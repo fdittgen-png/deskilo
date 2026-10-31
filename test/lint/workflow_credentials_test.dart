@@ -11,9 +11,13 @@ import 'package:yaml/yaml.dart';
 YamlMap _workflow(String name) =>
     loadYaml(File('.github/workflows/$name.yml').readAsStringSync()) as YamlMap;
 
+YamlMap _mapAt(YamlMap map, String key) => map[key] as YamlMap;
+
+YamlMap _job(String workflow, String job) =>
+    _mapAt(_mapAt(_workflow(workflow), 'jobs'), job);
+
 List<YamlMap> _steps(String workflow, String job) =>
-    ((_workflow(workflow)['jobs'] as YamlMap)[job]['steps'] as YamlList)
-        .cast<YamlMap>();
+    (_job(workflow, job)['steps'] as YamlList).cast<YamlMap>();
 
 YamlMap _step(String workflow, String job, String name) =>
     _steps(workflow, job).singleWhere((step) => step['name'] == name);
@@ -31,7 +35,7 @@ void main() {
       expect(attach['if'], "startsWith(github.ref, 'refs/tags/v')");
       expect(attach['permissions'], {'contents': 'write'});
       expect(
-        (attach['steps'] as YamlList).first['uses'],
+        ((attach['steps'] as YamlList).first as YamlMap)['uses'],
         'actions/download-artifact@v4',
       );
     }
@@ -75,7 +79,10 @@ void main() {
   test('dictionary writes are confined to its refresh job', () {
     final workflow = _workflow('dictionary-refresh');
     expect(workflow['permissions'], {'contents': 'read'});
-    final permissions = workflow['jobs']['refresh']['permissions'] as YamlMap;
+    final permissions = _mapAt(
+      _job('dictionary-refresh', 'refresh'),
+      'permissions',
+    );
     expect(permissions['contents'], 'write');
     expect(permissions['pull-requests'], 'write');
     expect(permissions['actions'], 'write');
@@ -102,7 +109,7 @@ void main() {
       (step) =>
           (step['uses'] as String? ?? '').startsWith('supabase/setup-cli@'),
     );
-    expect(setup['with']['version'], replay['with']['version']);
+    expect(_mapAt(setup, 'with')['version'], _mapAt(replay, 'with')['version']);
     final deploy =
         _step('edge-functions', 'functions', 'Deploy')['run'] as String;
     expect(deploy, isNot(contains('releases/latest')));
@@ -113,17 +120,17 @@ void main() {
     () {
       final steps = _steps('quality', 'gate');
       final checkout = steps.first;
-      expect(checkout['with']['fetch-depth'], 0);
+      expect(_mapAt(checkout, 'with')['fetch-depth'], 0);
       final scan = steps.singleWhere(
         (step) =>
             step['name'] == 'Scan the current tree and every commit in the PR',
       );
       expect(
-        scan['env']['SCAN_BASE'],
+        _mapAt(scan, 'env')['SCAN_BASE'],
         r'${{ github.event.pull_request.base.sha }}',
       );
       expect(
-        scan['env']['SCAN_HEAD'],
+        _mapAt(scan, 'env')['SCAN_HEAD'],
         r'${{ github.event.pull_request.head.sha }}',
       );
       expect(
