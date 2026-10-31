@@ -63,6 +63,8 @@ What the product is for and what it covers, module by module; delivery status li
 
 ## Build it
 
+See [CI and automation](CI-and-Automation) for merge gates, test shards, database checks, releases, artifacts, and troubleshooting.
+
 <table>
 <tr>
 <td width="33%" valign="top">
