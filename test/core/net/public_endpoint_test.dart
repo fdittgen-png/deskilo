@@ -101,7 +101,6 @@ void main() {
 
     test('plain text is not checked as an endpoint', () {
       expect(def('').check('http://anything'), isNull);
-      expect(endpointKindOfUnit(''), isNull);
     });
   });
 }

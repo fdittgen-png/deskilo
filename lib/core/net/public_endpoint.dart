@@ -93,35 +93,25 @@ bool _isLoopback(String host) {
 /// names that only resolve on a local network.
 bool _isPrivate(String host) {
   final h = host.toLowerCase();
-  if (h.endsWith('.local') || h.endsWith('.internal') || h.endsWith('.lan')) {
-    return true;
-  }
+  if (const ['.local', '.internal', '.lan'].any(h.endsWith)) return true;
   final v4 = _ipv4(h);
-  if (v4 != null) {
-    final [a, b, _, _] = v4;
-    return a == 0 ||
-        a == 10 ||
-        a == 127 ||
-        (a == 100 && b >= 64 && b <= 127) ||
-        (a == 169 && b == 254) ||
-        (a == 172 && b >= 16 && b <= 31) ||
-        (a == 192 && b == 168) ||
-        a >= 224;
-  }
+  if (v4 != null) return _privateV4(v4[0], v4[1]);
   final v6 = h.replaceAll('[', '').replaceAll(']', '');
-  if (v6.contains(':')) {
-    return v6 == '::' ||
-        v6 == '::1' ||
-        v6.startsWith('fc') ||
-        v6.startsWith('fd') ||
-        v6.startsWith('fe8') ||
-        v6.startsWith('fe9') ||
-        v6.startsWith('fea') ||
-        v6.startsWith('feb') ||
-        v6.startsWith('::ffff:');
-  }
-  return false;
+  return v6.contains(':') && _privateV6(v6);
 }
+
+bool _privateV4(int a, int b) =>
+    const [0, 10, 127].contains(a) ||
+    a >= 224 ||
+    (a == 100 && b >= 64 && b <= 127) ||
+    (a == 169 && b == 254) ||
+    (a == 172 && b >= 16 && b <= 31) ||
+    (a == 192 && b == 168);
+
+bool _privateV6(String v6) =>
+    v6 == '::' ||
+    v6 == '::1' ||
+    const ['fc', 'fd', 'fe8', 'fe9', 'fea', 'feb', '::ffff:'].any(v6.startsWith);
 
 List<int>? _ipv4(String host) {
   final parts = host.split('.');

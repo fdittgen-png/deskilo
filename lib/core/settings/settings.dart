@@ -155,7 +155,7 @@ class SettingDefinition {
         if (max != null && value.length > max!) return SettingProblem.aboveMax;
         // #2488 -- a public endpoint is parsed, not prefix-matched; empty
         // means "not managed here" (the build's or the documented default).
-        final endpoint = endpointKindOfUnit(unit);
+        final endpoint = _endpointKindOfUnit(unit);
         if (endpoint != null &&
             value.isNotEmpty &&
             publicEndpointProblem(value, endpoint) != null) {
@@ -195,7 +195,7 @@ enum SettingProblem {
 /// #2488 -- the endpoint kind a text setting's [unit] declares, or null for
 /// plain text: `url` is a geocoder-style base URL, `url template` a tile
 /// template.
-PublicEndpointKind? endpointKindOfUnit(String unit) => switch (unit) {
+PublicEndpointKind? _endpointKindOfUnit(String unit) => switch (unit) {
       'url' => PublicEndpointKind.geocoder,
       'url template' => PublicEndpointKind.tileTemplate,
       _ => null,
