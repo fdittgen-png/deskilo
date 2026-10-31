@@ -94,3 +94,23 @@ Subsequent authoritative PR check: #3180 MERGED at 2026-10-31T23:21:13Z,
 merge SHA c61c94aa9fbaa3b2220436a2577d3e7c4e37fdd8, source head unchanged.
 This supersedes OPEN in the first-green observation above.
 
+## PR3179: separate F-Droid audit timeout, not a pass
+
+Source 3ebe7be220b14d6cc58d6b8a2163df206be5ef12, run
+https://github.com/fdittgen-png/deskilo/actions/runs/41248620858 attempt1,
+job/check124677225369: COMPLETED/CANCELLED at23:29:35Z.
+GitHub's check annotation confirms the job exceeded its 50-minute limit.
+The FOSS generated-drift/analyze/full-tests step SUCCESS ran22:39:56–23:22:01Z
+(42m05). The release APK build was CANCELLED at23:29:31Z; both no-GMS dex
+and no-extra-signing-block scans, plus APK artifact upload, were SKIPPED.
+No completed release APK audit can be inferred from the successful test step.
+
+The exact workflow at that source head has timeout-minutes:50 and serializes
+all verification plus APK build. Outgoing Codex relayed the evidence to
+Claude/e1/gate at23:32:26Z, suggesting separate same-SHA FOSS verification
+and APK+scan jobs while retaining all checks. This is a proposal, not a fix
+or an instruction to weaken the gate. Claude owns corrections; e1 reconciles
+the follow-up with #3166. No duplicate retry or source edit was launched.
+Separate Quality41248620765 attempt2 has all four shards and aggregate code
+SUCCESS, but physical topology is still IN_PROGRESS at this snapshot.
+
