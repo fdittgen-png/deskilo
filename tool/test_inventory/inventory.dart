@@ -180,6 +180,15 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'asset gzip package',
+    root: 'packages/deskilo_asset_gzip/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test in packages/deskilo_asset_gzip',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_asset_gzip',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'Edge functions',
     root: 'supabase/functions',
     suffix: '_test.ts',
