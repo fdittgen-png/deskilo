@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "settingLabelBiSeriesMonths": "Monthly evolution length",
+  "@settingLabelBiSeriesMonths": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingHintBiSeriesMonths": "How many months a monthly evolution shows, the current one included: 13 is a year and the same month a year ago.",
+  "@settingHintBiSeriesMonths": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingLabelBiSeriesQuarters": "Quarterly evolution length",
+  "@settingLabelBiSeriesQuarters": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingHintBiSeriesQuarters": "How many quarters a quarterly evolution shows, the current one included: 9 is two years and the same quarter two years ago.",
+  "@settingHintBiSeriesQuarters": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingLabelBiSeriesYears": "Yearly evolution length",
+  "@settingLabelBiSeriesYears": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingHintBiSeriesYears": "How many years a yearly evolution shows, the current one included.",
+  "@settingHintBiSeriesYears": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingUnitQuarters": "quarters",
+  "@settingUnitQuarters": {
+    "description": "#2578 settings: unit of a count of quarters."
+  }
+}

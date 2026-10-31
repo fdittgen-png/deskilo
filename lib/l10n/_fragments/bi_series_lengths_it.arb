@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "settingLabelBiSeriesMonths": "Lunghezza dell'andamento mensile",
+  "settingHintBiSeriesMonths": "Quanti mesi mostra un andamento mensile, quello in corso compreso: 13 sono un anno e lo stesso mese dell'anno prima.",
+  "settingLabelBiSeriesQuarters": "Lunghezza dell'andamento trimestrale",
+  "settingHintBiSeriesQuarters": "Quanti trimestri mostra un andamento trimestrale, quello in corso compreso: 9 sono due anni e lo stesso trimestre di due anni prima.",
+  "settingLabelBiSeriesYears": "Lunghezza dell'andamento annuale",
+  "settingHintBiSeriesYears": "Quanti anni mostra un andamento annuale, quello in corso compreso.",
+  "settingUnitQuarters": "trimestri"
+}

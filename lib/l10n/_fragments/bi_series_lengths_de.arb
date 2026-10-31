@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "settingLabelBiSeriesMonths": "Länge der Monatsentwicklung",
+  "settingHintBiSeriesMonths": "Wie viele Monate eine Monatsentwicklung zeigt, der laufende eingeschlossen: 13 sind ein Jahr und derselbe Monat des Vorjahres.",
+  "settingLabelBiSeriesQuarters": "Länge der Quartalsentwicklung",
+  "settingHintBiSeriesQuarters": "Wie viele Quartale eine Quartalsentwicklung zeigt, das laufende eingeschlossen: 9 sind zwei Jahre und dasselbe Quartal vor zwei Jahren.",
+  "settingLabelBiSeriesYears": "Länge der Jahresentwicklung",
+  "settingHintBiSeriesYears": "Wie viele Jahre eine Jahresentwicklung zeigt, das laufende eingeschlossen.",
+  "settingUnitQuarters": "Quartale"
+}

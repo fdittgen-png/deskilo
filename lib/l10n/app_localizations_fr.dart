@@ -22469,6 +22469,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le nombre maximal de cartes d\'un rapport enregistré, toutes pages confondues. La plateforme n\'en stocke jamais plus de 24 ; un rapport au-delà est refusé à l\'enregistrement, jamais tronqué.';
 
   @override
+  String get settingHintBiSeriesMonths =>
+      'Nombre de mois affichés par une évolution mensuelle, le mois en cours compris : 13 couvre un an et le même mois de l\'an passé.';
+
+  @override
+  String get settingHintBiSeriesQuarters =>
+      'Nombre de trimestres affichés par une évolution trimestrielle, le trimestre en cours compris : 9 couvre deux ans et le même trimestre deux ans plus tôt.';
+
+  @override
+  String get settingHintBiSeriesYears =>
+      'Nombre d\'années affichées par une évolution annuelle, l\'année en cours comprise.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixe : l\'avance maximale, en jours, d\'une facture d\'abonnement avant le début du mois.';
 
@@ -22707,6 +22719,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelBiReportMaxVisuals => 'Cartes par rapport';
+
+  @override
+  String get settingLabelBiSeriesMonths => 'Longueur de l\'évolution mensuelle';
+
+  @override
+  String get settingLabelBiSeriesQuarters =>
+      'Longueur de l\'évolution trimestrielle';
+
+  @override
+  String get settingLabelBiSeriesYears => 'Longueur de l\'évolution annuelle';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -22991,6 +23013,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'par heure';
+
+  @override
+  String get settingUnitQuarters => 'trimestres';
 
   @override
   String get settingUnitRequests => 'requêtes';

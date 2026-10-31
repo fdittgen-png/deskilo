@@ -72,6 +72,9 @@ String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key
 /// #2579 -- the bounds of a saved report.
 String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'bi.batch_time_budget_ms' => l10n.settingLabelBiBatchTimeBudgetMs,
+      'bi.series_months' => l10n.settingLabelBiSeriesMonths,
+      'bi.series_quarters' => l10n.settingLabelBiSeriesQuarters,
+      'bi.series_years' => l10n.settingLabelBiSeriesYears,
       'bi.report_max_pages' => l10n.settingLabelBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
@@ -166,6 +169,9 @@ String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key
 /// #2579 -- the bounds of a saved report.
 String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bi.batch_time_budget_ms' => l10n.settingHintBiBatchTimeBudgetMs,
+      'bi.series_months' => l10n.settingHintBiSeriesMonths,
+      'bi.series_quarters' => l10n.settingHintBiSeriesQuarters,
+      'bi.series_years' => l10n.settingHintBiSeriesYears,
       'bi.report_max_pages' => l10n.settingHintBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
@@ -211,6 +217,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'hours' => l10n.settingUnitHours,
       'days' => l10n.settingUnitDays,
       'months' => l10n.settingUnitMonths,
+      'quarters' => l10n.settingUnitQuarters,
       'years' => l10n.settingUnitYears,
       'currency units' => l10n.settingUnitCurrencyUnits,
       'rows' => l10n.settingUnitRows,

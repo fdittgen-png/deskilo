@@ -207,7 +207,10 @@ class _BiExportSheetState extends ConsumerState<_BiExportSheet> {
       final plan = biSnapshotPlan(
         target.report,
         period: target.period,
-        seriesLength: biSeriesLength(target.period.grain),
+        seriesLength: biSeriesLength(
+          target.period.grain,
+          ref.read(activeSettingsProvider),
+        ),
         window: biInterval,
         limit: _limit,
       );

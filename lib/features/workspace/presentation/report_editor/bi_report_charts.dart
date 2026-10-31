@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/active_settings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/bi_analysis.dart';
 import '../../domain/bi_modules.dart';
@@ -245,7 +246,7 @@ class BiLineBody extends ConsumerWidget {
         module.id,
         grain,
         end,
-        biSeriesLength(grain),
+        biSeriesLength(grain, ref.watch(activeSettingsProvider)),
       ),
     );
     final currency = ref

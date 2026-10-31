@@ -15277,6 +15277,9 @@
   "@settingHintBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingHintBiSeriesMonths": "Nombre de mois affichés par une évolution mensuelle, le mois en cours compris : 13 couvre un an et le même mois de l'an passé.",
+  "settingHintBiSeriesQuarters": "Nombre de trimestres affichés par une évolution trimestrielle, le trimestre en cours compris : 9 couvre deux ans et le même trimestre deux ans plus tôt.",
+  "settingHintBiSeriesYears": "Nombre d'années affichées par une évolution annuelle, l'année en cours comprise.",
   "settingHintBillingMaxAdvanceDays": "Fixe : l'avance maximale, en jours, d'une facture d'abonnement avant le début du mois.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -15449,6 +15452,9 @@
   "@settingLabelBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingLabelBiSeriesMonths": "Longueur de l'évolution mensuelle",
+  "settingLabelBiSeriesQuarters": "Longueur de l'évolution trimestrielle",
+  "settingLabelBiSeriesYears": "Longueur de l'évolution annuelle",
   "settingLabelBillingMaxAdvanceDays": "Avance de la facture d'abonnement",
   "@settingLabelBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting label."
@@ -15726,6 +15732,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitQuarters": "trimestres",
   "settingUnitRequests": "requêtes",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
