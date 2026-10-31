@@ -1690,6 +1690,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get badgePinNotSet => 'Nessun PIN';
 
   @override
+  String get badgePinReviewNotice =>
+      'La lunghezza di questo vecchio PIN è sconosciuta o inferiore al minimo attuale. Chiedi al membro di cambiarlo nelle proprie impostazioni. Il PIN attuale resta utilizzabile.';
+
+  @override
+  String get badgePinReviewUnavailable =>
+      'Lo stato di verifica del PIN non è disponibile. Riprova prima di presumere che rispetti il minimo attuale.';
+
+  @override
   String get badgePinSaveFailed =>
       'Server irraggiungibile. Il suo PIN non è stato modificato — riprovi.';
 
@@ -7343,6 +7351,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventAutoValidated => 'Convalidato automaticamente';
 
   @override
+  String eventBadgeSecurityAlert(int failures, int minutes) {
+    return 'L’accesso con badge è sospeso dopo $failures tentativi falliti in $minutes minuti. Verifica i badge e chiedi ai membri di accedere via e-mail fino alla fine del blocco.';
+  }
+
+  @override
   String eventCommitmentVarianceLine(
     String actor,
     String amount,
@@ -7526,6 +7539,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Rettifica';
+
+  @override
+  String get eventTypeBadgeSecurityAlert => 'Protezione dell’accesso con badge';
 
   @override
   String get eventTypeCommitmentVariance => 'Differenza di affitto';
@@ -22630,6 +22646,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.';
 
   @override
+  String get settingHintSecurityBadgeWorkspaceFailureLimit =>
+      'Tentativi di PIN falliti nello spazio durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Il limite può solo essere ridotto.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.';
 
@@ -22872,6 +22892,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN del badge: lunghezza minima';
+
+  @override
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
+      'Limite dei tentativi falliti con badge dello spazio';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

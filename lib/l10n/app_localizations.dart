@@ -2851,6 +2851,18 @@ abstract class AppLocalizations {
   /// **'No PIN yet'**
   String get badgePinNotSet;
 
+  /// No description provided for @badgePinReviewNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.'**
+  String get badgePinReviewNotice;
+
+  /// No description provided for @badgePinReviewUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.'**
+  String get badgePinReviewUnavailable;
+
   /// #1086 the PIN save or clear could not reach the server
   ///
   /// In en, this message translates to:
@@ -12487,6 +12499,12 @@ abstract class AppLocalizations {
   /// **'Auto-validated'**
   String get eventAutoValidated;
 
+  /// No description provided for @eventBadgeSecurityAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.'**
+  String eventBadgeSecurityAlert(int failures, int minutes);
+
   /// Events feed (#2575): what the validators decide on
   ///
   /// In en, this message translates to:
@@ -12730,6 +12748,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adjustment'**
   String get eventTypeAdjustment;
+
+  /// No description provided for @eventTypeBadgeSecurityAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge sign-in protection'**
+  String get eventTypeBadgeSecurityAlert;
 
   /// Validation domain (#2575): a bill above the rent a contract expects
   ///
@@ -37758,6 +37782,12 @@ abstract class AppLocalizations {
   /// **'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.'**
   String get settingHintSecurityBadgePinMinLength;
 
+  /// No description provided for @settingHintSecurityBadgeWorkspaceFailureLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.'**
+  String get settingHintSecurityBadgeWorkspaceFailureLimit;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -38141,6 +38171,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shortest badge PIN'**
   String get settingLabelSecurityBadgePinMinLength;
+
+  /// No description provided for @settingLabelSecurityBadgeWorkspaceFailureLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace badge failure ceiling'**
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit;
 
   /// #2485 settings: Setting label.
   ///

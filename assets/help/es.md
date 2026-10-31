@@ -3443,6 +3443,8 @@ Usted quiere que los miembros registren su llegada acercando una tarjeta, sin te
 - El gestor de credenciales también permite emitir una **Nueva credencial**, **Revocar** una y **Guardar como PDF** para imprimir. Una credencial revocada puede eliminarse definitivamente.
 - **Inicia mi sesión** está desactivado por defecto: una credencial que registra la llegada no inicia la sesión hasta que el miembro lo decida.
 - Cada miembro también puede crear su propia credencial en sus ajustes personales.
+- Seguridad del acceso con credencial: los PIN fallidos de todas las tarjetas del espacio comparten un límite, 50 por defecto durante la ventana de bloqueo (15 minutos por defecto). En los ajustes del espacio → Seguridad, un propietario puede reducirlo a 1–50. Al alcanzarlo, se pausa el acceso con credencial hasta que los intentos salgan de esa ventana y los propietarios reciben una alerta en los eventos. Los demás espacios siguen disponibles. El cuestionario guarda el límite elegido como respuesta para introducir en la aplicación.
+- Al gestionar las credenciales de un miembro, un aviso pide renovar el PIN si su longitud registrada está por debajo del mínimo actual o se desconoce porque se creó antes del registro de longitud. Los PIN antiguos siguen funcionando hasta que su titular los cambie; el gestor no muestra el PIN ni su hash.
 
 **Véase también:** [Una tableta de pared para registrar la llegada](help:user.kiosk.mode)
 

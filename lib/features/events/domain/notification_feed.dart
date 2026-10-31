@@ -115,6 +115,27 @@ class NotificationFilterState {
   }
 }
 
+const _moneyEvents = <EventType>{
+  EventType.payment,
+  EventType.usageCorrection,
+  EventType.usageRecordDelete,
+  EventType.paymentTermsChange,
+  EventType.expenseRepartition,
+  EventType.expenseSchedule,
+  EventType.expense,
+  EventType.adjustment,
+  EventType.serviceCharge,
+  EventType.invoicePayment,
+  EventType.invoiceWriteoff,
+  EventType.invoiceReminder,
+  EventType.priceNegotiation,
+  EventType.invoiceIssue,
+  EventType.invoiceVoid,
+  EventType.refund,
+  EventType.leaseChange,
+  EventType.commitmentVariance,
+};
+
 /// The category a workspace event belongs to. A check-in/check-out is a
 /// reservation MODIFICATION whose payload status moved to
 /// checked_in/completed (0007's trigger records the new status), so the
@@ -131,27 +152,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.reservationDelete:
     case EventType.quota:
       return NotificationCategory.reservations;
-    case EventType.payment:
-    // #833 — both change what a month bills, so they belong with the
-    // money the member is being asked about.
-    case EventType.usageCorrection:
-    case EventType.usageRecordDelete:
-    case EventType.paymentTermsChange:
-    case EventType.expenseRepartition:
-    case EventType.expenseSchedule:
-    case EventType.expense:
-    case EventType.adjustment:
-    case EventType.serviceCharge:
-    case EventType.invoicePayment:
-    case EventType.invoiceWriteoff:
-    case EventType.invoiceReminder:
-    case EventType.priceNegotiation:
-    // #982 — acts of record on money.
-    case EventType.invoiceIssue:
-    case EventType.invoiceVoid:
-    case EventType.refund ||
-        EventType.leaseChange ||
-        EventType.commitmentVariance:
+    case final type when _moneyEvents.contains(type):
       return NotificationCategory.money;
     case EventType.roleChange:
     case EventType.memberJoin:
@@ -159,10 +160,11 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.memberStatusChange:
     case EventType.subscriptionChange:
     case EventType.matrixChange:
+    case EventType.badgeSecurityAlert:
       return NotificationCategory.members;
     // #1088 — a type this build does not know still belongs somewhere.
     // Reservations is the feed's general bucket, not a claim about it.
-    case EventType.unknown:
+    default:
       return NotificationCategory.reservations;
   }
 }

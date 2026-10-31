@@ -740,7 +740,9 @@ window.SETUP_L10N={
    "accountingOk": "The bank statements' bounds and suggestion window are set.",
    "retUsYears": "US state record retention",
    "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
-   "retUsRule": "The retention rule applies"
+   "retUsRule": "The retention rule applies",
+   "badgeFailureLimit": "Badge sign-in failures per workspace",
+   "badgeFailureLimitHint": "After this many failed PIN attempts across the workspace, badge sign-in pauses for the lockout window and owners receive an alert. Set a value from 1 to 50 in Workspace settings → Security; 50 is the default. The XML keeps this answer for setup; enter it in the app."
   },
   "feature": {
    "calendarTab": [
@@ -2411,7 +2413,9 @@ window.SETUP_L10N={
    "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
    "retUsYears": "Conservation des pièces, État américain",
    "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
-   "retUsRule": "La règle de conservation s'applique"
+   "retUsRule": "La règle de conservation s'applique",
+   "badgeFailureLimit": "Échecs de connexion par badge de l’espace",
+   "badgeFailureLimitHint": "Après ce nombre d’échecs de PIN dans l’espace, la connexion par badge est suspendue pendant la fenêtre de blocage et les propriétaires reçoivent une alerte. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut. Le XML conserve cette réponse ; saisissez-la dans l’application."
   },
   "feature": {
    "calendarTab": [
@@ -4082,7 +4086,9 @@ window.SETUP_L10N={
    "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
    "retUsYears": "Aufbewahrung, US-Bundesstaat",
    "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
-   "retUsRule": "Die Aufbewahrungsregel gilt"
+   "retUsRule": "Die Aufbewahrungsregel gilt",
+   "badgeFailureLimit": "Fehlversuche der Badge-Anmeldung pro Workspace",
+   "badgeFailureLimitHint": "Nach so vielen fehlgeschlagenen PIN-Versuchen im Workspace pausiert die Badge-Anmeldung für das Sperrfenster; Eigentümer erhalten eine Warnung. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich, standardmäßig 50. Die XML-Datei bewahrt die Antwort auf; tragen Sie sie in der App ein."
   },
   "feature": {
    "calendarTab": [
@@ -5753,7 +5759,9 @@ window.SETUP_L10N={
    "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
    "retUsYears": "Conservación de registros, estado de EE. UU.",
    "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
-   "retUsRule": "Se aplica la regla de conservación"
+   "retUsRule": "Se aplica la regla de conservación",
+   "badgeFailureLimit": "Intentos fallidos de acceso con credencial por espacio",
+   "badgeFailureLimitHint": "Tras este número de PIN fallidos en el espacio, el acceso con credencial se pausa durante la ventana de bloqueo y los propietarios reciben una alerta. Elija de 1 a 50 en los ajustes del espacio → Seguridad; 50 por defecto. El XML conserva la respuesta; introdúzcala en la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -7424,7 +7432,9 @@ window.SETUP_L10N={
    "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
    "retUsYears": "Conservazione dei documenti, stato USA",
    "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
-   "retUsRule": "Vale la regola di conservazione"
+   "retUsRule": "Vale la regola di conservazione",
+   "badgeFailureLimit": "Tentativi falliti di accesso con badge per spazio",
+   "badgeFailureLimitHint": "Dopo questo numero di PIN errati nello spazio, l’accesso con badge si sospende per la finestra di blocco e i proprietari ricevono un avviso. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 per impostazione predefinita. Il file XML conserva la risposta; inserirla nell’app."
   },
   "feature": {
    "calendarTab": [

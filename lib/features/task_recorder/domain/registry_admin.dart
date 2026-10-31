@@ -86,6 +86,7 @@ const Set<String> validationRuleKeys = {
   'matrix_change',
   'lease_change',
   'commitment_variance',
+  'badge_security_alert',
 };
 
 /// The validation rule that applies when a type has none of its own.

@@ -10,6 +10,10 @@ abstract class BadgeRepository {
   /// read their own).
   Future<List<MemberBadge>> fetchMemberBadges(String workspaceId);
 
+  /// Whether an administrator should ask this member to refresh an old PIN.
+  /// The server never returns its value, hash or length.
+  Future<bool> badgePinNeedsReview(String workspaceId, String memberId);
+
   /// Admin-only (RPC `issue_member_badge`): mints a badge for [memberId]
   /// and returns the RAW token exactly once — render it as a QR and let
   /// it go; the server keeps only the hash.

@@ -1681,6 +1681,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgePinNotSet => 'No PIN yet';
 
   @override
+  String get badgePinReviewNotice =>
+      'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.';
+
+  @override
+  String get badgePinReviewUnavailable =>
+      'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.';
+
+  @override
   String get badgePinSaveFailed =>
       'Could not reach the server. Your PIN was not changed — try again.';
 
@@ -7296,6 +7304,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventAutoValidated => 'Auto-validated';
 
   @override
+  String eventBadgeSecurityAlert(int failures, int minutes) {
+    return 'Badge sign-in paused after $failures failed attempts in $minutes minutes. Review the badges and ask members to use email while the lock clears.';
+  }
+
+  @override
   String eventCommitmentVarianceLine(
     String actor,
     String amount,
@@ -7479,6 +7492,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Adjustment';
+
+  @override
+  String get eventTypeBadgeSecurityAlert => 'Badge sign-in protection';
 
   @override
   String get eventTypeCommitmentVariance => 'Rent difference';
@@ -22445,6 +22461,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.';
 
   @override
+  String get settingHintSecurityBadgeWorkspaceFailureLimit =>
+      'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.';
 
@@ -22664,6 +22684,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgePinMinLength => 'Shortest badge PIN';
+
+  @override
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
+      'Workspace badge failure ceiling';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays => 'Invitation validity';

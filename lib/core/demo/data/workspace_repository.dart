@@ -414,6 +414,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override Future<void> setMemberSimultaneousLimit(String memberId, int? limit) => _setMemberSimultaneousLimitImpl(memberId, limit);
   @override Future<void> setMemberLevelPermission(String memberId, {required bool allowed}) => _setMemberLevelPermissionImpl(memberId, allowed: allowed);
   @override Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) => _setMemberKioskImpl(memberId, isKiosk: isKiosk);
+  @override Future<bool> badgePinNeedsReview(String workspaceId, String memberId) async => false;
   @override Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) => _fetchMemberBadgesImpl(workspaceId);
   @override Future<IssuedBadge> issueMemberBadge(String workspaceId, String memberId, {String label = ''}) => _issueMemberBadgeImpl(workspaceId, memberId, label: label);
   @override Future<void> registerNfcBadge(String workspaceId, String memberId, {required String uid, String label = ''}) => _registerNfcBadgeImpl(workspaceId, memberId, uid: uid, label: label);
@@ -503,5 +504,4 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override Future<void> grantWorkspaceTemplate(String templateId, String email) => _grantWorkspaceTemplateImpl(templateId, email);
   @override Future<void> revokeWorkspaceTemplateGrant(String templateId, String email) => _revokeWorkspaceTemplateGrantImpl(templateId, email);
   @override Future<List<String>> workspaceTemplateGrantees(String templateId) => _workspaceTemplateGranteesImpl(templateId);
-
 }

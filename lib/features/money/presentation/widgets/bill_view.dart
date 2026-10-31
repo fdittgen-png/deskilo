@@ -216,26 +216,8 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.paymentTermsChange:
       case EventType.quota:
         return l10n.eventTypeQuota;
-      case EventType.invoiceWriteoff:
-      case EventType.invoiceReminder:
-      case EventType.priceNegotiation:
-      case EventType.reservationDelete:
-      case EventType.roleChange:
-      case EventType.memberJoin:
-      case EventType.reservation:
-      case EventType.spaceReservation:
-      case EventType.invoicePayment:
-      case EventType.invoiceIssue:
-      case EventType.invoiceVoid:
-      case EventType.refund:
-      case EventType.memberStatusChange:
-      case EventType.subscriptionChange:
-      case EventType.matrixChange ||
-          EventType.leaseChange ||
-          EventType.commitmentVariance:
-      case EventType.adjustment:
-      // #1088 — never an open position; the fallback keeps it exhaustive.
-      case EventType.unknown:
+      // Nonfinancial and unknown events share the neutral fallback.
+      default:
         return l10n.eventTypeAdjustment;
     }
   }
