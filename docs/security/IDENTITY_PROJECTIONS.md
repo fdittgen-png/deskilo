@@ -29,7 +29,7 @@ and are read by nobody but themselves.
 |---|---|---|
 | `display_name`, `avatar_path` | community | photo bytes: storage policy (checkpoint B) |
 | `whatsapp` | community | opt-in, '' = not shared (#224) |
-| `status_text`, `last_seen_at` | community | directory presence |
+| `status_text`, `last_seen_at` | community | directory presence (`last_seen_at` read from the unpublished `presence` table since #3123) |
 | `courtesy`, `first_name`, `last_name`, `company`, `street`, `postal_code`, `city`, `country_code`, `phone`, `email`, `vat_id`, `legal_id` | operational | `PersonalInfo` — what invoices and letters print |
 | `address` | operational | legacy free-text postal block |
 | `preferred_locale` | operational | the language documents to S are printed in |

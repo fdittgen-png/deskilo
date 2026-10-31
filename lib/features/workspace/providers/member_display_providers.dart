@@ -6,8 +6,12 @@
 // by workspace_providers.dart, so a feature that knows the workspace
 // imports neither the reservations nor the members feature to print a
 // name or a face.
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/lifecycle/app_foreground.dart';
+import '../../../core/presence/presence_rules.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
 import '../../profile/domain/profile.dart';
@@ -48,6 +52,14 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   // app: names, status lines, WhatsApp numbers and photographs, all at
   // once. Watched BEFORE the gap (#1218).
   final recording = ref.watch(recordingPrivacyProvider);
+  // #3123 — presence is no longer pushed (the heartbeat writes the
+  // unpublished presence table): while the directory is in front, its
+  // profiles refresh once per heartbeat interval, so an online dot lags a
+  // beat at most.
+  if (ref.watch(appForegroundProvider)) {
+    final refresh = Timer(PresenceRules.heartbeatInterval, ref.invalidateSelf);
+    ref.onDispose(refresh.cancel);
+  }
   final members = await ref.watch(workspaceMembersProvider.future);
   // A managed member (#962) has no account and therefore no profile;
   // its empty user id must never reach the query, where PostgREST

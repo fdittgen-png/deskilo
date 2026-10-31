@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'invalidation_map.dart' show kResyncSignal;
-import 'profile_change_classifier.dart';
 
 /// Push-driven freshness (#413): a stream of "table X changed" signals
 /// for the signed-in user, fed by Supabase Realtime `postgres_changes`
@@ -233,8 +232,6 @@ class SupabaseRealtimeSync implements RealtimeSync {
 
   Stream<String> _feed(String channelName, List<RealtimeBinding> bindings) {
     final controller = StreamController<String>.broadcast();
-    // #2019 C — one per watched workspace: presence-only profile updates.
-    final profiles = ProfileChangeClassifier();
     late final ChannelSupervisor<RealtimeChannel> supervisor;
     supervisor = ChannelSupervisor<RealtimeChannel>(
       create: () {
@@ -254,11 +251,9 @@ class SupabaseRealtimeSync implements RealtimeSync {
                   ),
             callback: (payload) {
               if (controller.isClosed) return;
-              final signal = switch (b.table) {
-                'profiles' => profiles.signal(payload.eventType, payload.newRecord),
-                realtimeDeletionsTable => deletionSignal(payload.newRecord),
-                _ => b.table,
-              };
+              final signal = b.table == realtimeDeletionsTable
+                  ? deletionSignal(payload.newRecord)
+                  : b.table;
               if (signal != null) controller.add(signal);
             },
           );
