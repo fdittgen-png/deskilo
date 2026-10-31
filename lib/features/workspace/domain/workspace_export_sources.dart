@@ -150,6 +150,7 @@ const List<ExportSource> workspaceExportSources = [
       'vat_id',
       'address',
       'whatsapp',
+      'last_seen_at',
       'first_name',
       'last_name',
       'company',

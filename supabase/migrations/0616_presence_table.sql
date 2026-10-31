@@ -13,7 +13,7 @@
 -- two projections read it, and the app refreshes presence on its own
 -- schedule (once per heartbeat interval, while in front).
 
-create table public.presence (
+create table if not exists public.presence (
   user_id uuid primary key references auth.users(id) on delete cascade,
   last_seen_at timestamptz not null default now()
 );
@@ -22,8 +22,10 @@ select public.ensure_system_columns('presence');
 alter table public.presence enable row level security;
 -- Read only through the definer projections; written only by touch_last_seen.
 revoke all on public.presence from anon, authenticated;
+drop policy if exists mcp_delegated_deny on public.presence;
 create policy mcp_delegated_deny on public.presence as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+drop policy if exists personal_native_session on public.presence;
 create policy personal_native_session on public.presence as restrictive for all to public
   using ((select public.personal_native_session()))
   with check ((select public.personal_native_session()));
@@ -56,21 +58,24 @@ declare
   v_def text;
   v_patched text;
 begin
+  -- Idempotent: a definition that already reads presence is left alone.
   select pg_get_functiondef('public.export_my_data(uuid)'::regprocedure) into v_def;
-  v_patched := pg_temp.anchor_replace(v_def,
+  v_patched := case when position('public.presence' in v_def) > 0 then v_def end;
+  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def,
     $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me.user_id),$a$,
     $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me.user_id),
-    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me.user_id),$a$);
+    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me.user_id),$a$));
   if v_patched is null then
     raise exception '0616: export_my_data profile anchor missing';
   end if;
   execute v_patched;
 
   select pg_get_functiondef('public.export_my_personal_data_v1()'::regprocedure) into v_def;
-  v_patched := pg_temp.anchor_replace(v_def,
+  v_patched := case when position('public.presence' in v_def) > 0 then v_def end;
+  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def,
     $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me),$a$,
     $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me),
-    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me),$a$);
+    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me),$a$));
   if v_patched is null then
     raise exception '0616: export_my_personal_data_v1 profile anchor missing';
   end if;
