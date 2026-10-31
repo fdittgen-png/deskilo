@@ -9,7 +9,9 @@ import 'dart:convert';
 
 import 'package:deskilo/core/cache/read_retry.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/data/supabase_event_repository.dart';
+import 'package:deskilo/features/events/data/sweep_throttle.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -61,7 +63,15 @@ void main() {
       retry: readRetry,
       overrides: [
         eventRepositoryProvider.overrideWithValue(
-          SupabaseEventRepository(client),
+          // An interval of 0: every read sweeps, so the counts below are
+          // the retry policy's alone.
+          SupabaseEventRepository(
+            client,
+            sweeps: SweepThrottle(
+              clock: FixedClock(DateTime.utc(2026, 10, 31)),
+              interval: () => Duration.zero,
+            ),
+          ),
         ),
         currentWorkspaceProvider.overrideWith((ref) async => _ws),
       ],
