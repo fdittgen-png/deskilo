@@ -1290,6 +1290,10 @@ constraint readiness_acknowledgements.readiness_acknowledgements_user_id_fkey FO
 constraint readiness_acknowledgements.readiness_acknowledgements_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint readiness_acknowledgements.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint readiness_acknowledgements.system_company_present CHECK ((company_id IS NOT NULL))
+constraint realtime_deletions.realtime_deletions_pkey PRIMARY KEY (id)
+constraint realtime_deletions.realtime_deletions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint realtime_deletions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint realtime_deletions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reminder_attempts.reminder_attempts_channel_check CHECK ((channel = ANY (ARRAY['push'::text, 'share'::text])))
 constraint reminder_attempts.reminder_attempts_detail_check CHECK ((char_length(detail) <= 300))
 constraint reminder_attempts.reminder_attempts_intent_id_fkey FOREIGN KEY (intent_id) REFERENCES reminder_intents(id) ON DELETE CASCADE
@@ -2641,6 +2645,7 @@ routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_l
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
+routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:543a1c987f88
@@ -3291,6 +3296,7 @@ trigger push_endpoints.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_
 trigger quota_extensions.quota_extensions_rebalance_credits CREATE TRIGGER quota_extensions_rebalance_credits AFTER INSERT OR DELETE ON public.quota_extensions FOR EACH ROW EXECUTE FUNCTION members_rebalance_credits()
 trigger quota_extensions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.quota_extensions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger readiness_acknowledgements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.readiness_acknowledgements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger realtime_deletions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.realtime_deletions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_attempts_append_only BEFORE DELETE OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION reminder_attempts_append_only()
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
