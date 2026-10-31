@@ -52,7 +52,7 @@ function obligationsCard(lbl){const rows=OBLIGATIONS[S.country]||[];
  for(const o of rows)kids.push(h('p',{},obligationText(o)),h('p',{class:'hint'},(o.confirmed?'':JT('setupObligationUnconfirmed')+' ')+JT('setupObligationSource',{source:o.source})));
  return h('div',{class:'card'},...kids)}
 function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.append(h('option',{value:l.id},jw('level',pr.key+'_'+l.id)));s.value=now[pr.key];
- s.onchange=()=>{applyLevel(pr.key,s.value);render()};
+ s.onchange=()=>{applyLevel(pr.key,s.value);render()};s.setAttribute('aria-label',jw('process',pr.key));
  const why=S.journey.used&&rec[pr.key]&&rec[pr.key].level===now[pr.key]?jw('reason',rec[pr.key].reason):'';
  return h('div',{},h('label',{},jw('process',pr.key)),s,why?h('p',{class:'hint'},why):null)}
 
