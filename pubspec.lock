@@ -386,7 +386,7 @@ packages:
     source: hosted
     version: "0.7.14"
   deskilo_asset_gzip:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "packages/deskilo_asset_gzip"
       relative: true

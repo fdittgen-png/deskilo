@@ -107,11 +107,13 @@ dependencies:
   markdown_widget: ^2.3.2+8
   liquify: ^1.6.1
   package_info_plus: ^10.2.1
-
-dev_dependencies:
   # #3102 — the build-time gzip of the instance bundle (asset transformer).
+  # A regular dependency on purpose: as a dev_dependency, a release Android
+  # build re-registered the dev-only integration_test plugin and failed.
   deskilo_asset_gzip:
     path: packages/deskilo_asset_gzip
+
+dev_dependencies:
   # #1017 — the documentation screenshot pipeline (tool/media.dart):
   # merge, crop, downscale. Tool-only; the app never decodes an image
   # itself.
