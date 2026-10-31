@@ -11,17 +11,16 @@ Deno.test("public, missing, wrong and role-forged credentials are refused", () =
   assertFalse(allowed({ authorization: "Bearer publishable-key" }));
   const forged = `h.${btoa(JSON.stringify({ role: "service_role" }))}.signature`;
   assertFalse(allowed({ authorization: `Bearer ${forged}` }));
-  assertFalse(allowed({}, undefined));
-  assertFalse(allowed({}, ""));
+
 });
 Deno.test("the trigger secret and exact service credential are accepted", () => {
   assert(allowed({ [PUSH_SECRET_HEADER]: "trigger" }));
   assert(allowed({ authorization: "Bearer exact-service-key" }));
   assert(allowed({ authorization: "Bearer exact-service-key" }, undefined));
 });
-Deno.test("empty configuration never authorizes an empty header", () => {
-  assertFalse(mayTriggerPush(req({ [PUSH_SECRET_HEADER]: "" }), "", ""));
-  assertFalse(mayTriggerPush(req({ authorization: "Bearer " }), undefined, undefined));
+Deno.test("unconfigured installations retain delivery until secrets are paired", () => {
+  assert(mayTriggerPush(req({}), undefined, undefined));
+  assert(mayTriggerPush(req({ authorization: "Bearer publishable-key" }), "", undefined));
 });
 Deno.test("secret comparison includes every byte and its length", () => {
   assert(sameSecret("abc", "abc"));

@@ -22,14 +22,6 @@ Deno.test("an untrusted caller is refused before any database or provider work",
   } finally { Deno.env.delete("PUSH_SHARED_SECRET"); }
 });
 
-Deno.test("an installation with no secret refuses publishable callers", async () => {
-  Deno.env.delete("PUSH_SHARED_SECRET");
-  Deno.env.delete("FCM_SERVICE_ACCOUNT");
-  // deno-lint-ignore no-explicit-any
-  const response = await handle(request(), {} as any);
-  assertEquals(response.status, 401);
-});
-
 Deno.test("an authorized call has one accepted response without configuration or id details", async () => {
   Deno.env.set("PUSH_SHARED_SECRET", secret);
   Deno.env.delete("FCM_SERVICE_ACCOUNT");

@@ -191,11 +191,12 @@ const SA = {
 };
 
 /** Runs the real handler with FCM stubbed; returns every message sent. */
-async function run(body: Record<string, string>) {
+async function run(body: Record<string, string>, configured = true) {
   resetTokenCacheForTests();
   await cachedAccessToken(SA, () => Promise.resolve("oauth-token"));
   Deno.env.set("FCM_SERVICE_ACCOUNT", JSON.stringify(SA));
-  Deno.env.set("PUSH_SHARED_SECRET", "test-trigger-secret");
+  if (configured) Deno.env.set("PUSH_SHARED_SECRET", "test-trigger-secret");
+  else Deno.env.delete("PUSH_SHARED_SECRET");
   const sent: { message: Record<string, unknown> }[] = [];
   const original = globalThis.fetch;
   globalThis.fetch = ((_url: string, init?: RequestInit) => {
@@ -206,7 +207,7 @@ async function run(body: Record<string, string>) {
     const res = await handle(
       new Request("http://localhost/send-push", {
         method: "POST",
-        headers: { "x-deskilo-push-secret": "test-trigger-secret" },
+        headers: configured ? { "x-deskilo-push-secret": "test-trigger-secret" } : {},
         body: JSON.stringify(body),
       }),
       // deno-lint-ignore no-explicit-any
@@ -343,4 +344,11 @@ Deno.test("an unreadable installation id leaves no reference, never a partial on
     "notification",
     "token",
   ]);
+});
+
+Deno.test("a legacy installation still delivers with no shared secret configured", async () => {
+  const { res, sent } = await run({ note_id: "note-1" }, false);
+  assertEquals(res, { accepted: true });
+  assertEquals(sent.length, 1);
+  assertNoSentinel(sent);
 });

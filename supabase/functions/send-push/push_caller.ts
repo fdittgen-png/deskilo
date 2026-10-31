@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The database trigger carries a secret read from Vault. A public API key
-// alone never authorizes delivery, even before an installation is configured.
+// alone never authorizes delivery once the installation has paired its secrets.
 
 export const PUSH_SECRET_HEADER = "x-deskilo-push-secret";
 
@@ -16,14 +16,23 @@ export function sameSecret(a: string, b: string): boolean {
   return diff === 0;
 }
 
-/** Only the configured trigger secret or exact service credential authorizes a call.
- * A decoded JWT role is never proof of its signature. Missing configuration
- * fails closed instead of exposing the notification fanout to publishable keys. */
+let warned = false;
+
+/** Configured installations accept only the trigger or exact service credential.
+ * Unconfigured installations retain delivery during the operator rollout and
+ * warn once per worker. A decoded JWT role never proves its signature. */
 export function mayTriggerPush(
   req: Request,
   secret: string | undefined,
   serviceKey: string | undefined,
 ): boolean {
+  if (!secret) {
+    if (!warned) {
+      warned = true;
+      console.warn("send-push: PUSH_SHARED_SECRET is not set; legacy caller access remains enabled");
+    }
+    return true;
+  }
   const sent = req.headers.get(PUSH_SECRET_HEADER);
   if (secret && sent && sameSecret(sent, secret)) return true;
   const bearer = (req.headers.get("authorization") ?? "").match(/^Bearer\s+(.+)$/i)?.[1];
