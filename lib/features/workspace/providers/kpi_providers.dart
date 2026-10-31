@@ -3,6 +3,9 @@
 // #1918 — the KPI repository, overridable in tests.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/settings/active_settings.dart';
+import '../../../core/settings/setting_defaults.g.dart';
+
 import '../../../core/time/workspace_calendar.dart';
 import '../data/bi_query_coordinator.dart';
 import '../data/fan_out_batch_reader.dart';
@@ -36,6 +39,15 @@ KpiBatchReader biBatchReader(Ref ref) {
     kpis is SupabaseKpiRepository
         ? SupabaseBiBatchReader(kpis.client)
         : FanOutBatchReader(kpis, ref.watch(financeKpiRepositoryProvider)),
+    // #2578 — the workspace's bound, read per batch (never watched: a
+    // settings change must not drop the batches in flight).
+    batchMax: () {
+      final settings = ref.read(activeSettingsProvider);
+      const key = 'bi.batch_max_requests';
+      return settings != null && settings.definitions.containsKey(key)
+          ? settings.read<int>(key)
+          : SettingDefaults.biBatchMaxRequests;
+    },
   );
 }
 

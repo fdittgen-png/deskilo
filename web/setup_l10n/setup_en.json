@@ -147,6 +147,7 @@
  "identityTimezoneHint": "IANA name. Every booking slot is anchored to it; each member can display the time in their own.",
  "identityLanguage": "Workspace language",
  "identityLanguageHint": "Invitations and reports are written in it by default.",
+ "identityAdvanced": "Advanced: server and network settings",
  "identityAddress": "Postal address",
  "identityAddressHint": "Printed on invoices and on the kiosk receipt.",
  "identityAddressPlaceholder": "12 Example Street, London SW1A 1AA",

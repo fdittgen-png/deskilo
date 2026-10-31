@@ -41,6 +41,8 @@ permissions:
   contents: write
   pull-requests: write
   actions: write
+  # #3144 — the local stack pulls the Supabase images from GHCR as this job.
+  packages: read
 
 env:
   FLUTTER_VERSION: "3.47.5"

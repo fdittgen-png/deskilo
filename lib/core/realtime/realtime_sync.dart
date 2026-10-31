@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'invalidation_map.dart' show kResyncSignal;
-import 'profile_change_classifier.dart';
 
 /// Push-driven freshness (#413): a stream of "table X changed" signals
 /// for the signed-in user, fed by Supabase Realtime `postgres_changes`
@@ -80,17 +79,36 @@ typedef RealtimeBinding = ({
   String? workspaceFilter,
 });
 
-/// #2019 — the bindings for [workspaceId]. A filter cannot match a DELETE
-/// (the old row carries only its key), so each scoped table also keeps an
-/// unfiltered DELETE binding: deletions stay conservatively visible.
+/// #3101 — where deletes of the scoped tables arrive. Realtime cannot
+/// filter a DELETE (the old row carries only its key), and an unfiltered
+/// delete listener woke every client of every tenant. Migration 0615 has
+/// each deleting statement write one row per (workspace, table) here,
+/// subscribed as an INSERT filtered by the workspace like every scoped
+/// table.
+@visibleForTesting
+const realtimeDeletionsTable = 'realtime_deletions';
+
+/// The table a deletion signal names, when it is one this feed renders.
+@visibleForTesting
+String? deletionSignal(Map<String, Object?> newRecord) {
+  final table = newRecord['table_name'];
+  return table is String && workspaceScopedTables.contains(table) ? table : null;
+}
+
+/// #2019 — the bindings for [workspaceId]: every scoped table filtered by
+/// the workspace, and its deletes through [realtimeDeletionsTable] (#3101).
 @visibleForTesting
 List<RealtimeBinding> realtimeBindings(String workspaceId) => [
   for (final table in realtimeTables)
-    if (workspaceScopedTables.contains(table)) ...[
-      (table: table, event: PostgresChangeEvent.all, workspaceFilter: workspaceId),
-      (table: table, event: PostgresChangeEvent.delete, workspaceFilter: null),
-    ] else
+    if (workspaceScopedTables.contains(table))
+      (table: table, event: PostgresChangeEvent.all, workspaceFilter: workspaceId)
+    else
       (table: table, event: PostgresChangeEvent.all, workspaceFilter: null),
+  (
+    table: realtimeDeletionsTable,
+    event: PostgresChangeEvent.insert,
+    workspaceFilter: workspaceId,
+  ),
 ];
 
 /// #2564 O5 — the account target's bindings: the tables that are not one
@@ -214,8 +232,6 @@ class SupabaseRealtimeSync implements RealtimeSync {
 
   Stream<String> _feed(String channelName, List<RealtimeBinding> bindings) {
     final controller = StreamController<String>.broadcast();
-    // #2019 C — one per watched workspace: presence-only profile updates.
-    final profiles = ProfileChangeClassifier();
     late final ChannelSupervisor<RealtimeChannel> supervisor;
     supervisor = ChannelSupervisor<RealtimeChannel>(
       create: () {
@@ -235,9 +251,10 @@ class SupabaseRealtimeSync implements RealtimeSync {
                   ),
             callback: (payload) {
               if (controller.isClosed) return;
-              controller.add(b.table == 'profiles'
-                  ? profiles.signal(payload.eventType, payload.newRecord)
-                  : b.table);
+              final signal = b.table == realtimeDeletionsTable
+                  ? deletionSignal(payload.newRecord)
+                  : b.table;
+              if (signal != null) controller.add(signal);
             },
           );
         }

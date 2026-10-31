@@ -63,6 +63,7 @@ function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.
 // getters, so switching the language re-reads them. build(step) draws with
 // the helpers bound to its step (ui), whose ? opens the step's own guide
 // section when a question has none.
+let advOpen=false; // the advanced disclosure stays as the owner left it across re-renders
 const STEPS=[
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);return[
@@ -76,6 +77,10 @@ const STEPS=[
   // #1289 — the brand seed; the app derives its themes from it and
   // refuses one that cannot be read, so the page only checks the shape.
   input(T('identityBrandColor'),'brandColor',T('identityBrandColorHint'),'text','#C2410C','identity'),
+  // #2571 — a US space whose state asks for longer than the federal rule.
+  ...(S.country==='US'?[selectEl(T('retUsYears'),'retention.usYears',opts(RET_US_YEARS),T('retUsYearsHint'),null,'legal')]:[]),
+  // #3075 — the server and network parameters decide nothing for a newcomer: they sit behind an advanced disclosure the owner opens on purpose.
+  ((d)=>{d.ontoggle=()=>{advOpen=d.open};return d})(h('details',{class:'adv',...(advOpen||S.network.roles==='workspace_host'?{open:''}:{})},h('summary',{},T('identityAdvanced')),
   selectEl(T('networkRoles'),'network.roles',opts(NETWORK_ROLES),T('networkRolesHint'),null,'identity'),
   ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
   // #2562 C2a — for a workspace server enrolled at a personal home.
@@ -91,11 +96,10 @@ const STEPS=[
   // #2863 — every server that asks a company registry for supplier details.
   selectEl(T('supLookupWait'),'supplierLookup.timeout',opts(SUP_LOOKUP_WAIT),T('supLookupWaitHint'),null,'identity'),
   selectEl(T('supLookupRate'),'supplierLookup.perMinute',opts(SUP_LOOKUP_RATE),T('supLookupRateHint'),null,'identity'),
-  // #2571 — a US space whose state asks for longer than the federal rule.
-  ...(S.country==='US'?[selectEl(T('retUsYears'),'retention.usYears',opts(RET_US_YEARS),T('retUsYearsHint'),null,'legal')]:[]),
   // #2378 — where the data lives, as the operator declares it; never inferred.
   selectEl(T('recordsHostingCountry'),'records.hostingCountry',[['',T('recordsHostingNone')],...COUNTRIES.map(c=>[c[0],countryName(c[0])])],T('recordsHostingCountryHint'),null,'identity'),
   ...(S.country==='CA'?[input(T('recordsCraReference'),'records.craReference',T('recordsCraReferenceHint'),'text','','identity')]:[]),
+  )),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.

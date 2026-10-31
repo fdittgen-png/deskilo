@@ -134,7 +134,8 @@ void main() {
         'working-directory: packages/deskilo_document_model\n'
         'working-directory: packages/deskilo_document_pdf\n'
         'working-directory: packages/deskilo_document_editor\n'
-        'working-directory: packages/deskilo_task_recording\n');
+        'working-directory: packages/deskilo_task_recording\n'
+        'working-directory: packages/deskilo_asset_gzip\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
     // perf-bench.yml is missing: its family is a dead entry.
     write('scripts/run_fixture.sh', 'export DESKILO_OWNED_FIXTURE=1\n');
@@ -159,6 +160,8 @@ void main() {
         "$header// E.\nvoid main() {}\n");
     write('packages/deskilo_task_recording/test/t_test.dart',
         "$header// T.\nvoid main() {}\n");
+    write('packages/deskilo_asset_gzip/test/g_test.dart',
+        "$header// G.\nvoid main() {}\n");
     write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
     write('tool/bench/b_test.dart', "$header// Bench.\nvoid main() {}\n");
     write('integration_test/i_test.dart', "$header// I.\nvoid main() {}\n");
