@@ -367,12 +367,12 @@ abstract class _$DefaultWorkspaceId extends $AsyncNotifier<String?> {
   }
 }
 
-/// The active workspace (profile). #3102: list and choice are read together.
+/// The active workspace (profile).
 
 @ProviderFor(currentWorkspace)
 final currentWorkspaceProvider = CurrentWorkspaceProvider._();
 
-/// The active workspace (profile). #3102: list and choice are read together.
+/// The active workspace (profile).
 
 final class CurrentWorkspaceProvider
     extends
@@ -382,7 +382,7 @@ final class CurrentWorkspaceProvider
           FutureOr<Workspace?>
         >
     with $FutureModifier<Workspace?>, $FutureProvider<Workspace?> {
-  /// The active workspace (profile). #3102: list and choice are read together.
+  /// The active workspace (profile).
   CurrentWorkspaceProvider._()
     : super(
         from: null,
@@ -408,7 +408,7 @@ final class CurrentWorkspaceProvider
   }
 }
 
-String _$currentWorkspaceHash() => r'1e2c60509db64d56ff9e0cd5faaf255ce96a7064';
+String _$currentWorkspaceHash() => r'a7b9be5faada8f84288ac243f197ad5ce1d6d426';
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
