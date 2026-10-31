@@ -69,11 +69,16 @@ concurrency:
 env:
   FLUTTER_VERSION: "3.47.5"
 
+permissions:
+  contents: read
+
 jobs:
   dmg:
     # Pinned like ios-testflight: macos-latest migrates under our feet.
     runs-on: macos-15
     timeout-minutes: 60
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
     steps:
       # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
       # dispatch ref resolved here, or this event's); no other HEAD builds.
@@ -102,13 +107,13 @@ jobs:
           sha: ${{ steps.source.outputs.sha }}
           leg: macos
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         if: ${{ github.event_name != 'pull_request' }}
         with:
           ruby-version: "3.3"
@@ -129,7 +134,7 @@ jobs:
 
       - name: Set up SSH agent with match deploy key
         if: ${{ github.event_name != 'pull_request' }}
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
 
@@ -155,8 +160,9 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           FASTLANE_DISABLE_COLORS: "1"
+          INPUT_SYNC_CERTS: ${{ inputs.sync_certs }}
         run: |
-          if [ "${{ inputs.sync_certs }}" = "true" ]; then
+          if [ "$INPUT_SYNC_CERTS" = "true" ]; then
             bundle exec fastlane match_developer_id write:true
           else
             bundle exec fastlane match_developer_id
@@ -235,8 +241,18 @@ jobs:
         if: always()
         run: rm -f "$ASC_API_KEY_FILEPATH"
 
+  attach:
+    needs: dmg
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: deskilo-macos-${{ needs.dmg.outputs.source_sha }}
+          path: release
       - name: Attach to the release
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${GITHUB_REF_NAME}" "$DMG_PATH" --clobber
+        run: gh release upload "$GITHUB_REF_NAME" release/*.dmg --clobber --repo "$GITHUB_REPOSITORY"

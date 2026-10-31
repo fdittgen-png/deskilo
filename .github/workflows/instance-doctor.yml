@@ -49,6 +49,9 @@ concurrency:
 env:
   FLUTTER_VERSION: "3.47.5"
 
+permissions:
+  contents: read
+
 jobs:
   doctor:
     runs-on: ubuntu-latest
@@ -66,9 +69,9 @@ jobs:
         id: gate
         env:
           TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          REF: ${{ inputs.ref || secrets.SUPABASE_PROJECT_REF }}
         run: |
-          if [ -z "$TOKEN" ] || [ -z "${{ inputs.ref }}$REF" ]; then
+          if [ -z "$TOKEN" ] || [ -z "$REF" ]; then
             {
               echo "## Instance doctor — not configured"
               echo
@@ -81,7 +84,7 @@ jobs:
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         if: steps.gate.outputs.ready == 'true'
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -100,7 +103,7 @@ jobs:
           set +e
           # #1313 — this log and this summary are PUBLIC: --public prints
           # each finding's level, title and count, never an object name.
-          dart run tool/instance.dart doctor --ref "$REF" --public > doctor.txt 2>&1
+          dart run tool/instance.dart doctor --ref "$REF" --public > doctor.txt
           echo "code=$?" >> "$GITHUB_OUTPUT"
           {
             echo "## Instance doctor"

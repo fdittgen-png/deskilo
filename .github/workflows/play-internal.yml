@@ -63,6 +63,9 @@ concurrency:
 env:
   FLUTTER_VERSION: "3.47.5"
 
+permissions:
+  contents: read
+
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
@@ -72,6 +75,7 @@ jobs:
       # maps back to a commit
       contents: write
     env:
+      PLAY_TRACK: ${{ inputs.track || 'internal' }}
       HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       # #1446 C4 — one full SHA fixed BEFORE the checkout (the caller's, the
@@ -116,7 +120,7 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
@@ -206,7 +210,7 @@ jobs:
           python tools/upload_to_play.py \
             --aab build/app/outputs/bundle/release/app-release.aab \
             --key "$PLAY_KEY_PATH" \
-            --track "${{ inputs.track || 'internal' }}" \
+            --track "$PLAY_TRACK" \
             "${notes_arg[@]}"
 
       - name: Clean up service-account key
@@ -231,7 +235,7 @@ jobs:
           # shipped build reported as a FAILED run is a lie that sends
           # someone hunting a release that actually went out. Warn loudly,
           # record it in the summary, keep the run honest — green.
-          git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: ${{ inputs.track || 'internal' }}) — ${{ steps.source.outputs.sha }}"
+          git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: $PLAY_TRACK) — ${{ steps.source.outputs.sha }}"
           if git push origin "$TAG"; then
             echo "Tagged $TAG"
             echo "- **Tagged:** \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
@@ -251,7 +255,7 @@ jobs:
             BYTES=$(stat -c%s "$AAB")
             echo "- **AAB size:** $(( BYTES / 1024 / 1024 )) MiB ($BYTES bytes)" >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "- **Track:** ${{ inputs.track || 'internal' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Track:** $PLAY_TRACK" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ env.HAS_PLAY_SA }}" != "true" ]; then
             echo "- **Play upload:** SKIPPED (no service-account secret)" >> "$GITHUB_STEP_SUMMARY"
           elif [ "${{ steps.upload.outputs.uploaded }}" = "false" ]; then

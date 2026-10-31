@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+title = "Deskilo secret scanning"
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "The Android emulator cache identifier is not a credential"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^\.github/workflows/android-boot\.yml$''']
+regexes = ['''^avd-34-pixel6$''']
+
+[[allowlists]]
+description = "The published F-Droid certificate fingerprint is public verification data"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^fdroid/de\.deskilo\.app\.yml$''']
+regexes = ['''^bd1ec20edb6d8daf42a3186829e08dd1ee2273d73c2b0581a8a4d1a6286072aa$''']
+
+[[allowlists]]
+description = "Throwaway password of the explicitly loopback-only topology harness"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^scripts/topology_stacks\.sh$''']
+regexes = ['''^Topology-2026-fixture$''']
+
+[[allowlists]]
+description = "curl reads the operator credential from the environment"
+targetRules = ["curl-auth-user"]
+condition = "AND"
+paths = ['''^scripts/payment_sandbox_check\.sh$''']
+regexTarget = "match"
+regexes = ['''-u "\$STRIPE_TEST_SECRET_KEY:"''']
+
+[[allowlists]]
+description = "Exact synthetic credentials used by database refusal and copy-isolation tests"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^supabase/tests/database/(286_payment_test_check|45_template_apply_contract)\.sql$''']
+regexes = ['''^(test_dHar4XY7|K1338X-einvoice)$''']
+
+[[allowlists]]
+description = "Unsigned JWT fixtures whose signature is literally the word signature"
+targetRules = ["jwt"]
+condition = "AND"
+paths = ['''^supabase/tests/database/269_personal_home_endpoint\.sql$''']
+regexes = ['''^eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJyb2xlIjoic2VydmljZV9yb2xlIn0\.c2lnbmF0dXJl$''', '''^eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIn0\.c2lnbmF0dXJl$''']
+
+[[allowlists]]
+description = "Exact fake token passed to an in-memory accounting repository"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^test/features/money/accounting_connection_test\.dart$''']
+regexes = ['''^tok-secret-2370$''']
+
+[[allowlists]]
+description = "Recorder privacy canary which must never enter a recording"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^test/features/task_recorder/ui_capture_values_test\.dart$''']
+regexes = ['''^Canary-Secret-4711$''']

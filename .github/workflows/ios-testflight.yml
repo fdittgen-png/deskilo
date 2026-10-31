@@ -90,6 +90,9 @@ env:
   # The odd one out is always the one that gets missed.
   FLUTTER_VERSION: "3.47.5"
 
+permissions:
+  contents: read
+
 jobs:
   build-and-upload:
     # Pinned like tankstellen: macos-latest migrates under our feet.
@@ -138,17 +141,17 @@ jobs:
       - name: Select newest stable Xcode
         # Apple rejects TestFlight uploads built with SDKs older than the
         # current major (tankstellen lesson) — always take the newest stable.
-        uses: maxim-lobanov/setup-xcode@v1
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         with:
           xcode-version: latest-stable
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -188,7 +191,7 @@ jobs:
       - name: Set up SSH agent with match deploy key
         # The shared certs repo is fetched via SSH with a deploy key
         # (PAT-based clones kept 403ing on tankstellen, #1498).
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
 
@@ -205,6 +208,11 @@ jobs:
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           IOS_BUILD_NUMBER: ${{ steps.bn.outputs.build_number }}
           TESTFLIGHT_CHANGELOG: ${{ inputs.release_notes || 'Internal build.' }}
+          INPUT_UPLOAD_METADATA: ${{ inputs.upload_metadata }}
+          INPUT_CREATE_APP: ${{ inputs.create_app }}
+          INPUT_ATTACH_BUILD: ${{ inputs.attach_build }}
+          INPUT_SYNC_CERTS: ${{ inputs.sync_certs }}
+          INPUT_DISTRIBUTE_EXTERNAL: ${{ inputs.distribute_external }}
           # External-distribution test info (only read when
           # distribute_external=true; empty values degrade gracefully).
           BETA_CONTACT_PHONE: ${{ secrets.BETA_CONTACT_PHONE || '' }}
@@ -217,16 +225,16 @@ jobs:
           # the 3 s default with 4 retries failed a whole alpha train (#2247).
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
         run: |
-          if [ "${{ inputs.upload_metadata }}" = "true" ]; then
+          if [ "$INPUT_UPLOAD_METADATA" = "true" ]; then
             bundle exec fastlane upload_metadata
-          elif [ "${{ inputs.create_app }}" = "true" ]; then
+          elif [ "$INPUT_CREATE_APP" = "true" ]; then
             bundle exec fastlane create_app_record
-          elif [ "${{ inputs.attach_build }}" = "true" ]; then
+          elif [ "$INPUT_ATTACH_BUILD" = "true" ]; then
             bundle exec fastlane attach_build_to_version
-          elif [ "${{ inputs.sync_certs }}" = "true" ]; then
+          elif [ "$INPUT_SYNC_CERTS" = "true" ]; then
             bundle exec fastlane match_sync_appstore
           else
-            bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}" distribute_external:"${{ inputs.distribute_external }}"
+            bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}" distribute_external:"${INPUT_DISTRIBUTE_EXTERNAL}"
           fi
 
       - name: Clean up decoded API key

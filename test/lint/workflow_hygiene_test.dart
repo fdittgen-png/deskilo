@@ -18,13 +18,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// Third-party actions not yet pinned by SHA.
-const int _unpinnedThirdPartyActions = 37;
+const int _unpinnedThirdPartyActions = 0;
 
 /// Workflows without a top-level `permissions:` block.
-const int _workflowsWithoutPermissions = 6;
+const int _workflowsWithoutPermissions = 0;
 
 /// Lines with an `inputs` expression inside a `run:` block.
-const int _inputsInsideRun = 21;
+const int _inputsInsideRun = 0;
 
 List<File> _workflowFiles() => filesWithExtension('.github/workflows', '.yml');
 

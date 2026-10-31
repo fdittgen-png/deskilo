@@ -93,6 +93,8 @@ A new root test directory defaults to `gate`; a new feature directory defaults t
 
 Before its selected tests, `gate` also:
 
+The first check installs Gitleaks 8.30.1 from a versioned archive with a committed SHA-256, then scans the current source tree and every commit in the PR range. A credential introduced and removed within the same PR still fails. Findings are redacted. `.gitleaks.toml` extends the default rules; its fixture exceptions require both the exact path and synthetic value. It does not exempt whole test folders.
+
 1. Resolves dependencies with the pinned SDK and lockfile-keyed package cache.
 2. Runs `dart run tool/build_arb.dart` and `flutter gen-l10n`, rejecting uncommitted localization drift.
 3. Runs `scripts/generated_drift.sh` around `build_runner`, rejecting changed `.g.dart` or `.freezed.dart` output.
@@ -222,7 +224,7 @@ Validation should be understood separately from delivery configuration. The work
 | F-Droid publishing | `FDROID_KEYSTORE_BASE64`, `FDROID_KEYSTORE_PASSWORD`, and expected certificate input |
 | Release failure email | `SMTP_*`, `NOTIFY_EMAIL_TO`; the issue/report remains the other notification channel |
 
-Most validation workflows grant `contents: read`. Dictionary refresh needs repository/PR/action writes; Pages requires `pages: write` and OIDC; release and hosting steps have their own scoped write permissions. Consult job-level permissions too, since they can differ from the workflow default.
+All workflows declare default permissions; validation defaults to `contents: read`. Dictionary refresh grants repository/PR/action writes only to its refresh job; Pages requires `pages: write` and OIDC; release and hosting jobs retain their scoped writes. Third-party actions are pinned by full commit SHA, with grouped weekly Dependabot updates. Workflow inputs reach shell scripts through environment variables. Windows PR builds never load the signing certificate, and certificate/keystore cleanup runs even after failure. The public doctor's summary contains only public stdout; stderr stays in the runner log.
 
 Concurrency groups normally cancel only a superseded **pull-request** run. Scheduled, dispatched, and release operations generally queue rather than being interrupted midway. Some utilities have no explicit concurrency group; check their YAML before assuming serialization.
 

@@ -59,7 +59,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
         with:
           sdk: stable
       - id: verdict
@@ -79,7 +79,19 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+        with:
+          fetch-depth: 0
+      - name: Install the pinned secret scanner
+        run: bash scripts/install_gitleaks.sh "$RUNNER_TEMP/secret-scanner"
+      - name: Scan the current tree and every commit in the PR
+        env:
+          GITLEAKS_BIN: ${{ runner.temp }}/secret-scanner/gitleaks
+          SCAN_BASE: ${{ github.event.pull_request.base.sha }}
+          SCAN_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          bash scripts/secret_scan_check.sh
+          bash scripts/secret_scan.sh "$SCAN_BASE" "$SCAN_HEAD"
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
@@ -229,7 +241,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
@@ -394,7 +406,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
@@ -489,7 +501,7 @@ jobs:
     if: always()
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
@@ -714,7 +726,7 @@ jobs:
         id: standdown
         if: env.DB_REQUIRED != 'true'
         run: grep -E '^database\|not_applicable\|' report/classification.txt
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1
         if: env.DB_REQUIRED == 'true'
         with:
           # Pinned, not `latest`: resolving the newest release at run time
@@ -726,7 +738,7 @@ jobs:
           # that decides `contract.txt` should not change because a
           # release was published between two runs. Bump deliberately.
           version: 2.118.0
-      - uses: denoland/setup-deno@v2
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
         if: env.DB_REQUIRED == 'true'
         with:
           deno-version: v2.x
@@ -930,7 +942,7 @@ jobs:
       # resumed, an upgrade from N, a foreign table that blocks, the marker
       # after every migration, and a failing doctor probe. Function
       # deploys and auth settings stay uncovered: no local Management API.
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
         with:

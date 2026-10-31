@@ -65,6 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      PLAY_TRACK: ${{ inputs.track }}
+      PLAY_MOVE_TESTERS_FROM: ${{ inputs.move_testers_from }}
       HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
@@ -92,10 +94,10 @@ jobs:
         if: ${{ inputs.retire_track }}
         run: |
           python tools/upload_to_play.py --clear-track \
-            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            --track "$PLAY_TRACK" --key "$PLAY_KEY_PATH" \
             | tee "$RUNNER_TEMP/retire.txt"
           {
-            echo '## Track `${{ inputs.track }}` retired'
+            echo "## Track \`$PLAY_TRACK\` retired"
             echo '```'
             cat "$RUNNER_TEMP/retire.txt"
             echo '```'
@@ -105,10 +107,10 @@ jobs:
         if: ${{ inputs.drop_drafts }}
         run: |
           python tools/upload_to_play.py --drop-drafts \
-            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            --track "$PLAY_TRACK" --key "$PLAY_KEY_PATH" \
             | tee "$RUNNER_TEMP/drafts.txt"
           {
-            echo '## Drafts dropped from `${{ inputs.track }}`'
+            echo "## Drafts dropped from \`$PLAY_TRACK\`"
             echo '```'
             cat "$RUNNER_TEMP/drafts.txt"
             echo '```'
@@ -118,10 +120,10 @@ jobs:
         if: ${{ inputs.move_testers_from != '' }}
         run: |
           python tools/upload_to_play.py \
-            --move-testers "${{ inputs.move_testers_from }}" "${{ inputs.track }}" \
+            --move-testers "$PLAY_MOVE_TESTERS_FROM" "$PLAY_TRACK" \
             --key "$PLAY_KEY_PATH" | tee "$RUNNER_TEMP/testers.txt"
           {
-            echo '## Testers moved onto `${{ inputs.track }}`'
+            echo "## Testers moved onto \`$PLAY_TRACK\`"
             echo '```'
             cat "$RUNNER_TEMP/testers.txt"
             echo '```'
@@ -131,10 +133,10 @@ jobs:
         if: ${{ inputs.set_countries }}
         run: |
           python tools/upload_to_play.py --set-countries \
-            --track "${{ inputs.track }}" --key "$PLAY_KEY_PATH" \
+            --track "$PLAY_TRACK" --key "$PLAY_KEY_PATH" \
             | tee "$RUNNER_TEMP/countries.txt"
           {
-            echo '## Markets set on `${{ inputs.track }}`'
+            echo "## Markets set on \`$PLAY_TRACK\`"
             echo '```'
             cat "$RUNNER_TEMP/countries.txt"
             echo '```'

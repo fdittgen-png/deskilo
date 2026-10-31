@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: denoland/setup-deno@v2
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
         with:
           deno-version: v2.x
 
@@ -122,6 +122,12 @@ jobs:
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Install the pinned deployment CLI
+        if: steps.gate.outputs.ready == 'true'
+        uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1
+        with:
+          version: 2.118.0
+
       - name: Deploy
         if: steps.gate.outputs.ready == 'true'
         env:
@@ -129,8 +135,6 @@ jobs:
           REF: ${{ secrets.SUPABASE_PROJECT_REF }}
           FN: ${{ inputs.function }}
         run: |
-          curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz \
-            | tar -xz -C /usr/local/bin supabase
           if [ "$FN" = "all" ]; then
             supabase functions deploy --project-ref "$REF"
           else
