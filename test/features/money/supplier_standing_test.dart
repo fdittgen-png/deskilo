@@ -94,19 +94,4 @@ void main() {
       isEmpty,
     );
   });
-
-  test('a read that reached the server cap prints no standing at all', () {
-    final capped = [
-      for (var i = 0; i < 1000; i++)
-        _doc('p$i', supplier: 's1', cents: 100, on: DateTime(2026)),
-    ];
-    expect(supplierStandings(capped, year: 2026), isEmpty);
-    expect(
-      supplierStandings(
-        capped.take(1000 - 1),
-        year: 2026,
-      )['s1']!.yearGrossCents,
-      100 * (1000 - 1),
-    );
-  });
 }

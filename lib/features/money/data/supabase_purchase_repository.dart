@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/time/date_text.dart';
 import '../domain/purchase.dart';
 
@@ -18,15 +19,21 @@ class SupabasePurchaseRepository implements PurchaseRepository {
 
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async {
-    final rows = await _client
-        .from('purchase_documents')
-        .select(
-          'id, kind, state, category, original_reference, currency, '
-          'received_on, legacy_qualification, supplier_id, '
-          'purchase_lines(gross_cents)',
-        )
-        .eq('workspace_id', workspaceId)
-        .order('created_datetime', ascending: false);
+    // #3070 — every page, whatever the server's row cap: a supplier's printed
+    // cost is a sum, and a short list would understate it without a word.
+    final rows = await fetchAllPages(
+      table: 'purchase_documents',
+      build: () => _client
+          .from('purchase_documents')
+          .select(
+            'id, kind, state, category, original_reference, currency, '
+            'received_on, legacy_qualification, supplier_id, '
+            'purchase_lines(gross_cents)',
+          )
+          .eq('workspace_id', workspaceId)
+          .order('created_datetime', ascending: false)
+          .order('id'),
+    );
     return [for (final r in rows) PurchaseSummary.fromRow(r)];
   }
 
