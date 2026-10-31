@@ -114,3 +114,11 @@ the follow-up with #3166. No duplicate retry or source edit was launched.
 Separate Quality41248620765 attempt2 has all four shards and aggregate code
 SUCCESS, but physical topology is still IN_PROGRESS at this snapshot.
 
+Superseding result: attempt2 database Gate FAILED. See
+3179-quality-attempt2-failure.md for the exact four pgTAP files, nine failing
+assertions, original exit1, successful topology scope and e1's23:34Z
+top-priority test-only correction assignment to Claude. Do not retry the
+unchanged SHA or infer success from the four passing Flutter shards.
+e1's23:32Z decision defers the non-required F-Droid timeout follow-up unless
+it repeats on master; no F-Droid change is assigned tonight.
+
