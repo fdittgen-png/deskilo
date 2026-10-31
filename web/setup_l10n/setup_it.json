@@ -147,6 +147,7 @@
  "identityTimezoneHint": "Nome IANA. Tutti gli slot di prenotazione vi sono ancorati; ogni membro può visualizzare l'ora nel proprio.",
  "identityLanguage": "Lingua dello spazio",
  "identityLanguageHint": "Inviti e report vengono redatti in questa lingua per impostazione predefinita.",
+ "identityAdvanced": "Avanzate: server e rete",
  "identityAddress": "Indirizzo postale",
  "identityAddressHint": "Stampato sulle fatture e sulla ricevuta del chiosco.",
  "identityAddressPlaceholder": "Via Roma 12, 20121 Milano",
