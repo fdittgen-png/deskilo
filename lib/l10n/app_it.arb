@@ -15277,6 +15277,9 @@
   "@settingHintBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingHintBiSeriesMonths": "Quanti mesi mostra un andamento mensile, quello in corso compreso: 13 sono un anno e lo stesso mese dell'anno prima.",
+  "settingHintBiSeriesQuarters": "Quanti trimestri mostra un andamento trimestrale, quello in corso compreso: 9 sono due anni e lo stesso trimestre di due anni prima.",
+  "settingHintBiSeriesYears": "Quanti anni mostra un andamento annuale, quello in corso compreso.",
   "settingHintBillingMaxAdvanceDays": "Fisso: l'anticipo massimo, in giorni, di una fattura d'abbonamento prima dell'inizio del mese.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -15449,6 +15452,9 @@
   "@settingLabelBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingLabelBiSeriesMonths": "Lunghezza dell'andamento mensile",
+  "settingLabelBiSeriesQuarters": "Lunghezza dell'andamento trimestrale",
+  "settingLabelBiSeriesYears": "Lunghezza dell'andamento annuale",
   "settingLabelBillingMaxAdvanceDays": "Anticipo della fattura d'abbonamento",
   "@settingLabelBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting label."
@@ -15726,6 +15732,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitQuarters": "trimestri",
   "settingUnitRequests": "richieste",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"

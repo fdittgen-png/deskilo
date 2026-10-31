@@ -876,4 +876,18 @@ void main() {
       [const SafTGap(SafTGapKind.standardAccount, '7830 Tap på fordringer')],
     );
   });
+
+  test("the shipped rows map the seeded chart and its rates for Romania's "
+      'D406 (0626)', () {
+    expect(
+      buildSafTFinancial(
+        _request(
+          SafTFinancialProfile.romania,
+          country: 'RO',
+          reference: ActiveTaxReference.current,
+        ),
+      ),
+      isA<SafTFinancialFile>(),
+    );
+  });
 }

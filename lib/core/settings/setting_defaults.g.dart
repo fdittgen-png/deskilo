@@ -24,6 +24,12 @@ abstract final class SettingDefaults {
   static const int biReportMaxPages = 4;
   /// `bi.report_max_visuals`
   static const int biReportMaxVisuals = 24;
+  /// `bi.series_months`
+  static const int biSeriesMonths = 13;
+  /// `bi.series_quarters`
+  static const int biSeriesQuarters = 9;
+  /// `bi.series_years`
+  static const int biSeriesYears = 5;
   /// `billing.max_advance_days`
   static const int billingMaxAdvanceDays = 28;
   /// `booking.check_in_leeway_minutes`

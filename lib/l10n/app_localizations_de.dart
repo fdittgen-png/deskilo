@@ -22450,6 +22450,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die meisten Karten, die ein gespeicherter Bericht über alle Seiten haben darf. Die Plattform speichert nie mehr als 24; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.';
 
   @override
+  String get settingHintBiSeriesMonths =>
+      'Wie viele Monate eine Monatsentwicklung zeigt, der laufende eingeschlossen: 13 sind ein Jahr und derselbe Monat des Vorjahres.';
+
+  @override
+  String get settingHintBiSeriesQuarters =>
+      'Wie viele Quartale eine Quartalsentwicklung zeigt, das laufende eingeschlossen: 9 sind zwei Jahre und dasselbe Quartal vor zwei Jahren.';
+
+  @override
+  String get settingHintBiSeriesYears =>
+      'Wie viele Jahre eine Jahresentwicklung zeigt, das laufende eingeschlossen.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.';
 
@@ -22684,6 +22696,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelBiReportMaxVisuals => 'Karten je Bericht';
+
+  @override
+  String get settingLabelBiSeriesMonths => 'Länge der Monatsentwicklung';
+
+  @override
+  String get settingLabelBiSeriesQuarters => 'Länge der Quartalsentwicklung';
+
+  @override
+  String get settingLabelBiSeriesYears => 'Länge der Jahresentwicklung';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Vorlauf der Abo-Rechnung';
@@ -22965,6 +22986,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'pro Stunde';
+
+  @override
+  String get settingUnitQuarters => 'Quartale';
 
   @override
   String get settingUnitRequests => 'Anfragen';

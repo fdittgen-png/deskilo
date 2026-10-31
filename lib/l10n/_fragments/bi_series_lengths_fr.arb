@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "settingLabelBiSeriesMonths": "Longueur de l'évolution mensuelle",
+  "settingHintBiSeriesMonths": "Nombre de mois affichés par une évolution mensuelle, le mois en cours compris : 13 couvre un an et le même mois de l'an passé.",
+  "settingLabelBiSeriesQuarters": "Longueur de l'évolution trimestrielle",
+  "settingHintBiSeriesQuarters": "Nombre de trimestres affichés par une évolution trimestrielle, le trimestre en cours compris : 9 couvre deux ans et le même trimestre deux ans plus tôt.",
+  "settingLabelBiSeriesYears": "Longueur de l'évolution annuelle",
+  "settingHintBiSeriesYears": "Nombre d'années affichées par une évolution annuelle, l'année en cours comprise.",
+  "settingUnitQuarters": "trimestres"
+}
