@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Configured installations accept only their trigger secret or exact service
+// credential, while unconfigured installations retain legacy delivery.
 import { assert, assertFalse } from "jsr:@std/assert@1";
 import { mayTriggerPush, PUSH_SECRET_HEADER, sameSecret } from "./push_caller.ts";
 const req = (headers: Record<string, string>) =>
@@ -11,7 +14,6 @@ Deno.test("public, missing, wrong and role-forged credentials are refused", () =
   assertFalse(allowed({ authorization: "Bearer publishable-key" }));
   const forged = `h.${btoa(JSON.stringify({ role: "service_role" }))}.signature`;
   assertFalse(allowed({ authorization: `Bearer ${forged}` }));
-
 });
 Deno.test("the trigger secret and exact service credential are accepted", () => {
   assert(allowed({ [PUSH_SECRET_HEADER]: "trigger" }));

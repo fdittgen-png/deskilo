@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Untrusted requests do no privileged work; authorized callers receive one
+// opaque accepted response regardless of configuration or identifier details.
 import { assertEquals } from "jsr:@std/assert@1";
 import { handle } from "./index.ts";
 
