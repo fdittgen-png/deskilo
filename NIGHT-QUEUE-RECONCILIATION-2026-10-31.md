@@ -41,3 +41,35 @@ e1 queued one small test-only PR for incoming Claude before the performance
 items, intended to close #3074 only after the whole acceptance and review pass.
 This is the reviewer's reported gap assessment, not a new local test run or
 an implementation claim by outgoing Codex. Keep #3074 OPEN until verified.
+
+## #3132 source reconciliation
+
+Master was independently read through GitHub as
+`2f3c1a45447bb29723898766887c9fc809fe8673`. Source was inspected in the clean
+security worktree at `3ebe7be220b14d6cc58d6b8a2163df206be5ef12`; a scoped
+`git diff --quiet` against that master returned **0** for MCP contracts,
+registry, Edge handler, client tests and the three operation pgTAP files.
+
+| Decided write | Merged/source evidence |
+|---|---|
+| set_workspace_basics | [#3142](https://github.com/fdittgen-png/deskilo/pull/3142), merge `df3b22b78e07d8eccf7d315185bccd690a7575b9`; registry lib/core/mcp/mcp_operations.dart:401; pgTAP 316_mcp_set_workspace_basics.sql. |
+| set_member_permissions_preset | [#3163](https://github.com/fdittgen-png/deskilo/pull/3163), merge `d76f14555535c291d2d2444b73798999309bffe9`; registry line 414; pgTAP 319_mcp_set_member_permissions_preset.sql, including pending_validation without granting the rights. |
+| create_invitations | [#3157](https://github.com/fdittgen-png/deskilo/pull/3157), merge `1c70d0310aaa152064e7a2ae8f58386f98ca8e62`; registry line 425; pgTAP 317_mcp_create_invitations.sql, including invitation_id/status without a join code. |
+| create_subscription_level, then create_membership_plan | Absent under these operation names from contracts/mcp/operations.json, the Dart MCP registry and inspected MCP handlers/client tests. These remain implementation work, not an invitation/preset redo. |
+| set_payment_instructions | Absent from the same catalogue/handler surface. Still needs the decided definer command, manageBilling re-check, old/new confirmation, audit event and owner notice. |
+
+The three delivered operations occur in contracts/mcp/operations.json and
+coverage.json with the named pgTAP files. Source inspection found their
+confirmation/refusal assertions and the preset's pending case; **no tests were
+run by this audit**. Per-write confirmation-declined recovery, setup assistant
+path completeness and current coverage fingerprint execution are NOT VERIFIED
+here and remain part of whole-issue closure review. Do not treat a manifest
+entry or old PR description as fresh runtime acceptance.
+
+When e1 reaches this issue, the efficient sequence is its already-decided
+subscription-level command before membership-plan creation, then payment
+instructions, using the existing confirmation/authorization/audit machinery.
+Update contract, coverage/fingerprint and setup paths with each coherent
+slice; keep Refs/Remains until all acceptance passes. set_legal_identity and
+propose_floor_plan remain refused/in-app per the issue. This adds no claim,
+changes no current priority and reserves no shared file or migration number.
