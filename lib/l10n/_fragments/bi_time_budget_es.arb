@@ -1,0 +1,6 @@
+{
+  "@@locale": "es",
+  "settingLabelBiBatchTimeBudgetMs": "Presupuesto de tiempo de una lectura de informe",
+  "settingHintBiBatchTimeBudgetMs": "Cuánto puede calcular una lectura de informe antes de que las cifras aún no alcanzadas se den como fuera de presupuesto; la página muestra lo que tiene. Manténgalo por debajo del tiempo de espera del servidor.",
+  "settingUnitMilliseconds": "ms"
+}
