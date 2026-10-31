@@ -1,0 +1,9 @@
+{
+  "@@locale": "es",
+  "settingLabelLocaleDefaultCurrency": "Moneda por defecto",
+  "settingHintLocaleDefaultCurrency": "En qué moneda se muestran los importes antes de conectar un espacio de trabajo, y con cuál empieza uno nuevo. Nunca sustituye la moneda que falte en una factura.",
+  "settingLabelLocaleDefaultCountry": "País por defecto",
+  "settingHintLocaleDefaultCountry": "Con qué país empieza un espacio nuevo cuando se desconoce la región del dispositivo. Solo una sugerencia; no decide ningún país emisor ni impuesto.",
+  "settingLabelLocaleDefaultLocale": "Formato por defecto de números y fechas",
+  "settingHintLocaleDefaultLocale": "El formato usado antes de que un miembro o un espacio elija uno. La elección del miembro siempre prevalece."
+}

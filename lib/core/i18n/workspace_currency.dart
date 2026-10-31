@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../settings/setting_defaults.g.dart';
 import 'currencies.dart';
 
 /// The active workspace's currency GRAIN — how many minor units make one
@@ -25,8 +26,9 @@ abstract final class WorkspaceCurrency {
   /// Back to the two-decimal default (tests).
   static void reset() => _code = null;
 
-  /// The active code, or 'EUR' before one is installed.
-  static String get code => _code ?? 'EUR';
+  /// The active code, or the registry's default currency before one is
+  /// installed.
+  static String get code => _code ?? SettingDefaults.localeDefaultCurrency;
 
   /// Minor units per major unit: 100 for the euro, 1 for the yen,
   /// 1 000 for the dinar.

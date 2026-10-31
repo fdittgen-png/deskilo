@@ -103,6 +103,9 @@ String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
 String _regionSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'directory.geocoder_url' => l10n.settingLabelDirectoryGeocoderUrl,
       'directory.tile_url_template' => l10n.settingLabelDirectoryTileUrlTemplate,
+      'locale.default_currency' => l10n.settingLabelLocaleDefaultCurrency,
+      'locale.default_country' => l10n.settingLabelLocaleDefaultCountry,
+      'locale.default_locale' => l10n.settingLabelLocaleDefaultLocale,
       _ => key,
     };
 
@@ -201,6 +204,9 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
 String? _regionSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'directory.geocoder_url' => l10n.settingHintDirectoryGeocoderUrl,
       'directory.tile_url_template' => l10n.settingHintDirectoryTileUrlTemplate,
+      'locale.default_currency' => l10n.settingHintLocaleDefaultCurrency,
+      'locale.default_country' => l10n.settingHintLocaleDefaultCountry,
+      'locale.default_locale' => l10n.settingHintLocaleDefaultLocale,
       _ => null,
     };
 

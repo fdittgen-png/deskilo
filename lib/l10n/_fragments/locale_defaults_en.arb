@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "settingLabelLocaleDefaultCurrency": "Default currency",
+  "@settingLabelLocaleDefaultCurrency": {
+    "description": "#2488 settings: Setting label."
+  },
+  "settingHintLocaleDefaultCurrency": "What amounts are shown in before a workspace is connected, and where a new workspace starts. It never stands in for a missing invoice currency.",
+  "@settingHintLocaleDefaultCurrency": {
+    "description": "#2488 settings: Setting hint."
+  },
+  "settingLabelLocaleDefaultCountry": "Default country",
+  "@settingLabelLocaleDefaultCountry": {
+    "description": "#2488 settings: Setting label."
+  },
+  "settingHintLocaleDefaultCountry": "Where a new workspace starts when the device's region is unknown. A suggestion only; it decides no tax or issuer country.",
+  "@settingHintLocaleDefaultCountry": {
+    "description": "#2488 settings: Setting hint."
+  },
+  "settingLabelLocaleDefaultLocale": "Default number and date format",
+  "@settingLabelLocaleDefaultLocale": {
+    "description": "#2488 settings: Setting label."
+  },
+  "settingHintLocaleDefaultLocale": "The format used before a member or workspace has chosen one. A member's own choice always wins.",
+  "@settingHintLocaleDefaultLocale": {
+    "description": "#2488 settings: Setting hint."
+  }
+}

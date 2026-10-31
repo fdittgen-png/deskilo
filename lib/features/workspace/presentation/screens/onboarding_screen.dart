@@ -12,6 +12,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/device_locale.dart';
+import '../../../../core/settings/region_defaults.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -121,7 +122,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    final country = initialCountryFor(ref.read(deviceLocaleProvider));
+    final country = initialCountryFor(
+      ref.read(deviceLocaleProvider),
+      fallbackCountry: ref.read(regionDefaultsProvider).country,
+    );
     _countryCode = country.code;
     _currency.text = _derivedCurrency = country.currencyCode;
     _timezone.text = _derivedTimezone = country.defaultTimezone;

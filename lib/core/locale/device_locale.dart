@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../country/country_catalog.dart';
+import '../settings/setting_defaults.g.dart';
 
 part 'device_locale.g.dart';
 
@@ -18,11 +19,14 @@ Locale deviceLocale(Ref ref) => PlatformDispatcher.instance.locale;
 ///
 /// The device's own region when the catalog knows it (`fr_CH` → CH); else
 /// a language spoken as the main language of exactly one catalog country
-/// (`de` → DE, `it` → IT); else the catalog's own fallback, France — the
-/// same answer `CountryCatalog.byCode` gives an unknown code. Never inferred
+/// (`de` → DE, `it` → IT); else the registry's default country
+/// (`locale.default_country`, France until an operator changes it). Never inferred
 /// further: currency and time zone follow the country and stay editable,
 /// and nothing legal or fiscal is derived from a locale.
-Country initialCountryFor(Locale? device) {
+Country initialCountryFor(
+  Locale? device, {
+  String fallbackCountry = SettingDefaults.localeDefaultCountry,
+}) {
   final region = device?.countryCode;
   if (region != null && CountryCatalog.isKnown(region)) {
     return CountryCatalog.byCode(region);
@@ -37,5 +41,5 @@ Country initialCountryFor(Locale? device) {
     'pl' => 'PL',
     _ => null,
   };
-  return CountryCatalog.byCode(byLanguage ?? 'FR');
+  return CountryCatalog.byCode(byLanguage ?? fallbackCountry);
 }

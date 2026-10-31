@@ -1,0 +1,9 @@
+{
+  "@@locale": "fr",
+  "settingLabelLocaleDefaultCurrency": "Devise par défaut",
+  "settingHintLocaleDefaultCurrency": "Dans quelle devise les montants s'affichent avant qu'un espace de travail soit connecté, et celle d'un nouvel espace. Elle ne remplace jamais la devise manquante d'une facture.",
+  "settingLabelLocaleDefaultCountry": "Pays par défaut",
+  "settingHintLocaleDefaultCountry": "Le pays d'un nouvel espace de travail quand la région de l'appareil est inconnue. Une simple suggestion : elle ne décide d'aucun pays émetteur ni d'aucune taxe.",
+  "settingLabelLocaleDefaultLocale": "Format par défaut des nombres et dates",
+  "settingHintLocaleDefaultLocale": "Le format utilisé avant qu'un membre ou un espace de travail en ait choisi un. Le choix du membre l'emporte toujours."
+}
