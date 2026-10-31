@@ -15,6 +15,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../domain/bank/bank_records.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../bank_labels.dart';
+import '../invoice_actions.dart' show savePdfToDownloads;
 import 'bank_import_flow.dart';
 import 'bank_lines_sheet.dart';
 
@@ -120,13 +121,42 @@ class BankStatementsView extends ConsumerWidget {
                           '${bankFormatLabel(l10n, s.format)} · '
                           '${l10n.bankStatementCounts(s.lineCount, s.openCount)}',
                         ),
-                        trailing: const Icon(Icons.chevron_right),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // #2380 — the file as it was imported.
+                            if (s.sourceSha256.isNotEmpty)
+                              IconButton(
+                                key: ValueKey('bank-statement-original-${s.id}'),
+                                tooltip: l10n.bankStatementOriginal,
+                                icon: const Icon(Icons.download_outlined),
+                                onPressed: () => _original(context, ref, s),
+                              ),
+                            const Icon(Icons.chevron_right),
+                          ],
+                        ),
                         onTap: () => _open(context, s),
                       ),
                   ],
                 ),
         ),
       ],
+    );
+  }
+
+  Future<void> _original(
+    BuildContext context,
+    WidgetRef ref,
+    StoredBankStatement s,
+  ) async {
+    final bytes =
+        await ref.read(bankImportCommandsProvider).original(workspaceId, s);
+    if (!context.mounted) return;
+    await savePdfToDownloads(
+      context,
+      ref,
+      bytes: bytes,
+      fileName: s.fileName.isEmpty ? s.sourceSha256 : s.fileName,
     );
   }
 

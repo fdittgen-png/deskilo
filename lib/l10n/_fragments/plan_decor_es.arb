@@ -1,6 +1,6 @@
 {
   "editorToolDecor": "Formas",
-  "editorHintDecor": "Toque el plano para soltar la forma; arrástrela a su sitio",
+  "editorHintDecor": "Toque para colocar una forma; arrastre para dibujar una pared en la cuadrícula",
   "editorDecorPaletteHint": "Dibuje la sala tal como es: paredes, puertas y ventanas la enmarcan, el resto la amuebla.",
   "editorRotate": "Girar",
   "decorWall": "Pared",
@@ -10,5 +10,7 @@
   "decorTable": "Mesa",
   "decorCouch": "Sofá",
   "decorWc": "WC",
-  "decorKitchen": "Cocina"
+  "decorKitchen": "Cocina",
+  "editorWallSaved": "Pared dibujada",
+  "editorWallUndo": "Deshacer"
 }

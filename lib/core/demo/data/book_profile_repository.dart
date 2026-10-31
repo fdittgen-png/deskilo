@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/accounting_amount.dart';
 import '../../../features/money/domain/book_chart.dart';
 import '../../../features/money/domain/book_profile.dart';
@@ -8,9 +9,11 @@ import '../../../features/money/domain/book_profile_repository.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/posting.dart';
 import '../../../features/money/domain/posting_rules.dart';
+import '../../../features/money/domain/posting_rules_acquisitions.dart';
 import '../../../features/money/domain/posting_rules_purchases.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/retention_hold.dart';
+import '../../../features/money/domain/vat_input.dart';
 import '../../time/date_text.dart';
 import '../../vat/retention.dart';
 import '../../vat/tax_reference_active.dart';
@@ -204,8 +207,27 @@ class FakeBookProfileRepository implements BookProfileRepository {
       groupOf: (t) =>
           ActiveTaxReference.current.groupOfRate(country, t.percent, t.category),
     );
+    // #3152 — the acquisition tax of a service bought abroad, from the
+    // confirmed expenses that carry `vat.acquisition`, as the server books
+    // it (0622) on the expense's tax point.
+    final acquired = acquisitionPostingsOf(
+      acquisitions: [
+        for (final e in m.eventRepository?.events ?? const <WorkspaceEvent>[])
+          if (e.workspaceId == workspaceId &&
+              e.type == EventType.expense &&
+              e.status == EventStatus.confirmed &&
+              e.decidedAt != null &&
+              inPeriod(e.decidedAt!) &&
+              e.payload['vat'] is Map &&
+              (e.payload['vat'] as Map)['acquisition'] == true)
+            _acquisition(e),
+      ],
+      book: book,
+      groupOf: (percent) => ActiveTaxReference.current
+          .groupOfRate(country, percent.toDouble(), 'S'),
+    );
     return PostingSet(
-      [...sold.postings, ...bought]..sort(comparePostings),
+      [...sold.postings, ...bought, ...acquired]..sort(comparePostings),
       book.blockers,
     );
   }
@@ -341,4 +363,25 @@ String? demoBooksKept(
     'holds': held,
     'reasons': [if (rule == null) 'no_rule' else if (!rule.confirmed) 'unconfirmed'],
   });
+}
+
+/// An expense bought abroad as the return reads it: its amount is the base,
+/// the tax owed and the deductible share split as `vat_acquisition_split`.
+VatAcquisition _acquisition(WorkspaceEvent e) {
+  final vat = (e.payload['vat'] as Map).cast<String, Object?>();
+  final percent = (vat['percent'] as num? ?? 0).toDouble();
+  final split = vatAcquisitionSplit(
+    (e.payload['amount_cents'] as num? ?? 0).toInt(),
+    percent,
+    (vat['deductible_pct'] as num? ?? 100).toDouble(),
+  );
+  final day = e.decidedAt!;
+  return (
+    expenseId: e.id,
+    day: DateTime(day.year, day.month, day.day),
+    percent: percent,
+    currency: DemoPurchaseExchangeRates.spaceCurrency,
+    taxOwedCents: split.taxCents,
+    deductibleCents: split.deductibleCents,
+  );
 }

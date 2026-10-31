@@ -112,6 +112,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('This file was already imported. Nothing was added.'), findsOneWidget);
     expect(await bank.fetchStatements('ws-1'), hasLength(1));
+    // #2380 — the imported file is kept once, and the statement offers it.
+    final stored = (await bank.fetchStatements('ws-1')).single;
+    expect(bank.originals.keys, ['ws-1/${stored.sourceSha256}']);
+    expect(bank.originals.values.single, _camt);
+    expect(
+      find.byKey(ValueKey('bank-statement-original-${stored.id}')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('the reference matches are confirmed in one press; the third '

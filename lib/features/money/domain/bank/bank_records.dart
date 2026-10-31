@@ -7,6 +7,8 @@
 // a person decides), duplicate, recorded (its payment exists and settles no
 // invoice yet), pending (its match awaits the validators), matched, or
 // reconciled (money out, with the payment reported as made). Pure Dart.
+import 'dart:typed_data';
+
 import 'package:meta/meta.dart';
 
 import '../../../../core/data/json_reader.dart';
@@ -157,6 +159,7 @@ class StoredBankStatement {
     required this.openCount,
     this.statementRef = '',
     this.fileName = '',
+    this.sourceSha256 = '',
     this.openingCents,
     this.closingCents,
   });
@@ -178,6 +181,7 @@ class StoredBankStatement {
       openCount: r.integer('open'),
       statementRef: r.stringOr('statement_ref'),
       fileName: r.stringOr('file_name'),
+      sourceSha256: r.stringOr('source_sha256'),
       openingCents: r.intOrNull('opening_cents'),
       closingCents: r.intOrNull('closing_cents'),
     );
@@ -195,6 +199,10 @@ class StoredBankStatement {
   final int openCount;
   final String statementRef;
   final String fileName;
+
+  /// #2380 — the digest of the file it was read from, which names the
+  /// original kept beside it; empty from a server before 0621.
+  final String sourceSha256;
   final int? openingCents;
   final int? closingCents;
 }
@@ -236,6 +244,18 @@ abstract interface class BankStatementRepository {
   Future<List<StoredBankStatement>> fetchStatements(String workspaceId);
 
   Future<List<StoredBankLine>> fetchLines(String statementId);
+
+  /// #2380 — keeps the file's [bytes] as the original of the statement
+  /// read from it, under its digest [sourceSha256]. Keeping the same file
+  /// again is not an error: the bytes are the same.
+  Future<void> storeOriginal(
+    String workspaceId, {
+    required String sourceSha256,
+    required List<int> bytes,
+  });
+
+  /// #2380 — the original file of a statement, as it was imported.
+  Future<Uint8List> fetchOriginal(String workspaceId, String sourceSha256);
 
   /// Imports [statement] read from a file whose bytes digest to
   /// [sourceSha256]; the same digest imports nothing a second time.

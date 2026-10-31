@@ -11,7 +11,8 @@ import '../../domain/records_location.dart';
 /// whose records are not declared in Canada, the rule that asks for them
 /// there and the CRA authorisation it recorded. Read-only: the operator
 /// declares the country in the platform settings, a billing manager the
-/// authorisation in the workspace settings.
+/// authorisation in the workspace settings. #2375: a German space whose
+/// books are not declared in the EU sees § 146 AO the same way.
 class RecordsLocationTile extends ConsumerWidget {
   const RecordsLocationTile({required this.country, super.key});
 
@@ -43,12 +44,19 @@ class RecordsLocationTile extends ConsumerWidget {
         else
           l10n.recordsLocationCraReference(location.craReference),
       ],
+      if (location.aoNotice)
+        if (location.hostingCountry == null)
+          l10n.recordsLocationAoNotice
+        else
+          l10n.recordsLocationAoOutside,
     ];
     return ListTile(
       key: const ValueKey('records-location'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(
-        location.craNotice ? Icons.warning_amber_outlined : Icons.dns_outlined,
+        location.craNotice || location.aoNotice
+            ? Icons.warning_amber_outlined
+            : Icons.dns_outlined,
       ),
       title: Text(l10n.recordsLocationTitle),
       subtitle: Text(

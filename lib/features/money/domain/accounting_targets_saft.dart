@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2379 — the SAF-T Financial targets: the general ledger of a local book
-// as the OECD tree, restricted per country (saf_t_financial.dart), and
+// as the OECD tree, restricted per country (saf_t_financial.dart; Romania's
+// D406 in saf_t_financial_ro.dart), and
 // Denmark's routes, where the duty is a registered bookkeeping system
 // rather than a file.
 import 'accounting_format.dart';
@@ -32,6 +33,18 @@ const _faiaLuFormat = AccountingFormat(
 /// bookkeeping system, which this file does not make DesKilo.
 const _saftDkFormat = AccountingFormat(
   id: 'saft_dk',
+  claim: FormatClaim.exchange,
+  extension: 'xml',
+  needsLegalId: true,
+);
+
+/// #2379 — ANAF's D406 tree (Ro_SAFT 2.4.9), read against the published
+/// schema in CI; refused while an account has no national chart account, a
+/// rate no ANAF code, or the company no bank account. An exchange file,
+/// not the return: the monthly D406 also carries the source documents,
+/// which this file leaves empty, and goes through ANAF's own validator.
+const _saftRoFormat = AccountingFormat(
+  id: 'saft_ro',
   claim: FormatClaim.exchange,
   extension: 'xml',
   needsLegalId: true,
@@ -82,6 +95,19 @@ const List<AccountingTarget> safTFinancialTargets = [
     operations: _ledgerOperations,
     taxCodeModel: TaxCodeModel.perRate,
     format: _faiaLuFormat,
+  ),
+  AccountingTarget(
+    id: 'saft_ro',
+    vendor: 'ANAF',
+    authority: true,
+    product: 'SAF-T (D406)',
+    edition: '2.4.9',
+    countries: {'RO'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: _ledgerOperations,
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _saftRoFormat,
   ),
   // Denmark (Bogføringsloven 2022): the duty is to keep the books in a
   // registered digital bookkeeping system; DesKilo is not one. The two

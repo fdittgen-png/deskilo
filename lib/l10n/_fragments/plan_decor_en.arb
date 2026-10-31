@@ -3,7 +3,7 @@
   "@editorToolDecor": {
     "description": "#3074 the plan's drawn shapes: editorToolDecor"
   },
-  "editorHintDecor": "Tap the plan to drop the shape; drag it to place it",
+  "editorHintDecor": "Tap to drop a shape; drag to draw a wall along the grid",
   "@editorHintDecor": {
     "description": "#3074 the plan's drawn shapes: editorHintDecor"
   },
@@ -46,5 +46,7 @@
   "decorKitchen": "Kitchen",
   "@decorKitchen": {
     "description": "#3074 the plan's drawn shapes: decorKitchen"
-  }
+  },
+  "editorWallSaved": "Wall drawn",
+  "editorWallUndo": "Undo"
 }

@@ -96,7 +96,16 @@ void main() {
       expect(shardOf('test/brand_new_root/a_test.dart'), gateShard);
       expect(shardOf('test/helpers/x_test.dart'), gateShard);
       expect(shardOf('test/features/money/a_test.dart'), moneyShard);
-      expect(shardOf('test/features/workspace/domain/a_test.dart'), moneyShard);
+      expect(shardOf('test/features/reservations/a_test.dart'), moneyShard);
+      expect(
+        shardOf('test/features/workspace/domain/a_test.dart'),
+        workspaceShard,
+      );
+      expect(shardOf('test/features/me/a_test.dart'), workspaceShard);
+      expect(shardOf('test/features/events/a_test.dart'), workspaceShard);
+      expect(shardOf('test/features/auth/a_test.dart'), workspaceShard);
+      expect(shardOf('test/app/a_test.dart'), restShard);
+      expect(shardOf('test/a11y/a_test.dart'), restShard);
       expect(shardOf('test/features/money_extra/a_test.dart'), restShard);
       expect(shardOf('test/features/mcp/a_test.dart'), restShard);
       expect(shardOf('test/features/a_test.dart'), restShard);
@@ -269,9 +278,9 @@ void main() {
       '${dir.path}/merged.info',
     ]);
 
-    test('three complete shards: the plan reads them, the rows are green for '
+    test('four complete shards: the plan reads them, the rows are green for '
         'the suite, and the LCOV merges', () {
-      for (final id in [gateShard, moneyShard, restShard]) {
+      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
         final r = envelope(id);
         expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
       }
@@ -295,6 +304,7 @@ void main() {
       () {
         envelope(gateShard);
         envelope(moneyShard);
+        envelope(workspaceShard);
         expect(plan().exitCode, 0);
         expect(rows().exitCode, 1);
         final m = mergeCov();
@@ -306,13 +316,14 @@ void main() {
     test('a shard with no LCOV fails the merge although its tests passed', () {
       envelope(gateShard);
       envelope(moneyShard);
+      envelope(workspaceShard);
       envelope(restShard, lcovFile: false);
       expect(plan().exitCode, 0);
       expect(mergeCov().exitCode, 1);
     });
 
     test('a stream edited after the envelope was written fails the shard', () {
-      for (final id in [gateShard, moneyShard, restShard]) {
+      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
         envelope(id);
       }
       File('${dir.path}/testshard-rest/tests.jsonl').writeAsStringSync('\n');
@@ -321,7 +332,7 @@ void main() {
     });
 
     test('a candidate other than the plan\'s fails every shard', () {
-      for (final id in [gateShard, moneyShard, restShard]) {
+      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
         envelope(id);
       }
       final r = _dart([

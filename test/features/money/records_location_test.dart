@@ -98,6 +98,52 @@ void main() {
     });
   });
 
+  // #2375 — § 146 Abs. 2a AO: a German business keeps its electronic books
+  // in Germany or another EU member state; elsewhere only with the tax
+  // office's permission (Abs. 2b). EU membership is the reference store's.
+  group('the German notice', () {
+    test('a German space on an installation declared outside the EU', () {
+      final l = _of('DE', {_hosting: 'US'});
+      expect(l.aoNotice, isTrue);
+      expect(l.hostingInEu, isFalse);
+    });
+
+    test('a German space on an installation that declared nothing', () {
+      expect(_of('DE').aoNotice, isTrue);
+    });
+
+    test('a German space hosted in Germany or another member state', () {
+      expect(_of('DE', {_hosting: 'DE'}).aoNotice, isFalse);
+      expect(_of('DE', {_hosting: 'FR'}).aoNotice, isFalse);
+    });
+
+    test('a space of another country, wherever it is hosted', () {
+      expect(_of('FR', {_hosting: 'US'}).aoNotice, isFalse);
+      expect(_of('CA', {_hosting: 'US'}).aoNotice, isFalse);
+    });
+
+    test('the archive README states the rule and why it applies', () {
+      expect(
+        _of('DE', {_hosting: 'US'}).archiveLines,
+        contains(
+          'These books are kept outside the EU: this needs the tax '
+          "office's permission (§ 146 Abs. 2b AO).",
+        ),
+      );
+      expect(
+        _of('DE').archiveLines,
+        contains(
+          'Nothing declares these books kept in Germany or another EU '
+          'member state (§ 146 Abs. 2a AO).',
+        ),
+      );
+      expect(
+        _of('DE', {_hosting: 'FR'}).archiveLines.join(),
+        isNot(contains('§ 146')),
+      );
+    });
+  });
+
   group('the accounting settings', () {
     late AppLocalizations l10n;
     setUpAll(() async {
@@ -156,6 +202,28 @@ void main() {
       });
       expect(text, contains(l10n.recordsLocationCraReference('CRA-2026-0042')));
     });
+
+    testWidgets(
+      'a German space on a US-hosted installation sees the § 146 notice',
+      (tester) async {
+        final text = await shown(tester, 'DE', {_hosting: 'US'});
+        expect(text.split('\n'), [
+          l10n.recordsLocationHosted('US'),
+          l10n.recordsLocationAoOutside,
+        ]);
+      },
+    );
+
+    testWidgets(
+      'a German space on an installation that declared nothing says so',
+      (tester) async {
+        final text = await shown(tester, 'DE');
+        expect(text.split('\n'), [
+          l10n.recordsLocationUndeclared,
+          l10n.recordsLocationAoNotice,
+        ]);
+      },
+    );
 
     testWidgets('nothing declared is said as nothing declared', (tester) async {
       final text = await shown(tester, 'FR');
