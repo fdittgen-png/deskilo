@@ -7,7 +7,9 @@
 import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/presentation/feature_copy.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_levels_screen.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,7 +17,7 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
 Future<FakeWorkspaceRepository> _pump(WidgetTester tester) async {
-  tester.view.physicalSize = const Size(900, 3200);
+  tester.view.physicalSize = const Size(900, 9000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final repo = FakeWorkspaceRepository.withWorkspace();
@@ -76,6 +78,32 @@ void main() {
       await tester.pumpAndSettle();
     }
     expect(repo.flagWrites, [expected.flags]);
+  });
+
+  testWidgets('the preview speaks in what the space gets, never switch names', (
+    tester,
+  ) async {
+    final repo = await _pump(tester);
+    final expected = _planFor(repo, setupPresets[SetupPreset.complet]!);
+    await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
+    await tester.pumpAndSettle();
+    final l10n = AppLocalizationsEn();
+    final bullets = tester
+        .widgetList<Text>(
+          find.descendant(
+            of: find.byKey(const ValueKey('setup-levels-preview')),
+            matching: find.textContaining('• '),
+          ),
+        )
+        .map((t) => t.data)
+        .toList();
+    expect(bullets, [
+      for (final f in expected.switchOn) '• ${featureDescription(l10n, f)}',
+    ]);
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('setup-levels-on'))).data,
+      'Your space gets:',
+    );
   });
 
   testWidgets('switching off asks first, and a no writes nothing', (

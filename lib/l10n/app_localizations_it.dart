@@ -23771,11 +23771,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLevelsApply => 'Applica';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Perché $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'Che cosa serve';
 
   @override
@@ -23813,14 +23808,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Disattiva: $features';
-  }
+  String get setupLevelsSwitchOff => 'Lo spazio non avrà più:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Attiva: $features';
-  }
+  String get setupLevelsSwitchOn => 'Lo spazio ottiene:';
 
   @override
   String get setupLevelsTitle => 'Che cosa fa il suo spazio';
@@ -24251,27 +24242,28 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'un tablet all’ingresso registra gli arrivi',
-      'keeps_books': 'tiene la contabilità',
-      'later': 'un assistente può arrivare più tardi',
-      'members_only': 'solo i membri vedono lo spazio',
-      'members_owe': 'i membri devono denaro allo spazio',
-      'no_money': 'non circola denaro',
-      'no_purchases': 'lo spazio non segue i suoi acquisti',
-      'no_vat': 'lo spazio non è soggetto a IVA',
-      'organised': 'più persone decidono insieme',
-      'pay_by_transfer': 'i membri pagano con bonifico',
-      'pay_online': 'i membri pagano online',
-      'public_page': 'lo spazio ha una pagina pubblica',
-      'several_rooms': 'ci sono più sale o sedi',
-      'shared_places': 'i membri condividono i posti',
-      'small_community': 'è una piccola comunità',
-      'start_simple': 'conviene iniziare in modo semplice',
-      'tracks_purchases': 'segue gli acquisti dello spazio',
-      'vat_registered': 'lo spazio è soggetto a IVA',
-      'issues_invoices': 'emette fatture',
-      'association': 'un’associazione decide insieme, con il suo consiglio',
-      'approve_bookings': 'le prenotazioni attendono un’approvazione',
+      'door_tablet': 'Perché un tablet all’ingresso registra gli arrivi',
+      'keeps_books': 'Perché tiene la contabilità',
+      'later': 'Perché un assistente può arrivare più tardi',
+      'members_only': 'Perché solo i membri vedono lo spazio',
+      'members_owe': 'Perché i membri devono denaro allo spazio',
+      'no_money': 'Perché non circola denaro',
+      'no_purchases': 'Perché lo spazio non segue i suoi acquisti',
+      'no_vat': 'Perché lo spazio non è soggetto a IVA',
+      'organised': 'Perché più persone decidono insieme',
+      'pay_by_transfer': 'Perché i membri pagano con bonifico',
+      'pay_online': 'Perché i membri pagano online',
+      'public_page': 'Perché lo spazio ha una pagina pubblica',
+      'several_rooms': 'Perché ci sono più sale o sedi',
+      'shared_places': 'Perché i membri condividono i posti',
+      'small_community': 'Perché è una piccola comunità',
+      'start_simple': 'Perché conviene iniziare in modo semplice',
+      'tracks_purchases': 'Perché segue gli acquisti dello spazio',
+      'vat_registered': 'Perché lo spazio è soggetto a IVA',
+      'issues_invoices': 'Perché emette fatture',
+      'association':
+          'Perché un’associazione decide insieme, con il suo consiglio',
+      'approve_bookings': 'Perché le prenotazioni attendono un’approvazione',
       'other': '$key',
     });
     return '$_temp0';

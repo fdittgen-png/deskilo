@@ -23814,11 +23814,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelsApply => 'Appliquer';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Parce que $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'Ce qu’il lui faut';
 
   @override
@@ -23856,14 +23851,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Désactive : $features';
-  }
+  String get setupLevelsSwitchOff => 'Votre espace n’aura plus :';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Active : $features';
-  }
+  String get setupLevelsSwitchOn => 'Votre espace obtient :';
 
   @override
   String get setupLevelsTitle => 'Ce que fait votre espace';
@@ -24300,27 +24291,28 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'une tablette à l’entrée enregistre les arrivées',
-      'keeps_books': 'vous tenez une comptabilité',
-      'later': 'un assistant peut venir plus tard',
-      'members_only': 'seuls les membres voient l’espace',
-      'members_owe': 'les membres doivent de l’argent à l’espace',
-      'no_money': 'aucun argent ne circule',
-      'no_purchases': 'l’espace ne suit pas ses achats',
-      'no_vat': 'l’espace n’est pas assujetti à la TVA',
-      'organised': 'plusieurs personnes décident ensemble',
-      'pay_by_transfer': 'les membres paient par virement',
-      'pay_online': 'les membres paient en ligne',
-      'public_page': 'l’espace a une page publique',
-      'several_rooms': 'il y a plusieurs salles ou sites',
-      'shared_places': 'les membres partagent les places',
-      'small_community': 'une petite communauté',
-      'start_simple': 'commencer simplement',
-      'tracks_purchases': 'vous suivez les achats de l’espace',
-      'vat_registered': 'l’espace est assujetti à la TVA',
-      'issues_invoices': 'vous émettez des factures',
-      'association': 'une association décide ensemble, avec son bureau',
-      'approve_bookings': 'les réservations attendent une validation',
+      'door_tablet': 'Parce qu’une tablette à l’entrée enregistre les arrivées',
+      'keeps_books': 'Parce que vous tenez une comptabilité',
+      'later': 'Parce qu’un assistant peut venir plus tard',
+      'members_only': 'Parce que seuls les membres voient l’espace',
+      'members_owe': 'Parce que les membres doivent de l’argent à l’espace',
+      'no_money': 'Parce qu’aucun argent ne circule',
+      'no_purchases': 'Parce que l’espace ne suit pas ses achats',
+      'no_vat': 'Parce que l’espace n’est pas assujetti à la TVA',
+      'organised': 'Parce que plusieurs personnes décident ensemble',
+      'pay_by_transfer': 'Parce que les membres paient par virement',
+      'pay_online': 'Parce que les membres paient en ligne',
+      'public_page': 'Parce que l’espace a une page publique',
+      'several_rooms': 'Parce qu’il y a plusieurs salles ou sites',
+      'shared_places': 'Parce que les membres partagent les places',
+      'small_community': 'Parce que la communauté est petite',
+      'start_simple': 'Parce que vous voulez commencer simplement',
+      'tracks_purchases': 'Parce que vous suivez les achats de l’espace',
+      'vat_registered': 'Parce que l’espace est assujetti à la TVA',
+      'issues_invoices': 'Parce que vous émettez des factures',
+      'association':
+          'Parce qu’une association décide ensemble, avec son bureau',
+      'approve_bookings': 'Parce que les réservations attendent une validation',
       'other': '$key',
     });
     return '$_temp0';
