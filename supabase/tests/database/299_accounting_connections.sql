@@ -16,10 +16,11 @@
 -- earlier one keeps its file. A revoked and reconnected company finds its
 -- documents again; a delegated token, a plain member and a stranger are
 -- refused by calls under the authenticated role.
--- Revoking forgets the secret and keeps the mappings and deliveries.
+-- Revoking forgets the secret and keeps the mappings and deliveries. A
+-- delivered connection takes a new token for its recorded company (#2370).
 -- Positive cases beside every refusal.
 begin;
-select plan(58);
+select plan(60);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -295,7 +296,17 @@ select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e002', 'a', 'acknowle
           'acknowledged', 'a second invoice is received');
 select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-other-company-2370', '')$q$,
             pg_temp.v('conn'))) ->> 'refused',
-          'DKA02', 'a connection that delivered keeps its token: revoke and connect again');
+          'DKA02', 'a connection that delivered keeps its token without the company it recorded');
+-- #2370 — a routine rotation: a new token for the recorded company keeps
+-- the connection, its maps and its deliveries; another company is refused.
+select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-other-company-2370', '999999999')$q$,
+            pg_temp.v('conn'))) ->> 'refused',
+          'DKA02', 'a token for another company is a new connection');
+select is((pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-rotated-2370-abcdef', '812345678')$q$,
+            pg_temp.v('conn'))) ->> 'id')
+          || ':' || (select count(*) from public.accounting_maps where connection_id = pg_temp.v('conn')::uuid)
+          || ':' || (select count(*) from public.accounting_deliveries where connection_id = pg_temp.v('conn')::uuid),
+          pg_temp.v('conn') || ':1:2', 'a new token for the recorded company keeps the connection, its map and its deliveries');
 
 -- ── the generic journal file, delivered twice ─────────────────────
 select set_config('ac.export1', pg_temp.as_json('exporter', format(

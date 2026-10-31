@@ -237,13 +237,56 @@ void main() {
     expect(await repo.fetchConnections('ws'), isEmpty);
   });
 
-  test('a connection that delivered keeps its token', () async {
+  // #2370 — a routine rotation (an expiring API token) of a connection that
+  // delivered keeps the connection, its maps and its deliveries when the
+  // company it reaches is recorded: the token is for that company. Without
+  // a recorded company another token could reach another company, so the
+  // token stays (DKA02) and another company is a new connection.
+  test('a connection that delivered takes a new token for its recorded company '
+      'and keeps its maps', () async {
     final books = FakeBookPeriodRepository(today: _today);
     final repo = seedDemoAccountingConnections(books, _today);
     final c = (await repo.fetchConnections('ws-1')).single;
     expect(c.delivered, isTrue);
-    expect(await AccountingConnectionCommands(repo).replaceToken(c, token: 'tok-other-2370'), isNull,
+    expect(c.remoteTenantId, isNotEmpty);
+    expect(c.tokenRotatable, isTrue);
+    final rotated = await AccountingConnectionCommands(repo).replaceToken(c, token: 'tok-rotated-2370');
+    expect(rotated, isNotNull);
+    expect(rotated!.id, c.id);
+    expect(rotated.remoteTenantId, c.remoteTenantId);
+    expect(rotated.maps.map((m) => m.id), c.maps.map((m) => m.id));
+  });
+
+  test('a connection that delivered without a recorded company keeps its token', () async {
+    final books = FakeBookPeriodRepository(today: _today);
+    final seeded = seedDemoAccountingConnections(books, _today);
+    final c = (await seeded.fetchConnections('ws-1')).single;
+    final repo = FakeAccountingConnectionRepository(
+      books: books,
+      today: _today,
+      connections: [
+        AccountingConnection(
+          id: c.id,
+          issuerSiteId: c.issuerSiteId,
+          targetId: c.targetId,
+          authKind: c.authKind,
+          status: c.status,
+          displayName: c.displayName,
+          connectedAt: c.connectedAt,
+          secretsSet: c.secretsSet,
+          maps: c.maps,
+        ),
+      ],
+      deliveries: seeded.deliveries,
+    );
+    final bare = (await repo.fetchConnections('ws-1')).single;
+    expect(bare.tokenRotatable, isFalse);
+    expect(await AccountingConnectionCommands(repo).replaceToken(bare, token: 'tok-other-2370'), isNull,
         reason: 'nothing is sent: the server refuses it (DKA02)');
+    await expectLater(
+      repo.setToken(bare.id, token: 'tok-other-2370', remoteTenantId: ''),
+      throwsStateError,
+    );
   });
 
   test('a changed document is a new delivery; the earlier one keeps its file', () async {

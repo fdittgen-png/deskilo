@@ -62,14 +62,15 @@ class AccountingConnectionCommands {
     );
   }
 
-  /// Replaces the token of an existing token connection; null when the
-  /// token does not fit, or the connection delivered (its company stays:
-  /// another one is a new connection).
+  /// Replaces the token of an existing token connection, for the company
+  /// it recorded; null when the token does not fit, or the connection
+  /// delivered without a recorded company (#2370: another company is a new
+  /// connection).
   Future<AccountingConnection?> replaceToken(
     AccountingConnection connection, {
     required String token,
   }) async {
-    if (!_tokenFits(token) || connection.delivered) return null;
+    if (!_tokenFits(token) || !connection.tokenRotatable) return null;
     return _repository.setToken(
       connection.id,
       token: token.trim(),
