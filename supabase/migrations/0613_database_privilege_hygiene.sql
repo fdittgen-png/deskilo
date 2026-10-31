@@ -2,7 +2,7 @@
 -- risk: transforming
 -- (privileges only; no row and no function body moves)
 --
--- 0612 (#3095, SEC-D1 and the oracle half of SEC-D2 of the #2960 audit) --
+-- 0613 (#3095, SEC-D1 and the oracle half of SEC-D2 of the #2960 audit) --
 -- the defaults stop handing out access.
 --
 --   1. Default privileges of `postgres` in `public`: a NEW function is no
@@ -53,4 +53,4 @@ grant select on public.deskilo_schema_version to anon;
 
 revoke execute on function public.feature_operation_allowed(uuid, text, text) from authenticated;
 
-select public.set_deskilo_schema_version(612);
+select public.set_deskilo_schema_version(613);

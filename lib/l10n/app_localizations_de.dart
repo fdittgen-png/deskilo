@@ -8448,7 +8448,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzen in vier Ansichten';
+  String get featureFinanceFacesTitle =>
+      'Abrechnung, Zahlungen, Rechnungen, Dokumente';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8739,7 +8740,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureMessagesHubTitle => 'Nachrichten, überarbeitet';
 
   @override
-  String get featureMoneyTab => 'Finanzen-Tab';
+  String get featureMoneyTab => 'Abrechnung und Saldo';
 
   @override
   String get featureMoneyTabDesc => 'Monatsrechnungen, Zahlungen und Ausgaben.';
@@ -22547,6 +22548,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
 
@@ -22585,6 +22590,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintSecurityBadgeLockoutMinutes =>
       'Minuten, über die falsche PIN-Eingaben gezählt werden und für die ein gesperrter Badge gesperrt bleibt. Kann nur verlängert werden.';
+
+  @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -22757,6 +22766,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Online-Fenster';
 
   @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Nach Abwesenheit neu laden';
+
+  @override
   String get settingLabelPurchasePaymentChecker =>
       'Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)';
 
@@ -22794,6 +22807,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgeLockoutMinutes => 'Sperrzeit des Badges';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength => 'Kürzeste Badge-PIN';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

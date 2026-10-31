@@ -7,8 +7,15 @@ import 'event_providers.dart';
 
 final eventsInvalidations = [
   InvalidationContribution(
-    const ['events', 'event_decisions'],
+    const ['events'],
     [eventsProvider, eventDecisionsProvider, myPendingEventCountProvider],
+  ),
+  // #3099 (PERF-2) — a decision changes the decisions, not the feed: the
+  // 100-row events page (and the sweep before it) stays cached, and the
+  // decisions derived from it are read again.
+  InvalidationContribution(
+    const ['event_decisions'],
+    [eventDecisionsProvider, myPendingEventCountProvider],
   ),
   InvalidationContribution(
     const ['validation_policies'],

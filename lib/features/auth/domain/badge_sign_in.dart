@@ -35,11 +35,13 @@ enum BadgeSignInFailure {
 /// tag must not become a way to harvest addresses off a shared tablet.
 class BadgeIdentity {
   const BadgeIdentity({
-    required this.userId,
+    this.userId = '',
     required this.displayName,
     required this.hasAvatar,
   });
 
+  /// The demo twin's own account for the badge; the server never returns
+  /// it (#3091), so a real identity carries ''.
   final String userId;
   final String displayName;
 

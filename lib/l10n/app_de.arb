@@ -5991,7 +5991,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
-  "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
+  "featureFinanceFacesTitle": "Abrechnung, Zahlungen, Rechnungen, Dokumente",
   "featureForeignCurrencyPurchasesDesc": "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.",
   "featureForeignCurrencyPurchasesTitle": "Einkäufe in anderer Währung",
   "featureFormHelpHintsDesc": "Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.",
@@ -6176,7 +6176,7 @@
   },
   "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.",
   "featureMessagesHubTitle": "Nachrichten, überarbeitet",
-  "featureMoneyTab": "Finanzen-Tab",
+  "featureMoneyTab": "Abrechnung und Saldo",
   "featureMoneyTabDesc": "Monatsrechnungen, Zahlungen und Ausgaben.",
   "featureMore": "Mehr",
   "featureMultiSite": "Standorte",
@@ -15366,6 +15366,7 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.",
   "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15394,6 +15395,7 @@
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintSecurityBadgePinMinLength": "Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.",
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15534,6 +15536,7 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
   "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15562,6 +15565,7 @@
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelSecurityBadgePinMinLength": "Kürzeste Badge-PIN",
   "settingLabelSecurityInvitationExpiryDays": "Gültigkeit einer Einladung",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

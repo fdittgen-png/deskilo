@@ -20,6 +20,13 @@ void main() {
     ]);
   });
 
+  test('#3099 — a decision in another workspace does not wake this inbox', () {
+    expect(of('event_decisions').map((b) => (b.event, b.workspaceFilter)), [
+      (PostgresChangeEvent.all, 'ws-a'),
+      (PostgresChangeEvent.delete, null),
+    ]);
+  });
+
   test('account-wide tables stay unfiltered', () {
     for (final t in [
       'profiles',
@@ -28,7 +35,6 @@ void main() {
       'member_notes',
       'conversations',
       'conversation_participants',
-      'event_decisions',
     ]) {
       expect(of(t).single.workspaceFilter, isNull, reason: t);
     }

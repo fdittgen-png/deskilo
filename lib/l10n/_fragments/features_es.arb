@@ -22,7 +22,7 @@
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",
   "featureEventsTab": "Pestaña Eventos",
   "featureEventsTabDesc": "Actividad y confirmaciones pendientes.",
-  "featureMoneyTab": "Pestaña Finanzas",
+  "featureMoneyTab": "Extracto y saldo",
   "featureMoneyTabDesc": "Facturas mensuales, pagos y gastos.",
   "featureServices": "Servicios",
   "featureServicesDesc": "Catálogo de servicios y registro de consumos.",
@@ -161,7 +161,7 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finanzas en cuatro vistas",
+  "featureFinanceFacesTitle": "Extracto, pagos, facturas, documentos",
   "featureFinanceFacesDesc": "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
   "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.",

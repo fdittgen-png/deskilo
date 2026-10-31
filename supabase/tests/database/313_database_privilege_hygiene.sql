@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #3095 / 0612: the defaults stop handing out access. A new function is
+-- #3095 / 0613: the defaults stop handing out access. A new function is
 -- closed to PUBLIC and anon, a new table to anon; anon holds no table-level
 -- SELECT but keeps what is deliberate (the schema version, the column grants
 -- of the published cards); the feature-operation oracle is closed to the

@@ -8440,7 +8440,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzas en cuatro vistas';
+  String get featureFinanceFacesTitle =>
+      'Extracto, pagos, facturas, documentos';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8730,7 +8731,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureMessagesHubTitle => 'Mensajes, renovados';
 
   @override
-  String get featureMoneyTab => 'Pestaña Finanzas';
+  String get featureMoneyTab => 'Extracto y saldo';
 
   @override
   String get featureMoneyTabDesc => 'Facturas mensuales, pagos y gastos.';
@@ -22501,6 +22502,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Minutos tras su última señal de vida durante los que una persona sigue contando como en línea. Manténgalo por encima del latido de 2 minutos.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.';
 
@@ -22539,6 +22544,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintSecurityBadgeLockoutMinutes =>
       'Minutos durante los que se cuentan los intentos erróneos y durante los que una credencial bloqueada sigue bloqueada. Solo se puede alargar.';
+
+  @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -22719,6 +22728,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Ventana en línea';
 
   @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Releer tras una ausencia';
+
+  @override
   String get settingLabelPurchasePaymentChecker =>
       'Pagos que registra una segunda persona desde (unidades monetarias)';
 
@@ -22757,6 +22770,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgeLockoutMinutes =>
       'Tiempo de bloqueo de la credencial';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength =>
+      'PIN de tarjeta: longitud mínima';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

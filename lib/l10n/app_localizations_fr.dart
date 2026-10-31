@@ -8457,7 +8457,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finances en quatre volets';
+  String get featureFinanceFacesTitle =>
+      'Relevé, paiements, factures, documents';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8747,7 +8748,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messages repensés';
 
   @override
-  String get featureMoneyTab => 'Onglet Finances';
+  String get featureMoneyTab => 'Relevé et solde';
 
   @override
   String get featureMoneyTabDesc =>
@@ -22565,6 +22566,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minutes pendant lesquelles l\'application doit être restée hors de vue (en arrière-plan, onglet masqué, borne en veille) avant de relire tout ce qu\'elle affiche à son retour. Changer de fenêtre ne relit jamais ; une connexion en direct perdue relit toujours.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un paiement d\'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu\'il règle. 0 désactive la règle.';
 
@@ -22603,6 +22608,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintSecurityBadgeLockoutMinutes =>
       'Minutes pendant lesquelles les essais erronés sont comptés et pendant lesquelles un badge verrouillé le reste. Peut seulement être allongée.';
+
+  @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'Le moins de chiffres qu\'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu\'à leur changement.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -22781,6 +22790,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Fenêtre en ligne';
 
   @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Relire après une absence';
+
+  @override
   String get settingLabelPurchasePaymentChecker =>
       'Paiements enregistrés par une seconde personne à partir de (unités monétaires)';
 
@@ -22818,6 +22831,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgeLockoutMinutes =>
       'Durée de verrouillage du badge';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength =>
+      'PIN de badge : longueur minimale';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

@@ -22,6 +22,7 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
       'billing.max_advance_days' => l10n.settingLabelBillingMaxAdvanceDays,
       'directory.upcoming_window_days' => l10n.settingLabelDirectoryUpcomingWindowDays,
       'presence.online_window_minutes' => l10n.settingLabelPresenceOnlineWindowMinutes,
+      'presence.resync_after_away_minutes' => l10n.settingLabelPresenceResyncAfterAwayMinutes,
       'dunning.first_after_days' => l10n.settingLabelDunningFirstAfterDays,
       'security.badge_lockout_failures' => l10n.settingLabelSecurityBadgeLockoutFailures,
       'security.badge_lockout_minutes' => l10n.settingLabelSecurityBadgeLockoutMinutes,
@@ -90,6 +91,7 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
 String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'records.hosting_country' => l10n.settingLabelRecordsHostingCountry,
       'records.cra_authorisation_reference' => l10n.settingLabelRecordsCraReference,
+      'security.badge_pin_min_length' => l10n.settingLabelSecurityBadgePinMinLength,
       _ => key,
     };
 
@@ -107,6 +109,7 @@ String? settingHint(AppLocalizations l10n, String key) => switch (key) {
       'billing.max_advance_days' => l10n.settingHintBillingMaxAdvanceDays,
       'directory.upcoming_window_days' => l10n.settingHintDirectoryUpcomingWindowDays,
       'presence.online_window_minutes' => l10n.settingHintPresenceOnlineWindowMinutes,
+      'presence.resync_after_away_minutes' => l10n.settingHintPresenceResyncAfterAwayMinutes,
       'dunning.first_after_days' => l10n.settingHintDunningFirstAfterDays,
       'security.badge_lockout_failures' => l10n.settingHintSecurityBadgeLockoutFailures,
       'security.badge_lockout_minutes' => l10n.settingHintSecurityBadgeLockoutMinutes,
@@ -167,6 +170,7 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
       'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
       'records.cra_authorisation_reference' => l10n.settingHintRecordsCraReference,
+      'security.badge_pin_min_length' => l10n.settingHintSecurityBadgePinMinLength,
       _ => null,
     };
 

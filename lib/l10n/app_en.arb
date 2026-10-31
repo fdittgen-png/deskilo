@@ -10171,7 +10171,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
-  "featureFinanceFacesTitle": "Finances in four faces",
+  "featureFinanceFacesTitle": "Statement, payments, invoices, documents",
   "featureForeignCurrencyPurchasesDesc": "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused.",
   "@featureForeignCurrencyPurchasesDesc": {
     "description": "#3031 Features screen: what bills in another currency change."
@@ -10430,7 +10430,7 @@
   },
   "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
   "featureMessagesHubTitle": "Messages, reworked",
-  "featureMoneyTab": "Money tab",
+  "featureMoneyTab": "Statement and balance",
   "@featureMoneyTab": {
     "description": "Feature switch: the Money bottom tab"
   },
@@ -26532,6 +26532,10 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPresenceResyncAfterAwayMinutes": "Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.",
+  "@settingHintPresenceResyncAfterAwayMinutes": {
+    "description": "#3098 settings: Setting hint."
+  },
   "settingHintPurchasePaymentChecker": "A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -26571,6 +26575,10 @@
   "settingHintSecurityBadgeLockoutMinutes": "Minutes over which wrong PIN attempts are counted and for which a locked badge stays locked. Can only be lengthened.",
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintSecurityBadgePinMinLength": "The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.",
+  "@settingHintSecurityBadgePinMinLength": {
+    "description": "#3091 settings: Setting hint."
   },
   "settingHintSecurityInvitationExpiryDays": "Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.",
   "@settingHintSecurityInvitationExpiryDays": {
@@ -26760,6 +26768,10 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPresenceResyncAfterAwayMinutes": "Re-read after being away",
+  "@settingLabelPresenceResyncAfterAwayMinutes": {
+    "description": "#3098 settings: Setting label."
+  },
   "settingLabelPurchasePaymentChecker": "Payments a second person records from (currency units)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -26799,6 +26811,10 @@
   "settingLabelSecurityBadgeLockoutMinutes": "Badge lockout time",
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelSecurityBadgePinMinLength": "Shortest badge PIN",
+  "@settingLabelSecurityBadgePinMinLength": {
+    "description": "#3091 settings: Setting label."
   },
   "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
   "@settingLabelSecurityInvitationExpiryDays": {

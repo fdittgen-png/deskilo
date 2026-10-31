@@ -18,6 +18,7 @@
 // only a Wero payment), and the key's mode (a test key never settles a
 // live payment). Anything else is refused and nothing is credited.
 
+import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMinor } from "../_shared/money.ts";
 import { mollieApi, mollieKeyMode } from "../_shared/providers.ts";
@@ -37,13 +38,16 @@ async function apiKey(
   workspaceId: string,
   provider: string,
 ): Promise<string> {
-  const { data } = await admin
-    .from("payment_credentials")
-    .select("config")
-    .eq("workspace_id", workspaceId)
-    .eq("provider", provider)
-    .maybeSingle();
-  const stored = (data?.config ?? {}) as Record<string, string>;
+  // #3093 E6 — a failed read throws; the caller answers 500, never the
+  // installation's key for a workspace that has its own.
+  const stored = configOf(
+    await admin
+      .from("payment_credentials")
+      .select("config")
+      .eq("workspace_id", workspaceId)
+      .eq("provider", provider)
+      .maybeSingle(),
+  );
   return stored.api_key ?? Deno.env.get("MOLLIE_API_KEY") ?? "";
 }
 
@@ -102,7 +106,13 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return respond("ok", 200);
   }
   const settleProvider = intent.provider;
-  const key = await apiKey(admin, intent.workspace_id, settleProvider);
+  let key: string;
+  try {
+    key = await apiKey(admin, intent.workspace_id, settleProvider);
+  } catch (e) {
+    console.error("mollie webhook credential read failed", String(e));
+    return respond("config_unavailable", 500);
+  }
   if (!key) {
     console.log("mollie webhook not configured for workspace", intent.workspace_id);
     return respond("not_configured", 200);

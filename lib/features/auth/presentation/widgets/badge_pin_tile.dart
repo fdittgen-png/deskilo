@@ -136,9 +136,13 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
         stackTrace: st,
       );
       if (!mounted) return;
+      // #3091 — the server's minimum is a setting: its refusal names it.
+      final shortBy = RegExp(r'PIN must be (\d+) to 8').firstMatch('$e');
       setState(() {
         _busy = false;
-        _error = l10n.badgePinSaveFailed;
+        _error = shortBy == null
+            ? l10n.badgePinSaveFailed
+            : l10n.badgePinTooShort(int.parse(shortBy.group(1)!));
       });
       return;
     }

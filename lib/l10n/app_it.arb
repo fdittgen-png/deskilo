@@ -5991,7 +5991,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
-  "featureFinanceFacesTitle": "Finanze in quattro viste",
+  "featureFinanceFacesTitle": "Estratto, pagamenti, fatture, documenti",
   "featureForeignCurrencyPurchasesDesc": "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata.",
   "featureForeignCurrencyPurchasesTitle": "Acquisti in altra valuta",
   "featureFormHelpHintsDesc": "Un carosello di suggerimenti richiudibile su ogni schermata principale, e un piccolo ? accanto a ogni parametro e campo — un tocco apre la guida alla sezione giusta. Ripristinabile dalle impostazioni.",
@@ -6176,7 +6176,7 @@
   },
   "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.",
   "featureMessagesHubTitle": "Messaggi, rinnovati",
-  "featureMoneyTab": "Scheda Finanze",
+  "featureMoneyTab": "Estratto e saldo",
   "featureMoneyTabDesc": "Fatture mensili, pagamenti e spese.",
   "featureMore": "Altro",
   "featureMultiSite": "Sedi",
@@ -15366,6 +15366,7 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPresenceResyncAfterAwayMinutes": "Minuti in cui l'app deve essere rimasta fuori vista (in background, una scheda nascosta, un chiosco in standby) prima di rileggere tutto ciò che mostra al ritorno. Cambiare finestra non rilegge mai; una connessione in diretta persa rilegge sempre.",
   "settingHintPurchasePaymentChecker": "Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15394,6 +15395,7 @@
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintSecurityBadgePinMinLength": "Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.",
   "settingHintSecurityInvitationExpiryDays": "Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15534,6 +15536,7 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPresenceResyncAfterAwayMinutes": "Rileggi dopo un'assenza",
   "settingLabelPurchasePaymentChecker": "Pagamenti registrati da una seconda persona a partire da (unità monetarie)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15562,6 +15565,7 @@
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelSecurityBadgePinMinLength": "PIN del badge: lunghezza minima",
   "settingLabelSecurityInvitationExpiryDays": "Validità di un invito",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
