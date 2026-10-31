@@ -87,6 +87,14 @@ class FileCacheStore implements CacheStore {
   final Map<String, int> _publishedSeq = {};
   int _seq = 0;
 
+  /// #3102 — writers of each key still in flight. The two maps above only
+  /// order writers that overlap, so a key with none in flight is forgotten.
+  final Map<String, int> _inFlight = {};
+
+  /// Keys whose write order is still remembered (tests).
+  @visibleForTesting
+  int get trackedWrites => {..._startedSeq.keys, ..._publishedSeq.keys}.length;
+
   /// Invalidations seen, newest last (bounded): a write that started
   /// before one that covers its key must not publish after it.
   final List<({String prefix, int at})> _invalidations = [];
@@ -176,6 +184,7 @@ class FileCacheStore implements CacheStore {
     if (dir == null) return;
     final seq = ++_seq;
     _startedSeq[key] = seq;
+    _inFlight.update(key, (n) => n + 1, ifAbsent: () => 1);
     final startedAfterInvalidation = _invalidationCount;
     // A unique temporary file per write: two writers of one key never
     // share, truncate or rename each other's file.
@@ -204,6 +213,15 @@ class FileCacheStore implements CacheStore {
       TraceLogger.instance
           .warn('cache', 'write failed for $key', error: e, stackTrace: st);
       await _deleteQuietly(tmp);
+    } finally {
+      final left = (_inFlight[key] ?? 1) - 1;
+      if (left > 0) {
+        _inFlight[key] = left;
+      } else {
+        _inFlight.remove(key);
+        _startedSeq.remove(key);
+        _publishedSeq.remove(key);
+      }
     }
   }
 
@@ -234,7 +252,9 @@ class FileCacheStore implements CacheStore {
     if (_invalidations.length > 64) _invalidations.removeAt(0);
     _publishedSeq.removeWhere((k, _) => k.startsWith(prefix));
     try {
-      for (final file in dir.listSync().whereType<File>()) {
+      // #3102 — listed asynchronously: this runs on every realtime-driven
+      // invalidation, and a synchronous listing blocked the UI isolate.
+      await for (final file in dir.list().where((e) => e is File).cast<File>()) {
         // An in-flight writer's temporary file is the writer's own.
         if (_isTmp(file)) continue;
         final name = file.uri.pathSegments.last;
