@@ -23284,6 +23284,12 @@ abstract class AppLocalizations {
   /// **'{field}: {from} → {to}'**
   String mcpConfirmFieldChange(String field, String from, String to);
 
+  /// #3132 mcp_confirmation: the label of the person an assistant proposes to invite
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation for'**
+  String get mcpConfirmInvitee;
+
   /// #2873 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -24364,6 +24370,12 @@ abstract class AppLocalizations {
   /// **'Set the opening days and hours'**
   String get mcpOpSetupHours;
 
+  /// #2394 generated from contracts/mcp/operations.json (create_invitations)
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a person'**
+  String get mcpOpSetupInvite;
+
   /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
   ///
   /// In en, this message translates to:
@@ -24381,6 +24393,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preview a change of levels'**
   String get mcpOpSetupLevelsPreview;
+
+  /// #2394 generated from contracts/mcp/operations.json (set_member_permissions_preset)
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book and use the space'**
+  String get mcpOpSetupMemberRights;
 
   /// #2394 generated from contracts/mcp/operations.json (set_number_sequence)
   ///
@@ -33113,6 +33131,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
+
+  /// #2375 the accounting settings: a German space whose installation declares no country
+  ///
+  /// In en, this message translates to:
+  /// **'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.'**
+  String get recordsLocationAoNotice;
+
+  /// #2375 the accounting settings: a German space whose installation is declared outside the EU
+  ///
+  /// In en, this message translates to:
+  /// **'A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office\'s permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.'**
+  String get recordsLocationAoOutside;
 
   /// #2378 records location
   ///

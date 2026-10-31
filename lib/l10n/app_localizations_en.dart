@@ -14017,6 +14017,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get mcpConfirmInvitee => 'Invitation for';
+
+  @override
   String mcpConfirmLevel(String process, String level) {
     return '$process: $level';
   }
@@ -14675,6 +14678,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpSetupHours => 'Set the opening days and hours';
 
   @override
+  String get mcpOpSetupInvite => 'Invite a person';
+
+  @override
   String get mcpOpSetupLevels => 'See the setup levels';
 
   @override
@@ -14682,6 +14688,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpSetupLevelsPreview => 'Preview a change of levels';
+
+  @override
+  String get mcpOpSetupMemberRights => 'Let members book and use the space';
 
   @override
   String get mcpOpSetupNumbering => 'Set how documents are numbered';
@@ -19744,6 +19753,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get recordingPrivacyWriteRefused =>
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
+
+  @override
+  String get recordsLocationAoNotice =>
+      'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office\'s permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.';
 
   @override
   String get recordsLocationCraNone =>

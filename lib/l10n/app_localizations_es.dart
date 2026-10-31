@@ -14107,6 +14107,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get mcpConfirmInvitee => 'Invitación para';
+
+  @override
   String mcpConfirmLevel(String process, String level) {
     return '$process: $level';
   }
@@ -14773,6 +14776,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpSetupHours => 'Fijar los días y horarios de apertura';
 
   @override
+  String get mcpOpSetupInvite => 'Invitar a una persona';
+
+  @override
   String get mcpOpSetupLevels => 'Ver los niveles de configuración';
 
   @override
@@ -14780,6 +14786,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpOpSetupLevelsPreview => 'Previsualizar un cambio de niveles';
+
+  @override
+  String get mcpOpSetupMemberRights =>
+      'Permitir a los miembros reservar y usar el espacio';
 
   @override
   String get mcpOpSetupNumbering => 'Fijar la numeración de los documentos';
@@ -19883,6 +19893,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recordingPrivacyWriteRefused =>
       'No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.';
+
+  @override
+  String get recordsLocationAoNotice =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.';
 
   @override
   String get recordsLocationCraNone =>

@@ -164,6 +164,19 @@ void _levelXml(
         }
       });
     }
+    // v5 (#3074): the drawn room, symbols only — a photo is not decor.
+    for (final image in plan.images) {
+      final kind = image.kind;
+      if (kind == null) continue;
+      builder.element(WorkspaceXmlSchema.decorElement, nest: () {
+        builder.attribute(WorkspaceXmlSchema.kindAttr, kind.name);
+        _rectAttributes(builder, image.rect);
+        if (image.quarterTurns != 0) {
+          builder.attribute(
+              WorkspaceXmlSchema.turnsAttr, '${image.quarterTurns}');
+        }
+      });
+    }
   });
 }
 
@@ -422,7 +435,33 @@ WorkspaceXmlLevel _parseLevel(XmlElement element) => WorkspaceXmlLevel(
             in element.findElements(WorkspaceXmlSchema.officeElement))
           _parseOffice(office),
       ],
+      decor: [
+        for (final decor
+            in element.findElements(WorkspaceXmlSchema.decorElement))
+          _parseDecor(decor),
+      ],
     );
+
+WorkspaceXmlDecor _parseDecor(XmlElement element) {
+  final kind = _requireAttribute(element, WorkspaceXmlSchema.kindAttr);
+  if (PlanDecorKind.fromWire(kind) == null) {
+    throw WorkspaceXmlException(WorkspaceXmlError.invalidValue,
+        '<${WorkspaceXmlSchema.decorElement}> '
+        '${WorkspaceXmlSchema.kindAttr}="$kind" is not one of '
+        '${PlanDecorKind.values.map((k) => k.name).join(', ')}');
+  }
+  final turns = _optionalInt(element, WorkspaceXmlSchema.turnsAttr);
+  if (turns < 0 || turns > 3) {
+    throw WorkspaceXmlException(WorkspaceXmlError.invalidValue,
+        '<${WorkspaceXmlSchema.decorElement}> '
+        '${WorkspaceXmlSchema.turnsAttr}="$turns" is a quarter turn, 0 to 3');
+  }
+  return WorkspaceXmlDecor(
+    kind: kind,
+    rect: _parseRect(element),
+    quarterTurns: turns,
+  );
+}
 
 WorkspaceXmlOffice _parseOffice(XmlElement element) => WorkspaceXmlOffice(
       name: _requireAttribute(element, WorkspaceXmlSchema.nameAttr),

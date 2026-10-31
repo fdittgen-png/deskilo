@@ -57,6 +57,7 @@
   <xs:complexType name="deskilo-workspace.floor-plan.level">
     <xs:annotation><xs:documentation>A level (a floor).</xs:documentation></xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="decor" type="deskilo-workspace.floor-plan.level.decor"/>
       <xs:element name="office" type="deskilo-workspace.floor-plan.level.office"/>
     </xs:choice>
     <xs:attribute name="name" type="xs:string" use="required"/>
@@ -64,6 +65,15 @@
     <xs:attribute name="price-cents" type="xs:integer"/>
     <xs:attribute name="bookable-as-whole" type="xs:boolean"/>
     <xs:attribute name="site" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="deskilo-workspace.floor-plan.level.decor">
+    <xs:annotation><xs:documentation>A symbol drawn on the level: a wall, a door, a window, a pillar, a table, a couch, a WC or a kitchen. A photo placed on the plan does not travel.</xs:documentation></xs:annotation>
+    <xs:attribute name="kind" use="required"><xs:simpleType><xs:restriction base="xs:string"><xs:enumeration value="wall"/><xs:enumeration value="door"/><xs:enumeration value="window"/><xs:enumeration value="pillar"/><xs:enumeration value="table"/><xs:enumeration value="couch"/><xs:enumeration value="wc"/><xs:enumeration value="kitchen"/></xs:restriction></xs:simpleType></xs:attribute>
+    <xs:attribute name="x" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="y" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="w" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="h" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="turns" type="xs:nonNegativeInteger"/>
   </xs:complexType>
   <xs:complexType name="deskilo-workspace.floor-plan.level.office">
     <xs:annotation><xs:documentation>An area of the level: a room, a parking.</xs:documentation></xs:annotation>

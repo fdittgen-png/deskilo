@@ -99,6 +99,15 @@ String _richDocument() => buildWorkspaceXml(
           _seat('s2', 'd1', 1, kind: ResourceKind.room),
           _seat('s3', 'd1', 2, kind: ResourceKind.parking),
         ],
+        images: const [
+          PlanImage(
+            id: 'i1',
+            levelId: 'l1',
+            rect: GridRect(x: 0, y: 6, w: 3, h: 3),
+            kind: PlanDecorKind.door,
+            quarterTurns: 1,
+          ),
+        ],
       ),
     ),
   ],

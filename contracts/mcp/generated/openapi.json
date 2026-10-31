@@ -90,6 +90,8 @@
                           "deskilo_apply_setup_levels",
                           "deskilo_mark_setup_step",
                           "deskilo_set_workspace_basics",
+                          "deskilo_set_member_permissions_preset",
+                          "deskilo_create_invitations",
                           "deskilo_set_opening_hours",
                           "deskilo_add_closure_days",
                           "deskilo_set_number_sequence"
@@ -1221,6 +1223,8 @@
               "apply_setup_levels",
               "mark_setup_step",
               "set_workspace_basics",
+              "set_member_permissions_preset",
+              "create_invitations",
               "set_opening_hours",
               "add_closure_days",
               "set_number_sequence"
@@ -2837,6 +2841,91 @@
           "workspace_id"
         ],
         "x-operation": "set_workspace_basics",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "SetMemberPermissionsPresetInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "preset": {
+            "type": "string",
+            "enum": [
+              "members_can_book"
+            ],
+            "description": "The preset to apply; the only one is 'members_can_book'.",
+            "examples": [
+              "members_can_book"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "preset"
+        ],
+        "x-operation": "set_member_permissions_preset",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "CreateInvitationsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The first name of the person to invite.",
+            "examples": [
+              "Camille"
+            ]
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The last name of the person to invite.",
+            "examples": [
+              "Martin"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ],
+        "x-operation": "create_invitations",
         "x-rpc": null,
         "x-handler": true
       },

@@ -9810,6 +9810,7 @@
   "mcpConfirmDone": "Confirmado. El asistente ya puede enviar la solicitud.",
   "mcpConfirmExpired": "Esta solicitud ha caducado. Pida al asistente que la envíe de nuevo.",
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "mcpConfirmInvitee": "Invitación para",
   "mcpConfirmLevel": "{process}: {level}",
   "mcpConfirmNewShare": "Nueva parte de suscripción: {pct} %",
   "mcpConfirmNewStatus": "Nuevo estado: {status}",
@@ -9990,9 +9991,11 @@
   "mcpOpSetupBasics": "Fijar la zona horaria, el idioma y la dirección",
   "mcpOpSetupClosures": "Añadir días de cierre",
   "mcpOpSetupHours": "Fijar los días y horarios de apertura",
+  "mcpOpSetupInvite": "Invitar a una persona",
   "mcpOpSetupLevels": "Ver los niveles de configuración",
   "mcpOpSetupLevelsApply": "Cambiar los niveles de configuración",
   "mcpOpSetupLevelsPreview": "Previsualizar un cambio de niveles",
+  "mcpOpSetupMemberRights": "Permitir a los miembros reservar y usar el espacio",
   "mcpOpSetupNumbering": "Fijar la numeración de los documentos",
   "mcpOpSetupStatus": "Ver en qué punto está la configuración",
   "mcpOpSetupStepExplain": "Explicar un paso de la configuración",
@@ -13082,6 +13085,8 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationAoNotice": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.",
+  "recordsLocationAoOutside": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.",
   "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
   "recordsLocationCraNotice": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.",
   "recordsLocationCraOutside": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Esta instalación está declarada fuera de Canadá.",

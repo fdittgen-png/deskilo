@@ -2,7 +2,7 @@
 -- risk: additive
 -- (set_accounting_token_v1 restated whole from 0595 with one condition)
 --
--- 9999 (#2370, the number is taken at push time) -- a routine token
+-- 0628 (#2370) -- a routine token
 -- rotation keeps the connection. Once a connection had delivered, any new
 -- token was refused (DKA02) and the manager had to revoke and connect
 -- again, which starts with no mappings: every expiring API token meant
@@ -51,4 +51,4 @@ $fn$;
 revoke execute on function public.set_accounting_token_v1(uuid, text, text) from public, anon;
 grant execute on function public.set_accounting_token_v1(uuid, text, text) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(628);

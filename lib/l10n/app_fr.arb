@@ -9810,6 +9810,7 @@
   "mcpConfirmDone": "Confirmé. L'assistant peut maintenant envoyer la demande.",
   "mcpConfirmExpired": "Cette demande a expiré. Demandez à l'assistant de la renvoyer.",
   "mcpConfirmFieldChange": "{field} : {from} → {to}",
+  "mcpConfirmInvitee": "Invitation pour",
   "mcpConfirmLevel": "{process} : {level}",
   "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct} %",
   "mcpConfirmNewStatus": "Nouveau statut : {status}",
@@ -9990,9 +9991,11 @@
   "mcpOpSetupBasics": "Définir le fuseau horaire, la langue et l'adresse",
   "mcpOpSetupClosures": "Ajouter des jours de fermeture",
   "mcpOpSetupHours": "Définir les jours et heures d'ouverture",
+  "mcpOpSetupInvite": "Inviter une personne",
   "mcpOpSetupLevels": "Voir les niveaux de mise en place",
   "mcpOpSetupLevelsApply": "Changer les niveaux de mise en place",
   "mcpOpSetupLevelsPreview": "Prévisualiser un changement de niveaux",
+  "mcpOpSetupMemberRights": "Permettre aux membres de réserver et d'utiliser l'espace",
   "mcpOpSetupNumbering": "Définir la numérotation des documents",
   "mcpOpSetupStatus": "Voir où en est la mise en place",
   "mcpOpSetupStepExplain": "Expliquer une étape de la mise en place",
@@ -13082,6 +13085,8 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationAoNotice": "Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l'UE (§ 146 al. 2a AO). Rien ne déclare cette installation dans l'UE.",
+  "recordsLocationAoOutside": "Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l'UE ; ailleurs, il lui faut l'autorisation du centre des impôts (§ 146 al. 2b AO). Cette installation est déclarée hors de l'UE.",
   "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace.",
   "recordsLocationCraNotice": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.",
   "recordsLocationCraOutside": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.",

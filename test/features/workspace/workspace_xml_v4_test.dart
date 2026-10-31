@@ -120,7 +120,7 @@ String _export() => buildWorkspaceXml(
 void main() {
   test('v4 writes the kinds, and only where a place is not a plain seat', () {
     final xml = _export();
-    expect(xml, contains('<deskilo-workspace version="4">'));
+    expect(xml, contains('<deskilo-workspace version="5">'));
     expect(xml, contains('area-kind="parking"'));
     expect(xml, contains('resource-kind="parking"'));
     expect(xml, contains('slot-minutes="1440" parking-kind="ev"'));
@@ -166,7 +166,7 @@ void main() {
 
   test('a v3 file still parses: every place a seat in a workspace area', () {
     final v3 = _export()
-        .replaceFirst('version="4"', 'version="3"')
+        .replaceFirst('version="5"', 'version="3"')
         .replaceAll(RegExp(r' (area|resource|parking)-kind="[a-z]+"'), '')
         .replaceAll(RegExp(r' (capacity|slot-minutes)="\d+"'), '');
     final data = parseWorkspaceXml(v3);
