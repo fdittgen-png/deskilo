@@ -408,7 +408,7 @@ final class CurrentWorkspaceProvider
   }
 }
 
-String _$currentWorkspaceHash() => r'0ed433dfe8421732e07f404ca32b4f7a2f76d5d8';
+String _$currentWorkspaceHash() => r'9c42a2f75777c067da71b040621a4e74edc7048b';
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.

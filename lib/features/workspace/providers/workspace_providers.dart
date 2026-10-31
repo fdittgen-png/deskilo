@@ -172,9 +172,15 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
     final read = ref.watch(connectedWorkspaceReaderProvider);
     return readConnectedWorkspace(pool, read, split.source, split.workspaceId);
   }
+  // #3102 — the list and the remembered choice are independent: both are
+  // asked for at once, so the start-up waits one round trip, not two.
+  final chosen = ref.watch(activeWorkspaceIdProvider.future);
   final workspaces = await ref.watch(myWorkspacesProvider.future);
-  if (workspaces.isEmpty) return null;
-  final chosenId = await ref.watch(activeWorkspaceIdProvider.future);
+  if (workspaces.isEmpty) {
+    chosen.ignore();
+    return null;
+  }
+  final chosenId = await chosen;
   return workspaces.where((w) => w.id == chosenId).firstOrNull ??
       workspaces.first;
 }
