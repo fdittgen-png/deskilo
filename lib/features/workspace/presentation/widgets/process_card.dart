@@ -45,6 +45,8 @@ Color _stateColor(ThemeData theme, ProcessState state) => switch (state) {
 /// subprocess → feature. No switch lives here: turning features on and
 /// off stays on the switches view until the atomic process activation
 /// of #1329 exists, and tapping a feature goes there.
+const _offNamesShown = 3;
+
 class ProcessCard extends StatelessWidget {
   const ProcessCard({
     super.key,
@@ -70,10 +72,12 @@ class ProcessCard extends StatelessWidget {
   final Map<String, GlobalKey> subprocessKeys;
 
   /// #3072 — "Partial" says which features are switched off: the first
-  /// few by name, then how many more.
+  /// [_offNamesShown] by name, then how many more.
   String _offNote(AppLocalizations l10n) {
-    final off = [for (final s in status.subprocesses) ...s.off];
-    final shown = [for (final f in off.take(3)) featureName(l10n, f)];
+    final off = status.offFeatures;
+    final shown = [
+      for (final f in off.take(_offNamesShown)) featureName(l10n, f),
+    ];
     final more = off.length - shown.length;
     return l10n.processOffNote(
       more > 0 ? '${shown.join(', ')} +$more' : shown.join(', '),

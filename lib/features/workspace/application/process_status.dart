@@ -96,6 +96,12 @@ class ProcessStatus {
   int get heldBackCount =>
       subprocesses.fold(0, (sum, s) => sum + s.heldBack.length);
 
+  /// The switched-off features of every subprocess, each once, in order: a
+  /// feature two subprocesses share is one thing to switch on.
+  List<WorkspaceFeature> get offFeatures => {
+    for (final s in subprocesses) ...s.off,
+  }.toList();
+
   /// Whether this card belongs under [filter].
   ///
   /// The chips ask what an owner asks, so they overlap where the
