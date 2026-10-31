@@ -49,7 +49,7 @@ final class EventRepositoryProvider
   }
 }
 
-String _$eventRepositoryHash() => r'7f40cb16a4b69aaf657e142d44b162cfebf6701f';
+String _$eventRepositoryHash() => r'55176918c93ae225cdc7ff1ea524f5c2aec7b723';
 
 /// The active workspace's event feed, newest first (server-scoped by role).
 

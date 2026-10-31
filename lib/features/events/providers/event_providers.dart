@@ -30,7 +30,7 @@ const _sweepKey = 'messaging.inbox_sweep_interval_seconds';
 
 /// #3099 — how long a workspace's timeout sweep stays fresh. The registry
 /// default stands while the settings load, or on a server without the key.
-final inboxSweepIntervalProvider = Provider<Duration>((ref) {
+final _inboxSweepIntervalProvider = Provider<Duration>((ref) {
   final settings = ref.watch(activeSettingsProvider);
   return Duration(
     seconds: settings != null && settings.definitions.containsKey(_sweepKey)
@@ -46,7 +46,7 @@ EventRepository eventRepository(Ref ref) => SupabaseEventRepository(
       // not rebuild the repository (and lose the throttle's memory).
       sweeps: SweepThrottle(
         clock: ref.watch(clockProvider),
-        interval: () => ref.read(inboxSweepIntervalProvider),
+        interval: () => ref.read(_inboxSweepIntervalProvider),
       ),
     );
 
