@@ -365,6 +365,8 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
     const control = ['SELECT', 'TEXTAREA'].includes(c.tagName)
       || (c.tagName === 'INPUT' && !['checkbox', 'radio', 'hidden'].includes(c.attrs.type));
     if (control && !inLabel && !c.attrs['aria-label'] && !c.attrs['aria-labelledby']) unnamed.push(step.id);
+    const text = (n) => (n.children || []).map((k) => (typeof k === 'object' ? text(k) : String(k))).join('') + (n._text || '');
+    if (c.tagName === 'BUTTON' && !/[\p{L}\p{N}]/u.test(text(c)) && !c.attrs['aria-label']) unnamed.push(step.id + ':button');
     walk(step, c, inLabel || c.tagName === 'LABEL'); } };
   for (const step of globalThis.__STEPS) for (const k of step.build()) if (k && typeof k === 'object') { if (k.tagName === 'LABEL') walk(step, k, true); walk(step, k, k.tagName === 'LABEL'); }
   const byStep = unnamed.reduce((m, id) => ({ ...m, [id]: (m[id] || 0) + 1 }), {});
