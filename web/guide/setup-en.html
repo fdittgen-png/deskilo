@@ -2681,6 +2681,7 @@
 <li>Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.</li>
 <li>The detailed checklist is for the operator: see <a href="en.html#user.advanced.platforms">Platforms</a> and <a href="en.html#user.advanced.own-server">Your own server</a>.</li>
 <li>Push text never carries a name or a time: this is deliberate, for privacy.</li>
+<li>Pair the push secret on each installation: store the same private random value in Vault as <code>deskilo_push_shared_secret</code> first, then as <code>PUSH_SHARED_SECRET</code> for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.privacy.push">Push notifications on this device</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>What members control <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-admin">Administrator</span></div></header><div class="body"><p>You want to tell your members honestly what they can switch off.</p>

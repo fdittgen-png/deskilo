@@ -2681,6 +2681,7 @@
 <li>Senza i passaggi da 1 a 4 non viene inviata alcuna push, qualunque cosa dicano gli interruttori. Il flusso, la campanella e i messaggi funzionano comunque.</li>
 <li>L'elenco dettagliato è per l'operatore: vedi <a href="it.html#user.advanced.platforms">Piattaforme</a> e <a href="it.html#user.advanced.own-server">Il Suo server</a>.</li>
 <li>Il testo della push non contiene mai un nome né un orario: è voluto, per la riservatezza.</li>
+<li>Associare il segreto push su ogni installazione: salvare prima lo stesso valore casuale privato in Vault come <code>deskilo_push_shared_secret</code>, poi come <code>PUSH_SHARED_SECRET</code> per la funzione push. Provare un messaggio e un sollecito dopo l’associazione. Le installazioni non ancora associate mantengono l’invio precedente con un avviso; quelle configurate rifiutano chiamate senza segreto o credenziale di servizio. Non copiare mai il segreto nell’app o nel file XML di configurazione.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="it.html#user.privacy.push">Notifiche push su questo dispositivo</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>Che cosa controllano i membri <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span><span class="role role-admin">Amministratore</span></div></header><div class="body"><p>Vuole dire ai Suoi membri, con onestà, che cosa possono spegnere.</p>

@@ -5337,6 +5337,7 @@ Quiere que los recordatorios salgan solos.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
 - Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
+- Que el servidor acepte una solicitud push no prueba que un dispositivo la haya recibido. El resultado sigue siendo desconocido si el servicio push no revela la entrega; el recordatorio sigue registrado y el importe adeudado no cambia.
 
 **Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
 
@@ -7707,6 +7708,7 @@ El push no viene con la aplicación por sí solo. Si usted ejecuta su espacio en
 - Sin los pasos 1 a 4, no se envía ningún push, digan lo que digan los interruptores. El flujo, la campana y los mensajes siguen funcionando.
 - La lista de comprobación detallada es para el operador: véase [Plataformas](help:user.advanced.platforms) y [Su propio servidor](help:user.advanced.own-server).
 - El texto del push nunca lleva un nombre ni una hora: es deliberado, por privacidad.
+- Empareje el secreto push en cada instalación: guarde primero el mismo valor aleatorio privado en Vault como `deskilo_push_shared_secret` y después como `PUSH_SHARED_SECRET` para la función push. Pruebe un mensaje y un recordatorio tras emparejarlo. Las instalaciones aún no emparejadas conservan el envío anterior con un aviso; las configuradas rechazan llamadas sin el secreto o credencial de servicio. Nunca copie el secreto en la aplicación ni en el XML de configuración.
 
 **Véase también:** [Notificaciones push en este dispositivo](help:user.privacy.push)
 

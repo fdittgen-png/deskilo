@@ -5337,6 +5337,7 @@ Vuole che i solleciti partano da soli.
 - Mai mentre un pagamento è in sospeso o la fattura è sospesa. Le fatture senza termine registrato restano a Lei.
 - Disattivati: invia Lei stesso ogni sollecito.
 - Quando viene eseguito: ogni mattina sul server se l'installazione pianifica attività, altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.
+- L’accettazione di una richiesta push da parte del server non prova la ricezione su un dispositivo. L’esito resta sconosciuto quando il servizio push non rivela la consegna; il sollecito resta registrato e l’importo dovuto non cambia.
 
 **Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules)
 
@@ -7707,6 +7708,7 @@ Le notifiche push non arrivano con l'app da sole. Se gestisce il Suo spazio sull
 - Senza i passaggi da 1 a 4 non viene inviata alcuna push, qualunque cosa dicano gli interruttori. Il flusso, la campanella e i messaggi funzionano comunque.
 - L'elenco dettagliato è per l'operatore: vedi [Piattaforme](help:user.advanced.platforms) e [Il Suo server](help:user.advanced.own-server).
 - Il testo della push non contiene mai un nome né un orario: è voluto, per la riservatezza.
+- Associare il segreto push su ogni installazione: salvare prima lo stesso valore casuale privato in Vault come `deskilo_push_shared_secret`, poi come `PUSH_SHARED_SECRET` per la funzione push. Provare un messaggio e un sollecito dopo l’associazione. Le installazioni non ancora associate mantengono l’invio precedente con un avviso; quelle configurate rifiutano chiamate senza segreto o credenziale di servizio. Non copiare mai il segreto nell’app o nel file XML di configurazione.
 
 **Vedi anche:** [Notifiche push su questo dispositivo](help:user.privacy.push)
 

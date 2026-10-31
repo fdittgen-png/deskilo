@@ -5597,6 +5597,7 @@ Vous voulez que les relances partent toutes seules.
 - Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.
 - Désactivées : vous envoyez chaque relance vous-même.
 - Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.
+- L’acceptation d’une demande push par le serveur ne prouve pas sa réception par un appareil. Le résultat reste inconnu lorsque le service push ne révèle pas la livraison ; le rappel reste enregistré et la somme due ne change pas.
 
 **Voir aussi:** [Règles de relance](#règles-de-relance)
 

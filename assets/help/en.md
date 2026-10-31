@@ -5337,6 +5337,7 @@ You want reminders to leave on their own.
 - Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
 - Off: you send each reminder yourself.
 - When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.
+- A server accepting a push request does not prove that a device received it. The delivery outcome stays unknown when the push service does not disclose device delivery; the reminder remains recorded and the amount owed is unchanged.
 
 **See also:** [Reminder rules](help:user.money.reminders.rules)
 
@@ -7707,6 +7708,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 - Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.
 - The detailed checklist is for the operator: see [Platforms](help:user.advanced.platforms) and [Your own server](help:user.advanced.own-server).
 - Push text never carries a name or a time: this is deliberate, for privacy.
+- Pair the push secret on each installation: store the same private random value in Vault as `deskilo_push_shared_secret` first, then as `PUSH_SHARED_SECRET` for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.
 
 **See also:** [Push notifications on this device](help:user.privacy.push)
 
