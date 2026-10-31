@@ -24948,6 +24948,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersSearch => 'Search by name, number or tax ID';
 
   @override
+  String suppliersStanding(String date, String amount) {
+    return 'Last bill $date · $amount this year';
+  }
+
+  @override
   String get suppliersTaxUnverified => 'Tax identifier not verified';
 
   @override

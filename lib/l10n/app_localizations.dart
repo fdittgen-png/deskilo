@@ -41363,6 +41363,12 @@ abstract class AppLocalizations {
   /// **'Search by name, number or tax ID'**
   String get suppliersSearch;
 
+  /// #3070 supplier list: the date of the last bill and what the supplier cost this year
+  ///
+  /// In en, this message translates to:
+  /// **'Last bill {date} · {amount} this year'**
+  String suppliersStanding(String date, String amount);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:

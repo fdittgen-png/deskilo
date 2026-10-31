@@ -29441,6 +29441,18 @@
   "@suppliersSearch": {
     "description": "#3070 the search field of the suppliers screen"
   },
+  "suppliersStanding": "Last bill {date} · {amount} this year",
+  "@suppliersStanding": {
+    "description": "#3070 supplier list: the date of the last bill and what the supplier cost this year",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersTaxUnverified": "Tax identifier not verified",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

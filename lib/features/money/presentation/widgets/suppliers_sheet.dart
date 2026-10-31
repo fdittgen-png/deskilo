@@ -4,14 +4,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/purchase.dart';
 import '../../domain/supplier.dart';
+import '../../domain/supplier_standing.dart';
+import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
 import 'supplier_bank_dialog.dart';
 import 'supplier_dialogs.dart';
@@ -180,6 +186,13 @@ class SuppliersView extends ConsumerWidget {
                   .contains(needle))
                 s,
           ];
+    // #3070 — what each supplier cost this year; a failed or empty read
+    // simply leaves the line out.
+    final standings = supplierStandings(
+      ref.watch(purchasesProvider(workspaceId)).value ??
+          const <PurchaseSummary>[],
+      year: ref.watch(clockProvider).now().year,
+    );
     final reviews =
         ref.watch(supplierReviewsProvider(workspaceId)).value ??
         const <SupplierReview>[];
@@ -218,7 +231,17 @@ class SuppliersView extends ConsumerWidget {
               '${s.number} · ${s.name}'
               '${s.isActive ? '' : ' (${l10n.suppliersArchivedTag})'}',
             ),
-            subtitle: Text(_taxLine(l10n, s)),
+            subtitle: Text(
+              [
+                _taxLine(l10n, s),
+                if (standings[s.id] case final st?
+                    when st.lastBillOn != null)
+                  l10n.suppliersStanding(
+                    appFormatOf(context).date(st.lastBillOn!),
+                    moneyFormat(st.currency).formatMinor(st.yearGrossCents),
+                  ),
+              ].join('\n'),
+            ),
             trailing: Wrap(
               children: [
                 IconButton(

@@ -144,6 +144,7 @@ class PurchaseSummary {
     this.receivedOn,
     this.originalDate,
     this.legacy = false,
+    this.supplierId,
   });
 
   /// A table row (lines embedded as `purchase_lines`) or a detail document
@@ -170,10 +171,14 @@ class PurchaseSummary {
       receivedOn: DateTime.tryParse(r.stringOr('received_on')),
       originalDate: DateTime.tryParse(r.stringOr('original_date')),
       legacy: r.stringOr('legacy_qualification', 'none') != 'none',
+      supplierId: r.stringOrNull('supplier_id'),
     );
   }
 
   final String id;
+
+  /// The supplier the document is filed under; null when it names none.
+  final String? supplierId;
   final PurchaseKind kind;
   final PurchaseState state;
   final String category;

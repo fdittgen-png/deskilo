@@ -51,6 +51,15 @@ class BookingWindowSummary extends StatelessWidget {
     final hours = '${format.wallTime(start)}–${format.wallTime(end)}';
     final zone = timezone ?? window.start.timeZoneName;
     final personalZone = format.zoneSuffix(window.start);
+    final caption = [
+      ?cue,
+      dates,
+      ?period,
+      '${words.uxWorkspaceTime}: $hours ($zone)',
+      if (personalZone.isNotEmpty)
+        '${words.uxDeviceTime}: ${format.dateTime(window.start)}–'
+            '${format.time(window.end)} ($personalZone)',
+    ].join(' · ');
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.sm,
@@ -58,18 +67,18 @@ class BookingWindowSummary extends StatelessWidget {
       ),
       child: Align(
         alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          [
-            ?cue,
-            dates,
-            ?period,
-            '${words.uxWorkspaceTime}: $hours ($zone)',
-            if (personalZone.isNotEmpty)
-              '${words.uxDeviceTime}: ${format.dateTime(window.start)}–'
-                  '${format.time(window.end)} ($personalZone)',
-          ].join(' · '),
-          key: const ValueKey('booking-window-summary'),
-          style: Theme.of(context).textTheme.bodySmall,
+        child: Tooltip(
+          message: caption,
+          child: Text(
+            caption,
+            key: const ValueKey('booking-window-summary'),
+            style: Theme.of(context).textTheme.bodySmall,
+            // #3068 — one line: the first screen belongs to the plan; the
+            // whole caption stays in the tooltip and the semantics label.
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            semanticsLabel: caption,
+          ),
         ),
       ),
     );
