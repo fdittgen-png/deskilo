@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/data/sweep_throttle.dart';
 import '../../../core/realtime/invalidation_map.dart';
 import '../../../core/realtime/realtime_wiring.dart';
 import '../../../core/settings/active_settings.dart';
@@ -9,7 +10,6 @@ import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
-import '../data/sweep_throttle.dart';
 import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
 import '../domain/validation_policy.dart';

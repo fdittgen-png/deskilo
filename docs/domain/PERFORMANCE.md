@@ -301,3 +301,16 @@ The 100-row events page, as the owner of the busiest dev workspace, `EXPLAIN (AN
 | after (0613 helper) | 21.1 ms | 19.8 ms | 1,440 |
 
 The plan is unchanged (`events_workspace_created_idx`, hashed SubPlan 1). Only the helper got cheaper: it used to call `event_type_view_permissions(type)` once per held permission and event type. Now each type maps to its permissions once. For the person in 22 workspaces, the helper returns the same 594 rows (0 differing) in 70 ms instead of 131. `30_query_budgets.sql` holds the page under 100 ms at 5,000 events (dev: 8 ms after, 30 ms before).
+
+### The instance bundle shipped gzipped (#3102)
+
+`assets/instance/bundle.json` holds every migration's SQL and the edge functions' sources for the instance wizard. A build-time asset transformer (`packages/deskilo_asset_gzip`, deterministic: no time stamp, no platform byte) gzips it. The repository keeps the plain file the tools read.
+
+| measured 2026-10-31, at 0616 | before | after |
+|---|---|---|
+| `flutter_assets/assets/instance/bundle.json` | 17,375,176 B | 3,019,896 B |
+| release APK, arm64 (`--split-per-abi`) | 90,007,388 B | 89,980,604 B |
+
+The APK barely moves because an APK already deflates its JSON assets. The 14 MB is won where assets sit uncompressed: the iOS app bundle once installed, the web build, its service-worker cache, and any web host without transport compression. The loader reads either form and decodes off the UI isolate.
+
+The transformer must be a regular `dependency`, not a `dev_dependency`. As a dev dependency, a release Android build re-registered the dev-only `integration_test` plugin and failed to compile (`GeneratedPluginRegistrant`). The package is pure Dart and the app imports none of it.

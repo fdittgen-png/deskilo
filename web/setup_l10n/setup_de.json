@@ -147,6 +147,7 @@
  "identityTimezoneHint": "IANA-Name. Alle Buchungszeitfenster sind darin verankert; jedes Mitglied kann die Uhrzeit in seiner eigenen anzeigen.",
  "identityLanguage": "Sprache des Arbeitsbereichs",
  "identityLanguageHint": "Einladungen und Berichte werden standardmäßig in dieser Sprache verfasst.",
+ "identityAdvanced": "Erweitert: Server und Netzwerk",
  "identityAddress": "Postanschrift",
  "identityAddressHint": "Wird auf Rechnungen und dem Kiosk-Beleg gedruckt.",
  "identityAddressPlaceholder": "Musterstraße 12, 10115 Berlin",

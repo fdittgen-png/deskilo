@@ -5,7 +5,9 @@ import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
+import '../../../core/data/sweep_throttle.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/reservation.dart';
@@ -22,6 +24,13 @@ class SupabaseReservationRepository implements ReservationRepository {
   /// cache only answers when it fails (the tankstellen offline
   /// backbone) — a stale answer online would mislead a booking.
   final CacheStore _cache;
+
+  /// #3100 — shares the day-end sweep among concurrent window reads. An
+  /// interval of 0: only reads in flight together share it.
+  final _daySweeps = SweepThrottle(
+    clock: const SystemClock(),
+    interval: () => Duration.zero,
+  );
 
   /// Every mutation drops the cached windows: an offline fallback must
   /// never resurrect a pre-mutation view.
@@ -73,10 +82,17 @@ class SupabaseReservationRepository implements ReservationRepository {
           // NEVER fatal — a sweep that fails (function not yet applied,
           // transient hiccup) must not take the reservation read down
           // with it; the next fetch simply tries again.
+          //
+          // #3100 — window reads in flight together (one signal refreshes
+          // the day, two months, the upcoming list and the directory)
+          // share one sweep; a later read sweeps again.
           try {
-            await _client.rpc<dynamic>('sweep_day_end', params: {
-              'p_workspace_id': workspaceId,
-            });
+            await _daySweeps.run(
+              workspaceId,
+              () => _client.rpc<dynamic>('sweep_day_end', params: {
+                'p_workspace_id': workspaceId,
+              }),
+            );
           } on Object catch (e, st) {
             TraceLogger.instance
                 .warn('booking', 'day-end sweep failed', error: e, stackTrace: st);

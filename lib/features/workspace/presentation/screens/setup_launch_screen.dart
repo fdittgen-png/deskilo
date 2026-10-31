@@ -97,9 +97,13 @@ class _LaunchBody extends ConsumerWidget {
         const SizedBox(height: AppSpacing.md),
         _Heading(l10n.setupLaunchAnswers),
         for (final g in review.groups) ...[
-          Text(
-            l10n.setupLaunchGroup(g.group.name),
-            style: Theme.of(context).textTheme.titleSmall,
+          Semantics(
+            header: true,
+            child: Text(
+              l10n.setupLaunchGroup(g.group.name),
+              key: ValueKey('setup-launch-group-${g.group.name}'),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           ),
           for (final s in g.steps)
             _AnswerTile(
@@ -136,9 +140,12 @@ class _Heading extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
+  Widget build(BuildContext context) => Semantics(
+    header: true,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Text(text, style: Theme.of(context).textTheme.titleMedium),
+    ),
   );
 }
 

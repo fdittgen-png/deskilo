@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/sweep_throttle.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../money/domain/payment_terms.dart';
@@ -9,7 +10,6 @@ import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
-import 'sweep_throttle.dart';
 
 class SupabaseEventRepository implements EventRepository {
   SupabaseEventRepository(this._client, {required this._sweeps});

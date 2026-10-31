@@ -158,6 +158,9 @@ const Map<String, String> _notExported = {
   'workspace_documents': 'configuration: the document library',
 
   // --- operational state, not a record of the space -----------------
+  'realtime_deletions':
+      'a ten-minute signal that rows were deleted, kept only so live '
+          'clients of the workspace refresh (#3101); not a record',
   'deployments':
       'a dev/prod transfer log belonging to the environment pair, not '
           'to either workspace',
