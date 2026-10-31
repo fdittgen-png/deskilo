@@ -196,17 +196,17 @@ class ShellDrawer extends ConsumerWidget {
                 for (final e in reporting) e.key,
               }, from: reporting),
             ],
-            if (administration.isNotEmpty) ...[
-              const Divider(),
-              group('people', labels.uxNavPeople, Icons.group_outlined, {
-                'drawer-members', 'drawer-roles', 'drawer-nfc-config',
-              }),
-              ..._financeGroups(group, tile, entries, administration),
-              group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
-                'drawer-setup-guide', 'drawer-workspace-settings', 'drawer-availability',
-                'drawer-features', 'drawer-editor',
-              }),
-            ],
+            if (administration.isNotEmpty) const Divider(),
+            // Each group hides itself when empty. A financial permission
+            // must not depend on having an unrelated administration door.
+            group('people', labels.uxNavPeople, Icons.group_outlined, {
+              'drawer-members', 'drawer-roles', 'drawer-nfc-config',
+            }),
+            ..._financeGroups(group, tile, entries, administration),
+            group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
+              'drawer-setup-guide', 'drawer-workspace-settings', 'drawer-availability',
+              'drawer-features', 'drawer-editor',
+            }),
             const Divider(),
             for (final e in account) tile(e),
           ],
