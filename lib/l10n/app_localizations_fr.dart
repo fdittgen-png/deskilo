@@ -25217,6 +25217,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliersSearch => 'Rechercher par nom, numéro ou numéro fiscal';
 
   @override
+  String suppliersStanding(String date, String amount) {
+    return 'Dernière facture le $date · $amount cette année';
+  }
+
+  @override
   String get suppliersTaxUnverified => 'Identifiant fiscal non vérifié';
 
   @override

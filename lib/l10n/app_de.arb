@@ -16856,6 +16856,7 @@
   },
   "suppliersSavedOpen": "Öffnen",
   "suppliersSearch": "Nach Name, Nummer oder Steuer-ID suchen",
+  "suppliersStanding": "Letzte Rechnung am {date} · {amount} in diesem Jahr",
   "suppliersTaxUnverified": "Steuernummer nicht geprüft",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

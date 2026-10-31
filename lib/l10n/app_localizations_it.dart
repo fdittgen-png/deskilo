@@ -25164,6 +25164,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get suppliersSearch => 'Cerca per nome, numero o codice fiscale';
 
   @override
+  String suppliersStanding(String date, String amount) {
+    return 'Ultima fattura il $date · $amount quest’anno';
+  }
+
+  @override
   String get suppliersTaxUnverified => 'Identificativo fiscale non verificato';
 
   @override
