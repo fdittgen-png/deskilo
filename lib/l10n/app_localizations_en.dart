@@ -19746,6 +19746,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
 
   @override
+  String get recordsLocationAoNotice =>
+      'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office\'s permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.';
+
+  @override
   String get recordsLocationCraNone =>
       'No CRA authorisation is recorded. A billing manager records it in the workspace settings.';
 

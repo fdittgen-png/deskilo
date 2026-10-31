@@ -19885,6 +19885,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.';
 
   @override
+  String get recordsLocationAoNotice =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.';
+
+  @override
   String get recordsLocationCraNone =>
       'No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.';
 

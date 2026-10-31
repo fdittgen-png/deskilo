@@ -10,5 +10,7 @@
   "recordsLocationCraNotice": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.",
   "recordsLocationCraOutside": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Esta instalación está declarada fuera de Canadá.",
   "recordsLocationCraReference": "Autorización de la CRA: {reference}",
-  "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio."
+  "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
+  "recordsLocationAoNotice": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.",
+  "recordsLocationAoOutside": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE."
 }

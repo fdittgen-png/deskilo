@@ -19927,6 +19927,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
 
   @override
+  String get recordsLocationAoNotice =>
+      'Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat (§ 146 Abs. 2a AO). Nichts weist diese Installation dort aus.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat; anderswo nur mit Bewilligung des Finanzamts (§ 146 Abs. 2b AO). Diese Installation ist außerhalb der EU angegeben.';
+
+  @override
   String get recordsLocationCraNone =>
       'Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.';
 

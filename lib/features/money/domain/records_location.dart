@@ -7,11 +7,16 @@
 // outside Canada (`records.cra_authorisation_reference`, a workspace
 // setting). The app never infers a location from a region it was built
 // with, a language or a URL: nothing declared is said as nothing declared.
+// #2375: a German business keeps its electronic books in Germany or another
+// EU member state (§ 146 Abs. 2a AO), elsewhere only with the tax office's
+// permission (Abs. 2b); membership is the tax reference store's.
 // Pure Dart.
 import 'package:meta/meta.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/vat/place_of_supply.dart' show isEuCountry;
+import '../../../core/vat/tax_reference.dart';
 
 /// The platform setting the operator declares the hosting country in.
 const String _hostingCountryKey = 'records.hosting_country';
@@ -23,6 +28,10 @@ const String _craReferenceKey = 'records.cra_authorisation_reference';
 /// kept within it unless the CRA permits otherwise.
 const String _canada = 'CA';
 
+/// The country whose fiscal code (§ 146 Abs. 2a AO) asks for the books to
+/// be kept within the EU unless the tax office permits otherwise.
+const String _germany = 'DE';
+
 /// An ISO 3166-1 alpha-2 code, as the operator types it.
 final RegExp _countryCode = RegExp(r'^[A-Z]{2}$');
 
@@ -32,6 +41,7 @@ class RecordsLocation {
     required this.issuerCountry,
     required this.hostingCountry,
     required this.craReference,
+    this.hostingInEu = false,
   });
 
   /// The location of a space of [issuerCountry] as [settings] state it. A
@@ -39,6 +49,7 @@ class RecordsLocation {
   factory RecordsLocation.fromSettings(
     SettingsSet? settings, {
     required String issuerCountry,
+    TaxReferenceSet? reference,
   }) {
     String read(String key, String fallback) =>
         settings != null && settings.definitions.containsKey(key)
@@ -48,9 +59,12 @@ class RecordsLocation {
       _hostingCountryKey,
       SettingDefaults.recordsHostingCountry,
     ).trim().toUpperCase();
+    final hosting = _countryCode.hasMatch(declared) ? declared : null;
     return RecordsLocation(
       issuerCountry: issuerCountry.trim().toUpperCase(),
-      hostingCountry: _countryCode.hasMatch(declared) ? declared : null,
+      hostingCountry: hosting,
+      hostingInEu:
+          hosting != null && isEuCountry(hosting, reference: reference),
       craReference: read(
         _craReferenceKey,
         SettingDefaults.recordsCraAuthorisationReference,
@@ -68,9 +82,16 @@ class RecordsLocation {
   /// The CRA authorisation reference the space recorded, empty when none.
   final String craReference;
 
+  /// Whether the declared country is an EU member state.
+  final bool hostingInEu;
+
   /// A Canadian business whose records are not declared to be in Canada:
   /// they may be kept elsewhere only with the CRA's authorisation.
   bool get craNotice => issuerCountry == _canada && hostingCountry != _canada;
+
+  /// #2375 — a German business whose books are not declared in the EU:
+  /// kept elsewhere, they need the tax office's permission.
+  bool get aoNotice => issuerCountry == _germany && !hostingInEu;
 
   /// The lines an archive's README states, in English.
   List<String> get archiveLines => [
@@ -93,5 +114,12 @@ class RecordsLocation {
       else
         'CRA authorisation reference: $craReference.',
     ],
+    if (aoNotice)
+      if (hostingCountry == null)
+        'Nothing declares these books kept in Germany or another EU '
+            'member state (§ 146 Abs. 2a AO).'
+      else
+        'These books are kept outside the EU: this needs the tax '
+            "office's permission (§ 146 Abs. 2b AO).",
   ];
 }
