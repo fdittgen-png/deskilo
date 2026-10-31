@@ -3,7 +3,7 @@
 -- once, and leaves other workspaces usable. Every PIN refusal does one crypt;
 -- only badge administrators see a PIN-review notice, never credential material.
 begin;
-select plan(26);
+select plan(30);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003091' || lpad(n::text,4,'0'))::uuid;
@@ -55,6 +55,12 @@ reset role;
 select pg_temp.act_as(2);
 select throws_ok($$select public.badge_pin_needs_review(pg_temp.u(101),pg_temp.u(201))$$,'P0001','not allowed','a plain member cannot inspect another account PIN');
 select is((select count(*)::int from public.events where workspace_id=pg_temp.u(101) and type='badge_security_alert'),0,'a plain member does not read the owner alert');
+reset role;
+update public.workspaces set role_permissions='{"member":["operateKiosk"]}' where id=pg_temp.u(101);
+select pg_temp.act_as(2);
+select ok(public.has_permission(pg_temp.u(101),'operateKiosk'),'the door operator holds the kiosk permission');
+select ok(not public.has_permission(pg_temp.u(101),'workspaceSettings'),'the door operator holds no workspace administration permission');
+select is((select count(*)::int from public.events where workspace_id=pg_temp.u(101) and type='badge_security_alert'),0,'a kiosk-only member cannot read the owner alert');
 select public.set_badge_pin('482615');
 reset role;
 select is((select pin_length::int from public.account_badge_pins where user_id=pg_temp.u(2)),6,'new PINs record their length without exposing the hash');
@@ -66,13 +72,22 @@ select set_config('request.jwt.claims','{"role":"service_role"}',true);
 
 -- Instrument the real crypt boundary inside this rolled-back transaction,
 -- rather than compare noisy wall-clock timings on a shared runner.
-alter function extensions.crypt(text,text) rename to crypt_3091_actual;
-create function extensions.crypt(text,text) returns text language plpgsql as $$
+create function pg_temp.counted_crypt(text,text) returns text language plpgsql as $$
 begin
   perform set_config('t.crypt_calls',(coalesce(nullif(current_setting('t.crypt_calls',true),''),'0')::int+1)::text,true);
-  return extensions.crypt_3091_actual($1,$2);
+  return extensions.crypt($1,$2);
 end;
 $$;
+do $instrument$
+declare v_def text;
+begin
+  select pg_get_functiondef('public.badge_auth_verify(text,text)'::regprocedure) into v_def;
+  if regexp_count(v_def,'extensions\.crypt\(') <> 1 then
+    raise exception 'expected one verifier crypt call';
+  end if;
+  execute replace(v_def,'extensions.crypt(','pg_temp.counted_crypt(');
+end;
+$instrument$;
 create function pg_temp.crypt_calls(p_uid text,p_pin text) returns int language plpgsql as $$
 begin
   perform set_config('t.crypt_calls','0',true);
@@ -99,6 +114,7 @@ select is(public.badge_auth_verify('abcd','482615')->>'reason','refused','a shor
 select ok(not has_function_privilege('authenticated','public.record_badge_auth_failure(text,uuid)','EXECUTE'),'the failure recorder is not a public authenticated API');
 select ok(not has_function_privilege('anon','public.badge_auth_verify(text,text)','EXECUTE'),'anonymous clients cannot bypass the Edge boundary');
 select ok(not has_table_privilege('authenticated','public.badge_auth_attempts','select'),'clients cannot read the attempt log');
+select is(public.event_type_view_permissions('badge_security_alert'),array['workspaceSettings'],'the alert has an explicit workspace administration view permission');
 select is((select count(*)::int from pg_policies where schemaname='public' and tablename='badge_auth_attempts' and permissive='PERMISSIVE'),0,'the workspace attack log still has no permissive client policy');
 select * from finish();
 rollback;
