@@ -284,6 +284,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "invitation_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "invoice_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -3222,6 +3226,74 @@
     "de": "Mitgliedern Buchen und Nutzen des Raums erlauben",
     "es": "Permitir a los miembros reservar y usar el espacio",
     "it": "Consentire ai membri di prenotare e usare lo spazio"
+   }
+  },
+  {
+   "id": "create_invitations",
+   "handler": true,
+   "dispatch": true,
+   "title": "Invite a person to the workspace",
+   "description": "The setup step 'invite': an invitation for one member, named by first and last name (at least one). It is never an admin invitation and the join code is never returned to you: the person who confirms sees it in the DesKilo app and passes it on. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows who is invited; then call again with the same request_id and arguments. The answer names the invitation (invitation_id) and its status, nothing that lets anyone join.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageMembers"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "first_name": {
+     "type": "text",
+     "maxLength": 120,
+     "description": "The first name of the person to invite.",
+     "examples": [
+      "Camille"
+     ]
+    },
+    "last_name": {
+     "type": "text",
+     "maxLength": 120,
+     "description": "The last name of the person to invite.",
+     "examples": [
+      "Martin"
+     ]
+    }
+   },
+   "output": [
+    "invitation_id",
+    "status"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupInvite",
+    "en": "Invite a person",
+    "fr": "Inviter une personne",
+    "de": "Eine Person einladen",
+    "es": "Invitar a una persona",
+    "it": "Invitare una persona"
    }
   },
   {

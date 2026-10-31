@@ -134,6 +134,16 @@ jobs:
             adb logcat -d > launch-logcat.txt
             adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression) - full logcat in the launch-logcat artifact"; grep -iE "AndroidRuntime|FATAL|deskilo" launch-logcat.txt | tail -80; exit 1; }
             echo "release build is alive after launch"
+            # Exercise the native app-switcher cover as well as cold launch.
+            adb shell input keyevent KEYCODE_HOME
+            sleep 2
+            adb logcat -d > launch-logcat.txt
+            adb shell pidof de.deskilo.app || { echo "::error::release build crashed while entering the background"; exit 1; }
+            adb shell am start -W -n de.deskilo.app/.MainActivity
+            sleep 2
+            adb logcat -d > launch-logcat.txt
+            adb shell pidof de.deskilo.app || { echo "::error::release build crashed while resuming"; exit 1; }
+            echo "release build is alive after pause and resume"
 
       - name: Upload launch logcat
         if: always()

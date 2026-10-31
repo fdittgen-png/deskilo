@@ -32,6 +32,7 @@
   "mcpOpSetupStepMark": "Einen Einrichtungsschritt als erledigt oder für später markieren",
   "mcpOpSetupBasics": "Zeitzone, Sprache und Adresse festlegen",
   "mcpOpSetupMemberRights": "Mitgliedern Buchen und Nutzen des Raums erlauben",
+  "mcpOpSetupInvite": "Eine Person einladen",
   "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
   "mcpOpSetupClosures": "Schließtage hinzufügen",
   "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen"

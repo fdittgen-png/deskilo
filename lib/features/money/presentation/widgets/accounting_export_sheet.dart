@@ -158,6 +158,7 @@ class _FormatTile extends StatelessWidget {
         'saft_pt' ||
         'saft_no' ||
         'saft_dk' ||
+        'saft_ro' ||
         'faia_lu' ||
         'saft_oecd_full' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,

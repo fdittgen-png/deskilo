@@ -32,6 +32,7 @@
   "mcpOpSetupStepMark": "Marquer une étape comme faite ou pour plus tard",
   "mcpOpSetupBasics": "Définir le fuseau horaire, la langue et l'adresse",
   "mcpOpSetupMemberRights": "Permettre aux membres de réserver et d'utiliser l'espace",
+  "mcpOpSetupInvite": "Inviter une personne",
   "mcpOpSetupHours": "Définir les jours et heures d'ouverture",
   "mcpOpSetupClosures": "Ajouter des jours de fermeture",
   "mcpOpSetupNumbering": "Définir la numérotation des documents"

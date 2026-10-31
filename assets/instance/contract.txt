@@ -1975,9 +1975,12 @@ routine public.badge_token_hash(p_token text) -> text | function | invoker | imm
 routine public.bank_import_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:716d86bbf858
 routine public.bank_line_hash(p_account text, p_booking date, p_value date, p_amount bigint, p_currency text, p_reference text, p_end_to_end text, p_iban text, p_remittance text) -> text | function | invoker | immutable | exec:service_role | body:7a38c4adb37d
 routine public.bank_line_status(l bank_statement_lines) -> text | function | definer | stable | exec:service_role | body:313425c5a2ff
+routine public.bank_original_access(p_workspace_id uuid, p_write boolean) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9f5560438710
+routine public.bank_original_imported(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:2f8318b4a884
+routine public.bank_original_workspace(p_name text) -> uuid | function | invoker | immutable | exec:authenticated,service_role | body:3c7a058ad2d5
 routine public.bank_statement_lines_v1(p_statement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ba69858a780
 routine public.bank_statement_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:40e3eb8e6cf6
-routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5f3e293f231
+routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dbd4baa5a18a
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_batch_time_budget_ms(p_workspace_id uuid) -> integer | function | definer | stable | exec:service_role | body:b13385b30322
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
@@ -2042,7 +2045,7 @@ routine public.commitment_variance_apply() -> trigger | function | definer | vol
 routine public.commitment_variance_write(p_workspace_id uuid, p_occurrence_id uuid, p_purchase_id uuid, p_line_no integer, p_amount_cents bigint, p_reason text, p_request_id uuid, p_actor uuid) -> uuid | function | definer | volatile | exec:service_role | body:ff4fa1be3993
 routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_refusal_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c774bc970470
-routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:62e360d204f4
+routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:63b944dcf734
 routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) -> TABLE(direction text, percent numeric, category text, tax_point date, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint, vat_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:aa24ffac9871
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
@@ -2190,7 +2193,7 @@ routine public.import_bank_statement_v1(p_workspace_id uuid, p_statement jsonb, 
 routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e99f11021cb3
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
-routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e7ec2d660a64
+routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d1d17272fcd
 routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:91fd625a6ad2
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
@@ -2353,6 +2356,7 @@ routine public.mcp_op_apply_setup_levels(c mcp_call_context, p_args jsonb) -> js
 routine public.mcp_op_cancel_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3750646c95fe
 routine public.mcp_op_check_in(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:31473771b784
 routine public.mcp_op_check_out(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3d30234d6be4
+routine public.mcp_op_create_invitations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:eca1cc455b1f
 routine public.mcp_op_create_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:8a13f4c06f5f
 routine public.mcp_op_explain_setup_step(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:21b9d7b45661
 routine public.mcp_op_get_availability(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:156c91f6a9e7
@@ -2383,7 +2387,7 @@ routine public.mcp_op_set_number_sequence(c mcp_call_context, p_args jsonb) -> j
 routine public.mcp_op_set_opening_hours(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:47b6bbe331db
 routine public.mcp_op_set_workspace_basics(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4eec85af0fed
 routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:12fecbe08fb8
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:405813bdc0fd
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
@@ -2419,6 +2423,7 @@ routine public.mcp_statement_outcome(c mcp_call_context, p_member_id uuid, p_arg
 routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:0ae374a4bff6
 routine public.mcp_target_add_closure_days(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4398319ba1aa
 routine public.mcp_target_apply_setup_levels(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f41e2241a183
+routine public.mcp_target_create_invitations(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f8a6f13a2bb0
 routine public.mcp_target_mark_setup_step(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:99326e24d844
 routine public.mcp_target_of(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:b7500fa5c676
 routine public.mcp_target_set_member_permissions_preset(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ae3b20833fc4
@@ -2907,6 +2912,7 @@ routine public.setup_basics_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | f
 routine public.setup_closure_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:29a10771479f
 routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:b6d27e138549
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
+routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
 routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:e97b1dee5897
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c

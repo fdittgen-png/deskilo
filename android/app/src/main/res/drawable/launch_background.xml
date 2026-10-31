@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Native launch screen: the brand icon on the theme background, so
      boot shows logo → in-app splash → finished screen with no blank
-     flash in between. -->
+     flash in between. The bitmap source must stay a raster drawable:
+     the launcher mipmap resolves to adaptive XML on newer Android versions. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?android:colorBackground" />
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_launcher_foreground" />
     </item>
 </layer-list>

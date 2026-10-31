@@ -398,6 +398,19 @@
     "input": "b24a919592aa66c6",
     "output": "e3a7bf0af850a0b1"
   },
+  "create_invitations": {
+    "name": "deskilo_create_invitations",
+    "title": "Invite a person to the workspace",
+    "annotations": {
+      "title": "Invite a person to the workspace",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "3308dfeff7ed8dd1",
+    "output": "0d153e15b49033c6"
+  },
   "set_opening_hours": {
     "name": "deskilo_set_opening_hours",
     "title": "Set the opening days and hours",

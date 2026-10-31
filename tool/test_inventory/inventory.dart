@@ -119,7 +119,7 @@ const runnerFamilies = <RunnerFamily>[
     name: 'root suite',
     root: 'test',
     suffix: '_test.dart',
-    owner: 'quality.yml: flutter test --coverage in three shards '
+    owner: 'quality.yml: flutter test --coverage in four shards '
         '(tool/quality_shard.dart), one report stream each',
     workflow: 'quality.yml',
     command: 'flutter test --coverage',

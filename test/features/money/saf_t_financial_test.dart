@@ -149,6 +149,28 @@ final _maps = <TaxReferenceRow>[
     ('write_off', '645100'),
   ])
     _row('LU', 'saf_t/$role', {'account': code}),
+  // #2379 — Romania: the synthetic account of the national chart (OMFP
+  // 1802/2014) and its function; ANAF's VAT codes by rate (D406
+  // nomenclature, sheets Livrari and Achizitii ded 100%).
+  for (final (role, code, function) in const [
+    ('customers', '4111', 'Activ'),
+    ('bank', '5121', 'Activ'),
+    ('suppliers', '401', 'Pasiv'),
+    ('revenue', '704', 'Pasiv'),
+    ('vat_output', '4427', 'Pasiv'),
+    ('vat_input', '4426', 'Activ'),
+    ('vat_pending', '4428', 'Bifunctional'),
+    ('expenses', '628', 'Activ'),
+    ('write_off', '654', 'Activ'),
+  ])
+    _row('RO', 'saf_t/$role', {'account': code, 'label': function}),
+  for (final (key, code) in const [
+    ('saf_t/tax:output:21', '310344'),
+    ('saf_t/tax:output:11', '310351'),
+    ('saf_t/tax:input:21', '301104'),
+    ('saf_t/tax:input:11', '301105'),
+  ])
+    _row('RO', key, {'tax_code': code}),
 ];
 
 /// The bundled reference without its own `saf_t/` rows, so each test
@@ -165,18 +187,25 @@ InvoiceParty _company(String country) => InvoiceParty(
   city: switch (country) {
     'NO' => 'Oslo',
     'DK' => 'København Ø',
+    'RO' => 'București',
     _ => 'Luxembourg',
   },
   postalCode: switch (country) {
     'NO' => '0155',
     'DK' => '2100',
+    'RO' => '010011',
     _ => 'L-1611',
   },
   country: country,
-  legalId: country == 'DK' ? '10150817' : '999999999',
+  legalId: switch (country) {
+    'DK' => '10150817',
+    'RO' => '14399840',
+    _ => '999999999',
+  },
   vatId: switch (country) {
     'NO' => 'NO999999999MVA',
     'DK' => 'DK10150817',
+    'RO' => 'RO14399840',
     _ => 'LU12345678',
   },
   vatRegime: 'standard',
@@ -233,7 +262,11 @@ SafTFinancialRequest _request(
         ),
       },
   company: company ?? _company(country),
-  companyIban: country == 'DK' ? 'DK5000400440116243' : '',
+  companyIban: switch (country) {
+    'DK' => 'DK5000400440116243',
+    'RO' => 'RO49AAAA1B31007593840000',
+    _ => '',
+  },
   contact: contact,
   currency: 'EUR',
   softwareVersion: '1.0.3',
@@ -253,6 +286,9 @@ List<SafTGap> _gaps(SafTFinancialRequest request) =>
       SafTFinancialFile() => fail('expected a refusal'),
     };
 
+String _textOf(XmlElement e, String name) =>
+    e.findElements(name).single.innerText;
+
 int _cents(String text) => (double.parse(text) * 100).round();
 
 int _text(XmlElement e, String name) =>
@@ -271,13 +307,16 @@ void main() {
     (SafTFinancialProfile.norway, 'NO'),
     (SafTFinancialProfile.luxembourg, 'LU'),
     (SafTFinancialProfile.denmark, 'DK'),
+    (SafTFinancialProfile.romania, 'RO'),
   ]) {
     group(profile.formatId, () {
       final doc = _file(
         _request(profile, country: country, standardRateOnly: country == 'DK'),
       );
       final ledger = doc.findAllElements('GeneralLedgerEntries').single;
-      final lines = ledger.findAllElements('Line').toList();
+      // Romania's lines are TransactionLines.
+      final lineTag = profile.romaniaShape ? 'TransactionLine' : 'Line';
+      final lines = ledger.findAllElements(lineTag).toList();
       bool debit(XmlElement l) => l.findElements('DebitAmount').isNotEmpty;
       int lineAmount(XmlElement l) => _cents(
         l
@@ -327,7 +366,7 @@ void main() {
       test('every transaction balances and references its document', () {
         final numbers = {for (final p in _all) p.documentNumber};
         for (final t in ledger.findAllElements('Transaction')) {
-          final own = t.findElements('Line').toList();
+          final own = t.findElements(lineTag).toList();
           expect(
             own.where(debit).map(lineAmount).fold(0, (a, b) => a + b),
             own
@@ -399,6 +438,8 @@ void main() {
         final used = doc
             .findAllElements('TaxInformation')
             .map((t) => t.findElements('TaxCode').single.innerText)
+            // Romania's lines without tax carry ANAF's no-tax code.
+            .where((code) => code != '000000')
             .toSet();
         expect(used, isNotEmpty);
         expect(codes, containsAll(used));
@@ -596,6 +637,132 @@ void main() {
       ),
       [const SafTGap(SafTGapKind.company, 'Address')],
     );
+  });
+
+  group('#2379 — Romania (D406)', () {
+    SafTFinancialRequest ro({
+      TaxReferenceSet? reference,
+      Map<String, SafTParty>? partyDetails,
+    }) => _request(
+      SafTFinancialProfile.romania,
+      country: 'RO',
+      reference: reference,
+      partyDetails: partyDetails,
+    );
+
+    test('every line names a customer, a supplier and its tax; a line '
+        'without VAT carries ANAF\'s no-tax code at zero', () {
+      final doc = _file(ro());
+      final lines = doc.findAllElements('TransactionLine').toList();
+      expect(lines, isNotEmpty);
+      for (final l in lines) {
+        expect(l.findElements('CustomerID'), hasLength(1));
+        expect(l.findElements('SupplierID'), hasLength(1));
+        final tax = l.findElements('TaxInformation').single;
+        final type = tax.findElements('TaxType').single.innerText;
+        final code = tax.findElements('TaxCode').single.innerText;
+        if (type == '000') {
+          expect(code, '000000');
+          expect(_text(tax.findElements('TaxAmount').single, 'Amount'), 0);
+        } else {
+          expect(type, '300');
+          expect({'310344', '310351', '301104', '301105'}, contains(code));
+        }
+      }
+      expect(
+        lines.where(
+          (l) =>
+              l.findAllElements('TaxType').single.innerText == '300' &&
+              l.findAllElements('TaxCode').single.innerText == '310344',
+        ),
+        isNotEmpty,
+      );
+    });
+
+    test('an account names its national chart account and its function', () {
+      final doc = _file(ro());
+      final customers = doc
+          .findAllElements('Account')
+          .firstWhere((a) => a.findElements('AccountID').single.innerText == '1500');
+      expect(_textOf(customers, 'StandardAccountID'), '4111');
+      expect(_textOf(customers, 'AccountType'), 'Activ');
+    });
+
+    test('a party with a registration number carries its name and address',
+        () {
+      final doc = _file(
+        ro(
+          partyDetails: {
+            safTPartyKey('member', _memberNumber): const SafTParty(
+              name: 'Ana SRL',
+              street: 'Strada Lipscani 1',
+              city: 'București',
+              postalCode: '030031',
+              country: 'RO',
+              vatId: 'RO18547290',
+            ),
+            safTPartyKey('supplier', '17'): const SafTParty(
+              name: 'Nettoyage Pézenas',
+              street: '2 quai du Port',
+              city: 'Pézenas',
+              postalCode: '34120',
+              country: 'FR',
+            ),
+          },
+        ),
+      );
+      final company = doc
+          .findAllElements('Customer')
+          .single
+          .findElements('CompanyStructure')
+          .single;
+      expect(_textOf(company, 'RegistrationNumber'), 'RO18547290');
+      // The name the documents were posted under.
+      expect(_textOf(company, 'Name'), 'Ana');
+      // A supplier without one is written by its number only.
+      expect(
+        doc.findAllElements('Supplier').single.findElements('CompanyStructure'),
+        isEmpty,
+      );
+    });
+
+    test('a rate without its ANAF code is named, never written', () {
+      final reference = _reference(
+        maps: [
+          for (final m in _maps)
+            if (m.key != 'saf_t/tax:output:21') m,
+        ],
+      );
+      expect(
+        _gaps(ro(reference: reference)),
+        contains(const SafTGap(SafTGapKind.standardTaxCode, 'output:21')),
+      );
+    });
+
+    test('a company without its bank account is named', () {
+      final request = ro();
+      expect(
+        _gaps(
+          SafTFinancialRequest(
+            profile: request.profile,
+            period: request.period,
+            postings: request.postings,
+            opening: request.opening,
+            accountNames: request.accountNames,
+            accountTypes: request.accountTypes,
+            parties: request.parties,
+            partyDetails: request.partyDetails,
+            company: request.company,
+            contact: request.contact,
+            currency: request.currency,
+            softwareVersion: request.softwareVersion,
+            createdAt: request.createdAt,
+            reference: request.reference,
+          ),
+        ),
+        [const SafTGap(SafTGapKind.company, 'BankAccount')],
+      );
+    });
   });
 
   test('Denmark names a company without its VAT number', () {

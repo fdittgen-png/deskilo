@@ -5,6 +5,8 @@
 // the picture or background file. Each flow asks, then hands the answer
 // to [LevelCanvasEdits] and refreshes the plan; the screen keeps the
 // gestures and the selection.
+import 'dart:async';
+
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -360,6 +362,7 @@ class LevelCanvasFlows {
     BuildContext context,
     CanvasCell cell,
     PlanDecorKind kind, {
+    GridRect? drawnRect,
     required VoidCallback onPlaced,
   }) async {
     final workspaceId = _workspaceId;
@@ -375,13 +378,33 @@ class LevelCanvasFlows {
       write: () => edits.createDecor(
         workspaceId,
         kind: kind,
-        rect: GridRect(x: x, y: y, w: size.w, h: size.h),
+        rect: drawnRect ?? GridRect(x: x, y: y, w: size.w, h: size.h),
         imageId: imageId,
       ),
       onDone: () {
         _refresh();
         onPlaced();
+        if (drawnRect != null && context.mounted) _offerWallUndo(context, imageId);
       },
+    );
+  }
+
+  void _offerWallUndo(BuildContext context, String imageId) {
+    AppSnack.success(
+      context,
+      context.l10n.editorWallSaved,
+      replace: true,
+      action: SnackBarAction(
+        key: const ValueKey('editor-wall-undo'),
+        label: context.l10n.editorWallUndo,
+        onPressed: () => unawaited(runPlanMediaWrite(
+          context,
+          busy: busy,
+          trace: 'undo wall failed',
+          write: () => edits.undoDecor(imageId),
+          onDone: _refresh,
+        )),
+      ),
     );
   }
 

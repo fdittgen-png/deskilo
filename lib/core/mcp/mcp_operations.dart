@@ -422,6 +422,18 @@ const Map<String, McpOperationSpec> mcpOperations = {
     },
     output: ['changes', 'field', 'from', 'to'], group: 'setup',
   ),
+  'create_invitations': McpOperationSpec(
+    id: 'create_invitations', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageMembers', features: ['mcpAccess', 'setupGuide'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'first_name': McpField(McpFieldType.text, maxLength: 120),
+      'last_name': McpField(McpFieldType.text, maxLength: 120),
+    },
+    output: ['invitation_id', 'status'], group: 'setup',
+  ),
   'set_opening_hours': McpOperationSpec(
     id: 'set_opening_hours', rpc: null, handler: true, dispatch: true,
     authority: McpAuthority.permission, permission: 'workspaceSettings', features: ['mcpAccess', 'setupGuide'],

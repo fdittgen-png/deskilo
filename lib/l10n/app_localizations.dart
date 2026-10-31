@@ -800,6 +800,12 @@ abstract class AppLocalizations {
   /// **'{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged'**
   String acctJournalLogged(int logged, int unchanged);
 
+  /// #3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge).
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax'**
+  String get acctKindAcquisitionTax;
+
   /// #2370 Transfers list: the kind of document event a line carried.
   ///
   /// In en, this message translates to:
@@ -3444,6 +3450,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 movement} other{{count} movements}}, {open} to do'**
   String bankStatementCounts(int count, int open);
+
+  /// #2380 bank statements: tooltip of the action that downloads the imported file as it was.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the original file'**
+  String get bankStatementOriginal;
 
   /// #2380 Bank statements: one statement, its account and period.
   ///
@@ -11428,7 +11440,7 @@ abstract class AppLocalizations {
   /// #3074 the plan's drawn shapes: editorHintDecor
   ///
   /// In en, this message translates to:
-  /// **'Tap the plan to drop the shape; drag it to place it'**
+  /// **'Tap to drop a shape; drag to draw a wall along the grid'**
   String get editorHintDecor;
 
   /// #1216 what the next gesture does while the desk tool is armed
@@ -11796,6 +11808,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select'**
   String get editorToolSelect;
+
+  /// No description provided for @editorWallSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Wall drawn'**
+  String get editorWallSaved;
+
+  /// No description provided for @editorWallUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get editorWallUndo;
 
   /// Button: forget the platform
   ///
@@ -23260,6 +23284,12 @@ abstract class AppLocalizations {
   /// **'{field}: {from} → {to}'**
   String mcpConfirmFieldChange(String field, String from, String to);
 
+  /// #3132 mcp_confirmation: the label of the person an assistant proposes to invite
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation for'**
+  String get mcpConfirmInvitee;
+
   /// #2873 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -24339,6 +24369,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set the opening days and hours'**
   String get mcpOpSetupHours;
+
+  /// #2394 generated from contracts/mcp/operations.json (create_invitations)
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a person'**
+  String get mcpOpSetupInvite;
 
   /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
   ///
@@ -33095,6 +33131,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
+
+  /// #2375 the accounting settings: a German space whose installation declares no country
+  ///
+  /// In en, this message translates to:
+  /// **'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.'**
+  String get recordsLocationAoNotice;
+
+  /// #2375 the accounting settings: a German space whose installation is declared outside the EU
+  ///
+  /// In en, this message translates to:
+  /// **'A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office\'s permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.'**
+  String get recordsLocationAoOutside;
 
   /// #2378 records location
   ///

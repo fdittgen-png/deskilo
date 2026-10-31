@@ -40,6 +40,7 @@ enum McpOperationId {
   markSetupStep('mark_setup_step'),
   setWorkspaceBasics('set_workspace_basics'),
   setMemberPermissionsPreset('set_member_permissions_preset'),
+  createInvitations('create_invitations'),
   setOpeningHours('set_opening_hours'),
   addClosureDays('add_closure_days'),
   setNumberSequence('set_number_sequence'),

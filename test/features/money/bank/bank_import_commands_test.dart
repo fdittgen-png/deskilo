@@ -302,4 +302,57 @@ void main() {
     );
     expect(money.invoiceMatchesStore['id-539007547034']!.resolution, 'under_accepted');
   });
+
+  test('#2380 — the original is kept with the statement it produced, '
+      'and read back byte for byte', () async {
+    final bytes = _fixture('camt054_notification.xml');
+    final outcome = await import(bytes, BankFileFormat.camt054);
+    expect(outcome.result, isNotNull);
+    final stored = (await bank.fetchStatements('ws-1')).single;
+    expect(stored.sourceSha256, hasLength(64));
+    expect(await bank.fetchOriginal('ws-1', stored.sourceSha256), bytes);
+    // The same file again keeps one original.
+    await import(bytes, BankFileFormat.camt054);
+    expect(bank.originals, hasLength(1));
+  });
+
+  test('#2380 — an original the first import could not keep is kept by the '
+      'next import of the same file', () async {
+    final flaky = _NoOriginals(money: money, today: DateTime.utc(2026, 10, 26));
+    final commands = BankImportCommands(flaky);
+    final bytes = _fixture('camt054_notification.xml');
+    Future<BankImportOutcome> once() => commands.importFile(
+      'ws-1',
+      bytes: bytes,
+      fileName: 'f',
+      format: BankFileFormat.camt054,
+      settings: _settings,
+    );
+    await expectLater(once(), throwsStateError);
+    expect(await flaky.fetchStatements('ws-1'), hasLength(1));
+    expect(flaky.originals, isEmpty);
+    flaky.failing = false;
+    expect((await once()).result!.repeated, isTrue);
+    expect(flaky.originals, hasLength(1));
+  });
+}
+
+class _NoOriginals extends FakeBankStatementRepository {
+  _NoOriginals({required super.money, required super.today});
+
+  bool failing = true;
+
+  @override
+  Future<void> storeOriginal(
+    String workspaceId, {
+    required String sourceSha256,
+    required List<int> bytes,
+  }) {
+    if (failing) throw StateError('storage unavailable (test)');
+    return super.storeOriginal(
+      workspaceId,
+      sourceSha256: sourceSha256,
+      bytes: bytes,
+    );
+  }
 }

@@ -21,6 +21,7 @@ class McpSetupChangeText {
   String? subject(Map<String, Object?> target) => switch (target['kind']) {
     'workspace_basics' => _l10n.setupStepTitle('basics'),
     'member_rights' => _l10n.setupStepTitle('member_rights'),
+    'invitation' => _l10n.setupStepTitle('invite'),
     'opening_hours' => _l10n.availabilityWorkHoursTitle,
     'closure_days' => [
       if (target['days'] case final List<Object?> days)
@@ -37,6 +38,7 @@ class McpSetupChangeText {
   String? change(Map<String, Object?> target) => switch (target['kind']) {
     'workspace_basics' ||
     'member_rights' ||
+    'invitation' ||
     'opening_hours' ||
     'number_sequence' => [
       if (target['changes'] case final List<Object?> changes)
@@ -55,6 +57,7 @@ class McpSetupChangeText {
   };
 
   String _field(String field) => switch (field) {
+    'invitee' => _l10n.mcpConfirmInvitee,
     'timezone' => _l10n.workspaceTimezoneLabel,
     'default_locale' => _l10n.languageTitle,
     'address' => _l10n.workspaceAddressLabel,
@@ -99,7 +102,7 @@ class McpSetupChangeText {
       'monthly' => _l10n.numberSequenceResetMonthly,
       _ => _l10n.numberSequenceResetNever,
     },
-    'timezone' || 'default_locale' || 'address'
+    'invitee' || 'timezone' || 'default_locale' || 'address'
         when '${value ?? ''}'.isEmpty =>
       '—',
     _ when value is bool => value ? _l10n.compareYes : _l10n.compareNo,

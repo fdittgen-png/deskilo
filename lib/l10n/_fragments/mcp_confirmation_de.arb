@@ -22,5 +22,6 @@
   "mcpConfirmStepDone": "Er wird als erledigt markiert.",
   "mcpConfirmStepLater": "Er wird für später zurückgestellt.",
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
-  "mcpConfirmClosureReason": "Grund: {reason}"
+  "mcpConfirmClosureReason": "Grund: {reason}",
+  "mcpConfirmInvitee": "Einladung für"
 }
