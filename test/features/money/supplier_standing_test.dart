@@ -29,7 +29,7 @@ PurchaseSummary _doc(
 
 void main() {
   final standings = supplierStandings([
-    _doc('a', supplier: 's1', cents: 10000, on: DateTime(2026, 3, 1)),
+    _doc('a', supplier: 's1', cents: 10000, on: DateTime(2026, 3)),
     _doc('b', supplier: 's1', cents: 5000, on: DateTime(2026, 9, 10)),
     _doc(
       'c',
@@ -43,7 +43,7 @@ void main() {
       'e',
       supplier: 's1',
       cents: 7777,
-      on: DateTime(2026, 10, 1),
+      on: DateTime(2026, 10),
       state: PurchaseState.draft,
     ),
     _doc(
@@ -57,7 +57,7 @@ void main() {
       'g',
       supplier: 's1',
       cents: 400,
-      on: DateTime(2026, 2, 1),
+      on: DateTime(2026, 2),
       currency: 'CHF',
     ),
     _doc('h', supplier: 's2', cents: 300, on: DateTime(2026, 1, 5)),
@@ -88,10 +88,25 @@ void main() {
           reference: 'x',
           currency: 'EUR',
           grossCents: 1,
-          receivedOn: DateTime(2026, 1, 1),
+          receivedOn: DateTime(2026),
         ),
       ], year: 2026),
       isEmpty,
+    );
+  });
+
+  test('a read that reached the server cap prints no standing at all', () {
+    final capped = [
+      for (var i = 0; i < 1000; i++)
+        _doc('p$i', supplier: 's1', cents: 100, on: DateTime(2026)),
+    ];
+    expect(supplierStandings(capped, year: 2026), isEmpty);
+    expect(
+      supplierStandings(
+        capped.take(1000 - 1),
+        year: 2026,
+      )['s1']!.yearGrossCents,
+      100 * (1000 - 1),
     );
   });
 }

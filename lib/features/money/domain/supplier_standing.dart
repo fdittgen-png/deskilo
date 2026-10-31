@@ -18,10 +18,18 @@ class SupplierStanding {
   final String currency;
 }
 
+/// The most rows one read returns before the server cuts the answer without
+/// an error (PostgREST max_rows, 1000 on Supabase). A list that long may be
+/// missing its oldest documents.
+const _purchaseReadCap = 1000;
+
+/// Empty when [purchases] reached [_purchaseReadCap]: a truncated sum must
+/// never be printed as what a supplier cost.
 Map<String, SupplierStanding> supplierStandings(
   Iterable<PurchaseSummary> purchases, {
   required int year,
 }) {
+  if (purchases.length >= _purchaseReadCap) return const {};
   final byId = <String, List<PurchaseSummary>>{};
   for (final p in purchases) {
     final id = p.supplierId;
