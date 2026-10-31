@@ -14812,6 +14812,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Prévisualiser un changement de niveaux';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Permettre aux membres de réserver et d\'utiliser l\'espace';
+
+  @override
   String get mcpOpSetupNumbering => 'Définir la numérotation des documents';
 
   @override

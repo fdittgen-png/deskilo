@@ -385,6 +385,19 @@
     "input": "04c386957add048b",
     "output": "62b16cfc197d87f2"
   },
+  "set_member_permissions_preset": {
+    "name": "deskilo_set_member_permissions_preset",
+    "title": "Let members book and use the space",
+    "annotations": {
+      "title": "Let members book and use the space",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "b24a919592aa66c6",
+    "output": "e3a7bf0af850a0b1"
+  },
   "set_opening_hours": {
     "name": "deskilo_set_opening_hours",
     "title": "Set the opening days and hours",

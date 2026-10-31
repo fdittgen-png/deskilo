@@ -73,6 +73,8 @@ String mcpOperationLabel(AppLocalizations l10n, String op) =>
         l10n.mcpOpSetupStepMark,
       McpOperationId.setWorkspaceBasics =>
         l10n.mcpOpSetupBasics,
+      McpOperationId.setMemberPermissionsPreset =>
+        l10n.mcpOpSetupMemberRights,
       McpOperationId.setOpeningHours =>
         l10n.mcpOpSetupHours,
       McpOperationId.addClosureDays =>

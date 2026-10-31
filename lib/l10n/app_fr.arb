@@ -9989,6 +9989,7 @@
   "mcpOpSetupLevels": "Voir les niveaux de mise en place",
   "mcpOpSetupLevelsApply": "Changer les niveaux de mise en place",
   "mcpOpSetupLevelsPreview": "Prévisualiser un changement de niveaux",
+  "mcpOpSetupMemberRights": "Permettre aux membres de réserver et d'utiliser l'espace",
   "mcpOpSetupNumbering": "Définir la numérotation des documents",
   "mcpOpSetupStatus": "Voir où en est la mise en place",
   "mcpOpSetupStepExplain": "Expliquer une étape de la mise en place",
