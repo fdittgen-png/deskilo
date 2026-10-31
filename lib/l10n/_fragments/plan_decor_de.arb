@@ -1,6 +1,6 @@
 {
   "editorToolDecor": "Formen",
-  "editorHintDecor": "Tippen Sie auf den Plan, um die Form abzulegen; ziehen Sie sie an ihren Platz",
+  "editorHintDecor": "Tippen Sie, um eine Form abzulegen; ziehen Sie, um eine Wand am Raster zu zeichnen",
   "editorDecorPaletteHint": "Zeichnen Sie den Raum, wie er ist: Wände, Türen und Fenster rahmen ihn, der Rest möbliert ihn.",
   "editorRotate": "Drehen",
   "decorWall": "Wand",
@@ -10,5 +10,7 @@
   "decorTable": "Tisch",
   "decorCouch": "Sofa",
   "decorWc": "WC",
-  "decorKitchen": "Küche"
+  "decorKitchen": "Küche",
+  "editorWallSaved": "Wand gezeichnet",
+  "editorWallUndo": "Rückgängig"
 }
