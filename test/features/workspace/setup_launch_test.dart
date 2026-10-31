@@ -264,6 +264,25 @@ void main() {
     expect(pushed, ['/workspace-settings']);
   });
 
+  testWidgets('#3076 the group labels and the section titles are headings', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await _pump(tester, _status(placesDone: true));
+    final group = find.byKey(const ValueKey('setup-launch-group-open'));
+    await tester.scrollUntilVisible(group, 200, scrollable: _list);
+    await tester.pump();
+    expect(
+      tester.getSemantics(group),
+      matchesSemantics(label: l10n.setupLaunchGroup('open'), isHeader: true),
+    );
+    expect(
+      tester.getSemantics(find.text(l10n.setupLaunchAnswers)),
+      matchesSemantics(label: l10n.setupLaunchAnswers, isHeader: true),
+    );
+    handle.dispose();
+  });
+
   List<String> copies(WidgetTester tester) {
     final copied = <String>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
