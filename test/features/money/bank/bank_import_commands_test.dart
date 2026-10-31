@@ -302,4 +302,44 @@ void main() {
     );
     expect(money.invoiceMatchesStore['id-539007547034']!.resolution, 'under_accepted');
   });
+
+  test('#2380 — the original is kept before the statement is imported, '
+      'and read back byte for byte', () async {
+    final bytes = _fixture('camt054_notification.xml');
+    final outcome = await import(bytes, BankFileFormat.camt054);
+    expect(outcome.result, isNotNull);
+    final stored = (await bank.fetchStatements('ws-1')).single;
+    expect(stored.sourceSha256, hasLength(64));
+    expect(await bank.fetchOriginal('ws-1', stored.sourceSha256), bytes);
+    // The same file again keeps one original.
+    await import(bytes, BankFileFormat.camt054);
+    expect(bank.originals, hasLength(1));
+  });
+
+  test('#2380 — a file whose original cannot be kept is not imported', () async {
+    final failing = _NoOriginals(money: money, today: DateTime.utc(2026, 10, 26));
+    await expectLater(
+      BankImportCommands(failing).importFile(
+        'ws-1',
+        bytes: _fixture('camt054_notification.xml'),
+        fileName: 'f',
+        format: BankFileFormat.camt054,
+        settings: _settings,
+      ),
+      throwsStateError,
+    );
+    expect(await failing.fetchStatements('ws-1'), isEmpty);
+  });
+}
+
+class _NoOriginals extends FakeBankStatementRepository {
+  _NoOriginals({required super.money, required super.today});
+
+  @override
+  Future<void> storeOriginal(
+    String workspaceId, {
+    required String sourceSha256,
+    required List<int> bytes,
+  }) async =>
+      throw StateError('storage unavailable (test)');
 }

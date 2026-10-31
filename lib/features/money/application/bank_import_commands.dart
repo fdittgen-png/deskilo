@@ -75,9 +75,9 @@ class BankImportCommands {
 
   final BankStatementRepository _repository;
 
-  /// Reads [bytes] as [format] under [settings]' bounds and imports the
-  /// statement; a file that cannot be read is refused whole and nothing
-  /// is sent.
+  /// Reads [bytes] as [format] under [settings]' bounds, keeps the file as
+  /// the statement's original and imports the statement; a file that
+  /// cannot be read is refused whole and nothing is sent.
   Future<BankImportOutcome> importFile(
     String workspaceId, {
     required List<int> bytes,
@@ -100,10 +100,20 @@ class BankImportCommands {
       );
       return (result: null, refused: e);
     }
+    final digest = sha256.convert(bytes).toString();
+    // #2380 — the original first: a statement is never imported without the
+    // file it was read from. A failed upload throws and imports nothing; a
+    // failed import after it leaves the file under its digest, which the
+    // next attempt keeps as it is.
+    await _repository.storeOriginal(
+      workspaceId,
+      sourceSha256: digest,
+      bytes: bytes,
+    );
     final result = await _repository.importStatement(
       workspaceId,
       statement: statement,
-      sourceSha256: sha256.convert(bytes).toString(),
+      sourceSha256: digest,
       fileName: _cut(fileName, BankColumnWidths.fileName),
     );
     return (result: result, refused: null);

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/bank/bank_records.dart';
@@ -42,6 +44,35 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
         StoredBankLine.fromJson(row),
     ];
   }
+
+  /// #2380 — the bucket of the originals (0621); the path is
+  /// `<workspace_id>/<sha256>`, as its storage policies require.
+  static const _originals = 'bank-statements';
+
+  @override
+  Future<void> storeOriginal(
+    String workspaceId, {
+    required String sourceSha256,
+    required List<int> bytes,
+  }) async {
+    try {
+      await _client.storage.from(_originals).uploadBinary(
+            '$workspaceId/$sourceSha256',
+            Uint8List.fromList(bytes),
+            fileOptions: const FileOptions(
+              contentType: 'application/octet-stream',
+            ),
+          );
+    } on StorageException catch (e) {
+      // The same digest is the same file: kept already (a repeated import,
+      // or one whose import failed after its upload).
+      if (e.statusCode != '409' && !e.message.contains('exists')) rethrow;
+    }
+  }
+
+  @override
+  Future<Uint8List> fetchOriginal(String workspaceId, String sourceSha256) =>
+      _client.storage.from(_originals).download('$workspaceId/$sourceSha256');
 
   @override
   Future<BankImportResult> importStatement(

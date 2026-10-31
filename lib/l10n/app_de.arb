@@ -882,6 +882,7 @@
   "bankReviewKeep": "Behalten",
   "bankReviewTitle": "Bereits importiert?",
   "bankStatementCounts": "{count, plural, =1{1 Bewegung} other{{count} Bewegungen}}, {open} offen",
+  "bankStatementOriginal": "Originaldatei herunterladen",
   "bankStatementPeriod": "{account} · {from} – {to}",
   "bankStatementsEmpty": "Noch kein Auszug importiert.",
   "bankStatementsIntro": "Importieren Sie die Dateien, die Ihre Bank erstellt. Jede Bewegung wird nur einmal gelesen; die Zahlungen werden ihren Rechnungen zugeordnet, sobald Sie bestätigen.",

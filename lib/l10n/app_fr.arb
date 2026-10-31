@@ -882,6 +882,7 @@
   "bankReviewKeep": "Le conserver",
   "bankReviewTitle": "Déjà importé ?",
   "bankStatementCounts": "{count, plural, =1{1 mouvement} other{{count} mouvements}}, {open} à traiter",
+  "bankStatementOriginal": "Télécharger le fichier d'origine",
   "bankStatementPeriod": "{account} · {from} – {to}",
   "bankStatementsEmpty": "Aucun relevé importé pour l'instant.",
   "bankStatementsIntro": "Importez les fichiers que produit votre banque. Chaque mouvement est lu une seule fois ; les paiements sont rapprochés de leurs factures quand vous confirmez.",

@@ -3445,6 +3445,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 movement} other{{count} movements}}, {open} to do'**
   String bankStatementCounts(int count, int open);
 
+  /// #2380 bank statements: tooltip of the action that downloads the imported file as it was.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the original file'**
+  String get bankStatementOriginal;
+
   /// #2380 Bank statements: one statement, its account and period.
   ///
   /// In en, this message translates to:

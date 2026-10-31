@@ -1,7 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- (one private storage bucket; two helpers; two storage policies, read and
--- insert; no update and no delete, so a stored original stays)
+-- insert; no update and no delete, so a stored original stays;
+-- bank_statements_v1 restated whole from 0603 with source_sha256)
 --
 -- 0621 (#2380, owner amendment of 2026-10-14) -- the imported bank statement
 -- file is kept, byte for byte, beside the statement it produced. #3054 kept
@@ -57,5 +58,30 @@ drop policy if exists bank_originals_insert on storage.objects;
 create policy bank_originals_insert on storage.objects for insert to authenticated
   with check (bucket_id = 'bank-statements'
               and public.bank_original_access(public.bank_original_workspace(name), true));
+
+-- The statement names its original: the client reads it at
+-- <workspace_id>/<source_sha256>.
+create or replace function public.bank_statements_v1(p_workspace_id uuid)
+returns jsonb language plpgsql stable security definer set search_path = public as $fn$
+begin
+  perform public.bank_import_actor(p_workspace_id, 'read');
+  return coalesce((
+    select jsonb_agg(jsonb_build_object(
+      'id', s.id, 'format', s.format, 'account', s.account, 'currency', s.currency,
+      'statement_ref', s.statement_ref, 'file_name', s.file_name,
+      'source_sha256', s.source_sha256,
+      'period_from', s.period_from, 'period_to', s.period_to,
+      'opening_cents', s.opening_cents, 'closing_cents', s.closing_cents,
+      'imported_at', s.imported_at,
+      'lines', (select count(*) from public.bank_statement_lines l where l.statement_id = s.id),
+      'open', (select count(*) from public.bank_statement_lines l
+                where l.statement_id = s.id
+                  and public.bank_line_status(l) in ('open', 'review', 'recorded')))
+      order by s.period_to desc, s.imported_at desc)
+      from public.bank_statements s where s.workspace_id = p_workspace_id), '[]'::jsonb);
+end;
+$fn$;
+revoke execute on function public.bank_statements_v1(uuid) from public, anon;
+grant execute on function public.bank_statements_v1(uuid) to authenticated;
 
 select public.set_deskilo_schema_version(621);
