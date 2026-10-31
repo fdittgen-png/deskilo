@@ -22,7 +22,6 @@ const _extraTables = [
   'payment_intents',
   'quota_extensions',
   'seat_accessories',
-  kProfilePresenceSignal,
   'no_such_table',
 ];
 

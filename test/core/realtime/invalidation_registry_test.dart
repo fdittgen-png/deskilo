@@ -6,7 +6,6 @@
 // account's providers, and the other way round), the composition rules and
 // that the registry recovers after a refused lookup.
 import 'package:deskilo/app/realtime_invalidations.dart';
-import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:deskilo/core/realtime/invalidation_registry.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -37,7 +36,6 @@ void main() {
     for (final table in realtimeTables) {
       expect(registry.tables, contains(table), reason: table);
     }
-    expect(registry.tables, contains(kProfilePresenceSignal));
   });
 
   test('a workspace target never reaches an account provider', () {

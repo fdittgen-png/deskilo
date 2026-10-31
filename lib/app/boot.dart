@@ -69,15 +69,21 @@ Future<void> _warm(Ref ref) async {
       await ref.read(currentWorkspaceProvider.future).catchError((_) => null);
   if (workspace == null) return;
 
-  // The Reserve hub's data, in parallel: levels + plan of the first
-  // level (the canvas), today's reservations (seat states), membership
-  // and granularity (window chips and gates).
-  final levels = await ref.read(levelsProvider.future).catchError(
-        (_) => const <Level>[],
-      );
+  // The Reserve hub's data, in parallel: levels then the plan of the first
+  // level (the canvas), today's reservations (seat states), membership and
+  // granularity (window chips and gates). #3102 — only the plan waits for
+  // the levels; the rest no longer waits behind them.
+  Future<void> levelsThenPlan() async {
+    final levels = await ref.read(levelsProvider.future).catchError(
+          (_) => const <Level>[],
+        );
+    if (levels.isNotEmpty) {
+      await tolerant(ref.read(floorPlanProvider(levels.first.id).future));
+    }
+  }
+
   await Future.wait([
-    if (levels.isNotEmpty)
-      tolerant(ref.read(floorPlanProvider(levels.first.id).future)),
+    levelsThenPlan(),
     tolerant(
       ref.read(reservationsForDayProvider(dayKeyOf(DateTime.now())).future),
     ),

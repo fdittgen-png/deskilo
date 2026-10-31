@@ -17,7 +17,6 @@ packages bustsPlanCache=false allPackagesProvider, packagesProvider
 payment_intents bustsPlanCache=false calendarItemsProvider, myAccountProvider, myLedgerProvider, myStatementProvider
 plan_images bustsPlanCache=true floorPlanProvider, levelsProvider, targetLevelsProvider, targetNamesProvider
 profiles bustsPlanCache=false defaultWorkspaceIdProvider, memberNamesProvider, memberProfilesProvider
-profiles:presence bustsPlanCache=false memberProfilesProvider
 quota_extensions bustsPlanCache=false calendarItemsProvider, myAccountProvider, myLedgerProvider, myStatementProvider
 reservations bustsPlanCache=false calendarItemsProvider, directoryReservationsProvider, myUpcomingReservationsProvider, reservationsForDayProvider, reservationsForMonthProvider
 seat_accessories bustsPlanCache=true floorPlanProvider

@@ -274,6 +274,8 @@ public.platform_admins.personal_native_session
 public.platform_admins.platform_admins_self
 public.premises_leases.mcp_delegated_deny
 public.premises_leases.premises_leases_select
+public.presence.mcp_delegated_deny
+public.presence.personal_native_session
 public.price_negotiations.mcp_delegated_deny
 public.price_negotiations.price_negotiations_select
 public.privacy_notice_acknowledgments.mcp_delegated_deny
@@ -316,6 +318,8 @@ public.quota_extensions.mcp_delegated_deny
 public.quota_extensions.quota_extensions_select
 public.readiness_acknowledgements.mcp_delegated_deny
 public.readiness_acknowledgements.readiness_acknowledgements_own
+public.realtime_deletions.mcp_delegated_deny
+public.realtime_deletions.realtime_deletions_select
 public.reminder_attempts.mcp_delegated_deny
 public.reminder_attempts.reminder_attempts_select
 public.reminder_intents.mcp_delegated_deny

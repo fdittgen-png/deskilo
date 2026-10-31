@@ -1088,6 +1088,9 @@ constraint premises_leases.premises_leases_workspace_id_supplier_id_fkey FOREIGN
 constraint premises_leases.premises_leases_workspace_id_terminated_by_member_id_fkey FOREIGN KEY (workspace_id, terminated_by_member_id) REFERENCES members(workspace_id, id)
 constraint premises_leases.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint premises_leases.system_company_present CHECK ((company_id IS NOT NULL))
+constraint presence.presence_pkey PRIMARY KEY (user_id)
+constraint presence.presence_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint presence.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint price_negotiations.price_negotiations_check CHECK (((fee_cents IS NOT NULL) OR (overage_fee_cents IS NOT NULL) OR (discount_percent IS NOT NULL) OR (subscription_pct IS NOT NULL) OR (items <> '{}'::jsonb)))
 constraint price_negotiations.price_negotiations_discount_percent_check CHECK (((discount_percent IS NULL) OR ((discount_percent >= (0)::numeric) AND (discount_percent <= (100)::numeric))))
 constraint price_negotiations.price_negotiations_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE SET NULL
@@ -1290,6 +1293,10 @@ constraint readiness_acknowledgements.readiness_acknowledgements_user_id_fkey FO
 constraint readiness_acknowledgements.readiness_acknowledgements_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint readiness_acknowledgements.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint readiness_acknowledgements.system_company_present CHECK ((company_id IS NOT NULL))
+constraint realtime_deletions.realtime_deletions_pkey PRIMARY KEY (id)
+constraint realtime_deletions.realtime_deletions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint realtime_deletions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint realtime_deletions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reminder_attempts.reminder_attempts_channel_check CHECK ((channel = ANY (ARRAY['push'::text, 'share'::text])))
 constraint reminder_attempts.reminder_attempts_detail_check CHECK ((char_length(detail) <= 300))
 constraint reminder_attempts.reminder_attempts_intent_id_fkey FOREIGN KEY (intent_id) REFERENCES reminder_intents(id) ON DELETE CASCADE
@@ -1907,7 +1914,7 @@ routine public.account_group_messages_guard() -> trigger | function | definer | 
 routine public.account_group_messages_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:49460b231470
 routine public.account_message_request_guard() -> trigger | function | definer | volatile | exec:service_role | body:dc478bb36646
 routine public.account_messages_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9aeca399cd10
-routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:78eb18577763
+routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:006dc6412f44
 routine public.account_space_eligible(p_user uuid, p_ref text) -> boolean | function | definer | stable | exec: | body:1341e629d469
 routine public.account_visibility_lock(p_user uuid) -> void | function | definer | volatile | exec: | body:e19bb24a78c5
 routine public.account_visibility_saved_field(p_user uuid, p_field text) -> jsonb | function | definer | stable | exec: | body:a6b17bfc33d2
@@ -1931,7 +1938,7 @@ routine public.acknowledge_setup_step(p_workspace_id uuid, p_step text) -> readi
 routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:359ab91b1c36
 routine public.activate_co_owner(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d5034f3958e
 routine public.add_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:510cf920691c
-routine public.add_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3d7e8f0c883d
+routine public.add_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c53f8fb08da9
 routine public.add_lease_term_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_kind text, p_label text, p_amount_cents integer, p_every_months integer, p_effective_from date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:84b7781a957e
 routine public.admin_create_reservation_for(p_workspace_id uuid, p_subject_member_id uuid, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1247ac71ec45
 routine public.administrator_role_names() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:56a5f2d35990
@@ -2120,8 +2127,8 @@ routine public.expense_event_schedule_vat() -> trigger | function | definer | vo
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:88b1b882d2e1
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fba8d3f34792
-routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db0b5a4b3900
-routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3cda55b2168b
+routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:306cf771611b
+routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:14d3aa283260
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a66f863dc003
 routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:414fe35adf1b
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
@@ -2437,7 +2444,7 @@ routine public.member_notes_announce_guard() -> trigger | function | definer | v
 routine public.member_notes_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:890b2c3ae02a
 routine public.member_notes_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7c2de38ad227
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
-routine public.member_profile_projection(p_subject uuid, p_purposes text[]) -> jsonb | function | definer | stable | exec:service_role | body:b20f92de3d17
+routine public.member_profile_projection(p_subject uuid, p_purposes text[]) -> jsonb | function | definer | stable | exec:service_role | body:6e715833efc2
 routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60df0798b726
 routine public.member_profiles(p_workspace_id uuid, p_user_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1c4517a0ed4a
 routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:a4cbb2f39da5
@@ -2641,6 +2648,7 @@ routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_l
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
+routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:543a1c987f88
@@ -2649,7 +2657,7 @@ routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind 
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
 routine public.record_book_export_v1(p_workspace_id uuid, p_format_id text, p_from date, p_to date, p_sha256 text, p_bytes bigint, p_rows integer, p_documents integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:178d17dba8a2
 routine public.record_file_deliveries_v1(p_workspace_id uuid, p_target_id text, p_issuer_site_id uuid, p_book_export_id uuid, p_documents jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:eab002551a9f
-routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:909f1ddd4e67
+routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:687099ad233c
 routine public.record_member_reimbursement_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6903fd94329d
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:e81915235895
 routine public.record_purchase_exchange_rate_v1(p_workspace_id uuid, p_purchase_id uuid, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:26191bc1ab28
@@ -2857,7 +2865,7 @@ routine public.set_repartition_rule(p_workspace_id uuid, p_rule jsonb) -> void |
 routine public.set_role_permission(p_workspace_id uuid, p_role text, p_permission text, p_enabled boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d7cd84d7fda5
 routine public.set_role_permissions(p_workspace_id uuid, p_role text, p_permissions text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:75d64e57ab19
 routine public.set_room_rental_audience_v1(p_workspace_id uuid, p_rental_id uuid, p_audience jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ea0c113bfe19
-routine public.set_room_rental_fees_v1(p_workspace_id uuid, p_rental_id uuid, p_fees jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c3c0b4bdc63b
+routine public.set_room_rental_fees_v1(p_workspace_id uuid, p_rental_id uuid, p_fees jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f3134ee9d040
 routine public.set_seat_block(p_seat_id uuid, p_blocked_from timestamp with time zone, p_blocked_to timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:f81dc944c6c3
 routine public.set_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:32bfa990e281
 routine public.set_supplier_bank(p_supplier_id uuid, p_account_holder text, p_iban text, p_bic text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:cd9a4434261e
@@ -2885,7 +2893,7 @@ routine public.setting_history(p_workspace uuid, p_key text) -> jsonb | function
 routine public.setting_origin(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:49631a185341
 routine public.setting_value(p_workspace uuid, p_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:465a3755568e
 routine public.setting_value_problem(p_type text, p_value jsonb, p_min numeric, p_max numeric, p_floor numeric, p_choices jsonb) -> text | function | invoker | immutable | exec:service_role | body:9f9801164c72
-routine public.settle_credit_invoice(p_invoice_id uuid, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:86f6092cf8ec
+routine public.settle_credit_invoice(p_invoice_id uuid, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:3e91e8724d75
 routine public.settle_invoices(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:be298f3521a0
 routine public.settle_invoices_v1(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_request_id uuid, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6799c4081d49
 routine public.settle_lease_charges_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_period_start date, p_period_end date, p_actual_cents bigint, p_due_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8768f6aaadf
@@ -2960,7 +2968,7 @@ routine public.template_walk_payload(p_configuration jsonb, p_floor_plan jsonb) 
 routine public.template_wording_check(p_workspace_id uuid, p_config jsonb) -> void | function | definer | stable | exec:service_role | body:2d5eb567bc03
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
-routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:1ad738483c79
+routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
@@ -3002,7 +3010,7 @@ routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | 
 routine public.vies_check_subject(p_workspace_id uuid, p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ab9bc99a5395
 routine public.vies_vat_parts(p_vat_id text, p_country text) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:fe4c5a47ee99
 routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5f4b79b2c75b
-routine public.void_invoice(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f65d910e8d0a
+routine public.void_invoice(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:b1101f7f705b
 routine public.who_can_access_me(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87d0e2cdf5
 routine public.window_outside_working_hours(p_local_start timestamp without time zone, p_local_end timestamp without time zone, p_ws_start integer, p_ws_end integer) -> boolean | function | invoker | immutable | exec:service_role | body:1f792252b736
 routine public.withdraw_instance_delegation(p_user uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c6fe02abd94f
@@ -3049,6 +3057,7 @@ routine public.workspaces_permitting(p_perms text[]) -> SETOF uuid | function | 
 routine public.workspaces_sample_data_stays_test() -> trigger | function | definer | volatile | exec:service_role | body:d260749b5b84
 routine public.write_account_audience(p_user uuid, p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec: | body:8617ec0cd447
 routine public.write_account_audience_refs(p_user uuid, p_field text, p_audience text, p_refs text[]) -> void | function | definer | volatile | exec: | body:046c060791eb
+trigger accessories.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.accessories REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger accessories.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.accessories FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_about.public_person_card_on_about CREATE TRIGGER public_person_card_on_about AFTER INSERT OR DELETE OR UPDATE ON public.account_about FOR EACH ROW EXECUTE FUNCTION public_person_card_sync()
 trigger account_about.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_about FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3093,6 +3102,7 @@ trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_s
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
 trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_stations_guard BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_guard()
 trigger charging_stations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger closure_days.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.closure_days REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger closure_days.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.closure_days FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3105,6 +3115,7 @@ trigger database_authority_audit.zz_system_columns_stamp CREATE TRIGGER zz_syste
 trigger deployments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.deployments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger deskilo_schema_version.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.deskilo_schema_version FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger desks.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER UPDATE OF office_id ON public.desks FOR EACH ROW WHEN ((new.office_id IS DISTINCT FROM old.office_id)) EXECUTE FUNCTION analytics_seat_changed()
+trigger desks.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.desks REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger desks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.desks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger directory_people.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.directory_people FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger document_exchange_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.document_exchange_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3114,6 +3125,7 @@ trigger einvoice_inbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_
 trigger enrolled_installations.protect_enrolled_installation CREATE TRIGGER protect_enrolled_installation BEFORE DELETE OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION protect_enrolled_installation()
 trigger enrolled_installations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger event_decisions.event_decisions_fill_workspace CREATE TRIGGER event_decisions_fill_workspace BEFORE INSERT OR UPDATE OF event_id ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION event_decisions_fill_workspace()
+trigger event_decisions.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.event_decisions REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()
@@ -3132,6 +3144,7 @@ trigger events.expense_event_schedule_vat CREATE TRIGGER expense_event_schedule_
 trigger events.purchase_expense_event_bridge CREATE TRIGGER purchase_expense_event_bridge AFTER INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'expense'::text)) EXECUTE FUNCTION purchase_expense_event_bridge()
 trigger events.purchase_expense_event_stamp CREATE TRIGGER purchase_expense_event_stamp BEFORE INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'expense'::text)) EXECUTE FUNCTION purchase_expense_event_stamp()
 trigger events.purchase_expense_event_state CREATE TRIGGER purchase_expense_event_state AFTER UPDATE OF status ON public.events FOR EACH ROW WHEN (((new.type = 'expense'::text) AND (old.status IS DISTINCT FROM new.status))) EXECUTE FUNCTION purchase_expense_event_state()
+trigger events.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.events REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger exchange_rate_sources.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.exchange_rate_sources FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger expense_occurrences.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_occurrences FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3142,6 +3155,7 @@ trigger federation_inbox_receipts.zz_system_columns_stamp CREATE TRIGGER zz_syst
 trigger federation_keys.protect_federation_history CREATE TRIGGER protect_federation_history BEFORE DELETE OR UPDATE ON public.federation_keys FOR EACH ROW EXECUTE FUNCTION protect_federation_history()
 trigger federation_keys.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.federation_keys FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger fee_bands.fee_bands_contiguous CREATE CONSTRAINT TRIGGER fee_bands_contiguous AFTER INSERT OR DELETE OR UPDATE ON public.fee_bands DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_fee_bands_contiguous()
+trigger fee_bands.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.fee_bands REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger fee_bands.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.fee_bands FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger financial_command_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.financial_command_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger guest_participation_audit.guest_participation_audit_append_only CREATE TRIGGER guest_participation_audit_append_only BEFORE DELETE OR UPDATE ON public.guest_participation_audit FOR EACH ROW EXECUTE FUNCTION guest_participation_audit_append_only()
@@ -3177,6 +3191,7 @@ trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE
 trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_maturity_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.invoices_reimbursement_guard CREATE TRIGGER invoices_reimbursement_guard BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_reimbursement_guard()
+trigger invoices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.invoices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger lease_settlements.lease_settlements_guard CREATE TRIGGER lease_settlements_guard BEFORE DELETE OR UPDATE ON public.lease_settlements FOR EACH ROW EXECUTE FUNCTION lease_settlements_guard()
 trigger lease_settlements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_settlements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3185,7 +3200,9 @@ trigger lease_terms.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_sta
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
 trigger ledger_entries.ledger_entries_supply_class CREATE TRIGGER ledger_entries_supply_class BEFORE INSERT ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entry_supply_class()
 trigger ledger_entries.purchase_obligation_credit_link CREATE TRIGGER purchase_obligation_credit_link AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'expense'::text) AND (new.event_id IS NOT NULL))) EXECUTE FUNCTION purchase_obligation_credit_link()
+trigger ledger_entries.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.ledger_entries REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger levels.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.levels REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger levels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.levels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger licence_plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.licence_plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger managed_identities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.managed_identities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3248,19 +3265,24 @@ trigger message_stars.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_s
 trigger number_sequences.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.number_sequences FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger offices.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER UPDATE OF level_id ON public.offices FOR EACH ROW WHEN ((new.level_id IS DISTINCT FROM old.level_id)) EXECUTE FUNCTION analytics_seat_changed()
 trigger offices.offices_area_guard CREATE TRIGGER offices_area_guard BEFORE INSERT OR UPDATE ON public.offices FOR EACH ROW EXECUTE FUNCTION offices_area_guard()
+trigger offices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.offices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger offices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.offices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger opening_hours_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.opening_hours_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger outgoing_payments.outgoing_payments_guard CREATE TRIGGER outgoing_payments_guard BEFORE DELETE OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION outgoing_payments_guard()
 trigger outgoing_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger packages.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.packages REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger packages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.packages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger payment_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_credentials FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger payment_intents.payment_intents_ledger_matches CREATE TRIGGER payment_intents_ledger_matches BEFORE INSERT OR UPDATE OF ledger_entry_id, workspace_id, member_id, amount_cents ON public.payment_intents FOR EACH ROW EXECUTE FUNCTION payment_intents_ledger_matches()
+trigger payment_intents.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.payment_intents REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger payment_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger plan_images.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.plan_images REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger plan_images.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.plan_images FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger platform_access_log.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.platform_access_log FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger platform_admins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.platform_admins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger premises_leases.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.premises_leases FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger presence.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.presence FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger price_negotiations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.price_negotiations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notice_acknowledgments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notice_acknowledgments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3289,8 +3311,10 @@ trigger purchase_sources.zz_system_columns_stamp CREATE TRIGGER zz_system_column
 trigger push_config.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.push_config FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger push_endpoints.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.push_endpoints FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger quota_extensions.quota_extensions_rebalance_credits CREATE TRIGGER quota_extensions_rebalance_credits AFTER INSERT OR DELETE ON public.quota_extensions FOR EACH ROW EXECUTE FUNCTION members_rebalance_credits()
+trigger quota_extensions.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.quota_extensions REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger quota_extensions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.quota_extensions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger readiness_acknowledgements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.readiness_acknowledgements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger realtime_deletions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.realtime_deletions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_attempts_append_only BEFORE DELETE OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION reminder_attempts_append_only()
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3300,6 +3324,7 @@ trigger reservation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_co
 trigger reservation_target_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_target_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservations.analytics_reservation_target CREATE TRIGGER analytics_reservation_target AFTER INSERT OR UPDATE OF seat_id, desk_id, office_id, level_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION analytics_reservation_target()
 trigger reservations.enforce_reservation_limit CREATE TRIGGER enforce_reservation_limit AFTER INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION enforce_reservation_limit()
+trigger reservations.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.reservations REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger reservations.reservation_hierarchy_guard CREATE TRIGGER reservation_hierarchy_guard BEFORE INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_hierarchy_guard()
 trigger reservations.reservation_hierarchy_guard_update CREATE TRIGGER reservation_hierarchy_guard_update BEFORE UPDATE OF starts_at, ends_at, seat_id, desk_id, office_id, level_id, member_id, status ON public.reservations FOR EACH ROW WHEN (((new.status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND ((((((((old.starts_at IS DISTINCT FROM new.starts_at) OR (old.ends_at IS DISTINCT FROM new.ends_at)) OR (old.seat_id IS DISTINCT FROM new.seat_id)) OR (old.desk_id IS DISTINCT FROM new.desk_id)) OR (old.office_id IS DISTINCT FROM new.office_id)) OR (old.level_id IS DISTINCT FROM new.level_id)) OR (old.member_id IS DISTINCT FROM new.member_id)) OR (old.status IS DISTINCT FROM new.status)))) EXECUTE FUNCTION reservation_hierarchy_guard()
 trigger reservations.reservation_rental_guard CREATE TRIGGER reservation_rental_guard BEFORE INSERT OR UPDATE OF starts_at, ends_at, status, seat_id, desk_id, office_id, level_id, member_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_rental_guard()
@@ -3323,13 +3348,16 @@ trigger room_rentals.room_rental_commitment_sync CREATE TRIGGER room_rental_comm
 trigger room_rentals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.room_rentals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger sample_data_batches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.sample_data_batches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger sample_data_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.sample_data_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger seat_accessories.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.seat_accessories REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger seat_accessories.seat_accessories_same_workspace CREATE TRIGGER seat_accessories_same_workspace BEFORE INSERT OR UPDATE ON public.seat_accessories FOR EACH ROW EXECUTE FUNCTION seat_accessories_same_workspace()
 trigger seat_accessories.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seat_accessories FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger seat_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seat_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger seats.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER INSERT OR DELETE ON public.seats FOR EACH ROW EXECUTE FUNCTION analytics_seat_changed()
 trigger seats.analytics_seat_history_update CREATE TRIGGER analytics_seat_history_update AFTER UPDATE OF desk_id, blocked_from, blocked_to ON public.seats FOR EACH ROW WHEN (((new.desk_id IS DISTINCT FROM old.desk_id) OR (new.blocked_from IS DISTINCT FROM old.blocked_from) OR (new.blocked_to IS DISTINCT FROM old.blocked_to))) EXECUTE FUNCTION analytics_seat_changed()
+trigger seats.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.seats REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger seats.seats_resource_guard CREATE TRIGGER seats_resource_guard BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION seats_resource_guard()
 trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger services.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.services REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger services.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3347,6 +3375,7 @@ trigger suppliers.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp
 trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_exemption_certificates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger validation_policies.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.validation_policies REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_declarations.book_period_vat_close CREATE TRIGGER book_period_vat_close AFTER UPDATE OF status ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION book_period_vat_close()
 trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()

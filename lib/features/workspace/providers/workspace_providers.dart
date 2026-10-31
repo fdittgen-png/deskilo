@@ -163,18 +163,18 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
 /// The active workspace (profile).
 @Riverpod(keepAlive: true)
 Future<Workspace?> currentWorkspace(Ref ref) async {
-  // #2562 -- a workspace selected on a connected installation is read
-  // through that installation's own pinned client, never the root client;
-  // a refusal is the typed ConnectionFailure.
+  // #2562 -- a connected installation's workspace: its own pinned client.
   final split = ref.watch(selectedWorkspaceHostProvider);
   if (split != null) {
     final pool = ref.watch(connectedInstallationsProvider);
     final read = ref.watch(connectedWorkspaceReaderProvider);
     return readConnectedWorkspace(pool, read, split.source, split.workspaceId);
   }
+  // #3102 -- both asked at once; ignore(): a failed choice is never unhandled.
+  final choice = ref.watch(activeWorkspaceIdProvider.future)..ignore();
   final workspaces = await ref.watch(myWorkspacesProvider.future);
   if (workspaces.isEmpty) return null;
-  final chosenId = await ref.watch(activeWorkspaceIdProvider.future);
+  final chosenId = await choice;
   return workspaces.where((w) => w.id == chosenId).firstOrNull ??
       workspaces.first;
 }
