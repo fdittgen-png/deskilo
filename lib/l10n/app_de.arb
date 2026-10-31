@@ -12068,6 +12068,7 @@
   "processMembershipCommerceDesc": "Leistungspreise und Mitgliedsvereinbarungen festlegen.",
   "processNeededBy": "benötigt von {features}",
   "processNothingToDo": "Ist bereits so — nichts zu ändern.",
+  "processOffNote": "Ausgeschaltet: {features}",
   "processOperations": "Betrieb und Verwaltung",
   "processOperationsDesc": "Konfiguration und App-Bedienung verwalten.",
   "processRemoveDependants": "Auch die {count} abhängigen Funktionen ausschalten",

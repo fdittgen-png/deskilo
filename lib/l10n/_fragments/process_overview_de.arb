@@ -50,5 +50,6 @@
   "featureDetailHeldBack": "Eingeschaltet, aber blockiert: sie benötigt {feature}, das ausgeschaltet ist.",
   "featureDetailOff": "Ausgeschaltet.",
   "featureDetailNone": "Nichts.",
-  "featureDetailGrantsPermission": "Gewährt Administratoren die Berechtigung „{permission}“."
+  "featureDetailGrantsPermission": "Gewährt Administratoren die Berechtigung „{permission}“.",
+  "processOffNote": "Ausgeschaltet: {features}"
 }

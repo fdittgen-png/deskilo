@@ -77,6 +77,14 @@ void main() {
 
     expect(_inCard('integrations', 'Active'), findsOneWidget);
     expect(_inCard('spaceManagement', 'Partial'), findsOneWidget);
+    // #3072 — Partial names what is switched off, not only that something is.
+    expect(
+      find.descendant(
+        of: _card('spaceManagement'),
+        matching: find.textContaining('Switched off: '),
+      ),
+      findsOneWidget,
+    );
     expect(_inCard('coordination', 'Available'), findsOneWidget);
     expect(_inCard('workspaceAccess', 'Needs attention'), findsOneWidget);
     expect(

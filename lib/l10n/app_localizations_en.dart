@@ -18505,6 +18505,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get processNothingToDo => 'Already the case — nothing to change.';
 
   @override
+  String processOffNote(String features) {
+    return 'Switched off: $features';
+  }
+
+  @override
   String get processOperations => 'Operations & administration';
 
   @override

@@ -50,5 +50,6 @@
   "featureDetailHeldBack": "Activada, pero retenida: necesita {feature}, que está desactivada.",
   "featureDetailOff": "Desactivada.",
   "featureDetailNone": "Nada.",
-  "featureDetailGrantsPermission": "Concede a los administradores el permiso «{permission}»."
+  "featureDetailGrantsPermission": "Concede a los administradores el permiso «{permission}».",
+  "processOffNote": "Desactivado: {features}"
 }

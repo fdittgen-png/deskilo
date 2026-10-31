@@ -12068,6 +12068,7 @@
   "processMembershipCommerceDesc": "Definire prezzi dei servizi e accordi con i membri.",
   "processNeededBy": "necessaria per {features}",
   "processNothingToDo": "È già così: niente da cambiare.",
+  "processOffNote": "Disattivato: {features}",
   "processOperations": "Operazioni e amministrazione",
   "processOperationsDesc": "Gestire la configurazione e l’utilizzo dell’applicazione.",
   "processRemoveDependants": "Disattiva anche le {count} funzionalità dipendenti",

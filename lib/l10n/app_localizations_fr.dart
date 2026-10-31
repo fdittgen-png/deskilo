@@ -18683,6 +18683,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get processNothingToDo => 'C\'est déjà le cas — rien à changer.';
 
   @override
+  String processOffNote(String features) {
+    return 'Désactivé : $features';
+  }
+
+  @override
   String get processOperations => 'Exploitation et administration';
 
   @override
