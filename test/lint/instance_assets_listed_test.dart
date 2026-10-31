@@ -8,6 +8,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 void main() {
   test('every file in assets/instance/ is an asset of the app', () {
     final pubspec = File('pubspec.yaml').readAsStringSync();
@@ -17,10 +19,11 @@ void main() {
       ).allMatches(pubspec))
         m.group(1)!,
     };
+    // Every file, whatever its extension, through the shared walk (#2604).
     final files = [
-      for (final f in Directory('assets/instance').listSync())
-        if (f is File) f.path.replaceAll(r'\', '/'),
-    ]..sort();
+      for (final f in filesWithExtension('assets/instance', ''))
+        f.path.replaceAll(r'\', '/'),
+    ];
     expect(files, isNotEmpty);
     expect(
       [
