@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Contrôle des délais de la boîte",
+  "settingHintMessagingInboxSweepIntervalSeconds": "Secondes entre deux contrôles, par un appareil, des demandes dont le délai est dépassé. Une telle demande apparaît expirée au plus tard après ce temps. 0 contrôle avant chaque lecture de la boîte."
+}

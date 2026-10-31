@@ -26,7 +26,7 @@
 -- the budget is 400. Its job is to catch a 5x regression on a shared
 -- runner, not to measure the runner.
 begin;
-select plan(9);
+select plan(10);
 
 -- ------------------------------------------------------- the indexes
 select has_index('public', 'reservations', 'reservations_workspace_time_idx',
@@ -83,8 +83,16 @@ begin
 
   -- Without this the planner is working from an empty table's statistics
   -- and every plan below is a guess about a table it thinks has one row.
+  -- #3099 — the inbox's page: 5 000 events of one workspace, newest first.
+  insert into public.events (workspace_id, type, action, actor_member_id,
+                             subject_member_id, status, created_at)
+  select ws, 'payment', 'created', m, m, 'applied',
+         now() - (i || ' minutes')::interval
+    from generate_series(1, 5000) i;
+
   analyze public.reservations;
   analyze public.ledger_entries;
+  analyze public.events;
 
   perform set_config('deskilo.scale.ws', ws::text, false);
   perform set_config('deskilo.scale.member', m::text, false);
@@ -153,6 +161,31 @@ select cmp_ok(
   current_setting('deskilo.scale.ms')::int, '<', 400,
   'member_statement over twelve months answers well inside its budget '
   '(73 ms on the dev project; 400 is the ceiling, loose on purpose)');
+
+-- #3099 (PERF-2) — the 100-row events page as the owner, through RLS:
+-- events_select asks event_types_in_view() once per statement. On the dev
+-- project this fixture measures 30 ms with the 0400 helper and 8 ms with
+-- 0613's; 100 is the ceiling, loose on purpose.
+do $page$
+declare t0 timestamptz;
+begin
+  set local role authenticated;
+  t0 := clock_timestamp();
+  perform count(*) from (
+    select * from public.events
+     where workspace_id = current_setting('deskilo.scale.ws')::uuid
+     order by created_at desc, id desc
+     limit 100) page;
+  perform set_config('deskilo.scale.events_ms',
+    round(extract(epoch from clock_timestamp() - t0) * 1000)::text, false);
+  reset role;
+end;
+$page$;
+
+select cmp_ok(
+  current_setting('deskilo.scale.events_ms')::int, '<', 100,
+  'the inbox''s 100-row events page answers well inside its budget '
+  '(8 ms on the dev project; 100 is the ceiling, loose on purpose)');
 
 select * from finish();
 rollback;

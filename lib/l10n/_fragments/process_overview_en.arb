@@ -300,5 +300,10 @@
         "type": "String"
       }
     }
+  },
+  "processOffNote": "Switched off: {features}",
+  "@processOffNote": {
+    "description": "#3072 which features a partial process has switched off",
+    "placeholders": {"features": {"type": "String"}}
   }
 }

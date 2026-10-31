@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Fristprüfung des Posteingangs",
+  "settingHintMessagingInboxSweepIntervalSeconds": "Sekunden zwischen zwei Prüfungen, durch ein Gerät, auf Anfragen mit abgelaufener Frist. Eine solche Anfrage erscheint höchstens so viel später als abgelaufen. 0 prüft vor jedem Lesen des Posteingangs."
+}

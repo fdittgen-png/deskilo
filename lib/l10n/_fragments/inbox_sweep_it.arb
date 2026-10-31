@@ -1,0 +1,5 @@
+{
+  "@@locale": "it",
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Controllo scadenze della casella",
+  "settingHintMessagingInboxSweepIntervalSeconds": "Secondi tra due controlli, da parte di un dispositivo, delle richieste con scadenza superata. Una tale richiesta appare scaduta al più tardi dopo questo tempo. 0 controlla prima di ogni lettura della casella."
+}

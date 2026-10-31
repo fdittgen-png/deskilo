@@ -18645,6 +18645,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get processNothingToDo => 'È già così: niente da cambiare.';
 
   @override
+  String processOffNote(String features) {
+    return 'Disattivato: $features';
+  }
+
+  @override
   String get processOperations => 'Operazioni e amministrazione';
 
   @override
@@ -22483,6 +22488,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Secondi tra due controlli, da parte di un dispositivo, delle richieste con scadenza superata. Una tale richiesta appare scaduta al più tardi dopo questo tempo. 0 controlla prima di ogni lettura della casella.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.';
 
@@ -22710,6 +22719,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Aggiornamento della posta in arrivo';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Controllo scadenze della casella';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
@@ -23766,11 +23779,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLevelsApply => 'Applica';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Perché $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'Che cosa serve';
 
   @override
@@ -23808,14 +23816,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Disattiva: $features';
-  }
+  String get setupLevelsSwitchOff => 'Lo spazio non avrà più:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Attiva: $features';
-  }
+  String get setupLevelsSwitchOn => 'Lo spazio ottiene:';
 
   @override
   String get setupLevelsTitle => 'Che cosa fa il suo spazio';
@@ -24246,27 +24250,28 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'un tablet all’ingresso registra gli arrivi',
-      'keeps_books': 'tiene la contabilità',
-      'later': 'un assistente può arrivare più tardi',
-      'members_only': 'solo i membri vedono lo spazio',
-      'members_owe': 'i membri devono denaro allo spazio',
-      'no_money': 'non circola denaro',
-      'no_purchases': 'lo spazio non segue i suoi acquisti',
-      'no_vat': 'lo spazio non è soggetto a IVA',
-      'organised': 'più persone decidono insieme',
-      'pay_by_transfer': 'i membri pagano con bonifico',
-      'pay_online': 'i membri pagano online',
-      'public_page': 'lo spazio ha una pagina pubblica',
-      'several_rooms': 'ci sono più sale o sedi',
-      'shared_places': 'i membri condividono i posti',
-      'small_community': 'è una piccola comunità',
-      'start_simple': 'conviene iniziare in modo semplice',
-      'tracks_purchases': 'segue gli acquisti dello spazio',
-      'vat_registered': 'lo spazio è soggetto a IVA',
-      'issues_invoices': 'emette fatture',
-      'association': 'un’associazione decide insieme, con il suo consiglio',
-      'approve_bookings': 'le prenotazioni attendono un’approvazione',
+      'door_tablet': 'Perché un tablet all’ingresso registra gli arrivi',
+      'keeps_books': 'Perché tiene la contabilità',
+      'later': 'Perché un assistente può arrivare più tardi',
+      'members_only': 'Perché solo i membri vedono lo spazio',
+      'members_owe': 'Perché i membri devono denaro allo spazio',
+      'no_money': 'Perché non circola denaro',
+      'no_purchases': 'Perché lo spazio non segue i suoi acquisti',
+      'no_vat': 'Perché lo spazio non è soggetto a IVA',
+      'organised': 'Perché più persone decidono insieme',
+      'pay_by_transfer': 'Perché i membri pagano con bonifico',
+      'pay_online': 'Perché i membri pagano online',
+      'public_page': 'Perché lo spazio ha una pagina pubblica',
+      'several_rooms': 'Perché ci sono più sale o sedi',
+      'shared_places': 'Perché i membri condividono i posti',
+      'small_community': 'Perché è una piccola comunità',
+      'start_simple': 'Perché conviene iniziare in modo semplice',
+      'tracks_purchases': 'Perché segue gli acquisti dello spazio',
+      'vat_registered': 'Perché lo spazio è soggetto a IVA',
+      'issues_invoices': 'Perché emette fatture',
+      'association':
+          'Perché un’associazione decide insieme, con il suo consiglio',
+      'approve_bookings': 'Perché le prenotazioni attendono un’approvazione',
       'other': '$key',
     });
     return '$_temp0';

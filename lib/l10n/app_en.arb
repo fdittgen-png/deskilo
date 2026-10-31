@@ -22089,6 +22089,15 @@
   "@processNothingToDo": {
     "description": "#1329 the process change preview and apply"
   },
+  "processOffNote": "Switched off: {features}",
+  "@processOffNote": {
+    "description": "#3072 which features a partial process has switched off",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
   "processOperations": "Operations & administration",
   "processOperationsDesc": "Maintain configuration and the application experience.",
   "processRemoveDependants": "Also switch off the {count} dependants",
@@ -26492,6 +26501,10 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.",
+  "@settingHintMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting hint."
+  },
   "settingHintMessagingMessageRequestsPerDay": "How many message requests one person may send per day to people who have not allowed them. Can only be lowered.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -26727,6 +26740,10 @@
   "settingLabelMessagingInboxPollSeconds": "Inbox refresh",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Inbox timeout check",
+  "@settingLabelMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting label."
   },
   "settingLabelMessagingMessageRequestsPerDay": "Message requests per day",
   "@settingLabelMessagingMessageRequestsPerDay": {
@@ -27995,15 +28012,6 @@
   "@setupLevelsApply": {
     "description": "#2868 setup levels: setupLevelsApply"
   },
-  "setupLevelsBecause": "Because {reason}",
-  "@setupLevelsBecause": {
-    "description": "#2868 setup levels: setupLevelsBecause",
-    "placeholders": {
-      "reason": {
-        "type": "String"
-      }
-    }
-  },
   "setupLevelsChoice": "What it needs",
   "@setupLevelsChoice": {
     "description": "#2868 setup levels: setupLevelsChoice"
@@ -28057,23 +28065,13 @@
       }
     }
   },
-  "setupLevelsSwitchOff": "Switches off: {features}",
+  "setupLevelsSwitchOff": "Your space no longer gets:",
   "@setupLevelsSwitchOff": {
-    "description": "#2868 setup levels: setupLevelsSwitchOff",
-    "placeholders": {
-      "features": {
-        "type": "String"
-      }
-    }
+    "description": "#3076 setup levels preview: setupLevelsSwitchOff"
   },
-  "setupLevelsSwitchOn": "Switches on: {features}",
+  "setupLevelsSwitchOn": "Your space gets:",
   "@setupLevelsSwitchOn": {
-    "description": "#2868 setup levels: setupLevelsSwitchOn",
-    "placeholders": {
-      "features": {
-        "type": "String"
-      }
-    }
+    "description": "#3076 setup levels preview: setupLevelsSwitchOn"
   },
   "setupLevelsTitle": "What your space does",
   "@setupLevelsTitle": {
@@ -28560,7 +28558,7 @@
       }
     }
   },
-  "setupReason": "{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} association{an association decides together, with its board} approve_bookings{bookings wait for an approval} other{{key}}}",
+  "setupReason": "{key, select, door_tablet{Because a tablet at the door checks people in} keeps_books{Because you keep accounting books} later{Because an assistant can come later} members_only{Because only members see the space} members_owe{Because members owe the space money} no_money{Because no money changes hands} no_purchases{Because the space buys nothing it tracks} no_vat{Because the space is not registered for VAT} organised{Because several people decide together} pay_by_transfer{Because members pay by transfer} pay_online{Because members pay online} public_page{Because the space has a public page} several_rooms{Because there are several rooms or sites} shared_places{Because members share the places} small_community{Because the community is small} start_simple{Because you want to start simple} tracks_purchases{Because you track what the space buys} vat_registered{Because the space is registered for VAT} issues_invoices{Because you issue invoices} association{Because an association decides together, with its board} approve_bookings{Because bookings wait for an approval} other{{key}}}",
   "@setupReason": {
     "description": "#2868 setup levels: setupReason",
     "placeholders": {

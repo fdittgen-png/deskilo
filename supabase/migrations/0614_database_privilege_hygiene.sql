@@ -2,7 +2,7 @@
 -- risk: transforming
 -- (privileges only; no row and no function body moves)
 --
--- 0613 (#3095, SEC-D1 and the oracle half of SEC-D2 of the #2960 audit) --
+-- 0614 (#3095, SEC-D1 and the oracle half of SEC-D2 of the #2960 audit) --
 -- the defaults stop handing out access.
 --
 --   1. Default privileges of `postgres` in `public`: a NEW function is no
@@ -26,14 +26,44 @@
 -- settle_credit_invoice and add_conversation_participant, and the per-entry
 -- check of set_room_rental_fees_v1.
 
+-- Global AND per-schema: a per-schema default only ADDS to the global one, so
+-- it cannot take back the built-in EXECUTE of PUBLIC (or a global grant to
+-- anon); a fresh replay keeps the function executable unless the global
+-- default is revoked too.
+alter default privileges for role postgres
+  revoke execute on functions from public, anon;
+alter default privileges for role postgres
+  revoke select on tables from anon;
 alter default privileges for role postgres in schema public
   revoke execute on functions from public, anon;
 alter default privileges for role postgres in schema public
   revoke select on tables from anon;
 
--- Only a TABLE-level grant is withdrawn: `revoke select on all tables` would
--- also drop the column-level grants the published cards, the directory source
--- list and the installation identity carry on purpose (0299, 0305, 0390, 0559).
+-- The hosted platform also creates objects as supabase_admin: the same
+-- defaults for it, where this role may set them (a migration run as another
+-- role is refused, and that is not a failure of this one).
+do $admin$
+begin
+  if exists (select 1 from pg_roles where rolname = 'supabase_admin') then
+    alter default privileges for role supabase_admin
+      revoke execute on functions from public, anon;
+    alter default privileges for role supabase_admin
+      revoke select on tables from anon;
+    alter default privileges for role supabase_admin in schema public
+      revoke execute on functions from public, anon;
+    alter default privileges for role supabase_admin in schema public
+      revoke select on tables from anon;
+  end if;
+exception when insufficient_privilege then
+  raise notice 'default privileges of supabase_admin left as they are';
+end
+$admin$;
+
+-- Revoking a table privilege also revokes the matching column privileges, so
+-- a table where anon holds a COLUMN grant is skipped: the published cards, the
+-- directory source list and the installation identity carry theirs on purpose
+-- (0299, 0305, 0390, 0559). Those tables have no table-level SELECT anyway
+-- (revoked in 0269/0305/0390); the guard covers an installation that drifted.
 do $privileges$
 declare
   v_table regclass;
@@ -44,6 +74,12 @@ begin
      where n.nspname = 'public' and c.relkind in ('r', 'v', 'm', 'p')
        and c.relname <> 'deskilo_schema_version'
        and has_table_privilege('anon', c.oid, 'select')
+       and not exists (
+         select 1
+           from pg_attribute a, aclexplode(a.attacl) x
+          where a.attrelid = c.oid and a.attnum > 0 and not a.attisdropped
+            and x.privilege_type = 'SELECT'
+            and x.grantee = (select oid from pg_roles where rolname = 'anon'))
   loop
     execute format('revoke select on table %s from anon', v_table);
   end loop;
@@ -53,4 +89,4 @@ grant select on public.deskilo_schema_version to anon;
 
 revoke execute on function public.feature_operation_allowed(uuid, text, text) from authenticated;
 
-select public.set_deskilo_schema_version(613);
+select public.set_deskilo_schema_version(614);
