@@ -191,10 +191,12 @@ const SA = {
 };
 
 /** Runs the real handler with FCM stubbed; returns every message sent. */
-async function run(body: Record<string, string>) {
+async function run(body: Record<string, string>, configured = true) {
   resetTokenCacheForTests();
   await cachedAccessToken(SA, () => Promise.resolve("oauth-token"));
   Deno.env.set("FCM_SERVICE_ACCOUNT", JSON.stringify(SA));
+  if (configured) Deno.env.set("PUSH_SHARED_SECRET", "test-trigger-secret");
+  else Deno.env.delete("PUSH_SHARED_SECRET");
   const sent: { message: Record<string, unknown> }[] = [];
   const original = globalThis.fetch;
   globalThis.fetch = ((_url: string, init?: RequestInit) => {
@@ -205,15 +207,18 @@ async function run(body: Record<string, string>) {
     const res = await handle(
       new Request("http://localhost/send-push", {
         method: "POST",
+        headers: configured ? { "x-deskilo-push-secret": "test-trigger-secret" } : {},
         body: JSON.stringify(body),
       }),
       // deno-lint-ignore no-explicit-any
       fakeSupabase(tables()) as any,
     );
+    assertEquals(res.status, 202);
     return { res: await res.json(), sent };
   } finally {
     globalThis.fetch = original;
     Deno.env.delete("FCM_SERVICE_ACCOUNT");
+    Deno.env.delete("PUSH_SHARED_SECRET");
   }
 }
 
@@ -241,7 +246,7 @@ const ALLOWED_DATA_KEYS = [
 
 Deno.test("a direct message rings its recipient with generic text in their language and a qualified reference", async () => {
   const { res, sent } = await run({ note_id: "note-1" });
-  assertEquals(res.sent, 1);
+  assertEquals(res, { accepted: true });
   const message = only(sent);
   assertEquals(message.notification, {
     title: "DesKilo",
@@ -261,7 +266,7 @@ Deno.test("a direct message rings its recipient with generic text in their langu
 
 Deno.test("a message of a conversation names the conversation by id, nothing more (#2556)", async () => {
   const { res, sent } = await run({ note_id: "note-2" });
-  assertEquals(res.sent, 1);
+  assertEquals(res, { accepted: true });
   const message = only(sent);
   assertEquals(message.token, "device-it");
   assertEquals(message.data, {
@@ -279,7 +284,7 @@ Deno.test("a message of a conversation names the conversation by id, nothing mor
 
 Deno.test("a payment reminder names no amount; the member's own language override wins", async () => {
   const { res, sent } = await run({ event_id: "ev-1" });
-  assertEquals(res.sent, 1);
+  assertEquals(res, { accepted: true });
   const message = only(sent);
   assertEquals(message.token, "device-it");
   assertEquals(message.notification, {
@@ -293,7 +298,7 @@ Deno.test("a payment reminder names no amount; the member's own language overrid
 
 Deno.test("a removed reservation reaches the subject and the admins with the same generic title, never the actor", async () => {
   const { res, sent } = await run({ event_id: "ev-2" });
-  assertEquals(res.sent, 2);
+  assertEquals(res, { accepted: true });
   assertEquals(sent.map((s) => s.message.token).sort(), [
     "device-fr",
     "device-it",
@@ -339,4 +344,11 @@ Deno.test("an unreadable installation id leaves no reference, never a partial on
     "notification",
     "token",
   ]);
+});
+
+Deno.test("a legacy installation still delivers with no shared secret configured", async () => {
+  const { res, sent } = await run({ note_id: "note-1" }, false);
+  assertEquals(res, { accepted: true });
+  assertEquals(sent.length, 1);
+  assertNoSentinel(sent);
 });

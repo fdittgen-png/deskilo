@@ -1,54 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3092 — the caller check: with the secret configured, only the trigger
-// (secret header) or the service role may ask for a push; with none
-// configured the function keeps working as before.
-
+// Configured installations accept only their trigger secret or exact service
+// credential, while unconfigured installations retain legacy delivery.
 import { assert, assertFalse } from "jsr:@std/assert@1";
-import {
-  bearerRole,
-  mayTriggerPush,
-  PUSH_SECRET_HEADER,
-  sameSecret,
-} from "./push_caller.ts";
-
-const jwt = (role: string) =>
-  `h.${btoa(JSON.stringify({ role })).replace(/=+$/, "")}.s`;
+import { mayTriggerPush, PUSH_SECRET_HEADER, sameSecret } from "./push_caller.ts";
 const req = (headers: Record<string, string>) =>
   new Request("https://f.test/send-push", { method: "POST", headers });
-
-Deno.test("a call without the secret is refused when one is configured", () => {
-  assertFalse(mayTriggerPush(req({}), "s3cret"));
-  assertFalse(
-    mayTriggerPush(req({ authorization: `Bearer ${jwt("anon")}` }), "s3cret"),
-  );
-  assertFalse(mayTriggerPush(req({ [PUSH_SECRET_HEADER]: "wrong" }), "s3cret"));
+const allowed = (headers: Record<string, string>, secret: string | undefined = "trigger") =>
+  mayTriggerPush(req(headers), secret, "exact-service-key");
+Deno.test("public, missing, wrong and role-forged credentials are refused", () => {
+  assertFalse(allowed({}));
+  assertFalse(allowed({ [PUSH_SECRET_HEADER]: "wrong" }));
+  assertFalse(allowed({ authorization: "Bearer publishable-key" }));
+  const forged = `h.${btoa(JSON.stringify({ role: "service_role" }))}.signature`;
+  assertFalse(allowed({ authorization: `Bearer ${forged}` }));
 });
-
-Deno.test("the trigger's secret and the service role are let through", () => {
-  assert(mayTriggerPush(req({ [PUSH_SECRET_HEADER]: "s3cret" }), "s3cret"));
-  assert(
-    mayTriggerPush(
-      req({ authorization: `Bearer ${jwt("service_role")}` }),
-      "s3cret",
-    ),
-  );
+Deno.test("the trigger secret and exact service credential are accepted", () => {
+  assert(allowed({ [PUSH_SECRET_HEADER]: "trigger" }));
+  assert(allowed({ authorization: "Bearer exact-service-key" }));
+  assert(allowed({ authorization: "Bearer exact-service-key" }, undefined));
 });
-
-Deno.test("with no secret configured the function keeps working as before", () => {
-  assert(
-    mayTriggerPush(req({ authorization: `Bearer ${jwt("anon")}` }), undefined),
-  );
-  assert(mayTriggerPush(req({}), ""));
+Deno.test("unconfigured installations retain delivery until secrets are paired", () => {
+  assert(mayTriggerPush(req({}), undefined, undefined));
+  assert(mayTriggerPush(req({ authorization: "Bearer publishable-key" }), "", undefined));
 });
-
-Deno.test("helpers", () => {
+Deno.test("secret comparison includes every byte and its length", () => {
   assert(sameSecret("abc", "abc"));
   assertFalse(sameSecret("abc", "abd"));
   assertFalse(sameSecret("abc", "abcd"));
   assertFalse(sameSecret("", "x"));
-  assert(
-    bearerRole(req({ authorization: `Bearer ${jwt("anon")}` })) === "anon",
-  );
-  assert(bearerRole(req({ authorization: "Bearer not-a-jwt" })) === null);
 });

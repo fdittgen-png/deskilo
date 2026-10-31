@@ -2539,8 +2539,8 @@ routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | 
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751
 routine public.note_push_mentions(p_note uuid) -> uuid[] | function | definer | stable | exec:service_role | body:323630271acb
-routine public.notify_member_note() -> trigger | function | definer | volatile | exec:service_role | body:a34e1a067108
-routine public.notify_pending_event() -> trigger | function | definer | volatile | exec:service_role | body:d58062fcd4fe
+routine public.notify_member_note() -> trigger | function | definer | volatile | exec:service_role | body:c29f35cbeacb
+routine public.notify_pending_event() -> trigger | function | definer | volatile | exec:service_role | body:eec44d3ce2d5
 routine public.number_sequence_date_rank(p_date_part text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:4bd74f2dbf51
 routine public.number_sequence_defaults(p_journal text) -> TABLE(prefix text, date_part text, reset text) | function | invoker | immutable | exec:authenticated,service_role | body:4b73563abe6b
 routine public.number_sequence_effective_reset(p_date_part text, p_reset text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:b248778cd735
@@ -2659,12 +2659,13 @@ routine public.purchase_resource_site(p_workspace_id uuid, p_kind text, p_id uui
 routine public.purchase_state_of_event(p_status text) -> text | function | invoker | immutable | exec:service_role | body:d221debfbdf6
 routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:e87b9e97c015
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
+routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
-routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:543a1c987f88
+routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:6061a31874f8
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
 routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text) -> jsonb | function | definer | volatile | exec:service_role | body:d8a127d312db
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
@@ -2696,7 +2697,7 @@ routine public.release_dunning_hold(p_invoice_id uuid) -> void | function | defi
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
 routine public.release_retention_hold(p_hold_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:453a81248395
 routine public.reminder_attempts_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:aef59fb23b5d
-routine public.reminder_queue_push(p_intent_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:c8749c5c0d61
+routine public.reminder_queue_push(p_intent_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:1423564acaf2
 routine public.remove_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:54961220ca5d
 routine public.remove_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:695b1773b84f
 routine public.remove_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:06705ab617d9

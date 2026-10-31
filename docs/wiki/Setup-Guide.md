@@ -1744,6 +1744,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 - Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.
 - The detailed checklist is for the operator: see [Platforms](User-Guide#deskilo-on-your-devices) and [Your own server](User-Guide#run-your-own-server).
 - Push text never carries a name or a time: this is deliberate, for privacy.
+- Pair the push secret on each installation: store the same private random value in Vault as `deskilo_push_shared_secret` first, then as `PUSH_SHARED_SECRET` for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.
 
 **See also:** [Push notifications on this device](User-Guide#push-notifications-on-this-device)
 

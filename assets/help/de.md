@@ -5337,6 +5337,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
 - Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
+- Eine vom Server angenommene Push-Anfrage beweist keinen Empfang auf einem Gerät. Wenn der Push-Dienst die Geräteauslieferung nicht offenlegt, bleibt das Ergebnis unbekannt; die Erinnerung bleibt erfasst und der geschuldete Betrag unverändert.
 
 **Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
 
@@ -7707,6 +7708,7 @@ Push gehört nicht von selbst zur App. Betreiben Sie Ihren Space auf der gemeins
 - Ohne die Schritte 1 bis 4 wird nichts gepusht, was die Schalter auch sagen. Der Feed, die Glocke und die Nachrichten funktionieren weiterhin.
 - Die ausführliche Checkliste ist für den Betreiber: siehe [Plattformen](help:user.advanced.platforms) und [Ihr eigener Server](help:user.advanced.own-server).
 - Der Push-Text enthält nie einen Namen oder eine Uhrzeit: Das ist Absicht, aus Datenschutzgründen.
+- Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als `deskilo_push_shared_secret`, danach als `PUSH_SHARED_SECRET` für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Noch nicht eingerichtete Installationen behalten den bisherigen Versand mit einer Warnung; konfigurierte Installationen verweigern Aufrufe ohne Geheimnis oder Dienstzugangsdaten. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.
 
 **Siehe auch:** [Push-Benachrichtigungen auf diesem Gerät](help:user.privacy.push)
 

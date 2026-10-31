@@ -5597,6 +5597,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
 - Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
+- Eine vom Server angenommene Push-Anfrage beweist keinen Empfang auf einem Gerät. Wenn der Push-Dienst die Geräteauslieferung nicht offenlegt, bleibt das Ergebnis unbekannt; die Erinnerung bleibt erfasst und der geschuldete Betrag unverändert.
 
 **Siehe auch:** [Mahnregeln](#mahnregeln)
 
