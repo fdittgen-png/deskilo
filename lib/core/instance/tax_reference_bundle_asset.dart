@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show compute;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -30,6 +31,13 @@ Future<TaxReferenceSet> Function() taxReferenceBundleLoader(Ref ref) =>
 /// Called once at start-up, before anything renders: the app then answers
 /// "is this country in the EU" with no server, and the installation's own
 /// rows replace it when they arrive.
+///
+/// #3102 (PERF-8) — about 194 KB of JSON: decoded off the UI isolate
+/// (`compute`; on the web it stays on the one thread there is), while the
+/// rest of start-up runs.
 Future<void> installBundledTaxReference() async => ActiveTaxReference.install(
-      _parseTaxReferenceBundle(await rootBundle.loadString(_taxReferenceAssetPath)),
+      await compute(
+        _parseTaxReferenceBundle,
+        await rootBundle.loadString(_taxReferenceAssetPath),
+      ),
     );
