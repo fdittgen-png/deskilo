@@ -26,3 +26,18 @@ Recommended action: e1 reconcile stale status and include the omitted v1
 acceptance/remainder entries in its maintained order, while preserving explicit
 v2/rollout/provider gates. Incoming Claude continues #2488 and e1's agreed
 finance/performance order. No new PR or source edit was created by this audit.
+
+## Reviewer correction received after the audit
+
+2026-10-31T23:11Z: e1 checked #3074 and explicitly rejected closure for now.
+The merged implementation remainders do not prove these acceptance tests:
+
+- Editor move, resize and delete of a decor symbol.
+- Reserve displays decor to an ordinary member.
+- pgTAP decor-row RLS: a member reads but cannot write; another workspace's
+  decor is invisible.
+
+e1 queued one small test-only PR for incoming Claude before the performance
+items, intended to close #3074 only after the whole acceptance and review pass.
+This is the reviewer's reported gap assessment, not a new local test run or
+an implementation claim by outgoing Codex. Keep #3074 OPEN until verified.
