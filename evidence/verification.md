@@ -50,3 +50,43 @@ No production deployment or real FCM device delivery result is claimed.
 
 Update 2026-10-31T22:09:59Z: Edge run 41246398606 completed SUCCESS at dce8100fa20290d30d6ed70ecd5da9734429d022. Typecheck every function and Test every function that has tests both passed; Are the deploy secrets there and Deploy were SKIPPED on this pull request. Quality41246398626 remains running. e1 APPROVED that exact source head; reviews/3178.md is exported. No later source change has occurred.
 
+## Final superseding receipts after the night transfer
+
+PR3178: GitHub now confirms MERGED at 2026-10-31T22:25:49Z as
+2f3c1a45447bb29723898766887c9fc809fe8673, reviewed head
+dce8100fa20290d30d6ed70ecd5da9734429d022. Quality run
+https://github.com/fdittgen-png/deskilo/actions/runs/41246398626
+attempt1 is COMPLETED/SUCCESS at that source head. This supersedes the earlier
+pending snapshot above. Operator secrets, deployment and real push device
+evidence remain separate and are not established by this run.
+
+PR3180 / #3069: exact source head
+49986b4880d82e6ff1f0f8fc135decce5896ae06, approved in ../reviews/3180.md.
+Quality run https://github.com/fdittgen-png/deskilo/actions/runs/41250250531
+attempt1 is COMPLETED/SUCCESS. All four test shards, classification, database
+job, analyze/l10n/test/coverage aggregate and quality report report SUCCESS.
+The database job took its non-SQL classification path: do not call that fresh
+clean replay/pgTAP/provider/device evidence. GitHub job conclusions were checked;
+numeric original subprocess exit codes are UNKNOWN in this API-only receipt.
+Local commands/exit receipts and generated-file status remain in the night
+handover. No source mutation was made by outgoing Codex after transfer.
+
+API-listed artifacts below were unexpired when inspected; their content was
+not downloaded or independently validated by this receipt:
+
+- quality-report-attempt-1: 13062085251, digest sha256:2c4f462ad51787ecc8dc65f1609d72efb4b9f85e1aff45ef8313689f354dff94.
+- testshard-money-attempt-1: 13062000285.
+- testshard-rest-attempt-1: 13061825335.
+- testshard-gate-attempt-1: 13061690637.
+- testshard-workspace-attempt-1: 13060754718.
+- quality-timings-attempt-1: 13061895573.
+- quality-code-attempt-1: 13061581458.
+- quality-classification-attempt-1: 13061405893.
+- quality-database-attempt-1: 13060977693.
+
+At the first green observation PR3180 remained OPEN/CLEAN, autoMergeRequest
+null and head unchanged. e1, incoming Claude and gate were notified through
+the Mac exchange. e1 retains arming/merge and closure review; no merge is
+claimed by this receipt. A later source change requires appropriate new
+SHA-bound verification/review rather than reusing this result.
+
