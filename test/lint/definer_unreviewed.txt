@@ -11,7 +11,6 @@
 # do. The list only shrinks: the test fails on an entry whose function is
 # guarded, revoked or gone, and on any new unguarded function.
 eu_country_code/1 | reviewed: a pure lookup of reference data; invoker functions (supply_vat_category, vies_vat_parts) need it callable
-feature_operation_allowed/3 | reviewed: answers whether a feature is on, as feature_effective does for any workspace id; the invoker function invoice_issuing_enabled needs it
 is_eu_country/1 | reviewed: a pure lookup of reference data; the invoker function supply_vat_category needs it
 is_this_installation/1 | reviewed: compares an id with this installation's; a row policy calls it, so it must stay callable
 mcp_own_reservation/4 | reviewed: not callable by authenticated on the live schema (pinned in pgTAP 221); the text scan cannot follow how it was revoked

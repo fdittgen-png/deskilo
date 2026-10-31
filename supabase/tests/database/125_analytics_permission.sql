@@ -40,6 +40,7 @@ begin
   perform set_config('an.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -48,6 +49,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.reads(p_who text) returns boolean
 language plpgsql as $r$
@@ -60,6 +62,7 @@ exception when insufficient_privilege then
   return false;
 end
 $r$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

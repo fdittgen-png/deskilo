@@ -45,21 +45,25 @@ begin
   perform set_config('t.from', (date_trunc('day', now()) + interval '1 day 9 hours')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as(p text) returns void language sql as $$
   select set_config('request.jwt.claims',
     json_build_object('sub', current_setting('t.' || p), 'role', 'authenticated')::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.once(p_id text, p_hours int) returns uuid language sql as $$
   select public.create_reservation_once(p_id::uuid, current_setting('t.ws')::uuid,
     current_setting('t.seat')::uuid, null, null, null,
     current_setting('t.from')::timestamptz,
     current_setting('t.from')::timestamptz + make_interval(hours => p_hours), false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.outcome(p_id text) returns jsonb language sql as $$
   select public.reservation_request_outcome(current_setting('t.ws')::uuid, p_id::uuid);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the same request, the same booking ───────────────────────────────
 select pg_temp.as('u');

@@ -22,6 +22,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.connect(p_user uuid, p_ops text[]) returns void language plpgsql as $$
 begin
   insert into public.mcp_eligibility_grants (installation_id, binding_id, local_user_id, decision_id, decision, status, decided_by, expires_at)
@@ -35,6 +36,7 @@ begin
    where local_user_id = p_user and client_id = 'claude-test';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Ask through MCP, then confirm in the app: the retry under the same
 -- request id is what the two sessions will race.
 create function pg_temp.ask_and_confirm(p_user uuid, p_op text, p_args jsonb, p_request uuid) returns text language plpgsql as $$
@@ -49,6 +51,7 @@ begin
   return public.mcp_confirm_action((v->'data'->>'confirmation_id')::uuid, true)::text;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('race.i', public.installation_id()::text, false);
 -- #1631 — member d's own booking operations, for the revoke races (5–7).

@@ -14,6 +14,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.refusal(p_start time, p_end time, p_seat uuid) returns text
 language plpgsql as $$
@@ -26,6 +27,7 @@ begin
 exception when others then return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
  ('00000000-0000-4000-8000-0000002633a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'owner-2633@deskilo.test', '', now(), now(), now());

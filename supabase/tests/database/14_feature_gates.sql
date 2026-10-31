@@ -51,6 +51,7 @@ begin
   perform set_config('deskilo.gates.member_id', m_member::text, true);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Real JWT claims and the `authenticated` role: an authorization answer
 -- given to `postgres` proves nothing.
@@ -62,12 +63,14 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The flag map, written as the server stores it.
 create or replace function pg_temp.flags(p_flags jsonb) returns void language sql as $flags$
   update public.workspaces set feature_flags = p_flags
    where id = current_setting('deskilo.gates.ws')::uuid;
 $flags$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

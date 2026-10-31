@@ -48,16 +48,19 @@ begin
   perform set_config('deskilo.orph.v', v::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as_user(p text) returns void language sql as $$
   select set_config('request.jwt.claims',
     json_build_object('sub', current_setting('deskilo.orph.' || p), 'role', 'authenticated')::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.named() returns text[] language sql as $$
   select coalesce(array_agg(x order by x), '{}')
     from public.plan_media_orphans(current_setting('deskilo.orph.ws')::uuid) x;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as_user('u');
 select is(

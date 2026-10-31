@@ -40,10 +40,12 @@ create function pg_temp.batch() returns uuid language sql as $$
   select id from public.sample_data_batches
    where workspace_id = '00000000-0000-4000-8000-0000002872b1' and cleared_at is null
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.section(p text) returns jsonb language sql as $$
   select s from jsonb_array_elements(public.workspace_readiness('00000000-0000-4000-8000-0000002872b1')) s
    where s->>'section' = p
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Every row of the space that a batch could touch, whole, in one digest per table.
 create function pg_temp.digest() returns jsonb language sql as $$
   select jsonb_build_object(
@@ -56,6 +58,7 @@ create function pg_temp.digest() returns jsonb language sql as $$
     'number_sequences', (select md5(coalesce(string_agg(md5(to_jsonb(t)::text), ',' order by to_jsonb(t)::text), '')) from public.number_sequences t where t.workspace_id = '00000000-0000-4000-8000-0000002872b1'),
     'workspaces', (select md5(to_jsonb(t)::text) from public.workspaces t where t.id = '00000000-0000-4000-8000-0000002872b1'))
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Who may not.
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002872a2","role":"authenticated"}',true);

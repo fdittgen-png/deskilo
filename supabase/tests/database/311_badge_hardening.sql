@@ -13,6 +13,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- n failed attempts on the tag, each [ago] before now.
 create function pg_temp.failed(p_uid text, p_n int, p_ago interval) returns void language plpgsql as $$
@@ -22,10 +23,12 @@ begin
     from generate_series(1, p_n);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.verdict(p_uid text) returns text language sql as $$
   select public.badge_auth_verify(p_uid, '000000') ->> 'reason'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 values ('00000000-0000-4000-8000-000000003091', '00000000-0000-0000-0000-000000000000',

@@ -11,10 +11,13 @@ select plan(26);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002556' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('e00' || p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.t(p_min int) returns timestamptz language sql as $$
   select timestamptz '2026-03-01 10:00:00+00' + make_interval(mins => p_min) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- plpgsql: each call reads what earlier statements wrote.
 create function pg_temp.inbox(p_reader text, p_user int default 1, p_at text default null,
   p_key text default null, p_extra jsonb default '{}') returns jsonb language plpgsql as $$
@@ -25,12 +28,15 @@ begin
   execute format('select public.%I($1::timestamptz, $2)', p_reader) into v using p_at, p_key;
   return v;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- kind/tail of every row of a page, in order.
 create function pg_temp.keys(p jsonb) returns text language sql as $$
   select coalesce(string_agg((e->>'context_kind') || '/' || right(e->>'context_id', 4), ','
                   order by o), '') from jsonb_array_elements(p->'items') with ordinality x(e, o) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.row_of(p jsonb, p_tail text) returns jsonb language sql as $$
   select e from jsonb_array_elements(p->'items') e where right(e->>'context_id', 4) = p_tail $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures ──────────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);

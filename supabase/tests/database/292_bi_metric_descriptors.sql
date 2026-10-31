@@ -13,6 +13,7 @@ select plan(20);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000257a' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -20,6 +21,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -33,6 +35,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm, 'code', sqlstate);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- 1 owner of A, 2 plain member of A.
 create function pg_temp.seed() returns void language plpgsql as $seed$
@@ -87,6 +90,7 @@ begin
   perform set_config('t.first', first_day::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create function pg_temp.batch(p_user uuid, p_requests jsonb) returns jsonb language plpgsql as $$
@@ -95,6 +99,7 @@ begin
     current_setting('t.a'), p_requests::text));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Month k (0-based) of the fixture as a capacity request, one level or none.
 create function pg_temp.month(p_key text, k int, p_level text, p_months int default 1) returns jsonb
 language sql as $$
@@ -104,6 +109,7 @@ language sql as $$
     || case when p_level is null then '{}'::jsonb
             else jsonb_build_object('level_id', current_setting(p_level)) end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ------------------------------------------------------------ the registry
 select is((select count(*)::int from jsonb_each(public.kpi_registry()) e
@@ -183,6 +189,7 @@ create function pg_temp.reserved(p_key text) returns numeric language sql as $$
     from jsonb_array_elements(current_setting('t.p')::jsonb -> 'results') x
    where x ->> 'request_key' = p_key;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is((select count(*)::int from generate_series(0, 11) k
             where pg_temp.reserved(k || ':total')
                <> pg_temp.reserved(k || ':t.l1') + pg_temp.reserved(k || ':t.l2') + pg_temp.reserved(k || ':t.l3')),

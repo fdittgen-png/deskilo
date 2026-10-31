@@ -12,11 +12,15 @@ select plan(44);
 
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000002562b' || p_n)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://p.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.w() returns uuid language sql as $$
   select '00000000-0000-4000-8000-00000025620a'::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.p() returns uuid language sql as $$
   select '00000000-0000-4000-8000-00000025620f'::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── P: fixtures ───────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);
@@ -121,6 +125,7 @@ create function pg_temp.b(p_event int, p_subject text, p_rev int, p_status text,
     'event_id', ('00000000-0000-4000-8000-000000256' || lpad(p_event::text, 3, '0'))::uuid, 'source_installation_id', pg_temp.p(),
     'target_installation_id', public.installation_id(), 'issuer', p_issuer, 'subject', p_subject,
     'revision', p_rev, 'status', p_status, 'issued_at', p_issued, 'valid_until', p_until) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Signs `p_signed` as P would and posts `p_sent` (the same unless tampering).
 create function pg_temp.tx(p_signed jsonb, p_sent jsonb default null, p_secret text default repeat('s', 40),
   p_key text default 'k1', p_source uuid default pg_temp.p(), p_target uuid default public.installation_id(),
@@ -138,6 +143,7 @@ begin
       convert_to(p_secret, 'UTF8'), 'sha256'), 'hex')),
     encode(convert_to(coalesce(p_sent, p_signed)::text, 'UTF8'), 'base64'))->>'outcome';
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── W: authentic, fresh, first seen ───────────────────────────────────
 select is(pg_temp.tx(pg_temp.b(1, 'sa', 10, 'active')), 'applied', 'a signed active status applies');

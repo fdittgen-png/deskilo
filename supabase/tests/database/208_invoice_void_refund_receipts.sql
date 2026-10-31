@@ -29,6 +29,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 do $seed$
 declare
@@ -77,6 +78,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub','00000000-0000-4000-8000-000000258521','role','authenticated')::text, true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Invoices issued the ordinary way: September (4500), August (600), July (-1500).
 set local role authenticated;

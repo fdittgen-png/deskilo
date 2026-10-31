@@ -30,6 +30,7 @@ begin
   perform set_config('deskilo.series.owner', u_owner::text, true);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The row as a draw finds it, written directly (as the database would
 -- hold it after years of use).
@@ -41,15 +42,18 @@ returns void language sql as $state$
     set prefix = excluded.prefix, suffix = '', date_part = excluded.date_part,
         reset = excluded.reset, period_key = excluded.period_key, next_value = excluded.next_value;
 $state$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.key(p_reset text, p_back interval default '0'::interval)
 returns text language sql as $key$
   select public.number_sequence_period_key(current_setting('deskilo.series.ws')::uuid, p_reset, now() - p_back);
 $key$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.draw() returns text language sql as $draw$
   select public.next_document_number(current_setting('deskilo.series.ws')::uuid, 'zz_series');
 $draw$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- set_number_sequence as the owner, through the authenticated role.
 create or replace function pg_temp.configure(p_prefix text, p_date text, p_reset text)
@@ -67,6 +71,7 @@ exception when others then
   raise;
 end
 $configure$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

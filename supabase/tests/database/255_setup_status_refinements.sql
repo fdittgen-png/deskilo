@@ -34,12 +34,15 @@ update public.workspaces set role_permissions = coalesce(role_permissions, '{}':
 create function pg_temp.status() returns jsonb language sql as $$
   select public.workspace_setup_status('00000000-0000-4000-8000-0000002867b5')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.step(p_step text) returns text language sql as $$
   select s->>'state' from jsonb_array_elements(pg_temp.status()->'steps') s where s->>'step' = p_step
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bookable() returns jsonb language sql as $$
   select m from jsonb_array_elements(pg_temp.status()->'milestones') m where m->>'milestone' = 'bookable'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims',
   '{"sub":"00000000-0000-4000-8000-0000002867a5","role":"authenticated"}', true);

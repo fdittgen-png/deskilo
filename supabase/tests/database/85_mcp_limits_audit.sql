@@ -29,12 +29,14 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_user uuid, p_op text, p_args jsonb, p_request uuid) returns jsonb language plpgsql as $$
 begin
   perform pg_temp.act_as(p_user, 'claude-test');
   return public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, p_op, p_args, p_request);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.confirm_and_run(p_user uuid, p_op text, p_args jsonb, p_request uuid) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -45,6 +47,7 @@ begin
   return pg_temp.call(p_user, p_op, p_args, p_request);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Seeded as postgres: eligibility, a connection and its consent.
 create function pg_temp.connect(p_user uuid, p_ops text[]) returns void language plpgsql as $$
 begin
@@ -58,6 +61,7 @@ begin
   select id, current_setting('t.a')::uuid, p_ops, 'workspace' from public.mcp_connections where local_user_id = p_user;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Usage rows seeded directly, as postgres, in the caller's current minute.
 create function pg_temp.seed(p_user uuid, p_client text, p_mutation boolean, p_rows integer) returns void language sql as $$
   insert into public.mcp_usage (installation_id, workspace_id, local_user_id, client_id, operation, mutation, outcome)
@@ -65,9 +69,11 @@ create function pg_temp.seed(p_user uuid, p_client text, p_mutation boolean, p_r
          case when p_mutation then 'request_subscription_change' else 'get_capabilities' end, p_mutation, 'completed'
     from generate_series(1, greatest(p_rows, 0));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.usage(p_request uuid) returns integer language sql as $$
   select count(*)::integer from public.mcp_usage where request_id = p_request;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('t.i', public.installation_id()::text, true);
 select set_config('t.ops', 'get_capabilities,request_subscription_change', true);

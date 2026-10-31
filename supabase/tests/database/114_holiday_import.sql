@@ -46,6 +46,7 @@ begin
   perform set_config('deskilo.imp.member', u_member::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -54,6 +55,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Corpus Christi lies in the invoiced June; Christmas is already there;
 -- New Year is sent twice under two names.
@@ -67,11 +69,13 @@ language sql as $$
       {"day": "2026-12-25", "name": "Erster Weihnachtstag"}]'::jsonb,
     p_apply);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.closures() returns int language sql as $$
   select count(*)::int from public.closure_days
    where workspace_id = current_setting('deskilo.imp.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

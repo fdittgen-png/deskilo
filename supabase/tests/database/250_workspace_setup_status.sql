@@ -24,10 +24,12 @@ create function pg_temp.step(p_step text) returns jsonb language sql as $$
   select s from jsonb_array_elements(public.workspace_setup_status('00000000-0000-4000-8000-0000002867b1')->'steps') s
    where s->>'step' = p_step
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.milestone(p_milestone text) returns jsonb language sql as $$
   select m from jsonb_array_elements(public.workspace_setup_status('00000000-0000-4000-8000-0000002867b1')->'milestones') m
    where m->>'milestone' = p_milestone
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A plain member does not configure the space.
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002867a2","role":"authenticated"}',true);

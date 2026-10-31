@@ -63,6 +63,7 @@ begin
   perform set_config('deskilo.ctr.m_other', m_other::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as_owner() returns void language plpgsql as $act$
 begin
@@ -72,15 +73,18 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.next_value(p_journal text) returns bigint language sql as $nv$
   select next_value from public.number_sequences
    where workspace_id = current_setting('deskilo.ctr.ws')::uuid and journal = p_journal;
 $nv$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.draw(p_journal text) returns text language sql as $draw$
   select public.next_document_number(current_setting('deskilo.ctr.ws')::uuid, p_journal);
 $draw$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A draw that reports a refusal instead of raising, so a fix that refuses
 -- rather than widens still satisfies the TODO assertions below.
@@ -91,6 +95,7 @@ exception when others then
   return 'refused: ' || sqlerrm;
 end
 $try$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- set_number_sequence as the owner, through the authenticated role.
 create or replace function pg_temp.configure(p_journal text, p_prefix text, p_date text, p_digits int,
@@ -106,6 +111,7 @@ exception when others then
   raise;
 end
 $configure$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -214,6 +220,7 @@ create or replace function pg_temp.invoice(p_ws text, p_number text) returns voi
     from public.members m
    where m.workspace_id = p_ws::uuid and m.user_id = current_setting('deskilo.ctr.owner')::uuid;
 $inv$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select lives_ok(
   format($$ select pg_temp.invoice(%L, 'INV-2034-0001') $$, current_setting('deskilo.ctr.ws')),
@@ -232,6 +239,7 @@ create or replace function pg_temp.declaration(p_start date, p_number text) retu
   values (current_setting('deskilo.ctr.ws')::uuid, p_start, (p_start + interval '1 month' - interval '1 day')::date,
           '[]'::jsonb, 0, 0, p_number);
 $decl$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.declaration('2034-01-01', 'DECL-2034-0001');
 select throws_like(

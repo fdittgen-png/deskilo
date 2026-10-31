@@ -100,6 +100,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -113,6 +114,7 @@ begin
   return out;
 end;
 $p$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select matches(
   pg_temp.plan_for(format(

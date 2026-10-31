@@ -39,6 +39,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub',uo,'role','authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 set local role authenticated;
@@ -63,10 +64,12 @@ select is((select count(*)::int from public.ledger_entries where event_id=curren
 create or replace function pg_temp.st() returns jsonb language sql as $$
   select public.member_statement(current_setting('deskilo.pilot.m')::uuid, '2026-09');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.lines() returns jsonb language sql as $$
   select public.preview_invoice(current_setting('deskilo.pilot.ws')::uuid,
     current_setting('deskilo.pilot.m')::uuid, '2026-09') -> 'lines';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is((pg_temp.st()->>'fee_cents')::int, 3500, 'the statement bills the subscription band');
 select is((pg_temp.st()->>'overage_cents')::int, 2000, 'and two half-days beyond the one included');

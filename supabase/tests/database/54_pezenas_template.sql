@@ -34,18 +34,22 @@ create or replace function pg_temp.groups() returns text[] language sql as $$
   select array_agg(distinct e->>'group')
     from jsonb_array_elements(public.deployable_entities()) e;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.pez.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.tpl() returns uuid language sql as $$
   select current_setting('deskilo.pez.tpl')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_who text) returns uuid language sql as $$
   select current_setting('deskilo.pez.m_' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Half-days included in p_period for p_who, as the statement says.
 create or replace function pg_temp.included(p_who text, p_period text)
@@ -53,6 +57,7 @@ returns int language sql as $$
   select ((public.member_statement(pg_temp.member(p_who), p_period))
             ->>'included_half_days')::int;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The fifteen months of the report, in order, for one subscription.
 create or replace function pg_temp.fifteen(p_who text)
@@ -60,6 +65,7 @@ returns int[] language sql as $$
   select array_agg(pg_temp.included(p_who, to_char(m, 'YYYY-MM')) order by m)
     from generate_series(date '2026-10-01', date '2027-12-01', interval '1 month') m;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -417,6 +423,7 @@ $cfg$::jsonb,
     json_build_object('sub', u_owner::text, 'role', 'authenticated')::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -568,6 +575,7 @@ begin
   perform set_config('deskilo.pez.d2', d2::text, false);
 end
 $fix$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.book(p_desk text, p_day date, p_seat boolean default false)
 returns text language sql as $$
@@ -582,6 +590,7 @@ returns text language sql as $$
     case when p_seat then 'null'
          else quote_literal(current_setting('deskilo.pez.' || p_desk)) || '::uuid' end);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.fixture_plan();
 

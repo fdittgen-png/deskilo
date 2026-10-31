@@ -47,14 +47,17 @@ returns void language sql as $$
           'D-' || p_id, 'T', '[]'::jsonb, p_total, p_currency, 'A', 'Dunning', 'Owner', 'sig', p_issued,
           case when p_replaces is null then null else ('00000000-0000-4000-8000-0000001913' || p_replaces)::uuid end);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.st(p_id text, p_at timestamptz default now()) returns jsonb language sql as $$
   select public.invoice_dunning_state_core(('00000000-0000-4000-8000-0000001913' || p_id)::uuid, p_at);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.match(p_id text, p_status text, p_paid int, p_resolution text) returns void language sql as $$
   insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, status, note, by_name)
   values ('00000000-0000-4000-8000-0000001913b1', ('00000000-0000-4000-8000-0000001913' || p_id)::uuid,
           p_paid, p_resolution, p_status, 'fixture', 'Owner');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.inv('d1', 'b1', 'c2', '2026-09-01 10:00+02', 12000);
 select pg_temp.inv('d2', 'b1', 'c2', '2026-01-31 12:00+01', 12000);

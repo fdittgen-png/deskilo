@@ -18,6 +18,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)
@@ -57,10 +58,12 @@ create function pg_temp.book(p_from text, p_to text) returns uuid language sql a
     current_setting('deskilo.j.ws')::uuid, current_setting('deskilo.j.seat')::uuid,
     null, null, null, current_setting(p_from)::timestamptz, current_setting(p_to)::timestamptz, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.member(p_user text) returns uuid language sql as $$
   select id from public.members where workspace_id = current_setting('deskilo.j.ws')::uuid
      and user_id = ('00000000-0000-4000-8000-0000001974' || p_user)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Joining: both wait for the owner.
 select pg_temp.act_as('00000000-0000-4000-8000-0000001974a2');

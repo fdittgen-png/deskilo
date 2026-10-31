@@ -24,10 +24,12 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002567' || lpad((9000 + n)::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
@@ -41,6 +43,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.as_val(p_user uuid, p_sql text) returns text
 language plpgsql as $$
@@ -55,6 +58,7 @@ exception when others then
   return 'ERROR: ' || sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.ingest(p_tag text, p_name text, p_vat text) returns text
 language plpgsql as $$
@@ -67,6 +71,7 @@ begin
       'net_cents', 1000, 'tax_cents', 200, 'gross_cents', 1200)::text));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.schedule(p_user uuid, p_title text) returns uuid
 language plpgsql as $$
@@ -79,17 +84,20 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.name_supplier(p_user uuid, p_schedule text, p_supplier text) returns text
 language sql as $$
   select pg_temp.as_err(p_user, format('select public.set_expense_schedule_supplier(%L, %L)',
     current_setting('t.' || p_schedule), nullif(p_supplier, '')));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.supplier_of_schedule(p_schedule text) returns text language sql as $$
   select coalesce(supplier_id::text, '') from public.expense_schedules
    where id = current_setting('t.' || p_schedule)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

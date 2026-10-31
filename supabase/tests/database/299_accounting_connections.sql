@@ -74,6 +74,7 @@ begin
   perform set_config('ac.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -81,6 +82,7 @@ begin
     json_build_object('sub', current_setting('ac.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- p_sql's jsonb answer as p_who, or {"refused": sqlstate}.
 create or replace function pg_temp.as_json(p_who text, p_sql text) returns jsonb
@@ -94,6 +96,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- p_sql's jsonb answer as p_who with an assistant's delegated token.
 create or replace function pg_temp.as_delegated(p_who text, p_sql text) returns jsonb
@@ -109,6 +112,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- p_sql run as p_who under the authenticated role itself (grants, RLS):
 -- its first value as text, or the SQLSTATE refused.
@@ -126,10 +130,12 @@ exception when others then
   return sqlstate;
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.v(p_key text) returns text language sql as $v$
   select current_setting('ac.' || p_key)
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- One connection delivery recorded by the service role (the edge function).
 create or replace function pg_temp.deliver(p_doc text, p_sha text, p_status text,
@@ -143,6 +149,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $d$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The documents a generic journal file carried.
 create or replace function pg_temp.docs(p_third text) returns jsonb language sql as $docs$
@@ -154,6 +161,7 @@ create or replace function pg_temp.docs(p_third text) returns jsonb language sql
     jsonb_build_object('kind', 'credit_note', 'id', '00000000-0000-4000-8000-00000237d002', 'number', 'A-1',
                        'date', '2026-03-05', 'sha256', repeat(p_third, 64)))
 $docs$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

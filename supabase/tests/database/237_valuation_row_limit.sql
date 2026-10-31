@@ -11,6 +11,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -23,6 +24,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -36,6 +38,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -44,16 +47,20 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002577' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int, w text) returns uuid language sql as $$
   select id from public.members
    where user_id = pg_temp.u(n) and workspace_id = current_setting(w)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002577e' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -74,21 +81,26 @@ values (current_setting('t.a')::uuid, pg_temp.u(2), false, false, 'active', 1, '
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.hash(p text) returns text language sql as $$ select md5(p) || md5(p || 'x'); $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.meta(p_hash text) returns jsonb language sql as $$
   select jsonb_build_object('basis', 'book', 'source_system', 'Cabinet Martin', 'source_reference', 'FY2026',
     'source_hash', pg_temp.hash(p_hash), 'period_from', date '2026-01-01', 'period_to', date '2026-12-31',
     'currency', 'EUR', 'movements', 'period', 'complete_scope', false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rows(n int) returns jsonb language sql as $$
   select jsonb_agg(jsonb_build_object('asset_number', i, 'external_reference', 'X' || i)) from generate_series(1, n) i;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.stage(p_user uuid, p_hash text, p_rows jsonb, p_req int) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, format('select public.stage_asset_valuations_v1(%L, %L, %L::jsonb, %L::jsonb)',
     current_setting('t.a'), pg_temp.rq(p_req), pg_temp.meta(p_hash)::text, p_rows::text));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A hundred registered assets; the purchase lines behind them are not what is
 -- tested, so their foreign key is not checked for these synthetic rows.

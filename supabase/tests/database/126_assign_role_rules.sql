@@ -49,6 +49,7 @@ begin
   perform set_config('deskilo.give.admin', u_admin::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -57,33 +58,39 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.give.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_who text) returns uuid language sql as $$
   select id from public.members
    where workspace_id = pg_temp.ws()
      and user_id = current_setting('deskilo.give.' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.role(p_key text) returns uuid language sql as $$
   select id from public.workspace_roles
    where workspace_id = pg_temp.ws() and key = p_key;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.give(p_who text, p_key text, p_assign boolean)
 returns text language sql as $$
   select format('select public.assign_workspace_role(%L, %L, %L)',
                 pg_temp.member(p_who), pg_temp.role(p_key), p_assign);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.events(p_who text) returns int language sql as $$
   select count(*)::int from public.events
    where workspace_id = pg_temp.ws() and type = 'role_change'
      and subject_member_id = pg_temp.member(p_who);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select pg_temp.act_as('owner');

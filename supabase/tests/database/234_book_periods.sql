@@ -12,6 +12,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -24,6 +25,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -37,6 +39,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -45,9 +48,11 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002365' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -76,6 +81,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.void(p_id uuid) returns text language plpgsql as $$
 begin
   update public.invoices set voided_at = now(), voided_by_name = 'Owner' where id = p_id;
@@ -84,6 +90,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.match(p_invoice uuid, p_at timestamptz) returns text language plpgsql as $$
 begin
   insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at)
@@ -93,6 +100,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- the claims name the owner of A while the fixtures are written as the table owner
 select pg_temp.act_as(pg_temp.u(1));

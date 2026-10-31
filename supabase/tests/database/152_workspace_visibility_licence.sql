@@ -23,6 +23,7 @@ begin
   perform set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001918a1","role":"authenticated"}',true);
   return public.workspace_licence_status('00000000-0000-4000-8000-0000001918b1', p_on);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is((select visibility || '/' || (visibility_set_at is null)::text from public.workspaces
             where id='00000000-0000-4000-8000-0000001918b1'), 'private/true',

@@ -25,6 +25,7 @@ create function pg_temp.state(p_step text) returns text language sql as $$
   select s->>'state' from jsonb_array_elements(public.workspace_setup_status('00000000-0000-4000-8000-0000002868b1')->'steps') s
    where s->>'step' = p_step
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002868a1","role":"authenticated"}',true);
 

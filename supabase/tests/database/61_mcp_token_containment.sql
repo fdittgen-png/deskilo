@@ -12,6 +12,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.pre(p_method text, p_path text) returns text language plpgsql as $$
 begin
   perform set_config('request.method', p_method, true);
@@ -22,6 +23,7 @@ exception when others then
   return 'refused';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(public.mcp_facade_guard_status()->'tables_without_denial', '[]'::jsonb,
   'every RLS table carries the restrictive denial (a new table must add it)');

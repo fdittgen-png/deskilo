@@ -14,21 +14,26 @@ select plan(18);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('0000025620c' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.me() returns uuid language sql as $$
   select pg_temp.id('00002562c201') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.hosts(p_claims jsonb default '{}') returns jsonb language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
     (jsonb_build_object('sub', pg_temp.me(), 'role', 'authenticated') || p_claims)::text, true);
   return public.my_workspace_hosts_v1();
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The fixture hosts only, as "letter:state" in the reader's order.
 create function pg_temp.states(p jsonb) returns text language sql as $$
   select coalesce(string_agg(right(h->>'installation_id', 1) || ':' || (h->>'state'), ',' order by o), '')
     from jsonb_array_elements(p->'hosts') with ordinality x(h, o)
    where left(h->>'installation_id', 35) = '00000000-0000-4000-8000-0000025620c' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures ──────────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);

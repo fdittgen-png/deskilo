@@ -33,10 +33,12 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002573' || lpad((9000 + n)::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of running [p_sql] as [p_user]; '' when it worked.
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
@@ -51,6 +53,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The jsonb [p_sql] returns as [p_user]; {"error": ...} when it is refused.
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
@@ -66,6 +69,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Saves a member receipt of [p_lines] as member 2 of A under request [p_req].
 create function pg_temp.save(p_req int, p_lines jsonb) returns jsonb language sql as $$
@@ -75,6 +79,7 @@ create function pg_temp.save(p_req int, p_lines jsonb) returns jsonb language sq
     jsonb_build_object('kind', 'member_receipt', 'category', 'supplies', 'original_date', current_date,
                        'lines', p_lines)::text));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Submits draft [p_purchase] at revision 1 as member 2 under request [p_req].
 create function pg_temp.submit(p_req int, p_purchase text) returns jsonb language sql as $$
@@ -82,6 +87,7 @@ create function pg_temp.submit(p_req int, p_purchase text) returns jsonb languag
     'select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), p_purchase,
     ('a0000000-0000-4000-8000-00000000' || lpad(p_req::text, 4, '0'))::uuid));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- One line: gross, net, tax, rate, recoverable, class, then its place.
 create function pg_temp.line(p_gross int, p_net int, p_tax int, p_rate numeric, p_rec int,
@@ -90,16 +96,19 @@ create function pg_temp.line(p_gross int, p_net int, p_tax int, p_rate numeric, 
     'net_cents', p_net, 'tax_cents', p_tax, 'tax_rate_percent', p_rate,
     'recoverable_tax_cents', p_rec, 'recognition_kind', p_kind)) || p_place;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.events_of_a() returns int language sql as $$
   select count(*)::int from public.events
    where workspace_id = current_setting('t.a')::uuid and type = 'expense';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.docs_of_a() returns int language sql as $$
   select count(*)::int from public.purchase_documents
    where workspace_id = current_setting('t.a')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The postings of document [p_doc] in A's books today: code:Dn / code:Cn.
 create function pg_temp.posted(p_doc text) returns text language sql as $$
@@ -111,12 +120,14 @@ create function pg_temp.posted(p_doc text) returns text language sql as $$
          jsonb_array_elements(p -> 'lines') with ordinality z(l, n)
    where p ->> 'document_id' = p_doc;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.blockers() returns text language sql as $$
   select coalesce(string_agg((b ->> 'block') || ':' || (b ->> 'subject'), ',' order by b ->> 'block', b ->> 'subject'), '')
     from jsonb_array_elements(pg_temp.as_json(pg_temp.u(1), format('select public.compute_postings(%L, %L, %L, %L)',
            current_setting('t.a'), current_setting('t.site_a1'), current_date - 1, current_date + 1)) -> 'blockers') b;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.book(p_role text, p_code text, p_type text) returns void language sql as $$
   insert into public.book_accounts (workspace_id, issuer_site_id, code, name, account_type)
@@ -126,6 +137,7 @@ create function pg_temp.book(p_role text, p_code text, p_type text) returns void
     from public.book_accounts a
    where a.issuer_site_id = current_setting('t.site_a1')::uuid and a.code = p_code;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

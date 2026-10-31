@@ -46,6 +46,7 @@ begin
   perform set_config('deskilo.adm.bob', u_bob::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -54,27 +55,32 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.adm.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_who text) returns uuid language sql as $$
   select id from public.members
    where workspace_id = pg_temp.ws()
      and user_id = current_setting('deskilo.adm.' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.admin_role() returns uuid language sql as $$
   select id from public.workspace_roles
    where workspace_id = pg_temp.ws() and builtin;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.holds(p_who text) returns boolean language sql as $$
   select exists (select 1 from public.workspace_role_members
                   where role_id = pg_temp.admin_role()
                     and member_id = pg_temp.member(p_who));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

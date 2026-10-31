@@ -53,10 +53,12 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.missing(mm uuid) returns text[] language sql as $q$
   select public.invoice_issue_readiness(m.workspace_id, m.id, '2026-09') from public.members m where m.id = mm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Issue the month; '' when it went through with the four facts right.
 create or replace function pg_temp.issue(cc text, currency text) returns text language plpgsql as $issue$
@@ -85,6 +87,7 @@ exception when others then
   return 'error: ' || sqlerrm;
 end;
 $issue$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── every member state ────────────────────────────────────────────────
 -- Italy, Spain, Poland and Romania route every invoice through a national

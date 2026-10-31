@@ -75,6 +75,7 @@ begin
   perform set_config('iv.owner', u_o::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -82,16 +83,19 @@ begin
     json_build_object('sub', current_setting('iv.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.flag(p_on boolean) returns void language sql as $f$
   update public.workspaces set feature_flags = feature_flags || jsonb_build_object('inputVat', p_on)
    where id = current_setting('iv.ws')::uuid;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.sept() returns uuid language sql as $q$
   select id from public.vat_declarations
    where workspace_id = current_setting('iv.ws')::uuid and period_start = '2026-09-01';
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

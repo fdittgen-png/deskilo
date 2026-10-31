@@ -15,6 +15,7 @@ insert into auth.users (id, instance_id, aud, role, email, encrypted_password, e
 create function pg_temp.sec(p text, s text) returns jsonb language sql as $$
   select e from jsonb_array_elements(current_setting(p)::jsonb) e where e->>'section' = s
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 grant execute on function pg_temp.sec(text, text) to authenticated;
 
 -- The owner's two spaces, the foreign owner's one, a plain member in the first.

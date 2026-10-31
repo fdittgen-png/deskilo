@@ -11,6 +11,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The facade calls mcp_read_v1 as its owner; the test calls it directly
 -- under each person's claims, so it grants itself what the facade has.
 grant execute on function public.mcp_read_v1(uuid, public.members, text, jsonb) to authenticated;
@@ -19,10 +20,12 @@ create function pg_temp.read(p_user uuid, p_op text, p_args jsonb) returns jsonb
     (select m from public.members m where m.workspace_id = current_setting('t.w')::uuid and m.user_id = p_user),
     p_op, p_args);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.at(p_days integer, p_time time) returns text language sql as $$
   select to_char((((now() at time zone 'Europe/Paris')::date + p_days + p_time) at time zone 'Europe/Paris') at time zone 'UTC',
                  'YYYY-MM-DD"T"HH24:MI:SS"Z"');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
  ('00000000-0000-4000-8000-0000000166a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'o1617@deskilo.test', '', now(), now(), now()),

@@ -65,6 +65,7 @@ begin
   perform set_config('bd.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -73,6 +74,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Saves as p_who (into p_ws, default the space) and returns the view json, or
 -- the SQLSTATE refused.
@@ -88,6 +90,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $s$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.call(p_who text, p_sql text) returns text
 language plpgsql as $c$
@@ -99,6 +102,7 @@ exception when others then
   return sqlstate;
 end
 $c$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The view named p_name as p_who receives it.
 create or replace function pg_temp.seen(p_who text, p_name text) returns jsonb
@@ -109,10 +113,12 @@ begin
            where v ->> 'name' = p_name);
 end
 $r$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.id_of(p_name text) returns uuid language sql as $i$
   select id from public.bi_views where name = p_name
 $i$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.visual(p_id text, p_order int, p_metric text default 'capacity.seat_utilisation',
                                           p_over jsonb default '{}') returns jsonb
@@ -123,6 +129,7 @@ language sql as $v$
     'layout', jsonb_build_object('order', p_order, 'span', 6, 'height', 2),
     'interaction', 'filter', 'drill', null) || p_over
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.report(p_pages jsonb, p_over jsonb default '{}') returns jsonb
 language sql as $r$
@@ -132,11 +139,13 @@ language sql as $r$
     'pages', p_pages,
     'printStyle', jsonb_build_object('paper', 'A4', 'orientation', 'portrait', 'showSources', true)) || p_over
 $r$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.page(p_id text, p_visuals jsonb, p_filters jsonb default '[]') returns jsonb
 language sql as $p$
   select jsonb_build_object('id', p_id, 'title', 'Page ' || p_id, 'filters', p_filters, 'visuals', p_visuals)
 $p$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Capacity on p1; finance then capacity on p2.
 create or replace function pg_temp.mixed() returns jsonb language sql as $m$
@@ -145,10 +154,12 @@ create or replace function pg_temp.mixed() returns jsonb language sql as $m$
     pg_temp.page('p2', jsonb_build_array(pg_temp.visual('v2', 0, 'finance.invoiced'),
                                          pg_temp.visual('v3', 1)))))
 $m$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.capacity() returns jsonb language sql as $c$
   select pg_temp.report(jsonb_build_array(pg_temp.page('p1', jsonb_build_array(pg_temp.visual('v1', 0)))))
 $c$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

@@ -23,6 +23,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -35,6 +36,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -48,6 +50,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -56,16 +59,20 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002575' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int, w text) returns uuid language sql as $$
   select id from public.members
    where user_id = pg_temp.u(n) and workspace_id = current_setting(w)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002575e' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -105,16 +112,20 @@ insert into public.suppliers (id, workspace_id, supplier_number, name) values
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('b0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.today() returns date language sql as $$
   select (now() at time zone 'Europe/Paris')::date;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ob(n int) returns uuid language sql as $$
   select o.id from public.purchase_obligations o join public.purchase_sources s on s.purchase_id = o.purchase_id
    where s.source_id = pg_temp.ev(n);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rev(n int) returns int language sql as $$
   select revision from public.purchase_obligations where id = pg_temp.ob(n);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.pay(p_user uuid, n int, p_amount bigint, p_rev int, p_req int, p_paid_on date default null) returns jsonb
 language plpgsql as $$
 begin
@@ -123,6 +134,7 @@ begin
     current_setting('t.a'), pg_temp.ob(n), p_amount, p_rev, pg_temp.rq(p_req), coalesce(p_paid_on, pg_temp.today() - 1)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.page_obligation(p_n int) returns jsonb language plpgsql as $$
 declare r jsonb;
 begin
@@ -133,6 +145,7 @@ begin
   return null;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- e1: EUR 120.00, September; e2: EUR 120.00, August; e3: EUR 50.00, July;
 -- e4: the owner's own claim of EUR 10.00. All approved, credits booked a day ago.

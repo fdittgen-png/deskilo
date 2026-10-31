@@ -10,6 +10,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -22,6 +23,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -35,6 +37,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -43,9 +46,11 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002579' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -69,9 +74,11 @@ begin
   return pg_temp.as_json(p_user, format('select public.bi_query_batch_v1(%L, %L::jsonb)', current_setting('t.a'), p_requests::text));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.cap(p_key text, p_from text, p_to text) returns jsonb language sql as $$
   select jsonb_build_object('request_key', p_key, 'metric_id', 'capacity.seat_utilisation', 'from', p_from, 'to', p_to);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select ok((pg_temp.batch(pg_temp.u(1), (select jsonb_agg(pg_temp.cap('k' || g, '2026-09-01T00:00:00+02', '2026-10-01T00:00:00+02')) from generate_series(1, 61) g))::text) like '%between 1 and 60 requests%',
   'S1 by default 61 requests are refused, naming 60');

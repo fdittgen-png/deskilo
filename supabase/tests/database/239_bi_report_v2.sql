@@ -33,6 +33,7 @@ begin
   perform set_config('br.member', u_m::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -41,6 +42,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.save(p_who text, p_id uuid, p_scope text, p_name text,
                                         p_def jsonb, p_rev int) returns jsonb
@@ -52,6 +54,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $s$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- One KPI visual; the keys can be overridden to build a bad one.
 create or replace function pg_temp.visual(p_id text, p_order int, p_over jsonb default '{}') returns jsonb
@@ -62,6 +65,7 @@ language sql as $v$
     'layout', jsonb_build_object('order', p_order, 'span', 6, 'height', 2),
     'interaction', 'filter', 'drill', null) || p_over
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.report(p_visuals jsonb, p_over jsonb default '{}') returns jsonb
 language sql as $r$
@@ -72,6 +76,7 @@ language sql as $r$
       'id', 'p1', 'title', 'Page 1', 'filters', '[]'::jsonb, 'visuals', p_visuals)),
     'printStyle', jsonb_build_object('paper', 'A4', 'orientation', 'portrait', 'showSources', true)) || p_over
 $r$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

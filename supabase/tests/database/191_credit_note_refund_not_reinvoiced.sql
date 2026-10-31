@@ -42,6 +42,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub', uo, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -51,6 +52,7 @@ create or replace function pg_temp.vat_sum() returns bigint language sql as $$
            (date_trunc('month', now()) - interval '1 month')::date,
            (date_trunc('month', now()) + interval '2 month')::date);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select lives_ok($$select public.settle_credit_invoice(current_setting('rf.cn')::uuid, 'bank transfer')$$,
   'the credit note is settled by a refund');
 
