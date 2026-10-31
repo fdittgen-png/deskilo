@@ -149,9 +149,8 @@ class BankStatementsView extends ConsumerWidget {
     WidgetRef ref,
     StoredBankStatement s,
   ) async {
-    final bytes = await ref
-        .read(bankStatementRepositoryProvider)
-        .fetchOriginal(workspaceId, s.sourceSha256);
+    final bytes =
+        await ref.read(bankImportCommandsProvider).original(workspaceId, s);
     if (!context.mounted) return;
     await savePdfToDownloads(
       context,

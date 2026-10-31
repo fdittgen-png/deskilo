@@ -5,6 +5,8 @@
 // decisions on its movements. The server checks the flag, the rights, the
 // line count and every match again; this refuses only what cannot be
 // right, before anything is sent.
+import 'dart:typed_data';
+
 import 'package:crypto/crypto.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -164,6 +166,10 @@ class BankImportCommands {
     StoredBankLine line, {
     required String outgoingPaymentId,
   }) => _repository.reconcileOut(line.id, outgoingPaymentId: outgoingPaymentId);
+
+  /// #2380 — the original file of [statement], as it was imported.
+  Future<Uint8List> original(String workspaceId, StoredBankStatement statement) =>
+      _repository.fetchOriginal(workspaceId, statement.sourceSha256);
 }
 
 /// What a spreadsheet's mapping still lacks, field by field.

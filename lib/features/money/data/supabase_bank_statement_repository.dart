@@ -63,10 +63,12 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
               contentType: 'application/octet-stream',
             ),
           );
-    } on StorageException catch (e) {
+    } on StorageException catch (e, st) {
       // The same digest is the same file: kept already (a repeated import,
       // or one whose import failed after its upload).
-      if (e.statusCode != '409' && !e.message.contains('exists')) rethrow;
+      if (e.statusCode == '409' || e.message.contains('exists')) return;
+      // trace-exempt: the import command reports the failure.
+      Error.throwWithStackTrace(e, st);
     }
   }
 
