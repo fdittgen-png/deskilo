@@ -21,12 +21,14 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
 create or replace function pg_temp.state() returns text language sql as $$
   select public.work_hours_provenance(current_setting('deskilo.pv.ws')::uuid)->>'state';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.state(), 'default', 'no work-hour key set: the product default');
 

@@ -29,12 +29,14 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
 create or replace function pg_temp.opened() returns timestamptz language sql as $$
   select modified_datetime from public.workspaces where id = current_setting('deskilo.set.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.payload(p_address text, p_pct int default 80) returns jsonb language sql as $$
   select jsonb_build_object(
@@ -44,6 +46,7 @@ create or replace function pg_temp.payload(p_address text, p_pct int default 80)
     'invitation_templates', jsonb_build_object('fr', ' Bonjour ', 'en', '  '),
     'new_member_defaults', jsonb_build_object('subscription_pct', p_pct));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('deskilo.set.v0', pg_temp.opened()::text, false);
 -- `modified_datetime` is stamped with now(), which one transaction never

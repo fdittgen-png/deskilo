@@ -42,6 +42,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.bookable() returns text language sql as $$
@@ -50,6 +51,7 @@ create or replace function pg_temp.bookable() returns text language sql as $$
     current_setting('deskilo.av.from')::timestamptz,
     current_setting('deskilo.av.from')::timestamptz + interval '4 hours');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.bookable(), null, 'a free seat is bookable for the member');
 select is((select count(*)::int from public.reservations

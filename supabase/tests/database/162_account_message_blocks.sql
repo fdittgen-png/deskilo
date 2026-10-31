@@ -15,9 +15,11 @@ create function pg_temp.actor(p_suffix text) returns void language sql as $$
  select set_config('request.jwt.claims',json_build_object('sub',
    '00000000-0000-4000-8000-0000221100'||p_suffix,'role','authenticated')::text,true)::void;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_name text) returns uuid language sql as $$
  select current_setting('blocks.'||p_name)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 set local role authenticated;
 select is(current_user::text,'authenticated','commands run without the postgres RLS bypass');

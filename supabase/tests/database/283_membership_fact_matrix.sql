@@ -34,23 +34,32 @@ select plan(42);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('9999e' || lpad(p_n::text, 7, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(p_n int) returns uuid language sql as $$
   select pg_temp.id('99991' || lpad(p_n::text, 7, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.snap(p_n int) returns uuid language sql as $$
   select pg_temp.id('9999b' || lpad(p_n::text, 7, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://p9999.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('9999a000000' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text, p_k int default 1) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.id('9999f000000' || p_k) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.act(p_n int) returns void language sql as $$
   select set_config('request.jwt.claims', case when p_n is null then ''
     else jsonb_build_object('sub', pg_temp.u(p_n), 'role', 'authenticated')::text end, true)::void $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- plpgsql: each call reads what earlier statements wrote.
 create function pg_temp.sees(p_field text, p_viewer int) returns text language plpgsql as $$
 begin return public.account_field_visible_to(pg_temp.u(1), p_field, pg_temp.u(p_viewer))::text; end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.fact(p_u int, p_ref text) returns text language plpgsql as $$
 declare v text;
 begin
@@ -58,9 +67,11 @@ begin
     into v from public.membership_facts where user_id = pg_temp.u(p_u) and network_id = p_ref;
   return coalesce(v, 'none');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.in_force(p_u int, p_ref text) returns text language plpgsql as $$
 begin return public.membership_fact_in_force(pg_temp.u(p_u), p_ref, array['active']::text[])::text; end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── P: fixtures ───────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);
@@ -120,6 +131,7 @@ begin
     (select jsonb_object_agg('x-deskilo-' || key, value) from jsonb_each(v_h)),
     encode(convert_to(v_body::text, 'UTF8'), 'base64'));
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One fact of source p_s about person p_u and the workspace p_ref.
 create function pg_temp.go(p_e int, p_s text, p_u int, p_r bigint, p_st text,
   p_at timestamptz default now(), p_ref text default null,
@@ -128,6 +140,7 @@ returns text language sql as $$
   select pg_temp.post(p_s, p_e, jsonb_build_object('kind', 'membership_fact',
     'subject', pg_temp.u(p_u), 'network_id', coalesce(p_ref, pg_temp.ref(p_s)),
     'revision', p_r, 'status', p_st), p_at, p_life)->>'outcome' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A page of W-B's snapshot.
 create function pg_temp.pg(p_e int, p_snap int, p_wm int, p_page int, p_pages int, p_cnt int,
   p_hash text, p_entries jsonb)
@@ -135,13 +148,17 @@ returns text language sql as $$
   select pg_temp.post('b', p_e, jsonb_build_object('kind', 'membership_snapshot',
     'snapshot_id', pg_temp.snap(p_snap), 'watermark', p_wm, 'page', p_page, 'pages', p_pages,
     'count', p_cnt, 'hash', p_hash, 'entries', p_entries))->>'outcome' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One snapshot entry of W-B, as a one-element list (lists concatenate).
 create function pg_temp.e(p_n int, p_k int, p_r int, p_st text) returns jsonb language sql as $$
   select jsonb_build_array(jsonb_build_array(pg_temp.u(p_n)::text, pg_temp.ref('b', p_k), p_r, p_st)) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.full_list() returns jsonb language sql as $$
   select pg_temp.e(1, 1, 10, 'active') || pg_temp.e(6, 1, 11, 'active') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.h(p_entries jsonb) returns text language sql as $$
   select public.membership_snapshot_digest(p_entries) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- W-B's facts at P as person+workspace=status@revision.
 create function pg_temp.bst() returns text language plpgsql as $$
 declare v text;
@@ -151,6 +168,7 @@ begin
     from public.membership_facts where source_installation_id = pg_temp.inst('b');
   return v;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── case 7: P decides from its own facts, never through a link to W ───
 select is_empty($$select srvname::text from pg_foreign_server
@@ -229,6 +247,7 @@ begin
                        where event_id = pg_temp.ev(p_e))::text
            || ' ' || pg_temp.fact(3, pg_temp.ref('a', 2));
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.crashed(13), 'applied 0 none', 'case 5: a crash before P commits leaves no receipt and no fact');
 select is(pg_temp.go(13, 'a', 3, 5, 'active', p_ref => pg_temp.ref('a', 2)) || ' '
           || pg_temp.fact(3, pg_temp.ref('a', 2)),
@@ -346,6 +365,7 @@ begin
     from public.membership_fact_outbox where subject = pg_temp.u(1)::text;
   return v;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── case 5 (W): a lost enqueue heals ──────────────────────────────────
 alter table public.members disable trigger membership_fact_on_member_change;

@@ -73,22 +73,26 @@ begin
   perform set_config('sc.ux', ux::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.g(k text) returns uuid language sql as $$
   select current_setting('sc.' || k)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.act_as(who text) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
     json_build_object('sub', current_setting('sc.' || who), 'role', 'authenticated')::text, false);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- matches / consumed payments / invoice_payment events of the workspace
 create or replace function pg_temp.state() returns text language sql as $$
   select (select count(*) from public.invoice_matches where workspace_id = pg_temp.g('ws'))
       || '/' || (select count(*) from public.invoice_match_payments where workspace_id = pg_temp.g('ws'))
       || '/' || (select count(*) from public.events where workspace_id = pg_temp.g('ws') and type = 'invoice_payment');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 set local role authenticated;

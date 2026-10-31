@@ -73,6 +73,7 @@ begin
   perform set_config('deskilo.rp.plain', u_plain::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -81,16 +82,19 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.id(p text) returns uuid language sql as $$
   select current_setting('deskilo.rp.' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Nine to one, `p_days` from today: one window per booking, so no two
 -- bookings of the subject ever overlap.
 create or replace function pg_temp.at(p_days int) returns timestamptz language sql as $$
   select date_trunc('day', now()) + make_interval(days => p_days, hours => 9);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Booking FOR the subject, on the seat, `p_days` from today.
 create or replace function pg_temp.book_for(p_days int) returns text language sql as $$
@@ -98,6 +102,7 @@ create or replace function pg_temp.book_for(p_days int) returns text language sq
     pg_temp.id('ws'), pg_temp.id('m_subject'), pg_temp.id('seat'),
     pg_temp.at(p_days), pg_temp.at(p_days) + interval '4 hours');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Booking the whole Upstairs level for oneself, `p_days` from today.
 create or replace function pg_temp.book_level(p_days int) returns text language sql as $$
@@ -105,6 +110,7 @@ create or replace function pg_temp.book_level(p_days int) returns text language 
     pg_temp.id('ws'), pg_temp.at(p_days), pg_temp.at(p_days) + interval '4 hours',
     pg_temp.id('upstairs'));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 set local role authenticated;

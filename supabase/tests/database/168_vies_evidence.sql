@@ -46,6 +46,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub',uo,'role','authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -60,6 +61,7 @@ begin
   perform set_config('request.jwt.claims', c, true);
 end;
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- What the edge function asks VIES, for the issuer.
 set local role authenticated;

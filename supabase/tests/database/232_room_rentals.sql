@@ -12,6 +12,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -24,6 +25,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -37,6 +39,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -45,9 +48,11 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002568' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.book(p_user_member uuid, p_where text, p_id uuid, p_from timestamptz, p_to timestamptz) returns text
 language plpgsql as $$
@@ -59,7 +64,9 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.paris(p text) returns timestamptz language sql as $$ select (p::timestamp) at time zone 'Europe/Paris'; $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -113,6 +120,7 @@ begin
     current_setting('t.a'), p_office, '00000000-0000-4000-8000-0000256800a1', p_status, p_rev));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.save('draft', 0)->>'status', 'draft', '4 the owner records the rental as a draft');
 select set_config('t.r', (select id::text from public.room_rentals limit 1), true);
 select is(pg_temp.book((select id from public.members where user_id = pg_temp.u(2) and workspace_id = current_setting('t.a')::uuid),
@@ -131,7 +139,9 @@ select is(pg_temp.as_json(pg_temp.u(1), format('select public.set_room_rental_fe
   '4', '8 two fees: the general one and one for Carol');
 
 create function pg_temp.ada() returns uuid language sql as $$ select id from public.members where user_id = pg_temp.u(2) and workspace_id = current_setting('t.a')::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bruno() returns uuid language sql as $$ select id from public.members where user_id = pg_temp.u(3) and workspace_id = current_setting('t.a')::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.book(pg_temp.ada(), 'office_id', '00000000-0000-4000-8000-0000256800c2', pg_temp.paris('2027-04-12 09:00'), pg_temp.paris('2027-04-12 13:00')),
   '', '9 Ada books inside the window');
@@ -202,6 +212,7 @@ begin
   return public.mcp_read_v1(current_setting('t.a')::uuid, v_member, p_op, p_args);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is((select count(*)::int from jsonb_array_elements(pg_temp.mcp_places(pg_temp.u(3), 'get_availability',
   jsonb_build_object('starts_at', '2027-04-12T08:00:00+02:00', 'ends_at', '2027-04-12T18:00:00+02:00', 'kind', 'office'))->'items') i
   where i->>'office_id' = '00000000-0000-4000-8000-0000256800c2'), 0, '35 availability does not list the rented room to Bruno');

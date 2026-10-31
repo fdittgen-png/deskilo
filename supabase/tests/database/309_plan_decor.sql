@@ -24,6 +24,7 @@ begin
   perform set_config('deskilo.decor.lv', lv::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 select lives_ok(

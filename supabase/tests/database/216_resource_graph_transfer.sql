@@ -19,6 +19,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -27,6 +28,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.merge_err(p_tree jsonb) returns text language plpgsql as $$
 begin
   perform public.merge_floor_plan(current_setting('t.b')::uuid, p_tree);
@@ -35,6 +37,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
  ('00000000-0000-4000-8000-0000002660a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'owner-2660@deskilo.test', '', now(), now(), now()),
@@ -120,6 +123,7 @@ create function pg_temp.seat_doc(p_office text, p_area text, p_seat jsonb) retur
       'desks', jsonb_build_array(jsonb_build_object('name', 'D2', 'x', 1, 'y', 1, 'w', 4, 'h', 2,
         'seats', jsonb_build_array(p_seat)))))));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select ok(pg_temp.merge_err(pg_temp.seat_doc('O', 'workspace',
     jsonb_build_object('name', 'X', 'x', 3, 'y', 3, 'resource_kind', 'boat'))) like '%unknown resource kind%',
   'D: an unknown kind is refused');

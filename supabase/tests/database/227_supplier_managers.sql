@@ -11,6 +11,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -23,9 +24,11 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002574' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -49,6 +52,7 @@ begin
     current_setting('t.a'), p_name));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select ok(not (pg_temp.save(pg_temp.u(2), 'Net & Clair') ? 'error'), 'a member holding managePurchases creates a supplier');
 select is((select count(*)::int from public.suppliers where workspace_id = current_setting('t.a')::uuid), 1, 'readback: it exists');

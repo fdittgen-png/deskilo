@@ -30,6 +30,7 @@ begin
   perform set_config('deskilo.e', e::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as(p_user text, p_method text) returns void language sql as $$
@@ -37,6 +38,7 @@ create or replace function pg_temp.as(p_user text, p_method text) returns void l
     'sub', current_setting('deskilo.' || p_user), 'role', 'authenticated',
     'amr', json_build_array(json_build_object('method', p_method)))::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as('g', 'oauth');
 select is(public.mcp_google_status(),

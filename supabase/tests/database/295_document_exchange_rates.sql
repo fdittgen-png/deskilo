@@ -34,14 +34,17 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003031' || lpad((9000 + n)::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.req(n int) returns uuid language sql as $$
   select ('a3031000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The jsonb [p_sql] returns as [p_user]; {"error": ...} when it is refused.
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
@@ -57,6 +60,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The first column of [p_sql] as [p_user], as text; the error when refused.
 create function pg_temp.as_text(p_user uuid, p_sql text) returns text
@@ -72,6 +76,7 @@ exception when others then
   return 'error: ' || sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Saves a bill [p_ref] in [p_currency] as [p_user] in [p_ws]; [p_extra] joins
 -- the payload (an exchange_rate, a purchase_id).
@@ -88,6 +93,7 @@ returns jsonb language sql as $$
          jsonb_build_object('description', 'Set-up', 'gross_cents', 1250, 'recognition_kind', 'operating')))
      || p_extra)::text));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.rate(p_user int, p_doc text, p_rate text, p_source text,
                              p_ws text default current_setting('t.a'))
@@ -96,16 +102,19 @@ returns jsonb language sql as $$
     'select public.record_purchase_exchange_rate_v1(%L, %L, %L::numeric, %L::date, %L)',
     p_ws, p_doc, p_rate, current_date - 2, p_source));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.doc(p_ref text) returns text language sql as $$
   select id::text from public.purchase_documents
    where workspace_id = current_setting('t.a')::uuid and original_reference = p_ref;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.revision(p_ref text) returns int language sql as $$
   select revision from public.purchase_documents
    where workspace_id = current_setting('t.a')::uuid and original_reference = p_ref;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.submit_and_decide(p_ref text, p_req int) returns jsonb language sql as $$
   select pg_temp.as_json(pg_temp.u(1), format('select public.submit_purchase_v1(%L, %L, %s, %L)',
@@ -113,11 +122,13 @@ create function pg_temp.submit_and_decide(p_ref text, p_req int) returns jsonb l
   select pg_temp.as_json(pg_temp.u(4), format('select public.decide_purchase_v1(%L, %L, %s, true, '''', %L)',
            current_setting('t.a'), pg_temp.doc(p_ref), pg_temp.revision(p_ref), pg_temp.req(p_req + 1)));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.books() returns jsonb language sql as $$
   select pg_temp.as_json(pg_temp.u(1), format('select public.compute_postings(%L, %L, %L, %L)',
     current_setting('t.a'), current_setting('t.site_a'), current_date - 10, current_date));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The [p_kind] entry of document [p_ref]: code:Dn / code:Cn, in order.
 create function pg_temp.posted(p_ref text, p_kind text) returns text language sql as $$
@@ -128,16 +139,19 @@ create function pg_temp.posted(p_ref text, p_kind text) returns text language sq
          jsonb_array_elements(p -> 'lines') with ordinality z(l, n)
    where p ->> 'document_number' = p_ref and p ->> 'kind' = p_kind;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.entry(p_ref text, p_kind text) returns jsonb language sql as $$
   select p from jsonb_array_elements(pg_temp.books() -> 'postings') p
    where p ->> 'document_number' = p_ref and p ->> 'kind' = p_kind;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.blockers() returns text language sql as $$
   select coalesce(string_agg((b ->> 'block') || ':' || (b ->> 'subject'), ',' order by b ->> 'block', b ->> 'subject'), '')
     from jsonb_array_elements(pg_temp.books() -> 'blockers') b;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.book(p_role text, p_code text, p_type text) returns void language sql as $$
   insert into public.book_accounts (workspace_id, issuer_site_id, code, name, account_type)
@@ -147,6 +161,7 @@ create function pg_temp.book(p_role text, p_code text, p_type text) returns void
     from public.book_accounts a
    where a.issuer_site_id = current_setting('t.site_a')::uuid and a.code = p_code;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

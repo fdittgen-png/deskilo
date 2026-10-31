@@ -39,9 +39,11 @@ create or replace function pg_temp.inv(p_id text, p_ws text, p_member text) retu
           'L-' || p_id, 'T', '[]'::jsonb, 12000, 'EUR', 'A', 'Clauses', 'Owner', 'sig',
           '{"seller":{"country":"fr"},"buyer":{"country":"DE","vat_id":"DE123456789"}}');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.snap(p_id text) returns jsonb language sql as $$
   select legal_snapshot from public.invoices where id = ('00000000-0000-4000-8000-0000001916' || p_id)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.inv('d1', 'b1', 'c2');
 select pg_temp.inv('d2', 'b1', 'c3');

@@ -25,6 +25,7 @@ begin
   perform set_config('deskilo.other', other::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as(p_user text, p_aal text) returns void language sql as $$
@@ -32,6 +33,7 @@ create or replace function pg_temp.as(p_user text, p_aal text) returns void lang
     'sub', current_setting('deskilo.' || p_user), 'role', 'authenticated',
     'aal', p_aal)::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as('other', 'aal2');
 select throws_like($$ select public.instance_mcp_overview() $$,

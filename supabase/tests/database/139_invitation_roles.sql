@@ -46,6 +46,7 @@ begin
   perform set_config('deskilo.inv.n2', u_n2::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -54,16 +55,19 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.inv.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_who text) returns uuid language sql as $$
   select id from public.members
    where workspace_id = pg_temp.ws()
      and user_id = current_setting('deskilo.inv.' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.roles_of(p_who text) returns text language sql as $$
   select coalesce(string_agg(r.key, ',' order by r.key), '-')
@@ -71,6 +75,7 @@ create or replace function pg_temp.roles_of(p_who text) returns text language sq
     join public.workspace_roles r on r.id = rm.role_id and not r.builtin
    where rm.member_id = pg_temp.member(p_who);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Redeeming, the way join_workspace does: the code is marked used by the
 -- person, and their membership arrives with the status it is given.
@@ -86,6 +91,7 @@ begin
           false, false, p_status);
 end
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select pg_temp.act_as('owner');

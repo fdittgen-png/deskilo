@@ -53,12 +53,14 @@ begin
     json_build_object('sub', u_owner::text, 'role', 'authenticated')::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.included(p_period text)
 returns int language sql as $$
   select (public.member_statement(current_setting('deskilo.spec.member')::uuid,
                                   p_period) ->> 'included_half_days')::int;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

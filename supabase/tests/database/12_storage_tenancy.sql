@@ -51,6 +51,7 @@ begin
   perform set_config('deskilo.storage.ws_b', ws_b::text, true);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Before any object can exist, the bucket must. 0215 creates it; until
 -- then, no instance built from the migrations had one.

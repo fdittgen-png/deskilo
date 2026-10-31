@@ -79,6 +79,7 @@ returns text[] language sql as $$
                                            'net_cents',p_gross * 100 / 121,
                                            'vat_cents',p_gross - p_gross * 100 / 121)))) x;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.gaps('28001', '{"name":"B","street":"s","city":"c","vat_id":"ESA12345674"}'),
           '{}'::text[], 'Madrid: nothing else missing');

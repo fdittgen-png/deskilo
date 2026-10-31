@@ -63,6 +63,7 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.charge(mm uuid, category text, cents int, supply text, descr text)
 returns void language sql as $q$
@@ -70,6 +71,7 @@ returns void language sql as $q$
   select workspace_id, id, 'charge', category, cents, descr, '2026-09', supply
     from public.members where id = mm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.issue(mm uuid) returns text language plpgsql as $q$
 begin
@@ -81,10 +83,12 @@ exception when others then
        (select workspace_id from public.members where id = mm), mm, '2026-09')) x), '');
 end;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.invoice_of(mm uuid) returns public.invoices language sql as $q$
   select i.* from public.invoices i where i.member_id = mm and i.period = '2026-09';
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the shapes ────────────────────────────────────────────────────────
 select ok(public.tax_reference_valid('sales_tax', '{"state":"NY","components":[{"level":"state","label":"NY","percent":4}]}'),

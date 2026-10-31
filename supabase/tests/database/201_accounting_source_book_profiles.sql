@@ -41,12 +41,14 @@ create temp table sp_before as
 create or replace function pg_temp.snap(w text) returns jsonb language sql as $$
   select public.accounting_source_snapshot_v1(('00000000-0000-4000-8000-0000002365' || w)::uuid, date '2026-01-01', date '2026-12-31');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.act_as(who text) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
     json_build_object('sub', '00000000-0000-4000-8000-0000002365' || who, 'role', 'authenticated')::text, false);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 set local role authenticated;
 select pg_temp.act_as('a1');

@@ -42,6 +42,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.template(p_date text default 'year',
                                            p_reset text default 'yearly')
@@ -52,6 +53,7 @@ returns jsonb language sql as $$
                          'date_part', p_date, 'digits', 5,
                          'reset', p_reset, 'gapless', true))));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.seq(p_ws text, p_field text)
 returns text language sql as $$
@@ -64,6 +66,7 @@ returns text language sql as $$
    where workspace_id = current_setting('deskilo.seq.' || p_ws)::uuid
      and journal = 'invoice';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

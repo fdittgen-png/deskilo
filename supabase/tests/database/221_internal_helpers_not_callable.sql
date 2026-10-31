@@ -8,6 +8,7 @@ select plan(31);
 create function pg_temp.callable(p_sig text, p_role text) returns boolean language sql as $$
   select has_function_privilege(p_role, p_sig::regprocedure, 'execute');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select ok(not pg_temp.callable(sig, 'authenticated') and not pg_temp.callable(sig, 'anon'), sig || ' is not callable by a signed-in or anonymous person')
   from unnest(array[

@@ -36,6 +36,7 @@ begin
           date_trunc('day', now()) + interval '1 day' + make_interval(hours => p_to);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select lives_ok($$select pg_temp.book('seat_id', '00000000-0000-4000-8000-0000001908e4', 9, 12)$$, 'a seat is booked 9–12');
 select lives_ok($$select pg_temp.book('seat_id', '00000000-0000-4000-8000-0000001908e5', 9, 12, 't.m2')$$, 'another member takes the other seat at the same desk');

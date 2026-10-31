@@ -66,6 +66,7 @@ begin
   perform set_config('deskilo.test.m_b', m_b::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -79,6 +80,7 @@ begin
                       'role', 'authenticated')::text, false);
 end;
 $be$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.be('u_a');
 set local role authenticated;

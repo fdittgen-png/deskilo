@@ -11,12 +11,16 @@ select plan(16);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000279e' || lpad(p_n::text, 4, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('0000279a000' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.id('0000279f0001') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A fresh fact as the apply stores it, named or not, under the source's epoch.
 create function pg_temp.fact(p_u int, p_c text, p_name text default null)
 returns void language sql as $$
@@ -25,6 +29,7 @@ returns void language sql as $$
   select pg_temp.u(p_u), pg_temp.ref(p_c), 'https://p279.test/auth/v1', pg_temp.inst(p_c), 1,
          'active', now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid(), p_name
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- u(p_n)'s workspaces page. plpgsql: each call reads what earlier statements wrote.
 create function pg_temp.ws(p_n int, p_q text default '') returns jsonb language plpgsql as $$
 begin
@@ -32,6 +37,7 @@ begin
     'role', 'authenticated')::text, true);
   return public.my_personal_message_directory_v1('workspaces', null, null, p_q);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The name u(p_n)'s page gives W-p_c ('none': not listed, '-': unnamed).
 create function pg_temp.wname(p_n int, p_c text) returns text language plpgsql as $$
 declare v jsonb;
@@ -40,6 +46,7 @@ begin
    where e->>'network_id' = pg_temp.ref(p_c);
   return case when v is null then 'none' else coalesce(v->>'permitted_name', '-') end;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The helper's row for W-p_c as name/fresh ('none': no row).
 create function pg_temp.rel(p_n int, p_c text) returns text language plpgsql as $$
 declare v text;
@@ -49,10 +56,12 @@ begin
    where r.network_id = pg_temp.ref(p_c);
   return coalesce(v, 'none');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The last character of each installation listed by a search, in order.
 create function pg_temp.found(p_n int, p_q text) returns text language sql as $$
   select coalesce(string_agg(right(split_part(e->>'network_id', ':', 1), 1), ',' order by o), '')
     from jsonb_array_elements(pg_temp.ws(p_n, p_q)->'items') with ordinality x(e, o) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures ──────────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);

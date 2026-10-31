@@ -26,10 +26,12 @@ insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) val
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025800' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(p_ws text, p_member text, p_status text) returns void language sql as $$
   insert into public.events (workspace_id, type, action, actor_member_id, subject_member_id, status)
   values (pg_temp.u(p_ws), 'expense', 'submitted', pg_temp.u(p_member), pg_temp.u(p_member), p_status);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_user text, p_from text, p_to text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -39,6 +41,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.ev('b1', 'c2', 'pending');
 select pg_temp.ev('b1', 'c2', 'pending');

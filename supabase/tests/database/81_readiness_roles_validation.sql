@@ -23,9 +23,11 @@ begin
   insert into snap values (p_label, public.workspace_readiness(current_setting('t.ws')::uuid));
   reset role;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rv(p_label text) returns jsonb language sql as $$
   select e from snap, jsonb_array_elements(v) e where label = p_label and e->>'section' = 'roles_validation'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.read('none');
 insert into public.validation_policies (workspace_id, company_id, event_type, required_count)
@@ -41,6 +43,7 @@ select pg_temp.read('satisfied');
 create function pg_temp.asst(p_label text) returns jsonb language sql as $$
   select e from snap, jsonb_array_elements(v) e where label = p_label and e->>'section' = 'assistant'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) - 'mcpAccess' || '{"mcpAccess": false}'
  where id = current_setting('t.ws')::uuid;
 select pg_temp.read('mcp_off');

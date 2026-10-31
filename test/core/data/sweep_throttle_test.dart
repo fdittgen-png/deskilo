@@ -6,8 +6,8 @@
 // by the next read; concurrent reads share the one in flight.
 import 'dart:async';
 
+import 'package:deskilo/core/data/sweep_throttle.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/events/data/sweep_throttle.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Clock implements Clock {

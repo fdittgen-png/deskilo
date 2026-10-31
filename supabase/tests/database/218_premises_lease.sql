@@ -18,6 +18,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -30,6 +31,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -38,21 +40,26 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002569' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int) returns uuid language sql as $$
   select id from public.members where user_id = pg_temp.u(n) and workspace_id = current_setting('t.a')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.save(p_user uuid, p_lease text, p_rev int, p_payload jsonb, p_req int) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, format('select public.save_premises_lease_v1(%L, %L, %s, %L::jsonb, %L)',
     current_setting('t.a'), p_lease, p_rev, p_payload::text, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.term(p_user uuid, p_lease text, p_rev int, p_kind text, p_label text, p_amount int, p_every int, p_from date, p_req int) returns jsonb
 language plpgsql as $$
 begin
@@ -60,6 +67,7 @@ begin
     current_setting('t.a'), p_lease, p_rev, p_kind, p_label, p_amount, p_every, p_from, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.notice(p_user uuid, p_lease text, p_rev int, p_given date, p_end date, p_reason text, p_req int) returns jsonb
 language plpgsql as $$
 begin
@@ -67,6 +75,7 @@ begin
     current_setting('t.a'), p_lease, p_rev, p_given, p_end, p_reason, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.sweep() returns int language plpgsql as $$
 declare v int;
 begin
@@ -76,6 +85,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -107,6 +117,7 @@ create function pg_temp.lease_payload(p_extra jsonb default '{}'::jsonb) returns
     'notice_months', 3, 'indexation_note', 'ILC, each 1 March', 'deposit_cents', 200000,
     'contract_document_id', '00000000-0000-4000-8000-0000256900d1') || p_extra;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── A: the flag and the rights ─────────────────────────────────────────
 select ok((pg_temp.save(pg_temp.u(1), null, 0, pg_temp.lease_payload(), 1)::text) like '%switched off%',

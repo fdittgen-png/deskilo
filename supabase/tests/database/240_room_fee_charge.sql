@@ -19,6 +19,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -32,6 +33,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_int(p_user uuid, p_sql text) returns int
 language plpgsql as $$
 declare v int;
@@ -45,12 +47,16 @@ exception when others then
   return -1;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002575' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.paris(p text) returns timestamptz language sql as $$ select (p::timestamp) at time zone 'Europe/Paris'; $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int) returns uuid language sql as $$
   select id from public.members where user_id = pg_temp.u(n) and workspace_id = current_setting('t.a')::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A booking as the table owner; returns the reservation id.
 create function pg_temp.book(p_member uuid, p_office uuid, p_from text, p_to text) returns uuid
 language plpgsql as $$
@@ -62,8 +68,10 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.open_amount(p_reservation uuid) returns int language sql as $$
   select amount_cents from public.reservation_charges where reservation_id = p_reservation and reversed_at is null $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

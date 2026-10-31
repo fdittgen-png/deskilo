@@ -14,6 +14,7 @@ create function pg_temp.members_section() returns jsonb language sql as $$
   select e from jsonb_array_elements(public.workspace_readiness(current_setting('t.ws')::uuid)) e
    where e->>'section' = 'member_permissions'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.members_section()->>'state' || '/' || (pg_temp.members_section()->>'required') || '/' || (pg_temp.members_section()->>'reason'),
   'needs_configuration/true/members_cannot_book', 'a new space grants plain members nothing: a required step');

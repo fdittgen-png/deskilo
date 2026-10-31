@@ -19,15 +19,18 @@ begin
     'sub', p_user, 'role', 'authenticated', 'client_id', p_client))::text, true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.nobody() returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', '', true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.page(p_from text, p_to text, p_ws uuid default null, p_dir text default 'asc',
                              p_after_start text default null, p_after_id uuid default null) returns jsonb language sql as $$
   select public.my_reservations_page_v1(p_from::timestamptz, p_to::timestamptz, p_ws, p_dir, p_after_start::timestamptz, p_after_id);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.sqlstate_of(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -36,17 +39,21 @@ exception when others then
   return sqlstate;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The ids of a page, in the order returned.
 create function pg_temp.ids(p jsonb) returns text language sql as $$
   select coalesce(string_agg(right(e ->> 'id', 4), ',' order by n), '')
     from jsonb_array_elements(p -> 'items') with ordinality t(e, n);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002553a' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.r(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002553b' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures, by direct insert ───────────────────────────────────────────
 -- u1: the caller, member of One and Two. u2: another member of One.

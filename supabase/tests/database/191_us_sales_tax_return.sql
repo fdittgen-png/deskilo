@@ -37,6 +37,7 @@ begin
   return ws;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.customer(ws uuid, tag text) returns uuid language plpgsql as $seed$
 declare
@@ -57,6 +58,7 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.as_owner(ws uuid) returns void language plpgsql as $q$
 begin
@@ -64,6 +66,7 @@ begin
     (select user_id from public.members where workspace_id = ws and is_owner), 'role','authenticated')::text, true);
 end;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('us.ws', pg_temp.space('a')::text, true);
 select set_config('us.a', pg_temp.customer(current_setting('us.ws')::uuid, 'plain')::text, true);
@@ -80,6 +83,7 @@ create or replace function pg_temp.line(st text, k text, nm text default '') ret
     left join public.sales_tax_return(current_setting('us.ws')::uuid, current_date - 1, current_date + 1) r
       on r.state = st and r.kind = k and r.name = nm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.line('NY', 'taxable'), '10000/888/1', 'taxed sales of 100.00 and 8.88 collected, from the one customer who pays');
 select is(pg_temp.line('NY', 'tax', 'New York State'), '10000/400/1', 'the state tax on its base');

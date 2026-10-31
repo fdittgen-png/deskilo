@@ -60,6 +60,7 @@ begin
   perform set_config('deskilo.matrix.member', u_member::text, true);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Reads as [who]: the four governed rows of the seeded workspace.
 create or replace function pg_temp.counts() returns int[] language sql as $counts$
@@ -70,6 +71,7 @@ create or replace function pg_temp.counts() returns int[] language sql as $count
     (select count(*)::int from public.events where workspace_id = current_setting('deskilo.matrix.ws')::uuid)
   ];
 $counts$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 grant execute on function pg_temp.counts() to authenticated;
 
 select pg_temp.seed();

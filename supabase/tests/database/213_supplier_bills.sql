@@ -16,6 +16,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
 language plpgsql as $$
 begin
@@ -28,6 +29,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
 language plpgsql as $$
 declare v jsonb;
@@ -41,6 +43,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -49,16 +52,20 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002576' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int, w text) returns uuid language sql as $$
   select id from public.members
    where user_id = pg_temp.u(n) and workspace_id = current_setting(w)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002576e' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -95,20 +102,24 @@ update public.profiles set first_name = 'Synthetic', last_name = 'Client', count
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.today() returns date language sql as $$
   select (now() at time zone 'Europe/Paris')::date;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, p_sql);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bill(p_ref text, p_gross int) returns text language sql as $$
   select jsonb_build_object('kind', 'bill', 'supplier_id', '00000000-0000-4000-8000-0000257600a1',
     'original_reference', p_ref, 'due_on', '2026-12-15', 'payer_kind', 'unpaid',
     'lines', jsonb_build_array(jsonb_build_object('description', 'Cleaning', 'gross_cents', p_gross,
       'net_cents', p_gross * 5 / 6, 'tax_cents', p_gross - p_gross * 5 / 6, 'tax_rate_percent', 20)))::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.decide(p_user uuid, p_purchase text, p_rev int, p_approve boolean, p_reason text, p_req int) returns jsonb
 language plpgsql as $$
 begin
@@ -116,6 +127,7 @@ begin
     current_setting('t.a'), p_purchase, p_rev, p_approve, p_reason, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.paysup(p_user uuid, p_ob text, p_amount bigint, p_rev int, p_req int, p_paid_on date default null) returns jsonb
 language plpgsql as $$
 begin
@@ -123,6 +135,7 @@ begin
     current_setting('t.a'), p_ob, p_amount, p_rev, pg_temp.rq(p_req), coalesce(p_paid_on, pg_temp.today() - 1)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into public.suppliers (id, workspace_id, supplier_number, name) values
  ('00000000-0000-4000-8000-0000257600a1', current_setting('t.a')::uuid, '1', 'Net & Clair'),

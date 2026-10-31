@@ -20,18 +20,23 @@ begin
     'client_id', p_client))::text, true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_op text, p_args jsonb, p_request uuid default null) returns jsonb language sql as $$
   select public.mcp_execute_v1(public.installation_id(), '00000000-0000-4000-8000-0000002873c1', p_op, p_args, p_request);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.confirm(p_answer text) returns jsonb language sql as $$
   select public.mcp_confirm_action((current_setting(p_answer)::jsonb->'data'->>'confirmation_id')::uuid, true);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rules() returns jsonb language sql as $$
   select booking_rules from public.workspaces where id = '00000000-0000-4000-8000-0000002873c1';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.target(p_request uuid) returns jsonb language sql as $$
   select preview->'target' from public.mcp_action_confirmations where request_id = p_request;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The owner (d1) and a member (d2), both with Google identities.
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)

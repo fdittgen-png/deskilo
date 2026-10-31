@@ -59,6 +59,7 @@ begin
   perform set_config('deskilo.m2', m2::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 -- One arrival: a fresh pending authorization for that client, opened by
@@ -76,15 +77,18 @@ begin
   return public.oauth_authorization_context(v_id)->>'client_status';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.audited(p_client text) returns text language sql as $$
   select detail->>'family' from public.database_authority_audit
    where action = 'client_auto_approved'
      and detail->>'client_id' = '00000000-0000-4000-8000-0000002146' || p_client;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.as(p_user text, p_aal text) returns void language sql as $$
   select set_config('request.jwt.claims', json_build_object(
     'sub', current_setting('deskilo.' || p_user), 'role', 'authenticated', 'aal', p_aal)::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── an outsider approves nothing ─────────────────────────────────────
 select is(pg_temp.arrive('m2', 'd2'), 'waiting', 'someone outside every mcpAccess workspace approves nothing');

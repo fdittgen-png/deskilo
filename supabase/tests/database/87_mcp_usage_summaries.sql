@@ -15,6 +15,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Usage rows seeded directly, as postgres.
 create function pg_temp.seed(p_user uuid, p_client text, p_op text, p_mutation boolean, p_outcome text,
                              p_rows integer, p_age interval default '0'::interval, p_ws uuid default null)
@@ -24,6 +25,7 @@ returns void language sql as $$
          p_op, p_mutation, p_outcome, now() - p_age
     from generate_series(1, p_rows);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-0000001630' || s)::uuid, '00000000-0000-0000-0000-000000000000', 'authenticated',

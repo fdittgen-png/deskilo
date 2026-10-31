@@ -28,11 +28,13 @@ create or replace function pg_temp.keys() returns text[] language sql immutable 
                'noprofile', 'selfentered', 'owner', 'a', 'b', 'admin', 'issuer',
                'stranger'];
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.uid(p_key text) returns uuid language sql immutable as $q$
   select ('00000000-0000-4000-8000-0002941' ||
           lpad(array_position(pg_temp.keys(), p_key)::text, 5, '0'))::uuid;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -104,6 +106,7 @@ begin
   end loop;
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Signed in as [who], with the e-mail claim that account's JWT would
 -- carry. Called as `postgres`, before `set local role`.
@@ -116,12 +119,14 @@ begin
   perform set_config('request.jwt.claim.sub', current_setting('g2941.' || p_who), true);
 end;
 $be$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The template, through its RLS policy.
 create or replace function pg_temp.template_rows() returns int language sql as $q$
   select count(*)::int from public.workspace_templates
    where id = current_setting('g2941.tpl')::uuid;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 grant execute on function pg_temp.template_rows() to authenticated;
 
 -- A's invoice, through its RLS policy.
@@ -130,12 +135,14 @@ create or replace function pg_temp.grant_rows() returns int language sql as $q$
   select count(*)::int from public.workspace_template_grants
    where template_id = current_setting('g2941.tpl')::uuid;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 grant execute on function pg_temp.grant_rows() to authenticated;
 
 create or replace function pg_temp.invoice_rows() returns int language sql as $q$
   select count(*)::int from public.invoices
    where id = current_setting('g2941.inv')::uuid;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 grant execute on function pg_temp.invoice_rows() to authenticated;
 
 select pg_temp.seed();

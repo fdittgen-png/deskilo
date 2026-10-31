@@ -14,14 +14,19 @@ select plan(15);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://pfx2563.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- W-A (an enrolled workspace installation) and P (the personal home).
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('00000256390' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ev(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000025638' || lpad(p_n::text, 2, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref() returns text language sql as $$
   select public.installation_id() || ':' || pg_temp.id('000002563901') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the setting and the helpers ───────────────────────────────────────
 select is((select key || '=' || (default_value #>> '{}') || ' ' || min_value || '..' || max_value || ' '
@@ -69,6 +74,7 @@ create function pg_temp.fact(p_n int, p_ago int) returns void language sql as $$
   values (pg_temp.ev(p_n), pg_temp.inst('f'), pg_temp.iss(), 'f' || p_n, pg_temp.ref(), p_n, 'active',
     now() - make_interval(secs => p_ago), now() + interval '10 minutes', jsonb_build_object('n', p_n),
     'sent', 1, now() - make_interval(secs => p_ago), 925630000 + p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.page(p_n int, p_ago int) returns void language sql as $$
   insert into public.membership_snapshot_outbox (event_id, target_installation_id, snapshot_id, page, pages,
     watermark, entry_count, manifest_hash, asserted_at, valid_until, body, state, attempts, last_attempt_at,
@@ -76,15 +82,18 @@ create function pg_temp.page(p_n int, p_ago int) returns void language sql as $$
   values (pg_temp.ev(p_n), pg_temp.inst('f'), pg_temp.ev(p_n), 1, 1, 0, 0, repeat('0', 64),
     now() - make_interval(secs => p_ago), now() + interval '10 minutes', jsonb_build_object('n', p_n),
     'sent', 1, now() - make_interval(secs => p_ago), 925630000 + p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.status(p_n int, p_ago int) returns void language sql as $$
   insert into public.identity_status_outbox (event_id, target_installation_id, issuer, subject, revision,
     status, issued_at, valid_until, body, state, attempts, last_attempt_at, net_request_id)
   values (pg_temp.ev(p_n), pg_temp.inst('a'), pg_temp.iss(), 'i' || p_n, p_n, 'active',
     now() - make_interval(secs => p_ago), now() + interval '10 minutes', jsonb_build_object('n', p_n),
     'sent', 1, now() - make_interval(secs => p_ago), 925630000 + p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.answer(p_n int, p_code int, p_content text) returns void language sql as $$
   insert into net._http_response (id, status_code, content, timed_out, created)
   values (925630000 + p_n, p_code, p_content, false, now()) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.booked(p_table text, p_n int) returns text language plpgsql as $$
 declare v text;
 begin
@@ -92,6 +101,7 @@ begin
                    where event_id = $1', p_table) into v using pg_temp.ev(p_n);
   return v;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.fact(1, 30), pg_temp.answer(1, 200, '{"outcome":"duplicate","first_outcome":"wrong_issuer"}');
 select pg_temp.fact(2, 30), pg_temp.answer(2, 200, '{"outcome":"duplicate","first_outcome":"applied"}');

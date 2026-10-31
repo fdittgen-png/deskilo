@@ -41,6 +41,7 @@ begin
   return ws;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.customer(ws uuid, tag text, capacity text default 'business') returns uuid language plpgsql as $seed$
 declare
@@ -61,6 +62,7 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.issue(mm uuid) returns text language plpgsql as $q$
 begin
@@ -72,10 +74,12 @@ exception when others then
        (select workspace_id from public.members where id = mm), mm, '2026-09')) x), '');
 end;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.invoice_of(mm uuid) returns public.invoices language sql as $q$
   select i.* from public.invoices i where i.member_id = mm and i.period = '2026-09';
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('us.ws', pg_temp.space('ny')::text, true);
 select set_config('us.pay', pg_temp.customer(current_setting('us.ws')::uuid, 'pays')::text, true);

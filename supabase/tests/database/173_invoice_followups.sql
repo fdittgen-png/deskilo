@@ -51,20 +51,24 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws(mm uuid) returns uuid language sql as $q$
   select workspace_id from public.members where id = mm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Act as the owner of the member's space.
 create or replace function pg_temp.act(mm uuid) returns void language sql as $q$
   select set_config('request.jwt.claims', json_build_object('sub',
     (select o.user_id from public.members o join public.members m on m.workspace_id = o.workspace_id
       where m.id = mm and o.is_owner limit 1), 'role','authenticated')::text, true) is null;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.missing(mm uuid, reason text default '', repl uuid default null)
 returns text[] language sql as $q$
   select public.invoice_issue_readiness(pg_temp.ws(mm), mm, '2026-09', 'full', repl, reason);
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── exemption per rate ────────────────────────────────────────────────
 select is(pg_temp.missing(pg_temp.seller('FR','e1',array['Formation professionnelle (art. 261 CGI)'])),

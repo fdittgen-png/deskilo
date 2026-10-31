@@ -28,6 +28,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 do $seed$
 declare

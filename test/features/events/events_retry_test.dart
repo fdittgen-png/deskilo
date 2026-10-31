@@ -8,10 +8,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/core/cache/read_retry.dart';
+import 'package:deskilo/core/data/sweep_throttle.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/data/supabase_event_repository.dart';
-import 'package:deskilo/features/events/data/sweep_throttle.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';

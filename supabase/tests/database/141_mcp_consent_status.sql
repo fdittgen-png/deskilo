@@ -83,6 +83,7 @@ begin
   perform set_config('deskilo.adm', adm::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as(p_user text, p_aal text default 'aal1') returns void language sql as $$
@@ -90,10 +91,12 @@ create or replace function pg_temp.as(p_user text, p_aal text default 'aal1') re
     'sub', current_setting('deskilo.' || p_user), 'role', 'authenticated', 'aal', p_aal,
     'amr', json_build_array(json_build_object('method', 'oauth')))::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.notices(p_user text, p_kind text) returns int language sql as $$
   select count(*)::int from public.instance_notices
    where user_id = current_setting('deskilo.' || p_user)::uuid and kind = p_kind;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the context names the decision, approves nothing ─────────────────
 select pg_temp.as('m1');

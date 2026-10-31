@@ -19,6 +19,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of editing as [p_user]; '' when the edit worked.
 create function pg_temp.edit_error(p_user uuid, p_kind text, p_id uuid, p_body text) returns text
@@ -33,6 +34,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of a setting write as [p_user]; '' when it was saved.
 create function pg_temp.write_error(p_user uuid, p_ws uuid, p_key text, p_value text) returns text
@@ -47,6 +49,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-00002487' || lpad(i::text, 4, '0'))::uuid,

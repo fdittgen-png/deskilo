@@ -66,23 +66,28 @@ begin
   perform set_config('sn.ux', ux::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.g(k text) returns uuid language sql as $$
   select current_setting('sn.' || k)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.act_as(who text) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
     json_build_object('sub', current_setting('sn.' || who), 'role', 'authenticated')::text, false);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.snap(w text) returns jsonb language sql as $$
   select public.accounting_source_snapshot_v1(pg_temp.g(w), date '2026-01-01', date '2026-12-31');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.state() returns text language sql as $$
   select (select count(*) from public.invoices) || '/' || (select count(*) from public.invoice_matches)
       || '/' || (select count(*) from public.ledger_entries) || '/' || (select count(*) from public.expense_repartitions);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select set_config('sn.before', pg_temp.state(), false);

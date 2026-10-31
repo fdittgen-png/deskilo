@@ -20,6 +20,7 @@ begin
   return r;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.err(p_user text, p_client text, p_sql text) returns text language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', case when p_user is null then '{"role":"anon"}'
@@ -33,6 +34,7 @@ exception when others then
   return 'refused';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The owner's workspace, and its shared code.
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000001652a1","role":"authenticated"}', true);

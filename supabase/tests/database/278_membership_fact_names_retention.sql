@@ -11,14 +11,20 @@ select plan(22);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000278e' || lpad(p_n::text, 4, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://p278.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('0000278a000' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ws() returns uuid language sql as $$ select pg_temp.id('0000278f0001') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.ws() $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The label u(p_n)'s references give W-p_c's workspace ('none': not listed).
 create function pg_temp.lab(p_n int, p_c text) returns text language plpgsql as $$
 declare v jsonb;
@@ -29,6 +35,7 @@ begin
   perform set_config('request.jwt.claims', '', true);
   return case when v is null then 'none' else coalesce(v->>'label', '-') end;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The name P holds on u(p_n)'s fact about W-p_c ('gone': no fact). plpgsql,
 -- so it reads what an earlier call in the same statement wrote.
@@ -39,6 +46,7 @@ begin
    where f.user_id = pg_temp.u(p_n) and f.network_id = pg_temp.ref(p_c);
   return coalesce(v, 'gone');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── P: fixtures (u1 consented to W-A, u2 to W-B) ──────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);
@@ -100,12 +108,14 @@ begin
     (select jsonb_object_agg('x-deskilo-' || key, value) from jsonb_each(v_h)),
     encode(convert_to(v_body::text, 'UTF8'), 'base64'))->>'outcome';
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A delete that sets the purge's marker by hand, on a fresh receipt.
 create function pg_temp.marked_delete() returns void language plpgsql as $$
 begin
   perform set_config('deskilo.federation_retention', 'on', true);
   delete from public.federation_inbox_receipts;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the doors and the setting ─────────────────────────────────────────
 select is_empty($$select p.proname || ' ' || r from pg_proc p
@@ -196,6 +206,7 @@ create function pg_temp.names() returns text language sql as $$
   select string_agg(status || '=' || coalesce(body->>'workspace_name', '-'), ' '
                     order by revision, body->>'workspace_name' nulls last)
     from public.membership_fact_outbox where subject = pg_temp.u(1)::text $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status)
 values (pg_temp.id('0000278d0001'), pg_temp.ws(), pg_temp.u(3), false, false, 'active');

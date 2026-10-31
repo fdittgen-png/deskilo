@@ -27,14 +27,17 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025870' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.line(p_what text, p_net int, p_tax int) returns jsonb language sql as $$
   select jsonb_build_object('description', p_what, 'gross_cents', p_net + p_tax, 'net_cents', p_net,
     'tax_cents', p_tax, 'tax_rate_percent', case when p_tax = 0 then 0 else 20 end,
     'recoverable_tax_cents', p_tax, 'nonrecoverable_tax_cents', 0, 'recognition_kind', 'operating');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A bill dated p_date with two lines; submitted, and approved by a second
 -- admin when p_approve.
 create function pg_temp.bill(p_ref text, p_date text, p_approve boolean) returns uuid language plpgsql as $$
@@ -56,6 +59,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000025870a1","role":"authenticated"}',true);
 set local role authenticated;
 

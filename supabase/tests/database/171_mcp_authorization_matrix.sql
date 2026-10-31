@@ -38,6 +38,7 @@ select plan(42);
 create function pg_temp.u(p_who text) returns uuid language sql immutable as $$
   select md5('mcp-2391-' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_strip_nulls(jsonb_build_object(
@@ -46,6 +47,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One facade call as [p_who]; p_client null is the native token.
 create function pg_temp.call(p_who text, p_op text, p_args jsonb default '{}', p_ws text default 'a',
                              p_client text default 'claude-2391', p_req uuid default null)
@@ -60,6 +62,7 @@ begin
   return r;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Its outcome word: the refusal code, else the status.
 create function pg_temp.says(p_who text, p_op text, p_args jsonb default '{}', p_ws text default 'a',
                              p_client text default 'claude-2391')
@@ -67,6 +70,7 @@ returns text language sql as $$
   select coalesce(r->'error'->>'code', r->>'status')
     from (select pg_temp.call(p_who, p_op, p_args, p_ws, p_client) r) q;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A row count as [p_who] through [p_client] (null: the native token).
 create function pg_temp.sees(p_who text, p_client text, p_sql text) returns int language plpgsql as $$
 declare
@@ -78,6 +82,7 @@ begin
   return n;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A native statement as [p_who]; its first column as text.
 create function pg_temp.native(p_who text, p_sql text) returns text language plpgsql as $$
 declare
@@ -89,20 +94,24 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Every dispatchable operation the catalogue names.
 create function pg_temp.ops() returns text[] language sql as $$
   select array_agg(k order by k) from jsonb_each(public.mcp_operation_catalogue()->'operations') e(k, v)
    where (v->>'dispatch')::boolean;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- get_capabilities' refusals as {operation: reason}.
 create function pg_temp.refused(p_body jsonb) returns jsonb language sql as $$
   select coalesce(jsonb_object_agg(r->>'operation', r->>'reason'), '{}')
     from jsonb_array_elements(p_body->'data'->'refused') r;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.event_ids(p_body jsonb) returns text[] language sql as $$
   select coalesce(array_agg(i->>'event_id' order by i->>'event_id'), '{}')
     from jsonb_array_elements(p_body->'data'->'items') i;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── seed ─────────────────────────────────────────────────────────────
 select set_config('t.i', public.installation_id()::text, true);

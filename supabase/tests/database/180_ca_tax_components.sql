@@ -65,6 +65,7 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select set_config('ca.de', pg_temp.de_seller()::text, true);
 select lives_ok($q$select public.create_invoice((select workspace_id from public.members where id = current_setting('ca.de')::uuid),
                                                  current_setting('ca.de')::uuid, '2026-09')$q$,

@@ -35,6 +35,7 @@ create or replace function pg_temp.gaps(p_vat_id text, p_buyer jsonb, p_gross in
       jsonb_build_array(jsonb_build_object('category','S','percent',20,'gross_cents',p_gross,
                                            'net_cents',p_gross * 5 / 6,'vat_cents',p_gross / 6)))) x;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.gaps('GB123456789', '{"name":"B","street":"s","city":"c"}'), '{}'::text[],
           'GB: a nine-digit VRN, sterling, a full customer: nothing else missing');
