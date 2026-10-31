@@ -49,6 +49,12 @@ abstract final class WorkspaceImportPlanKeys {
   static const String nfcUid = 'nfc_uid';
   static const String vatRate = 'vat_rate';
 
+  // v5 (#3074): the level's drawn symbols, written by import_floor_plan_v3
+  // (migration 0624) into plan_images.
+  static const String decor = 'decor';
+  static const String kind = 'kind';
+  static const String quarterTurns = 'quarter_turns';
+
   // v4 (#2860): the kind of place, read by import_floor_plan_v3 since 0538.
   static const String resourceKind = 'resource_kind';
   static const String capacity = 'capacity';
@@ -95,6 +101,18 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
         WorkspaceImportPlanKeys.priceCents: level.priceCents,
         WorkspaceImportPlanKeys.bookableAsWhole: level.bookableAsWhole,
         if (level.site.isNotEmpty) WorkspaceImportPlanKeys.site: level.site,
+        if (level.decor.isNotEmpty)
+          WorkspaceImportPlanKeys.decor: [
+            for (final d in level.decor)
+              {
+                WorkspaceImportPlanKeys.kind: d.kind,
+                WorkspaceImportPlanKeys.x: d.rect.x,
+                WorkspaceImportPlanKeys.y: d.rect.y,
+                WorkspaceImportPlanKeys.w: d.rect.w,
+                WorkspaceImportPlanKeys.h: d.rect.h,
+                WorkspaceImportPlanKeys.quarterTurns: d.quarterTurns,
+              },
+          ],
         WorkspaceImportPlanKeys.offices: [
           for (final office in level.offices)
             {

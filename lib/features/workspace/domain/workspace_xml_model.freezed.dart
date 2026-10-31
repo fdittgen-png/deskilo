@@ -1513,11 +1513,294 @@ $GridRectCopyWith<$Res> get rect {
 }
 
 /// @nodoc
+mixin _$WorkspaceXmlDecor {
+
+ String get kind; GridRect get rect; int get quarterTurns;
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$WorkspaceXmlDecorCopyWith<WorkspaceXmlDecor> get copyWith => _$WorkspaceXmlDecorCopyWithImpl<WorkspaceXmlDecor>(this as WorkspaceXmlDecor, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as WorkspaceXmlDecor;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceXmlDecor&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.quarterTurns, _this.quarterTurns) || other.quarterTurns == _this.quarterTurns));
+}
+
+
+@override
+int get hashCode {
+  final _this = this as WorkspaceXmlDecor;
+  return Object.hash(runtimeType,_this.kind,_this.rect,_this.quarterTurns);
+}
+
+@override
+String toString() {
+  final _this = this as WorkspaceXmlDecor;
+  return 'WorkspaceXmlDecor(kind: ${_this.kind}, rect: ${_this.rect}, quarterTurns: ${_this.quarterTurns})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $WorkspaceXmlDecorCopyWith<$Res>  {
+  factory $WorkspaceXmlDecorCopyWith(WorkspaceXmlDecor value, $Res Function(WorkspaceXmlDecor) _then) = _$WorkspaceXmlDecorCopyWithImpl;
+@useResult
+$Res call({
+ String kind, GridRect rect, int quarterTurns
+});
+
+
+$GridRectCopyWith<$Res> get rect;
+
+}
+/// @nodoc
+class _$WorkspaceXmlDecorCopyWithImpl<$Res>
+    implements $WorkspaceXmlDecorCopyWith<$Res> {
+  _$WorkspaceXmlDecorCopyWithImpl(this._self, this._then);
+
+  final WorkspaceXmlDecor _self;
+  final $Res Function(WorkspaceXmlDecor) _then;
+
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? rect = null,Object? quarterTurns = null,}) {
+  return _then(WorkspaceXmlDecor(
+kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
+as GridRect,quarterTurns: null == quarterTurns ? _self.quarterTurns : quarterTurns // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$GridRectCopyWith<$Res> get rect {
+  
+  return $GridRectCopyWith<$Res>(_self.rect, (value) {
+    return _then(_self.copyWith(rect: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [WorkspaceXmlDecor].
+extension WorkspaceXmlDecorPatterns on WorkspaceXmlDecor {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _WorkspaceXmlDecor value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _WorkspaceXmlDecor value)  $default,){
+final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _WorkspaceXmlDecor value)?  $default,){
+final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  GridRect rect,  int quarterTurns)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor() when $default != null:
+return $default(_that.kind,_that.rect,_that.quarterTurns);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  GridRect rect,  int quarterTurns)  $default,) {final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor():
+return $default(_that.kind,_that.rect,_that.quarterTurns);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  GridRect rect,  int quarterTurns)?  $default,) {final _that = this;
+switch (_that) {
+case _WorkspaceXmlDecor() when $default != null:
+return $default(_that.kind,_that.rect,_that.quarterTurns);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _WorkspaceXmlDecor implements WorkspaceXmlDecor {
+  const _WorkspaceXmlDecor({required this.kind, required this.rect, this.quarterTurns = 0});
+  
+
+@override final  String kind;
+@override final  GridRect rect;
+@override@JsonKey() final  int quarterTurns;
+
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$WorkspaceXmlDecorCopyWith<_WorkspaceXmlDecor> get copyWith => __$WorkspaceXmlDecorCopyWithImpl<_WorkspaceXmlDecor>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceXmlDecor&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.quarterTurns, quarterTurns) || other.quarterTurns == quarterTurns));
+}
+
+
+@override
+int get hashCode {
+    return Object.hash(runtimeType,kind,rect,quarterTurns);
+}
+
+@override
+String toString() {
+    return 'WorkspaceXmlDecor(kind: $kind, rect: $rect, quarterTurns: $quarterTurns)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$WorkspaceXmlDecorCopyWith<$Res> implements $WorkspaceXmlDecorCopyWith<$Res> {
+  factory _$WorkspaceXmlDecorCopyWith(_WorkspaceXmlDecor value, $Res Function(_WorkspaceXmlDecor) _then) = __$WorkspaceXmlDecorCopyWithImpl;
+@override @useResult
+$Res call({
+ String kind, GridRect rect, int quarterTurns
+});
+
+
+@override $GridRectCopyWith<$Res> get rect;
+
+}
+/// @nodoc
+class __$WorkspaceXmlDecorCopyWithImpl<$Res>
+    implements _$WorkspaceXmlDecorCopyWith<$Res> {
+  __$WorkspaceXmlDecorCopyWithImpl(this._self, this._then);
+
+  final _WorkspaceXmlDecor _self;
+  final $Res Function(_WorkspaceXmlDecor) _then;
+
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? rect = null,Object? quarterTurns = null,}) {
+  return _then(_WorkspaceXmlDecor(
+kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
+as GridRect,quarterTurns: null == quarterTurns ? _self.quarterTurns : quarterTurns // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+/// Create a copy of WorkspaceXmlDecor
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$GridRectCopyWith<$Res> get rect {
+  
+  return $GridRectCopyWith<$Res>(_self.rect, (value) {
+    return _then(_self.copyWith(rect: value));
+  });
+}
+}
+
+/// @nodoc
 mixin _$WorkspaceXmlLevel {
 
  String get name; int get sortOrder; List<WorkspaceXmlOffice> get offices;/// v3: the level's price, whether it books as a whole, and the NAME of
 /// the site it belongs to ('' = the workspace's default).
- int get priceCents; bool get bookableAsWhole; String get site;
+ int get priceCents; bool get bookableAsWhole; String get site;/// v5: the symbols drawn on the plan, in the order they are stored.
+ List<WorkspaceXmlDecor> get decor;
 /// Create a copy of WorkspaceXmlLevel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1529,20 +1812,20 @@ $WorkspaceXmlLevelCopyWith<WorkspaceXmlLevel> get copyWith => _$WorkspaceXmlLeve
 @override
 bool operator ==(Object other) {
   final _this = this as WorkspaceXmlLevel;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceXmlLevel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.sortOrder, _this.sortOrder) || other.sortOrder == _this.sortOrder)&&const DeepCollectionEquality().equals(other.offices, _this.offices)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.site, _this.site) || other.site == _this.site));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkspaceXmlLevel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.sortOrder, _this.sortOrder) || other.sortOrder == _this.sortOrder)&&const DeepCollectionEquality().equals(other.offices, _this.offices)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.site, _this.site) || other.site == _this.site)&&const DeepCollectionEquality().equals(other.decor, _this.decor));
 }
 
 
 @override
 int get hashCode {
   final _this = this as WorkspaceXmlLevel;
-  return Object.hash(runtimeType,_this.name,_this.sortOrder,const DeepCollectionEquality().hash(_this.offices),_this.priceCents,_this.bookableAsWhole,_this.site);
+  return Object.hash(runtimeType,_this.name,_this.sortOrder,const DeepCollectionEquality().hash(_this.offices),_this.priceCents,_this.bookableAsWhole,_this.site,const DeepCollectionEquality().hash(_this.decor));
 }
 
 @override
 String toString() {
   final _this = this as WorkspaceXmlLevel;
-  return 'WorkspaceXmlLevel(name: ${_this.name}, sortOrder: ${_this.sortOrder}, offices: ${_this.offices}, priceCents: ${_this.priceCents}, bookableAsWhole: ${_this.bookableAsWhole}, site: ${_this.site})';
+  return 'WorkspaceXmlLevel(name: ${_this.name}, sortOrder: ${_this.sortOrder}, offices: ${_this.offices}, priceCents: ${_this.priceCents}, bookableAsWhole: ${_this.bookableAsWhole}, site: ${_this.site}, decor: ${_this.decor})';
 }
 
 
@@ -1553,7 +1836,7 @@ abstract mixin class $WorkspaceXmlLevelCopyWith<$Res>  {
   factory $WorkspaceXmlLevelCopyWith(WorkspaceXmlLevel value, $Res Function(WorkspaceXmlLevel) _then) = _$WorkspaceXmlLevelCopyWithImpl;
 @useResult
 $Res call({
- String name, int sortOrder, List<WorkspaceXmlOffice> offices, int priceCents, bool bookableAsWhole, String site
+ String name, int sortOrder, List<WorkspaceXmlOffice> offices, int priceCents, bool bookableAsWhole, String site, List<WorkspaceXmlDecor> decor
 });
 
 
@@ -1570,7 +1853,7 @@ class _$WorkspaceXmlLevelCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceXmlLevel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? sortOrder = null,Object? offices = null,Object? priceCents = null,Object? bookableAsWhole = null,Object? site = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? sortOrder = null,Object? offices = null,Object? priceCents = null,Object? bookableAsWhole = null,Object? site = null,Object? decor = null,}) {
   return _then(WorkspaceXmlLevel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
@@ -1578,7 +1861,8 @@ as int,offices: null == offices ? _self.offices : offices // ignore: cast_nullab
 as List<WorkspaceXmlOffice>,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,site: null == site ? _self.site : site // ignore: cast_nullable_to_non_nullable
-as String,
+as String,decor: null == decor ? _self.decor : decor // ignore: cast_nullable_to_non_nullable
+as List<WorkspaceXmlDecor>,
   ));
 }
 
@@ -1660,10 +1944,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site,  List<WorkspaceXmlDecor> decor)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkspaceXmlLevel() when $default != null:
-return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site);case _:
+return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site,_that.decor);case _:
   return orElse();
 
 }
@@ -1681,10 +1965,10 @@ return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site,  List<WorkspaceXmlDecor> decor)  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceXmlLevel():
-return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site);}
+return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site,_that.decor);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -1698,10 +1982,10 @@ return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  int sortOrder,  List<WorkspaceXmlOffice> offices,  int priceCents,  bool bookableAsWhole,  String site,  List<WorkspaceXmlDecor> decor)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkspaceXmlLevel() when $default != null:
-return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site);case _:
+return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.bookableAsWhole,_that.site,_that.decor);case _:
   return null;
 
 }
@@ -1713,7 +1997,7 @@ return $default(_that.name,_that.sortOrder,_that.offices,_that.priceCents,_that.
 
 
 class _WorkspaceXmlLevel implements WorkspaceXmlLevel {
-  const _WorkspaceXmlLevel({required this.name, required this.sortOrder,  List<WorkspaceXmlOffice> offices = const <WorkspaceXmlOffice>[], this.priceCents = 0, this.bookableAsWhole = false, this.site = ''}): _offices = offices;
+  const _WorkspaceXmlLevel({required this.name, required this.sortOrder,  List<WorkspaceXmlOffice> offices = const <WorkspaceXmlOffice>[], this.priceCents = 0, this.bookableAsWhole = false, this.site = '',  List<WorkspaceXmlDecor> decor = const <WorkspaceXmlDecor>[]}): _offices = offices,_decor = decor;
   
 
 @override final  String name;
@@ -1730,6 +2014,15 @@ class _WorkspaceXmlLevel implements WorkspaceXmlLevel {
 @override@JsonKey() final  int priceCents;
 @override@JsonKey() final  bool bookableAsWhole;
 @override@JsonKey() final  String site;
+/// v5: the symbols drawn on the plan, in the order they are stored.
+ final  List<WorkspaceXmlDecor> _decor;
+/// v5: the symbols drawn on the plan, in the order they are stored.
+@override@JsonKey() List<WorkspaceXmlDecor> get decor {
+  if (_decor is EqualUnmodifiableListView) return _decor;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_decor);
+}
+
 
 /// Create a copy of WorkspaceXmlLevel
 /// with the given fields replaced by the non-null parameter values.
@@ -1741,18 +2034,18 @@ _$WorkspaceXmlLevelCopyWith<_WorkspaceXmlLevel> get copyWith => __$WorkspaceXmlL
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceXmlLevel&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&const DeepCollectionEquality().equals(other.offices, _offices)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.site, site) || other.site == site));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkspaceXmlLevel&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&const DeepCollectionEquality().equals(other.offices, _offices)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.site, site) || other.site == site)&&const DeepCollectionEquality().equals(other.decor, _decor));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,name,sortOrder,const DeepCollectionEquality().hash(_offices),priceCents,bookableAsWhole,site);
+    return Object.hash(runtimeType,name,sortOrder,const DeepCollectionEquality().hash(_offices),priceCents,bookableAsWhole,site,const DeepCollectionEquality().hash(_decor));
 }
 
 @override
 String toString() {
-    return 'WorkspaceXmlLevel(name: $name, sortOrder: $sortOrder, offices: $offices, priceCents: $priceCents, bookableAsWhole: $bookableAsWhole, site: $site)';
+    return 'WorkspaceXmlLevel(name: $name, sortOrder: $sortOrder, offices: $offices, priceCents: $priceCents, bookableAsWhole: $bookableAsWhole, site: $site, decor: $decor)';
 }
 
 
@@ -1763,7 +2056,7 @@ abstract mixin class _$WorkspaceXmlLevelCopyWith<$Res> implements $WorkspaceXmlL
   factory _$WorkspaceXmlLevelCopyWith(_WorkspaceXmlLevel value, $Res Function(_WorkspaceXmlLevel) _then) = __$WorkspaceXmlLevelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, int sortOrder, List<WorkspaceXmlOffice> offices, int priceCents, bool bookableAsWhole, String site
+ String name, int sortOrder, List<WorkspaceXmlOffice> offices, int priceCents, bool bookableAsWhole, String site, List<WorkspaceXmlDecor> decor
 });
 
 
@@ -1780,7 +2073,7 @@ class __$WorkspaceXmlLevelCopyWithImpl<$Res>
 
 /// Create a copy of WorkspaceXmlLevel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? sortOrder = null,Object? offices = null,Object? priceCents = null,Object? bookableAsWhole = null,Object? site = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? sortOrder = null,Object? offices = null,Object? priceCents = null,Object? bookableAsWhole = null,Object? site = null,Object? decor = null,}) {
   return _then(_WorkspaceXmlLevel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
@@ -1788,7 +2081,8 @@ as int,offices: null == offices ? _self._offices : offices // ignore: cast_nulla
 as List<WorkspaceXmlOffice>,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,site: null == site ? _self.site : site // ignore: cast_nullable_to_non_nullable
-as String,
+as String,decor: null == decor ? _self._decor : decor // ignore: cast_nullable_to_non_nullable
+as List<WorkspaceXmlDecor>,
   ));
 }
 
