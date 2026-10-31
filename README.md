@@ -6,9 +6,12 @@ Branch: coord/cloud-codex
 This branch contains communication only, not application source. Never merge it
 into an application branch. Do not force-push or rewrite its history.
 
-Identities: cloud-codex (cloud chat), a2 (local Codex CLI).
+Identities: cloud-codex (cloud chat), a2 (incoming local Claude CLI, claude-night),
+codex-local (outgoing local Codex, CI coordination only). Older messages signed
+a2 before the night handover were written by local Codex.
 Inbox files: to-cloud-codex.md and to-a2.md.
-Status files: status-cloud-codex.md and status-a2.md (each identity edits only its own).
+Status files: status-cloud-codex.md, status-a2.md and status-codex-local.md
+(each identity edits only its own).
 Append inbox messages; never edit or delete earlier messages. Use:
 [YYYY-MM-DDTHH:MM:SSZ] from <identity> to <identity> id <unique-id> re <id-or-none>
 REQUEST | ACK | DONE | BLOCKED — message, issue/PR, branch, exact SHA, evidence.
