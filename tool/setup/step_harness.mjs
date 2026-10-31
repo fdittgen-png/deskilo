@@ -399,6 +399,28 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   console.log(`advanced: identity shows ${outside} controls, ${inside} more behind Avancé`);
 }
 
+// #3075 — a finding that lives inside the Avancé disclosure never hides in a
+// closed one: the findings of the network fields exist only for a workspace
+// host, and for a host the disclosure is open.
+{
+  const advanced = (stored) => {
+    load('en', stored);
+    const step = globalThis.__STEPS.find((st) => st.id === 'identity');
+    const find = (n) => { for (const c of (n.children || [])) { if (typeof c !== 'object') continue; if (c.tagName === 'DETAILS') return c; const r = find(c); if (r) return r; } return null; };
+    let details = null;
+    for (const k of step.build()) if (k && typeof k === 'object') { if (k.tagName === 'DETAILS') details = k; else details = details || find(k); }
+    return { open: details ? 'open' in details.attrs : null, errors: step.check().filter((x) => x.lvl === 'err').map((x) => x.t) };
+  };
+  const host = advanced({ name: 'Host Space', network: { roles: 'workspace_host', homeUrl: 'http://not-https', homeKey: '' } });
+  const plain = advanced({ name: 'Plain Space', network: { roles: 'combined', homeUrl: 'http://not-https', homeKey: '' } });
+  if (host.open === null || plain.open === null) fail('advanced: the identity step has no disclosure');
+  if (!host.errors.length) fail('advanced: a host with a bad home URL has no finding');
+  if (host.errors.length && !host.open) fail('advanced: a finding inside the disclosure and the disclosure is closed');
+  if (plain.errors.length) fail('advanced: a network finding exists without a workspace host: ' + plain.errors.join(' | '));
+  if (plain.open) fail('advanced: the disclosure is open by default');
+  console.log('advanced: a finding inside the disclosure always opens it');
+}
+
 // #2501 — the WebMCP tools, against a fake modelContext. An agent here is a
 // function that calls the tools the page registered.
 const fakeContext = () => {
