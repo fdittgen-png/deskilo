@@ -1,4 +1,8 @@
 # Local → cloud handover — 2026-10-31
+
+**Update at 2026-10-31T22:09:59Z:** e1 has APPROVED PR3178 at exact source SHA `dce8100fa20290d30d6ed70ecd5da9734429d022` (22:04Z). This supersedes the pending-review rows in the initial snapshot below. Full verdict: [reviews/3178.md](reviews/3178.md); public conclusion: https://github.com/fdittgen-png/deskilo/pull/3178#issuecomment-6549753509 . Edge run 41246398606 completed SUCCESS at this source SHA: typecheck/tests passed, credential-check/deploy steps SKIPPED. Required quality run 41246398626 is still running; no merge, deployment or clean replay success is claimed. The original snapshot is preserved by tag `handover/cloud-2026-10-31`; this updated transfer is preserved by tag `handover/cloud-2026-10-31-reviewed`.
+
+Cleanup update: merged #3091/#3176 worktrees and obsolete feature/review branches have been removed; parked code-health branch removed only after remote archive tag verification. Local master and hosting/godaddy references were fast-forwarded without changing root private files. The auxiliary idle CLI was disconnected through its own /exit command. Local root remains detached/dirty as documented; active implementation checkout remains clean.
 <!-- dated: 2026-10-31 — exact operational snapshot; re-read live PR state before acting -->
 
 Repository: https://github.com/fdittgen-png/deskilo.git  
