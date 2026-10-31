@@ -43,6 +43,7 @@ const _postedWhenLocalBook = {
   // #2379 — the SAF-T Financial files, written from the postings only.
   'saft_no',
   'saft_dk',
+  'saft_ro',
   'faia_lu',
   'saft_oecd_full',
   // #2377 — the Swiss journal and its Banana layout.
@@ -64,6 +65,7 @@ const _named = {
   // #2379 — they name the accounts and the parties too.
   'saft_no',
   'saft_dk',
+  'saft_ro',
   'faia_lu',
   'saft_oecd_full',
   'ch_kmu',
