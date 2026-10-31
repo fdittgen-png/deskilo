@@ -17,6 +17,8 @@
 #                   pfi.public.lu, FAIA/XSD_Files.zip
 #   saft_dk         Erhvervsstyrelsen, Danish SAF-T Financial 2.1
 #                   git.erst.dk standard-filformater, SAF-T/XSD/
+#   saft_ro         ANAF, Romanian SAF-T (D406) 2.4.9
+#                   static.anaf.ro, Informatii_R/saf_t.htm
 #   saft_oecd_full  the same FAIA 2.01 full schema: Luxembourg's publication
 #                   of the OECD 2.0 tree in the OECD namespace. The OECD's own
 #                   XSD is not published apart from its guidance, so this is
@@ -46,9 +48,11 @@ check() {
 NO=saft_no/Norwegian_SAF-T_Financial_Schema_v_1.30.xsd
 LU=faia_lu/FAIA_v_2.01_full.xsd
 DK=saft_dk/Danish_SAF-T_Financial_Schema_v_2_1.xsd
+RO=saft_ro/Ro_SAFT_Schema_v249_2025.xsd
 check "$NO" 5362d6778872b4ed2524e09b083e634ae950a4f1d9f1b95076b4c9e4df6a0650
 check "$LU" 957273b819739dd015950475a36642b6a0348c54d59f74e53787a97c887a96c5
 check "$DK" 01cd75f7bf10f1cdab00b48ea2579e97647d7d01fa00862f76edd5d0a6ad8ec3
+check "$RO" 80ad7eaaf2aafd656a6e3c0e69e3a8fcdb23262640287ebba6383ff3014dccc2
 
 status=0
 # validate <sample> <schema>
@@ -68,5 +72,6 @@ validate() {
 validate saft_no "$NO"
 validate faia_lu "$LU"
 validate saft_dk "$DK"
+validate saft_ro "$RO"
 validate saft_oecd_full "$LU"
 exit $status

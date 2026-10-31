@@ -143,6 +143,15 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     specification:
         'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd',
   ),
+  'saft_ro': AccountingCapability(
+    formatId: 'saft_ro',
+    state: QualificationState.locallyValidated,
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification: 'ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd',
+  ),
   'faia_lu': AccountingCapability(
     formatId: 'faia_lu',
     state: QualificationState.locallyValidated,
