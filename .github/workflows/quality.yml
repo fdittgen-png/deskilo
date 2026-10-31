@@ -580,6 +580,11 @@ jobs:
     name: quality · database
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    # #3144 — the local stack pulls the Supabase images from GHCR as this
+    # job: its token must read packages (the workflow grants contents only).
+    permissions:
+      contents: read
+      packages: read
     needs: [classify]
     # Always evaluated: a classify job that died must not skip this one,
     # because a skipped required context counts as passing.

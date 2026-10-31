@@ -45,10 +45,39 @@ outputs:
 runs:
   using: composite
   steps:
+    # #3144 — the Supabase images come from GHCR, pulled as this job (its
+    # own token), not anonymously: anonymous Docker Hub ("Data limit
+    # exceeded", four database runs lost on 2026-10-31) and anonymous ECR
+    # Public (the same, on the next run) both ran out. Set for the rest of
+    # the job, so `supabase test db` (its pg_prove container) uses it too.
+    # The calling job grants `packages: read`; a failed login fails here,
+    # loudly, rather than falling back to an anonymous quota.
+    - shell: bash
+      env:
+        TOKEN: ${{ github.token }}
+        ACTOR: ${{ github.actor }}
+      run: |
+        echo "SUPABASE_INTERNAL_IMAGE_REGISTRY=ghcr.io" >> "$GITHUB_ENV"
+        if ! echo "$TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin; then
+          echo "::error::local stack: GHCR login as the job failed — does the job grant packages: read?"
+          exit 1
+        fi
+        echo "local stack: pulling the Supabase images from ghcr.io, authenticated as the job"
     - shell: bash
       env:
         WORKDIR: ${{ inputs.workdir }}
       run: supabase start ${WORKDIR:+--workdir "$WORKDIR"}
+    # #3144 — the proof the registry was honoured: no Supabase image of this
+    # stack was pulled from Docker Hub or ECR Public.
+    - shell: bash
+      run: |
+        from_hub=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^(docker\.io/|public\.ecr\.aws/)?supabase/' || true)
+        if [ -n "$from_hub" ]; then
+          echo "::error::local stack: Supabase images not from GHCR: $from_hub"
+          exit 1
+        fi
+        echo "local stack: Supabase images from $SUPABASE_INTERNAL_IMAGE_REGISTRY:"
+        docker images --format '{{.Repository}}:{{.Tag}}' | grep -F "$SUPABASE_INTERNAL_IMAGE_REGISTRY/supabase/" || true
     - id: address
       shell: bash
       env:
