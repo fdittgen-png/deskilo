@@ -1082,6 +1082,7 @@ Vuole che i solleciti partano da soli.
 - Mai mentre un pagamento è in sospeso o la fattura è sospesa. Le fatture senza termine registrato restano a Lei.
 - Disattivati: invia Lei stesso ogni sollecito.
 - Quando viene eseguito: ogni mattina sul server se l'installazione pianifica attività, altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.
+- L’accettazione di una richiesta push da parte del server non prova la ricezione su un dispositivo. L’esito resta sconosciuto quando il servizio push non rivela la consegna; il sollecito resta registrato e l’importo dovuto non cambia.
 
 **Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules)
 

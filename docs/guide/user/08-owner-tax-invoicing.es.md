@@ -1082,6 +1082,7 @@ Quiere que los recordatorios salgan solos.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
 - Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
+- Que el servidor acepte una solicitud push no prueba que un dispositivo la haya recibido. El resultado sigue siendo desconocido si el servicio push no revela la entrega; el recordatorio sigue registrado y el importe adeudado no cambia.
 
 **Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
 

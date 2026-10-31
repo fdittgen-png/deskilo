@@ -5594,6 +5594,7 @@ You want reminders to leave on their own.
 - Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
 - Off: you send each reminder yourself.
 - When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.
+- A server accepting a push request does not prove that a device received it. The delivery outcome stays unknown when the push service does not disclose device delivery; the reminder remains recorded and the amount owed is unchanged.
 
 **See also:** [Reminder rules](#reminder-rules)
 

@@ -121,6 +121,7 @@ El push no viene con la aplicación por sí solo. Si usted ejecuta su espacio en
 - Sin los pasos 1 a 4, no se envía ningún push, digan lo que digan los interruptores. El flujo, la campana y los mensajes siguen funcionando.
 - La lista de comprobación detallada es para el operador: véase [Plataformas](help:user.advanced.platforms) y [Su propio servidor](help:user.advanced.own-server).
 - El texto del push nunca lleva un nombre ni una hora: es deliberado, por privacidad.
+- Empareje el secreto push en cada instalación: guarde primero el mismo valor aleatorio privado en Vault como `deskilo_push_shared_secret` y después como `PUSH_SHARED_SECRET` para la función push. Pruebe un mensaje y un recordatorio tras emparejarlo. Las instalaciones aún no emparejadas conservan el envío anterior con un aviso; las configuradas rechazan llamadas sin el secreto o credencial de servicio. Nunca copie el secreto en la aplicación ni en el XML de configuración.
 
 **Véase también:** [Notificaciones push en este dispositivo](help:user.privacy.push)
 

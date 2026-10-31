@@ -2681,6 +2681,7 @@
 <li>Ohne die Schritte 1 bis 4 wird nichts gepusht, was die Schalter auch sagen. Der Feed, die Glocke und die Nachrichten funktionieren weiterhin.</li>
 <li>Die ausführliche Checkliste ist für den Betreiber: siehe <a href="de.html">Plattformen</a> und <a href="de.html#user.advanced.own-server">Ihr eigener Server</a>.</li>
 <li>Der Push-Text enthält nie einen Namen oder eine Uhrzeit: Das ist Absicht, aus Datenschutzgründen.</li>
+<li>Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als <code>deskilo_push_shared_secret</code>, danach als <code>PUSH_SHARED_SECRET</code> für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Noch nicht eingerichtete Installationen behalten den bisherigen Versand mit einer Warnung; konfigurierte Installationen verweigern Aufrufe ohne Geheimnis oder Dienstzugangsdaten. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="de.html">Push-Benachrichtigungen auf diesem Gerät</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>Was Mitglieder selbst steuern <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-admin">Administrator:in</span></div></header><div class="body"><p>Sie möchten Ihren Mitgliedern ehrlich sagen, was sie ausschalten können.</p>

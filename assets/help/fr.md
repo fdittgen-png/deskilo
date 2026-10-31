@@ -5335,6 +5335,7 @@ Vous voulez que les relances partent toutes seules.
 - Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.
 - Désactivées : vous envoyez chaque relance vous-même.
 - Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.
+- L’acceptation d’une demande push par le serveur ne prouve pas sa réception par un appareil. Le résultat reste inconnu lorsque le service push ne révèle pas la livraison ; le rappel reste enregistré et la somme due ne change pas.
 
 **Voir aussi:** [Règles de relance](help:user.money.reminders.rules)
 
@@ -7705,6 +7706,7 @@ Le push ne vient pas avec l'app toute seule. Si votre espace tourne sur l'instal
 - Sans les étapes 1 à 4, rien n'est poussé, quels que soient les interrupteurs. Le fil, la cloche et les messages fonctionnent toujours.
 - La liste de contrôle détaillée s'adresse à l'opérateur : voir [Les plateformes](help:user.advanced.platforms) et [Votre propre serveur](help:user.advanced.own-server).
 - Le texte d'un push ne contient jamais de nom ni d'horaire : c'est voulu, pour la confidentialité.
+- Associez le secret push sur chaque installation : enregistrez d’abord la même valeur aléatoire privée dans Vault sous `deskilo_push_shared_secret`, puis dans `PUSH_SHARED_SECRET` pour la fonction push. Testez un message et un rappel après l’association. Les installations non associées conservent leur envoi précédent avec un avertissement ; les installations configurées refusent les appels sans secret ou identifiant de service. Ne copiez jamais le secret dans l’application ou le XML de configuration.
 
 **Voir aussi:** [Notifications push sur cet appareil](help:user.privacy.push)
 

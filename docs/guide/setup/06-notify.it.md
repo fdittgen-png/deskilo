@@ -121,6 +121,7 @@ Le notifiche push non arrivano con l'app da sole. Se gestisce il Suo spazio sull
 - Senza i passaggi da 1 a 4 non viene inviata alcuna push, qualunque cosa dicano gli interruttori. Il flusso, la campanella e i messaggi funzionano comunque.
 - L'elenco dettagliato è per l'operatore: vedi [Piattaforme](help:user.advanced.platforms) e [Il Suo server](help:user.advanced.own-server).
 - Il testo della push non contiene mai un nome né un orario: è voluto, per la riservatezza.
+- Associare il segreto push su ogni installazione: salvare prima lo stesso valore casuale privato in Vault come `deskilo_push_shared_secret`, poi come `PUSH_SHARED_SECRET` per la funzione push. Provare un messaggio e un sollecito dopo l’associazione. Le installazioni non ancora associate mantengono l’invio precedente con un avviso; quelle configurate rifiutano chiamate senza segreto o credenziale di servizio. Non copiare mai il segreto nell’app o nel file XML di configurazione.
 
 **Vedi anche:** [Notifiche push su questo dispositivo](help:user.privacy.push)
 

@@ -76,6 +76,13 @@ Lessons behind the checklist, grouped by topic. Read the section you need.
 
 ## Tooling
 
+- **Run Dart generators serially within a worktree.** Dart 3.13's native-asset
+  preparation rewrites `.dart_tool/lib/objective_c.dylib` even for pure Dart
+  generators. Concurrent runs can race in `install_name_tool` or `codesign`
+  (missing or non-Mach-O output). Wait for the command's final exit before
+  starting the next generator, then regenerate any dependent output after a
+  failed producer. An execution session id is still a running command.
+
 - **A stale `build_runner` blocks later ones silently.** A hung `build.dart.aot`
   from hours earlier holds the lock: `ps -eo pid,etime,time,command | grep build.dart.aot`
   (CPU time not moving = stuck), kill that pid only, `rm -rf .dart_tool/build`, retry.
