@@ -16856,6 +16856,7 @@
   },
   "suppliersSavedOpen": "Apri",
   "suppliersSearch": "Cerca per nome, numero o codice fiscale",
+  "suppliersStanding": "Ultima fattura il {date} · {amount} quest’anno",
   "suppliersTaxUnverified": "Identificativo fiscale non verificato",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

@@ -25145,6 +25145,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suppliersSearch => 'Buscar por nombre, número o NIF';
 
   @override
+  String suppliersStanding(String date, String amount) {
+    return 'Última factura el $date · $amount este año';
+  }
+
+  @override
   String get suppliersTaxUnverified => 'Identificador fiscal no verificado';
 
   @override

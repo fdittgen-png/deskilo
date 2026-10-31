@@ -28,6 +28,7 @@
   "@suppliersRestore": {
     "description": "#2567 suppliers"
   },
+  "suppliersStanding": "Ultima fattura il {date} · {amount} quest’anno",
   "suppliersArchivedTag": "archiviato",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"

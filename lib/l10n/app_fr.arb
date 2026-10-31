@@ -16856,6 +16856,7 @@
   },
   "suppliersSavedOpen": "Ouvrir",
   "suppliersSearch": "Rechercher par nom, numéro ou numéro fiscal",
+  "suppliersStanding": "Dernière facture le {date} · {amount} cette année",
   "suppliersTaxUnverified": "Identifiant fiscal non vérifié",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

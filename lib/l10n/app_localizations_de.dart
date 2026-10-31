@@ -25190,6 +25190,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliersSearch => 'Nach Name, Nummer oder Steuer-ID suchen';
 
   @override
+  String suppliersStanding(String date, String amount) {
+    return 'Letzte Rechnung am $date · $amount in diesem Jahr';
+  }
+
+  @override
   String get suppliersTaxUnverified => 'Steuernummer nicht geprüft';
 
   @override
