@@ -14780,6 +14780,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpOpSetFavorite => 'Plätze als Favoriten markieren';
 
   @override
+  String get mcpOpSetupBasics => 'Zeitzone, Sprache und Adresse festlegen';
+
+  @override
   String get mcpOpSetupClosures => 'Schließtage hinzufügen';
 
   @override
@@ -22401,6 +22404,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die höchste Zahl von Kennzahlen, die eine Berichtsseite in einem Abruf anfordern darf. Braucht eine Seite mehr, wird sie auf mehrere Abrufe verteilt; ein größerer Stapel wird ganz abgelehnt.';
 
   @override
+  String get settingHintBiBatchTimeBudgetMs =>
+      'Wie lange eine Berichtsabfrage rechnen darf, bevor die noch nicht erreichten Kennzahlen als über Budget gemeldet werden; die Seite zeigt, was sie hat. Unter dem Anfrage-Timeout des Servers halten.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.';
 
@@ -22634,6 +22641,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Kennzahlen je Berichtsabruf';
+
+  @override
+  String get settingLabelBiBatchTimeBudgetMs =>
+      'Zeitbudget einer Berichtsabfrage';
 
   @override
   String get settingLabelBiReportMaxBytes => 'Größe einer Berichtsdefinition';
@@ -22906,6 +22917,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitHours => 'Stunden';
+
+  @override
+  String get settingUnitMilliseconds => 'ms';
 
   @override
   String get settingUnitMinutes => 'Minuten';

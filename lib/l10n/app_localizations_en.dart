@@ -14654,6 +14654,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpSetFavorite => 'Mark places as favourites';
 
   @override
+  String get mcpOpSetupBasics => 'Set the time zone, language and address';
+
+  @override
   String get mcpOpSetupClosures => 'Add closure days';
 
   @override
@@ -22193,6 +22196,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.';
 
   @override
+  String get settingHintBiBatchTimeBudgetMs =>
+      'How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server\'s request timeout.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.';
 
@@ -22425,6 +22432,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Figures per report read';
+
+  @override
+  String get settingLabelBiBatchTimeBudgetMs => 'Report read time budget';
 
   @override
   String get settingLabelBiReportMaxBytes => 'Size of a report definition';
@@ -22685,6 +22695,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitHours => 'hours';
+
+  @override
+  String get settingUnitMilliseconds => 'ms';
 
   @override
   String get settingUnitMinutes => 'minutes';

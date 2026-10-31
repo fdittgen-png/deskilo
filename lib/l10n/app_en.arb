@@ -17539,6 +17539,10 @@
   "@mcpOpSetFavorite": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
+  "mcpOpSetupBasics": "Set the time zone, language and address",
+  "@mcpOpSetupBasics": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_workspace_basics)"
+  },
   "mcpOpSetupClosures": "Add closure days",
   "@mcpOpSetupClosures": {
     "description": "#2394 generated from contracts/mcp/operations.json (add_closure_days)"
@@ -26389,6 +26393,10 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiBatchTimeBudgetMs": "How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server's request timeout.",
+  "@settingHintBiBatchTimeBudgetMs": {
+    "description": "#2578 settings: Setting hint."
+  },
   "settingHintBiReportMaxBytes": "The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -26628,6 +26636,10 @@
   "settingLabelBiBatchMaxRequests": "Figures per report read",
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiBatchTimeBudgetMs": "Report read time budget",
+  "@settingLabelBiBatchTimeBudgetMs": {
+    "description": "#2578 settings: Setting label."
   },
   "settingLabelBiReportMaxBytes": "Size of a report definition",
   "@settingLabelBiReportMaxBytes": {
@@ -26959,6 +26971,10 @@
   "settingUnitHours": "hours",
   "@settingUnitHours": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitMilliseconds": "ms",
+  "@settingUnitMilliseconds": {
+    "description": "#2578 settings: unit of a duration in milliseconds."
   },
   "settingUnitMinutes": "minutes",
   "@settingUnitMinutes": {

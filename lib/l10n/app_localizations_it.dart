@@ -14763,6 +14763,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpSetFavorite => 'Segnare posti come preferiti';
 
   @override
+  String get mcpOpSetupBasics =>
+      'Impostare il fuso orario, la lingua e l\'indirizzo';
+
+  @override
   String get mcpOpSetupClosures => 'Aggiungere giorni di chiusura';
 
   @override
@@ -22376,6 +22380,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.';
 
   @override
+  String get settingHintBiBatchTimeBudgetMs =>
+      'Quanto può calcolare una lettura del report prima che le cifre non ancora raggiunte risultino fuori budget; la pagina mostra ciò che ha. Tenerlo sotto il timeout delle richieste del server.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'La più grande definizione di report salvata, in byte del suo testo memorizzato. La piattaforma non ne conserva mai più di 65536; una definizione contiene domande, mai cifre.';
 
@@ -22611,6 +22619,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Cifre per lettura di report';
+
+  @override
+  String get settingLabelBiBatchTimeBudgetMs =>
+      'Budget di tempo di una lettura del report';
 
   @override
   String get settingLabelBiReportMaxBytes =>
@@ -22891,6 +22903,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitHours => 'ore';
+
+  @override
+  String get settingUnitMilliseconds => 'ms';
 
   @override
   String get settingUnitMinutes => 'minuti';
