@@ -106,16 +106,22 @@ Future<List<Reservation>> myUpcomingReservations(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
   if (workspace == null || member == null) return const [];
   final now = ref.read(clockProvider).now();
+  final horizon = now.add(const Duration(days: 7));
+  // #3102 — whole days, so every read of one day asks for the same window
+  // (and the same cache entry); `now` and the 7-day horizon are applied
+  // to the rows instead.
+  final day = DateTime.utc(now.toUtc().year, now.toUtc().month, now.toUtc().day);
   final window = await ref.watch(reservationRepositoryProvider).fetchWindow(
         workspace.id,
-        from: now,
-        to: now.add(const Duration(days: 7)),
+        from: day,
+        to: day.add(const Duration(days: 8)),
       );
   return window
       .where((r) =>
           r.memberId == member.id &&
           r.status == ReservationStatus.reserved &&
-          r.startsAt.isAfter(now))
+          r.startsAt.isAfter(now) &&
+          r.startsAt.isBefore(horizon))
       .toList();
 }
 
