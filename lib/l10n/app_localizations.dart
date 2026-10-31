@@ -37398,6 +37398,24 @@ abstract class AppLocalizations {
   /// **'The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.'**
   String get settingHintBiReportMaxVisuals;
 
+  /// #2578 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many months a monthly evolution shows, the current one included: 13 is a year and the same month a year ago.'**
+  String get settingHintBiSeriesMonths;
+
+  /// #2578 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many quarters a quarterly evolution shows, the current one included: 9 is two years and the same quarter two years ago.'**
+  String get settingHintBiSeriesQuarters;
+
+  /// #2578 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many years a yearly evolution shows, the current one included.'**
+  String get settingHintBiSeriesYears;
+
   /// #2486 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -37763,6 +37781,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cards per report'**
   String get settingLabelBiReportMaxVisuals;
+
+  /// #2578 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly evolution length'**
+  String get settingLabelBiSeriesMonths;
+
+  /// #2578 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Quarterly evolution length'**
+  String get settingLabelBiSeriesQuarters;
+
+  /// #2578 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly evolution length'**
+  String get settingLabelBiSeriesYears;
 
   /// #2486 settings: Setting label.
   ///
@@ -38237,6 +38273,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'per hour'**
   String get settingUnitPerHour;
+
+  /// #2578 settings: unit of a count of quarters.
+  ///
+  /// In en, this message translates to:
+  /// **'quarters'**
+  String get settingUnitQuarters;
 
   /// #2578 BI settings
   ///

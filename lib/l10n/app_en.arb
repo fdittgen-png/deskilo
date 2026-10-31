@@ -26409,6 +26409,18 @@
   "@settingHintBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingHintBiSeriesMonths": "How many months a monthly evolution shows, the current one included: 13 is a year and the same month a year ago.",
+  "@settingHintBiSeriesMonths": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingHintBiSeriesQuarters": "How many quarters a quarterly evolution shows, the current one included: 9 is two years and the same quarter two years ago.",
+  "@settingHintBiSeriesQuarters": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingHintBiSeriesYears": "How many years a yearly evolution shows, the current one included.",
+  "@settingHintBiSeriesYears": {
+    "description": "#2578 settings: Setting hint."
+  },
   "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -26652,6 +26664,18 @@
   "settingLabelBiReportMaxVisuals": "Cards per report",
   "@settingLabelBiReportMaxVisuals": {
     "description": "#2579 report limits"
+  },
+  "settingLabelBiSeriesMonths": "Monthly evolution length",
+  "@settingLabelBiSeriesMonths": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingLabelBiSeriesQuarters": "Quarterly evolution length",
+  "@settingLabelBiSeriesQuarters": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingLabelBiSeriesYears": "Yearly evolution length",
+  "@settingLabelBiSeriesYears": {
+    "description": "#2578 settings: Setting label."
   },
   "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -26995,6 +27019,10 @@
   "settingUnitPerHour": "per hour",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitQuarters": "quarters",
+  "@settingUnitQuarters": {
+    "description": "#2578 settings: unit of a count of quarters."
   },
   "settingUnitRequests": "requests",
   "@settingUnitRequests": {
