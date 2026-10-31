@@ -41,17 +41,17 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
   echo
   echo '| Discipline | | Evidence |'
   echo '|---|---|---|'
-  printf '%s\n' "$rows" | while IFS='|' read -r name outcome detail; do
+  while IFS='|' read -r name outcome detail; do
     case "$outcome" in
       success) mark='✅ PASS' ;;
       skipped)
-        if printf '%s\n' "$conditional" | grep -qxF "$name"; then
+        if grep -qxF "$name" <<<"$conditional"; then
           mark='⏭️ SKIPPED (waits on an earlier row)'
         else
           mark='❌ FAIL (did not run)'
         fi ;;
       not_applicable)
-        if printf '%s\n' "$stood_down" | grep -qxF "$(job_of "$name")"; then
+        if grep -qxF "$(job_of "$name")" <<<"$stood_down"; then
           mark='➖ NOT APPLICABLE (classifier)'
         else
           mark='❌ FAIL (claims not applicable without the classifier)'
@@ -59,7 +59,7 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
       *)       mark='❌ FAIL' ;;
     esac
     printf '| %s | %s | %s |\n' "$name" "$mark" "$detail"
-  done
+  done <<<"$rows"
   echo
   echo '> Performance is not a row here, and the guards that exist prove'
   echo '> different things: a draw-call budget is algorithmic, a query'
@@ -77,7 +77,7 @@ fi
 names=$(printf '%s\n' "$rows" | cut -d'|' -f1)
 while read -r want; do
   [ -z "$want" ] && continue
-  n=$(printf '%s\n' "$names" | grep -cxF "$want")
+  n=$(grep -cxF "$want" <<<"$names")
   if [ "$n" -eq 0 ]; then
     echo "::error::the report has no row for '$want' — its job died, its step was renamed, or its artifact was lost"
     status=1
@@ -88,7 +88,7 @@ while read -r want; do
 done <<< "$expected"
 while read -r have; do
   [ -z "$have" ] && continue
-  if ! printf '%s\n' "$expected" | grep -qxF "$have"; then
+  if ! grep -qxF "$have" <<<"$expected"; then
     echo "::error::row '$have' is not in $MANIFEST — add it there, so the gate knows to wait for it"
     status=1
   fi
@@ -99,12 +99,12 @@ while IFS='|' read -r name outcome detail; do
   case "$outcome" in
     success) ;;
     skipped)
-      if ! printf '%s\n' "$conditional" | grep -qxF "$name"; then
+      if ! grep -qxF "$name" <<<"$conditional"; then
         echo "::error::'$name' did not run and is not conditional"
         status=1
       fi ;;
     not_applicable)
-      if ! printf '%s\n' "$stood_down" | grep -qxF "$(job_of "$name")"; then
+      if ! grep -qxF "$(job_of "$name")" <<<"$stood_down"; then
         echo "::error::'$name' claims not applicable, but the classifier did not stand its job down"
         status=1
       fi ;;
