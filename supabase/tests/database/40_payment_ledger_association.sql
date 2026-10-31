@@ -33,6 +33,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -40,6 +41,7 @@ create or replace function pg_temp.findings() returns text[] language sql as $$
   select coalesce(array_agg(r."check" order by r."check"), '{}')
     from public.reconcile_workspace(current_setting('deskilo.assoc.ws')::uuid) r;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Two equal payments in one month, each settled twice (a webhook retry).
 do $pay$

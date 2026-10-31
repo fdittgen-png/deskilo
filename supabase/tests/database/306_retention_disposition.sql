@@ -9,6 +9,7 @@ select plan(48);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00009999' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
@@ -16,17 +17,21 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Ids are read once, as the table owner, and kept in settings: a signed-in
 -- person's RLS would hide another space's rows from a lookup.
 create function pg_temp.ws(p_name text) returns uuid language sql as $$
   select current_setting('t.ws.' || p_name)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.site(p_name text) returns uuid language sql as $$
   select current_setting('t.site.' || p_name)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.assess(p_site text, p_classes text[], p_day date) returns jsonb language sql as $$
   select public.retention_assess(pg_temp.ws('Keep'), pg_temp.site(p_site), p_classes, p_day);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

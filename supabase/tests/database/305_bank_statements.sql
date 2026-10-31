@@ -93,6 +93,7 @@ begin
   perform set_config('bk.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -100,6 +101,7 @@ begin
     json_build_object('sub', current_setting('bk.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- p_sql's jsonb answer as p_who, or {"refused": sqlstate}.
 create or replace function pg_temp.as_json(p_who text, p_sql text) returns jsonb
@@ -113,6 +115,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate, 'message', sqlerrm);
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.as_delegated(p_who text, p_sql text) returns jsonb
 language plpgsql as $j$
@@ -127,6 +130,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- p_sql's first value as p_who under the authenticated role (grants, RLS).
 create or replace function pg_temp.as_role(p_who text, p_sql text) returns text
@@ -143,10 +147,12 @@ exception when others then
   return sqlstate;
 end
 $j$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.v(p_key text) returns text language sql as $v$
   select current_setting('bk.' || p_key)
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- One movement as the app sends it.
 create or replace function pg_temp.mv(p_pos int, p_cents int, p_ref text, p_tx text,
@@ -157,11 +163,13 @@ returns jsonb language sql as $mv$
     'counterparty_name', 'Demo Member', 'counterparty_iban', '', 'reference', p_ref,
     'end_to_end_id', '', 'remittance', p_text)
 $mv$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.stmt(p_sha text) returns jsonb language sql as $st$
   select jsonb_build_object('format', 'camt054', 'account', 'CH9300762011623852957', 'currency', 'CHF',
     'statement_ref', 'N-1', 'source_sha256', repeat(p_sha, 64), 'file_name', 'n.xml')
 $st$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The import as p_who of p_lines under the file digest p_sha.
 create or replace function pg_temp.import(p_who text, p_sha text, p_lines jsonb, p_ws text default 'ws')
@@ -169,10 +177,12 @@ returns jsonb language sql as $im$
   select pg_temp.as_json(p_who, format('select public.import_bank_statement_v1(%L, %L, %L)',
     pg_temp.v(p_ws), pg_temp.stmt(p_sha), p_lines))
 $im$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.line(p_tx text) returns text language sql as $l$
   select id::text from public.bank_statement_lines where transaction_id = p_tx
 $l$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

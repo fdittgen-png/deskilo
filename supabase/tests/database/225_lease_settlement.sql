@@ -16,6 +16,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -28,12 +29,15 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002573' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.settle(p_user uuid, p_rev int, p_from date, p_to date, p_actual bigint, p_due date, p_req int) returns jsonb
 language plpgsql as $$
 begin
@@ -41,6 +45,7 @@ begin
     current_setting('t.a'), current_setting('t.id'), p_rev, p_from, p_to, p_actual, p_due, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

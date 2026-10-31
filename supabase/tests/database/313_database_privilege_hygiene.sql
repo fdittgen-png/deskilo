@@ -6,7 +6,7 @@
 -- of the published cards); the feature-operation oracle is closed to the
 -- signed-in user.
 begin;
-select plan(12);
+select plan(13);
 
 create function public.zz_privilege_probe() returns int language sql as 'select 1';
 create table public.zz_privilege_probe_table (id int);
@@ -22,6 +22,8 @@ select is(has_function_privilege('authenticated', 'public.zz_privilege_probe_gra
   'a function granted explicitly to authenticated still executes');
 select is(has_function_privilege('anon', 'public.zz_privilege_probe_granted()', 'execute'), false,
   'and is still closed to anon');
+select is(has_function_privilege('authenticated', 'public.zz_privilege_probe()', 'execute'), true,
+  'a new function stays executable by the signed-in user: only anon was closed');
 
 set local role anon;
 select throws_ok($$select count(*) from public.workspaces$$, '42501', null,

@@ -78,6 +78,7 @@ begin
   perform set_config('deskilo.t.seat', seat::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 -- The canonical MORNING window of the same day — the other half-day the
@@ -94,6 +95,7 @@ returns timestamptz[] language sql stable as $morning$
       + interval '12 hours') at time zone 'Europe/Paris'
   ];
 $morning$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A Monday afternoon well inside the horizon, in the workspace's clock.
 create or replace function pg_temp.slot(offset_days int default 0)
@@ -107,6 +109,7 @@ returns timestamptz[] language sql stable as $slot$
       + interval '17 hours') at time zone 'Europe/Paris'
   ];
 $slot$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.book(p_member uuid, p_offset int default 0)
 returns uuid language plpgsql as $book$
@@ -122,6 +125,7 @@ begin
   return v;
 end
 $book$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- No `set local role authenticated` here, deliberately. `pg_temp.book`
 -- inserts into `reservations` directly, and under that role RLS refuses

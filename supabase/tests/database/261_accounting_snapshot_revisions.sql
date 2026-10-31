@@ -49,6 +49,7 @@ insert into public.book_profiles(workspace_id,issuer_site_id,authority_mode,exte
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025640' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The caller is named by a claim only (see the header). Every call is one
 -- statement of the file's transaction: a read of its own.
 create function pg_temp.snap(p_user text, p_ws text) returns jsonb language plpgsql as $$
@@ -60,15 +61,18 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The revisions that differ between two answers, by name.
 create function pg_temp.moved(a jsonb, b jsonb) returns text[] language sql as $$
   select coalesce(array_agg(k order by k), '{}'::text[])
     from jsonb_object_keys(a -> 'revisions') k
    where a -> 'revisions' ->> k is distinct from b -> 'revisions' ->> k;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.r(p text) returns jsonb language sql as $$
   select current_setting(p)::jsonb;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Two reads, nothing changed between them.
 select set_config('r.s1', pg_temp.snap('a1', 'b1')::text, true);

@@ -19,6 +19,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -27,6 +28,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- a1 owner (host), a2 administrator (manageReservations by default), a4
 -- stranger, a5 member, a6 the guest, a7 a guest who joins and leaves.

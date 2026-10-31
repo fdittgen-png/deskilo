@@ -26,6 +26,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.open(p_amount int, p_request uuid, p_provider text default 'stripe')
@@ -34,6 +35,7 @@ returns table(id uuid, reference text, reused boolean) language sql as $$
     current_setting('deskilo.req.ws')::uuid, current_setting('deskilo.req.m')::uuid,
     p_provider, '2026-10', p_amount, 'EUR', p_request) o;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create temp table first_call as
   select * from pg_temp.open(2500, '11111111-1111-4111-8111-111111111111');

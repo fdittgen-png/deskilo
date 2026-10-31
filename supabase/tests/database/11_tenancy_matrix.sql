@@ -106,6 +106,7 @@ begin
   return seeded;
 end;
 $fill$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create temp table seed_ids (tbl text, id uuid) on commit drop;
 
@@ -164,6 +165,7 @@ $seed$;
 create or replace function pg_temp.covered() returns text[] language sql as $$
   select string_to_array(current_setting('deskilo.matrix.filled'), ',');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.uncovered() returns text[] language sql as $$
   select coalesce(array_agg(c.relname order by c.relname), '{}')
@@ -175,6 +177,7 @@ create or replace function pg_temp.uncovered() returns text[] language sql as $$
                     and a.attnum > 0 and not a.attisdropped)
      and not (c.relname = any(pg_temp.covered()));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Read every covered table as a member of A. A table that returns a row
 -- of workspace B is a leak; a table that refuses the read outright (the
@@ -199,6 +202,7 @@ begin
   return out;
 end;
 $leaks$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(
   pg_temp.leaks('authenticated',
@@ -248,6 +252,7 @@ begin
   return out;
 end;
 $writes$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(
   pg_temp.write_leaks('authenticated',

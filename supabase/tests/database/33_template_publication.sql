@@ -13,6 +13,7 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)

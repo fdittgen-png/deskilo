@@ -16,6 +16,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -28,15 +29,19 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002575' || lpad(n::text, 4, '1'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int) returns uuid language sql as $$
   select id from public.members where user_id = pg_temp.u(n) and workspace_id = current_setting('t.a')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- a bill of the lessor with the given lines (gross cents), submitted by the owner
 create function pg_temp.bill(p_ref text, p_lines int[], p_supplier uuid default '00000000-0000-4000-8000-0000257500a1', p_submit boolean default true) returns text
 language plpgsql as $$
@@ -58,34 +63,42 @@ begin
   return v_id;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.line(p_purchase text, p_no int default 1) returns uuid language sql as $$
   select id from public.purchase_lines where purchase_id = p_purchase::uuid and line_no = p_no;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.occ(p_month int) returns uuid language sql as $$
   select o.id from public.expense_occurrences o join public.lease_terms t on t.schedule_id = o.schedule_id
    where t.lease_id = current_setting('t.lease')::uuid and o.due_on = make_date(2026, p_month, 1);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.match(p_user uuid, p_purchase text, p_items jsonb, p_req int, p_rev int default 1) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, format('select public.match_purchase_commitments_v1(%L, %L, %s, %L::jsonb, %L)',
     current_setting('t.a'), p_purchase, p_rev, p_items::text, pg_temp.rq(p_req)));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.item(p_occurrence uuid, p_line uuid, p_cents int) returns jsonb language sql as $$
   select jsonb_build_object('occurrence_id', p_occurrence, 'purchase_line_id', p_line, 'allocated_cents', p_cents);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.page(p_user uuid) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, format('select public.purchase_commitment_page_v1(%L, %L, null, 100)', current_setting('t.a'), current_setting('t.lease')));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.occ_json(p_user uuid, p_month int) returns jsonb language sql as $$
   select e from jsonb_array_elements(pg_temp.page(p_user) -> 'occurrences') e
    where e ->> 'due_on' = make_date(2026, p_month, 1)::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.matched(p_month int) returns bigint language sql as $$
   select coalesce(sum(allocated_cents), 0) from public.purchase_commitment_matches where occurrence_id = pg_temp.occ(p_month);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

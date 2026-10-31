@@ -13,6 +13,7 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.book(p_day int) returns uuid language sql as $b$
   select public.create_reservation(
@@ -23,6 +24,7 @@ create or replace function pg_temp.book(p_day int) returns uuid language sql as 
     ((current_setting('deskilo.cc.base')::date + p_day)::timestamp + time '12:00') at time zone 'Europe/Paris',
     false, null, null);
 $b$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)

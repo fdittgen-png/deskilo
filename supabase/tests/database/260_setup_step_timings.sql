@@ -27,20 +27,25 @@ create function pg_temp.as_user(p_suffix text) returns text language sql as $$
   select set_config('request.jwt.claims',
     json_build_object('sub', '00000000-0000-4000-8000-0000002915' || p_suffix, 'role', 'authenticated')::text, true)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.record(p_step text, p_opened text, p_seconds int)
 returns boolean language sql as $$
   select public.record_setup_step_timing('00000000-0000-4000-8000-0000002915b1', p_step, p_opened::timestamptz, p_seconds)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rows_of(p_step text) returns bigint language sql as $$
   select count(*) from public.setup_step_timings
    where workspace_id = '00000000-0000-4000-8000-0000002915b1' and step = p_step
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.range_of(p_step text) returns jsonb language sql as $$
   select r from jsonb_array_elements(public.setup_step_timing_ranges()) r where r->>'step' = p_step
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.status() returns jsonb language sql as $$
   select public.workspace_setup_status('00000000-0000-4000-8000-0000002915b1')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as_user('a1');
 create temp table before_timings as select pg_temp.status() as status;

@@ -37,18 +37,22 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025820' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.line(p_what text, p_net int, p_tax int, p_kind text) returns jsonb language sql as $$
   select jsonb_build_object('description', p_what, 'gross_cents', p_net + p_tax, 'net_cents', p_net,
     'tax_cents', p_tax, 'tax_rate_percent', case when p_tax = 0 then 0 else 20 end,
     'recoverable_tax_cents', p_tax, 'nonrecoverable_tax_cents', 0, 'recognition_kind', p_kind);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.kpi(p_from text, p_to text) returns jsonb language sql as $$
   select pg_temp.call(pg_temp.u('a1'),
     format('select public.kpi_costs_summary(%L, %L, %L)', '00000000-0000-4000-8000-0000025820b1', p_from, p_to));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000025820a1","role":"authenticated"}',true);
 set local role authenticated;
 

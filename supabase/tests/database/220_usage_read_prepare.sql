@@ -16,6 +16,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -28,25 +29,31 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002590' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int) returns uuid language sql as $$
   select id from public.members where user_id = pg_temp.u(n) and workspace_id = current_setting('t.a')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.rq(n int) returns uuid language sql as $$
   select ('c0000000-0000-4000-8000-00000000' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.read(p_user uuid, p_period text, p_member uuid default null) returns jsonb language plpgsql as $$
 begin
   return pg_temp.as_json(p_user, format('select public.usage_records_read_v1(%L, %L, %L)',
     current_setting('t.a'), p_period, p_member));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.counts() returns text language sql as $$
   select (select count(*) from public.usage_records)::text || '/' || (select count(*) from public.events)::text
          || '/' || (select count(*) from public.ledger_entries)::text || '/' || (select count(*) from public.invoices)::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

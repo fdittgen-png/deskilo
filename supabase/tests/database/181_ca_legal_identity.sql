@@ -30,19 +30,23 @@ language sql as $$
                          'buyer', '{"name":"B","street":"s","city":"c"}'::jsonb),
       p_totals)) x;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.gst(p_percent numeric) returns jsonb language sql as $$
   select jsonb_build_array(jsonb_build_object('category','S','percent',p_percent,'gross_cents',10500,
     'net_cents',10000,'vat_cents',500,
     'components', jsonb_build_array(jsonb_build_object('scheme','GST','authority','CA','percent',5,'base_cents',10000,'tax_cents',500))));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.gst_qst() returns jsonb language sql as $$
   select public.vat_components_entry('CA', 14.975, 100000, 14975)
          || jsonb_build_object('category','S','percent',14.975,'gross_cents',114975,'net_cents',100000,'vat_cents',14975);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.qst_totals() returns jsonb language sql as $$
   select jsonb_build_array(pg_temp.gst_qst());
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.gaps('vat_registered', '123456789 RT0001', '', pg_temp.gst(5)), '{}'::text[], 'a GST-only invoice: the BN with its RT account is enough');
 select is(pg_temp.gaps('vat_registered', '123456789RT0001', '', pg_temp.gst(5)), '{}'::text[], 'without the space');

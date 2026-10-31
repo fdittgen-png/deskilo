@@ -23,6 +23,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of running [p_sql] as [p_user]; '' when it worked.
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
@@ -37,6 +38,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- An inbox document arriving as [p_user]; '' when stored.
 create function pg_temp.ingest(p_user uuid, p_ws uuid, p_tag text, p_name text, p_vat text) returns text
@@ -49,16 +51,19 @@ begin
       'net_cents', 1000, 'tax_cents', 200, 'gross_cents', 1200)::text));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.supplier_of(p_ws uuid, p_tag text) returns uuid language sql as $$
   select supplier_id from public.einvoice_inbox where workspace_id = p_ws and invoice_number = p_tag;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.review_of(p_ws uuid, p_tag text) returns public.supplier_review_candidates language sql as $$
   select c.* from public.supplier_review_candidates c
     join public.einvoice_inbox i on i.id = c.source_id
    where c.workspace_id = p_ws and i.invoice_number = p_tag;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-00002567' || lpad(i::text, 4, '0'))::uuid,

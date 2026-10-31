@@ -23,6 +23,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of running [p_sql] as [p_user]; '' when it worked.
 create function pg_temp.as_err(p_user uuid, p_sql text) returns text
@@ -37,6 +38,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The result of calling [p_sql] (a select returning jsonb) as [p_user].
 create function pg_temp.as_json(p_user uuid, p_sql text) returns jsonb
@@ -52,6 +54,7 @@ exception when others then
   return jsonb_build_object('error', sqlerrm);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of a statement run as the table owner.
 create function pg_temp.owner_err(p_sql text) returns text language plpgsql as $$
@@ -62,14 +65,17 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002573' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mem(n int, w text) returns uuid language sql as $$
   select id from public.members
    where user_id = pg_temp.u(n) and workspace_id = current_setting(w)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A draft receipt payload: one line, EUR 120.00 with 20 % tax, [rec] recoverable.
 create function pg_temp.receipt(p_purchase uuid, p_rec text, p_rate text default '20') returns text language sql as $$
@@ -80,6 +86,7 @@ create function pg_temp.receipt(p_purchase uuid, p_rec text, p_rate text default
       'description', 'Cleaning', 'gross_cents', 12000, 'net_cents', 10000, 'tax_cents', 2000,
       'tax_rate_percent', p_rate::numeric, 'recoverable_tax_cents', nullif(p_rec, '')::bigint)))::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',

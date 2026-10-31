@@ -18,6 +18,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)
@@ -51,12 +52,14 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A workspace value written the way the server writes it.
 create function pg_temp.setv(p_ws text, p_key text, p_value int) returns void language plpgsql as $$
 begin
   perform public.store_setting(current_setting(p_ws)::uuid, p_key, to_jsonb(p_value), 'test', null);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A reservation of the owner of workspace [p_ws] starting [p_min] minutes from
 -- now (one minute long), on that workspace's first seat.
@@ -69,6 +72,7 @@ begin
     null, null, null, v_s, v_s + interval '1 minute', false);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The refusal text of a check-in by the owner [p_user] right now ('' when it
 -- worked; the booking is then cancelled so the next case is not blocked by a
 -- person who is already checked in).
@@ -84,6 +88,7 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── A: the rows ────────────────────────────────────────────────────────
 select is((select count(*)::int from public.setting_definitions where key in (
@@ -168,6 +173,7 @@ begin
   return (select starts_at from public.reservations where id = current_setting('t.d1')::uuid) - v_at;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 reset role;
 select is(pg_temp.reminder_lead(), interval '15 minutes', 'golden: the reminder is 15 minutes before the start');
 select pg_temp.setv('t.w2', 'booking.check_in_reminder_lead_minutes', 30);

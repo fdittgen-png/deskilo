@@ -14,6 +14,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
  ('00000000-0000-4000-8000-0000002632a1', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'owner-2632@deskilo.test', '', now(), now(), now());
@@ -59,6 +60,7 @@ begin
 exception when others then return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.refusal('10:00', '11:00', '00000000-0000-4000-8000-0000002632b5'), null,
   'the room is booked 10:00-11:00');
 select ok(pg_temp.refusal('10:00', '11:00', '00000000-0000-4000-8000-0000002632b4') like '%half-day%',

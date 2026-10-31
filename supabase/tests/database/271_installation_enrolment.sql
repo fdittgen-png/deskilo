@@ -19,6 +19,7 @@ create function pg_temp.anon_jwt(p_claims text) returns text language sql as $$
       || rtrim(translate(encode(convert_to(p_claims, 'UTF8'), 'base64'), '+/', '-_'), '=')
       || '.c2lnbmF0dXJl';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the relation and its doors ────────────────────────────────────────
 select has_table('public', 'enrolled_installations', 'the enrolment relation exists');

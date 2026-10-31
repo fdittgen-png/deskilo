@@ -46,6 +46,7 @@ language sql immutable as $q$
     ('get_setup_step_draft',
      'renders updated_by_name through profile_full_name; the match is the draft row''s own v.updated_at, not the profile''s');
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.mutable_columns() returns setof text
 language sql stable as $q$
@@ -59,6 +60,7 @@ language sql stable as $q$
                                      where k.conrelid = a.attrelid and k.contype = 'p'),
                                     '{}'::smallint[]));
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.policy_texts() returns table (relname text, polname text, expr text)
 language sql stable as $q$
@@ -70,6 +72,7 @@ language sql stable as $q$
     join pg_namespace n on n.oid = c.relnamespace
    where n.nspname = 'public';
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.authorization_functions() returns setof oid
 language sql stable as $q$
@@ -90,6 +93,7 @@ language sql stable as $q$
   )
   select oid from called union select oid from one_down union select oid from deciders;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.reads_mutable_profile(p_text text) returns boolean
 language sql stable as $q$
@@ -97,6 +101,7 @@ language sql stable as $q$
      and exists (select 1 from pg_temp.mutable_columns() c
                   where p_text ~* ('\.' || c || '\M'));
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.flagged_functions() returns setof text
 language sql stable as $q$
@@ -105,6 +110,7 @@ language sql stable as $q$
    where p.oid in (select pg_temp.authorization_functions())
      and pg_temp.reads_mutable_profile(p.prosrc);
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- 1. The net has something to catch: the columns a person edits about
 -- themselves include the e-mail, and the authorization set includes the

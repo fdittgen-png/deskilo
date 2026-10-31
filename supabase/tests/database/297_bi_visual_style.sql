@@ -38,6 +38,7 @@ begin
   perform set_config('bs.analyst', u_a::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.visual(p_style jsonb) returns jsonb language sql as $v$
   select jsonb_build_object(
@@ -46,6 +47,7 @@ create or replace function pg_temp.visual(p_style jsonb) returns jsonb language 
     'layout', jsonb_build_object('order', 0, 'span', 6, 'height', 3))
     || case when p_style is null then '{}'::jsonb else jsonb_build_object('style', p_style) end
 $v$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.report(p_style jsonb) returns jsonb language sql as $r$
   select jsonb_build_object(
@@ -55,6 +57,7 @@ create or replace function pg_temp.report(p_style jsonb) returns jsonb language 
       'id', 'p1', 'title', 'Page 1', 'filters', '[]'::jsonb,
       'visuals', jsonb_build_array(pg_temp.visual(p_style)))))
 $r$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.save(p_name text, p_def jsonb, p_who text default 'owner',
                                         p_id uuid default null, p_rev int default 0) returns jsonb
@@ -67,6 +70,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $s$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The overview layouts p_who receives: their page-`overview` reports' names.
 create or replace function pg_temp.layouts(p_who text) returns text language plpgsql as $l$
@@ -78,11 +82,13 @@ begin
            where v #>> '{definition,pages,0,id}' = 'overview');
 end
 $l$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.overview(p_name text) returns jsonb language sql as $o$
   select jsonb_set(pg_temp.report(null), '{pages,0}',
                    (pg_temp.report(null) #> '{pages,0}') || jsonb_build_object('id', 'overview', 'title', p_name))
 $o$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

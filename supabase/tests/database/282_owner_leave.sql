@@ -16,16 +16,20 @@ select plan(13);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('0999e' || lpad(p_n::text, 7, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.w(p_n int) returns uuid language sql as $$
   select pg_temp.id('0999f' || lpad(p_n::text, 7, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Acts as u(p_n), or with no session when p_n is null.
 create function pg_temp.as_user(p_n int) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', case when p_n is null then ''
     else jsonb_build_object('sub', pg_temp.u(p_n), 'role', 'authenticated')::text end, true);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One leave of w(p_ws) as u(p_n): 'ok', or the SQLSTATE and message.
 create function pg_temp.leave(p_n int, p_ws int) returns text language plpgsql as $$
 begin
@@ -35,6 +39,7 @@ begin
 exception when others then
   return sqlstate || ' ' || sqlerrm;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- u(p_n)'s favourite on w(p_ws) as the account writer answers it.
 create function pg_temp.fav(p_n int, p_ws int) returns text language plpgsql as $$
 begin
@@ -44,11 +49,13 @@ begin
 exception when others then
   return sqlstate || ' ' || sqlerrm;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- u(p_n)'s row in w(p_ws): owner or member, and its status; '-' when none.
 create function pg_temp.row_of(p_n int, p_ws int) returns text language sql as $$
   select coalesce((select (case when is_owner then 'owner' else 'member' end) || ':' || status
                      from public.members
                     where user_id = pg_temp.u(p_n) and workspace_id = pg_temp.w(p_ws)), '-') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- What u(p_n)'s personal references say of w(p_ws): status, favourite, name.
 create function pg_temp.ref_of(p_n int, p_ws int) returns text language plpgsql as $$
 declare v jsonb;
@@ -58,6 +65,7 @@ begin
    where e ->> 'network_id' = (select network_id from public.workspaces where id = pg_temp.w(p_ws));
   return coalesce((v ->> 'status') || ' ' || (v ->> 'is_favorite') || ' ' || (v ->> 'label'), 'none');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures ──────────────────────────────────────────────────────────
 -- W1: u1 the only owner, u2 a member. W2: u3 the owner, u4 a passive

@@ -66,17 +66,20 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.read(p_op text, p_args jsonb) returns jsonb language sql as $$
   select public.mcp_read_v1(current_setting('t.ws')::uuid,
     (select m from public.members m where m.id = current_setting('t.m')::uuid), p_op, p_args);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.window(p_extra jsonb) returns jsonb language sql as $$
   select jsonb_build_object(
     'starts_at', to_char(date_trunc('day', now()) + interval '1 day 9 hours', 'YYYY-MM-DD"T"HH24:MI:SS"Z"'),
     'ends_at', to_char(date_trunc('day', now()) + interval '1 day 12 hours', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')) || p_extra;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Labels: names of the level, office and desk; a letter for the seat.
 select is(public.mcp_place_label(current_setting('t.s1')::uuid, null, null, null),

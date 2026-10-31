@@ -35,6 +35,7 @@ create function pg_temp.claims(p_client text, p_role text default 'authenticated
     'sub', '00000000-0000-4000-8000-0000002562a1', 'role', p_role,
     'client_id', p_client, 'scope', p_scope));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the role ──────────────────────────────────────────────────────────
 select ok(exists (select 1 from pg_roles where rolname = 'deskilo_identity'
@@ -127,6 +128,7 @@ exception when others then
   return sqlstate;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 do $$
 begin
   if not (select rolsuper from pg_roles where rolname = current_user)

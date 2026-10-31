@@ -58,6 +58,7 @@ begin
   perform set_config('deskilo.roles.m_plain', m_plain::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -66,19 +67,23 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.roles.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_who text) returns uuid language sql as $$
   select current_setting('deskilo.roles.m_' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.role_id() returns uuid language sql as $$
   select id from public.workspace_roles
    where workspace_id = pg_temp.ws() and key = 'treasurer';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select pg_temp.act_as('owner');
@@ -213,6 +218,7 @@ select ok(
 create or replace function pg_temp.far() returns uuid language sql as $$
   select current_setting('deskilo.roles.far')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The export is taken ONCE, while the source's owner is still the
 -- caller: only an owner exports a configuration, and the space it lands
@@ -221,6 +227,7 @@ $$;
 create or replace function pg_temp.config() returns jsonb language sql as $$
   select current_setting('deskilo.roles.config')::jsonb;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.act_as('owner');
 select public.set_workspace_role(pg_temp.ws(), 'treasurer', array['issueInvoices'],
@@ -321,6 +328,7 @@ returns jsonb language sql as $$
       'names', '{"en": "Treasurer", "fr": "Trésorier"}'::jsonb,
       'sort_order', 3, 'active', true))));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.act_as('plain');
 

@@ -26,10 +26,12 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_request uuid, p_pct integer) returns jsonb language sql as $$
   select public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid,
     'request_subscription_change', json_build_object('member_id', current_setting('t.m'), 'pct', p_pct)::jsonb, p_request);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('t.i', public.installation_id()::text, true);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values

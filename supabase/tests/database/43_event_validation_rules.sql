@@ -27,10 +27,12 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.id(p_key text) returns uuid language sql as $id$
   select current_setting('deskilo.ev.' || p_key)::uuid;
 $id$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- "<event status>/<member status>" — read as the seeding role.
 create or replace function pg_temp.state(p_event text, p_member text) returns text language sql as $st$
@@ -38,6 +40,7 @@ create or replace function pg_temp.state(p_event text, p_member text) returns te
     from public.events e, public.members m
    where e.id = pg_temp.id(p_event) and m.id = pg_temp.id(p_member);
 $st$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- "<event status>/<ledger rows>/<posted cents>" for a payment event.
 create or replace function pg_temp.money(p_event text) returns text language sql as $mo$
@@ -47,6 +50,7 @@ create or replace function pg_temp.money(p_event text) returns text language sql
    where e.id = pg_temp.id(p_event)
    group by e.status;
 $mo$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Replaces one exact piece of respond_to_event, or fails if it is gone.
 create or replace function pg_temp.patch(p_from text, p_to text) returns void language plpgsql as $pa$
@@ -58,12 +62,14 @@ begin
   execute replace(v_def, p_from, p_to);
 end
 $pa$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.restore() returns void language plpgsql as $re$
 begin
   execute current_setting('deskilo.ev.orig');
 end
 $re$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -135,6 +141,7 @@ begin
     (select id::text from public.reservations where member_id = m_actor), false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

@@ -61,6 +61,7 @@ begin
   perform set_config('deskilo.ia', ia::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 create or replace function pg_temp.as(p_user text, p_aal text, p_method text default 'oauth') returns void language sql as $$
@@ -68,6 +69,7 @@ create or replace function pg_temp.as(p_user text, p_aal text, p_method text def
     'sub', current_setting('deskilo.' || p_user), 'role', 'authenticated', 'aal', p_aal,
     'amr', json_build_array(json_build_object('method', p_method)))::text, false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -76,10 +78,12 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create or replace function pg_temp.grant_to(p_user text, p_days int, p_reason text default 'only operator') returns text language sql as $$
   select pg_temp.err(format('select public.instance_grant_mcp_eligibility(%L, %L, %s)',
     current_setting('deskilo.' || p_user), p_reason, p_days));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- pg_net's answer to one probe request, as it would store it.
 create or replace function pg_temp.answer(p_which text, p_status int, p_headers jsonb, p_content text) returns void language plpgsql as $$
 declare
@@ -91,6 +95,7 @@ begin
   values (v_id, p_status, 'application/json', p_headers, p_content, false, now());
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── S3: who may grant ────────────────────────────────────────────────
 select pg_temp.as('m1', 'aal2');

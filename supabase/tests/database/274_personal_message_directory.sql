@@ -12,14 +12,19 @@ select plan(31);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('00002472e' || lpad(p_n::text, 3, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('000002472a0' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.id('000002472f01') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.lref() returns text language sql as $$
   select network_id from public.workspaces where id = pg_temp.id('000002472f02') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A fact as the apply stores it: fresh (900 s ahead) or lapsed an hour ago.
 create function pg_temp.fact(p_u int, p_c text, p_st text, p_fresh boolean default true)
 returns void language sql as $$
@@ -30,6 +35,7 @@ returns void language sql as $$
          case when p_fresh then now() + interval '900 seconds' else now() - interval '1 hour' end,
          e.enrolled_at, gen_random_uuid()
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- plpgsql: each call reads what earlier statements wrote.
 create function pg_temp.dir(p_section text, p_ref text default null, p_after text default null,
   p_q text default '', p_extra jsonb default '{}') returns jsonb language plpgsql as $$
@@ -38,10 +44,12 @@ begin
     'role', 'authenticated') || p_extra)::text, true);
   return public.my_personal_message_directory_v1(p_section, p_ref, p_after, p_q);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The keys of a page, by their last three characters, in order.
 create function pg_temp.keys(p jsonb) returns text language sql as $$
   select coalesce(string_agg(right(coalesce(e->>'person_id', e->>'group_id'), 3), ','
                   order by o), '') from jsonb_array_elements(p->'items') with ordinality x(e, o) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures ──────────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);

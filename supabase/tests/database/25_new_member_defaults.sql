@@ -49,6 +49,7 @@ begin
     (select invite_code from public.workspaces where id = plain), false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -57,6 +58,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.member(p_ws text, p_user text)
 returns text language sql as $$
@@ -65,6 +67,7 @@ returns text language sql as $$
    where workspace_id = current_setting('deskilo.def.' || p_ws)::uuid
      and user_id = current_setting('deskilo.def.' || p_user)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

@@ -39,10 +39,12 @@ create function pg_temp.acc(code text, kind text) returns text language sql as $
   select public.save_book_account('00000000-0000-4000-8000-0000009999b1','00000000-0000-4000-8000-0000009999d1',
     null, code, code, kind, true, 'manual', 0) ->> 'id';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.map(role text, code text, kind text) returns jsonb language sql as $$
   select public.save_book_mapping('00000000-0000-4000-8000-0000009999b1','00000000-0000-4000-8000-0000009999d1',
     role, pg_temp.acc(code, kind)::uuid, '2020-01-01', 0);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.lines(p_number text, p_kind text) returns text language sql as $$
   select string_agg((l ->> 'account_code') || ':' ||
            case when (l ->> 'debit_cents')::bigint > 0 then 'D' || (l ->> 'debit_cents') else 'C' || (l ->> 'credit_cents') end,
@@ -51,12 +53,14 @@ create function pg_temp.lines(p_number text, p_kind text) returns text language 
          jsonb_array_elements(p -> 'lines') with ordinality z(l, n)
    where p ->> 'document_number' = p_number and p ->> 'kind' = p_kind;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.net(p_code text) returns bigint language sql as $$
   select coalesce(sum((l ->> 'debit_cents')::bigint - (l ->> 'credit_cents')::bigint), 0)
     from jsonb_array_elements(current_setting('t.r')::jsonb -> 'postings') p,
          jsonb_array_elements(p -> 'lines') l
    where l ->> 'account_code' = p_code;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000009999a1","role":"authenticated"}',true);
 set local role authenticated;

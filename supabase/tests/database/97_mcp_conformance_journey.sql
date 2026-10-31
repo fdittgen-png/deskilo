@@ -52,9 +52,11 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_who text) returns uuid language sql immutable as $$
   select ('00000000-0000-4000-8000-0000001632' || p_who)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Every envelope any caller received, for the canary sweep.
 create temp table outputs (label text, body jsonb);
 -- One dispatcher call as a delegated token of [p_who] through [p_client].
@@ -71,6 +73,7 @@ begin
   return r;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The outcome word of a call: its status, or its refusal code.
 create function pg_temp.says(p_who text, p_client text, p_ws text, p_op text default 'get_capabilities')
 returns text language plpgsql as $$
@@ -83,6 +86,7 @@ begin
   return coalesce(r->'error'->>'code', r->>'status');
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.book(p_req text, p_ws text default 'a', p_half text default 'am') returns jsonb language sql as $$
   select pg_temp.call('a2', 'claude-1632', current_setting('t.' || p_ws)::uuid, 'create_reservation',
     jsonb_build_object('seat_id', current_setting('t.seat'),
@@ -90,10 +94,12 @@ create function pg_temp.book(p_req text, p_ws text default 'a', p_half text defa
                        'ends_at', current_setting('t.' || p_half || '_e')),
     pg_temp.u(p_req));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bookings() returns int language sql as $$
   select count(*)::int from public.reservations r join public.members m on m.id = r.member_id
    where m.user_id = pg_temp.u('a2');
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The native consent flow for [p_scopes], as [p_who].
 create function pg_temp.consent(p_who text, p_client text, p_authz text, p_scopes jsonb) returns text language plpgsql as $$
 declare
@@ -106,6 +112,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The error a native statement raises for [p_who], or 'no error'.
 create function pg_temp.err(p_who text, p_sql text) returns text language plpgsql as $$
 begin
@@ -120,6 +127,7 @@ begin
   return 'no error';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A native call returning jsonb, as [p_who].
 create function pg_temp.native(p_who text, p_sql text) returns jsonb language plpgsql as $$
 declare
@@ -131,6 +139,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A respond_to_validation through MCP, confirmed natively when asked.
 create function pg_temp.validate(p_who text, p_client text, p_event text, p_req text) returns jsonb language plpgsql as $$
 declare
@@ -145,6 +154,7 @@ begin
   return pg_temp.call(p_who, p_client, current_setting('t.a')::uuid, 'respond_to_validation', args, pg_temp.u(p_req));
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Fault injection: replace the ONE occurrence of [p_anchor] in [p_fn],
 -- keeping the original body to restore. Anything but exactly one
 -- occurrence refuses, so a moved check cannot make a fault a no-op.
@@ -159,11 +169,13 @@ begin
   return 'injected';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.restore() returns void language plpgsql as $$
 begin
   execute current_setting('t.saved');
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── seed ─────────────────────────────────────────────────────────────
 -- a1 owner · a2 H · a3 V1 · a4 V2 · a5 X1 · a6 X2 · a7 Y (D2-only

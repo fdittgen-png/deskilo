@@ -19,13 +19,16 @@ begin
     'client_id', p_client))::text, true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_op text, p_args jsonb, p_request uuid default null) returns jsonb language sql as $$
   select public.mcp_execute_v1(public.installation_id(), '00000000-0000-4000-8000-0000002873b1', p_op, p_args, p_request);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.raw(p_key text) returns boolean language sql as $$
   select public.feature_raw(feature_flags, p_key) from public.workspaces
    where id = '00000000-0000-4000-8000-0000002873b1';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Two people with Google identities: the owner (a1) and a member (a2).
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)

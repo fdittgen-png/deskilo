@@ -18,6 +18,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.reasons(p_uid text, p_n int) returns text[] language plpgsql as $$
 declare r text[] := '{}'; i int;
@@ -28,6 +29,7 @@ begin
   return r;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.refused(p_key text, p_value text) returns boolean language plpgsql as $$
 begin
@@ -36,6 +38,7 @@ begin
 exception when others then return sqlerrm like '%is refused%';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.limit_reached(p_group boolean, p_sender uuid, p_n int, p_to uuid[]) returns text
 language plpgsql as $$
@@ -62,6 +65,7 @@ begin
   return v_msg;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-00002485' || lpad(i::text, 4, '0'))::uuid,

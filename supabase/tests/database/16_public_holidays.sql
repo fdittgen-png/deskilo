@@ -40,6 +40,7 @@ begin
   perform set_config('deskilo.hol.m_owner', m_owner::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -48,17 +49,20 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.days(p_country text, p_year int)
 returns text language sql as $$
   select string_agg(to_char(h.day, 'MM-DD'), ',' order by h.day)
     from public.public_holidays(p_country, p_year) h;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.closures() returns int language sql as $$
   select count(*)::int from public.closure_days
    where workspace_id = current_setting('deskilo.hol.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

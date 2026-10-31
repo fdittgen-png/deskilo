@@ -34,6 +34,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The dispatcher's answer for one read, as the delegated token of p_user.
 create function pg_temp.cap(p_user uuid, p_client text, p_ws text) returns text language plpgsql as $$
 declare
@@ -46,6 +47,7 @@ begin
   return coalesce(r->'error'->>'code', r->>'status');
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One reservation, by request id, as H through the first assistant.
 create function pg_temp.book(p_req uuid) returns jsonb language plpgsql as $$
 declare
@@ -59,6 +61,7 @@ begin
   return r;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The native consent flow: prepare, then finalise.
 create function pg_temp.consent(p_user uuid, p_client text, p_authz text, p_scopes jsonb) returns text language plpgsql as $$
 declare
@@ -71,10 +74,12 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bookings() returns int language sql as $$
   select count(*)::int from public.reservations r join public.members m on m.id = r.member_id
    where r.workspace_id = current_setting('t.a')::uuid and m.user_id = '00000000-0000-4000-8000-0000001631a3';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── seed ─────────────────────────────────────────────────────────────
 select set_config('t.i', public.installation_id()::text, true);

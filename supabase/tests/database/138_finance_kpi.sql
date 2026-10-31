@@ -77,6 +77,7 @@ begin
   perform set_config('fk.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -86,6 +87,7 @@ begin
                                 'role', 'authenticated')::text end, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The summary as p_who, or the SQLSTATE that refused it.
 create or replace function pg_temp.kpi(p_who text, p_from text, p_to text) returns jsonb
@@ -97,6 +99,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $k$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

@@ -38,6 +38,7 @@ begin
   perform set_config('bv.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -46,6 +47,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Saves as p_who and returns the view json, or the SQLSTATE refused.
 create or replace function pg_temp.save(p_who text, p_id uuid, p_scope text, p_name text,
@@ -58,6 +60,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $s$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.call(p_who text, p_sql text) returns text
 language plpgsql as $c$
@@ -69,6 +72,7 @@ exception when others then
   return sqlstate;
 end
 $c$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

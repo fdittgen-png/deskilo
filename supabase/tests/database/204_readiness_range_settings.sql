@@ -18,6 +18,7 @@ begin
   execute 'set local role authenticated';
 end;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of a setting write as [p_user]; '' when it was saved.
 create function pg_temp.write_error(p_user uuid, p_ws uuid, p_key text, p_value text) returns text
@@ -32,6 +33,7 @@ exception when others then
   return sqlerrm;
 end;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A field of the recovery section, as the owner reads it.
 create function pg_temp.recovery(p_key text) returns text language plpgsql as $f$
@@ -45,6 +47,7 @@ begin
   return v;
 end;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The refusal text of a call as the owner; '' when it was answered.
 create function pg_temp.refusal(p_sql text) returns text language plpgsql as $f$
@@ -58,6 +61,7 @@ exception when others then
   return sqlerrm;
 end;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- An assistant read of [p_days] days from now, as the owner; its refusal code.
 create function pg_temp.mcp_code(p_days int) returns text language plpgsql as $f$
@@ -74,6 +78,7 @@ begin
   return coalesce(v, '');
 end;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select ('00000000-0000-4000-8000-00002487' || lpad(i::text, 4, '0'))::uuid,

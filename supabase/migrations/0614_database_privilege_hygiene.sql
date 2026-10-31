@@ -34,6 +34,12 @@ alter default privileges for role postgres
   revoke execute on functions from public, anon;
 alter default privileges for role postgres
   revoke select on tables from anon;
+-- The service key keeps what PUBLIC gave it, by name. The signed-in user is
+-- NOT named here: a function is granted to `authenticated` where it is
+-- declared, as the migrations already do (a global grant would reopen the
+-- default this migration closes).
+alter default privileges for role postgres
+  grant execute on functions to service_role;
 alter default privileges for role postgres in schema public
   revoke execute on functions from public, anon;
 alter default privileges for role postgres in schema public
@@ -49,6 +55,8 @@ begin
       revoke execute on functions from public, anon;
     alter default privileges for role supabase_admin
       revoke select on tables from anon;
+    alter default privileges for role supabase_admin
+      grant execute on functions to service_role;
     alter default privileges for role supabase_admin in schema public
       revoke execute on functions from public, anon;
     alter default privileges for role supabase_admin in schema public

@@ -56,6 +56,7 @@ begin
   perform set_config('va.member', u_m::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -63,6 +64,7 @@ begin
     json_build_object('sub', current_setting('va.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select pg_temp.act_as('owner');

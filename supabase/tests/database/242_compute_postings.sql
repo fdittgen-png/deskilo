@@ -39,9 +39,11 @@ insert into public.suppliers (id, workspace_id, supplier_number, name, status) v
 create function pg_temp.vt(p numeric, g int, n int, v int) returns jsonb language sql as $$
   select jsonb_build_object('percent', p, 'category', 'S', 'gross_cents', g, 'net_cents', n, 'vat_cents', v);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ln(k text, a int, v numeric default 0) returns jsonb language sql as $$
   select jsonb_build_object('kind', k, 'label', k, 'amount_cents', a, 'vat_percent', v);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents, currency,
                              member_name, workspace_name, issuer_name, signature, issued_at, site_id, vat_totals) values
  ('00000000-0000-4000-8000-0000002365e1','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365c1',
@@ -97,10 +99,12 @@ create function pg_temp.acc(code text, kind text) returns text language sql as $
   select public.save_book_account('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365d1',
     null, code, code, kind, true, 'manual', 0) ->> 'id';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.map(role text, code text, kind text) returns jsonb language sql as $$
   select public.save_book_mapping('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365d1',
     role, pg_temp.acc(code, kind)::uuid, '2020-01-01', 0);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.lines(p_number text, p_kind text, p_date text default null) returns text language sql as $$
   select string_agg((l ->> 'account_code') || ':' ||
            case when (l ->> 'debit_cents')::bigint > 0 then 'D' || (l ->> 'debit_cents') else 'C' || (l ->> 'credit_cents') end,
@@ -110,6 +114,7 @@ create function pg_temp.lines(p_number text, p_kind text, p_date text default nu
    where p ->> 'document_number' = p_number and p ->> 'kind' = p_kind
      and (p_date is null or p ->> 'date' = p_date);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create function pg_temp.call(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
 declare v jsonb;
@@ -119,6 +124,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002365a1","role":"authenticated"}',true);
 set local role authenticated;

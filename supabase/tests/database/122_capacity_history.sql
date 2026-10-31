@@ -107,6 +107,7 @@ begin
     json_build_object('sub', u_o, 'role', 'authenticated')::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The KPI for [day + p_start, day + p_end) local days, one level.
 create or replace function pg_temp.kpi(p_day text, p_start int, p_end int, p_level text)
@@ -117,6 +118,7 @@ returns jsonb language sql as $$
     ((current_setting(p_day)::date + p_end)::timestamp at time zone 'Europe/Paris'),
     nullif(current_setting(p_level, true), '')::uuid);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

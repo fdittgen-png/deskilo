@@ -19,6 +19,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.err(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -27,13 +28,16 @@ exception when others then
   return sqlerrm;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002486' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.days_of(p_code text) returns numeric language sql as $$
   select round(extract(epoch from (i.expires_at - now())) / 86400)::numeric
     from public.invitations i where i.code = p_code;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -179,6 +183,7 @@ create function pg_temp.as_operator() returns void language sql as $$
   select set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(8), 'role', 'authenticated', 'aal', 'aal2',
     'amr', json_build_array(json_build_object('method', 'oauth')))::text, true);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.answer(p_which text, p_status int, p_headers jsonb, p_content text) returns void language plpgsql as $$
 declare v_id bigint;
 begin
@@ -188,6 +193,7 @@ begin
   values (v_id, p_status, 'application/json', p_headers, p_content, false, now());
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into public.platform_admins (user_id) values (pg_temp.u(8));
 insert into auth.identities (id, provider_id, user_id, identity_data, provider, created_at, updated_at)
 values (gen_random_uuid(), 'google-matrix-8', pg_temp.u(8), jsonb_build_object('sub', 'google-matrix-8'), 'google', now(), now());
