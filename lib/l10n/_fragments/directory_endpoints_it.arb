@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",
+  "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
+  "settingLabelDirectoryTileUrlTemplate": "Server delle tessere della mappa",
+  "settingHintDirectoryTileUrlTemplate": "Il server delle tessere da cui è disegnata la mappa di scoperta, con i segnaposto z, x e y tra parentesi graffe nell'indirizzo (s tra parentesi graffe per un sottodominio è ammesso): https, sull'internet pubblica, senza nome utente, password né #. Lasci vuoto per usare il server di questa versione dell'app, altrimenti OpenStreetMap. Un nuovo host chiede di nuovo a ogni persona prima che la mappa si carichi.",
+  "settingGroupRegion": "Regione e mappe",
+  "settingUnitUrl": "indirizzo",
+  "settingUnitUrlTemplate": "modello di indirizzo",
+  "settingProblemNotAnEndpoint": "Non è un indirizzo https pubblico nella forma giusta: nessun nome utente o password, nessun #, non un indirizzo locale o di rete privata (un modello di tessere richiede i segnaposto z, x e y tra parentesi graffe; un indirizzo di ricerca nessun ?)",
+  "discoveryMapProvenance": "Tessere della mappa: {tiles}. Ricerca indirizzi: {geocoder}.",
+  "discoveryMapSourceManaged": "scelto dal gestore di questo server",
+  "discoveryMapSourceBuild": "integrato in questa versione dell'app",
+  "discoveryMapSourceBundled": "il valore predefinito dell'app"
+}

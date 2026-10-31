@@ -10531,11 +10531,35 @@ abstract class AppLocalizations {
   /// **'Before the map opens'**
   String get discoveryMapDisclosureTitle;
 
+  /// #2488 Where each map endpoint came from; the placeholders are discoveryMapSource* phrases.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tiles: {tiles}. Address lookup: {geocoder}.'**
+  String discoveryMapProvenance(String tiles, String geocoder);
+
   /// No description provided for @discoveryMapRemembered.
   ///
   /// In en, this message translates to:
   /// **'Your choice is kept on this device for this map provider.'**
   String get discoveryMapRemembered;
+
+  /// #2488 Endpoint provenance.
+  ///
+  /// In en, this message translates to:
+  /// **'built into this app version'**
+  String get discoveryMapSourceBuild;
+
+  /// #2488 Endpoint provenance.
+  ///
+  /// In en, this message translates to:
+  /// **'the app\'s default'**
+  String get discoveryMapSourceBundled;
+
+  /// #2488 Endpoint provenance.
+  ///
+  /// In en, this message translates to:
+  /// **'chosen by this server\'s operator'**
+  String get discoveryMapSourceManaged;
 
   /// No description provided for @discoveryMapStay.
   ///
@@ -37398,6 +37422,12 @@ abstract class AppLocalizations {
   /// **'Records location'**
   String get settingGroupRecords;
 
+  /// #2488 Settings group.
+  ///
+  /// In en, this message translates to:
+  /// **'Region and maps'**
+  String get settingGroupRegion;
+
   /// #2485 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -37541,6 +37571,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.'**
   String get settingHintCalendarRangeDays;
+
+  /// #2488 Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.'**
+  String get settingHintDirectoryGeocoderUrl;
+
+  /// #2488 Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The tile server the discovery map is drawn from, with the placeholders z, x and y in curly braces in its address (s in curly braces for a subdomain is allowed): https, on the public internet, without a user name, password or #. Leave it empty to use the server this app version was built with, else OpenStreetMap. A new host asks each person again before the map loads.'**
+  String get settingHintDirectoryTileUrlTemplate;
 
   /// #2486 settings: Setting hint.
   ///
@@ -37932,6 +37974,18 @@ abstract class AppLocalizations {
   /// **'Calendar range'**
   String get settingLabelCalendarRangeDays;
 
+  /// #2488 Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Address lookup service'**
+  String get settingLabelDirectoryGeocoderUrl;
+
+  /// #2488 Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tile server'**
+  String get settingLabelDirectoryTileUrlTemplate;
+
   /// #2486 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -38256,6 +38310,12 @@ abstract class AppLocalizations {
   /// **'Enter a whole number'**
   String get settingProblemNotANumber;
 
+  /// #2488 Validation message of a URL setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a public https address of the right shape: no user name or password, no #, not a local or private network address (a tile template needs the placeholders z, x and y in curly braces; a lookup address no ?)'**
+  String get settingProblemNotAnEndpoint;
+
   /// #2484 settings: Validation.
   ///
   /// In en, this message translates to:
@@ -38387,6 +38447,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'seconds'**
   String get settingUnitSeconds;
+
+  /// #2488 Unit suffix of a URL setting.
+  ///
+  /// In en, this message translates to:
+  /// **'address'**
+  String get settingUnitUrl;
+
+  /// #2488 Unit suffix of a URL template setting.
+  ///
+  /// In en, this message translates to:
+  /// **'address template'**
+  String get settingUnitUrlTemplate;
 
   /// #2571 retention settings
   ///

@@ -6252,8 +6252,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoveryMapDisclosureTitle => 'Avant d’ouvrir la carte';
 
   @override
+  String discoveryMapProvenance(String tiles, String geocoder) {
+    return 'Tuiles de la carte : $tiles. Recherche d\'adresse : $geocoder.';
+  }
+
+  @override
   String get discoveryMapRemembered =>
       'Votre choix est conservé sur cet appareil pour ce fournisseur de carte.';
+
+  @override
+  String get discoveryMapSourceBuild =>
+      'intégré à cette version de l\'application';
+
+  @override
+  String get discoveryMapSourceBundled =>
+      'la valeur par défaut de l\'application';
+
+  @override
+  String get discoveryMapSourceManaged =>
+      'choisi par l\'exploitant de ce serveur';
 
   @override
   String get discoveryMapStay => 'Rester sur la liste';
@@ -22437,6 +22454,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupRecords => 'Lieu de conservation des registres';
 
   @override
+  String get settingGroupRegion => 'Région et cartes';
+
+  @override
   String get settingGroupSecurity => 'Limites de sécurité et d\'accès';
 
   @override
@@ -22528,6 +22548,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintCalendarRangeDays =>
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
+
+  @override
+  String get settingHintDirectoryGeocoderUrl =>
+      'Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l\'internet public, sans nom d\'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l\'adresse avec laquelle cette version de l\'application a été construite, sinon le service public Photon.';
+
+  @override
+  String get settingHintDirectoryTileUrlTemplate =>
+      'Le serveur de tuiles qui dessine la carte de découverte, avec les marqueurs z, x et y entre accolades dans son adresse (s entre accolades pour un sous-domaine est permis) : https, sur l\'internet public, sans nom d\'utilisateur, mot de passe ni #. Laissez vide pour utiliser le serveur de cette version de l\'application, sinon OpenStreetMap. Un nouvel hôte redemande l\'accord de chacun avant que la carte ne se charge.';
 
   @override
   String get settingHintDirectoryUpcomingWindowDays =>
@@ -22782,6 +22810,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
 
   @override
+  String get settingLabelDirectoryGeocoderUrl =>
+      'Service de recherche d\'adresse';
+
+  @override
+  String get settingLabelDirectoryTileUrlTemplate =>
+      'Serveur de tuiles de la carte';
+
+  @override
   String get settingLabelDirectoryUpcomingWindowDays => 'Aperçu de l\'annuaire';
 
   @override
@@ -22984,6 +23020,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingProblemNotANumber => 'Saisissez un nombre entier';
 
   @override
+  String get settingProblemNotAnEndpoint =>
+      'Pas une adresse https publique de la bonne forme : ni nom d\'utilisateur ni mot de passe, pas de #, pas une adresse locale ou de réseau privé (un modèle de tuiles demande les marqueurs z, x et y entre accolades ; une adresse de recherche aucun ?)';
+
+  @override
   String get settingProblemWrongType => 'Valeur non valide';
 
   @override
@@ -23050,6 +23090,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'secondes';
+
+  @override
+  String get settingUnitUrl => 'adresse';
+
+  @override
+  String get settingUnitUrlTemplate => 'modèle d\'adresse';
 
   @override
   String get settingUnitYears => 'années';

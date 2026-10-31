@@ -1,0 +1,15 @@
+{
+  "@@locale": "fr",
+  "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",
+  "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
+  "settingLabelDirectoryTileUrlTemplate": "Serveur de tuiles de la carte",
+  "settingHintDirectoryTileUrlTemplate": "Le serveur de tuiles qui dessine la carte de découverte, avec les marqueurs z, x et y entre accolades dans son adresse (s entre accolades pour un sous-domaine est permis) : https, sur l'internet public, sans nom d'utilisateur, mot de passe ni #. Laissez vide pour utiliser le serveur de cette version de l'application, sinon OpenStreetMap. Un nouvel hôte redemande l'accord de chacun avant que la carte ne se charge.",
+  "settingGroupRegion": "Région et cartes",
+  "settingUnitUrl": "adresse",
+  "settingUnitUrlTemplate": "modèle d'adresse",
+  "settingProblemNotAnEndpoint": "Pas une adresse https publique de la bonne forme : ni nom d'utilisateur ni mot de passe, pas de #, pas une adresse locale ou de réseau privé (un modèle de tuiles demande les marqueurs z, x et y entre accolades ; une adresse de recherche aucun ?)",
+  "discoveryMapProvenance": "Tuiles de la carte : {tiles}. Recherche d'adresse : {geocoder}.",
+  "discoveryMapSourceManaged": "choisi par l'exploitant de ce serveur",
+  "discoveryMapSourceBuild": "intégré à cette version de l'application",
+  "discoveryMapSourceBundled": "la valeur par défaut de l'application"
+}

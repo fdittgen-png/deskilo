@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
+  "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
+  "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
+  "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
+  "settingGroupRegion": "Region und Karten",
+  "settingUnitUrl": "Adresse",
+  "settingUnitUrlTemplate": "Adressvorlage",
+  "settingProblemNotAnEndpoint": "Keine öffentliche https-Adresse in der richtigen Form: kein Benutzername oder Passwort, kein #, keine lokale oder private Netzwerkadresse (eine Kachelvorlage braucht die Platzhalter z, x und y in geschweiften Klammern; eine Suchadresse kein ?)",
+  "discoveryMapProvenance": "Kartenkacheln: {tiles}. Adresssuche: {geocoder}.",
+  "discoveryMapSourceManaged": "vom Betreiber dieses Servers gewählt",
+  "discoveryMapSourceBuild": "in diese App-Version eingebaut",
+  "discoveryMapSourceBundled": "die Voreinstellung der App"
+}

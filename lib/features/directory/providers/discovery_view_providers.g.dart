@@ -61,17 +61,23 @@ final class DiscoveryViewStoreProvider
 String _$discoveryViewStoreHash() =>
     r'5479ab7d1f2020fbe5ec909537a53d392c6ec367';
 
-/// The map services this build draws discovery's map from.
+/// The map services discovery's map is drawn from (#2488): the platform's
+/// stored endpoints, else this build's, else the documented defaults. Until
+/// the platform settings arrive (or signed out) the build's choice stands.
 
 @ProviderFor(mapServices)
 final mapServicesProvider = MapServicesProvider._();
 
-/// The map services this build draws discovery's map from.
+/// The map services discovery's map is drawn from (#2488): the platform's
+/// stored endpoints, else this build's, else the documented defaults. Until
+/// the platform settings arrive (or signed out) the build's choice stands.
 
 final class MapServicesProvider
     extends $FunctionalProvider<MapServices, MapServices, MapServices>
     with $Provider<MapServices> {
-  /// The map services this build draws discovery's map from.
+  /// The map services discovery's map is drawn from (#2488): the platform's
+  /// stored endpoints, else this build's, else the documented defaults. Until
+  /// the platform settings arrive (or signed out) the build's choice stands.
   MapServicesProvider._()
     : super(
         from: null,
@@ -105,7 +111,7 @@ final class MapServicesProvider
   }
 }
 
-String _$mapServicesHash() => r'3214ff4368c7376f29837f6d873aee043a7711d3';
+String _$mapServicesHash() => r'4430954c15add1947b5187e0f17b553b991efb41';
 
 /// List or map, and the map provider accepted, for the signed-in person
 /// at their personal home on this device. Signed out, the choice is held

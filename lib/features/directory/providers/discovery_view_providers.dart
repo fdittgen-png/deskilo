@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/settings/active_settings.dart';
+
 import '../data/prefs_discovery_view_store.dart';
 import '../domain/discovery_view.dart';
 import 'saved_places_providers.dart';
@@ -12,9 +14,12 @@ part 'discovery_view_providers.g.dart';
 DiscoveryViewStore discoveryViewStore(Ref ref) =>
     const PrefsDiscoveryViewStore();
 
-/// The map services this build draws discovery's map from.
+/// The map services discovery's map is drawn from (#2488): the platform's
+/// stored endpoints, else this build's, else the documented defaults. Until
+/// the platform settings arrive (or signed out) the build's choice stands.
 @Riverpod(keepAlive: true)
-MapServices mapServices(Ref ref) => MapServices.configured;
+MapServices mapServices(Ref ref) =>
+    MapServices.resolve(ref.watch(platformSettingsProvider).value);
 
 /// List or map, and the map provider accepted, for the signed-in person
 /// at their personal home on this device. Signed out, the choice is held

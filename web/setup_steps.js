@@ -100,6 +100,9 @@ const STEPS=[
   // #2378 — where the data lives, as the operator declares it; never inferred.
   selectEl(T('recordsHostingCountry'),'records.hostingCountry',[['',T('recordsHostingNone')],...COUNTRIES.map(c=>[c[0],countryName(c[0])])],T('recordsHostingCountryHint'),null,'identity'),
   ...(S.country==='CA'?[input(T('recordsCraReference'),'records.craReference',T('recordsCraReferenceHint'),'text','','identity')]:[]),
+  // #2488 — the discovery map's tile server and address lookup; empty = the app's default.
+  input(T('mapTiles'),'map.tiles',T('mapTilesHint'),'url','https://tile.openstreetmap.org/{z}/{x}/{y}.png','identity'),
+  input(T('mapGeocoder'),'map.geocoder',T('mapGeocoderHint'),'url','https://photon.komoot.io/api/','identity'),
   )),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));

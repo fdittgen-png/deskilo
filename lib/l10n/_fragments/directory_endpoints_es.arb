@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
+  "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
+  "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
+  "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
+  "settingGroupRegion": "Región y mapas",
+  "settingUnitUrl": "dirección",
+  "settingUnitUrlTemplate": "plantilla de dirección",
+  "settingProblemNotAnEndpoint": "No es una dirección https pública con la forma correcta: sin nombre de usuario ni contraseña, sin #, no una dirección local o de red privada (una plantilla de teselas necesita los marcadores z, x e y entre llaves; una dirección de búsqueda ningún ?)",
+  "discoveryMapProvenance": "Teselas del mapa: {tiles}. Búsqueda de direcciones: {geocoder}.",
+  "discoveryMapSourceManaged": "elegido por el operador de este servidor",
+  "discoveryMapSourceBuild": "integrado en esta versión de la aplicación",
+  "discoveryMapSourceBundled": "el valor por defecto de la aplicación"
+}

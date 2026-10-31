@@ -4404,7 +4404,11 @@
   "discoveryMapContinue": "Continuar al mapa",
   "discoveryMapDisclosureBody": "El mapa lo dibuja {tiles} y las direcciones sin coordenadas las sitúa {geocoder}. El proveedor del mapa recibe información de conexión y del área visualizada: la dirección IP de su dispositivo y la parte del mapa que usted mira. No se le envía nada si usted no continúa.",
   "discoveryMapDisclosureTitle": "Antes de abrir el mapa",
+  "discoveryMapProvenance": "Teselas del mapa: {tiles}. Búsqueda de direcciones: {geocoder}.",
   "discoveryMapRemembered": "Su elección se guarda en este dispositivo para este proveedor de mapas.",
+  "discoveryMapSourceBuild": "integrado en esta versión de la aplicación",
+  "discoveryMapSourceBundled": "el valor por defecto de la aplicación",
+  "discoveryMapSourceManaged": "elegido por el operador de este servidor",
   "discoveryMapStay": "Quedarse en la lista",
   "discoveryMoreDirectoriesFailed": "No se pudieron cargar más directorios.",
   "discoveryNoSaved": "Todavía no hay espacios guardados en este dispositivo.",
@@ -15251,6 +15255,7 @@
     "description": "#2487 settings: Settings group title."
   },
   "settingGroupRecords": "Lugar de conservación de los registros",
+  "settingGroupRegion": "Región y mapas",
   "settingGroupSecurity": "Límites de seguridad y acceso",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15326,6 +15331,8 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
+  "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
   "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -15502,6 +15509,8 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
+  "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
   "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -15671,6 +15680,7 @@
   "@settingProblemNotANumber": {
     "description": "#2484 settings: Validation."
   },
+  "settingProblemNotAnEndpoint": "No es una dirección https pública con la forma correcta: sin nombre de usuario ni contraseña, sin #, no una dirección local o de red privada (una plantilla de teselas necesita los marcadores z, x e y entre llaves; una dirección de búsqueda ningún ?)",
   "settingProblemWrongType": "Valor no válido",
   "@settingProblemWrongType": {
     "description": "#2484 settings: Validation."
@@ -15761,6 +15771,8 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitUrl": "dirección",
+  "settingUnitUrlTemplate": "plantilla de dirección",
   "settingUnitYears": "años",
   "@settingUnitYears": {
     "description": "#2571 retention settings"

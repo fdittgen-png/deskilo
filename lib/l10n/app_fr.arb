@@ -4404,7 +4404,11 @@
   "discoveryMapContinue": "Continuer vers la carte",
   "discoveryMapDisclosureBody": "La carte est dessinée par {tiles}, et les adresses sans coordonnées sont placées par {geocoder}. Le fournisseur de la carte reçoit des informations de connexion et la zone affichée : l’adresse IP de votre appareil et la partie de la carte que vous regardez. Rien ne lui est envoyé si vous ne continuez pas.",
   "discoveryMapDisclosureTitle": "Avant d’ouvrir la carte",
+  "discoveryMapProvenance": "Tuiles de la carte : {tiles}. Recherche d'adresse : {geocoder}.",
   "discoveryMapRemembered": "Votre choix est conservé sur cet appareil pour ce fournisseur de carte.",
+  "discoveryMapSourceBuild": "intégré à cette version de l'application",
+  "discoveryMapSourceBundled": "la valeur par défaut de l'application",
+  "discoveryMapSourceManaged": "choisi par l'exploitant de ce serveur",
   "discoveryMapStay": "Rester sur la liste",
   "discoveryMoreDirectoriesFailed": "Les autres annuaires n’ont pas pu être chargés.",
   "discoveryNoSaved": "Aucun espace enregistré sur cet appareil pour l’instant.",
@@ -15251,6 +15255,7 @@
     "description": "#2487 settings: Settings group title."
   },
   "settingGroupRecords": "Lieu de conservation des registres",
+  "settingGroupRegion": "Région et cartes",
   "settingGroupSecurity": "Limites de sécurité et d'accès",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15326,6 +15331,8 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
+  "settingHintDirectoryTileUrlTemplate": "Le serveur de tuiles qui dessine la carte de découverte, avec les marqueurs z, x et y entre accolades dans son adresse (s entre accolades pour un sous-domaine est permis) : https, sur l'internet public, sans nom d'utilisateur, mot de passe ni #. Laissez vide pour utiliser le serveur de cette version de l'application, sinon OpenStreetMap. Un nouvel hôte redemande l'accord de chacun avant que la carte ne se charge.",
   "settingHintDirectoryUpcomingWindowDays": "Combien de jours à l'avance l'annuaire affiche la prochaine réservation d'un membre.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -15502,6 +15509,8 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",
+  "settingLabelDirectoryTileUrlTemplate": "Serveur de tuiles de la carte",
   "settingLabelDirectoryUpcomingWindowDays": "Aperçu de l'annuaire",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -15671,6 +15680,7 @@
   "@settingProblemNotANumber": {
     "description": "#2484 settings: Validation."
   },
+  "settingProblemNotAnEndpoint": "Pas une adresse https publique de la bonne forme : ni nom d'utilisateur ni mot de passe, pas de #, pas une adresse locale ou de réseau privé (un modèle de tuiles demande les marqueurs z, x et y entre accolades ; une adresse de recherche aucun ?)",
   "settingProblemWrongType": "Valeur non valide",
   "@settingProblemWrongType": {
     "description": "#2484 settings: Validation."
@@ -15761,6 +15771,8 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitUrl": "adresse",
+  "settingUnitUrlTemplate": "modèle d'adresse",
   "settingUnitYears": "années",
   "@settingUnitYears": {
     "description": "#2571 retention settings"

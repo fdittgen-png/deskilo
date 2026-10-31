@@ -11,6 +11,7 @@
 // fallback, the registry's default is the fallback.
 import '../cache/cache_scope.dart';
 import '../data/json_reader.dart';
+import '../net/public_endpoint.dart';
 
 /// The kinds of value a setting holds. A duration is a whole number of its
 /// definition's [SettingDefinition.unit].
@@ -152,6 +153,14 @@ class SettingDefinition {
       case SettingType.text:
         if (value is! String) return SettingProblem.wrongType;
         if (max != null && value.length > max!) return SettingProblem.aboveMax;
+        // #2488 -- a public endpoint is parsed, not prefix-matched; empty
+        // means "not managed here" (the build's or the documented default).
+        final endpoint = endpointKindOfUnit(unit);
+        if (endpoint != null &&
+            value.isNotEmpty &&
+            publicEndpointProblem(value, endpoint) != null) {
+          return SettingProblem.notAnEndpoint;
+        }
       case SettingType.choice:
         if (value is! String || !choices.contains(value)) {
           return SettingProblem.notAChoice;
@@ -178,7 +187,19 @@ enum SettingProblem {
   belowFloor,
   wrongType,
   notAChoice,
+
+  /// #2488 -- not a public https endpoint of the unit's kind.
+  notAnEndpoint,
 }
+
+/// #2488 -- the endpoint kind a text setting's [unit] declares, or null for
+/// plain text: `url` is a geocoder-style base URL, `url template` a tile
+/// template.
+PublicEndpointKind? endpointKindOfUnit(String unit) => switch (unit) {
+      'url' => PublicEndpointKind.geocoder,
+      'url template' => PublicEndpointKind.tileTemplate,
+      _ => null,
+    };
 
 /// One version of a stored value (history, newest first).
 class SettingVersion {

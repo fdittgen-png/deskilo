@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../l10n/app_localizations.dart';
 import '../domain/discovery_view.dart';
 
 /// Said once per map provider before the map first loads: who draws it,
@@ -50,6 +51,15 @@ class MapDisclosureDialog extends StatelessWidget {
                 services.geocoderHost,
               ),
             ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              key: const ValueKey('directory-map-provenance'),
+              l.discoveryMapProvenance(
+                _sourceLabel(l, services.tilesSource),
+                _sourceLabel(l, services.geocoderSource),
+              ),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
             if (remembered) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
@@ -74,4 +84,12 @@ class MapDisclosureDialog extends StatelessWidget {
       ],
     );
   }
+
+  /// #2488 -- who chose an endpoint: the server's operator, this app
+  /// build, or the app's documented default.
+  static String _sourceLabel(AppLocalizations l, MapServiceSource s) => switch (s) {
+        MapServiceSource.managed => l.discoveryMapSourceManaged,
+        MapServiceSource.build => l.discoveryMapSourceBuild,
+        MapServiceSource.bundled => l.discoveryMapSourceBundled,
+      };
 }

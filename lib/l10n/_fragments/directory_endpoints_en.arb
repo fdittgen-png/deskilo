@@ -1,0 +1,59 @@
+{
+  "@@locale": "en",
+  "settingLabelDirectoryGeocoderUrl": "Address lookup service",
+  "@settingLabelDirectoryGeocoderUrl": {
+    "description": "#2488 Setting label."
+  },
+  "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
+  "@settingHintDirectoryGeocoderUrl": {
+    "description": "#2488 Setting hint."
+  },
+  "settingLabelDirectoryTileUrlTemplate": "Map tile server",
+  "@settingLabelDirectoryTileUrlTemplate": {
+    "description": "#2488 Setting label."
+  },
+  "settingHintDirectoryTileUrlTemplate": "The tile server the discovery map is drawn from, with the placeholders z, x and y in curly braces in its address (s in curly braces for a subdomain is allowed): https, on the public internet, without a user name, password or #. Leave it empty to use the server this app version was built with, else OpenStreetMap. A new host asks each person again before the map loads.",
+  "@settingHintDirectoryTileUrlTemplate": {
+    "description": "#2488 Setting hint."
+  },
+  "settingGroupRegion": "Region and maps",
+  "@settingGroupRegion": {
+    "description": "#2488 Settings group."
+  },
+  "settingUnitUrl": "address",
+  "@settingUnitUrl": {
+    "description": "#2488 Unit suffix of a URL setting."
+  },
+  "settingUnitUrlTemplate": "address template",
+  "@settingUnitUrlTemplate": {
+    "description": "#2488 Unit suffix of a URL template setting."
+  },
+  "settingProblemNotAnEndpoint": "Not a public https address of the right shape: no user name or password, no #, not a local or private network address (a tile template needs the placeholders z, x and y in curly braces; a lookup address no ?)",
+  "@settingProblemNotAnEndpoint": {
+    "description": "#2488 Validation message of a URL setting."
+  },
+  "discoveryMapProvenance": "Map tiles: {tiles}. Address lookup: {geocoder}.",
+  "@discoveryMapProvenance": {
+    "description": "#2488 Where each map endpoint came from; the placeholders are discoveryMapSource* phrases.",
+    "placeholders": {
+      "tiles": {
+        "type": "String"
+      },
+      "geocoder": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryMapSourceManaged": "chosen by this server's operator",
+  "@discoveryMapSourceManaged": {
+    "description": "#2488 Endpoint provenance."
+  },
+  "discoveryMapSourceBuild": "built into this app version",
+  "@discoveryMapSourceBuild": {
+    "description": "#2488 Endpoint provenance."
+  },
+  "discoveryMapSourceBundled": "the app's default",
+  "@discoveryMapSourceBundled": {
+    "description": "#2488 Endpoint provenance."
+  }
+}

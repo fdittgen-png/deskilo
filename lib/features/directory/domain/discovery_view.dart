@@ -11,24 +11,93 @@
 // the same namespace as saved places, the person at their personal home;
 // while nobody is signed in it lives only as long as the screen.
 import '../../../core/data/json_reader.dart';
+import '../../../core/net/public_endpoint.dart';
+import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/settings/settings.dart';
+
+/// #2488 -- where a map endpoint came from.
+enum MapServiceSource {
+  /// The platform's operator stored it in the settings.
+  managed,
+
+  /// This build was given it.
+  build,
+
+  /// The documented default the app ships.
+  bundled,
+}
 
 /// The third parties the map reaches once it is open: the tile server
 /// that draws it, and the geocoder that places a published address
 /// without coordinates.
 class MapServices {
-  const MapServices({required this.tiles, required this.geocoder});
+  const MapServices({
+    required this.tiles,
+    required this.geocoder,
+    this.tilesSource = MapServiceSource.bundled,
+    this.geocoderSource = MapServiceSource.bundled,
+  });
 
-  /// The deployment's map services: the build may name its own.
-  static const configured = MapServices(
-    tiles: String.fromEnvironment(
-      'MAP_TILE_URL',
-      defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    ),
-    geocoder: String.fromEnvironment(
-      'DIRECTORY_GEOCODER_URL',
-      defaultValue: 'https://photon.komoot.io/api/',
-    ),
-  );
+  /// The build's own choice: what `--dart-define` names, else the
+  /// documented default. Used where no settings are read (and in tests).
+  static final configured = resolve(null);
+
+  /// #2488 -- the two endpoints in order of precedence: a value the
+  /// platform's operator stored (`directory.tile_url_template`,
+  /// `directory.geocoder_url`) wins; absent that, a value this build was
+  /// given (`MAP_TILE_URL`, `DIRECTORY_GEOCODER_URL`); else the registry's
+  /// documented default. A stored value that is not a valid public endpoint
+  /// is ignored, never used: the next source stands in. A build constant is
+  /// never written back to the shared registry.
+  static MapServices resolve(
+    SettingsSet? settings, {
+    String buildTiles = const String.fromEnvironment('MAP_TILE_URL'),
+    String buildGeocoder = const String.fromEnvironment('DIRECTORY_GEOCODER_URL'),
+    bool allowLocal = localEndpointsAllowed,
+  }) {
+    final tiles = _pick(settings, tilesKey, buildTiles,
+        SettingDefaults.directoryTileUrlTemplate, PublicEndpointKind.tileTemplate, allowLocal);
+    final geocoder = _pick(settings, geocoderKey, buildGeocoder,
+        SettingDefaults.directoryGeocoderUrl, PublicEndpointKind.geocoder, allowLocal);
+    return MapServices(
+      tiles: tiles.$1,
+      tilesSource: tiles.$2,
+      geocoder: geocoder.$1,
+      geocoderSource: geocoder.$2,
+    );
+  }
+
+  static const tilesKey = 'directory.tile_url_template';
+  static const geocoderKey = 'directory.geocoder_url';
+
+  static (String, MapServiceSource) _pick(
+    SettingsSet? settings,
+    String key,
+    String build,
+    String documented,
+    PublicEndpointKind kind,
+    bool allowLocal,
+  ) {
+    bool valid(String v) =>
+        v.isNotEmpty && publicEndpointProblem(v, kind, allowLocal: allowLocal) == null;
+    if (settings != null &&
+        settings.definitions.containsKey(key) &&
+        settings.originOf(key) == SettingOrigin.platform) {
+      final managed = settings.read<String>(key);
+      if (valid(managed)) return (managed, MapServiceSource.managed);
+    }
+    if (valid(build)) return (build, MapServiceSource.build);
+    final registryDefault = settings != null && settings.definitions.containsKey(key)
+        ? settings.definitions[key]!.defaultValue
+        : documented;
+    return (
+      registryDefault is String && valid(registryDefault) ? registryDefault : documented,
+      MapServiceSource.bundled,
+    );
+  }
+
+  /// Where [tiles] and [geocoder] came from, shown to the person.
+  final MapServiceSource tilesSource, geocoderSource;
 
   /// The tile URL template and the geocoder endpoint.
   final String tiles, geocoder;

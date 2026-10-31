@@ -46,6 +46,10 @@ abstract final class SettingDefaults {
   static const int bookingWalkUpWindowMinutes = 240;
   /// `calendar.range_days`
   static const int calendarRangeDays = 400;
+  /// `directory.geocoder_url`
+  static const String directoryGeocoderUrl = 'https://photon.komoot.io/api/';
+  /// `directory.tile_url_template`
+  static const String directoryTileUrlTemplate = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   /// `directory.upcoming_window_days`
   static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
