@@ -13,17 +13,36 @@ void main() {
   Iterable<RealtimeBinding> of(String table) =>
       bindings.where((b) => b.table == table);
 
-  test('a workspace-owned table: filtered by the workspace, deletes kept', () {
+  test('a workspace-owned table: filtered by the workspace', () {
     expect(of('reservations').map((b) => (b.event, b.workspaceFilter)), [
       (PostgresChangeEvent.all, 'ws-a'),
-      (PostgresChangeEvent.delete, null),
     ]);
+  });
+
+  test('#3101 — every binding of a scoped table carries the workspace filter',
+      () {
+    final unfiltered = [
+      for (final b in bindings)
+        if ((workspaceScopedTables.contains(b.table) ||
+                b.table == realtimeDeletionsTable) &&
+            b.workspaceFilter != 'ws-a')
+          '${b.table}/${b.event}',
+    ];
+    expect(unfiltered, isEmpty);
+  });
+
+  test('#3101 — deletes arrive as this workspace\'s deletion signals', () {
+    expect(of(realtimeDeletionsTable).map((b) => (b.event, b.workspaceFilter)),
+        [(PostgresChangeEvent.insert, 'ws-a')]);
+    expect(deletionSignal({'table_name': 'reservations'}), 'reservations');
+    // A row naming no rendered table, or none at all, wakes nothing.
+    expect(deletionSignal({'table_name': 'profiles'}), isNull);
+    expect(deletionSignal(const {}), isNull);
   });
 
   test('#3099 — a decision in another workspace does not wake this inbox', () {
     expect(of('event_decisions').map((b) => (b.event, b.workspaceFilter)), [
       (PostgresChangeEvent.all, 'ws-a'),
-      (PostgresChangeEvent.delete, null),
     ]);
   });
 
@@ -41,7 +60,8 @@ void main() {
   });
 
   test('every rendered table is still bound; scoped ones are real tables', () {
-    expect(bindings.map((b) => b.table).toSet(), realtimeTables.toSet());
+    expect(bindings.map((b) => b.table).toSet(),
+        {...realtimeTables, realtimeDeletionsTable});
     expect(realtimeTables.toSet().containsAll(workspaceScopedTables), isTrue);
   });
 }
