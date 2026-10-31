@@ -24274,7 +24274,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'several_rooms': 'Weil es mehrere Räume oder Standorte gibt',
       'shared_places': 'Weil Mitglieder die Plätze teilen',
       'small_community': 'Weil die Gemeinschaft klein ist',
-      'start_simple': 'Weil es einfach beginnen soll',
+      'start_simple': 'Weil Sie einfach beginnen möchten',
       'tracks_purchases': 'Weil Sie verfolgen, was der Raum einkauft',
       'vat_registered': 'Weil der Raum umsatzsteuerpflichtig ist',
       'issues_invoices': 'Weil Sie Rechnungen stellen',
