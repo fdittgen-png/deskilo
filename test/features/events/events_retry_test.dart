@@ -4,10 +4,13 @@
 // Under Riverpod's default policy a failing read was tried 10 times over
 // about 38 s, sweeping each time; a missing sweep function failed the feed
 // outright. Counted over HTTP on the real repository.
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/core/cache/read_retry.dart';
+import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/features/events/data/supabase_event_repository.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -16,6 +19,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../helpers/real_async.dart';
 
 const _json = {'content-type': 'application/json'};
 
@@ -91,20 +96,44 @@ void main() {
     final sub = c.listen(eventsProvider, (_, _) {});
     addTearDown(sub.close);
     await expectLater(c.read(eventsProvider.future), throwsA(anything));
-    // Longer than the policy's two quick tries would take.
-    await Future<void>.delayed(const Duration(seconds: 1));
+    final failure = c.read(eventsProvider).error!;
     expect(lists, 1);
     expect(sweeps, 1);
+    // The policy schedules no further try, so none can follow.
+    expect(readRetry(0, failure), isNull);
   });
 
+  // Counted on the repository, not over HTTP: the HTTP client retries a
+  // 5xx itself, below the provider.
   test('a transient failure is tried twice more, then stops', () async {
-    final c = start(
-      sweep: (r) => http.Response('null', 200, headers: _json, request: r),
-      list: (r) => error(r, 503, '503'),
+    final repo = _TimingOut();
+    final c = ProviderContainer(
+      retry: readRetry,
+      overrides: [
+        eventRepositoryProvider.overrideWithValue(repo),
+        currentWorkspaceProvider.overrideWith((ref) async => _ws),
+      ],
     );
+    addTearDown(c.dispose);
     final sub = c.listen(eventsProvider, (_, _) {});
     addTearDown(sub.close);
-    await Future<void>.delayed(const Duration(seconds: 6));
-    expect(lists, 3);
+    await untilReal(
+      () => c.read(eventsProvider) is AsyncError,
+      what: 'the two quick retries',
+    );
+    expect(repo.reads, 3);
   });
+}
+
+class _TimingOut extends FakeEventRepository {
+  int reads = 0;
+
+  @override
+  Future<List<WorkspaceEvent>> fetchEvents(
+    String workspaceId, {
+    int limit = 100,
+  }) async {
+    reads++;
+    throw TimeoutException('events read (test)');
+  }
 }
