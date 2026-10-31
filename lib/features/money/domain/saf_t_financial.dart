@@ -80,7 +80,8 @@ enum SafTFinancialProfile {
     // The authority's own sample's value.
     accountingBasis: 'Regnskabsdata',
     taxType: 'VAT',
-    taxDescription: 'Merværdiafgift',
+    // The schema's only value.
+    taxDescription: 'VAT',
     taxEntityRequired: true,
     standardAccountRequired: false,
   );
@@ -117,6 +118,23 @@ enum SafTFinancialProfile {
   /// Whether every account must map to the authority's standard account
   /// (Norway, Luxembourg); Denmark's schema leaves it optional.
   final bool standardAccountRequired;
+
+  /// #2379 — Denmark's file names the standard chart it refers to (the
+  /// schema's fixed values) and carries its parties by number only.
+  bool get denmarkShape => this == SafTFinancialProfile.denmark;
+
+  /// The standard chart Denmark's `GeneralLedgerAccounts` names (fixed by
+  /// the schema 2.1: `Standardkontoplanen`, version `20230131`).
+  static const dkStandardChart = ('Standardkontoplanen', '20230131');
+
+  /// The journal type Denmark's schema knows for [code]: receivables,
+  /// payables, adjustments, else the general ledger.
+  static String dkJournalType(String code) => switch (code) {
+    'VE' => 'AR',
+    'HA' => 'AP',
+    'OD' => 'AJ',
+    _ => 'GL',
+  };
 
   static SafTFinancialProfile? ofFormat(String formatId) => [
     for (final p in values)

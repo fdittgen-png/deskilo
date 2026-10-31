@@ -334,6 +334,11 @@ class SafTFinancialFacts {
       gap(SafTGapKind.company, 'RegistrationNumber');
     }
     if (company.name.trim().isEmpty) gap(SafTGapKind.company, 'Name');
+    // Denmark's company states its VAT registration (or a bank account,
+    // which the book does not hold).
+    if (profile.denmarkShape && company.vatId.trim().isEmpty) {
+      gap(SafTGapKind.company, 'TaxRegistration');
+    }
     // The file states the company's own taxes; a seller of another country
     // than the profile's is not the declaration it makes.
     if (profile.country.isNotEmpty && taxCountry != profile.country) {
@@ -388,7 +393,12 @@ class SafTFinancialFacts {
           details?.street ?? '',
           details?.city ?? '',
           details?.postalCode ?? '',
-          missing: () => gap(SafTGapKind.party, '${e.key} Address'),
+          // Denmark's file carries no party address.
+          missing: () {
+            if (!profile.denmarkShape) {
+              gap(SafTGapKind.party, '${e.key} Address');
+            }
+          },
         );
       }
     }

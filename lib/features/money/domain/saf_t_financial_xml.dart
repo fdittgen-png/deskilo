@@ -139,7 +139,13 @@ class SafTFinancialXml extends SafTFinancialFacts {
         if (accounts.isNotEmpty) {
           builder.element(
             'GeneralLedgerAccounts',
-            nest: () => accounts.forEach(account),
+            nest: () {
+              if (profile.denmarkShape) {
+                tag('NameOfStandardAccount', SafTFinancialProfile.dkStandardChart.$1);
+                tag('VersionOfStandardAccount', SafTFinancialProfile.dkStandardChart.$2);
+              }
+              accounts.forEach(account);
+            },
           );
         }
         if (customers.isNotEmpty) {
@@ -219,6 +225,16 @@ class SafTFinancialXml extends SafTFinancialFacts {
     builder.element(
       element,
       nest: () {
+        // Denmark carries a party by its number, account and balances only.
+        if (profile.denmarkShape) {
+          tag(idElement, number);
+          final a = accounts.single;
+          tag('AccountID', a);
+          final open = netOf(r.opening, a);
+          balance('Opening', open);
+          balance('Closing', open + netOf(r.postings, a));
+          return;
+        }
         tag('Name', partyName(number, entry.party, details));
         if (details != null && hasAddress(details.city, details.postalCode)) {
           address(
@@ -327,7 +343,12 @@ class SafTFinancialXml extends SafTFinancialFacts {
             nest: () {
               tag('JournalID', journal.code);
               tag('Description', safTJournalNames[journal]!);
-              tag('Type', journal.code);
+              tag(
+                'Type',
+                profile.denmarkShape
+                    ? SafTFinancialProfile.dkJournalType(journal.code)
+                    : journal.code,
+              );
               postings.forEach(transaction);
             },
           );
@@ -358,6 +379,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
             party.number,
           );
         }
+        // Denmark: the record's id in the system that produced it.
+        if (profile.denmarkShape) tag('SystemID', transactionIdOf(p));
         for (final l in p.lines) {
           line(p, l);
         }

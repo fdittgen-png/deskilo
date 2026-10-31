@@ -162,11 +162,23 @@ TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) => TaxReferenceSet([
 InvoiceParty _company(String country) => InvoiceParty(
   name: 'Cowork',
   street: 'Storgata 1',
-  city: country == 'NO' ? 'Oslo' : 'Luxembourg',
-  postalCode: country == 'NO' ? '0155' : 'L-1611',
+  city: switch (country) {
+    'NO' => 'Oslo',
+    'DK' => 'København Ø',
+    _ => 'Luxembourg',
+  },
+  postalCode: switch (country) {
+    'NO' => '0155',
+    'DK' => '2100',
+    _ => 'L-1611',
+  },
   country: country,
-  legalId: '999999999',
-  vatId: country == 'NO' ? 'NO999999999MVA' : 'LU12345678',
+  legalId: country == 'DK' ? '10150817' : '999999999',
+  vatId: switch (country) {
+    'NO' => 'NO999999999MVA',
+    'DK' => 'DK10150817',
+    _ => 'LU12345678',
+  },
   vatRegime: 'standard',
 );
 
