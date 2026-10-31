@@ -56,6 +56,7 @@ const _kindLabels = {
   PostingKind.vatRelease: 'TVA exigible',
   PostingKind.memberReceipt: 'Note de frais',
   PostingKind.reimbursement: 'Remboursement de frais',
+  PostingKind.acquisitionTax: 'Autoliquidation TVA',
 };
 
 const _lettered = {BookRole.customers, BookRole.suppliers};

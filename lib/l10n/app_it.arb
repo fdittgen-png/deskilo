@@ -235,6 +235,7 @@
   "acctEntraTenant": "Tenant (ID directory o dominio)",
   "acctEntraTitle": "Colleghi {target} con un'applicazione Microsoft Entra",
   "acctJournalLogged": "{logged, plural, =0{Nessun nuovo documento registrato} =1{Un documento registrato} other{{logged} documenti registrati}}, {unchanged} invariati",
+  "acctKindAcquisitionTax": "Imposta sull'acquisto",
   "acctKindCreditNote": "Nota di credito",
   "acctKindExpense": "Spesa",
   "acctKindInvoice": "Fattura",

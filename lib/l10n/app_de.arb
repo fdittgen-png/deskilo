@@ -235,6 +235,7 @@
   "acctEntraTenant": "Mandant (Verzeichnis-ID oder Domäne)",
   "acctEntraTitle": "{target} mit einer Microsoft-Entra-Anwendung verbinden",
   "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert",
+  "acctKindAcquisitionTax": "Bezugsteuer",
   "acctKindCreditNote": "Gutschrift",
   "acctKindExpense": "Ausgabe",
   "acctKindInvoice": "Rechnung",

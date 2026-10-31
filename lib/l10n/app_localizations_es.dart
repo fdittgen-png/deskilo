@@ -446,6 +446,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Impuesto sobre adquisiciones';
+
+  @override
   String get acctKindCreditNote => 'Factura rectificativa';
 
   @override
