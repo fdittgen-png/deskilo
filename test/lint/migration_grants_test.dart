@@ -48,6 +48,44 @@ Set<String> missingRevokes(String sql) {
   return created.where((c) => !revoked.contains(c)).toSet();
 }
 
+/// #3134 — from this migration on a new function in `public` is closed to
+/// signed-in accounts by default (0618), so every function a later migration
+/// introduces says what `authenticated` may do with it, in the same file.
+const String _defaultClosed =
+    '0618_functions_closed_to_authenticated_by_default.sql';
+
+final _drop = RegExp(
+  r'drop\s+function\s+(?:if\s+exists\s+)?([^\s(;,]+)',
+  caseSensitive: false,
+);
+final _posture = RegExp(
+  r'(grant|revoke)\s+execute\s+on\s+function\s+([^\s;(]+)[^;]*?\b(?:to|from)\b([^;]*);',
+  caseSensitive: false,
+);
+
+/// The names a migration creates (plain or `or replace`).
+Set<String> createdNames(String sql) =>
+    _create.allMatches(sql).map((m) => _bare(m.group(1)!)).toSet();
+
+/// Functions [sql] introduces — created and not in [known], or dropped and
+/// created again, which loses the ACL — without a grant or a revoke that
+/// names `authenticated` in the same text.
+Set<String> missingAuthenticatedPosture(String sql, Set<String> known) {
+  final dropped = _drop.allMatches(sql).map((m) => _bare(m.group(1)!)).toSet();
+  final stated = {
+    for (final m in _posture.allMatches(sql))
+      if (RegExp(r'\bauthenticated\b', caseSensitive: false)
+          .hasMatch(m.group(3)!))
+        _bare(m.group(2)!),
+  };
+  return {
+    for (final name in createdNames(sql))
+      if ((!known.contains(name) || dropped.contains(name)) &&
+          !stated.contains(name))
+        name,
+  };
+}
+
 void main() {
   test('every migration after the sweep revokes what it creates', () {
     final after = sqlFiles('supabase/migrations')
@@ -73,6 +111,70 @@ void main() {
           'revoke added later never reaches the ones already created — the '
           'omission is permanent from here.',
     );
+  });
+
+  test('a function a later migration introduces states its posture for '
+      'authenticated (#3134)', () {
+    final files = sqlFiles('supabase/migrations')
+      ..sort((a, b) => a.path.compareTo(b.path));
+    final known = <String>{};
+    final offenders = <String>[];
+    for (final file in files) {
+      final name = file.uri.pathSegments.last;
+      final sql = file.readAsStringSync();
+      if (name.compareTo(_defaultClosed) > 0) {
+        for (final fn in missingAuthenticatedPosture(sql, known)) {
+          offenders.add('$name: $fn');
+        }
+      }
+      known.addAll(createdNames(sql));
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'A new function in public is executable by nobody but the '
+          'service key until its migration grants it (0618). These '
+          'migrations introduce a function without saying what '
+          'authenticated may do with it:\n${offenders.join('\n')}\n\n'
+          'Add, in the SAME migration, either\n'
+          '  grant execute on function <name>(<args>) to authenticated;\n'
+          'or, for a function only other definer functions call,\n'
+          '  revoke execute on function <name>(<args>) from public, anon, '
+          'authenticated;',
+    );
+  });
+
+  test('a new function without a posture for authenticated is caught', () {
+    const sql = '''
+create function public.fresh(p uuid) returns void language sql as \$\$ select 1 \$\$;
+revoke execute on function public.fresh(uuid) from public, anon;
+''';
+    expect(missingAuthenticatedPosture(sql, {}), {'fresh'});
+  });
+
+  test('a grant or a revoke that names authenticated answers it', () {
+    const granted = '''
+create function public.a(p uuid) returns void language sql as \$\$ select 1 \$\$;
+grant execute on function public.a(uuid) to authenticated;
+''';
+    const closed = '''
+create function public.b(p uuid) returns void language sql as \$\$ select 1 \$\$;
+revoke execute on function public.b(uuid) from public, anon, authenticated;
+''';
+    expect(missingAuthenticatedPosture(granted, {}), isEmpty);
+    expect(missingAuthenticatedPosture(closed, {}), isEmpty);
+  });
+
+  test('a replaced known function keeps its ACL, a dropped one loses it', () {
+    const replaced = '''
+create or replace function public.known(p uuid) returns void language sql as \$\$ select 1 \$\$;
+''';
+    const recreated = '''
+drop function public.known(uuid);
+create function public.known(p uuid) returns void language sql as \$\$ select 1 \$\$;
+''';
+    expect(missingAuthenticatedPosture(replaced, {'known'}), isEmpty);
+    expect(missingAuthenticatedPosture(recreated, {'known'}), {'known'});
   });
 
   test('the sweep this rule stands on is still in the tree', () {
