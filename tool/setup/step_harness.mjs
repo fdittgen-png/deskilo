@@ -355,6 +355,24 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   console.log('processes:', processes);
 }
 
+// #3075 — every text input, select and textarea a step draws has a name a
+// screen reader can announce: an aria-label, or a label around it.
+{
+  load('en', { name: 'Names Space' });
+  const unnamed = [];
+  const walk = (step, n, inLabel) => { for (const c of (n.children || [])) {
+    if (typeof c !== 'object') continue;
+    const control = ['SELECT', 'TEXTAREA'].includes(c.tagName)
+      || (c.tagName === 'INPUT' && !['checkbox', 'radio', 'hidden'].includes(c.attrs.type));
+    if (control && !inLabel && !c.attrs['aria-label'] && !c.attrs['aria-labelledby']) unnamed.push(step.id);
+    walk(step, c, inLabel || c.tagName === 'LABEL'); } };
+  for (const step of globalThis.__STEPS) for (const k of step.build()) if (k && typeof k === 'object') { if (k.tagName === 'LABEL') walk(step, k, true); walk(step, k, k.tagName === 'LABEL'); }
+  const byStep = unnamed.reduce((m, id) => ({ ...m, [id]: (m[id] || 0) + 1 }), {});
+  console.log('names: controls without a name per step:', JSON.stringify(byStep));
+  if (unnamed.length) fail(`names: ${unnamed.length} controls have no accessible name (${JSON.stringify(byStep)})`);
+  else console.log('names: every control is named');
+}
+
 // #2501 — the WebMCP tools, against a fake modelContext. An agent here is a
 // function that calls the tools the page registered.
 const fakeContext = () => {
