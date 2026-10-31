@@ -38,7 +38,7 @@ select p.id, p.last_seen_at
 on conflict (user_id) do nothing;
 
 -- The subject-access exports keep returning the heartbeat: both read the
--- presence row beside the profile (anchored on the profile line).
+-- presence row into the profile entry (anchored on the profile line).
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text
 language plpgsql
@@ -57,25 +57,37 @@ do $migration$
 declare
   v_def text;
   v_patched text;
+  v_old text;
+  v_new text;
 begin
-  -- Idempotent: a definition that already reads presence is left alone.
+  -- The heartbeat rides inside the profile entry, appended with ||, so the
+  -- exports' long jsonb_build_object keeps its argument count (<= 100).
+  -- Idempotent: a definition that already carries it is left alone, and the
+  -- first draft of this migration (a separate 'presence' argument, applied
+  -- to dev only) is taken out first.
   select pg_get_functiondef('public.export_my_data(uuid)'::regprocedure) into v_def;
-  v_patched := case when position('public.presence' in v_def) > 0 then v_def end;
-  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def,
-    $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me.user_id),$a$,
-    $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me.user_id),
-    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me.user_id),$a$));
+  v_def := replace(v_def, $a$
+    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me.user_id),$a$, '');
+  v_old := $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me.user_id),$a$;
+  v_new := $a$-- jsonb_build_object takes at most 100 arguments: a new key is appended
+    -- with || inside an existing entry, never as another pair (#3123).
+    'profile', (select (to_jsonb(p) - 'pin_hash') || jsonb_build_object('presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me.user_id)) from public.profiles p where p.id = v_me.user_id),$a$;
+  v_patched := case when position(v_new in v_def) > 0 then v_def end;
+  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def, v_old, v_new));
   if v_patched is null then
     raise exception '0616: export_my_data profile anchor missing';
   end if;
   execute v_patched;
 
   select pg_get_functiondef('public.export_my_personal_data_v1()'::regprocedure) into v_def;
-  v_patched := case when position('public.presence' in v_def) > 0 then v_def end;
-  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def,
-    $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me),$a$,
-    $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me),
-    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me),$a$));
+  v_def := replace(v_def, $a$
+    'presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me),$a$, '');
+  v_old := $a$'profile', (select to_jsonb(p) - 'pin_hash' from public.profiles p where p.id = v_me),$a$;
+  v_new := $a$-- jsonb_build_object takes at most 100 arguments: a new key is appended
+    -- with || inside an existing entry, never as another pair (#3123).
+    'profile', (select (to_jsonb(p) - 'pin_hash') || jsonb_build_object('presence', (select to_jsonb(pr) from public.presence pr where pr.user_id = v_me)) from public.profiles p where p.id = v_me),$a$;
+  v_patched := case when position(v_new in v_def) > 0 then v_def end;
+  v_patched := coalesce(v_patched, pg_temp.anchor_replace(v_def, v_old, v_new));
   if v_patched is null then
     raise exception '0616: export_my_personal_data_v1 profile anchor missing';
   end if;
