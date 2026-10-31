@@ -152,6 +152,8 @@ begin
     'invoices', jsonb_build_object('count', jsonb_array_length(i), 'total_cents', (select coalesce(sum((e->>'total_cents')::bigint), 0) from jsonb_array_elements(i) e)),
     'ledger', jsonb_build_object('count', jsonb_array_length(l))));
 end \$f\$" >/dev/null || fail "the control probe would not build"
+# A new function in public is closed to signed-in accounts until it is granted (0618, #3134).
+psql_q "grant execute on function public.zz_torn_probe(uuid, date, date) to authenticated" >/dev/null || fail "the control probe could not be granted"
 writer2_log=/tmp/snapshot_writer2.log
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$(writer_for Q)" >"$writer2_log" 2>&1 &
 writer2=$!

@@ -22,8 +22,8 @@ select is(has_function_privilege('authenticated', 'public.zz_privilege_probe_gra
   'a function granted explicitly to authenticated still executes');
 select is(has_function_privilege('anon', 'public.zz_privilege_probe_granted()', 'execute'), false,
   'and is still closed to anon');
-select is(has_function_privilege('authenticated', 'public.zz_privilege_probe()', 'execute'), true,
-  'a new function stays executable by the signed-in user: only anon was closed');
+select is(has_function_privilege('authenticated', 'public.zz_privilege_probe()', 'execute'), false,
+  'a new function is not executable by the signed-in user either (0618, #3134)');
 
 set local role anon;
 select throws_ok($$select count(*) from public.workspaces$$, '42501', null,
