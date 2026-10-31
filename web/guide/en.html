@@ -2581,6 +2581,10 @@
 <li>Each member can also make their own badge in their personal settings.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.kiosk.mode">A wall tablet for check-in</a></p>
+<ul>
+<li>Badge sign-in security (#3091): failed PIN attempts across all cards of the workspace share a ceiling, 50 by default during the badge lockout window (15 minutes by default). Workspace settings → Security lets an owner tighten the ceiling to 1–50. Reaching it pauses badge sign-in until attempts leave that window and sends the owners an alert in Events. Other workspaces keep working. The setup questionnaire records the chosen ceiling as an answer to enter in the app.</li>
+<li>When you manage a member’s badges, a notice asks for a PIN refresh if its recorded length is below the current minimum or its length is unknown because it was set before length tracking. Older PINs keep working until their owner changes them; the badge manager never reveals the PIN or its hash.</li>
+</ul>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-badges-nfc.en.b8fa17aa9.jpg" alt="NFC badge check-in"></div><button class="zoom" type="button" aria-label="Enlarge the screenshot: NFC badge check-in">⤢</button></figure></div></article><article class="section" id="user.documents.add" data-roles="owner admin"><header><h3>Add a document to the library <a class="permalink" href="#user.documents.add" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-admin">Administrator</span></div></header><div class="body"><p>You want to gather your statutes, guides, statements and minutes in one place for the members who need them. The library holds links, not files.</p>
 
 <h4 class="lbl lbl-steps">Steps</h4>

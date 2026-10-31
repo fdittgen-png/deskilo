@@ -719,6 +719,8 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinReviewNotice": "La longueur de ce code ancien est inconnue ou inférieure au minimum actuel. Demandez au membre de le modifier dans ses propres réglages. Son code actuel reste utilisable.",
+  "badgePinReviewUnavailable": "La vérification du code est indisponible. Réessayez avant de considérer que ce code respecte le minimum actuel.",
   "badgePinSaveFailed": "Serveur injoignable. Votre code n'a pas été modifié — réessayez.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -5411,6 +5413,17 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures} échecs en {minutes} minutes. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "eventCommitmentVarianceLine": "{actor} accepte un écart de {amount} sur {reference} (échéance {date}) : {reason}",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} répartit « {title} » — {amount} entre {count} membres",
@@ -5579,6 +5592,7 @@
   "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir.",
   "eventSystemDecider": "Système",
   "eventTypeAdjustment": "Ajustement",
+  "eventTypeBadgeSecurityAlert": "Protection de la connexion par badge",
   "eventTypeCommitmentVariance": "Écart de loyer",
   "eventTypeExpense": "Dépense",
   "eventTypeExpenseRepartition": "Dépense partagée",
@@ -15412,6 +15426,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Le moins de chiffres qu'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu'à leur changement.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.",
   "settingHintSecurityInvitationExpiryDays": "Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15587,6 +15602,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "PIN de badge : longueur minimale",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Plafond des échecs de badge de l’espace",
   "settingLabelSecurityInvitationExpiryDays": "Validité d'une invitation",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

@@ -1,0 +1,18 @@
+{
+  "eventTypeBadgeSecurityAlert": "Badge sign-in protection",
+  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.",
+  "badgePinReviewNotice": "This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.",
+  "badgePinReviewUnavailable": "PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Workspace badge failure ceiling",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

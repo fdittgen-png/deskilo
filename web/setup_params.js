@@ -116,6 +116,7 @@ const PARAM_META=[
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
+ ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
  ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],
@@ -172,7 +173,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',retention:'app',bank:'app',records:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

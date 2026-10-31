@@ -39,6 +39,10 @@ String eventLine(
   final cents = event.payload['amount_cents'] as int?;
   final amount = cents == null ? '' : currency.formatMinor(cents);
   var line = switch ((event.type, event.action)) {
+    (EventType.badgeSecurityAlert, _) => l10n.eventBadgeSecurityAlert(
+      (event.payload['failures'] as num?)?.toInt() ?? 0,
+      (event.payload['window_minutes'] as num?)?.toInt() ?? 0,
+    ),
     (EventType.reservation, EventAction.created) =>
       l10n.eventReservationCreated(actor, target),
     (EventType.reservation, EventAction.modified) =>

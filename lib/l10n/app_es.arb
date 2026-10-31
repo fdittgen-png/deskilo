@@ -719,6 +719,8 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
+  "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -5411,6 +5413,17 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventBadgeSecurityAlert": "El acceso con tarjeta se ha bloqueado tras {failures} intentos fallidos en {minutes} minutos. Revise las tarjetas y pida a los miembros que accedan por correo mientras termina el bloqueo.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "eventCommitmentVarianceLine": "{actor} acepta una diferencia de {amount} en {reference} (vencimiento {date}): {reason}",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} reparte «{title}»: {amount} entre {count} socios",
@@ -5579,6 +5592,7 @@
   "eventSourceNotFound": "No se archivó ningún documento de compra para esta solicitud, o no puede verlo.",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Ajuste",
+  "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
@@ -15412,6 +15426,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.",
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15587,6 +15602,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "PIN de tarjeta: longitud mínima",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Límite de fallos de tarjeta del espacio",
   "settingLabelSecurityInvitationExpiryDays": "Validez de una invitación",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

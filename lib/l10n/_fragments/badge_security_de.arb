@@ -1,0 +1,18 @@
+{
+  "eventTypeBadgeSecurityAlert": "Schutz der Badge-Anmeldung",
+  "eventBadgeSecurityAlert": "Die Badge-Anmeldung ist nach {failures} Fehlversuchen innerhalb von {minutes} Minuten gesperrt. Prüfen Sie die Badges und bitten Sie Mitglieder, sich bis zum Ablauf der Sperre per E-Mail anzumelden.",
+  "badgePinReviewNotice": "Die Länge dieser älteren PIN ist unbekannt oder unterschreitet das aktuelle Minimum. Bitten Sie das Mitglied, sie in den eigenen Einstellungen zu ändern. Die bisherige PIN bleibt gültig.",
+  "badgePinReviewUnavailable": "Der PIN-Prüfstatus ist nicht verfügbar. Versuchen Sie es erneut, bevor Sie annehmen, dass diese PIN das aktuelle Minimum erfüllt.",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Grenze für Badge-Fehlversuche im Bereich",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

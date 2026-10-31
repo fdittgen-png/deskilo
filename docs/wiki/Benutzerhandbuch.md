@@ -3599,6 +3599,9 @@ Sie möchten, dass Mitglieder sich mit dem Antippen einer Karte einchecken, ohne
 
 **Siehe auch:** [Ein Wand-Tablet für den Check-in](#kiosk-modus-ein-wand-tablet-für-den-check-in)
 
+- Sicherheit der Badge-Anmeldung (#3091): Fehlgeschlagene PIN-Versuche aller Karten eines Workspaces teilen ein Limit, standardmäßig 50 innerhalb des Sperrfensters (standardmäßig 15 Minuten). In den Workspace-Einstellungen → Sicherheit kann ein Eigentümer das Limit auf 1–50 senken. Sobald es erreicht ist, pausiert die Badge-Anmeldung, bis die Versuche aus dem Zeitfenster fallen; Eigentümer erhalten eine Warnung in den Ereignissen. Andere Workspaces bleiben verfügbar. Der Fragebogen hält das gewählte Limit als Antwort zur Eingabe in der App fest.
+- Beim Verwalten der Badges eines Mitglieds erscheint ein Hinweis zur PIN-Erneuerung, wenn die erfasste Länge unter dem aktuellen Minimum liegt oder unbekannt ist, weil die PIN vor der Längenerfassung gesetzt wurde. Ältere PINs bleiben bis zur Änderung durch ihren Inhaber gültig; die Verwaltung zeigt weder PIN noch Hash an.
+
 <!-- anchor: user.documents.add -->
 ### Ein Dokument zur Bibliothek hinzufügen
 

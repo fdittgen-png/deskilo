@@ -9,6 +9,7 @@ import '../domain/workspace_event.dart';
 /// validation settings': one wording everywhere.
 String eventTypeLabel(AppLocalizations l10n, EventType type) {
   return switch (type) {
+    EventType.badgeSecurityAlert => l10n.eventTypeBadgeSecurityAlert,
     EventType.reservation => l10n.eventTypeReservation,
     EventType.payment => l10n.eventTypePayment,
     EventType.expense => l10n.eventTypeExpense,

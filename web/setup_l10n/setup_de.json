@@ -735,5 +735,7 @@
  "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
  "retUsYears": "Aufbewahrung, US-Bundesstaat",
  "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
- "retUsRule": "Die Aufbewahrungsregel gilt"
+ "retUsRule": "Die Aufbewahrungsregel gilt",
+ "badgeFailureLimit": "Fehlversuche der Badge-Anmeldung pro Workspace",
+ "badgeFailureLimitHint": "Nach so vielen fehlgeschlagenen PIN-Versuchen im Workspace pausiert die Badge-Anmeldung für das Sperrfenster; Eigentümer erhalten eine Warnung. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich, standardmäßig 50. Die XML-Datei bewahrt die Antwort auf; tragen Sie sie in der App ein."
 }

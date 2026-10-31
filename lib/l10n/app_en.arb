@@ -1932,6 +1932,8 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinReviewNotice": "This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.",
+  "badgePinReviewUnavailable": "PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.",
   "badgePinSaveFailed": "Could not reach the server. Your PIN was not changed — try again.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -9004,6 +9006,17 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "eventCommitmentVarianceLine": "{actor} accepts a difference of {amount} on {reference} (due {date}): {reason}",
   "@eventCommitmentVarianceLine": {
     "description": "Events feed (#2575): what the validators decide on",
@@ -9379,6 +9392,7 @@
   "@eventTypeAdjustment": {
     "description": "Event type label / filter chip"
   },
+  "eventTypeBadgeSecurityAlert": "Badge sign-in protection",
   "eventTypeCommitmentVariance": "Rent difference",
   "@eventTypeCommitmentVariance": {
     "description": "Validation domain (#2575): a bill above the rent a contract expects"
@@ -26643,6 +26657,7 @@
   "@settingHintSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting hint."
   },
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.",
   "settingHintSecurityInvitationExpiryDays": "Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -26899,6 +26914,7 @@
   "@settingLabelSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting label."
   },
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Workspace badge failure ceiling",
   "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

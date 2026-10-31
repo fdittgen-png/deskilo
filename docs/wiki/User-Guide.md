@@ -3599,6 +3599,9 @@ You want members to check in by tapping a card, with no phone.
 
 **See also:** [A wall tablet for check-in](#kiosk-mode-a-wall-tablet-for-check-in)
 
+- Badge sign-in security (#3091): failed PIN attempts across all cards of the workspace share a ceiling, 50 by default during the badge lockout window (15 minutes by default). Workspace settings → Security lets an owner tighten the ceiling to 1–50. Reaching it pauses badge sign-in until attempts leave that window and sends the owners an alert in Events. Other workspaces keep working. The setup questionnaire records the chosen ceiling as an answer to enter in the app.
+- When you manage a member’s badges, a notice asks for a PIN refresh if its recorded length is below the current minimum or its length is unknown because it was set before length tracking. Older PINs keep working until their owner changes them; the badge manager never reveals the PIN or its hash.
+
 <!-- anchor: user.documents.add -->
 ### Add a document to the library
 

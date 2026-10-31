@@ -20,20 +20,27 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-alter table public.events drop constraint if exists events_type_check;
-alter table public.events add constraint events_type_check check (type = any (array[
-  'reservation','payment','expense','adjustment','service_charge','quota','role_change','member_join','space_reservation',
-  'invoice_payment','reservation_delete','invoice_writeoff','invoice_reminder','price_negotiation','expense_schedule',
-  'expense_repartition','usage_correction','usage_record_delete','payment_terms_change',
-  'invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change','lease_change',
-  'commitment_variance','badge_security_alert']));
-alter table public.validation_policies drop constraint if exists validation_policies_event_type_check;
-alter table public.validation_policies add constraint validation_policies_event_type_check check (event_type is null or event_type = any (array[
-  'reservation','payment','expense','adjustment','service_charge','quota','role_change','member_join','space_reservation',
-  'invoice_payment','reservation_delete','invoice_writeoff','invoice_reminder','price_negotiation','expense_schedule',
-  'expense_repartition','usage_correction','usage_record_delete','payment_terms_change',
-  'invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change','lease_change',
-  'commitment_variance','badge_security_alert']));
+-- Preserve event types introduced by every earlier migration.
+do $constraints$
+declare r record; v_def text;
+begin
+  for r in select * from (values
+    ('events','events_type_check','type'),
+    ('validation_policies','validation_policies_event_type_check','event_type')
+  ) as c(table_name,constraint_name,column_name) loop
+    select pg_get_constraintdef(oid) into v_def from pg_constraint
+     where conrelid=('public.'||r.table_name)::regclass and conname=r.constraint_name;
+    if v_def is null or position('CHECK (' in v_def) <> 1 then
+      raise exception 'event type constraint anchor missing: %',r.constraint_name;
+    end if;
+    if position('badge_security_alert' in v_def)=0 then
+      execute format('alter table public.%I drop constraint %I',r.table_name,r.constraint_name);
+      execute format('alter table public.%I add constraint %I ',r.table_name,r.constraint_name)
+        || replace(v_def,'CHECK (',format('CHECK (%I = %L OR ',r.column_name,'badge_security_alert'));
+    end if;
+  end loop;
+end;
+$constraints$;
 
 -- The caller holds the workspace lock, so the threshold transition and alert
 -- are atomic even when several badges are attacked concurrently.

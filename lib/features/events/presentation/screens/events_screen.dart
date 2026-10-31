@@ -197,6 +197,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     EventType.memberStatusChange => Icons.person_off_outlined,
     EventType.subscriptionChange => Icons.percent_outlined,
     EventType.matrixChange => Icons.admin_panel_settings_outlined,
+    EventType.badgeSecurityAlert => Icons.security_outlined,
     // #1088 — a type this build does not know gets the neutral mark.
     EventType.unknown => Icons.info_outline,
     };

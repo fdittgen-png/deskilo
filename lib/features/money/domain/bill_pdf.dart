@@ -300,6 +300,7 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
         EventType.commitmentVariance:
     case EventType.adjustment:
     // #1088 — never an open position; the fallback keeps it exhaustive.
+    case EventType.badgeSecurityAlert:
     case EventType.unknown:
       return strings.eventAdjustment;
   }

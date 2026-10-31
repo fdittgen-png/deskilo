@@ -735,5 +735,7 @@
  "accountingOk": "The bank statements' bounds and suggestion window are set.",
  "retUsYears": "US state record retention",
  "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
- "retUsRule": "The retention rule applies"
+ "retUsRule": "The retention rule applies",
+ "badgeFailureLimit": "Badge sign-in failures per workspace",
+ "badgeFailureLimitHint": "After this many failed PIN attempts across the workspace, badge sign-in pauses for the lockout window and owners receive an alert. Set a value from 1 to 50 in Workspace settings → Security; 50 is the default. The XML keeps this answer for setup; enter it in the app."
 }

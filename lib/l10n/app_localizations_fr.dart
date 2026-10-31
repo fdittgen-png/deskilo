@@ -1695,6 +1695,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get badgePinNotSet => 'Pas encore de code';
 
   @override
+  String get badgePinReviewNotice =>
+      'La longueur de ce code ancien est inconnue ou inférieure au minimum actuel. Demandez au membre de le modifier dans ses propres réglages. Son code actuel reste utilisable.';
+
+  @override
+  String get badgePinReviewUnavailable =>
+      'La vérification du code est indisponible. Réessayez avant de considérer que ce code respecte le minimum actuel.';
+
+  @override
   String get badgePinSaveFailed =>
       'Serveur injoignable. Votre code n\'a pas été modifié — réessayez.';
 
@@ -7356,6 +7364,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventAutoValidated => 'Validé automatiquement';
 
   @override
+  String eventBadgeSecurityAlert(int failures, int minutes) {
+    return 'La connexion par badge est suspendue après $failures échecs en $minutes minutes. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.';
+  }
+
+  @override
   String eventCommitmentVarianceLine(
     String actor,
     String amount,
@@ -7539,6 +7552,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Ajustement';
+
+  @override
+  String get eventTypeBadgeSecurityAlert =>
+      'Protection de la connexion par badge';
 
   @override
   String get eventTypeCommitmentVariance => 'Écart de loyer';
@@ -22673,6 +22690,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le moins de chiffres qu\'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu\'à leur changement.';
 
   @override
+  String get settingHintSecurityBadgeWorkspaceFailureLimit =>
+      'Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.';
 
@@ -22912,6 +22933,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN de badge : longueur minimale';
+
+  @override
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
+      'Plafond des échecs de badge de l’espace';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

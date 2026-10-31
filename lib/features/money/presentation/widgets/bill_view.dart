@@ -235,6 +235,7 @@ class _OpenPositionsCard extends StatelessWidget {
           EventType.commitmentVariance:
       case EventType.adjustment:
       // #1088 — never an open position; the fallback keeps it exhaustive.
+      case EventType.badgeSecurityAlert:
       case EventType.unknown:
         return l10n.eventTypeAdjustment;
     }

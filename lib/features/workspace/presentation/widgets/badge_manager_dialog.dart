@@ -23,6 +23,7 @@ import '../../domain/badge_pdf.dart';
 import '../../domain/member_badge.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import 'badge_pin_review_notice.dart';
 import 'nfc_tap_dialog.dart';
 
 /// One member's badge manager (0043/0046, extracted for the 0053
@@ -517,6 +518,7 @@ class _BadgeManagerDialogState
                   ),
             ),
             const SizedBox(height: 8),
+            BadgePinReviewNotice(workspaceId: widget.workspaceId, memberId: widget.memberId),
             _content(context, issued, badges),
           ],
           ),

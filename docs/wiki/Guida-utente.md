@@ -3599,6 +3599,9 @@ Vuole che i membri facciano il check-in avvicinando una tessera, senza telefono.
 
 **Vedi anche:** [Un tablet a muro per il check-in](#modalità-chiosco-un-tablet-a-muro-per-il-check-in)
 
+- Sicurezza dell’accesso con badge (#3091): i PIN errati di tutte le carte dello spazio condividono un limite, 50 per impostazione predefinita nella finestra di blocco (15 minuti per impostazione predefinita). Nelle impostazioni dello spazio → Sicurezza un proprietario può ridurlo a 1–50. Quando viene raggiunto, l’accesso con badge si sospende finché i tentativi escono dalla finestra e i proprietari ricevono un avviso negli eventi. Gli altri spazi restano disponibili. Il questionario conserva il limite scelto come risposta da inserire nell’app.
+- Quando si gestiscono i badge di un membro, un avviso chiede di rinnovare il PIN se la lunghezza registrata è inferiore al minimo attuale o sconosciuta perché il PIN precede la registrazione della lunghezza. I vecchi PIN funzionano fino alla modifica da parte del titolare; la gestione non rivela né il PIN né il suo hash.
+
 <!-- anchor: user.documents.add -->
 ### Aggiungere un documento alla biblioteca
 

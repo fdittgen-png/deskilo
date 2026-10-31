@@ -21,8 +21,8 @@ insert into auth.users (id,instance_id,aud,role,email,encrypted_password,email_c
 select pg_temp.u(i),'00000000-0000-0000-0000-000000000000','authenticated','authenticated',
   'badge-security-'||i||'@example.test','',now(),now(),now() from generate_series(1,4) i;
 insert into public.workspaces (id,name,country_code,currency_code,timezone,created_by,feature_flags)
-values (pg_temp.u(101),'Badge security A','FR','EUR','Europe/Paris',pg_temp.u(1),'{"nfcBadges":true,"badgeSignIn":true}'),
-       (pg_temp.u(102),'Badge security B','FR','EUR','Europe/Paris',pg_temp.u(4),'{"nfcBadges":true,"badgeSignIn":true}');
+values (pg_temp.u(101),'Badge security A','FR','EUR','Europe/Paris',pg_temp.u(1),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true}'),
+       (pg_temp.u(102),'Badge security B','FR','EUR','Europe/Paris',pg_temp.u(4),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true}');
 insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status)
 values (pg_temp.u(201),pg_temp.u(101),pg_temp.u(1),true,true,'active'),
        (pg_temp.u(202),pg_temp.u(101),pg_temp.u(2),false,false,'active'),
@@ -62,6 +62,8 @@ select pg_temp.act_as(1);
 select is(public.badge_pin_needs_review(pg_temp.u(101),pg_temp.u(202)),false,'the notice clears after a compliant PIN change');
 reset role;
 
+select set_config('request.jwt.claims','{"role":"service_role"}',true);
+
 -- Instrument the real crypt boundary inside this rolled-back transaction,
 -- rather than compare noisy wall-clock timings on a shared runner.
 alter function extensions.crypt(text,text) rename to crypt_3091_actual;
@@ -81,10 +83,10 @@ $$;
 grant execute on all functions in schema pg_temp to authenticated,anon;
 select is(pg_temp.crypt_calls('3091999999999999','000000'),1,'an unknown badge does one crypt');
 select is(pg_temp.crypt_calls('3091000000000003','000000'),1,'an inactive member does one crypt');
-update public.workspaces set feature_flags='{"nfcBadges":true,"badgeSignIn":false}' where id=pg_temp.u(102);
+update public.workspaces set feature_flags='{"kioskMode":true,"nfcBadges":true,"badgeSignIn":false}' where id=pg_temp.u(102);
 select is(pg_temp.crypt_calls('3091000000000004','000000'),1,'a disabled feature does one crypt');
 delete from public.account_badge_pins where user_id=pg_temp.u(4);
-update public.workspaces set feature_flags='{"nfcBadges":true,"badgeSignIn":true}' where id=pg_temp.u(102);
+update public.workspaces set feature_flags='{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true}' where id=pg_temp.u(102);
 select is(pg_temp.crypt_calls('3091000000000004','000000'),1,'an account with no PIN does one dummy crypt');
 update public.member_badges set revoked_at=now() where id=pg_temp.u(304);
 select is(pg_temp.crypt_calls('3091000000000004','000000'),1,'a revoked badge does one dummy crypt');

@@ -94,6 +94,7 @@ const STEPS=[
   // #2556 — every server reads its part of the inbox one page at a time.
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),
   // #2863 — every server that asks a company registry for supplier details.
+  ...(on('badgeSignIn')?[input(T('badgeFailureLimit'),'badgeSecurity.failureLimit',T('badgeFailureLimitHint'),'number','','tags')]:[]),
   selectEl(T('supLookupWait'),'supplierLookup.timeout',opts(SUP_LOOKUP_WAIT),T('supLookupWaitHint'),null,'identity'),
   selectEl(T('supLookupRate'),'supplierLookup.perMinute',opts(SUP_LOOKUP_RATE),T('supLookupRateHint'),null,'identity'),
   // #2378 — where the data lives, as the operator declares it; never inferred.

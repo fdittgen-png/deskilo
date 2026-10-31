@@ -735,5 +735,7 @@
  "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
  "retUsYears": "Conservation des pièces, État américain",
  "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
- "retUsRule": "La règle de conservation s'applique"
+ "retUsRule": "La règle de conservation s'applique",
+ "badgeFailureLimit": "Échecs de connexion par badge de l’espace",
+ "badgeFailureLimitHint": "Après ce nombre d’échecs de PIN dans l’espace, la connexion par badge est suspendue pendant la fenêtre de blocage et les propriétaires reçoivent une alerte. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut. Le XML conserve cette réponse ; saisissez-la dans l’application."
 }

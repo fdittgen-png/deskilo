@@ -91,6 +91,9 @@ enum EventType {
   /// accepted difference, held for a second person when a policy exists.
   commitmentVariance('commitment_variance'),
 
+  /// A workspace-wide badge sign-in ceiling has paused further attempts.
+  badgeSecurityAlert('badge_security_alert'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still
