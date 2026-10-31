@@ -22089,6 +22089,15 @@
   "@processNothingToDo": {
     "description": "#1329 the process change preview and apply"
   },
+  "processOffNote": "Switched off: {features}",
+  "@processOffNote": {
+    "description": "#3072 which features a partial process has switched off",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
   "processOperations": "Operations & administration",
   "processOperationsDesc": "Maintain configuration and the application experience.",
   "processRemoveDependants": "Also switch off the {count} dependants",

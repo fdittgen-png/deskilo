@@ -50,5 +50,6 @@
   "featureDetailHeldBack": "Attivata, ma bloccata: richiede {feature}, che è disattivata.",
   "featureDetailOff": "Disattivata.",
   "featureDetailNone": "Niente.",
-  "featureDetailGrantsPermission": "Concede agli amministratori il permesso «{permission}»."
+  "featureDetailGrantsPermission": "Concede agli amministratori il permesso «{permission}».",
+  "processOffNote": "Disattivato: {features}"
 }
