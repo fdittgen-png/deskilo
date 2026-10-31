@@ -1,0 +1,6 @@
+{
+  "@@locale": "fr",
+  "settingLabelBiBatchTimeBudgetMs": "Budget de temps d'une lecture de rapport",
+  "settingHintBiBatchTimeBudgetMs": "Durée de calcul d'une lecture de rapport avant que les chiffres non atteints soient signalés hors budget ; la page montre ce qu'elle a. Restez sous le délai de requête du serveur.",
+  "settingUnitMilliseconds": "ms"
+}

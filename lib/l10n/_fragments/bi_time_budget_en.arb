@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "settingLabelBiBatchTimeBudgetMs": "Report read time budget",
+  "@settingLabelBiBatchTimeBudgetMs": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingHintBiBatchTimeBudgetMs": "How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server's request timeout.",
+  "@settingHintBiBatchTimeBudgetMs": {
+    "description": "#2578 settings: Setting hint."
+  },
+  "settingUnitMilliseconds": "ms",
+  "@settingUnitMilliseconds": {
+    "description": "#2578 settings: unit of a duration in milliseconds."
+  }
+}

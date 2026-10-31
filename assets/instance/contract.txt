@@ -1979,6 +1979,7 @@ routine public.bank_statement_lines_v1(p_statement_id uuid) -> jsonb | function 
 routine public.bank_statement_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:40e3eb8e6cf6
 routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5f3e293f231
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
+routine public.bi_batch_time_budget_ms(p_workspace_id uuid) -> integer | function | definer | stable | exec:service_role | body:b13385b30322
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
 routine public.bi_definition_for_reader(p_workspace_id uuid, p jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:f3058d8868ca
 routine public.bi_definition_metrics(p jsonb) -> SETOF text | function | invoker | immutable | exec:service_role | body:42c2c9bee325
@@ -1986,7 +1987,7 @@ routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | im
 routine public.bi_export_evidence_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:5af9af0e68d5
 routine public.bi_export_snapshot_v1(p_workspace_id uuid, p_requests jsonb, p_report_id uuid, p_report_revision integer, p_format text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1c95e253a37
 routine public.bi_metric_readable(p_workspace_id uuid, p_metric text) -> boolean | function | invoker | stable | exec:service_role | body:0786fa27fd61
-routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b19130b4de
+routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a765b7b96d
 routine public.bi_report_dimensions() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2d05f6cb55bc
 routine public.bi_report_filters_narrow(p_higher jsonb, p_lower jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:af02e844457e
 routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:35b1153b461a

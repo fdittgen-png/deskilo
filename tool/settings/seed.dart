@@ -688,6 +688,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'bi_batch_time_budget',
+    row: (
+      key: 'bi.batch_time_budget_ms',
+      type: 'int',
+      defaultValue: 4000,
+      min: 500,
+      max: 7000,
+      unit: 'milliseconds',
+      group: 'kpi',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'bi_query_batch_v1 (#2578)',
+      note: 'How long one report read may compute before the figures it has not reached yet are answered as timed out, so a page shows what it has instead of waiting for the server to give up. Keep it below the server request timeout.',
+    ),
+  ),
+  (
     since: 'bi_report_definitions',
     row: (
       key: 'bi.report_max_pages',
