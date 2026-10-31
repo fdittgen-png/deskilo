@@ -155,6 +155,17 @@ sealed class WorkspaceXmlOffice with _$WorkspaceXmlOffice {
   }) = _WorkspaceXmlOffice;
 }
 
+/// A `<decor>` symbol drawn on a level (v5): its stored kind word, its
+/// rect and its clockwise quarter turns, 0..3.
+@freezed
+sealed class WorkspaceXmlDecor with _$WorkspaceXmlDecor {
+  const factory WorkspaceXmlDecor({
+    required String kind,
+    required GridRect rect,
+    @Default(0) int quarterTurns,
+  }) = _WorkspaceXmlDecor;
+}
+
 /// A `<level>` (floor) with its offices nested inside.
 @freezed
 sealed class WorkspaceXmlLevel with _$WorkspaceXmlLevel {
@@ -168,6 +179,9 @@ sealed class WorkspaceXmlLevel with _$WorkspaceXmlLevel {
     @Default(0) int priceCents,
     @Default(false) bool bookableAsWhole,
     @Default('') String site,
+
+    /// v5: the symbols drawn on the plan, in the order they are stored.
+    @Default(<WorkspaceXmlDecor>[]) List<WorkspaceXmlDecor> decor,
   }) = _WorkspaceXmlLevel;
 }
 

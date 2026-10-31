@@ -144,9 +144,9 @@ String _validXml() => buildWorkspaceXml(
 
 void main() {
   group('round trip', () {
-    test('export writes schema version 4 (#2860)', () {
-      expect(WorkspaceXmlSchema.version, 4);
-      expect(_validXml(), contains('<deskilo-workspace version="4">'));
+    test('export writes schema version 5 (#3074)', () {
+      expect(WorkspaceXmlSchema.version, 5);
+      expect(_validXml(), contains('<deskilo-workspace version="5">'));
     });
 
     test('toXml → parse yields the equal id-free structure (#164/#180)', () {
@@ -314,9 +314,9 @@ void main() {
       );
     });
 
-    test('newer version 5 → unsupportedVersion (#916)', () {
+    test('newer version 6 → unsupportedVersion (#916)', () {
       expect(
-        errorOf('<deskilo-workspace version="5">'
+        errorOf('<deskilo-workspace version="6">'
             '<settings name="X" country="DE" currency="EUR" '
             'timezone="Europe/Berlin"/><floor-plan/></deskilo-workspace>'),
         WorkspaceXmlError.unsupportedVersion,

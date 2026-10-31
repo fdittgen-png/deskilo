@@ -22,5 +22,6 @@
   "mcpConfirmStepDone": "Verrà segnato come fatto.",
   "mcpConfirmStepLater": "Verrà messo da parte per dopo.",
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
-  "mcpConfirmClosureReason": "Motivo: {reason}"
+  "mcpConfirmClosureReason": "Motivo: {reason}",
+  "mcpConfirmInvitee": "Invito per"
 }
