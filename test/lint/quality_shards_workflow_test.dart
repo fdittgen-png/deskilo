@@ -29,6 +29,10 @@ const _timeouts = {
   restShard: '45',
 };
 
+/// #3166 — each shard's cap: money and rest measured 22.8 and 22.7 min on
+/// a green run, so their cap is 45 until the shards are rebalanced.
+const _timeouts = {gateShard: '30', moneyShard: '45', restShard: '45'};
+
 YamlMap _jobs() =>
     (loadYaml(File('.github/workflows/quality.yml').readAsStringSync())
             as YamlMap)['jobs']

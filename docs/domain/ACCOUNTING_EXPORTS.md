@@ -177,6 +177,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `run_my_accounts` | Run my Accounts · Run my Accounts · API | api | documents | CH | specificationNeeded | not named yet |
 | `saft_no` | Skatteetaten · SAF-T Financial · 1.30 | file | journal | NO | locallyValidated | Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd |
 | `faia_lu` | Administration de l'enregistrement · FAIA · 2.01 | file | journal | LU | locallyValidated | AED FAIA 2.01, FAIA_v_2.01_full.xsd |
+| `saft_ro` | ANAF · SAF-T (D406) · 2.4.9 | file | journal | RO | locallyValidated | ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd |
 | `denmark_registered_system` | Erhvervsstyrelsen · Registered digital bookkeeping system · Bogføringsloven 2022 | api | documents | DK | specificationNeeded | not named yet |
 | `saft_dk` | Erhvervsstyrelsen · SAF-T DK · 2.1 | file | journal | DK | locallyValidated | Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd |
 | `economic_api` | Visma · e-conomic · REST API | api | documents | DK | specificationNeeded | not named yet |

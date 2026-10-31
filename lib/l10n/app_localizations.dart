@@ -800,6 +800,12 @@ abstract class AppLocalizations {
   /// **'{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged'**
   String acctJournalLogged(int logged, int unchanged);
 
+  /// #3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge).
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax'**
+  String get acctKindAcquisitionTax;
+
   /// #2370 Transfers list: the kind of document event a line carried.
   ///
   /// In en, this message translates to:
@@ -11434,7 +11440,7 @@ abstract class AppLocalizations {
   /// #3074 the plan's drawn shapes: editorHintDecor
   ///
   /// In en, this message translates to:
-  /// **'Tap the plan to drop the shape; drag it to place it'**
+  /// **'Tap to drop a shape; drag to draw a wall along the grid'**
   String get editorHintDecor;
 
   /// #1216 what the next gesture does while the desk tool is armed
@@ -11802,6 +11808,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select'**
   String get editorToolSelect;
+
+  /// No description provided for @editorWallSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Wall drawn'**
+  String get editorWallSaved;
+
+  /// No description provided for @editorWallUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get editorWallUndo;
 
   /// Button: forget the platform
   ///

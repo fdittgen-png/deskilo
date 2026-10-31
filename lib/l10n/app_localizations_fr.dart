@@ -446,6 +446,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Impôt sur les acquisitions';
+
+  @override
   String get acctKindCreditNote => 'Avoir';
 
   @override
@@ -6766,7 +6769,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Touchez le plan pour poser la forme ; faites-la glisser pour la placer';
+      'Touchez pour poser une forme ; faites glisser pour tracer un mur sur la grille';
 
   @override
   String get editorHintDesk =>
@@ -6960,6 +6963,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Sélection';
+
+  @override
+  String get editorWallSaved => 'Mur tracé';
+
+  @override
+  String get editorWallUndo => 'Annuler';
 
   @override
   String get einvoiceConfigClear => 'Supprimer la plateforme';

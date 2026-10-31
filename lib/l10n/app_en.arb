@@ -567,6 +567,10 @@
       }
     }
   },
+  "acctKindAcquisitionTax": "Acquisition tax",
+  "@acctKindAcquisitionTax": {
+    "description": "#3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge)."
+  },
   "acctKindCreditNote": "Credit note",
   "@acctKindCreditNote": {
     "description": "#2370 Transfers list: the kind of document event a line carried."
@@ -8272,7 +8276,7 @@
   "@editorEmptyFloorTitle": {
     "description": "#1216 the card shown on a level nobody has drawn on yet"
   },
-  "editorHintDecor": "Tap the plan to drop the shape; drag it to place it",
+  "editorHintDecor": "Tap to drop a shape; drag to draw a wall along the grid",
   "@editorHintDecor": {
     "description": "#3074 the plan's drawn shapes: editorHintDecor"
   },
@@ -8505,6 +8509,8 @@
   "@editorToolSelect": {
     "description": "Canvas tool: select/inspect elements, pan and zoom"
   },
+  "editorWallSaved": "Wall drawn",
+  "editorWallUndo": "Undo",
   "einvoiceConfigClear": "Remove the platform",
   "@einvoiceConfigClear": {
     "description": "Button: forget the platform"

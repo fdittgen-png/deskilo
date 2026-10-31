@@ -65,6 +65,12 @@ GridRect rectBetween(CanvasCell a, CanvasCell b) {
   );
 }
 
+/// A one-cell-thick wall along the drag's dominant axis, including both ends.
+GridRect wallBetween(CanvasCell start, CanvasCell end) {
+  final horizontal = (end.x - start.x).abs() >= (end.y - start.y).abs();
+  return rectBetween(start, horizontal ? (x: end.x, y: start.y) : (x: start.x, y: end.y));
+}
+
 /// The outline of the selected element, or null when nothing (or
 /// nothing that still exists) is selected.
 GridRect? selectionRectOf(
