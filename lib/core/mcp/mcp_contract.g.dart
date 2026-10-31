@@ -38,6 +38,7 @@ enum McpOperationId {
   previewSetupLevels('preview_setup_levels'),
   applySetupLevels('apply_setup_levels'),
   markSetupStep('mark_setup_step'),
+  setWorkspaceBasics('set_workspace_basics'),
   setOpeningHours('set_opening_hours'),
   addClosureDays('add_closure_days'),
   setNumberSequence('set_number_sequence'),
@@ -122,3 +123,54 @@ class McpEnvelope {
     );
   }
 }
+
+/// #1801 — every status an MCP envelope may carry.
+const List<String> mcpStatuses = [
+  'completed',
+  'pending_validation',
+  'requires_confirmation',
+  'denied',
+  'conflict',
+  'validation_error',
+  'not_found',
+  'rate_limited',
+];
+
+/// Names no input may carry: identity, role, SQL, targets, approval state.
+const Set<String> mcpForbiddenInputs = {
+  'actor',
+  'actor_id',
+  'user_id',
+  'role',
+  'roles',
+  'permission',
+  'permissions',
+  'is_admin',
+  'is_owner',
+  'sql',
+  'query',
+  'table',
+  'rpc',
+  'function',
+  'url',
+  'approval',
+  'approved',
+  'decided_by',
+  'status_override',
+  'secret',
+  'password',
+  'api_key',
+  'token',
+  'access_token',
+  'client_secret',
+  'private_key',
+  'credentials',
+};
+
+/// #1809 — every field an answer discloses only when the installation
+/// maximum, the workspace policy and the person's consent all name it
+/// (#1645). The app offers exactly these, never a hand-written list.
+const List<String> mcpOptionalFields = [
+  'name',
+];
+

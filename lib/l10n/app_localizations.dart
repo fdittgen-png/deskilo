@@ -24322,6 +24322,12 @@ abstract class AppLocalizations {
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
 
+  /// #2394 generated from contracts/mcp/operations.json (set_workspace_basics)
+  ///
+  /// In en, this message translates to:
+  /// **'Set the time zone, language and address'**
+  String get mcpOpSetupBasics;
+
   /// #2394 generated from contracts/mcp/operations.json (add_closure_days)
   ///
   /// In en, this message translates to:

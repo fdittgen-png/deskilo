@@ -14763,6 +14763,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpSetFavorite => 'Segnare posti come preferiti';
 
   @override
+  String get mcpOpSetupBasics =>
+      'Impostare il fuso orario, la lingua e l\'indirizzo';
+
+  @override
   String get mcpOpSetupClosures => 'Aggiungere giorni di chiusura';
 
   @override

@@ -635,25 +635,6 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     ..writeln('/// The contract version these specs were generated from.')
     ..writeln('const int mcpContractVersion = ${contract['version']};')
     ..writeln()
-    ..writeln('/// #1801 — every status an MCP envelope may carry.')
-    ..writeln('const List<String> mcpStatuses = [')
-    ..writeln([for (final s in contract['statuses'] as List) "  '$s',"].join('\n'))
-    ..writeln('];')
-    ..writeln()
-    ..writeln('/// Names no input may carry: identity, role, SQL, targets, approval state.')
-    ..writeln('const Set<String> mcpForbiddenInputs = {')
-    ..writeln([for (final f in contract['forbidden_inputs'] as List) "  '$f',"].join('\n'))
-    ..writeln('};')
-    ..writeln()
-    ..writeln('/// #1809 — every field an answer discloses only when the installation')
-    ..writeln('/// maximum, the workspace policy and the person\'s consent all name it')
-    ..writeln('/// (#1645). The app offers exactly these, never a hand-written list.')
-    ..writeln('const List<String> mcpOptionalFields = [')
-    ..writeln([
-      for (final f in {for (final op in ops) ...mcpOptionalOutput(contract, op)}.toList()..sort()) "  '$f',",
-    ].join('\n'))
-    ..writeln('];')
-    ..writeln()
     ..writeln('/// Every catalogued operation, handler or not.')
     ..writeln('const Map<String, McpOperationSpec> mcpOperations = {');
   for (final op in ops) {
@@ -689,6 +670,29 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
       ..writeln('  ),');
   }
   dart.writeln('};');
+
+  // The three shared constants live with the contract types: the catalogue
+  // grows by an entry per operation and this file must stay under its budget.
+  final shared = StringBuffer()
+    ..writeln('/// #1801 — every status an MCP envelope may carry.')
+    ..writeln('const List<String> mcpStatuses = [')
+    ..writeln([for (final s in contract['statuses'] as List) "  '$s',"].join('\n'))
+    ..writeln('];')
+    ..writeln()
+    ..writeln('/// Names no input may carry: identity, role, SQL, targets, approval state.')
+    ..writeln('const Set<String> mcpForbiddenInputs = {')
+    ..writeln([for (final f in contract['forbidden_inputs'] as List) "  '$f',"].join('\n'))
+    ..writeln('};')
+    ..writeln()
+    ..writeln('/// #1809 — every field an answer discloses only when the installation')
+    ..writeln('/// maximum, the workspace policy and the person\'s consent all name it')
+    ..writeln('/// (#1645). The app offers exactly these, never a hand-written list.')
+    ..writeln('const List<String> mcpOptionalFields = [')
+    ..writeln([
+      for (final f in {for (final op in ops) ...mcpOptionalOutput(contract, op)}.toList()..sort()) "  '$f',",
+    ].join('\n'))
+    ..writeln('];')
+    ..writeln();
 
   final types = StringBuffer()
     ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
@@ -869,7 +873,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     generatedPaths.openapi: prettyJson(openapi),
     generatedPaths.webOpenapi: prettyJson(openapi),
     generatedPaths.labels: labels.toString(),
-    generatedPaths.dartTypes: types.toString(),
+    generatedPaths.dartTypes: '${types.toString()}\n$shared',
     generatedPaths.webmcp: renderWebMcpTools(contract),
     ...arb,
   };

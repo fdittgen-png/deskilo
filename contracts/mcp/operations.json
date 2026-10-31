@@ -3082,6 +3082,84 @@
    }
   },
   {
+   "id": "set_workspace_basics",
+   "handler": true,
+   "dispatch": true,
+   "title": "Set the workspace time zone, language and address",
+   "description": "The setup step 'basics', as its screen does it: the workspace time zone (an IANA name such as Europe/Paris), its default language (en, fr, de, es or it) and its address. Give only what changes. The country and the currency are not offered here: they fix money and legal rules and stay in the app. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "workspaceSettings"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "timezone": {
+     "type": "text",
+     "maxLength": 64,
+     "description": "The workspace time zone as an IANA name, e.g. \"Europe/Paris\".",
+     "examples": [
+      "Europe/Paris"
+     ]
+    },
+    "default_locale": {
+     "type": "text",
+     "maxLength": 5,
+     "description": "The default language of the workspace: en, fr, de, es or it.",
+     "examples": [
+      "fr"
+     ]
+    },
+    "address": {
+     "type": "text",
+     "maxLength": 300,
+     "description": "The workspace's postal address on one line.",
+     "examples": [
+      "12 rue de la Gare, 34120 P\u00e9zenas"
+     ]
+    }
+   },
+   "output": [
+    "changes",
+    "field",
+    "from",
+    "to"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupBasics",
+    "en": "Set the time zone, language and address",
+    "fr": "D\u00e9finir le fuseau horaire, la langue et l'adresse",
+    "de": "Zeitzone, Sprache und Adresse festlegen",
+    "es": "Fijar la zona horaria, el idioma y la direcci\u00f3n",
+    "it": "Impostare il fuso orario, la lingua e l'indirizzo"
+   }
+  },
+  {
    "id": "set_opening_hours",
    "handler": true,
    "dispatch": true,

@@ -17539,6 +17539,10 @@
   "@mcpOpSetFavorite": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
+  "mcpOpSetupBasics": "Set the time zone, language and address",
+  "@mcpOpSetupBasics": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_workspace_basics)"
+  },
   "mcpOpSetupClosures": "Add closure days",
   "@mcpOpSetupClosures": {
     "description": "#2394 generated from contracts/mcp/operations.json (add_closure_days)"

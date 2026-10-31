@@ -14780,6 +14780,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpOpSetFavorite => 'Plätze als Favoriten markieren';
 
   @override
+  String get mcpOpSetupBasics => 'Zeitzone, Sprache und Adresse festlegen';
+
+  @override
   String get mcpOpSetupClosures => 'Schließtage hinzufügen';
 
   @override

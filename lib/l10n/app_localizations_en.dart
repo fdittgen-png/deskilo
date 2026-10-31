@@ -14654,6 +14654,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpSetFavorite => 'Mark places as favourites';
 
   @override
+  String get mcpOpSetupBasics => 'Set the time zone, language and address';
+
+  @override
   String get mcpOpSetupClosures => 'Add closure days';
 
   @override

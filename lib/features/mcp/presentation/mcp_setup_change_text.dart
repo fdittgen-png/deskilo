@@ -17,6 +17,7 @@ class McpSetupChangeText {
 
   /// What the change is about, or null for a target of another kind.
   String? subject(Map<String, Object?> target) => switch (target['kind']) {
+    'workspace_basics' => _l10n.setupStepTitle('basics'),
     'opening_hours' => _l10n.availabilityWorkHoursTitle,
     'closure_days' => [
       if (target['days'] case final List<Object?> days)
@@ -31,7 +32,7 @@ class McpSetupChangeText {
 
   /// What it changes, one line per field, or null for another kind.
   String? change(Map<String, Object?> target) => switch (target['kind']) {
-    'opening_hours' || 'number_sequence' => [
+    'workspace_basics' || 'opening_hours' || 'number_sequence' => [
       if (target['changes'] case final List<Object?> changes)
         for (final c in changes.whereType<Map<Object?, Object?>>())
           _l10n.mcpConfirmFieldChange(
@@ -48,6 +49,9 @@ class McpSetupChangeText {
   };
 
   String _field(String field) => switch (field) {
+    'timezone' => _l10n.workspaceTimezoneLabel,
+    'default_locale' => _l10n.languageTitle,
+    'address' => _l10n.workspaceAddressLabel,
     'open_weekdays' => _l10n.availabilityOpenWeekdays,
     'work_start_minutes' => _l10n.availabilityWorkStart,
     'half_boundary_minutes' => _l10n.availabilityHalfBoundary,
@@ -81,6 +85,9 @@ class McpSetupChangeText {
       'monthly' => _l10n.numberSequenceResetMonthly,
       _ => _l10n.numberSequenceResetNever,
     },
+    'timezone' || 'default_locale' || 'address'
+        when '${value ?? ''}'.isEmpty =>
+      '—',
     _ when '${value ?? ''}'.isEmpty => _l10n.numberSequenceDateNone,
     _ => '$value',
   };
