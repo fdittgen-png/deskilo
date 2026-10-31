@@ -426,6 +426,7 @@ constraint event_decisions.event_decisions_decision_check CHECK ((decision = ANY
 constraint event_decisions.event_decisions_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 constraint event_decisions.event_decisions_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint event_decisions.event_decisions_pkey PRIMARY KEY (id)
+constraint event_decisions.event_decisions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint event_decisions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint events.events_action_check CHECK ((action = ANY (ARRAY['created'::text, 'modified'::text, 'cancelled'::text, 'submitted'::text, 'approved'::text, 'rejected'::text])))
 constraint events.events_actor_member_id_fkey FOREIGN KEY (actor_member_id) REFERENCES members(id) ON DELETE RESTRICT
@@ -2112,6 +2113,7 @@ routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integ
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
 routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fdaaf680cd2d
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
+routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2e3e2610f711
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:6149227a9717
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
@@ -3111,6 +3113,7 @@ trigger einvoice_inbox.purchase_inbox_match_link CREATE TRIGGER purchase_inbox_m
 trigger einvoice_inbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_inbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger enrolled_installations.protect_enrolled_installation CREATE TRIGGER protect_enrolled_installation BEFORE DELETE OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION protect_enrolled_installation()
 trigger enrolled_installations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger event_decisions.event_decisions_fill_workspace CREATE TRIGGER event_decisions_fill_workspace BEFORE INSERT OR UPDATE OF event_id ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION event_decisions_fill_workspace()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()
