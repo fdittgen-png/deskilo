@@ -160,23 +160,23 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
   }
 }
 
-/// The active workspace (profile). #3102: list and choice are read together.
+/// The active workspace (profile).
 @Riverpod(keepAlive: true)
 Future<Workspace?> currentWorkspace(Ref ref) async {
-  // #2562 -- a workspace selected on a connected installation is read
-  // through that installation's own pinned client, never the root client;
-  // a refusal is the typed ConnectionFailure.
+  // #2562 -- a connected installation's workspace: its own pinned client.
   final split = ref.watch(selectedWorkspaceHostProvider);
   if (split != null) {
     final pool = ref.watch(connectedInstallationsProvider);
     final read = ref.watch(connectedWorkspaceReaderProvider);
     return readConnectedWorkspace(pool, read, split.source, split.workspaceId);
   }
-  final (choice, list) = (ref.watch(activeWorkspaceIdProvider.future), ref.watch(myWorkspacesProvider.future));
-  final workspaces = await list;
-  if (workspaces.isEmpty) return choice.then((_) => null, onError: (Object _) => null);
+  // #3102 -- both asked at once; ignore(): a failed choice is never unhandled.
+  final choice = ref.watch(activeWorkspaceIdProvider.future)..ignore();
+  final workspaces = await ref.watch(myWorkspacesProvider.future);
+  if (workspaces.isEmpty) return null;
   final chosenId = await choice;
-  return workspaces.where((w) => w.id == chosenId).firstOrNull ?? workspaces.first;
+  return workspaces.where((w) => w.id == chosenId).firstOrNull ??
+      workspaces.first;
 }
 
 /// #1449 — starting a workspace: what a creation needs before it is one,

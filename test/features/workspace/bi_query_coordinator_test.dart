@@ -64,7 +64,7 @@ Future<void> _turn() async {
 void main() {
   test('callers of one turn leave in one batch, each figure once', () async {
     final inner = _Reader();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     final a = c.read('w', [_req('0', '2026-01'), _req('1', '2026-02')]);
     final b = c.read('w', [_req('x', '2026-02'), _req('y', '2026-03')]);
     final ra = await a;
@@ -79,7 +79,7 @@ void main() {
 
   test('a figure in flight is awaited, not asked again', () async {
     final inner = _Reader()..hold = Completer<void>();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     final first = c.read('w', [_req('0', '2026-01')]);
     await _turn();
     final second = c.read('w', [_req('k', '2026-01'), _req('j', '2026-04')]);
@@ -93,7 +93,7 @@ void main() {
 
   test('nothing is kept: the same figure later is asked again', () async {
     final inner = _Reader();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     await c.read('w', [_req('0', '2026-01')]);
     await c.read('w', [_req('0', '2026-01')]);
     expect(inner.calls, hasLength(2));
@@ -101,7 +101,7 @@ void main() {
 
   test('another workspace or metric is another figure', () async {
     final inner = _Reader();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     await Future.wait([
       c.read('w1', [_req('0', '2026-01')]),
       c.read('w2', [_req('0', '2026-01')]),
@@ -113,7 +113,7 @@ void main() {
 
   test('a refusal reaches every waiter of the batch', () async {
     final inner = _Reader()..failWith = const KpiForbidden();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     final a = c.read('w', [_req('0', '2026-01')]);
     final b = c.read('w', [_req('0', '2026-02')]);
     await expectLater(a, throwsA(isA<KpiForbidden>()));
@@ -128,7 +128,7 @@ void main() {
 
   test('callers are packed whole under the batch bound', () async {
     final inner = _Reader();
-    final c = BiQueryCoordinator(inner);
+    final c = BiQueryCoordinator(inner, batchMax: () => 60);
     String m(int i) =>
         '${2000 + i ~/ 12}-${(i % 12 + 1).toString().padLeft(2, '0')}';
     final a = c.read('w', [for (var i = 0; i < 40; i++) _req('$i', m(i))]);
@@ -140,4 +140,25 @@ void main() {
       reason: '40 + 40 new would be 80, over the bound of 60',
     );
   });
+
+  test(
+    '#2578 — batches hold at most the workspace\'s bi.batch_max_requests',
+    () async {
+      final inner = _Reader();
+      final c = BiQueryCoordinator(inner, batchMax: () => 10);
+      String month(int m) =>
+          '${2020 + m ~/ 12}-${(m % 12 + 1).toString().padLeft(2, '0')}';
+      // Five callers of five figures each; a caller is never split.
+      final reads = <Future<List<BiBatchEntry>>>[
+        for (var caller = 0; caller < 5; caller++)
+          c.read('w', [
+            for (var i = 0; i < 5; i++)
+              _req('$caller.$i', month(caller * 5 + i)),
+          ]),
+      ];
+      final results = await Future.wait(reads);
+      expect([for (final r in results) r.length], [5, 5, 5, 5, 5]);
+      expect([for (final call in inner.calls) call.length], [10, 10, 5]);
+    },
+  );
 }
