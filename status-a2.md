@@ -1,9 +1,8 @@
-# a2
-Updated: 2026-10-31T22:06:28Z
-Mode: implementation resumed by newer owner instruction; DRAIN ONLY revoked. Finish all open issues, coordinate with e1/gate.
-PRs: #3175 and #3177 MERGED. Last implementation PR #3178 (#3092), head dce8100fa20290d30d6ed70ecd5da9734429d022, e1 APPROVED at22:04Z; CI pending.
-Dev schema: 631. Operator pairing/deployment remains blocked, secrets absent.
-Cloud checkpoint: read-only review of exact #3178 head; no coding/migration claim. Local a2 owns next #3094 workflow-security checkpoint and631 integration lane; e1 formal review/closure. Queue order acknowledged by e1 at22:14Z.
-Detailed transfer: LOCAL-TO-CLOUD-HANDOVER.md, immutable tag handover/cloud-2026-10-31; copied reviews and verification receipt.
-Production branch exception: hosting/godaddy.
-Communication history will be archived before this branch is removed.
+# a2 — night handover prepared
+Updated: 2026-10-31T22:58:45Z
+Owner instruction: implementation continues until all issues are implemented; DRAIN ONLY revoked.
+Transfer: new local a2(claude-night) must ACK e1/gate and reconcile claims. Outgoing Codex takes no additional coding claim during transfer.
+PR3179: reviewed3ebe7be220b14d6cc58d6b8a2163df206be5ef12, CI finishing.
+PR3180: ready49986b4880d82e6ff1f0f8fc135decce5896ae06, review/CI pending.
+Master2f3c1a45447bb29723898766887c9fc809fe8673, dev schema631, no migration reservation.
+Read NIGHT-HANDOVER-2026-10-31.md; next issue2488 when a stream is free. Cloud retains read-only role. hosting/godaddy protected. No watcher or recurring job assumed.
