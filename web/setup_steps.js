@@ -221,7 +221,10 @@ const STEPS=[
   // Same shape: a palier with a bracket and no fee is dropped by the
   // filter below, so the owner sees a row on screen that never reaches
   // the app.
-  S.tiers.filter(t=>t.fee===''&&(String(t.from).trim()!==''||String(t.to).trim()!==''))
+  // #3075 — the untouched first row (0–100 %, no fee) is the page's default,
+  // not an answer: it blocks nothing until the owner changes it.
+  const untouched=t=>S.tiers.length===1&&String(t.from)==='0'&&String(t.to)==='100'&&String(t.over)==='';
+  S.tiers.filter(t=>t.fee===''&&(String(t.from).trim()!==''||String(t.to).trim()!=='')&&!untouched(t))
    .forEach(t=>f.push(F.err(T('billingErrTierNoFee',{from:t.from,to:t.to}),'billing')));
   const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
   if(!tiers.length)f.push(F.warn(T('billingWarnNoTiers'),'billing'));
@@ -272,7 +275,9 @@ const STEPS=[
   // #2331 — a registered seller with no rate the app can resolve: the
   // server refuses every invoice (vat_rate_unresolved).
   if(registered()&&!on('vatManagement'))f.push(F.err(T('legalErrRegisteredNoVatManagement',{feature:quoted(featureTitle('vatManagement'))}),'features'));
-  if(!S.street.trim()||!S.postal.trim()||!S.city.trim())f.push(F.err(T('legalErrAddress'),'legal'));
+  // #3075 — an address nobody started is a to-do, not a blocker; a half-typed
+  // one is an error (the invoice would carry a hole).
+  if(!S.street.trim()||!S.postal.trim()||!S.city.trim())f.push((S.street.trim()||S.postal.trim()||S.city.trim()?F.err:F.warn)(T('legalErrAddress'),'legal'));
   const ei=S.einvoice;if(isEU()&&ei.url.trim()&&!ei.token.trim())f.push(F.warn(T('legalWarnEinvoiceToken'),'legal'));
   if(on('einvoiceCustomerDelivery')&&ei.customerUrl.trim()&&!ei.customerToken.trim())f.push(F.warn(T('legalWarnCustomerToken'),'legal'));
   if(on('dunning')&&((parseInt(S.reminders.levels)||0)<1||(parseInt(S.reminders.firstDays)||0)<1))f.push(F.err(T('legalErrDunning'),'legal'));
@@ -285,7 +290,7 @@ const STEPS=[
   if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],'accessories',(a,ap)=>[cell(`${ap}.name`),cell(`${ap}.supp`,'number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
- check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.err(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
+ check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
   if(on('accessorySupplements')){const n=S.accessories.filter(a=>a.name.trim()).length;if(!n)f.push(F.err(T('accessoriesErrNone'),'services'));else f.push(F.ok(T('accessoriesOk',{n})))}return f}},
 
 {id:'pay',get title(){return T('payTitle')},get why(){return T('payWhy')},applies(){return on('moneyTab')},

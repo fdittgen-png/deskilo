@@ -11,6 +11,10 @@ name: CI · Android boot check
 # job timeouts; integration_test/app_boot_test.dart remains for on-device
 # runs via `flutter test integration_test -d <device>`.)
 
+# #3094 G4 — least privilege: nothing here writes to the repository.
+permissions:
+  contents: read
+
 on:
   push:
     branches: [master]

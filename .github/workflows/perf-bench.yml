@@ -16,6 +16,10 @@ name: Nightly · Journey latency benchmark
 # milliseconds and API p95 are NOT measured here and the record says so;
 # the gate fails if that declaration is ever dropped.
 
+# #3094 G4 — least privilege: nothing here writes to the repository.
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: '20 3 * * *'

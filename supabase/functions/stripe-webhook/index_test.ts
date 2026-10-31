@@ -155,3 +155,23 @@ Deno.test("every v1 signature is tried: valid first or last, both settle", async
     assertEquals([res.status, fake.rpcCalls], [200, ["settle_online_payment"]], header);
   }
 });
+
+// #3093 E5 — every answer given before the signature is checked carries one
+// body: an unsigned caller cannot tell the stage that refused.
+Deno.test("the answers before verification all carry one body", async () => {
+  const lookup = await call(
+    fakeAdmin({ intent: { data: null, error: { message: "timeout" } } }),
+    paid(),
+  );
+  const early = await call(fakeAdmin({ intent: { data: null, error: null } }), paid());
+  const credentials = await call(
+    fakeAdmin({ credentials: { data: null, error: { message: "down" } } }),
+    paid(),
+  );
+  const unconfigured = await call(
+    fakeAdmin({ credentials: { data: null, error: null } }),
+    paid(),
+  );
+  const bodies = new Set([lookup, early, credentials, unconfigured].map((r) => r.text));
+  assertEquals([...bodies], ["not_ready"]);
+});

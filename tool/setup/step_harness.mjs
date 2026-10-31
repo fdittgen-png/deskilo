@@ -552,6 +552,18 @@ const fakeContext = () => {
   if (off.byId.expertwrap.style.display !== 'none') fail('expert: the expert switch shows with setupGuide off');
   console.log('expert: the switches are the expert view; links open it');
 }
+// #3075 — one stepper: the rail draws the steps that apply, in the order the
+// counter counts them, on every step.
+{
+  const page = load('en', { name: 'Stepper Space' });
+  const ids = globalThis.__applicable();
+  for (const id of ids) {
+    globalThis.__go(id);
+    const chips = page.byId.rail.children.filter((c) => typeof c === 'object');
+    if (chips.length !== ids.length) fail(`stepper: ${chips.length} chips for ${ids.length} steps at ${id}`);
+  }
+  console.log('stepper: the rail and the counter list the same steps');
+}
 // #2924 — one pure normalize() repairs the answers on every save and every
 // load; drawing a step never writes. So the WebMCP tools, which compute
 // their blocking findings without drawing anything, see what the screen
@@ -639,6 +651,14 @@ const fakeContext = () => {
   }
   if (shapes.length < 5) fail(`answers: ${shapes.length} legacy fixtures`);
   console.log(`answers: round-trip; ${shapes.length} legacy files load as before`);
+}
+// #3075 — a fresh page with only the name typed produces no blocker: a
+// default is not an answer, and blocks nothing until the owner changes it.
+{
+  load('en', { name: 'Fresh Space' });
+  const blockers = globalThis.window.__setup.findings().filter((x) => x.lvl === 'err').map((x) => x.t);
+  if (blockers.length) fail('defaults: a fresh page with a name has blockers: ' + blockers.join(' | '));
+  console.log('defaults: a fresh page with only a name has 0 blockers');
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));

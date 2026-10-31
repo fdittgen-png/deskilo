@@ -165,7 +165,7 @@ select cmp_ok(
 -- #3099 (PERF-2) — the 100-row events page as the owner, through RLS:
 -- events_select asks event_types_in_view() once per statement. On the dev
 -- project this fixture measures 30 ms with the 0400 helper and 8 ms with
--- 0612's; 100 is the ceiling, loose on purpose.
+-- 0613's; 100 is the ceiling, loose on purpose.
 do $page$
 declare t0 timestamptz;
 begin

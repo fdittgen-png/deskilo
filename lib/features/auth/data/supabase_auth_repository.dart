@@ -517,7 +517,6 @@ class SupabaseAuthRepository implements AuthRepository {
     }
     if (data['ok'] != true) return BadgeStepResult.failed(_failureOf(data));
     return BadgeStepResult.ok(BadgeIdentity(
-      userId: data['user_id']?.toString() ?? '',
       displayName: data['display_name']?.toString() ?? '',
       hasAvatar: data['has_avatar'] == true,
     ));

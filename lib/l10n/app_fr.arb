@@ -5991,7 +5991,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
-  "featureFinanceFacesTitle": "Finances en quatre volets",
+  "featureFinanceFacesTitle": "Relevé, paiements, factures, documents",
   "featureForeignCurrencyPurchasesDesc": "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée.",
   "featureForeignCurrencyPurchasesTitle": "Achats dans une autre devise",
   "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
@@ -6176,7 +6176,7 @@
   },
   "featureMessagesHubDesc": "Une seule barre de boîte de réception (Tous / Non lus / Archivés et recherche), épingler, couper le son, archiver et marquer non lu sur un fil, la conversation en page entière avec séparateurs de date, un menu joindre et un brouillon conservé dans le composeur, une personne ouverte d'un seul geste. Désactivé : la boîte à deux barres et le fil en feuille.",
   "featureMessagesHubTitle": "Messages repensés",
-  "featureMoneyTab": "Onglet Finances",
+  "featureMoneyTab": "Relevé et solde",
   "featureMoneyTabDesc": "Factures mensuelles, paiements et dépenses.",
   "featureMore": "Plus",
   "featureMultiSite": "Sites",
@@ -15396,6 +15396,7 @@
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintSecurityBadgePinMinLength": "Le moins de chiffres qu'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu'à leur changement.",
   "settingHintSecurityInvitationExpiryDays": "Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15566,6 +15567,7 @@
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelSecurityBadgePinMinLength": "PIN de badge : longueur minimale",
   "settingLabelSecurityInvitationExpiryDays": "Validité d'une invitation",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

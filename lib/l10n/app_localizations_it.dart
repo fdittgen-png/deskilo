@@ -8438,7 +8438,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanze in quattro viste';
+  String get featureFinanceFacesTitle =>
+      'Estratto, pagamenti, fatture, documenti';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8727,7 +8728,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messaggi, rinnovati';
 
   @override
-  String get featureMoneyTab => 'Scheda Finanze';
+  String get featureMoneyTab => 'Estratto e saldo';
 
   @override
   String get featureMoneyTabDesc => 'Fatture mensili, pagamenti e spese.';
@@ -22570,6 +22571,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Minuti in cui si contano i tentativi errati e per cui un badge bloccato resta bloccato. Può solo essere allungata.';
 
   @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.';
 
@@ -22794,6 +22799,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgeLockoutMinutes =>
       'Durata del blocco del badge';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength =>
+      'PIN del badge: lunghezza minima';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

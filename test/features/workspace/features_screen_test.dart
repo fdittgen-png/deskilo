@@ -82,7 +82,7 @@ void main() {
     final workspace = await pumpFeatures(tester);
     final before = Map.of(workspace.workspaces.single.featureFlags);
 
-    await tester.tap(find.text('Money tab'));
+    await tester.tap(find.text('Statement and balance'));
     await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
 
@@ -94,14 +94,14 @@ void main() {
     for (final entry in before.entries) {
       if (entry.key != 'moneyTab') expect(flags[entry.key], entry.value);
     }
-    expect(switchTitled(tester, 'Money tab').value, isFalse);
+    expect(switchTitled(tester, 'Statement and balance').value, isFalse);
 
     // Toggling back re-enables it.
-    await tester.tap(find.text('Money tab'));
+    await tester.tap(find.text('Statement and balance'));
     await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
     expect(workspace.flagWrites.last, {'moneyTab': true});
-    expect(switchTitled(tester, 'Money tab').value, isTrue);
+    expect(switchTitled(tester, 'Statement and balance').value, isTrue);
   });
 
   testWidgets('stored overrides seed the switches', (tester) async {

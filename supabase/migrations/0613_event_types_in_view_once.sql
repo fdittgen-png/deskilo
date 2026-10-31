@@ -3,7 +3,7 @@
 -- (event_types_in_view restated whole; same signature, same rows, same ACL;
 -- one row of the settings registry)
 --
--- 0612 (#3099 slice D, PERF-2 of the performance audit) -- the RLS helper
+-- 0613 (#3099 slice D, PERF-2 of the performance audit) -- the RLS helper
 -- of events and event_decisions cost 104 ms of a 135 ms 100-row events
 -- page (audit EXPLAIN). The final join evaluated
 -- event_type_view_permissions(type) once per (held permission x event
@@ -53,4 +53,4 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(612);
+select public.set_deskilo_schema_version(613);

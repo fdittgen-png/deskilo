@@ -29,40 +29,39 @@ Future<Map<String, String>> _column(
 };
 
 /// seat/desk/office id → display name for [workspaceId]. Desks are named
-/// too (0059): whole-desk reservations name their table.
+/// too (0059): whole-desk reservations name their table. #3100 — the three
+/// reads run together, not one after another.
 Future<Map<String, String>> fetchPlaceNames(
   SupabaseClient client,
   String workspaceId,
-) async => {
-  for (final table in const ['seats', 'desks', 'offices'])
-    ...await _column(client, workspaceId, table, 'name'),
-};
+) async {
+  final parts = await Future.wait([
+    for (final table in const ['seats', 'desks', 'offices'])
+      _column(client, workspaceId, table, 'name'),
+  ]);
+  return {for (final part in parts) ...part};
+}
 
 /// seat/desk/office id → the id of the level it stands on, for
-/// [workspaceId], read along offices → desks → seats.
+/// [workspaceId], read along offices → desks → seats (#3100: the three
+/// reads together, composed afterwards).
 Future<Map<String, String>> fetchPlaceLevels(
   SupabaseClient client,
   String workspaceId,
 ) async {
-  final officeLevel = await _column(client, workspaceId, 'offices', 'level_id');
+  final [officeLevel, deskOffice, seatDesk] = await Future.wait([
+    _column(client, workspaceId, 'offices', 'level_id'),
+    _column(client, workspaceId, 'desks', 'office_id'),
+    _column(client, workspaceId, 'seats', 'desk_id'),
+  ]);
   final deskLevel = {
-    for (final MapEntry(:key, :value) in (await _column(
-      client,
-      workspaceId,
-      'desks',
-      'office_id',
-    )).entries)
+    for (final MapEntry(:key, :value) in deskOffice.entries)
       key: ?officeLevel[value],
   };
   return {
     ...officeLevel,
     ...deskLevel,
-    for (final MapEntry(:key, :value) in (await _column(
-      client,
-      workspaceId,
-      'seats',
-      'desk_id',
-    )).entries)
+    for (final MapEntry(:key, :value) in seatDesk.entries)
       key: ?deskLevel[value],
   };
 }

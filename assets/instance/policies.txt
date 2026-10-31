@@ -107,7 +107,6 @@ public.enrolled_installations.mcp_delegated_deny
 public.enrolled_installations.personal_native_session
 public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
-public.event_decisions.personal_native_session
 public.events.events_select
 public.events.mcp_delegated_deny
 public.exchange_rate_sources.exchange_rate_sources_read

@@ -8384,7 +8384,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finances in four faces';
+  String get featureFinanceFacesTitle =>
+      'Statement, payments, invoices, documents';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8674,7 +8675,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messages, reworked';
 
   @override
-  String get featureMoneyTab => 'Money tab';
+  String get featureMoneyTab => 'Statement and balance';
 
   @override
   String get featureMoneyTabDesc => 'Monthly bills, payments and expenses.';
@@ -22387,6 +22388,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes over which wrong PIN attempts are counted and for which a locked badge stays locked. Can only be lengthened.';
 
   @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.';
 
@@ -22591,6 +22596,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgeLockoutMinutes => 'Badge lockout time';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength => 'Shortest badge PIN';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays => 'Invitation validity';
