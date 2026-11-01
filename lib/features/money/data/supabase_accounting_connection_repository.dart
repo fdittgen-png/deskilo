@@ -93,8 +93,10 @@ class SupabaseAccountingConnectionRepository
         'accounting-connect',
         body: {'action': 'verify', 'connection_id': connectionId},
       );
-    } on FunctionException catch (e) {
-      if (e.status != _runRefused && e.status != _notChecked) rethrow;
+    } on FunctionException catch (e, st) {
+      if (e.status != _runRefused && e.status != _notChecked) {
+        Error.throwWithStackTrace(e, st);
+      }
     }
   }
 
