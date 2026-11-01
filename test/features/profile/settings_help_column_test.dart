@@ -16,7 +16,7 @@ import '../../helpers/settings_sections.dart';
 
 void main() {
   for (final width in [360.0, 1192.0]) {
-    for (final locale in ['fr', 'de', 'it']) {
+    for (final locale in ['fr', 'de', 'it', 'es']) {
       testWidgets('$locale at ${width.toInt()} dp: Settings has one help column',
           (tester) async {
         tester.view.physicalSize = Size(width, 4800);

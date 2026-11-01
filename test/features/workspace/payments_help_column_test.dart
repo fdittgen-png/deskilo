@@ -14,7 +14,7 @@ import '../../helpers/screens/workspace_settings_screen.dart';
 
 void main() {
   for (final width in [360.0, 1192.0]) {
-    for (final locale in ['fr', 'de', 'it']) {
+    for (final locale in ['fr', 'de', 'it', 'es']) {
       testWidgets('$locale at ${width.toInt()} dp: Payments has one help column',
           (tester) async {
         await pumpWorkspaceSettings(
