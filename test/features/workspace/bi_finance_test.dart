@@ -4,7 +4,7 @@
 // collected, read once from the server (the money report's predicates),
 // exact to the minor unit across the JSON boundary, never a default
 // currency, never a missing amount read as 0, never labelled a profit;
-// compared through the shared toolbar, opened at the money report, and
+// compared through the shared toolbar, opened at its rows, and
 // absent for a reader without the finance right.
 import 'dart:async';
 
@@ -12,7 +12,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/money/presentation/screens/workspace_status_screen.dart';
+import 'package:deskilo/features/money/presentation/screens/invoice_register_screen.dart';
 import 'package:deskilo/features/workspace/data/supabase_kpi_repository.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_result.dart';
@@ -330,13 +330,13 @@ void main() {
     );
   });
 
-  testWidgets('the source opens the money report; Back returns to the '
+  testWidgets('the source opens the invoice register; Back returns to the '
       'same analysis', (tester) async {
     await _pump(tester);
     await _open(tester, '/bi?cmp=year&cards=finance.invoiced');
     await tester.tap(find.byKey(const ValueKey('bi-drill')));
     await tester.pumpAndSettle();
-    expect(find.byType(WorkspaceStatusScreen), findsOneWidget);
+    expect(find.byType(InvoiceRegisterScreen), findsOneWidget);
     GoRouter.of(tester.element(find.byType(Scaffold).first)).pop();
     await tester.pumpAndSettle();
     expect(_query(tester), {'cmp': 'year', 'cards': 'finance.invoiced', 'view': 'table'});

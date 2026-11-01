@@ -120,53 +120,27 @@ class _InvoiceRegisterScreenState
       body: Column(children: [
         if (_period case final period?)
           _periodChip(l10n, dateFormat, period),
-        Expanded(child: _content(
-          context,
-          l10n,
-          invoicesAsync: invoicesAsync,
-          canIssue: canIssue,
-          matches: matches,
-          reminders: reminders,
-          currency: currency,
-          dateFormat: dateFormat,
-          showMemberNames: showMemberNames,
-        )),
+        Expanded(
+          child: switch (invoicesAsync) {
+            AsyncData(value: final invoices) => _table(
+                context,
+                l10n,
+                invoices: _visible(invoices, canIssue),
+                years: {for (final i in invoices) i.issuedAt.year}.toList()
+                  ..sort((a, b) => b.compareTo(a)),
+                matches: matches,
+                reminders: reminders,
+                currency: currency,
+                dateFormat: dateFormat,
+                showMemberNames: showMemberNames,
+                canIssue: canIssue,
+              ),
+            AsyncError() => Center(child: Text(l10n.workspaceGenericError)),
+            _ => const LoadingView(),
+          },
+        ),
       ]),
     );
-  }
-
-  Widget _content(
-    BuildContext context,
-    AppLocalizations l10n, {
-    required AsyncValue<List<Invoice>> invoicesAsync,
-    required bool canIssue,
-    required Map<String, InvoiceMatch> matches,
-    required Map<String, ({int count, DateTime last})> reminders,
-    required MoneyFormat currency,
-    required DateFormat dateFormat,
-    required bool showMemberNames,
-  }) {
-    return switch (invoicesAsync) {
-        AsyncData(value: final invoices) => _table(
-            context,
-            l10n,
-            invoices: _visible(invoices, canIssue),
-            years: {for (final i in invoices) i.issuedAt.year}.toList()
-              ..sort((a, b) => b.compareTo(a)),
-            matches: matches,
-            reminders: reminders,
-            currency: currency,
-            dateFormat: dateFormat,
-            showMemberNames: showMemberNames,
-            canIssue: canIssue,
-          ),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
-        _ => const LoadingView(),
-    };
   }
 
   String _periodText(
