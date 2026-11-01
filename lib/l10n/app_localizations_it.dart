@@ -23488,6 +23488,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupDraftSaving => 'Salvataggio della bozza…';
 
   @override
+  String setupGoalBecause(String milestone) {
+    return 'Perché il vostro obiettivo è: $milestone.';
+  }
+
+  @override
+  String get setupGoalChange => 'Cambia';
+
+  @override
+  String setupGoalLine(String milestone) {
+    return 'Il vostro obiettivo: $milestone';
+  }
+
+  @override
   String get setupGrowBooksAccrual => 'I ricavi contano alla fatturazione.';
 
   @override
@@ -24582,6 +24595,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get setupStepDone => 'Fatto';
+
+  @override
   String get setupStepElsewhere =>
       'Questo passaggio si svolge in una schermata dedicata.';
 
@@ -24629,6 +24645,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupStepLoadFailed =>
       'Non è stato possibile caricare questo passaggio. Riprovi più tardi.';
+
+  @override
+  String get setupStepNext => 'Passo successivo';
 
   @override
   String get setupStepOpenScreen => 'Apra';

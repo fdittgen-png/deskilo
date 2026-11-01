@@ -16014,6 +16014,28 @@
   "setupDraftRestored": "Borrador restaurado: estas respuestas aún no se han aplicado.",
   "setupDraftSaved": "Borrador guardado",
   "setupDraftSaving": "Guardando el borrador…",
+  "setupGoalBecause": "Porque su objetivo es: {milestone}.",
+  "@setupGoalBecause": {
+    "description": "#3076 — the check page says which goal decides what stops opening.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGoalChange": "Cambiar",
+  "@setupGoalChange": {
+    "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalLine": "Su objetivo: {milestone}",
+  "@setupGoalLine": {
+    "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "setupGrowBooksAccrual": "Los ingresos cuentan al facturarse.",
   "setupGrowBooksCash": "Los ingresos cuentan al cobrarse.",
   "setupGrowBooksCurrency": "Los importes se llevan en {currency}.",
@@ -16324,9 +16346,17 @@
   "setupServicesPreviewNote": "Los miembros eligen en esta lista cuando añaden un consumo a su factura.",
   "setupServicesSaveFailed": "No se ha podido añadir el servicio. Inténtelo de nuevo.",
   "setupStateName": "{key, select, ready{Hecho} needsConfiguration{Por hacer} blocked{Espera otro paso} needsOperator{Actúa su operador} notApplicable{No se usa} deferred{Aparcado} unknown{Desconocido} other{{key}}}",
+  "setupStepDone": "Hecho",
+  "@setupStepDone": {
+    "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."
+  },
   "setupStepElsewhere": "Este paso se hace en su propia pantalla.",
   "setupStepHint": "{key, select, basics{Cómo se llama el espacio y dónde está: las fechas, la moneda y los festivos dependen de ello.} hours{Cuándo pueden reservar los miembros: días, horas y cierres.} places{Dibuje las salas, mesas y puestos que reservan los miembros.} member_rights{Permita a los miembros reservar, ver el calendario y su propia cuenta.} invite{Comparta el código del espacio o envíe invitaciones.} pricing{Lo que cuesta un puesto, una membresía o un día.} services{Café, impresión, taquillas: lo que los miembros pueden añadir.} payment_methods{Sus datos bancarios e instrucciones de pago.} online_payments{Pago con tarjeta mediante un proveedor que conecta su operador.} approvals{Quién valida las solicitudes y cuántas personas deben estar de acuerdo.} new_members{Con qué empieza un nuevo miembro.} notifications{Quién se entera de qué, y cómo: en la aplicación, en el teléfono, como recordatorio.} limits{Con cuánta antelación, por cuánto tiempo y cuántos puestos a la vez reservan los miembros.} kiosk{Una tableta en la entrada y tarjetas para los miembros.} purchases{Lo que compra el espacio y a quién.} lease{El alquiler y los gastos que paga el espacio.} assets{Lo que posee el espacio y cómo pierde valor.} look{Los colores del espacio y sus propias palabras.} public_page{Lo que pueden ver las personas ajenas al espacio.} legal_identity{Los datos que debe llevar cada factura.} vat{Los tipos que aplica y sus declaraciones.} numbering{Cómo se forman los números de factura.} documents{Su membrete en facturas y cartas.} einvoicing{Enviar facturas por la plataforma de facturación electrónica.} accounting{El plan de cuentas y las exportaciones para su gestor.} reminders{Cuándo y cómo se reclaman las facturas impagadas.} first_booking{Reserve un puesto como lo haría un miembro.} recovery{Exporte una vez los datos del espacio.} assistant{Deje que un asistente de IA ayude, siempre con su confirmación.} other{{key}}}",
   "setupStepLoadFailed": "No se ha podido cargar este paso. Inténtelo más tarde.",
+  "setupStepNext": "Siguiente paso",
+  "@setupStepNext": {
+    "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
+  },
   "setupStepOpenScreen": "Abrirlo",
   "setupStepPreviewTitle": "Lo que verán sus miembros",
   "setupStepTitle": "{key, select, basics{Nombre, país y zona horaria} hours{Horario de apertura} places{Puestos en el plano} member_rights{Qué pueden hacer los miembros} invite{Invitar a miembros} pricing{Precios y planes} services{Servicios} payment_methods{Cómo pagan los miembros} online_payments{Pagos en línea} approvals{Aprobaciones} new_members{Nuevos miembros} notifications{Notificaciones} limits{Límites de reserva} kiosk{Quiosco y tarjetas} purchases{Proveedores y compras} lease{Su alquiler} assets{Equipamiento} look{Colores y vocabulario} public_page{Página pública} legal_identity{Identidad legal} vat{IVA} numbering{Numeración de facturas} documents{Aspecto de las facturas} einvoicing{Facturación electrónica} accounting{Contabilidad} reminders{Recordatorios de pago} first_booking{Una primera reserva} recovery{Una copia de sus datos} assistant{Asistente} other{{key}}}",

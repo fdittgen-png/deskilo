@@ -168,6 +168,25 @@ class SetupStatus {
     return null;
   }
 
+  /// #3076 — the goal the space chose: the last milestone the status marks
+  /// as applying, derived, never stored; null when none applies.
+  SetupMilestoneStatus? get goal {
+    for (final m in milestones.reversed) {
+      if (m.applies) return m;
+    }
+    return null;
+  }
+
+  /// #3076 — the next step to open after [step]: the first one behind it,
+  /// in guide order, that still needs configuring; null when none is left.
+  SetupStepStatus? stepAfter(String step) {
+    final at = steps.indexWhere((s) => s.step == step);
+    for (final s in steps.skip(at + 1)) {
+      if (s.state == SetupStepState.needsConfiguration) return s;
+    }
+    return null;
+  }
+
   int _rank(String milestone) =>
       milestones.indexWhere((m) => m.milestone == milestone);
 

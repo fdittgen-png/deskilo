@@ -39024,6 +39024,24 @@ abstract class AppLocalizations {
   /// **'Saving draft…'**
   String get setupDraftSaving;
 
+  /// #3076 — the check page says which goal decides what stops opening.
+  ///
+  /// In en, this message translates to:
+  /// **'Because your goal is {milestone}.'**
+  String setupGoalBecause(String milestone);
+
+  /// #3076 — opens the screen where the space's levels, and so its goal, are chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get setupGoalChange;
+
+  /// #3076 — the hub states the goal the space chose, derived from the last milestone that applies.
+  ///
+  /// In en, this message translates to:
+  /// **'Your goal: {milestone}'**
+  String setupGoalLine(String milestone);
+
   /// #2875 setup grow steps: setupGrowBooksAccrual
   ///
   /// In en, this message translates to:
@@ -40463,6 +40481,12 @@ abstract class AppLocalizations {
   /// **'{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}'**
   String setupStateName(String key);
 
+  /// #3076 — on the last step page of the guide: goes back to the guide, nothing is left.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get setupStepDone;
+
   /// #2870 setup steps: setupStepElsewhere
   ///
   /// In en, this message translates to:
@@ -40480,6 +40504,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This step could not be loaded. Try again later.'**
   String get setupStepLoadFailed;
+
+  /// #3076 — on a step page of the guide: goes on to the next step still to do.
+  ///
+  /// In en, this message translates to:
+  /// **'Next step'**
+  String get setupStepNext;
 
   /// #2870 setup steps: setupStepOpenScreen
   ///
