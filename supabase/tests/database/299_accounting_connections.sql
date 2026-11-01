@@ -183,15 +183,15 @@ select is((select count(*)::int from information_schema.columns
           0, 'no column of the tables holds a token or a secret');
 select is((select string_agg(f || ':' || has_function_privilege(r, 'public.' || f, 'execute')::text, ',' order by f, r)
              from unnest(array['accounting_credentials_resolved(uuid)', 'set_accounting_credentials(uuid,jsonb,jsonb)',
-                               'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text)']) f,
+                               'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text,int)']) f,
                   unnest(array['anon', 'authenticated']) r),
           'accounting_credentials_resolved(uuid):false,accounting_credentials_resolved(uuid):false,'
-          'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text):false,'
-          'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text):false,'
+          'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text,int):false,'
+          'record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text,int):false,'
           'set_accounting_credentials(uuid,jsonb,jsonb):false,set_accounting_credentials(uuid,jsonb,jsonb):false',
           'the resolver and the service writers are no client''s to call');
 select ok(has_function_privilege('service_role', 'public.accounting_credentials_resolved(uuid)', 'execute')
-          and has_function_privilege('service_role', 'public.record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text)', 'execute'),
+          and has_function_privilege('service_role', 'public.record_accounting_delivery(uuid,text,uuid,date,text,date,date,text,text,jsonb,text,int)', 'execute'),
           'the service role resolves and records');
 select ok(not has_table_privilege('authenticated', 'vault.decrypted_secrets', 'select'),
           'no client reads the decrypted secrets');

@@ -340,6 +340,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut.';
 
   @override
+  String acctDeliverInFlight(int count) {
+    return 'Wird noch von einem anderen Lauf übermittelt: $count. Versuchen Sie es in einigen Minuten erneut.';
+  }
+
+  @override
   String acctDeliverMissing(String keys) {
     return 'Ordnen Sie zuerst zu: $keys';
   }

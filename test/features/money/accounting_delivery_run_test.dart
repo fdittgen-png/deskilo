@@ -78,6 +78,20 @@ void main() {
     expect(run.details, ['not posted: 403 posting is not permitted']);
   });
 
+  test('a delivery another run is still sending is in flight and needs a '
+      'second look later, not a failure', () {
+    final run = DeliveryRunDone.fromJson({
+      'results': [
+        {'document_kind': 'invoice', 'status': 'in_flight'},
+        {'document_kind': 'receipt', 'status': 'acknowledged'},
+      ],
+    });
+    expect(DeliveryRunStatus.of('in_flight'), DeliveryRunStatus.inFlight);
+    expect(run.count(DeliveryRunStatus.inFlight), 1);
+    expect(run.count(DeliveryRunStatus.failed), 0);
+    expect(run.needingAttention, 1);
+  });
+
   test('an answer without its results is never an empty run', () {
     expect(
       () => DeliveryRunDone.fromJson({'counts': <String, Object?>{}}),

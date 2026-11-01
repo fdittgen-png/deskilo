@@ -10,5 +10,6 @@
   "acctDeliverNotConnected": "Esta conexión está desconectada: vuelva a conectarla y luego envíe.",
   "acctDeliverFailed": "El envío no se ha completado. No se ha enviado nada más; inténtelo más tarde.",
   "acctDeliverNothingSent": "No se ha enviado nada.",
-  "acctDeliverStoppedAt": "Detenido en {month}. Enviados antes: {count}."
+  "acctDeliverStoppedAt": "Detenido en {month}. Enviados antes: {count}.",
+  "acctDeliverInFlight": "Otra ejecución todavía los está enviando: {count}. Vuelva a intentarlo en unos minutos."
 }

@@ -132,6 +132,9 @@ function world(opts: {
   refresh?: () => Response;
   /** The invoices table as the caller reads it; null refuses the read. */
   invoices?: { id: string; replaces_number: string }[] | null;
+  /** Another run holds every delivery: the log answers in_flight to a
+   * prepare that names a window (what the function's budget gives it). */
+  otherRunSending?: boolean;
 } = {}) {
   const log = deliveryLog();
   const pl = pennylane();
@@ -192,7 +195,15 @@ function world(opts: {
           error: null,
         });
       }
-      if (fn === "record_accounting_delivery") return Promise.resolve(log.record(args));
+      if (fn === "record_accounting_delivery") {
+        if (opts.otherRunSending && args.p_status === "generated" && Number(args.p_in_flight_seconds) > 0) {
+          return Promise.resolve({
+            data: { status: "sent", idempotency_key: "0".repeat(64), remote_id: "", outcome: "in_flight" },
+            error: null,
+          });
+        }
+        return Promise.resolve(log.record(args));
+      }
       if (fn === "set_accounting_credentials") {
         stored.push(args);
         return Promise.resolve({ data: { id: CONN }, error: null });
@@ -289,6 +300,17 @@ Deno.test("an unmapped role blocks its document with the key named; the others g
   assertEquals(blocked.document_kind, "receipt");
   assertEquals(blocked.missing, ["account bank"]);
   assertEquals(w.pl.st.posts, 1);
+});
+
+Deno.test("a delivery another run is still sending is reported in flight: nothing is read back or created", async () => {
+  const w = world({ postings: [sale(INV, "F-1", "2026-03-02")], otherRunSending: true });
+  const body = await (await run(w)).json();
+  assertEquals(body.counts, { in_flight: 1 });
+  assertEquals(body.results[0].status, "in_flight");
+  assertEquals([w.pl.st.gets, w.pl.st.posts], [0, 0]);
+  // The window is the function's wall-clock budget, in seconds.
+  const prepare = w.calls.find((c) => c.fn === "record_accounting_delivery")!;
+  assertEquals(prepare.args.p_in_flight_seconds, 400);
 });
 
 Deno.test("one document is delivered again on its own", async () => {

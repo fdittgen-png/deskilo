@@ -211,6 +211,7 @@
   "acctDeliverBooksBlocked": "Die Buchungen dieses Zeitraums können noch nicht erstellt werden: {subjects}.",
   "acctDeliverDone": "Übertragen: {delivered} · bereits vorhanden: {unchanged} · zu prüfen: {attention}",
   "acctDeliverFailed": "Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut.",
+  "acctDeliverInFlight": "Wird noch von einem anderen Lauf übermittelt: {count}. Versuchen Sie es in einigen Minuten erneut.",
   "acctDeliverMissing": "Ordnen Sie zuerst zu: {keys}",
   "acctDeliverNotConnected": "Diese Verbindung ist abgemeldet: Verbinden Sie sie erneut und übertragen Sie dann.",
   "acctDeliverNothing": "In diesem Zeitraum gibt es nichts zu übertragen.",

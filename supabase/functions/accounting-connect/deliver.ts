@@ -265,7 +265,7 @@ export async function deliverPeriod(
     const refused = await adapter.prepare();
     if (refused) return json({ error: "target_refused", detail: refused }, 409);
   }
-  const deliveries = databaseStore(deps.service());
+  const deliveries = databaseStore(deps.service(), { inFlightSeconds: FUNCTION_BUDGET_MS / 1000 });
   const results: Outcome[] = [];
   for (const { posting, id } of chosen) {
     const base = {
@@ -292,7 +292,11 @@ export async function deliverPeriod(
       }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps, credited[posting.documentId]));
       // A draft the target refused to post carries the target's words in
       // the result; every other outcome in its delivery row.
-      const detail = result.status === "blocked" ? "" : result.status === "sent" ? result.detail : result.row.error ?? "";
+      const detail = result.status === "blocked" || result.status === "in_flight"
+        ? ""
+        : result.status === "sent"
+        ? result.detail
+        : result.row.error ?? "";
       results.push(
         result.status === "blocked"
           ? { ...base, status: "blocked", missing: result.missing }

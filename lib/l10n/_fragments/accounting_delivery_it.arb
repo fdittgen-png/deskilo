@@ -10,5 +10,6 @@
   "acctDeliverNotConnected": "Questo collegamento è disconnesso: lo colleghi di nuovo, poi invii.",
   "acctDeliverFailed": "L'invio non è andato a buon fine. Non è stato inviato altro; riprovi più tardi.",
   "acctDeliverNothingSent": "Non è stato inviato nulla.",
-  "acctDeliverStoppedAt": "Interrotto a {month}. Inviati prima: {count}."
+  "acctDeliverStoppedAt": "Interrotto a {month}. Inviati prima: {count}.",
+  "acctDeliverInFlight": "Un'altra esecuzione li sta ancora inviando: {count}. Riprova tra qualche minuto."
 }

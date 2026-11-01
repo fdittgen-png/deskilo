@@ -8,7 +8,10 @@
 //   1. The delivery is prepared: `record_accounting_delivery` stores the
 //      stable identity and its idempotency key BEFORE anything is sent. An
 //      acknowledged delivery with the same digest ends here: a re-run is a
-//      no-op and creates no remote id.
+//      no-op and creates no remote id. A delivery another run prepared or
+//      sent within the function's wall-clock budget is still in that run's
+//      hands: the log answers `in_flight` and this run stops, so two runs
+//      that are truly concurrent never both read back nothing and create.
 //   2. Every mapping key the payload needs is looked up. One missing
 //      blocks the delivery with the key named; nothing is sent and no
 //      default code is ever put in its place.
@@ -93,7 +96,7 @@ export interface DeliveryRow {
   status: DeliveryStatus;
   idempotency_key: string;
   remote_id: string;
-  outcome: "created" | "existing" | "unchanged" | "updated" | "conflict";
+  outcome: "created" | "existing" | "unchanged" | "updated" | "conflict" | "in_flight";
   /** The target's words or the kit's reason of a conflict or a failure. */
   error?: string;
   /** The remote document's version the delivery holds (an ETag), '' when
@@ -141,6 +144,8 @@ export interface RemoteAdapter {
 
 export type DeliveryResult =
   | { status: "blocked"; missing: string[] }
+  /** Another run holds this delivery: nothing was read back or sent. */
+  | { status: "in_flight"; row: DeliveryRow }
   | { status: "unchanged" | "acknowledged" | "conflict" | "failed"; row: DeliveryRow }
   /** A draft the target holds and refused to post: the target's words. */
   | { status: "sent"; row: DeliveryRow; detail: string };
@@ -169,6 +174,9 @@ export async function deliver(
   const prepared = await store.record(job, "generated");
   if (prepared.outcome === "unchanged") {
     return { status: "unchanged", row: prepared };
+  }
+  if (prepared.outcome === "in_flight") {
+    return { status: "in_flight", row: prepared };
   }
   const missing = missingMappings(job.needs, maps);
   // A send whose outcome is unknown stays a conflict while it is blocked:
@@ -306,8 +314,11 @@ export type ServiceDb = {
 };
 
 /** The store over `record_accounting_delivery`. A refused record throws:
- * a delivery that cannot be recorded is never sent. */
-export function databaseStore(db: ServiceDb): DeliveryStore {
+ * a delivery that cannot be recorded is never sent. [inFlightSeconds] is
+ * the longest a run holding a delivery can still be working (the
+ * function's wall-clock budget); the log answers `in_flight` to a run that
+ * prepares a delivery touched within it. Without it the log never does. */
+export function databaseStore(db: ServiceDb, options: { inFlightSeconds?: number } = {}): DeliveryStore {
   return {
     async record(job, status, remote, error) {
       const { data, error: failed } = await db.rpc("record_accounting_delivery", {
@@ -324,6 +335,7 @@ export function databaseStore(db: ServiceDb): DeliveryStore {
           ? { id: remote.id, number: remote.number ?? "", version: remote.version ?? "", state: remote.state ?? "" }
           : {},
         p_error: error ?? "",
+        p_in_flight_seconds: options.inFlightSeconds ?? 0,
       });
       if (failed) {
         const e = failed as { code?: unknown; message?: unknown };

@@ -26,7 +26,11 @@ enum DeliveryRunStatus {
 
   /// #2374 — the target holds it as a draft and refused to post it (the
   /// target's words say why); the next run posts the same draft.
-  sent('sent');
+  sent('sent'),
+
+  /// Another run of the same delivery is still sending it: nothing was
+  /// read back or sent here; it is asked again once that run is over.
+  inFlight('in_flight');
 
   const DeliveryRunStatus(this.wire);
   final String wire;
@@ -36,7 +40,11 @@ enum DeliveryRunStatus {
 
   /// Whether a person has to look at it.
   bool get needsAttention =>
-      this == conflict || this == failed || this == blocked || this == sent;
+      this == conflict ||
+      this == failed ||
+      this == blocked ||
+      this == sent ||
+      this == inFlight;
 }
 
 /// What one document event of a run became.

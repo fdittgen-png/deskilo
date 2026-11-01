@@ -211,6 +211,7 @@
   "acctDeliverBooksBlocked": "Los asientos de este periodo aún no se pueden contabilizar: {subjects}.",
   "acctDeliverDone": "Enviados: {delivered} · ya recibidos: {unchanged} · por revisar: {attention}",
   "acctDeliverFailed": "El envío no se ha completado. No se ha enviado nada más; inténtelo más tarde.",
+  "acctDeliverInFlight": "Otra ejecución todavía los está enviando: {count}. Vuelva a intentarlo en unos minutos.",
   "acctDeliverMissing": "Asigne primero estas correspondencias: {keys}",
   "acctDeliverNotConnected": "Esta conexión está desconectada: vuelva a conectarla y luego envíe.",
   "acctDeliverNothing": "No hay nada que enviar en este periodo.",

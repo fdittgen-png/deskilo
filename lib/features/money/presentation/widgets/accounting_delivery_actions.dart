@@ -53,6 +53,8 @@ String _reasonOf(AppLocalizations l10n, DeliveryRun reason) => switch (reason) {
       ),
       if (done.missing.isNotEmpty)
         l10n.acctDeliverMissing(done.missing.join(', ')),
+      if (done.count(DeliveryRunStatus.inFlight) > 0)
+        l10n.acctDeliverInFlight(done.count(DeliveryRunStatus.inFlight)),
       ...done.details,
     ].join(' '),
     fine: done.needingAttention == 0,

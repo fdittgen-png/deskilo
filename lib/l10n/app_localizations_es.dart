@@ -341,6 +341,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'El envío no se ha completado. No se ha enviado nada más; inténtelo más tarde.';
 
   @override
+  String acctDeliverInFlight(int count) {
+    return 'Otra ejecución todavía los está enviando: $count. Vuelva a intentarlo en unos minutos.';
+  }
+
+  @override
   String acctDeliverMissing(String keys) {
     return 'Asigne primero estas correspondencias: $keys';
   }

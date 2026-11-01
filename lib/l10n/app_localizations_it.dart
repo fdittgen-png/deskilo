@@ -340,6 +340,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'invio non è andato a buon fine. Non è stato inviato altro; riprovi più tardi.';
 
   @override
+  String acctDeliverInFlight(int count) {
+    return 'Un\'altra esecuzione li sta ancora inviando: $count. Riprova tra qualche minuto.';
+  }
+
+  @override
   String acctDeliverMissing(String keys) {
     return 'Imposti prima queste corrispondenze: $keys';
   }

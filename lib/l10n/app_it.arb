@@ -211,6 +211,7 @@
   "acctDeliverBooksBlocked": "Le scritture di questo periodo non possono ancora essere registrate: {subjects}.",
   "acctDeliverDone": "Inviati: {delivered} · già presenti: {unchanged} · da verificare: {attention}",
   "acctDeliverFailed": "L'invio non è andato a buon fine. Non è stato inviato altro; riprovi più tardi.",
+  "acctDeliverInFlight": "Un'altra esecuzione li sta ancora inviando: {count}. Riprova tra qualche minuto.",
   "acctDeliverMissing": "Imposti prima queste corrispondenze: {keys}",
   "acctDeliverNotConnected": "Questo collegamento è disconnesso: lo colleghi di nuovo, poi invii.",
   "acctDeliverNothing": "Non c'è nulla da inviare in questo periodo.",
