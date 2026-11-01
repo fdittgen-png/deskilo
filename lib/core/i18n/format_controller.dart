@@ -8,6 +8,7 @@ import '../../features/profile/providers/personal_preferences_providers.dart';
 import '../../features/profile/providers/profile_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../locale/device_locale.dart';
 import '../locale/locale_controller.dart';
 import '../settings/region_defaults.dart';
 import '../settings/setting_defaults.g.dart';
@@ -41,8 +42,11 @@ part 'format_controller.g.dart';
 /// UI language's home region, 24-hour clock, workspace zone.
 @riverpod
 AppFormat appFormat(Ref ref) {
+  // No language chosen in the app: the one the app is DRAWN in, which is
+  // the platform's (#3060). `Intl.systemLocale` is not that on the web, so
+  // dates stayed English under a French or German browser.
   final uiLanguage = ref.watch(localeControllerProvider).value?.languageCode ??
-      Intl.systemLocale.split('_').first;
+      ref.watch(deviceLocaleProvider).languageCode;
   final workspace = ref.watch(currentWorkspaceProvider).value;
   final features = ref.watch(enabledFeaturesSyncProvider);
   final prefs = features.contains(WorkspaceFeature.regionalFormats)
