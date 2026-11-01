@@ -14703,6 +14703,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpMemberStatus => 'Change a member\'s status';
 
   @override
+  String get mcpOpMembershipPlan => 'Offer a new membership plan';
+
+  @override
   String get mcpOpMyInvoices => 'See your invoices';
 
   @override
@@ -27482,6 +27485,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unblockDone => 'Unblocked.';
+
+  @override
+  String get unsavedChangesBody =>
+      'What you changed on this page is not saved yet.';
+
+  @override
+  String get unsavedChangesDiscard => 'Discard changes';
+
+  @override
+  String get unsavedChangesKeep => 'Keep editing';
+
+  @override
+  String get unsavedChangesTitle => 'Leave with unsaved changes?';
 
   @override
   String get usageAsk => 'Bill the time I was here';

@@ -477,4 +477,15 @@ const Map<String, McpOperationSpec> mcpOperations = {
     },
     output: ['journal', 'changes', 'field', 'from', 'to', 'preview'], group: 'setup',
   ),
+  'create_membership_plan': McpOperationSpec(
+    id: 'create_membership_plan', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageBilling', features: ['mcpAccess', 'moneyTab'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'percent': McpField(McpFieldType.integer, required: true),
+    },
+    output: ['created', 'percent'], group: 'financial',
+  ),
 };

@@ -146,5 +146,9 @@
   "mcpOpSetupNumbering": "Set how documents are numbered",
   "@mcpOpSetupNumbering": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_number_sequence)"
+  },
+  "mcpOpMembershipPlan": "Offer a new membership plan",
+  "@mcpOpMembershipPlan": {
+    "description": "#2394 generated from contracts/mcp/operations.json (create_membership_plan)"
   }
 }

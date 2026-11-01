@@ -11,6 +11,7 @@ import '../../../../app/route_classes.dart';
 import '../../../../app/shell/shell_drawer.dart' show navigationDefaultProvider;
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
@@ -156,6 +157,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 features: features, permissions: perms)
             ? (l10n.memberAccountTitle)
             : (l10n.settingsTitle)),
+        // #3068 — Help from the header, not only from the last row.
+        actions: [
+          IconButton(
+            key: const ValueKey('settings-help-action'),
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.helpTitle,
+            onPressed: () => openGuide(ref, context),
+          ),
+        ],
       ),
       body: Column(children: [
         if (workspaceTiles.isNotEmpty) AppTabBar(barKey: const ValueKey('settings-scope'),

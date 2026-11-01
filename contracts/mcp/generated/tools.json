@@ -4192,6 +4192,107 @@
         "idempotentHint": true,
         "openWorldHint": false
       }
+    },
+    {
+      "name": "deskilo_create_membership_plan",
+      "title": "Offer a new membership plan",
+      "description": "A membership plan is a subscription level: the percentage of the full subscription a member can choose, as the owner adds it on the billing screen. Give the percentage as a whole number; the range the workspace allows comes from its template and anything outside it, or a plan already offered, is refused. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the percentage and the workspace; then call again with the same request_id and arguments. Needs the money functionality to be on in the workspace. The answer says whether the plan was created and at which percentage.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "percent": {
+            "type": "integer",
+            "description": "The share of the full subscription the plan charges, as a whole percentage (30 for a plan at 30 % of the full price).",
+            "examples": [
+              30
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "percent"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "create_membership_plan"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Offer a new membership plan",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
     }
   ]
 }

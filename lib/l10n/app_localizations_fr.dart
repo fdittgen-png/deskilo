@@ -14844,6 +14844,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpOpMemberStatus => 'Modifier le statut d\'un membre';
 
   @override
+  String get mcpOpMembershipPlan =>
+      'Proposer une nouvelle formule d\'abonnement';
+
+  @override
   String get mcpOpMyInvoices => 'Voir vos factures';
 
   @override
@@ -27794,6 +27798,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unblockDone => 'Débloqué.';
+
+  @override
+  String get unsavedChangesBody =>
+      'Ce que vous avez modifié sur cette page n\'est pas encore enregistré.';
+
+  @override
+  String get unsavedChangesDiscard => 'Abandonner les modifications';
+
+  @override
+  String get unsavedChangesKeep => 'Continuer la saisie';
+
+  @override
+  String get unsavedChangesTitle => 'Quitter sans enregistrer ?';
 
   @override
   String get usageAsk => 'Facturer le temps où j\'étais là';

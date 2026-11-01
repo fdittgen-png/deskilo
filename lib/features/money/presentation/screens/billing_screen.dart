@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/unsaved_changes_guard.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -16,6 +18,7 @@ import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/billing_band_row.dart';
 import '../widgets/billing_editor_sections.dart';
 import '../widgets/carnets_editor.dart';
 import '../widgets/vat_rate_field.dart';
@@ -33,36 +36,27 @@ class BillingScreen extends ConsumerWidget {
     final levelsAsync = ref.watch(subscriptionLevelsProvider);
     final packagesAsync = ref.watch(allPackagesProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.billingTitle)),
-      body: switch ((bandsAsync, levelsAsync, packagesAsync)) {
-        (
-          AsyncData(value: final bands),
-          AsyncData(value: final levels),
-          AsyncData(value: final packages)
-        ) =>
-          _BillingEditor(bands: bands, levels: levels, packages: packages),
-        (AsyncError(), _, _) || (_, AsyncError(), _) || (_, _, AsyncError()) =>
-          Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
-        _ => const LoadingView(),
-      },
-    );
+    final appBar = AppBar(title: Text(l10n.billingTitle));
+    return switch ((bandsAsync, levelsAsync, packagesAsync)) {
+      (
+        AsyncData(value: final bands),
+        AsyncData(value: final levels),
+        AsyncData(value: final packages)
+      ) =>
+        _BillingEditor(
+          appBar: appBar,
+          bands: bands,
+          levels: levels,
+          packages: packages,
+        ),
+      (AsyncError(), _, _) || (_, AsyncError(), _) || (_, _, AsyncError()) =>
+        Scaffold(
+          appBar: appBar,
+          body: Center(child: Text(l10n.workspaceGenericError)),
+        ),
+      _ => Scaffold(appBar: appBar, body: const LoadingView()),
+    };
   }
-}
-
-/// One editable band row: the upper boundary plus its two prices. The lower
-/// boundary is derived from the previous row, so the set always tiles
-/// (0, 100] once every `toPct` is valid.
-class _BandDraft {
-  _BandDraft({required this.toPct, required this.feeCents, required this.overageCents});
-
-  int? toPct;
-  int? feeCents;
-  int? overageCents;
 }
 
 class _BillingEditor extends ConsumerStatefulWidget {
@@ -70,7 +64,10 @@ class _BillingEditor extends ConsumerStatefulWidget {
     required this.bands,
     required this.levels,
     required this.packages,
+    required this.appBar,
   });
+
+  final PreferredSizeWidget appBar;
 
   final List<FeeBand> bands;
   final SubscriptionLevels levels;
@@ -81,12 +78,18 @@ class _BillingEditor extends ConsumerStatefulWidget {
 }
 
 class _BillingEditorState extends ConsumerState<_BillingEditor> {
-  late final List<_BandDraft> _bands;
+  late final List<BillingBandDraft> _bands;
   late final Set<int> _enabledPresets;
   late final List<int> _extraLevels;
   late bool _allowCustom;
   final _newLevel = TextEditingController();
   bool _bandsInvalid = false;
+
+  /// One Save for the page (#3072): what each block looked like when it was
+  /// last loaded or saved, so the page knows whether it holds unsaved edits
+  /// and a Save only sends the blocks that changed.
+  late String _savedBands, _savedLevels, _savedVat;
+  bool _saving = false;
 
   // New-package form (0042).
   final _pkgName = TextEditingController();
@@ -106,10 +109,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   void initState() {
     super.initState();
     _bands = widget.bands.isEmpty
-        ? [_BandDraft(toPct: 100, feeCents: 0, overageCents: 0)]
+        ? [BillingBandDraft(toPct: 100, feeCents: 0, overageCents: 0)]
         : [
             for (final band in widget.bands)
-              _BandDraft(
+              BillingBandDraft(
                 toPct: band.toPct,
                 feeCents: band.feeCents,
                 overageCents: band.overageFeeCents,
@@ -118,7 +121,23 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     _enabledPresets = {...widget.levels.enabledPresets};
     _extraLevels = [...widget.levels.extraLevels]..sort();
     _allowCustom = widget.levels.allowCustom;
+    _savedBands = _bandsSignature;
+    _savedLevels = _levelsSignature;
+    _savedVat = _tariffVatRateId;
   }
+
+  String get _bandsSignature =>
+      [for (final b in _bands) '${b.toPct}/${b.feeCents}/${b.overageCents}']
+          .join(';');
+
+  String get _levelsSignature =>
+      '${(_enabledPresets.toList()..sort()).join(',')}|'
+      '${_extraLevels.join(',')}|$_allowCustom';
+
+  bool get _dirty =>
+      _bandsSignature != _savedBands ||
+      _levelsSignature != _savedLevels ||
+      _tariffVatRateId != _savedVat;
 
   @override
   void dispose() {
@@ -159,7 +178,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     setState(() {
       _bands.insert(
         _bands.length - 1,
-        _BandDraft(
+        BillingBandDraft(
           toPct: newTo,
           feeCents: last.feeCents,
           overageCents: last.overageCents,
@@ -168,7 +187,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     });
   }
 
-  void _removeBand(_BandDraft draft) {
+  void _removeBand(BillingBandDraft draft) {
     // Deleting a row removes ITS lower boundary (the "from X %" the owner
     // sees on that row): the range merges into the PREVIOUS band, whose
     // upper bound extends. Merging forward instead made the NEXT row's
@@ -183,7 +202,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         // draft identity, so a fresh object rebuilds its boundary field
         // with the new initialValue.
         final previous = _bands[index - 1];
-        _bands[index - 1] = _BandDraft(
+        _bands[index - 1] = BillingBandDraft(
           toPct: draft.toPct,
           feeCents: previous.feeCents,
           overageCents: previous.overageCents,
@@ -220,26 +239,57 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     return bands;
   }
 
-  Future<void> _saveBands() async {
+  /// The page's one Save (#3072): the fee bands, the levels and the
+  /// tariff rate, each only when it changed. A refused or failed block stops
+  /// the rest and leaves everything typed where it is.
+  Future<void> _saveAll() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
+    if (workspace == null || _saving) return;
     final bands = _validatedBands();
-    if (bands == null) {
-      setState(() => _bandsInvalid = true);
-      return;
+    setState(() {
+      _bandsInvalid = bands == null;
+      _saving = bands != null;
+    });
+    if (bands == null) return;
+    final commands = ref.read(commercialTermsProvider);
+    try {
+      if (_bandsSignature != _savedBands) {
+        if (!await _run('fee band save failed',
+            () => commands.replaceFeeBands(workspace.id, bands))) {
+          return;
+        }
+        _savedBands = _bandsSignature;
+        ref.invalidate(feeBandsProvider);
+      }
+      if (_levelsSignature != _savedLevels) {
+        final levels = SubscriptionLevels(
+          enabledPresets: _enabledPresets.toList()..sort(),
+          extraLevels: List.of(_extraLevels),
+          allowCustom: _allowCustom,
+        );
+        if (!await _run('subscription levels save failed',
+            () => commands.setSubscriptionLevels(workspace.id, levels))) {
+          return;
+        }
+        _savedLevels = _levelsSignature;
+        ref.invalidate(subscriptionLevelsProvider);
+      }
+      if (_tariffVatRateId != _savedVat) {
+        final vatRateId = _tariffVatRateId;
+        if (!await _run(
+            'tariff vat save failed',
+            () => ref
+                .read(workspaceRepositoryProvider)
+                .setSubscriptionVatRate(workspace.id, vatRateId))) {
+          return;
+        }
+        _savedVat = vatRateId;
+        ref.invalidate(currentWorkspaceProvider);
+      }
+      if (mounted) _showSaved();
+    } finally {
+      if (mounted) setState(() => _saving = false);
     }
-    setState(() => _bandsInvalid = false);
-    if (!await _run(
-      'fee band save failed',
-      () => ref
-          .read(commercialTermsProvider)
-          .replaceFeeBands(workspace.id, bands),
-    )) {
-      return;
-    }
-    ref.invalidate(feeBandsProvider);
-    if (!mounted) return;
-    _showSaved();
   }
 
   // ---- subscription levels ------------------------------------------------
@@ -257,27 +307,6 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
       }
       _newLevel.clear();
     });
-  }
-
-  Future<void> _saveLevels() async {
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final levels = SubscriptionLevels(
-      enabledPresets: _enabledPresets.toList()..sort(),
-      extraLevels: List.of(_extraLevels),
-      allowCustom: _allowCustom,
-    );
-    if (!await _run(
-      'subscription levels save failed',
-      () => ref
-          .read(commercialTermsProvider)
-          .setSubscriptionLevels(workspace.id, levels),
-    )) {
-      return;
-    }
-    ref.invalidate(subscriptionLevelsProvider);
-    if (!mounted) return;
-    _showSaved();
   }
 
   // ---- packages (0042) ----------------------------------------------------
@@ -353,23 +382,6 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     return rate == null || rate.percent <= 0 ? null : rate.percent;
   }
 
-  /// Owner picked a tariff rate: persist immediately, like a toggle.
-  Future<void> _saveTariffVat(String vatRateId) async {
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    setState(() => _tariffVatRateDraft = vatRateId);
-    if (!await _run(
-      'tariff vat save failed',
-      () => ref
-          .read(workspaceRepositoryProvider)
-          .setSubscriptionVatRate(workspace.id, vatRateId),
-    )) {
-      return;
-    }
-    ref.invalidate(currentWorkspaceProvider);
-    _showSaved();
-  }
-
   /// "incl. VAT 41.67" for a gross amount at the tariff rate (#537).
   String? _vatShare(AppLocalizations l10n, int? cents) {
     final percent = _tariffVatPercent;
@@ -378,83 +390,20 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     return l10n.vatShareAmount(share);
   }
 
-  Widget _bandRow(AppLocalizations l10n, int index) {
+  Widget _bandRow(AppLocalizations l10n, int index, String currencySymbol) {
     final draft = _bands[index];
-    final isLast = index == _bands.length - 1;
-    final from = index == 0 ? 0 : _bands[index - 1].toPct;
-    return Padding(
+    return BillingBandRow(
       key: ObjectKey(draft),
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 72,
-            child: Text(
-              l10n.billingBandFrom(from ?? 0),
-            ),
-          ),
-          Expanded(
-            child: TextFormField(
-              key: ValueKey('billing-band-to-$index'),
-              enabled: !isLast,
-              initialValue: '${draft.toPct ?? ''}',
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: l10n.billingBandTo,
-              ),
-              // setState so the following rows' derived "from X %" labels
-              // track the boundary immediately (#194). The keyed rows keep
-              // their field edit state: initialValue is only read on the
-              // element's first build.
-              onChanged: (raw) =>
-                  setState(() => draft.toPct = int.tryParse(raw.trim())),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextFormField(
-              key: ValueKey('billing-band-fee-$index'),
-              initialValue: centsToMajor(draft.feeCents ?? 0),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: l10n.billingBandFee,
-                helperText: _vatShare(l10n, draft.feeCents),
-              ),
-              // setState so the VAT-share helper tracks the amount live.
-              onChanged: (raw) => setState(
-                  () => draft.feeCents = parseCentsInput(raw)),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextFormField(
-              key: ValueKey('billing-band-overage-$index'),
-              initialValue: centsToMajor(draft.overageCents ?? 0),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: l10n.billingBandOverage,
-                helperText: _vatShare(l10n, draft.overageCents),
-              ),
-              onChanged: (raw) => setState(
-                  () => draft.overageCents = parseCentsInput(raw)),
-            ),
-          ),
-          if (isLast)
-            // The last band always ends at 100% and cannot be removed; hide
-            // the button instead of disabling it (#194) but keep the row
-            // columns aligned with the IconButton's footprint.
-            const SizedBox(width: 48)
-          else
-            IconButton(
-              key: ValueKey('billing-remove-band-$index'),
-              icon: const Icon(Icons.remove_circle_outline),
-              tooltip: l10n.billingRemoveBand,
-              onPressed: () => _removeBand(draft),
-            ),
-        ],
-      ),
+      index: index,
+      draft: draft,
+      from: index == 0 ? 0 : _bands[index - 1].toPct ?? 0,
+      isLast: index == _bands.length - 1,
+      currencySymbol: currencySymbol,
+      vatShare: (cents) => _vatShare(l10n, cents),
+      // setState so the following rows' derived "from X %" labels and the
+      // VAT-share helpers track the edit immediately (#194).
+      onEdited: () => setState(() {}),
+      onRemove: () => _removeBand(draft),
     );
   }
 
@@ -464,7 +413,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final chargesVat = workspace?.vatRegime == 'vat_registered';
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    return ListView(
+    final currencySymbol = moneyFormat(workspace?.currencyCode).currencySymbol;
+    final fields = ListView(
       padding: const EdgeInsets.all(16),
       children: [
         BillingSectionHeader(
@@ -479,7 +429,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           rates: rates,
           tariffRateId: _tariffVatRateId,
         ),
-        for (var i = 0; i < _bands.length; i++) _bandRow(l10n, i),
+        for (var i = 0; i < _bands.length; i++)
+          _bandRow(l10n, i, currencySymbol),
         if (_bandsInvalid)
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -494,23 +445,16 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           dropdownKey: const ValueKey('billing-tariff-vat'),
           rates: rates,
           value: _tariffVatRateId,
-          onChanged: _saveTariffVat,
+          onChanged: (id) => setState(() => _tariffVatRateDraft = id),
         ),
-        Row(
-          children: [
-            TextButton.icon(
-              key: const ValueKey('billing-add-band'),
-              onPressed: _addBand,
-              icon: const Icon(Icons.add),
-              label: Text(l10n.billingAddBand),
-            ),
-            const Spacer(),
-            FilledButton(
-              key: const ValueKey('billing-save'),
-              onPressed: _saveBands,
-              child: Text(l10n.commonSave),
-            ),
-          ],
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            key: const ValueKey('billing-add-band'),
+            onPressed: _addBand,
+            icon: const Icon(Icons.add),
+            label: Text(l10n.billingAddBand),
+          ),
         ),
         const Divider(height: 32),
         BillingSectionHeader(
@@ -539,14 +483,6 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           value: _allowCustom,
           onChanged: (v) => setState(() => _allowCustom = v),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: FilledButton(
-            key: const ValueKey('billing-save-2'),
-            onPressed: _saveLevels,
-            child: Text(l10n.commonSave),
-          ),
-        ),
         const Divider(height: 32),
         BillingSectionHeader(
           title: l10n.billingPackages,
@@ -573,6 +509,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           small: true,
         ),
         BillingNewPackageRow(
+          currencySymbol: currencySymbol,
           name: _pkgName,
           days: _pkgDays,
           price: _pkgPrice,
@@ -587,6 +524,33 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.carnets))
           ...const [Divider(height: 32), CarnetsEditor()], // #1279
       ],
+    );
+    // One Save for the blocks above (#3072), in the scaffold's bottom bar so
+    // it never scrolls away and a snackbar rises above it; the add rows
+    // below the packs create records of their own and keep their own buttons.
+    return UnsavedChangesGuard(
+      isDirty: () => _dirty,
+      child: Scaffold(
+        appBar: widget.appBar,
+        body: fields,
+        bottomNavigationBar: Material(
+          elevation: 3,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: FilledButton.icon(
+                key: const ValueKey('billing-save'),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                ),
+                onPressed: _saving ? null : _saveAll,
+                icon: Icon(_saving ? Icons.hourglass_top : Icons.save),
+                label: Text(l10n.commonSave),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
 
 import '../../../../core/country/country_catalog.dart';
@@ -67,14 +69,43 @@ class WorkspaceSettingsForm {
     invitationTemplate.text = templateDrafts[templateLang] ?? '';
     deskOpacity = workspace.deskOpacity;
     openedAt = workspace.system.modifiedAt;
+    _saved = _snapshot();
   }
+
+  /// What the form held when it was last loaded or saved (#3072).
+  String _saved = '';
+
+  /// Everything the Save would send, spelled for comparison.
+  String _snapshot() =>
+      jsonEncode(toSave(countryCode ?? '').toSettings());
+
+  /// Whether the form holds edits that were not saved.
+  bool get isDirty => _saved.isNotEmpty && _snapshot() != _saved;
+
+  /// The form now matches what is stored: loaded, or just saved.
+  void markSaved() {
+    _saved = _snapshot();
+    _marks.value++;
+  }
+
+  /// Counts the times the form was marked saved, so a listener sees it.
+  final _marks = ValueNotifier<int>(0);
+
+  /// The typed fields and the marking, for a listener that must follow
+  /// every keystroke and every Save.
+  late final Listenable changes = Listenable.merge([
+    currency, timezone, whatsappGroup, workspaceAddress, invitationTemplate,
+    _marks,
+  ]);
 
   /// #1294 / #1563 — the defaults live in billing_rules, read separately;
   /// seeded once, like the rest.
   void seedDefaultsOnce(NewMemberDefaults? loaded) {
     if (loaded == null || _seededDefaults) return;
     _seededDefaults = true;
+    final clean = !isDirty;
     newMemberDefaults = loaded;
+    if (clean) _saved = _snapshot();
   }
 
   /// The next build fills the form again (after an import).
@@ -122,5 +153,6 @@ class WorkspaceSettingsForm {
     whatsappGroup.dispose();
     workspaceAddress.dispose();
     invitationTemplate.dispose();
+    _marks.dispose();
   }
 }

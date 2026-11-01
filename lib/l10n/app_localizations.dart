@@ -24388,6 +24388,12 @@ abstract class AppLocalizations {
   /// **'Change a member\'s status'**
   String get mcpOpMemberStatus;
 
+  /// #2394 generated from contracts/mcp/operations.json (create_membership_plan)
+  ///
+  /// In en, this message translates to:
+  /// **'Offer a new membership plan'**
+  String get mcpOpMembershipPlan;
+
   /// #2394 generated from contracts/mcp/operations.json (list_my_invoices)
   ///
   /// In en, this message translates to:
@@ -45742,6 +45748,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unblocked.'**
   String get unblockDone;
+
+  /// #3072 body of the leave-with-unsaved-changes question
+  ///
+  /// In en, this message translates to:
+  /// **'What you changed on this page is not saved yet.'**
+  String get unsavedChangesBody;
+
+  /// #3072 button that leaves the form and drops the unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes'**
+  String get unsavedChangesDiscard;
+
+  /// #3072 button that stays on the form
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get unsavedChangesKeep;
+
+  /// #3072 title of the question asked when leaving a form that has unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'Leave with unsaved changes?'**
+  String get unsavedChangesTitle;
 
   /// #833 - action asking for the actual time to bill
   ///

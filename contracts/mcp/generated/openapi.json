@@ -94,7 +94,8 @@
                           "deskilo_create_invitations",
                           "deskilo_set_opening_hours",
                           "deskilo_add_closure_days",
-                          "deskilo_set_number_sequence"
+                          "deskilo_set_number_sequence",
+                          "deskilo_create_membership_plan"
                         ]
                       },
                       "arguments": {
@@ -1227,7 +1228,8 @@
               "create_invitations",
               "set_opening_hours",
               "add_closure_days",
-              "set_number_sequence"
+              "set_number_sequence",
+              "create_membership_plan"
             ]
           },
           "workspace_id": {
@@ -3138,6 +3140,43 @@
           "journal"
         ],
         "x-operation": "set_number_sequence",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "CreateMembershipPlanInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "percent": {
+            "type": "integer",
+            "description": "The share of the full subscription the plan charges, as a whole percentage (30 for a plan at 30 % of the full price).",
+            "examples": [
+              30
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "percent"
+        ],
+        "x-operation": "create_membership_plan",
         "x-rpc": null,
         "x-handler": true
       }
