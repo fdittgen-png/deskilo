@@ -229,6 +229,7 @@ begin
       "messageMentions": true,
       "messagesHub": true,
       "moneyTab": true,
+      "mtdSubmission": false,
       "multiSite": false,
       "navigationStyle": true,
       "nfcBadges": false,

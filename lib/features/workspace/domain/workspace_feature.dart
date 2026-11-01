@@ -401,11 +401,10 @@ enum WorkspaceFeature {
   /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
   /// register (under purchases); #2568 rented rooms (under levelBooking). OFF.
   webMcp,
-  purchases,
-  premisesLease,
+  purchases, premisesLease,
   assetRegister,
   externalRooms,
-  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869 guide, #2862 data report, #3031 bills in another currency, #2370 accounting systems, #2380 bank statements (OFF).
+  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869 guide, #2862 data report, #3031 bills in another currency, #2370 accounting systems, #2380 bank statements, #2470 HMRC VAT submission under vatDeclarations (OFF).
   accountingPeriods,
   biReportDesigner,
   purchaseAnalytics,
@@ -417,9 +416,6 @@ enum WorkspaceFeature {
   accountingConnectors,
   bankImport,
   planDecor,
-
-  /// #2470 — submit the prepared UK VAT return to HMRC through the MTD VAT
-  /// API. Platform, OFF, under vatDeclarations.
   mtdSubmission;
 
   /// The key of this feature inside `workspaces.feature_flags`.

@@ -40,7 +40,7 @@ Future<void> _pumpScreen(
   await pumpApp(
     tester,
     FeaturesScreen(assessments: assessments ?? featureAssessments),
-    size: const Size(800, 24000),
+    size: const Size(800, 26000),
     overrides: standardTestOverrides(
       workspace: FakeWorkspaceRepository.withWorkspace(
         featureFlags: featureFlags,
