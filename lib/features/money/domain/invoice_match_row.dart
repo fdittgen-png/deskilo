@@ -18,7 +18,13 @@ InvoiceMatch invoiceMatchOf(JsonReader row) => InvoiceMatch(
   writeoffAt: row.dateTimeOrNull('writeoff_at')?.toLocal(),
   // #841 — who released it, reachable from the document.
   eventId: row.stringOrNull('event_id'),
+  // #2380 — the reconciled statement line's facts, present only on the
+  // accounting source's rows (0641); a calendar day, not an instant.
+  valueDate: _day(row.stringOrNull('value_date')),
+  bankReference: row.stringOrNull('bank_reference'),
 );
+
+DateTime? _day(String? iso) => iso == null ? null : DateTime.parse(iso);
 
 /// One `invoice_match_payments` row (#2355): an instalment of [invoiceId],
 /// dated when it was matched.
