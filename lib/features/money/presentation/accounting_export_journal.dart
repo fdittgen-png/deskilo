@@ -22,7 +22,7 @@ export '../application/generic_journal_export.dart'
         JournalOpeningRefused,
         JournalPosted,
         JournalSafTRefused,
-        journalCsvOf,
+        journalFileOf,
         writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
@@ -85,6 +85,15 @@ Future<void> exportGenericJournal(
         context,
         l10n.journalSageRefused(
           blockers.map((b) => l10n.sageBlock(b.block.name, b.subject)).join('; '),
+        ),
+      );
+    case JournalInterchangeRefused(:final problems):
+      AppSnack.error(
+        context,
+        l10n.journalInterchangeRefused(
+          problems
+              .map((p) => l10n.interchangeBlock(p.block.name, p.subject))
+              .join('; '),
         ),
       );
     case JournalTaxCodesMissing(:final keys):

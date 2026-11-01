@@ -575,7 +575,12 @@ final Map<String, Future<String> Function()> _files = {
     );
   },
   'generic_journal.csv': () async =>
-      journalCsvOf(_posted(await _read('generic_journal_csv', local: true))),
+      switch (journalFileOf(
+        _posted(await _read('generic_journal_csv', local: true)),
+      )) {
+        JournalFile(:final content) => content,
+        final other => fail('expected the journal, got $other'),
+      },
   'audit_trail.csv': () async {
     final b = (await _read('audit_trail')).books;
     return buildAuditTrailCsv(

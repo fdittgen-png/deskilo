@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import '../domain/accounting_format.dart';
+import '../domain/accounting_interchange.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
@@ -78,6 +79,13 @@ final class JournalTaxCodesMissing extends GenericJournal {
   final List<String> keys;
 }
 
+/// #2370 — the interchange envelope of the postings is unfit to write:
+/// each problem named; nothing was written.
+final class JournalInterchangeRefused extends GenericJournal {
+  const JournalInterchangeRefused(this.problems);
+  final List<InterchangeProblem> problems;
+}
+
 /// #2373 — the Sage 50 audit trail was refused: each blocker named.
 final class JournalSageRefused extends GenericJournal {
   const JournalSageRefused(this.blockers);
@@ -105,8 +113,14 @@ final class JournalPosted extends GenericJournal {
     this.functionalCurrency,
     this.opening = const [],
     this.accountTypes = const {},
+    this.book,
   });
   final List<Posting> postings;
+
+  /// #2370 — the local-book profile the postings were read on: the
+  /// envelope's issuer, revision and currency. Null only for postings made
+  /// without a read; their envelope is refused.
+  final BookProfile? book;
 
   /// #2379 — every posting of the book before [year], read once beside it
   /// for a file that states opening balances (SAF-T Financial); empty for
@@ -139,9 +153,29 @@ GenericJournal writtenWith(
   String Function(JournalPosted books) write,
 ) => read is JournalPosted ? JournalFile(write(read)) : read;
 
-/// The generic journal CSV, one row per posting line.
-String journalCsvOf(JournalPosted books) =>
-    buildGenericJournalCsv(books.postings);
+/// #2370 — the interchange envelope of [books]: the postings and parties
+/// as read, on the book profile they were read on.
+AccountingInterchangeV1 interchangeOf(JournalPosted books) =>
+    AccountingInterchangeV1.fromPostings(
+      issuerSiteId: books.book?.issuerSiteId ?? '',
+      bookProfileId: books.book?.id ?? '',
+      bookProfileRevision: books.book?.revision ?? 0,
+      period: books.year,
+      functionalCurrency: books.book?.functionalCurrency ?? '',
+      postings: books.postings,
+      parties: books.parties,
+    );
+
+/// The generic journal CSV of [read], one row per posting line, written
+/// from its validated envelope; what stops it passes through.
+GenericJournal journalFileOf(GenericJournal read) {
+  if (read is! JournalPosted) return read;
+  final envelope = interchangeOf(read);
+  final problems = envelope.validate();
+  return problems.isEmpty
+      ? JournalFile(buildGenericJournalCsv(envelope))
+      : JournalInterchangeRefused(problems);
+}
 
 /// The FEC target's rule for a party's client code.
 final CustomerIdRule _fecPartyRule = accountingTargets
@@ -269,6 +303,7 @@ class GenericJournalExport {
       functionalCurrency: journal.functionalCurrency,
       opening: opening.postings,
       accountTypes: journal.accountTypes,
+      book: journal.book,
     );
   }
 
@@ -372,11 +407,14 @@ class GenericJournalExport {
           ? JournalBlocked([...roles])
           : JournalNeedsRates([for (final b in set.blockers) b.subject]);
     }
-    if (chart == null) return JournalPosted(set.postings, year: period);
+    if (chart == null) {
+      return JournalPosted(set.postings, year: period, book: local);
+    }
     final documents = {for (final p in set.postings) p.documentId};
     return JournalPosted(
       set.postings,
       year: period,
+      book: local,
       functionalCurrency: local.functionalCurrency,
       accountNames: {
         for (final a in chart.accounts)

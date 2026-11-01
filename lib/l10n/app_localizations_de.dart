@@ -11485,6 +11485,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceYouAreOwner => 'Sie sind der Instanzeigentümer.';
 
   @override
+  String interchangeBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'missingIssuer': 'das Buch nennt keinen Aussteller',
+      'missingRevision': 'das Buchungsprofil $subject hat keine Revision',
+      'unbalancedEntry': 'die Buchung $subject ist nicht ausgeglichen',
+      'unconvertedCurrency': '$subject ist nicht in der Währung des Buchs',
+      'unknownDocument': 'eine Buchung betrifft den unbekannten Beleg $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String invitationAlreadyMember(String workspace) {
     return 'Sie sind bereits Mitglied von $workspace.';
   }
@@ -12753,6 +12766,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String journalFecPartyCode(String names) {
     return 'Der FEC braucht für jeden Geschäftspartner einen Kundencode aus bis zu 13 Buchstaben und Ziffern: Vergeben Sie zuerst eine Mitglieds- oder Lieferantennummer an: $names';
+  }
+
+  @override
+  String journalInterchangeRefused(String reasons) {
+    return 'Das Journal wurde nicht geschrieben: $reasons';
   }
 
   @override
