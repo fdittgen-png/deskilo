@@ -160,9 +160,12 @@ select is(pg_temp.snap_row('t.s1', '00000000-0000-4000-8000-0000064100e3')::text
 select is(pg_temp.snap_row('t.s1', '00000000-0000-4000-8000-0000064100e4')::text,
           pg_temp.table_row('00000000-0000-4000-8000-0000064100e4')::text,
           'D: two instalment lines are ambiguous and leave the row byte for byte');
+-- The table row of space 2 is read as space 2's owner: RLS hides it from a1.
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000064100a2","role":"authenticated"}',true);
 select is(md5(pg_temp.snap_row('t.s2', '00000000-0000-4000-8000-0000064100e9')::text),
           md5(pg_temp.table_row('00000000-0000-4000-8000-0000064100e9')::text),
           'a space without a statement import: the row''s digest is the table row''s');
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000064100a1","role":"authenticated"}',true);
 select is((select count(*)::int from jsonb_array_elements(current_setting('t.s2')::jsonb -> 'matches') r
             where r ?| array['value_date', 'bank_reference']), 0, 'and no row of that space carries a key');
 select is(current_setting('t.s1')::jsonb #> '{totals,matches}', '{"count": 4, "paid_cents": 48000}'::jsonb,
