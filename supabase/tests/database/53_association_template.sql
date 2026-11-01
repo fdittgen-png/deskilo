@@ -101,6 +101,12 @@ begin
   insert into public.members (workspace_id, user_id, is_owner, is_admin, subscription_pct)
   values (bare, u_bare, true, true, 50) returning id into m_bare;
 
+  -- The members joined long before the months asserted below: `member_statement`
+  -- reads a month before the member's joined_at as 'not yet a member' (0 half days,
+  -- no invoice), and joined_at defaults to now(), so an unpinned fixture goes red
+  -- on the first day of the month after the one the expectations name.
+  update public.members set joined_at = timestamptz '2026-01-01 00:00:00+00' where workspace_id in (ws, bare);
+
   perform set_config('deskilo.assoc.ws', ws::text, false);
   perform set_config('deskilo.assoc.bare', bare::text, false);
   perform set_config('deskilo.assoc.owner', u_owner::text, false);
