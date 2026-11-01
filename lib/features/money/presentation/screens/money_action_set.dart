@@ -217,6 +217,9 @@ class MoneyActionSet {
                   canOffset: held.contains(purchaseOffsetPermission),
                   toPay: true,
                 )),
+      // #2380 — the statements, matching and reconciliation sit with the
+      // cash, as well as with the books.
+      ?_bankButton(ref, data),
     ];
   }
 
