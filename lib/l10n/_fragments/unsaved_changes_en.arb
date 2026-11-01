@@ -1,0 +1,18 @@
+{
+  "unsavedChangesTitle": "Leave with unsaved changes?",
+  "@unsavedChangesTitle": {
+    "description": "#3072 title of the question asked when leaving a form that has unsaved changes"
+  },
+  "unsavedChangesBody": "What you changed on this page is not saved yet.",
+  "@unsavedChangesBody": {
+    "description": "#3072 body of the leave-with-unsaved-changes question"
+  },
+  "unsavedChangesKeep": "Keep editing",
+  "@unsavedChangesKeep": {
+    "description": "#3072 button that stays on the form"
+  },
+  "unsavedChangesDiscard": "Discard changes",
+  "@unsavedChangesDiscard": {
+    "description": "#3072 button that leaves the form and drops the unsaved changes"
+  }
+}

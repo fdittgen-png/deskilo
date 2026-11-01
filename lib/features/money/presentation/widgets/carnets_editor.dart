@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../application/carnets.dart';
 import '../../providers/credit_providers.dart';
 
@@ -71,6 +74,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final products = ref.watch(creditProductsProvider).value ?? const [];
+    final money = moneyFormat(WorkspaceCurrency.code);
     return Column(
       key: const ValueKey('carnets-editor'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,8 +91,8 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
             key: ValueKey('carnet-${p.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(p.name),
-            subtitle: Text(l10n.carnetSummary(
-                    p.halfDays, centsToMajor(p.priceCents))),
+            subtitle:
+                Text(l10n.carnetSummary(p.halfDays, money.formatMinor(p.priceCents))),
             value: p.active,
             onChanged: (on) => runGuarded(
               context,
@@ -97,40 +101,37 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
               action: () => setCarnetActive(ref, p.id, active: on),
             ),
           ),
-        TextField(
+        AppTextField(
           key: const ValueKey('carnet-name'),
           controller: _name,
-          decoration:
-              InputDecoration(labelText: l10n.carnetName),
+          label: l10n.carnetName,
         ),
         Row(children: [
           Expanded(
-            child: TextField(
+            child: AppTextField(
               key: const ValueKey('carnet-half-days'),
               controller: _halfDays,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  labelText: l10n.carnetHalfDays),
+              label: l10n.carnetHalfDays,
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: TextField(
+            child: AppTextField(
               key: const ValueKey('carnet-price'),
               controller: _price,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              decoration:
-                  InputDecoration(labelText: l10n.carnetPrice),
+              label: l10n.carnetPrice,
+              suffixText: money.currencySymbol,
             ),
           ),
         ]),
-        TextField(
+        AppTextField(
           key: const ValueKey('carnet-validity'),
           controller: _validity,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              labelText: l10n.carnetValidity),
+          label: l10n.carnetValidity,
         ),
         const SizedBox(height: AppSpacing.sm),
         Align(

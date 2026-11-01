@@ -32560,6 +32560,22 @@
   },
   "unblockAction": "Unblock",
   "unblockDone": "Unblocked.",
+  "unsavedChangesBody": "What you changed on this page is not saved yet.",
+  "@unsavedChangesBody": {
+    "description": "#3072 body of the leave-with-unsaved-changes question"
+  },
+  "unsavedChangesDiscard": "Discard changes",
+  "@unsavedChangesDiscard": {
+    "description": "#3072 button that leaves the form and drops the unsaved changes"
+  },
+  "unsavedChangesKeep": "Keep editing",
+  "@unsavedChangesKeep": {
+    "description": "#3072 button that stays on the form"
+  },
+  "unsavedChangesTitle": "Leave with unsaved changes?",
+  "@unsavedChangesTitle": {
+    "description": "#3072 title of the question asked when leaving a form that has unsaved changes"
+  },
   "usageAsk": "Bill the time I was here",
   "@usageAsk": {
     "description": "#833 - action asking for the actual time to bill"

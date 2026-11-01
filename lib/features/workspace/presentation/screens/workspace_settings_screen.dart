@@ -13,6 +13,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/unsaved_changes_guard.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/admin_visibility_tile.dart';
 import '../../application/apply_brand_seed.dart';
@@ -93,7 +94,11 @@ class _WorkspaceSettingsScreenState
     // workspace row the screen already holds. Seeded once, like the rest —
     // and #1563: until it lands there is nothing to save, so Save omits it.
     _form.seedDefaultsOnce(ref.watch(newMemberDefaultsProvider).value);
-    return Scaffold(
+    // #3072 — one form, one Save: leaving it with edits asks first.
+    return UnsavedChangesGuard(
+      isDirty: () => _form.isDirty,
+      refreshOn: _form.changes,
+      child: Scaffold(
       appBar: AppBar(
         title: Text(l10n.workspaceSettingsTitle),
       ),
@@ -118,7 +123,7 @@ class _WorkspaceSettingsScreenState
               ]),
             ),
       bottomNavigationBar: workspace == null ? null : WorkspaceSettingsSaveBar(busy: _busy, onSave: () => _save(workspace.id)),
-    );
+    ));
   }
 
   /// Lets the section libraries rebuild (setState is protected).
@@ -350,6 +355,7 @@ class _WorkspaceSettingsScreenState
                 );
             // The next Save compares against what was just committed.
             _form.openedAt = saved.system.modifiedAt;
+            _form.markSaved();
           } on WorkspaceSettingsConflict {
             // Nothing was written; everything typed stays on screen.
             if (mounted) {

@@ -216,9 +216,14 @@ class SectionJump {
 
 /// The sections of one long form, in the app's pill style.
 class SectionJumpBar extends StatefulWidget {
-  const SectionJumpBar({required this.items, super.key});
+  const SectionJumpBar({required this.items, this.current, super.key});
 
   final List<SectionJump> items;
+
+  /// The key of the section the reader is in (#3072), drawn selected: a
+  /// form that follows its scroll position passes it. Null: the bar draws
+  /// the section last opened from it.
+  final String? current;
 
   @override
   State<SectionJumpBar> createState() => _SectionJumpBarState();
@@ -235,7 +240,7 @@ class _SectionJumpBarState extends State<SectionJumpBar> {
 
   Widget _pill(BuildContext context, SectionJump item) {
     final scheme = Theme.of(context).colorScheme;
-    final selected = item.key == _current;
+    final selected = item.key == (widget.current ?? _current);
     final ink = item.destructive
         ? scheme.error
         : selected
