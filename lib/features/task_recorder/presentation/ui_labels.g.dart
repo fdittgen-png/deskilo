@@ -2376,6 +2376,7 @@ Map<String, _Getter> _part7() => {
   'questionEditorKey': (l) => l.questionEditorKey,
   'questionTypeBoolean': (l) => l.questionTypeBoolean,
   'questionsInactive': (l) => l.questionsInactive,
+  'readStateFailed': (l) => l.readStateFailed,
   'readinessStateUnverified': (l) => l.readinessStateUnverified,
   'reminderTitle': (l) => l.reminderTitle,
   'repartitionFiledPending': (l) => l.repartitionFiledPending,

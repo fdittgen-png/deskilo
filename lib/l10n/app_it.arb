@@ -13084,6 +13084,10 @@
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
   },
+  "readStateFailed": "Impossibile caricare. Riprovi.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readStateOffline": "Nessuna connessione. Controlli la rete e riprovi.",
   "@readStateOffline": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"

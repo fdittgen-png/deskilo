@@ -19792,6 +19792,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.';
 
   @override
+  String get readStateFailed => 'No se pudo cargar. Inténtelo de nuevo.';
+
+  @override
   String get readStateOffline =>
       'Sin conexión. Revise su red e inténtelo de nuevo.';
 

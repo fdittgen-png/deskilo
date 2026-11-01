@@ -19853,6 +19853,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.';
 
   @override
+  String get readStateFailed => 'Le chargement a échoué. Réessayez.';
+
+  @override
   String get readStateOffline =>
       'Pas de connexion. Vérifiez votre réseau et réessayez.';
 

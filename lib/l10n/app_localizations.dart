@@ -32955,6 +32955,12 @@ abstract class AppLocalizations {
   /// #3061 shared read-failure messages: connectivity and denied access
   ///
   /// In en, this message translates to:
+  /// **'This could not be loaded. Try again.'**
+  String get readStateFailed;
+
+  /// #3061 shared read-failure messages: connectivity and denied access
+  ///
+  /// In en, this message translates to:
   /// **'No connection. Check your network and try again.'**
   String get readStateOffline;
 

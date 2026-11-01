@@ -19656,6 +19656,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'You do not have access to this. Ask a workspace administrator if you need it.';
 
   @override
+  String get readStateFailed => 'This could not be loaded. Try again.';
+
+  @override
   String get readStateOffline =>
       'No connection. Check your network and try again.';
 

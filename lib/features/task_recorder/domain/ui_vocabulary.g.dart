@@ -9786,6 +9786,7 @@ const Set<String> uiLabelKeys = {
   'quotaRequestPending',
   'quotaRequestTitle',
   'readStateDenied',
+  'readStateFailed',
   'readStateOffline',
   'readinessActorAdministrator',
   'readinessActorOperator',

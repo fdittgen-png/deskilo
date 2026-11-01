@@ -19810,6 +19810,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.';
 
   @override
+  String get readStateFailed => 'Impossibile caricare. Riprovi.';
+
+  @override
   String get readStateOffline =>
       'Nessuna connessione. Controlli la rete e riprovi.';
 

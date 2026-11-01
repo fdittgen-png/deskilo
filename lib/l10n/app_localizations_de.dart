@@ -19835,6 +19835,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.';
 
   @override
+  String get readStateFailed =>
+      'Das Laden hat nicht geklappt. Bitte versuchen Sie es erneut.';
+
+  @override
   String get readStateOffline =>
       'Keine Verbindung. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut.';
 
