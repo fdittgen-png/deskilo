@@ -61,6 +61,7 @@ List<Map<String, String>> _rows({
   FecAccounts accounts = const FecAccounts(),
 }) {
   final file = buildFecFile(FecRequest(
+      currency: 'EUR',
     invoices: invoices ?? [_invoice()],
     matches: matches,
     company: _company,
@@ -79,6 +80,7 @@ void main() {
   test('the first line is the 18 mandated columns, in the mandated order',
       () {
     final file = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: [_invoice()],
       matches: const {},
       company: _company,
@@ -250,5 +252,24 @@ void main() {
 
     expect(rows.first['CompAuxLib'], 'Ana Martin Dupont');
     expect(rows.first.length, 18, reason: 'still exactly 18 columns');
+  });
+
+  // #3184 — the FEC is euro-denominated by definition: a workspace that
+  // books in another currency is refused with that currency named, never
+  // written with euro-formatted amounts.
+  test('a workspace not booking in euro is refused, its currency named', () {
+    for (final currency in ['CHF', 'DKK']) {
+      expect(
+        () => buildFecFile(FecRequest(
+          currency: currency,
+          invoices: [_invoice()],
+          matches: const {},
+          company: _company,
+          accounts: const FecAccounts(),
+          lineText: (line) => invoiceLineText(const ReportStrings(), line),
+        )),
+        throwsA(isA<ArgumentError>().having((e) => e.invalidValue, 'currency', currency)),
+      );
+    }
   });
 }

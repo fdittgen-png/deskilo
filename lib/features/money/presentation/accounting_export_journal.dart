@@ -57,7 +57,9 @@ Future<void> exportGenericJournal(
       ].join(', ');
       AppSnack.error(
         context,
-        blockers.any((b) => b.block == FecBlock.partyCode)
+        blockers.any((b) => b.block == FecBlock.currency)
+            ? l10n.fecCurrencyRefused(named(FecBlock.currency))
+            : blockers.any((b) => b.block == FecBlock.partyCode)
             ? l10n.journalFecPartyCode(named(FecBlock.partyCode))
             : l10n.journalFecMissingRate(named(FecBlock.missingRate)),
       );

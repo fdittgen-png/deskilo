@@ -235,6 +235,15 @@ void main() {
       expect(sha256.convert(changed), isNot(sha256.convert(first)));
     });
 
+    // #3184 — a document without a currency is not given the euro: its
+    // currency cell stays empty and the report names it, blocking.
+    test('a document with no currency is never written as euro', () {
+      final e = _export([_inv(id: '1', currency: '')]);
+      final row = e.csv.split('\n').firstWhere((l) => !l.startsWith('#') && l.contains('INV-1'));
+      expect(row, isNot(contains('EUR')));
+      expect(e.report.findings.map((f) => f.kind), contains(HandoffFindingKind.missingCurrency));
+    });
+
     test('a missing currency, a duplicate, a foreign match block the file', () {
       final r = _export(
         [_inv(id: '1', currency: ''), _inv(id: '2'), _inv(id: '2')],

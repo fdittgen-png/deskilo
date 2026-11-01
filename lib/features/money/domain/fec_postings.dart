@@ -30,6 +30,7 @@ import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
 import 'accounting_target.dart';
 import 'book_chart.dart';
+import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
 import 'posting.dart';
@@ -74,6 +75,10 @@ enum FecBlock {
 
   /// An entry in a foreign currency has no recorded exchange rate.
   missingRate,
+
+  /// The book is kept in a currency other than the euro, which the FEC
+  /// is denominated in (#3184); the subject is that currency.
+  currency,
 }
 
 class FecBlocker {
@@ -117,7 +122,8 @@ String? fecAuxAccount(String collective, String number, CustomerIdRule rule) {
 /// party's number may look like (the FEC target's customer id rule). An
 /// entry whose currency is not [functionalCurrency] is converted at its
 /// document's rate in [rates]. Every party and document that stops the
-/// file is named in the result's blockers.
+/// file is named in the result's blockers. A book kept in another currency
+/// than the euro is refused whole.
 PostedFecResult buildFecFromPostings(
   List<Posting> postings, {
   required Map<String, String> accountNames,
@@ -126,6 +132,12 @@ PostedFecResult buildFecFromPostings(
   String? functionalCurrency,
   Map<String, FxRate> rates = const {},
 }) {
+  if (functionalCurrency != null && !isEuroFormatCurrency(functionalCurrency)) {
+    return (
+      file: '',
+      blockers: [FecBlocker(FecBlock.currency, functionalCurrency)],
+    );
+  }
   final file = _PostedFec(
     accountNames: accountNames,
     parties: parties,

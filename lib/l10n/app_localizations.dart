@@ -15539,6 +15539,12 @@ abstract class AppLocalizations {
   /// **'The FEC breaks the import contract ({rules}) and was not saved.'**
   String fecContractFailed(String rules);
 
+  /// FEC export (#3184): the workspace books in a currency other than the euro
+  ///
+  /// In en, this message translates to:
+  /// **'The FEC is written in euros only, and this workspace books in {currency}: no FEC was written.'**
+  String fecCurrencyRefused(String currency);
+
   /// Refusal: the FEC file name is built from the SIREN, which is not set
   ///
   /// In en, this message translates to:

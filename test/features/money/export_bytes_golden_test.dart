@@ -182,13 +182,14 @@ String _lineText(InvoiceLine line) =>
 
 Map<String, String Function()> _files() => {
   'fec.txt': () => buildFecFile(FecRequest(
+      currency: 'EUR',
     invoices: _invoices,
     matches: _matches,
     company: _seller,
     accounts: const FecAccounts(),
     lineText: _lineText,
   )),
-  'datev.csv': () => buildDatevFile(DatevRequest(detail: datevCollective, 
+  'datev.csv': () => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
     invoices: _invoices,
     matches: _matches,
     accounts: const DatevAccounts(),

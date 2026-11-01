@@ -6634,6 +6634,15 @@
   "fecAccountsTitle": "Comptes à utiliser",
   "fecArchiveChanged": "Le FEC de l'exercice clôturé ne correspond plus à celui journalisé le {date} ; l'archive n'a pas été créée.",
   "fecContractFailed": "Le FEC ne respecte pas le contrat d'import ({rules}) et n'a pas été enregistré.",
+  "fecCurrencyRefused": "Le FEC n'est écrit qu'en euros et cet espace comptabilise en {currency} : aucun FEC n'a été écrit.",
+  "@fecCurrencyRefused": {
+    "description": "FEC export (#3184): the workspace books in a currency other than the euro",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
   "fecProvisional": "Cet exercice n'est pas clôturé : le FEC est provisoire et l'archive le conserve comme tel.",
   "federationActionExistingAccount": "Me connecter à mon compte existant",

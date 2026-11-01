@@ -18,6 +18,7 @@ import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_stammdaten.dart';
 import 'datev_writer.dart';
+import 'euro_format.dart';
 import 'invoice.dart';
 import 'number_sequence.dart';
 
@@ -229,7 +230,7 @@ List<DatevProblem> _numberProblems(DatevRequest r) {
       DatevClientNumber(r.clientNumber),
     if (r.accountLength < shortest || r.accountLength > longest)
       DatevSachkontenlaenge(r.accountLength),
-    if (r.currency.toUpperCase() != DatevWriter.amountCurrency)
+    if (!isEuroFormatCurrency(r.currency))
       DatevCurrency(r.currency),
   ];
 }

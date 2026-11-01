@@ -251,13 +251,14 @@ class AccountingExportRun {
   }
 
   FecExportActions get fecActions =>
-      FecExportActions(context, ref, (workspaceId: workspace.id, legalId: company.legalId, development: development));
+      FecExportActions(context, ref, (workspaceId: workspace.id, currency: workspace.currencyCode, legalId: company.legalId, development: development));
 
   String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
   Future<void> _fec() async {
     // #2365 — a local book's FEC is its postings, on its own chart.
     if (posted case final journal?) return fecActions.exportPosted(journal, save: save);
+    if (!fecActions.currencyAllowed()) return;
     // The owner's own VAT account (0072) if they set one — the dialog
     // is where it can still be corrected.
     final accounts = await showFecAccountsDialog(
@@ -274,6 +275,7 @@ class AccountingExportRun {
       errorText: l10n.workspaceGenericError,
       action: () => save(
         buildFecFile(FecRequest(
+          currency: workspace.currencyCode,
           invoices: exported,
           matches: matches,
           company: company,
@@ -368,7 +370,6 @@ class AccountingExportRun {
           matches: matches,
           generatedAt: now,
           workspaceName: workspace.name,
-          currencyFallback: workspace.currencyCode,
         );
         final report = buildAccountantHandoff(
           invoices: exported,
@@ -479,7 +480,7 @@ class AccountingExportRun {
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
         if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
-          invoices: yearInvoices,
+          currency: workspace.currencyCode, invoices: yearInvoices,
           matches: matches,
           company: company,
           accounts: fecAccounts,

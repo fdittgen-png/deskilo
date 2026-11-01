@@ -514,6 +514,7 @@ void main() {
       FecAccounts accounts = const FecAccounts(),
     }) {
       final file = buildFecFile(FecRequest(
+      currency: 'EUR',
         invoices: [invoice ?? _invoice()],
         matches: const {},
         company: _seller,

@@ -29,6 +29,7 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 void main() {
   test('FEC: the refund is customers debited, bank credited, lettered', () {
     final lines = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       company: seededCompany,
@@ -54,6 +55,7 @@ void main() {
 
   test('FEC: no refund row without a refunded match', () {
     final file = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
@@ -66,7 +68,7 @@ void main() {
 
   test('DATEV: the refund debits the customers and credits the bank', () {
     const accounts = DatevAccounts();
-    final rows = buildDatevFile(DatevRequest(detail: datevCollective, 
+    final rows = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       accounts: accounts,

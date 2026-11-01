@@ -9451,6 +9451,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String fecCurrencyRefused(String currency) {
+    return 'El FEC solo se escribe en euros y este espacio contabiliza en $currency: no se ha escrito ningún FEC.';
+  }
+
+  @override
   String get fecMissingSiren =>
       'El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.';
 

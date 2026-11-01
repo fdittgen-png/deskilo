@@ -247,4 +247,18 @@ void main() {
       0,
     );
   });
+
+  // #3184 — the euro file is not written for a book kept in another currency.
+  test('a book whose functional currency is not euro is refused, named', () {
+    for (final currency in ['CHF', 'DKK']) {
+      final fec = buildFecFromPostings(
+        set.postings,
+        accountNames: const {},
+        parties: parties,
+        functionalCurrency: currency,
+      );
+      expect(fec.file, isEmpty);
+      expect(fec.blockers, [FecBlocker(FecBlock.currency, currency)]);
+    }
+  });
 }
