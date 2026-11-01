@@ -32946,6 +32946,18 @@ abstract class AppLocalizations {
   /// **'Request extra half-days'**
   String get quotaRequestTitle;
 
+  /// #3061 shared read-failure messages: connectivity and denied access
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have access to this. Ask a workspace administrator if you need it.'**
+  String get readStateDenied;
+
+  /// #3061 shared read-failure messages: connectivity and denied access
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Check your network and try again.'**
+  String get readStateOffline;
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:

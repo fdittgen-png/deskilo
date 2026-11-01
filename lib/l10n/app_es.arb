@@ -13080,6 +13080,14 @@
   "quotaRequestExplainer": "Sus reservas están limitadas por su suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",
   "quotaRequestPending": "Solicitud enviada — pendiente de validación.",
   "quotaRequestTitle": "Solicitar medias jornadas extra",
+  "readStateDenied": "No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "Sin conexión. Revise su red e inténtelo de nuevo.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Quién: {who}",
   "readinessActorAdministrator": "Un administrador de la base de datos",
   "readinessActorOperator": "El operador del servidor",

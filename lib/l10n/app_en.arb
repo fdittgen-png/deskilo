@@ -23578,6 +23578,14 @@
   "@quotaRequestTitle": {
     "description": "Title of the quota-extension request sheet"
   },
+  "readStateDenied": "You do not have access to this. Ask a workspace administrator if you need it.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "No connection. Check your network and try again.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Who: {who}",
   "@readinessActor": {
     "description": "#1636 workspace_readiness",

@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "readStateOffline": "Nessuna connessione. Controlli la rete e riprovi.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  }
+}

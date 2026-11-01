@@ -13080,6 +13080,14 @@
   "quotaRequestExplainer": "Le sue prenotazioni sono limitate dal suo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
   "quotaRequestPending": "Richiesta inviata — in attesa di convalida.",
   "quotaRequestTitle": "Richiedi mezze giornate extra",
+  "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "Nessuna connessione. Controlli la rete e riprovi.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Chi: {who}",
   "readinessActorAdministrator": "Un amministratore del database",
   "readinessActorOperator": "L’operatore del server",

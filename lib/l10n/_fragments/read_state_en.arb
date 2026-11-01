@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "readStateOffline": "No connection. Check your network and try again.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateDenied": "You do not have access to this. Ask a workspace administrator if you need it.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  }
+}

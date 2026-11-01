@@ -19806,6 +19806,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get quotaRequestTitle => 'Richiedi mezze giornate extra';
 
   @override
+  String get readStateDenied =>
+      'Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.';
+
+  @override
+  String get readStateOffline =>
+      'Nessuna connessione. Controlli la rete e riprovi.';
+
+  @override
   String readinessActor(String who) {
     return 'Chi: $who';
   }

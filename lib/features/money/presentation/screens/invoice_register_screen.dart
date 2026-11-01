@@ -7,8 +7,8 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -121,23 +121,23 @@ class _InvoiceRegisterScreenState
         if (_period case final period?)
           _periodChip(l10n, dateFormat, period),
         Expanded(
-          child: switch (invoicesAsync) {
-            AsyncData(value: final invoices) => _table(
-                context,
-                l10n,
-                invoices: _visible(invoices, canIssue),
-                years: {for (final i in invoices) i.issuedAt.year}.toList()
-                  ..sort((a, b) => b.compareTo(a)),
-                matches: matches,
-                reminders: reminders,
-                currency: currency,
-                dateFormat: dateFormat,
-                showMemberNames: showMemberNames,
-                canIssue: canIssue,
-              ),
-            AsyncError() => Center(child: Text(l10n.workspaceGenericError)),
-            _ => const LoadingView(),
-          },
+          child: AsyncReadBody<List<Invoice>>(
+            value: invoicesAsync,
+            onRetry: () => ref.invalidate(invoicesProvider),
+            data: (invoices) => _table(
+              context,
+              l10n,
+              invoices: _visible(invoices, canIssue),
+              years: {for (final i in invoices) i.issuedAt.year}.toList()
+                ..sort((a, b) => b.compareTo(a)),
+              matches: matches,
+              reminders: reminders,
+              currency: currency,
+              dateFormat: dateFormat,
+              showMemberNames: showMemberNames,
+              canIssue: canIssue,
+            ),
+          ),
         ),
       ]),
     );

@@ -11,8 +11,9 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -139,8 +140,16 @@ class MembersScreen extends ConsumerWidget {
         title: Text(l10n.membersTitle),
         actions: _appBarActions(context, ref, me, features),
       ),
-      body: switch (membersAsync) {
-        AsyncData(value: final members) => ListView(
+      body: AsyncReadBody<List<Member>>(
+        value: membersAsync,
+        onRetry: () => ref.invalidate(workspaceMembersProvider),
+        data: (members) => members.isEmpty
+            ? EmptyState(
+                key: const ValueKey('members-empty'),
+                icon: Icons.group_outlined,
+                title: l10n.directoryEmpty,
+              )
+            : ListView(
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.members),
@@ -181,13 +190,7 @@ class MembersScreen extends ConsumerWidget {
                 ),
             ],
           ),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
-        _ => const LoadingView(),
-      },
+      ),
     );
   }
 
