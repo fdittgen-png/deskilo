@@ -9,6 +9,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
@@ -126,7 +127,7 @@ Map<String, Object?> agreementReportData(
   required int subscriptionPct,
 }) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
   final band = feeBandFor(facts.bands, subscriptionPct);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
@@ -208,7 +209,7 @@ Map<String, Object?> paymentsReportData(
 }) {
   final workspace = facts.workspace;
   final me = facts.me;
-  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
   final dateFormat = DateFormat.yMMMd(strings.dateLocale);
   final ledger = facts.ledger
       .where(
@@ -290,7 +291,7 @@ Map<String, Object?> workspaceReportData(
   WorkspaceFacts facts,
 ) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
   final levels = facts.levels;
   final plans = facts.plans;
   final hours = facts.hours;

@@ -121,7 +121,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    final country = initialCountryFor(ref.read(deviceLocaleProvider));
+    final country = ref.read(initialCountryProvider);
     _countryCode = country.code;
     _currency.text = _derivedCurrency = country.currencyCode;
     _timezone.text = _derivedTimezone = country.defaultTimezone;

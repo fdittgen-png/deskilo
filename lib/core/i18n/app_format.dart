@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:intl/intl.dart';
 
+import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'currencies.dart';
 import 'format_prefs.dart';
@@ -32,7 +33,10 @@ class AppFormat {
   final TimeZoneMode timeZoneMode;
 
   /// Whatever the tests and the pre-#711 app always assumed.
-  static const fallback = AppFormat(locale: 'en_US', currencyCode: 'EUR');
+  static const fallback = AppFormat(
+    locale: SettingDefaults.localeDefaultLocale,
+    currencyCode: SettingDefaults.localeDefaultCurrency,
+  );
 
   // ── money ────────────────────────────────────────────────────────
 
