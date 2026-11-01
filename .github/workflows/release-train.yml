@@ -295,7 +295,7 @@ jobs:
 
       - name: E-mail the failure report
         if: ${{ steps.compose.outputs.failed_count != '0' && env.HAS_SMTP == 'true' }}
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3
         with:
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT || 465 }}

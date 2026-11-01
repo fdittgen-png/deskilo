@@ -59,7 +59,7 @@ jobs:
       - id: flutter_pin
         run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ steps.flutter_pin.outputs.version }}
           channel: stable

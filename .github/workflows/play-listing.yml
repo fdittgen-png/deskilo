@@ -53,10 +53,12 @@ jobs:
           echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
 
       - name: Sync listing
+        env:
+          LISTING_DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          python tools/upload_listing.py \
-            --key "$PLAY_KEY_PATH" \
-            ${{ inputs.dry_run && '--dry-run' || '' }}
+          args=(--key "$PLAY_KEY_PATH")
+          if [ "$LISTING_DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          python tools/upload_listing.py "${args[@]}"
 
       - name: Clean up service-account key
         if: always()

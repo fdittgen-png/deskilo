@@ -80,7 +80,7 @@ jobs:
         with:
           ref: ${{ inputs.source_sha || inputs.ref || github.ref }}
           fetch-depth: 0
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
         with:
           sdk: stable
       - id: verdict
@@ -137,10 +137,12 @@ jobs:
       - name: Base href
         id: base
         if: env.WEB_REQUIRED == 'true'
+        env:
+          INPUT_DEPLOY: ${{ inputs.deploy }}
         # Pages serves the site under /<repo>/, so the base href has to
         # match or every asset 404s. A plain artifact build stays at '/'.
         run: |
-          if [ "${{ inputs.deploy }}" = "true" ]; then
+          if [ "$INPUT_DEPLOY" = "true" ]; then
             BASE="/${GITHUB_REPOSITORY#*/}/"
           else
             BASE="/"
@@ -155,7 +157,7 @@ jobs:
           leg: web
           base_href: ${{ steps.base.outputs.base_href }}
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         if: env.WEB_REQUIRED == 'true'
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}

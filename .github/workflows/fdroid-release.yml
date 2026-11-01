@@ -71,7 +71,7 @@ jobs:
       - id: flutter_pin
         run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ steps.flutter_pin.outputs.version }}
           channel: stable
@@ -197,6 +197,8 @@ jobs:
           ls -l "$OUT"
 
       - name: Check every APK carries the key the recipe allows
+        env:
+          EXPECTED_CERT_SHA256: ${{ inputs.expect_cert_sha256 }}
         run: |
           set -euo pipefail
           APKSIGNER=$(ls "$ANDROID_SDK_ROOT"/build-tools/*/apksigner | sort -V | tail -1)
@@ -204,7 +206,7 @@ jobs:
             GOT=$("$APKSIGNER" verify --print-certs "$apk" \
                   | sed -n 's/.*SHA-256 digest: *//p' | head -1)
             echo "$(basename "$apk") -> $GOT"
-            if [ "$GOT" != "${{ inputs.expect_cert_sha256 }}" ]; then
+            if [ "$GOT" != "$EXPECTED_CERT_SHA256" ]; then
               echo "signed with a key the recipe does not allow" >&2
               exit 1
             fi
