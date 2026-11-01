@@ -220,7 +220,7 @@ async function mapsOf(
 /** The connection's access token, fresh; null when the sign-in is gone
  * (the connection is then marked expired). The adapter is given this token
  * and nothing else of Vault. */
-async function freshToken(
+export async function freshToken(
   deps: Deps,
   held: NonNullable<Awaited<ReturnType<typeof resolved>>>,
 ): Promise<string | null> {

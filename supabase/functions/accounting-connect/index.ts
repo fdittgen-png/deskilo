@@ -62,6 +62,7 @@ import {
   UUID,
 } from "./connection.ts";
 import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
+import { hmrcObligations, hmrcSubmit, hmrcValidateHeaders } from "./hmrc.ts";
 import { revoke, verify } from "./lifecycle.ts";
 
 export type { Deps } from "./connection.ts";
@@ -347,6 +348,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       return revoke(deps, authorization, body);
     case "verify":
       return verify(deps, authorization, body);
+    case "hmrc_obligations":
+      return hmrcObligations(deps, req, authorization, body);
+    case "hmrc_submit":
+      return hmrcSubmit(deps, req, authorization, body);
+    case "hmrc_validate_headers":
+      return hmrcValidateHeaders(deps, req, authorization, body);
     default:
       return json({ error: "unknown action" }, 400);
   }
