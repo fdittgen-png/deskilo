@@ -1,0 +1,18 @@
+{
+  "invoiceRegisterPeriod": "Period: {from} – {to}",
+  "@invoiceRegisterPeriod": {
+    "description": "Register filter chip: the days the register is narrowed to by a drill-through",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRegisterPeriodClear": "Show all periods",
+  "@invoiceRegisterPeriodClear": {
+    "description": "Register filter chip: removes the period and shows every invoice"
+  }
+}
