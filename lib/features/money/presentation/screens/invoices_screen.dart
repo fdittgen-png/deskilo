@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -67,7 +68,7 @@ class InvoicesScreen extends ConsumerWidget {
     final perms = ref.watch(myPermissionsProvider);
     final facts = (
       countryCode: countryCode,
-      currencyCode: workspace?.currencyCode ?? 'EUR',
+      currencyCode: workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
       vatExempt: workspace?.vatRegime == 'exempt',
       // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
       isEu: isEuCountry(countryCode),

@@ -11,6 +11,11 @@
 //     second entry of the same document in the same journal. Inside one
 //     fiscal year a number names one entry; every line of the entry
 //     carries it.
+//   * The dates are three facts: EcritureDate is the day the entry was
+//     booked, PieceDate the date of its supporting piece (the value date of
+//     the bank statement line a receipt was reconciled with, #2380; the
+//     entry's date otherwise) and ValidDate is the entry's, never derived
+//     from either. PieceRef is that line's reference when it has one.
 //   * A receivable or payable line (customers, suppliers) is lettered with
 //     its document when that document's lines on the account balance in the
 //     file; DateLet is then the date of the last of them
@@ -157,6 +162,11 @@ class _PostedFec {
   static String _amount(AccountingAmount a) =>
       minorToText(a.minor, a.currency, decimalSeparator: ',');
 
+  /// PieceRef: the bank's reference of the statement line an entry was
+  /// reconciled with (#2380), the document's own reference otherwise.
+  static String _pieceRef(Posting p) =>
+      p.bankReference.isNotEmpty ? p.bankReference : _reference(p);
+
   static String _reference(Posting p) => p.documentNumber.isNotEmpty
       ? p.documentNumber
       : p.documentId.substring(0, p.documentId.length.clamp(0, 8));
@@ -243,8 +253,11 @@ class _PostedFec {
       _clean(accountNames[l.accountCode] ?? l.accountCode),
       if (third) _auxOf(p, l) else '',
       _clean(third ? parties[p.documentId]?.name ?? '' : ''),
-      _clean(ref),
-      ymd(p.date),
+      _clean(_pieceRef(p)),
+      // PieceDate: the piece's own date, the statement line's value date
+      // when the entry is reconciled with one (#2380); EcritureDate and
+      // ValidDate stay the entry's.
+      ymd(p.valueDate ?? p.date),
       _clean('${_kindLabels[p.kind] ?? p.kind.wire} $ref'),
       _amount(l.debit),
       _amount(l.credit),
