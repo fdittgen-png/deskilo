@@ -14421,6 +14421,8 @@
     "description": "#2631 resource_reserve: reserveEvMarker"
   },
   "reserveFullDayChip": "Giornata intera",
+  "reserveLegendSheetTitle": "Cosa significano i colori",
+  "reserveLegendTooltip": "Legenda dei colori",
   "reserveMeetingRoom": "Sala riunioni",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"

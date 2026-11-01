@@ -21258,6 +21258,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reserveFullDayChip => 'Full day';
 
   @override
+  String get reserveLegendSheetTitle => 'What the colours mean';
+
+  @override
+  String get reserveLegendTooltip => 'Colour legend';
+
+  @override
   String get reserveMeetingRoom => 'Meeting room';
 
   @override

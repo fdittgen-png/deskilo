@@ -21433,6 +21433,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reserveFullDayChip => 'Giornata intera';
 
   @override
+  String get reserveLegendSheetTitle => 'Cosa significano i colori';
+
+  @override
+  String get reserveLegendTooltip => 'Legenda dei colori';
+
+  @override
   String get reserveMeetingRoom => 'Sala riunioni';
 
   @override

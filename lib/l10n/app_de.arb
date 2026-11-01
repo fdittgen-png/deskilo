@@ -14421,6 +14421,8 @@
     "description": "#2631 resource_reserve: reserveEvMarker"
   },
   "reserveFullDayChip": "Ganzer Tag",
+  "reserveLegendSheetTitle": "Was die Farben bedeuten",
+  "reserveLegendTooltip": "Farblegende",
   "reserveMeetingRoom": "Besprechungsraum",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"

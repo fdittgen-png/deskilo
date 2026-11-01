@@ -160,5 +160,7 @@
     }
   },
   "reservationNoteOverNotCheckedIn": "Questo periodo è finito senza check-in.",
-  "bookingRatePlace": "Valuta questo posto"
+  "bookingRatePlace": "Valuta questo posto",
+  "reserveLegendTooltip": "Legenda dei colori",
+  "reserveLegendSheetTitle": "Cosa significano i colori"
 }

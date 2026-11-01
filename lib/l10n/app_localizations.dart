@@ -35826,6 +35826,18 @@ abstract class AppLocalizations {
   /// **'Full day'**
   String get reserveFullDayChip;
 
+  /// #3068 Reserve hub: the title of the sheet that holds the seat legend
+  ///
+  /// In en, this message translates to:
+  /// **'What the colours mean'**
+  String get reserveLegendSheetTitle;
+
+  /// #3068 Reserve hub: the button in the view controls that opens the seat legend
+  ///
+  /// In en, this message translates to:
+  /// **'Colour legend'**
+  String get reserveLegendTooltip;
+
   /// #2631 resource_reserve: reserveMeetingRoom
   ///
   /// In en, this message translates to:

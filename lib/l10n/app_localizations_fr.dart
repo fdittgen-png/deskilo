@@ -21478,6 +21478,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reserveFullDayChip => 'Journée entière';
 
   @override
+  String get reserveLegendSheetTitle => 'Ce que signifient les couleurs';
+
+  @override
+  String get reserveLegendTooltip => 'Légende des couleurs';
+
+  @override
   String get reserveMeetingRoom => 'Salle de réunion';
 
   @override

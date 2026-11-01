@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_blocker.dart';
+import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
@@ -47,6 +48,7 @@ import '../widgets/getting_started_card.dart';
 import '../widgets/pending_booking_banner.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/seat_legend.dart';
+import '../widgets/seat_legend_sheet.dart';
 import '../widgets/stale_availability_banner.dart';
 import 'reserve_hub_host.dart';
 import 'reserve_hub_recorder.dart';
@@ -127,14 +129,16 @@ class ReserveHubHeader extends ConsumerWidget {
         const PendingBookingBanner(), // #1855 — nothing unless an answer is owed
         MotionReveal(child: _closedDayBanner(ref, l10n, availability)),
         const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
-        HeaderControlRow(children: _viewControls(ref, l10n, guidanceKey)),
+        HeaderControlRow(
+            children: _viewControls(context, ref, l10n, guidanceKey, gateOn)),
         HeaderControlRow(children: _whenControls(ref, timeViews)),
         if (timeViews)
           BookingWindowSummary(
               window: window,
               today: host.today,
               timezone: workspace?.timezone),
-        if (gateOn)
+        // #3068 — inline until the person has opened it from its button.
+        if (gateOn && _legendStillInline(ref))
           SeatLegend(
             showClosed: host.view.legendShowsClosed,
           ),
@@ -173,9 +177,11 @@ class ReserveHubHeader extends ConsumerWidget {
 
   /// ROW 1 — what you are looking at.
   List<Widget> _viewControls(
+    BuildContext context,
     WidgetRef ref,
     AppLocalizations l10n,
     String? guidanceKey,
+    bool gateOn,
   ) {
     final seatList = host.view == ReserveView.list;
     return <Widget>[
@@ -210,8 +216,28 @@ class ReserveHubHeader extends ConsumerWidget {
                 .switchedView(seatList ? 'list' : 'plan'); // #1865
           },
         ),
+      // #3068 — the legend, one tap away; the SeatLegend itself is unchanged.
+      if (gateOn)
+        IconButton(
+          key: const ValueKey('reserve-legend-button'),
+          tooltip: l10n.reserveLegendTooltip,
+          icon: const Icon(Icons.legend_toggle),
+          onPressed: () => showSeatLegendSheet(
+            context,
+            ref,
+            showClosed: host.view.legendShowsClosed,
+          ),
+        ),
       ?backToNow,
     ];
+  }
+
+  /// Whether the legend still sits under the controls: until this device has
+  /// seen it opened. Unknown (still reading the device) counts as hidden, so
+  /// the plan does not jump down a line when the answer arrives.
+  bool _legendStillInline(WidgetRef ref) {
+    final dismissed = ref.watch(dismissedHelpHintsProvider).value;
+    return dismissed != null && !dismissed.contains(reserveLegendHintId);
   }
 
   /// ROW 2 — WHEN you are looking at it, plus how the plan draws.

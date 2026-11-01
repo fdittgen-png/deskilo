@@ -21456,6 +21456,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reserveFullDayChip => 'Ganzer Tag';
 
   @override
+  String get reserveLegendSheetTitle => 'Was die Farben bedeuten';
+
+  @override
+  String get reserveLegendTooltip => 'Farblegende';
+
+  @override
   String get reserveMeetingRoom => 'Besprechungsraum';
 
   @override

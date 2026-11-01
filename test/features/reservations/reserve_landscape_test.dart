@@ -41,10 +41,16 @@ void main() {
             'canvas');
   });
 
-  testWidgets('the legend wraps instead of being cut mid-word',
+  testWidgets('the legend, opened from its button, is not cut mid-word',
       (tester) async {
     await pumpHub(tester, size: const Size(2316, 1080), pixelRatio: 3);
-    final legend = find.byKey(const ValueKey('reserve-legend'));
+    // #3068 — it lives behind the button in the controls now, and the
+    // panel is the sheet's width, not the 260 dp side panel's.
+    await tester.tap(find.byKey(const ValueKey('reserve-legend-button')));
+    await tester.pumpAndSettle();
+    final legend = find.descendant(
+        of: find.byType(BottomSheet),
+        matching: find.byKey(const ValueKey('reserve-legend')));
     expect(legend, findsOneWidget);
     final box = tester.getRect(legend);
     for (final label in const ['Free', 'Reserved', 'Mine', 'Blocked']) {

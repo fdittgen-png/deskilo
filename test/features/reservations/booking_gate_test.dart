@@ -350,19 +350,34 @@ void main() {
     }
 
     testWidgets(
-        'the legend names the seat states under the controls; flag OFF '
-        'hides it', (tester) async {
+        'the legend names the seat states: shown on a first visit, and '
+        'always one tap away behind the controls\' legend button',
+        (tester) async {
       await pumpHub(tester);
       expect(find.byKey(const ValueKey('reserve-legend')), findsOneWidget);
       expect(find.text('Free'), findsOneWidget);
       expect(find.text('Checked in'), findsOneWidget);
       expect(find.text('Blocked'), findsOneWidget);
+
+      // Having opened it, the person keeps the explanation of why a seat
+      // cannot be booked: the same words, in the sheet.
+      await tester.tap(find.byKey(const ValueKey('reserve-legend-button')));
+      await tester.pumpAndSettle();
+      for (final word in const ['Free', 'Checked in', 'Blocked']) {
+        expect(
+            find.descendant(
+                of: find.byType(BottomSheet), matching: find.text(word)),
+            findsOneWidget,
+            reason: word);
+      }
     });
 
     testWidgets('flag OFF: no legend, closed days stay bookable-looking',
         (tester) async {
       await pumpHub(tester, flags: const {'bookingGate': false});
       expect(find.byKey(const ValueKey('reserve-legend')), findsNothing);
+      expect(
+          find.byKey(const ValueKey('reserve-legend-button')), findsNothing);
     });
 
     testWidgets(

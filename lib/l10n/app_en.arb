@@ -25307,6 +25307,14 @@
   "@reserveFullDayChip": {
     "description": "Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)"
   },
+  "reserveLegendSheetTitle": "What the colours mean",
+  "@reserveLegendSheetTitle": {
+    "description": "#3068 Reserve hub: the title of the sheet that holds the seat legend"
+  },
+  "reserveLegendTooltip": "Colour legend",
+  "@reserveLegendTooltip": {
+    "description": "#3068 Reserve hub: the button in the view controls that opens the seat legend"
+  },
   "reserveMeetingRoom": "Meeting room",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"
