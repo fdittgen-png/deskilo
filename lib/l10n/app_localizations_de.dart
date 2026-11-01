@@ -19849,6 +19849,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get quotaRequestTitle => 'Zusätzliche halbe Tage beantragen';
 
   @override
+  String get readStateDenied =>
+      'Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.';
+
+  @override
+  String get readStateFailed =>
+      'Das Laden hat nicht geklappt. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get readStateOffline =>
+      'Keine Verbindung. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut.';
+
+  @override
   String readinessActor(String who) {
     return 'Wer: $who';
   }

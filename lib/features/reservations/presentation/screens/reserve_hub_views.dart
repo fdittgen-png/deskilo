@@ -12,9 +12,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
@@ -202,7 +202,6 @@ class ReservePlanView extends ConsumerWidget {
     List<Reservation> reservations,
     bool seatList,
   ) {
-    final l10n = context.l10n;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     return switch (planAsync) {
       // #687 — the list answers "which seat can I take"; the map answers
@@ -210,9 +209,13 @@ class ReservePlanView extends ConsumerWidget {
       //
       // KeyedSubtree so the AnimatedSwitcher above sees a new child and
       // cross-fades (#209) instead of swapping hard.
-      AsyncData(value: final plan) when seatList => KeyedSubtree(
-          key: const ValueKey('reserve-list-view'),
-          child: SeatListView(
+      AsyncValue(hasValue: true, requireValue: final plan) when seatList =>
+        _keepWhileRefreshing(
+          ref,
+          planAsync,
+          level,
+          const ValueKey('reserve-list-view'),
+          SeatListView(
             plan: plan,
             reservations: reservations,
             names: names,
@@ -227,33 +230,72 @@ class ReservePlanView extends ConsumerWidget {
                 level: level, plan: plan, window: window),
           ),
         ),
-      AsyncData(value: final plan) => ReserveCanvas(
-          key: const ValueKey('reserve-canvas-view'),
-          plan: plan,
-          level: level,
-          reservations: reservations,
-          window: window,
-          dayOpen: dayOpen,
-          day: host.dayWindow(window.start),
-          focus: host.focus,
-          onSeatTap: (seat) =>
-              _seatTapped(ref, 'plan', plan, seat, reservations),
+      AsyncValue(hasValue: true, requireValue: final plan) =>
+        _keepWhileRefreshing(
+          ref,
+          planAsync,
+          level,
+          const ValueKey('reserve-canvas-view'),
+          ReserveCanvas(
+            plan: plan,
+            level: level,
+            reservations: reservations,
+            window: window,
+            dayOpen: dayOpen,
+            day: host.dayWindow(window.start),
+            focus: host.focus,
+            onSeatTap: (seat) =>
+                _seatTapped(ref, 'plan', plan, seat, reservations),
+          ),
         ),
-      // #2011 — the floor plan could not be read: say so and offer Retry;
-      // the level selector stays, so the level is kept.
-      AsyncError() => Padding(
+      // #2011 — the floor plan could not be read: say what kind of failure
+      // it is and offer Retry; the level selector stays, so the level is kept.
+      AsyncError(:final error) => Padding(
           padding: const EdgeInsets.all(16),
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('reserve-plan-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            text: l10n.workspaceGenericError,
-            actionLabel: l10n.reserveStaleRetry,
-            onAction: () => ref.invalidate(floorPlanProvider(level.id)),
+            error: error,
+            onRetry: () => ref.invalidate(floorPlanProvider(level.id)),
           ),
         ),
       _ => const PlanSkeleton(),
     };
   }
+
+  /// #3061 — the plan stays on screen while it is read again: a thin progress
+  /// line on top, and, when that read failed, the failure above the old plan
+  /// instead of a skeleton or a blank page.
+  Widget _keepWhileRefreshing(
+    WidgetRef ref,
+    AsyncValue<FloorPlan> planAsync,
+    Level level,
+    Key key,
+    Widget content,
+  ) => Stack(
+    key: key,
+    fit: StackFit.expand,
+    children: [
+      content,
+      Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (planAsync.isLoading)
+              const LinearProgressIndicator(key: ValueKey('read-refreshing')),
+            if (planAsync.hasError)
+              ReadFailureBanner(
+                key: const ValueKey('reserve-plan-unavailable'),
+                error: planAsync.error!,
+                onRetry: () => ref.invalidate(floorPlanProvider(level.id)),
+              ),
+          ],
+        ),
+      ),
+    ],
+  );
 
   void _seatTapped(
     WidgetRef ref,

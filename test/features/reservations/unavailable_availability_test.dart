@@ -75,7 +75,7 @@ void main() {
     expect(find.byKey(banner), findsOneWidget);
     plans.failPlanReads = false;
     await tester.tap(find.descendant(
-        of: find.byKey(banner), matching: find.text('Retry')));
+        of: find.byKey(banner), matching: find.text('Try again')));
     await tester.pumpAndSettle();
     expect(find.byKey(banner), findsNothing);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);

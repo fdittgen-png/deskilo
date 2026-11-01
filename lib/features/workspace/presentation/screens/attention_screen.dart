@@ -27,8 +27,9 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/loading_view.dart';
+
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/workspace_feature.dart';
@@ -59,32 +60,28 @@ class AttentionScreen extends ConsumerWidget {
         configures: ref.watch(myPermissionsProvider)
             .contains(WorkspacePermission.manageConfiguration));
 
-    final body = items.when(
-        loading: () => const LoadingView(),
-        // A refusal already reached the trace; a screen-sized sentence
-        // here would be a second voice saying the same thing.
-        error: (e, _) => const SizedBox.shrink(),
-        data: (list) => list.isEmpty
-            // The empty state is an ANSWER, not an absence: it says
-            // nothing needs you and gets out of the way, rather than
-            // leaving an empty list to interpret.
-            ? EmptyState(
-                key: emptyKey,
-                icon: Icons.check_circle_outline,
-                title: l10n.decisionSurfaceEmpty,
-                subtitle:
-                    l10n.decisionSurfaceEmptyDetail,
-              )
-            : ListView.builder(
-                key: listKey,
-                padding: AppSpacing.gutterAll,
-                itemCount: list.length,
-                itemBuilder: (context, index) => AttentionRow(
-                  key: rowKeyFor(index),
-                  item: list[index],
-                ),
-              ),
-      );
+    final body = AsyncReadBody<List<Attention>>(
+      value: items,
+      onRetry: () => ref.invalidate(attentionProvider),
+      data: (list) => list.isEmpty
+          // The empty state is an ANSWER, not an absence: it says
+          // nothing needs you and gets out of the way, rather than
+          // leaving an empty list to interpret. A failed read is not
+          // this answer (#3061): it has its own, with a retry.
+          ? EmptyState(
+              key: emptyKey,
+              icon: Icons.check_circle_outline,
+              title: l10n.decisionSurfaceEmpty,
+              subtitle: l10n.decisionSurfaceEmptyDetail,
+            )
+          : ListView.builder(
+              key: listKey,
+              padding: AppSpacing.gutterAll,
+              itemCount: list.length,
+              itemBuilder: (context, index) =>
+                  AttentionRow(key: rowKeyFor(index), item: list[index]),
+            ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.featureDecisionSurfaceTitle),

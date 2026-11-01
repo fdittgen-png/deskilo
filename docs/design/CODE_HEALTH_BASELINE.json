@@ -375,7 +375,6 @@
 
       "lib/features/money/presentation/screens/einvoice_config_screen.dart": 2,
 
-      "lib/features/money/presentation/screens/invoice_register_screen.dart": 1,
 
       "lib/features/money/presentation/screens/legal_identity_screen.dart": 1,
 
@@ -453,7 +452,6 @@
 
       "lib/features/reservations/presentation/reserve_seat_actions.dart": 3,
 
-      "lib/features/reservations/presentation/screens/reserve_hub_views.dart": 1,
 
       "lib/features/reservations/presentation/widgets/reservation_detail_actions.dart": 1,
 
@@ -477,7 +475,6 @@
 
       "lib/features/workspace/presentation/screens/documents_screen.dart": 3,
 
-      "lib/features/workspace/presentation/screens/members_screen.dart": 1,
 
       "lib/features/workspace/presentation/screens/nfc_config_screen.dart": 1,
 
