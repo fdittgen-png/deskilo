@@ -39,7 +39,6 @@ import '../../features/workspace/presentation/screens/wording_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_applications_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_library_screen.dart';
-import '../../features/workspace/presentation/screens/workspace_overview_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../../features/workspace/presentation/widgets/onboarding_host_gate.dart';
@@ -298,7 +297,6 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(
           features: [WorkspaceFeature.decisionSurface],
-          to: '/',
         ),
       ),
       builder: (context, state) => const AttentionScreen(),
@@ -357,17 +355,6 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
             growPages: setupGrowPages,
             moneyRecorded: setupMoneyRecorded,
           ),
-    ),
-    // #2583 — the overview: what needs the person, then the figures.
-    GoRoute(
-      path: '/workspace-overview',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.workspaceOverview],
-          to: '/',
-        ),
-      ),
-      builder: (context, state) => const WorkspaceOverviewScreen(),
     ),
     // #1923 — Business analytics: only with a module this reader may see.
     GoRoute(
