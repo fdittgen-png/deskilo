@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/help_row.dart';
 
 /// #780 — the Settings row that opens the Server screen: which Supabase
 /// instance this device talks to (the app's own by default).
@@ -18,14 +18,12 @@ class BackendSettingsTile extends ConsumerWidget {
     final l10n = context.l10n;
     final endpoint = ref.watch(activeBackendProvider).value;
     final isDefault = endpoint == null || ActiveBackend.isDefault(endpoint);
-    return ListTile(
+    return HelpRow(
       key: const ValueKey('backend-server-tile'),
       leading: const Icon(Icons.dns_outlined),
-      title: HelpDotTitle(
-        l10n.backendServerTitle,
-        l10n.helpTopicServer,
-        anchor: HelpAnchor.backendServer,
-      ),
+      title: l10n.backendServerTitle,
+ topic: l10n.helpTopicServer,
+ anchor: HelpAnchor.backendServer,
       subtitle: Text(
         endpoint == null
             ? ''

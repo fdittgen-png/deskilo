@@ -129,14 +129,12 @@ Widget _languageTile(BuildContext context, WidgetRef ref,
     {required bool defaultsOnly}) {
   final l10n = context.l10n;
   final localeOverride = ref.watch(personalLocaleProvider);
-  return ListTile(
+  return HelpRow(
     key: const ValueKey('account-settings-tiles-language-title'),
     leading: const Icon(Icons.language),
-    title: HelpDotTitle(
-      l10n.languageTitle,
-      l10n.helpTopicSettings,
-      anchor: HelpAnchor.profileLanguage,
-    ),
+    title: l10n.languageTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileLanguage,
     subtitle: Text(
       localeOverride == null
           ? (l10n.languageSystemDefault)
@@ -154,14 +152,12 @@ Widget _languageTile(BuildContext context, WidgetRef ref,
 Widget _themeTile(BuildContext context, WidgetRef ref,
     {required bool defaultsOnly}) {
   final l10n = context.l10n;
-  return ListTile(
+  return HelpRow(
     key: const ValueKey('account-settings-tiles-theme-title'),
     leading: const Icon(Icons.brightness_6_outlined),
-    title: HelpDotTitle(
-      l10n.themeTitle,
-      l10n.helpTopicSettings,
-      anchor: HelpAnchor.profileTheme,
-    ),
+    title: l10n.themeTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileTheme,
     subtitle: Text(switch (ref.watch(personalThemeProvider)) {
       ThemeMode.light => l10n.themeLight,
       ThemeMode.dark => l10n.themeDark,
@@ -226,14 +222,12 @@ List<Widget> accountSettingsTiles(
     // #886 — the structured identity: name, postal block, contacts. The
     // legacy free-text address dialog stays while the flag is off.
     if (account && inSpace && features.contains(WorkspaceFeature.personalInfo))
-      ListTile(
+      HelpRow(
         key: const ValueKey('settings-personal-info'),
         leading: const Icon(Icons.contact_mail_outlined),
-        title: HelpDotTitle(
-          l10n.personalInfoTitle,
-          l10n.helpTopicSettings,
-          anchor: HelpAnchor.profilePersonalInfo,
-        ),
+        title: l10n.personalInfoTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profilePersonalInfo,
         subtitle: Text(
           _identitySummary(myProfile) ??
               (l10n.personalInfoNone),
@@ -244,14 +238,12 @@ List<Widget> accountSettingsTiles(
       )
     else if (account)
       // Postal address (0060): printed on the member's invoices.
-      ListTile(
+      HelpRow(
         key: const ValueKey('settings-address'),
         leading: const Icon(Icons.home_outlined),
-        title: HelpDotTitle(
-          l10n.addressTitle,
-          l10n.helpTopicSettings,
-          anchor: HelpAnchor.profileAddress,
-        ),
+        title: l10n.addressTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileAddress,
         subtitle: Text(
           (myProfile?.address.isNotEmpty ?? false)
               ? myProfile!.address
@@ -267,14 +259,12 @@ List<Widget> accountSettingsTiles(
     // Opt-in WhatsApp number on my profile (#223), shared with members of
     // my workspaces. Rides the whatsappIntegration feature.
     if (profile && features.contains(WorkspaceFeature.whatsappIntegration))
-      ListTile(
+      HelpRow(
         key: ValueKey('account-settings-tiles-whatsapp-title-${only?.name}'),
         leading: const Icon(Icons.chat_outlined),
-        title: HelpDotTitle(
-          l10n.whatsappTitle,
-          l10n.helpTopicSettings,
-          anchor: HelpAnchor.profileWhatsapp,
-        ),
+        title: l10n.whatsappTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileWhatsapp,
         subtitle: Text(
           (myProfile?.sharesWhatsapp ?? false)
               ? myProfile!.whatsapp
@@ -302,14 +292,12 @@ List<Widget> accountSettingsTiles(
     // #606 — bring every dismissed contextual hint back. Rides the same
     // flag as the hints themselves: no hints, no row.
     if (account && features.contains(WorkspaceFeature.formHelpHints))
-      ListTile(
+      HelpRow(
         key: const ValueKey('settings-restore-hints'),
         leading: const Icon(Icons.lightbulb_outline),
-        title: HelpDotTitle(
-          l10n.helpHintRestoreTitle,
-          l10n.helpTopicSettings,
-          anchor: HelpAnchor.profileRestoreHints,
-        ),
+        title: l10n.helpHintRestoreTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileRestoreHints,
         onTap: () async {
           await ref.read(dismissedHelpHintsProvider.notifier).restoreAll();
           if (!context.mounted) return;
@@ -340,14 +328,12 @@ Widget? _navigationTile(BuildContext context, WidgetRef ref) {
     NavigationStyle.classic => classic,
     NavigationStyle.menu => menu,
   };
-  return ListTile(
+  return HelpRow(
     key: const ValueKey('settings-navigation'),
     leading: const Icon(Icons.menu_open_outlined),
-    title: HelpDotTitle(
-      l10n.navigationTitle,
-      l10n.helpTopicSettings,
-      anchor: HelpAnchor.profileNavigation,
-    ),
+    title: l10n.navigationTitle,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileNavigation,
     subtitle: Text(switch (ref.watch(navigationStyleControllerProvider).value) {
       NavigationStyle.classic => classic,
       NavigationStyle.menu => menu,

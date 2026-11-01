@@ -1,0 +1,14 @@
+# #3215 -- rows with the help symbol inside the title (HelpDotTitle) per file.
+# Only falls: test/lint/help_dot_title_budget_test.dart explains and records.
+7 lib/features/events/presentation/widgets/policy_editor_sheet.dart
+1 lib/features/events/presentation/widgets/validation_policy_card.dart
+2 lib/features/money/presentation/screens/legal_identity_screen.dart
+1 lib/features/money/presentation/screens/my_payment_terms_screen.dart
+1 lib/features/money/presentation/widgets/dunning_rules_dialog.dart
+1 lib/features/profile/presentation/screens/personal_info_screen.dart
+5 lib/features/profile/presentation/screens/privacy_screen.dart
+3 lib/features/workspace/presentation/member_admin_actions.dart
+1 lib/features/workspace/presentation/member_vat_treatment.dart
+3 lib/features/workspace/presentation/screens/availability_policies.dart
+6 lib/features/workspace/presentation/screens/workspace_settings_screen.dart
+1 lib/features/workspace/presentation/widgets/workspace_own_screens.dart

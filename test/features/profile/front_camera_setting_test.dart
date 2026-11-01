@@ -32,18 +32,19 @@ void main() {
       80,
       scrollable: find.byType(Scrollable).first,
     );
+    // #3215 — the row is a HelpRow now: its switch is a Switch in the row.
     await tester.ensureVisible(tile);
     await tester.pumpAndSettle();
 
     expect(
-      tester.widget<SwitchListTile>(tile).value,
+      tester.widget<Switch>(find.descendant(of: tile, matching: find.byType(Switch))).value,
       isTrue,
     );
 
     await tester.tap(tile);
     await tester.pumpAndSettle();
 
-    expect(tester.widget<SwitchListTile>(tile).value, isFalse);
+    expect(tester.widget<Switch>(find.descendant(of: tile, matching: find.byType(Switch))).value, isFalse);
     expect(store.value, isFalse);
   });
 }
