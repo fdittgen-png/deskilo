@@ -893,6 +893,11 @@
   "bankStatementsIntro": "Importez les fichiers que produit votre banque. Chaque mouvement est lu une seule fois ; les paiements sont rapprochés de leurs factures quand vous confirmez.",
   "bankStatementsLoadFailed": "Les relevés bancaires n'ont pas pu être chargés.",
   "bankStatementsTitle": "Relevés bancaires",
+  "bankUndoBody": "Le mouvement redevient ouvert et le paiement n'est de nouveau qu'enregistré comme effectué. Le rapprochement et la raison de son annulation restent conservés.",
+  "bankUndoConfirm": "Annuler le rapprochement",
+  "bankUndoReasonLabel": "Pourquoi il est annulé",
+  "bankUndoReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
+  "bankUndoTitle": "Annuler ce rapprochement ?",
   "baseRoleNote": "Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s'y ajoutent ; aucun ne retire quoi que ce soit.",
   "@baseRoleNote": {
     "description": "the mandatory base role"

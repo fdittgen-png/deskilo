@@ -2101,6 +2101,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankStatementsTitle => 'Estratti conto';
 
   @override
+  String get bankUndoBody =>
+      'Il movimento torna aperto e il pagamento risulta di nuovo solo registrato come effettuato. La riconciliazione e il motivo dell\'annullamento restano registrati.';
+
+  @override
+  String get bankUndoConfirm => 'Annulla la riconciliazione';
+
+  @override
+  String get bankUndoReasonLabel => 'Perché viene annullata';
+
+  @override
+  String get bankUndoReasonRequired =>
+      'Indichi perché la riconciliazione viene annullata.';
+
+  @override
+  String get bankUndoTitle => 'Annullare questa riconciliazione?';
+
+  @override
   String get baseRoleNote =>
       'Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.';
 

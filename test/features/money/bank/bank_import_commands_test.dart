@@ -335,6 +335,79 @@ void main() {
     expect((await once()).result!.repeated, isTrue);
     expect(flaky.originals, hasLength(1));
   });
+
+  test('#2380 — undoing a reconciliation sends nothing without a reason or '
+      'for a movement that reconciles nothing; the same request id undoes '
+      'once', () async {
+    final bank = FakeBankStatementRepository(
+      money: FakeMoneyRepository(),
+      today: DateTime.utc(2026, 10, 26),
+    );
+    final commands = BankImportCommands(bank);
+    bank.reportedPayments.add((
+      payment: OutgoingCandidate(
+        id: 'out-1',
+        amountCents: 900,
+        paidOn: DateTime.utc(2026, 10, 19),
+        reference: '',
+        payee: 'Studio Lumen',
+      ),
+      currency: 'CHF',
+    ));
+    final result = await bank.importStatement(
+      'ws-1',
+      statement: BankStatement(
+        format: BankFileFormat.camt054,
+        account: 'CH9300762011623852957',
+        currency: 'CHF',
+        lines: [
+          BankLine(
+            position: 1,
+            bookingDate: DateTime.utc(2026, 10, 20),
+            valueDate: DateTime.utc(2026, 10, 20),
+            amountCents: -900,
+            currency: 'CHF',
+            transactionId: 'U1',
+          ),
+        ],
+      ),
+      sourceSha256: 'f' * 64,
+      fileName: 'u.xml',
+    );
+    Future<StoredBankLine> current() async =>
+        (await bank.fetchLines(result.statementId)).single;
+    final open = await current();
+    expect(
+      await commands.unreconcileOut(open, reason: 'x', requestId: 'r0'),
+      isNull,
+      reason: 'an open movement reconciles nothing to undo',
+    );
+    await commands.reconcileOut(open, outgoingPaymentId: 'out-1');
+    final reconciled = await current();
+    expect(
+      await commands.unreconcileOut(reconciled, reason: '  ', requestId: 'r1'),
+      isNull,
+    );
+    expect(bank.unreconciliations, isEmpty);
+
+    final long = 'w' * (BankColumnWidths.unreconcileReason + 20);
+    expect(
+      await commands.unreconcileOut(reconciled, reason: long, requestId: 'r1'),
+      BankLineStatus.open,
+    );
+    expect(
+      bank.unreconciliations['r1']!.reason.length,
+      BankColumnWidths.unreconcileReason,
+      reason: 'a reason longer than its column is cut to it',
+    );
+    expect(
+      await commands.unreconcileOut(reconciled, reason: long, requestId: 'r1'),
+      BankLineStatus.open,
+      reason: 'the same request answers the same',
+    );
+    expect(bank.unreconciliations, hasLength(1));
+    expect(bank.reportedPayments.map((r) => r.payment.id), ['out-1']);
+  });
 }
 
 class _NoOriginals extends FakeBankStatementRepository {

@@ -4,7 +4,7 @@
 // settles (the suggestions first, with why; then every other open invoice
 // in its currency) and how a difference resolves; whether a movement that
 // resembles another statement's is a duplicate; which payment reported as
-// made a movement out reconciles.
+// made a movement out reconciles, and why that reconciliation is undone.
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/bank/bank_match.dart';
 import '../../domain/bank/bank_records.dart';
+import '../../domain/bank/bank_statement.dart';
 import '../bank_labels.dart';
 
 /// The invoice chosen for a movement, how an overpayment resolves, and
@@ -271,6 +272,78 @@ class _BankOutDialogState extends State<_BankOutDialog> {
           key: const ValueKey('bank-out-confirm'),
           onPressed: _id == null ? null : () => Navigator.of(context).pop(_id),
           child: Text(l10n.bankMatchConfirm),
+        ),
+      ],
+    );
+  }
+}
+
+/// Why the reconciliation of a movement out is undone; null when the
+/// person keeps it.
+Future<String?> showBankUndoDialog(BuildContext context) => showDialog<String>(
+  context: context,
+  builder: (_) => const _BankUndoDialog(),
+);
+
+class _BankUndoDialog extends StatefulWidget {
+  const _BankUndoDialog();
+
+  @override
+  State<_BankUndoDialog> createState() => _BankUndoDialogState();
+}
+
+class _BankUndoDialogState extends State<_BankUndoDialog> {
+  final _reason = TextEditingController();
+  String? _error;
+
+  @override
+  void dispose() {
+    _reason.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final reason = _reason.text.trim();
+    if (reason.isEmpty) {
+      setState(() => _error = context.l10n.bankUndoReasonRequired);
+      return;
+    }
+    Navigator.of(context).pop(reason);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return AlertDialog(
+      title: Text(l10n.bankUndoTitle),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.bankUndoBody),
+            const FormGap.small(),
+            AppTextField(
+              key: const ValueKey('bank-undo-reason'),
+              controller: _reason,
+              label: l10n.bankUndoReasonLabel,
+              error: _error,
+              maxLines: 2,
+              maxLength: BankColumnWidths.unreconcileReason,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('bank-undo-cancel'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          key: const ValueKey('bank-undo-confirm'),
+          onPressed: _submit,
+          child: Text(l10n.bankUndoConfirm),
         ),
       ],
     );

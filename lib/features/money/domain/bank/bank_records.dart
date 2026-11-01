@@ -284,6 +284,15 @@ abstract interface class BankStatementRepository {
     String lineId, {
     required String outgoingPaymentId,
   });
+
+  /// Undoes the reconciliation of money out, once, for [reason]: the
+  /// movement is open again and its payment reported again; the undoing is
+  /// kept on record. The same [requestId] again changes nothing.
+  Future<BankLineStatus> unreconcileOut(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  });
 }
 
 /// A calendar day of the wire (`YYYY-MM-DD`) at UTC midnight.

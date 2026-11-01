@@ -4,14 +4,16 @@
 // reconciles: each with where it stands and, for money in still open, the
 // invoice it most likely settles and why, matched once per load. The
 // movements whose structured reference names one invoice for exactly what
-// it owes are confirmed in one press; every other one by itself. While a
-// decision is sent nothing else can be pressed; a reader who may not match
-// or reconcile sees the list and no door.
+// it owes are confirmed in one press; every other one by itself. A
+// reconciled movement out is undone by the person who may reconcile, with a
+// reason. While a decision is sent nothing else can be pressed; a reader
+// who may not match or reconcile sees the list and no door.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -97,6 +99,7 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
     BankLineStatus.open =>
       line.isMoneyIn ? widget.canMatch : widget.canReconcile,
     BankLineStatus.recorded => line.isMoneyIn && widget.canMatch,
+    BankLineStatus.reconciled => widget.canReconcile,
     _ => false,
   };
 
@@ -135,11 +138,18 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
         if (paymentId == null) return;
         action = () =>
             commands.reconcileOut(line, outgoingPaymentId: paymentId);
+      case BankLineStatus.reconciled:
+        final reason = await showBankUndoDialog(context);
+        if (reason == null) return;
+        // One request id per decision: a retry of this send never undoes
+        // a later reconciliation of the same movement.
+        final requestId = newRequestId();
+        action = () =>
+            commands.unreconcileOut(line, reason: reason, requestId: requestId);
       case BankLineStatus.duplicate ||
           BankLineStatus.recorded ||
           BankLineStatus.pending ||
-          BankLineStatus.matched ||
-          BankLineStatus.reconciled:
+          BankLineStatus.matched:
         return;
     }
     if (!mounted) return;

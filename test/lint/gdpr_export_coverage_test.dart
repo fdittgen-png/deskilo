@@ -75,6 +75,10 @@ const Map<String, String> _notExported = {
   'purchase_settlement_allocations':
       '#2574 — the append-only link from a claim to a payment; it names rows '
           'exported elsewhere (the payment, the ledger entry)',
+  'bank_line_unreconciliations':
+      '#2380 — the append-only record of a reconciliation of money out undone; '
+          'it records who undid it (a member) but is an accounting history of '
+          'the space, not the person\'s own data',
   'purchase_commitment_matches':
       '#2575 — the append-only link from a lease\'s expected rent to the bill '
           'lines that replaced it; it records who linked it (a member) but is '
