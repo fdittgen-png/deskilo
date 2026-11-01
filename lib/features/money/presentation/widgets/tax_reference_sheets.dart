@@ -71,6 +71,7 @@ class _VersionForm {
           'position': switch (from?.value) {
             RateValue(:final position) => '$position',
             GroupExampleValue(:final position) => '$position',
+            CountryValue(:final position) => '$position',
             _ => '0',
           },
           'regime': from?.value is ExemptionTextValue
@@ -90,8 +91,10 @@ class _VersionForm {
           'currency': switch (from?.value) {
             ThresholdValue(:final currency) => currency,
             IssuingGateValue(:final currency) => currency,
+            CountryValue(:final currency) => currency,
             _ => '',
           },
+          'time_zone': from?.value is CountryValue ? (from!.value as CountryValue).timeZone : '',
           'from': switch (from?.value) {
             MandateValue(:final from) => from,
             _ => '',
@@ -154,13 +157,13 @@ class _VersionForm {
 
   double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
 
-  /// The two values that begin on a day: a duty, a retention clock.
-  TaxValue _datedValue() => domain == TaxDomain.mandate
-      ? MandateValue(duty: choice['duty']!, from: fields.text('from'))
-      : RetentionValue(
-          years: int.tryParse(fields.text('years')) ?? 0,
-          from: choice['start']!,
-        );
+  /// The small values: a duty and a retention clock (both begin on a day),
+  /// and a country of the creation catalogue.
+  TaxValue _pairedValue() => switch (domain) {
+        TaxDomain.mandate => MandateValue(duty: choice['duty']!, from: fields.text('from')),
+        TaxDomain.country => countryValueOf(fields, choice),
+        _ => RetentionValue(years: int.tryParse(fields.text('years')) ?? 0, from: choice['start']!),
+      };
 
   TaxValue value() => switch (domain) {
         TaxDomain.rate => RateValue(
@@ -183,7 +186,7 @@ class _VersionForm {
             cashOption: flag['cash_option']!,
             cashBackstop: choice['cash_backstop']!,
           ),
-        TaxDomain.mandate || TaxDomain.retention => _datedValue(),
+        TaxDomain.mandate || TaxDomain.retention || TaxDomain.country => _pairedValue(),
         TaxDomain.issuingGate => IssuingGateValue(
             supported: flag['supported']!,
             requiresTaxNumber: flag['requires_tax_number']!,
@@ -264,6 +267,7 @@ class _VersionForm {
       },
       if (domain == TaxDomain.retention && (int.tryParse(fields.text('years')) ?? 0) < 1)
         'years': l10n.taxRefInvalidNumber,
+      if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields),
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
         'from': l10n.taxRefInvalidDate,
@@ -384,6 +388,11 @@ class _VersionForm {
           ],
         TaxDomain.taxability => [
             _pick('status', l10n.taxRefStatus, taxabilityStatuses),
+          ],
+        TaxDomain.country => [
+            _text('currency', l10n.taxRefCurrency), _text('time_zone', l10n.taxRefTimeZone),
+            _pick('banking_scheme', l10n.taxRefBankingScheme, bankingSchemeNames),
+            _text('position', l10n.taxRefPosition, type: TextInputType.number),
           ],
         TaxDomain.rateComponent => [
             _text('percent', l10n.taxRefPercent, type: TextInputType.number),

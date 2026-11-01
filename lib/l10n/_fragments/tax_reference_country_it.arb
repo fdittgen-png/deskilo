@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "taxRefDomainCountry": "Paese (catalogo di creazione)",
+  "taxRefTimeZone": "Fuso orario (IANA)",
+  "taxRefBankingScheme": "Sistema bancario",
+  "taxRefInvalidTimeZone": "Non è un fuso orario IANA noto all'app, come Europe/Paris"
+}
