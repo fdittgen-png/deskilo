@@ -7,7 +7,7 @@
 -- percentage outside the registry's bounds and a level already offered are
 -- refused with their own errcode and change nothing.
 begin;
-select plan(19);
+select plan(21);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -94,6 +94,18 @@ select is(pg_temp.levels('00000000-0000-4000-8000-0000003132b1'),
 select is(pg_temp.levels('00000000-0000-4000-8000-0000003132b2'),
   '{"enabled_presets": [25, 50, 75, 100], "extra_levels": [], "allow_custom": false}'::jsonb,
   'another workspace keeps the default levels');
+
+-- The billing screen sits behind the money functionality: with it off the
+-- command refuses too, and the same call succeeds once it is back on.
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"moneyTab": false}'::jsonb
+ where id = '00000000-0000-4000-8000-0000003132b1';
+select pg_temp.act_as('00000000-0000-4000-8000-0000003132a2');
+select throws_ok($$select public.create_subscription_level('00000000-0000-4000-8000-0000003132b1', 60)$$,
+  '55000', null, 'a space with the money functionality off refuses the command');
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"moneyTab": true}'::jsonb
+ where id = '00000000-0000-4000-8000-0000003132b1';
+select is(public.create_subscription_level('00000000-0000-4000-8000-0000003132b1', 60) -> 'extra_levels',
+  '[1, 30, 60]'::jsonb, 'back on, the same call adds the level');
 
 select * from finish();
 rollback;

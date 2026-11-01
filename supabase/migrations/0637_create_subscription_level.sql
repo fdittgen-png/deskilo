@@ -20,8 +20,12 @@
 -- Refusals (the errcode is the contract):
 --   42501  no right (not signed in, not a member, a member without
 --          manageBilling, another workspace's manager, no such workspace)
+--   55000  the money functionality is switched off in this space (the screen
+--          that hosts the field, /billing, requires the moneyTab feature)
 --   22023  a percentage outside the registry's bounds, or none
 --   23505  the level is already offered
+--   XX000  the registry has no bounds, or the column no preset levels: never
+--          read as 'any percentage is allowed'
 
 create or replace function public.create_subscription_level(p_workspace_id uuid, p_percent int)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
@@ -37,10 +41,17 @@ begin
      or not public.has_permission(p_workspace_id, 'manageBilling') then
     raise exception 'only whoever manages billing may add a subscription level' using errcode = '42501';
   end if;
+  -- The billing screen sits behind the money functionality (route /billing).
+  if not public.feature_effective(p_workspace_id, 'moneyTab') then
+    raise exception 'money is switched off in this space' using errcode = '55000';
+  end if;
 
   select (f->>'min')::int, (f->>'max')::int into v_min, v_max
     from jsonb_array_elements(public.template_field_registry()) f
    where f->>'id' = 'workspace.subscription_levels.extra_levels';
+  if v_min is null or v_max is null then
+    raise exception 'the bounds of a subscription level are not defined' using errcode = 'XX000';
+  end if;
   if p_percent is null or p_percent < v_min or p_percent > v_max then
     raise exception 'a subscription level is a percentage from % to %', v_min, v_max using errcode = '22023';
   end if;
