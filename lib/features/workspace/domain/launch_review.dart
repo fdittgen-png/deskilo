@@ -84,6 +84,21 @@ class LaunchReview {
   /// What only the operator can do, to forward as text.
   final List<SetupStepStatus> operatorTasks;
 
+  /// #3076 — when the space cannot go live at its goal: the highest chosen
+  /// milestone it COULD open at, every earlier one reached and none of them
+  /// stopped by an open required step. Null when it can go live, or when not
+  /// even the first milestone is reached.
+  LaunchMilestone? get openableBelowGoal {
+    if (canGoLive) return null;
+    LaunchMilestone? best;
+    for (final m in milestones) {
+      final stopped = blockers.any((s) => s.milestone == m.status.milestone);
+      if (!m.status.reached || stopped) break;
+      best = m;
+    }
+    return best;
+  }
+
   /// Every milestone the space chose is reached on the server.
   bool get canGoLive =>
       milestones.isNotEmpty &&

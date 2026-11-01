@@ -13,6 +13,7 @@ import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -136,6 +137,37 @@ void main() {
     expect(_read(tester, 'setup-step-services'), contains('To do'));
     await _unfold(tester, 'add-more');
     expect(_read(tester, 'setup-step-kiosk'), contains('Not in your setup'));
+    semantics.dispose();
+  });
+
+  testWidgets('the hub\'s traversal lists each button once (#3076)', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await _pump(tester, _status());
+
+    final labels = <String>[];
+    void walk(SemanticsNode node) {
+      final data = node.getSemanticsData();
+      if (data.flagsCollection.isButton && data.label.isNotEmpty) {
+        labels.add(data.label);
+      }
+      node.visitChildren((SemanticsNode child) {
+        walk(child);
+        return true;
+      });
+    }
+
+    walk(tester.getSemantics(find.byType(SetupGuideScreen)));
+    expect(labels, isNotEmpty);
+    expect(
+      {
+        for (final l in labels.toSet())
+          if (labels.where((x) => x == l).length > 1) l,
+      },
+      isEmpty,
+      reason: 'a button must be one stop, not several: $labels',
+    );
     semantics.dispose();
   });
 

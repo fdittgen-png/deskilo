@@ -91,5 +91,6 @@
   "setupLaunchCannot": "Live gehen ist möglich, sobald jeder Meilenstein erreicht ist.",
   "@setupLaunchCannot": {
     "description": "#2876 setup launch: setupLaunchCannot"
-  }
+  },
+  "setupLaunchOpenLower": "Nur mit {milestone} live gehen"
 }

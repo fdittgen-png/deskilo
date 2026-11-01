@@ -16231,6 +16231,7 @@
   "@setupLaunchMilestones": {
     "description": "#2876 setup launch: setupLaunchMilestones"
   },
+  "setupLaunchOpenLower": "Ouvrir avec {milestone} seulement",
   "setupLaunchOperator": "Seul votre opérateur peut faire ceci :",
   "@setupLaunchOperator": {
     "description": "#2876 setup launch: setupLaunchOperator"

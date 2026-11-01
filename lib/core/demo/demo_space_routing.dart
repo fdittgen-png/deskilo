@@ -28,6 +28,7 @@ import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -155,7 +156,19 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     bankStatementRepositoryProvider.overrideWith(
       (ref) => pick(ref, homeBank, secondBank),
     ),
-    invoiceQueriesProvider.overrideWith((ref) => money(ref).invoiceQueries),
+    // #3060 F5 — the register a plain member reads is their own invoices,
+    // as on the server.
+    invoiceQueriesProvider.overrideWith((ref) {
+      return money(ref).invoiceQueries..ownOnlyFor = () {
+        final rights = ref.read(myPermissionsProvider);
+        if (rights.contains(WorkspacePermission.viewFinances) ||
+            rights.contains(WorkspacePermission.issueInvoices)) {
+          return null;
+        }
+        // Unknown yet reads nothing rather than everything.
+        return ref.read(myMemberProvider).value?.id ?? '';
+      };
+    }),
     memberAccountQueriesProvider.overrideWith(
       (ref) => money(ref).accountQueries,
     ),

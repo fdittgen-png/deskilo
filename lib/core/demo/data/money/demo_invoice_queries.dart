@@ -13,13 +13,22 @@ import '../money_repository.dart';
 /// money store ([FakeMoneyRepository]); every other port of that space reads
 /// and writes the same store.
 class DemoInvoiceQueries implements InvoiceQueries {
-  DemoInvoiceQueries(this._m);
+  DemoInvoiceQueries(this._m, {this.ownOnlyFor});
 
   final FakeMoneyRepository _m;
 
+  /// The member whose OWN invoices are all the reader may see, or null when
+  /// the reader sees the whole register (the server's `invoices_select`,
+  /// 0131: a member without viewFinances or issueInvoices reads only theirs).
+  String? Function()? ownOnlyFor;
+
   @override
-  Future<List<Invoice>> fetchInvoices(String workspaceId) async =>
-      List.unmodifiable(_m.invoices);
+  Future<List<Invoice>> fetchInvoices(String workspaceId) async {
+    final own = ownOnlyFor?.call();
+    return List.unmodifiable(
+      own == null ? _m.invoices : _m.invoices.where((i) => i.memberId == own),
+    );
+  }
 
   @override
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async => {

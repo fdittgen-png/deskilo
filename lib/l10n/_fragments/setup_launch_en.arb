@@ -91,5 +91,14 @@
   "setupLaunchCannot": "Go live becomes possible once every milestone is reached.",
   "@setupLaunchCannot": {
     "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchOpenLower": "Go live with {milestone} only",
+  "@setupLaunchOpenLower": {
+    "description": "#3076 check page: opens at the nearest milestone reached when the goal is not",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
   }
 }

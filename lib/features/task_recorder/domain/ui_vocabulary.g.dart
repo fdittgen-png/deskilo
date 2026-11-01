@@ -2794,6 +2794,7 @@ const Set<String> uiKeys = {
   'setup-launch-goal',
   'setup-launch-goal-change',
   'setup-launch-list',
+  'setup-launch-open-lower',
   'setup-launch-operator',
   'setup-launch-public',
   'setup-launch-report',

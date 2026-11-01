@@ -91,5 +91,6 @@
   "setupLaunchCannot": "Aprire sarà possibile quando ogni traguardo sarà raggiunto.",
   "@setupLaunchCannot": {
     "description": "#2876 setup launch: setupLaunchCannot"
-  }
+  },
+  "setupLaunchOpenLower": "Aprire solo con {milestone}"
 }

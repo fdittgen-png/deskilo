@@ -168,6 +168,9 @@ void main() {
     expect(find.text('page places'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return')), findsOneWidget);
     expect(find.text('Next step'), findsOneWidget);
+    // One primary action on a step page (#3076), beside the way back.
+    expect(find.byKey(const ValueKey('setup-next-step')), findsOneWidget);
+    expect(find.byType(FilledButton), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('setup-next-step')));
     await tester.pumpAndSettle();
