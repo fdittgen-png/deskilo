@@ -20,13 +20,16 @@ const _shardJobs = {
   restShard: 'rest',
 };
 
-/// #3166 — each shard's cap: the feature shards keep 45 minutes of
-/// margin until two loaded runs of the four-way split are measured.
+/// #3166 — each shard's cap: 30 minutes for all four. The four-way split
+/// measured 809-1157 s per job over three green runs (the largest 19.3
+/// minutes, setup included), so 30 minutes leaves 55 % headroom and still
+/// ends a hung job instead of holding the runner for three quarters of an
+/// hour.
 const _timeouts = {
   gateShard: '30',
-  moneyShard: '45',
-  workspaceShard: '45',
-  restShard: '45',
+  moneyShard: '30',
+  workspaceShard: '30',
+  restShard: '30',
 };
 
 YamlMap _jobs() =>
