@@ -23,7 +23,7 @@ import {
   type DeliveryStore,
   type RemoteDocument,
 } from "./accounting_delivery.ts";
-import { type Posting, type PostingParty, postingSha256 } from "./accounting_postings.ts";
+import { type Posting, type PostingParty, postingSha256, postingsOf } from "./accounting_postings.ts";
 import { CONNECTIONS_URL, IDEMPOTENCY_KEY_LENGTH, signedInTenant, xeroAccounting } from "./accounting_xero.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
@@ -288,6 +288,41 @@ Deno.test("a year becomes one Xero object per document, and a second run creates
   assertEquals((await run(x, log, year)).statuses, ["unchanged", "unchanged", "unchanged", "unchanged"]);
   assertEquals(x.st.writes, before);
   assertEquals(x.held.Invoices.length, 1);
+});
+
+Deno.test("a payment reconciled with a statement line is dated on its value date (#2380)", async () => {
+  const wire = (id: string, date: string, extra: Record<string, unknown>) => ({
+    journal: "bank",
+    kind: "receipt",
+    date,
+    document_id: id,
+    document_number: "F-2026-0001",
+    currency: "GBP",
+    ...extra,
+    lines: [
+      { role: "bank", qualifier: null, debit_cents: 6000, credit_cents: 0 },
+      { role: "customers", qualifier: null, debit_cents: 0, credit_cents: 6000 },
+    ],
+  });
+  const read = postingsOf({
+    postings: [
+      wire(INV, "2026-02-10", { value_date: "2026-02-07", bank_reference: "RF18539007547034" }),
+      wire(INV, "2026-02-10", {}),
+    ],
+    blockers: [],
+  }).postings;
+  assertEquals(read.map((p) => p.valueDate ?? null), ["2026-02-07", null]);
+  const x = organisation();
+  const log = new Log();
+  await run(x, log, [year[0], read[0]]);
+  assertEquals(x.held.Payments.map((p) => p.Date), ["2026-02-07"]);
+  // The delivery identity is the booking day: the value date changes what
+  // Xero is told, never which document it is.
+  assertEquals(await postingSha256(read[0]), await postingSha256({ ...read[0], valueDate: undefined }));
+  // No line, no change: the payment is dated as it always was.
+  const y = organisation();
+  await run(y, new Log(), [year[0], read[1]]);
+  assertEquals(y.held.Payments.map((p) => p.Date), ["2026-02-10"]);
 });
 
 Deno.test("a TaxType the organisation does not hold stops the document with the key named", async () => {
