@@ -16620,6 +16620,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myVisitsTitle => 'Mis visitas';
 
   @override
+  String get navPurchasesGroup => 'Compras y proveedores';
+
+  @override
   String get navigationClassic =>
       'Clásica: la barra inferior y el botón redondo';
 
@@ -19018,6 +19021,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Perfil público';
+
+  @override
+  String get purchaseApprovalsEmpty => 'Nada espera su aprobación.';
+
+  @override
+  String get purchaseApprovalsRefused =>
+      'No se pudieron leer los documentos por aprobar.';
+
+  @override
+  String get purchaseApprovalsTitle => 'Por aprobar';
 
   @override
   String get purchaseEntryAdd => 'Añadir compra / gasto';

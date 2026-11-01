@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "navPurchasesGroup": "Einkäufe und Lieferanten",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "Zu genehmigen",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsEmpty": "Nichts wartet auf Ihre Genehmigung.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "Die zu genehmigenden Belege konnten nicht gelesen werden.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  }
+}

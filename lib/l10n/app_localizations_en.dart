@@ -16510,6 +16510,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myVisitsTitle => 'My visits';
 
   @override
+  String get navPurchasesGroup => 'Purchases & suppliers';
+
+  @override
   String get navigationClassic =>
       'Classic: the bottom bar and the round button';
 
@@ -18891,6 +18894,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Public profile';
+
+  @override
+  String get purchaseApprovalsEmpty => 'Nothing waits for your approval.';
+
+  @override
+  String get purchaseApprovalsRefused =>
+      'The documents waiting for approval could not be read.';
+
+  @override
+  String get purchaseApprovalsTitle => 'To approve';
 
   @override
   String get purchaseEntryAdd => 'Add purchase / expense';

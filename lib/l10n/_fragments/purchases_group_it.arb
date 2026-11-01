@@ -1,0 +1,19 @@
+{
+  "@@locale": "it",
+  "navPurchasesGroup": "Acquisti e fornitori",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "Da approvare",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsEmpty": "Nulla attende la sua approvazione.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "Non è stato possibile leggere i documenti da approvare.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  }
+}
