@@ -290,6 +290,22 @@ function differencesOf(e: Record<string, unknown>, posting: Posting): string[] {
  * Pennylane ledger account its role is mapped to (`account` mappings,
  * remote id = the ledger account's id), the entry's external reference the
  * delivery's idempotency key, so a readback finds exactly this delivery. */
+/** The company a token reaches, by its id, or why not.
+ * spec: API v2 "Get current user and company" (`GET /me`) — `company.id`.
+ * Not yet verified against a live company. */
+async function tokenCompany(
+  fetchImpl: Fetch,
+  cfg: Config,
+): Promise<{ tenant: string } | { refused: string }> {
+  const me = await call(fetchImpl, cfg, "me");
+  if (!me.ok) return { refused: me.failure.detail };
+  const company = me.body.company;
+  const id = typeof company === "object" && company !== null ? (company as Record<string, unknown>).id : undefined;
+  return typeof id === "number" || (typeof id === "string" && id !== "")
+    ? { tenant: String(id) }
+    : { refused: "Pennylane names no company for this token" };
+}
+
 export function pennylaneLedger(ctx: AdapterContext): PostingAdapter {
   const cfg: Config = {
     base_url: SANDBOX.base_url,
@@ -299,11 +315,22 @@ export function pennylaneLedger(ctx: AdapterContext): PostingAdapter {
   return {
     async prepare() {
       if (!cfg.access_token) return "the connection holds no token";
+      // The company a token reaches is the token's, not the label's: a
+      // token for another company than the one the manager named delivers
+      // nothing.
+      if (ctx.tenant) {
+        const company = await tokenCompany(ctx.fetch, cfg);
+        if ("refused" in company) return company.refused;
+        if (company.tenant !== ctx.tenant) {
+          return "this token reaches another Pennylane company than the one this connection was made for";
+        }
+      }
       const found = await journalIds(ctx.fetch, cfg);
       if ("failure" in found) return found.failure.detail;
       journals = found.ids;
       return null;
     },
+    signedInTenant: () => tokenCompany(ctx.fetch, cfg),
     needs: accountNeeds,
     remote(posting, party, maps) {
       return {

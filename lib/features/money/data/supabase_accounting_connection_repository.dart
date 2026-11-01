@@ -24,6 +24,10 @@ class SupabaseAccountingConnectionRepository
   /// connection); its body says which.
   static const _runRefused = 409;
 
+  /// The HTTP status of a connection the server does not check by its
+  /// token (an OAuth connection, or a target without that check).
+  static const _notChecked = 400;
+
   /// The HTTP status of a caller the server refused: they may not deliver
   /// for this connection or read these books.
   static const _notAllowed = 403;
@@ -68,11 +72,31 @@ class SupabaseAccountingConnectionRepository
     String connectionId, {
     required String token,
     required String remoteTenantId,
-  }) => _connection('set_accounting_token_v1', {
-    'p_connection_id': connectionId,
-    'p_token': token,
-    'p_remote_tenant_id': remoteTenantId,
-  });
+  }) async {
+    final stored = await _connection('set_accounting_token_v1', {
+      'p_connection_id': connectionId,
+      'p_token': token,
+      'p_remote_tenant_id': remoteTenantId,
+    });
+    await _verifyCompany(connectionId);
+    return stored;
+  }
+
+  /// Asks the target which company the stored token reaches. A company
+  /// other than the one named, or one the target will not name, is
+  /// recorded on the connection by the server (state `error`, with the
+  /// target's words) and read with the connections; nothing is delivered to
+  /// it. A target the server does not check by its token answers 400.
+  Future<void> _verifyCompany(String connectionId) async {
+    try {
+      await _client.functions.invoke(
+        'accounting-connect',
+        body: {'action': 'verify', 'connection_id': connectionId},
+      );
+    } on FunctionException catch (e) {
+      if (e.status != _runRefused && e.status != _notChecked) rethrow;
+    }
+  }
 
   @override
   Future<SignInStart> startSignIn(
@@ -115,10 +139,17 @@ class SupabaseAccountingConnectionRepository
   }
 
   @override
-  Future<AccountingConnection> revoke(String connectionId) => _connection(
-    'revoke_accounting_connection_v1',
-    {'p_connection_id': connectionId},
-  );
+  Future<AccountingConnection> revoke(String connectionId) async {
+    // The server revokes the connection here first and then, where the
+    // target documents it (RFC 7009), at the target: a target that does not
+    // confirm leaves the connection revoked all the same.
+    final response = await _client.functions.invoke(
+      'accounting-connect',
+      body: {'action': 'revoke', 'connection_id': connectionId},
+    );
+    final data = response.data;
+    return AccountingConnection.fromJson(data is Map ? data['connection'] : null);
+  }
 
   @override
   Future<AccountingConnection> saveMap(

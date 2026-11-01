@@ -96,3 +96,35 @@ Deno.test("a readback knows an entry by its day and its sums", async () => {
     assertEquals(typeof found !== "string" && found[0].matches, matches);
   }
 });
+
+// ── the company the token reaches ──────────────────────────────────────────
+
+const asked = (company: unknown, status = 200) =>
+  ((url: string | URL | Request) =>
+    Promise.resolve(
+      String(url).endsWith("/me")
+        ? new Response(JSON.stringify({ company }), { status })
+        : Response.json({ items: [], has_more: false }),
+    )) as typeof fetch;
+
+const adapterFor = (tenant: string, company: unknown, status = 200) =>
+  pennylaneLedger({
+    fetch: asked(company, status),
+    secrets: { access_token: "t" },
+    tenant,
+    targetId: "pennylane_api",
+    env: () => undefined,
+  });
+
+Deno.test("the token's own company is read from /me", async () => {
+  assertEquals(await adapterFor("", { id: 42 }).signedInTenant!(), { tenant: "42" });
+  assertEquals("refused" in (await adapterFor("", {}).signedInTenant!()), true);
+  assertEquals("refused" in (await adapterFor("", { id: 1 }, 401).signedInTenant!()), true);
+});
+
+Deno.test("a delivery is refused when the token reaches another company than the one named", async () => {
+  assertEquals(await adapterFor("42", { id: 42 }).prepare(), null);
+  assertEquals(await adapterFor("", { id: 42 }).prepare(), null);
+  const refused = await adapterFor("41", { id: 42 }).prepare();
+  assertEquals(typeof refused, "string");
+});

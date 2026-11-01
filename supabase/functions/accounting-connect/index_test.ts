@@ -20,6 +20,8 @@ function world(
     allowed?: boolean;
     token?: (body: URLSearchParams) => Response;
     target?: string;
+    /** The company the Pennylane token reaches (`GET /me`). */
+    pennylaneCompany?: number;
     api?: (url: URL) => Response | null;
     /** The company the connection was made for, if it was. */
     heldTenant?: string;
@@ -79,7 +81,9 @@ function world(
     redirectUri: "https://x.test/functions/v1/accounting-connect",
     fetcher: ((url: string | URL | Request, init?: RequestInit) =>
       Promise.resolve(
-        opts.api?.(new URL(String(url))) ?? (opts.token
+        opts.api?.(new URL(String(url))) ?? (target === "pennylane_api" && String(url).endsWith("/me")
+          ? new Response(JSON.stringify({ company: { id: opts.pennylaneCompany ?? 7 } }))
+          : opts.token
           ? opts.token(new URLSearchParams(String(init?.body)))
           : new Response(JSON.stringify({ access_token: "AT-secret", refresh_token: "RT-secret", expires_in: 60 }))),
       )) as typeof fetch,
@@ -338,4 +342,14 @@ Deno.test("a Sage sign-in reaching several businesses, or one in another country
   const ie = sageWorld(["b-1"], "IE");
   assertEquals((await xeroCallback(ie.w, "sage_business_cloud_gb")).status, 409);
   assert(String(ie.w.state().status_detail).includes("is in IE"));
+});
+
+Deno.test("a Pennylane sign-in records the company its token reaches, and one signed in again to another is refused", async () => {
+  const w = world({ pennylaneCompany: 7 });
+  await handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(w)}`), w.deps);
+  assertEquals(w.state().remote_tenant_id, "7");
+  const again = world({ pennylaneCompany: 8, heldTenant: "7" });
+  const res = await handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(again)}`), again.deps);
+  assertEquals(res.status, 409);
+  assertEquals(again.state().status, "error");
 });
