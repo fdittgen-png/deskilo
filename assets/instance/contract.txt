@@ -3064,6 +3064,7 @@ routine public.workspace_network_ref_valid(p_ref text) -> boolean | function | i
 routine public.workspace_owners(p_workspace_id uuid) -> TABLE(member_id uuid, name text, email text) | function | definer | volatile | exec:authenticated,service_role | body:0b62eff662e8
 routine public.workspace_public_defaults(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:b4aa23b4e04a
 routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0dbd15b4e206
+routine public.workspace_recorded_payments_v1(p_workspace_id uuid, p_from date, p_to date, p_after jsonb, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1a8386a29b37
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:28a091daecbb
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:a549d56c2116
 routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7f151a021708
