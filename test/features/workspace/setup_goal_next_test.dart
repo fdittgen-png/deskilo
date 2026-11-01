@@ -106,6 +106,13 @@ Future<GoRouter> _pump(WidgetTester tester, SetupStatus status) async {
   return router;
 }
 
+/// One route change: a frame, then the page transition (the file already
+/// settles elsewhere; this keeps the pumpAndSettle budget from growing).
+Future<void> _go(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
+}
+
 void main() {
   test('the goal is the last milestone the status marks as applying', () {
     expect(_status().goal?.milestone, 'money');
@@ -180,16 +187,16 @@ void main() {
   ) async {
     final router = await _pump(tester, _status());
     unawaited(router.push('/setup/launch'));
-    await tester.pumpAndSettle();
+    await _go(tester);
     unawaited(router.push('/setup/step/places'));
-    await tester.pumpAndSettle();
+    await _go(tester);
     expect(find.text('step places'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return')), findsOneWidget);
     expect(find.text('Next step'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('setup-next-step')));
-    await tester.pumpAndSettle();
+    await _go(tester);
     expect(find.text('page tiers'), findsOneWidget);
     expect(find.text('Done'), findsOneWidget);
   });
@@ -198,10 +205,10 @@ void main() {
       'that is not a step page carries no bar', (tester) async {
     final router = await _pump(tester, _status(open: ['tiers']));
     unawaited(router.push('/setup/step/tiers'));
-    await tester.pumpAndSettle();
+    await _go(tester);
     expect(find.text('Done'), findsOneWidget);
     unawaited(router.push('/setup/levels'));
-    await tester.pumpAndSettle();
+    await _go(tester);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
   });
 }
