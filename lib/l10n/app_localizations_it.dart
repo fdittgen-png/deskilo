@@ -27742,6 +27742,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unblockDone => 'Sbloccata.';
 
   @override
+  String get unsavedChangesBody =>
+      'Le modifiche fatte in questa pagina non sono ancora salvate.';
+
+  @override
+  String get unsavedChangesDiscard => 'Scarta le modifiche';
+
+  @override
+  String get unsavedChangesKeep => 'Continua a modificare';
+
+  @override
+  String get unsavedChangesTitle => 'Uscire senza salvare?';
+
+  @override
   String get usageAsk => 'Fattura il tempo in cui c’ero';
 
   @override

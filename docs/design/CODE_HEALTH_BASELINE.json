@@ -56,7 +56,7 @@
 
       "lib/features/money/presentation/report_defaults.dart": 637,
 
-      "lib/features/money/presentation/screens/billing_screen.dart": 612,
+      "lib/features/money/presentation/screens/billing_screen.dart": 576,
 
       "lib/features/money/presentation/widgets/expense_schedule_sheet.dart": 576,
 
@@ -134,7 +134,7 @@
 
       "lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart": 6,
 
-      "lib/features/money/presentation/screens/billing_screen.dart": 14,
+      "lib/features/money/presentation/screens/billing_screen.dart": 12,
 
       "lib/features/money/presentation/screens/legal_identity_screen.dart": 9,
 

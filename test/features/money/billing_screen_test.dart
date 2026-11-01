@@ -38,6 +38,14 @@ Future<FakeMoneyRepository> pumpBilling(
   return money;
 }
 
+/// Frames enough for a dialog or a snackbar to arrive (a fixed span of fake
+/// time, not a wait).
+Future<void> _settle(WidgetTester tester) async {
+  for (var i = 0; i < 4; i++) {
+    await tester.pump(const Duration(milliseconds: 500));
+  }
+}
+
 void main() {
   testWidgets('fee bands render ordered with boundaries and prices',
       (tester) async {
@@ -258,7 +266,7 @@ void main() {
 
     // The default fake seeds one 5-day pack at €40.
     expect(find.text('5-day pack'), findsOneWidget);
-    expect(find.text('5 days · 40 EUR'), findsOneWidget);
+    expect(find.text('5 days · €40.00'), findsOneWidget);
 
     await tester.enterText(
       find.widgetWithText(TextField, 'Name'),
@@ -311,12 +319,104 @@ void main() {
     await tester.tap(find.text('Reduced (10 %)').last);
     await tester.pumpAndSettle();
 
-    // Persisted on pick, and every band share re-prices at 10 %
-    // (250.00 gross → 22.73 VAT).
+    // The pick is a draft until the page's one Save (#3072), and every band
+    // share re-prices at 10 % at once (250.00 gross → 22.73 VAT).
+    expect(workspace.workspaces[0].subscriptionVatRateId, isNot('vat-2'));
+    await tester.tap(find.byKey(const ValueKey('billing-save')));
+    await _settle(tester);
     expect(workspace.workspaces[0].subscriptionVatRateId, 'vat-2');
     expect(find.textContaining('(the tariff rate)'), findsOneWidget);
     expect(find.textContaining('incl. VAT 22.73'), findsOneWidget);
     expect(find.textContaining('incl. VAT 41.67'), findsNothing);
+  });
+
+
+  testWidgets(
+      'one Save covers the fee bands, the levels and the tariff rate; '
+      'nothing is saved before it (#3072)', (tester) async {
+    final money = await pumpBilling(tester);
+
+    expect(find.byKey(const ValueKey('billing-save-2')), findsNothing);
+    await tester.enterText(find.widgetWithText(TextFormField, '250'), '300');
+    await tester.tap(find.byKey(const ValueKey('billing-percent-value-25')));
+    await tester.pump();
+    expect(money.feeBands.last.feeCents, 25000, reason: 'not saved yet');
+    expect(money.subscriptionLevels.enabledPresets, contains(25));
+
+    await tester.tap(find.byKey(const ValueKey('billing-save')));
+    await _settle(tester);
+
+    expect(money.feeBands.last.feeCents, 30000);
+    expect(money.subscriptionLevels.enabledPresets, isNot(contains(25)));
+    expect(find.text('Saved.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a refused band set keeps every typed value and saves none of the '
+      'page (#3072)', (tester) async {
+    final money = await pumpBilling(tester);
+
+    await tester.tap(find.byKey(const ValueKey('billing-percent-value-25')));
+    await tester.enterText(find.widgetWithText(TextFormField, '50'), '20');
+    await tester.tap(find.byKey(const ValueKey('billing-save')));
+    await _settle(tester);
+
+    expect(find.text('Bands must increase and end at 100%.'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '20'), findsOneWidget);
+    expect(money.subscriptionLevels.enabledPresets, contains(25));
+  });
+
+  testWidgets('a clean page leaves without a question (#3072)', (tester) async {
+    await pumpBilling(tester);
+    final context = tester.element(find.byKey(const ValueKey('billing-save')));
+
+    // Clean: back leaves without a question.
+    unawaited(Navigator.of(context).maybePop());
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('unsaved-changes-dialog')), findsNothing);
+    expect(find.byKey(const ValueKey('billing-save')), findsNothing);
+  });
+
+  testWidgets('a dirty page asks before it is left; Keep editing stays, '
+      'Discard leaves (#3072)', (tester) async {
+    await pumpBilling(tester);
+    await tester.enterText(find.widgetWithText(TextFormField, '250'), '300');
+    await tester.pump();
+    unawaited(Navigator.of(
+            tester.element(find.byKey(const ValueKey('billing-save'))))
+        .maybePop());
+    await _settle(tester);
+    expect(
+        find.byKey(const ValueKey('unsaved-changes-dialog')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('unsaved-changes-keep')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('billing-save')), findsOneWidget);
+
+    unawaited(Navigator.of(
+            tester.element(find.byKey(const ValueKey('billing-save'))))
+        .maybePop());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('unsaved-changes-discard')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('billing-save')), findsNothing);
+  });
+
+  testWidgets(
+      'amounts carry the workspace currency, not its code; every field keeps '
+      'its label once filled (#3072)', (tester) async {
+    await pumpBilling(tester);
+
+    // "5 days · 40 EUR" read as "€40" in the statement: one spelling.
+    expect(find.text('5 days · €40.00'), findsOneWidget);
+    expect(find.text('5 days · 40 EUR'), findsNothing);
+
+    await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Ten');
+    await tester.enterText(find.widgetWithText(TextField, 'Price'), '70');
+    await tester.pump();
+    // Filled, the label still names the field and the unit sits beside it.
+    expect(find.widgetWithText(TextField, 'Name'), findsOneWidget);
+    expect(find.widgetWithText(TextField, 'Price'), findsOneWidget);
+    expect(find.text('€'), findsWidgets);
   });
 
 }

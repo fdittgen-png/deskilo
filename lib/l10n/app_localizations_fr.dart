@@ -27796,6 +27796,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unblockDone => 'Débloqué.';
 
   @override
+  String get unsavedChangesBody =>
+      'Ce que vous avez modifié sur cette page n\'est pas encore enregistré.';
+
+  @override
+  String get unsavedChangesDiscard => 'Abandonner les modifications';
+
+  @override
+  String get unsavedChangesKeep => 'Continuer la saisie';
+
+  @override
+  String get unsavedChangesTitle => 'Quitter sans enregistrer ?';
+
+  @override
   String get usageAsk => 'Facturer le temps où j\'étais là';
 
   @override

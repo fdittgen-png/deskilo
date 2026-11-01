@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/section_in_view.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
@@ -91,26 +92,59 @@ class WorkspaceFormSections extends StatefulWidget {
 
 class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
   final _groups = <String, GlobalKey<_WorkspaceFormGroupState>>{};
+
+  /// The section the reader is in (#3072): the last one whose top has
+  /// reached the top of the scroll area (the last one at the end of the
+  /// form); the first before any has.
+  String? _inView;
+
+  /// A pill was tapped and the scroll to its section is under way: the
+  /// pill stays the one marked until the reader scrolls on their own.
+  bool _jumping = false;
+
+  bool _onScroll(ScrollNotification note) {
+    if (_jumping) return false;
+    final current = sectionInView(note, _groups);
+    if (current != null && current != _inView) {
+      setState(() => _inView = current);
+    }
+    return false;
+  }
+
+  Future<void> _jump(String id) async {
+    setState(() {
+      _jumping = true;
+      _inView = id;
+    });
+    await _groups[id]?.currentState?.open();
+    _jumping = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final groups = widget.children.whereType<WorkspaceFormGroup>().toList();
     for (final group in groups) {
       _groups.putIfAbsent(group.id, GlobalKey<_WorkspaceFormGroupState>.new);
     }
+    final inView = _inView ?? (groups.isEmpty ? null : groups.first.id);
     return Column(children: [
       // #2313 — the shared section bar: one row, never wrapped.
-      SectionJumpBar(items: [for (final group in groups) SectionJump(
-        key: 'workspace-section-${group.id}', label: group.title,
-        destructive: group.destructive,
-        onPressed: () => _groups[group.id]?.currentState?.open())]),
-      Expanded(child: SingleChildScrollView(padding: AppSpacing.gutterAll,
+      SectionJumpBar(
+        current: inView == null ? null : 'workspace-section-$inView',
+        items: [for (final group in groups) SectionJump(
+          key: 'workspace-section-${group.id}', label: group.title,
+          destructive: group.destructive,
+          onPressed: () => _jump(group.id))]),
+      Expanded(child: NotificationListener<ScrollNotification>(
+        onNotification: _onScroll,
+        child: SingleChildScrollView(padding: AppSpacing.gutterAll,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           for (final child in widget.children)
             if (child is WorkspaceFormGroup) WorkspaceFormGroup(key: _groups[child.id],
               id: child.id, title: child.title, icon: child.icon,
               initiallyExpanded: child.initiallyExpanded, destructive: child.destructive, children: child.children)
             else child,
-        ]))),
+        ])))),
     ]);
   }
 }

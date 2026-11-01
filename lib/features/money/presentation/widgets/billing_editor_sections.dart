@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../domain/vat_rate.dart';
@@ -138,11 +139,11 @@ class BillingNewLevelRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: TextField(
+          child: AppTextField(
             key: const ValueKey('billing-level-value'),
             controller: controller,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: l10n.billingLevelValue),
+            label: l10n.billingLevelValue,
             onSubmitted: (_) => onAdd(),
           ),
         ),
@@ -178,7 +179,7 @@ class BillingPackageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final price = '${centsToMajor(package.priceCents)} $currencyCode'.trim();
+    final price = moneyFormat(currencyCode).formatMinor(package.priceCents);
     final summary = l10n.billingPackageSummary(package.days, price);
     final rate = vatRateSuffix(
       chargesVat: chargesVat,
@@ -204,11 +205,15 @@ class BillingPackageTile extends StatelessWidget {
 class BillingNewPackageRow extends StatelessWidget {
   const BillingNewPackageRow({
     super.key,
+    required this.currencySymbol,
     required this.name,
     required this.days,
     required this.price,
     required this.onAdd,
   });
+
+  /// The workspace currency's symbol, beside the price (#3072).
+  final String currencySymbol;
 
   final TextEditingController name;
   final TextEditingController days;
@@ -222,26 +227,27 @@ class BillingNewPackageRow extends StatelessWidget {
       children: [
         Expanded(
           flex: 3,
-          child: TextField(
+          child: AppTextField(
             controller: name,
-            decoration: InputDecoration(labelText: l10n.billingPackageName),
+            label: l10n.billingPackageName,
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: TextField(
+          child: AppTextField(
             controller: days,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: l10n.billingPackageDays),
+            label: l10n.billingPackageDays,
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           flex: 2,
-          child: TextField(
+          child: AppTextField(
             controller: price,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(labelText: l10n.billingPackagePrice),
+            label: l10n.billingPackagePrice,
+            suffixText: currencySymbol,
           ),
         ),
         IconButton(

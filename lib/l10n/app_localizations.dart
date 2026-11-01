@@ -45743,6 +45743,30 @@ abstract class AppLocalizations {
   /// **'Unblocked.'**
   String get unblockDone;
 
+  /// #3072 body of the leave-with-unsaved-changes question
+  ///
+  /// In en, this message translates to:
+  /// **'What you changed on this page is not saved yet.'**
+  String get unsavedChangesBody;
+
+  /// #3072 button that leaves the form and drops the unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes'**
+  String get unsavedChangesDiscard;
+
+  /// #3072 button that stays on the form
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get unsavedChangesKeep;
+
+  /// #3072 title of the question asked when leaving a form that has unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'Leave with unsaved changes?'**
+  String get unsavedChangesTitle;
+
   /// #833 - action asking for the actual time to bill
   ///
   /// In en, this message translates to:

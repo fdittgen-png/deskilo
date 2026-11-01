@@ -27484,6 +27484,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unblockDone => 'Unblocked.';
 
   @override
+  String get unsavedChangesBody =>
+      'What you changed on this page is not saved yet.';
+
+  @override
+  String get unsavedChangesDiscard => 'Discard changes';
+
+  @override
+  String get unsavedChangesKeep => 'Keep editing';
+
+  @override
+  String get unsavedChangesTitle => 'Leave with unsaved changes?';
+
+  @override
   String get usageAsk => 'Bill the time I was here';
 
   @override
