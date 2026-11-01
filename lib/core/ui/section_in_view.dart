@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 /// How far below the top edge of the scroll area a section still counts as
 /// the one in view.
-const double sectionInViewThreshold = 56;
+const double _threshold = 56;
 
 /// The id of the section the reader is in after [note], from the sections'
 /// [targets] in page order: the last one whose top has reached the top of
@@ -27,7 +27,7 @@ String? sectionInView(
   for (final entry in targets.entries) {
     final section = entry.value.currentContext?.findRenderObject();
     if (section is! RenderBox || !section.attached) continue;
-    if (section.localToGlobal(Offset.zero).dy <= top + sectionInViewThreshold) {
+    if (section.localToGlobal(Offset.zero).dy <= top + _threshold) {
       current = entry.key;
     }
   }
