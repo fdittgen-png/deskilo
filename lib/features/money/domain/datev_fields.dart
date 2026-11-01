@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'book_profile.dart';
+import 'datev.dart';
 import 'invoice.dart';
 
 /// #2365 — DATEV's field limits: `Belegfeld 1` holds 36 characters and
@@ -72,6 +73,7 @@ class DatevBooking {
     this.taxPeriodDate,
     this.taxKey = '',
     this.invoice,
+    this.journal,
   });
 
   /// This booking dated [day].
@@ -85,6 +87,7 @@ class DatevBooking {
     taxPeriodDate: taxPeriodDate,
     taxKey: taxKey,
     invoice: invoice,
+    journal: journal,
   );
 
   final int cents;
@@ -101,6 +104,10 @@ class DatevBooking {
   /// The document the row books, when it books one: its site, number,
   /// dates and voucher travel with the row.
   final Invoice? invoice;
+
+  /// The Buchungsstapel the row belongs in when it is not decided by the
+  /// bank account: a supplier row names its own.
+  final DatevJournal? journal;
 }
 
 /// Where the builder's bookings go.

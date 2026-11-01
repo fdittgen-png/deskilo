@@ -39,6 +39,10 @@ abstract final class DatevFormatRules {
   /// longer than the Sachkonten.
   static const debtorLeadingDigits = (1, 6);
 
+  /// The first digit of a Kreditor, 7 to 9: DATEV's Personenkonten run
+  /// on above the Debitors.
+  static const creditorLeadingDigits = (7, 9);
+
   /// The fields a Buchungsstapel row of format 700, version 13 holds.
   static const rowFields = 125;
 
@@ -52,6 +56,19 @@ abstract final class DatevFormatRules {
     return (
       debtorLeadingDigits.$1 * unit,
       (debtorLeadingDigits.$2 + 1) * unit - 1,
+    );
+  }
+
+  /// The inclusive range of a Kreditor for Sachkonten of [accountLength]
+  /// digits: 70000 to 99999 for four.
+  static (int, int) creditorRange(int accountLength) {
+    var unit = 1;
+    for (var i = 0; i < accountLength; i++) {
+      unit *= 10;
+    }
+    return (
+      creditorLeadingDigits.$1 * unit,
+      (creditorLeadingDigits.$2 + 1) * unit - 1,
     );
   }
 }
@@ -134,4 +151,26 @@ final class DatevAutomaticClash extends DatevProblem {
   const DatevAutomaticClash(this.percent, this.account);
   final double percent;
   final String account;
+}
+
+/// A supplier's number gives no Kreditor in DATEV's range (or the bill has
+/// no supplier): [supplier] is its name, else the bill's reference.
+final class DatevSupplierNumber extends DatevProblem {
+  const DatevSupplierNumber(this.supplier, this.number);
+  final String supplier;
+  final String number;
+}
+
+/// Two suppliers would share one Kreditor.
+final class DatevCreditorClash extends DatevProblem {
+  const DatevCreditorClash(this.account, this.suppliers);
+  final String account;
+  final List<String> suppliers;
+}
+
+/// The books could not post the purchases: these roles have no account, or
+/// these documents no recorded exchange rate (`reference (currency)`).
+final class DatevBooksBlocked extends DatevProblem {
+  const DatevBooksBlocked(this.subjects);
+  final List<String> subjects;
 }

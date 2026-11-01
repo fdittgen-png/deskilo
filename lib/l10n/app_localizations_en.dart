@@ -5640,6 +5640,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Cost centre (KOST1) when a document names no site';
 
   @override
+  String get datevCreditorBase => 'Kreditor of supplier number 0';
+
+  @override
   String get datevDebtorBase => 'Debitor of member number 0';
 
   @override
@@ -5653,6 +5656,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String datevProblemBooksBlocked(String subjects) {
+    return 'The books could not post the purchases: $subjects';
+  }
+
+  @override
   String datevProblemClient(String number) {
     return 'Mandantennummer \"$number\" is not a number from 1 to 99999';
   }
@@ -5660,6 +5668,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String datevProblemConsultant(String number) {
     return 'Beraternummer \"$number\" is not a number from 1001 to 9999999';
+  }
+
+  @override
+  String datevProblemCreditorClash(String suppliers, String account) {
+    return '$suppliers would share Kreditor $account';
   }
 
   @override
@@ -5689,6 +5702,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String datevProblemSachkontenlaenge(String length) {
     return 'the account length $length is not 4 to 8';
+  }
+
+  @override
+  String datevProblemSupplierNumber(String supplier, String number) {
+    return '$supplier has no supplier number that gives a Kreditor (\"$number\"): give the supplier a numeric number in the Kreditor range first';
   }
 
   @override

@@ -84,6 +84,7 @@ typedef AccountingExportInput = ({
 /// source.
 const Set<String> _postedWhenLocalBook = {
   'fec',
+  _datevFormat,
   'saft',
   _sageFormat,
   _archiveFormat,
@@ -97,6 +98,8 @@ const Set<String> _postedWhenLocalBook = {
 /// opening balances: the book's postings before the year are read with it.
 final Set<String> _postedFec = {
   'fec',
+  // #2375 — DATEV books the suppliers' Kreditor from the purchases entries.
+  _datevFormat,
   // #2373 — Sage 50 keys each row to its customer or supplier.
   _sageFormat,
   _archiveFormat,
@@ -116,6 +119,7 @@ final Set<String> _postedOnlyFormats = {
 const Set<String> _swissJournalFormats = {'ch_kmu', 'banana_transactions'};
 const String _archiveFormat = 'bundle';
 const String _sageFormat = 'sage50';
+const String _datevFormat = 'datev';
 
 /// #2376 — the day of the latest document the person exports, on the same
 /// clock the export year is taken from: the posted formats read the fiscal

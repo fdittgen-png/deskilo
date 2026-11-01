@@ -11,6 +11,7 @@ import '../domain/accounting_format.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
+import '../domain/datev_creditors.dart';
 import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';
 import '../domain/fiscal_year.dart';
@@ -182,6 +183,27 @@ Set<String> thirdPartyAccountsOf(JournalPosted books) => {
       if (l.role == BookRole.customers || l.role == BookRole.suppliers)
         l.accountCode,
 };
+
+/// #2375 — the purchases side [read] gives DATEV: the engine's entries and
+/// their suppliers, or the roles and rates that stopped it; null when no
+/// issuer keeps a local book (the export then has no supplier rows).
+DatevPurchases? datevPurchasesOf(GenericJournal? read, int creditorBase) =>
+    switch (read) {
+      JournalPosted(:final postings, :final parties) => DatevPurchases(
+        creditorBase: creditorBase,
+        postings: postings,
+        parties: parties,
+      ),
+      JournalBlocked(:final roles) => DatevPurchases(
+        creditorBase: creditorBase,
+        blocked: roles,
+      ),
+      JournalNeedsRates(:final documents) => DatevPurchases(
+        creditorBase: creditorBase,
+        blocked: documents,
+      ),
+      _ => null,
+    };
 
 /// [read]'s posted FEC: the file, or why there is none.
 GenericJournal postedFecFileOf(GenericJournal read) =>

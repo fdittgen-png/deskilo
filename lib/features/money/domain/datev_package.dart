@@ -12,6 +12,7 @@ import '../../../core/time/date_text.dart';
 import 'billing_rules.dart';
 import 'book_profile.dart';
 import 'datev.dart';
+import 'datev_creditors.dart';
 import 'datev_debtors.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
@@ -31,6 +32,7 @@ class DatevPackageRequest {
     required this.debtorBase,
     this.memberNumbers = const {},
     this.memberNames = const {},
+    this.purchases,
     this.rowsPerBatch = DatevFormatRules.rowsPerBatch,
   });
 
@@ -54,6 +56,11 @@ class DatevPackageRequest {
   /// none.
   final Map<String, String> memberNumbers;
   final Map<String, String> memberNames;
+
+  /// The purchases side the posting engine made, for a space that keeps a
+  /// local book; null when none was read (the export then has no supplier
+  /// rows).
+  final DatevPurchases? purchases;
   final int rowsPerBatch;
 }
 
@@ -89,6 +96,7 @@ String _batchFileName(DatevSlice slice) {
 String _batchName(DatevJournal journal, String name) => switch (journal) {
   DatevJournal.sales => 'Erlöse $name',
   DatevJournal.bank => 'Bank $name',
+  DatevJournal.purchases => 'Eingang $name',
 };
 
 DatevPackage buildDatevPackage(DatevPackageRequest p) {
@@ -107,13 +115,26 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
   if (debtors.problems.isNotEmpty) {
     return DatevPackage._(problems: debtors.problems);
   }
-  final detailed = r.withDebtors(debtors.accounts);
+  final purchases = p.purchases;
+  if (purchases != null && purchases.blocked.isNotEmpty) {
+    return DatevPackage._(problems: [DatevBooksBlocked(purchases.blocked)]);
+  }
+  final creditors = DatevCreditors.of(
+    purchases ?? const DatevPurchases(creditorBase: 0),
+    accountLength: r.accountLength,
+  );
+  if (creditors.problems.isNotEmpty) {
+    return DatevPackage._(problems: creditors.problems);
+  }
+  final detailed = r
+      .withDebtors(debtors.accounts)
+      .withSupplierBookings(creditors.bookings);
   final writer = datevWriterOf(detailed);
   final problems = [
     ..._taxProblems(r),
     ..._accountProblems(
       writer.bookings,
-      debtors.accounts.values.toSet(),
+      {...debtors.accounts.values, ...creditors.parties.keys},
       r.accountLength,
     ),
     ..._referenceProblems(writer),
@@ -171,6 +192,9 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
       for (final MapEntry(key: member, value: account)
           in debtors.accounts.entries)
         if (used.contains(account)) account: debtors.parties[member]!,
+      for (final MapEntry(key: account, value: party)
+          in creditors.parties.entries)
+        if (used.contains(account)) account: party,
     },
     (
       generatedAt: r.generatedAt,
