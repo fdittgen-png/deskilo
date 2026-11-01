@@ -14,6 +14,7 @@ import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
+import 'workspace_currency.dart';
 
 part 'format_controller.g.dart';
 
@@ -21,7 +22,7 @@ part 'format_controller.g.dart';
 /// workspace (#711): their format locale (or the derived default), the
 /// workspace's currency, their clock and zone preference.
 ///
-/// TWO SIDE EFFECTS, both deliberate and both documented here because a
+/// THREE SIDE EFFECTS, all deliberate and both documented here because a
 /// provider with side effects is a thing to be suspicious of:
 ///
 ///  1. `Intl.defaultLocale` is set to the resolved locale. That is what
@@ -31,6 +32,9 @@ part 'format_controller.g.dart';
 ///  2. [WorkspaceTime.displayMode] follows the member's zone preference,
 ///     so `WorkspaceTime.display()` — the helper the older screens
 ///     already call — honours it without each of them changing.
+///  3. [WorkspaceCurrency] learns the platform's default currency, so the
+///     ambient grain of a screen with no workspace follows the operator's
+///     `locale.default_currency` and not the compile-time copy (#2488).
 ///
 /// Under the `regionalFormats` feature OFF, the member's stored
 /// preferences are ignored and everything reads as it did before: the
@@ -52,13 +56,14 @@ AppFormat appFormat(Ref ref) {
       ? prefs.formatLocale
       : defaultFormatLocale(uiLanguage, workspace?.countryCode ?? '');
 
+  final region = ref.watch(regionDefaultsProvider);
   Intl.defaultLocale = locale;
   WorkspaceTime.displayMode = prefs.timeZoneMode;
+  WorkspaceCurrency.installDefault(region.currency);
 
   return AppFormat(
     locale: locale,
-    currencyCode: workspace?.currencyCode ??
-        ref.watch(regionDefaultsProvider).currency,
+    currencyCode: workspace?.currencyCode ?? region.currency,
     // The pre-#711 app was 24-hour everywhere; `auto` only takes over
     // once a member has actually chosen it, so nobody's clock flips
     // under them on upgrade.

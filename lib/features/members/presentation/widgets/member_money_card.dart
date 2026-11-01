@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/domain/invoice.dart';
@@ -59,7 +60,7 @@ class MemberMoneyCard extends ConsumerWidget {
     if (!maySee) return const SizedBox.shrink();
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final currencyCode = workspace?.currencyCode ?? 'EUR';
+    final currencyCode = workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
     final currency = moneyFormat(currencyCode);
 
     final accountAsync = ref.watch(memberAccountProvider(memberId));

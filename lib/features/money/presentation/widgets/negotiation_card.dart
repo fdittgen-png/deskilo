@@ -7,6 +7,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -489,7 +490,7 @@ class MemberNegotiationTile extends ConsumerWidget {
         memberId: memberId,
         memberName: memberName,
         currency: moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
+          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
         ),
         readOnly: !canManage,
       ),

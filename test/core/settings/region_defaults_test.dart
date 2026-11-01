@@ -51,6 +51,16 @@ void main() {
     expect(WorkspaceCurrency.code, 'EUR');
   });
 
+  test('the platform default currency is the ambient grain until a workspace installs its own', () {
+    WorkspaceCurrency.installDefault('JPY');
+    expect(WorkspaceCurrency.code, 'JPY');
+    expect(WorkspaceCurrency.minorPerMajor, 1);
+    WorkspaceCurrency.install('CHF');
+    expect(WorkspaceCurrency.code, 'CHF');
+    WorkspaceCurrency.reset();
+    expect(WorkspaceCurrency.code, 'EUR');
+  });
+
   test('a stored platform value is read; an older server keeps the defaults', () {
     final d = RegionDefaults.fromSettings(
         _stored(currency: 'CHF', country: 'CH', locale: 'de_CH'));

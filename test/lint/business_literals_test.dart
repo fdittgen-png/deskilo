@@ -100,17 +100,17 @@ const _allowed = <String, String>{
   'lib/core/locale/device_locale.dart::language to country heuristic':
       'a guess from the device language for the first screen, not a choice anybody makes; nothing legal derives from it',
   'lib/features/money/domain/fec_writer.dart::export format currency of the FEC file':
-      'the FEC format fixes the currency code it writes',
+      'the FEC is a euro file; refusing a workspace in another currency is #3184',
   'lib/features/money/domain/datev.dart::export format currency of the DATEV file':
-      'the DATEV format fixes the currency code it writes',
+      'DATEV writes the currency of its header; carrying the workspace currency or refusing another is #3184',
   'lib/features/money/domain/datev_writer.dart::export format currency of the DATEV file':
-      'the DATEV format fixes the currency code it writes',
+      'DATEV writes the currency of its header; carrying the workspace currency or refusing another is #3184',
 };
 
 /// The currency fallback: `'EUR'` written in lib/ (S5 moves the fallback to
 /// the workspace country's currency). Counted over lib/, minus generated
 /// files, l10n output and the demo dataset (fixtures, not defaults).
-const _eurCeiling = 33; // 60 -> 33 (#2488: the display fallbacks read locale.default_currency; the rest is classified on #2488)
+const _eurCeiling = 11; // 60 -> 11 (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
 
 int _count(String file, String pattern) {
   final f = File(file);

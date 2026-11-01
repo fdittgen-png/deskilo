@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -156,7 +157,7 @@ class MoneyViewData {
   PaymentInstructions get paymentInstructions =>
       PaymentInstructions.fromDb(workspace?.paymentInstructions ?? const {});
 
-  String get currencyCode => workspace?.currencyCode ?? 'EUR';
+  String get currencyCode => workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
 
   MoneyFormat get currency => moneyFormat(currencyCode);
 

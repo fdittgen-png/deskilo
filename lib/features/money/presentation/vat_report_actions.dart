@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -78,7 +79,7 @@ Map<String, Object?> _vatReportData(
 ) {
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
   final locale = Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
   String rate(double percent) => percent == percent.roundToDouble()
@@ -188,11 +189,12 @@ Future<void> saveVatReportCsv(
   required DateTime start,
   required DateTime end,
 }) async {
-  final workspace = ref.read(currentWorkspaceProvider).value;
+  // An export is never in a currency nobody chose (#2488): no workspace, no file.
+  final currency = ref.read(currentWorkspaceProvider).value?.currencyCode;
+  if (currency == null) return;
   final report = await _loadVatReport(ref, start: start, end: end);
   if (!context.mounted) return;
-  final csv =
-      vatReportCsv(report, currency: workspace?.currencyCode ?? 'EUR');
+  final csv = vatReportCsv(report, currency: currency);
   await savePdfToDownloads(context, ref,
       bytes: Uint8List.fromList(utf8.encode(csv)),
       fileName: '${_stem(report)}.csv');
