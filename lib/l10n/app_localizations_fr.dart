@@ -22570,6 +22570,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Durée de calcul d\'une lecture de rapport avant que les chiffres non atteints soient signalés hors budget ; la page montre ce qu\'elle a. Restez sous le délai de requête du serveur.';
 
   @override
+  String get settingHintBiDetailPageSize =>
+      'Nombre de lignes qu\'affiche une page du détail d\'un indicateur, par exemple les paiements derrière le montant encaissé. La page suivante reprend là où celle-ci s\'arrête.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'La plus grande définition de rapport enregistrée, en octets de son texte stocké. La plateforme n\'en stocke jamais plus de 65536 ; une définition contient des questions, jamais des chiffres.';
 
@@ -22846,6 +22850,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelBiBatchTimeBudgetMs =>
       'Budget de temps d\'une lecture de rapport';
+
+  @override
+  String get settingLabelBiDetailPageSize => 'Lignes par page de détail';
 
   @override
   String get settingLabelBiReportMaxBytes =>

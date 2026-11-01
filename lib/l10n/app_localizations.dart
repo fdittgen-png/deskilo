@@ -37602,6 +37602,12 @@ abstract class AppLocalizations {
   /// **'How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server\'s request timeout.'**
   String get settingHintBiBatchTimeBudgetMs;
 
+  /// #2578 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many rows one page of a figure\'s detail shows, such as the payments behind the collected amount. The next page continues where this one stopped.'**
+  String get settingHintBiDetailPageSize;
+
   /// #2579 report limits
   ///
   /// In en, this message translates to:
@@ -38021,6 +38027,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report read time budget'**
   String get settingLabelBiBatchTimeBudgetMs;
+
+  /// #2578 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Rows per detail page'**
+  String get settingLabelBiDetailPageSize;
 
   /// #2579 report limits
   ///

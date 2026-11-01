@@ -22523,6 +22523,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanto può calcolare una lettura del report prima che le cifre non ancora raggiunte risultino fuori budget; la pagina mostra ciò che ha. Tenerlo sotto il timeout delle richieste del server.';
 
   @override
+  String get settingHintBiDetailPageSize =>
+      'Quante righe mostra una pagina del dettaglio di una cifra, come i pagamenti dietro l\'importo incassato. La pagina successiva riprende da dove questa si ferma.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'La più grande definizione di report salvata, in byte del suo testo memorizzato. La piattaforma non ne conserva mai più di 65536; una definizione contiene domande, mai cifre.';
 
@@ -22798,6 +22802,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelBiBatchTimeBudgetMs =>
       'Budget di tempo di una lettura del report';
+
+  @override
+  String get settingLabelBiDetailPageSize => 'Righe per pagina di dettaglio';
 
   @override
   String get settingLabelBiReportMaxBytes =>

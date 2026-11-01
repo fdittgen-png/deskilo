@@ -22335,6 +22335,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server\'s request timeout.';
 
   @override
+  String get settingHintBiDetailPageSize =>
+      'How many rows one page of a figure\'s detail shows, such as the payments behind the collected amount. The next page continues where this one stopped.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.';
 
@@ -22606,6 +22610,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchTimeBudgetMs => 'Report read time budget';
+
+  @override
+  String get settingLabelBiDetailPageSize => 'Rows per detail page';
 
   @override
   String get settingLabelBiReportMaxBytes => 'Size of a report definition';

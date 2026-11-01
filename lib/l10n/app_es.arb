@@ -15356,6 +15356,7 @@
     "description": "#2578 BI settings"
   },
   "settingHintBiBatchTimeBudgetMs": "Cuánto puede calcular una lectura de informe antes de que las cifras aún no alcanzadas se den como fuera de presupuesto; la página muestra lo que tiene. Manténgalo por debajo del tiempo de espera del servidor.",
+  "settingHintBiDetailPageSize": "Cuántas filas muestra una página del detalle de una cifra, como los pagos detrás del importe cobrado. La página siguiente continúa donde se detiene esta.",
   "settingHintBiReportMaxBytes": "La mayor definición de informe guardada, en bytes de su texto almacenado. La plataforma nunca guarda más de 65536; una definición contiene preguntas, nunca cifras.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15537,6 +15538,7 @@
     "description": "#2578 BI settings"
   },
   "settingLabelBiBatchTimeBudgetMs": "Presupuesto de tiempo de una lectura de informe",
+  "settingLabelBiDetailPageSize": "Filas por página de detalle",
   "settingLabelBiReportMaxBytes": "Tamaño de una definición de informe",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"

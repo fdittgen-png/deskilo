@@ -709,6 +709,8 @@
  "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app.",
  "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
  "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app.",
+ "biDetailPageSize": "Pagamenti: righe per pagina",
+ "biDetailPageSizeHint": "Quanti pagamenti mostra una pagina del dettaglio dell'importo incassato; la pagina successiva riprende da dove si è fermata. Si imposta nelle impostazioni dello spazio dell'app.",
  "fedRetention": "Conservazione degli scambi tra server",
  "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
  "fedAnswerWait": "Attesa della risposta tra server",
