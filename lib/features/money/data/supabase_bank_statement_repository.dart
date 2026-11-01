@@ -130,4 +130,15 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
     'p_line_id': lineId,
     'p_outgoing_payment_id': outgoingPaymentId,
   });
+
+  @override
+  Future<BankLineStatus> unreconcileOut(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  }) => _status('unreconcile_bank_line_out_v1', {
+    'p_line_id': lineId,
+    'p_reason': reason,
+    'p_request_id': requestId,
+  });
 }

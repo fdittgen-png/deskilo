@@ -2107,6 +2107,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankStatementsTitle => 'Relevés bancaires';
 
   @override
+  String get bankUndoBody =>
+      'Le mouvement redevient ouvert et le paiement n\'est de nouveau qu\'enregistré comme effectué. Le rapprochement et la raison de son annulation restent conservés.';
+
+  @override
+  String get bankUndoConfirm => 'Annuler le rapprochement';
+
+  @override
+  String get bankUndoReasonLabel => 'Pourquoi il est annulé';
+
+  @override
+  String get bankUndoReasonRequired =>
+      'Indiquez pourquoi le rapprochement est annulé.';
+
+  @override
+  String get bankUndoTitle => 'Annuler ce rapprochement ?';
+
+  @override
   String get baseRoleNote =>
       'Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s\'y ajoutent ; aucun ne retire quoi que ce soit.';
 

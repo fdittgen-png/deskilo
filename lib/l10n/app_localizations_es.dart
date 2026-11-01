@@ -2105,6 +2105,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankStatementsTitle => 'Extractos bancarios';
 
   @override
+  String get bankUndoBody =>
+      'El movimiento vuelve a estar abierto y el pago vuelve a figurar solo como registrado como realizado. La conciliación y el motivo por el que se deshizo quedan registrados.';
+
+  @override
+  String get bankUndoConfirm => 'Deshacer';
+
+  @override
+  String get bankUndoReasonLabel => 'Por qué se deshace';
+
+  @override
+  String get bankUndoReasonRequired =>
+      'Indique por qué se deshace la conciliación.';
+
+  @override
+  String get bankUndoTitle => '¿Deshacer esta conciliación?';
+
+  @override
   String get baseRoleNote =>
       'Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman; ninguno quita nada.';
 

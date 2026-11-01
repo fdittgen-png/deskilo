@@ -18,7 +18,8 @@ import 'money_repository.dart';
 /// account is not created again, a movement without one that resembles
 /// another statement's waits for a review, money in becomes one payment of
 /// the invoice's member and is matched through the demo's own match, money
-/// out reconciles a reported payment.
+/// out reconciles a reported payment, and that reconciliation is undone
+/// once, with a reason, giving the payment back to the candidates.
 class FakeBankStatementRepository implements BankStatementRepository {
   FakeBankStatementRepository({required this.money, required this.today});
 
@@ -350,8 +351,51 @@ class FakeBankStatementRepository implements BankStatementRepository {
     if (!line.outgoingCandidates.any((c) => c.id == outgoingPaymentId)) {
       throw StateError('unknown outgoing payment');
     }
-    reportedPayments.removeWhere((r) => r.payment.id == outgoingPaymentId);
+    final i = reportedPayments.indexWhere(
+      (r) => r.payment.id == outgoingPaymentId,
+    );
+    _reconciled[lineId] = reportedPayments.removeAt(i);
     return _set(lineId, BankLineStatus.reconciled);
+  }
+
+  /// The reported payment each reconciled movement out took.
+  final _reconciled =
+      <String, ({OutgoingCandidate payment, String currency})>{};
+
+  /// The reconciliations undone, as the server records them: the line, the
+  /// payment let go and why, by request id.
+  final unreconciliations =
+      <String, ({String lineId, String paymentId, String reason})>{};
+
+  @override
+  Future<BankLineStatus> unreconcileOut(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  }) async {
+    final done = unreconciliations[requestId];
+    if (done != null) {
+      if (done.lineId != lineId) {
+        throw StateError(
+          'this request id was already used for a different request',
+        );
+      }
+      return BankLineStatus.open;
+    }
+    if (reason.trim().isEmpty) {
+      throw StateError('state why the reconciliation is undone');
+    }
+    final payment = _reconciled.remove(lineId);
+    if (payment == null) {
+      throw StateError('this movement reconciles no payment');
+    }
+    reportedPayments.add(payment);
+    unreconciliations[requestId] = (
+      lineId: lineId,
+      paymentId: payment.payment.id,
+      reason: reason.trim(),
+    );
+    return _set(lineId, BankLineStatus.open);
   }
 }
 

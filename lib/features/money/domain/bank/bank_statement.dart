@@ -81,6 +81,10 @@ abstract final class BankColumnWidths {
   static const int remittance = 1000;
   static const int fileName = 255;
 
+  /// Why a reconciliation of money out is undone
+  /// (`bank_line_unreconciliations.reason`).
+  static const int unreconcileReason = 300;
+
   /// An IBAN as stored: up to 34 upper-case letters and digits.
   static final RegExp iban = RegExp(r'^[A-Z0-9]{0,34}$');
 }

@@ -2104,6 +2104,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankStatementsTitle => 'Kontoauszüge';
 
   @override
+  String get bankUndoBody =>
+      'Die Bewegung ist wieder offen und die Zahlung wieder nur als geleistet erfasst. Der Abgleich und der Grund der Rücknahme bleiben festgehalten.';
+
+  @override
+  String get bankUndoConfirm => 'Rückgängig machen';
+
+  @override
+  String get bankUndoReasonLabel => 'Grund der Rücknahme';
+
+  @override
+  String get bankUndoReasonRequired =>
+      'Geben Sie an, warum der Abgleich rückgängig gemacht wird.';
+
+  @override
+  String get bankUndoTitle => 'Diesen Abgleich rückgängig machen?';
+
+  @override
   String get baseRoleNote =>
       'Jede Person hat genau eine Basisrolle: Benutzer, Administrator, Mit-Eigentümer oder Eigentümer. Weitere Rollen kommen hinzu; keine nimmt etwas weg.';
 

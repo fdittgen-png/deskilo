@@ -90,5 +90,10 @@
   "bankRefusedTooLong": "Un conto o un identificativo bancario del file è più lungo di quanto un estratto conserva. Non è stato importato nulla.",
   "refusalBankLineDecided": "Questo movimento è stato deciso nel frattempo (abbinato, riconciliato o verificato). L'elenco mostra il suo stato attuale.",
   "refusalBankLineRefused": "Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.",
-  "refusalBankFileRefused": "Il server ha rifiutato l'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla."
+  "refusalBankFileRefused": "Il server ha rifiutato l'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla.",
+  "bankUndoTitle": "Annullare questa riconciliazione?",
+  "bankUndoBody": "Il movimento torna aperto e il pagamento risulta di nuovo solo registrato come effettuato. La riconciliazione e il motivo dell'annullamento restano registrati.",
+  "bankUndoReasonLabel": "Perché viene annullata",
+  "bankUndoReasonRequired": "Indichi perché la riconciliazione viene annullata.",
+  "bankUndoConfirm": "Annulla la riconciliazione"
 }

@@ -2088,6 +2088,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankStatementsTitle => 'Bank statements';
 
   @override
+  String get bankUndoBody =>
+      'The movement becomes open again and the payment is again only recorded as made. The reconciliation and why it was undone stay on record.';
+
+  @override
+  String get bankUndoConfirm => 'Undo';
+
+  @override
+  String get bankUndoReasonLabel => 'Why it is undone';
+
+  @override
+  String get bankUndoReasonRequired => 'Say why the reconciliation is undone.';
+
+  @override
+  String get bankUndoTitle => 'Undo this reconciliation?';
+
+  @override
   String get baseRoleNote =>
       'Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.';
 

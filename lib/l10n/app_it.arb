@@ -893,6 +893,11 @@
   "bankStatementsIntro": "Importi i file prodotti dalla Sua banca. Ogni movimento viene letto una sola volta; i pagamenti vengono abbinati alle fatture quando Lei conferma.",
   "bankStatementsLoadFailed": "Non è stato possibile caricare gli estratti conto.",
   "bankStatementsTitle": "Estratti conto",
+  "bankUndoBody": "Il movimento torna aperto e il pagamento risulta di nuovo solo registrato come effettuato. La riconciliazione e il motivo dell'annullamento restano registrati.",
+  "bankUndoConfirm": "Annulla la riconciliazione",
+  "bankUndoReasonLabel": "Perché viene annullata",
+  "bankUndoReasonRequired": "Indichi perché la riconciliazione viene annullata.",
+  "bankUndoTitle": "Annullare questa riconciliazione?",
   "baseRoleNote": "Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.",
   "@baseRoleNote": {
     "description": "the mandatory base role"

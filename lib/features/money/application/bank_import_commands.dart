@@ -178,6 +178,23 @@ class BankImportCommands {
     required String outgoingPaymentId,
   }) => _repository.reconcileOut(line.id, outgoingPaymentId: outgoingPaymentId);
 
+  /// Undoes [line]'s reconciliation for [reason] under [requestId]; null
+  /// when nothing was sent: the line reconciles nothing, or no reason is
+  /// given. A reason longer than its column is cut to it.
+  Future<BankLineStatus?> unreconcileOut(
+    StoredBankLine line, {
+    required String reason,
+    required String requestId,
+  }) async {
+    final why = reason.trim();
+    if (line.status != BankLineStatus.reconciled || why.isEmpty) return null;
+    return _repository.unreconcileOut(
+      line.id,
+      reason: _cut(why, BankColumnWidths.unreconcileReason),
+      requestId: requestId,
+    );
+  }
+
   /// #2380 — the original file of [statement], as it was imported.
   Future<Uint8List> original(String workspaceId, StoredBankStatement statement) =>
       _repository.fetchOriginal(workspaceId, statement.sourceSha256);
