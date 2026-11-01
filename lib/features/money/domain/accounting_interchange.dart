@@ -85,29 +85,40 @@ class InterchangeAttachment {
   final String sha256;
 }
 
+/// Whose book the envelope is and on which profile it was read: the
+/// issuer, the book profile and its revision, the book's currency.
+class InterchangeBook {
+  const InterchangeBook({
+    required this.issuerSiteId,
+    required this.profileId,
+    required this.revision,
+    required this.functionalCurrency,
+  });
+
+  final String issuerSiteId;
+  final String profileId;
+  final int revision;
+
+  /// Every line of the envelope is in it.
+  final String functionalCurrency;
+}
+
 /// One period of one issuer's book, as an accounting system receives it.
 class AccountingInterchangeV1 {
   const AccountingInterchangeV1({
-    required this.issuerSiteId,
-    required this.bookProfileId,
-    required this.bookProfileRevision,
+    required this.book,
     required this.period,
-    required this.functionalCurrency,
     required this.documents,
     required this.postings,
     this.attachments = const [],
   });
 
-  /// The envelope of [postings] (the engine's answer for [period]) on the
-  /// book profile [bookProfileId] at [bookProfileRevision], with the
-  /// [parties] of their documents by document id. Every amount is the
-  /// postings' own.
+  /// The envelope of [postings] (the engine's answer for [period]) on
+  /// [book], with the [parties] of their documents by document id. Every
+  /// amount is the postings' own.
   factory AccountingInterchangeV1.fromPostings({
-    required String issuerSiteId,
-    required String bookProfileId,
-    required int bookProfileRevision,
+    required InterchangeBook book,
     required FiscalYear period,
-    required String functionalCurrency,
     required List<Posting> postings,
     Map<String, PostingParty> parties = const {},
   }) {
@@ -122,11 +133,8 @@ class AccountingInterchangeV1 {
           .add(p.kind);
     }
     return AccountingInterchangeV1(
-      issuerSiteId: issuerSiteId,
-      bookProfileId: bookProfileId,
-      bookProfileRevision: bookProfileRevision,
+      book: book,
       period: period,
-      functionalCurrency: functionalCurrency,
       postings: List.unmodifiable(postings),
       documents: List.unmodifiable([
         for (final e in events.entries)
@@ -143,13 +151,8 @@ class AccountingInterchangeV1 {
   /// The schema this envelope follows.
   static const String schema = 'accounting_interchange_v1';
 
-  final String issuerSiteId;
-  final String bookProfileId;
-  final int bookProfileRevision;
+  final InterchangeBook book;
   final FiscalYear period;
-
-  /// The book's currency: every line is in it.
-  final String functionalCurrency;
   final List<InterchangeDocument> documents;
   final List<Posting> postings;
   final List<InterchangeAttachment> attachments;
@@ -158,16 +161,16 @@ class AccountingInterchangeV1 {
   /// order met; empty when it is fit.
   List<InterchangeProblem> validate() {
     final out = <InterchangeProblem>{};
-    if (issuerSiteId.trim().isEmpty) {
+    if (book.issuerSiteId.trim().isEmpty) {
       out.add(const InterchangeProblem(InterchangeBlock.missingIssuer, ''));
     }
-    if (bookProfileRevision < 1) {
+    if (book.revision < 1) {
       out.add(
-        InterchangeProblem(InterchangeBlock.missingRevision, bookProfileId),
+        InterchangeProblem(InterchangeBlock.missingRevision, book.profileId),
       );
     }
     final known = {for (final d in documents) d.id};
-    final currency = functionalCurrency.trim().toUpperCase();
+    final currency = book.functionalCurrency.trim().toUpperCase();
     for (final p in postings) {
       if (!known.contains(p.documentId)) {
         out.add(

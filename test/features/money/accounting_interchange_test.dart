@@ -90,11 +90,13 @@ AccountingInterchangeV1 _envelope({
   String currency = 'EUR',
   List<Posting>? postings,
 }) => AccountingInterchangeV1.fromPostings(
-  issuerSiteId: issuer,
-  bookProfileId: 'profile-1',
-  bookProfileRevision: revision,
+  book: InterchangeBook(
+    issuerSiteId: issuer,
+    profileId: 'profile-1',
+    revision: revision,
+    functionalCurrency: currency,
+  ),
   period: FiscalYear.calendar(2026),
-  functionalCurrency: currency,
   postings: postings ?? _set.postings,
 );
 
@@ -110,11 +112,11 @@ void main() {
     );
     final e = interchangeOf(books);
     expect(AccountingInterchangeV1.schema, 'accounting_interchange_v1');
-    expect(e.issuerSiteId, 'site');
-    expect(e.bookProfileId, 'profile-1');
-    expect(e.bookProfileRevision, 3);
+    expect(e.book.issuerSiteId, 'site');
+    expect(e.book.profileId, 'profile-1');
+    expect(e.book.revision, 3);
     expect(e.period, FiscalYear.calendar(2026));
-    expect(e.functionalCurrency, 'EUR');
+    expect(e.book.functionalCurrency, 'EUR');
     // The postings themselves, not a copy computed again.
     expect(e.postings, hasLength(_set.postings.length));
     for (var i = 0; i < e.postings.length; i++) {
@@ -189,11 +191,8 @@ void main() {
       final e = _envelope();
       final missing = e.documents.first.id;
       final cut = AccountingInterchangeV1(
-        issuerSiteId: e.issuerSiteId,
-        bookProfileId: e.bookProfileId,
-        bookProfileRevision: e.bookProfileRevision,
+        book: e.book,
         period: e.period,
-        functionalCurrency: e.functionalCurrency,
         documents: e.documents.skip(1).toList(),
         postings: e.postings,
       );

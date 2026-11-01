@@ -44,11 +44,13 @@ BookMapping _map(BookRole role, String code, {String? qualifier}) =>
 
 AccountingInterchangeV1 _envelope(List<Posting> postings) =>
     AccountingInterchangeV1.fromPostings(
-      issuerSiteId: 'site',
-      bookProfileId: 'p',
-      bookProfileRevision: 1,
+      book: const InterchangeBook(
+        issuerSiteId: 'site',
+        profileId: 'p',
+        revision: 1,
+        functionalCurrency: 'EUR',
+      ),
       period: FiscalYear.calendar(2026),
-      functionalCurrency: 'EUR',
       postings: postings,
     );
 

@@ -35,11 +35,13 @@ PostingLine _line(BookRole role, String account, {int debit = 0, int credit = 0,
 /// The generic journal file of [postings], as the export writes it.
 String _journal(List<Posting> postings) => buildGenericJournalCsv(
   AccountingInterchangeV1.fromPostings(
-    issuerSiteId: 'site',
-    bookProfileId: 'p',
-    bookProfileRevision: 1,
+    book: const InterchangeBook(
+      issuerSiteId: 'site',
+      profileId: 'p',
+      revision: 1,
+      functionalCurrency: 'EUR',
+    ),
     period: FiscalYear.calendar(2026),
-    functionalCurrency: 'EUR',
     postings: postings,
   ),
 );

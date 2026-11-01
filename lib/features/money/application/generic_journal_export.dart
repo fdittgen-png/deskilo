@@ -7,6 +7,8 @@
 // stops the file and is named.
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import '../domain/accounting_format.dart';
 import '../domain/accounting_interchange.dart';
 import '../domain/book_chart.dart';
@@ -155,13 +157,16 @@ GenericJournal writtenWith(
 
 /// #2370 — the interchange envelope of [books]: the postings and parties
 /// as read, on the book profile they were read on.
+@visibleForTesting
 AccountingInterchangeV1 interchangeOf(JournalPosted books) =>
     AccountingInterchangeV1.fromPostings(
-      issuerSiteId: books.book?.issuerSiteId ?? '',
-      bookProfileId: books.book?.id ?? '',
-      bookProfileRevision: books.book?.revision ?? 0,
+      book: InterchangeBook(
+        issuerSiteId: books.book?.issuerSiteId ?? '',
+        profileId: books.book?.id ?? '',
+        revision: books.book?.revision ?? 0,
+        functionalCurrency: books.book?.functionalCurrency ?? '',
+      ),
       period: books.year,
-      functionalCurrency: books.book?.functionalCurrency ?? '',
       postings: books.postings,
       parties: books.parties,
     );
