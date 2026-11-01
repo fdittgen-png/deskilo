@@ -35826,6 +35826,18 @@ abstract class AppLocalizations {
   /// **'Full day'**
   String get reserveFullDayChip;
 
+  /// #3068 Reserve hub: the title of the sheet that holds the seat legend
+  ///
+  /// In en, this message translates to:
+  /// **'What the colours mean'**
+  String get reserveLegendSheetTitle;
+
+  /// #3068 Reserve hub: the button in the view controls that opens the seat legend
+  ///
+  /// In en, this message translates to:
+  /// **'Colour legend'**
+  String get reserveLegendTooltip;
+
   /// #2631 resource_reserve: reserveMeetingRoom
   ///
   /// In en, this message translates to:
@@ -43157,6 +43169,12 @@ abstract class AppLocalizations {
   /// **'Partial'**
   String get taskRecorderCompletenessPartial;
 
+  /// #3068 task recorder: the generated name of a recording started without one; when is the start date and time
+  ///
+  /// In en, this message translates to:
+  /// **'Task recorded {when}'**
+  String taskRecorderDefaultName(String when);
+
   /// #1865 task recorder: taskRecorderDelete
   ///
   /// In en, this message translates to:
@@ -43318,6 +43336,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My recordings on this device'**
   String get taskRecorderMyRecordings;
+
+  /// #3068 task recorder: what an empty name means
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Left empty, the recording is named after the time you start it.'**
+  String get taskRecorderNameHint;
+
+  /// #3068 task recorder: the optional name asked before a recording starts
+  ///
+  /// In en, this message translates to:
+  /// **'Name this task'**
+  String get taskRecorderNameLabel;
 
   /// #1865 task recorder: taskRecorderNoOutcome
   ///

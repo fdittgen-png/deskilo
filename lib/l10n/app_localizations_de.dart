@@ -21456,6 +21456,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reserveFullDayChip => 'Ganzer Tag';
 
   @override
+  String get reserveLegendSheetTitle => 'Was die Farben bedeuten';
+
+  @override
+  String get reserveLegendTooltip => 'Farblegende';
+
+  @override
   String get reserveMeetingRoom => 'Besprechungsraum';
 
   @override
@@ -26255,6 +26261,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taskRecorderCompletenessPartial => 'Unvollständig';
 
   @override
+  String taskRecorderDefaultName(String when) {
+    return 'Aufgabe aufgenommen $when';
+  }
+
+  @override
   String get taskRecorderDelete => 'Von diesem Gerät löschen';
 
   @override
@@ -26349,6 +26360,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taskRecorderMyRecordings =>
       'Meine Aufzeichnungen auf diesem Gerät';
+
+  @override
+  String get taskRecorderNameHint =>
+      'Optional. Ohne Eingabe trägt die Aufnahme die Startzeit als Namen.';
+
+  @override
+  String get taskRecorderNameLabel => 'Diese Aufgabe benennen';
 
   @override
   String get taskRecorderNoOutcome => 'Keine Antwort aufgezeichnet';

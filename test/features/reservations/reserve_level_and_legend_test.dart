@@ -12,6 +12,7 @@
 //   * "the blocked is on the 2nd row. Make sure that all explanation
 //     are on the same row." The legend wrapped, and one entry alone on
 //     a second line reads as a heading for what is under it.
+import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/seat_legend.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -80,29 +81,59 @@ void main() {
         reason: 'the plan overwrote a value it merely could not show');
   });
 
-  testWidgets('every legend entry sits on the same row', (tester) async {
-    // The width the report was shot at: 360 dp is where the five plan
-    // states needed 361 dp and "Blocked" fell to a second line.
-    await pumpHub(tester, size: const Size(360, 800));
-    final legend = find.byKey(const ValueKey('reserve-legend'));
-    expect(legend, findsOneWidget);
+  // #3068 — the legend left the first screen. It is one tap away behind a
+  // entry in the View menu, opens in a sheet, and once a person has
+  // opened it the inline copy stops taking room. The #1269 guarantee
+  // survives where the legend now lives: every entry on one row.
+  for (final size in const [Size(360, 800), Size(1192, 760)]) {
+    testWidgets('the legend opens from the View menu and reads on one row at '
+        '${size.width.round()} dp', (tester) async {
+      await pumpHub(tester, size: size);
+      await openReserveLegend(tester);
 
-    final labels = find.descendant(of: legend, matching: find.byType(Text));
-    expect(labels, findsAtLeast(5));
-    final tops = {
-      for (final e in labels.evaluate())
-        tester.getRect(find.byWidget(e.widget)).top.round(),
-    };
-    expect(tops.length, 1,
-        reason: 'the legend wrapped onto ${tops.length} rows — "Blocked" '
-            'alone under the others reads as a heading, not as the fifth '
-            'of five equals');
-    // And it stays inside the screen rather than running off it.
-    final box = tester.getRect(legend);
-    for (final e in labels.evaluate()) {
-      expect(tester.getRect(find.byWidget(e.widget)).right,
-          lessThanOrEqualTo(box.right + 1));
-    }
+      final legend = find.descendant(
+          of: find.byType(BottomSheet),
+          matching: find.byKey(const ValueKey('reserve-legend')));
+      expect(legend, findsOneWidget, reason: 'the same SeatLegend, in a sheet');
+      final labels = find.descendant(of: legend, matching: find.byType(Text));
+      expect(labels, findsAtLeast(5));
+      final tops = {
+        for (final e in labels.evaluate())
+          tester.getRect(find.byWidget(e.widget)).top.round(),
+      };
+      expect(tops.length, 1,
+          reason: 'the legend wrapped onto ${tops.length} rows');
+      final box = tester.getRect(legend);
+      for (final e in labels.evaluate()) {
+        expect(tester.getRect(find.byWidget(e.widget)).right,
+            lessThanOrEqualTo(box.right + 1));
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('opened once, the inline legend no longer takes the first '
+      'screen — and that is remembered on the device', (tester) async {
+    final device = InMemoryHelpHintStore();
+    await pumpHub(tester, size: const Size(1192, 760), helpHints: device);
+    // A first visit still shows it where it was: nobody is asked to find a
+    // button to learn what the colours mean.
+    final inline = find.byKey(const ValueKey('reserve-legend'));
+    expect(inline, findsOneWidget);
+
+    await openReserveLegend(tester);
+    await tester.tap(find.byType(ModalBarrier).last, warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(inline, findsNothing, reason: 'opened once: hidden from now on');
+    expect(device.dismissed, contains('reserve.legend'));
+
+    // The same device after a restart: still hidden, still one tap away.
+    await tester.pumpWidget(const SizedBox());
+    await pumpHub(tester, size: const Size(1192, 760), helpHints: device);
+    expect(inline, findsNothing);
+    await tester.tap(find.byKey(const ValueKey('reserve-view-switch')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reserve-view-legend')), findsOneWidget);
   });
 
   testWidgets('a reader who asked for larger text gets it, wrapped',
