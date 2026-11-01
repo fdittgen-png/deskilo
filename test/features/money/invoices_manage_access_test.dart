@@ -14,7 +14,7 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 
 void main() {
-  testWidgets('the Invoices face offers "Manage invoices" and opens the hub',
+  testWidgets('the Invoices face offers "Invoices" and opens the hub',
       (tester) async {
     tester.view.physicalSize = const Size(800, 1400);
     tester.view.devicePixelRatio = 1.0;
@@ -26,7 +26,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Money'));
+    await tester.tap(find.text('My finances'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
     await tester.pumpAndSettle();
@@ -37,7 +37,7 @@ void main() {
     expect(tester.widget(row), isA<ListTile>(),
         reason: 'the management row, like the Settings tiles');
     expect(
-      find.descendant(of: row, matching: find.text('Manage invoices')),
+      find.descendant(of: row, matching: find.text('Invoices')),
       findsOneWidget,
     );
     expect(

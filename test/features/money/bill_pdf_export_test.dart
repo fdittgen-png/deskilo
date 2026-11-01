@@ -26,7 +26,7 @@ Future<void> pumpMoney(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Money'));
+  await tester.tap(find.text('My finances'));
   await tester.pumpAndSettle();
 }
 
