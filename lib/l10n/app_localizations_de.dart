@@ -7492,6 +7492,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventOutcomeRejected => 'Abgelehnt';
 
   @override
+  String eventPaymentInstructionsChange(String actor, String fields) {
+    return '$actor hat das Bankkonto, auf das Mitglieder zahlen, über einen Assistenten und mit eigener Bestätigung in der App geändert: $fields.';
+  }
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor hat eine Zahlung von $amount erfasst';
   }
@@ -7634,6 +7639,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Zahlung';
+
+  @override
+  String get eventTypePaymentInstructionsChange => 'Änderung des Bankkontos';
 
   @override
   String get eventTypePaymentTermsChange => 'Zahlungsbedingungen';
@@ -14840,6 +14848,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpOpMyStatement => 'Ihren Kontoauszug sehen';
+
+  @override
+  String get mcpOpPaymentInstructions =>
+      'Das Bankkonto des Arbeitsbereichs ändern';
 
   @override
   String get mcpOpPendingValidations => 'Offene Freigabeanfragen sehen';

@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/payment_instructions_labels.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/usage_record.dart';
 import '../domain/event_decision.dart';
@@ -169,15 +170,12 @@ String eventLine(
             EventType.commitmentVariance,
         _) =>
       _recordOrLeaseLine(l10n, event, actor, currency),
-    _ => _securityOrFallbackLine(l10n, event),
+    _ => _noticeOrFallbackLine(l10n, event, actor),
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.
   // #2085 — a role given or taken back already names its member.
-  final namesMember = event.type == EventType.roleChange &&
-      event.payload.containsKey('role_key');
-  if ((!event.actorIsSubject || event.type == EventType.serviceCharge) &&
-      !namesMember) {
+  if (_appendsSubject(event)) {
     final subject = names[event.subjectMemberId] ?? '';
     line = '$line ${l10n.eventForSubject(subject)}';
   }
@@ -268,10 +266,38 @@ String eventWhen(WorkspaceEvent event, AppFormat format) {
   return '$range · $created';
 }
 
-String _securityOrFallbackLine(AppLocalizations l10n, WorkspaceEvent event) =>
-    event.type == EventType.badgeSecurityAlert
-        ? l10n.eventBadgeSecurityAlert(
-            (event.payload['failures'] as num?)?.toInt() ?? 0,
-            (event.payload['window_minutes'] as num?)?.toInt() ?? 0,
-          )
-        : eventFallbackLine(l10n, event);
+/// Whether the line ends with who the event is about (see [eventLine]).
+bool _appendsSubject(WorkspaceEvent event) {
+  final namesMember = event.type == EventType.roleChange &&
+      event.payload.containsKey('role_key');
+  // #3132 — the bank-account notice is about the owner by design: it names
+  // who changed it, and would read oddly "for" the owner it tells.
+  if (namesMember || event.type == EventType.paymentInstructionsChange) {
+    return false;
+  }
+  return !event.actorIsSubject || event.type == EventType.serviceCharge;
+}
+
+/// The lines of the notices that are not about a booking or money in motion:
+/// the badge sign-in alert, and (#3132) the owners' notice that an assistant
+/// changed the bank account, which names who and which fields, never the
+/// account.
+String _noticeOrFallbackLine(
+  AppLocalizations l10n,
+  WorkspaceEvent event,
+  String actor,
+) => switch (event.type) {
+  EventType.badgeSecurityAlert => l10n.eventBadgeSecurityAlert(
+    (event.payload['failures'] as num?)?.toInt() ?? 0,
+    (event.payload['window_minutes'] as num?)?.toInt() ?? 0,
+  ),
+  EventType.paymentInstructionsChange => l10n.eventPaymentInstructionsChange(
+    actor,
+    [
+      if (event.payload['fields'] case final List<Object?> fields)
+        for (final f in fields)
+          paymentInstructionsFieldLabel(l10n, '$f') ?? '$f',
+    ].join(', '),
+  ),
+  _ => eventFallbackLine(l10n, event),
+};

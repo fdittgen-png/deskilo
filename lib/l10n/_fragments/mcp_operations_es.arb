@@ -36,5 +36,6 @@
   "mcpOpSetupHours": "Fijar los días y horarios de apertura",
   "mcpOpSetupClosures": "Añadir días de cierre",
   "mcpOpSetupNumbering": "Fijar la numeración de los documentos",
-  "mcpOpMembershipPlan": "Ofrecer un nuevo plan de membresía"
+  "mcpOpMembershipPlan": "Ofrecer un nuevo plan de membresía",
+  "mcpOpPaymentInstructions": "Cambiar la cuenta bancaria del espacio"
 }

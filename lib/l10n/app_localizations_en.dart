@@ -7432,6 +7432,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventOutcomeRejected => 'Rejected';
 
   @override
+  String eventPaymentInstructionsChange(String actor, String fields) {
+    return '$actor changed the bank account members pay into, through an assistant and with their confirmation in the app: $fields.';
+  }
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor recorded a payment of $amount';
   }
@@ -7574,6 +7579,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Payment';
+
+  @override
+  String get eventTypePaymentInstructionsChange => 'Bank account change';
 
   @override
   String get eventTypePaymentTermsChange => 'Payment conditions';
@@ -14713,6 +14721,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpMyStatement => 'See your account statement';
+
+  @override
+  String get mcpOpPaymentInstructions => 'Change the workspace\'s bank account';
 
   @override
   String get mcpOpPendingValidations => 'See pending validation requests';

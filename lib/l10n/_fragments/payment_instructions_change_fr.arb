@@ -1,0 +1,4 @@
+{
+  "eventTypePaymentInstructionsChange": "Changement du compte bancaire",
+  "eventPaymentInstructionsChange": "{actor} a modifié le compte bancaire sur lequel les membres paient, par l'intermédiaire d'un assistant et avec sa confirmation dans l'application : {fields}."
+}

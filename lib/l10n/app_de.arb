@@ -5553,6 +5553,7 @@
   "eventOutcomeConfirmed": "Bestätigt",
   "eventOutcomePending": "Wartet auf eine Entscheidung",
   "eventOutcomeRejected": "Abgelehnt",
+  "eventPaymentInstructionsChange": "{actor} hat das Bankkonto, auf das Mitglieder zahlen, über einen Assistenten und mit eigener Bestätigung in der App geändert: {fields}.",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5667,6 +5668,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Zahlung",
+  "eventTypePaymentInstructionsChange": "Änderung des Bankkontos",
   "eventTypePaymentTermsChange": "Zahlungsbedingungen",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -10049,6 +10051,7 @@
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
+  "mcpOpPaymentInstructions": "Das Bankkonto des Arbeitsbereichs ändern",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
   "mcpOpRatePlace": "Plätze bewerten",
   "mcpOpRefund": "Rechnung erstatten",

@@ -7,6 +7,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/app_format.dart';
+import '../../../core/l10n/payment_instructions_labels.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart';
@@ -23,6 +24,7 @@ class McpSetupChangeText {
     'member_rights' => _l10n.setupStepTitle('member_rights'),
     'invitation' => _l10n.setupStepTitle('invite'),
     'membership_plan' => _level(target['percent']),
+    'payment_instructions' => _l10n.paymentInstructionsTitle,
     'opening_hours' => _l10n.availabilityWorkHoursTitle,
     'closure_days' => [
       if (target['days'] case final List<Object?> days)
@@ -41,6 +43,7 @@ class McpSetupChangeText {
     'member_rights' ||
     'invitation' ||
     'membership_plan' ||
+    'payment_instructions' ||
     'opening_hours' ||
     'number_sequence' => [
       if (target['changes'] case final List<Object?> changes)
@@ -74,7 +77,10 @@ class McpSetupChangeText {
     'digits' => _l10n.numberSequenceDigits,
     'reset' => _l10n.numberSequenceReset,
     'next_value' => _l10n.numberSequenceNext,
-    _ => _permissionLabel(field) ?? field,
+    _ =>
+      paymentInstructionsFieldLabel(_l10n, field) ??
+          _permissionLabel(field) ??
+          field,
   };
 
   /// A permission's own words, as the role matrix shows it (#3132).
@@ -110,7 +116,13 @@ class McpSetupChangeText {
     'subscription_level' ||
     'timezone' ||
     'default_locale' ||
-    'address'
+    'address' ||
+    'iban' ||
+    'bic' ||
+    'bank_name' ||
+    'account_number' ||
+    'bank_code' ||
+    'qr_iban'
         when '${value ?? ''}'.isEmpty =>
       '—',
     _ when value is bool => value ? _l10n.compareYes : _l10n.compareNo,

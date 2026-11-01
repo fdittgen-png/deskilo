@@ -438,7 +438,7 @@ constraint events.events_reservation_id_fkey FOREIGN KEY (reservation_id) REFERE
 constraint events.events_status_check CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))
 constraint events.events_subject_member_id_fkey FOREIGN KEY (subject_member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint events.events_subject_member_id_same_workspace FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
-constraint events.events_type_check CHECK (((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))
+constraint events.events_type_check CHECK (((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))
 constraint events.events_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint events.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint events.system_company_present CHECK ((company_id IS NOT NULL))
@@ -1642,7 +1642,7 @@ constraint usage_records.usage_records_reservation_id_key UNIQUE (reservation_id
 constraint usage_records.usage_records_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint validation_policies.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint validation_policies.system_company_present CHECK ((company_id IS NOT NULL))
-constraint validation_policies.validation_policies_event_type_check CHECK (((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))
+constraint validation_policies.validation_policies_event_type_check CHECK (((event_type = 'payment_instructions_change'::text) OR ((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))
 constraint validation_policies.validation_policies_min_amount_check CHECK ((min_amount_cents >= 0))
 constraint validation_policies.validation_policies_pkey PRIMARY KEY (id)
 constraint validation_policies.validation_policies_required_count_check CHECK (((required_count >= 1) AND (required_count <= 10)))
@@ -2129,7 +2129,7 @@ routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | in
 routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fdaaf680cd2d
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
-routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:4341dee24a6f
+routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:93a6104313b9
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:5f4ba165c976
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:88b1b882d2e1
@@ -2390,9 +2390,10 @@ routine public.mcp_op_set_favorite(c mcp_call_context, p_args jsonb) -> jsonb | 
 routine public.mcp_op_set_member_permissions_preset(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:fe8cde0611c8
 routine public.mcp_op_set_number_sequence(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:468ed786c617
 routine public.mcp_op_set_opening_hours(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:47b6bbe331db
+routine public.mcp_op_set_payment_instructions(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:8caff7bef909
 routine public.mcp_op_set_workspace_basics(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4eec85af0fed
 routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:0252dfab0137
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:814d5105dd08
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
@@ -2435,6 +2436,7 @@ routine public.mcp_target_of(p_workspace_id uuid, p_operation text, p_args jsonb
 routine public.mcp_target_set_member_permissions_preset(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ae3b20833fc4
 routine public.mcp_target_set_number_sequence(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:409f38986b2f
 routine public.mcp_target_set_opening_hours(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2c87a40d293f
+routine public.mcp_target_set_payment_instructions(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:55b982022f9c
 routine public.mcp_target_set_workspace_basics(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:396aaf8f5d0a
 routine public.mcp_time_arg(p_args jsonb, p_key text) -> timestamp with time zone | function | invoker | immutable | exec:service_role | body:3fcf56ea5f3e
 routine public.mcp_usage_cleanup(p_keep_days integer) -> integer | function | invoker | volatile | exec:service_role | body:c9dd4854acb4
@@ -2580,6 +2582,7 @@ routine public.outgoing_payments_guard() -> trigger | function | invoker | volat
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f135c6a70d02
+routine public.payment_instructions_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:098c3b53073f
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17dae5ea6441
