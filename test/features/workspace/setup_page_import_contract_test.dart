@@ -457,6 +457,7 @@ void main() {
         'retention': 'app',
         'bank': 'app',
         'records': 'app',
+        'map': 'app',
         'members': 'app',
         'einvoice': 'file',
       });
