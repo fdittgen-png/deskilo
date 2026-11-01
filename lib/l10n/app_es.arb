@@ -14421,6 +14421,8 @@
     "description": "#2631 resource_reserve: reserveEvMarker"
   },
   "reserveFullDayChip": "Día completo",
+  "reserveLegendSheetTitle": "Qué significan los colores",
+  "reserveLegendTooltip": "Leyenda de colores",
   "reserveMeetingRoom": "Sala de reuniones",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"
@@ -17293,6 +17295,7 @@
   "taskRecorderCompletenessComplete": "Completa",
   "taskRecorderCompletenessInterrupted": "Interrumpida",
   "taskRecorderCompletenessPartial": "Parcial",
+  "taskRecorderDefaultName": "Tarea grabada {when}",
   "taskRecorderDelete": "Borrar de este dispositivo",
   "taskRecorderDeleteConfirm": "¿Borrar esta grabación de este dispositivo? Los archivos exportados no se ven afectados y nada cambia en el espacio.",
   "taskRecorderDiscard": "Descartar",
@@ -17320,6 +17323,8 @@
   "taskRecorderLeaveOut": "Dejar fuera de la exportación",
   "taskRecorderLimits": "Hasta {steps} pasos o {minutes} minutos por grabación. Las grabaciones se borran de este dispositivo después de {days} días; un archivo exportado es suyo y se queda donde lo guardó.",
   "taskRecorderMyRecordings": "Mis grabaciones en este dispositivo",
+  "taskRecorderNameHint": "Opcional. Si se deja vacío, la grabación lleva la hora de inicio como nombre.",
+  "taskRecorderNameLabel": "Dar un nombre a esta tarea",
   "taskRecorderNoOutcome": "Ninguna respuesta grabada",
   "taskRecorderNoRecordings": "No hay grabaciones en este dispositivo.",
   "taskRecorderNoteHint": "Sus propias palabras, guardadas tal como las escribe",

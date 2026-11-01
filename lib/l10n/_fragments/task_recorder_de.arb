@@ -236,5 +236,8 @@
   "taskRecorderValuesOn": "Werte werden erfasst",
   "taskRecorderExportValuesTitle": "Diese Aufnahme enthält Werte",
   "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfen Sie sie vor dem Teilen und geben Sie sie nur an Personen weiter, die das sehen dürfen.",
-  "taskRecorderExportValuesConfirm": "Trotzdem speichern"
+  "taskRecorderExportValuesConfirm": "Trotzdem speichern",
+  "taskRecorderNameLabel": "Diese Aufgabe benennen",
+  "taskRecorderNameHint": "Optional. Ohne Eingabe trägt die Aufnahme die Startzeit als Namen.",
+  "taskRecorderDefaultName": "Aufgabe aufgenommen {when}"
 }

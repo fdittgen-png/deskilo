@@ -25307,6 +25307,14 @@
   "@reserveFullDayChip": {
     "description": "Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)"
   },
+  "reserveLegendSheetTitle": "What the colours mean",
+  "@reserveLegendSheetTitle": {
+    "description": "#3068 Reserve hub: the title of the sheet that holds the seat legend"
+  },
+  "reserveLegendTooltip": "Colour legend",
+  "@reserveLegendTooltip": {
+    "description": "#3068 Reserve hub: the button in the view controls that opens the seat legend"
+  },
   "reserveMeetingRoom": "Meeting room",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"
@@ -30780,6 +30788,15 @@
   "@taskRecorderCompletenessPartial": {
     "description": "#1865 task recorder: taskRecorderCompletenessPartial"
   },
+  "taskRecorderDefaultName": "Task recorded {when}",
+  "@taskRecorderDefaultName": {
+    "description": "#3068 task recorder: the generated name of a recording started without one; when is the start date and time",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "taskRecorderDelete": "Delete from this device",
   "@taskRecorderDelete": {
     "description": "#1865 task recorder: taskRecorderDelete"
@@ -30896,6 +30913,14 @@
   "taskRecorderMyRecordings": "My recordings on this device",
   "@taskRecorderMyRecordings": {
     "description": "#1865 task recorder: taskRecorderMyRecordings"
+  },
+  "taskRecorderNameHint": "Optional. Left empty, the recording is named after the time you start it.",
+  "@taskRecorderNameHint": {
+    "description": "#3068 task recorder: what an empty name means"
+  },
+  "taskRecorderNameLabel": "Name this task",
+  "@taskRecorderNameLabel": {
+    "description": "#3068 task recorder: the optional name asked before a recording starts"
   },
   "taskRecorderNoOutcome": "No answer recorded",
   "@taskRecorderNoOutcome": {

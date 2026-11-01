@@ -14421,6 +14421,8 @@
     "description": "#2631 resource_reserve: reserveEvMarker"
   },
   "reserveFullDayChip": "Ganzer Tag",
+  "reserveLegendSheetTitle": "Was die Farben bedeuten",
+  "reserveLegendTooltip": "Farblegende",
   "reserveMeetingRoom": "Besprechungsraum",
   "@reserveMeetingRoom": {
     "description": "#2631 resource_reserve: reserveMeetingRoom"
@@ -17293,6 +17295,7 @@
   "taskRecorderCompletenessComplete": "Vollständig",
   "taskRecorderCompletenessInterrupted": "Unterbrochen",
   "taskRecorderCompletenessPartial": "Unvollständig",
+  "taskRecorderDefaultName": "Aufgabe aufgenommen {when}",
   "taskRecorderDelete": "Von diesem Gerät löschen",
   "taskRecorderDeleteConfirm": "Diese Aufzeichnung von diesem Gerät löschen? Exportierte Dateien sind nicht betroffen, und im Arbeitsbereich ändert sich nichts.",
   "taskRecorderDiscard": "Verwerfen",
@@ -17320,6 +17323,8 @@
   "taskRecorderLeaveOut": "Vom Export ausnehmen",
   "taskRecorderLimits": "Bis zu {steps} Schritte oder {minutes} Minuten pro Aufzeichnung. Aufzeichnungen werden nach {days} Tagen von diesem Gerät gelöscht; eine exportierte Datei gehört Ihnen und bleibt, wo Sie sie gespeichert haben.",
   "taskRecorderMyRecordings": "Meine Aufzeichnungen auf diesem Gerät",
+  "taskRecorderNameHint": "Optional. Ohne Eingabe trägt die Aufnahme die Startzeit als Namen.",
+  "taskRecorderNameLabel": "Diese Aufgabe benennen",
   "taskRecorderNoOutcome": "Keine Antwort aufgezeichnet",
   "taskRecorderNoRecordings": "Keine Aufzeichnungen auf diesem Gerät.",
   "taskRecorderNoteHint": "Ihre eigenen Worte, so gespeichert, wie Sie sie schreiben",

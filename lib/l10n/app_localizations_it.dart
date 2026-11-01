@@ -21433,6 +21433,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reserveFullDayChip => 'Giornata intera';
 
   @override
+  String get reserveLegendSheetTitle => 'Cosa significano i colori';
+
+  @override
+  String get reserveLegendTooltip => 'Legenda dei colori';
+
+  @override
   String get reserveMeetingRoom => 'Sala riunioni';
 
   @override
@@ -26253,6 +26259,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderCompletenessPartial => 'Parziale';
 
   @override
+  String taskRecorderDefaultName(String when) {
+    return 'Attività registrata $when';
+  }
+
+  @override
   String get taskRecorderDelete => 'Elimina da questo dispositivo';
 
   @override
@@ -26348,6 +26359,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taskRecorderMyRecordings =>
       'Le mie registrazioni su questo dispositivo';
+
+  @override
+  String get taskRecorderNameHint =>
+      'Facoltativo. Se lasci vuoto, la registrazione prende come nome l\'ora di avvio.';
+
+  @override
+  String get taskRecorderNameLabel => 'Dai un nome a questa attività';
 
   @override
   String get taskRecorderNoOutcome => 'Nessuna risposta registrata';

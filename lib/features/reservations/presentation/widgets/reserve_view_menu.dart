@@ -47,6 +47,7 @@ class ReserveViewMenu extends StatelessWidget {
     required this.view,
     required this.onChanged,
     this.onGetStarted,
+    this.onLegend,
   });
 
   final ReserveView view;
@@ -55,6 +56,12 @@ class ReserveViewMenu extends StatelessWidget {
   /// reopens the dismissed card. Null hides the entry: the menu is the
   /// hub's view chooser first.
   final VoidCallback? onGetStarted;
+
+  /// #3068 — when set, the menu carries a "Colour legend" entry that opens
+  /// the seat legend in a sheet. The header row has no room for a fourth
+  /// control at 360 dp (#699 pins two rows), so the legend lives with the
+  /// other plan controls, here. Null hides the entry (booking gate off).
+  final VoidCallback? onLegend;
 
   /// Called with the chosen view; choosing the one already shown does not
   /// fire, so choosing Plan from the list presentation keeps the list.
@@ -114,8 +121,19 @@ class ReserveViewMenu extends StatelessWidget {
               trailing: option == current ? const Icon(Icons.check) : null,
             ),
           ),
-        if (onGetStarted != null) ...[
+        if (onLegend != null || onGetStarted != null)
           const PopupMenuDivider(),
+        if (onLegend != null)
+          PopupMenuItem<ReserveView>(
+            key: const ValueKey('reserve-view-legend'),
+            onTap: onLegend,
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.legend_toggle),
+              title: Text(l10n.reserveLegendTooltip),
+            ),
+          ),
+        if (onGetStarted != null) ...[
           PopupMenuItem<ReserveView>(
             key: const ValueKey('reserve-view-get-started'),
             onTap: onGetStarted,

@@ -5,6 +5,7 @@
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
+import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -35,6 +36,9 @@ Future<FakeReservationRepository> pumpHub(
   Size size = const Size(800, 1400),
   double pixelRatio = 1.0,
   void Function(FakeWorkspaceRepository)? configureWorkspace,
+  // #3068 — the device's dismissed hints; shared across two pumps it is
+  // the same device after a restart.
+  InMemoryHelpHintStore? helpHints,
 }) async {
   // Portrait viewport: these tests exercise the hub's feature behaviour,
   // not the landscape split (which is covered separately). The 800×600
@@ -60,6 +64,7 @@ Future<FakeReservationRepository> pumpHub(
         reservations: reservations,
         workspace: workspace,
         clock: clock,
+        helpHints: helpHints,
       ),
       child: const DeskiloApp(),
     ),

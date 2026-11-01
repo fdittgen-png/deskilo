@@ -255,5 +255,13 @@
   "bookingRatePlace": "Rate this place",
   "@bookingRatePlace": {
     "description": "#3066 the collapsed rating row of the booking sheet"
+  },
+  "reserveLegendTooltip": "Colour legend",
+  "reserveLegendSheetTitle": "What the colours mean",
+  "@reserveLegendTooltip": {
+    "description": "#3068 Reserve hub: the button in the view controls that opens the seat legend"
+  },
+  "@reserveLegendSheetTitle": {
+    "description": "#3068 Reserve hub: the title of the sheet that holds the seat legend"
   }
 }
