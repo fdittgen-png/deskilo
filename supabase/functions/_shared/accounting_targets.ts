@@ -21,6 +21,13 @@ export interface OAuthTarget {
   scopes: string[];
   /** The redirect's query parameter naming the remote company, if any. */
   tenantParam?: string;
+  /** The target's token revocation endpoint (RFC 7009), when it documents
+   * one. A target without one is revoked in DesKilo only, and the person
+   * is told to remove the app in the target's own settings. */
+  revokeUrl?: string;
+  /** How that endpoint wants the token: a form (RFC 7009, the default) or
+   * JSON (Intuit). */
+  revokeBody?: "form" | "json";
   /** How long a sign-in may take from the authorisation page to the
    * redirect; an older state is refused before any exchange, so a redirect
    * URL found later in a history or a referrer cannot connect a company. */
@@ -37,6 +44,12 @@ const quickbooksOnline: OAuthTarget = {
   tokenUrl: "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer",
   scopes: ["com.intuit.quickbooks.accounting"],
   tenantParam: "realmId",
+  // spec: developer.intuit.com — "Revoke token": POST to
+  // developer.api.intuit.com/v2/oauth2/tokens/revoke with the client as
+  // basic auth and a JSON body {token}. Not yet verified against a
+  // registered Intuit application.
+  revokeUrl: "https://developer.api.intuit.com/v2/oauth2/tokens/revoke",
+  revokeBody: "json",
   // A person signing in, not a batch: ten minutes.
   stateLifetimeMs: 10 * 60 * 1000,
 };
@@ -54,6 +67,10 @@ const quickbooksOnline: OAuthTarget = {
 const xero: OAuthTarget = {
   authorizeUrl: "https://login.xero.com/identity/connect/authorize",
   tokenUrl: "https://identity.xero.com/connect/token",
+  // spec: developer.xero.com — "Revoke refresh token": RFC 7009 on
+  // identity.xero.com/connect/revocation. Not yet verified against a
+  // registered Xero application.
+  revokeUrl: "https://identity.xero.com/connect/revocation",
   scopes: ["offline_access", "accounting.transactions", "accounting.contacts", "accounting.settings.read"],
   // A person signing in, not a batch: ten minutes.
   stateLifetimeMs: 10 * 60 * 1000,
@@ -82,6 +99,9 @@ export const oauthTargets: Record<string, OAuthTarget> = {
   bexio_api: {
     authorizeUrl: "https://auth.bexio.com/realms/bexio/protocol/openid-connect/auth",
     tokenUrl: "https://auth.bexio.com/realms/bexio/protocol/openid-connect/token",
+    // The realm is Keycloak, whose standard revocation endpoint (RFC 7009)
+    // this is. Not yet verified against a registered bexio app.
+    revokeUrl: "https://auth.bexio.com/realms/bexio/protocol/openid-connect/revoke",
     scopes: [
       "openid",
       "offline_access",

@@ -162,6 +162,48 @@ export function refreshTokens(
   }, now, refreshToken);
 }
 
+/** Revokes [token] at the target (RFC 7009). Best effort and pure: the
+ * answer is whether the target accepted it, and a refusal carries the
+ * endpoint's error code at most, never the token or the request. A target
+ * that documents no revocation endpoint answers `not_supported`. */
+export async function revokeToken(
+  fetchImpl: Fetch,
+  target: OAuthTarget,
+  client: OAuthClient,
+  token: string,
+  hint: "refresh_token" | "access_token",
+): Promise<{ ok: true } | { ok: false; detail: string }> {
+  if (!target.revokeUrl) return { ok: false, detail: "not_supported" };
+  const json = target.revokeBody === "json";
+  let res: Response;
+  try {
+    res = await fetchImpl(target.revokeUrl, {
+      method: "POST",
+      headers: {
+        "content-type": json ? "application/json" : "application/x-www-form-urlencoded",
+        accept: "application/json",
+        authorization: `Basic ${btoa(`${client.clientId}:${client.clientSecret}`)}`,
+      },
+      body: json
+        ? JSON.stringify({ token })
+        : new URLSearchParams({ token, token_type_hint: hint }).toString(),
+    });
+  } catch {
+    // The error text of a failed request may quote it: say only that
+    // nothing answered.
+    return { ok: false, detail: "unreachable" };
+  }
+  if (res.ok) return { ok: true };
+  let code = `${res.status}`;
+  try {
+    const body = await res.json();
+    if (typeof body?.error === "string") code = body.error;
+  } catch {
+    // not JSON: the status alone answers
+  }
+  return { ok: false, detail: code.slice(0, 100) };
+}
+
 export function isFailure(x: TokenSet | TokenFailure): x is TokenFailure {
   return "reason" in x;
 }
