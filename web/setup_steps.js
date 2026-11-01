@@ -1,61 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// The setup questionnaire's steps (#2926): the levels step's helpers and
-// the STEPS web/setup.html walks through — what each asks, why, when it
+// The setup questionnaire's steps (#2926): the STEPS web/setup.html walks
+// through — what each asks, why, when it
 // applies and what it checks — with the findings they add up to. Loaded
 // after the page's own script, whose state, helpers and words it uses; it
 // draws, it never writes but through set()/setMany().
 'use strict';
-// #2868 — the plain questions, the level of each process, the quick starts
-// and the rules that turn answers into levels: generated from the app's
-// setup_levels.dart (setup_catalogue.js), so this page recommends exactly
-// what the app's levels screen does; the words are the app's own. What the
-// law of a country asks comes from the bundled tax reference rows.
-const LEVELS=window.SETUP_LEVELS||{questions:[],processes:[],presets:{},rules:{}};
-const OBLIGATIONS=window.SETUP_OBLIGATIONS||{};
-const jw=(group,key)=>L10N[LANG]?.journey?.[group]?.[key]??L10N.en?.journey?.[group]?.[key]??key;
-const JT=(key,params)=>{const s=jw('s',key);return params?s.replace(/\{(\w+)\}/g,(m,k)=>k in params?String(params[k]):m):s};
-const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
-// ------------------------------------------------------------------ levels (#2868)
-const levelIds=p=>(LEVELS.processes.find(x=>x.key===p)?.levels||[]).map(l=>l.id);
-const levelRank=(p,id)=>levelIds(p).indexOf(id);
-// The first rule of each process that holds: a rule without questions
-// always does — recommendSetupLevels, read from the same rules.
-function recommendLevels(answers){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>!x.any.length||x.any.some(q=>answers[q]===true));out[p]={level:r.level,reason:r.reason}}return out}
-// Each process's level as the switches say: the highest whose switches and
-// every lower level's are all ticked — currentSetupLevels.
-function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
-// A level ticks its switches and every lower level's, and unticks the
-// higher ones' — setupFeatureDelta. The expert view keeps every switch.
-// applyLevels sets the switches of each [process, level] pair in a copy of
-// them and writes it once, with `also`.
-function applyLevels(pairs,also=[]){const f={...S.features};let used=false;
- for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f)f[k]=i<=r}));used=true}
- setMany([...also,['features',f],...(used?[['journey.used',true]]:[])])}
-function applyLevel(p,id){applyLevels([[p,id]])}
-function answerQuestion(q,v){const rec=recommendLevels({...S.journey.answers,[q]:v});applyLevels(Object.entries(rec).map(([p,r])=>[p,r.level]),[[`journey.answers.${q}`,v]])}
-function applyPreset(name){applyLevels(Object.entries(LEVELS.presets[name]||{}))}
-const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
-// What a vector lacks: each chosen level (and those below it) whose needs
-// another process does not meet — setupVectorGaps.
-function levelGaps(now){const out=[];for(const pr of LEVELS.processes){pr.levels.slice(0,levelRank(pr.key,now[pr.key])+1).forEach(l=>{for(const[np,min]of Object.entries(l.needs||{}))if(levelRank(np,now[np]??'')<levelRank(np,min))out.push(JT('setupLevelsGap',{level:jw('process',pr.key)+': '+jw('level',pr.key+'_'+l.id),needed:jw('process',np)+': '+jw('level',np+'_'+min)}))})}return out}
-function obligationText(o){
- if(o.kind==='vatThreshold'){let limit=String(o.cents/100);try{limit=new Intl.NumberFormat(LANG,{style:'currency',currency:o.currency}).format(o.cents/100)}catch(e){limit=String(o.cents/100)}
-  const s=L10N[LANG]?.journey?.threshold?.[o.detail]??jw('threshold','other');return s.replace(/\{limit\}/g,limit)}
- let date=o.from;try{date=new Intl.DateTimeFormat(LANG,{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}).format(new Date(o.from+'T00:00:00Z'))}catch(e){date=o.from}
- return JT(o.from<=new Date().toISOString().slice(0,10)?'eInvoiceMandateSince':'eInvoiceMandateFrom',{date,duty:jw('duty',o.detail)})}
-// What the law of the country asks, from the reviewed reference rows; a
-// row nobody confirmed, or no row, says to ask an accountant.
-function obligationsCard(lbl){const rows=OBLIGATIONS[S.country]||[];
- const kids=[lbl(JT('setupObligationsTitle',{country:countryName(S.country)}))];
- if(!rows.length)kids.push(h('p',{class:'hint'},JT('setupObligationNone')));
- for(const o of rows)kids.push(h('p',{},obligationText(o)),h('p',{class:'hint'},(o.confirmed?'':JT('setupObligationUnconfirmed')+' ')+JT('setupObligationSource',{source:o.source})));
- return h('div',{class:'card'},...kids)}
-function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.append(h('option',{value:l.id},jw('level',pr.key+'_'+l.id)));s.value=now[pr.key];
- s.onchange=()=>{applyLevel(pr.key,s.value);render()};s.setAttribute('aria-label',jw('process',pr.key));
- const why=S.journey.used&&rec[pr.key]&&rec[pr.key].level===now[pr.key]?jw('reason',rec[pr.key].reason):'';
- return h('div',{},h('label',{},jw('process',pr.key)),s,why?h('p',{class:'hint'},why):null)}
-
 // ------------------------------------------------------------------ steps
 // Each step: what it asks, why, whether it applies at all given earlier
 // answers, and what it checks. Order IS the dependency order: a later
@@ -65,12 +15,32 @@ function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.
 // section when a question has none.
 let advOpen=false; // the advanced disclosure stays as the owner left it across re-renders
 const STEPS=[
+// #2868 — the plain questions, the first screen (#3075): each answer sets
+// the level of every process through the app's own rules. The page works
+// offline and never claims what the space is ready for.
+{id:'levels',applies(){return on('setupGuide')},get title(){return JT('setupLevelsTitle')},get why(){return T('levelsWhy')},
+ build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const now=levelsNow(),rec=recommendLevels(S.journey.answers),preset=S.journey.used?presetOf(now):'';
+  return[h('p',{class:'hint'},T('levelsOffline')),
+   lbl(JT('setupLevelsQuestions')),
+   ...questionRows(),
+   lbl(JT('setupLevelsPresets')),
+   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
+   lbl(JT('setupLevelsChoice')),
+   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
+   ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
+   h('p',{class:'hint'},T('levelsExpertHint')),
+   h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
+ check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
+  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
+  return f}},
+
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
   h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),onCountry,'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
+  obligationsCard(lbl),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
   input(T('identityAddress'),'address',T('identityAddressHint'),'text',T('identityAddressPlaceholder'),'identity'),
@@ -114,26 +84,6 @@ const STEPS=[
   // #2561 L3 — a personal home is an HTTPS origin and a publishable key.
   if(S.network.roles==='workspace_host'&&((S.network.homeUrl.trim()&&!/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:\d{1,5})?\/?$/i.test(S.network.homeUrl.trim()))||(S.network.homeKey.trim()&&!/^(sb_publishable_\S{6,}|eyJ\S+\.\S+\.\S*)$/.test(S.network.homeKey.trim()))))f.push(F.err(T('networkErrHome'),'identity'));
   if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))f.push(F.warn(T('identityWarnInvoicingCountry',{country:countryName(S.country),list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),'identity'));return f}},
-
-// #2868 — the plain questions, right after the country: each answer sets
-// the level of every process through the app's own rules. The page works
-// offline and never claims what the space is ready for.
-{id:'levels',applies(){return on('setupGuide')},get title(){return JT('setupLevelsTitle')},get why(){return T('levelsWhy')},
- build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const now=levelsNow(),rec=recommendLevels(S.journey.answers),preset=S.journey.used?presetOf(now):'';
-  return[h('p',{class:'hint'},T('levelsOffline')),
-   lbl(JT('setupLevelsQuestions')),
-   ...LEVELS.questions.map(q=>checkbox(jw('question',q),null,S.journey.answers[q]===true,v=>answerQuestion(q,v))),
-   obligationsCard(lbl),
-   lbl(JT('setupLevelsPresets')),
-   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
-   lbl(JT('setupLevelsChoice')),
-   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
-   ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
-   h('p',{class:'hint'},T('levelsExpertHint')),
-   h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
- check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
-  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
-  return f}},
 
 // #2868 — every switch: the expert view once the questions are the way in.
 {id:'features',expertOnly:true,get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},

@@ -6,5 +6,7 @@
   "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",
   "setupObligationSource": "Fonte: {source}",
   "setupJourneyConflict": "Nel frattempo qualcun altro ha salvato altre risposte. Eccole: le verifichi, poi applichi.",
-  "setupJourneySavedBy": "Salvato per ultimo da {name}."
+  "setupJourneySavedBy": "Salvato per ultimo da {name}.",
+  "setupAnswerUnknown": "Non lo so ancora",
+  "setupAnswerUnknownNote": "Non ancora deciso: {list} restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa."
 }

@@ -23301,6 +23301,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
 
   @override
+  String get setupAnswerUnknown => 'Je ne sais pas encore';
+
+  @override
+  String setupAnswerUnknownNote(String list) {
+    return 'Pas encore décidé : $list restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.';
+  }
+
+  @override
   String get setupApprovalsApply => 'Appliquer cette règle';
 
   @override

@@ -23043,6 +23043,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.';
 
   @override
+  String get setupAnswerUnknown => 'Not sure yet';
+
+  @override
+  String setupAnswerUnknownNote(String list) {
+    return 'Not decided yet: $list stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.';
+  }
+
+  @override
   String get setupApprovalsApply => 'Use this rule';
 
   @override

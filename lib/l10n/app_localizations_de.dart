@@ -23269,6 +23269,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.';
 
   @override
+  String get setupAnswerUnknown => 'Weiß ich noch nicht';
+
+  @override
+  String setupAnswerUnknownNote(String list) {
+    return 'Noch nicht entschieden: $list bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.';
+  }
+
+  @override
   String get setupApprovalsApply => 'Diese Regel verwenden';
 
   @override

@@ -15960,6 +15960,8 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
+  "setupAnswerUnknown": "Weiß ich noch nicht",
+  "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
   "setupApprovalsApply": "Diese Regel verwenden",
   "setupApprovalsApplyFailed": "Die Freigaberegel konnte nicht gespeichert werden. Bitte erneut versuchen.",
   "setupApprovalsFlowOutcome": "Sie gilt",

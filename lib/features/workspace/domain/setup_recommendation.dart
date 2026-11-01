@@ -202,3 +202,38 @@ Map<SetupProcess, SetupRecommendation> recommendSetupLevels(
       return (level: rule.level, reason: rule.reason);
     }(),
 };
+
+/// What a space already does that answers a question yes: the process and
+/// the lowest level that stands for it (#3076). A question with no such
+/// evidence in the levels (an association, approval before booking) is not
+/// listed and stays a no until the owner says otherwise. The web page reads
+/// this table too (`tool/build_setup_l10n.dart`).
+const Map<String, ({SetupProcess process, String level})>
+setupQuestionEvidence = {
+  'members_owe_money': (process: SetupProcess.money, level: 'statements'),
+  'issue_invoices': (process: SetupProcess.money, level: 'invoices'),
+  'pay_online': (process: SetupProcess.payments, level: 'online'),
+  'vat_registered': (process: SetupProcess.tax, level: 'vat'),
+  'keep_books': (process: SetupProcess.tax, level: 'books'),
+  'tracks_purchases': (process: SetupProcess.purchases, level: 'expenses'),
+  'several_rooms_or_sites': (
+    process: SetupProcess.bookings,
+    level: 'resources',
+  ),
+  'door_tablet': (process: SetupProcess.bookings, level: 'measured'),
+  'public_page': (process: SetupProcess.presentation, level: 'public'),
+  'organised': (process: SetupProcess.community, level: 'organised'),
+};
+
+/// The answers the levels a space reaches stand for: a question is yes
+/// where its evidence is reached. The questions open from these, so an
+/// owner who arrives mid-way is not asked to describe a space the app
+/// already knows.
+SetupAnswers setupAnswersFromLevels(SetupLevelVector now) {
+  int rank(SetupProcess p, String? level) =>
+      setupLevels[p]!.indexWhere((l) => l.id == level);
+  return SetupAnswers.fromJson({
+    for (final MapEntry(key: question, value: e) in setupQuestionEvidence.entries)
+      question: rank(e.process, now[e.process]) >= rank(e.process, e.level),
+  });
+}

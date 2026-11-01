@@ -23238,6 +23238,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.';
 
   @override
+  String get setupAnswerUnknown => 'Aún no lo sé';
+
+  @override
+  String setupAnswerUnknownNote(String list) {
+    return 'Aún sin decidir: $list se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa.';
+  }
+
+  @override
   String get setupApprovalsApply => 'Usar esta regla';
 
   @override

@@ -1,5 +1,6 @@
 {
  "setupTitle": "DesKilo — Assistente di configurazione",
+ "setupHow": "Come funziona questa pagina",
  "setupLanguage": "Lingua",
  "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le Sue risposte precedenti rendono possibili (le funzionalità che non attiva, il regime IVA che non ha, il paese che non si applica — non Le viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le Sue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
  "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",

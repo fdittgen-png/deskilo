@@ -38772,6 +38772,18 @@ abstract class AppLocalizations {
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
 
+  /// #3076 setup questions: the third answer, not decided yet
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure yet'**
+  String get setupAnswerUnknown;
+
+  /// #3076 setup questions: what an undecided question leaves at the safe choice
+  ///
+  /// In en, this message translates to:
+  /// **'Not decided yet: {list} stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.'**
+  String setupAnswerUnknownNote(String list);
+
   /// #2871 setup run steps: setupApprovalsApply
   ///
   /// In en, this message translates to:

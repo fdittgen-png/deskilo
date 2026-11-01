@@ -27391,6 +27391,19 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
+  "setupAnswerUnknown": "Not sure yet",
+  "@setupAnswerUnknown": {
+    "description": "#3076 setup questions: the third answer, not decided yet"
+  },
+  "setupAnswerUnknownNote": "Not decided yet: {list} stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.",
+  "@setupAnswerUnknownNote": {
+    "description": "#3076 setup questions: what an undecided question leaves at the safe choice",
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
   "setupApprovalsApply": "Use this rule",
   "@setupApprovalsApply": {
     "description": "#2871 setup run steps: setupApprovalsApply"
