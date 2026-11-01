@@ -10,6 +10,7 @@ import '../../features/money/presentation/screens/money_screen.dart';
 import '../../features/reservations/presentation/screens/reserve_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/presentation/screens/inbox_screen.dart';
+import '../../features/workspace/presentation/screens/workspace_overview_screen.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'shell_screen.dart';
@@ -38,6 +39,18 @@ StatefulShellRoute shellRoute(RouteEnv env) => StatefulShellRoute.indexedStack(
           // The workspace's alerts and requests, plus one door to the
           // messenger in Me (#2210: the old conversation list is gone).
           builder: (context, state) => const InboxScreen(),
+        ),
+        // #2583 / #3060 — the overview: what needs the person, then the
+        // figures. Inside the shell so the drawer or the sidebar is there
+        // from every entry (a deep link included).
+        GoRoute(
+          path: '/workspace-overview',
+          redirect: env.guard(
+            const RouteAccess(
+              features: [WorkspaceFeature.workspaceOverview],
+            ),
+          ),
+          builder: (context, state) => const WorkspaceOverviewScreen(),
         ),
       ],
     ),

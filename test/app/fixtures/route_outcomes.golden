@@ -514,7 +514,7 @@ member on  /account-messages/thread -> /account-messages
 member on  /applications -> (open)
 member on  /assistants -> (open)
 member on  /assistants/connect -> /assistants
-member on  /attention -> /
+member on  /attention -> /calendar
 member on  /auth -> /reserve
 member on  /availability -> /calendar
 member on  /bi -> /calendar
@@ -631,7 +631,7 @@ member on  /validation -> /calendar
 member on  /vat -> /calendar
 member on  /vat-declarations -> /calendar
 member on  /workspace-code -> /calendar
-member on  /workspace-overview -> /
+member on  /workspace-overview -> /calendar
 member on  /workspace-settings -> /calendar
 member off /accessories -> /messages
 member off /account-activity -> (open)
@@ -641,7 +641,7 @@ member off /account-messages/thread -> /account-messages
 member off /applications -> (open)
 member off /assistants -> (open)
 member off /assistants/connect -> /assistants
-member off /attention -> /
+member off /attention -> /messages
 member off /auth -> /reserve
 member off /availability -> /messages
 member off /bi -> /messages
@@ -758,7 +758,7 @@ member off /validation -> /messages
 member off /vat -> /messages
 member off /vat-declarations -> /messages
 member off /workspace-code -> /messages
-member off /workspace-overview -> /
+member off /workspace-overview -> /messages
 member off /workspace-settings -> /messages
 admin on  /accessories -> /calendar
 admin on  /account-activity -> (open)
@@ -768,7 +768,7 @@ admin on  /account-messages/thread -> /account-messages
 admin on  /applications -> (open)
 admin on  /assistants -> (open)
 admin on  /assistants/connect -> /assistants
-admin on  /attention -> /
+admin on  /attention -> /calendar
 admin on  /auth -> /reserve
 admin on  /availability -> /calendar
 admin on  /bi -> /calendar
@@ -885,7 +885,7 @@ admin on  /validation -> /calendar
 admin on  /vat -> /calendar
 admin on  /vat-declarations -> /money
 admin on  /workspace-code -> /calendar
-admin on  /workspace-overview -> /
+admin on  /workspace-overview -> /calendar
 admin on  /workspace-settings -> /calendar
 admin off /accessories -> /messages
 admin off /account-activity -> (open)
@@ -895,7 +895,7 @@ admin off /account-messages/thread -> /account-messages
 admin off /applications -> (open)
 admin off /assistants -> (open)
 admin off /assistants/connect -> /assistants
-admin off /attention -> /
+admin off /attention -> /messages
 admin off /auth -> /reserve
 admin off /availability -> /messages
 admin off /bi -> /messages
@@ -1012,7 +1012,7 @@ admin off /validation -> /messages
 admin off /vat -> /messages
 admin off /vat-declarations -> /messages
 admin off /workspace-code -> /messages
-admin off /workspace-overview -> /
+admin off /workspace-overview -> /messages
 admin off /workspace-settings -> /messages
 owner on  /accessories -> /calendar
 owner on  /account-activity -> (open)
@@ -1022,7 +1022,7 @@ owner on  /account-messages/thread -> /account-messages
 owner on  /applications -> (open)
 owner on  /assistants -> (open)
 owner on  /assistants/connect -> /assistants
-owner on  /attention -> /
+owner on  /attention -> /calendar
 owner on  /auth -> /reserve
 owner on  /availability -> (open)
 owner on  /bi -> /calendar
@@ -1139,7 +1139,7 @@ owner on  /validation -> (open)
 owner on  /vat -> (open)
 owner on  /vat-declarations -> (open)
 owner on  /workspace-code -> (open)
-owner on  /workspace-overview -> /
+owner on  /workspace-overview -> /calendar
 owner on  /workspace-settings -> (open)
 owner off /accessories -> /messages
 owner off /account-activity -> (open)
@@ -1149,7 +1149,7 @@ owner off /account-messages/thread -> /account-messages
 owner off /applications -> (open)
 owner off /assistants -> (open)
 owner off /assistants/connect -> /assistants
-owner off /attention -> /
+owner off /attention -> /messages
 owner off /auth -> /reserve
 owner off /availability -> (open)
 owner off /bi -> /messages
@@ -1266,5 +1266,5 @@ owner off /validation -> (open)
 owner off /vat -> /messages
 owner off /vat-declarations -> /messages
 owner off /workspace-code -> (open)
-owner off /workspace-overview -> /
+owner off /workspace-overview -> /messages
 owner off /workspace-settings -> (open)
