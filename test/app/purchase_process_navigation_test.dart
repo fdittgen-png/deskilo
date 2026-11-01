@@ -128,6 +128,35 @@ void main() {
     expect(find.byKey(const ValueKey('cash-hub-to-pay')), findsOneWidget);
   });
 
+  testWidgets('the cash page opens the bank statements only with bank import '
+      'on and a right to read them (#2577)', (tester) async {
+    await _pump(tester, const CashHubScreen(), owner: false);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('bank-statements-button')), findsNothing);
+
+    await _pump(
+      tester,
+      const CashHubScreen(),
+      features: {WorkspaceFeature.bankImport},
+      owner: false,
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('bank-statements-button')), findsNothing);
+
+    await _pump(
+      tester,
+      const CashHubScreen(),
+      features: {WorkspaceFeature.bankImport},
+      rights: {WorkspacePermission.viewFinances},
+      owner: false,
+    );
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('bank-statements-button')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('the accounting page opens a door only with its flag on', (
     tester,
   ) async {
