@@ -91,7 +91,13 @@ class ShellScreen extends ConsumerWidget {
         collapsible: !webShell && visibleBranches.isNotEmpty,
         appBar: AppBar(
           // #1823 — the chip names the space; the tab sits under it.
-          title: SpaceChip(tabTitle: tabTitles[navigationShell.currentIndex]),
+          title: SpaceChip(
+            // #3060 F7 — the overview sits in the first branch but is not
+            // its alerts: the bar names what is on screen.
+            tabTitle: GoRouterState.of(context).uri.path == '/workspace-overview'
+                ? l10n.overviewTitle
+                : tabTitles[navigationShell.currentIndex],
+          ),
           actions: shellBarActions(context, ref,
               currentIndex: navigationShell.currentIndex),
         ),
