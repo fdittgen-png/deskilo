@@ -1932,7 +1932,7 @@ routine public.accounting_map_key_valid(p_kind text, p_key text) -> boolean | fu
 routine public.accounting_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cede8c7c67d0
 routine public.accounting_secret_keys(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5889e4ff7a19
 routine public.accounting_secret_name(p_connection_id uuid, p_key text) -> text | function | invoker | immutable | exec:service_role | body:b5a3b934052e
-routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:b3570b63dea2
+routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:976c7e443afc
 routine public.accounting_store_secret(p_connection_id uuid, p_key text, p_value text) -> void | function | definer | volatile | exec:service_role | body:ee0ab7c3cf07
 routine public.accounting_transfers_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f69b172d7dc0
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
@@ -1976,6 +1976,7 @@ routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | d
 routine public.badge_pin_needs_review(p_workspace_id uuid, p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f757e49c3c30
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bank_import_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:716d86bbf858
+routine public.bank_line_facts(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8baef224cb0c
 routine public.bank_line_hash(p_account text, p_booking date, p_value date, p_amount bigint, p_currency text, p_reference text, p_end_to_end text, p_iban text, p_remittance text) -> text | function | invoker | immutable | exec:service_role | body:7a38c4adb37d
 routine public.bank_line_status(l bank_statement_lines) -> text | function | definer | stable | exec:service_role | body:313425c5a2ff
 routine public.bank_original_access(p_workspace_id uuid, p_write boolean) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9f5560438710
@@ -2601,7 +2602,7 @@ routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
 routine public.posting_account(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date) -> TABLE(code text, problem text) | function | definer | stable | exec:service_role | body:5adcca634cb9
 routine public.posting_at_rate(p_entry jsonb, p_currency text, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | invoker | immutable | exec:service_role | body:fb515e5ba01c
-routine public.posting_bank_entry(p_workspace_id uuid, p_invoice_id uuid, p_entry jsonb) -> jsonb | function | definer | stable | exec:service_role | body:687afb15e815
+routine public.posting_bank_entry(p_workspace_id uuid, p_invoice_id uuid, p_entry jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fb7360981238
 routine public.posting_entry(p_journal text, p_kind text, p_day date, p_document_id uuid, p_number text, p_currency text, p_lines jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8e672093efdd
 routine public.posting_line(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date, p_amount bigint, p_debit_side boolean) -> jsonb | function | definer | stable | exec:service_role | body:71003e824439
 routine public.posting_parties(p_workspace_id uuid, p_document_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e4f9d362bfe8

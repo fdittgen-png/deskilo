@@ -101,6 +101,16 @@ sealed class InvoiceMatch with _$InvoiceMatch {
     /// stood. Null on matches recorded before the column was read, and
     /// on the ones no rule ever governed.
     String? eventId,
+
+    /// #2380 — the value date of the reconciled bank statement line that
+    /// became the one payment this invoice consumed (0641): the day the
+    /// money moved at the bank, beside [matchedAt], which still dates the
+    /// booking. Null when no line, or more than one, explains the payment,
+    /// and on every match not read from the accounting source.
+    DateTime? valueDate,
+
+    /// #2380 — that line's reference, null when it has none.
+    String? bankReference,
   }) = _InvoiceMatch;
 
   const InvoiceMatch._();
