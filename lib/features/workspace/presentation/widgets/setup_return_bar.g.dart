@@ -66,3 +66,61 @@ abstract class _$SetupReturnPending extends $Notifier<bool> {
     return element.handleCreate(ref, build);
   }
 }
+
+/// #3076 — the step of the guide that is open over it; null when none.
+
+@ProviderFor(SetupOpenStep)
+final setupOpenStepProvider = SetupOpenStepProvider._();
+
+/// #3076 — the step of the guide that is open over it; null when none.
+final class SetupOpenStepProvider
+    extends $NotifierProvider<SetupOpenStep, String?> {
+  /// #3076 — the step of the guide that is open over it; null when none.
+  SetupOpenStepProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'setupOpenStepProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$setupOpenStepHash();
+
+  @$internal
+  @override
+  SetupOpenStep create() => SetupOpenStep();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String?>(value),
+    );
+  }
+}
+
+String _$setupOpenStepHash() => r'3c2e415f3eae40ec2edf95a91425f6af74ad3dbd';
+
+/// #3076 — the step of the guide that is open over it; null when none.
+
+abstract class _$SetupOpenStep extends $Notifier<String?> {
+  String? build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<String?, String?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<String?, String?>,
+              String?,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

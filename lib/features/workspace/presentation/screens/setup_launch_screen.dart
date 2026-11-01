@@ -84,6 +84,8 @@ class _LaunchBody extends ConsumerWidget {
       key: const ValueKey('setup-launch-list'),
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
+        if (!review.canGoLive && status.goal != null)
+          _GoalBecause(goal: status.goal!, open: open),
         _GoLive(workspace: workspace, review: review, open: open),
         const SizedBox(height: AppSpacing.md),
         _Heading(l10n.setupLaunchMilestones),
@@ -147,6 +149,34 @@ class _Heading extends StatelessWidget {
       child: Text(text, style: Theme.of(context).textTheme.titleMedium),
     ),
   );
+}
+
+/// #3076 — which goal decides what stops opening, and the way to change it.
+class _GoalBecause extends StatelessWidget {
+  const _GoalBecause({required this.goal, required this.open});
+
+  final SetupMilestoneStatus goal;
+  final Future<void> Function(String) open;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Row(
+      key: const ValueKey('setup-launch-goal'),
+      children: [
+        Expanded(
+          child: Text(
+            l10n.setupGoalBecause(l10n.setupMilestoneName(goal.milestone)),
+          ),
+        ),
+        TextButton(
+          key: const ValueKey('setup-launch-goal-change'),
+          onPressed: () => open('/setup/levels'),
+          child: Text(l10n.setupGoalChange),
+        ),
+      ],
+    );
+  }
 }
 
 /// Going live: the blockers when it cannot, the button when it can.

@@ -23538,6 +23538,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupDraftSaving => 'Enregistrement du brouillon…';
 
   @override
+  String setupGoalBecause(String milestone) {
+    return 'Parce que votre objectif est : $milestone.';
+  }
+
+  @override
+  String get setupGoalChange => 'Changer';
+
+  @override
+  String setupGoalLine(String milestone) {
+    return 'Votre objectif : $milestone';
+  }
+
+  @override
   String get setupGrowBooksAccrual => 'Les produits comptent à la facturation.';
 
   @override
@@ -24640,6 +24653,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get setupStepDone => 'Terminé';
+
+  @override
   String get setupStepElsewhere => 'Cette étape se fait sur son propre écran.';
 
   @override
@@ -24689,6 +24705,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupStepLoadFailed =>
       'Cette étape n’a pas pu être chargée. Réessayez plus tard.';
+
+  @override
+  String get setupStepNext => 'Étape suivante';
 
   @override
   String get setupStepOpenScreen => 'L’ouvrir';

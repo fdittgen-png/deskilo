@@ -381,6 +381,11 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   const rule = /@media\(pointer:coarse\)\{([^@]*?)\}\}/.exec(html);
   if (!rule || !/min-height:44px/.test(rule[1])) fail('targets: no 44 px minimum on a coarse pointer');
   else for (const sel of ['.step', '.chip', '.help', 'select', 'button']) if (!rule[1].split('{')[0].includes(sel)) fail(`targets: ${sel} is not in the 44 px rule`);
+  // #3075 — the help links and the links of the intro keep their look and
+  // gain the hit area: the ? link (16 px) through a 14 px halo, the text
+  // links through padding their negative margin takes back.
+  if (rule && !/\.helpq::after\{[^}]*inset:-14px/.test(rule[1])) fail('targets: the ? help link has no 44 px hit area');
+  if (rule && !/\[data-th\] a\{[^}]*padding:12px 0;margin:-12px 0/.test(rule[1])) fail('targets: the intro links have no 44 px hit area');
   console.log('targets: a coarse pointer gets 44 px targets');
 }
 

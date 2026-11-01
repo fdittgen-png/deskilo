@@ -27645,6 +27645,28 @@
   "@setupDraftSaving": {
     "description": "#2869 setup drafts: while a setup step's draft is being saved"
   },
+  "setupGoalBecause": "Because your goal is {milestone}.",
+  "@setupGoalBecause": {
+    "description": "#3076 — the check page says which goal decides what stops opening.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGoalChange": "Change",
+  "@setupGoalChange": {
+    "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalLine": "Your goal: {milestone}",
+  "@setupGoalLine": {
+    "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "setupGrowBooksAccrual": "Income counts when it is invoiced.",
   "@setupGrowBooksAccrual": {
     "description": "#2875 setup grow steps: setupGrowBooksAccrual"
@@ -28932,6 +28954,10 @@
       }
     }
   },
+  "setupStepDone": "Done",
+  "@setupStepDone": {
+    "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."
+  },
   "setupStepElsewhere": "This step is done on its own screen.",
   "@setupStepElsewhere": {
     "description": "#2870 setup steps: setupStepElsewhere"
@@ -28948,6 +28974,10 @@
   "setupStepLoadFailed": "This step could not be loaded. Try again later.",
   "@setupStepLoadFailed": {
     "description": "#2870 setup steps: setupStepLoadFailed"
+  },
+  "setupStepNext": "Next step",
+  "@setupStepNext": {
+    "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "Open it",
   "@setupStepOpenScreen": {
