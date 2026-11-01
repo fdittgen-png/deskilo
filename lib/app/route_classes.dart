@@ -168,6 +168,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/sites', RouteClass.workspace),
   RouteRule('/money/status', RouteClass.workspace),
   RouteRule('/money/purchases', RouteClass.workspace),
+  RouteRule('/money/purchases/approvals', RouteClass.workspace),
   RouteRule('/money/suppliers', RouteClass.workspace),
   RouteRule('/money/sales', RouteClass.workspace),
   RouteRule('/money/cash', RouteClass.workspace),

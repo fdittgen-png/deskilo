@@ -27508,6 +27508,12 @@ abstract class AppLocalizations {
   /// **'My visits'**
   String get myVisitsTitle;
 
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases & suppliers'**
+  String get navPurchasesGroup;
+
   /// #969 navigation style: navigationClassic
   ///
   /// In en, this message translates to:
@@ -31601,6 +31607,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public profile'**
   String get publicProfileTitle;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing waits for your approval.'**
+  String get purchaseApprovalsEmpty;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'The documents waiting for approval could not be read.'**
+  String get purchaseApprovalsRefused;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get purchaseApprovalsTitle;
 
   /// #2577 the guided purchase / expense entry
   ///

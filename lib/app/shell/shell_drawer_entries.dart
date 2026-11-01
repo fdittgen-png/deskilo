@@ -143,6 +143,21 @@ class DrawerEntries {
         DrawerEntry('drawer-purchases', Icons.shopping_cart_outlined,
             l10n.hubPurchasesTitle, () => go('/money/purchases'),
             route: '/money/purchases'),
+      // #3070 — the payees, for whoever opens their page.
+      if (features.contains(WorkspaceFeature.supplyExpenses) &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.manageBilling) ||
+              may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-suppliers', Icons.storefront_outlined,
+            l10n.suppliersTitle, () => go('/money/suppliers'),
+            route: '/money/suppliers'),
+      // #3070 — the documents waiting for a decision; the drawer badges it.
+      if (features.contains(WorkspaceFeature.purchases) &&
+          may(WorkspacePermission.approveExpenses))
+        DrawerEntry('drawer-purchase-approvals', Icons.task_alt_outlined,
+            l10n.purchaseApprovalsTitle,
+            () => go('/money/purchases/approvals'),
+            route: '/money/purchases/approvals'),
       if (money &&
           (may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.manageBilling) ||

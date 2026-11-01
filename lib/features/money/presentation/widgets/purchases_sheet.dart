@@ -225,6 +225,25 @@ Future<void> showPurchaseDetail(
   ),
 );
 
+/// #3070 — one document opened from the approvals queue: the decision bar is
+/// offered, paying and capturing stay on the purchases page; the server
+/// decides again on every write.
+Future<void> showPurchaseForDecision(
+  BuildContext context,
+  String workspaceId,
+  String purchaseId,
+) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => _PurchaseDetailView(
+    workspaceId: workspaceId,
+    purchaseId: purchaseId,
+    canPay: false,
+    canCapture: false,
+    canDecide: true,
+  ),
+);
+
 /// One purchase document as the server read it.
 class _PurchaseDetailView extends ConsumerWidget {
   const _PurchaseDetailView({

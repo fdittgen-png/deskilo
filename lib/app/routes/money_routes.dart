@@ -17,6 +17,7 @@ import '../../features/money/presentation/screens/my_finances_screen.dart';
 import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
 import '../../features/money/presentation/screens/payment_config_screen.dart';
+import '../../features/money/presentation/screens/purchase_approvals_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
@@ -37,6 +38,7 @@ import 'me_adapters.dart';
 /// Routes of the money feature.
 List<RouteBase> moneyRoutes(RouteEnv env) => [
   ..._invoicingRoutes(env),
+  ..._purchaseRoutes(env),
   ..._financeRoutes(env),
 ];
 
@@ -145,15 +147,24 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
   ];
 }
 
-List<RouteBase> _financeRoutes(RouteEnv env) {
+/// The purchase side: the hub, the approvals queue and the suppliers.
+List<RouteBase> _purchaseRoutes(RouteEnv env) {
   return [
-    // #2577 — the purchase and the sales side, each on its own page.
+    // #2577 — the purchase side on its own page.
     GoRoute(
       path: '/money/purchases',
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
       ),
       builder: (context, state) => const PurchasesHubScreen(),
+    ),
+    // #3070 — what waits for a decision, with the count on its drawer entry.
+    GoRoute(
+      path: '/money/purchases/approvals',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
+      ),
+      builder: (context, state) => const PurchaseApprovalsScreen(),
     ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(
@@ -166,6 +177,11 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const SuppliersScreen(),
     ),
+  ];
+}
+
+List<RouteBase> _financeRoutes(RouteEnv env) {
+  return [
     GoRoute(
       path: '/money/sales',
       redirect: env.guard(

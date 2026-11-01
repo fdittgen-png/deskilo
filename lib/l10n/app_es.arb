@@ -10821,6 +10821,10 @@
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
   },
+  "navPurchasesGroup": "Compras y proveedores",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "navigationClassic": "Clásica: la barra inferior y el botón redondo",
   "@navigationClassic": {
     "description": "#969 navigation style: navigationClassic"
@@ -12325,6 +12329,18 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus espacios siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfileTitle": "Perfil público",
+  "purchaseApprovalsEmpty": "Nada espera su aprobación.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "No se pudieron leer los documentos por aprobar.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "Por aprobar",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "purchaseEntryAdd": "Añadir compra / gasto",
   "purchaseEntryMe": "Pagué yo",
   "purchaseEntryMeHint": "Preséntelo como su gasto: una vez aprobado, el espacio se lo debe.",

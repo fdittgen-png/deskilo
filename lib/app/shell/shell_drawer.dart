@@ -17,8 +17,10 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
+import '../../features/money/providers/purchase_providers.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/widgets/setup_resume_banner.dart' show setupGuideOpenFor;
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
@@ -44,6 +46,22 @@ NavigationStyle navigationDefault(Ref ref) {
     isPhone: ref.watch(deviceIsPhoneProvider),
     everydayOnly: everydayOnly,
   );
+}
+
+/// #3070 — the documents waiting for the signed-in person's decision; read
+/// only for who may decide, so nobody else loads the list for a badge.
+int _waitingApprovals(
+  WidgetRef ref,
+  String? workspaceId,
+  Set<WorkspaceFeature> features,
+  Set<WorkspacePermission> permissions,
+) {
+  if (workspaceId == null ||
+      !features.contains(WorkspaceFeature.purchases) ||
+      !permissions.contains(WorkspacePermission.approveExpenses)) {
+    return 0;
+  }
+  return ref.watch(pendingApprovalsProvider(workspaceId)).value?.length ?? 0;
 }
 
 /// Whether the shell navigates through the drawer — the web build
@@ -132,14 +150,19 @@ class ShellDrawer extends ConsumerWidget {
     // Every badge opens the content it counts (#1306 S3): the events
     // entry while the bell is on, the Calendar entry when the calendar
     // carries the decisions instead.
-    int badgeOf(DrawerEntry e) => e.key == 'drawer-events'
-        ? attention.total
-        : e.key == 'drawer-tab-${ShellBranch.money}'
-            ? attention.money
-            : e.key == 'drawer-tab-${ShellBranch.calendar}' &&
-                    decisionSignalOnCalendar(features)
-                ? pendingEvents
-                : 0;
+    final badges = <String, int>{
+      'drawer-events': attention.total,
+      'drawer-tab-${ShellBranch.money}': attention.money,
+      if (decisionSignalOnCalendar(features))
+        'drawer-tab-${ShellBranch.calendar}': pendingEvents,
+      'drawer-purchase-approvals': _waitingApprovals(
+        ref,
+        workspace?.id,
+        features,
+        perms,
+      ),
+    };
+    int badgeOf(DrawerEntry e) => badges[e.key] ?? 0;
     Widget tile(DrawerEntry e) =>
         DrawerTile(entry: e, path: path, badge: badgeOf(e));
     Widget group(String id, String title, IconData icon, Set<String> keys,
@@ -246,8 +269,9 @@ List<Widget> _financeGroups(
       'drawer-sales', 'drawer-invoices', 'drawer-services',
       'drawer-accessories',
     }, from: all),
-    for (final e in money)
-      if (e.key == 'drawer-purchases') tile(e),
+    group('purchases', labels.navPurchasesGroup, Icons.shopping_cart_outlined, {
+      'drawer-purchases', 'drawer-suppliers', 'drawer-purchase-approvals',
+    }, from: all),
     group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
       'drawer-cash', 'drawer-billing', 'drawer-payment-methods',
       'drawer-payment-config',

@@ -19931,6 +19931,10 @@
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
   },
+  "navPurchasesGroup": "Purchases & suppliers",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "navigationClassic": "Classic: the bottom bar and the round button",
   "@navigationClassic": {
     "description": "#969 navigation style: navigationClassic"
@@ -22571,6 +22575,18 @@
   "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
   "publicProfilePublishTitle": "Publish a public profile?",
   "publicProfileTitle": "Public profile",
+  "purchaseApprovalsEmpty": "Nothing waits for your approval.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "The documents waiting for approval could not be read.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "To approve",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
     "description": "#2577 the guided purchase / expense entry"
