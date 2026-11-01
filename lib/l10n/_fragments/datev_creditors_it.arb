@@ -1,0 +1,40 @@
+{
+  "@@locale": "it",
+  "datevProblemSupplierNumber": "{supplier} non ha un numero di fornitore che dia un conto Kreditor («{number}»): gli assegni prima un numero numerico nell'intervallo dei Kreditor",
+  "@datevProblemSupplierNumber": {
+    "description": "DATEV export (#2375): a supplier number gives no Kreditor account",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemCreditorClash": "{suppliers} condividerebbero il conto Kreditor {account}",
+  "@datevProblemCreditorClash": {
+    "description": "DATEV export (#2375): two suppliers would share one Kreditor account",
+    "placeholders": {
+      "suppliers": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemBooksBlocked": "I libri non hanno potuto registrare gli acquisti: {subjects}",
+  "@datevProblemBooksBlocked": {
+    "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
+    "placeholders": {
+      "subjects": {
+        "type": "String"
+      }
+    }
+  },
+  "datevCreditorBase": "Conto Kreditor del fornitore n. 0",
+  "@datevCreditorBase": {
+    "description": "DATEV export dialog (#2375): the Kreditor account of supplier counter 0"
+  }
+}

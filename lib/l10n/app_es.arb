@@ -3959,17 +3959,54 @@
     "description": "#669 - accounting export formats"
   },
   "datevCostCentre": "Centro de coste (KOST1) cuando un documento no indica sede",
+  "datevCreditorBase": "Cuenta Kreditor del proveedor n.º 0",
+  "@datevCreditorBase": {
+    "description": "DATEV export dialog (#2375): the Kreditor account of supplier counter 0"
+  },
   "datevDebtorBase": "Cuenta Debitor del miembro n.º 0",
   "datevProblemAccountLength": "la cuenta {account} no tiene {length} dígitos",
   "datevProblemAutomatic": "el {percent} % se contabilizaría en {account}, la cuenta automática de otro tipo",
+  "datevProblemBooksBlocked": "Los libros no pudieron contabilizar las compras: {subjects}",
+  "@datevProblemBooksBlocked": {
+    "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
+    "placeholders": {
+      "subjects": {
+        "type": "String"
+      }
+    }
+  },
   "datevProblemClient": "La Mandantennummer «{number}» no es un número de 1 a 99999",
   "datevProblemConsultant": "La Beraternummer «{number}» no es un número de 1001 a 9999999",
+  "datevProblemCreditorClash": "{suppliers} compartirían la cuenta Kreditor {account}",
+  "@datevProblemCreditorClash": {
+    "description": "DATEV export (#2375): two suppliers would share one Kreditor account",
+    "placeholders": {
+      "suppliers": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "datevProblemCurrency": "los importes están en {currency}; el archivo DATEV se escribe en euros",
   "datevProblemDebtorClash": "{members} compartirían la cuenta Debitor {account}",
   "datevProblemFiscalYearStarts": "los perfiles contables de las sedes empiezan el ejercicio en días distintos",
   "datevProblemMemberNumber": "{member} no tiene un número de miembro que dé una cuenta Debitor («{number}»): asígnele primero un número",
   "datevProblemReferenceTooLong": "{field} «{value}» supera la longitud que admite DATEV y se recortaría",
   "datevProblemSachkontenlaenge": "la longitud de cuenta {length} no está entre 4 y 8",
+  "datevProblemSupplierNumber": "{supplier} no tiene un número de proveedor que dé una cuenta Kreditor («{number}»): asígnele primero un número numérico dentro del rango de Kreditor",
+  "@datevProblemSupplierNumber": {
+    "description": "DATEV export (#2375): a supplier number gives no Kreditor account",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "datevProblemTaxKey": "no hay ningún BU-Schlüssel registrado para el {percent} % en la cuenta {account}",
   "datevVoucherLinks": "Adjuntar los PDF de las facturas y enlazarlos desde cada línea (Beleglink)",
   "decisionSurfaceEmpty": "Nada le espera",
@@ -17561,6 +17598,7 @@
   "@taxRefAliasOf": {
     "description": "#2478 tax reference: Field: the member state an alias code stands for."
   },
+  "taxRefBankingScheme": "Sistema bancario",
   "taxRefCashBackstop": "Plazo máximo en criterio de caja",
   "@taxRefCashBackstop": {
     "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
@@ -17615,6 +17653,7 @@
   "@taxRefDomainCatalogueNote": {
     "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
   },
+  "taxRefDomainCountry": "País (catálogo de creación)",
   "taxRefDomainEuMember": "Miembros de la UE",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -17743,6 +17782,7 @@
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
   },
+  "taxRefInvalidTimeZone": "No es una zona horaria IANA que la aplicación conozca, como Europe/Paris",
   "taxRefInvoiceOption": "Opción por la fecha de factura",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
@@ -17860,6 +17900,7 @@
   "@taxRefText": {
     "description": "#2477 tax reference: Field: statutory text."
   },
+  "taxRefTimeZone": "Zona horaria (IANA)",
   "taxRefTitle": "Datos de referencia fiscales",
   "@taxRefTitle": {
     "description": "#2477 tax reference: Screen title: the VAT reference values the platform owner maintains."

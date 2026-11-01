@@ -33,6 +33,8 @@ const _ws = 'ws-1';
 /// local book; the generic journal has no other source.
 const _postedWhenLocalBook = {
   'fec',
+  // #2375 — DATEV books the suppliers' Kreditor from the purchases entries.
+  'datev',
   'saft',
   'bundle',
   'generic_journal_csv',
@@ -56,6 +58,7 @@ const _postedWhenLocalBook = {
 /// The posted formats that also read the chart's names and the parties.
 const _named = {
   'fec',
+  'datev',
   // #2373 — Sage 50 keys each row to its customer or supplier.
   'sage50',
   'bundle',

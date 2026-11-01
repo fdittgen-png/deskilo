@@ -124,6 +124,7 @@ class DatevExportSettings {
     required this.clientNumber,
     required this.accountLength,
     required this.debtorBase,
+    required this.creditorBase,
     required this.costCentre,
     required this.voucherLinks,
   });
@@ -138,6 +139,9 @@ class DatevExportSettings {
 
   /// The Debitor of member counter 0.
   final int debtorBase;
+
+  /// The Kreditor of supplier counter 0.
+  final int creditorBase;
 
   /// KOST1 of a row whose document names no site.
   final String costCentre;
@@ -165,6 +169,9 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   final accountLength = TextEditingController(text: '$length');
   final debtorBase = TextEditingController(
     text: '${DatevFormatRules.debtorRange(length).$1}',
+  );
+  final creditorBase = TextEditingController(
+    text: '${DatevFormatRules.creditorRange(length).$1}',
   );
   final kost = TextEditingController(text: costCentre);
   final links = ValueNotifier(true);
@@ -205,6 +212,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
           field('datev-account-expenses', expenses,
               l10n.fecAccountExpenses),
           field('datev-debtor-base', debtorBase, l10n.datevDebtorBase),
+          field('datev-creditor-base', creditorBase, l10n.datevCreditorBase),
           field('datev-cost-centre', kost, l10n.datevCostCentre,
               keyboardType: TextInputType.text),
           ValueListenableBuilder<bool>(
@@ -237,6 +245,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
             ),
             accountLength: int.tryParse(accountLength.text.trim()) ?? 0,
             debtorBase: int.tryParse(debtorBase.text.trim()) ?? 0,
+            creditorBase: int.tryParse(creditorBase.text.trim()) ?? 0,
             costCentre: kost.text.trim(),
             voucherLinks: links.value,
           )),

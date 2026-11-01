@@ -90,9 +90,10 @@ class DatevWriter {
 
   /// Which Buchungsstapel [b] belongs in.
   DatevJournal journalOf(DatevBooking b) =>
-      b.debit == accounts.bank || b.credit == accounts.bank
-      ? DatevJournal.bank
-      : DatevJournal.sales;
+      b.journal ??
+      (b.debit == accounts.bank || b.credit == accounts.bank
+          ? DatevJournal.bank
+          : DatevJournal.sales);
 
   // #2355 — the engine's tax points per invoice; with a ledger given, an
   // invoice it holds nothing for has no tax due yet.
@@ -460,6 +461,10 @@ class DatevWriter {
       );
     }
   }
+
+  /// #2375 — the supplier side: rows the posting engine's purchases entries
+  /// made, dated on the calendar day they were posted (not an instant).
+  void bookSupplierBookings() => _bookings.addAll(detail.supplierBookings);
 
   /// The header, the columns and every booking, CRLF-separated: DATEV's
   /// importer is a Windows tool and a bare LF has been seen to fold the

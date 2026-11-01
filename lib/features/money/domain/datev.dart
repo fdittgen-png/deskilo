@@ -224,7 +224,8 @@ DatevWriter datevWriterOf(DatevRequest request) => DatevWriter(
   )
     ..bookInvoices()
     ..bookExpenses()
-    ..bookRepartitions();
+    ..bookRepartitions()
+    ..bookSupplierBookings();
 
 /// #2492 — what one Buchungsstapel is built from.
 class DatevRequest {
@@ -252,6 +253,10 @@ class DatevRequest {
   /// This request with each member on the Debitor [debtors] names.
   DatevRequest withDebtors(Map<String, String> debtors) =>
       _copy(detail: detail.withDebtors(debtors));
+
+  /// This request with the supplier side [bookings] (#2375).
+  DatevRequest withSupplierBookings(List<DatevBooking> bookings) =>
+      _copy(detail: detail.withSupplierBookings(bookings));
 
   /// This request for the Buchungsstapel [slice] alone, under the header
   /// [accounts] (its fiscal-year start) and the name [batchName].
@@ -318,8 +323,9 @@ class DatevRequest {
 }
 
 /// The journal a Buchungsstapel holds: the sales side, or every booking
-/// that moves the bank account, so the accountant imports each on its own.
-enum DatevJournal { sales, bank }
+/// that moves the bank account, and (#2375) the supplier bills, so the
+/// accountant imports each on its own.
+enum DatevJournal { sales, bank, purchases }
 
 /// #2375 — one Buchungsstapel of an export: the bookings of [journal] dated
 /// [from]..[to], the [part]-th run of [rowsPerPart] of them, written as
@@ -351,6 +357,7 @@ class DatevDetail {
     required this.defaultCostCentre,
     required this.voucherLinks,
     this.debtors = const {},
+    this.supplierBookings = const [],
   });
 
   /// This detail with [debtors].
@@ -358,7 +365,21 @@ class DatevDetail {
     defaultCostCentre: defaultCostCentre,
     voucherLinks: voucherLinks,
     debtors: debtors,
+    supplierBookings: supplierBookings,
   );
+
+  /// This detail with the supplier side [bookings], already on the
+  /// Kreditors (datev_creditors.dart).
+  DatevDetail withSupplierBookings(List<DatevBooking> bookings) => DatevDetail(
+    defaultCostCentre: defaultCostCentre,
+    voucherLinks: voucherLinks,
+    debtors: debtors,
+    supplierBookings: bookings,
+  );
+
+  /// The posting engine's purchases entries as rows against each
+  /// supplier's Kreditor: bills, credit notes and their payments.
+  final List<DatevBooking> supplierBookings;
 
   /// The Debitor of each member, by member id.
   final Map<String, String> debtors;

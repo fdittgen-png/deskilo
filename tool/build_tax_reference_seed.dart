@@ -23,6 +23,7 @@ void main(List<String> args) {
     ..parent.createSync(recursive: true)
     ..writeAsStringSync(taxReferenceBundleJson(rows));
   stdout.writeln('wrote ${out.path}: ${rows.length} rows');
+  File('lib/core/country/country_seed.g.dart').writeAsStringSync(countrySeedDart(rows));
   final i = args.indexOf('--migration');
   if (i >= 0 && i + 1 < args.length) {
     final file = File(args[i + 1]);

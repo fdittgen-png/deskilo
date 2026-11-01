@@ -5668,6 +5668,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Centro de coste (KOST1) cuando un documento no indica sede';
 
   @override
+  String get datevCreditorBase => 'Cuenta Kreditor del proveedor n.º 0';
+
+  @override
   String get datevDebtorBase => 'Cuenta Debitor del miembro n.º 0';
 
   @override
@@ -5681,6 +5684,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String datevProblemBooksBlocked(String subjects) {
+    return 'Los libros no pudieron contabilizar las compras: $subjects';
+  }
+
+  @override
   String datevProblemClient(String number) {
     return 'La Mandantennummer «$number» no es un número de 1 a 99999';
   }
@@ -5688,6 +5696,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String datevProblemConsultant(String number) {
     return 'La Beraternummer «$number» no es un número de 1001 a 9999999';
+  }
+
+  @override
+  String datevProblemCreditorClash(String suppliers, String account) {
+    return '$suppliers compartirían la cuenta Kreditor $account';
   }
 
   @override
@@ -5717,6 +5730,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String datevProblemSachkontenlaenge(String length) {
     return 'la longitud de cuenta $length no está entre 4 y 8';
+  }
+
+  @override
+  String datevProblemSupplierNumber(String supplier, String number) {
+    return '$supplier no tiene un número de proveedor que dé una cuenta Kreditor («$number»): asígnele primero un número numérico dentro del rango de Kreditor';
   }
 
   @override
@@ -26830,6 +26848,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Alias de (código ISO, vacío para un Estado miembro)';
 
   @override
+  String get taxRefBankingScheme => 'Sistema bancario';
+
+  @override
   String get taxRefCashBackstop => 'Plazo máximo en criterio de caja';
 
   @override
@@ -26877,6 +26898,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefDomainCatalogueNote => 'Notas del catálogo';
+
+  @override
+  String get taxRefDomainCountry => 'País (catálogo de creación)';
 
   @override
   String get taxRefDomainEuMember => 'Miembros de la UE';
@@ -26983,6 +27007,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Introduzca el código de estado de dos letras';
 
   @override
+  String get taxRefInvalidTimeZone =>
+      'No es una zona horaria IANA que la aplicación conozca, como Europe/Paris';
+
+  @override
   String get taxRefInvoiceOption => 'Opción por la fecha de factura';
 
   @override
@@ -27078,6 +27106,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefText => 'Texto';
+
+  @override
+  String get taxRefTimeZone => 'Zona horaria (IANA)';
 
   @override
   String get taxRefTitle => 'Datos de referencia fiscales';

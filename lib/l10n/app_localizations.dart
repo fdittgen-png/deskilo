@@ -9583,6 +9583,12 @@ abstract class AppLocalizations {
   /// **'Cost centre (KOST1) when a document names no site'**
   String get datevCostCentre;
 
+  /// DATEV export dialog (#2375): the Kreditor account of supplier counter 0
+  ///
+  /// In en, this message translates to:
+  /// **'Kreditor of supplier number 0'**
+  String get datevCreditorBase;
+
   /// DATEV export dialog (#2375): the Debitor account of member counter 0
   ///
   /// In en, this message translates to:
@@ -9601,6 +9607,12 @@ abstract class AppLocalizations {
   /// **'{percent} % would be booked to {account}, the automatic account of another rate'**
   String datevProblemAutomatic(String percent, String account);
 
+  /// DATEV export (#2375): the books could not post the purchases, with the missing roles or rates
+  ///
+  /// In en, this message translates to:
+  /// **'The books could not post the purchases: {subjects}'**
+  String datevProblemBooksBlocked(String subjects);
+
   /// DATEV export (#2375): the client number is out of range
   ///
   /// In en, this message translates to:
@@ -9612,6 +9624,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Beraternummer \"{number}\" is not a number from 1001 to 9999999'**
   String datevProblemConsultant(String number);
+
+  /// DATEV export (#2375): two suppliers would share one Kreditor account
+  ///
+  /// In en, this message translates to:
+  /// **'{suppliers} would share Kreditor {account}'**
+  String datevProblemCreditorClash(String suppliers, String account);
 
   /// DATEV export (#2375): the workspace currency is not the one DATEV is written in
   ///
@@ -9648,6 +9666,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the account length {length} is not 4 to 8'**
   String datevProblemSachkontenlaenge(String length);
+
+  /// DATEV export (#2375): a supplier number gives no Kreditor account
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} has no supplier number that gives a Kreditor (\"{number}\"): give the supplier a numeric number in the Kreditor range first'**
+  String datevProblemSupplierNumber(String supplier, String number);
 
   /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
   ///
@@ -44321,6 +44345,12 @@ abstract class AppLocalizations {
   /// **'Alias of (ISO code, empty for a member state)'**
   String get taxRefAliasOf;
 
+  /// #2488 country catalogue: taxRefBankingScheme
+  ///
+  /// In en, this message translates to:
+  /// **'Banking scheme'**
+  String get taxRefBankingScheme;
+
   /// #2479 tax reference: Field: when an unpaid part falls due under cash accounting.
   ///
   /// In en, this message translates to:
@@ -44410,6 +44440,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Catalogue notes'**
   String get taxRefDomainCatalogueNote;
+
+  /// #2488 country catalogue: taxRefDomainCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Country (creation catalogue)'**
+  String get taxRefDomainCountry;
 
   /// #2477 tax reference: Domain filter: EU member states.
   ///
@@ -44603,6 +44639,12 @@ abstract class AppLocalizations {
   /// **'Enter the two-letter state code'**
   String get taxRefInvalidState;
 
+  /// #2488 country catalogue: taxRefInvalidTimeZone
+  ///
+  /// In en, this message translates to:
+  /// **'Not an IANA time zone the app knows, such as Europe/Paris'**
+  String get taxRefInvalidTimeZone;
+
   /// #2479 tax reference: Switch: the seller may opt for the invoice date.
   ///
   /// In en, this message translates to:
@@ -44782,6 +44824,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Text'**
   String get taxRefText;
+
+  /// #2488 country catalogue: taxRefTimeZone
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone (IANA)'**
+  String get taxRefTimeZone;
 
   /// #2477 tax reference: Screen title: the VAT reference values the platform owner maintains.
   ///

@@ -6927,6 +6927,10 @@
   "@datevCostCentre": {
     "description": "DATEV export dialog (#2375): KOST1 when the document names no site"
   },
+  "datevCreditorBase": "Kreditor of supplier number 0",
+  "@datevCreditorBase": {
+    "description": "DATEV export dialog (#2375): the Kreditor account of supplier counter 0"
+  },
   "datevDebtorBase": "Debitor of member number 0",
   "@datevDebtorBase": {
     "description": "DATEV export dialog (#2375): the Debitor account of member counter 0"
@@ -6955,6 +6959,15 @@
       }
     }
   },
+  "datevProblemBooksBlocked": "The books could not post the purchases: {subjects}",
+  "@datevProblemBooksBlocked": {
+    "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
+    "placeholders": {
+      "subjects": {
+        "type": "String"
+      }
+    }
+  },
   "datevProblemClient": "Mandantennummer \"{number}\" is not a number from 1 to 99999",
   "@datevProblemClient": {
     "description": "DATEV export (#2375): the client number is out of range",
@@ -6969,6 +6982,18 @@
     "description": "DATEV export (#2375): the consultant number is out of range",
     "placeholders": {
       "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemCreditorClash": "{suppliers} would share Kreditor {account}",
+  "@datevProblemCreditorClash": {
+    "description": "DATEV export (#2375): two suppliers would share one Kreditor account",
+    "placeholders": {
+      "suppliers": {
+        "type": "String"
+      },
+      "account": {
         "type": "String"
       }
     }
@@ -7027,6 +7052,18 @@
     "description": "DATEV export (#2375): the account length is not one DATEV knows",
     "placeholders": {
       "length": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemSupplierNumber": "{supplier} has no supplier number that gives a Kreditor (\"{number}\"): give the supplier a numeric number in the Kreditor range first",
+  "@datevProblemSupplierNumber": {
+    "description": "DATEV export (#2375): a supplier number gives no Kreditor account",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "number": {
         "type": "String"
       }
     }
@@ -31532,6 +31569,10 @@
   "@taxRefAliasOf": {
     "description": "#2478 tax reference: Field: the member state an alias code stands for."
   },
+  "taxRefBankingScheme": "Banking scheme",
+  "@taxRefBankingScheme": {
+    "description": "#2488 country catalogue: taxRefBankingScheme"
+  },
   "taxRefCashBackstop": "Cash backstop",
   "@taxRefCashBackstop": {
     "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
@@ -31591,6 +31632,10 @@
   "taxRefDomainCatalogueNote": "Catalogue notes",
   "@taxRefDomainCatalogueNote": {
     "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainCountry": "Country (creation catalogue)",
+  "@taxRefDomainCountry": {
+    "description": "#2488 country catalogue: taxRefDomainCountry"
   },
   "taxRefDomainEuMember": "EU members",
   "@taxRefDomainEuMember": {
@@ -31720,6 +31765,10 @@
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
   },
+  "taxRefInvalidTimeZone": "Not an IANA time zone the app knows, such as Europe/Paris",
+  "@taxRefInvalidTimeZone": {
+    "description": "#2488 country catalogue: taxRefInvalidTimeZone"
+  },
   "taxRefInvoiceOption": "Option for the invoice date",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
@@ -31839,6 +31888,10 @@
   "taxRefText": "Text",
   "@taxRefText": {
     "description": "#2477 tax reference: Field: statutory text."
+  },
+  "taxRefTimeZone": "Time zone (IANA)",
+  "@taxRefTimeZone": {
+    "description": "#2488 country catalogue: taxRefTimeZone"
   },
   "taxRefTitle": "Tax reference data",
   "@taxRefTitle": {
