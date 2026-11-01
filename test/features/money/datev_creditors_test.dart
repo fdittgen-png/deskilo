@@ -6,12 +6,14 @@
 // the Stammdaten name it. A number that gives no account stops the export
 // and is named. The files are parsed field by field.
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/datev_creditors.dart';
 import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/datev_problem.dart';
 import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
+import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -369,6 +371,37 @@ void main() {
       );
       final after = _package(_purchases([member]));
       expect(after.files, _package(null).files);
+    });
+  });
+
+  group('the purchases the books give DATEV', () {
+    final year = FiscalYear(DateTime(2026), DateTime(2026, 12, 31));
+
+    test('a posted year gives its postings and suppliers', () {
+      final purchases = datevPurchasesOf(
+        JournalPosted([_bill()], year: year, parties: {'doc-1': _acme}),
+        70000,
+      )!;
+      expect(purchases.creditorBase, 70000);
+      expect(purchases.postings, hasLength(1));
+      expect(purchases.parties['doc-1'], _acme);
+    });
+
+    test('a year the engine could not post is named', () {
+      expect(
+        datevPurchasesOf(const JournalBlocked(['suppliers']), 70000)!.blocked,
+        ['suppliers'],
+      );
+      expect(
+        datevPurchasesOf(const JournalNeedsRates(['RE-1 (CHF)']), 70000)!
+            .blocked,
+        ['RE-1 (CHF)'],
+      );
+    });
+
+    test('no local book gives no supplier side', () {
+      expect(datevPurchasesOf(null, 70000), isNull);
+      expect(datevPurchasesOf(const JournalNeedsLocalBook(), 70000), isNull);
     });
   });
 }
