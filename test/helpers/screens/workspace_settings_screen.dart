@@ -27,6 +27,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   bool expand = true,
   bool reports = false,
   Size size = const Size(800, 4600),
+  Locale? deviceLocale,
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
   // three more payment fields in #192, the WhatsApp-group section in
@@ -45,6 +46,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
           workspace: workspace,
           floorPlan: floorPlan,
           money: money,
+          deviceLocale: deviceLocale,
         ),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),
       ],

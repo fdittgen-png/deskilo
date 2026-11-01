@@ -26,6 +26,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
@@ -229,16 +230,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 const Expanded(child: MyBadgeTile()),
-                HelpDot(l10n.helpHintBadgesTopic,
-                  anchor: HelpAnchor.profileBadge,
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(end: HelpRow.tileEndInset),
+                  child: HelpColumn(
+                    topic: l10n.helpHintBadgesTopic,
+                    anchor: HelpAnchor.profileBadge,
+                  ),
                 ),
               ],
             ),
             Row(
               children: [
                 const Expanded(child: BadgePinTile()),
-                HelpDot(l10n.helpHintBadgesTopic,
-                  anchor: HelpAnchor.profileBadgePin,
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(end: HelpRow.tileEndInset),
+                  child: HelpColumn(
+                    topic: l10n.helpHintBadgesTopic,
+                    anchor: HelpAnchor.profileBadgePin,
+                  ),
                 ),
               ],
             ),
@@ -246,14 +255,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           // Self-set status line on my profile (#231): shown next to me
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.
-          ListTile(
+          HelpRow(
             key: const ValueKey('settings-profile-status-title'),
             leading: const Icon(Icons.mood_outlined),
-            title: HelpDotTitle(
-              l10n.profileStatusTitle,
-              l10n.helpTopicSettings,
-              anchor: HelpAnchor.profileStatus,
-            ),
+            title: l10n.profileStatusTitle,
+            topic: l10n.helpTopicSettings,
+            anchor: HelpAnchor.profileStatus,
             subtitle: Text(
               (myProfile?.hasStatus ?? false)
                   ? myProfile!.statusText
@@ -270,14 +277,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ref.watch(bookingGranularityProvider).value ??
                 BookingGranularity.flexible,
           ).isNotEmpty)
-            ListTile(
+            HelpRow(
               key: const ValueKey('settings-default-period'),
               leading: const Icon(Icons.schedule_outlined),
-              title: HelpDotTitle(
-                l10n.defaultPeriodTitle,
-                l10n.helpTopicSettings,
-                anchor: HelpAnchor.profileDefaultPeriod,
-              ),
+              title: l10n.defaultPeriodTitle,
+              topic: l10n.helpTopicSettings,
+              anchor: HelpAnchor.profileDefaultPeriod,
               subtitle: Text(switch (ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
                   lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
@@ -334,14 +339,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           // validation; the member reads them here.
           if (myMember != null &&
               features.contains(WorkspaceFeature.memberPaymentTerms))
-            ListTile(
+            HelpRow(
               key: const ValueKey('settings-payment-terms'),
               leading: const Icon(Icons.request_quote_outlined),
-              title: HelpDotTitle(
-                l10n.paymentTermsTitle,
-                l10n.helpTopicSettings,
-                anchor: HelpAnchor.profilePaymentTerms,
-              ),
+              title: l10n.paymentTermsTitle,
+              topic: l10n.helpTopicSettings,
+              anchor: HelpAnchor.profilePaymentTerms,
               subtitle: Text(myMember.paymentTerms == null
                   ? (l10n.paymentTermsInherited)
                   : (l10n.paymentTermsOverridden)),

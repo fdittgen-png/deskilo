@@ -10,6 +10,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
@@ -164,12 +165,12 @@ class WorkspaceParameterTiles {
   Widget _payments(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'payments', title: l10n.workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
                   if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.moneyTab))
-                  ListTile(
+                  HelpRow(
                     key: const Key('workspaceSettingsPaymentMethods'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(
                         Icons.account_balance_wallet_outlined),
-                    title: Text(l10n.paymentInstructionsTitle),
+                    title: l10n.paymentInstructionsTitle,
                     subtitle: Text(l10n.paymentMethodsSubtitle),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/payment-methods'),
@@ -177,11 +178,11 @@ class WorkspaceParameterTiles {
                   // 0069 — the legal identity the e-invoice needs lives
                   // on its own screen: the regime decides which fields
                   // even apply.
-                  ListTile(
+                  HelpRow(
                     key: const Key('workspaceSettingsLegalIdentity'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.badge_outlined),
-                    title: Text(l10n.legalIdentityTitle),
+                    title: l10n.legalIdentityTitle,
                     subtitle: Text(l10n.legalIdentitySubtitle),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/legal-identity'),
@@ -372,24 +373,22 @@ class WorkspaceParameterTiles {
 
   /// The billing tools beside the payment rows.
   List<Widget> _billingTools(AppLocalizations l10n) => [
-                  ListTile(key: const Key('workspaceSettingsReports'),
+                  HelpRow(key: const Key('workspaceSettingsReports'),
                     leading: const Icon(Icons.summarize_outlined),
-                    title: Text(l10n.uxReportsTitle),
+                    title: l10n.uxReportsTitle,
                     subtitle: Text(l10n.uxReportsHint),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/reports')),
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
                       .contains(WorkspaceFeature.invoicing))
-                  ListTile(
+                  HelpRow(
                     key: const Key('workspaceSettingsDunning'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.rule_outlined),
-                    title: HelpDotTitle(
-                      l10n.dunningSettingsTitle,
-                      helpTopic,
-                      anchor: HelpAnchor.remindersRules,
-                    ),
+                    title: l10n.dunningSettingsTitle,
+ topic: helpTopic,
+ anchor: HelpAnchor.remindersRules,
                     subtitle: Text(
                       l10n.dunningLevels,
                       maxLines: 1,
@@ -401,11 +400,11 @@ class WorkspaceParameterTiles {
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
                       .contains(WorkspaceFeature.configurableSettings))
-                    ListTile(
+                    HelpRow(
                       key: const Key('workspaceSettingsConfigurable'),
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.tune_outlined),
-                      title: Text(l10n.settingsWorkspaceTitle),
+                      title: l10n.settingsWorkspaceTitle,
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => showSettingsEditorSheet(
                         context,
@@ -421,15 +420,13 @@ class WorkspaceParameterTiles {
                   if (ref.watch(enabledFeaturesSyncProvider).any((f) =>
                       f == WorkspaceFeature.subscriptionInvoices ||
                       f == WorkspaceFeature.usageInvoices))
-                    ListTile(
+                    HelpRow(
                       key: const Key('workspaceSettingsBillingRules'),
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.event_repeat_outlined),
-                      title: HelpDotTitle(
-                        l10n.billingRulesTitle,
-                        l10n.billingRulesTitle,
-                        anchor: HelpAnchor.billingSchedule,
-                      ),
+                      title: l10n.billingRulesTitle,
+ topic: l10n.billingRulesTitle,
+ anchor: HelpAnchor.billingSchedule,
                       subtitle: Text(
                         l10n.billingRulesSubtitle,
                       ),
