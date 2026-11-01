@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:intl/intl.dart';
 
+import '../settings/setting_defaults.g.dart';
 import 'currencies.dart';
 
 /// A currency formatter that knows its code (#711).
@@ -39,6 +40,7 @@ class MoneyFormat {
 }
 
 /// The one-liner the sweep replaced `NumberFormat.simpleCurrency(name:)`
-/// with. Null or empty code reads as the euro, as the old call did.
+/// with. Null or empty code reads as the registry's default currency (the
+/// euro until an operator changes it), as the old call read the euro.
 MoneyFormat moneyFormat(String? code, {String? locale}) =>
-    MoneyFormat((code == null || code.isEmpty) ? 'EUR' : code, locale: locale);
+    MoneyFormat((code == null || code.isEmpty) ? SettingDefaults.localeDefaultCurrency : code, locale: locale);

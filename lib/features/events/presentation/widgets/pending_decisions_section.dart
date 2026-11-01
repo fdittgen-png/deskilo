@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/event_sources.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -82,7 +83,7 @@ class PendingDecisionsSection extends ConsumerWidget {
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const <ValidationPolicy>[];
     final currency = moneyFormat(
-        ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
+        ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final format = ref.watch(appFormatProvider);
     return Column(
       key: const ValueKey('pending-decisions'),

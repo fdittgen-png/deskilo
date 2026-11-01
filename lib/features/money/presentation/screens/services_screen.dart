@@ -7,6 +7,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -95,7 +96,7 @@ class ServicesScreen extends ConsumerWidget {
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
             'vat_registered';
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
+    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final inactiveColor = Theme.of(context).disabledColor;
 
     return Scaffold(

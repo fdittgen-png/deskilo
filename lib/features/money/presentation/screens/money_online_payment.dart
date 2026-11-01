@@ -174,8 +174,10 @@ class MoneyOnlinePayment {
       errorText: l10n.workspaceGenericError,
       action: () async {
         final repo = _ref.read(paymentGatewayRepositoryProvider);
-        final currency =
-            _ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR';
+        // No workspace currency, no payment order: never one in a currency
+        // nobody chose (#2488).
+        final currency = _ref.read(currentWorkspaceProvider).value?.currencyCode;
+        if (currency == null) throw StateError('no workspace currency');
         start = await _requests.run(workspaceId, memberId, provider, period,
             amountCents, (id) => repo.createPaymentOrder(
                 provider: provider, workspaceId: workspaceId,

@@ -30,6 +30,7 @@
 library;
 
 import '../../../core/money/money_text.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
 import 'book_period.dart';
@@ -214,6 +215,7 @@ List<AuditEvent> buildAuditEvents({
   return events;
 }
 
+/// [currencyCode] — the workspace's currency, which sets the amounts' digits.
 /// [source] — the revisions of the settings, tax reference, book profile and
 /// calendar the one fiscal source was read with (#2564): when given, the
 /// trail states which version of each it was made with.
@@ -222,6 +224,7 @@ String buildAuditTrailCsv({
   required DateTime generatedAt,
   required String workspaceName,
   AccountingSourceRevisions? source,
+  String? currencyCode,
 }) {
 
   final buffer = StringBuffer()
@@ -251,8 +254,9 @@ String buildAuditTrailCsv({
       csvCell(event.reference),
       csvCell(event.relatesTo),
       csvCell(event.description),
-      // The trail has no currency column: two decimals, as since #669.
-      minorToText(event.amountCents, 'EUR'),
+      // The trail has no currency column: the amounts are in the workspace's
+      // currency (#2488; the registry default only when none is named).
+      minorToText(event.amountCents, currencyCode ?? SettingDefaults.localeDefaultCurrency),
       csvCell(event.counterparty),
       csvCell(event.actor),
       csvCell(event.status),

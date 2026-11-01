@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/event_decision.dart';
@@ -123,7 +124,7 @@ Future<NoteRecordChoices> noteRecordChoices(
       final matches = ref.read(invoiceMatchesProvider).value ?? const {};
       final names = ref.read(memberNamesProvider).value ?? const <String, String>{};
       final moneyOf = moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
+          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
       formatAmount = moneyOf.formatMinor;
       for (final invoice in invoices) {
         // A number, a name and a period: nothing here is translated, so
@@ -182,7 +183,7 @@ Future<NoteRecordChoices> noteRecordChoices(
     case NoteRecordKind.payment:
       final ledger = await ref.read(myLedgerProvider.future);
       final money = moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
+          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
       final seen = <String>{};
       for (final entry in ledger) {
         if (entry.kind != LedgerKind.credit ||
