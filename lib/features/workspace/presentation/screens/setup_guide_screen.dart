@@ -83,6 +83,11 @@ class _SetupGuideBody extends ConsumerWidget {
           children: [
             // Inside the demo: what it is, and the other space.
             const DemoSetupCard(),
+            if (value.goal case final goal?)
+              SetupGoalLine(
+                goal: goal,
+                onChange: () => _openLevels(context, reload),
+              ),
             SetupGuideMilestones(status: value),
             if (value.nextMilestone case final next?
                 when value.toNextMilestone.low > 0) ...[
@@ -239,9 +244,10 @@ Future<void> _open(
   Future<void> Function() reload,
 ) async {
   // #2869 — the screen it opens carries the way back to the guide.
-  final pending = ProviderScope.containerOf(context, listen: false)
-      .read(setupReturnPendingProvider.notifier)
+  final container = ProviderScope.containerOf(context, listen: false);
+  final pending = container.read(setupReturnPendingProvider.notifier)
     ..set(open: true);
+  container.read(setupOpenStepProvider.notifier).set(step.step);
   try {
     await context.push(step.route);
   } finally {

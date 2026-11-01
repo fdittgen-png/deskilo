@@ -1,0 +1,32 @@
+{
+  "setupGoalLine": "Votre objectif : {milestone}",
+  "@setupGoalLine": {
+    "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGoalChange": "Changer",
+  "@setupGoalChange": {
+    "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalBecause": "Parce que votre objectif est : {milestone}.",
+  "@setupGoalBecause": {
+    "description": "#3076 — the check page says which goal decides what stops opening.",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "setupStepNext": "Étape suivante",
+  "@setupStepNext": {
+    "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
+  },
+  "setupStepDone": "Terminé",
+  "@setupStepDone": {
+    "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."
+  }
+}

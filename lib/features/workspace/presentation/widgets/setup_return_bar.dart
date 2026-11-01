@@ -12,6 +12,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import 'setup_next_step_button.dart';
 
 part 'setup_return_bar.g.dart';
 
@@ -22,6 +23,15 @@ class SetupReturnPending extends _$SetupReturnPending {
   bool build() => false;
 
   void set({required bool open}) => state = open;
+}
+
+/// #3076 — the step of the guide that is open over it; null when none.
+@Riverpod(keepAlive: true)
+class SetupOpenStep extends _$SetupOpenStep {
+  @override
+  String? build() => null;
+
+  void set(String? step) => state = step;
 }
 
 /// [child], with the way back to the guide under it while a step is open.
@@ -98,19 +108,25 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
                   horizontal: AppSpacing.md,
                   vertical: AppSpacing.xs,
                 ),
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: TextButton.icon(
-                    key: const ValueKey('setup-return'),
-                    icon: const Icon(Icons.checklist_outlined),
-                    label: Text(context.l10n.setupGuideReturn),
-                    // Going there drops the step page, whose push then never
-                    // answers: the way back is taken, so the bar goes too.
-                    onPressed: () {
-                      ref.read(setupReturnPendingProvider.notifier).set(open: false);
-                      widget.router.go('/setup');
-                    },
-                  ),
+                child: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    TextButton.icon(
+                      key: const ValueKey('setup-return'),
+                      icon: const Icon(Icons.checklist_outlined),
+                      label: Text(context.l10n.setupGuideReturn),
+                      // Going there drops the step page, whose push then never
+                      // answers: the way back is taken, so the bar goes too.
+                      onPressed: () {
+                        ref
+                            .read(setupReturnPendingProvider.notifier)
+                            .set(open: false);
+                        widget.router.go('/setup');
+                      },
+                    ),
+                    SetupNextStepButton(router: widget.router),
+                  ],
                 ),
               ),
             ),
