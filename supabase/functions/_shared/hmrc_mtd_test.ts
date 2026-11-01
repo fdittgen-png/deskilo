@@ -19,6 +19,7 @@ import {
 import type { ClientValues, NineBoxes, VendorValues } from "./hmrc_mtd.ts";
 
 const BASE = "https://test-api.service.hmrc.gov.uk";
+const SIGN_IN = "https://test-www.tax.service.gov.uk";
 
 const BOXES: NineBoxes = {
   vatDueSales: 105.5,
@@ -65,13 +66,14 @@ function play(status: number, body: unknown, seen: Seen[] = []): typeof fetch {
 }
 
 Deno.test("the OAuth target is the installation's base URL with the two scopes", () => {
-  const t = hmrcTarget(`${BASE}/`);
-  assertEquals(t.authorizeUrl, `${BASE}/oauth/authorize`);
+  const t = hmrcTarget(`${BASE}/`, `${SIGN_IN}/`);
+  assertEquals(t.authorizeUrl, `${SIGN_IN}/oauth/authorize`);
   assertEquals(t.tokenUrl, `${BASE}/oauth/token`);
   assertEquals(t.scopes, ["read:vat", "write:vat"]);
+  assertEquals(t.clientAuth, "body");
 });
 
-Deno.test("token exchange and refresh keep the secret out of the body", async () => {
+Deno.test("token exchange and refresh send the client in the server-to-server form body", async () => {
   const seen: Seen[] = [];
   const token = await exchangeCode(
     play(200, {
@@ -80,7 +82,7 @@ Deno.test("token exchange and refresh keep the secret out of the body", async ()
       expires_in: 14400,
       scope: "read:vat write:vat",
     }, seen),
-    hmrcTarget(BASE),
+    hmrcTarget(BASE, SIGN_IN),
     { clientId: "cid", clientSecret: "sec" },
     "the-code",
     "https://app.example/cb",
@@ -88,10 +90,16 @@ Deno.test("token exchange and refresh keep the secret out of the body", async ()
   );
   if (isFailure(token)) throw new Error("exchange failed");
   assertEquals(token.accessToken, "at");
-  assertEquals(String(seen[0].init.body).includes("sec"), false);
+  const sent = new URLSearchParams(String(seen[0].init.body));
+  assertEquals(sent.get("client_secret"), "sec");
+  assertEquals(sent.get("client_id"), "cid");
+  assertEquals(
+    (seen[0].init.headers as Record<string, string>).authorization,
+    undefined,
+  );
   const refused = await refreshTokens(
     play(400, { error: "invalid_grant" }),
-    hmrcTarget(BASE),
+    hmrcTarget(BASE, SIGN_IN),
     { clientId: "cid", clientSecret: "sec" },
     "rt",
     new Date("2026-11-01T10:00:00Z"),

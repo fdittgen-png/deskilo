@@ -28,6 +28,10 @@ export interface OAuthTarget {
   /** How that endpoint wants the token: a form (RFC 7009, the default) or
    * JSON (Intuit). */
   revokeBody?: "form" | "json";
+  /** How the app authenticates at the token endpoint: HTTP Basic (RFC 6749
+   * §2.3.1, the default) or client_id/client_secret in the server-to-server
+   * form body, which HMRC documents (#2470). Never a browser URL. */
+  clientAuth?: "basic" | "body";
   /** How long a sign-in may take from the authorisation page to the
    * redirect; an older state is refused before any exchange, so a redirect
    * URL found later in a history or a referrer cannot connect a company. */

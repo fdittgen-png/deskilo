@@ -19,12 +19,23 @@ import type { Fetch } from "./accounting_oauth.ts";
 export const HMRC_SCOPES = ["read:vat", "write:vat"];
 const ACCEPT = "application/vnd.hmrc.1.0+json";
 
-/** The OAuth target of an HMRC installation at [baseUrl]. */
-export function hmrcTarget(baseUrl: string): OAuthTarget {
-  const base = baseUrl.replace(/\/+$/, "");
+/** The OAuth target of an HMRC installation. HMRC's sign-in page is on its
+ * own host (sandbox `https://test-www.tax.service.gov.uk`, production
+ * `https://www.tax.service.gov.uk`), apart from the API and token host
+ * (`https://test-api.service.hmrc.gov.uk` / `https://api.service.hmrc.gov.uk`);
+ * both come from the installation's trusted settings, never from a client. */
+export function hmrcTarget(
+  apiBaseUrl: string,
+  signInBaseUrl: string,
+): OAuthTarget {
+  const api = apiBaseUrl.replace(/\/+$/, "");
+  const signIn = signInBaseUrl.replace(/\/+$/, "");
   return {
-    authorizeUrl: `${base}/oauth/authorize`,
-    tokenUrl: `${base}/oauth/token`,
+    authorizeUrl: `${signIn}/oauth/authorize`,
+    tokenUrl: `${api}/oauth/token`,
+    // spec: developer.service.hmrc.gov.uk — "User-restricted endpoints":
+    // client_id and client_secret travel in the token request's form body.
+    clientAuth: "body",
     scopes: HMRC_SCOPES,
     // spec: developer.service.hmrc.gov.uk — "User-restricted endpoints": the
     // person signs in at HMRC and the redirect carries code and state only.

@@ -88,12 +88,19 @@ async function tokenCall(
       headers: {
         "content-type": "application/x-www-form-urlencoded",
         accept: "application/json",
-        authorization: `Basic ${btoa(`${client.clientId}:${client.clientSecret}`)}`,
+        // client_secret_basic, which RFC 6749 §2.3.1 makes every
+        // authorisation server accept: the default, no secret in the body.
+        ...(target.clientAuth === "body"
+          ? {}
+          : { authorization: `Basic ${btoa(`${client.clientId}:${client.clientSecret}`)}` }),
       },
-      // client_secret_basic, which RFC 6749 §2.3.1 makes every
-      // authorisation server accept; the secret is never in the body.
-      body: new URLSearchParams({ ...form, client_id: client.clientId })
-        .toString(),
+      // A target that documents it (HMRC) takes the client in the form of
+      // this server-to-server request instead; it never reaches a browser.
+      body: new URLSearchParams(
+        target.clientAuth === "body"
+          ? { ...form, client_id: client.clientId, client_secret: client.clientSecret }
+          : { ...form, client_id: client.clientId },
+      ).toString(),
     });
   } catch (error) {
     return { reason: "unreachable", detail: String(error).slice(0, 300) };
