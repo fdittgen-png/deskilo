@@ -5553,6 +5553,7 @@
   "eventOutcomeConfirmed": "Confermato",
   "eventOutcomePending": "In attesa di una decisione",
   "eventOutcomeRejected": "Rifiutato",
+  "eventPaymentInstructionsChange": "{actor} ha modificato il conto bancario su cui pagano i membri, tramite un assistente e con la sua conferma nell'app: {fields}.",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventPaymentTermsChangeLine": "{actor} chiede di fissare le condizioni di pagamento: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5667,6 +5668,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Pagamento",
+  "eventTypePaymentInstructionsChange": "Modifica del conto bancario",
   "eventTypePaymentTermsChange": "Condizioni di pagamento",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -10049,6 +10051,7 @@
   "mcpOpMyInvoices": "Vedere le sue fatture",
   "mcpOpMyReservations": "Vedere le sue prenotazioni",
   "mcpOpMyStatement": "Vedere il suo estratto conto",
+  "mcpOpPaymentInstructions": "Modificare il conto bancario dello spazio",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
   "mcpOpRatePlace": "Valutare i posti",
   "mcpOpRefund": "Rimborsare una fattura",

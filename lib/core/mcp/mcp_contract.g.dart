@@ -45,6 +45,7 @@ enum McpOperationId {
   addClosureDays('add_closure_days'),
   setNumberSequence('set_number_sequence'),
   createMembershipPlan('create_membership_plan'),
+  setPaymentInstructions('set_payment_instructions'),
   ;
 
   const McpOperationId(this.id);

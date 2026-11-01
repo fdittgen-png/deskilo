@@ -95,7 +95,8 @@
                           "deskilo_set_opening_hours",
                           "deskilo_add_closure_days",
                           "deskilo_set_number_sequence",
-                          "deskilo_create_membership_plan"
+                          "deskilo_create_membership_plan",
+                          "deskilo_set_payment_instructions"
                         ]
                       },
                       "arguments": {
@@ -1229,7 +1230,8 @@
               "set_opening_hours",
               "add_closure_days",
               "set_number_sequence",
-              "create_membership_plan"
+              "create_membership_plan",
+              "set_payment_instructions"
             ]
           },
           "workspace_id": {
@@ -3177,6 +3179,83 @@
           "percent"
         ],
         "x-operation": "create_membership_plan",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "SetPaymentInstructionsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "iban": {
+            "type": "string",
+            "maxLength": 42,
+            "description": "The IBAN of the account, with or without spaces. An empty value clears it.",
+            "examples": [
+              "FR76 3000 6000 0112 3456 7890 189"
+            ]
+          },
+          "bic": {
+            "type": "string",
+            "maxLength": 11,
+            "description": "The BIC (SWIFT code) of the bank, 8 or 11 characters. An empty value clears it.",
+            "examples": [
+              "AGRIFRPP"
+            ]
+          },
+          "bank_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The name of the bank. An empty value clears it.",
+            "examples": [
+              "Credit Agricole"
+            ]
+          },
+          "account_number": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "The account number, for a country that does not bank by IBAN. An empty value clears it.",
+            "examples": [
+              "12345678"
+            ]
+          },
+          "bank_code": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "The code that routes to the bank where there is no IBAN: a UK sort code, a US routing number, a Canadian transit and institution number. An empty value clears it.",
+            "examples": [
+              "20-00-00"
+            ]
+          },
+          "qr_iban": {
+            "type": "string",
+            "maxLength": 42,
+            "description": "Switzerland only: the QR-IBAN a QR-bill is paid into (institution identifier 30000 to 31999). An empty value clears it.",
+            "examples": [
+              "CH44 3199 9123 0008 8901 2"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ],
+        "x-operation": "set_payment_instructions",
         "x-rpc": null,
         "x-handler": true
       }
