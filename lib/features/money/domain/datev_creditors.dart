@@ -136,7 +136,7 @@ String _reference(Posting p) => p.documentNumber.isNotEmpty
 
 /// The lines of [p] other than the payable, each against [creditor] on its
 /// own side; a payment goes in the bank Stapel, a bill or credit note in the
-/// purchases one.
+/// purchases one. A payment's bank line facts become its Beleginfo.
 List<DatevBooking> _bookingsOf(Posting p, String creditor, String ref) => [
   for (final l in p.lines)
     if (l.role != BookRole.suppliers && l.debit.minor != l.credit.minor)
@@ -150,5 +150,8 @@ List<DatevBooking> _bookingsOf(Posting p, String creditor, String ref) => [
         journal: p.kind == PostingKind.supplierPayment
             ? DatevJournal.bank
             : DatevJournal.purchases,
+        // #2380 (0642): a payment one reconciled statement line explains
+        // carries its value date and reference; Belegdatum stays [p.date].
+        bankInfo: datevBankInfoOf(p.valueDate, p.bankReference),
       ),
 ];

@@ -15,6 +15,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_ubl.dart';
+import '../../domain/register_period.dart';
 import '../../providers/money_providers.dart';
 import '../accounting_export.dart';
 import '../invoice_status.dart';
@@ -35,7 +36,12 @@ import '../widgets/invoice_integrity_chip.dart';
 /// A member sees only what concerns them: issued and not tagged erroneous
 /// (RLS already scopes the rows to their own).
 class InvoiceRegisterScreen extends ConsumerStatefulWidget {
-  const InvoiceRegisterScreen({super.key});
+  const InvoiceRegisterScreen({super.key, this.from, this.to});
+
+  /// #2578 — the days a drill-through narrows the register to (`YYYY-MM`
+  /// or `YYYY-MM-DD`); anything missing or malformed shows every invoice.
+  final String? from;
+  final String? to;
 
   @override
   ConsumerState<InvoiceRegisterScreen> createState() =>
@@ -45,6 +51,9 @@ class InvoiceRegisterScreen extends ConsumerStatefulWidget {
 class _InvoiceRegisterScreenState
     extends ConsumerState<InvoiceRegisterScreen> {
   bool _newestFirst = true;
+
+  /// The window the register was opened on; cleared by the chip.
+  late RegisterPeriod? _period = RegisterPeriod.parse(widget.from, widget.to);
 
   /// null = every year. An accountant works a fiscal year at a time, and
   /// the SAF-T export takes exactly what the register shows.
@@ -101,34 +110,71 @@ class _InvoiceRegisterScreenState
                 ref,
                 _visible(invoicesAsync.value ?? const [], canIssue || canExport),
                 label: _year?.toString() ??
-                    (l10n.invoiceRegisterAllYears),
+                    (_period == null
+                        ? l10n.invoiceRegisterAllYears
+                        : _periodText(l10n, dateFormat, _period!)),
               ),
             ),
         ],
       ),
-      body: switch (invoicesAsync) {
-        AsyncData(value: final invoices) => _table(
-            context,
-            l10n,
-            invoices: _visible(invoices, canIssue),
-            years: {for (final i in invoices) i.issuedAt.year}.toList()
-              ..sort((a, b) => b.compareTo(a)),
-            matches: matches,
-            reminders: reminders,
-            currency: currency,
-            dateFormat: dateFormat,
-            showMemberNames: showMemberNames,
-            canIssue: canIssue,
-          ),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
-          ),
-        _ => const LoadingView(),
-      },
+      body: Column(children: [
+        if (_period case final period?)
+          _periodChip(l10n, dateFormat, period),
+        Expanded(
+          child: switch (invoicesAsync) {
+            AsyncData(value: final invoices) => _table(
+                context,
+                l10n,
+                invoices: _visible(invoices, canIssue),
+                years: {for (final i in invoices) i.issuedAt.year}.toList()
+                  ..sort((a, b) => b.compareTo(a)),
+                matches: matches,
+                reminders: reminders,
+                currency: currency,
+                dateFormat: dateFormat,
+                showMemberNames: showMemberNames,
+                canIssue: canIssue,
+              ),
+            AsyncError() => Center(child: Text(l10n.workspaceGenericError)),
+            _ => const LoadingView(),
+          },
+        ),
+      ]),
     );
   }
+
+  String _periodText(
+    AppLocalizations l10n,
+    DateFormat dateFormat,
+    RegisterPeriod period,
+  ) => l10n.invoiceRegisterPeriod(
+    dateFormat.format(period.first),
+    dateFormat.format(period.last),
+  );
+
+  /// #2578 — says which days the rows are, and takes the narrowing off.
+  Widget _periodChip(
+    AppLocalizations l10n,
+    DateFormat dateFormat,
+    RegisterPeriod period,
+  ) => Align(
+    alignment: AlignmentDirectional.centerStart,
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        AppSpacing.md,
+        AppSpacing.lg,
+        0,
+      ),
+      child: InputChip(
+        key: const ValueKey('invoice-register-period'),
+        label: Text(_periodText(l10n, dateFormat, period)),
+        deleteIcon: const Icon(Icons.close, key: ValueKey('invoice-register-period-clear')),
+        deleteButtonTooltipMessage: l10n.invoiceRegisterPeriodClear,
+        onDeleted: () => setState(() => _period = null),
+      ),
+    ),
+  );
 
   /// What this reader may see, narrowed to the picked year. Erroneous
   /// documents stay with the people who correct them; a member's register
@@ -136,7 +182,8 @@ class _InvoiceRegisterScreenState
   List<Invoice> _visible(List<Invoice> invoices, bool canIssue) => [
         for (final invoice in invoices)
           if ((canIssue || !invoice.isVoided) &&
-              (_year == null || invoice.issuedAt.year == _year))
+              (_year == null || invoice.issuedAt.year == _year) &&
+              (_period?.contains(invoice.issuedAt) ?? true))
             invoice,
       ];
 

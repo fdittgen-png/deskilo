@@ -1,0 +1,4 @@
+{
+  "invoiceRegisterPeriod": "Periodo: {from} – {to}",
+  "invoiceRegisterPeriodClear": "Mostra tutti i periodi"
+}
