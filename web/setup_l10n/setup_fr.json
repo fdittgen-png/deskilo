@@ -709,6 +709,8 @@
  "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app.",
  "inboxPageSize": "Boîte de réception : conversations par page",
  "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application.",
+ "biDetailPageSize": "Paiements : lignes par page",
+ "biDetailPageSizeHint": "Combien de paiements une page du détail du montant encaissé affiche ; la page suivante reprend là où elle s'arrête. Se règle dans les paramètres de l'espace de l'application.",
  "fedRetention": "Conservation des échanges entre serveurs",
  "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
  "fedAnswerWait": "Attente de réponse entre serveurs",

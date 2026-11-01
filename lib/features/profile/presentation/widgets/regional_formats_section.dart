@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/format_prefs.dart';
@@ -14,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_preferences.dart';
 import '../../providers/personal_preferences_providers.dart';
@@ -105,26 +105,22 @@ class RegionalFormatsScreen extends ConsumerWidget {
               ),
             ),
           ),
-          ListTile(
+          HelpRow(
             key: const ValueKey('regional-locale'),
             leading: const Icon(Icons.language_outlined),
-            title: HelpDotTitle(
-              l10n.regionalFormatLocale,
-              l10n.helpTopicSettings,
-              anchor: HelpAnchor.profileRegionalFormats,
-            ),
+            title: l10n.regionalFormatLocale,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileRegionalFormats,
             subtitle: Text(localeLabel),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _pickLocale(context, l10n, prefs, save),
           ),
-          ListTile(
+          HelpRow(
             key: const ValueKey('regional-clock'),
             leading: const Icon(Icons.schedule_outlined),
-            title: HelpDotTitle(
-              l10n.regionalClock,
-              l10n.helpTopicSettings,
-              anchor: HelpAnchor.profileClock,
-            ),
+            title: l10n.regionalClock,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileClock,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -153,14 +149,12 @@ class RegionalFormatsScreen extends ConsumerWidget {
               onSelectionChanged: (s) => save(prefs.copyWith(clock: s.first)),
             ),
           ),
-          SwitchListTile(
+          HelpRow.toggle(
             key: const ValueKey('regional-device-zone'),
-            secondary: const Icon(Icons.public_outlined),
-            title: HelpDotTitle(
-              l10n.regionalDeviceZone,
-              l10n.helpTopicSettings,
-              anchor: HelpAnchor.profileDeviceZone,
-            ),
+            leading: const Icon(Icons.public_outlined),
+            title: l10n.regionalDeviceZone,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileDeviceZone,
             // Says what the default IS, because "workspace time" only
             // means something once you know the workspace is elsewhere.
             subtitle: Text(

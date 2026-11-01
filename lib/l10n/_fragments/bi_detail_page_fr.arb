@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "settingLabelBiDetailPageSize": "Lignes par page de détail",
+  "settingHintBiDetailPageSize": "Nombre de lignes qu'affiche une page du détail d'un indicateur, par exemple les paiements derrière le montant encaissé. La page suivante reprend là où celle-ci s'arrête."
+}

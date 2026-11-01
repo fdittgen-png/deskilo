@@ -20,7 +20,9 @@ import 'lint_sources.dart';
 /// would be undoing #1019, not recording progress.
 const _withoutAnchor = 0;
 
-final _call = RegExp(r'\bHelpDot(?:Title)?\(');
+/// #3215 -- a HelpRow / HelpColumn draws a symbol only when it names a
+/// `topic:`; those without one are rows, not symbols.
+final _call = RegExp(r'\b(?:HelpDot(?:Title)?|HelpRow(?:\.toggle)?|HelpColumn)\(');
 
 /// The call's own parentheses, so a nested `HelpDot` inside another
 /// widget's argument list is not mistaken for this one's.
@@ -43,11 +45,17 @@ void main() {
     var total = 0;
     for (final file in handWrittenDartFiles('lib')) {
       // The widgets themselves declare the parameter; they are not sites.
-      if (file.path.contains('lib/core/help/')) continue;
+      if (file.path.contains('lib/core/help/') ||
+          file.path == 'lib/core/ui/help_row.dart') {
+        continue;
+      }
       final source = file.readAsStringSync();
       for (final match in _call.allMatches(source)) {
-        total++;
         final call = _callSource(source, match.end - 1);
+        if (!match.group(0)!.startsWith('HelpDot') && !call.contains('topic:')) {
+          continue;
+        }
+        total++;
         if (!call.contains('anchor:')) {
           final line = '\n'.allMatches(source.substring(0, match.start)).length + 1;
           naked.add('${file.path}:$line');

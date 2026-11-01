@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "settingLabelBiDetailPageSize": "Filas por página de detalle",
+  "settingHintBiDetailPageSize": "Cuántas filas muestra una página del detalle de una cifra, como los pagos detrás del importe cobrado. La página siguiente continúa donde se detiene esta."
+}

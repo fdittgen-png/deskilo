@@ -22515,6 +22515,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuánto puede calcular una lectura de informe antes de que las cifras aún no alcanzadas se den como fuera de presupuesto; la página muestra lo que tiene. Manténgalo por debajo del tiempo de espera del servidor.';
 
   @override
+  String get settingHintBiDetailPageSize =>
+      'Cuántas filas muestra una página del detalle de una cifra, como los pagos detrás del importe cobrado. La página siguiente continúa donde se detiene esta.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'La mayor definición de informe guardada, en bytes de su texto almacenado. La plataforma nunca guarda más de 65536; una definición contiene preguntas, nunca cifras.';
 
@@ -22791,6 +22795,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelBiBatchTimeBudgetMs =>
       'Presupuesto de tiempo de una lectura de informe';
+
+  @override
+  String get settingLabelBiDetailPageSize => 'Filas por página de detalle';
 
   @override
   String get settingLabelBiReportMaxBytes =>

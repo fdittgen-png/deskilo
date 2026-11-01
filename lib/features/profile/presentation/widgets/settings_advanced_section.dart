@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/scan/front_camera.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/application/set_workspace_dev_mode.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -40,14 +40,12 @@ List<Widget> advancedSettingsTiles(
           // Which camera reads badge QR codes: front by default (a
           // wall-mounted kiosk's back lens faces the wall). Device-local
           // preference, like language and theme.
-          SwitchListTile(
+          HelpRow.toggle(
             key: const ValueKey('settings-front-camera'),
-            secondary: const Icon(Icons.camera_front_outlined),
-            title: HelpDotTitle(
-              l10n.settingsFrontCamera,
-              l10n.helpTopicSettings,
-              anchor: HelpAnchor.profileFrontCamera,
-            ),
+            leading: const Icon(Icons.camera_front_outlined),
+            title: l10n.settingsFrontCamera,
+ topic: l10n.helpTopicSettings,
+ anchor: HelpAnchor.profileFrontCamera,
             subtitle: Text(
               l10n.settingsFrontCameraDesc,
             ),

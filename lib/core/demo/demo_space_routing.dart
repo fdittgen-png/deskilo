@@ -23,6 +23,7 @@ import '../../features/me/providers/me_providers.dart'
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/money_providers.dart';
+import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -90,6 +91,14 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   final homeKpi = kpi(home.money);
   final myReservations = _myReservations(fixture);
   final secondKpi = kpi(second.money);
+  final homePayments = DemoRecordedPaymentsRepository(
+    money: home.money,
+    workspaces: home.workspaces,
+  );
+  final secondPayments = DemoRecordedPaymentsRepository(
+    money: second.money,
+    workspaces: second.workspaces,
+  );
   final homeBank = seedDemoBankStatements(home.money, home.seededAt);
   final secondBank = FakeBankStatementRepository(
     money: second.money,
@@ -193,6 +202,11 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // with the server's predicates.
     financeKpiRepositoryProvider.overrideWith(
       (ref) => pick(ref, homeKpi, secondKpi),
+    ),
+    // #2578 — the payments behind the collected figure, from the same
+    // matches the finance cards sum.
+    recordedPaymentsRepositoryProvider.overrideWith(
+      (ref) => pick(ref, homePayments, secondPayments),
     ),
   ];
 }

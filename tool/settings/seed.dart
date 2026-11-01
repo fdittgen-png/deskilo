@@ -1335,6 +1335,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'The number, date and clock format used before a member or a workspace has chosen one (a screen with no connection yet). A member\'s own format preference always wins.',
     ),
   ),
+  (
+    since: 'recorded_payments_read',
+    row: (
+      key: 'bi.detail_page_size',
+      type: 'int',
+      defaultValue: 50,
+      min: 10,
+      max: 200,
+      unit: 'rows',
+      group: 'kpi',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'workspace_recorded_payments_v1 (#2578)',
+      note: 'How many rows one page of a figure\'s detail returns, such as the payments behind the collected amount. A bound on one read, not on what the period holds: the next page continues where this one stopped.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

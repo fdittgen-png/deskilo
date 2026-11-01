@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/settings/setting_defaults.g.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 
 import '../../time/date_text.dart';
@@ -99,6 +101,98 @@ class DemoFinanceKpiRepository implements FinanceKpiRepository {
       },
       reasons: [if (mixed) 'currency_mix', if (partial) 'period_not_over'],
       computedAt: now,
+    );
+  }
+}
+
+/// #2578 — the payments behind the collected figure over the demo's own
+/// matches, with the predicates of `workspace_recorded_payments_v1` (0643)
+/// and of [DemoFinanceKpiRepository]: a match that consumed a payment, by
+/// the local day of the match, newest first, a page of the registry's
+/// default size continued by the last row's keys.
+class DemoRecordedPaymentsRepository implements RecordedPaymentsRepository {
+  DemoRecordedPaymentsRepository({
+    required this.money,
+    required this.workspaces,
+    this.pageSize = SettingDefaults.biDetailPageSize,
+  });
+
+  final FakeMoneyRepository money;
+  final FakeWorkspaceRepository workspaces;
+  final int pageSize;
+
+  static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
+
+  @override
+  Future<RecordedPaymentsPage> page(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+    RecordedPaymentsCursor? after,
+    int? limit,
+  }) async {
+    final workspace = workspaces.workspaces
+        .where((w) => w.id == workspaceId)
+        .firstOrNull;
+    final currency = workspace?.currencyCode.trim().toUpperCase() ?? '';
+    final first = _day(from), last = _day(to);
+    final byId = {for (final i in money.invoices) i.id: i};
+    final ledger = {for (final e in money.ledger) e.id: e};
+    final rows = <RecordedPayment>[];
+    for (final m in money.invoiceMatchesStore.values) {
+      final invoice = byId[m.invoiceId];
+      final paymentId = m.paymentLedgerId;
+      if (paymentId == null ||
+          invoice == null ||
+          invoice.workspaceId != workspaceId) {
+        continue;
+      }
+      final day = _day(WorkspaceTime.wall(m.matchedAt));
+      if (day.isBefore(first) || day.isAfter(last)) continue;
+      final entry = ledger[paymentId];
+      rows.add(
+        RecordedPayment(
+          id: paymentId,
+          matchedAt: m.matchedAt,
+          paidOn: entry?.occurredOn,
+          amountMinor: m.paidCents,
+          currency: invoice.currency.isEmpty
+              ? currency
+              : invoice.currency.toUpperCase(),
+          invoiceId: invoice.id,
+          invoiceNumber: invoice.number,
+          payerName: invoice.memberName,
+          resolution: m.resolution,
+          label: entry?.description,
+        ),
+      );
+    }
+    int newestFirst(RecordedPayment a, RecordedPayment b) {
+      final at = b.matchedAt.compareTo(a.matchedAt);
+      return at != 0 ? at : b.id.compareTo(a.id);
+    }
+
+    rows.sort(newestFirst);
+    final start = after == null
+        ? 0
+        : rows.indexWhere((r) {
+            final at = DateTime.parse(after.matchedAt);
+            return r.matchedAt.isBefore(at) ||
+                (r.matchedAt.isAtSameMomentAs(at) &&
+                    r.id.compareTo(after.id) < 0);
+          });
+    final size = limit == null || limit > pageSize ? pageSize : limit;
+    final rest = start < 0 ? const <RecordedPayment>[] : rows.sublist(start);
+    final items = rest.take(size).toList();
+    return RecordedPaymentsPage(
+      items: items,
+      pageSize: size,
+      nextCursor: rest.length > size
+          ? RecordedPaymentsCursor(
+              matchedAt: items.last.matchedAt.toUtc().toIso8601String(),
+              id: items.last.id,
+            )
+          : null,
     );
   }
 }

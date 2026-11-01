@@ -22558,6 +22558,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie lange eine Berichtsabfrage rechnen darf, bevor die noch nicht erreichten Kennzahlen als über Budget gemeldet werden; die Seite zeigt, was sie hat. Unter dem Anfrage-Timeout des Servers halten.';
 
   @override
+  String get settingHintBiDetailPageSize =>
+      'Wie viele Zeilen eine Seite der Details einer Kennzahl zeigt, etwa die Zahlungen hinter dem eingenommenen Betrag. Die nächste Seite setzt dort fort, wo diese aufhört.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.';
 
@@ -22831,6 +22835,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelBiBatchTimeBudgetMs =>
       'Zeitbudget einer Berichtsabfrage';
+
+  @override
+  String get settingLabelBiDetailPageSize => 'Zeilen je Detailseite';
 
   @override
   String get settingLabelBiReportMaxBytes => 'Größe einer Berichtsdefinition';

@@ -26601,6 +26601,10 @@
   "@settingHintBiBatchTimeBudgetMs": {
     "description": "#2578 settings: Setting hint."
   },
+  "settingHintBiDetailPageSize": "How many rows one page of a figure's detail shows, such as the payments behind the collected amount. The next page continues where this one stopped.",
+  "@settingHintBiDetailPageSize": {
+    "description": "#2578 settings: Setting hint."
+  },
   "settingHintBiReportMaxBytes": "The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -26876,6 +26880,10 @@
   },
   "settingLabelBiBatchTimeBudgetMs": "Report read time budget",
   "@settingLabelBiBatchTimeBudgetMs": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingLabelBiDetailPageSize": "Rows per detail page",
+  "@settingLabelBiDetailPageSize": {
     "description": "#2578 settings: Setting label."
   },
   "settingLabelBiReportMaxBytes": "Size of a report definition",
