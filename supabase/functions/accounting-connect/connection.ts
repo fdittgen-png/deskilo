@@ -7,7 +7,17 @@
 
 import { CORS } from "../_shared/cors.ts";
 import { clientEnvName } from "../_shared/accounting_targets.ts";
-import type { Fetch, OAuthClient } from "../_shared/accounting_oauth.ts";
+import {
+  connectedWrite,
+  expiredWrite,
+  isFailure,
+} from "../_shared/accounting_oauth.ts";
+import type {
+  Fetch,
+  OAuthClient,
+  TokenFailure,
+  TokenSet,
+} from "../_shared/accounting_oauth.ts";
 
 /** The width of `accounting_connections.status_detail` (0595): the most
  * of a target's words a connection keeps. */
@@ -46,6 +56,8 @@ export type Deps = {
   redirectUri: string;
   fetcher?: Fetch;
   now?: () => Date;
+  /** Waiting for another writer's refresh; injected so tests do not wait. */
+  sleep?: (ms: number) => Promise<void>;
 };
 
 export const json = (body: unknown, status = 200) =>
@@ -104,6 +116,94 @@ export async function rotatedMeanwhile(
   return current !== "" && current !== usedRefreshToken && access !== ""
     ? access
     : null;
+}
+
+/** How long one writer may hold a connection's refresh, and how long and
+ * how often another waits for it. */
+export const REFRESH_LEASE_SECONDS = 30;
+export const REFRESH_POLL_MS = 250;
+export const REFRESH_POLL_MAX = 40;
+
+export type Refreshed =
+  | { status: "refreshed" | "rotated"; accessToken: string }
+  | { status: "failed"; failure: TokenFailure }
+  | { status: "busy" | "gone" };
+
+/** Refreshes the connection's token set EXACTLY ONCE across every writer.
+ * HMRC's refresh tokens are single-use, so a writer claims the
+ * connection's lease before it calls the token endpoint; any other writer
+ * waits and re-reads, and takes the pair the first one stored. A loser
+ * therefore never spends a spent token and never clears the winner's pair.
+ * [run] performs the provider call with the refresh token held at that
+ * moment. */
+export async function refreshExclusive(
+  deps: Deps,
+  connectionId: string,
+  seenRefreshToken: string,
+  run: (refreshToken: string) => Promise<TokenSet | TokenFailure>,
+): Promise<Refreshed> {
+  const holder = crypto.randomUUID();
+  const sleep = deps.sleep ??
+    ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
+  let claimed = false;
+  for (let attempt = 0; attempt < REFRESH_POLL_MAX && !claimed; attempt++) {
+    const { data, error } = await deps.service().rpc(
+      "claim_accounting_refresh_lease",
+      {
+        p_connection_id: connectionId,
+        p_holder: holder,
+        p_seconds: REFRESH_LEASE_SECONDS,
+      },
+    );
+    if (error) return { status: "busy" };
+    if (data === true) {
+      claimed = true;
+      break;
+    }
+    // Someone else holds it: their pair may be stored already.
+    const rotated = await rotatedMeanwhile(
+      deps,
+      connectionId,
+      seenRefreshToken,
+    );
+    if (rotated) return { status: "rotated", accessToken: rotated };
+    await sleep(REFRESH_POLL_MS);
+  }
+  if (!claimed) return { status: "busy" };
+  try {
+    const held = await resolved(deps, connectionId);
+    if (!held || held.revoked) return { status: "gone" };
+    const current = held.secrets.refresh_token ?? "";
+    if (current === "") {
+      return {
+        status: "failed",
+        failure: { reason: "refused", detail: "no refresh token" },
+      };
+    }
+    // Another writer finished between our read and our claim.
+    if (
+      current !== seenRefreshToken && (held.secrets.access_token ?? "") !== ""
+    ) {
+      return { status: "rotated", accessToken: held.secrets.access_token };
+    }
+    const tokens = await run(current);
+    if (isFailure(tokens)) {
+      // A writer outside the lease may still have rotated the pair.
+      const rotated = await rotatedMeanwhile(deps, connectionId, current);
+      if (rotated) return { status: "rotated", accessToken: rotated };
+      await store(deps, connectionId, expiredWrite(tokens));
+      return { status: "failed", failure: tokens };
+    }
+    if (!await store(deps, connectionId, connectedWrite(tokens))) {
+      return { status: "busy" };
+    }
+    return { status: "refreshed", accessToken: tokens.accessToken };
+  } finally {
+    await deps.service().rpc("release_accounting_refresh_lease", {
+      p_connection_id: connectionId,
+      p_holder: holder,
+    });
+  }
 }
 
 export async function store(

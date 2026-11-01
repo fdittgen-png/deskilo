@@ -30,6 +30,7 @@ function world(
   const target = opts.target ?? "pennylane_api";
   const calls: Call[] = [];
   const vault: Record<string, string> = {};
+  let leaseHolder = "";
   let state: Record<string, unknown> = { status: "pending" };
   const answer = (as: string) => ({
     rpc: (fn: string, args: Record<string, unknown>) => {
@@ -66,6 +67,16 @@ function world(
       if (fn === "is_eu_country") {
         calls.push({ as, fn: `eu:${args.p_code}`, args });
         return Promise.resolve({ data: args.p_code === "IE", error: null });
+      }
+      // The refresh lease (0648): one holder at a time.
+      if (fn === "claim_accounting_refresh_lease") {
+        const free = !leaseHolder || leaseHolder === args.p_holder;
+        if (free) leaseHolder = String(args.p_holder);
+        return Promise.resolve({ data: free, error: null });
+      }
+      if (fn === "release_accounting_refresh_lease") {
+        if (leaseHolder === args.p_holder) leaseHolder = "";
+        return Promise.resolve({ data: null, error: null });
       }
       if (fn === "set_accounting_credentials") {
         for (
@@ -316,6 +327,84 @@ Deno.test("a refused refresh after a concurrent rotation keeps the connection (s
     "the newer pair is not overwritten",
   );
   assertEquals(w.state().status, "connected");
+});
+
+Deno.test("two concurrent refreshes call the provider once; the loser takes the winner's pair (lease)", async () => {
+  let refreshCalls = 0;
+  const spent = new Set<string>();
+  const w = world({
+    token: (body) => {
+      if (body.get("grant_type") !== "refresh_token") {
+        return new Response(
+          JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+        );
+      }
+      refreshCalls++;
+      const used = body.get("refresh_token") ?? "";
+      if (spent.has(used)) {
+        return new Response(JSON.stringify({ error: "invalid_grant" }), {
+          status: 400,
+        });
+      }
+      spent.add(used);
+      return new Response(
+        JSON.stringify({ access_token: "AT-2", refresh_token: "RT-2" }),
+      );
+    },
+  });
+  w.deps.sleep = () => new Promise((r) => setTimeout(r, 0));
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const [a, b] = await Promise.all([
+    handle(post({ action: "refresh", connection_id: CONN }), w.deps),
+    handle(post({ action: "refresh", connection_id: CONN }), w.deps),
+  ]);
+  assertEquals([await a.json(), await b.json()], [{ status: "connected" }, {
+    status: "connected",
+  }]);
+  assertEquals(refreshCalls, 1, "the single-use token is spent once");
+  assertEquals(w.vault.refresh_token, "RT-2");
+  assertEquals(w.state().status, "connected");
+});
+
+Deno.test("a lease that is never free is busy, not expired, and nothing is spent", async () => {
+  let refreshCalls = 0;
+  const w = world({
+    token: (body) => {
+      if (body.get("grant_type") === "refresh_token") refreshCalls++;
+      return new Response(
+        JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+      );
+    },
+  });
+  w.deps.sleep = () => Promise.resolve();
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const real = w.deps.service;
+  w.deps.service = () => ({
+    rpc: (fn, args) =>
+      fn === "claim_accounting_refresh_lease"
+        ? Promise.resolve({ data: false, error: null })
+        : real().rpc(fn, args),
+  });
+  const res = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
+  assertEquals(res.status, 503);
+  assertEquals(refreshCalls, 0);
+  assertEquals(w.state().status, "connected");
+  assertEquals(w.vault.refresh_token, "RT");
 });
 
 Deno.test("a delegated token, no token, a bad body and an unknown action are refused", async () => {

@@ -28,9 +28,17 @@ function world(opts: {
     rpc: (fn: string, args: Record<string, unknown>) => {
       calls.push({ as, fn, args });
       if (fn === "accounting_connection_manageable_v1") {
-        return Promise.resolve(opts.allowed === false
-          ? { data: null, error: { code: "42501" } }
-          : { data: { id: CONN, workspace_id: "w", target_id: target, auth_kind: opts.authKind ?? "oauth2" }, error: null });
+        return Promise.resolve(
+          opts.allowed === false ? { data: null, error: { code: "42501" } } : {
+            data: {
+              id: CONN,
+              workspace_id: "w",
+              target_id: target,
+              auth_kind: opts.authKind ?? "oauth2",
+            },
+            error: null,
+          },
+        );
       }
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
@@ -43,27 +51,46 @@ function world(opts: {
             status: "connected",
             revoked: false,
             remote_tenant_id: opts.tenant ?? "",
-            secrets: opts.secrets ?? { access_token: "AT-secret", refresh_token: SECRET },
+            secrets: opts.secrets ??
+              { access_token: "AT-secret", refresh_token: SECRET },
           },
           error: null,
         });
       }
       if (fn === "revoke_accounting_connection_v1") {
-        return Promise.resolve(opts.revokeFails
-          ? { data: null, error: { code: "XX000" } }
-          : { data: { id: CONN, status: "revoked" }, error: null });
+        return Promise.resolve(
+          opts.revokeFails
+            ? { data: null, error: { code: "XX000" } }
+            : { data: { id: CONN, status: "revoked" }, error: null },
+        );
       }
       if (fn === "record_accounting_revocation") {
-        return Promise.resolve(opts.recordFails
-          ? { data: null, error: { code: "XX000" } }
-          : { data: { id: CONN, status: "revoked", remote_revocation: args.p_outcome }, error: null });
+        return Promise.resolve(
+          opts.recordFails ? { data: null, error: { code: "XX000" } } : {
+            data: {
+              id: CONN,
+              status: "revoked",
+              remote_revocation: args.p_outcome,
+            },
+            error: null,
+          },
+        );
       }
-      if (fn === "set_accounting_credentials") return Promise.resolve({ data: { id: CONN }, error: null });
+      if (fn === "set_accounting_credentials") {
+        return Promise.resolve({ data: { id: CONN }, error: null });
+      }
       return Promise.resolve({ data: null, error: { code: "42883" } });
     },
   });
   const deps: Deps = {
-    caller: () => ({ ...answer("caller"), from: () => ({ select: () => ({ in: () => Promise.resolve({ data: null, error: null }) }) }) }),
+    caller: () => ({
+      ...answer("caller"),
+      from: () => ({
+        select: () => ({
+          in: () => Promise.resolve({ data: null, error: null }),
+        }),
+      }),
+    }),
     service: () => answer("service"),
     env: (name) =>
       ({
@@ -74,7 +101,10 @@ function world(opts: {
     fetcher: ((url: string | URL | Request, init?: RequestInit) => {
       seen.push({ url: String(url), init: init! });
       calls.push({ as: "vendor", fn: String(url), args: {} });
-      return Promise.resolve(opts.vendor?.(new URL(String(url)), init!) ?? new Response("{}", { status: 200 }));
+      return Promise.resolve(
+        opts.vendor?.(new URL(String(url)), init!) ??
+          new Response("{}", { status: 200 }),
+      );
     }) as typeof fetch,
     now: () => new Date("2026-10-25T10:00:00Z"),
   };
@@ -84,43 +114,82 @@ function world(opts: {
 const post = (body: unknown) =>
   new Request("https://x.test/functions/v1/accounting-connect", {
     method: "POST",
-    headers: { Authorization: "Bearer user-token", "content-type": "application/json" },
+    headers: {
+      Authorization: "Bearer user-token",
+      "content-type": "application/json",
+    },
     body: JSON.stringify(body),
   });
 
 Deno.test("revoking an OAuth connection revokes the refresh token at the target, after it is revoked here", async () => {
   const w = world();
-  const res = await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const res = await handle(
+    post({ action: "revoke", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 200);
   const answer = await res.json();
-  assertEquals(answer.connection, { id: CONN, status: "revoked", remote_revocation: "revoked" });
+  assertEquals(answer.connection, {
+    id: CONN,
+    status: "revoked",
+    remote_revocation: "revoked",
+  });
   assertEquals(answer.remote_revocation, "revoked");
   const order = w.calls.map((c) => c.fn);
-  assert(order.indexOf("revoke_accounting_connection_v1") < order.findIndex((f) => f.startsWith("https://")));
-  assertEquals(w.calls.find((c) => c.fn === "revoke_accounting_connection_v1")!.as, "caller");
-  assertEquals(new URLSearchParams(String(w.seen[0].init.body)).get("token"), SECRET);
+  assert(
+    order.indexOf("revoke_accounting_connection_v1") <
+      order.findIndex((f) => f.startsWith("https://")),
+  );
+  assertEquals(
+    w.calls.find((c) => c.fn === "revoke_accounting_connection_v1")!.as,
+    "caller",
+  );
+  assertEquals(
+    new URLSearchParams(String(w.seen[0].init.body)).get("token"),
+    SECRET,
+  );
   assert(!JSON.stringify(answer).includes(SECRET));
 });
 
 Deno.test("a target that refuses or is unreachable still leaves the connection revoked, the failure said", async () => {
-  for (const vendor of [() => new Response('{"error":"server_error"}', { status: 500 })]) {
+  for (
+    const vendor of [
+      () => new Response('{"error":"server_error"}', { status: 500 }),
+    ]
+  ) {
     const w = world({ vendor });
-    const answer = await (await handle(post({ action: "revoke", connection_id: CONN }), w.deps)).json();
+    const answer = await (await handle(
+      post({ action: "revoke", connection_id: CONN }),
+      w.deps,
+    )).json();
     assertEquals(answer.connection.status, "revoked");
     assertEquals(answer.remote_revocation, "failed");
     assert(!JSON.stringify(answer).includes(SECRET));
   }
-  const down = world({ vendor: () => {
-    throw new Error(`connect ${SECRET}`);
-  } });
-  const answer = await (await handle(post({ action: "revoke", connection_id: CONN }), down.deps)).json();
+  const down = world({
+    vendor: () => {
+      throw new Error(`connect ${SECRET}`);
+    },
+  });
+  const answer = await (await handle(
+    post({ action: "revoke", connection_id: CONN }),
+    down.deps,
+  )).json();
   assertEquals(answer.remote_revocation, "failed");
   assert(!JSON.stringify(answer).includes(SECRET));
 });
 
 Deno.test("a target without a revocation endpoint, or a token connection, is revoked here only, said", async () => {
-  for (const w of [world({ target: "pennylane_api", authKind: "token" }), world({ target: "sage_business_cloud_gb" })]) {
-    const answer = await (await handle(post({ action: "revoke", connection_id: CONN }), w.deps)).json();
+  for (
+    const w of [
+      world({ target: "pennylane_api", authKind: "token" }),
+      world({ target: "sage_business_cloud_gb" }),
+    ]
+  ) {
+    const answer = await (await handle(
+      post({ action: "revoke", connection_id: CONN }),
+      w.deps,
+    )).json();
     assertEquals(answer.connection.status, "revoked");
     assertEquals(answer.remote_revocation, "not_supported");
     assertEquals(w.seen.length, 0);
@@ -129,7 +198,10 @@ Deno.test("a target without a revocation endpoint, or a token connection, is rev
 
 Deno.test("a caller who may not manage the connection revokes nothing anywhere", async () => {
   const w = world({ allowed: false });
-  const res = await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const res = await handle(
+    post({ action: "revoke", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 403);
   assertEquals(w.seen.length, 0);
   assert(!w.calls.some((c) => c.fn === "revoke_accounting_connection_v1"));
@@ -137,27 +209,45 @@ Deno.test("a caller who may not manage the connection revokes nothing anywhere",
 
 Deno.test("when the database cannot revoke, the target is not asked and the connection is not left connected", async () => {
   const w = world({ revokeFails: true });
-  const res = await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const res = await handle(
+    post({ action: "revoke", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 500);
   assertEquals(w.seen.length, 0);
 });
 
 Deno.test("the outcome is recorded on the revoked connection by the service role, after the target was asked", async () => {
-  for (const [opts, outcome] of [
-    [{}, "revoked"],
-    [{ vendor: () => new Response("{}", { status: 503 }) }, "failed"],
-    [{ target: "pennylane_api", authKind: "token" }, "not_supported"],
-  ] as const) {
+  for (
+    const [opts, outcome] of [
+      [{}, "revoked"],
+      [{ vendor: () => new Response("{}", { status: 503 }) }, "failed"],
+      [{ target: "pennylane_api", authKind: "token" }, "not_supported"],
+    ] as const
+  ) {
     const w = world(opts);
-    const answer = await (await handle(post({ action: "revoke", connection_id: CONN }), w.deps)).json();
-    const recorded = w.calls.filter((c) => c.fn === "record_accounting_revocation");
+    const answer = await (await handle(
+      post({ action: "revoke", connection_id: CONN }),
+      w.deps,
+    )).json();
+    const recorded = w.calls.filter((c) =>
+      c.fn === "record_accounting_revocation"
+    );
     assertEquals(recorded.length, 1);
     assertEquals(recorded[0].as, "service");
-    assertEquals(recorded[0].args, { p_connection_id: CONN, p_outcome: outcome });
+    assertEquals(recorded[0].args, {
+      p_connection_id: CONN,
+      p_outcome: outcome,
+    });
     const order = w.calls.map((c) => c.fn);
-    assert(order.indexOf("revoke_accounting_connection_v1") < order.indexOf("record_accounting_revocation"));
+    assert(
+      order.indexOf("revoke_accounting_connection_v1") <
+        order.indexOf("record_accounting_revocation"),
+    );
     const asked = order.findIndex((f) => f.startsWith("https://"));
-    if (asked >= 0) assert(asked < order.indexOf("record_accounting_revocation"));
+    if (asked >= 0) {
+      assert(asked < order.indexOf("record_accounting_revocation"));
+    }
     assertEquals(answer.connection.remote_revocation, outcome);
     assert(!JSON.stringify(recorded).includes(SECRET));
   }
@@ -165,7 +255,10 @@ Deno.test("the outcome is recorded on the revoked connection by the service role
 
 Deno.test("an outcome that cannot be recorded leaves the connection revoked and the answer the same", async () => {
   const w = world({ recordFails: true });
-  const res = await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const res = await handle(
+    post({ action: "revoke", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 200);
   const answer = await res.json();
   assertEquals(answer.connection, { id: CONN, status: "revoked" });
@@ -182,11 +275,21 @@ Deno.test("a refused revocation records no outcome", async () => {
 // ── the company a token reaches ────────────────────────────────────────────
 
 const me = (id: unknown) => (url: URL) =>
-  url.pathname.endsWith("/me") ? Response.json({ company: { id, name: "Acme" } }) : Response.json({ items: [] });
+  url.pathname.endsWith("/me")
+    ? Response.json({ company: { id, name: "Acme" } })
+    : Response.json({ items: [] });
 
 Deno.test("verify records the company a token reaches when none was named", async () => {
-  const w = world({ target: "pennylane_api", authKind: "token", secrets: { access_token: "tok-1234567" }, vendor: me(4242) });
-  const res = await handle(post({ action: "verify", connection_id: CONN }), w.deps);
+  const w = world({
+    target: "pennylane_api",
+    authKind: "token",
+    secrets: { access_token: "tok-1234567" },
+    vendor: me(4242),
+  });
+  const res = await handle(
+    post({ action: "verify", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 200);
   assertEquals((await res.json()).status, "verified");
   const written = w.calls.find((c) => c.fn === "set_accounting_credentials")!;
@@ -194,17 +297,41 @@ Deno.test("verify records the company a token reaches when none was named", asyn
 });
 
 Deno.test("verify refuses a token that reaches another company than the one named, and says so", async () => {
-  const w = world({ target: "pennylane_api", authKind: "token", tenant: "1111", secrets: { access_token: "tok-1234567" }, vendor: me(4242) });
-  const res = await handle(post({ action: "verify", connection_id: CONN }), w.deps);
+  const w = world({
+    target: "pennylane_api",
+    authKind: "token",
+    tenant: "1111",
+    secrets: { access_token: "tok-1234567" },
+    vendor: me(4242),
+  });
+  const res = await handle(
+    post({ action: "verify", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(res.status, 409);
   const written = w.calls.find((c) => c.fn === "set_accounting_credentials")!;
-  assertEquals((written.args.p_patch as Record<string, string>).status, "error");
-  assertEquals((written.args.p_patch as Record<string, string>).remote_tenant_id, undefined);
+  assertEquals(
+    (written.args.p_patch as Record<string, string>).status,
+    "error",
+  );
+  assertEquals(
+    (written.args.p_patch as Record<string, string>).remote_tenant_id,
+    undefined,
+  );
 });
 
 Deno.test("verify of the named company changes nothing", async () => {
-  const w = world({ target: "pennylane_api", authKind: "token", tenant: "4242", secrets: { access_token: "tok-1234567" }, vendor: me(4242) });
-  const res = await handle(post({ action: "verify", connection_id: CONN }), w.deps);
+  const w = world({
+    target: "pennylane_api",
+    authKind: "token",
+    tenant: "4242",
+    secrets: { access_token: "tok-1234567" },
+    vendor: me(4242),
+  });
+  const res = await handle(
+    post({ action: "verify", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals((await res.json()).status, "verified");
   assert(!w.calls.some((c) => c.fn === "set_accounting_credentials"));
 });

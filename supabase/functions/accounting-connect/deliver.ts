@@ -36,7 +36,12 @@ import {
   type DeliveryResult,
 } from "../_shared/accounting_delivery.ts";
 import { oauthTargets } from "../_shared/accounting_targets.ts";
-import { connectedWrite, expiredWrite, isFailure, refreshTokens } from "../_shared/accounting_oauth.ts";
+import {
+  connectedWrite,
+  expiredWrite,
+  isFailure,
+  refreshTokens,
+} from "../_shared/accounting_oauth.ts";
 import {
   type AdapterContext,
   balanced,
@@ -51,10 +56,22 @@ import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
 import { sageAccounting } from "../_shared/accounting_sage.ts";
 import { xeroAccounting } from "../_shared/accounting_xero.ts";
 import { businessCentral } from "../_shared/accounting_business_central.ts";
-import { type CallerDb, clientOf, type Deps, json, resolved, rotatedMeanwhile, store, UUID } from "./connection.ts";
+import {
+  type CallerDb,
+  clientOf,
+  type Deps,
+  json,
+  refreshExclusive,
+  resolved,
+  store,
+  UUID,
+} from "./connection.ts";
 
 /** The targets this server delivers to, by target id. */
-export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAdapter> = {
+export const deliveryAdapters: Record<
+  string,
+  (ctx: AdapterContext) => PostingAdapter
+> = {
   pennylane_api: pennylaneLedger,
   quickbooks_online_us: quickbooksOnline,
   quickbooks_online_ca: quickbooksOnline,
@@ -94,7 +111,9 @@ export function adapterContext(
     targetId,
     env: deps.env,
     isEuCountry: async (code) => {
-      const { data, error } = await deps.service().rpc("is_eu_country", { p_code: code });
+      const { data, error } = await deps.service().rpc("is_eu_country", {
+        p_code: code,
+      });
       return error || typeof data !== "boolean" ? null : data;
     },
   };
@@ -103,9 +122,14 @@ export function adapterContext(
 /** The legal number of the invoice each credit note of [documentIds]
  * corrects (`invoices.replaces_number`), as the caller reads them. A
  * credit note that names none is a credit kept for the customer. */
-async function creditedNumbers(caller: CallerDb, documentIds: string[]): Promise<Record<string, string> | null> {
+async function creditedNumbers(
+  caller: CallerDb,
+  documentIds: string[],
+): Promise<Record<string, string> | null> {
   if (documentIds.length === 0) return {};
-  const { data, error } = await caller.from("invoices").select("id, replaces_number").in("id", documentIds);
+  const { data, error } = await caller.from("invoices").select(
+    "id, replaces_number",
+  ).in("id", documentIds);
   if (error || !Array.isArray(data)) return null;
   // Row-level security answers fewer rows, not an error: a credit note
   // the caller cannot read is refused, never taken for an unallocated one.
@@ -114,7 +138,9 @@ async function creditedNumbers(caller: CallerDb, documentIds: string[]): Promise
   for (const row of data as Record<string, unknown>[]) {
     if (typeof row.id !== "string") continue;
     seen.add(row.id);
-    if (typeof row.replaces_number === "string" && row.replaces_number) numbers[row.id] = row.replaces_number;
+    if (typeof row.replaces_number === "string" && row.replaces_number) {
+      numbers[row.id] = row.replaces_number;
+    }
   }
   return documentIds.every((id) => seen.has(id)) ? numbers : null;
 }
@@ -130,21 +156,33 @@ const REFRESH_AHEAD_MS = FUNCTION_BUDGET_MS;
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /** [from]..[to] as one period of one calendar month, or null. */
-function periodOf(from: unknown, to: unknown): { from: string; to: string } | null {
-  if (typeof from !== "string" || typeof to !== "string" || !DAY.test(from) || !DAY.test(to)) {
+function periodOf(
+  from: unknown,
+  to: unknown,
+): { from: string; to: string } | null {
+  if (
+    typeof from !== "string" || typeof to !== "string" || !DAY.test(from) ||
+    !DAY.test(to)
+  ) {
     return null;
   }
   const a = new Date(`${from}T00:00:00Z`);
   const b = new Date(`${to}T00:00:00Z`);
-  if (isNaN(a.getTime()) || isNaN(b.getTime()) || a.toISOString().slice(0, 10) !== from ||
-    b.toISOString().slice(0, 10) !== to || b < a || from.slice(0, 7) !== to.slice(0, 7)) {
+  if (
+    isNaN(a.getTime()) || isNaN(b.getTime()) ||
+    a.toISOString().slice(0, 10) !== from ||
+    b.toISOString().slice(0, 10) !== to || b < a ||
+    from.slice(0, 7) !== to.slice(0, 7)
+  ) {
     return null;
   }
   return { from, to };
 }
 
 /** The document a re-delivery names, or undefined for the whole period. */
-function documentOf(raw: unknown): { kind: string; id: string } | undefined | null {
+function documentOf(
+  raw: unknown,
+): { kind: string; id: string } | undefined | null {
   if (raw === undefined || raw === null) return undefined;
   if (typeof raw !== "object") return null;
   const d = raw as Record<string, unknown>;
@@ -160,11 +198,16 @@ async function mapsOf(
   workspaceId: string,
   connectionId: string,
 ): Promise<AccountingMap[] | null> {
-  const { data, error } = await deps.caller(authorization).rpc("accounting_connections_v1", {
-    p_workspace_id: workspaceId,
-  });
+  const { data, error } = await deps.caller(authorization).rpc(
+    "accounting_connections_v1",
+    {
+      p_workspace_id: workspaceId,
+    },
+  );
   if (error || !Array.isArray(data)) return null;
-  const c = (data as Record<string, unknown>[]).find((x) => x.id === connectionId);
+  const c = (data as Record<string, unknown>[]).find((x) =>
+    x.id === connectionId
+  );
   if (!c || !Array.isArray(c.maps)) return null;
   return (c.maps as Record<string, unknown>[]).map((m) => ({
     kind: m.kind as AccountingMap["kind"],
@@ -186,22 +229,22 @@ async function freshToken(
   if (held.auth_kind !== "oauth2" || !target) return current || null;
   const now = (deps.now ?? (() => new Date()))();
   const expires = Date.parse(held.token_expires_at ?? "");
-  if (current && Number.isFinite(expires) && expires - now.getTime() > REFRESH_AHEAD_MS) return current;
+  if (
+    current && Number.isFinite(expires) &&
+    expires - now.getTime() > REFRESH_AHEAD_MS
+  ) return current;
   const client = clientOf(deps, held.target_id);
   const refreshToken = held.secrets.refresh_token ?? "";
   if (!client || !refreshToken) return null;
-  const tokens = await refreshTokens(deps.fetcher ?? fetch, target, client, refreshToken, now);
-  if (isFailure(tokens)) {
-    // A concurrent request may have rotated the single-use refresh token:
-    // its newer access token stands, the connection is not expired.
-    const rotated = await rotatedMeanwhile(deps, held.id, refreshToken);
-    if (rotated) return rotated;
-    await store(deps, held.id, expiredWrite(tokens));
-    return null;
-  }
-  const write = connectedWrite(tokens);
-  if (!await store(deps, held.id, write)) return null;
-  return tokens.accessToken;
+  const result = await refreshExclusive(
+    deps,
+    held.id,
+    refreshToken,
+    (token) => refreshTokens(deps.fetcher ?? fetch, target, client, token, now),
+  );
+  return result.status === "refreshed" || result.status === "rotated"
+    ? result.accessToken
+    : null;
 }
 
 type Outcome = {
@@ -221,15 +264,25 @@ export async function deliverPeriod(
   authorization: string,
   body: Record<string, unknown>,
 ): Promise<Response> {
-  const connectionId = typeof body.connection_id === "string" ? body.connection_id : "";
+  const connectionId = typeof body.connection_id === "string"
+    ? body.connection_id
+    : "";
   const period = periodOf(body.from, body.to);
   const only = documentOf(body.document);
   if (!UUID.test(connectionId) || !period || only === null) {
-    return json({ error: "connection_id, a period within one month and a valid document required" }, 400);
+    return json({
+      error:
+        "connection_id, a period within one month and a valid document required",
+    }, 400);
   }
   const caller = deps.caller(authorization);
-  const allowed = await caller.rpc("accounting_connection_manageable_v1", { p_connection_id: connectionId });
-  const manageable = allowed.data as { workspace_id?: string; target_id?: string } | null;
+  const allowed = await caller.rpc("accounting_connection_manageable_v1", {
+    p_connection_id: connectionId,
+  });
+  const manageable = allowed.data as {
+    workspace_id?: string;
+    target_id?: string;
+  } | null;
   if (allowed.error || !manageable?.workspace_id) {
     return json({ error: "not allowed to deliver for this connection" }, 403);
   }
@@ -237,39 +290,65 @@ export async function deliverPeriod(
   const adapterOf = deliveryAdapters[manageable.target_id ?? ""];
   if (!adapterOf) return json({ error: "not_delivered_here" }, 400);
   const held = await resolved(deps, connectionId);
-  if (!held || held.revoked || held.status !== "connected") return json({ error: "not_connected" }, 409);
+  if (!held || held.revoked || held.status !== "connected") {
+    return json({ error: "not_connected" }, 409);
+  }
   const token = await freshToken(deps, held);
   if (!token) return json({ error: "not_connected" }, 409);
   const maps = await mapsOf(deps, authorization, workspaceId, connectionId);
-  if (!maps) return json({ error: "not allowed to deliver for this connection" }, 403);
+  if (!maps) {
+    return json({ error: "not allowed to deliver for this connection" }, 403);
+  }
   const computed = await caller.rpc("compute_postings", {
     p_workspace_id: workspaceId,
     p_issuer_site_id: held.issuer_site_id,
     p_from: period.from,
     p_to: period.to,
   });
-  if (computed.error) return json({ error: "not allowed to read the books" }, 403);
+  if (computed.error) {
+    return json({ error: "not allowed to read the books" }, 403);
+  }
   const { postings, blockers } = postingsOf(computed.data);
-  if (blockers.length > 0) return json({ error: "books_blocked", blockers }, 409);
+  if (blockers.length > 0) {
+    return json({ error: "books_blocked", blockers }, 409);
+  }
   const ids = await deliveryIds(postings);
   const chosen = postings
     .map((posting, i) => ({ posting, id: ids[i] }))
-    .filter(({ posting, id }) => !only || (posting.kind === only.kind && id === only.id));
-  const parties = chosen.length === 0 ? {} : await caller.rpc("posting_parties", {
-    p_workspace_id: workspaceId,
-    p_document_ids: [...new Set(chosen.map(({ posting }) => posting.documentId))],
-  }).then((r) => (r.error ? {} : (r.data ?? {}) as Record<string, PostingParty>));
+    .filter(({ posting, id }) =>
+      !only || (posting.kind === only.kind && id === only.id)
+    );
+  const parties = chosen.length === 0
+    ? {}
+    : await caller.rpc("posting_parties", {
+      p_workspace_id: workspaceId,
+      p_document_ids: [
+        ...new Set(chosen.map(({ posting }) => posting.documentId)),
+      ],
+    }).then((
+      r,
+    ) => (r.error ? {} : (r.data ?? {}) as Record<string, PostingParty>));
   const credited = await creditedNumbers(
     caller,
-    [...new Set(chosen.filter(({ posting }) => posting.kind === "credit_note").map(({ posting }) => posting.documentId))],
+    [
+      ...new Set(
+        chosen.filter(({ posting }) => posting.kind === "credit_note").map((
+          { posting },
+        ) => posting.documentId),
+      ),
+    ],
   );
   if (!credited) return json({ error: "not allowed to read the books" }, 403);
-  const adapter = adapterOf(adapterContext(deps, held.target_id, token, held.remote_tenant_id));
+  const adapter = adapterOf(
+    adapterContext(deps, held.target_id, token, held.remote_tenant_id),
+  );
   if (chosen.length > 0) {
     const refused = await adapter.prepare();
     if (refused) return json({ error: "target_refused", detail: refused }, 409);
   }
-  const deliveries = databaseStore(deps.service(), { inFlightSeconds: FUNCTION_BUDGET_MS / 1000 });
+  const deliveries = databaseStore(deps.service(), {
+    inFlightSeconds: FUNCTION_BUDGET_MS / 1000,
+  });
   const results: Outcome[] = [];
   for (const { posting, id } of chosen) {
     const base = {
@@ -279,28 +358,43 @@ export async function deliverPeriod(
       event_date: posting.date,
     };
     if (!balanced(posting)) {
-      results.push({ ...base, status: "failed", detail: "the posting does not balance" });
+      results.push({
+        ...base,
+        status: "failed",
+        detail: "the posting does not balance",
+      });
       continue;
     }
     try {
-      const result = await deliver({
-        connectionId,
-        documentKind: posting.kind,
-        documentId: id,
-        eventDate: posting.date,
-        documentNumber: posting.documentNumber,
-        periodFrom: period.from,
-        periodTo: period.to,
-        payloadSha256: await postingSha256(posting),
-        needs: adapter.needs(posting),
-      }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps, credited[posting.documentId]));
+      const result = await deliver(
+        {
+          connectionId,
+          documentKind: posting.kind,
+          documentId: id,
+          eventDate: posting.date,
+          documentNumber: posting.documentNumber,
+          periodFrom: period.from,
+          periodTo: period.to,
+          payloadSha256: await postingSha256(posting),
+          needs: adapter.needs(posting),
+        },
+        maps,
+        deliveries,
+        adapter.remote(
+          posting,
+          parties[posting.documentId],
+          maps,
+          credited[posting.documentId],
+        ),
+      );
       // A draft the target refused to post carries the target's words in
       // the result; every other outcome in its delivery row.
-      const detail = result.status === "blocked" || result.status === "in_flight"
-        ? ""
-        : result.status === "sent"
-        ? result.detail
-        : result.row.error ?? "";
+      const detail =
+        result.status === "blocked" || result.status === "in_flight"
+          ? ""
+          : result.status === "sent"
+          ? result.detail
+          : result.row.error ?? "";
       results.push(
         result.status === "blocked"
           ? { ...base, status: "blocked", missing: result.missing }
@@ -310,7 +404,12 @@ export async function deliverPeriod(
       // A delivery the log refused (a changed document already
       // acknowledged: 23514) was not sent; the others still go.
       if (!(error instanceof DeliveryNotRecorded)) throw error;
-      results.push({ ...base, status: "failed", code: error.code, detail: error.message });
+      results.push({
+        ...base,
+        status: "failed",
+        code: error.code,
+        detail: error.message,
+      });
     }
   }
   const counts: Record<string, number> = {};
