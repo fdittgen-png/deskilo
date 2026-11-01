@@ -5,6 +5,7 @@ window.SETUP_L10N={
  "en": {
   "s": {
    "setupTitle": "DesKilo — Setup Assistant",
+   "setupHow": "How this page works",
    "setupLanguage": "Language",
    "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it into a space you created (Workspace → Import workspace (XML)). Each answer says whether the import applies it, whether it is typed in the app, or whether it stays in the file only; the last step lists what remains to do in the app.",
    "setupGuideHtml": "The complete user guide — with a screenshot of every screen, long forms merged into one image — is {link} (English · Français · Deutsch · Español · Italiano) and in the app (Settings → Help).",
@@ -1676,6 +1677,8 @@ window.SETUP_L10N={
     "setupLevelsPresets": "Quick start",
     "setupLevelsChoice": "What it needs",
     "setupLevelsGap": "{level} needs {needed}",
+    "setupAnswerUnknown": "Not sure yet",
+    "setupAnswerUnknownNote": "Not decided yet: {list} stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.",
     "setupObligationsTitle": "What the law asks in {country}",
     "setupObligationUnconfirmed": "Not confirmed for this country — ask your accountant.",
     "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
@@ -1688,6 +1691,7 @@ window.SETUP_L10N={
  "fr": {
   "s": {
    "setupTitle": "DesKilo — Assistant de configuration",
+   "setupHow": "Comment ça marche",
    "setupLanguage": "Langue",
    "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe dans un espace que vous avez créé (Espace de coworking → Importer l'espace (XML)). Chaque réponse indique si l'import l'applique, si elle se saisit dans l'app ou si elle reste dans le fichier seulement ; la dernière étape liste ce qui reste à faire dans l'app.",
    "setupGuideHtml": "Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est {link} (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).",
@@ -3359,6 +3363,8 @@ window.SETUP_L10N={
     "setupLevelsPresets": "Démarrage rapide",
     "setupLevelsChoice": "Ce qu’il lui faut",
     "setupLevelsGap": "{level} demande {needed}",
+    "setupAnswerUnknown": "Je ne sais pas encore",
+    "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.",
     "setupObligationsTitle": "Ce que demande la loi : {country}",
     "setupObligationUnconfirmed": "Non confirmé pour ce pays — demandez à votre comptable.",
     "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
@@ -3371,6 +3377,7 @@ window.SETUP_L10N={
  "de": {
   "s": {
    "setupTitle": "DesKilo — Konfigurationsassistent",
+   "setupHow": "So funktioniert diese Seite",
    "setupLanguage": "Sprache",
    "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie in einen Raum, den Sie angelegt haben (Workspace → Workspace importieren (XML)). Jede Antwort sagt, ob der Import sie übernimmt, ob sie in der App eingetragen wird oder ob sie nur in der Datei bleibt; der letzte Schritt listet, was in der App noch zu tun ist.",
    "setupGuideHtml": "Das vollständige Benutzerhandbuch — mit einem Screenshot jedes Bildschirms, lange Formulare zu einem Bild zusammengefügt — finden Sie {link} (English · Français · Deutsch · Español · Italiano) und in der App (Einstellungen → Hilfe).",
@@ -5042,6 +5049,8 @@ window.SETUP_L10N={
     "setupLevelsPresets": "Schnellstart",
     "setupLevelsChoice": "Was er braucht",
     "setupLevelsGap": "{level} braucht {needed}",
+    "setupAnswerUnknown": "Weiß ich noch nicht",
+    "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
     "setupObligationsTitle": "Was das Gesetz verlangt: {country}",
     "setupObligationUnconfirmed": "Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.",
     "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
@@ -5054,6 +5063,7 @@ window.SETUP_L10N={
  "es": {
   "s": {
    "setupTitle": "DesKilo — Asistente de configuración",
+   "setupHow": "Cómo funciona esta página",
    "setupLanguage": "Idioma",
    "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que sus respuestas anteriores hacen posibles (las funciones que no activa, el régimen de IVA que no tiene, el país que no aplica — no se le pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Sus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
    "setupGuideHtml": "La guía de usuario completa — con una captura de cada pantalla, los formularios largos fusionados en una imagen — está {link} (English · Français · Deutsch · Español · Italiano) y en la app (Ajustes → Ayuda).",
@@ -6725,6 +6735,8 @@ window.SETUP_L10N={
     "setupLevelsPresets": "Inicio rápido",
     "setupLevelsChoice": "Lo que necesita",
     "setupLevelsGap": "{level} necesita {needed}",
+    "setupAnswerUnknown": "Aún no lo sé",
+    "setupAnswerUnknownNote": "Aún sin decidir: {list} se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa.",
     "setupObligationsTitle": "Lo que exige la ley en {country}",
     "setupObligationUnconfirmed": "No confirmado para este país — consulte a su asesor contable.",
     "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
@@ -6737,6 +6749,7 @@ window.SETUP_L10N={
  "it": {
   "s": {
    "setupTitle": "DesKilo — Assistente di configurazione",
+   "setupHow": "Come funziona questa pagina",
    "setupLanguage": "Lingua",
    "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le Sue risposte precedenti rendono possibili (le funzionalità che non attiva, il regime IVA che non ha, il paese che non si applica — non Le viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le Sue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
    "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",
@@ -8408,6 +8421,8 @@ window.SETUP_L10N={
     "setupLevelsPresets": "Avvio rapido",
     "setupLevelsChoice": "Che cosa serve",
     "setupLevelsGap": "{level} richiede {needed}",
+    "setupAnswerUnknown": "Non lo so ancora",
+    "setupAnswerUnknownNote": "Non ancora deciso: {list} restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa.",
     "setupObligationsTitle": "Cosa chiede la legge in {country}",
     "setupObligationUnconfirmed": "Non confermato per questo paese — chieda al Suo commercialista.",
     "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",

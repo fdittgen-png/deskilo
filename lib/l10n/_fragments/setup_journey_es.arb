@@ -6,5 +6,7 @@
   "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
   "setupObligationSource": "Fuente: {source}",
   "setupJourneyConflict": "Otra persona guardó otras respuestas mientras tanto. Aquí están: revíselas y después aplique.",
-  "setupJourneySavedBy": "Guardado por última vez por {name}."
+  "setupJourneySavedBy": "Guardado por última vez por {name}.",
+  "setupAnswerUnknown": "Aún no lo sé",
+  "setupAnswerUnknownNote": "Aún sin decidir: {list} se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa."
 }

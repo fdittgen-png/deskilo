@@ -6,5 +6,7 @@
   "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
   "setupObligationSource": "Source : {source}",
   "setupJourneyConflict": "Quelqu’un d’autre a enregistré d’autres réponses entre-temps. Les voici : vérifiez-les, puis appliquez.",
-  "setupJourneySavedBy": "Enregistré en dernier par {name}."
+  "setupJourneySavedBy": "Enregistré en dernier par {name}.",
+  "setupAnswerUnknown": "Je ne sais pas encore",
+  "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez."
 }

@@ -123,7 +123,7 @@ const answers = (features) => ({
 function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null, search = '', patch = (s) => s } = {}) {
   created = [];
   const byId = {};
-  for (const id of ['form','bar','rail','nav','saved','allmode','expertview','expertwrap','stepno','lang']) byId[id]=mk('div');
+  for (const id of ['form','bar','rail','nav','saved','allmode','expertview','expertwrap','allwrap','primary','legend','stepno','lang']) byId[id]=mk('div');
   const chrome = { 'data-t': marked('data-t').map(k => ({k, e: mk('span')})), 'data-th': marked('data-th').map(k => ({k, e: mk('p')})) };
   for (const list of Object.values(chrome)) for (const x of list) x.e.setAttribute(list === chrome['data-t'] ? 'data-t' : 'data-th', x.k);
   const store = stored ? { 'deskilo-setup-v1': JSON.stringify(stored) } : {};
@@ -149,7 +149,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
 globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
-globalThis.__setMode=setMode; globalThis.__migrate=migrate;
+globalThis.__setMode=setMode; globalThis.__migrate=migrate; globalThis.__shown=shownAnswers; globalThis.__unknown=markUnknown; globalThis.__note=unknownNote;
 `);
   // The shared module and the questionnaire's tools, as the page loads them
   // after its own script (#2501).
@@ -617,6 +617,52 @@ const fakeContext = () => {
   if (!steps().includes('features')) fail('expert: the features step is hidden with setupGuide off');
   if (off.byId.expertwrap.style.display !== 'none') fail('expert: the expert switch shows with setupGuide off');
   console.log('expert: the switches are the expert view; links open it');
+}
+// #3075 — the first screen asks the business question: the questions come
+// before the identity, the explanation of the file and the badge legend sit
+// behind a disclosure, the expert checkboxes wait for the second step, and
+// the sticky bar's primary action is the next step — the export appears at
+// the last one.
+{
+  const page = load('en', { name: 'Entry Space' });
+  const ids = globalThis.__applicable();
+  if (ids[0] !== 'levels' || ids[1] !== 'identity') fail(`entry: the steps start ${ids.slice(0, 3).join(',')}`);
+  const s = globalThis.window.SETUP_L10N.en.s;
+  const drawn = (n) => (n.children || []).some((c) => typeof c === 'object' && (c.attrs?.class === 'legend' || drawn(c)));
+  if (drawn(page.byId.form)) fail('entry: the badge legend is drawn inside the first step');
+  if (page.byId.expertwrap.style.display !== 'none' || page.byId.allwrap.style.display !== 'none') fail('entry: the expert checkboxes show on the first step');
+  if (page.byId.primary._text !== s.setupNext + ' ›') fail(`entry: the first step's primary action reads "${page.byId.primary._text}"`);
+  globalThis.__go('identity');
+  if (page.byId.expertwrap.style.display === 'none' || page.byId.allwrap.style.display === 'none') fail('entry: the expert checkboxes never show');
+  globalThis.__go(ids[ids.length - 1]);
+  if (!(page.byId.primary._text || '').includes(s.setupExportXml)) fail(`entry: the last step's primary action reads "${page.byId.primary._text}"`);
+  // The explanation of the file is a disclosure, not the page's opening.
+  const header = html.slice(html.indexOf('<header>'), html.indexOf('</header>'));
+  const how = header.indexOf('<details');
+  if (how < 0 || ['setupIntroHtml', 'setupGuideHtml', 'setupSecretsHtml', 'setupDemoHtml', 'id="legend"'].some((k) => header.indexOf(k) < how)) fail('entry: the file explanation and the legend are not behind the header disclosure');
+  console.log('entry: questions first, the explanation behind a disclosure, next as the primary action');
+}
+// #3076 — the questions open from what the space already does, and "not
+// sure yet" is a third answer that keeps the safe level and says what stays
+// there; answering for real replaces it.
+{
+  const lv = globalThis.window?.SETUP_LEVELS;
+  const features = {};
+  const upTo = (process, id) => { const pr = lv.processes.find((x) => x.key === process); for (const l of pr.levels) { l.features.forEach((k) => { features[k] = true; }); if (l.id === id) break; } };
+  upTo('money', 'invoices'); upTo('tax', 'vat'); upTo('bookings', 'resources');
+  load('en', { name: 'Prefilled Space', features });
+  const asked = () => Object.entries(globalThis.__shown()).filter(([, v]) => v).map(([q]) => q).sort().join(',');
+  const want = 'issue_invoices,members_owe_money,several_rooms_or_sites,vat_registered';
+  if (asked() !== want) fail(`prefill: a configured space opens with "${asked()}", not "${want}"`);
+  const before = JSON.stringify(globalThis.__levelsNow());
+  globalThis.__unknown('pay_online');
+  const note = globalThis.__note('pay_online');
+  const s = globalThis.window.SETUP_L10N.en;
+  if (!note.includes(s.journey.process.payments) || !note.includes(s.journey.level.payments_off)) fail(`unknown: the note reads "${note}"`);
+  if (JSON.stringify(globalThis.__levelsNow()) !== before) fail('unknown: "not sure yet" moved a level the space has');
+  globalThis.__answer('pay_online', true);
+  if (globalThis.__note('pay_online') !== '') fail('unknown: answering for real leaves the note');
+  console.log('prefill: the questions open from the space; not sure yet keeps the safe level');
 }
 // #3075 — one stepper: the rail draws the steps that apply, in the order the
 // counter counts them, on every step.

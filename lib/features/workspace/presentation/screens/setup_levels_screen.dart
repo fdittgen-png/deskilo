@@ -73,6 +73,9 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   /// Levels the owner set by hand or by a quick start; the rest follow
   /// the recommendation.
   final _chosen = <SetupProcess, String>{};
+
+  /// Questions the owner left at "not sure yet": answered no for now.
+  final _unknown = <String>{};
   var _busy = false;
 
   @override
@@ -88,10 +91,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   Widget _body(AppLocalizations l10n, Workspace workspace) {
     final journey = ref.watch(setupJourneyProvider(workspace.id));
     if (journey case AsyncLoading(hasValue: false)) return const LoadingView();
-    final saved = _restoreOnce(journey);
     final stored = resolveEnabledFeatures(workspace.featureFlags);
-    final recommended = recommendSetupLevels(_answers);
     final current = currentSetupLevels(stored);
+    final saved = _restoreOnce(journey, current);
+    final recommended = recommendSetupLevels(_answers);
     final vector = {
       for (final p in SetupProcess.values)
         p: _chosen[p] ?? (_answered ? recommended[p]!.level : current[p]!),
@@ -162,12 +165,17 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   }
 
   /// The saved journey; its answers are taken over once loaded, and again
-  /// once a conflict reloaded it.
-  SetupJourney? _restoreOnce(AsyncValue<SetupJourney?> journey) {
+  /// once a conflict reloaded it. Without one, the questions open from what
+  /// the space already does (#3076).
+  SetupJourney? _restoreOnce(
+    AsyncValue<SetupJourney?> journey,
+    SetupLevelVector current,
+  ) {
     final saved = journey.value;
     if (!_restored && journey.hasValue && !journey.isLoading) {
       _restored = true;
-      if (saved != null) _answers = saved.answers;
+      _unknown.clear();
+      _answers = saved?.answers ?? setupAnswersFromLevels(current);
     }
     return saved;
   }
@@ -190,19 +198,52 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   List<Widget> _questions(AppLocalizations l10n, SetupJourney? saved) => [
     if (saved?.updatedByName case final String name)
       Text(l10n.setupJourneySavedBy(name)),
-    for (final key in setupQuestions)
+    for (final key in setupQuestions) ...[
       SwitchListTile(
         key: ValueKey('setup-question-$key'),
         contentPadding: EdgeInsets.zero,
         title: Text(l10n.setupQuestion(key)),
         value: _answers[key],
-        onChanged: (v) => setState(() {
-          _answers = _answers.withAnswer(key, yes: v);
-          _answered = true;
-          _chosen.clear();
-        }),
+        onChanged: (v) => _answer(key, yes: v),
       ),
+      // #3076 — the third answer: the safe level, and what stays there.
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: FilterChip(
+          key: ValueKey('setup-question-$key-unknown'),
+          label: Text(l10n.setupAnswerUnknown),
+          selected: _unknown.contains(key),
+          onSelected: (on) => _answer(key, yes: false, unknown: on),
+        ),
+      ),
+      if (_unknown.contains(key))
+        Text(
+          _unknownNote(l10n, key),
+          key: ValueKey('setup-question-$key-note'),
+        ),
+    ],
   ];
+
+  void _answer(String key, {required bool yes, bool unknown = false}) =>
+      setState(() {
+        _answers = _answers.withAnswer(key, yes: yes);
+        _answered = true;
+        unknown ? _unknown.add(key) : _unknown.remove(key);
+        _chosen.clear();
+      });
+
+  /// The processes a yes would raise, at the level they stay at for now.
+  String _unknownNote(AppLocalizations l10n, String question) {
+    final yes = recommendSetupLevels(_answers.withAnswer(question, yes: true));
+    final no = recommendSetupLevels(_answers.withAnswer(question, yes: false));
+    return l10n.setupAnswerUnknownNote(
+      [
+        for (final p in SetupProcess.values)
+          if (yes[p]!.level != no[p]!.level)
+            '${l10n.setupProcessName(p.name)}: ${_levelWord(l10n, p, no[p]!.level)}',
+      ].join(', '),
+    );
+  }
 
   Future<void> _apply(
     Workspace workspace,
@@ -349,15 +390,18 @@ class _Preview extends StatelessWidget {
     final l10n = context.l10n;
     // #3076 — what the space gets, in the member-facing words of the
     // manifest, never the switches' own names.
-    List<Widget> outcomes(String heading, List<WorkspaceFeature> fs, Key key) =>
-        [
-          Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
-          for (final f in fs)
-            Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.xs),
-              child: Text('• ${featureDescription(l10n, f)}'),
-            ),
-        ];
+    List<Widget> outcomes(
+      String heading,
+      List<WorkspaceFeature> fs,
+      Key key,
+    ) => [
+      Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
+      for (final f in fs)
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
+          child: Text('• ${featureDescription(l10n, f)}'),
+        ),
+    ];
     return Card(
       key: const ValueKey('setup-levels-preview'),
       child: Padding(

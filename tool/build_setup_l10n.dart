@@ -185,6 +185,8 @@ const _journeyStrings = [
   'setupLevelsPresets',
   'setupLevelsChoice',
   'setupLevelsGap',
+  'setupAnswerUnknown',
+  'setupAnswerUnknownNote',
   'setupObligationsTitle',
   'setupObligationUnconfirmed',
   'setupObligationNone',
@@ -309,6 +311,10 @@ String buildSetupCatalogue() {
 /// screen reads, so the page cannot recommend anything the app would not.
 Map<String, Object?> setupLevelsData() => {
   'questions': setupQuestions,
+  'evidence': {
+    for (final MapEntry(key: q, value: e) in setupQuestionEvidence.entries)
+      q: {'process': e.process.name, 'level': e.level},
+  },
   'processes': [
     for (final MapEntry(key: process, value: levels) in setupLevels.entries)
       {

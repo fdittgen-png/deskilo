@@ -23254,6 +23254,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.';
 
   @override
+  String get setupAnswerUnknown => 'Non lo so ancora';
+
+  @override
+  String setupAnswerUnknownNote(String list) {
+    return 'Non ancora deciso: $list restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa.';
+  }
+
+  @override
   String get setupApprovalsApply => 'Usare questa regola';
 
   @override
