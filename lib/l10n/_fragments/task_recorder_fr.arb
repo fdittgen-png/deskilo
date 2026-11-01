@@ -236,5 +236,8 @@
   "taskRecorderValuesOn": "Les valeurs sont enregistrées",
   "taskRecorderExportValuesTitle": "Cet enregistrement contient des valeurs",
   "taskRecorderExportValuesBody": "Il contient ce qui a été saisi et choisi pendant l'enregistrement. Vérifiez-le avant de le partager, et ne le partagez qu'avec des personnes qui peuvent le voir.",
-  "taskRecorderExportValuesConfirm": "Enregistrer quand même"
+  "taskRecorderExportValuesConfirm": "Enregistrer quand même",
+  "taskRecorderNameLabel": "Nommer cette tâche",
+  "taskRecorderNameHint": "Facultatif. Laissé vide, l'enregistrement porte l'heure de son démarrage.",
+  "taskRecorderDefaultName": "Tâche enregistrée {when}"
 }

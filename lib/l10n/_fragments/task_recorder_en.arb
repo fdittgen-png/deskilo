@@ -964,5 +964,22 @@
   "taskRecorderValuesOn": "Values are being captured",
   "taskRecorderExportValuesTitle": "This recording contains values",
   "taskRecorderExportValuesBody": "It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.",
-  "taskRecorderExportValuesConfirm": "Save anyway"
+  "taskRecorderExportValuesConfirm": "Save anyway",
+  "taskRecorderNameLabel": "Name this task",
+  "taskRecorderNameHint": "Optional. Left empty, the recording is named after the time you start it.",
+  "taskRecorderDefaultName": "Task recorded {when}",
+  "@taskRecorderNameLabel": {
+    "description": "#3068 task recorder: the optional name asked before a recording starts"
+  },
+  "@taskRecorderNameHint": {
+    "description": "#3068 task recorder: what an empty name means"
+  },
+  "@taskRecorderDefaultName": {
+    "description": "#3068 task recorder: the generated name of a recording started without one; when is the start date and time",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  }
 }

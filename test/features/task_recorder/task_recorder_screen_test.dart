@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
@@ -56,6 +57,8 @@ class _Harness {
         recorderScopeProvider.overrideWithValue(canaryScope),
         taskRecorderAvailableProvider.overrideWithValue(available),
         typedFileSaverProvider.overrideWithValue(saver.call),
+        // #3068 — the generated name reads the clock seam.
+        clockProvider.overrideWithValue(FixedClock(DateTime(2026, 11, 1, 14, 5))),
       ],
     );
   }
@@ -143,6 +146,52 @@ void main() {
     expect(h.controller.state, RecorderState.ended);
     expect(find.textContaining('1 steps'), findsOneWidget);
     expect(find.textContaining('Complete'), findsOneWidget);
+    await h.done(tester);
+  });
+
+  testWidgets('#3068 the name is asked at the start and kept as typed', (
+    tester,
+  ) async {
+    final h = _Harness();
+    await h.pump(tester);
+    final field = find.byKey(const ValueKey('task-recorder-name-field'));
+    expect(field, findsOneWidget);
+    await tester.enterText(field, '  Book a desk for Friday ');
+    await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
+    await tester.pumpAndSettle();
+    expect(h.controller.snapshot!.title, 'Book a desk for Friday');
+    await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
+    await tester.pumpAndSettle();
+    // The name belonged to that recording: the next one asks again.
+    expect(
+      tester.widget<TextField>(field).controller!.text,
+      isEmpty,
+    );
+    await h.done(tester);
+  });
+
+  testWidgets('#3068 skipping the name still never saves a blank title', (
+    tester,
+  ) async {
+    final h = _Harness();
+    await h.pump(tester);
+    // Nothing typed, and a field of spaces, both mean "skip".
+    for (final typed in const ['', '   ']) {
+      await tester.enterText(
+        find.byKey(const ValueKey('task-recorder-name-field')),
+        typed,
+      );
+      await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
+      await tester.pumpAndSettle();
+      final title = h.controller.snapshot!.title;
+      expect(title, isNotNull, reason: 'a recording must carry a name');
+      expect(title!.trim(), isNotEmpty);
+      expect(title, startsWith('Task recorded '));
+      expect(title, contains('14:05'), reason: 'the generated name reads '
+          'the clock seam, not the wall clock');
+      await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
+      await tester.pumpAndSettle();
+    }
     await h.done(tester);
   });
 

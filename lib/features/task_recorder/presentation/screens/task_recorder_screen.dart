@@ -14,8 +14,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../application/recorder_controller.dart';
@@ -37,6 +39,17 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
   // The person's choice for THIS recording; off every time, never remembered.
   bool _captureValues = false;
 
+  // #3068 — the name is asked BEFORE the recording starts: the title is
+  // written into the store header at that moment and nothing renames it
+  // afterwards.
+  final _name = TextEditingController();
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,17 +62,29 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
   Future<void> _start() async {
     final l10n = context.l10n;
     final scope = ref.read(recorderScopeProvider);
+    // Empty is the explicit skip: the recording is then named after the
+    // moment it starts, never left without a title.
+    final typed = _name.text.trim();
+    final title = typed.isNotEmpty
+        ? typed
+        : l10n.taskRecorderDefaultName(
+            appFormatOf(context).dateTime(ref.read(clockProvider).now()),
+          );
     final started =
         scope != null &&
         await ref
             .read(recorderControllerProvider)
             .start(
               scope: scope,
+              title: title,
               prerequisites: const [Prerequisite('signed_in')],
               captureValues: _captureValues,
             );
     // The choice belonged to THAT recording: the next one starts off again.
-    if (mounted && started) setState(() => _captureValues = false);
+    if (mounted && started) {
+      _name.clear();
+      setState(() => _captureValues = false);
+    }
     if (!mounted || started) return;
     AppSnack.error(
       context,
@@ -119,6 +144,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
                   : !available
                   ? (l10n.taskRecorderUnavailable)
                   : null,
+              name: _name,
               captureValues: _captureValues,
               onCaptureValues: (v) => setState(() => _captureValues = v),
               onStart: _start,
@@ -139,6 +165,7 @@ class _Disclosure extends StatelessWidget {
   const _Disclosure({
     required this.canStart,
     required this.reason,
+    required this.name,
     required this.captureValues,
     required this.onCaptureValues,
     required this.onStart,
@@ -146,6 +173,7 @@ class _Disclosure extends StatelessWidget {
 
   final bool canStart;
   final String? reason;
+  final TextEditingController name;
   final bool captureValues;
   final ValueChanged<bool> onCaptureValues;
   final VoidCallback onStart;
@@ -180,6 +208,19 @@ class _Disclosure extends StatelessWidget {
               Text(why),
               const SizedBox(height: AppSpacing.sm),
             ],
+            TextField(
+              key: const ValueKey('task-recorder-name-field'),
+              controller: name,
+              enabled: canStart,
+              maxLength: const RecordingLimits().maxTitleLength,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: l10n.taskRecorderNameLabel,
+                helperText: l10n.taskRecorderNameHint,
+                helperMaxLines: 2,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
             // Off by default: a recording keeps no value unless the person
             // asks for it, for this recording only.
             SwitchListTile(

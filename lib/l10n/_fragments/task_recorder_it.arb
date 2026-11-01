@@ -236,5 +236,8 @@
   "taskRecorderValuesOn": "I valori vengono catturati",
   "taskRecorderExportValuesTitle": "Questa registrazione contiene valori",
   "taskRecorderExportValuesBody": "Contiene ciò che è stato scritto e scelto durante la registrazione. La controlli prima di condividerla e la condivida solo con chi può vederlo.",
-  "taskRecorderExportValuesConfirm": "Salva comunque"
+  "taskRecorderExportValuesConfirm": "Salva comunque",
+  "taskRecorderNameLabel": "Dai un nome a questa attività",
+  "taskRecorderNameHint": "Facoltativo. Se lasci vuoto, la registrazione prende come nome l'ora di avvio.",
+  "taskRecorderDefaultName": "Attività registrata {when}"
 }

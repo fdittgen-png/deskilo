@@ -236,5 +236,8 @@
   "taskRecorderValuesOn": "Se están capturando valores",
   "taskRecorderExportValuesTitle": "Esta grabación contiene valores",
   "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísela antes de compartirla y compártala solo con quien deba verlo.",
-  "taskRecorderExportValuesConfirm": "Guardar de todos modos"
+  "taskRecorderExportValuesConfirm": "Guardar de todos modos",
+  "taskRecorderNameLabel": "Dar un nombre a esta tarea",
+  "taskRecorderNameHint": "Opcional. Si se deja vacío, la grabación lleva la hora de inicio como nombre.",
+  "taskRecorderDefaultName": "Tarea grabada {when}"
 }

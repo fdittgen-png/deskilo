@@ -25991,6 +25991,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskRecorderCompletenessPartial => 'Partial';
 
   @override
+  String taskRecorderDefaultName(String when) {
+    return 'Task recorded $when';
+  }
+
+  @override
   String get taskRecorderDelete => 'Delete from this device';
 
   @override
@@ -26083,6 +26088,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskRecorderMyRecordings => 'My recordings on this device';
+
+  @override
+  String get taskRecorderNameHint =>
+      'Optional. Left empty, the recording is named after the time you start it.';
+
+  @override
+  String get taskRecorderNameLabel => 'Name this task';
 
   @override
   String get taskRecorderNoOutcome => 'No answer recorded';

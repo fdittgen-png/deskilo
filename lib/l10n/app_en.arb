@@ -30750,6 +30750,15 @@
   "@taskRecorderCompletenessPartial": {
     "description": "#1865 task recorder: taskRecorderCompletenessPartial"
   },
+  "taskRecorderDefaultName": "Task recorded {when}",
+  "@taskRecorderDefaultName": {
+    "description": "#3068 task recorder: the generated name of a recording started without one; when is the start date and time",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "taskRecorderDelete": "Delete from this device",
   "@taskRecorderDelete": {
     "description": "#1865 task recorder: taskRecorderDelete"
@@ -30866,6 +30875,14 @@
   "taskRecorderMyRecordings": "My recordings on this device",
   "@taskRecorderMyRecordings": {
     "description": "#1865 task recorder: taskRecorderMyRecordings"
+  },
+  "taskRecorderNameHint": "Optional. Left empty, the recording is named after the time you start it.",
+  "@taskRecorderNameHint": {
+    "description": "#3068 task recorder: what an empty name means"
+  },
+  "taskRecorderNameLabel": "Name this task",
+  "@taskRecorderNameLabel": {
+    "description": "#3068 task recorder: the optional name asked before a recording starts"
   },
   "taskRecorderNoOutcome": "No answer recorded",
   "@taskRecorderNoOutcome": {
