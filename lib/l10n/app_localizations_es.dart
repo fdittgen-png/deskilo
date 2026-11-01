@@ -20016,6 +20016,28 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hubo inversión del sujeto pasivo en este periodo.';
 
   @override
+  String get recordedPaymentsEmpty =>
+      'Ningún pago se asignó a una factura en este periodo.';
+
+  @override
+  String get recordedPaymentsMore => 'Mostrar más pagos';
+
+  @override
+  String get recordedPaymentsOff =>
+      'El dinero está desactivado en este espacio.';
+
+  @override
+  String recordedPaymentsPeriod(String from, String to) {
+    return 'Periodo: $from – $to';
+  }
+
+  @override
+  String get recordedPaymentsTitle => 'Pagos recibidos';
+
+  @override
+  String get recordedPaymentsUnnamed => 'Pago';
+
+  @override
   String get recordingPrivacyBadge => 'Modo grabación — personas inventadas';
 
   @override

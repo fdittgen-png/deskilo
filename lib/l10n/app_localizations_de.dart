@@ -20055,6 +20055,27 @@ class AppLocalizationsDe extends AppLocalizations {
       'In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.';
 
   @override
+  String get recordedPaymentsEmpty =>
+      'In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.';
+
+  @override
+  String get recordedPaymentsMore => 'Weitere Zahlungen anzeigen';
+
+  @override
+  String get recordedPaymentsOff => 'Geld ist in diesem Bereich ausgeschaltet.';
+
+  @override
+  String recordedPaymentsPeriod(String from, String to) {
+    return 'Zeitraum: $from – $to';
+  }
+
+  @override
+  String get recordedPaymentsTitle => 'Eingegangene Zahlungen';
+
+  @override
+  String get recordedPaymentsUnnamed => 'Zahlung';
+
+  @override
   String get recordingPrivacyBadge => 'Aufnahmemodus — erfundene Personen';
 
   @override

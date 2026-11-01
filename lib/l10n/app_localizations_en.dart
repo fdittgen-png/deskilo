@@ -19870,6 +19870,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recapEmpty => 'Nothing was reverse-charged in this period.';
 
   @override
+  String get recordedPaymentsEmpty =>
+      'No payments were matched to an invoice in this period.';
+
+  @override
+  String get recordedPaymentsMore => 'Show more payments';
+
+  @override
+  String get recordedPaymentsOff => 'Money is switched off in this space.';
+
+  @override
+  String recordedPaymentsPeriod(String from, String to) {
+    return 'Period: $from – $to';
+  }
+
+  @override
+  String get recordedPaymentsTitle => 'Payments received';
+
+  @override
+  String get recordedPaymentsUnnamed => 'Payment';
+
+  @override
   String get recordingPrivacyBadge => 'Filming mode — invented people';
 
   @override

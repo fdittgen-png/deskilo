@@ -13175,6 +13175,12 @@
     }
   },
   "recapEmpty": "In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.",
+  "recordedPaymentsEmpty": "In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.",
+  "recordedPaymentsMore": "Weitere Zahlungen anzeigen",
+  "recordedPaymentsOff": "Geld ist in diesem Bereich ausgeschaltet.",
+  "recordedPaymentsPeriod": "Zeitraum: {from} – {to}",
+  "recordedPaymentsTitle": "Eingegangene Zahlungen",
+  "recordedPaymentsUnnamed": "Zahlung",
   "recordingPrivacyBadge": "Aufnahmemodus — erfundene Personen",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

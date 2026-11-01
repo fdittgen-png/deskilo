@@ -20071,6 +20071,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get recapEmpty => 'Rien n\'a été autoliquidé sur cette période.';
 
   @override
+  String get recordedPaymentsEmpty =>
+      'Aucun paiement n\'a été rapproché d\'une facture sur cette période.';
+
+  @override
+  String get recordedPaymentsMore => 'Afficher d\'autres paiements';
+
+  @override
+  String get recordedPaymentsOff =>
+      'La gestion de l\'argent est désactivée dans cet espace.';
+
+  @override
+  String recordedPaymentsPeriod(String from, String to) {
+    return 'Période : $from – $to';
+  }
+
+  @override
+  String get recordedPaymentsTitle => 'Paiements reçus';
+
+  @override
+  String get recordedPaymentsUnnamed => 'Paiement';
+
+  @override
   String get recordingPrivacyBadge => 'Mode tournage — personnes inventées';
 
   @override

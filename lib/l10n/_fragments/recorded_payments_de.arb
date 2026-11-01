@@ -1,0 +1,8 @@
+{
+  "recordedPaymentsTitle": "Eingegangene Zahlungen",
+  "recordedPaymentsEmpty": "In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.",
+  "recordedPaymentsMore": "Weitere Zahlungen anzeigen",
+  "recordedPaymentsOff": "Geld ist in diesem Bereich ausgeschaltet.",
+  "recordedPaymentsUnnamed": "Zahlung",
+  "recordedPaymentsPeriod": "Zeitraum: {from} – {to}"
+}
