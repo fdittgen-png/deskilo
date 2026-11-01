@@ -12,13 +12,12 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/recorded_payments.dart';
 import '../../domain/register_period.dart';
 import '../../providers/recorded_payments_providers.dart';
+import 'money_view_data.dart';
 
 class RecordedPaymentsScreen extends ConsumerWidget {
   const RecordedPaymentsScreen({super.key, this.from, this.to});
@@ -29,9 +28,11 @@ class RecordedPaymentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final workspace = MoneyViewData.gates(ref).workspace;
     final period = RegisterPeriod.parse(from, to);
-    final today = WorkspaceTime.dateOf(ref.watch(clockProvider).now());
+    // The fallback month is the clock's; the figure's own window always
+    // arrives in the address.
+    final today = ref.watch(clockProvider).now();
     final first = period?.first ?? DateTime(today.year, today.month);
     final last = period?.last ?? DateTime(today.year, today.month + 1, 0);
     final dateFormat = DateFormat.yMMMd(
