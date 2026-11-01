@@ -65,12 +65,32 @@ function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.
 // section when a question has none.
 let advOpen=false; // the advanced disclosure stays as the owner left it across re-renders
 const STEPS=[
+// #2868 — the plain questions, the first screen (#3075): each answer sets
+// the level of every process through the app's own rules. The page works
+// offline and never claims what the space is ready for.
+{id:'levels',applies(){return on('setupGuide')},get title(){return JT('setupLevelsTitle')},get why(){return T('levelsWhy')},
+ build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const now=levelsNow(),rec=recommendLevels(S.journey.answers),preset=S.journey.used?presetOf(now):'';
+  return[h('p',{class:'hint'},T('levelsOffline')),
+   lbl(JT('setupLevelsQuestions')),
+   ...LEVELS.questions.map(q=>checkbox(jw('question',q),null,S.journey.answers[q]===true,v=>answerQuestion(q,v))),
+   lbl(JT('setupLevelsPresets')),
+   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
+   lbl(JT('setupLevelsChoice')),
+   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
+   ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
+   h('p',{class:'hint'},T('levelsExpertHint')),
+   h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
+ check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
+  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
+  return f}},
+
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
   h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),onCountry,'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
+  obligationsCard(lbl),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
   input(T('identityAddress'),'address',T('identityAddressHint'),'text',T('identityAddressPlaceholder'),'identity'),
@@ -114,26 +134,6 @@ const STEPS=[
   // #2561 L3 — a personal home is an HTTPS origin and a publishable key.
   if(S.network.roles==='workspace_host'&&((S.network.homeUrl.trim()&&!/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:\d{1,5})?\/?$/i.test(S.network.homeUrl.trim()))||(S.network.homeKey.trim()&&!/^(sb_publishable_\S{6,}|eyJ\S+\.\S+\.\S*)$/.test(S.network.homeKey.trim()))))f.push(F.err(T('networkErrHome'),'identity'));
   if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))f.push(F.warn(T('identityWarnInvoicingCountry',{country:countryName(S.country),list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),'identity'));return f}},
-
-// #2868 — the plain questions, right after the country: each answer sets
-// the level of every process through the app's own rules. The page works
-// offline and never claims what the space is ready for.
-{id:'levels',applies(){return on('setupGuide')},get title(){return JT('setupLevelsTitle')},get why(){return T('levelsWhy')},
- build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const now=levelsNow(),rec=recommendLevels(S.journey.answers),preset=S.journey.used?presetOf(now):'';
-  return[h('p',{class:'hint'},T('levelsOffline')),
-   lbl(JT('setupLevelsQuestions')),
-   ...LEVELS.questions.map(q=>checkbox(jw('question',q),null,S.journey.answers[q]===true,v=>answerQuestion(q,v))),
-   obligationsCard(lbl),
-   lbl(JT('setupLevelsPresets')),
-   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
-   lbl(JT('setupLevelsChoice')),
-   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
-   ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
-   h('p',{class:'hint'},T('levelsExpertHint')),
-   h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
- check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
-  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
-  return f}},
 
 // #2868 — every switch: the expert view once the questions are the way in.
 {id:'features',expertOnly:true,get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},

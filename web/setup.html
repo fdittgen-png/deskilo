@@ -11,7 +11,7 @@ body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:
 header{background:var(--accent);color:#fff;padding:20px 16px}
 header h1{margin:0;font-size:1.4rem}
 header p{margin:6px 0 0;opacity:.92;font-size:.9rem;max-width:60rem}
-header a{color:#fff}
+header a{color:#fff}header .how{margin-top:6px}header .how summary{color:#fff;opacity:.92}header .legend{color:#fff}
 header .top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
 header .lang{display:flex;gap:8px;align-items:center;margin:0;font-weight:400;font-size:.85rem}
 header .lang select{width:auto;padding:4px 8px;font-size:.85rem}
@@ -105,20 +105,17 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
 <body>
 <header>
   <div class="top"><h1 data-t="setupTitle"></h1><label class="lang"><span data-t="setupLanguage"></span><select id="lang" onchange="setLang(this.value)"></select></label></div>
-  <p data-th="setupIntroHtml"></p>
-  <p style="margin-top:8px" data-th="setupGuideHtml"></p>
-<p style="margin-top:8px" data-th="setupSecretsHtml"></p>
-<p style="margin-top:8px" data-th="setupDemoHtml"></p>
+  <details class="how"><summary data-t="setupHow"></summary><p data-th="setupIntroHtml"></p><p style="margin-top:8px" data-th="setupGuideHtml"></p><p style="margin-top:8px" data-th="setupSecretsHtml"></p><p style="margin-top:8px" data-th="setupDemoHtml"></p><div class="legend" id="legend"></div></details>
 </header>
 <main>
   <div class="progress"><div id="bar" style="width:0"></div></div>
   <div class="rail" id="rail"></div>
-  <div class="mode"><span class="stepno" id="stepno"></span><label style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="allmode" onchange="setMode(this.checked)"> <span data-t="setupExpertMode"></span></label><label id="expertwrap" style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="expertview" onchange="setExpert(this.checked)"> <span data-t="setupExpertSwitches"></span></label></div>
+  <div class="mode"><span class="stepno" id="stepno"></span><label id="allwrap" style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="allmode" onchange="setMode(this.checked)"> <span data-t="setupExpertMode"></span></label><label id="expertwrap" style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="expertview" onchange="setExpert(this.checked)"> <span data-t="setupExpertSwitches"></span></label></div>
   <div id="form"></div>
   <div class="nav" id="nav"></div>
 </main>
 <footer>
-  <button class="btn primary" onclick="exportChecked()">⬇ <span data-t="setupExportXml"></span></button>
+  <button class="btn primary" id="primary" onclick="primaryAction()"></button>
   <button class="btn ghost" onclick="document.getElementById('load').click()" data-t="setupLoadFile"></button>
   <input type="file" id="load" accept=".xml" style="display:none" onchange="loadFile(this.files[0])">
   <button class="btn ghost" onclick="if(confirm(T('setupClearAnswersConfirm'))){localStorage.removeItem(LS);localStorage.removeItem(LS+'-step');localStorage.removeItem(LS+'-expert');location.reload()}" data-t="setupReset"></button>
@@ -438,7 +435,7 @@ function render(){
  // as in the app: switching the parent back on finds it as it was.
  const F_=document.getElementById('form');F_.textContent='';
  if(!expertView()&&STEPS.find(s=>s.id===cur)?.expertOnly){expert=true;localStorage.setItem(LS+'-expert','1')}
- F_.append(h('div',{class:'legend'},...Object.keys(DEST_TEXT).map(d=>h('span',{},h('span',{class:'dest '+d},T(DEST_TEXT[d][0])),' '+T(DEST_TEXT[d][1])))));
+ renderLegend();
  const list=applicable();if(!list.some(s=>s.id===cur))cur=list[0].id;
  const idx=list.findIndex(s=>s.id===cur);
  document.getElementById('bar').style.width=Math.round((idx)/(list.length-1)*100)+'%';
@@ -447,7 +444,7 @@ function render(){
  list.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':''),type:'button',onclick:()=>go(st.id)},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
  document.getElementById('allmode').checked=mode==='all';
  document.getElementById('expertview').checked=expertView();
- document.getElementById('expertwrap').style.display=on('setupGuide')?'':'none';
+ entryChrome(list,idx);
  const show=mode==='all'?list:[list[idx]];
  // A step that throws used to take the WHOLE page with it: the body was
  // empty, and because render() never reached the end, the navigation was
@@ -492,6 +489,7 @@ function boot(){
 </script>
 <script src="setup_params.js"></script>
 <script src="setup_steps.js"></script>
+<script src="setup_entry.js"></script>
 <script src="setup_xml.js"></script>
 <script>boot()</script>
 <script src="setup_webmcp.js"></script>

@@ -1,5 +1,6 @@
 {
  "setupTitle": "DesKilo — Konfigurationsassistent",
+ "setupHow": "So funktioniert diese Seite",
  "setupLanguage": "Sprache",
  "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie in einen Raum, den Sie angelegt haben (Workspace → Workspace importieren (XML)). Jede Antwort sagt, ob der Import sie übernimmt, ob sie in der App eingetragen wird oder ob sie nur in der Datei bleibt; der letzte Schritt listet, was in der App noch zu tun ist.",
  "setupGuideHtml": "Das vollständige Benutzerhandbuch — mit einem Screenshot jedes Bildschirms, lange Formulare zu einem Bild zusammengefügt — finden Sie {link} (English · Français · Deutsch · Español · Italiano) und in der App (Einstellungen → Hilfe).",
