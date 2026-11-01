@@ -16,6 +16,8 @@ const _labels = {
   'fr': "Utiliser le fuseau horaire de l'appareil plutôt que celui de l'espace",
   'de': 'Die Zeitzone dieses Geräts statt der des Arbeitsbereichs verwenden',
   'it': "Usa il fuso orario del dispositivo invece di quello dell'area di lavoro",
+  'es':
+      'Usar la zona horaria de este dispositivo en lugar de la del espacio de trabajo',
 };
 
 Widget _rows(String label, List<bool> switchState) => Scaffold(
