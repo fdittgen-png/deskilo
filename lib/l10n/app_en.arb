@@ -14641,6 +14641,10 @@
   "@invoicePickMember": {
     "description": "Issue sheet placeholder before a member is chosen"
   },
+  "invoicePreviewUnavailable": "The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.",
+  "@invoicePreviewUnavailable": {
+    "description": "Issue form: the preview answer could not be read or decoded; neither an empty month nor a total"
+  },
   "invoiceProformaAction": "Proforma invoice",
   "@invoiceProformaAction": {
     "description": "Tooltip of the proforma action on the hub rows (0072)"

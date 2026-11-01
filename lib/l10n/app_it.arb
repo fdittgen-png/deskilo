@@ -8402,6 +8402,7 @@
   "invoicePdfTitle": "Fattura",
   "invoicePdfVoided": "ERRATA — annullata il",
   "invoicePickMember": "Scelga un membro per vedere cosa ha registrato il suo mese.",
+  "invoicePreviewUnavailable": "L’anteprima non è stata letta, quindi non viene mostrato nulla e nulla può essere emesso. Cambi mese o riprovi.",
   "invoiceProformaAction": "Fattura proforma",
   "invoiceProformaNothing": "Nessun dato registrato per questo mese — nessuna proforma da inviare.",
   "invoiceProformaShared": "Proforma condivisa.",

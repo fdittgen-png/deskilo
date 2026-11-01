@@ -20435,6 +20435,12 @@ abstract class AppLocalizations {
   /// **'Pick a member to see what their month tracked.'**
   String get invoicePickMember;
 
+  /// Issue form: the preview answer could not be read or decoded; neither an empty month nor a total
+  ///
+  /// In en, this message translates to:
+  /// **'The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.'**
+  String get invoicePreviewUnavailable;
+
   /// Tooltip of the proforma action on the hub rows (0072)
   ///
   /// In en, this message translates to:

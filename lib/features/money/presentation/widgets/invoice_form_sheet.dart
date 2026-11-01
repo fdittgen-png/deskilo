@@ -20,14 +20,12 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_issue_readiness.dart';
-import '../../domain/invoice_line_text.dart';
-import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_issue_block_text.dart';
-import '../report_strings_l10n.dart';
 import 'invoice_correction_reason_field.dart';
 import 'invoice_issue_runner.dart';
 import 'invoice_missing_sales_tax.dart';
+import 'invoice_preview_body.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -179,6 +177,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   final _buyerReference = TextEditingController();
   final _purchaseOrder = TextEditingController();
   ({List<InvoiceLine> lines, int totalCents})? _preview;
+  // The preview answer could not be read: unavailable, never an empty month.
+  bool _previewFailed = false;
   // #1916 — the essentials the server would refuse to issue without.
   List<String> _missing = const [];
   bool _loading = false;
@@ -215,6 +215,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       if (!mounted || _memberId != memberId || _period != period) return;
       setState(() {
         _preview = result;
+        _previewFailed = false;
         _missing = missing;
         _loading = false;
       });
@@ -225,7 +226,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           .error('money', 'invoice preview failed', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() {
-        _preview = (lines: const <InvoiceLine>[], totalCents: 0);
+        _preview = null;
+        _previewFailed = true;
         _missing = const [];
         _loading = false;
       });
@@ -276,103 +278,6 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         onPressed: atCurrent ? null : () => _shiftMonth(1),
       ),
     ]);
-
-  /// The derived positions — read-only by design (0062).
-  List<Widget> _previewBody(
-    BuildContext context,
-    ({List<InvoiceLine> lines, int totalCents})? preview,
-    List<InvoiceLine> lines,
-  ) {
-    final l10n = widget.l10n;
-    return [
-        if (_memberId == null)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              l10n.invoicePickMember,
-              key: const ValueKey('invoice-pick-member'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        else if (_loading || preview == null)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Center(child: CircularProgressIndicator()),
-          )
-        else if (lines.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              l10n.invoiceNothingToInvoice,
-              key: const ValueKey('invoice-preview-empty'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          )
-        else ...[
-          for (final (i, line) in lines.indexed)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                key: ValueKey('invoice-preview-line-$i'),
-                children: [
-                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n), line,
-                      association: widget.association, period: _period))),
-                  Text(widget.currency.formatMinor(line.amountCents)),
-                ],
-              ),
-            ),
-          const Divider(),
-          // The VAT the document will carry (0072) — computed here exactly
-          // as the server computes it at issue time.
-          for (final total in vatTotalsOf(
-            [
-              for (final line in lines)
-                (amountCents: line.amountCents, vatPercent: line.vatPercent),
-            ],
-            // Only taxed rates are shown, so the zero category never
-            // reaches the screen.
-            zeroCategory: 'O',
-          ))
-            if (total.vatCents > 0)
-              Padding(
-                key: ValueKey('invoice-preview-vat-${total.percent}'),
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(children: [
-                  Expanded(
-                    child: Text(
-                      '${l10n.vatPdfVat} '
-                      '${total.percent == total.percent.roundToDouble() ? total.percent.toStringAsFixed(0) : total.percent} %',
-                      style: TextStyle(color: Theme.of(context).hintColor),
-                    ),
-                  ),
-                  Text(
-                    widget.currency.formatMinor(total.vatCents),
-                    style: TextStyle(color: Theme.of(context).hintColor),
-                  ),
-                ]),
-              ),
-          Row(
-            key: const ValueKey('invoice-preview-total'),
-            children: [
-              Expanded(
-                child: Text(
-                  // 0063 — the invoice nets consumptions against payments:
-                  // the total IS the balance due (solde).
-                  l10n.invoiceBalance,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Text(
-                widget.currency.formatMinor(preview.totalCents),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
-    ];
-  }
 
   List<Widget> _publicBuyerFields() {
     final l10n = widget.l10n;
@@ -497,7 +402,16 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             severity: InlineBannerSeverity.info,
           ),
         const SizedBox(height: 8),
-        ..._previewBody(context, preview, lines),
+        InvoicePreviewBody(
+          memberPicked: _memberId != null,
+          loading: _loading,
+          failed: _previewFailed,
+          preview: preview,
+          l10n: l10n,
+          currency: widget.currency,
+          association: widget.association,
+          period: _period,
+        ),
         const SizedBox(height: 4),
         // 0064 — snapshot the annex (check-ins, bookings, payments) into
         // the immutable document.

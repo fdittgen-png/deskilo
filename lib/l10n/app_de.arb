@@ -8402,6 +8402,7 @@
   "invoicePdfTitle": "Rechnung",
   "invoicePdfVoided": "FEHLERHAFT — storniert am",
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
+  "invoicePreviewUnavailable": "Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.",
   "invoiceProformaAction": "Proforma-Rechnung",
   "invoiceProformaNothing": "Für diesen Monat wurde nichts erfasst — keine Proforma zu senden.",
   "invoiceProformaShared": "Proforma geteilt.",

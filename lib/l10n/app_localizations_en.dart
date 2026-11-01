@@ -12317,6 +12317,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pick a member to see what their month tracked.';
 
   @override
+  String get invoicePreviewUnavailable =>
+      'The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.';
+
+  @override
   String get invoiceProformaAction => 'Proforma invoice';
 
   @override

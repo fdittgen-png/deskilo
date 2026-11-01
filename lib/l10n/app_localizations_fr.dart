@@ -12433,6 +12433,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisissez un membre pour voir ce que son mois a enregistré.';
 
   @override
+  String get invoicePreviewUnavailable =>
+      'L’aperçu n’a pas pu être lu : rien n’est affiché et rien ne peut être émis. Changez de mois ou réessayez.';
+
+  @override
   String get invoiceProformaAction => 'Facture proforma';
 
   @override
