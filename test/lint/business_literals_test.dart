@@ -33,20 +33,20 @@ typedef _Tracked = ({
 /// The business values the epic measured (the sample, not a census).
 const _tracked = <_Tracked>[
   (what: 'the country a device with no locale falls back to', file: 'lib/core/locale/device_locale.dart',
-   pattern: r"\?\? 'FR'", ceiling: 1, movesIn: 'S5'),
+   pattern: r"\?\? 'FR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   // #2572 -- the rest of S2..S5, Dart side.
   (what: 'the one UI snap of the booking grid (15 minutes)', file: 'lib/features/workspace/domain/booking_granularity.dart',
    pattern: r'defaultStepMinutes = \d+', ceiling: 1, movesIn: 'never (allowed)'),
   (what: 'currency fallback of the format controller', file: 'lib/core/i18n/format_controller.dart',
-   pattern: r"currencyCode \?\? 'EUR'", ceiling: 1, movesIn: 'S5'),
+   pattern: r"currencyCode \?\? 'EUR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   (what: 'locale and currency of the format controller seed', file: 'lib/core/i18n/format_controller.dart',
-   pattern: r"locale: 'en_US', currencyCode: 'EUR'", ceiling: 1, movesIn: 'S5'),
+   pattern: r"locale: 'en_US', currencyCode: 'EUR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   (what: 'AppFormat.fallback locale and currency', file: 'lib/core/i18n/app_format.dart',
-   pattern: r"locale: 'en_US', currencyCode: 'EUR'", ceiling: 1, movesIn: 'S5'),
+   pattern: r"locale: 'en_US', currencyCode: 'EUR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   (what: 'the currency code before one is installed', file: 'lib/core/i18n/workspace_currency.dart',
-   pattern: r"\?\? 'EUR'", ceiling: 1, movesIn: 'S5'),
+   pattern: r"\?\? 'EUR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   (what: 'currency fallback of the letter data maps', file: 'lib/features/money/domain/report_data_letters.dart',
-   pattern: r"currencyCode \?\? 'EUR'", ceiling: 3, movesIn: 'S5'),
+   pattern: r"currencyCode \?\? 'EUR'", ceiling: 0, movesIn: 'S5 (done, #2488)'),
   // Both defaults live in the one description of the map services that
   // the map disclosure names.
   (what: 'map tile and geocoder endpoint defaults', file: 'lib/features/directory/domain/discovery_view.dart',
@@ -110,7 +110,7 @@ const _allowed = <String, String>{
 /// The currency fallback: `'EUR'` written in lib/ (S5 moves the fallback to
 /// the workspace country's currency). Counted over lib/, minus generated
 /// files, l10n output and the demo dataset (fixtures, not defaults).
-const _eurCeiling = 60; // measured 2026-10-26 (#2373: the Sage file writes its base currency)
+const _eurCeiling = 53; // 60 -> 53 (#2488: the display fallbacks read locale.default_currency; the rest is classified on #2488)
 
 int _count(String file, String pattern) {
   final f = File(file);

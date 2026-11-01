@@ -22590,6 +22590,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Von der Plattform festgelegt: die Monate nach dem ersten, die eine Finanzkennzahl umfassen darf (23 bedeutet insgesamt 24 Monate). Er begrenzt die Abfrage.';
 
   @override
+  String get settingHintLocaleDefaultCountry =>
+      'Womit ein neuer Arbeitsbereich beginnt, wenn die Region des Geräts unbekannt ist. Nur ein Vorschlag; er bestimmt kein Ausstellerland und keine Steuer.';
+
+  @override
+  String get settingHintLocaleDefaultCurrency =>
+      'In welcher Währung Beträge angezeigt werden, bevor ein Arbeitsbereich verbunden ist, und womit ein neuer beginnt. Sie ersetzt nie eine fehlende Rechnungswährung.';
+
+  @override
+  String get settingHintLocaleDefaultLocale =>
+      'Das Format, bevor ein Mitglied oder Arbeitsbereich eines gewählt hat. Die eigene Wahl des Mitglieds gilt immer.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.';
 
@@ -22837,6 +22849,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelKpiFinanceRangeMonths => 'Zeitraum der Finanzkennzahl';
+
+  @override
+  String get settingLabelLocaleDefaultCountry => 'Standardland';
+
+  @override
+  String get settingLabelLocaleDefaultCurrency => 'Standardwährung';
+
+  @override
+  String get settingLabelLocaleDefaultLocale =>
+      'Standardformat für Zahlen und Datum';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>

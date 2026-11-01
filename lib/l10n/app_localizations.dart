@@ -37662,6 +37662,24 @@ abstract class AppLocalizations {
   /// **'Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.'**
   String get settingHintKpiFinanceRangeMonths;
 
+  /// #2488 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Where a new workspace starts when the device\'s region is unknown. A suggestion only; it decides no tax or issuer country.'**
+  String get settingHintLocaleDefaultCountry;
+
+  /// #2488 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What amounts are shown in before a workspace is connected, and where a new workspace starts. It never stands in for a missing invoice currency.'**
+  String get settingHintLocaleDefaultCurrency;
+
+  /// #2488 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The format used before a member or workspace has chosen one. A member\'s own choice always wins.'**
+  String get settingHintLocaleDefaultLocale;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -38063,6 +38081,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finance figure range'**
   String get settingLabelKpiFinanceRangeMonths;
+
+  /// #2488 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Default country'**
+  String get settingLabelLocaleDefaultCountry;
+
+  /// #2488 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Default currency'**
+  String get settingLabelLocaleDefaultCurrency;
+
+  /// #2488 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Default number and date format'**
+  String get settingLabelLocaleDefaultLocale;
 
   /// #2485 settings: Setting label.
   ///

@@ -157,4 +157,13 @@ void main() {
     expect(update['open-pull-requests-limit'], 1);
     expect(update['groups'], contains('actions'));
   });
+
+  test('action update automation never proposes a major version', () {
+    final config =
+        loadYaml(File('.github/dependabot.yml').readAsStringSync()) as YamlMap;
+    final update = (config['updates'] as YamlList).single as YamlMap;
+    final ignore = (update['ignore'] as YamlList).single as YamlMap;
+    expect(ignore['dependency-name'], '*');
+    expect(ignore['update-types'], ['version-update:semver-major']);
+  });
 }

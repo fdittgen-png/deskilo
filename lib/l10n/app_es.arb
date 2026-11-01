@@ -15391,6 +15391,9 @@
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintLocaleDefaultCountry": "Con qué país empieza un espacio nuevo cuando se desconoce la región del dispositivo. Solo una sugerencia; no decide ningún país emisor ni impuesto.",
+  "settingHintLocaleDefaultCurrency": "En qué moneda se muestran los importes antes de conectar un espacio de trabajo, y con cuál empieza uno nuevo. Nunca sustituye la moneda que falte en una factura.",
+  "settingHintLocaleDefaultLocale": "El formato usado antes de que un miembro o un espacio elija uno. La elección del miembro siempre prevalece.",
   "settingHintMcpConfirmationExpiryMinutes": "Minutos de que dispone la persona para confirmar una acción pedida por un asistente. Las solicitudes ya hechas conservan su plazo. Solo se puede acortar.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -15569,6 +15572,9 @@
   "@settingLabelKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelLocaleDefaultCountry": "País por defecto",
+  "settingLabelLocaleDefaultCurrency": "Moneda por defecto",
+  "settingLabelLocaleDefaultLocale": "Formato por defecto de números y fechas",
   "settingLabelMcpConfirmationExpiryMinutes": "Tiempo de confirmación de una acción del asistente",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
