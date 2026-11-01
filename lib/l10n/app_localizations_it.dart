@@ -23489,7 +23489,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String setupGoalBecause(String milestone) {
-    return 'Perché il vostro obiettivo è: $milestone.';
+    return 'Perché il Suo obiettivo è: $milestone.';
   }
 
   @override
@@ -23497,7 +23497,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String setupGoalLine(String milestone) {
-    return 'Il vostro obiettivo: $milestone';
+    return 'Il Suo obiettivo: $milestone';
   }
 
   @override

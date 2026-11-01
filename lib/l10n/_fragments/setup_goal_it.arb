@@ -1,5 +1,5 @@
 {
-  "setupGoalLine": "Il vostro obiettivo: {milestone}",
+  "setupGoalLine": "Il Suo obiettivo: {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
     "placeholders": {
@@ -12,7 +12,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
-  "setupGoalBecause": "Perché il vostro obiettivo è: {milestone}.",
+  "setupGoalBecause": "Perché il Suo obiettivo è: {milestone}.",
   "@setupGoalBecause": {
     "description": "#3076 — the check page says which goal decides what stops opening.",
     "placeholders": {
