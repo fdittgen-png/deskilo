@@ -305,4 +305,34 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('a membership plan names the percentage and the workspace', (
+    tester,
+  ) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'create_membership_plan',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'percent': 30},
+        target: {
+          'kind': 'membership_plan',
+          'percent': 30,
+          'changes': [
+            {'field': 'subscription_level', 'from': null, 'to': 30},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Offer a new membership plan'), findsOneWidget);
+    expect(find.text('Membership at 30 %'), findsOneWidget);
+    expect(
+      find.textContaining('Subscription levels: — → Membership at 30 %'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Kraftwerk'), findsOneWidget);
+  });
 }

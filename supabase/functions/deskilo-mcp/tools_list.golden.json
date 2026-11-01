@@ -449,5 +449,18 @@
     },
     "input": "cd8fb8b813e9dbfe",
     "output": "d387c3d84ba21917"
+  },
+  "create_membership_plan": {
+    "name": "deskilo_create_membership_plan",
+    "title": "Offer a new membership plan",
+    "annotations": {
+      "title": "Offer a new membership plan",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "6259777486b63dd8",
+    "output": "59560c599548264a"
   }
 }

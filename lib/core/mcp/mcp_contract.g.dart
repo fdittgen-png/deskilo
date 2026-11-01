@@ -44,6 +44,7 @@ enum McpOperationId {
   setOpeningHours('set_opening_hours'),
   addClosureDays('add_closure_days'),
   setNumberSequence('set_number_sequence'),
+  createMembershipPlan('create_membership_plan'),
   ;
 
   const McpOperationId(this.id);

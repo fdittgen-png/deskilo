@@ -14802,6 +14802,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpMemberStatus => 'Cambiar el estado de un miembro';
 
   @override
+  String get mcpOpMembershipPlan => 'Ofrecer un nuevo plan de membresía';
+
+  @override
   String get mcpOpMyInvoices => 'Ver sus facturas';
 
   @override

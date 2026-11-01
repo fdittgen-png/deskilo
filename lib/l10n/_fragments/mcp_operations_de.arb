@@ -35,5 +35,6 @@
   "mcpOpSetupInvite": "Eine Person einladen",
   "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
   "mcpOpSetupClosures": "Schließtage hinzufügen",
-  "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen"
+  "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen",
+  "mcpOpMembershipPlan": "Ein neues Abo-Modell anbieten"
 }

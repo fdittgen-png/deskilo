@@ -10045,6 +10045,7 @@
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
   "mcpOpMemberStatement": "Den Kontoauszug eines Mitglieds sehen",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
+  "mcpOpMembershipPlan": "Ein neues Abo-Modell anbieten",
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
