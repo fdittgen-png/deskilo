@@ -41,6 +41,7 @@ void main() {
           accounts: const FecAccounts(),
           lineText: (l) => l.label,
           ledger: SeededExportYear.ledger,
+          currency: 'EUR',
         ),
       ).split('\r\n');
       final head = lines.first.split('\t');
