@@ -77,7 +77,7 @@ class FinanceInvoice {
       dueOn: r.dateTimeOrNull('due_on'),
       totalCents: r.intOrNull('total_cents') ?? 0,
       paidCents: r.intOrNull('paid_cents') ?? 0,
-      currency: r.stringOr('currency', 'EUR'),
+      currency: r.stringOr('currency'),
       state: FinanceState.fromWire(r.json['state']),
       reminderCount: r.intOrNull('reminder_count') ?? 0,
       lastReminderAt: r.dateTimeOrNull('last_reminder_at'),

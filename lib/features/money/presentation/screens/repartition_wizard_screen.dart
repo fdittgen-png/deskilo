@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
@@ -159,7 +160,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     ref
       ..watch(workspaceMembersProvider)
       ..watch(memberNamesProvider);
-    final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+    final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final rule = _effectiveRule();
     final shares = _shares();
     final total = shares.fold<int>(0, (s, x) => s + x.amountCents);

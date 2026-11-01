@@ -289,13 +289,14 @@ class _VatDeclarationsScreenState
           alignment: AlignmentDirectional.centerStart,
           child: OutlinedButton.icon(
             key: const ValueKey('vat-recap-csv'),
-            onPressed: () => saveRecapitulativeCsv(context, ref,
-                start: period.start,
-                // the period's last day, included
-                end: addCalendarDays(period.end, 1),
-                currency: ref.read(currentWorkspaceProvider).value
-                        ?.currencyCode ??
-                    'EUR'),
+            // No workspace, no currency, no file (#2488).
+            onPressed: ref.read(currentWorkspaceProvider).value == null
+                ? null
+                : () => saveRecapitulativeCsv(context, ref,
+                    start: period.start,
+                    // the period's last day, included
+                    end: addCalendarDays(period.end, 1),
+                    currency: ref.read(currentWorkspaceProvider).value!.currencyCode),
             icon: const Icon(Icons.public_outlined),
             label: Text(l10n
                 .recapCsv),

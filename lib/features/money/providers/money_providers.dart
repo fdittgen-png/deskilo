@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
@@ -578,7 +579,7 @@ Future<List<NumberSequence>> numberSequences(Ref ref) async {
 Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) {
-    return WorkspaceStatus(from: from, to: to, currency: 'EUR');
+    return WorkspaceStatus(from: from, to: to, currency: SettingDefaults.localeDefaultCurrency);
   }
   return ref
       .read(billingRulesRepositoryProvider)
