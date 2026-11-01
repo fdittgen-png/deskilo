@@ -8,7 +8,7 @@
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
-  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde la pestaña Finanzas.",
+  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde Mis finanzas.",
   "quotaRequestButton": "Solicitar medias jornadas extra",
   "quotaRequestTitle": "Solicitar medias jornadas extra",
   "quotaRequestExplainer": "Sus reservas están limitadas por su suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",

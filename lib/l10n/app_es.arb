@@ -4518,7 +4518,7 @@
   "@documentsRoleOwner": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Documentos",
+  "documentsTitle": "Biblioteca de documentos",
   "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
@@ -6052,7 +6052,7 @@
   "@featureExternalRoomsTitle": {
     "description": "#2568 rented rooms"
   },
-  "featureFinanceFacesDesc": "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
+  "featureFinanceFacesDesc": "Mis finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featureFinanceFacesTitle": "Extracto, pagos, facturas, documentos",
   "featureForeignCurrencyPurchasesDesc": "Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza.",
   "featureForeignCurrencyPurchasesTitle": "Compras en otra moneda",
@@ -6875,7 +6875,7 @@
       }
     }
   },
-  "financesLinkBody": "Sus facturas, recordatorios y pagos de todos sus espacios están juntos en Yo › Finanzas.",
+  "financesLinkBody": "Sus facturas, recordatorios y pagos de todos sus espacios están juntos en Yo › Mis finanzas.",
   "financesLinkTitle": "Sus finanzas en todos sus espacios",
   "financesNoReminders": "Ningún recordatorio recibido.",
   "@financesNoReminders": {
@@ -6986,7 +6986,7 @@
     "description": "Me › Finances"
   },
   "financesStateUnpaid": "No pagada",
-  "financesTitle": "Finanzas",
+  "financesTitle": "Mis finanzas",
   "@financesTitle": {
     "description": "Me › Finances"
   },
@@ -8630,16 +8630,16 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Aún no hay facturas.",
-  "invoicesManage": "Gestionar facturas",
+  "invoicesManage": "Facturas",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
   "invoicesTitle": "Facturas",
-  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Finanzas.",
+  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Mis finanzas.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingHubTitle": "Facturación",
+  "invoicingHubTitle": "Facturas",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -10323,7 +10323,7 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberInvoicesBanner": "Todas sus facturas y pagos, de todos los espacios, están en Yo › Finanzas.",
+  "memberInvoicesBanner": "Todas sus facturas y pagos, de todos los espacios, están en Yo › Mis finanzas.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -13072,7 +13072,7 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde la pestaña Finanzas.",
+  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde Mis finanzas.",
   "quotaRequestButton": "Solicitar medias jornadas extra",
   "quotaRequestCountLabel": "Número de medias jornadas",
   "quotaRequestExplainer": "Sus reservas están limitadas por su suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",
@@ -17045,7 +17045,7 @@
   },
   "tabCalendar": "Calendario",
   "tabEvents": "Eventos",
-  "tabMoney": "Finanzas",
+  "tabMoney": "Mis finanzas",
   "tabPlan": "Plano",
   "taskExportActionBack": "Vuelva atrás.",
   "taskExportActionCancelReview": "Cancele la revisión sin reservar.",
@@ -18244,9 +18244,10 @@
   "uxMoneyUsageScope": "Reservas y consumos del mes seleccionado.",
   "uxMoneyWorkspaceTools": "Herramientas financieras del espacio",
   "uxMyBookings": "Mis reservas",
-  "uxNavFinance": "Facturación y pagos",
+  "uxNavFinance": "Tesorería y contabilidad",
   "uxNavPeople": "Miembros y acceso",
   "uxNavReporting": "Informes",
+  "uxNavSales": "Ventas y cobros",
   "uxNavWorkspace": "Configurar el espacio",
   "uxOpenWorkspace": "Abrir espacio",
   "uxPreferencesSection": "Preferencias",

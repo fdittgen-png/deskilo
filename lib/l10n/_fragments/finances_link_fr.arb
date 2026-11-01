@@ -1,7 +1,7 @@
 {
   "financesAllSpaces": "Tous les espaces",
   "financesLinkTitle": "Vos finances dans tous vos espaces",
-  "financesLinkBody": "Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Finances.",
+  "financesLinkBody": "Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Mes finances.",
   "financesLinkAction": "Ouvrir pour {space}",
   "@financesLinkAction": {
     "placeholders": {

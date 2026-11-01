@@ -6380,7 +6380,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get documentsRoleOwner => 'Nur Inhaber';
 
   @override
-  String get documentsTitle => 'Dokumente';
+  String get documentsTitle => 'Dokumentbibliothek';
 
   @override
   String get documentsTitleLabel => 'Titel';
@@ -8519,7 +8519,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureFinanceFacesDesc =>
-      'Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
+      'Meine Finanzen hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
 
   @override
   String get featureFinanceFacesTitle =>
@@ -9749,7 +9749,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesLinkBody =>
-      'Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.';
+      'Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Meine Finanzen.';
 
   @override
   String get financesLinkTitle => 'Ihre Finanzen in allen Workspaces';
@@ -9835,7 +9835,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesStateUnpaid => 'Unbezahlt';
 
   @override
-  String get financesTitle => 'Finanzen';
+  String get financesTitle => 'Meine Finanzen';
 
   @override
   String get financesToPay => 'Zu zahlen';
@@ -10567,7 +10567,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicDeployment => 'Deployen';
 
   @override
-  String get helpTopicDocumentLibrary => 'Dokumentenbibliothek';
+  String get helpTopicDocumentLibrary => 'Dokumentbibliothek';
 
   @override
   String get helpTopicEinvoice => 'E-Rechnung';
@@ -12714,17 +12714,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicesEmpty => 'Noch keine Rechnungen.';
 
   @override
-  String get invoicesManage => 'Rechnungen verwalten';
+  String get invoicesManage => 'Rechnungen';
 
   @override
   String get invoicesTitle => 'Rechnungen';
 
   @override
   String get invoicingBanner =>
-      'Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Finanzen.';
+      'Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Meine Finanzen.';
 
   @override
-  String get invoicingHubTitle => 'Rechnungsstellung';
+  String get invoicingHubTitle => 'Rechnungen';
 
   @override
   String get invoicingMyFinances => 'Meine Finanzen';
@@ -15639,7 +15639,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberInvoicesBanner =>
-      'Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Finanzen.';
+      'Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Meine Finanzen.';
 
   @override
   String get memberKioskLabel => 'Kiosk';
@@ -19803,7 +19803,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get quotaExceededError =>
-      'Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage im Finanzen-Tab.';
+      'Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage unter Meine Finanzen.';
 
   @override
   String get quotaRequestButton => 'Zusätzliche halbe Tage beantragen';
@@ -25512,7 +25512,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tabEvents => 'Ereignisse';
 
   @override
-  String get tabMoney => 'Finanzen';
+  String get tabMoney => 'Meine Finanzen';
 
   @override
   String get tabPlan => 'Plan';
@@ -27992,13 +27992,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxMyBookings => 'Meine Buchungen';
 
   @override
-  String get uxNavFinance => 'Abrechnung & Zahlungen';
+  String get uxNavFinance => 'Geld & Buchhaltung';
 
   @override
   String get uxNavPeople => 'Mitglieder und Zugang';
 
   @override
   String get uxNavReporting => 'Reporting';
+
+  @override
+  String get uxNavSales => 'Verkauf & Zahlungseingang';
 
   @override
   String get uxNavWorkspace => 'Workspace einrichten';

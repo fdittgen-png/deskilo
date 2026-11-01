@@ -219,7 +219,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Money'));
+      await tester.tap(find.text('My finances'));
       await tester.pumpAndSettle();
       expect(money.billingSweeps, ['ws-1']);
     });

@@ -162,7 +162,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Abrechnung, Zahlungen, Rechnungen, Dokumente",
-  "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
+  "featureFinanceFacesDesc": "Meine Finanzen hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
   "featurePaymentRemindersTitle": "Automatische Zahlungserinnerungen",
   "featurePaymentRemindersDesc": "Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.",
   "featureSupplyExpensesTitle": "Vorräte aus Ausgaben",

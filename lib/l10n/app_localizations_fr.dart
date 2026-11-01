@@ -6382,7 +6382,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get documentsRoleOwner => 'Propriétaires uniquement';
 
   @override
-  String get documentsTitle => 'Documents';
+  String get documentsTitle => 'Bibliothèque de documents';
 
   @override
   String get documentsTitleLabel => 'Titre';
@@ -8532,7 +8532,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureFinanceFacesDesc =>
-      'L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
+      'Mes finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
 
   @override
   String get featureFinanceFacesTitle =>
@@ -9770,7 +9770,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get financesLinkBody =>
-      'Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Finances.';
+      'Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Mes finances.';
 
   @override
   String get financesLinkTitle => 'Vos finances dans tous vos espaces';
@@ -9856,7 +9856,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesStateUnpaid => 'Non payée';
 
   @override
-  String get financesTitle => 'Finances';
+  String get financesTitle => 'Mes finances';
 
   @override
   String get financesToPay => 'À payer';
@@ -12728,17 +12728,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicesEmpty => 'Aucune facture pour l\'instant.';
 
   @override
-  String get invoicesManage => 'Gérer les factures';
+  String get invoicesManage => 'Factures';
 
   @override
   String get invoicesTitle => 'Factures';
 
   @override
   String get invoicingBanner =>
-      'Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Finances.';
+      'Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Mes finances.';
 
   @override
-  String get invoicingHubTitle => 'Facturation';
+  String get invoicingHubTitle => 'Factures';
 
   @override
   String get invoicingMyFinances => 'Mes finances';
@@ -15662,7 +15662,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberInvoicesBanner =>
-      'Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Finances.';
+      'Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Mes finances.';
 
   @override
   String get memberKioskLabel => 'Borne';
@@ -19820,7 +19820,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get quotaExceededError =>
-      'Quota mensuel de demi-journées atteint — demandez des demi-journées supplémentaires depuis l\'onglet Finances.';
+      'Quota mensuel de demi-journées atteint — demandez des demi-journées supplémentaires depuis Mes finances.';
 
   @override
   String get quotaRequestButton => 'Demander des demi-journées';
@@ -25547,7 +25547,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tabEvents => 'Événements';
 
   @override
-  String get tabMoney => 'Finances';
+  String get tabMoney => 'Mes finances';
 
   @override
   String get tabPlan => 'Plan';
@@ -28020,13 +28020,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uxMyBookings => 'Mes réservations';
 
   @override
-  String get uxNavFinance => 'Facturation & paiements';
+  String get uxNavFinance => 'Trésorerie et comptabilité';
 
   @override
   String get uxNavPeople => 'Membres et accès';
 
   @override
   String get uxNavReporting => 'Reporting';
+
+  @override
+  String get uxNavSales => 'Ventes et encaissements';
 
   @override
   String get uxNavWorkspace => 'Configurer l’espace';

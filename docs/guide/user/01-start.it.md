@@ -344,10 +344,10 @@ Un account può appartenere a molti spazi. Ogni spazio le dà un profilo: il suo
 
 **Passaggi**
 
-1. Tocchi il pulsante ☰ in alto a sinistra. Il menu si apre con il nome del suo spazio, **Torna a Io** e le destinazioni di ogni giorno: **Prenota**, **Calendario**, **Membri**, **Denaro**.
+1. Tocchi il pulsante ☰ in alto a sinistra. Il menu si apre con il nome del suo spazio, **Torna a Io** e le destinazioni di ogni giorno: **Prenota**, **Calendario**, **Membri**, **Le mie finanze**.
 2. Tocchi una destinazione per aprirla. Un numero blu accanto indica ciò che vi attende.
-3. Apra **Reportistica**, **Membri e accesso**, **Fatturazione e pagamenti** o **Configurare lo spazio** per vedere gli strumenti di amministrazione che il suo ruolo consente.
-4. In fondo, **Documenti**, **Privacy e dati** e **Impostazioni** sono sempre a portata di mano.
+3. Apra **Reportistica**, **Membri e accesso**, **Vendite e incassi**, **Cassa e contabilità** o **Configurare lo spazio** per vedere gli strumenti di amministrazione che il suo ruolo consente.
+4. In fondo, **Biblioteca documenti**, **Privacy e dati** e **Impostazioni** sono sempre a portata di mano.
 5. Tocchi l'avatar in alto a destra, oppure **Torna a Io**, per lasciare lo spazio e tornare a [Io](app:/me).
 
 <p><img src="images/user-start-navigation--groups.it.jpg" width="280"></p>

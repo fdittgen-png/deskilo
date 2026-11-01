@@ -387,10 +387,10 @@ Vous êtes dans un espace et voulez atteindre un écran. Tout est dans un seul m
 
 **Étapes**
 
-1. Touchez le bouton ☰ en haut à gauche. Le menu s'ouvre avec le nom de votre espace, **Retour à Moi** et les destinations du quotidien : **Réserver**, **Calendrier**, **Membres**, **Finances**.
+1. Touchez le bouton ☰ en haut à gauche. Le menu s'ouvre avec le nom de votre espace, **Retour à Moi** et les destinations du quotidien : **Réserver**, **Calendrier**, **Membres**, **Mes finances**.
 2. Touchez une destination pour l'ouvrir. Un nombre bleu à côté indique ce qui vous y attend.
-3. Ouvrez **Reporting**, **Membres et accès**, **Facturation et paiements** ou **Configurer l’espace** pour voir les outils d'administration que votre rôle autorise.
-4. En bas, **Documents**, **Confidentialité et données** et **Réglages** restent toujours à portée de main.
+3. Ouvrez **Reporting**, **Membres et accès**, **Ventes et encaissements**, **Trésorerie et comptabilité** ou **Configurer l’espace** pour voir les outils d'administration que votre rôle autorise.
+4. En bas, **Bibliothèque de documents**, **Confidentialité et données** et **Réglages** restent toujours à portée de main.
 5. Touchez l'avatar en haut à droite, ou **Retour à Moi**, pour quitter l'espace et revenir à [Moi](app:/me).
 
 ![](assets/help/images/user-start-navigation--groups.fr.b8fa17aa9.jpg)
@@ -2238,7 +2238,7 @@ Vous animez une communauté et voulez héberger DesKilo vous-même.
 
 ## Finances
 
-Tout ce que vous devez, ce que vous avez payé et ce qui vous a été facturé se trouve dans l'onglet **Finances** : un seul endroit pour lire le mois, le régler, retrouver une facture et demander une modification.
+Tout ce que vous devez, ce que vous avez payé et ce qui vous a été facturé se trouve dans l'onglet **Mes finances** : un seul endroit pour lire le mois, le régler, retrouver une facture et demander une modification.
 
 Dans ce chapitre :
 - [Lire votre relevé](help:user.money.statement) et [ce que change une facture](help:user.money.statement.invoiced)
@@ -2260,7 +2260,7 @@ Vous voulez savoir où en est le mois : ce que vous avez utilisé, ce que cela c
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et restez sur **Relevé**.
+1. Ouvrez [Mes finances](app:/money) et restez sur **Relevé**.
 2. Utilisez les flèches à côté du nom du mois pour parcourir les autres mois.
 3. Lisez d'abord **Solde** : **À régler** en rouge signifie que vous devez cette somme, **Réglé** signifie qu'il ne reste rien.
 4. Lisez ensuite **Ce mois-ci** : les jours utilisés sur les jours inclus dans votre formule, puis les jours restants.
@@ -2285,7 +2285,7 @@ Vous voulez savoir quel chiffre croire une fois que l'espace vous a envoyé une 
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et remontez jusqu'au mois facturé avec la flèche de gauche.
+1. Ouvrez [Mes finances](app:/money) et remontez jusqu'au mois facturé avec la flèche de gauche.
 2. Repérez la carte nommée **Facture** (ou **Avoir** quand le total est négatif) suivie de son numéro.
 3. Lisez l'état sur la carte, puis **Total de la facture** ; une facture partiellement payée affiche aussi **Déjà réglé** et **Restant dû**.
 
@@ -2306,7 +2306,7 @@ Vous voulez régler votre solde et savoir comment l'espace attend l'argent.
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et choisissez **Paiements**.
+1. Ouvrez [Mes finances](app:/money) et choisissez **Paiements**.
 2. Vérifiez **Solde** sous **Payer** ; les factures en retard, toutes périodes confondues, sont signalées au-dessus.
 3. Lisez les **Instructions de paiement** : les coordonnées bancaires, la référence de paiement à indiquer et les autres moyens que l'espace accepte. Touchez un IBAN ou une valeur pour la copier.
 4. Si le bouton est là, touchez **Payer en ligne**.
@@ -2330,7 +2330,7 @@ Vous avez payé par virement, en espèces ou autrement, et vous voulez que l'esp
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money), choisissez **Paiements** et touchez **Enregistrer un paiement**.
+1. Ouvrez [Mes finances](app:/money), choisissez **Paiements** et touchez **Enregistrer un paiement**.
 2. Saisissez le **Montant**.
 3. Touchez le moyen utilisé : **Virement**, **Espèces**, **PayPal**, **TWINT**, **Carte**, **Wero**, **Lydia**, **Wise** ou **Autre**. Touchez-le à nouveau pour l'effacer.
 4. Vérifiez **Date du paiement** et **S’applique à**, le mois que ce paiement règle.
@@ -2353,7 +2353,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et choisissez **Factures**.
+1. Ouvrez [Mes finances](app:/money) et choisissez **Factures**.
 2. Lisez la liste, de la plus récente à la plus ancienne. Chaque ligne indique le numéro, une pastille d'état, le mois, la date et le montant.
 3. Touchez une facture pour l'ouvrir.
 4. Touchez **Aperçu rapide** pour la lire à l'écran, **Télécharger le PDF** pour l'enregistrer ou **Partager le PDF** pour l'envoyer.
@@ -2379,7 +2379,7 @@ Vous voulez voir, réservation par réservation, ce qui a été facturé ce mois
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et choisissez **Usage**.
+1. Ouvrez [Mes finances](app:/money) et choisissez **Usage**.
 2. Choisissez le mois avec les flèches.
 3. Lisez chaque carte : le jour, l'heure, la place, puis **Réservé**, **Présent** et **Facturé**.
 4. Pour une réservation que vous avez quittée plus tôt, touchez **Facturer le temps où j'étais là**, ajoutez un motif si vous le souhaitez et touchez **Demander**.
@@ -2403,7 +2403,7 @@ Vous voulez voir ce qui vous attend côté argent, sans lire tout le fil.
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money).
+1. Ouvrez [Mes finances](app:/money).
 2. Touchez **Alertes financières**, la ligne tout en haut. Le nombre sur la cloche indique combien d'alertes attendent.
 3. Lisez la liste : les demandes que vous devez confirmer viennent en premier, puis les événements financiers.
 
@@ -2425,7 +2425,7 @@ Vous voulez un document sur votre propre argent, à lire, à garder ou à envoye
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et choisissez **Documents**.
+1. Ouvrez [Mes finances](app:/money) et choisissez **Documents**.
 2. Choisissez le mois avec les flèches, pour les rapports qui dépendent d'un mois.
 3. Touchez un rapport : **Mes conditions**, **Rapport des paiements**, **Rapport de consommation** ou **Relevé du mois (PDF)**.
 4. Choisissez **Aperçu rapide**, **Télécharger le PDF** ou **Partager le PDF**.
@@ -2450,7 +2450,7 @@ Vous voulez savoir si vous payez le tarif de l'espace ou un prix convenu rien qu
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money) et choisissez **Documents**.
+1. Ouvrez [Mes finances](app:/money) et choisissez **Documents**.
 2. Lisez **Mes conditions négociées** : pour **Abonnement mensuel**, **Dépassement par demi-journée** et **Remise sur les suppléments**, **Tarif** indique ce que tout le monde paie et **La mienne** ce que vous payez.
 3. Touchez **Qui peut voir ceci** pour savoir qui peut lire vos prix.
 
@@ -2471,7 +2471,7 @@ Vous voulez les statuts, un guide ou les comptes que votre espace a partagés.
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money), choisissez **Documents** et touchez **Bibliothèque de documents**, ou allez directement à [Documents](app:/documents).
+1. Ouvrez [Mes finances](app:/money), choisissez **Documents** et touchez **Bibliothèque de documents**, ou allez directement à [Bibliothèque de documents](app:/documents).
 2. Trouvez votre document dans sa catégorie : **Statuts et juridique**, **États financiers**, **Comptes rendus**, **Guides et manuels** ou **Autres documents**.
 3. Touchez-le. Il s'ouvre dans votre navigateur depuis l'endroit où il est stocké.
 
@@ -2493,7 +2493,7 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money), choisissez **Paiements** et touchez **Soumettre une dépense**.
+1. Ouvrez [Mes finances](app:/money), choisissez **Paiements** et touchez **Soumettre une dépense**.
 2. Saisissez le **Montant**.
 3. Choisissez une **Catégorie** : **Café et cuisine**, **Équipement**, **Fournitures** ou **Autre**.
 4. Écrivez une **Description**.
@@ -2519,7 +2519,7 @@ Une dépense attend et vous décidez si l'espace la paie.
 
 **Étapes**
 
-1. Ouvrez [Événements](app:/events), ou touchez **Alertes financières** dans [Finances](app:/money).
+1. Ouvrez [Événements](app:/events), ou touchez **Alertes financières** dans [Mes finances](app:/money).
 2. Cherchez sous **En attente de votre confirmation** la ligne qui indique le montant et le membre.
 3. Touchez **Accepter** pour la confirmer, ou la croix pour **Refuser**.
 
@@ -2556,7 +2556,7 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 
 **Étapes**
 
-1. Ouvrez [Finances](app:/money), choisissez **Paiements** ou **Factures**, et touchez **Ouvrir pour** votre espace sur la carte **Vos finances dans tous vos espaces**.
+1. Ouvrez [Mes finances](app:/money), choisissez **Paiements** ou **Factures**, et touchez **Ouvrir pour** votre espace sur la carte **Vos finances dans tous vos espaces**.
 2. Choisissez un onglet : **À payer**, **Payées**, **Paiements** ou **Rappels**.
 3. Si vous appartenez à plusieurs espaces, filtrez par espace en haut.
 

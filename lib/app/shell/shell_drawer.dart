@@ -251,9 +251,10 @@ typedef _GroupBuilder = Widget Function(
   List<Widget> after,
 });
 
-/// The sales, purchases and finance groups of the drawer: Sales and
-/// Purchases open their pages and carry what is sold, Finance carries the
-/// accounting and VAT sub-group.
+/// The sales and finance groups of the drawer (#3071): Sales & collections
+/// holds what is sold and what is collected (invoices, pricing, payment
+/// instructions, online payments), Purchases opens its page, Cash &
+/// accounting carries the cash page and the accounting and VAT sub-group.
 List<Widget> _financeGroups(
   _GroupBuilder group,
   Widget Function(DrawerEntry) tile,
@@ -265,16 +266,16 @@ List<Widget> _financeGroups(
   final accounting = entries.accounting();
   final all = [...money, ...administration];
   return [
-    group('sales', labels.hubSalesTitle, Icons.sell_outlined, {
+    group('sales', labels.uxNavSales, Icons.sell_outlined, {
       'drawer-sales', 'drawer-invoices', 'drawer-services',
-      'drawer-accessories',
+      'drawer-accessories', 'drawer-billing', 'drawer-payment-methods',
+      'drawer-payment-config',
     }, from: all),
     group('purchases', labels.navPurchasesGroup, Icons.shopping_cart_outlined, {
       'drawer-purchases', 'drawer-suppliers', 'drawer-purchase-approvals',
     }, from: all),
     group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
-      'drawer-cash', 'drawer-billing', 'drawer-payment-methods',
-      'drawer-payment-config',
+      'drawer-cash',
     }, from: all, after: [
       // Built only with a door inside: an empty sub-group would keep the
       // Finance header for a member with no finance entry at all.

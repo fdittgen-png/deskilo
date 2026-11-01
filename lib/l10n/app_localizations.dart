@@ -10750,7 +10750,7 @@ abstract class AppLocalizations {
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
-  /// **'Documents'**
+  /// **'Document library'**
   String get documentsTitle;
 
   /// Workspace document library (#500)
@@ -13958,7 +13958,7 @@ abstract class AppLocalizations {
   /// No description provided for @featureFinanceFacesDesc.
   ///
   /// In en, this message translates to:
-  /// **'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.'**
+  /// **'My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.'**
   String get featureFinanceFacesDesc;
 
   /// No description provided for @featureFinanceFacesTitle.
@@ -15992,7 +15992,7 @@ abstract class AppLocalizations {
   /// No description provided for @financesLinkBody.
   ///
   /// In en, this message translates to:
-  /// **'Your invoices, reminders and payments from every space are together in Me › Finances.'**
+  /// **'Your invoices, reminders and payments from every space are together in Me › My finances.'**
   String get financesLinkBody;
 
   /// No description provided for @financesLinkTitle.
@@ -16136,7 +16136,7 @@ abstract class AppLocalizations {
   /// Me › Finances
   ///
   /// In en, this message translates to:
-  /// **'Finances'**
+  /// **'My finances'**
   String get financesTitle;
 
   /// Me › Finances
@@ -20942,7 +20942,7 @@ abstract class AppLocalizations {
   /// #871 the Money tab row that opens invoice management (the billing hub)
   ///
   /// In en, this message translates to:
-  /// **'Manage invoices'**
+  /// **'Invoices'**
   String get invoicesManage;
 
   /// The invoice archive screen title and its Money entry button (0060)
@@ -20954,13 +20954,13 @@ abstract class AppLocalizations {
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
-  /// **'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.'**
+  /// **'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.'**
   String get invoicingBanner;
 
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
-  /// **'Invoicing'**
+  /// **'Invoices'**
   String get invoicingHubTitle;
 
   /// invoicing hub vs my finances
@@ -25771,7 +25771,7 @@ abstract class AppLocalizations {
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
-  /// **'All your invoices and payments, from every workspace, are in Me › Finances.'**
+  /// **'All your invoices and payments, from every workspace, are in Me › My finances.'**
   String get memberInvoicesBanner;
 
   /// Subtitle chip of a kiosk device account in the members list (0043)
@@ -32901,7 +32901,7 @@ abstract class AppLocalizations {
   /// Booking error when assert_member_quota (0031) rejects a reservation beyond the subscription entitlement
   ///
   /// In en, this message translates to:
-  /// **'Monthly half-day quota reached — request extra half-days from the Money tab.'**
+  /// **'Monthly half-day quota reached — request extra half-days from My finances.'**
   String get quotaExceededError;
 
   /// Money-tab button opening the quota-extension request sheet
@@ -41894,7 +41894,7 @@ abstract class AppLocalizations {
   /// Bottom-navigation label for the ledger/statements tab
   ///
   /// In en, this message translates to:
-  /// **'Money'**
+  /// **'My finances'**
   String get tabMoney;
 
   /// Bottom-navigation label for the floor-plan tab
@@ -46130,7 +46130,7 @@ abstract class AppLocalizations {
   /// No description provided for @uxNavFinance.
   ///
   /// In en, this message translates to:
-  /// **'Billing & payments'**
+  /// **'Cash & accounting'**
   String get uxNavFinance;
 
   /// No description provided for @uxNavPeople.
@@ -46144,6 +46144,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reporting'**
   String get uxNavReporting;
+
+  /// No description provided for @uxNavSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales & collections'**
+  String get uxNavSales;
 
   /// No description provided for @uxNavWorkspace.
   ///

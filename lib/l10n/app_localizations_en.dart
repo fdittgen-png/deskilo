@@ -6337,7 +6337,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsRoleOwner => 'Owners only';
 
   @override
-  String get documentsTitle => 'Documents';
+  String get documentsTitle => 'Document library';
 
   @override
   String get documentsTitleLabel => 'Title';
@@ -8454,7 +8454,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureFinanceFacesDesc =>
-      'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
+      'My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
 
   @override
   String get featureFinanceFacesTitle =>
@@ -9677,7 +9677,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesLinkBody =>
-      'Your invoices, reminders and payments from every space are together in Me › Finances.';
+      'Your invoices, reminders and payments from every space are together in Me › My finances.';
 
   @override
   String get financesLinkTitle => 'Your finances across spaces';
@@ -9763,7 +9763,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesStateUnpaid => 'Unpaid';
 
   @override
-  String get financesTitle => 'Finances';
+  String get financesTitle => 'My finances';
 
   @override
   String get financesToPay => 'To pay';
@@ -12609,17 +12609,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicesEmpty => 'No invoices yet.';
 
   @override
-  String get invoicesManage => 'Manage invoices';
+  String get invoicesManage => 'Invoices';
 
   @override
   String get invoicesTitle => 'Invoices';
 
   @override
   String get invoicingBanner =>
-      'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.';
+      'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.';
 
   @override
-  String get invoicingHubTitle => 'Invoicing';
+  String get invoicingHubTitle => 'Invoices';
 
   @override
   String get invoicingMyFinances => 'My finances';
@@ -15504,7 +15504,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberInvoicesBanner =>
-      'All your invoices and payments, from every workspace, are in Me › Finances.';
+      'All your invoices and payments, from every workspace, are in Me › My finances.';
 
   @override
   String get memberKioskLabel => 'Kiosk';
@@ -19624,7 +19624,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quotaExceededError =>
-      'Monthly half-day quota reached — request extra half-days from the Money tab.';
+      'Monthly half-day quota reached — request extra half-days from My finances.';
 
   @override
   String get quotaRequestButton => 'Request extra half-days';
@@ -25264,7 +25264,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabEvents => 'Events';
 
   @override
-  String get tabMoney => 'Money';
+  String get tabMoney => 'My finances';
 
   @override
   String get tabPlan => 'Plan';
@@ -27701,13 +27701,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxMyBookings => 'My bookings';
 
   @override
-  String get uxNavFinance => 'Billing & payments';
+  String get uxNavFinance => 'Cash & accounting';
 
   @override
   String get uxNavPeople => 'People & access';
 
   @override
   String get uxNavReporting => 'Reporting';
+
+  @override
+  String get uxNavSales => 'Sales & collections';
 
   @override
   String get uxNavWorkspace => 'Workspace setup';

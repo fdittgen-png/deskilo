@@ -344,10 +344,10 @@ You are in a space and want to reach a screen. Everything is in one menu, and a 
 
 **Steps**
 
-1. Tap the ☰ button at the top left. The menu opens with your space's name, **Back to Me** and the daily destinations: **Reserve**, **Calendar**, **Members**, **Money**.
+1. Tap the ☰ button at the top left. The menu opens with your space's name, **Back to Me** and the daily destinations: **Reserve**, **Calendar**, **Members**, **My finances**.
 2. Tap a destination to open it. A blue number beside it counts what waits there.
-3. Open **Reporting**, **People & access**, **Billing & payments** or **Workspace setup** to see the administration tools your role allows.
-4. At the bottom, **Documents**, **Privacy & data** and **Settings** are always close.
+3. Open **Reporting**, **People & access**, **Sales & collections**, **Cash & accounting** or **Workspace setup** to see the administration tools your role allows.
+4. At the bottom, **Document library**, **Privacy & data** and **Settings** are always close.
 5. Tap the avatar at the top right, or **Back to Me**, to leave the space and return to [Me](app:/me).
 
 <p><img src="images/user-start-navigation--groups.en.jpg" width="280"></p>

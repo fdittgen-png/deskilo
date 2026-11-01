@@ -53,7 +53,7 @@
       }
     }
   },
-  "quotaExceededError": "Monthly half-day quota reached — request extra half-days from the Money tab.",
+  "quotaExceededError": "Monthly half-day quota reached — request extra half-days from My finances.",
   "@quotaExceededError": {
     "description": "Booking error when assert_member_quota (0031) rejects a reservation beyond the subscription entitlement"
   },
