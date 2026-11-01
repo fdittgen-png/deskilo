@@ -23,6 +23,7 @@
   "acctConnTenant": "Unternehmen: {tenant}",
   "acctConnSince": "Verbunden am {date}",
   "acctConnDetail": "Antwort des Systems: {detail}",
+  "acctConnRevocationUnconfirmed": "Der Anbieter hat den Widerruf nicht bestätigt; entfernen Sie DesKilo in seinen Einstellungen",
   "acctConnRevokedBefore": "{count, plural, =1{Eine frühere Verbindung wurde widerrufen} other{{count} frühere Verbindungen wurden widerrufen}}",
   "acctConnConnectToken": "Mit API-Token verbinden",
   "acctConnReplaceToken": "Token ersetzen",

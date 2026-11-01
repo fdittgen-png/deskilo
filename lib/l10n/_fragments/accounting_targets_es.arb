@@ -23,6 +23,7 @@
   "acctConnTenant": "Empresa: {tenant}",
   "acctConnSince": "Conectada el {date}",
   "acctConnDetail": "Respuesta del sistema: {detail}",
+  "acctConnRevocationUnconfirmed": "El proveedor no confirmó la revocación; quite DesKilo en su configuración",
   "acctConnRevokedBefore": "{count, plural, =1{Se revocó una conexión anterior} other{Se revocaron {count} conexiones anteriores}}",
   "acctConnConnectToken": "Conectar con un token de API",
   "acctConnReplaceToken": "Sustituir el token",

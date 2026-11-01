@@ -112,6 +112,10 @@
       }
     }
   },
+  "acctConnRevocationUnconfirmed": "The provider did not confirm the revocation; remove DesKilo in its settings",
+  "@acctConnRevocationUnconfirmed": {
+    "description": "#2370 Connection card: the accounting system did not confirm it forgot the revoked connection's token, or cannot be asked; the person removes the app there."
+  },
   "acctConnRevokedBefore": "{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
   "@acctConnRevokedBefore": {
     "description": "#2370 Connection card: earlier connections of this issuer were revoked.",

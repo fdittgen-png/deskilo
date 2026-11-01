@@ -23,6 +23,7 @@
   "acctConnTenant": "Société : {tenant}",
   "acctConnSince": "Connectée le {date}",
   "acctConnDetail": "Réponse du système : {detail}",
+  "acctConnRevocationUnconfirmed": "Le fournisseur n'a pas confirmé la révocation ; retirez DesKilo dans ses paramètres",
   "acctConnRevokedBefore": "{count, plural, =1{Une connexion antérieure a été révoquée} other{{count} connexions antérieures ont été révoquées}}",
   "acctConnConnectToken": "Connecter avec un jeton d'API",
   "acctConnReplaceToken": "Remplacer le jeton",
