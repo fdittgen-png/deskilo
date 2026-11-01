@@ -17,15 +17,19 @@ import '../../providers/workspace_providers.dart';
 import 'setup_return_bar.dart';
 
 class SetupNextStepButton extends ConsumerWidget {
-  const SetupNextStepButton({required this.router, super.key});
+  const SetupNextStepButton({required this.router, this.routeStep, super.key});
 
   final GoRouter router;
+
+  /// The step whose own page is on top, read from the route; the step the
+  /// guide opened is the fallback.
+  final String? routeStep;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final open = ref.watch(setupOpenStepProvider);
+    final open = routeStep ?? ref.watch(setupOpenStepProvider);
     if (workspaceId == null || open == null) return const SizedBox.shrink();
     final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
     final next = status?.stepAfter(open);

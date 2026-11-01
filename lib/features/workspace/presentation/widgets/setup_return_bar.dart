@@ -47,6 +47,7 @@ class SetupReturnBar extends ConsumerStatefulWidget {
 
 class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
   late bool _onGuide = _guideOnTop();
+  late String? _routeStep = _stepOnTop();
 
   /// #2912 — the TOP route's own location, never the reported one: that
   /// is the route under a push, /reserve when the guide was pushed over
@@ -55,13 +56,29 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
       widget.router.routerDelegate.currentConfiguration.isNotEmpty &&
       widget.router.state.uri.path == '/setup';
 
+  /// #3076 — the step whose own page (`/setup/step/<id>`) is on top, from
+  /// the route itself: a step opened from the check page's "Fix it", from the
+  /// guide or by a link all carry the bar and the next step.
+  String? _stepOnTop() {
+    if (widget.router.routerDelegate.currentConfiguration.isEmpty) return null;
+    return _stepPath.firstMatch(widget.router.state.uri.path)?.group(1);
+  }
+
+  static final _stepPath = RegExp(r'^/setup/step/([a-z_]+)$');
+
   /// The delegate announces a route while the Router itself is building,
   /// so the top route is re-read after that frame rather than inside it.
   void _routed() {
-    if (_guideOnTop() == _onGuide) return;
+    if (_guideOnTop() == _onGuide && _stepOnTop() == _routeStep) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted && _guideOnTop() != _onGuide) {
-        setState(() => _onGuide = !_onGuide);
+      if (!mounted) return;
+      final guide = _guideOnTop();
+      final step = _stepOnTop();
+      if (guide != _onGuide || step != _routeStep) {
+        setState(() {
+          _onGuide = guide;
+          _routeStep = step;
+        });
       }
     });
   }
@@ -79,6 +96,7 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
       oldWidget.router.routerDelegate.removeListener(_routed);
       widget.router.routerDelegate.addListener(_routed);
       _onGuide = _guideOnTop();
+      _routeStep = _stepOnTop();
     }
   }
 
@@ -97,7 +115,7 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
     return Column(
       children: [
         Expanded(child: widget.child),
-        if (pending && !_onGuide)
+        if ((pending || _routeStep != null) && !_onGuide)
           Material(
             key: const ValueKey('setup-return-bar'),
             color: Theme.of(context).colorScheme.secondaryContainer,
@@ -125,7 +143,7 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
                         widget.router.go('/setup');
                       },
                     ),
-                    SetupNextStepButton(router: widget.router),
+                    SetupNextStepButton(router: widget.router, routeStep: _routeStep),
                   ],
                 ),
               ),

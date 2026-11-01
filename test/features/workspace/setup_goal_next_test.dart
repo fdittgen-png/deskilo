@@ -73,6 +73,13 @@ Future<GoRouter> _pump(WidgetTester tester, SetupStatus status) async {
         path: '/setup/levels',
         builder: (_, _) => const Scaffold(body: Text('levels page')),
       ),
+      GoRoute(
+        path: '/setup/step/:id',
+        builder: (_, state) => Scaffold(
+          appBar: AppBar(),
+          body: Text('step ${state.pathParameters['id']}'),
+        ),
+      ),
       for (final id in ['basics', 'places', 'tiers'])
         GoRoute(
           path: '/page-$id',
@@ -97,6 +104,13 @@ Future<GoRouter> _pump(WidgetTester tester, SetupStatus status) async {
   );
   await tester.pumpAndSettle();
   return router;
+}
+
+/// One route change: a frame, then the page transition (the file already
+/// settles elsewhere; this keeps the pumpAndSettle budget from growing).
+Future<void> _go(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
 }
 
 void main() {
@@ -164,6 +178,37 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('setup-next-step')));
     await tester.pumpAndSettle();
     expect(find.byType(SetupGuideScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
+  });
+
+  testWidgets('a step opened from the check page (Fix it), not from the guide, '
+      'carries the way back and the next step, read from its route', (
+    tester,
+  ) async {
+    final router = await _pump(tester, _status());
+    unawaited(router.push('/setup/launch'));
+    await _go(tester);
+    unawaited(router.push('/setup/step/places'));
+    await _go(tester);
+    expect(find.text('step places'), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return')), findsOneWidget);
+    expect(find.text('Next step'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('setup-next-step')));
+    await _go(tester);
+    expect(find.text('page tiers'), findsOneWidget);
+    expect(find.text('Done'), findsOneWidget);
+  });
+
+  testWidgets('the last open step opened by its route says Done, and a page '
+      'that is not a step page carries no bar', (tester) async {
+    final router = await _pump(tester, _status(open: ['tiers']));
+    unawaited(router.push('/setup/step/tiers'));
+    await _go(tester);
+    expect(find.text('Done'), findsOneWidget);
+    unawaited(router.push('/setup/levels'));
+    await _go(tester);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
   });
 }
