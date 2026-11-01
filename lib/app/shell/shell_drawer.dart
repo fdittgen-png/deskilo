@@ -50,7 +50,7 @@ NavigationStyle navigationDefault(Ref ref) {
 
 /// #3070 — the documents waiting for the signed-in person's decision; read
 /// only for who may decide, so nobody else loads the list for a badge.
-int waitingApprovals(
+int _waitingApprovals(
   WidgetRef ref,
   String? workspaceId,
   Set<WorkspaceFeature> features,
@@ -155,7 +155,7 @@ class ShellDrawer extends ConsumerWidget {
       'drawer-tab-${ShellBranch.money}': attention.money,
       if (decisionSignalOnCalendar(features))
         'drawer-tab-${ShellBranch.calendar}': pendingEvents,
-      'drawer-purchase-approvals': waitingApprovals(
+      'drawer-purchase-approvals': _waitingApprovals(
         ref,
         workspace?.id,
         features,
