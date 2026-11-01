@@ -4,7 +4,7 @@
 // are capped by the subscription entitlement; a member who needs more
 // requests a number of half-days, and owners/admins validate per the
 // owner's policy. These tests cover the client half: the request flow
-// on the Money tab, the quota event in the feed, and the booking error
+// on My finances, the quota event in the feed, and the booking error
 // mapping when the server rejects a beyond-quota reservation.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -24,7 +24,7 @@ import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, seatCente
 
 void main() {
   testWidgets(
-      'requesting extra half-days from the Money tab submits a pending '
+      'requesting extra half-days from My finances submits a pending '
       'quota event for the shown period', (tester) async {
     final events = FakeEventRepository();
     await pumpMoney(tester, events: events);
@@ -125,7 +125,7 @@ void main() {
 
     expect(
       find.text('Monthly half-day quota reached — request extra half-days '
-          'from the Money tab.'),
+          'from My finances.'),
       findsOneWidget,
     );
   });

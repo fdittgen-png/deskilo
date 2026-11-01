@@ -4518,7 +4518,7 @@
   "@documentsRoleOwner": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Dokumente",
+  "documentsTitle": "Dokumentbibliothek",
   "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
@@ -6052,7 +6052,7 @@
   "@featureExternalRoomsTitle": {
     "description": "#2568 rented rooms"
   },
-  "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
+  "featureFinanceFacesDesc": "Meine Finanzen hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
   "featureFinanceFacesTitle": "Abrechnung, Zahlungen, Rechnungen, Dokumente",
   "featureForeignCurrencyPurchasesDesc": "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.",
   "featureForeignCurrencyPurchasesTitle": "Einkäufe in anderer Währung",
@@ -6875,7 +6875,7 @@
       }
     }
   },
-  "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.",
+  "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Meine Finanzen.",
   "financesLinkTitle": "Ihre Finanzen in allen Workspaces",
   "financesNoReminders": "Keine Erinnerung erhalten.",
   "@financesNoReminders": {
@@ -6986,7 +6986,7 @@
     "description": "Me › Finances"
   },
   "financesStateUnpaid": "Unbezahlt",
-  "financesTitle": "Finanzen",
+  "financesTitle": "Meine Finanzen",
   "@financesTitle": {
     "description": "Me › Finances"
   },
@@ -7294,7 +7294,7 @@
   "helpTopicBookingLimits": "Buchungsgrenzen",
   "helpTopicBookingPolicies": "Buchungsregeln",
   "helpTopicDeployment": "Deployen",
-  "helpTopicDocumentLibrary": "Dokumentenbibliothek",
+  "helpTopicDocumentLibrary": "Dokumentbibliothek",
   "helpTopicEinvoice": "E-Rechnung",
   "helpTopicEnvironments": "Umgebungen",
   "helpTopicInstances": "Instanzen",
@@ -8630,16 +8630,16 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Noch keine Rechnungen.",
-  "invoicesManage": "Rechnungen verwalten",
+  "invoicesManage": "Rechnungen",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
   "invoicesTitle": "Rechnungen",
-  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Finanzen.",
+  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Meine Finanzen.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingHubTitle": "Rechnungsstellung",
+  "invoicingHubTitle": "Rechnungen",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -10323,7 +10323,7 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberInvoicesBanner": "Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Finanzen.",
+  "memberInvoicesBanner": "Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Meine Finanzen.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -13072,7 +13072,7 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage im Finanzen-Tab.",
+  "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage unter Meine Finanzen.",
   "quotaRequestButton": "Zusätzliche halbe Tage beantragen",
   "quotaRequestCountLabel": "Anzahl halber Tage",
   "quotaRequestExplainer": "Ihre Reservierungen sind durch Ihr Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
@@ -17047,7 +17047,7 @@
   },
   "tabCalendar": "Kalender",
   "tabEvents": "Ereignisse",
-  "tabMoney": "Finanzen",
+  "tabMoney": "Meine Finanzen",
   "tabPlan": "Plan",
   "taskExportActionBack": "Gehen Sie zurück.",
   "taskExportActionCancelReview": "Brechen Sie die Prüfung ab, ohne zu buchen.",
@@ -18249,9 +18249,10 @@
   "uxMoneyUsageScope": "Buchungen und Verbrauch im gewählten Monat.",
   "uxMoneyWorkspaceTools": "Finanzverwaltung des Workspaces",
   "uxMyBookings": "Meine Buchungen",
-  "uxNavFinance": "Abrechnung & Zahlungen",
+  "uxNavFinance": "Geld & Buchhaltung",
   "uxNavPeople": "Mitglieder und Zugang",
   "uxNavReporting": "Reporting",
+  "uxNavSales": "Verkauf & Zahlungseingang",
   "uxNavWorkspace": "Workspace einrichten",
   "uxOpenWorkspace": "Arbeitsbereich öffnen",
   "uxPreferencesSection": "Einstellungen",

@@ -11763,6 +11763,7 @@ const Set<String> uiLabelKeys = {
   'uxNavFinance',
   'uxNavPeople',
   'uxNavReporting',
+  'uxNavSales',
   'uxNavWorkspace',
   'uxOpenWorkspace',
   'uxPreferencesSection',

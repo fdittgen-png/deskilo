@@ -1,5 +1,5 @@
 {
-  "invoicingHubTitle": "Facturación",
+  "invoicingHubTitle": "Facturas",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -11,7 +11,7 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Finanzas.",
+  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Mis finanzas.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -19,7 +19,7 @@
   "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
-  "memberInvoicesBanner": "Todas sus facturas y pagos, de todos los espacios, están en Yo › Finanzas.",
+  "memberInvoicesBanner": "Todas sus facturas y pagos, de todos los espacios, están en Yo › Mis finanzas.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   }

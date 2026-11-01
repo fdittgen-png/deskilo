@@ -1,5 +1,5 @@
 {
-  "invoicingHubTitle": "Rechnungsstellung",
+  "invoicingHubTitle": "Rechnungen",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -11,7 +11,7 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Finanzen.",
+  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Meine Finanzen.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -19,7 +19,7 @@
   "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
-  "memberInvoicesBanner": "Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Finanzen.",
+  "memberInvoicesBanner": "Alle Ihre Rechnungen und Zahlungen aus allen Arbeitsbereichen finden Sie unter Ich › Meine Finanzen.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   }

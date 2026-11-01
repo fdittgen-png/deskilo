@@ -344,10 +344,10 @@ Vous êtes dans un espace et voulez atteindre un écran. Tout est dans un seul m
 
 **Étapes**
 
-1. Touchez le bouton ☰ en haut à gauche. Le menu s'ouvre avec le nom de votre espace, **Retour à Moi** et les destinations du quotidien : **Réserver**, **Calendrier**, **Membres**, **Finances**.
+1. Touchez le bouton ☰ en haut à gauche. Le menu s'ouvre avec le nom de votre espace, **Retour à Moi** et les destinations du quotidien : **Réserver**, **Calendrier**, **Membres**, **Mes finances**.
 2. Touchez une destination pour l'ouvrir. Un nombre bleu à côté indique ce qui vous y attend.
-3. Ouvrez **Reporting**, **Membres et accès**, **Facturation et paiements** ou **Configurer l’espace** pour voir les outils d'administration que votre rôle autorise.
-4. En bas, **Documents**, **Confidentialité et données** et **Réglages** restent toujours à portée de main.
+3. Ouvrez **Reporting**, **Membres et accès**, **Ventes et encaissements**, **Trésorerie et comptabilité** ou **Configurer l’espace** pour voir les outils d'administration que votre rôle autorise.
+4. En bas, **Bibliothèque de documents**, **Confidentialité et données** et **Réglages** restent toujours à portée de main.
 5. Touchez l'avatar en haut à droite, ou **Retour à Moi**, pour quitter l'espace et revenir à [Moi](app:/me).
 
 <p><img src="images/user-start-navigation--groups.fr.jpg" width="280"></p>

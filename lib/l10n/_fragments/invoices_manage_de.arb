@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "invoicesManage": "Rechnungen verwalten",
+  "invoicesManage": "Rechnungen",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   }

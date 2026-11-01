@@ -162,7 +162,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Estratto, pagamenti, fatture, documenti",
-  "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
+  "featureFinanceFacesDesc": "Le mie finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featurePaymentRemindersTitle": "Solleciti di pagamento automatici",
   "featurePaymentRemindersDesc": "Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.",
   "featureSupplyExpensesTitle": "Scorte dalle spese",

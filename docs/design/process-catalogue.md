@@ -80,7 +80,7 @@ own flags: this catalogue does not invent switches for those workflows.
 | membershipCommerce | pricing | memberPaymentTerms | The workspace sets the default payment conditions; a member may have their own, visible to them, changed only through a validated request by an authorised admin. | platform | money | invoicing | true | beta | selectable |
 | membershipCommerce | pricing | carnets | Sell carnets of half-days that are spent across months when a member books beyond their subscription, charged once at the sale. | platform | money | invoicing | false | beta | selectable |
 | billingPayments | records | moneyTab | Monthly bills, payments and expenses. | core | money | — | true | beta | selectable |
-| billingPayments | records | financeFaces | The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column. | core | money | moneyTab | true | beta | selectable |
+| billingPayments | records | financeFaces | My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column. | core | money | moneyTab | true | beta | selectable |
 | billingPayments | records | memberReports | The financial agreement and the monthly payments report — self-service for members, sendable per member. | platform | money | moneyTab | true | beta | selectable |
 | billingPayments | invoicing | invoicing | Immutable, signed invoices in an archive — download or share as PDF. | core | money | moneyTab | true | beta | selectable |
 | billingPayments | invoicing | adminInvoicing | Admins issue invoices too. The owner always can. | platform | money | invoicing | false | beta | selectable |

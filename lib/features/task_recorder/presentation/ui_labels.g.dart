@@ -2447,6 +2447,7 @@ Map<String, _Getter> _part7() => {
   'tipMoneyStatementMonth': (l) => l.tipMoneyStatementMonth,
   'tipWorkspaceSettingsLegal': (l) => l.tipWorkspaceSettingsLegal,
   'uxMoneyStatementScope': (l) => l.uxMoneyStatementScope,
+  'uxNavSales': (l) => l.uxNavSales,
   'uxRealSpaceHint': (l) => l.uxRealSpaceHint,
   'valuationClosing': (l) => l.valuationClosing,
   'valuationManualDepreciation': (l) => l.valuationManualDepreciation,

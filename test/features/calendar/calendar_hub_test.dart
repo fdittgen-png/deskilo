@@ -124,10 +124,10 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('calendar-item-p1')));
     await tester.pumpAndSettle();
 
-    // Landed on the Money tab, on the requested month (the focus
+    // Landed on the My finances tab, on the requested month (the focus
     // request was consumed and cleared by the screen).
     expect(
-      find.descendant(of: find.byType(AppBar), matching: find.text('Money')),
+      find.descendant(of: find.byType(AppBar), matching: find.text('My finances')),
       findsOneWidget,
     );
     final container = ProviderScope.containerOf(

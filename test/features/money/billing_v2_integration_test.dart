@@ -67,7 +67,7 @@ Future<FakeMoneyRepository> pumpMoney(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Money'));
+  await tester.tap(find.text('My finances'));
   await tester.pumpAndSettle();
   return money;
 }
@@ -441,7 +441,7 @@ void main() {
       await tester.tap(
         find.descendant(
           of: find.byType(ShellBottomBar),
-          matching: find.text('Money'),
+          matching: find.text('My finances'),
         ),
       );
       await tester.pumpAndSettle();
@@ -462,7 +462,7 @@ void main() {
       await tester.tap(
         find.descendant(
           of: find.byType(ShellBottomBar),
-          matching: find.text('Money'),
+          matching: find.text('My finances'),
         ),
       );
       await tester.pumpAndSettle();

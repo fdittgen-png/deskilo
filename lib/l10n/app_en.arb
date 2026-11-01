@@ -7801,7 +7801,7 @@
   "@documentsRoleOwner": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Documents",
+  "documentsTitle": "Document library",
   "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
@@ -10277,7 +10277,7 @@
   "@featureExternalRoomsTitle": {
     "description": "#2568 rented rooms"
   },
-  "featureFinanceFacesDesc": "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
+  "featureFinanceFacesDesc": "My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
   "featureFinanceFacesTitle": "Statement, payments, invoices, documents",
   "featureForeignCurrencyPurchasesDesc": "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused.",
   "@featureForeignCurrencyPurchasesDesc": {
@@ -11575,7 +11575,7 @@
       }
     }
   },
-  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
+  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › My finances.",
   "financesLinkTitle": "Your finances across spaces",
   "financesNoReminders": "No reminder received.",
   "@financesNoReminders": {
@@ -11700,7 +11700,7 @@
   "@financesStateUnpaid": {
     "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
   },
-  "financesTitle": "Finances",
+  "financesTitle": "My finances",
   "@financesTitle": {
     "description": "Me › Finances"
   },
@@ -15056,7 +15056,7 @@
   "@invoicesEmpty": {
     "description": "Empty state of the invoice archive"
   },
-  "invoicesManage": "Manage invoices",
+  "invoicesManage": "Invoices",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
@@ -15064,11 +15064,11 @@
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"
   },
-  "invoicingBanner": "You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › Finances.",
+  "invoicingBanner": "You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingHubTitle": "Invoicing",
+  "invoicingHubTitle": "Invoices",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -18593,7 +18593,7 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberInvoicesBanner": "All your invoices and payments, from every workspace, are in Me › Finances.",
+  "memberInvoicesBanner": "All your invoices and payments, from every workspace, are in Me › My finances.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -23533,7 +23533,7 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Monthly half-day quota reached — request extra half-days from the Money tab.",
+  "quotaExceededError": "Monthly half-day quota reached — request extra half-days from My finances.",
   "@quotaExceededError": {
     "description": "Booking error when assert_member_quota (0031) rejects a reservation beyond the subscription entitlement"
   },
@@ -29822,7 +29822,7 @@
   "@tabEvents": {
     "description": "Tooltip of the app-bar events bell and title of the events feed screen it pushes (#230; formerly the bottom-tab label)"
   },
-  "tabMoney": "Money",
+  "tabMoney": "My finances",
   "@tabMoney": {
     "description": "Bottom-navigation label for the ledger/statements tab"
   },
@@ -32832,12 +32832,13 @@
   "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
   "uxMoneyWorkspaceTools": "Workspace finance tools",
   "uxMyBookings": "My bookings",
-  "uxNavFinance": "Billing & payments",
+  "uxNavFinance": "Cash & accounting",
   "uxNavPeople": "People & access",
   "uxNavReporting": "Reporting",
   "@uxNavReporting": {
     "description": "#2313 the menu group that holds every report and the business analytics"
   },
+  "uxNavSales": "Sales & collections",
   "uxNavWorkspace": "Workspace setup",
   "uxOpenWorkspace": "Open workspace",
   "uxPreferencesSection": "Preferences",

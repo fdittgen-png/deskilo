@@ -45,8 +45,10 @@ Future<void> _reveal(WidgetTester tester, String key) async {
       matching: find.byType(Scrollable));
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
-    'drawer-sales' || 'drawer-invoices' || 'drawer-services' || 'drawer-accessories' => 'Sales',
-    'drawer-cash' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
+    // #3071 — what is sold and what is collected share one group.
+    'drawer-sales' || 'drawer-invoices' || 'drawer-services' || 'drawer-accessories' ||
+    'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Sales & collections',
+    'drawer-cash' => 'Cash & accounting',
     // #2313 — every report and the BI in their own group.
     'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
     'drawer-workspace-settings' || 'drawer-availability' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
@@ -101,7 +103,7 @@ void main() {
     await _pump(tester, web: true, workspace: workspace);
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
-    // Not under Billing & payments any more.
+    // Not under Sales & collections any more.
     await _reveal(tester, 'drawer-invoices');
     expect(find.byKey(const ValueKey('drawer-reports-finance')), findsNothing);
 
@@ -158,8 +160,8 @@ void main() {
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
     expect(find.text('People & access'), findsOneWidget);
-    expect(find.text('Sales'), findsOneWidget);
-    expect(find.text('Billing & payments'), findsOneWidget);
+    expect(find.text('Sales & collections'), findsOneWidget);
+    expect(find.text('Cash & accounting'), findsOneWidget);
     expect(find.text('Workspace setup'), findsOneWidget);
     expect(find.byKey(const ValueKey('drawer-members')), findsNothing);
     await tester.tap(find.text('People & access'));
@@ -176,7 +178,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Accounting & VAT is a sub-group of Billing & payments that '
+  testWidgets('Accounting & VAT is a sub-group of Cash & accounting that '
       'opens the accounting page', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
         featureFlags: const {'moneyTab': true, 'invoicing': true});
@@ -201,8 +203,8 @@ void main() {
     expect(find.byKey(const ValueKey('accounting-hub')), findsOneWidget);
   });
 
-  testWidgets('a member with no finance right sees neither Sales nor '
-      'Billing & payments, header included', (tester) async {
+  testWidgets('a member with no finance right sees neither Sales & collections nor '
+      'Cash & accounting, header included', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
       featureFlags: const {'customRoles': true, 'moneyTab': true, 'invoicing': true},
     )..myMember = const Member(
@@ -226,8 +228,8 @@ void main() {
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('People & access'), findsOneWidget);
-    expect(find.text('Sales'), findsNothing);
-    expect(find.text('Billing & payments'), findsNothing);
+    expect(find.text('Sales & collections'), findsNothing);
+    expect(find.text('Cash & accounting'), findsNothing);
     expect(find.text('Accounting & VAT'), findsNothing);
   });
 

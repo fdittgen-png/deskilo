@@ -1,6 +1,7 @@
 {
   "uxNavPeople": "Miembros y acceso",
-  "uxNavFinance": "Facturación y pagos",
+  "uxNavSales": "Ventas y cobros",
+  "uxNavFinance": "Tesorería y contabilidad",
   "uxNavWorkspace": "Configurar el espacio",
   "uxNavReporting": "Informes"
 }
