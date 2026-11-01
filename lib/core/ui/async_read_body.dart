@@ -29,7 +29,7 @@ class ReadFailureBanner extends StatelessWidget {
     final (icon, text) = switch (classifyReadFailure(error)) {
       ReadFailure.transient => (Icons.cloud_off_outlined, l10n.readStateOffline),
       ReadFailure.denied => (Icons.lock_outline, l10n.readStateDenied),
-      ReadFailure.other => (Icons.error_outline, l10n.workspaceGenericError),
+      ReadFailure.other => (Icons.error_outline, l10n.readStateFailed),
     };
     return Semantics(
       liveRegion: true,

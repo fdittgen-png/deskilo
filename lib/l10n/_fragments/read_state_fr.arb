@@ -7,5 +7,9 @@
   "readStateDenied": "Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Le chargement a échoué. Réessayez.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
   }
 }

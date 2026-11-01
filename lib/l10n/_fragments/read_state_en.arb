@@ -7,5 +7,9 @@
   "readStateDenied": "You do not have access to this. Ask a workspace administrator if you need it.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "This could not be loaded. Try again.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
   }
 }

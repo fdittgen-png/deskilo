@@ -144,11 +144,8 @@ class MembersScreen extends ConsumerWidget {
         value: membersAsync,
         onRetry: () => ref.invalidate(workspaceMembersProvider),
         data: (members) => members.isEmpty
-            ? EmptyState(
-                key: const ValueKey('members-empty'),
-                icon: Icons.group_outlined,
-                title: l10n.directoryEmpty,
-              )
+            ? EmptyState(key: const ValueKey('members-empty'),
+                icon: Icons.group_outlined, title: l10n.directoryEmpty)
             : ListView(
             children: [
               // #606 — contextual how-to; gated inside the widget.

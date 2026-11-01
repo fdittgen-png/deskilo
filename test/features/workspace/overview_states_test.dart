@@ -149,7 +149,7 @@ void main() {
       probe.fail(StateError('boom'));
       await tester.pump();
       expect(find.byKey(AttentionScreen.emptyKey), findsNothing);
-      expect(find.text(_en.workspaceGenericError), findsOneWidget);
+      expect(find.text(_en.readStateFailed), findsOneWidget);
       expect(find.textContaining('boom'), findsNothing);
 
       await tester.tap(find.byKey(_retry));

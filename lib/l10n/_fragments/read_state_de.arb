@@ -7,5 +7,9 @@
   "readStateDenied": "Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Das Laden hat nicht geklappt. Bitte versuchen Sie es erneut.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
   }
 }

@@ -168,7 +168,7 @@ void main() {
 
     probe.fail(StateError('boom'));
     await tester.pump();
-    expect(find.text(_en.workspaceGenericError), findsOneWidget);
+    expect(find.text(_en.readStateFailed), findsOneWidget);
     expect(find.byKey(const ValueKey('invoice-register-period')), findsOneWidget);
 
     await tester.tap(find.byKey(_retry));

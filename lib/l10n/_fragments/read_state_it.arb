@@ -7,5 +7,9 @@
   "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Impossibile caricare. Riprovi.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
   }
 }
