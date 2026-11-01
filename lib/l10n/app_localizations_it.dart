@@ -5667,6 +5667,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Centro di costo (KOST1) quando un documento non indica una sede';
 
   @override
+  String get datevCreditorBase => 'Conto Kreditor del fornitore n. 0';
+
+  @override
   String get datevDebtorBase => 'Conto Debitor del membro n. 0';
 
   @override
@@ -5680,6 +5683,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String datevProblemBooksBlocked(String subjects) {
+    return 'I libri non hanno potuto registrare gli acquisti: $subjects';
+  }
+
+  @override
   String datevProblemClient(String number) {
     return 'La Mandantennummer «$number» non è un numero da 1 a 99999';
   }
@@ -5687,6 +5695,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String datevProblemConsultant(String number) {
     return 'La Beraternummer «$number» non è un numero da 1001 a 9999999';
+  }
+
+  @override
+  String datevProblemCreditorClash(String suppliers, String account) {
+    return '$suppliers condividerebbero il conto Kreditor $account';
   }
 
   @override
@@ -5716,6 +5729,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String datevProblemSachkontenlaenge(String length) {
     return 'la lunghezza del conto $length non è compresa tra 4 e 8';
+  }
+
+  @override
+  String datevProblemSupplierNumber(String supplier, String number) {
+    return '$supplier non ha un numero di fornitore che dia un conto Kreditor («$number»): gli assegni prima un numero numerico nell\'intervallo dei Kreditor';
   }
 
   @override

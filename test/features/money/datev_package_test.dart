@@ -21,64 +21,8 @@ import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_test_requests.dart';
 import 'support/seeded_export_year.dart';
-
-const _bom = '\u{FEFF}';
-
-/// [i] at German rates (19 % and 7 %), with the buyer as frozen at issue.
-Invoice _german(Invoice i, {String number = 'M-0042', String site = ''}) =>
-    i.copyWith(
-      lines: [
-        for (final l in i.lines)
-          l.copyWith(
-            vatPercent: switch (l.vatPercent) {
-              20 => 19,
-              5.5 => 7,
-              final p => p,
-            },
-          ),
-      ],
-      buyerParty: InvoiceParty(
-        name: 'Ana Kowalczyk',
-        memberNumber: number,
-        street: 'Leopoldstraße 1',
-        postalCode: '80802',
-        city: 'München',
-        country: 'DE',
-      ),
-      sellerParty: seededCompany.copyWith(site: site),
-    );
-
-List<Invoice> get _year => [
-  for (final i in SeededExportYear.acceptanceInvoices)
-    _german(i, site: i.number == 'INV-2' ? 'Schwabing' : ''),
-];
-
-DatevRequest _request({
-  List<Invoice>? invoices,
-  DatevAccounts accounts = const DatevAccounts(),
-  String consultant = '1234567',
-  String client = '54321',
-  String currency = 'EUR',
-  int accountLength = 4,
-}) => DatevRequest(
-  invoices: invoices ?? _year,
-  matches: SeededExportYear.acceptanceMatches,
-  accounts: accounts,
-  from: DateTime(2026),
-  to: DateTime(2026, 12, 31),
-  generatedAt: DateTime(2027, 1, 5, 9),
-  consultantNumber: consultant,
-  clientNumber: client,
-  detail: const DatevDetail(defaultCostCentre: 'Cowork', voucherLinks: true),
-  currency: currency,
-  accountLength: accountLength,
-  batchName: 'Bürogemeinschaft München Schwabing Nord',
-  ledger: [
-    for (final e in SeededExportYear.ledger)
-      if (e.createdAt.year == 2026) e,
-  ],
-);
 
 DatevPackage _package({
   DatevRequest? request,
@@ -86,7 +30,7 @@ DatevPackage _package({
   Map<String, String> memberNumbers = const {},
 }) => buildDatevPackage(
   DatevPackageRequest(
-    request: request ?? _request(),
+    request: request ?? datevTestRequest(),
     bookProfiles: const [],
     closed: (from, to) => !to.isAfter(DateTime(2026, 4, 30)),
     memberSequence: NumberSequence.defaultsFor('member'),
@@ -96,49 +40,9 @@ DatevPackage _package({
   ),
 );
 
-/// A parsed Buchungsstapel: its header fields and its rows' fields.
-typedef _Batch = ({List<String> header, List<List<String>> rows});
-
-_Batch _parse(String file) {
-  expect(file.startsWith(_bom), isTrue, reason: 'the BOM comes first');
-  final lines = file.substring(1).split('\r\n');
-  expect(lines.last, isEmpty, reason: 'CRLF after the last row');
-  return (
-    header: _fields(lines[0]),
-    rows: [
-      for (final l in lines.skip(2).where((l) => l.isNotEmpty)) _fields(l),
-    ],
-  );
-}
-
-/// The fields of one line; a quoted field may hold doubled quotes.
-List<String> _fields(String line) {
-  final out = <String>[];
-  final b = StringBuffer();
-  var quoted = false;
-  for (var i = 0; i < line.length; i++) {
-    final c = line[i];
-    if (c == '"') {
-      if (quoted && i + 1 < line.length && line[i + 1] == '"') {
-        b.write('"');
-        i++;
-      } else {
-        quoted = !quoted;
-      }
-    } else if (c == ';' && !quoted) {
-      out.add(b.toString());
-      b.clear();
-    } else {
-      b.write(c);
-    }
-  }
-  out.add(b.toString());
-  return out;
-}
-
-Map<String, _Batch> _batches(DatevPackage p) => {
+Map<String, DatevTestBatch> _batches(DatevPackage p) => {
   for (final MapEntry(:key, :value) in p.files.entries)
-    if (key.startsWith('EXTF_Buchungsstapel_')) key: _parse(value),
+    if (key.startsWith('EXTF_Buchungsstapel_')) key: datevTestParse(value),
 };
 
 void main() {
@@ -292,7 +196,7 @@ void main() {
         for (final b in batches.values)
           for (final r in b.rows) ...[r[6], r[7]].where((a) => a.length == 5),
       };
-      final s = _parse(package.files[datevStammdatenFileName]!);
+      final s = datevTestParse(package.files[datevStammdatenFileName]!);
       expect(s.header.take(5), [
         'EXTF',
         '700',
@@ -338,14 +242,14 @@ void main() {
       'EXTF_Buchungsstapel_202603_bank_2.csv',
     ]);
     for (final k in march) {
-      expect(_parse(package.files[k]!).rows, hasLength(1));
+      expect(datevTestParse(package.files[k]!).rows, hasLength(1));
     }
   });
 
   group('what stops the export, named', () {
     test('numbers DATEV refuses', () {
       final p = _package(
-        request: _request(consultant: '12', client: 'ab'),
+        request: datevTestRequest(consultant: '12', client: 'ab'),
       );
       expect(p.files, isEmpty);
       expect(p.problems, [
@@ -356,9 +260,9 @@ void main() {
 
     test('a member with no number, the member named', () {
       final p = _package(
-        request: _request(
+        request: datevTestRequest(
           invoices: [
-            for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
+            for (final i in datevYear) i.copyWith(buyerParty: const InvoiceParty()),
           ],
         ),
       );
@@ -368,47 +272,47 @@ void main() {
 
     test('the number the member holds today stands in for none frozen', () {
       final p = _package(
-        request: _request(
+        request: datevTestRequest(
           invoices: [
-            for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
+            for (final i in datevYear) i.copyWith(buyerParty: const InvoiceParty()),
           ],
         ),
         memberNumbers: const {'m1': 'M-0003'},
       );
       expect(p.problems, isEmpty);
       expect(
-        _parse(p.files[datevStammdatenFileName]!).rows.single.first,
+        datevTestParse(p.files[datevStammdatenFileName]!).rows.single.first,
         '10003',
       );
     });
 
     test('two members on one Debitor', () {
-      final other = _german(
+      final other = datevGerman(
         SeededExportYear.inv2,
         number: 'M-42',
       ).copyWith(id: 'x', number: 'INV-9', memberId: 'm2');
-      final p = _package(request: _request(invoices: [..._year, other]));
+      final p = _package(request: datevTestRequest(invoices: [...datevYear, other]));
       final clash = p.problems.single as DatevDebtorClash;
       expect(clash.account, '10042');
     });
 
     test('a workspace not in euros, the currency named', () {
-      final p = _package(request: _request(currency: 'CHF'));
+      final p = _package(request: datevTestRequest(currency: 'CHF'));
       expect(p.files, isEmpty);
       expect((p.problems.single as DatevCurrency).given, 'CHF');
     });
 
     test('a Sachkontenlänge DATEV does not know', () {
-      final p = _package(request: _request(accountLength: 9));
+      final p = _package(request: datevTestRequest(accountLength: 9));
       expect((p.problems.single as DatevSachkontenlaenge).length, 9);
     });
 
     test('a 37-character invoice number is refused, never cut', () {
       final long = 'R' * 37;
       final p = _package(
-        request: _request(
+        request: datevTestRequest(
           invoices: [
-            for (final i in _year)
+            for (final i in datevYear)
               if (i.number == 'INV-2') i.copyWith(number: long) else i,
           ],
         ),
@@ -420,7 +324,7 @@ void main() {
 
     test('an account not as long as the header says', () {
       final p = _package(
-        request: _request(accounts: const DatevAccounts(bank: '12000')),
+        request: datevTestRequest(accounts: const DatevAccounts(bank: '12000')),
       );
       expect(p.problems.whereType<DatevAccountLength>().map((x) => x.account), [
         '12000',
@@ -454,7 +358,7 @@ void main() {
     test('19 % on the owner\'s revenue account carries the bundled key 3; '
         '7 % stays on its automatic account without one', () {
       final p = _package(
-        request: _request(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
       );
       expect(p.problems, isEmpty);
       expect(revenueRows(p), [
@@ -474,7 +378,7 @@ void main() {
         ]),
       );
       final p = _package(
-        request: _request(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
       );
       expect(p.problems, isEmpty);
       expect(revenueRows(p).map((r) => (r.$2, r.$3)).toSet(), {
@@ -490,7 +394,7 @@ void main() {
     test('without the reference key the export stops, the rate named', () {
       withoutKeys();
       final p = _package(
-        request: _request(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
       );
       final missing = p.problems.single as DatevTaxKeyMissing;
       expect((missing.percent, missing.account), (19.0, '8000'));
@@ -499,7 +403,7 @@ void main() {
 
     test('a rate on the automatic account of another rate stops it', () {
       final p = _package(
-        request: _request(accounts: const DatevAccounts(revenue: '8300')),
+        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8300')),
       );
       final clash = p.problems.whereType<DatevAutomaticClash>().single;
       expect((clash.percent, clash.account), (19.0, '8300'));
@@ -510,12 +414,12 @@ void main() {
       'is made', () {
     WorkspaceTime.install('Pacific/Auckland');
     // 31 March 12:00 UTC is 1 April 01:00 in Auckland.
-    final boundary = _german(
+    final boundary = datevGerman(
       SeededExportYear.inv2,
     ).copyWith(issuedAt: DateTime.utc(2026, 3, 31, 12));
-    final p = _package(request: _request(invoices: [boundary]));
+    final p = _package(request: datevTestRequest(invoices: [boundary]));
     expect(p.problems, isEmpty);
-    final april = _parse(p.files['EXTF_Buchungsstapel_202604_sales.csv']!);
+    final april = datevTestParse(p.files['EXTF_Buchungsstapel_202604_sales.csv']!);
     final sale = april.rows.single;
     expect(sale[9], '0104');
     expect(sale[23], '01.04.2026');

@@ -159,6 +159,12 @@ String datevProblemsText(AppLocalizations l10n, List<DatevProblem> problems) {
             l10n.datevProblemMemberNumber(member, number),
           DatevDebtorClash(:final account, :final members) =>
             l10n.datevProblemDebtorClash(members.join(', '), account),
+          DatevSupplierNumber(:final supplier, :final number) =>
+            l10n.datevProblemSupplierNumber(supplier, number),
+          DatevCreditorClash(:final account, :final suppliers) =>
+            l10n.datevProblemCreditorClash(suppliers.join(', '), account),
+          DatevBooksBlocked(:final subjects) =>
+            l10n.datevProblemBooksBlocked(subjects.join(', ')),
           DatevTaxKeyMissing(:final percent, :final account) =>
             l10n.datevProblemTaxKey(rate.format(percent), account),
           DatevAutomaticClash(:final percent, :final account) =>

@@ -1,0 +1,40 @@
+{
+  "@@locale": "en",
+  "datevProblemSupplierNumber": "{supplier} has no supplier number that gives a Kreditor (\"{number}\"): give the supplier a numeric number in the Kreditor range first",
+  "@datevProblemSupplierNumber": {
+    "description": "DATEV export (#2375): a supplier number gives no Kreditor account",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemCreditorClash": "{suppliers} would share Kreditor {account}",
+  "@datevProblemCreditorClash": {
+    "description": "DATEV export (#2375): two suppliers would share one Kreditor account",
+    "placeholders": {
+      "suppliers": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemBooksBlocked": "The books could not post the purchases: {subjects}",
+  "@datevProblemBooksBlocked": {
+    "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
+    "placeholders": {
+      "subjects": {
+        "type": "String"
+      }
+    }
+  },
+  "datevCreditorBase": "Kreditor of supplier number 0",
+  "@datevCreditorBase": {
+    "description": "DATEV export dialog (#2375): the Kreditor account of supplier counter 0"
+  }
+}

@@ -9,6 +9,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/vat/tax_reference.dart';
+import '../application/generic_journal_export.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/book_period.dart';
@@ -94,6 +95,7 @@ extension GermanAccountingExports on AccountingExportRun {
             debtorBase: datev.debtorBase,
             memberNumbers: numbers,
             memberNames: memberNames,
+            purchases: datevPurchasesOf(posted, datev.creditorBase),
           ),
         );
         if (!context.mounted) return;
