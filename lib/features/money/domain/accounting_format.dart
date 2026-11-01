@@ -39,6 +39,7 @@ import 'accounting_target.dart';
 import 'accounting_targets_business_central.dart';
 import 'accounting_targets_ch.dart';
 import 'accounting_targets_de.dart';
+import 'accounting_targets_hmrc.dart';
 import 'accounting_targets_quickbooks.dart';
 import 'accounting_targets_saft.dart';
 import 'accounting_targets_sage.dart';
@@ -331,6 +332,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   ...swissAccountingTargets,
   ...safTFinancialTargets,
+  ...hmrcAccountingTargets,
   AccountingTarget(
     id: 'saft',
     vendor: 'OECD',

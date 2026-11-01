@@ -39,7 +39,6 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import {
   type OAuthTarget,
-  oauthTargets,
 } from "../_shared/accounting_targets.ts";
 import {
   authorizeUrl,
@@ -58,6 +57,7 @@ import {
   resolved,
   STATUS_DETAIL_LENGTH,
   store,
+  targetOf,
   UUID,
 } from "./connection.ts";
 import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
@@ -82,7 +82,7 @@ async function authorize(
   body: Record<string, unknown>,
 ): Promise<Response> {
   const targetId = typeof body.target_id === "string" ? body.target_id : "";
-  const target: OAuthTarget | undefined = oauthTargets[targetId];
+  const target: OAuthTarget | undefined = targetOf(deps, targetId);
   if (!target) return json({ error: "this target is not signed in to" }, 400);
   const workspaceId = typeof body.workspace_id === "string"
     ? body.workspace_id
@@ -163,7 +163,7 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
   ) {
     return page("This sign-in link is not valid any more.", 400);
   }
-  const target = oauthTargets[held.target_id];
+  const target = targetOf(deps, held.target_id);
   const client = target ? clientOf(deps, held.target_id) : null;
   if (!target || !client) {
     return page("This server cannot sign in to this target.", 503);
@@ -282,7 +282,7 @@ async function refresh(
     return json({ error: "not allowed to manage this connection" }, 403);
   }
   const held = await resolved(deps, connectionId);
-  const target = held ? oauthTargets[held.target_id] : undefined;
+  const target = held ? targetOf(deps, held.target_id) : undefined;
   if (!held || held.auth_kind !== "oauth2" || !target) {
     return json({ error: "this connection is not signed in to" }, 400);
   }

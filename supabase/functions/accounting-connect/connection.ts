@@ -6,7 +6,13 @@
 // those secrets. No secret leaves this function in an answer.
 
 import { CORS } from "../_shared/cors.ts";
-import { clientEnvName } from "../_shared/accounting_targets.ts";
+import {
+  clientEnvName,
+  type OAuthTarget,
+  oauthTargets,
+} from "../_shared/accounting_targets.ts";
+import { hmrcEndpoints } from "../_shared/hmrc_endpoints.ts";
+import { hmrcTarget } from "../_shared/hmrc_mtd.ts";
 import {
   connectedWrite,
   expiredWrite,
@@ -65,6 +71,21 @@ export const json = (body: unknown, status = 200) =>
     status,
     headers: { ...CORS, "Content-Type": "application/json" },
   });
+
+/** The OAuth description of target [id]: the static table, or HMRC's, which
+ * takes its hosts from the installation's chosen environment (exact approved
+ * origins, never a client value). Undefined when the target is not signed in
+ * to, or HMRC is not configured. */
+export function targetOf(
+  deps: Pick<Deps, "env">,
+  id: string,
+): OAuthTarget | undefined {
+  if (id === "hmrc_mtd") {
+    const e = hmrcEndpoints(deps.env);
+    return e ? hmrcTarget(e.api, e.signIn) : undefined;
+  }
+  return oauthTargets[id];
+}
 
 export function clientOf(deps: Deps, targetId: string): OAuthClient | null {
   const clientId = deps.env(clientEnvName(targetId, "CLIENT_ID")) ?? "";

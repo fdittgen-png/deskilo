@@ -184,6 +184,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `dinero_api` | Visma · Dinero · API | api | documents | DK | specificationNeeded | not named yet |
 | `billy_api` | Billy · Billy · API v2 | api | documents | DK | specificationNeeded | not named yet |
 | `saft_oecd_full` | OECD · SAF-T · 2.0, general ledger from the posting engine | file | journal | everywhere | implemented | OECD SAF-T 2.0 guidance (2010), read against FAIA_v_2.01_full.xsd |
+| `hmrc_mtd` | HMRC · Making Tax Digital for VAT · VAT API 1.0 | api | documents | GB | implemented | HMRC VAT (MTD) API 1.0, obligations and returns |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
 | `accountant_csv` | DesKilo · Accountant CSV · format 3 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |

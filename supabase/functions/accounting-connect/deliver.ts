@@ -35,7 +35,6 @@ import {
   DeliveryNotRecorded,
   type DeliveryResult,
 } from "../_shared/accounting_delivery.ts";
-import { oauthTargets } from "../_shared/accounting_targets.ts";
 import {
   connectedWrite,
   expiredWrite,
@@ -64,6 +63,7 @@ import {
   refreshExclusive,
   resolved,
   store,
+  targetOf,
   UUID,
 } from "./connection.ts";
 
@@ -225,7 +225,7 @@ async function freshToken(
   held: NonNullable<Awaited<ReturnType<typeof resolved>>>,
 ): Promise<string | null> {
   const current = held.secrets.access_token ?? "";
-  const target = oauthTargets[held.target_id];
+  const target = targetOf(deps, held.target_id);
   if (held.auth_kind !== "oauth2" || !target) return current || null;
   const now = (deps.now ?? (() => new Date()))();
   const expires = Date.parse(held.token_expires_at ?? "");

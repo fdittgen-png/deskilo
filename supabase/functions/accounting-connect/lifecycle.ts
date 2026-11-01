@@ -25,8 +25,7 @@
 //        is delivered to it.
 
 import { revokeToken } from "../_shared/accounting_oauth.ts";
-import { oauthTargets } from "../_shared/accounting_targets.ts";
-import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
+import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, targetOf, UUID } from "./connection.ts";
 import { adapterContext, deliveryAdapters } from "./deliver.ts";
 
 type Remote = "revoked" | "failed" | "not_supported";
@@ -43,7 +42,7 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
   const revoked = await caller.rpc("revoke_accounting_connection_v1", { p_connection_id: connectionId });
   if (revoked.error || !revoked.data) return json({ error: "the connection could not be revoked" }, 500);
   let remote: Remote = "not_supported";
-  const target = held ? oauthTargets[held.target_id] : undefined;
+  const target = held ? targetOf(deps, held.target_id) : undefined;
   const client = held ? clientOf(deps, held.target_id) : null;
   if (held && !held.revoked && held.auth_kind === "oauth2" && target?.revokeUrl && client) {
     const refresh = held.secrets.refresh_token ?? "";

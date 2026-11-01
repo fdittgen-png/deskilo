@@ -15,6 +15,9 @@
 // with a target answers `oauth_not_configured`, and the person connects
 // with an API token instead where the target offers one.
 
+import { HMRC_ENVIRONMENTS } from "./hmrc_endpoints.ts";
+import { hmrcTarget } from "./hmrc_mtd.ts";
+
 export interface OAuthTarget {
   authorizeUrl: string;
   tokenUrl: string;
@@ -134,6 +137,11 @@ export const oauthTargets: Record<string, OAuthTarget> = {
   quickbooks_online_us: { ...quickbooksOnline },
   quickbooks_online_ca: { ...quickbooksOnline },
   quickbooks_online_gb: { ...quickbooksOnline },
+  // #2470 — HMRC: listed here so the table names every sign-in target of the
+  // app, with the PRODUCTION hosts as its static value; the function resolves
+  // HMRC through `targetOf` (connection.ts), which takes the installation's
+  // chosen environment, so nothing reads this entry for a call.
+  hmrc_mtd: { ...hmrcTarget(HMRC_ENVIRONMENTS.production.api, HMRC_ENVIRONMENTS.production.signIn) },
   xero_gb: { ...xero },
   xero_ca: { ...xero },
   xero_us: { ...xero },

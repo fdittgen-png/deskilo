@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- risk: additive
--- (two nullable columns on accounting_connections and two service-only
--- functions; no row moves)
+-- risk: transforming
+-- (two nullable columns, the registry and doors of HMRC, and two anchored
+-- restatements: set_accounting_credentials, mark_vat_declaration_submitted)
 --
 -- 0648 (#2470) -- the consumer slice of the HMRC MTD VAT submission.
 --
@@ -56,5 +56,245 @@ $fn$;
 revoke execute on function public.release_accounting_refresh_lease(uuid, text)
   from public, anon, authenticated;
 grant execute on function public.release_accounting_refresh_lease(uuid, text) to service_role;
+
+-- ── the registry knows HMRC (dart run tool/build_accounting_targets_sql.dart) ──
+create or replace function public.accounting_connection_targets()
+returns jsonb
+language sql
+immutable
+set search_path = public
+as $$
+  select '{
+    "bexio_api": ["oauth2", "token"],
+    "business_central_ca": ["token"],
+    "business_central_ch": ["token"],
+    "business_central_de": ["token"],
+    "business_central_fr": ["token"],
+    "business_central_gb": ["token"],
+    "business_central_us": ["token"],
+    "hmrc_mtd": ["oauth2"],
+    "pennylane_api": ["oauth2", "token"],
+    "quickbooks_online_ca": ["oauth2"],
+    "quickbooks_online_gb": ["oauth2"],
+    "quickbooks_online_us": ["oauth2"],
+    "sage_business_cloud_ca": ["oauth2"],
+    "sage_business_cloud_de": ["oauth2"],
+    "sage_business_cloud_es": ["oauth2"],
+    "sage_business_cloud_fr": ["oauth2"],
+    "sage_business_cloud_gb": ["oauth2"],
+    "sage_business_cloud_ie": ["oauth2"],
+    "sage_business_cloud_us": ["oauth2"],
+    "xero_ca": ["oauth2"],
+    "xero_eu": ["oauth2"],
+    "xero_gb": ["oauth2"],
+    "xero_us": ["oauth2"]
+  }'::jsonb
+$$;
+revoke execute on function public.accounting_connection_targets() from public, anon;
+grant execute on function public.accounting_connection_targets() to authenticated, service_role;
+
+-- ── the doors of HMRC ─────────────────────────────────────────────────────
+-- The member acting for [p_workspace_id] when MTD may be used there: the
+-- owner or co-owner of a GB space with mtdSubmission and vatDeclarations on.
+create or replace function public.hmrc_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_me public.members;
+begin
+  if auth.uid() is null then raise exception 'not signed in' using errcode = '42501'; end if;
+  if public.mcp_is_delegated() then
+    raise exception 'an assistant may not file VAT returns' using errcode = '42501';
+  end if;
+  select * into v_me from public.members m
+   where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
+  if v_me.id is null or not (v_me.is_owner or coalesce(v_me.co_owner, 'none') = 'active') then
+    raise exception 'only the owner files VAT declarations' using errcode = '42501';
+  end if;
+  if not public.feature_effective(p_workspace_id, 'mtdSubmission')
+     or not public.feature_effective(p_workspace_id, 'vatDeclarations') then
+    raise exception 'MTD submission is switched off in this space' using errcode = '0A000';
+  end if;
+  if not exists (select 1 from public.workspaces w where w.id = p_workspace_id and upper(w.country_code) = 'GB') then
+    raise exception 'MTD is for UK spaces' using errcode = '0A000';
+  end if;
+  return v_me.id;
+end;
+$fn$;
+revoke execute on function public.hmrc_actor(uuid) from public, anon, authenticated;
+
+-- The nine digits of a UK VAT number (GB or XI prefix, spaces and dots
+-- allowed), or null.
+create or replace function public.hmrc_vrn(p_vat_id text)
+returns text language sql immutable set search_path = public as $fn$
+  select case when d ~ '^[0-9]{9}$' then d end
+    from (select regexp_replace(regexp_replace(upper(coalesce(p_vat_id, '')), '^(GB|XI)', ''), '[^0-9]', '', 'g') as d) x;
+$fn$;
+revoke execute on function public.hmrc_vrn(text) from public, anon, authenticated;
+
+-- Opens the pending HMRC connection of an issuer: its VRN is the workspace's
+-- VAT number, recorded as the remote tenant, so a token for another
+-- registration can never be stored under it.
+create or replace function public.open_hmrc_connection_v1(
+  p_workspace_id uuid, p_issuer_site_id uuid, p_display_name text
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  v_me uuid := public.hmrc_actor(p_workspace_id);
+  v_vrn text;
+  c public.accounting_connections;
+begin
+  select public.hmrc_vrn(w.vat_id) into v_vrn from public.workspaces w where w.id = p_workspace_id;
+  if v_vrn is null then
+    raise exception 'the space has no valid UK VAT number' using errcode = 'DKA03';
+  end if;
+  if not exists (select 1 from public.sites s where s.id = p_issuer_site_id and s.workspace_id = p_workspace_id) then
+    raise exception 'the issuer is not a site of this space' using errcode = 'DKA03';
+  end if;
+  if exists (select 1 from public.accounting_connections x
+              where x.issuer_site_id = p_issuer_site_id and x.target_id = 'hmrc_mtd' and x.revoked_at is null) then
+    raise exception 'this issuer is already connected to HMRC: revoke it first' using errcode = 'DKA01';
+  end if;
+  insert into public.accounting_connections
+    (workspace_id, issuer_site_id, target_id, auth_kind, remote_tenant_id, display_name, connected_by_member_id)
+  values (p_workspace_id, p_issuer_site_id, 'hmrc_mtd', 'oauth2', v_vrn,
+          left(btrim(coalesce(p_display_name, '')), 120), v_me)
+  returning * into c;
+  return public.accounting_connection_json(c);
+end;
+$fn$;
+revoke execute on function public.open_hmrc_connection_v1(uuid, uuid, text) from public, anon;
+grant execute on function public.open_hmrc_connection_v1(uuid, uuid, text) to authenticated;
+
+-- The caller may manage this HMRC connection (and it is still open).
+create or replace function public.hmrc_connection_manageable_v1(p_connection_id uuid)
+returns jsonb language plpgsql stable security definer set search_path = public as $fn$
+declare
+  c public.accounting_connections;
+begin
+  select * into c from public.accounting_connections where id = p_connection_id;
+  if c.id is null or c.target_id <> 'hmrc_mtd' then raise exception 'unknown connection' using errcode = 'P0002'; end if;
+  perform public.hmrc_actor(c.workspace_id);
+  if c.revoked_at is not null then raise exception 'this connection was revoked' using errcode = 'DKA02'; end if;
+  return jsonb_build_object('id', c.id, 'workspace_id', c.workspace_id, 'target_id', c.target_id,
+                            'auth_kind', c.auth_kind, 'status', c.status);
+end;
+$fn$;
+revoke execute on function public.hmrc_connection_manageable_v1(uuid) from public, anon;
+grant execute on function public.hmrc_connection_manageable_v1(uuid) to authenticated;
+
+-- What a submission needs to know, for the caller who may file: the prepared
+-- return, its period and totals, and the connected registration bound to the
+-- workspace's own VAT number. Nothing is returned for a return already filed
+-- or changed since it was prepared.
+create or replace function public.hmrc_filing_context_v1(p_declaration_id uuid, p_connection_id uuid)
+returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  d public.vat_declarations;
+  c public.accounting_connections;
+  v_vrn text;
+  v_sum record;
+begin
+  select * into d from public.vat_declarations where id = p_declaration_id;
+  if d.id is null then raise exception 'unknown declaration' using errcode = 'P0002'; end if;
+  perform public.hmrc_actor(d.workspace_id);
+  if d.status <> 'prepared' then
+    raise exception 'prepare the return before filing it (or it is filed already)' using errcode = 'DKA03';
+  end if;
+  select * into c from public.accounting_connections where id = p_connection_id;
+  if c.id is null or c.workspace_id <> d.workspace_id or c.target_id <> 'hmrc_mtd'
+     or c.revoked_at is not null or c.status <> 'connected' then
+    raise exception 'connect HMRC first' using errcode = 'DKA02';
+  end if;
+  select public.hmrc_vrn(w.vat_id) into v_vrn from public.workspaces w where w.id = d.workspace_id;
+  if v_vrn is null or c.remote_tenant_id <> v_vrn then
+    raise exception 'the connection is for another VAT registration' using errcode = 'DKA03';
+  end if;
+  select * into v_sum from public.vat_return_summary(d.workspace_id, d.period_start, d.period_end);
+  if (v_sum.lines, v_sum.total_net_cents, v_sum.total_vat_cents, v_sum.invoice_count)
+     is distinct from (d.lines, d.total_net_cents, d.total_vat_cents, d.invoice_count) then
+    raise exception 'the period changed since this return was prepared: prepare it again' using errcode = 'DKA03';
+  end if;
+  return jsonb_build_object('declaration_id', d.id, 'workspace_id', d.workspace_id,
+    'period_start', d.period_start, 'period_end', d.period_end,
+    'total_vat_cents', d.total_vat_cents, 'lines', d.lines, 'vrn', v_vrn, 'connection_id', c.id);
+end;
+$fn$;
+revoke execute on function public.hmrc_filing_context_v1(uuid, uuid) from public, anon;
+grant execute on function public.hmrc_filing_context_v1(uuid, uuid) to authenticated;
+
+-- ── anchored patches (pg_temp.anchor_replace) ─────────────────────────────
+create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
+returns text
+language plpgsql
+as $f$
+declare
+  v_pattern text;
+  v_out text;
+begin
+  if position(p_old in p_def) > 0 then
+    return replace(p_def, p_old, p_new);
+  end if;
+  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
+  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
+  return case when v_out = p_def then null else v_out end;
+end
+$f$;
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
+do $migration$
+declare
+  v_def text;
+begin
+  -- The token writer checks the flag of the connection's own target.
+  select pg_get_functiondef('public.set_accounting_credentials(uuid,jsonb,jsonb)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$if not public.feature_effective(c.workspace_id, 'accountingConnectors') then$a$,
+    $a$if not public.feature_effective(c.workspace_id,
+         case when c.target_id = 'hmrc_mtd' then 'mtdSubmission' else 'accountingConnectors' end) then$a$);
+  if v_def is null then raise exception '0648: set_accounting_credentials anchor missing'; end if;
+  execute v_def;
+
+  -- The channel hmrc_mtd is accepted only inside the HMRC wrapper below.
+  select pg_get_functiondef('public.mark_vat_declaration_submitted(uuid,text,text)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$if coalesce(p_channel, '') not in ('manual', 'export') then$a$,
+    $a$if coalesce(p_channel, '') not in ('manual', 'export')
+     and not (p_channel = 'hmrc_mtd'
+              and coalesce(current_setting('deskilo.hmrc_filing', true), '') = p_declaration_id::text) then$a$);
+  if v_def is null then raise exception '0648: mark_vat_declaration_submitted anchor missing'; end if;
+  execute v_def;
+end
+$migration$;
+
+-- Files the prepared return as HMRC's: the edge function calls this (service
+-- role) only AFTER HMRC returned a receipt. The actor must be an owner or
+-- co-owner of the declaration's space and MTD must be on there; the whole
+-- ordinary filing (period lock, entries, number) then runs as that person.
+create or replace function public.file_vat_declaration_hmrc_v1(
+  p_declaration_id uuid, p_actor_user uuid, p_receipt text
+) returns void language plpgsql security definer set search_path = public as $fn$
+declare
+  d public.vat_declarations;
+begin
+  select * into d from public.vat_declarations where id = p_declaration_id for update;
+  if d.id is null then raise exception 'unknown declaration' using errcode = 'P0002'; end if;
+  if not public.feature_effective(d.workspace_id, 'mtdSubmission')
+     or not exists (select 1 from public.workspaces w where w.id = d.workspace_id and upper(w.country_code) = 'GB') then
+    raise exception 'MTD submission is not available in this space' using errcode = '0A000';
+  end if;
+  if not exists (select 1 from public.members m
+                  where m.workspace_id = d.workspace_id and m.user_id = p_actor_user and m.status = 'active'
+                    and (m.is_owner or coalesce(m.co_owner, 'none') = 'active')) then
+    raise exception 'only the owner files VAT declarations' using errcode = '42501';
+  end if;
+  perform set_config('request.jwt.claim.sub', p_actor_user::text, true);
+  perform set_config('request.jwt.claims', json_build_object('sub', p_actor_user)::text, true);
+  perform set_config('deskilo.hmrc_filing', p_declaration_id::text, true);
+  perform public.mark_vat_declaration_submitted(p_declaration_id, 'hmrc_mtd', p_receipt);
+  perform set_config('deskilo.hmrc_filing', '', true);
+end;
+$fn$;
+revoke execute on function public.file_vat_declaration_hmrc_v1(uuid, uuid, text) from public, anon, authenticated;
+grant execute on function public.file_vat_declaration_hmrc_v1(uuid, uuid, text) to service_role;
 
 select public.set_deskilo_schema_version(648);
