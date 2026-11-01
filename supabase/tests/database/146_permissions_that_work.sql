@@ -33,7 +33,7 @@ begin
   insert into public.workspaces (name, country_code, currency_code, timezone,
                                  created_by, feature_flags, role_permissions)
   values ('Permissions that work', 'FR', 'EUR', 'Europe/Paris', u_owner,
-          '{"customRoles": true, "publicHolidays": true, "holidayImport": true}'::jsonb,
+          '{"customRoles": true, "publicHolidays": true, "holidayImport": true, "carnets": true}'::jsonb,
           jsonb_build_object('admin', jsonb_build_array(
             'manageMembers', 'manageDocuments', 'manageServices',
             'workspaceSettings', 'manageBilling', 'manageIntegrations')))
