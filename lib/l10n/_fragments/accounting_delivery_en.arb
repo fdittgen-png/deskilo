@@ -85,5 +85,14 @@
         "type": "int"
       }
     }
+  },
+  "acctDeliverInFlight": "Still being delivered by another run: {count}. Try again in a few minutes.",
+  "@acctDeliverInFlight": {
+    "description": "#2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

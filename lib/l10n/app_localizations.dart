@@ -656,6 +656,12 @@ abstract class AppLocalizations {
   /// **'The delivery did not go through. Nothing more was sent; try again later.'**
   String get acctDeliverFailed;
 
+  /// #2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them.
+  ///
+  /// In en, this message translates to:
+  /// **'Still being delivered by another run: {count}. Try again in a few minutes.'**
+  String acctDeliverInFlight(int count);
+
   /// #2370 Snack: the mapping keys documents wait for.
   ///
   /// In en, this message translates to:

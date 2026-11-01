@@ -339,6 +339,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'The delivery did not go through. Nothing more was sent; try again later.';
 
   @override
+  String acctDeliverInFlight(int count) {
+    return 'Still being delivered by another run: $count. Try again in a few minutes.';
+  }
+
+  @override
   String acctDeliverMissing(String keys) {
     return 'Map these first: $keys';
   }

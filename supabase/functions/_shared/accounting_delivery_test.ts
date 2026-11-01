@@ -263,6 +263,31 @@ Deno.test("a delivery prepared by another run is read back before any create", a
   assertEquals(target.creates, 0);
 });
 
+Deno.test("a delivery another run is still sending stops: no readback, no create, no record", async () => {
+  const records: DeliveryStatus[] = [];
+  const store: DeliveryStore = {
+    record: (_j, status) => {
+      records.push(status);
+      return Promise.resolve({ status: "sent", idempotency_key: "k", remote_id: "", outcome: "in_flight" });
+    },
+  };
+  const target = new FakeTarget();
+  const result = await deliver(job(), maps, store, target);
+  assertEquals(result.status, "in_flight");
+  assertEquals(records, ["generated"]);
+  assertEquals([target.readbacks, target.creates], [0, 0]);
+});
+
+Deno.test("the database store tells the log how long a run may take", async () => {
+  const calls: Record<string, unknown>[] = [];
+  const row = { status: "sent", idempotency_key: "k", remote_id: "", outcome: "created" };
+  const db = { rpc: (_fn: string, args: Record<string, unknown>) => (calls.push(args), Promise.resolve({ data: row, error: null })) };
+  await databaseStore(db, { inFlightSeconds: 400 }).record(job(), "generated");
+  await databaseStore(db).record(job(), "generated");
+  assertEquals(calls[0].p_in_flight_seconds, 400);
+  assertEquals(calls[1].p_in_flight_seconds, 0);
+});
+
 /** A target that creates drafts and posts them as their own operation
  * (#2374). [postAnswer] decides the next post: done, refused, or done with
  * no answer. */

@@ -238,6 +238,8 @@ void main() {
       'Delivered: 0 · already there: 0 · to check: 1 Map these first: account bank': const DeliveryRunDone([
         DeliveryRunDocument(status: DeliveryRunStatus.blocked, missing: ['account bank']),
       ]),
+      'Delivered: 0 · already there: 0 · to check: 1 Still being delivered by another run: 1. Try again in a few minutes.':
+          const DeliveryRunDone([DeliveryRunDocument(status: DeliveryRunStatus.inFlight)]),
       'The books of this period cannot be posted yet: bank. Nothing was delivered.':
           const DeliveryRunBooksBlocked(['bank']),
       'The accounting system refused this company: Custom transaction numbers is off. Nothing was delivered.':

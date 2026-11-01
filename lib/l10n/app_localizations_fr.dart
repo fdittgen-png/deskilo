@@ -341,6 +341,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'envoi n\'a pas abouti. Rien de plus n\'a été envoyé ; réessayez plus tard.';
 
   @override
+  String acctDeliverInFlight(int count) {
+    return 'Encore en cours d\'envoi par une autre exécution : $count. Réessayez dans quelques minutes.';
+  }
+
+  @override
   String acctDeliverMissing(String keys) {
     return 'Renseignez d\'abord ces correspondances : $keys';
   }
