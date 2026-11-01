@@ -31,6 +31,13 @@ export interface Posting {
   documentNumber: string;
   currency: string;
   lines: PostingLine[];
+  /** YYYY-MM-DD: the value date of the bank statement line a receipt was
+   * reconciled with (#2380); absent when no line is linked. Not part of the
+   * posting's digest or its delivery identity: it changes what a target is
+   * told, never which document it is. */
+  valueDate?: string;
+  /** The reference the bank gave that line; absent when it has none. */
+  bankReference?: string;
 }
 
 /** The third party of a posted document (`posting_parties`). */
@@ -68,6 +75,8 @@ export function postingsOf(raw: unknown): { postings: Posting[]; blockers: Posti
       documentId: text(p.document_id),
       documentNumber: text(p.document_number),
       currency: text(p.currency).toUpperCase(),
+      ...(text(p.value_date) ? { valueDate: text(p.value_date) } : {}),
+      ...(text(p.bank_reference) ? { bankReference: text(p.bank_reference) } : {}),
       lines: list(p.lines).map((l) => ({
         role: text(l.role),
         qualifier: text(l.qualifier) || null,

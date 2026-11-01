@@ -125,6 +125,8 @@ class Posting {
     required this.documentId,
     required this.documentNumber,
     required this.lines,
+    this.valueDate,
+    this.bankReference = '',
   });
 
   final PostingJournal journal;
@@ -133,6 +135,15 @@ class Posting {
   final String documentId;
   final String documentNumber;
   final List<PostingLine> lines;
+
+  /// #2380 (0635) — the value date of the bank statement line an invoice's
+  /// receipt was reconciled with: the day the money moved at the bank, a
+  /// fact apart from [date] (the day the entry was booked). Null when no
+  /// statement line is linked to the entry.
+  final DateTime? valueDate;
+
+  /// The reference the bank gave that line; '' when there is none.
+  final String bankReference;
 
   /// Debits equal credits, exactly.
   bool get balanced {
@@ -181,6 +192,8 @@ Posting _postingFromJson(Object? raw) {
     kind: PostingKind.values.firstWhere((k) => k.wire == r.string('kind')),
     documentId: r.string('document_id'),
     documentNumber: r.string('document_number'),
+    valueDate: r.dateTimeOrNull('value_date'),
+    bankReference: r.stringOr('bank_reference'),
     lines: [
       for (final l in r.list('lines'))
         _lineFromJson(
