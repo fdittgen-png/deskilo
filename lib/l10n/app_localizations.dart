@@ -18869,6 +18869,12 @@ abstract class AppLocalizations {
   /// **'You are the instance owner.'**
   String get instanceYouAreOwner;
 
+  /// #2370 Generic journal export: one reason the interchange envelope was refused, by kind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book\'s currency} unknownDocument{a posting books the unknown document {subject}} other{{subject}}}'**
+  String interchangeBlock(String kind, String subject);
+
   /// No description provided for @invitationAlreadyMember.
   ///
   /// In en, this message translates to:
@@ -21004,6 +21010,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The FEC needs a client code for each third party, up to 13 letters and digits: give these a member or supplier number first: {names}'**
   String journalFecPartyCode(String names);
+
+  /// #2370 Generic journal export: the interchange envelope of the postings was refused, with the reasons (each an interchangeBlock).
+  ///
+  /// In en, this message translates to:
+  /// **'The journal was not written: {reasons}'**
+  String journalInterchangeRefused(String reasons);
 
   /// No description provided for @journalNeedsLocalBook.
   ///

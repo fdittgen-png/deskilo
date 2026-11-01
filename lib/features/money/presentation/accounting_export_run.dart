@@ -235,7 +235,7 @@ class AccountingExportRun {
       case 'saft_oecd_full':
         await safTFinancialExport();
       case 'generic_journal_csv':
-        await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
+        await exportGenericJournal(context, () async => journalFileOf(posted!),
             save: saveJournal);
     }
   }

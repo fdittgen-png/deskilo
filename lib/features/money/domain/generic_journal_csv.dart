@@ -4,8 +4,9 @@
 // posting engine (`compute_postings`), the fallback every accounting system
 // without a national format can import (Date, JournalNo, Account, Debit,
 // Credit, Description, Name, Dimension, TaxCode). It serialises the
-// postings and decides nothing: an entry the engine blocked never reaches
-// it.
+// postings of the interchange envelope and decides nothing: an entry the
+// engine blocked never reaches it, an envelope that fails its validation is
+// refused before it.
 //
 // Pure Dart.
 import 'dart:convert';
@@ -16,6 +17,7 @@ import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
 import 'accounting_connection.dart';
+import 'accounting_interchange.dart';
 import 'book_chart.dart';
 import 'posting.dart';
 
@@ -67,11 +69,11 @@ List<List<List<String>>> _postingRows(List<Posting> postings) {
 
 String _line(List<String> row) => row.map(csvCell).join(',');
 
-/// The journal of [postings], in their order.
-String buildGenericJournalCsv(List<Posting> postings) {
+/// The journal of [envelope]'s postings, in their order.
+String buildGenericJournalCsv(AccountingInterchangeV1 envelope) {
   final rows = [
     _header,
-    for (final posting in _postingRows(postings)) ...posting,
+    for (final posting in _postingRows(envelope.postings)) ...posting,
   ];
   return '${rows.map(_line).join('\r\n')}\r\n';
 }
