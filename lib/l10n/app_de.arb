@@ -4404,7 +4404,11 @@
   "discoveryMapContinue": "Weiter zur Karte",
   "discoveryMapDisclosureBody": "Die Karte wird von {tiles} gezeichnet, Adressen ohne Koordinaten platziert {geocoder}. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.",
   "discoveryMapDisclosureTitle": "Bevor die Karte öffnet",
+  "discoveryMapProvenance": "Kartenkacheln: {tiles}. Adresssuche: {geocoder}.",
   "discoveryMapRemembered": "Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.",
+  "discoveryMapSourceBuild": "in diese App-Version eingebaut",
+  "discoveryMapSourceBundled": "die Voreinstellung der App",
+  "discoveryMapSourceManaged": "vom Betreiber dieses Servers gewählt",
   "discoveryMapStay": "Bei der Liste bleiben",
   "discoveryMoreDirectoriesFailed": "Weitere Verzeichnisse konnten nicht geladen werden.",
   "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
@@ -15251,6 +15255,7 @@
     "description": "#2487 settings: Settings group title."
   },
   "settingGroupRecords": "Aufbewahrungsort der Aufzeichnungen",
+  "settingGroupRegion": "Region und Karten",
   "settingGroupSecurity": "Sicherheits- und Zugriffsgrenzen",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15326,6 +15331,8 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
+  "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
   "settingHintDirectoryUpcomingWindowDays": "Wie viele Tage im Voraus das Mitgliederverzeichnis die nächste Buchung eines Mitglieds zeigt.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -15502,6 +15509,8 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
+  "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
   "settingLabelDirectoryUpcomingWindowDays": "Vorschau im Verzeichnis",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -15671,6 +15680,7 @@
   "@settingProblemNotANumber": {
     "description": "#2484 settings: Validation."
   },
+  "settingProblemNotAnEndpoint": "Keine öffentliche https-Adresse in der richtigen Form: kein Benutzername oder Passwort, kein #, keine lokale oder private Netzwerkadresse (eine Kachelvorlage braucht die Platzhalter z, x und y in geschweiften Klammern; eine Suchadresse kein ?)",
   "settingProblemWrongType": "Kein gültiger Wert",
   "@settingProblemWrongType": {
     "description": "#2484 settings: Validation."
@@ -15761,6 +15771,8 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitUrl": "Adresse",
+  "settingUnitUrlTemplate": "Adressvorlage",
   "settingUnitYears": "Jahre",
   "@settingUnitYears": {
     "description": "#2571 retention settings"

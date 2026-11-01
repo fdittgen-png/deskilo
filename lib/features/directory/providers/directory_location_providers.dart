@@ -5,13 +5,20 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../data/photon_directory_geocoder.dart';
 import '../domain/directory_location.dart';
+import 'discovery_view_providers.dart';
 part 'directory_location_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 DirectoryGeocoder directoryGeocoder(Ref ref) {
   final client = http.Client();
   ref.onDispose(client.close);
-  return PhotonDirectoryGeocoder(client);
+  // #2488 -- the endpoint the platform settings name (else the build's,
+  // else the default); a changed endpoint rebuilds the geocoder and its
+  // cache.
+  return PhotonDirectoryGeocoder(
+    client,
+    endpoint: Uri.parse(ref.watch(mapServicesProvider).geocoder),
+  );
 }
 
 Duration? _noRetry(int count, Object error) => null;

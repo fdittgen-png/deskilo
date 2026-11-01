@@ -1239,6 +1239,45 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
 
+  (
+    since: 'directory_endpoints',
+    row: (
+      key: 'directory.geocoder_url',
+      type: 'text',
+      defaultValue: 'https://photon.komoot.io/api/',
+      min: null,
+      max: 512,
+      unit: 'url',
+      group: 'region',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'PhotonDirectoryGeocoder (#2488): Photon public instance',
+      note: 'The address-lookup service (Photon API) that places a published workspace address on the discovery map. An https address on the public internet, without credentials, query or fragment. Empty or invalid: the address this app build was given, else this default.',
+    ),
+  ),
+  (
+    since: 'directory_endpoints',
+    row: (
+      key: 'directory.tile_url_template',
+      type: 'text',
+      defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      min: null,
+      max: 512,
+      unit: 'url template',
+      group: 'region',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'DirectoryMap (#2488): OpenStreetMap standard tiles',
+      note: 'The tile server the discovery map is drawn from, as a template with {z}, {x} and {y} (and optionally {s} for a subdomain). An https address on the public internet, without credentials or fragment. Empty or invalid: the template this app build was given, else this default. Changing the host asks each person again before the map loads.',
+    ),
+  ),
+
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

@@ -6252,8 +6252,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryMapDisclosureTitle => 'Bevor die Karte öffnet';
 
   @override
+  String discoveryMapProvenance(String tiles, String geocoder) {
+    return 'Kartenkacheln: $tiles. Adresssuche: $geocoder.';
+  }
+
+  @override
   String get discoveryMapRemembered =>
       'Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.';
+
+  @override
+  String get discoveryMapSourceBuild => 'in diese App-Version eingebaut';
+
+  @override
+  String get discoveryMapSourceBundled => 'die Voreinstellung der App';
+
+  @override
+  String get discoveryMapSourceManaged =>
+      'vom Betreiber dieses Servers gewählt';
 
   @override
   String get discoveryMapStay => 'Bei der Liste bleiben';
@@ -22417,6 +22432,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupRecords => 'Aufbewahrungsort der Aufzeichnungen';
 
   @override
+  String get settingGroupRegion => 'Region und Karten';
+
+  @override
   String get settingGroupSecurity => 'Sicherheits- und Zugriffsgrenzen';
 
   @override
@@ -22508,6 +22526,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintCalendarRangeDays =>
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.';
+
+  @override
+  String get settingHintDirectoryGeocoderUrl =>
+      'Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.';
+
+  @override
+  String get settingHintDirectoryTileUrlTemplate =>
+      'Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.';
 
   @override
   String get settingHintDirectoryUpcomingWindowDays =>
@@ -22756,6 +22782,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';
 
   @override
+  String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';
+
+  @override
+  String get settingLabelDirectoryTileUrlTemplate => 'Kachelserver der Karte';
+
+  @override
   String get settingLabelDirectoryUpcomingWindowDays =>
       'Vorschau im Verzeichnis';
 
@@ -22956,6 +22988,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingProblemNotANumber => 'Ganze Zahl eingeben';
 
   @override
+  String get settingProblemNotAnEndpoint =>
+      'Keine öffentliche https-Adresse in der richtigen Form: kein Benutzername oder Passwort, kein #, keine lokale oder private Netzwerkadresse (eine Kachelvorlage braucht die Platzhalter z, x und y in geschweiften Klammern; eine Suchadresse kein ?)';
+
+  @override
   String get settingProblemWrongType => 'Kein gültiger Wert';
 
   @override
@@ -23022,6 +23058,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'Sekunden';
+
+  @override
+  String get settingUnitUrl => 'Adresse';
+
+  @override
+  String get settingUnitUrlTemplate => 'Adressvorlage';
 
   @override
   String get settingUnitYears => 'Jahre';

@@ -33,9 +33,16 @@ class PhotonDirectoryGeocoder implements DirectoryGeocoder {
 
   Future<DirectoryLocation?> _lookup(String query) async {
     try {
-      final response = await client
-          .get(endpoint.replace(queryParameters: {'q': query, 'limit': '1'}))
-          .timeout(requestTimeout);
+      // #2488 -- a public request: no credentials or headers of this app,
+      // and no redirect followed, so a configured endpoint cannot bounce
+      // the lookup to another host.
+      final request = http.Request(
+        'GET',
+        endpoint.replace(queryParameters: {'q': query, 'limit': '1'}),
+      )..followRedirects = false;
+      final response = await http.Response.fromStream(
+        await client.send(request).timeout(requestTimeout),
+      ).timeout(requestTimeout);
       if (response.statusCode != 200) {
         throw StateError('Address lookup unavailable');
       }

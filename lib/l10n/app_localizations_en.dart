@@ -6211,8 +6211,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryMapDisclosureTitle => 'Before the map opens';
 
   @override
+  String discoveryMapProvenance(String tiles, String geocoder) {
+    return 'Map tiles: $tiles. Address lookup: $geocoder.';
+  }
+
+  @override
   String get discoveryMapRemembered =>
       'Your choice is kept on this device for this map provider.';
+
+  @override
+  String get discoveryMapSourceBuild => 'built into this app version';
+
+  @override
+  String get discoveryMapSourceBundled => 'the app\'s default';
+
+  @override
+  String get discoveryMapSourceManaged => 'chosen by this server\'s operator';
 
   @override
   String get discoveryMapStay => 'Stay with the list';
@@ -22208,6 +22222,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupRecords => 'Records location';
 
   @override
+  String get settingGroupRegion => 'Region and maps';
+
+  @override
   String get settingGroupSecurity => 'Security and access limits';
 
   @override
@@ -22299,6 +22316,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingHintCalendarRangeDays =>
       'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.';
+
+  @override
+  String get settingHintDirectoryGeocoderUrl =>
+      'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.';
+
+  @override
+  String get settingHintDirectoryTileUrlTemplate =>
+      'The tile server the discovery map is drawn from, with the placeholders z, x and y in curly braces in its address (s in curly braces for a subdomain is allowed): https, on the public internet, without a user name, password or #. Leave it empty to use the server this app version was built with, else OpenStreetMap. A new host asks each person again before the map loads.';
 
   @override
   String get settingHintDirectoryUpcomingWindowDays =>
@@ -22545,6 +22570,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Calendar range';
 
   @override
+  String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';
+
+  @override
+  String get settingLabelDirectoryTileUrlTemplate => 'Map tile server';
+
+  @override
   String get settingLabelDirectoryUpcomingWindowDays => 'Directory look-ahead';
 
   @override
@@ -22733,6 +22764,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingProblemNotANumber => 'Enter a whole number';
 
   @override
+  String get settingProblemNotAnEndpoint =>
+      'Not a public https address of the right shape: no user name or password, no #, not a local or private network address (a tile template needs the placeholders z, x and y in curly braces; a lookup address no ?)';
+
+  @override
   String get settingProblemWrongType => 'Not a valid value';
 
   @override
@@ -22799,6 +22834,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'seconds';
+
+  @override
+  String get settingUnitUrl => 'address';
+
+  @override
+  String get settingUnitUrlTemplate => 'address template';
 
   @override
   String get settingUnitYears => 'years';

@@ -99,12 +99,19 @@ String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       _ => _liveUpdateSettingLabel(l10n, key),
     };
 
+/// #2488 -- the map's tile server and the directory's geocoder.
+String _regionSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'directory.geocoder_url' => l10n.settingLabelDirectoryGeocoderUrl,
+      'directory.tile_url_template' => l10n.settingLabelDirectoryTileUrlTemplate,
+      _ => key,
+    };
+
 /// #3098, #3099 -- how often the app re-reads: after an absence, and the
 /// inbox's timeout sweep.
 String _liveUpdateSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'presence.resync_after_away_minutes' => l10n.settingLabelPresenceResyncAfterAwayMinutes,
       'messaging.inbox_sweep_interval_seconds' => l10n.settingLabelMessagingInboxSweepIntervalSeconds,
-      _ => key,
+      _ => _regionSettingLabel(l10n, key),
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
@@ -190,10 +197,17 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       _ => _liveUpdateSettingHint(l10n, key),
     };
 
+/// #2488 -- the map's tile server and the directory's geocoder.
+String? _regionSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'directory.geocoder_url' => l10n.settingHintDirectoryGeocoderUrl,
+      'directory.tile_url_template' => l10n.settingHintDirectoryTileUrlTemplate,
+      _ => null,
+    };
+
 String? _liveUpdateSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'presence.resync_after_away_minutes' => l10n.settingHintPresenceResyncAfterAwayMinutes,
       'messaging.inbox_sweep_interval_seconds' => l10n.settingHintMessagingInboxSweepIntervalSeconds,
-      _ => null,
+      _ => _regionSettingHint(l10n, key),
     };
 
 String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) {
@@ -209,6 +223,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'kpi' => l10n.settingGroupKpi,
       'personal' => l10n.settingGroupPersonal,
       'records' => l10n.settingGroupRecords,
+      'region' => l10n.settingGroupRegion,
       _ => group,
     };
 
@@ -232,6 +247,8 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'pages' => l10n.settingUnitPages,
       'cards' => l10n.settingUnitCards,
       'bytes' => l10n.settingUnitBytes,
+      'url' => l10n.settingUnitUrl,
+      'url template' => l10n.settingUnitUrlTemplate,
       _ => unit,
     };
 
@@ -242,6 +259,7 @@ String settingProblemLabel(AppLocalizations l10n, SettingProblem p) => switch (p
       SettingProblem.belowFloor => l10n.settingProblemBelowFloor,
       SettingProblem.wrongType => l10n.settingProblemWrongType,
       SettingProblem.notAChoice => l10n.settingProblemNotAChoice,
+      SettingProblem.notAnEndpoint => l10n.settingProblemNotAnEndpoint,
     };
 
 String settingOriginLabel(AppLocalizations l10n, SettingOrigin o) => switch (o) {

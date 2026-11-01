@@ -6239,8 +6239,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoveryMapDisclosureTitle => 'Antes de abrir el mapa';
 
   @override
+  String discoveryMapProvenance(String tiles, String geocoder) {
+    return 'Teselas del mapa: $tiles. Búsqueda de direcciones: $geocoder.';
+  }
+
+  @override
   String get discoveryMapRemembered =>
       'Su elección se guarda en este dispositivo para este proveedor de mapas.';
+
+  @override
+  String get discoveryMapSourceBuild =>
+      'integrado en esta versión de la aplicación';
+
+  @override
+  String get discoveryMapSourceBundled =>
+      'el valor por defecto de la aplicación';
+
+  @override
+  String get discoveryMapSourceManaged =>
+      'elegido por el operador de este servidor';
 
   @override
   String get discoveryMapStay => 'Quedarse en la lista';
@@ -22372,6 +22389,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupRecords => 'Lugar de conservación de los registros';
 
   @override
+  String get settingGroupRegion => 'Región y mapas';
+
+  @override
   String get settingGroupSecurity => 'Límites de seguridad y acceso';
 
   @override
@@ -22463,6 +22483,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintCalendarRangeDays =>
       'Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.';
+
+  @override
+  String get settingHintDirectoryGeocoderUrl =>
+      'El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.';
+
+  @override
+  String get settingHintDirectoryTileUrlTemplate =>
+      'El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.';
 
   @override
   String get settingHintDirectoryUpcomingWindowDays =>
@@ -22717,6 +22745,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
 
   @override
+  String get settingLabelDirectoryGeocoderUrl =>
+      'Servicio de búsqueda de direcciones';
+
+  @override
+  String get settingLabelDirectoryTileUrlTemplate =>
+      'Servidor de teselas del mapa';
+
+  @override
   String get settingLabelDirectoryUpcomingWindowDays =>
       'Vista previa del directorio';
 
@@ -22922,6 +22958,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingProblemNotANumber => 'Introduzca un número entero';
 
   @override
+  String get settingProblemNotAnEndpoint =>
+      'No es una dirección https pública con la forma correcta: sin nombre de usuario ni contraseña, sin #, no una dirección local o de red privada (una plantilla de teselas necesita los marcadores z, x e y entre llaves; una dirección de búsqueda ningún ?)';
+
+  @override
   String get settingProblemWrongType => 'Valor no válido';
 
   @override
@@ -22988,6 +23028,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'segundos';
+
+  @override
+  String get settingUnitUrl => 'dirección';
+
+  @override
+  String get settingUnitUrlTemplate => 'plantilla de dirección';
 
   @override
   String get settingUnitYears => 'años';

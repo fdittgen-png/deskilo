@@ -4404,7 +4404,11 @@
   "discoveryMapContinue": "Continua verso la mappa",
   "discoveryMapDisclosureBody": "La mappa è disegnata da {tiles} e gli indirizzi senza coordinate sono collocati da {geocoder}. Il fornitore della mappa riceve informazioni di connessione e sull'area visualizzata: l'indirizzo IP del Suo dispositivo e la parte di mappa che Lei guarda. Non gli viene inviato nulla se Lei non continua.",
   "discoveryMapDisclosureTitle": "Prima di aprire la mappa",
+  "discoveryMapProvenance": "Tessere della mappa: {tiles}. Ricerca indirizzi: {geocoder}.",
   "discoveryMapRemembered": "La Sua scelta è conservata su questo dispositivo per questo fornitore di mappe.",
+  "discoveryMapSourceBuild": "integrato in questa versione dell'app",
+  "discoveryMapSourceBundled": "il valore predefinito dell'app",
+  "discoveryMapSourceManaged": "scelto dal gestore di questo server",
   "discoveryMapStay": "Resta sull'elenco",
   "discoveryMoreDirectoriesFailed": "Non è stato possibile caricare altre directory.",
   "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
@@ -15251,6 +15255,7 @@
     "description": "#2487 settings: Settings group title."
   },
   "settingGroupRecords": "Luogo di conservazione delle scritture",
+  "settingGroupRegion": "Regione e mappe",
   "settingGroupSecurity": "Limiti di sicurezza e di accesso",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15326,6 +15331,8 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
+  "settingHintDirectoryTileUrlTemplate": "Il server delle tessere da cui è disegnata la mappa di scoperta, con i segnaposto z, x e y tra parentesi graffe nell'indirizzo (s tra parentesi graffe per un sottodominio è ammesso): https, sull'internet pubblica, senza nome utente, password né #. Lasci vuoto per usare il server di questa versione dell'app, altrimenti OpenStreetMap. Un nuovo host chiede di nuovo a ogni persona prima che la mappa si carichi.",
   "settingHintDirectoryUpcomingWindowDays": "Quanti giorni prima l'elenco mostra la prossima prenotazione di un membro.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -15502,6 +15509,8 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",
+  "settingLabelDirectoryTileUrlTemplate": "Server delle tessere della mappa",
   "settingLabelDirectoryUpcomingWindowDays": "Anteprima dell'elenco",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -15671,6 +15680,7 @@
   "@settingProblemNotANumber": {
     "description": "#2484 settings: Validation."
   },
+  "settingProblemNotAnEndpoint": "Non è un indirizzo https pubblico nella forma giusta: nessun nome utente o password, nessun #, non un indirizzo locale o di rete privata (un modello di tessere richiede i segnaposto z, x e y tra parentesi graffe; un indirizzo di ricerca nessun ?)",
   "settingProblemWrongType": "Valore non valido",
   "@settingProblemWrongType": {
     "description": "#2484 settings: Validation."
@@ -15761,6 +15771,8 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitUrl": "indirizzo",
+  "settingUnitUrlTemplate": "modello di indirizzo",
   "settingUnitYears": "anni",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
