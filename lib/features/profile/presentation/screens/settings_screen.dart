@@ -199,6 +199,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     ));
   }
 
+  /// #763/#3215 — the help symbol beside a badge tile, in the rows' column.
+  Widget _badgeHelp(AppLocalizations l10n, String anchor) => Padding(
+        padding: const EdgeInsetsDirectional.only(end: HelpRow.tileEndInset),
+        child: HelpColumn(topic: l10n.helpHintBadgesTopic, anchor: anchor),
+      );
+
   /// #1307 — My membership: my standing in THIS workspace.
   List<Widget> _membershipTiles(
     BuildContext context,
@@ -230,25 +236,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 const Expanded(child: MyBadgeTile()),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(end: HelpRow.tileEndInset),
-                  child: HelpColumn(
-                    topic: l10n.helpHintBadgesTopic,
-                    anchor: HelpAnchor.profileBadge,
-                  ),
-                ),
+                _badgeHelp(l10n, HelpAnchor.profileBadge),
               ],
             ),
             Row(
               children: [
                 const Expanded(child: BadgePinTile()),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(end: HelpRow.tileEndInset),
-                  child: HelpColumn(
-                    topic: l10n.helpHintBadgesTopic,
-                    anchor: HelpAnchor.profileBadgePin,
-                  ),
-                ),
+                _badgeHelp(l10n, HelpAnchor.profileBadgePin),
               ],
             ),
           ],
