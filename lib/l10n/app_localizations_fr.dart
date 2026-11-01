@@ -24083,6 +24083,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLaunchMilestones => 'Étapes clés';
 
   @override
+  String setupLaunchOpenLower(String milestone) {
+    return 'Ouvrir avec $milestone seulement';
+  }
+
+  @override
   String get setupLaunchOperator => 'Seul votre opérateur peut faire ceci :';
 
   @override

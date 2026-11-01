@@ -91,5 +91,6 @@
   "setupLaunchCannot": "Abrir será posible cuando se alcancen todos los hitos.",
   "@setupLaunchCannot": {
     "description": "#2876 setup launch: setupLaunchCannot"
-  }
+  },
+  "setupLaunchOpenLower": "Abrir solo con {milestone}"
 }
