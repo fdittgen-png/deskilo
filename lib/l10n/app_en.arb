@@ -301,6 +301,10 @@
   "@acctConnReplaceToken": {
     "description": "#2370 Button: replace the API token of a connection."
   },
+  "acctConnRevocationUnconfirmed": "The provider did not confirm the revocation; remove DesKilo in its settings",
+  "@acctConnRevocationUnconfirmed": {
+    "description": "#2370 Connection card: the accounting system did not confirm it forgot the revoked connection's token, or cannot be asked; the person removes the app there."
+  },
   "acctConnRevoke": "Revoke",
   "@acctConnRevoke": {
     "description": "#2370 Button and dialog title: revoke a connection."

@@ -257,6 +257,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acctConnReplaceToken => 'Sustituir el token';
 
   @override
+  String get acctConnRevocationUnconfirmed =>
+      'El proveedor no confirmó la revocación; quite DesKilo en su configuración';
+
+  @override
   String get acctConnRevoke => 'Revocar';
 
   @override

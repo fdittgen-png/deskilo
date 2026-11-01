@@ -191,6 +191,7 @@
   "acctConnRefresh": "Vérifier la connexion",
   "acctConnRefused": "Le serveur a refusé : vérifiez que vous pouvez gérer la facturation.",
   "acctConnReplaceToken": "Remplacer le jeton",
+  "acctConnRevocationUnconfirmed": "Le fournisseur n'a pas confirmé la révocation ; retirez DesKilo dans ses paramètres",
   "acctConnRevoke": "Révoquer",
   "acctConnRevokeConfirm": "Révoquer cette connexion ? Son jeton est oublié aussitôt ; ses correspondances et les envois déjà faits restent listés.",
   "acctConnRevoked": "La connexion est révoquée.",

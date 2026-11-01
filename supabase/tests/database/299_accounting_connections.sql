@@ -224,6 +224,7 @@ select is(pg_temp.as_json('billing', format($q$select public.set_accounting_toke
           jsonb_build_object('target_id', 'pennylane_api', 'auth_kind', 'token', 'remote_tenant_id', '812345678',
             'display_name', 'Pennylane', 'status', 'connected', 'status_detail', '', 'scopes', '[]'::jsonb,
             'token_expires_at', null, 'refresh_expires_at', null, 'revoked_at', null,
+            'remote_revocation', null, 'remote_revocation_at', null,
             'secrets_set', '["access_token"]'::jsonb, 'delivered', false, 'maps', '[]'::jsonb),
           'the token connects, and the answer names the secret, never its value');
 select is((select decrypted_secret from vault.decrypted_secrets

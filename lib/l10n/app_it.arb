@@ -191,6 +191,7 @@
   "acctConnRefresh": "Verifica il collegamento",
   "acctConnRefused": "Il server ha rifiutato: verifichi di poter gestire la fatturazione.",
   "acctConnReplaceToken": "Sostituisci il token",
+  "acctConnRevocationUnconfirmed": "Il fornitore non ha confermato la revoca; rimuovi DesKilo nelle sue impostazioni",
   "acctConnRevoke": "Revoca",
   "acctConnRevokeConfirm": "Revocare questo collegamento? Il suo token viene dimenticato subito; le sue corrispondenze e gli invii già fatti restano elencati.",
   "acctConnRevoked": "Il collegamento è revocato.",

@@ -14,7 +14,9 @@ import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/accounting_delivery_run.dart';
+import 'package:deskilo/features/money/domain/accounting_target.dart';
 import 'package:deskilo/features/money/domain/book_period.dart';
+import 'package:deskilo/features/money/domain/remote_revocation.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_targets_sheet.dart';
 import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
@@ -132,6 +134,56 @@ void main() {
     expect(repo.connections.single.maps, hasLength(1), reason: 'the mappings stay');
     expect(_state(tester), 'Not connected');
     expect(find.text('One earlier connection was revoked'), findsOneWidget);
+    // A token connection only the company withdraws: the target is not
+    // asked, so the card says to remove the app there.
+    expect(
+      (await repo.fetchConnections('ws-1')).single.remoteRevocation,
+      RemoteRevocation.notSupported,
+    );
+    expect(
+      find.byKey(const ValueKey('acct-revocation-unconfirmed-$_card')),
+      findsOneWidget,
+    );
+    expect(
+      find.text('The provider did not confirm the revocation; remove DesKilo in its settings'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('#2370 — the card asks to remove the app at the provider only when the latest '
+      'revocation was not confirmed there', (tester) async {
+    AccountingConnection revoked(String id, DateTime at, RemoteRevocation? outcome) =>
+        AccountingConnection(
+          id: id,
+          issuerSiteId: _studio.id,
+          targetId: 'pennylane_api',
+          authKind: AccountingAuthKind.oauth2,
+          status: ConnectionStatus.revoked,
+          revokedAt: at,
+          remoteRevocation: outcome,
+        );
+    const notice = ValueKey('acct-revocation-unconfirmed-$_card');
+    for (final (outcomes, shown) in [
+      ([RemoteRevocation.failed], true),
+      ([RemoteRevocation.notSupported], true),
+      ([RemoteRevocation.revoked], false),
+      (<RemoteRevocation?>[null], false),
+      // An earlier unconfirmed one the latest revocation confirmed.
+      ([RemoteRevocation.failed, RemoteRevocation.revoked], false),
+      ([RemoteRevocation.revoked, RemoteRevocation.failed], true),
+    ]) {
+      final repo = FakeAccountingConnectionRepository(
+        books: FakeBookPeriodRepository(today: _today),
+        today: _today,
+        connections: [
+          for (final (i, o) in outcomes.indexed)
+            revoked('c-$i', _today.subtract(Duration(days: 10 - i)), o),
+        ],
+      );
+      await tester.pumpWidget(const SizedBox());
+      await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+      expect(find.byKey(notice), shown ? findsOneWidget : findsNothing, reason: '$outcomes');
+    }
   });
 
   testWidgets('#2374 — a billing manager connects Business Central with the company\'s Entra application; '

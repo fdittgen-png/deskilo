@@ -257,6 +257,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get acctConnReplaceToken => 'Remplacer le jeton';
 
   @override
+  String get acctConnRevocationUnconfirmed =>
+      'Le fournisseur n\'a pas confirmé la révocation ; retirez DesKilo dans ses paramètres';
+
+  @override
   String get acctConnRevoke => 'Révoquer';
 
   @override

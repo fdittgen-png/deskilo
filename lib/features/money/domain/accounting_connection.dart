@@ -12,6 +12,7 @@
 import '../../../core/data/json_reader.dart';
 import 'accounting_delivery_run.dart';
 import 'accounting_target.dart';
+import 'remote_revocation.dart';
 
 /// The right that connects, maps and revokes (the server's
 /// `accounting_connector_actor`).
@@ -171,6 +172,7 @@ class AccountingConnection {
     this.statusDetail = '',
     this.connectedAt,
     this.revokedAt,
+    this.remoteRevocation,
     this.delivered = false,
     this.secretsSet = const [],
     this.maps = const [],
@@ -190,6 +192,7 @@ class AccountingConnection {
       connectedAt: r.dateTimeOrNull('connected_at'),
       delivered: r.boolOr('delivered', fallback: false),
       revokedAt: r.dateTimeOrNull('revoked_at'),
+      remoteRevocation: RemoteRevocation.of(r.stringOrNull('remote_revocation')),
       secretsSet: r.strings('secrets_set'),
       maps: [for (final m in r.list('maps')) AccountingMap.fromJson(m)],
     );
@@ -205,6 +208,9 @@ class AccountingConnection {
   final String statusDetail;
   final DateTime? connectedAt;
   final DateTime? revokedAt;
+
+  /// What the target answered to the revocation, if it was recorded.
+  final RemoteRevocation? remoteRevocation;
 
   /// Whether a document was delivered through it: another company is then
   /// a new connection.

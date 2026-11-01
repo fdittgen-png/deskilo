@@ -191,6 +191,7 @@
   "acctConnRefresh": "Verbindung prüfen",
   "acctConnRefused": "Der Server hat abgelehnt: Prüfen Sie, ob Sie die Abrechnung verwalten dürfen.",
   "acctConnReplaceToken": "Token ersetzen",
+  "acctConnRevocationUnconfirmed": "Der Anbieter hat den Widerruf nicht bestätigt; entfernen Sie DesKilo in seinen Einstellungen",
   "acctConnRevoke": "Widerrufen",
   "acctConnRevokeConfirm": "Diese Verbindung widerrufen? Ihr Token wird sofort vergessen; ihre Zuordnungen und die bereits erfolgten Übermittlungen bleiben aufgeführt.",
   "acctConnRevoked": "Die Verbindung ist widerrufen.",

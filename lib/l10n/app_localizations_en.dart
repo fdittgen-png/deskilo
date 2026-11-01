@@ -256,6 +256,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctConnReplaceToken => 'Replace the token';
 
   @override
+  String get acctConnRevocationUnconfirmed =>
+      'The provider did not confirm the revocation; remove DesKilo in its settings';
+
+  @override
   String get acctConnRevoke => 'Revoke';
 
   @override
