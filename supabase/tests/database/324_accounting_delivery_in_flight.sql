@@ -56,10 +56,14 @@ $r$;
 -- A delivery's last activity, p_seconds ago.
 create or replace function pg_temp.age(p_doc text, p_seconds int) returns text language plpgsql as $a$
 begin
+  -- The system-columns trigger keeps created_datetime immutable; the fixture
+  -- ages the row as the passing of time would.
+  set local session_replication_role = replica;
   update public.accounting_deliveries
      set created_datetime = now() - make_interval(secs => p_seconds),
          sent_at = case when sent_at is null then null else now() - make_interval(secs => p_seconds) end
    where document_id = p_doc::uuid;
+  set local session_replication_role = origin;
   return 'aged';
 end
 $a$;
