@@ -731,7 +731,9 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
                 Payments: [{
                   Invoice: { InvoiceID: invoice.InvoiceID },
                   Account: ref.AccountCode ? { Code: ref.AccountCode } : { AccountID: ref.AccountID },
-                  Date: p.date,
+                  // The day the money moved at the bank, when a statement line
+                  // is reconciled with the receipt (#2380); the booking day otherwise.
+                  Date: p.valueDate ?? p.date,
                   Amount: major(deposit.debitCents, p.currency),
                   Reference: `${NOTE_PREFIX}${key}`,
                 }],
