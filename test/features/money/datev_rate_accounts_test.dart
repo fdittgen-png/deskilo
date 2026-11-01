@@ -17,7 +17,7 @@ List<(String, String, String)> _rows(
   List<Invoice> invoices, {
   DatevAccounts accounts = const DatevAccounts(),
 }) => [
-  for (final r in buildDatevFile(DatevRequest(detail: datevCollective, 
+  for (final r in buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
     invoices: invoices,
     matches: const {},
     accounts: accounts,

@@ -11,6 +11,7 @@ import 'support/seeded_export_year.dart';
 
 List<Map<String, String>> _rows(List<LedgerEntry> ledger) {
   final lines = buildFecFile(FecRequest(
+      currency: 'EUR',
     invoices: SeededExportYear.invoices,
     matches: SeededExportYear.matches,
     company: seededCompany,

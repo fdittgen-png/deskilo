@@ -18,6 +18,7 @@ import '../domain/accounting_format.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/archive_fec.dart';
 import '../domain/book_period.dart';
+import '../domain/euro_format.dart';
 import '../domain/fec.dart';
 import '../domain/fec_import_contract.dart';
 import '../domain/fiscal_year.dart';
@@ -26,10 +27,12 @@ import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';
 import 'book_report_actions.dart';
 
-/// Who the FEC is for: the space, the issuer's legal id, and whether the
-/// space's books are a development copy.
+/// Who the FEC is for: the space, the currency it books in (the FEC is
+/// written in euros only), the issuer's legal id, and whether the space's
+/// books are a development copy.
 typedef FecExportScope = ({
   String workspaceId,
+  String currency,
   String legalId,
   bool development,
 });
@@ -102,6 +105,14 @@ class FecExportActions {
     );
   }
 
+  /// Whether the space's currency is the one the FEC is written in; when
+  /// it is not, the person is told which currency the space books in.
+  bool currencyAllowed() {
+    if (isEuroFormatCurrency(scope.currency)) return true;
+    AppSnack.error(context, context.l10n.fecCurrencyRefused(scope.currency));
+    return false;
+  }
+
   /// The year's FEC and its period: the posted one when [posted] holds the
   /// postings, else the one [documents] writes for the calendar [year];
   /// null when the posted one was refused (the person was told why).
@@ -126,6 +137,7 @@ class FecExportActions {
       );
       return null;
     }
+    if (!currencyAllowed()) return null;
     return (
       fec: documents.fec(),
       period: FiscalYear.calendar(year),

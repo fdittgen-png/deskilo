@@ -20,6 +20,7 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 List<Map<String, String>> _fec({Map<String, InvoiceMatch>? matches}) {
   final file = buildFecFile(FecRequest(
+      currency: 'EUR',
     invoices: SeededExportYear.invoices,
     matches: matches ?? SeededExportYear.matches,
     company: seededCompany,
@@ -85,7 +86,7 @@ void main() {
   });
 
   group('DATEV', () {
-    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(detail: datevCollective, 
+    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: matches ?? SeededExportYear.matches,
       accounts: const DatevAccounts(),

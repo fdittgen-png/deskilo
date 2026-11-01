@@ -9391,6 +9391,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String fecCurrencyRefused(String currency) {
+    return 'The FEC is written in euros only, and this workspace books in $currency: no FEC was written.';
+  }
+
+  @override
   String get fecMissingSiren =>
       'The FEC is named after your registration number — fill it in under Legal identity first.';
 
@@ -12315,6 +12320,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoicePickMember =>
       'Pick a member to see what their month tracked.';
+
+  @override
+  String get invoicePreviewUnavailable =>
+      'The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.';
 
   @override
   String get invoiceProformaAction => 'Proforma invoice';

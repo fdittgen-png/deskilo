@@ -11178,6 +11178,15 @@
       }
     }
   },
+  "fecCurrencyRefused": "The FEC is written in euros only, and this workspace books in {currency}: no FEC was written.",
+  "@fecCurrencyRefused": {
+    "description": "FEC export (#3184): the workspace books in a currency other than the euro",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "fecMissingSiren": "The FEC is named after your registration number — fill it in under Legal identity first.",
   "@fecMissingSiren": {
     "description": "Refusal: the FEC file name is built from the SIREN, which is not set"
@@ -14640,6 +14649,10 @@
   "invoicePickMember": "Pick a member to see what their month tracked.",
   "@invoicePickMember": {
     "description": "Issue sheet placeholder before a member is chosen"
+  },
+  "invoicePreviewUnavailable": "The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.",
+  "@invoicePreviewUnavailable": {
+    "description": "Issue form: the preview answer could not be read or decoded; neither an empty month nor a total"
   },
   "invoiceProformaAction": "Proforma invoice",
   "@invoiceProformaAction": {

@@ -149,6 +149,10 @@
   "@invoiceNothingToInvoice": {
     "description": "Issue form: the picked month has no tracked positions (0062)"
   },
+  "invoicePreviewUnavailable": "The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.",
+  "@invoicePreviewUnavailable": {
+    "description": "Issue form: the preview answer could not be read or decoded; neither an empty month nor a total"
+  },
   "invoiceLineAdjustment": "Adjustment",
   "@invoiceLineAdjustment": {
     "description": "Fallback label of an adjustment position without a description"

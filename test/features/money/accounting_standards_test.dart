@@ -188,6 +188,7 @@ Map<String, InvoiceMatch> _matches() => {
     };
 
 String _fec({List<Invoice>? invoices}) => buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: invoices ?? _aRealYear(),
       matches: _matches(),
       company: _company,
@@ -317,7 +318,7 @@ void main() {
       // DATEV reads an unmarked file as Windows-1252. "Bürogemeinschaft
       // München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in the
       // accountant's books, and nothing errors anywhere.
-      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -341,7 +342,7 @@ void main() {
       // bills members called Škoda, and that charset cannot spell the
       // second one. Transcoding would substitute or drop it silently.
       const name = 'Bürogemeinschaft Škoda';
-      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: const [],
         matches: const {},
         accounts: const DatevAccounts(),
@@ -378,7 +379,7 @@ void main() {
     late List<String> columns;
 
     setUp(() {
-      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -525,7 +526,7 @@ void main() {
           .where((r) => r['CompteNum'] == '445710')
           .fold<int>(0, (sum, r) => sum + _cents(r['Credit']!) - _cents(r['Debit']!));
 
-      final datev = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final datev = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: year,
         matches: const {},
         accounts: const DatevAccounts(),

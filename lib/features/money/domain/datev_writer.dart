@@ -101,15 +101,10 @@ class DatevWriter {
       ? null
       : VatTaxPointIndex(taxPoints!);
 
-  /// The currency the amounts are written in: DATEV EXTF is a German and
-  /// Austrian format, both eurozone; an export in another refuses
-  /// (datev_package.dart), it is never written with euro digits.
-  static const amountCurrency = 'EUR';
-
   /// Always positive, comma decimal — see the header note.
   String _amount(int cents) => minorToText(
     cents,
-    amountCurrency,
+    currency,
     decimalSeparator: ',',
     absolute: true,
   );

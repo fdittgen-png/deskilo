@@ -15545,6 +15545,12 @@ abstract class AppLocalizations {
   /// **'The FEC breaks the import contract ({rules}) and was not saved.'**
   String fecContractFailed(String rules);
 
+  /// FEC export (#3184): the workspace books in a currency other than the euro
+  ///
+  /// In en, this message translates to:
+  /// **'The FEC is written in euros only, and this workspace books in {currency}: no FEC was written.'**
+  String fecCurrencyRefused(String currency);
+
   /// Refusal: the FEC file name is built from the SIREN, which is not set
   ///
   /// In en, this message translates to:
@@ -20434,6 +20440,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick a member to see what their month tracked.'**
   String get invoicePickMember;
+
+  /// Issue form: the preview answer could not be read or decoded; neither an empty month nor a total
+  ///
+  /// In en, this message translates to:
+  /// **'The preview could not be read, so nothing is shown and nothing can be issued. Change the month or try again.'**
+  String get invoicePreviewUnavailable;
 
   /// Tooltip of the proforma action on the hub rows (0072)
   ///

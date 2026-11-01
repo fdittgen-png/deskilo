@@ -129,6 +129,7 @@ void main() {
     expect(view.invoices.any((i) => i.kind == InvoiceKind.settlement), isFalse);
     expect(view.matches.keys.toSet(), {x, y});
     final fec = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: view.invoices,
       matches: view.matches,
       company: const InvoiceParty(name: 'ws'),

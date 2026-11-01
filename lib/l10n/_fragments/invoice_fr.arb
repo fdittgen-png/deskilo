@@ -43,6 +43,7 @@
   "invoicePdfVoided": "ERRONÉE — annulée le",
   "invoicePdfReplaces": "Remplace",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
+  "invoicePreviewUnavailable": "L’aperçu n’a pas pu être lu : rien n’est affiché et rien ne peut être émis. Changez de mois ou réessayez.",
   "invoiceLineAdjustment": "Ajustement",
   "invoiceFilterAllMembers": "Tous les membres",
   "invoiceFilterAllMonths": "Tous les mois",

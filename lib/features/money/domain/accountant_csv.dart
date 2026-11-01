@@ -154,12 +154,13 @@ const List<String> accountantCsvColumns = [
 /// Builds the CSV. [generatedAt] and the period bounds go in a `#`
 /// preamble so the file says what it is when it turns up in an e-mail
 /// three months later with no message attached.
+/// A document with no currency keeps its currency cell empty (#3184): the
+/// euro is never assumed, and the handoff report blocks the file on it.
 String buildAccountantCsv({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   required DateTime generatedAt,
   required String workspaceName,
-  String currencyFallback = 'EUR',
 }) {
   String day(DateTime? d) =>
       d == null ? '' : d.toIso8601String().split('T').first;
@@ -207,7 +208,7 @@ String buildAccountantCsv({
       _accountantCsvText(invoice.memberName),
       _accountantCsvText(invoice.memberId),
       _accountantCsvText(invoice.title),
-      _accountantCsvText(invoice.currency.isEmpty ? currencyFallback : invoice.currency),
+      _accountantCsvText(invoice.currency),
       // #1077 — the document's own currency decides the grain.
       minorToText(invoice.netCents, invoice.currency),
       minorToText(invoice.vatCents, invoice.currency),
