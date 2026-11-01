@@ -168,6 +168,16 @@ constraint asset_valuation_rows.system_company_present CHECK ((company_id IS NOT
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.badge_auth_attempts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_line_unreconciliations.bank_line_unreconciliations_line_id_fkey FOREIGN KEY (line_id) REFERENCES bank_statement_lines(id) ON DELETE CASCADE
+constraint bank_line_unreconciliations.bank_line_unreconciliations_pkey PRIMARY KEY (id)
+constraint bank_line_unreconciliations.bank_line_unreconciliations_reason_check CHECK (((char_length(reason) >= 1) AND (char_length(reason) <= 300)))
+constraint bank_line_unreconciliations.bank_line_unreconciliations_reconciled_by_member_id_fkey FOREIGN KEY (reconciled_by_member_id) REFERENCES members(id) ON DELETE SET NULL
+constraint bank_line_unreconciliations.bank_line_unreconciliations_request UNIQUE (workspace_id, request_id)
+constraint bank_line_unreconciliations.bank_line_unreconciliations_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint bank_line_unreconciliations.bank_line_unreconciliations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bank_line_unreconciliations.bank_line_unreconciliations_workspace_id_outgoing_payment__fkey FOREIGN KEY (workspace_id, outgoing_payment_id) REFERENCES outgoing_payments(workspace_id, id)
+constraint bank_line_unreconciliations.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_line_unreconciliations.system_company_present CHECK ((company_id IS NOT NULL))
 constraint bank_statement_lines.bank_statement_lines_account_check CHECK (((char_length(account) >= 1) AND (char_length(account) <= 64)))
 constraint bank_statement_lines.bank_statement_lines_amount_cents_check CHECK (((amount_cents <> 0) AND (abs(amount_cents) <= 2147483647)))
 constraint bank_statement_lines.bank_statement_lines_check CHECK (((state <> 'review'::text) OR (resembles_line_id IS NOT NULL)))
@@ -2583,7 +2593,7 @@ routine public.operator_set_installation_roles(p_roles text[], p_installation_id
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
 routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
-routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:f39ec0341d2b
+routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e6f8fab9892d
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f135c6a70d02
@@ -3002,6 +3012,7 @@ routine public.touch_conversation() -> trigger | function | definer | volatile |
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
+routine public.unreconcile_bank_line_out_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afe6df043a4c
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
 routine public.update_managed_identity(p_member_id uuid, p_identity jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:42ab2e5f4c08
 routine public.update_reservation(p_reservation_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:c24288f0606e
@@ -3120,6 +3131,7 @@ trigger analytics_history.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger asset_valuation_batches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_batches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_rows FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bank_line_unreconciliations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_line_unreconciliations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bank_statement_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statement_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bank_statements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_cost_allocation_rules.bi_cost_allocation_rules_guard CREATE TRIGGER bi_cost_allocation_rules_guard BEFORE UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION bi_cost_allocation_rules_guard()
