@@ -8,8 +8,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:deskilo/core/ui/loading_view.dart';
+import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/screens/invoice_register_screen.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,23 @@ final _en = AppLocalizationsEn();
 const _failure = ValueKey('read-failure');
 const _retry = ValueKey('inline-banner-action');
 const _refreshing = ValueKey('read-refreshing');
+
+/// The export's source, held by the test.
+class _Source implements AccountingExportSource {
+  final probe = ReadProbe<AccountingExportInput?>();
+
+  @override
+  Future<AccountingExportInput?> read({
+    required String formatId,
+    required String workspaceId,
+    required String country,
+    required int year,
+    required List<Invoice> invoices,
+  }) => probe();
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 Future<List<Invoice>> _invoices() async {
   final money = FakeMoneyRepository();
@@ -49,6 +68,7 @@ Future<ReadProbe<List<Invoice>>> _pump(
   WidgetTester tester, {
   String? from,
   String? to,
+  _Source? source,
 }) async {
   final probe = ReadProbe<List<Invoice>>();
   await pumpStateScreen(
@@ -57,6 +77,7 @@ Future<ReadProbe<List<Invoice>>> _pump(
     overrides: [
       ...standardTestOverrides(workspace: FakeWorkspaceRepository.withWorkspace()),
       invoicesProvider.overrideWith((ref) => probe()),
+      if (source != null) accountingExportSourceProvider.overrideWithValue(source),
     ],
   );
   await tester.pump();
@@ -167,5 +188,43 @@ void main() {
     for (final i in all) {
       expect(_row(i), findsOneWidget);
     }
+  });
+
+  testWidgets('an export is one command: the button is off while it runs, a '
+      'failed one says so and leaves the filters and the button as they were', (
+    tester,
+  ) async {
+    final all = await _invoices();
+    final source = _Source();
+    final probe = await _pump(
+      tester,
+      from: '2026-05',
+      to: '2026-06',
+      source: source,
+    );
+    probe.answer(all);
+    await tester.pump();
+    final export = find.byKey(const ValueKey('invoice-accounting-export'));
+    await tester.tap(export);
+    await tester.pump(const Duration(milliseconds: 400));
+    final datev = find.byKey(const ValueKey('accounting-export-datev'));
+    await tester.ensureVisible(datev);
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.tap(datev);
+    await tester.pump(const Duration(seconds: 1));
+    expect(source.probe.calls, 1);
+    expect(tester.widget<IconButton>(export).onPressed, isNull);
+
+    await tester.tap(export, warnIfMissed: false);
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.byKey(const ValueKey('accounting-export-datev')), findsNothing);
+    expect(source.probe.calls, 1, reason: 'no second run');
+
+    source.probe.fail(StateError('disk full'));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text(_en.commonSaveFailed), findsOneWidget);
+    expect(find.textContaining('disk full'), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-register-period')), findsOneWidget);
+    expect(tester.widget<IconButton>(export).onPressed, isNotNull);
   });
 }

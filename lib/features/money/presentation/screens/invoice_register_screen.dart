@@ -59,6 +59,18 @@ class _InvoiceRegisterScreenState
   /// the SAF-T export takes exactly what the register shows.
   int? _year;
 
+  /// An export is running: the one command the register owns.
+  bool _exporting = false;
+
+  Future<void> _export(List<Invoice> shown, {required String label}) async {
+    setState(() => _exporting = true);
+    try {
+      await exportAccountingFile(context, ref, shown, label: label);
+    } finally {
+      if (mounted) setState(() => _exporting = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -105,15 +117,17 @@ class _InvoiceRegisterScreenState
               // hunting for the accounting export walked past it.
               tooltip: l10n.invoiceAccountingExport,
               icon: const Icon(Icons.plagiarism_outlined),
-              onPressed: () => exportAccountingFile(
-                context,
-                ref,
-                _visible(invoicesAsync.value ?? const [], canIssue || canExport),
-                label: _year?.toString() ??
-                    (_period == null
-                        ? l10n.invoiceRegisterAllYears
-                        : _periodText(l10n, dateFormat, _period!)),
-              ),
+              // #3061 — one export at a time: the button is off from the
+              // tap until the run ends, however it ends.
+              onPressed: _exporting
+                  ? null
+                  : () => _export(
+                      _visible(invoicesAsync.value ?? const [], canIssue || canExport),
+                      label: _year?.toString() ??
+                          (_period == null
+                              ? l10n.invoiceRegisterAllYears
+                              : _periodText(l10n, dateFormat, _period!)),
+                    ),
             ),
         ],
       ),
