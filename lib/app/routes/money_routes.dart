@@ -18,6 +18,7 @@ import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
 import '../../features/money/presentation/screens/payment_config_screen.dart';
 import '../../features/money/presentation/screens/purchase_approvals_screen.dart';
+import '../../features/money/presentation/screens/recorded_payments_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
@@ -170,6 +171,17 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
       ),
       builder: (context, state) => const PurchaseApprovalsScreen(),
+    ),
+    // #2578 — the payments behind the collected figure, for its window.
+    GoRoute(
+      path: '/money/payments',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),
+      ),
+      builder: (context, state) => RecordedPaymentsScreen(
+        from: state.uri.queryParameters['from'],
+        to: state.uri.queryParameters['to'],
+      ),
     ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(

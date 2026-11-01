@@ -13176,6 +13176,12 @@
     }
   },
   "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
+  "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
+  "recordedPaymentsMore": "Mostrar más pagos",
+  "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
+  "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsTitle": "Pagos recibidos",
+  "recordedPaymentsUnnamed": "Pago",
   "recordingPrivacyBadge": "Modo grabación — personas inventadas",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
