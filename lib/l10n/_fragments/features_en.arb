@@ -577,5 +577,13 @@
   "featurePlanDecorDesc": "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.",
   "@featurePlanDecorDesc": {
     "description": "#3074 the plan shapes flag"
+  },
+  "featureMtdSubmissionTitle": "Submit UK VAT returns to HMRC",
+  "featureMtdSubmissionDesc": "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only.",
+  "@featureMtdSubmissionTitle": {
+    "description": "#2470 the HMRC MTD VAT submission flag"
+  },
+  "@featureMtdSubmissionDesc": {
+    "description": "#2470 the HMRC MTD VAT submission flag"
   }
 }

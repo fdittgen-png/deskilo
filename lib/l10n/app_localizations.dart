@@ -14483,6 +14483,18 @@ abstract class AppLocalizations {
   /// **'More'**
   String get featureMore;
 
+  /// #2470 the HMRC MTD VAT submission flag
+  ///
+  /// In en, this message translates to:
+  /// **'Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC\'s receipt on the return. Off keeps the bridging file only.'**
+  String get featureMtdSubmissionDesc;
+
+  /// #2470 the HMRC MTD VAT submission flag
+  ///
+  /// In en, this message translates to:
+  /// **'Submit UK VAT returns to HMRC'**
+  String get featureMtdSubmissionTitle;
+
   /// #945 sites: featureMultiSite
   ///
   /// In en, this message translates to:

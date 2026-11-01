@@ -85,6 +85,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.vatGroups,
     _F.vatCounterparty,
     _F.vatDeclarations,
+    _F.mtdSubmission,
     _F.inputVat,
     _F.viesVerification,
     _F.recapitulativeStatement,

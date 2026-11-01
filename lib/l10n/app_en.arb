@@ -10553,6 +10553,14 @@
   "@featureMore": {
     "description": "#1221 reveals the rest of a feature description"
   },
+  "featureMtdSubmissionDesc": "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only.",
+  "@featureMtdSubmissionDesc": {
+    "description": "#2470 the HMRC MTD VAT submission flag"
+  },
+  "featureMtdSubmissionTitle": "Submit UK VAT returns to HMRC",
+  "@featureMtdSubmissionTitle": {
+    "description": "#2470 the HMRC MTD VAT submission flag"
+  },
   "featureMultiSite": "Sites",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"

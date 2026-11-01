@@ -403,4 +403,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),
+  // #2470 — the prepared UK VAT return goes to HMRC from the app, through
+  // the MTD VAT API, and HMRC's receipt is kept on the return. Asked for: it
+  // needs the installation's HMRC application and a connected VRN.
+  WorkspaceFeature.mtdSubmission: FeatureManifestEntry(
+    feature: WorkspaceFeature.mtdSubmission,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.vatDeclarations,
+    defaultOn: false,
+  ),
 };

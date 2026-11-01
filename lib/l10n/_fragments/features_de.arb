@@ -260,5 +260,7 @@
     }
   },
   "featurePlanDecorTitle": "Den Raum im Plan zeichnen",
-  "featurePlanDecorDesc": "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben."
+  "featurePlanDecorDesc": "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben.",
+  "featureMtdSubmissionTitle": "Britische USt-Erklärung an HMRC senden",
+  "featureMtdSubmissionDesc": "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
 }

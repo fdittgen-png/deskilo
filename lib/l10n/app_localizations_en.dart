@@ -8761,6 +8761,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMore => 'More';
 
   @override
+  String get featureMtdSubmissionDesc =>
+      'Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC\'s receipt on the return. Off keeps the bridging file only.';
+
+  @override
+  String get featureMtdSubmissionTitle => 'Submit UK VAT returns to HMRC';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

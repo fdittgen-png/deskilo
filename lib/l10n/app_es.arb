@@ -6242,6 +6242,8 @@
   "featureMoneyTab": "Extracto y saldo",
   "featureMoneyTabDesc": "Facturas mensuales, pagos y gastos.",
   "featureMore": "Más",
+  "featureMtdSubmissionDesc": "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente.",
+  "featureMtdSubmissionTitle": "Presentar el IVA británico a HMRC",
   "featureMultiSite": "Sedes",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"

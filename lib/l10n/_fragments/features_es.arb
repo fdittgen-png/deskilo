@@ -260,5 +260,7 @@
     }
   },
   "featurePlanDecorTitle": "Dibujar la sala en el plano",
-  "featurePlanDecorDesc": "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen."
+  "featurePlanDecorDesc": "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen.",
+  "featureMtdSubmissionTitle": "Presentar el IVA británico a HMRC",
+  "featureMtdSubmissionDesc": "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
 }

@@ -416,7 +416,11 @@ enum WorkspaceFeature {
   foreignCurrencyPurchases,
   accountingConnectors,
   bankImport,
-  planDecor;
+  planDecor,
+
+  /// #2470 — submit the prepared UK VAT return to HMRC through the MTD VAT
+  /// API. Platform, OFF, under vatDeclarations.
+  mtdSubmission;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

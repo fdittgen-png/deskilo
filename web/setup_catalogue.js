@@ -602,6 +602,10 @@ window.SETUP_REGISTRY={
   [
    "planDecor",
    true
+  ],
+  [
+   "mtdSubmission",
+   false
   ]
  ],
  "requires": {
@@ -687,7 +691,8 @@ window.SETUP_REGISTRY={
   "dataReport": "dataExport",
   "foreignCurrencyPurchases": "purchases",
   "accountingConnectors": "accountingBook",
-  "bankImport": "invoicing"
+  "bankImport": "invoicing",
+  "mtdSubmission": "vatDeclarations"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1272,6 +1277,7 @@ window.SETUP_PROCESSES=[
      "bankImport",
      "vatManagement",
      "vatDeclarations",
+     "mtdSubmission",
      "vatGroups",
      "vatRateHistory",
      "vatCounterparty",
@@ -1631,7 +1637,8 @@ window.SETUP_LEVELS={
       "accountingBook",
       "accountingPeriods",
       "accountingConnectors",
-      "bankImport"
+      "bankImport",
+      "mtdSubmission"
      ],
      "needs": {
       "money": "invoices"
