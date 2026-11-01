@@ -104,8 +104,11 @@ begin
      and not (old.state = 'reconciled' and new.state = 'reported'
               and not exists (select 1 from public.bank_statement_lines b
                                where b.outgoing_payment_id = new.id)
+              -- The undo of THIS transaction: an older undo row must not let a
+              -- payment reconciled again slip back without a fresh undo.
               and exists (select 1 from public.bank_line_unreconciliations u
-                           where u.outgoing_payment_id = new.id)) then
+                           where u.outgoing_payment_id = new.id
+                             and u.created_datetime = now())) then
     raise exception 'an outgoing payment moves only from reported to reversed, or to reconciled by a bank line and back when that line is undone';
   end if;
   return new;

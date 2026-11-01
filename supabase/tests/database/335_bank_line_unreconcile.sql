@@ -14,11 +14,13 @@
 -- days P1 had taken, the reason and who undid it. The same request again
 -- answers the same and adds nothing; a second undoing is refused as
 -- decided meanwhile (DKB01). L1 then reconciles P2, the right one, and
--- nothing moves P2 back while L1 names it. The record is read by the
+-- nothing moves P2 back while L1 names it. An undo row of an earlier
+-- transaction lets nothing back: P1, reconciled again by L3, stays
+-- reconciled without a fresh undo, which still works. The record is read by the
 -- statements' readers only, written by nobody, and the command is not
 -- anon's. Positive cases beside every refusal.
 begin;
-select plan(30);
+select plan(35);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -220,6 +222,33 @@ select is(pg_temp.as_role('owner', $s$with u as (update public.bank_line_unrecon
           '42501', 'nor change it');
 select ok(not has_function_privilege('anon', 'public.unreconcile_bank_line_out_v1(uuid, text, uuid)', 'execute'),
           'the command is not anon''s');
+
+-- An older undo is not a pass. P1's undo is made an hour old (the stamp
+-- keeps created_datetime, so the triggers stand down for the edit); L3
+-- then reconciles P1. With L3's link gone, P1 still may not go back to
+-- reported on that old row: only the undo of the same transaction lets it.
+alter table public.bank_line_unreconciliations disable trigger user;
+update public.bank_line_unreconciliations
+   set created_datetime = now() - interval '1 hour', modified_datetime = now() - interval '1 hour';
+alter table public.bank_line_unreconciliations enable trigger user;
+select is(pg_temp.as_json('owner', format('select public.reconcile_bank_line_out_v1(%L, %L)',
+            pg_temp.v('l3'), pg_temp.v('p1'))) ->> 'status', 'reconciled',
+          'P1, undone an hour ago, is reconciled again by L3');
+select throws_ok(format($t$do $d$ begin
+            update public.bank_statement_lines set outgoing_payment_id = null where id = %L;
+            update public.outgoing_payments set state = 'reported' where id = %L;
+          end $d$$t$, pg_temp.v('l3'), pg_temp.v('p1')),
+          'P0001', null, 'an older undo row does not move P1 back, even with L3''s link gone');
+select is((select (l.outgoing_payment_id::text = pg_temp.v('p1')) || '/' || p.state
+             from public.bank_statement_lines l join public.outgoing_payments p on p.id = l.outgoing_payment_id
+            where l.id = pg_temp.v('l3')::uuid), 'true/reconciled',
+          'the refused attempt left L3 naming P1, reconciled');
+select is(pg_temp.undo('owner', pg_temp.v('l3'), 'Paid twice by mistake', '00000000-0000-4000-8000-0000064500e4') ->> 'status',
+          'open', 'a fresh undo through the command still works');
+select is((select p.state || '/' || (select count(*) from public.bank_line_unreconciliations u
+                                      where u.outgoing_payment_id = p.id)
+             from public.outgoing_payments p where p.id = pg_temp.v('p1')::uuid),
+          'reported/2', 'P1 is reported again, with both undos on record');
 
 select * from finish();
 rollback;
