@@ -45,8 +45,11 @@ select set_config('t.a', public.create_workspace('MCP F', 'FR', 'EUR', 'Europe/P
 reset role;
 update public.workspaces set street = '1 Fixture Street', city = 'Fixtureville', feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"mcpAccess": true, "invoicing": true, "moneyTab": true}'
  where id = current_setting('t.a')::uuid;
-insert into public.members (workspace_id, user_id, status, subscription_pct)
-values (current_setting('t.a')::uuid, '00000000-0000-4000-8000-0000000289a2', 'active', 100);
+-- joined long before the pinned period: joined_at defaults to now() and a month
+-- before it reads as 'not yet a member', so a fixture on now() goes red at the
+-- month rollover (Paris is a month ahead of the database's UTC for an hour).
+insert into public.members (workspace_id, user_id, status, subscription_pct, joined_at)
+values (current_setting('t.a')::uuid, '00000000-0000-4000-8000-0000000289a2', 'active', 100, timestamptz '2026-01-01 00:00:00+00');
 select set_config('t.m', (select id::text from public.members where workspace_id = current_setting('t.a')::uuid
   and user_id = '00000000-0000-4000-8000-0000000289a2'), true);
 insert into public.mcp_eligibility_grants (installation_id, binding_id, local_user_id, decision_id, decision, status, decided_by, expires_at)
@@ -62,7 +65,7 @@ select id, current_setting('t.a')::uuid, array['request_invoice_issue','request_
   from public.mcp_connections where local_user_id = '00000000-0000-4000-8000-0000000289a1';
 
 select pg_temp.act_as('00000000-0000-4000-8000-0000000289a1', 'claude-test');
-select set_config('t.p', to_char(now(), 'YYYY-MM'), true);
+select set_config('t.p', '2026-10', true);
 select set_config('t.r1', pg_temp.call('request_invoice_issue', jsonb_build_object('member_id', current_setting('t.m'),
   'period', current_setting('t.p')), '00000000-0000-4000-8000-00000000f101')::text, true);
 select set_config('t.bad', pg_temp.call('request_invoice_void', jsonb_build_object('invoice_id', gen_random_uuid(),
