@@ -293,7 +293,7 @@
   "moneyDueIn": "Scade tra {days} giorni",
   "moneyOverdueBy": "Scaduta da {days} giorni",
   "moneyNothingOpen": "Niente di aperto — è in regola.",
-  "moneyDocumentLibrary": "Libreria dei documenti",
+  "moneyDocumentLibrary": "Biblioteca documenti",
   "moneyStatementPdf": "Estratto del mese (PDF)",
   "moneyRemindedTimes": "Sollecitata ×{count}",
   "expenseSupplyToggle": "È una scorta per lo spazio",

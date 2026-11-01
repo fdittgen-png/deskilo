@@ -68,7 +68,7 @@
   "tipMoneyDocumentsPayments": "Per elencare ciò che ha pagato: apra «Report dei pagamenti».",
   "tipMoneyDocumentsUsage": "Per vedere ciò che ha consumato: apra «Report dei consumi».",
   "tipMoneyDocumentsStatement": "Per conservare il mese su carta: apra «Estratto del mese (PDF)».",
-  "tipMoneyDocumentsLibrary": "Per trovare i documenti condivisi dello spazio: apra «Libreria dei documenti».",
+  "tipMoneyDocumentsLibrary": "Per trovare i documenti condivisi dello spazio: apra «Biblioteca documenti».",
   "tipValidationDefault": "Per cambiare la regola che ogni azione eredita: tocchi «Regola predefinita».",
   "tipValidationOverride": "Per trattare un’azione in modo diverso: tocchi la sua scheda e la modifichi; poi riporta «Personalizzata».",
   "tipValidationCount": "Per chiedere più approvazioni: aumenti «Validazioni richieste», oppure le richieda solo oltre un importo con «Solo oltre questo importo».",

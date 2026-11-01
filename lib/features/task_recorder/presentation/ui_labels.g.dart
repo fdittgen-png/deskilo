@@ -2480,6 +2480,7 @@ Map<String, _Getter> _part7() => {
 
 Map<String, _Getter> _part8() => {
   'accountInvoiceVoided': (l) => l.accountInvoiceVoided,
+  'acctConnRevocationUnconfirmed': (l) => l.acctConnRevocationUnconfirmed,
   'acctDeliverySent': (l) => l.acctDeliverySent,
   'acctKindReceipt': (l) => l.acctKindReceipt,
   'acctKindReimbursement': (l) => l.acctKindReimbursement,

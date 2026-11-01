@@ -16272,7 +16272,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyDescriptionLabel => 'Descrizione';
 
   @override
-  String get moneyDocumentLibrary => 'Libreria dei documenti';
+  String get moneyDocumentLibrary => 'Biblioteca documenti';
 
   @override
   String moneyDueIn(int days) {
@@ -27644,7 +27644,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tipMoneyDocumentsLibrary =>
-      'Per trovare i documenti condivisi dello spazio: apra «Libreria dei documenti».';
+      'Per trovare i documenti condivisi dello spazio: apra «Biblioteca documenti».';
 
   @override
   String get tipMoneyDocumentsPayments =>
