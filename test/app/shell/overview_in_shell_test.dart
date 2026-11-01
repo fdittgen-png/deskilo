@@ -10,6 +10,7 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/workspace_overview_screen.dart';
 import 'package:deskilo/features/workspace/providers/attention_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +51,14 @@ void main() {
         expect(find.byType(ShellScreen), findsOneWidget);
         // One app bar: the shell's own.
         expect(find.byType(AppBar), findsOneWidget);
+        // ... naming the overview, not the tab it sits in.
+        expect(
+          find.descendant(
+            of: find.byType(AppBar),
+            matching: find.text(AppLocalizationsEn().overviewTitle),
+          ),
+          findsOneWidget,
+        );
       },
     );
   }
