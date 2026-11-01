@@ -16225,6 +16225,7 @@
   "@setupLaunchMilestones": {
     "description": "#2876 setup launch: setupLaunchMilestones"
   },
+  "setupLaunchOpenLower": "Nur mit {milestone} live gehen",
   "setupLaunchOperator": "Nur Ihr Betreiber kann das tun:",
   "@setupLaunchOperator": {
     "description": "#2876 setup launch: setupLaunchOperator"

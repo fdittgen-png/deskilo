@@ -39827,6 +39827,12 @@ abstract class AppLocalizations {
   /// **'Milestones'**
   String get setupLaunchMilestones;
 
+  /// #3076 check page: opens at the nearest milestone reached when the goal is not
+  ///
+  /// In en, this message translates to:
+  /// **'Go live with {milestone} only'**
+  String setupLaunchOpenLower(String milestone);
+
   /// #2876 setup launch: setupLaunchOperator
   ///
   /// In en, this message translates to:

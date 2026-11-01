@@ -91,5 +91,6 @@
   "setupLaunchCannot": "L’ouverture devient possible quand toutes les étapes clés sont atteintes.",
   "@setupLaunchCannot": {
     "description": "#2876 setup launch: setupLaunchCannot"
-  }
+  },
+  "setupLaunchOpenLower": "Ouvrir avec {milestone} seulement"
 }

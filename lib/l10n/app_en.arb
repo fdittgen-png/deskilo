@@ -28337,6 +28337,15 @@
   "@setupLaunchMilestones": {
     "description": "#2876 setup launch: setupLaunchMilestones"
   },
+  "setupLaunchOpenLower": "Go live with {milestone} only",
+  "@setupLaunchOpenLower": {
+    "description": "#3076 check page: opens at the nearest milestone reached when the goal is not",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "setupLaunchOperator": "Only your operator can do these:",
   "@setupLaunchOperator": {
     "description": "#2876 setup launch: setupLaunchOperator"

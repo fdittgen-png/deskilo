@@ -24016,6 +24016,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLaunchMilestones => 'Traguardi';
 
   @override
+  String setupLaunchOpenLower(String milestone) {
+    return 'Aprire solo con $milestone';
+  }
+
+  @override
   String get setupLaunchOperator => 'Solo il Suo operatore può farlo:';
 
   @override

@@ -213,6 +213,28 @@ class _GoLive extends StatelessWidget {
               keyPrefix: 'setup-launch-fix',
               open: open,
             ),
+          // #3076 — the owner may open at the nearest milestone reached: the
+          // same opening, after the same confirmation, never the default.
+          if (workspace.isDevelopment && review.openableBelowGoal != null)
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: OutlinedButton.icon(
+                key: const ValueKey('setup-launch-open-lower'),
+                icon: const Icon(Icons.rocket_launch_outlined),
+                label: Text(
+                  l10n.setupLaunchOpenLower(
+                    l10n.setupMilestoneName(
+                      review.openableBelowGoal!.status.milestone,
+                    ),
+                  ),
+                ),
+                onPressed: () async {
+                  if (await _confirmGoLive(context, l10n)) {
+                    await open('/deployment');
+                  }
+                },
+              ),
+            ),
         ],
       );
     }
