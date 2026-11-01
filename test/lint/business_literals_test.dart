@@ -102,6 +102,29 @@ const _allowed = <String, String>{
 /// The currency fallback: `'EUR'` written in lib/ (S5 moves the fallback to
 /// the workspace country's currency). Counted over lib/, minus generated
 /// files, l10n output and the demo dataset (fixtures, not defaults).
+/// #2488 -- the files that still write the euro literal, each with why it is
+/// not a business default. A display fallback reads the platform default; an
+/// exporter either writes the workspace's currency or refuses (#3184).
+const _eurHolders = {
+  'lib/core/i18n/currencies.dart':
+      'the list of currencies the picker offers: data, not a default',
+  'lib/features/money/domain/euro_format.dart':
+      'the one place the euro file formats (FEC, DATEV) name their currency; '
+          'a workspace in another currency is refused, never written as euros',
+  'lib/features/money/domain/vat_compliance.dart':
+      'the Italian stamp-duty rule is defined in euro (DPR 642/72 threshold): '
+          'it applies to euro invoices only',
+  'lib/features/money/domain/swiss_qr_bill.dart':
+      'the Swiss QR-bill standard allows exactly CHF and EUR',
+  'lib/features/money/domain/vat_rate.dart':
+      'a unit amount for rounding arithmetic, never printed or booked as euros',
+  'lib/features/money/domain/vat_components.dart':
+      'a unit amount for rounding arithmetic, never printed or booked as euros',
+  'lib/features/money/domain/fr_ereporting.dart':
+      'the French e-reporting flow is euro-denominated; production passes the '
+          "workspace's currency",
+};
+
 const _eurCeiling = 7; // 60 -> 11 -> 7 (#3184: FEC, DATEV and the accountant CSV left the file-format list; the one euro-format constant remains) (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
 
 int _count(String file, String pattern) {
@@ -158,6 +181,20 @@ void main() {
         reason: '$_rule: "$key" is allowed but no longer tracked: delete it',
       );
       expect(_allowed[key]!.trim(), isNotEmpty);
+    }
+  });
+
+  test('every file that holds the euro literal is documented, with its reason', () {
+    final files = filesUnder(['lib']).where((f) =>
+        !f.path.endsWith('.g.dart') &&
+        !f.path.contains('/l10n/') &&
+        !f.path.contains('lib/core/demo/'));
+    final holders = (countLiterals(files, [LiteralKind("'EUR'", RegExp(r"'EUR'"))])["'EUR'"]!).keys.toSet();
+    expect(holders, _eurHolders.keys.toSet(),
+        reason: '$_rule: a file that writes the euro literal needs a reason in _eurHolders; '
+            'a reason for a file that no longer does is deleted');
+    for (final reason in _eurHolders.values) {
+      expect(reason.trim(), isNotEmpty);
     }
   });
 
