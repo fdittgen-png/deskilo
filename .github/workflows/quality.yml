@@ -236,8 +236,8 @@ jobs:
     name: quality · test · money and reservations
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
-    # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
-    # margin until two loaded runs of the split are measured.
+    # and 22.7 min (other); after it 809-1157 s per job over three green
+    # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -318,8 +318,8 @@ jobs:
     name: quality · test · workspace, me, events and auth
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
-    # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
-    # margin until two loaded runs of the split are measured.
+    # and 22.7 min (other); after it 809-1157 s per job over three green
+    # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -401,8 +401,8 @@ jobs:
     name: quality · test · other features, app and a11y
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
-    # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
-    # margin until two loaded runs of the split are measured.
+    # and 22.7 min (other); after it 809-1157 s per job over three green
+    # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
