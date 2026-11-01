@@ -13,6 +13,8 @@
 
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -194,6 +196,19 @@ class ReserveHubHeader extends ConsumerWidget {
           ReserveHubRecorder(ref).switchedView(view.name); // #1881
         },
         onGetStarted: gettingStartedReopen(ref, guidanceKey),
+        // #3068 — the legend, with the other plan controls.
+        onLegend: gateOn
+            ? () {
+                unawaited(showSeatLegendSheet(
+                  context,
+                  showClosed: host.view.legendShowsClosed,
+                ));
+                // The device remembers it: the inline copy stops taking room.
+                unawaited(ref
+                    .read(dismissedHelpHintsProvider.notifier)
+                    .dismiss(reserveLegendHintId));
+              }
+            : null,
       ),
       // Map <-> list, as ONE button showing the icon of what you would switch
       // TO.
@@ -215,18 +230,6 @@ class ReserveHubHeader extends ConsumerWidget {
             ReserveHubRecorder(ref)
                 .switchedView(seatList ? 'list' : 'plan'); // #1865
           },
-        ),
-      // #3068 — the legend, one tap away; the SeatLegend itself is unchanged.
-      if (gateOn)
-        IconButton(
-          key: const ValueKey('reserve-legend-button'),
-          tooltip: l10n.reserveLegendTooltip,
-          icon: const Icon(Icons.legend_toggle),
-          onPressed: () => showSeatLegendSheet(
-            context,
-            ref,
-            showClosed: host.view.legendShowsClosed,
-          ),
         ),
       ?backToNow,
     ];

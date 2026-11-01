@@ -12,6 +12,7 @@ import 'package:deskilo/core/ui/canvas_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/reserve_view.dart' show openReserveLegend;
 import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 
 void main() {
@@ -41,13 +42,12 @@ void main() {
             'canvas');
   });
 
-  testWidgets('the legend, opened from its button, is not cut mid-word',
+  testWidgets('the legend, opened from the View menu, is not cut mid-word',
       (tester) async {
     await pumpHub(tester, size: const Size(2316, 1080), pixelRatio: 3);
-    // #3068 — it lives behind the button in the controls now, and the
+    // #3068 — it lives behind the View menu now, and the
     // panel is the sheet's width, not the 260 dp side panel's.
-    await tester.tap(find.byKey(const ValueKey('reserve-legend-button')));
-    await tester.pumpAndSettle();
+    await openReserveLegend(tester);
     final legend = find.descendant(
         of: find.byType(BottomSheet),
         matching: find.byKey(const ValueKey('reserve-legend')));

@@ -158,13 +158,18 @@ void main() {
     expect(field, findsOneWidget);
     await tester.enterText(field, '  Book a desk for Friday ');
     await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 50));
     expect(h.controller.snapshot!.title, 'Book a desk for Friday');
     await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 50));
     // The name belonged to that recording: the next one asks again.
     expect(
-      tester.widget<TextField>(field).controller!.text,
+      tester
+          .widget<TextField>(
+            find.descendant(of: field, matching: find.byType(TextField)),
+          )
+          .controller!
+          .text,
       isEmpty,
     );
     await h.done(tester);
@@ -182,7 +187,7 @@ void main() {
         typed,
       );
       await tester.tap(find.byKey(const ValueKey('task-recorder-start')));
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
       final title = h.controller.snapshot!.title;
       expect(title, isNotNull, reason: 'a recording must carry a name');
       expect(title!.trim(), isNotEmpty);
@@ -190,7 +195,7 @@ void main() {
       expect(title, contains('14:05'), reason: 'the generated name reads '
           'the clock seam, not the wall clock');
       await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
     }
     await h.done(tester);
   });

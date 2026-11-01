@@ -20,6 +20,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../application/recorder_controller.dart';
 import '../../domain/stored_recording.dart';
 import '../../domain/task_recording.dart';
@@ -208,17 +209,14 @@ class _Disclosure extends StatelessWidget {
               Text(why),
               const SizedBox(height: AppSpacing.sm),
             ],
-            TextField(
+            AppTextField(
               key: const ValueKey('task-recorder-name-field'),
               controller: name,
+              label: l10n.taskRecorderNameLabel,
+              helper: l10n.taskRecorderNameHint,
               enabled: canStart,
               maxLength: const RecordingLimits().maxTitleLength,
               textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                labelText: l10n.taskRecorderNameLabel,
-                helperText: l10n.taskRecorderNameHint,
-                helperMaxLines: 2,
-              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             // Off by default: a recording keeps no value unless the person

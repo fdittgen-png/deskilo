@@ -351,7 +351,7 @@ void main() {
 
     testWidgets(
         'the legend names the seat states: shown on a first visit, and '
-        'always one tap away behind the controls\' legend button',
+        'always in the View menu',
         (tester) async {
       await pumpHub(tester);
       expect(find.byKey(const ValueKey('reserve-legend')), findsOneWidget);
@@ -361,8 +361,7 @@ void main() {
 
       // Having opened it, the person keeps the explanation of why a seat
       // cannot be booked: the same words, in the sheet.
-      await tester.tap(find.byKey(const ValueKey('reserve-legend-button')));
-      await tester.pumpAndSettle();
+      await openReserveLegend(tester);
       for (final word in const ['Free', 'Checked in', 'Blocked']) {
         expect(
             find.descendant(
@@ -376,8 +375,11 @@ void main() {
         (tester) async {
       await pumpHub(tester, flags: const {'bookingGate': false});
       expect(find.byKey(const ValueKey('reserve-legend')), findsNothing);
-      expect(
-          find.byKey(const ValueKey('reserve-legend-button')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('reserve-view-switch')));
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.byKey(const ValueKey('reserve-view-day')), findsWidgets,
+          reason: 'the menu is open');
+      expect(find.byKey(const ValueKey('reserve-view-legend')), findsNothing);
     });
 
     testWidgets(

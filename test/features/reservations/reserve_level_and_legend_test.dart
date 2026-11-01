@@ -82,20 +82,14 @@ void main() {
   });
 
   // #3068 — the legend left the first screen. It is one tap away behind a
-  // button in the view controls, opens in a sheet, and once a person has
+  // entry in the View menu, opens in a sheet, and once a person has
   // opened it the inline copy stops taking room. The #1269 guarantee
   // survives where the legend now lives: every entry on one row.
   for (final size in const [Size(360, 800), Size(1192, 760)]) {
-    testWidgets('the legend is one tap away and reads on one row at '
+    testWidgets('the legend opens from the View menu and reads on one row at '
         '${size.width.round()} dp', (tester) async {
       await pumpHub(tester, size: size);
-      final button = find.byKey(const ValueKey('reserve-legend-button'));
-      expect(button, findsOneWidget);
-      expect(tester.getSize(button).shortestSide,
-          greaterThanOrEqualTo(kMinInteractiveDimension),
-          reason: 'a 48 dp target');
-      await tester.tap(button);
-      await tester.pumpAndSettle();
+      await openReserveLegend(tester);
 
       final legend = find.descendant(
           of: find.byType(BottomSheet),
@@ -127,8 +121,7 @@ void main() {
     final inline = find.byKey(const ValueKey('reserve-legend'));
     expect(inline, findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('reserve-legend-button')));
-    await tester.pumpAndSettle();
+    await openReserveLegend(tester);
     await tester.tap(find.byType(ModalBarrier).last, warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(inline, findsNothing, reason: 'opened once: hidden from now on');
@@ -138,8 +131,9 @@ void main() {
     await tester.pumpWidget(const SizedBox());
     await pumpHub(tester, size: const Size(1192, 760), helpHints: device);
     expect(inline, findsNothing);
-    expect(find.byKey(const ValueKey('reserve-legend-button')),
-        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('reserve-view-switch')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reserve-view-legend')), findsOneWidget);
   });
 
   testWidgets('a reader who asked for larger text gets it, wrapped',
