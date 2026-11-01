@@ -8454,6 +8454,8 @@
   "invoiceRegisterAmount": "Montant",
   "invoiceRegisterDate": "Date",
   "invoiceRegisterName": "Nom",
+  "invoiceRegisterPeriod": "Période : {from} – {to}",
+  "invoiceRegisterPeriodClear": "Afficher toutes les périodes",
   "invoiceRegisterTitle": "Registre des factures",
   "invoiceRegisterTotal": "Total",
   "invoiceRegisterYear": "Année",

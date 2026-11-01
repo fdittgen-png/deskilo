@@ -12483,6 +12483,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceRegisterName => 'Name';
 
   @override
+  String invoiceRegisterPeriod(String from, String to) {
+    return 'Zeitraum: $from – $to';
+  }
+
+  @override
+  String get invoiceRegisterPeriodClear => 'Alle Zeiträume anzeigen';
+
+  @override
   String get invoiceRegisterTitle => 'Rechnungsregister';
 
   @override
