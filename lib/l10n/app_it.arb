@@ -4518,7 +4518,7 @@
   "@documentsRoleOwner": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Documenti",
+  "documentsTitle": "Biblioteca documenti",
   "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
@@ -6050,7 +6050,7 @@
   "@featureExternalRoomsTitle": {
     "description": "#2568 rented rooms"
   },
-  "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
+  "featureFinanceFacesDesc": "Le mie finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featureFinanceFacesTitle": "Estratto, pagamenti, fatture, documenti",
   "featureForeignCurrencyPurchasesDesc": "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata.",
   "featureForeignCurrencyPurchasesTitle": "Acquisti in altra valuta",
@@ -6873,7 +6873,7 @@
       }
     }
   },
-  "financesLinkBody": "Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Finanze.",
+  "financesLinkBody": "Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Le mie finanze.",
   "financesLinkTitle": "Le sue finanze in tutti gli spazi",
   "financesNoReminders": "Nessun sollecito ricevuto.",
   "@financesNoReminders": {
@@ -6984,7 +6984,7 @@
     "description": "Me › Finances"
   },
   "financesStateUnpaid": "Non pagata",
-  "financesTitle": "Finanze",
+  "financesTitle": "Le mie finanze",
   "@financesTitle": {
     "description": "Me › Finances"
   },
@@ -8628,16 +8628,16 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Ancora nessuna fattura.",
-  "invoicesManage": "Gestire le fatture",
+  "invoicesManage": "Fatture",
   "@invoicesManage": {
     "description": "#871 the Money tab row that opens invoice management (the billing hub)"
   },
   "invoicesTitle": "Fatture",
-  "invoicingBanner": "Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Finanze.",
+  "invoicingBanner": "Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Le mie finanze.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingHubTitle": "Fatturazione",
+  "invoicingHubTitle": "Fatture",
   "@invoicingHubTitle": {
     "description": "invoicing hub vs my finances"
   },
@@ -10320,7 +10320,7 @@
   "@memberInvoiceVoided": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberInvoicesBanner": "Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Finanze.",
+  "memberInvoicesBanner": "Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Le mie finanze.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -13053,7 +13053,7 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra dalla scheda Finanze.",
+  "quotaExceededError": "Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra da Le mie finanze.",
   "quotaRequestButton": "Richiedi mezze giornate extra",
   "quotaRequestCountLabel": "Numero di mezze giornate",
   "quotaRequestExplainer": "Le sue prenotazioni sono limitate dal suo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
@@ -17026,7 +17026,7 @@
   },
   "tabCalendar": "Calendario",
   "tabEvents": "Eventi",
-  "tabMoney": "Finanze",
+  "tabMoney": "Le mie finanze",
   "tabPlan": "Piantina",
   "taskExportActionBack": "Torni indietro.",
   "taskExportActionCancelReview": "Annulli il riepilogo senza prenotare.",
@@ -18225,9 +18225,10 @@
   "uxMoneyUsageScope": "Prenotazioni e consumi del mese selezionato.",
   "uxMoneyWorkspaceTools": "Strumenti finanziari dello spazio",
   "uxMyBookings": "Le mie prenotazioni",
-  "uxNavFinance": "Fatture e pagamenti",
+  "uxNavFinance": "Cassa e contabilità",
   "uxNavPeople": "Membri e accesso",
   "uxNavReporting": "Reportistica",
+  "uxNavSales": "Vendite e incassi",
   "uxNavWorkspace": "Configurare lo spazio",
   "uxOpenWorkspace": "Apri spazio",
   "uxPreferencesSection": "Preferenze",

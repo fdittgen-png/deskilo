@@ -1,7 +1,7 @@
 <!-- anchor: user.money.overview -->
 ## Money
 
-Everything you owe, have paid and have been invoiced lives in the **Money** tab: one place to read the month, settle it, find an invoice and ask for a change.
+Everything you owe, have paid and have been invoiced lives in the **My finances** tab: one place to read the month, settle it, find an invoice and ask for a change.
 
 In this chapter:
 - [Read your statement](help:user.money.statement) and [what an invoice changes](help:user.money.statement.invoiced)
@@ -24,7 +24,7 @@ You want to know where the month stands: what you used, what it costs and what i
 
 **Steps**
 
-1. Open [Money](app:/money) and stay on **Statement**.
+1. Open [My finances](app:/money) and stay on **Statement**.
 2. Use the arrows beside the month name to browse other months.
 3. Read **Balance** first: **Outstanding** in red means you owe it, **Settled** means nothing is left.
 4. Read **This month** below it: the days you used out of the days your plan includes, and the days left.
@@ -50,7 +50,7 @@ You want to know which figure to trust once the workspace has sent you an invoic
 
 **Steps**
 
-1. Open [Money](app:/money) and go back to the invoiced month with the left arrow.
+1. Open [My finances](app:/money) and go back to the invoiced month with the left arrow.
 2. Look for the card named **Invoice** (or **Credit note** when the total is negative) followed by its number.
 3. Read the state on the card, then **Invoice total**; a partly paid invoice also shows **Paid so far** and **Remaining to pay**.
 
@@ -72,7 +72,7 @@ You want to settle your balance and know how the workspace expects the money.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Payments**.
+1. Open [My finances](app:/money) and choose **Payments**.
 2. Check **Balance** under **Pay**; overdue invoices from all periods are called out above it.
 3. Read **Payment instructions**: the bank details, the payment reference to quote and the other ways the workspace accepts. Tap an IBAN or a value to copy it.
 4. If the button is there, tap **Pay online**.
@@ -97,7 +97,7 @@ You paid by transfer, cash or another way and you want the workspace to know.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** and tap **Record a payment**.
+1. Open [My finances](app:/money), choose **Payments** and tap **Record a payment**.
 2. Enter the **Amount**.
 3. Tap how you paid: **Bank transfer**, **Cash**, **PayPal**, **TWINT**, **Card**, **Wero**, **Lydia**, **Wise** or **Other**. Tap it again to clear it.
 4. Check **Payment date** and **Applies to**, the month this payment settles.
@@ -121,7 +121,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Invoices**.
+1. Open [My finances](app:/money) and choose **Invoices**.
 2. Read the list, newest first. Each row shows the number, a status chip, the month, the date and the amount.
 3. Tap an invoice to open it.
 4. Tap **Quick view** to read it on screen, **Download PDF** to save it or **Share PDF** to send it.
@@ -148,7 +148,7 @@ You want to see, booking by booking, what was billed this month.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Usage**.
+1. Open [My finances](app:/money) and choose **Usage**.
 2. Pick the month with the arrows.
 3. Read each card: the day, the time, the place, then **Booked**, **Present** and **Billed**.
 4. For a booking you left early, tap **Bill the time I was here**, add a reason if you like and tap **Ask**.
@@ -173,7 +173,7 @@ You want to see what is waiting on you in money matters, without reading the who
 
 **Steps**
 
-1. Open [Money](app:/money).
+1. Open [My finances](app:/money).
 2. Tap **Finance alerts**, the row at the top. The number on the bell is how many are waiting.
 3. Read the list: the requests you must confirm come first, then the money events.
 
@@ -196,7 +196,7 @@ You want a document about your own money, to read, keep or send to your accounta
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Documents**.
+1. Open [My finances](app:/money) and choose **Documents**.
 2. Pick the month with the arrows, for the reports that depend on a month.
 3. Tap a report: **My conditions**, **Payments report**, **Consumption report** or **This month's statement (PDF)**.
 4. Choose **Quick view**, **Download PDF** or **Share PDF**.
@@ -222,7 +222,7 @@ You want to know whether you pay the workspace tariff or a price agreed just for
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Documents**.
+1. Open [My finances](app:/money) and choose **Documents**.
 2. Read **My negotiated prices**: for **Monthly fee**, **Overage per half-day** and **Discount on supplements**, **Tariff** shows what everyone pays and **Mine** what you pay.
 3. Tap **Who can see this** to learn who can read your prices.
 
@@ -244,7 +244,7 @@ You want the statutes, a guide or the statements your workspace has shared.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Documents** and tap **Document library**, or go straight to [Documents](app:/documents).
+1. Open [My finances](app:/money), choose **Documents** and tap **Document library**, or go straight to [Document library](app:/documents).
 2. Find your document under its category: **Statutes & legal**, **Financial statements**, **Meeting minutes**, **Guides & manuals** or **Other documents**.
 3. Tap it. It opens in your browser from wherever it is stored.
 
@@ -267,7 +267,7 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** and tap **Submit an expense**.
+1. Open [My finances](app:/money), choose **Payments** and tap **Submit an expense**.
 2. Enter the **Amount**.
 3. Pick a **Category**: **Coffee & kitchen**, **Equipment**, **Supplies** or **Other**.
 4. Write a **Description**.
@@ -294,7 +294,7 @@ An expense is waiting and you decide whether the workspace pays it.
 
 **Steps**
 
-1. Open [Events](app:/events), or tap **Finance alerts** in [Money](app:/money).
+1. Open [Events](app:/events), or tap **Finance alerts** in [My finances](app:/money).
 2. Look under **Waiting for your confirmation** for the line naming the amount and the member.
 3. Tap **Accept** to confirm it, or the cross to **Decline** it.
 
@@ -333,7 +333,7 @@ You belong to several spaces and want all your invoices, payments and reminders 
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** or **Invoices**, and tap **Open for** your space on the card **Your finances across spaces**.
+1. Open [My finances](app:/money), choose **Payments** or **Invoices**, and tap **Open for** your space on the card **Your finances across spaces**.
 2. Choose a tab: **Outstanding**, **Paid**, **Payments** or **Reminders**.
 3. If you belong to several spaces, filter by space at the top.
 

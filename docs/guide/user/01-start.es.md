@@ -344,10 +344,10 @@ Usted está en un espacio y quiere llegar a una pantalla. Todo está en un únic
 
 **Pasos**
 
-1. Toque el botón ☰ de la parte superior izquierda. El menú se abre con el nombre de su espacio, **Volver a Yo** y los destinos diarios: **Reservar**, **Calendario**, **Miembros**, **Dinero**.
+1. Toque el botón ☰ de la parte superior izquierda. El menú se abre con el nombre de su espacio, **Volver a Yo** y los destinos diarios: **Reservar**, **Calendario**, **Miembros**, **Mis finanzas**.
 2. Toque un destino para abrirlo. Un número azul a su lado cuenta lo que le espera allí.
-3. Abra **Informes**, **Miembros y acceso**, **Facturación y pagos** o **Configurar el espacio** para ver las herramientas de administración que su rol permite.
-4. Abajo, **Documentos**, **Privacidad y datos** y **Ajustes** siempre están a mano.
+3. Abra **Informes**, **Miembros y acceso**, **Ventas y cobros**, **Tesorería y contabilidad** o **Configurar el espacio** para ver las herramientas de administración que su rol permite.
+4. Abajo, **Biblioteca de documentos**, **Privacidad y datos** y **Ajustes** siempre están a mano.
 5. Toque el avatar de la parte superior derecha, o **Volver a Yo**, para salir del espacio y volver a [Yo](app:/me).
 
 <p><img src="images/user-start-navigation--groups.es.jpg" width="280"></p>

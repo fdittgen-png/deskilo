@@ -26,7 +26,7 @@ void main() {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    for (final label in ['Calendar', 'Members', 'Money']) {
+    for (final label in ['Calendar', 'Members', 'My finances']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
   });
@@ -48,12 +48,12 @@ void main() {
       (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('Money'));
+    await tester.tap(find.text('My finances'));
     await tester.pumpAndSettle();
 
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
-      matching: find.text('Money'),
+      matching: find.text('My finances'),
     );
     expect(appBarTitle, findsOneWidget);
   });

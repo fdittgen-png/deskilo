@@ -79,7 +79,7 @@ class MoneyActionSet {
         key: 'invoices-button',
         icon: Icons.receipt_long_outlined,
         title: l10n.invoicesManage,
-        subtitle: l10n.uxNavFinance,
+        subtitle: l10n.uxNavSales,
         onTap: () => context.push('/invoices'),
       ),
       status: managementTile(

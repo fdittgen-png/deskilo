@@ -162,7 +162,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Relevé, paiements, factures, documents",
-  "featureFinanceFacesDesc": "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
+  "featureFinanceFacesDesc": "Mes finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
   "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
   "featureSupplyExpensesTitle": "Fournitures via les dépenses",

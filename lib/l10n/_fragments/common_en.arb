@@ -16,7 +16,7 @@
   "@tabEvents": {
     "description": "Tooltip of the app-bar events bell and title of the events feed screen it pushes (#230; formerly the bottom-tab label)"
   },
-  "tabMoney": "Money",
+  "tabMoney": "My finances",
   "@tabMoney": {
     "description": "Bottom-navigation label for the ledger/statements tab"
   },

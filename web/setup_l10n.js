@@ -954,7 +954,7 @@ window.SETUP_L10N={
    ],
    "financeFaces": [
     "Statement, payments, invoices, documents",
-    "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column."
+    "My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column."
    ],
    "paymentReminders": [
     "Automatic payment reminders",
@@ -2640,7 +2640,7 @@ window.SETUP_L10N={
    ],
    "financeFaces": [
     "Relevé, paiements, factures, documents",
-    "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
+    "Mes finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
    ],
    "paymentReminders": [
     "Relances de paiement automatiques",
@@ -4326,7 +4326,7 @@ window.SETUP_L10N={
    ],
    "financeFaces": [
     "Abrechnung, Zahlungen, Rechnungen, Dokumente",
-    "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte."
+    "Meine Finanzen hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte."
    ],
    "paymentReminders": [
     "Automatische Zahlungserinnerungen",
@@ -6012,7 +6012,7 @@ window.SETUP_L10N={
    ],
    "financeFaces": [
     "Extracto, pagos, facturas, documentos",
-    "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
+    "Mis finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
    ],
    "paymentReminders": [
     "Recordatorios de pago automáticos",
@@ -7698,7 +7698,7 @@ window.SETUP_L10N={
    ],
    "financeFaces": [
     "Estratto, pagamenti, fatture, documenti",
-    "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna."
+    "Le mie finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna."
    ],
    "paymentReminders": [
     "Solleciti di pagamento automatici",

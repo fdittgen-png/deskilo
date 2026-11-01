@@ -1,7 +1,7 @@
 {
   "financesAllSpaces": "All spaces",
   "financesLinkTitle": "Your finances across spaces",
-  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
+  "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › My finances.",
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {
     "placeholders": {

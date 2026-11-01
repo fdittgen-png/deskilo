@@ -344,10 +344,10 @@ Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in 
 
 **Schritte**
 
-1. Tippen Sie oben links auf die Schaltfläche ☰. Das Menü öffnet sich mit dem Namen Ihres Spaces, **Zurück zu Ich** und den täglichen Zielen: **Reservieren**, **Kalender**, **Mitglieder**, **Finanzen**.
+1. Tippen Sie oben links auf die Schaltfläche ☰. Das Menü öffnet sich mit dem Namen Ihres Spaces, **Zurück zu Ich** und den täglichen Zielen: **Reservieren**, **Kalender**, **Mitglieder**, **Meine Finanzen**.
 2. Tippen Sie auf ein Ziel, um es zu öffnen. Eine blaue Zahl daneben zählt, was dort wartet.
-3. Öffnen Sie **Reporting**, **Mitglieder und Zugang**, **Abrechnung & Zahlungen** oder **Workspace einrichten**, um die Verwaltungswerkzeuge zu sehen, die Ihre Rolle zulässt.
-4. Ganz unten sind **Dokumente**, **Datenschutz & Daten** und **Einstellungen** immer griffbereit.
+3. Öffnen Sie **Reporting**, **Mitglieder und Zugang**, **Verkauf & Zahlungseingang**, **Geld & Buchhaltung** oder **Workspace einrichten**, um die Verwaltungswerkzeuge zu sehen, die Ihre Rolle zulässt.
+4. Ganz unten sind **Dokumentbibliothek**, **Datenschutz & Daten** und **Einstellungen** immer griffbereit.
 5. Tippen Sie oben rechts auf den Avatar oder auf **Zurück zu Ich**, um den Space zu verlassen und zu [Ich](app:/me) zurückzukehren.
 
 <p><img src="images/user-start-navigation--groups.de.jpg" width="280"></p>

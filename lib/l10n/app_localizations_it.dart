@@ -6366,7 +6366,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get documentsRoleOwner => 'Solo proprietari';
 
   @override
-  String get documentsTitle => 'Documenti';
+  String get documentsTitle => 'Biblioteca documenti';
 
   @override
   String get documentsTitleLabel => 'Titolo';
@@ -8501,7 +8501,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureFinanceFacesDesc =>
-      'La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
+      'Le mie finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
 
   @override
   String get featureFinanceFacesTitle =>
@@ -9734,7 +9734,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesLinkBody =>
-      'Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Finanze.';
+      'Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Le mie finanze.';
 
   @override
   String get financesLinkTitle => 'Le sue finanze in tutti gli spazi';
@@ -9820,7 +9820,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesStateUnpaid => 'Non pagata';
 
   @override
-  String get financesTitle => 'Finanze';
+  String get financesTitle => 'Le mie finanze';
 
   @override
   String get financesToPay => 'Da pagare';
@@ -12689,17 +12689,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicesEmpty => 'Ancora nessuna fattura.';
 
   @override
-  String get invoicesManage => 'Gestire le fatture';
+  String get invoicesManage => 'Fatture';
 
   @override
   String get invoicesTitle => 'Fatture';
 
   @override
   String get invoicingBanner =>
-      'Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Finanze.';
+      'Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Le mie finanze.';
 
   @override
-  String get invoicingHubTitle => 'Fatturazione';
+  String get invoicingHubTitle => 'Fatture';
 
   @override
   String get invoicingMyFinances => 'Le mie finanze';
@@ -15614,7 +15614,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberInvoicesBanner =>
-      'Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Finanze.';
+      'Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Le mie finanze.';
 
   @override
   String get memberKioskLabel => 'Chiosco';
@@ -19751,7 +19751,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get quotaExceededError =>
-      'Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra dalla scheda Finanze.';
+      'Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra da Le mie finanze.';
 
   @override
   String get quotaRequestButton => 'Richiedi mezze giornate extra';
@@ -25463,7 +25463,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tabEvents => 'Eventi';
 
   @override
-  String get tabMoney => 'Finanze';
+  String get tabMoney => 'Le mie finanze';
 
   @override
   String get tabPlan => 'Piantina';
@@ -27938,13 +27938,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get uxMyBookings => 'Le mie prenotazioni';
 
   @override
-  String get uxNavFinance => 'Fatture e pagamenti';
+  String get uxNavFinance => 'Cassa e contabilità';
 
   @override
   String get uxNavPeople => 'Membri e accesso';
 
   @override
   String get uxNavReporting => 'Reportistica';
+
+  @override
+  String get uxNavSales => 'Vendite e incassi';
 
   @override
   String get uxNavWorkspace => 'Configurare lo spazio';

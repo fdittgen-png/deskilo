@@ -405,10 +405,10 @@ Un account può appartenere a molti spazi. Ogni spazio le dà un profilo: il suo
 
 **Passaggi**
 
-1. Tocchi il pulsante ☰ in alto a sinistra. Il menu si apre con il nome del suo spazio, **Torna a Io** e le destinazioni di ogni giorno: **Prenota**, **Calendario**, **Membri**, **Denaro**.
+1. Tocchi il pulsante ☰ in alto a sinistra. Il menu si apre con il nome del suo spazio, **Torna a Io** e le destinazioni di ogni giorno: **Prenota**, **Calendario**, **Membri**, **Le mie finanze**.
 2. Tocchi una destinazione per aprirla. Un numero blu accanto indica ciò che vi attende.
-3. Apra **Reportistica**, **Membri e accesso**, **Fatturazione e pagamenti** o **Configurare lo spazio** per vedere gli strumenti di amministrazione che il suo ruolo consente.
-4. In fondo, **Documenti**, **Privacy e dati** e **Impostazioni** sono sempre a portata di mano.
+3. Apra **Reportistica**, **Membri e accesso**, **Vendite e incassi**, **Cassa e contabilità** o **Configurare lo spazio** per vedere gli strumenti di amministrazione che il suo ruolo consente.
+4. In fondo, **Biblioteca documenti**, **Privacy e dati** e **Impostazioni** sono sempre a portata di mano.
 5. Tocchi l'avatar in alto a destra, oppure **Torna a Io**, per lasciare lo spazio e tornare a [Io](https://fdittgen-png.github.io/deskilo/#/me).
 
 <p><img src="images/user-start-navigation--groups.it.b8fa17aa9.jpg" width="280"></p>
@@ -2337,7 +2337,7 @@ Dirige una comunità e vuole ospitare DesKilo da sé.
 <!-- anchor: user.money.overview -->
 ## Finanze
 
-Tutto ciò che deve, ha pagato e le è stato fatturato si trova nella scheda **Finanze**: un unico posto per leggere il mese, saldarlo, trovare una fattura e chiedere una modifica.
+Tutto ciò che deve, ha pagato e le è stato fatturato si trova nella scheda **Le mie finanze**: un unico posto per leggere il mese, saldarlo, trovare una fattura e chiedere una modifica.
 
 In questo capitolo:
 - [Leggere il proprio estratto](#leggere-il-proprio-estratto) e [che cosa cambia una fattura](#quando-un-mese-è-stato-fatturato)
@@ -2360,7 +2360,7 @@ Vuole sapere a che punto è il mese: che cosa ha utilizzato, quanto costa e che 
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e resti su **Estratto**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e resti su **Estratto**.
 2. Usi le frecce accanto al nome del mese per scorrere gli altri mesi.
 3. Legga prima il **Saldo**: **Da pagare** in rosso significa che Lei è in debito, **Saldato** significa che non resta nulla.
 4. Legga poi **Questo mese**: i giorni utilizzati su quelli inclusi nel Suo piano e i giorni rimanenti.
@@ -2386,7 +2386,7 @@ Vuole sapere di quale cifra fidarsi quando lo spazio Le ha inviato la fattura di
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e torni al mese fatturato con la freccia sinistra.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e torni al mese fatturato con la freccia sinistra.
 2. Cerchi la scheda chiamata **Fattura** (o **Nota di credito** quando il totale è negativo) seguita dal suo numero.
 3. Legga lo stato sulla scheda, poi il **Totale fattura**; una fattura pagata in parte mostra anche **Già pagato** e **Residuo da pagare**.
 
@@ -2408,7 +2408,7 @@ Vuole saldare il Suo saldo e sapere come lo spazio si aspetta di ricevere il den
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Pagamenti**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Pagamenti**.
 2. Controlli il **Saldo** sotto **Pagare**; le fatture scadute di tutti i periodi sono segnalate sopra.
 3. Legga le **Istruzioni di pagamento**: le coordinate bancarie, il riferimento di pagamento da indicare e gli altri modi accettati dallo spazio. Tocchi un IBAN o un valore per copiarlo.
 4. Se il pulsante è presente, tocchi **Paga online**.
@@ -2433,7 +2433,7 @@ Ha pagato con bonifico, in contanti o in un altro modo e vuole che lo spazio lo 
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** e tocchi **Registra un pagamento**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** e tocchi **Registra un pagamento**.
 2. Inserisca l'**Importo**.
 3. Tocchi il modo in cui ha pagato: **Bonifico**, **Contanti**, **PayPal**, **TWINT**, **Carta**, **Wero**, **Lydia**, **Wise** o **Altro**. Lo tocchi di nuovo per deselezionarlo.
 4. Controlli la **Data del pagamento** e **Si applica a**, il mese che questo pagamento salda.
@@ -2457,7 +2457,7 @@ Vuole trovare una fattura, vedere se è pagata e ottenerne il PDF.
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Fatture**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Fatture**.
 2. Legga l'elenco, dalla più recente. Ogni riga mostra il numero, un indicatore di stato, il mese, la data e l'importo.
 3. Tocchi una fattura per aprirla.
 4. Tocchi **Anteprima rapida** per leggerla sullo schermo, **Scarica PDF** per salvarla o **Condividi PDF** per inviarla.
@@ -2484,7 +2484,7 @@ Vuole vedere, prenotazione per prenotazione, che cosa è stato fatturato questo 
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Utilizzo**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Utilizzo**.
 2. Scelga il mese con le frecce.
 3. Legga ogni scheda: il giorno, l'orario, il posto, poi **Prenotato**, **Presente** e **Fatturato**.
 4. Per una prenotazione che ha lasciato in anticipo, tocchi **Fattura il tempo in cui c’ero**, aggiunga se lo desidera un motivo e tocchi **Chiedi**.
@@ -2509,7 +2509,7 @@ Vuole vedere che cosa La attende in materia di denaro, senza leggere tutto il fl
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money).
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money).
 2. Tocchi **Avvisi finanziari**, la riga in alto. Il numero sulla campana indica quanti ne attendono.
 3. Legga l'elenco: prima le richieste da confermare, poi gli eventi di denaro.
 
@@ -2532,7 +2532,7 @@ Vuole un documento sul Suo denaro, da leggere, conservare o inviare al Suo comme
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Documenti**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Documenti**.
 2. Scelga il mese con le frecce, per i report che dipendono da un mese.
 3. Tocchi un report: **Le mie condizioni**, **Report dei pagamenti**, **Report dei consumi** o **Estratto del mese (PDF)**.
 4. Scelga **Anteprima rapida**, **Scarica PDF** o **Condividi PDF**.
@@ -2558,7 +2558,7 @@ Vuole sapere se paga la tariffa dello spazio o un prezzo concordato solo per Lei
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Documenti**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money) e scelga **Documenti**.
 2. Legga **I miei prezzi negoziati**: per **Canone mensile**, **Eccedenza per mezza giornata** e **Sconto sui supplementi**, **Tariffa** mostra ciò che pagano tutti e **Le mie** ciò che paga Lei.
 3. Tocchi **Chi può vedere questo** per sapere chi può leggere i Suoi prezzi.
 
@@ -2580,7 +2580,7 @@ Vuole lo statuto, una guida o i bilanci che il Suo spazio ha condiviso.
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Documenti** e tocchi **Biblioteca documenti**, oppure vada direttamente a [Documenti](https://fdittgen-png.github.io/deskilo/#/documents).
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Documenti** e tocchi **Biblioteca documenti**, oppure vada direttamente a [Biblioteca documenti](https://fdittgen-png.github.io/deskilo/#/documents).
 2. Trovi il Suo documento nella sua categoria: **Statuto e legale**, **Bilanci**, **Verbali**, **Guide e manuali** o **Altri documenti**.
 3. Lo tocchi. Si apre nel browser da dove è archiviato.
 
@@ -2603,7 +2603,7 @@ Ha pagato qualcosa per lo spazio e vuole che lo spazio Le rimborsi la somma.
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** e tocchi **Invia una spesa**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** e tocchi **Invia una spesa**.
 2. Inserisca l'**Importo**.
 3. Scelga una **Categoria**: **Caffè e cucina**, **Attrezzatura**, **Materiale** o **Altro**.
 4. Scriva una **Descrizione**.
@@ -2630,7 +2630,7 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 
 **Passaggi**
 
-1. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events), oppure tocchi **Avvisi finanziari** in [Finanze](https://fdittgen-png.github.io/deskilo/#/money).
+1. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events), oppure tocchi **Avvisi finanziari** in [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money).
 2. Cerchi sotto **In attesa della sua conferma** la riga che indica l'importo e il membro.
 3. Tocchi **Accetta** per confermarla, oppure la croce per **Rifiuta**.
 
@@ -2669,7 +2669,7 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le sue finanze in tutti gli spazi**.
+1. Apra [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le sue finanze in tutti gli spazi**.
 2. Scelga una scheda: **Da pagare**, **Pagate**, **Pagamenti** o **Solleciti**.
 3. Se appartiene a più spazi, filtri per spazio in alto.
 

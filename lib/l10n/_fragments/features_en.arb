@@ -338,7 +338,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Statement, payments, invoices, documents",
-  "featureFinanceFacesDesc": "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
+  "featureFinanceFacesDesc": "My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
   "featurePaymentRemindersTitle": "Automatic payment reminders",
   "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action.",
   "featureSupplyExpensesTitle": "Supplies from expenses",

@@ -69,7 +69,7 @@ void main() {
     final (left, right) = splitAroundButton(tester);
     // #707 — Members is back on the bar, left of Money.
     expect(left, ['Calendar', 'Members']);
-    expect(right, ['Money']);
+    expect(right, ['My finances']);
   });
 
   testWidgets('two visible tabs split 1+1 (index halving)', (tester) async {
@@ -84,7 +84,7 @@ void main() {
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    expect(tabLabels(tester), ['Alerts', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Alerts', 'Members', 'My finances']);
   });
 
   testWidgets(
