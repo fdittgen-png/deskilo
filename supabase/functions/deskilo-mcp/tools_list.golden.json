@@ -462,5 +462,18 @@
     },
     "input": "6259777486b63dd8",
     "output": "59560c599548264a"
+  },
+  "set_payment_instructions": {
+    "name": "deskilo_set_payment_instructions",
+    "title": "Change the workspace's bank account",
+    "annotations": {
+      "title": "Change the workspace's bank account",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "046ab0626a4a76ff",
+    "output": "83a5717b9565cac6"
   }
 }

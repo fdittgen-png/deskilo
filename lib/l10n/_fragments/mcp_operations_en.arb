@@ -150,5 +150,9 @@
   "mcpOpMembershipPlan": "Offer a new membership plan",
   "@mcpOpMembershipPlan": {
     "description": "#2394 generated from contracts/mcp/operations.json (create_membership_plan)"
+  },
+  "mcpOpPaymentInstructions": "Change the workspace's bank account",
+  "@mcpOpPaymentInstructions": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_payment_instructions)"
   }
 }

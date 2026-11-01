@@ -9242,6 +9242,18 @@
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
   },
+  "eventPaymentInstructionsChange": "{actor} changed the bank account members pay into, through an assistant and with their confirmation in the app: {fields}.",
+  "@eventPaymentInstructionsChange": {
+    "description": "#3132 the owner notice: who changed the bank account through an assistant, and which fields",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
@@ -9507,6 +9519,7 @@
   "@eventTypePayment": {
     "description": "Event type label / filter chip"
   },
+  "eventTypePaymentInstructionsChange": "Bank account change",
   "eventTypePaymentTermsChange": "Payment conditions",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -17629,6 +17642,10 @@
   "mcpOpMyStatement": "See your account statement",
   "@mcpOpMyStatement": {
     "description": "#2394 generated from contracts/mcp/operations.json (get_my_statement)"
+  },
+  "mcpOpPaymentInstructions": "Change the workspace's bank account",
+  "@mcpOpPaymentInstructions": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_payment_instructions)"
   },
   "mcpOpPendingValidations": "See pending validation requests",
   "@mcpOpPendingValidations": {

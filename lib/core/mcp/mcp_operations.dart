@@ -488,4 +488,20 @@ const Map<String, McpOperationSpec> mcpOperations = {
     },
     output: ['created', 'percent'], group: 'financial',
   ),
+  'set_payment_instructions': McpOperationSpec(
+    id: 'set_payment_instructions', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageIntegrations', features: ['mcpAccess', 'moneyTab'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'iban': McpField(McpFieldType.text, maxLength: 42),
+      'bic': McpField(McpFieldType.text, maxLength: 11),
+      'bank_name': McpField(McpFieldType.text, maxLength: 120),
+      'account_number': McpField(McpFieldType.text, maxLength: 40),
+      'bank_code': McpField(McpFieldType.text, maxLength: 40),
+      'qr_iban': McpField(McpFieldType.text, maxLength: 42),
+    },
+    output: ['changed'], group: 'financial',
+  ),
 };

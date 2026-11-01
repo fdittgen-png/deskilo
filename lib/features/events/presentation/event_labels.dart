@@ -10,6 +10,8 @@ import '../domain/workspace_event.dart';
 String eventTypeLabel(AppLocalizations l10n, EventType type) {
   final labels = <EventType, String>{
     EventType.badgeSecurityAlert: l10n.eventTypeBadgeSecurityAlert,
+    EventType.paymentInstructionsChange:
+        l10n.eventTypePaymentInstructionsChange,
     EventType.reservation: l10n.eventTypeReservation,
     EventType.payment: l10n.eventTypePayment,
     EventType.expense: l10n.eventTypeExpense,

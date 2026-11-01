@@ -94,6 +94,10 @@ enum EventType {
   /// A workspace-wide badge sign-in ceiling has paused further attempts.
   badgeSecurityAlert('badge_security_alert'),
 
+  /// #3132 — the workspace's bank account was changed through an assistant,
+  /// after the person confirmed it in the app; the owners are told.
+  paymentInstructionsChange('payment_instructions_change'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

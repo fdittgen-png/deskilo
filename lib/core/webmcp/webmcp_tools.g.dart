@@ -501,4 +501,17 @@ const List<WebMcpToolSpec> webMcpTools = [
     readOnly: false,
     destructive: false,
   ),
+  WebMcpToolSpec(
+    id: "set_payment_instructions",
+    name: "deskilo_set_payment_instructions",
+    title: "Change the workspace's bank account",
+    description: "The bank account members are asked to pay into on an unpaid statement, as the Payment methods screen holds it: the IBAN, the BIC, the bank name and, where a country banks without an IBAN, the account number and the bank code (and, in Switzerland, the QR-IBAN). Give only what changes; an empty value clears a field. The IBAN, the BIC and the QR-IBAN are checked before anyone is asked. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the workspace, the account as it is now and the account as it would become, and the owners are told afterwards in their notifications that it changed. A change made in the meantime makes the proposal stale: propose again with a new request_id. Other ways to pay (PayPal, Wero, Lydia, Wise) and every payment-provider key or token stay in the app. Needs the money functionality to be on in the workspace. The answer only says that the account changed.",
+    inputSchema: "{\"type\":\"object\",\"additionalProperties\":false,\"properties\":{\"request_id\":{\"type\":\"string\",\"format\":\"uuid\",\"description\":\"A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.\",\"examples\":[\"6b1d3f0e-0000-4000-8000-000000000001\"]},\"workspace_id\":{\"type\":\"string\",\"format\":\"uuid\",\"description\":\"The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.\",\"examples\":[\"00000000-0000-4000-8000-0000000000a1\"]},\"iban\":{\"type\":\"string\",\"maxLength\":42,\"description\":\"The IBAN of the account, with or without spaces. An empty value clears it.\",\"examples\":[\"FR76 3000 6000 0112 3456 7890 189\"]},\"bic\":{\"type\":\"string\",\"maxLength\":11,\"description\":\"The BIC (SWIFT code) of the bank, 8 or 11 characters. An empty value clears it.\",\"examples\":[\"AGRIFRPP\"]},\"bank_name\":{\"type\":\"string\",\"maxLength\":120,\"description\":\"The name of the bank. An empty value clears it.\",\"examples\":[\"Credit Agricole\"]},\"account_number\":{\"type\":\"string\",\"maxLength\":40,\"description\":\"The account number, for a country that does not bank by IBAN. An empty value clears it.\",\"examples\":[\"12345678\"]},\"bank_code\":{\"type\":\"string\",\"maxLength\":40,\"description\":\"The code that routes to the bank where there is no IBAN: a UK sort code, a US routing number, a Canadian transit and institution number. An empty value clears it.\",\"examples\":[\"20-00-00\"]},\"qr_iban\":{\"type\":\"string\",\"maxLength\":42,\"description\":\"Switzerland only: the QR-IBAN a QR-bill is paid into (institution identifier 30000 to 31999). An empty value clears it.\",\"examples\":[\"CH44 3199 9123 0008 8901 2\"]}},\"required\":[\"request_id\",\"workspace_id\"]}",
+    mutation: "write",
+    confirmation: "native",
+    scope: "workspace",
+    features: ["mcpAccess", "moneyTab"],
+    readOnly: false,
+    destructive: false,
+  ),
 ];
