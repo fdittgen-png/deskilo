@@ -160,6 +160,36 @@ void main() {
     expect(find.text(_en.readStateOffline), findsOneWidget);
   });
 
+  testWidgets('an open register follows a new window on the same route', (
+    tester,
+  ) async {
+    final all = await _invoices();
+    final probe = ReadProbe<List<Invoice>>();
+    final overrides = [
+      ...standardTestOverrides(workspace: FakeWorkspaceRepository.withWorkspace()),
+      invoicesProvider.overrideWith((ref) => probe()),
+    ];
+    await pumpStateScreen(
+      tester,
+      const InvoiceRegisterScreen(),
+      overrides: overrides,
+    );
+    await tester.pump();
+    probe.answer(all);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('invoice-register-period')), findsNothing);
+    expect(_row(all.first), findsOneWidget);
+
+    await pumpStateScreen(
+      tester,
+      const InvoiceRegisterScreen(from: '2000-01', to: '2000-01'),
+      overrides: overrides,
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('invoice-register-period')), findsOneWidget);
+    expect(find.text(_en.invoicesEmpty), findsOneWidget);
+  });
+
   testWidgets('loading, failure, Try again, an empty period with its chip, '
       'then every invoice (state transition)', (tester) async {
     final all = await _invoices();

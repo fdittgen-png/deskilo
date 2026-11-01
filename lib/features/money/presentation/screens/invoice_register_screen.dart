@@ -55,6 +55,15 @@ class _InvoiceRegisterScreenState
   /// The window the register was opened on; cleared by the chip.
   late RegisterPeriod? _period = RegisterPeriod.parse(widget.from, widget.to);
 
+  @override
+  void didUpdateWidget(InvoiceRegisterScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The same route reopened with another window (a drill from a figure).
+    if (oldWidget.from != widget.from || oldWidget.to != widget.to) {
+      _period = RegisterPeriod.parse(widget.from, widget.to);
+    }
+  }
+
   /// null = every year. An accountant works a fiscal year at a time, and
   /// the SAF-T export takes exactly what the register shows.
   int? _year;
