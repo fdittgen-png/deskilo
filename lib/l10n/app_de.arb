@@ -17561,6 +17561,7 @@
   "@taxRefAliasOf": {
     "description": "#2478 tax reference: Field: the member state an alias code stands for."
   },
+  "taxRefBankingScheme": "Bankensystem",
   "taxRefCashBackstop": "Spätester Zeitpunkt bei Ist-Versteuerung",
   "@taxRefCashBackstop": {
     "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
@@ -17615,6 +17616,7 @@
   "@taxRefDomainCatalogueNote": {
     "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
   },
+  "taxRefDomainCountry": "Land (Anlagekatalog)",
   "taxRefDomainEuMember": "EU-Mitglieder",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -17743,6 +17745,7 @@
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
   },
+  "taxRefInvalidTimeZone": "Keine IANA-Zeitzone, die die App kennt, etwa Europe/Paris",
   "taxRefInvoiceOption": "Option für das Rechnungsdatum",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
@@ -17860,6 +17863,7 @@
   "@taxRefText": {
     "description": "#2477 tax reference: Field: statutory text."
   },
+  "taxRefTimeZone": "Zeitzone (IANA)",
   "taxRefTitle": "Steuer-Referenzdaten",
   "@taxRefTitle": {
     "description": "#2477 tax reference: Screen title: the VAT reference values the platform owner maintains."

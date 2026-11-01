@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "taxRefDomainCountry": "Country (creation catalogue)",
+  "@taxRefDomainCountry": {
+    "description": "#2488 country catalogue: taxRefDomainCountry"
+  },
+  "taxRefTimeZone": "Time zone (IANA)",
+  "@taxRefTimeZone": {
+    "description": "#2488 country catalogue: taxRefTimeZone"
+  },
+  "taxRefBankingScheme": "Banking scheme",
+  "@taxRefBankingScheme": {
+    "description": "#2488 country catalogue: taxRefBankingScheme"
+  },
+  "taxRefInvalidTimeZone": "Not an IANA time zone the app knows, such as Europe/Paris",
+  "@taxRefInvalidTimeZone": {
+    "description": "#2488 country catalogue: taxRefInvalidTimeZone"
+  }
+}

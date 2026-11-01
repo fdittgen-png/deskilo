@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "taxRefDomainCountry": "Land (Anlagekatalog)",
+  "taxRefTimeZone": "Zeitzone (IANA)",
+  "taxRefBankingScheme": "Bankensystem",
+  "taxRefInvalidTimeZone": "Keine IANA-Zeitzone, die die App kennt, etwa Europe/Paris"
+}
