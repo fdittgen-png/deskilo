@@ -275,6 +275,84 @@ Deno.test("HMRC's refusals are told apart and never carry a token", async () => 
   );
 });
 
+Deno.test("refusals are read by HMRC's documented body code, not by the status alone", async () => {
+  const call = (status: number, body: unknown) =>
+    submitReturn(
+      play(status, body),
+      BASE,
+      "123456789",
+      "at",
+      fraudHeaders(CLIENT, VENDOR),
+      "26A1",
+      BOXES,
+    );
+  const reason = async (status: number, body: unknown) =>
+    (await call(status, body) as { reason: string }).reason;
+  // The public vat-api sends all three of these as 403.
+  assertEquals(
+    await reason(403, { code: "DUPLICATE_SUBMISSION" }),
+    "already_submitted",
+  );
+  assertEquals(await reason(403, { code: "TAX_PERIOD_NOT_ENDED" }), "refused");
+  assertEquals(
+    await reason(403, { code: "CLIENT_OR_AGENT_NOT_AUTHORISED" }),
+    "not_authorised",
+  );
+  assertEquals(
+    await reason(403, { code: "NOT_SIGNED_UP_TO_MTD" }),
+    "not_authorised",
+  );
+  // A business error carries its code one level down (bounded).
+  assertEquals(
+    await reason(403, {
+      code: "BUSINESS_ERROR",
+      errors: [{ code: "DUPLICATE_SUBMISSION" }],
+    }),
+    "already_submitted",
+  );
+  assertEquals(
+    await reason(403, {
+      code: "BUSINESS_ERROR",
+      errors: [{ code: "TAX_PERIOD_NOT_ENDED" }],
+    }),
+    "refused",
+  );
+  // A status never invents a duplicate or an authorisation: unknown, missing or
+  // malformed bodies are a plain refusal, and nothing is filed.
+  assertEquals(await reason(409, { code: "SOMETHING_NEW" }), "refused");
+  assertEquals(await reason(409, undefined), "refused");
+  assertEquals(await reason(403, "not an object"), "refused");
+  assertEquals(await reason(403, { code: 42 }), "refused");
+  assertEquals(
+    await reason(403, { code: "BUSINESS_ERROR", errors: "x" }),
+    "refused",
+  );
+  // The code is bounded and the nested list is capped.
+  const long = await call(403, { code: "X".repeat(500) });
+  assertEquals(long.ok === false && long.code.length <= 60, true);
+  // Whatever the code, a refusal never carries a receipt.
+  assertEquals(
+    (await call(403, { code: "DUPLICATE_SUBMISSION", formBundleNumber: "1" }))
+      .ok,
+    false,
+  );
+});
+
+Deno.test("a success whose body is not an object is no receipt", async () => {
+  for (const body of [null, "ok", [1]]) {
+    const r = await submitReturn(
+      play(201, body),
+      BASE,
+      "123456789",
+      "at",
+      fraudHeaders(CLIENT, VENDOR),
+      "26A1",
+      BOXES,
+    );
+    assertEquals(r.ok === false && r.code, "NO_RECEIPT");
+  }
+});
+
 Deno.test("no network and no receipt are failures, not successes", async () => {
   const down: typeof fetch = () => Promise.reject(new Error("offline"));
   assertEquals(

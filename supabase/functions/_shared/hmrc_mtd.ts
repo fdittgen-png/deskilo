@@ -262,30 +262,68 @@ async function call(
   } catch {
     return { ok: false, reason: "unreachable", status: 0, code: "NETWORK" };
   }
-  let body: Record<string, unknown> = {};
+  let raw: unknown = {};
   try {
-    body = await res.json();
+    raw = await res.json();
   } catch {
     // not JSON: the status alone answers
   }
+  const body: Record<string, unknown> =
+    typeof raw === "object" && raw !== null && !Array.isArray(raw)
+      ? raw as Record<string, unknown>
+      : {};
   if (res.ok) return { ok: true, body };
-  const code =
-    (typeof body.code === "string" ? body.code : `HTTP_${res.status}`).slice(
-      0,
-      60,
-    );
-  const reason: HmrcFailure["reason"] = res.status === 401
-    ? "token"
-    : res.status === 403
-    ? "not_authorised"
-    : res.status === 409
-    ? "already_submitted"
-    : res.status === 429
-    ? "busy"
-    : res.status >= 500
-    ? "unreachable"
-    : "refused";
-  return { ok: false, reason, status: res.status, code };
+  const code = errorCode(raw, res.status);
+  return {
+    ok: false,
+    reason: reasonOf(code, res.status),
+    status: res.status,
+    code,
+  };
+}
+
+/** The error code HMRC documents in the body (`code`); a BUSINESS_ERROR
+ * carries its code one level down, in a short list. Bounded, and never the
+ * request: an unreadable body gives the status alone. */
+function errorCode(body: unknown, status: number): string {
+  const fallback = `HTTP_${status}`;
+  if (typeof body !== "object" || body === null) return fallback;
+  const top = (body as Record<string, unknown>).code;
+  if (typeof top !== "string" || top.length === 0) return fallback;
+  if (top === "BUSINESS_ERROR") {
+    const errors = (body as Record<string, unknown>).errors;
+    if (Array.isArray(errors)) {
+      for (const e of errors.slice(0, 5)) {
+        const inner = (e as Record<string, unknown> | null)?.code;
+        if (typeof inner === "string" && inner.length > 0) {
+          return inner.slice(0, 60);
+        }
+      }
+    }
+  }
+  return top.slice(0, 60);
+}
+
+// spec: developer.service.hmrc.gov.uk — VAT (MTD) API 1.0, "Submit VAT
+// return": DUPLICATE_SUBMISSION, TAX_PERIOD_NOT_ENDED and
+// CLIENT_OR_AGENT_NOT_AUTHORISED all arrive as 403, so the CODE decides and
+// the status never invents a meaning.
+const DUPLICATE = new Set(["DUPLICATE_SUBMISSION"]);
+const NOT_AUTHORISED = new Set([
+  "CLIENT_OR_AGENT_NOT_AUTHORISED",
+  "NOT_SIGNED_UP_TO_MTD",
+]);
+const THROTTLED = new Set(["MESSAGE_THROTTLED_OUT"]);
+
+function reasonOf(code: string, status: number): HmrcFailure["reason"] {
+  if (status === 401) return "token";
+  if (status === 429 || THROTTLED.has(code)) return "busy";
+  if (status >= 500) return "unreachable";
+  if (DUPLICATE.has(code)) return "already_submitted";
+  if (NOT_AUTHORISED.has(code)) return "not_authorised";
+  // Everything else HMRC rejected (400, 403, 404, 409, 422 with another or
+  // no code): a refusal, nothing filed, nothing assumed.
+  return "refused";
 }
 
 const authed = (accessToken: string, fraud: Record<string, string>) => ({
