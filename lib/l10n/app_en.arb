@@ -9242,6 +9242,18 @@
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
   },
+  "eventPaymentInstructionsChange": "{actor} changed the bank account members pay into, through an assistant and with their confirmation in the app: {fields}.",
+  "@eventPaymentInstructionsChange": {
+    "description": "#3132 the owner notice: who changed the bank account through an assistant, and which fields",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
@@ -9507,6 +9519,7 @@
   "@eventTypePayment": {
     "description": "Event type label / filter chip"
   },
+  "eventTypePaymentInstructionsChange": "Bank account change",
   "eventTypePaymentTermsChange": "Payment conditions",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -17630,6 +17643,10 @@
   "@mcpOpMyStatement": {
     "description": "#2394 generated from contracts/mcp/operations.json (get_my_statement)"
   },
+  "mcpOpPaymentInstructions": "Change the workspace's bank account",
+  "@mcpOpPaymentInstructions": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_payment_instructions)"
+  },
   "mcpOpPendingValidations": "See pending validation requests",
   "@mcpOpPendingValidations": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_pending_validations)"
@@ -19913,6 +19930,10 @@
   "myVisitsTitle": "My visits",
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "navPurchasesGroup": "Purchases & suppliers",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
   "navigationClassic": "Classic: the bottom bar and the round button",
   "@navigationClassic": {
@@ -22554,6 +22575,18 @@
   "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
   "publicProfilePublishTitle": "Publish a public profile?",
   "publicProfileTitle": "Public profile",
+  "purchaseApprovalsEmpty": "Nothing waits for your approval.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "The documents waiting for approval could not be read.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "To approve",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
     "description": "#2577 the guided purchase / expense entry"

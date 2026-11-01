@@ -5553,6 +5553,7 @@
   "eventOutcomeConfirmed": "Bestätigt",
   "eventOutcomePending": "Wartet auf eine Entscheidung",
   "eventOutcomeRejected": "Abgelehnt",
+  "eventPaymentInstructionsChange": "{actor} hat das Bankkonto, auf das Mitglieder zahlen, über einen Assistenten und mit eigener Bestätigung in der App geändert: {fields}.",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5667,6 +5668,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Zahlung",
+  "eventTypePaymentInstructionsChange": "Änderung des Bankkontos",
   "eventTypePaymentTermsChange": "Zahlungsbedingungen",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -10049,6 +10051,7 @@
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
+  "mcpOpPaymentInstructions": "Das Bankkonto des Arbeitsbereichs ändern",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
   "mcpOpRatePlace": "Plätze bewerten",
   "mcpOpRefund": "Rechnung erstatten",
@@ -10817,6 +10820,10 @@
   "myVisitsTitle": "Meine Besuche",
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "navPurchasesGroup": "Einkäufe und Lieferanten",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
   "navigationClassic": "Klassisch: die untere Leiste und der runde Knopf",
   "@navigationClassic": {
@@ -12322,6 +12329,18 @@
   "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.",
   "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
   "publicProfileTitle": "Öffentliches Profil",
+  "purchaseApprovalsEmpty": "Nichts wartet auf Ihre Genehmigung.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "Die zu genehmigenden Belege konnten nicht gelesen werden.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "Zu genehmigen",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
   "purchaseEntryMe": "Ich habe selbst bezahlt",
   "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",

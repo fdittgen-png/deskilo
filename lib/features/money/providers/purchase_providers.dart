@@ -22,6 +22,17 @@ final purchasesProvider = FutureProvider.autoDispose
           ref.watch(purchaseRepositoryProvider).fetchPurchases(workspaceId),
     );
 
+/// #3070 — the documents waiting for a decision: the approvals queue and the
+/// count on its drawer entry read the same list.
+final pendingApprovalsProvider = FutureProvider.autoDispose
+    .family<List<PurchaseSummary>, String>((ref, workspaceId) async {
+      final all = await ref.watch(purchasesProvider(workspaceId).future);
+      return [
+        for (final p in all)
+          if (p.state == PurchaseState.pending) p,
+      ];
+    });
+
 /// One document with its lines and evidence.
 final purchaseDetailProvider = FutureProvider.autoDispose
     .family<PurchaseDetail, ({String workspaceId, String purchaseId})>(

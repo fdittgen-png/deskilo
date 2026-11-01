@@ -22,6 +22,8 @@
 
       "lib/core/instance/mcp_readiness_checks.dart": 554,
 
+      "lib/core/mcp/mcp_operations.dart": 527,
+
       "lib/core/ui/canvas_controls.dart": 504,
 
       "lib/core/vat/tax_value.dart": 545,
@@ -3020,7 +3022,7 @@
     {"id":"lib/features/editor/presentation/screens/editor_screen.dart#_LevelList.build(BuildContext context,WidgetRef ref)","cog":20,"cyc":10,"len":150,"params":2},
     {"id":"lib/features/editor/presentation/widgets/seat_properties_sheet.dart#showSeatPropertiesSheet(BuildContext context,WidgetRef ref,{required String levelId,required FloorPlan plan,required Seat seat})","cog":46,"cyc":21,"len":246,"params":5},
     {"id":"lib/features/editor/presentation/widgets/space_properties_sheet.dart#showSpacePropertiesSheet(BuildContext context,{required String title,required String nameLabel,required String name,required bool bookable,required int priceCents,required String keyPrefix})","cog":6,"cyc":6,"len":103,"params":7},
-    {"id":"lib/features/events/presentation/event_lines.dart#eventLine(AppLocalizations l10n,WorkspaceEvent event,Map<String, String> names,Map<String, String> targets,MoneyFormat currency)","cog":30,"cyc":60,"len":156,"params":5},
+    {"id":"lib/features/events/presentation/event_lines.dart#eventLine(AppLocalizations l10n,WorkspaceEvent event,Map<String, String> names,Map<String, String> targets,MoneyFormat currency)","cog":27,"cyc":57,"len":153,"params":5},
     {"id":"lib/features/events/presentation/screens/validation_settings_screen.dart#ValidationSettingsScreen._edit(BuildContext context,WidgetRef ref,{required String? eventType,required String label})","cog":18,"cyc":26,"len":91,"params":4},
     {"id":"lib/features/events/presentation/widgets/policy_editor_sheet.dart#PolicyEditorSheetState.build(BuildContext context)","cog":28,"cyc":17,"len":269,"params":1},
     {"id":"lib/features/events/providers/attention_providers.dart#workspaceAttention(Ref ref)","cog":23,"cyc":25,"len":32,"params":1},

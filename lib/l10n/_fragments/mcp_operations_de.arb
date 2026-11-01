@@ -36,5 +36,6 @@
   "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
   "mcpOpSetupClosures": "Schließtage hinzufügen",
   "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen",
-  "mcpOpMembershipPlan": "Ein neues Abo-Modell anbieten"
+  "mcpOpMembershipPlan": "Ein neues Abo-Modell anbieten",
+  "mcpOpPaymentInstructions": "Das Bankkonto des Arbeitsbereichs ändern"
 }

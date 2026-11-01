@@ -7480,6 +7480,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventOutcomeRejected => 'Rifiutato';
 
   @override
+  String eventPaymentInstructionsChange(String actor, String fields) {
+    return '$actor ha modificato il conto bancario su cui pagano i membri, tramite un assistente e con la sua conferma nell\'app: $fields.';
+  }
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor ha registrato un pagamento di $amount';
   }
@@ -7622,6 +7627,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Pagamento';
+
+  @override
+  String get eventTypePaymentInstructionsChange =>
+      'Modifica del conto bancario';
 
   @override
   String get eventTypePaymentTermsChange => 'Condizioni di pagamento';
@@ -14824,6 +14833,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpMyStatement => 'Vedere il suo estratto conto';
 
   @override
+  String get mcpOpPaymentInstructions =>
+      'Modificare il conto bancario dello spazio';
+
+  @override
   String get mcpOpPendingValidations =>
       'Vedere le richieste di convalida in sospeso';
 
@@ -16638,6 +16651,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myVisitsTitle => 'Le mie visite';
+
+  @override
+  String get navPurchasesGroup => 'Acquisti e fornitori';
 
   @override
   String get navigationClassic =>
@@ -19038,6 +19054,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Profilo pubblico';
+
+  @override
+  String get purchaseApprovalsEmpty => 'Nulla attende la sua approvazione.';
+
+  @override
+  String get purchaseApprovalsRefused =>
+      'Non è stato possibile leggere i documenti da approvare.';
+
+  @override
+  String get purchaseApprovalsTitle => 'Da approvare';
 
   @override
   String get purchaseEntryAdd => 'Aggiungi acquisto / spesa';

@@ -5553,6 +5553,7 @@
   "eventOutcomeConfirmed": "Confermato",
   "eventOutcomePending": "In attesa di una decisione",
   "eventOutcomeRejected": "Rifiutato",
+  "eventPaymentInstructionsChange": "{actor} ha modificato il conto bancario su cui pagano i membri, tramite un assistente e con la sua conferma nell'app: {fields}.",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventPaymentTermsChangeLine": "{actor} chiede di fissare le condizioni di pagamento: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5667,6 +5668,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Pagamento",
+  "eventTypePaymentInstructionsChange": "Modifica del conto bancario",
   "eventTypePaymentTermsChange": "Condizioni di pagamento",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -10049,6 +10051,7 @@
   "mcpOpMyInvoices": "Vedere le sue fatture",
   "mcpOpMyReservations": "Vedere le sue prenotazioni",
   "mcpOpMyStatement": "Vedere il suo estratto conto",
+  "mcpOpPaymentInstructions": "Modificare il conto bancario dello spazio",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
   "mcpOpRatePlace": "Valutare i posti",
   "mcpOpRefund": "Rimborsare una fattura",
@@ -10817,6 +10820,10 @@
   "myVisitsTitle": "Le mie visite",
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
+  },
+  "navPurchasesGroup": "Acquisti e fornitori",
+  "@navPurchasesGroup": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
   "navigationClassic": "Classica: la barra inferiore e il pulsante rotondo",
   "@navigationClassic": {
@@ -12322,6 +12329,18 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
+  "purchaseApprovalsEmpty": "Nulla attende la sua approvazione.",
+  "@purchaseApprovalsEmpty": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsRefused": "Non è stato possibile leggere i documenti da approvare.",
+  "@purchaseApprovalsRefused": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApprovalsTitle": "Da approvare",
+  "@purchaseApprovalsTitle": {
+    "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
   "purchaseEntryAdd": "Aggiungi acquisto / spesa",
   "purchaseEntryMe": "Ho pagato io",
   "purchaseEntryMeHint": "La presenti come sua spesa: una volta approvata, lo spazio gliela deve.",

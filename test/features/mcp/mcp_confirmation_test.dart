@@ -335,4 +335,40 @@ void main() {
     );
     expect(find.textContaining('Kraftwerk'), findsOneWidget);
   });
+
+  testWidgets('a bank-account change shows the account as it is and as it '
+      'would become', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_payment_instructions',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'iban': 'DE89 3704 0044 0532 0130 00'},
+        target: {
+          'kind': 'payment_instructions',
+          'changes': [
+            {
+              'field': 'iban',
+              'from': 'FR76 3000 6000 0112 3456 7890 189',
+              'to': 'DE89 3704 0044 0532 0130 00',
+            },
+            {'field': 'bic', 'from': '', 'to': 'COBADEFF'},
+          ],
+        },
+      ),
+    );
+    expect(find.text("Change the workspace's bank account"), findsOneWidget);
+    expect(find.text('Payment instructions'), findsOneWidget);
+    expect(
+      find.textContaining(
+        'IBAN: FR76 3000 6000 0112 3456 7890 189 → DE89 3704 0044 0532 0130 00',
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('BIC / SWIFT: — → COBADEFF'), findsOneWidget);
+    expect(find.textContaining('Kraftwerk'), findsOneWidget);
+  });
 }

@@ -85,5 +85,7 @@ String mcpOperationLabel(AppLocalizations l10n, String op) =>
         l10n.mcpOpSetupNumbering,
       McpOperationId.createMembershipPlan =>
         l10n.mcpOpMembershipPlan,
+      McpOperationId.setPaymentInstructions =>
+        l10n.mcpOpPaymentInstructions,
       null => op,
     };

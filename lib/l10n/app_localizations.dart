@@ -12671,6 +12671,12 @@ abstract class AppLocalizations {
   /// **'Rejected'**
   String get eventOutcomeRejected;
 
+  /// #3132 the owner notice: who changed the bank account through an assistant, and which fields
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} changed the bank account members pay into, through an assistant and with their confirmation in the app: {fields}.'**
+  String eventPaymentInstructionsChange(String actor, String fields);
+
   /// Feed line for payment events
   ///
   /// In en, this message translates to:
@@ -12892,6 +12898,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment'**
   String get eventTypePayment;
+
+  /// No description provided for @eventTypePaymentInstructionsChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank account change'**
+  String get eventTypePaymentInstructionsChange;
 
   /// #881 member payment conditions: eventTypePaymentTermsChange
   ///
@@ -24412,6 +24424,12 @@ abstract class AppLocalizations {
   /// **'See your account statement'**
   String get mcpOpMyStatement;
 
+  /// #2394 generated from contracts/mcp/operations.json (set_payment_instructions)
+  ///
+  /// In en, this message translates to:
+  /// **'Change the workspace\'s bank account'**
+  String get mcpOpPaymentInstructions;
+
   /// #2394 generated from contracts/mcp/operations.json (list_pending_validations)
   ///
   /// In en, this message translates to:
@@ -27489,6 +27507,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My visits'**
   String get myVisitsTitle;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases & suppliers'**
+  String get navPurchasesGroup;
 
   /// #969 navigation style: navigationClassic
   ///
@@ -31583,6 +31607,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public profile'**
   String get publicProfileTitle;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing waits for your approval.'**
+  String get purchaseApprovalsEmpty;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'The documents waiting for approval could not be read.'**
+  String get purchaseApprovalsRefused;
+
+  /// #3070 purchases and suppliers navigation group and approvals queue
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get purchaseApprovalsTitle;
 
   /// #2577 the guided purchase / expense entry
   ///

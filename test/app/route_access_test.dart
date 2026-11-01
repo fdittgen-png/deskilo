@@ -72,6 +72,22 @@ void main() {
     }
   });
 
+  test('#3070 — the approvals queue is for who may decide, the suppliers for '
+      'who manages the money; the hub keeps its own rule', () {
+    expect(mayOpen('/money/purchases/approvals', treasurer), isTrue);
+    expect(mayOpen('/money/purchases/approvals', secretary), isFalse);
+    expect(
+      mayOpen('/money/purchases/approvals', {WorkspacePermission.viewMyMoney}),
+      isFalse,
+    );
+    expect(mayOpen('/money/suppliers', treasurer), isTrue);
+    expect(mayOpen('/money/suppliers', secretary), isFalse);
+    expect(
+      mayOpen('/money/purchases', {WorkspacePermission.viewMyMoney}),
+      isTrue,
+    );
+  });
+
   test('a secretary opens the members screens and not the money ones', () {
     expect(mayOpen('/members', secretary), isTrue);
     expect(mayOpen('/invoicing/wizard', secretary), isFalse);
