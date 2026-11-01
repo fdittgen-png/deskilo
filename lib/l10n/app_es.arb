@@ -10045,6 +10045,7 @@
   "mcpOpListWorkspaces": "Ver qué espacios puede usar",
   "mcpOpMemberStatement": "Ver el estado de cuenta de un miembro",
   "mcpOpMemberStatus": "Cambiar el estado de un miembro",
+  "mcpOpMembershipPlan": "Ofrecer un nuevo plan de membresía",
   "mcpOpMyInvoices": "Ver sus facturas",
   "mcpOpMyReservations": "Ver sus reservas",
   "mcpOpMyStatement": "Ver su estado de cuenta",

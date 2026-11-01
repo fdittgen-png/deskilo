@@ -24388,6 +24388,12 @@ abstract class AppLocalizations {
   /// **'Change a member\'s status'**
   String get mcpOpMemberStatus;
 
+  /// #2394 generated from contracts/mcp/operations.json (create_membership_plan)
+  ///
+  /// In en, this message translates to:
+  /// **'Offer a new membership plan'**
+  String get mcpOpMembershipPlan;
+
   /// #2394 generated from contracts/mcp/operations.json (list_my_invoices)
   ///
   /// In en, this message translates to:

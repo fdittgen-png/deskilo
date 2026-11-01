@@ -10045,6 +10045,7 @@
   "mcpOpListWorkspaces": "Voir les espaces qu'il peut utiliser",
   "mcpOpMemberStatement": "Voir le relevé de compte d'un membre",
   "mcpOpMemberStatus": "Modifier le statut d'un membre",
+  "mcpOpMembershipPlan": "Proposer une nouvelle formule d'abonnement",
   "mcpOpMyInvoices": "Voir vos factures",
   "mcpOpMyReservations": "Voir vos réservations",
   "mcpOpMyStatement": "Voir votre relevé de compte",

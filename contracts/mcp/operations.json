@@ -132,6 +132,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "created": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "credits_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -442,6 +446,10 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "overage_rate_cents": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "percent": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -3582,6 +3590,67 @@
     "de": "Die Nummerierung der Belege festlegen",
     "es": "Fijar la numeraci\u00f3n de los documentos",
     "it": "Impostare la numerazione dei documenti"
+   }
+  },
+  {
+   "id": "create_membership_plan",
+   "handler": true,
+   "dispatch": true,
+   "title": "Offer a new membership plan",
+   "description": "A membership plan is a subscription level: the percentage of the full subscription a member can choose, as the owner adds it on the billing screen. Give the percentage as a whole number; the range the workspace allows comes from its template and anything outside it, or a plan already offered, is refused. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the percentage and the workspace; then call again with the same request_id and arguments. Needs the money functionality to be on in the workspace. The answer says whether the plan was created and returns the plans now offered.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageBilling"
+   },
+   "features": [
+    "mcpAccess",
+    "moneyTab"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "percent": {
+     "type": "integer",
+     "required": true,
+     "description": "The share of the full subscription the plan charges, as a whole percentage (30 for a plan at 30 % of the full price).",
+     "examples": [
+      30
+     ]
+    }
+   },
+   "output": [
+    "created",
+    "percent",
+    "levels"
+   ],
+   "group": "financial",
+   "label": {
+    "key": "mcpOpMembershipPlan",
+    "en": "Offer a new membership plan",
+    "fr": "Proposer une nouvelle formule d'abonnement",
+    "de": "Ein neues Abo-Modell anbieten",
+    "es": "Ofrecer un nuevo plan de membres\u00eda",
+    "it": "Offrire un nuovo piano di abbonamento"
    }
   }
  ],

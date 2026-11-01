@@ -35,5 +35,6 @@
   "mcpOpSetupInvite": "Invitar a una persona",
   "mcpOpSetupHours": "Fijar los días y horarios de apertura",
   "mcpOpSetupClosures": "Añadir días de cierre",
-  "mcpOpSetupNumbering": "Fijar la numeración de los documentos"
+  "mcpOpSetupNumbering": "Fijar la numeración de los documentos",
+  "mcpOpMembershipPlan": "Ofrecer un nuevo plan de membresía"
 }

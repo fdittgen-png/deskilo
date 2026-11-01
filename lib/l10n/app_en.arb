@@ -17614,6 +17614,10 @@
   "@mcpOpMemberStatus": {
     "description": "#2394 generated from contracts/mcp/operations.json (request_member_status_change)"
   },
+  "mcpOpMembershipPlan": "Offer a new membership plan",
+  "@mcpOpMembershipPlan": {
+    "description": "#2394 generated from contracts/mcp/operations.json (create_membership_plan)"
+  },
   "mcpOpMyInvoices": "See your invoices",
   "@mcpOpMyInvoices": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_my_invoices)"
