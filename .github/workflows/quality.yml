@@ -238,7 +238,7 @@ jobs:
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
     # margin until two loaded runs of the split are measured.
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
@@ -320,7 +320,7 @@ jobs:
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
     # margin until two loaded runs of the split are measured.
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       # subosito/flutter-action v2.23.0, pinned to its commit.
@@ -403,7 +403,7 @@ jobs:
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other) on a green run of 2026-10-31. The cap keeps its
     # margin until two loaded runs of the split are measured.
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2

@@ -85,9 +85,9 @@ The assignment comes from [`tool/quality_rows/selection.dart`](https://github.co
 | Shard ID | Job name | Selection | Job timeout |
 | --- | --- | --- | --- |
 | `gate` | `quality · test · gates` | All `test/**/*_test.dart` outside `test/features/`, except `test/app/` and `test/a11y/`; includes lint, tool, i18n, UX, perf, and core tests | 30 min |
-| `money` | `quality · test · money and reservations` | `test/features/money/` and `test/features/reservations/` | 45 min |
-| `workspace` | `quality · test · workspace, me, events and auth` | `test/features/workspace/`, `me/`, `events/`, and `auth/` | 45 min |
-| `rest` | `quality · test · other features, app and a11y` | All remaining feature tests, plus `test/app/` and `test/a11y/` | 45 min |
+| `money` | `quality · test · money and reservations` | `test/features/money/` and `test/features/reservations/` | 30 min |
+| `workspace` | `quality · test · workspace, me, events and auth` | `test/features/workspace/`, `me/`, `events/`, and `auth/` | 30 min |
+| `rest` | `quality · test · other features, app and a11y` | All remaining feature tests, plus `test/app/` and `test/a11y/` | 30 min |
 
 A new root test directory defaults to `gate`; a new feature directory defaults to `rest`. The aggregate independently walks the test tree and proves that every required file is assigned exactly once. Database-backed topology execution additionally runs in the database job with its stack configuration.
 
