@@ -27,6 +27,9 @@
 //   POST {action: "deliver", connection_id, from, to, document?}
 //        A billing manager delivers a period's postings, or one document
 //        again, through the delivery kit (deliver.ts).
+//   POST {action: "revoke" | "verify", connection_id}
+//        Revoking a connection here and at the target (RFC 7009), and
+//        checking that a token reaches its company (lifecycle.ts).
 //
 // An installation that registered no OAuth application with a target
 // answers 503 `oauth_not_configured` before anything is opened.
@@ -47,6 +50,7 @@ import {
 } from "../_shared/accounting_oauth.ts";
 import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
 import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
+import { revoke, verify } from "./lifecycle.ts";
 
 export type { Deps } from "./connection.ts";
 
@@ -219,6 +223,10 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       return refresh(deps, authorization, body);
     case "deliver":
       return deliverPeriod(deps, authorization, body);
+    case "revoke":
+      return revoke(deps, authorization, body);
+    case "verify":
+      return verify(deps, authorization, body);
     default:
       return json({ error: "unknown action" }, 400);
   }

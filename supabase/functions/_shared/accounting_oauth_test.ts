@@ -11,6 +11,7 @@ import {
   isFailure,
   newState,
   refreshTokens,
+  revokeToken,
   sameSecret,
   type TokenSet,
 } from "./accounting_oauth.ts";
@@ -109,4 +110,53 @@ Deno.test("states are random and compared whole", () => {
 
 Deno.test("the client's environment names follow the target id", () => {
   assertEquals(clientEnvName("pennylane_api", "CLIENT_ID"), "ACCOUNTING_PENNYLANE_API_CLIENT_ID");
+});
+
+// ── RFC 7009: revoking a token at the target ───────────────────────────────
+
+Deno.test("the targets that document a revocation endpoint name it; the others name none", () => {
+  for (const id of ["quickbooks_online_us", "quickbooks_online_ca", "quickbooks_online_gb", "xero_gb", "xero_eu", "bexio_api"]) {
+    assert(oauthTargets[id].revokeUrl?.startsWith("https://"), id);
+  }
+  for (const id of ["pennylane_api", "sage_business_cloud_gb"]) {
+    assertEquals(oauthTargets[id].revokeUrl, undefined, id);
+  }
+});
+
+Deno.test("a revocation is a form post with the token and its hint, the client as basic auth", async () => {
+  const seen: { url: string; init: RequestInit }[] = [];
+  const result = await revokeToken(
+    ((url: string | URL | Request, init?: RequestInit) => {
+      seen.push({ url: String(url), init: init! });
+      return Promise.resolve(new Response("", { status: 200 }));
+    }) as typeof fetch,
+    { ...target, revokeUrl: "https://idp.test/revoke" },
+    client,
+    "the-refresh-token",
+    "refresh_token",
+  );
+  assertEquals(result, { ok: true });
+  assertEquals(seen[0].url, "https://idp.test/revoke");
+  const body = new URLSearchParams(String(seen[0].init.body));
+  assertEquals(body.get("token"), "the-refresh-token");
+  assertEquals(body.get("token_type_hint"), "refresh_token");
+  assertEquals(body.get("client_secret"), null);
+  assertEquals((seen[0].init.headers as Record<string, string>).authorization, `Basic ${btoa("app-id:app-secret")}`);
+});
+
+Deno.test("a target that takes JSON (Intuit) is sent JSON", async () => {
+  const seen: RequestInit[] = [];
+  await revokeToken(answering(200, {}, seen), oauthTargets.quickbooks_online_us, client, "tok", "refresh_token");
+  assertEquals(JSON.parse(String(seen[0].body)), { token: "tok" });
+  assertEquals((seen[0].headers as Record<string, string>)["content-type"], "application/json");
+});
+
+Deno.test("a refused or unreachable revocation says so without the token", async () => {
+  const withUrl = { ...target, revokeUrl: "https://idp.test/revoke" };
+  const refused = await revokeToken(answering(400, { error: "invalid_request", echo: "SECRET-TOKEN" }), withUrl, client, "SECRET-TOKEN", "access_token");
+  assertEquals(refused, { ok: false, detail: "invalid_request" });
+  const down = await revokeToken((() => Promise.reject(new Error("dial SECRET-TOKEN"))) as typeof fetch, withUrl, client, "SECRET-TOKEN", "access_token");
+  assertEquals(down.ok, false);
+  assert(!JSON.stringify(down).includes("SECRET-TOKEN"));
+  assertEquals(await revokeToken(answering(200, {}), target, client, "t", "access_token"), { ok: false, detail: "not_supported" });
 });
