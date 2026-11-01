@@ -1,0 +1,5 @@
+{
+  "@@locale": "it",
+  "settingLabelBiDetailPageSize": "Righe per pagina di dettaglio",
+  "settingHintBiDetailPageSize": "Quante righe mostra una pagina del dettaglio di una cifra, come i pagamenti dietro l'importo incassato. La pagina successiva riprende da dove questa si ferma."
+}

@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "settingLabelBiDetailPageSize": "Rows per detail page",
+  "@settingLabelBiDetailPageSize": {
+    "description": "#2578 settings: Setting label."
+  },
+  "settingHintBiDetailPageSize": "How many rows one page of a figure's detail shows, such as the payments behind the collected amount. The next page continues where this one stopped.",
+  "@settingHintBiDetailPageSize": {
+    "description": "#2578 settings: Setting hint."
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "settingLabelBiDetailPageSize": "Zeilen je Detailseite",
+  "settingHintBiDetailPageSize": "Wie viele Zeilen eine Seite der Details einer Kennzahl zeigt, etwa die Zahlungen hinter dem eingenommenen Betrag. Die nächste Seite setzt dort fort, wo diese aufhört."
+}

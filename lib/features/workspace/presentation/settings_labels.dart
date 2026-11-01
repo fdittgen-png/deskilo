@@ -78,6 +78,7 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_pages' => l10n.settingLabelBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
+      'bi.detail_page_size' => l10n.settingLabelBiDetailPageSize,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -186,6 +187,7 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_pages' => l10n.settingHintBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
+      'bi.detail_page_size' => l10n.settingHintBiDetailPageSize,
       _ => _bankSettingHint(l10n, key),
     };
 

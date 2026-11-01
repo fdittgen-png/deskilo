@@ -15354,6 +15354,7 @@
     "description": "#2578 BI settings"
   },
   "settingHintBiBatchTimeBudgetMs": "Wie lange eine Berichtsabfrage rechnen darf, bevor die noch nicht erreichten Kennzahlen als über Budget gemeldet werden; die Seite zeigt, was sie hat. Unter dem Anfrage-Timeout des Servers halten.",
+  "settingHintBiDetailPageSize": "Wie viele Zeilen eine Seite der Details einer Kennzahl zeigt, etwa die Zahlungen hinter dem eingenommenen Betrag. Die nächste Seite setzt dort fort, wo diese aufhört.",
   "settingHintBiReportMaxBytes": "Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15535,6 +15536,7 @@
     "description": "#2578 BI settings"
   },
   "settingLabelBiBatchTimeBudgetMs": "Zeitbudget einer Berichtsabfrage",
+  "settingLabelBiDetailPageSize": "Zeilen je Detailseite",
   "settingLabelBiReportMaxBytes": "Größe einer Berichtsdefinition",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"
