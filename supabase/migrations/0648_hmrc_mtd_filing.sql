@@ -205,7 +205,7 @@ begin
     raise exception 'connect HMRC first' using errcode = 'DKA02';
   end if;
   select public.hmrc_vrn(w.vat_id) into v_vrn from public.workspaces w where w.id = d.workspace_id;
-  if v_vrn is null or c.remote_tenant_id <> v_vrn then
+  if v_vrn is null or c.remote_tenant_id is distinct from v_vrn then
     raise exception 'the connection is for another VAT registration' using errcode = 'DKA03';
   end if;
   select * into v_sum from public.vat_return_summary(d.workspace_id, d.period_start, d.period_end);
@@ -220,6 +220,29 @@ end;
 $fn$;
 revoke execute on function public.hmrc_filing_context_v1(uuid, uuid) from public, anon;
 grant execute on function public.hmrc_filing_context_v1(uuid, uuid) to authenticated;
+
+-- Revokes an HMRC connection: its own door (owner or co-owner, MTD's flag),
+-- the same local clearing as any connection. HMRC documents no revocation
+-- endpoint, so the revocation is local only and the screen says so.
+create or replace function public.revoke_hmrc_connection_v1(p_connection_id uuid)
+returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  c public.accounting_connections;
+begin
+  select * into c from public.accounting_connections where id = p_connection_id for update;
+  if c.id is null or c.target_id <> 'hmrc_mtd' then raise exception 'unknown connection' using errcode = 'P0002'; end if;
+  perform public.hmrc_actor(c.workspace_id);
+  if c.revoked_at is not null then return public.accounting_connection_json(c); end if;
+  perform public.clear_accounting_credentials(c.id);
+  update public.accounting_connections
+     set status = 'revoked', status_detail = '', revoked_at = now()
+   where id = c.id
+  returning * into c;
+  return public.accounting_connection_json(c);
+end;
+$fn$;
+revoke execute on function public.revoke_hmrc_connection_v1(uuid) from public, anon;
+grant execute on function public.revoke_hmrc_connection_v1(uuid) to authenticated;
 
 -- ── anchored patches (pg_temp.anchor_replace) ─────────────────────────────
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
@@ -252,6 +275,29 @@ begin
     $a$if not public.feature_effective(c.workspace_id,
          case when c.target_id = 'hmrc_mtd' then 'mtdSubmission' else 'accountingConnectors' end) then$a$);
   if v_def is null then raise exception '0648: set_accounting_credentials anchor missing'; end if;
+  execute v_def;
+
+  -- The generic accounting doors never open, manage or revoke an HMRC
+  -- connection: it has its own doors above (owner right, MTD's flag, VRN).
+  select pg_get_functiondef('public.open_accounting_connection_v1(uuid,uuid,text,text,text)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$if v_ways is null then$a$,
+    $a$if v_ways is null or btrim(coalesce(p_target_id, '')) = 'hmrc_mtd' then$a$);
+  if v_def is null then raise exception '0648: open_accounting_connection_v1 anchor missing'; end if;
+  execute v_def;
+  select pg_get_functiondef('public.accounting_connection_manageable_v1(uuid)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
+    $a$if c.target_id = 'hmrc_mtd' then raise exception 'use hmrc_connection_manageable_v1' using errcode = '22023'; end if;
+  perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$);
+  if v_def is null then raise exception '0648: accounting_connection_manageable_v1 anchor missing'; end if;
+  execute v_def;
+  select pg_get_functiondef('public.revoke_accounting_connection_v1(uuid)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
+    $a$if c.target_id = 'hmrc_mtd' then raise exception 'use revoke_hmrc_connection_v1' using errcode = '22023'; end if;
+  perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$);
+  if v_def is null then raise exception '0648: revoke_accounting_connection_v1 anchor missing'; end if;
   execute v_def;
 
   -- The channel hmrc_mtd is accepted only inside the HMRC wrapper below.

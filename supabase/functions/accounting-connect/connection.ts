@@ -87,6 +87,12 @@ export function targetOf(
   return oauthTargets[id];
 }
 
+/** The caller-token door that says whether the person may manage a
+ * connection of [targetId]: HMRC has its own (MTD's flag and the owner right,
+ * not accountingConnectors). */
+export const manageableRpc = (targetId: string | undefined) =>
+  targetId === "hmrc_mtd" ? "hmrc_connection_manageable_v1" : "accounting_connection_manageable_v1";
+
 export function clientOf(deps: Deps, targetId: string): OAuthClient | null {
   const clientId = deps.env(clientEnvName(targetId, "CLIENT_ID")) ?? "";
   const clientSecret = deps.env(clientEnvName(targetId, "CLIENT_SECRET")) ?? "";

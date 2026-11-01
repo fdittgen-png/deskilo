@@ -53,6 +53,7 @@ import {
   clientOf,
   type Deps,
   json,
+  manageableRpc,
   refreshExclusive,
   resolved,
   STATUS_DETAIL_LENGTH,
@@ -101,12 +102,15 @@ async function authorize(
     ? body.connection_id
     : "";
   const opened = again
-    ? await deps.caller(authorization).rpc(
-      "accounting_connection_manageable_v1",
-      {
-        p_connection_id: again,
-      },
-    )
+    ? await deps.caller(authorization).rpc(manageableRpc(targetId), {
+      p_connection_id: again,
+    })
+    : targetId === "hmrc_mtd"
+    ? await deps.caller(authorization).rpc("open_hmrc_connection_v1", {
+      p_workspace_id: workspaceId,
+      p_issuer_site_id: issuer,
+      p_display_name: typeof body.display_name === "string" ? body.display_name : "",
+    })
     : await deps.caller(authorization).rpc("open_accounting_connection_v1", {
       p_workspace_id: workspaceId,
       p_issuer_site_id: issuer,
@@ -272,16 +276,13 @@ async function refresh(
   if (!UUID.test(connectionId)) {
     return json({ error: "connection_id required" }, 400);
   }
-  const allowed = await deps.caller(authorization).rpc(
-    "accounting_connection_manageable_v1",
-    {
-      p_connection_id: connectionId,
-    },
-  );
+  const held = await resolved(deps, connectionId);
+  const allowed = await deps.caller(authorization).rpc(manageableRpc(held?.target_id), {
+    p_connection_id: connectionId,
+  });
   if (allowed.error || !allowed.data) {
     return json({ error: "not allowed to manage this connection" }, 403);
   }
-  const held = await resolved(deps, connectionId);
   const target = held ? targetOf(deps, held.target_id) : undefined;
   if (!held || held.auth_kind !== "oauth2" || !target) {
     return json({ error: "this connection is not signed in to" }, 400);
