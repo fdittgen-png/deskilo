@@ -15959,6 +15959,8 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.",
+  "setupAnswerUnknown": "Je ne sais pas encore",
+  "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.",
   "setupApprovalsApply": "Appliquer cette règle",
   "setupApprovalsApplyFailed": "La règle d'approbation n'a pas pu être enregistrée. Réessayez.",
   "setupApprovalsFlowOutcome": "Elle s'applique",

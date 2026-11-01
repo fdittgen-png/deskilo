@@ -1386,6 +1386,48 @@ window.SETUP_LEVELS={
   "public_page",
   "organised"
  ],
+ "evidence": {
+  "members_owe_money": {
+   "process": "money",
+   "level": "statements"
+  },
+  "issue_invoices": {
+   "process": "money",
+   "level": "invoices"
+  },
+  "pay_online": {
+   "process": "payments",
+   "level": "online"
+  },
+  "vat_registered": {
+   "process": "tax",
+   "level": "vat"
+  },
+  "keep_books": {
+   "process": "tax",
+   "level": "books"
+  },
+  "tracks_purchases": {
+   "process": "purchases",
+   "level": "expenses"
+  },
+  "several_rooms_or_sites": {
+   "process": "bookings",
+   "level": "resources"
+  },
+  "door_tablet": {
+   "process": "bookings",
+   "level": "measured"
+  },
+  "public_page": {
+   "process": "presentation",
+   "level": "public"
+  },
+  "organised": {
+   "process": "community",
+   "level": "organised"
+  }
+ },
  "processes": [
   {
    "key": "bookings",

@@ -26,7 +26,7 @@ Future<void> _pump(
   List<Uri>? opened,
   bool inDemo = false,
 }) async {
-  tester.view.physicalSize = const Size(900, 4000);
+  tester.view.physicalSize = const Size(900, 9000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await pumpApp(
