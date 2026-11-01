@@ -11467,6 +11467,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceYouAreOwner => 'È il proprietario dell\'istanza.';
 
   @override
+  String interchangeBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'missingIssuer': 'il libro non indica alcun emittente',
+      'missingRevision': 'il profilo contabile $subject non ha una revisione',
+      'unbalancedEntry': 'la scrittura $subject non quadra',
+      'unconvertedCurrency': '$subject non è nella valuta del libro',
+      'unknownDocument':
+          'una scrittura registra il documento sconosciuto $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String invitationAlreadyMember(String workspace) {
     return 'È già membro di $workspace.';
   }
@@ -12737,6 +12751,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String journalFecPartyCode(String names) {
     return 'Il FEC richiede un codice cliente per ogni terzo, fino a 13 lettere e cifre: assegni prima un numero di membro o di fornitore a: $names';
+  }
+
+  @override
+  String journalInterchangeRefused(String reasons) {
+    return 'Il giornale non è stato scritto: $reasons';
   }
 
   @override
@@ -19804,6 +19823,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get quotaRequestTitle => 'Richiedi mezze giornate extra';
+
+  @override
+  String get readStateDenied =>
+      'Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.';
+
+  @override
+  String get readStateFailed => 'Impossibile caricare. Riprovi.';
+
+  @override
+  String get readStateOffline =>
+      'Nessuna connessione. Controlli la rete e riprovi.';
 
   @override
   String readinessActor(String who) {

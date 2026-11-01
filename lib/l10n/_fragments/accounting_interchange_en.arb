@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "journalInterchangeRefused": "The journal was not written: {reasons}",
+  "@journalInterchangeRefused": {
+    "description": "#2370 Generic journal export: the interchange envelope of the postings was refused, with the reasons (each an interchangeBlock).",
+    "placeholders": {
+      "reasons": {
+        "type": "String"
+      }
+    }
+  },
+  "interchangeBlock": "{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book's currency} unknownDocument{a posting books the unknown document {subject}} other{{subject}}}",
+  "@interchangeBlock": {
+    "description": "#2370 Generic journal export: one reason the interchange envelope was refused, by kind.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  }
+}

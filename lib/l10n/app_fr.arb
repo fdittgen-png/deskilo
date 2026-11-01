@@ -7764,6 +7764,7 @@
   "instanceYou": "vous",
   "instanceYouAreDelegate": "Vous êtes délégué du propriétaire de l'instance.",
   "instanceYouAreOwner": "Vous êtes le propriétaire de l'instance.",
+  "interchangeBlock": "{kind, select, missingIssuer{le livre ne nomme aucun émetteur} missingRevision{le profil comptable {subject} n’a pas de révision} unbalancedEntry{l’écriture {subject} n’est pas équilibrée} unconvertedCurrency{{subject} n’est pas dans la devise du livre} unknownDocument{une écriture porte sur le document inconnu {subject}} other{{subject}}}",
   "invitationAlreadyMember": "Vous êtes déjà membre de {workspace}.",
   "invitationApprovalRequired": "Un administrateur approuve les nouveaux membres avant l’ouverture de l’espace.",
   "invitationApprovalUnknown": "On ne sait pas si un administrateur doit approuver.",
@@ -8656,6 +8657,7 @@
   "journalBlocked": "Associez d'abord ces rôles dans le plan de comptes : {roles}",
   "journalFecMissingRate": "Ces documents sont dans une autre devise que celle de la comptabilité et aucun taux de change n'est enregistré pour eux ; le FEC n'a pas été écrit : {documents}",
   "journalFecPartyCode": "Le FEC exige un code client pour chaque tiers, jusqu'à 13 lettres et chiffres : attribuez d'abord un numéro de membre ou de fournisseur à : {names}",
+  "journalInterchangeRefused": "Le journal n’a pas été écrit : {reasons}",
   "journalNeedsLocalBook": "Le journal est tiré d'une comptabilité tenue ici : configurez d'abord le plan de comptes de l'émetteur.",
   "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}",
   "journalOpeningRefused": "Les soldes d’ouverture (du {from} au {to}) n’ont pas pu être comptabilisés : {reason}",
@@ -13080,6 +13082,18 @@
   "quotaRequestExplainer": "Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour {period} s'appliquent une fois validées.",
   "quotaRequestPending": "Demande envoyée — en attente de validation.",
   "quotaRequestTitle": "Demander des demi-journées supplémentaires",
+  "readStateDenied": "Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Le chargement a échoué. Réessayez.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "Pas de connexion. Vérifiez votre réseau et réessayez.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Qui : {who}",
   "readinessActorAdministrator": "Un administrateur de la base",
   "readinessActorOperator": "L’opérateur du serveur",

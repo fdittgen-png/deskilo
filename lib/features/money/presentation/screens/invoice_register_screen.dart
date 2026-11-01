@@ -7,8 +7,8 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -55,9 +55,30 @@ class _InvoiceRegisterScreenState
   /// The window the register was opened on; cleared by the chip.
   late RegisterPeriod? _period = RegisterPeriod.parse(widget.from, widget.to);
 
+  @override
+  void didUpdateWidget(InvoiceRegisterScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The same route reopened with another window (a drill from a figure).
+    if (oldWidget.from != widget.from || oldWidget.to != widget.to) {
+      _period = RegisterPeriod.parse(widget.from, widget.to);
+    }
+  }
+
   /// null = every year. An accountant works a fiscal year at a time, and
   /// the SAF-T export takes exactly what the register shows.
   int? _year;
+
+  /// An export is running: the one command the register owns.
+  bool _exporting = false;
+
+  Future<void> _export(List<Invoice> shown, {required String label}) async {
+    setState(() => _exporting = true);
+    try {
+      await exportAccountingFile(context, ref, shown, label: label);
+    } finally {
+      if (mounted) setState(() => _exporting = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,15 +126,17 @@ class _InvoiceRegisterScreenState
               // hunting for the accounting export walked past it.
               tooltip: l10n.invoiceAccountingExport,
               icon: const Icon(Icons.plagiarism_outlined),
-              onPressed: () => exportAccountingFile(
-                context,
-                ref,
-                _visible(invoicesAsync.value ?? const [], canIssue || canExport),
-                label: _year?.toString() ??
-                    (_period == null
-                        ? l10n.invoiceRegisterAllYears
-                        : _periodText(l10n, dateFormat, _period!)),
-              ),
+              // #3061 — one export at a time: the button is off from the
+              // tap until the run ends, however it ends.
+              onPressed: _exporting
+                  ? null
+                  : () => _export(
+                      _visible(invoicesAsync.value ?? const [], canIssue || canExport),
+                      label: _year?.toString() ??
+                          (_period == null
+                              ? l10n.invoiceRegisterAllYears
+                              : _periodText(l10n, dateFormat, _period!)),
+                    ),
             ),
         ],
       ),
@@ -121,23 +144,23 @@ class _InvoiceRegisterScreenState
         if (_period case final period?)
           _periodChip(l10n, dateFormat, period),
         Expanded(
-          child: switch (invoicesAsync) {
-            AsyncData(value: final invoices) => _table(
-                context,
-                l10n,
-                invoices: _visible(invoices, canIssue),
-                years: {for (final i in invoices) i.issuedAt.year}.toList()
-                  ..sort((a, b) => b.compareTo(a)),
-                matches: matches,
-                reminders: reminders,
-                currency: currency,
-                dateFormat: dateFormat,
-                showMemberNames: showMemberNames,
-                canIssue: canIssue,
-              ),
-            AsyncError() => Center(child: Text(l10n.workspaceGenericError)),
-            _ => const LoadingView(),
-          },
+          child: AsyncReadBody<List<Invoice>>(
+            value: invoicesAsync,
+            onRetry: () => ref.invalidate(invoicesProvider),
+            data: (invoices) => _table(
+              context,
+              l10n,
+              invoices: _visible(invoices, canIssue),
+              years: {for (final i in invoices) i.issuedAt.year}.toList()
+                ..sort((a, b) => b.compareTo(a)),
+              matches: matches,
+              reminders: reminders,
+              currency: currency,
+              dateFormat: dateFormat,
+              showMemberNames: showMemberNames,
+              canIssue: canIssue,
+            ),
+          ),
         ),
       ]),
     );

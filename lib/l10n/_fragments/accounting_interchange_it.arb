@@ -1,0 +1,5 @@
+{
+  "@@locale": "it",
+  "journalInterchangeRefused": "Il giornale non è stato scritto: {reasons}",
+  "interchangeBlock": "{kind, select, missingIssuer{il libro non indica alcun emittente} missingRevision{il profilo contabile {subject} non ha una revisione} unbalancedEntry{la scrittura {subject} non quadra} unconvertedCurrency{{subject} non è nella valuta del libro} unknownDocument{una scrittura registra il documento sconosciuto {subject}} other{{subject}}}"
+}

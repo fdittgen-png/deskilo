@@ -5,9 +5,11 @@
 // journal, amounts in major units, the rate group as the tax code of a tax
 // line, every entry balanced in the file as in the postings.
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
+import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
+import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
@@ -40,6 +42,18 @@ BookMapping _map(BookRole role, String code, {String? qualifier}) =>
       revision: 1,
     );
 
+AccountingInterchangeV1 _envelope(List<Posting> postings) =>
+    AccountingInterchangeV1.fromPostings(
+      book: const InterchangeBook(
+        issuerSiteId: 'site',
+        profileId: 'p',
+        revision: 1,
+        functionalCurrency: 'EUR',
+      ),
+      period: FiscalYear.calendar(2026),
+      postings: postings,
+    );
+
 void main() {
   final set = postingsOf(
     invoices: SeededExportYear.invoices,
@@ -67,7 +81,7 @@ void main() {
     ),
     groupOf: (InvoiceVatTotal t) => t.percent >= 20 ? 'standard' : 'reduced',
   );
-  final rows = buildGenericJournalCsv(set.postings).trimRight().split('\r\n');
+  final rows = buildGenericJournalCsv(_envelope(set.postings)).trimRight().split('\r\n');
 
   test('the header and one row per posting line', () {
     expect(set.blockers, isEmpty);
@@ -129,8 +143,8 @@ void main() {
       revision: 1,
     );
     test('no local book, no journal', () async {
-      final out = writtenWith(await GenericJournalExport(_Postings(set))
-          .read('ws', [profile(BookAuthority.externalBook)], 2026), journalCsvOf);
+      final out = journalFileOf(await GenericJournalExport(_Postings(set))
+          .read('ws', [profile(BookAuthority.externalBook)], 2026));
       expect(out, isA<JournalNeedsLocalBook>());
     });
     test(
@@ -140,17 +154,17 @@ void main() {
           PostingBlocker(PostingBlock.unmappedRole, 'write_off'),
           PostingBlocker(PostingBlock.badAccount, 'write_off'),
         ]);
-        final out = writtenWith(await GenericJournalExport(_Postings(blocked))
-            .read('ws', [profile(BookAuthority.localBook)], 2026), journalCsvOf);
+        final out = journalFileOf(await GenericJournalExport(_Postings(blocked))
+            .read('ws', [profile(BookAuthority.localBook)], 2026));
         expect((out as JournalBlocked).roles, ['write_off']);
       },
     );
     test('a local book gives the file', () async {
-      final out = writtenWith(await GenericJournalExport(_Postings(set))
-          .read('ws', [profile(BookAuthority.localBook)], 2026), journalCsvOf);
+      final out = journalFileOf(await GenericJournalExport(_Postings(set))
+          .read('ws', [profile(BookAuthority.localBook)], 2026));
       expect(
         (out as JournalFile).content,
-        buildGenericJournalCsv(set.postings),
+        buildGenericJournalCsv(_envelope(set.postings)),
       );
     });
   });

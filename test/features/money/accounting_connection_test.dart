@@ -14,8 +14,10 @@ import 'package:deskilo/features/money/application/accounting_connection_command
 import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
+import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/accounting_target.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
+import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,6 +32,20 @@ PostingLine _line(BookRole role, String account, {int debit = 0, int credit = 0,
 
 /// The seeded year in small: an invoice at two rates, its partial payment,
 /// a credit note and its refund, a write-off.
+/// The generic journal file of [postings], as the export writes it.
+String _journal(List<Posting> postings) => buildGenericJournalCsv(
+  AccountingInterchangeV1.fromPostings(
+    book: const InterchangeBook(
+      issuerSiteId: 'site',
+      profileId: 'p',
+      revision: 1,
+      functionalCurrency: 'EUR',
+    ),
+    period: FiscalYear.calendar(2026),
+    postings: postings,
+  ),
+);
+
 List<Posting> _year() => [
   Posting(
     journal: PostingJournal.sales,
@@ -192,7 +208,7 @@ void main() {
     expect(genericJournalDocuments(_year()).map((d) => d.sha256), docs.map((d) => d.sha256),
         reason: 'the same books give the same digests');
     // The rows hashed are the file's own rows.
-    final file = buildGenericJournalCsv(_year());
+    final file = _journal(_year());
     expect(file.split('\r\n').where((l) => l.isNotEmpty), hasLength(1 + 5 + 2 + 2 + 2 + 2));
   });
 
@@ -206,7 +222,7 @@ void main() {
     final repo = FakeAccountingConnectionRepository(books: books, today: _today);
     final log = BookPeriodCommands(books);
     final commands = AccountingConnectionCommands(repo);
-    final content = buildGenericJournalCsv(_year());
+    final content = _journal(_year());
     Future<FileDeliveryOutcome?> deliver() async {
       final id = await log.logExport('ws', formatId: 'generic_journal_csv', year: 2026, content: content, documents: 2);
       return commands.logJournalFile('ws', bookExportId: id!, targetId: 'generic_journal_csv',

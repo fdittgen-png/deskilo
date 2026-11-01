@@ -7764,6 +7764,7 @@
   "instanceYou": "Sie",
   "instanceYouAreDelegate": "Sie sind Stellvertreter des Instanzeigentümers.",
   "instanceYouAreOwner": "Sie sind der Instanzeigentümer.",
+  "interchangeBlock": "{kind, select, missingIssuer{das Buch nennt keinen Aussteller} missingRevision{das Buchungsprofil {subject} hat keine Revision} unbalancedEntry{die Buchung {subject} ist nicht ausgeglichen} unconvertedCurrency{{subject} ist nicht in der Währung des Buchs} unknownDocument{eine Buchung betrifft den unbekannten Beleg {subject}} other{{subject}}}",
   "invitationAlreadyMember": "Sie sind bereits Mitglied von {workspace}.",
   "invitationApprovalRequired": "Ein Administrator gibt neue Mitglieder frei, bevor sich der Bereich öffnet.",
   "invitationApprovalUnknown": "Ob ein Administrator freigeben muss, ist nicht bekannt.",
@@ -8656,6 +8657,7 @@
   "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
   "journalFecMissingRate": "Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: {documents}",
   "journalFecPartyCode": "Der FEC braucht für jeden Geschäftspartner einen Kundencode aus bis zu 13 Buchstaben und Ziffern: Vergeben Sie zuerst eine Mitglieds- oder Lieferantennummer an: {names}",
+  "journalInterchangeRefused": "Das Journal wurde nicht geschrieben: {reasons}",
   "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
   "journalNeedsRates": "Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: {documents}",
   "journalOpeningRefused": "Die Eröffnungssalden ({from} bis {to}) konnten nicht gebucht werden: {reason}",
@@ -13080,6 +13082,18 @@
   "quotaRequestExplainer": "Ihre Reservierungen sind durch Ihr Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
   "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
   "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",
+  "readStateDenied": "Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Das Laden hat nicht geklappt. Bitte versuchen Sie es erneut.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "Keine Verbindung. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Wer: {who}",
   "readinessActorAdministrator": "Eine Datenbankadministration",
   "readinessActorOperator": "Der Serverbetreiber",

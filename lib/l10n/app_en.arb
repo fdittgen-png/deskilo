@@ -13611,6 +13611,18 @@
   "@instanceYouAreOwner": {
     "description": "#1829 instance owner"
   },
+  "interchangeBlock": "{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book's currency} unknownDocument{a posting books the unknown document {subject}} other{{subject}}}",
+  "@interchangeBlock": {
+    "description": "#2370 Generic journal export: one reason the interchange envelope was refused, by kind.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
   "invitationAlreadyMember": "You are already a member of {workspace}.",
   "@invitationAlreadyMember": {
     "placeholders": {
@@ -15119,6 +15131,15 @@
     "description": "FEC export (#2376): parties without a usable auxiliary account",
     "placeholders": {
       "names": {
+        "type": "String"
+      }
+    }
+  },
+  "journalInterchangeRefused": "The journal was not written: {reasons}",
+  "@journalInterchangeRefused": {
+    "description": "#2370 Generic journal export: the interchange envelope of the postings was refused, with the reasons (each an interchangeBlock).",
+    "placeholders": {
+      "reasons": {
         "type": "String"
       }
     }
@@ -23577,6 +23598,18 @@
   "quotaRequestTitle": "Request extra half-days",
   "@quotaRequestTitle": {
     "description": "Title of the quota-extension request sheet"
+  },
+  "readStateDenied": "You do not have access to this. Ask a workspace administrator if you need it.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "This could not be loaded. Try again.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "No connection. Check your network and try again.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
   },
   "readinessActor": "Who: {who}",
   "@readinessActor": {

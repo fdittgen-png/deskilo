@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "journalInterchangeRefused": "Das Journal wurde nicht geschrieben: {reasons}",
+  "interchangeBlock": "{kind, select, missingIssuer{das Buch nennt keinen Aussteller} missingRevision{das Buchungsprofil {subject} hat keine Revision} unbalancedEntry{die Buchung {subject} ist nicht ausgeglichen} unconvertedCurrency{{subject} ist nicht in der Währung des Buchs} unknownDocument{eine Buchung betrifft den unbekannten Beleg {subject}} other{{subject}}}"
+}

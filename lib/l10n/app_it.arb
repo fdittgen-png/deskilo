@@ -7764,6 +7764,7 @@
   "instanceYou": "Lei",
   "instanceYouAreDelegate": "È un delegato del proprietario dell'istanza.",
   "instanceYouAreOwner": "È il proprietario dell'istanza.",
+  "interchangeBlock": "{kind, select, missingIssuer{il libro non indica alcun emittente} missingRevision{il profilo contabile {subject} non ha una revisione} unbalancedEntry{la scrittura {subject} non quadra} unconvertedCurrency{{subject} non è nella valuta del libro} unknownDocument{una scrittura registra il documento sconosciuto {subject}} other{{subject}}}",
   "invitationAlreadyMember": "È già membro di {workspace}.",
   "invitationApprovalRequired": "Un amministratore approva i nuovi membri prima che lo spazio si apra.",
   "invitationApprovalUnknown": "Non è noto se un amministratore debba approvare.",
@@ -8656,6 +8657,7 @@
   "journalBlocked": "Associa prima questi ruoli nel piano dei conti: {roles}",
   "journalFecMissingRate": "Questi documenti sono in una valuta diversa da quella della contabilità e non hanno un tasso di cambio registrato; il FEC non è stato generato: {documents}",
   "journalFecPartyCode": "Il FEC richiede un codice cliente per ogni terzo, fino a 13 lettere e cifre: assegni prima un numero di membro o di fornitore a: {names}",
+  "journalInterchangeRefused": "Il giornale non è stato scritto: {reasons}",
   "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
   "journalNeedsRates": "Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: {documents}",
   "journalOpeningRefused": "I saldi di apertura (dal {from} al {to}) non sono stati contabilizzati: {reason}",
@@ -13080,6 +13082,18 @@
   "quotaRequestExplainer": "Le sue prenotazioni sono limitate dal suo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
   "quotaRequestPending": "Richiesta inviata — in attesa di convalida.",
   "quotaRequestTitle": "Richiedi mezze giornate extra",
+  "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
+  "@readStateDenied": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateFailed": "Impossibile caricare. Riprovi.",
+  "@readStateFailed": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
+  "readStateOffline": "Nessuna connessione. Controlli la rete e riprovi.",
+  "@readStateOffline": {
+    "description": "#3061 shared read-failure messages: connectivity and denied access"
+  },
   "readinessActor": "Chi: {who}",
   "readinessActorAdministrator": "Un amministratore del database",
   "readinessActorOperator": "L’operatore del server",

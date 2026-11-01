@@ -83,6 +83,10 @@ class _Flaky implements BiViewRepository {
   final InMemoryBiViewRepository inner;
   bool loseNext = false;
 
+  /// #3061 — when set, a save waits for it: the request is in flight.
+  Completer<void>? hold;
+  int saves = 0;
+
   @override
   Future<List<BiSavedView>> list(String workspaceId) => inner.list(workspaceId);
 
@@ -96,6 +100,8 @@ class _Flaky implements BiViewRepository {
     required int expectedRevision,
     String? requestId,
   }) async {
+    saves++;
+    await hold?.future;
     final saved = await inner.save(
       workspaceId,
       id: id,
@@ -386,6 +392,32 @@ void main() {
     expect(all, hasLength(1));
     expect(all.single.revision, 1, reason: 'the retry was answered once');
     expect(await _saved(inner), [_members]);
+  });
+
+  testWidgets('#3061 — Save enters pending at once; a second activation while '
+      'the request is in flight is one command, and the draft is kept', (
+    tester,
+  ) async {
+    final inner = InMemoryBiViewRepository();
+    final views = _Flaky(inner)..hold = Completer<void>();
+    await _pump(tester, views);
+    await _tap(tester, 'overview-customize');
+    for (final id in _drafted(tester)) {
+      if (id != _members) await _tap(tester, 'overview-unpin-$id');
+    }
+    final save = find.byKey(const ValueKey('overview-layout-save'));
+    await tester.ensureVisible(save);
+    await tester.tap(save);
+    await tester.pump();
+    expect(tester.widget<FilledButton>(save).onPressed, isNull);
+    await tester.tap(save, warnIfMissed: false);
+    await tester.pump();
+    expect(views.saves, 1, reason: 'one effective command');
+    expect(_drafted(tester), [_members], reason: 'the draft stays meanwhile');
+
+    views.hold!.complete();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(await inner.list('ws-1'), hasLength(1));
   });
 
   testWidgets('with the designer off, a saved layout gives way to the '

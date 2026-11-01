@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
@@ -99,7 +100,7 @@ class _WorkspaceOverviewScreenState
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final rights = ref.watch(myPermissionsProvider);
-    final attention = ref.watch(attentionProvider).value ?? const <Attention>[];
+    final attentionAsync = ref.watch(attentionProvider);
     final modules = [
       for (final m in visibleBiModules(features, rights))
         if (biModuleViews.containsKey(m.id)) m,
@@ -137,14 +138,7 @@ class _WorkspaceOverviewScreenState
           if (workspace != null &&
               modules.any((m) => m.id == _pendingActions))
             _SpacePending(workspaceId: workspace.id),
-          if (attention.isEmpty)
-            Text(
-              l10n.decisionSurfaceEmpty,
-              key: const ValueKey('overview-attention-empty'),
-            )
-          else
-            for (final (i, item) in attention.indexed)
-              AttentionRow(key: ValueKey('overview-attention-$i'), item: item),
+          ..._attentionRows(attentionAsync),
           if (modules.isNotEmpty) ...[
             heading(l10n.overviewIndicators, 'overview-indicators'),
             if (workspace != null)
@@ -167,6 +161,30 @@ class _WorkspaceOverviewScreenState
         ],
       ),
     );
+  }
+
+  /// What needs the person: loading, the rows, "nothing" only for a read that
+  /// really answered nothing, and a failure that says so (#3061) — a failed
+  /// or refused read is never the same sentence as an empty inbox.
+  List<Widget> _attentionRows(AsyncValue<List<Attention>> async) {
+    final items = async.value;
+    return [
+      if (async.isLoading)
+        const LinearProgressIndicator(key: ValueKey('overview-attention-loading')),
+      if (async.hasError)
+        ReadFailureBanner(
+          error: async.error!,
+          onRetry: () => ref.invalidate(attentionProvider),
+        ),
+      if (items != null && items.isEmpty)
+        Text(
+          context.l10n.decisionSurfaceEmpty,
+          key: const ValueKey('overview-attention-empty'),
+        )
+      else if (items != null)
+        for (final (i, item) in items.indexed)
+          AttentionRow(key: ValueKey('overview-attention-$i'), item: item),
+    ];
   }
 
   /// The key indicators: Customize, then the person's layout being edited,
