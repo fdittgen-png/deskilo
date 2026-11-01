@@ -12395,6 +12395,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Elija un miembro para ver lo que registró su mes.';
 
   @override
+  String get invoicePreviewUnavailable =>
+      'No se pudo leer la vista previa, así que no se muestra nada y no se puede emitir nada. Cambie de mes o inténtelo de nuevo.';
+
+  @override
   String get invoiceProformaAction => 'Factura proforma';
 
   @override

@@ -43,6 +43,7 @@
   "invoicePdfVoided": "ERRATA — annullata il",
   "invoicePdfReplaces": "Sostituisce",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
+  "invoicePreviewUnavailable": "L’anteprima non è stata letta, quindi non viene mostrato nulla e nulla può essere emesso. Cambi mese o riprovi.",
   "invoiceLineAdjustment": "Rettifica",
   "invoiceFilterAllMembers": "Tutti i membri",
   "invoiceFilterAllMonths": "Tutti i mesi",

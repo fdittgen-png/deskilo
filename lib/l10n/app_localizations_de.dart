@@ -12415,6 +12415,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.';
 
   @override
+  String get invoicePreviewUnavailable =>
+      'Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.';
+
+  @override
   String get invoiceProformaAction => 'Proforma-Rechnung';
 
   @override

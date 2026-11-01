@@ -12398,6 +12398,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scelga un membro per vedere cosa ha registrato il suo mese.';
 
   @override
+  String get invoicePreviewUnavailable =>
+      'L’anteprima non è stata letta, quindi non viene mostrato nulla e nulla può essere emesso. Cambi mese o riprovi.';
+
+  @override
   String get invoiceProformaAction => 'Fattura proforma';
 
   @override

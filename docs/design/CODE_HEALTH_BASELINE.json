@@ -60,7 +60,6 @@
 
       "lib/features/money/presentation/widgets/expense_schedule_sheet.dart": 576,
 
-      "lib/features/money/presentation/widgets/invoice_form_sheet.dart": 552,
 
       "lib/features/money/providers/money_providers.dart": 601,
 
@@ -573,7 +572,6 @@
 
       "lib/features/money/presentation/widgets/invoice_detail_sections.dart": 2,
 
-      "lib/features/money/presentation/widgets/invoice_form_sheet.dart": 2,
 
       "lib/features/money/presentation/widgets/invoice_overview.dart": 1,
 
@@ -622,7 +620,6 @@
 
       "lib/features/money/presentation/screens/report_editor_screen.dart": 1,
 
-      "lib/features/money/presentation/widgets/invoice_form_sheet.dart": 1,
 
       "lib/features/money/presentation/widgets/usage_face.dart": 1,
 
@@ -3107,7 +3104,6 @@
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body(BuildContext context,AppLocalizations l10n,List<Invoice> invoices)","cog":40,"cyc":38,"len":143,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._row(BuildContext context,AppLocalizations l10n,Invoice invoice,{required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required String replacedByNumber,required DateFormat dateFormat})","cog":5,"cyc":6,"len":62,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart#showInvoiceDetailSheet(BuildContext context,{required WidgetRef ref,required Invoice invoice,required InvoiceMatch? match,required bool canIssue,required bool isEu,({int count, DateTime last})? reminder,String replacedByNumber,bool showMemberName,InvoiceTransmission? transmission,InvoiceJourney? journey,String settledByNumber})","cog":2,"cyc":4,"len":64,"params":12},
-    {"id":"lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState._previewBody(BuildContext context,({List<InvoiceLine> lines, int totalCents})? preview,List<InvoiceLine> lines)","cog":31,"cyc":10,"len":96,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_sheet_actions.dart#InvoiceSheetActions._button(BuildContext context,{required String key,required IconData icon,required String label,required InvoiceAction action,bool primary,bool danger})","cog":5,"cyc":6,"len":46,"params":7},
     {"id":"lib/features/money/presentation/widgets/my_invoices_list.dart#MyInvoicesList._row(BuildContext context,WidgetRef ref,AppLocalizations l10n,ThemeData theme,Invoice invoice,InvoiceMatch? match,({int count, DateTime last})? reminder,DateFormat dateFormat,DateTime now)","cog":14,"cyc":14,"len":112,"params":9},
     {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":24,"len":168,"params":2},
