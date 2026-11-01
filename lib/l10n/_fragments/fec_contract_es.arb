@@ -7,5 +7,14 @@
   "fecArchiveChanged": "El FEC del ejercicio cerrado ya no coincide con el registrado el {date}; el archivo no se ha creado.",
   "invoiceExportGeneralLedger": "Libro mayor (PDF, desde la contabilidad)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
-  "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)"
+  "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)",
+  "fecCurrencyRefused": "El FEC solo se escribe en euros y este espacio contabiliza en {currency}: no se ha escrito ningún FEC.",
+  "@fecCurrencyRefused": {
+    "description": "FEC export (#3184): the workspace books in a currency other than the euro",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  }
 }

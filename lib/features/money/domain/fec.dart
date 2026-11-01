@@ -2,6 +2,7 @@
 
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
+import 'euro_format.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
 import 'fec_writer.dart';
@@ -82,8 +83,20 @@ String fecFileName(String legalId, DateTime fiscalYearEnd,
 ///
 /// Amounts use the comma decimal separator and dates the `YYYYMMDD` form,
 /// as the arrêté specifies.
+///
+/// The FEC is euro-denominated by definition: a [FecRequest.currency] other
+/// than the euro throws an [ArgumentError] naming it (#3184), nothing is
+/// written; the run checks the workspace currency first and tells the person.
 String buildFecFile(FecRequest request) {
+  if (!isEuroFormatCurrency(request.currency)) {
+    throw ArgumentError.value(
+      request.currency,
+      'currency',
+      'the FEC is written in euros only',
+    );
+  }
   final writer = FecWriter(
+    currency: request.currency,
     invoices: request.invoices,
     matches: request.matches,
     company: request.company,
@@ -110,6 +123,7 @@ String buildFecFile(FecRequest request) {
 /// #2492 — what one FEC file is built from.
 class FecRequest {
   const FecRequest({
+    required this.currency,
     required this.invoices,
     required this.matches,
     required this.company,
@@ -128,6 +142,8 @@ class FecRequest {
     this.dayOf = WorkspaceTime.dateOf,
   });
 
+  /// The currency the workspace books in; only the euro is written.
+  final String currency;
   final List<Invoice> invoices;
   final Map<String, InvoiceMatch> matches;
   final InvoiceParty company;

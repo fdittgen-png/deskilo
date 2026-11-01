@@ -57,11 +57,7 @@ const _tracked = <_Tracked>[
    pattern: r'heartbeatInterval = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'never (allowed)'),
   (what: 'language to country heuristic', file: 'lib/core/locale/device_locale.dart',
    pattern: r"'[a-z]{2}' => '[A-Z]{2}'", ceiling: 7, movesIn: 'never (allowed)'),
-  (what: 'export format currency of the FEC file', file: 'lib/features/money/domain/fec_writer.dart',
-   pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
-  (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev.dart',
-   pattern: r"'EUR'", ceiling: 1, movesIn: 'never (allowed)'),
-  (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev_writer.dart',
+  (what: 'the one currency the euro-denominated FEC and DATEV are written in', file: 'lib/features/money/domain/euro_format.dart',
    pattern: r"'EUR'", ceiling: 1, movesIn: 'never (allowed)'),
   // The column defaults of 0051 (invitation, 14 days) and 0272 (confirmation, 5
   // minutes) left the ratchet with 0451 (S2): create_invitation now states
@@ -99,18 +95,37 @@ const _allowed = <String, String>{
       'the beat is the client protocol; the online window beside it is the setting (S3)',
   'lib/core/locale/device_locale.dart::language to country heuristic':
       'a guess from the device language for the first screen, not a choice anybody makes; nothing legal derives from it',
-  'lib/features/money/domain/fec_writer.dart::export format currency of the FEC file':
-      'the FEC is a euro file; refusing a workspace in another currency is #3184',
-  'lib/features/money/domain/datev.dart::export format currency of the DATEV file':
-      'DATEV writes the currency of its header; carrying the workspace currency or refusing another is #3184',
-  'lib/features/money/domain/datev_writer.dart::export format currency of the DATEV file':
-      'DATEV writes the currency of its header; carrying the workspace currency or refusing another is #3184',
+  'lib/features/money/domain/euro_format.dart::the one currency the euro-denominated FEC and DATEV are written in':
+      'the FEC and DATEV are euro files: a workspace in another currency is refused with its currency named (#3184), never written with euro digits',
 };
 
 /// The currency fallback: `'EUR'` written in lib/ (S5 moves the fallback to
 /// the workspace country's currency). Counted over lib/, minus generated
 /// files, l10n output and the demo dataset (fixtures, not defaults).
-const _eurCeiling = 11; // 60 -> 11 (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
+/// #2488 -- the files that still write the euro literal, each with why it is
+/// not a business default. A display fallback reads the platform default; an
+/// exporter either writes the workspace's currency or refuses (#3184).
+const _eurHolders = {
+  'lib/core/i18n/currencies.dart':
+      'the list of currencies the picker offers: data, not a default',
+  'lib/features/money/domain/euro_format.dart':
+      'the one place the euro file formats (FEC, DATEV) name their currency; '
+          'a workspace in another currency is refused, never written as euros',
+  'lib/features/money/domain/vat_compliance.dart':
+      'the Italian stamp-duty rule is defined in euro (DPR 642/72 threshold): '
+          'it applies to euro invoices only',
+  'lib/features/money/domain/swiss_qr_bill.dart':
+      'the Swiss QR-bill standard allows exactly CHF and EUR',
+  'lib/features/money/domain/vat_rate.dart':
+      'a unit amount for rounding arithmetic, never printed or booked as euros',
+  'lib/features/money/domain/vat_components.dart':
+      'a unit amount for rounding arithmetic, never printed or booked as euros',
+  'lib/features/money/domain/fr_ereporting.dart':
+      'the French e-reporting flow is euro-denominated; production passes the '
+          "workspace's currency",
+};
+
+const _eurCeiling = 7; // 60 -> 11 -> 7 (#3184: FEC, DATEV and the accountant CSV left the file-format list; the one euro-format constant remains) (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
 
 int _count(String file, String pattern) {
   final f = File(file);
@@ -166,6 +181,20 @@ void main() {
         reason: '$_rule: "$key" is allowed but no longer tracked: delete it',
       );
       expect(_allowed[key]!.trim(), isNotEmpty);
+    }
+  });
+
+  test('every file that holds the euro literal is documented, with its reason', () {
+    final files = filesUnder(['lib']).where((f) =>
+        !f.path.endsWith('.g.dart') &&
+        !f.path.contains('/l10n/') &&
+        !f.path.contains('lib/core/demo/'));
+    final holders = (countLiterals(files, [LiteralKind("'EUR'", RegExp(r"'EUR'"))])["'EUR'"]!).keys.toSet();
+    expect(holders, _eurHolders.keys.toSet(),
+        reason: '$_rule: a file that writes the euro literal needs a reason in _eurHolders; '
+            'a reason for a file that no longer does is deleted');
+    for (final reason in _eurHolders.values) {
+      expect(reason.trim(), isNotEmpty);
     }
   });
 

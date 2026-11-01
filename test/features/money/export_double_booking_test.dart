@@ -15,6 +15,7 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 void main() {
   test('FEC: the netted expense never reaches the bank, the payment does', () {
     final file = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
@@ -39,7 +40,7 @@ void main() {
   });
 
   test('DATEV: the netted expense is no Zahlung', () {
-    final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+    final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       accounts: const DatevAccounts(),

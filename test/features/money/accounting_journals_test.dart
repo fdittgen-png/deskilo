@@ -54,6 +54,7 @@ void main() {
     test('a credit note is booked as a sale reversed, lettered with the '
         'invoice it corrects — it used to be absent', () {
       final file = buildFecFile(FecRequest(
+      currency: 'EUR',
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -25000, replaces: 'INV-2026-0001')],
         matches: const {}, company: _company, accounts: const FecAccounts(),
         lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -72,6 +73,7 @@ void main() {
     test('a reimbursed expense lands in the purchases journal, balanced, '
         'expenses against the member\'s customer account', () {
       final file = buildFecFile(FecRequest(
+      currency: 'EUR',
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         ledger: [_reimbursement], memberNames: const {'member-1': 'Ana Martin'},
@@ -86,6 +88,7 @@ void main() {
 
     test('a shared cost the workspace paid is the expense itself, from the bank', () {
       final file = buildFecFile(FecRequest(
+      currency: 'EUR',
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         repartitions: [_rent],
@@ -97,6 +100,7 @@ void main() {
 
     test('an association that does not charge VAT books no VAT row', () {
       final file = buildFecFile(FecRequest(
+      currency: 'EUR',
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -1000)],
         matches: const {}, company: _company, accounts: const FecAccounts(),
         lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -113,7 +117,7 @@ void main() {
   });
 
   group('DATEV', () {
-    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(detail: datevCollective, 
+    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: invoices ?? [_invoice()], matches: const {},
           accounts: const DatevAccounts(), from: DateTime(2026), to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 9, 6, 10), consultantNumber: '1', clientNumber: '2',

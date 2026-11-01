@@ -37,7 +37,7 @@ void main() {
       ledger: SeededExportYear.ledger,
       repartitions: SeededExportYear.repartitions,
     );
-    final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+    final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
       accounts: const DatevAccounts(),
@@ -62,6 +62,7 @@ void main() {
       repartitions: SeededExportYear.repartitions,
     );
     final file = buildFecFile(FecRequest(
+      currency: 'EUR',
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,

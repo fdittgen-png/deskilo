@@ -24,7 +24,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _year = FiscalYear(DateTime(2025, 10), DateTime(2026, 9, 30));
-const _scope = (workspaceId: 'ws', legalId: '812 345 678', development: false);
+const _scope = (workspaceId: 'ws', currency: 'EUR', legalId: '812 345 678', development: false);
 
 AccountingAmount _eur(int minor) => AccountingAmount('EUR', minor);
 
