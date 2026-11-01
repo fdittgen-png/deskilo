@@ -4,7 +4,6 @@
 // refused read is never drawn as an empty register and Try again repeats the
 // same read; a refresh keeps the rows on screen; the period chip survives an
 // empty answer.
-import 'dart:async';
 import 'dart:io';
 
 import 'package:deskilo/core/ui/loading_view.dart';
@@ -145,10 +144,9 @@ void main() {
     probe.answer(all);
     await tester.pump();
 
-    final container = ProviderScope.containerOf(
+    ProviderScope.containerOf(
       tester.element(find.byType(InvoiceRegisterScreen)),
-    );
-    container.invalidate(invoicesProvider);
+    ).invalidate(invoicesProvider);
     await tester.pump();
     expect(probe.calls, 2);
     expect(_row(all.first), findsOneWidget, reason: 'content stays');

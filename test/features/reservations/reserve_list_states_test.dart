@@ -23,7 +23,7 @@ final _en = AppLocalizationsEn();
 class _Plans extends FakeFloorPlanRepository {
   int reads = 0;
   Completer<void>? hold;
-  Object? failure;
+  Exception? failure;
 
   @override
   Future<FloorPlan> fetchPlan(String levelId) async {
@@ -104,8 +104,9 @@ void main() {
     expect(find.byKey(_list), findsOneWidget);
 
     plans.hold = Completer<void>();
-    final container = ProviderScope.containerOf(tester.element(find.byKey(_list)));
-    container.invalidate(floorPlanProvider(plans.levels.first.id));
+    ProviderScope.containerOf(
+      tester.element(find.byKey(_list)),
+    ).invalidate(floorPlanProvider(plans.levels.first.id));
     await tester.pump();
     expect(find.byKey(_list), findsOneWidget, reason: 'content stays');
     expect(find.byKey(_refreshing), findsOneWidget);

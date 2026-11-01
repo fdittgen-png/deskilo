@@ -31,7 +31,7 @@ final _item = Attention(
   kind: AttentionKind.person,
   subject: 'members',
   action: AttentionAction.admit,
-  waitingSince: DateTime(2026, 5, 1),
+  waitingSince: DateTime(2026, 5),
   count: 2,
 );
 

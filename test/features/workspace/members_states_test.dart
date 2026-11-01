@@ -29,7 +29,7 @@ class _Workspace extends FakeWorkspaceRepository {
 
   final List<String> sent = [];
   Completer<void>? hold;
-  Object? failure;
+  Exception? failure;
 
   @override
   Future<void> sendMemberNote(
@@ -146,7 +146,7 @@ void main() {
     await tester.pump();
     workspace
       ..hold = Completer<void>()
-      ..failure = StateError('server said no');
+      ..failure = Exception('server said no');
 
     await tester.tap(find.byKey(const ValueKey('members-notify-admins')));
     await tester.pump(const Duration(milliseconds: 400));
