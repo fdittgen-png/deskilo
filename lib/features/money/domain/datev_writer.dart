@@ -201,7 +201,7 @@ class DatevWriter {
     return fields.join(';');
   }
 
-  /// The sub-ledger fields of a row of [invoice] (none when null): the
+  /// The sub-ledger fields of a row of [invoice] (bank facts when null): the
   /// voucher link (20), the number, date and due date as Beleginfo
   /// (21-26), then the bank line's value date and reference (#2380), the site as KOST1 (37) and the buyer's VAT id for a reverse
   /// charge (40).
@@ -213,15 +213,15 @@ class DatevWriter {
       );
     }
     final invoice = b.invoice;
-    if (invoice == null) return;
-    // `BEDI "<guid>"`, its quotes doubled inside the quoted cell: the
-    // DATEV dialect would turn them into apostrophes. The id is a uuid.
-    if (detail.voucherLinks) fields[19] = '"BEDI ""${invoice.id}"""';
-    final due = invoice.dueOn;
+    // A row without an invoice (a supplier payment) has the bank line's
+    // facts alone as Beleginfo (#2380, 0642); none on every other row.
+    final due = invoice?.dueOn;
     final info = [
-      ('Rechnungsnummer', invoice.number),
-      ('Belegdatum', dmy(dayOf(invoice.issuedAt), separator: '.')),
-      if (due != null) ('Fälligkeit', dmy(due, separator: '.')),
+      if (invoice != null) ...[
+        ('Rechnungsnummer', invoice.number),
+        ('Belegdatum', dmy(dayOf(invoice.issuedAt), separator: '.')),
+        if (due != null) ('Fälligkeit', dmy(due, separator: '.')),
+      ],
       ...b.bankInfo,
     ];
     for (final (k, (art, content)) in info.indexed) {
@@ -230,6 +230,10 @@ class DatevWriter {
         datevClip(content, DatevFormatRules.documentInfoLength),
       );
     }
+    if (invoice == null) return;
+    // `BEDI "<guid>"`, its quotes doubled inside the quoted cell: the
+    // DATEV dialect would turn them into apostrophes. The id is a uuid.
+    if (detail.voucherLinks) fields[19] = '"BEDI ""${invoice.id}"""';
     final vatId = invoice.buyerParty?.vatId ?? '';
     if (invoice.isReverseCharged && vatId.isNotEmpty) {
       fields[39] = _quoted(vatId.replaceAll(' ', ''));
