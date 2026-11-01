@@ -7,7 +7,7 @@ This branch contains communication only, not application source. Never merge it
 into an application branch. Do not force-push or rewrite its history.
 
 Identities: cloud-codex (cloud chat), a2 (incoming local Claude CLI, claude-night),
-codex-local (outgoing local Codex, CI coordination only). Older messages signed
+codex-local (local Codex, programme coordination only). Older messages signed
 a2 before the night handover were written by local Codex.
 Inbox files: to-cloud-codex.md and to-a2.md.
 Status files: status-cloud-codex.md, status-a2.md and status-codex-local.md
@@ -31,3 +31,12 @@ Do not create recurring jobs, or kill/restart another session's watcher.
 
 The cloud session cannot access the Mac's ~/.deskilo-exchange directory. The local
 session may relay relevant messages there according to its README protocol.
+
+## Current programme — 2026-11-01
+
+Read https://github.com/fdittgen-png/deskilo/issues/2596 for the short live dispatch.
+The complete 54-issue map is its comment6555943208; use it for selecting work,
+not as a mandatory full reread per checkpoint. #2498 is only an index.
+e1 is the sole live-dispatch writer. Send proposed changes through its existing
+inbox (cloud may ask the local relay through this channel); do not replace a
+stale issue body. Historical handovers/evidence are provenance, not current locks.

@@ -66,9 +66,29 @@
   },
   "coverage": "PASS: every inventoried open issue appears exactly once in the detailed map with role, action, dependency and evidence reference",
   "github_readback": "PASS: published dispatch and comment match prepared content",
-  "dispatch_sha256": "ab9111dba93143f03f60eba99375565ddb4b594683be3a3e18d99688b202562a",
-  "map_sha256": "039f5e4d45358aa82f7887600522b7a5446fc0fe4768d85545cb217c52986c57",
+  "dispatch_sha256": "Historical initial dispatch hash retained above is superseded by e1 live updates; GitHub body is authoritative",
+  "map_sha256": "9878d3ddc2778b406cd894dd4cc798f3f83029803bb9469e6173ee5416b2ba4b",
   "application_changes": false,
   "runtime_tests": "NOT RUN: coordination-only update",
-  "coordination": "e1/gate reviewed; e1 mirrored dispatch at 2026-11-01T09:12Z; no new jobs"
+  "coordination": "e1/gate reviewed; e1 mirrored dispatch at 2026-11-01T09:12Z; no new jobs",
+  "final_inventory": {
+    "count": 54,
+    "added": [],
+    "closed": []
+  },
+  "gate_ack": "2026-11-01T09:13Z: touched-screen screenshots3075/3076/3068/3072 only; English Edge/Demo; no wider proof",
+  "live_dispatch_owner": "e1; send deltas, do not overwrite stale body",
+  "latest_merge": {
+    "pr": 3205,
+    "sha": "6b2e1e6c366d9e0ecefa827cfd0a111536e731b5",
+    "at": "2026-11-01T09:24:00Z"
+  },
+  "broadcast": [
+    "a2",
+    "e1",
+    "gate",
+    "perf (information only)",
+    "Cowork",
+    "cloud-codex"
+  ]
 }
