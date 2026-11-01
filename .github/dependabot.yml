@@ -9,3 +9,9 @@ updates:
     groups:
       actions:
         patterns: ['*']
+    # A major version of an action can change its inputs, its runner or its
+    # permissions: it is read and pinned by hand, never
+    # proposed in a weekly group.
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
