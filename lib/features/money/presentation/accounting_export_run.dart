@@ -474,7 +474,7 @@ class AccountingExportRun {
           events: events,
           generatedAt: now,
           workspaceName: workspace.name,
-          source: books.revisions,
+          source: books.revisions, currencyCode: workspace.currencyCode,
         ));
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
         if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
@@ -560,7 +560,7 @@ class AccountingExportRun {
             ),
             generatedAt: now,
             workspaceName: workspace.name,
-            source: books.revisions,
+            source: books.revisions, currencyCode: workspace.currencyCode,
           ),
           named('audit trail'),
         );

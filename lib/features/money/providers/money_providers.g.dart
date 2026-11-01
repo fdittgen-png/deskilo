@@ -2361,7 +2361,7 @@ final class WorkspaceStatusProvider
   }
 }
 
-String _$workspaceStatusHash() => r'5f595569e661f80c5644f2782d39aa26a05aafed';
+String _$workspaceStatusHash() => r'dd4ff299f31750d180d6d69e0c2f0306f052000a';
 
 /// #934 — the workspace's status over a range of months.
 

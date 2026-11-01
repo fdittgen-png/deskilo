@@ -19,16 +19,24 @@ import 'currencies.dart';
 /// explicitly and stays the way to render an amount.
 abstract final class WorkspaceCurrency {
   static String? _code;
+  static String _default = SettingDefaults.localeDefaultCurrency;
 
   /// Installs [currencyCode] (ISO 4217) as the ambient grain.
   static void install(String? currencyCode) => _code = currencyCode;
 
-  /// Back to the two-decimal default (tests).
-  static void reset() => _code = null;
+  /// #2488 -- the platform's default currency (`locale.default_currency`),
+  /// which stands while no workspace has installed its own.
+  static void installDefault(String currencyCode) => _default = currencyCode;
 
-  /// The active code, or the registry's default currency before one is
+  /// Back to the two-decimal default (tests).
+  static void reset() {
+    _code = null;
+    _default = SettingDefaults.localeDefaultCurrency;
+  }
+
+  /// The active code, or the platform's default currency before one is
   /// installed.
-  static String get code => _code ?? SettingDefaults.localeDefaultCurrency;
+  static String get code => _code ?? _default;
 
   /// Minor units per major unit: 100 for the euro, 1 for the yen,
   /// 1 000 for the dinar.
