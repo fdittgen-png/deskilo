@@ -262,7 +262,7 @@ void main() {
   });
 
   group('DATEV gets the traps right', () {
-    String build({DateTime? issuedAt}) => buildDatevFile(DatevRequest(detail: datevCollective, 
+    String build({DateTime? issuedAt}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: [inv(issuedAt: issuedAt, vat: _vat20)],
           matches: {'i1': match()},
           accounts: const DatevAccounts(),
@@ -296,7 +296,7 @@ void main() {
     });
 
     test('a voided invoice is not booked', () {
-      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: [inv(voidedAt: DateTime(2026, 3, 20), vat: _vat20)],
         matches: const {},
         accounts: const DatevAccounts(),
@@ -312,7 +312,7 @@ void main() {
     test('a PENDING settlement is not booked', () {
       // Booking it would put money in the ledger the workspace has not
       // agreed it received (0067).
-      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
+      final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: [inv(vat: _vat20)],
         matches: {'i1': match(status: 'pending')},
         accounts: const DatevAccounts(),

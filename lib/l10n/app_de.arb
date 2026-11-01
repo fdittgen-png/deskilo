@@ -6635,6 +6635,15 @@
   "fecAccountsTitle": "Zu buchende Konten",
   "fecArchiveChanged": "Der FEC des abgeschlossenen Jahres stimmt nicht mehr mit dem am {date} protokollierten überein; das Archiv wurde nicht erstellt.",
   "fecContractFailed": "Der FEC verletzt den Importvertrag ({rules}) und wurde nicht gespeichert.",
+  "fecCurrencyRefused": "Die FEC-Datei wird nur in Euro geschrieben, dieser Arbeitsbereich bucht aber in {currency}: Es wurde keine FEC-Datei erstellt.",
+  "@fecCurrencyRefused": {
+    "description": "FEC export (#3184): the workspace books in a currency other than the euro",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.",
   "fecProvisional": "Dieses Geschäftsjahr ist nicht abgeschlossen: Der FEC ist vorläufig, und das Archiv bewahrt ihn als vorläufig auf.",
   "federationActionExistingAccount": "Bei meinem bestehenden Konto anmelden",
@@ -8402,6 +8411,7 @@
   "invoicePdfTitle": "Rechnung",
   "invoicePdfVoided": "FEHLERHAFT — storniert am",
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
+  "invoicePreviewUnavailable": "Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.",
   "invoiceProformaAction": "Proforma-Rechnung",
   "invoiceProformaNothing": "Für diesen Monat wurde nichts erfasst — keine Proforma zu senden.",
   "invoiceProformaShared": "Proforma geteilt.",

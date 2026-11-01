@@ -14,7 +14,7 @@ import 'support/seeded_export_year.dart';
 String _file({
   List<Invoice>? invoices,
   DatevAccounts accounts = const DatevAccounts(),
-}) => buildDatevFile(DatevRequest(detail: datevCollective, 
+}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
   invoices: invoices ?? SeededExportYear.invoices,
   matches: SeededExportYear.matches,
   accounts: accounts,

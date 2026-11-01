@@ -14,7 +14,7 @@ import 'book_chart.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
-import 'datev_writer.dart';
+import 'euro_format.dart';
 import 'invoice.dart';
 import 'posting.dart';
 
@@ -113,7 +113,7 @@ class DatevCreditors {
     }
     problems.addAll([
       for (final c in currencies.toList()..sort())
-        if (c != DatevWriter.amountCurrency) DatevCurrency(c),
+        if (!isEuroFormatCurrency(c)) DatevCurrency(c),
     ]);
     return DatevCreditors._(
       problems.isEmpty ? bookings : const [],

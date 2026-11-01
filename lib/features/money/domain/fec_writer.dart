@@ -27,6 +27,7 @@ const _miscJournalLabel = 'Opérations diverses';
 /// journal and the tax-point entries, then sorts them as the arrêté reads.
 class FecWriter {
   FecWriter({
+    required this.currency,
     required this.invoices,
     required this.matches,
     required this.company,
@@ -45,6 +46,7 @@ class FecWriter {
     this.dayOf = WorkspaceTime.dateOf,
   });
 
+  final String currency;
   final List<Invoice> invoices;
   final Map<String, InvoiceMatch> matches;
   final InvoiceParty company;
@@ -68,9 +70,9 @@ class FecWriter {
       text.replaceAll(RegExp(r'[\t\r\n]+'), ' ').trim();
 
 
-  // #1077 — two decimals is CORRECT here: the FEC is a French tax
-  // filing format and the French tax authority denominates it in euro.
-  // Not a hardcoded-euro bug; do not "fix" it. Dates are YYYYMMDD (`ymd`).
+  // #1077/#3184 — the amounts are written in [currency], which is the euro
+  // by the time a writer exists (`buildFecFile` refuses any other).
+  // Dates are YYYYMMDD (`ymd`).
   // A tab is the separator, so a tab inside a label would shift columns.
   // #927 — an entry number comes from the DOCUMENT it books (EcritureNum).
   void write({
@@ -102,8 +104,8 @@ class FecWriter {
       clean(pieceRef),
       ymd(pieceDate),
       clean(label),
-      minorToText(debitCents, 'EUR', decimalSeparator: ','),
-      minorToText(creditCents, 'EUR', decimalSeparator: ','),
+      minorToText(debitCents, currency, decimalSeparator: ','),
+      minorToText(creditCents, currency, decimalSeparator: ','),
       letter,
       // DateLet: filled from the lettering group (`withLetteringDates`).
       '',

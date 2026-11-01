@@ -93,6 +93,7 @@ void main() {
   );
 
   String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(
+      currency: 'EUR',
     invoices: [invoice],
     matches: matches,
     company: _company,
@@ -185,7 +186,7 @@ void main() {
         l.split(';'),
     ];
     String datev(List<Invoice> invoices, List<VatTaxPointAmount>? points) =>
-        buildDatevFile(DatevRequest(detail: datevCollective, 
+        buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: invoices,
           matches: const {},
           accounts: const DatevAccounts(),

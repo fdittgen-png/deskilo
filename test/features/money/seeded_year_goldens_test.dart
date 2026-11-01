@@ -327,6 +327,7 @@ String _fec(AccountingExportInput input) {
   final b = input.books;
   return buildFecFile(
     FecRequest(
+      currency: 'EUR',
       invoices: b.invoices,
       matches: b.matches,
       company: seededCompany,
@@ -400,6 +401,7 @@ Future<DatevPackage> _datevPackage(String? chart) async {
   return buildDatevPackage(
     DatevPackageRequest(
       request: DatevRequest(
+        currency: 'EUR',
         invoices: b.invoices,
         matches: b.matches,
         accounts: datevAccountsFor(

@@ -9462,6 +9462,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String fecCurrencyRefused(String currency) {
+    return 'Die FEC-Datei wird nur in Euro geschrieben, dieser Arbeitsbereich bucht aber in $currency: Es wurde keine FEC-Datei erstellt.';
+  }
+
+  @override
   String get fecMissingSiren =>
       'Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.';
 
@@ -12418,6 +12423,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoicePickMember =>
       'Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.';
+
+  @override
+  String get invoicePreviewUnavailable =>
+      'Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.';
 
   @override
   String get invoiceProformaAction => 'Proforma-Rechnung';

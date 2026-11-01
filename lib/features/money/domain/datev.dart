@@ -230,6 +230,7 @@ DatevWriter datevWriterOf(DatevRequest request) => DatevWriter(
 /// #2492 — what one Buchungsstapel is built from.
 class DatevRequest {
   const DatevRequest({
+    required this.currency,
     required this.invoices,
     required this.matches,
     required this.accounts,
@@ -239,7 +240,6 @@ class DatevRequest {
     required this.consultantNumber,
     required this.clientNumber,
     required this.detail,
-    this.currency = 'EUR',
     this.batchName = 'DesKilo',
     this.accountLength = 4,
     this.ledger = const [],

@@ -43,6 +43,7 @@
   "invoicePdfVoided": "FEHLERHAFT — storniert am",
   "invoicePdfReplaces": "Ersetzt",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
+  "invoicePreviewUnavailable": "Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.",
   "invoiceLineAdjustment": "Anpassung",
   "invoiceFilterAllMembers": "Alle Mitglieder",
   "invoiceFilterAllMonths": "Alle Monate",

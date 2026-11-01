@@ -302,6 +302,14 @@ void main() {
       expect((p.problems.single as DatevCurrency).given, 'CHF');
     });
 
+    // #3184 — DATEV is not written in a currency the Mandant does not
+    // book in: every non-euro currency is refused with its code.
+    test('a Danish workspace is refused too, with no file', () {
+      final p = _package(request: datevTestRequest(currency: 'dkk'));
+      expect(p.files, isEmpty);
+      expect((p.problems.single as DatevCurrency).given, 'dkk');
+    });
+
     test('a Sachkontenlänge DATEV does not know', () {
       final p = _package(request: datevTestRequest(accountLength: 9));
       expect((p.problems.single as DatevSachkontenlaenge).length, 9);
