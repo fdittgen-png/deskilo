@@ -9,6 +9,8 @@ import '../../features/profile/providers/profile_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../locale/locale_controller.dart';
+import '../settings/region_defaults.dart';
+import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
@@ -55,7 +57,8 @@ AppFormat appFormat(Ref ref) {
 
   return AppFormat(
     locale: locale,
-    currencyCode: workspace?.currencyCode ?? 'EUR',
+    currencyCode: workspace?.currencyCode ??
+        ref.watch(regionDefaultsProvider).currency,
     // The pre-#711 app was 24-hour everywhere; `auto` only takes over
     // once a member has actually chosen it, so nobody's clock flips
     // under them on upgrade.
@@ -77,6 +80,8 @@ AppFormat appFormatOf(BuildContext context) {
     // be the reason a sheet fails to build: a 24-hour clock in the
     // workspace's zone is what every screen showed before #1150.
     return const AppFormat(
-        locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24);
+        locale: SettingDefaults.localeDefaultLocale,
+        currencyCode: SettingDefaults.localeDefaultCurrency,
+        clock: ClockPref.h24);
   }
 }

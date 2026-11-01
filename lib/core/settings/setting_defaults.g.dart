@@ -68,6 +68,12 @@ abstract final class SettingDefaults {
   static const int kpiCapacityRangeDays = 400;
   /// `kpi.finance_range_months`
   static const int kpiFinanceRangeMonths = 23;
+  /// `locale.default_country`
+  static const String localeDefaultCountry = 'FR';
+  /// `locale.default_currency`
+  static const String localeDefaultCurrency = 'EUR';
+  /// `locale.default_locale`
+  static const String localeDefaultLocale = 'en_US';
   /// `mcp.confirmation_expiry_minutes`
   static const int mcpConfirmationExpiryMinutes = 5;
   /// `mcp.notice_read_retention_days`

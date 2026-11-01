@@ -30,6 +30,8 @@ const VAT_RATES={
 const XML_LEVEL_FALLBACK='Étage',XML_SEAT_FALLBACK='Place';
 // l10n-exempt-end
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.
+const FORMAT_LOCALES=['de_DE','de_AT','de_CH','en_GB','en_US','en_CA','en_IE','en_AU','es_ES','es_MX','fr_FR','fr_BE','fr_CA','fr_CH','it_IT','it_CH','nl_NL','nl_BE','pt_PT','pl_PL','sv_SE','da_DK','nb_NO','fi_FI','cs_CZ','hu_HU','ro_RO','el_GR','ja_JP']; // = kFormatLocales (#2488, pinned by region_defaults_test)
+const REGION_CURRENCIES=()=>[...new Set(COUNTRIES.map(c=>c[1]))];
 const CURRENCIES=['AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','ILS','INR','ISK','JPY','KRW','MXN','NOK','NZD','PLN','RON','SEK','SGD','TRY','USD','ZAR'];
 const TIMEZONES=[...new Set(COUNTRIES.map(c=>c[2]).concat(['America/Los_Angeles','America/Chicago','America/Denver','America/Vancouver','America/Montreal','Australia/Sydney','Asia/Tokyo','Asia/Singapore','Europe/Dublin','Atlantic/Canary','UTC']))].sort();
 const HORIZON=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['60','optDays',{n:60}],['90','optDaysDefault',{n:90}],['120','optDays',{n:120}],['180','optDays',{n:180}],['365','optOneYear'],['730','optYears',{n:2}]];
@@ -123,7 +125,7 @@ const PARAM_META=[
  ['bank.maxBytes','bankMaxBytes','enum',()=>BANK_MAX_BYTES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.maxLines','bankMaxLines','enum',()=>BANK_MAX_LINES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.matchWindow','bankMatchWindow','enum',()=>BANK_WINDOW.map(x=>x[0]),{needs:'bankImport'}],
- ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
+ ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['region.currency','regionCurrency','enum',REGION_CURRENCIES],['region.country','regionCountry','enum',()=>COUNTRIES.map(c=>c[0])],['region.locale','regionLocale','enum',()=>FORMAT_LOCALES.slice()],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -173,7 +175,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

@@ -22548,6 +22548,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fissato dalla piattaforma: i mesi oltre il primo che un indicatore finanziario può coprire (23 significa 24 mesi in tutto). Delimita la richiesta.';
 
   @override
+  String get settingHintLocaleDefaultCountry =>
+      'Da quale paese parte un nuovo spazio quando la regione del dispositivo è sconosciuta. Solo un suggerimento; non decide alcun paese emittente né imposta.';
+
+  @override
+  String get settingHintLocaleDefaultCurrency =>
+      'In quale valuta si mostrano gli importi prima che uno spazio di lavoro sia collegato, e da quale parte uno nuovo. Non sostituisce mai la valuta mancante di una fattura.';
+
+  @override
+  String get settingHintLocaleDefaultLocale =>
+      'Il formato usato prima che un membro o uno spazio ne scelga uno. La scelta del membro prevale sempre.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minuti a disposizione della persona per confermare un\'azione richiesta da un assistente. Le richieste già fatte mantengono il loro tempo. Può solo essere accorciato.';
 
@@ -22805,6 +22817,16 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelKpiFinanceRangeMonths =>
       'Periodo dell’indicatore finanziario';
+
+  @override
+  String get settingLabelLocaleDefaultCountry => 'Paese predefinito';
+
+  @override
+  String get settingLabelLocaleDefaultCurrency => 'Valuta predefinita';
+
+  @override
+  String get settingLabelLocaleDefaultLocale =>
+      'Formato predefinito di numeri e date';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>

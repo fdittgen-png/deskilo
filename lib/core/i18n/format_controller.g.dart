@@ -103,4 +103,4 @@ final class AppFormatProvider
   }
 }
 
-String _$appFormatHash() => r'374ebf782702fd52c01f6343f4dbade19f7f8504';
+String _$appFormatHash() => r'004b74b5a1e564115c28ba184350a2bc4d7ffef5';

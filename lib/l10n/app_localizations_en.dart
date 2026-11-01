@@ -22362,6 +22362,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.';
 
   @override
+  String get settingHintLocaleDefaultCountry =>
+      'Where a new workspace starts when the device\'s region is unknown. A suggestion only; it decides no tax or issuer country.';
+
+  @override
+  String get settingHintLocaleDefaultCurrency =>
+      'What amounts are shown in before a workspace is connected, and where a new workspace starts. It never stands in for a missing invoice currency.';
+
+  @override
+  String get settingHintLocaleDefaultLocale =>
+      'The format used before a member or workspace has chosen one. A member\'s own choice always wins.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.';
 
@@ -22605,6 +22617,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelKpiFinanceRangeMonths => 'Finance figure range';
+
+  @override
+  String get settingLabelLocaleDefaultCountry => 'Default country';
+
+  @override
+  String get settingLabelLocaleDefaultCurrency => 'Default currency';
+
+  @override
+  String get settingLabelLocaleDefaultLocale =>
+      'Default number and date format';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>

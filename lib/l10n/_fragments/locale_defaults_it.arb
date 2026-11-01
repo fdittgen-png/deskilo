@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "settingLabelLocaleDefaultCurrency": "Valuta predefinita",
+  "settingHintLocaleDefaultCurrency": "In quale valuta si mostrano gli importi prima che uno spazio di lavoro sia collegato, e da quale parte uno nuovo. Non sostituisce mai la valuta mancante di una fattura.",
+  "settingLabelLocaleDefaultCountry": "Paese predefinito",
+  "settingHintLocaleDefaultCountry": "Da quale paese parte un nuovo spazio quando la regione del dispositivo è sconosciuta. Solo un suggerimento; non decide alcun paese emittente né imposta.",
+  "settingLabelLocaleDefaultLocale": "Formato predefinito di numeri e date",
+  "settingHintLocaleDefaultLocale": "Il formato usato prima che un membro o uno spazio ne scelga uno. La scelta del membro prevale sempre."
+}

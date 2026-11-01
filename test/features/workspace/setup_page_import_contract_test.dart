@@ -458,6 +458,7 @@ void main() {
         'bank': 'app',
         'records': 'app',
         'map': 'app',
+        'region': 'app',
         'members': 'app',
         'einvoice': 'file',
       });
