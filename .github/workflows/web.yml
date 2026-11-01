@@ -76,7 +76,7 @@ jobs:
     outputs:
       web: ${{ steps.verdict.outputs.web }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.source_sha || inputs.ref || github.ref }}
           fetch-depth: 0
@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Stand down only with the verdict on record
         if: env.WEB_REQUIRED != 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: web-classification
           path: report
@@ -129,7 +129,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Candidate: $sha"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: env.WEB_REQUIRED == 'true'
         with:
           ref: ${{ steps.source.outputs.sha }}
@@ -190,7 +190,7 @@ jobs:
           npx --prefix tool/web playwright install chromium --with-deps --only-shell
           node tool/web/task_offline_probe.mjs
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: env.WEB_REQUIRED == 'true'
         with:
           name: deskilo-web-${{ steps.source.outputs.sha }}
@@ -199,7 +199,7 @@ jobs:
 
       - name: Upload Pages artifact
         if: env.WEB_REQUIRED == 'true' && inputs.deploy == true
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: build/web
 
@@ -217,4 +217,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

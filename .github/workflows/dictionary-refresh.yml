@@ -55,10 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: master
-      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1
+      - uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v1
         with:
           # The version quality.yml pins: the replay must be the same one.
           version: 2.118.0
@@ -116,7 +116,7 @@ jobs:
           gh workflow run quality.yml --ref "$BRANCH" || summary "quality.yml could not be dispatched on $BRANCH; run it by hand."
           summary "Refresh pull request #$n (auto-merge on) at schema marker $marker."
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: dictionary-refresh

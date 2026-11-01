@@ -54,7 +54,7 @@ jobs:
     name: typecheck · deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
         with:
@@ -124,7 +124,7 @@ jobs:
 
       - name: Install the pinned deployment CLI
         if: steps.gate.outputs.ready == 'true'
-        uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v1
         with:
           version: 2.118.0
 

@@ -96,7 +96,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Candidate: $sha"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.source.outputs.sha }}
 
@@ -115,7 +115,7 @@ jobs:
           echo "build_number=$BN" >> "$GITHUB_OUTPUT"
           echo "Build number: $BN"
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
@@ -155,7 +155,7 @@ jobs:
         if: always()
         run: rm -f android/app/upload-keystore.p12 android/key.properties
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: deskilo-release-aab-${{ steps.bn.outputs.build_number }}
           path: build/app/outputs/bundle/release/app-release.aab
@@ -165,7 +165,7 @@ jobs:
         if: ${{ env.HAS_PLAY_SA != 'true' }}
         run: echo "::warning::PLAY_STORE_SERVICE_ACCOUNT_JSON is not set — AAB built and attached as artifact, Play upload skipped."
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: ${{ env.HAS_PLAY_SA == 'true' }}
         with:
           python-version: "3.12"

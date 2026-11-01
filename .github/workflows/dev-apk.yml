@@ -28,11 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref }}
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
@@ -48,7 +48,7 @@ jobs:
           flutter pub get
           flutter build apk --debug --target-platform android-arm64
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: deskilo-arm64-${{ inputs.ref }}-${{ github.sha }}
           path: build/app/outputs/flutter-apk/app-debug.apk

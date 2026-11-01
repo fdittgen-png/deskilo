@@ -74,7 +74,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Candidate: $sha"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.source.outputs.sha }}
 
@@ -187,7 +187,7 @@ jobs:
         shell: pwsh
         run: Remove-Item -LiteralPath "$env:RUNNER_TEMP\codesign.pfx" -Force -ErrorAction SilentlyContinue
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: DesKilo-${{ steps.version.outputs.raw }}-windows-msi
           path: build/DesKilo-${{ steps.version.outputs.raw }}.msi
@@ -200,11 +200,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: DesKilo-${{ needs.msi.outputs.version }}-windows-msi
           path: release
       - name: Attach to release
-        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: release/*.msi

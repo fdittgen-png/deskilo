@@ -119,7 +119,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Candidate: $sha"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.source.outputs.sha }}
 
@@ -157,7 +157,7 @@ jobs:
           bundler-cache: true
 
       - name: Cache CocoaPods
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/Library/Caches/CocoaPods
@@ -272,7 +272,7 @@ jobs:
         if: ${{ always() && inputs.sync_certs != true && inputs.create_app != true
                 && inputs.upload_metadata != true
                 && inputs.attach_build != true }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ios-symbols-${{ steps.bn.outputs.build_number }}
           path: build/symbols

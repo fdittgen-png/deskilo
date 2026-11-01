@@ -59,7 +59,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # Owner-configurable, like the SMTP secrets on the release train:
       # without them this says so loudly in the summary and stops. A

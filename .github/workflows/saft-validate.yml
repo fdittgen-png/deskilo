@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -61,7 +61,7 @@ jobs:
         run: flutter test test/features/money/saf_t_financial_test.dart
       - name: Read each against its schema
         run: bash tool/saft/validate.sh "${{ runner.temp }}/saft-samples"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: saft-samples

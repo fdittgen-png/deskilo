@@ -98,7 +98,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Candidate: $sha"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.source.outputs.sha }}
 
@@ -230,7 +230,7 @@ jobs:
             echo "Notarised: opens on a double-click."
           fi
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ inputs.sync_certs != true }}
         with:
           name: deskilo-macos-${{ steps.source.outputs.sha }}
@@ -248,7 +248,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: deskilo-macos-${{ needs.dmg.outputs.source_sha }}
           path: release

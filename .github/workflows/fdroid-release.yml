@@ -59,11 +59,11 @@ jobs:
     steps:
       # No path juggling here on purpose: the default checkout path IS
       # the path the recipe reproduces at.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref }}
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
