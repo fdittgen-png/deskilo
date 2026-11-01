@@ -53,6 +53,19 @@ void main() {
       );
     });
 
+    test('the invoiced figure opens the invoice register, the collected one '
+        'stays on the money report', () {
+      final drills = {for (final m in biModules) m.id: m.drill};
+      final invoiced = drills['finance.invoiced']!;
+      expect(invoiced.route, '/invoice-register');
+      expect(invoiced.permission, WorkspacePermission.viewFinances);
+      expect(
+        invoiced.target(const BiPeriod(BiGrain.quarter, 2026, 4)),
+        '/invoice-register?from=2026-10&to=2026-12',
+      );
+      expect(drills['finance.collected']!.route, '/money/status');
+    });
+
     test('the finance modules and the capacity figure carry a period', () {
       final carrying = {
         for (final m in biModules)

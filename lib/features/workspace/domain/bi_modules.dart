@@ -157,8 +157,9 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
+    // #2578 — the invoices that make the figure, for its months.
     drill: BiDrill(
-      route: '/money/status',
+      route: '/invoice-register',
       permission: WorkspacePermission.viewFinances,
       carriesPeriod: true,
     ),
