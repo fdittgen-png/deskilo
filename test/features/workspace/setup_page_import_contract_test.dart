@@ -459,6 +459,7 @@ void main() {
         'records': 'app',
         'map': 'app',
         'region': 'app',
+        'bi': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

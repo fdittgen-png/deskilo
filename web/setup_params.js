@@ -51,6 +51,8 @@ const ID_SKEW=[['0','optSeconds',{n:0}],['5','optSeconds',{n:5}],['10','optSecon
 const DIR_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
 // #2556 — the inbox's page per source (messaging.inbox_page_size, 1..100).
 const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
+// #2578 — rows per page of a figure's detail (bi.detail_page_size, 10..200).
+const BI_DETAIL_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}],['200','optEntries',{n:200}]];
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
@@ -118,6 +120,7 @@ const PARAM_META=[
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
+ ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
@@ -175,7 +178,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it
