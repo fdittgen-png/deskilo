@@ -3,6 +3,7 @@ import '../../../features/money/domain/accounting_connection.dart';
 import '../../../features/money/domain/accounting_delivery_run.dart';
 import '../../../features/money/domain/accounting_target.dart';
 import '../../../features/money/domain/book_period.dart';
+import '../../../features/money/domain/remote_revocation.dart';
 import 'book_period_repository.dart';
 
 /// The accounting connections in memory, with the server's rules the
@@ -30,6 +31,9 @@ class FakeAccountingConnectionRepository
   final List<AccountingDelivery> deliveries;
   var _next = 1;
 
+  /// What the target answered to each revocation, by connection id.
+  final _outcomes = <String, RemoteRevocation>{};
+
   int _index(String connectionId) {
     final i = connections.indexWhere((c) => c.id == connectionId);
     if (i < 0) throw StateError('unknown connection');
@@ -54,6 +58,7 @@ class FakeAccountingConnectionRepository
       displayName: c.displayName,
       connectedAt: status == ConnectionStatus.connected ? today : c.connectedAt,
       revokedAt: revokedAt ?? c.revokedAt,
+      remoteRevocation: c.remoteRevocation,
       secretsSet: secretsSet ?? c.secretsSet,
       maps: maps ?? c.maps,
     );
@@ -83,6 +88,7 @@ class FakeAccountingConnectionRepository
         statusDetail: c.statusDetail,
         connectedAt: c.connectedAt,
         revokedAt: c.revokedAt,
+        remoteRevocation: _outcomes[c.id] ?? c.remoteRevocation,
         secretsSet: c.secretsSet,
         maps: c.maps,
         delivered: deliveries.any((d) => d.connectionId == c.id),
@@ -152,12 +158,14 @@ class FakeAccountingConnectionRepository
   Future<AccountingConnection> revoke(String connectionId) async {
     final c = connections[_index(connectionId)];
     if (!c.live) return c;
-    return _replace(
+    // No target is reached here, so none confirms the revocation.
+    _outcomes[c.id] = RemoteRevocation.notSupported;
+    return _withDelivered(_replace(
       c,
       status: ConnectionStatus.revoked,
       secretsSet: const [],
       revokedAt: today,
-    );
+    ));
   }
 
   @override

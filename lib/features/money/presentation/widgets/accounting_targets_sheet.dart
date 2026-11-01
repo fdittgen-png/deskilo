@@ -20,6 +20,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/accounting_format.dart';
+import '../../domain/remote_revocation.dart';
 import '../../providers/accounting_connection_providers.dart';
 import '../../providers/book_profile_providers.dart';
 import 'accounting_connection_dialogs.dart';
@@ -277,6 +278,17 @@ class _ConnectionCard extends ConsumerWidget {
     AppSnack.success(context, l10n.acctConnRevoked);
   }
 
+  /// The connection of this issuer and target revoked last.
+  AccountingConnection? get _latestRevoked {
+    AccountingConnection? latest;
+    for (final c in revoked) {
+      final at = c.revokedAt;
+      if (at == null) continue;
+      if (latest == null || at.isAfter(latest.revokedAt!)) latest = c;
+    }
+    return latest;
+  }
+
   /// What is known of the connection: its state and the target's words.
   List<Widget> _facts(BuildContext context) {
     final l10n = context.l10n;
@@ -388,6 +400,14 @@ class _ConnectionCard extends ConsumerWidget {
             Text(
               context.l10n.acctConnRevokedBefore(revoked.length),
               style: Theme.of(context).textTheme.bodySmall,
+            ),
+          // #2370: the target did not confirm it forgot the token of the
+          // latest connection revoked here; the person removes DesKilo there.
+          if (_latestRevoked?.revocationUnconfirmed ?? false)
+            Text(
+              context.l10n.acctConnRevocationUnconfirmed,
+              key: ValueKey('acct-revocation-unconfirmed-${target.id}-$issuerId'),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           Wrap(spacing: AppSpacing.sm, children: _doors(context, ref)),
         ],

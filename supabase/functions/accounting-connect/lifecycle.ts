@@ -12,7 +12,10 @@
 //        here, and the answer says `remote_revocation`: `revoked`,
 //        `failed` or `not_supported` (a target without an endpoint, or a
 //        connection made by an API token, which only the company can
-//        withdraw). The token is never logged and never in an answer.
+//        withdraw). That outcome is recorded on the revoked connection
+//        (service role, 0644), and the app tells the person to remove
+//        DesKilo in the target's settings when it is not `revoked`. The
+//        token is never logged and never in an answer.
 //   POST {action: "verify", connection_id}
 //        A billing manager checks that a TOKEN connection reaches the
 //        company it was made for. The adapter resolves the token's own
@@ -51,7 +54,17 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
       if (!done.ok) console.error(`accounting-connect: ${held.target_id} did not confirm the revocation (${done.detail})`);
     }
   }
-  return json({ connection: revoked.data, remote_revocation: remote });
+  // The outcome is recorded on the revoked row by the service role alone
+  // (record_accounting_revocation), so the card can say the target never
+  // confirmed; the caller could forge a value it passed itself. A failed
+  // record leaves the connection revoked and the answer the same.
+  const recorded = await deps.service().rpc("record_accounting_revocation", {
+    p_connection_id: connectionId,
+    p_outcome: remote,
+  });
+  if (recorded.error) console.error("accounting-connect: the revocation outcome was not recorded");
+  const connection = !recorded.error && recorded.data ? recorded.data : revoked.data;
+  return json({ connection, remote_revocation: remote });
 }
 
 export async function verify(deps: Deps, authorization: string, body: Record<string, unknown>): Promise<Response> {

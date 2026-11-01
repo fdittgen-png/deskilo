@@ -256,6 +256,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctConnReplaceToken => 'Token ersetzen';
 
   @override
+  String get acctConnRevocationUnconfirmed =>
+      'Der Anbieter hat den Widerruf nicht bestätigt; entfernen Sie DesKilo in seinen Einstellungen';
+
+  @override
   String get acctConnRevoke => 'Widerrufen';
 
   @override

@@ -23,6 +23,7 @@
   "acctConnTenant": "Società: {tenant}",
   "acctConnSince": "Collegato il {date}",
   "acctConnDetail": "Risposta del sistema: {detail}",
+  "acctConnRevocationUnconfirmed": "Il fornitore non ha confermato la revoca; rimuovi DesKilo nelle sue impostazioni",
   "acctConnRevokedBefore": "{count, plural, =1{Un collegamento precedente è stato revocato} other{{count} collegamenti precedenti sono stati revocati}}",
   "acctConnConnectToken": "Collega con un token API",
   "acctConnReplaceToken": "Sostituisci il token",

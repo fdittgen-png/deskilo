@@ -536,6 +536,12 @@ abstract class AppLocalizations {
   /// **'Replace the token'**
   String get acctConnReplaceToken;
 
+  /// #2370 Connection card: the accounting system did not confirm it forgot the revoked connection's token, or cannot be asked; the person removes the app there.
+  ///
+  /// In en, this message translates to:
+  /// **'The provider did not confirm the revocation; remove DesKilo in its settings'**
+  String get acctConnRevocationUnconfirmed;
+
   /// #2370 Button and dialog title: revoke a connection.
   ///
   /// In en, this message translates to:

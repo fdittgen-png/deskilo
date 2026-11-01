@@ -191,6 +191,7 @@
   "acctConnRefresh": "Comprobar la conexión",
   "acctConnRefused": "El servidor lo ha rechazado: compruebe que puede gestionar la facturación.",
   "acctConnReplaceToken": "Sustituir el token",
+  "acctConnRevocationUnconfirmed": "El proveedor no confirmó la revocación; quite DesKilo en su configuración",
   "acctConnRevoke": "Revocar",
   "acctConnRevokeConfirm": "¿Revocar esta conexión? Su token se olvida de inmediato; sus correspondencias y los envíos ya hechos siguen en la lista.",
   "acctConnRevoked": "La conexión está revocada.",
