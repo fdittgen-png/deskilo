@@ -12380,6 +12380,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceRegisterName => 'Name';
 
   @override
+  String invoiceRegisterPeriod(String from, String to) {
+    return 'Period: $from – $to';
+  }
+
+  @override
+  String get invoiceRegisterPeriodClear => 'Show all periods';
+
+  @override
   String get invoiceRegisterTitle => 'Invoice register';
 
   @override

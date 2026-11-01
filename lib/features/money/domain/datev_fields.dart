@@ -122,10 +122,13 @@ class DatevBooking {
 /// (0641): `Valutadatum` (TT.MM.JJJJ) and, when the bank gave one,
 /// `Bankreferenz`. None when no single line explains the payment. The
 /// Belegdatum is not touched: it decides the row's Buchungsstapel.
-List<(String, String)> datevBankInfo(InvoiceMatch? match) {
-  final valueDate = match?.valueDate;
+List<(String, String)> datevBankInfo(InvoiceMatch? match) =>
+    datevBankInfoOf(match?.valueDate, match?.bankReference ?? '');
+
+/// #2380 — the same pairs from the facts themselves: a supplier payment's
+/// posting carries them (0642), as a receipt's match row does (0641).
+List<(String, String)> datevBankInfoOf(DateTime? valueDate, String reference) {
   if (valueDate == null) return const [];
-  final reference = match?.bankReference ?? '';
   return [
     ('Valutadatum', dmy(valueDate, separator: '.')),
     if (reference.isNotEmpty) ('Bankreferenz', reference),

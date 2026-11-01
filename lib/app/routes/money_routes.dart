@@ -79,7 +79,12 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
       ),
-      builder: (context, state) => const InvoiceRegisterScreen(),
+      // #2578 — a drill-through from a figure narrows it to the figure's
+      // months; a missing or malformed pair shows the whole register.
+      builder: (context, state) => InvoiceRegisterScreen(
+        from: state.uri.queryParameters['from'],
+        to: state.uri.queryParameters['to'],
+      ),
     ),
     // Where invoices are POSTED (0073) — owner-only.
     GoRoute(

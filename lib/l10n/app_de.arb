@@ -8454,6 +8454,8 @@
   "invoiceRegisterAmount": "Betrag",
   "invoiceRegisterDate": "Datum",
   "invoiceRegisterName": "Name",
+  "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
+  "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen",
   "invoiceRegisterTitle": "Rechnungsregister",
   "invoiceRegisterTotal": "Gesamt",
   "invoiceRegisterYear": "Jahr",

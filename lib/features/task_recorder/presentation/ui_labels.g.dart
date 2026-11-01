@@ -4157,6 +4157,7 @@ Map<String, _Getter> _part13() => {
   'invoiceMissingBuyerTaxId': (l) => l.invoiceMissingBuyerTaxId,
   'invoiceMissingVatRate': (l) => l.invoiceMissingVatRate,
   'invoicePdfPage': (l) => l.invoicePdfPage,
+  'invoiceRegisterPeriodClear': (l) => l.invoiceRegisterPeriodClear,
   'invoiceRegisterTitle': (l) => l.invoiceRegisterTitle,
   'invoiceSendStatusFailed': (l) => l.invoiceSendStatusFailed,
   'journeyValidatorsMatch': (l) => l.journeyValidatorsMatch,

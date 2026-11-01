@@ -20543,6 +20543,18 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get invoiceRegisterName;
 
+  /// Register filter chip: the days the register is narrowed to by a drill-through
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {from} – {to}'**
+  String invoiceRegisterPeriod(String from, String to);
+
+  /// Register filter chip: removes the period and shows every invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Show all periods'**
+  String get invoiceRegisterPeriodClear;
+
   /// Screen title of the sortable invoice register (0072)
   ///
   /// In en, this message translates to:

@@ -1,0 +1,4 @@
+{
+  "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
+  "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen"
+}

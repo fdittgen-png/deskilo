@@ -8454,6 +8454,8 @@
   "invoiceRegisterAmount": "Importo",
   "invoiceRegisterDate": "Data",
   "invoiceRegisterName": "Nome",
+  "invoiceRegisterPeriod": "Periodo: {from} – {to}",
+  "invoiceRegisterPeriodClear": "Mostra tutti i periodi",
   "invoiceRegisterTitle": "Registro fatture",
   "invoiceRegisterTotal": "Totale",
   "invoiceRegisterYear": "Anno",
