@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../core/time/date_text.dart';
 import 'book_profile.dart';
 import 'datev.dart';
 import 'invoice.dart';
@@ -74,6 +75,7 @@ class DatevBooking {
     this.taxKey = '',
     this.invoice,
     this.journal,
+    this.bankInfo = const [],
   });
 
   /// This booking dated [day].
@@ -88,6 +90,7 @@ class DatevBooking {
     taxKey: taxKey,
     invoice: invoice,
     journal: journal,
+    bankInfo: bankInfo,
   );
 
   final int cents;
@@ -108,6 +111,25 @@ class DatevBooking {
   /// The Buchungsstapel the row belongs in when it is not decided by the
   /// bank account: a supplier row names its own.
   final DatevJournal? journal;
+
+  /// #2380 — the Beleginfo pairs (Art, Inhalt) of the bank statement line
+  /// that explains the money of this row, after the document's own: its
+  /// value date and its reference. Empty on every other row.
+  final List<(String, String)> bankInfo;
+}
+
+/// #2380 — the Beleginfo pairs of [match]'s reconciled statement line
+/// (0641): `Valutadatum` (TT.MM.JJJJ) and, when the bank gave one,
+/// `Bankreferenz`. None when no single line explains the payment. The
+/// Belegdatum is not touched: it decides the row's Buchungsstapel.
+List<(String, String)> datevBankInfo(InvoiceMatch? match) {
+  final valueDate = match?.valueDate;
+  if (valueDate == null) return const [];
+  final reference = match?.bankReference ?? '';
+  return [
+    ('Valutadatum', dmy(valueDate, separator: '.')),
+    if (reference.isNotEmpty) ('Bankreferenz', reference),
+  ];
 }
 
 /// Where the builder's bookings go.

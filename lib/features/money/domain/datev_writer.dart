@@ -203,7 +203,7 @@ class DatevWriter {
 
   /// The sub-ledger fields of a row of [invoice] (none when null): the
   /// voucher link (20), the number, date and due date as Beleginfo
-  /// (21-26), the site as KOST1 (37) and the buyer's VAT id for a reverse
+  /// (21-26), then the bank line's value date and reference (#2380), the site as KOST1 (37) and the buyer's VAT id for a reverse
   /// charge (40).
   void _detail(List<String> fields, DatevBooking b) {
     final costCentre = costCentreOf(b);
@@ -222,6 +222,7 @@ class DatevWriter {
       ('Rechnungsnummer', invoice.number),
       ('Belegdatum', dmy(dayOf(invoice.issuedAt), separator: '.')),
       if (due != null) ('Fälligkeit', dmy(due, separator: '.')),
+      ...b.bankInfo,
     ];
     for (final (k, (art, content)) in info.indexed) {
       fields[20 + 2 * k] = _quoted(art);
@@ -389,6 +390,7 @@ class DatevWriter {
         documentRef: invoice.number,
         text: 'Zahlung ${invoice.number}',
         invoice: invoice,
+        bankInfo: datevBankInfo(match),
       ),
     );
     bookDatevWriteOff(
@@ -414,6 +416,7 @@ class DatevWriter {
         documentRef: invoice.number,
         text: 'Erstattung ${invoice.number}',
         invoice: invoice,
+        bankInfo: datevBankInfo(match),
       ),
     );
   }
