@@ -287,6 +287,7 @@ class ReservePlanView extends ConsumerWidget {
               const LinearProgressIndicator(key: ValueKey('read-refreshing')),
             if (planAsync.hasError)
               ReadFailureBanner(
+                key: const ValueKey('reserve-plan-unavailable'),
                 error: planAsync.error!,
                 onRetry: () => ref.invalidate(floorPlanProvider(level.id)),
               ),
