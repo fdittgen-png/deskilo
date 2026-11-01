@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/section_in_view.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
@@ -101,28 +102,9 @@ class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
   /// pill stays the one marked until the reader scrolls on their own.
   bool _jumping = false;
 
-  /// How far below the top edge a section still counts as the one in view.
-  static const double _threshold = 56;
-
   bool _onScroll(ScrollNotification note) {
-    if (_jumping || note.depth != 0 || note is! ScrollUpdateNotification) {
-      return false;
-    }
-    final box = note.context?.findRenderObject();
-    if (box is! RenderBox) return false;
-    final top = box.localToGlobal(Offset.zero).dy;
-    String? current;
-    for (final entry in _groups.entries) {
-      final group = entry.value.currentContext?.findRenderObject();
-      if (group is! RenderBox || !group.attached) continue;
-      if (group.localToGlobal(Offset.zero).dy <= top + _threshold) {
-        current = entry.key;
-      }
-    }
-    // The last sections cannot scroll to the top: at the end, the last one.
-    if (note.metrics.extentAfter == 0 && _groups.isNotEmpty) {
-      current = _groups.keys.last;
-    }
+    if (_jumping) return false;
+    final current = sectionInView(note, _groups);
     if (current != null && current != _inView) {
       setState(() => _inView = current);
     }

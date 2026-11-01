@@ -106,7 +106,21 @@ class HelpDotTitle extends StatelessWidget {
           // caught it by tapping a tile's middle, which is exactly what
           // a finger does. The symbol belongs at the far right of the
           // title area — which is what #1185 said it was doing.
-          Expanded(child: Text(text, style: style)),
+          //
+          // #3068 — a one-line title is centred on the 48 dp target (it
+          // used to ride the target's top edge, so every row with a symbol
+          // read as sitting too high); a title taller than the target
+          // defines the height, and the symbol stays with the first line.
+          Expanded(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                heightFactor: 1,
+                child: Text(text, style: style),
+              ),
+            ),
+          ),
           HelpDot(topic, anchor: anchor),
         ],
       );

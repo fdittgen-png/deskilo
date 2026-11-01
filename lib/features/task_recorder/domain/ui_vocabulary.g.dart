@@ -2635,6 +2635,7 @@ const Set<String> uiKeys = {
   'settings-fingerprint',
   'settings-front-camera',
   'settings-help',
+  'settings-help-action',
   'settings-instance-assistants',
   'settings-kiosk-revert',
   'settings-linked-accounts',

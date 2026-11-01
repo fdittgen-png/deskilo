@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/section_in_view.dart';
 
 class SettingsTaskSection extends StatelessWidget {
   const SettingsTaskSection({required this.id, required this.title,
@@ -38,6 +39,17 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
   final _controllers = <String, ExpansibleController>{};
   final _targets = <String, GlobalKey>{};
   final _focus = <String, FocusNode>{};
+
+  /// The section the reader is in (#3068): marked in the index while
+  /// scrolling, and the tapped one while the jump is under way.
+  String? _inView;
+  bool _jumping = false;
+  bool _onScroll(ScrollNotification note) {
+    if (_jumping) return false;
+    final current = sectionInView(note, _targets);
+    if (current != null && current != _inView) setState(() => _inView = current);
+    return false;
+  }
   @override
   void dispose() {
     for (final controller in _controllers.values) { controller.dispose(); }
@@ -45,6 +57,7 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
     super.dispose();
   }
   Future<void> _jump(String id) async {
+    setState(() { _jumping = true; _inView = id; });
     final duration = motionDuration(context, kThemeAnimationDuration);
     _controllers[id]!.expand();
     _focus[id]!.requestFocus();
@@ -56,6 +69,7 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
       await Scrollable.ensureVisible(target,
         duration: motionDuration(context, MotionTokens.standard));
     }
+    _jumping = false;
   }
   @override
   Widget build(BuildContext context) {
@@ -67,10 +81,14 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
     }
     return Column(children: [
       // #2313 — the shared section bar: one row, never wrapped.
-      SectionJumpBar(items: [for (final section in sections) SectionJump(
+      SectionJumpBar(
+        current: 'settings-link-${_inView ?? (sections.isEmpty ? '' : sections.first.id)}',
+        items: [for (final section in sections) SectionJump(
         key: 'settings-link-${section.id}', label: section.title,
         onPressed: () => _jump(section.id))]),
-      Expanded(child: SingleChildScrollView(
+      Expanded(child: NotificationListener<ScrollNotification>(
+        onNotification: _onScroll,
+        child: SingleChildScrollView(
         key: PageStorageKey('settings-${widget.pane}'), padding: AppSpacing.gutterAll,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           for (final child in widget.children)
@@ -79,7 +97,7 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
                 id: child.id, title: child.title,
                 initiallyExpanded: child.initiallyExpanded, controller: _controllers[child.id], children: child.children))
             else child,
-        ]))),
+        ])))),
     ]);
   }
 }
