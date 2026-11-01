@@ -31569,6 +31569,10 @@
   "@taxRefAliasOf": {
     "description": "#2478 tax reference: Field: the member state an alias code stands for."
   },
+  "taxRefBankingScheme": "Banking scheme",
+  "@taxRefBankingScheme": {
+    "description": "#2488 country catalogue: taxRefBankingScheme"
+  },
   "taxRefCashBackstop": "Cash backstop",
   "@taxRefCashBackstop": {
     "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
@@ -31628,6 +31632,10 @@
   "taxRefDomainCatalogueNote": "Catalogue notes",
   "@taxRefDomainCatalogueNote": {
     "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainCountry": "Country (creation catalogue)",
+  "@taxRefDomainCountry": {
+    "description": "#2488 country catalogue: taxRefDomainCountry"
   },
   "taxRefDomainEuMember": "EU members",
   "@taxRefDomainEuMember": {
@@ -31757,6 +31765,10 @@
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
   },
+  "taxRefInvalidTimeZone": "Not an IANA time zone the app knows, such as Europe/Paris",
+  "@taxRefInvalidTimeZone": {
+    "description": "#2488 country catalogue: taxRefInvalidTimeZone"
+  },
   "taxRefInvoiceOption": "Option for the invoice date",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
@@ -31876,6 +31888,10 @@
   "taxRefText": "Text",
   "@taxRefText": {
     "description": "#2477 tax reference: Field: statutory text."
+  },
+  "taxRefTimeZone": "Time zone (IANA)",
+  "@taxRefTimeZone": {
+    "description": "#2488 country catalogue: taxRefTimeZone"
   },
   "taxRefTitle": "Tax reference data",
   "@taxRefTitle": {

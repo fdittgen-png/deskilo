@@ -11,6 +11,8 @@
 // that must not see the previous workspace's rows read the context instead.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../core/country/country_catalog.dart';
+import '../core/country/country_rows.dart';
 import '../core/vat/tax_reference_active.dart';
 import '../features/money/providers/tax_reference_providers.dart';
 import '../features/workspace/providers/workspace_providers.dart';
@@ -22,10 +24,14 @@ void activeTaxReference(Ref ref) {
   final captured = ref.watch(readyWorkspaceContextProvider);
   if (captured != null) {
     ActiveTaxReference.install(captured.taxReference.set);
+    CountryCatalog.install(countriesOfReference(captured.taxReference.set));
     return;
   }
   final context = ref.watch(workspaceContextProvider);
   if (context.isLoading || context.hasError) return;
   final set = ref.watch(taxReferenceSetProvider).value;
-  if (set != null && !set.isEmpty) ActiveTaxReference.install(set);
+  if (set != null && !set.isEmpty) {
+    ActiveTaxReference.install(set);
+    CountryCatalog.install(countriesOfReference(set));
+  }
 }

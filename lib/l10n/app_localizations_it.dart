@@ -26880,6 +26880,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Alias di (codice ISO, vuoto per uno Stato membro)';
 
   @override
+  String get taxRefBankingScheme => 'Sistema bancario';
+
+  @override
   String get taxRefCashBackstop => 'Termine massimo per cassa';
 
   @override
@@ -26927,6 +26930,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefDomainCatalogueNote => 'Note del catalogo';
+
+  @override
+  String get taxRefDomainCountry => 'Paese (catalogo di creazione)';
 
   @override
   String get taxRefDomainEuMember => 'Membri UE';
@@ -27032,6 +27038,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Inserisci il codice dello stato di due lettere';
 
   @override
+  String get taxRefInvalidTimeZone =>
+      'Non è un fuso orario IANA noto all\'app, come Europe/Paris';
+
+  @override
   String get taxRefInvoiceOption => 'Opzione per la data fattura';
 
   @override
@@ -27126,6 +27136,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefText => 'Testo';
+
+  @override
+  String get taxRefTimeZone => 'Fuso orario (IANA)';
 
   @override
   String get taxRefTitle => 'Dati di riferimento fiscali';

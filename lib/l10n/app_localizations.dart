@@ -44345,6 +44345,12 @@ abstract class AppLocalizations {
   /// **'Alias of (ISO code, empty for a member state)'**
   String get taxRefAliasOf;
 
+  /// #2488 country catalogue: taxRefBankingScheme
+  ///
+  /// In en, this message translates to:
+  /// **'Banking scheme'**
+  String get taxRefBankingScheme;
+
   /// #2479 tax reference: Field: when an unpaid part falls due under cash accounting.
   ///
   /// In en, this message translates to:
@@ -44434,6 +44440,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Catalogue notes'**
   String get taxRefDomainCatalogueNote;
+
+  /// #2488 country catalogue: taxRefDomainCountry
+  ///
+  /// In en, this message translates to:
+  /// **'Country (creation catalogue)'**
+  String get taxRefDomainCountry;
 
   /// #2477 tax reference: Domain filter: EU member states.
   ///
@@ -44627,6 +44639,12 @@ abstract class AppLocalizations {
   /// **'Enter the two-letter state code'**
   String get taxRefInvalidState;
 
+  /// #2488 country catalogue: taxRefInvalidTimeZone
+  ///
+  /// In en, this message translates to:
+  /// **'Not an IANA time zone the app knows, such as Europe/Paris'**
+  String get taxRefInvalidTimeZone;
+
   /// #2479 tax reference: Switch: the seller may opt for the invoice date.
   ///
   /// In en, this message translates to:
@@ -44806,6 +44824,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Text'**
   String get taxRefText;
+
+  /// #2488 country catalogue: taxRefTimeZone
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone (IANA)'**
+  String get taxRefTimeZone;
 
   /// #2477 tax reference: Screen title: the VAT reference values the platform owner maintains.
   ///
