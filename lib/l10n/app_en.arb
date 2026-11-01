@@ -2475,6 +2475,26 @@
   "@bankStatementsTitle": {
     "description": "#2380 Money: the bank statements button and sheet title."
   },
+  "bankUndoBody": "The movement becomes open again and the payment is again only recorded as made. The reconciliation and why it was undone stay on record.",
+  "@bankUndoBody": {
+    "description": "#2380 Undo dialog: what undoing a reconciliation does and that it stays on record."
+  },
+  "bankUndoConfirm": "Undo",
+  "@bankUndoConfirm": {
+    "description": "#2380 Undo dialog: the button that undoes the reconciliation."
+  },
+  "bankUndoReasonLabel": "Why it is undone",
+  "@bankUndoReasonLabel": {
+    "description": "#2380 Undo dialog: the label of the required reason field."
+  },
+  "bankUndoReasonRequired": "Say why the reconciliation is undone.",
+  "@bankUndoReasonRequired": {
+    "description": "#2380 Undo dialog: the error when no reason is given."
+  },
+  "bankUndoTitle": "Undo this reconciliation?",
+  "@bankUndoTitle": {
+    "description": "#2380 Undo dialog: the title, asking to undo a reconciliation of money out."
+  },
   "baseRoleNote": "Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.",
   "@baseRoleNote": {
     "description": "the mandatory base role"

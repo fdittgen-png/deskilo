@@ -3511,6 +3511,36 @@ abstract class AppLocalizations {
   /// **'Bank statements'**
   String get bankStatementsTitle;
 
+  /// #2380 Undo dialog: what undoing a reconciliation does and that it stays on record.
+  ///
+  /// In en, this message translates to:
+  /// **'The movement becomes open again and the payment is again only recorded as made. The reconciliation and why it was undone stay on record.'**
+  String get bankUndoBody;
+
+  /// #2380 Undo dialog: the button that undoes the reconciliation.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get bankUndoConfirm;
+
+  /// #2380 Undo dialog: the label of the required reason field.
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is undone'**
+  String get bankUndoReasonLabel;
+
+  /// #2380 Undo dialog: the error when no reason is given.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the reconciliation is undone.'**
+  String get bankUndoReasonRequired;
+
+  /// #2380 Undo dialog: the title, asking to undo a reconciliation of money out.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo this reconciliation?'**
+  String get bankUndoTitle;
+
   /// the mandatory base role
   ///
   /// In en, this message translates to:

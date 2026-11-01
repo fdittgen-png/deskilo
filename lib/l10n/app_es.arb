@@ -893,6 +893,11 @@
   "bankStatementsIntro": "Importe los archivos que genera su banco. Cada movimiento se lee una sola vez; los pagos se concilian con sus facturas cuando usted confirma.",
   "bankStatementsLoadFailed": "No se han podido cargar los extractos bancarios.",
   "bankStatementsTitle": "Extractos bancarios",
+  "bankUndoBody": "El movimiento vuelve a estar abierto y el pago vuelve a figurar solo como registrado como realizado. La conciliación y el motivo por el que se deshizo quedan registrados.",
+  "bankUndoConfirm": "Deshacer",
+  "bankUndoReasonLabel": "Por qué se deshace",
+  "bankUndoReasonRequired": "Indique por qué se deshace la conciliación.",
+  "bankUndoTitle": "¿Deshacer esta conciliación?",
   "baseRoleNote": "Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman; ninguno quita nada.",
   "@baseRoleNote": {
     "description": "the mandatory base role"

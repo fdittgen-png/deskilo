@@ -90,5 +90,10 @@
   "bankRefusedTooLong": "Ein Konto oder eine Bank-Transaktionskennung in der Datei ist länger, als ein Auszug speichert. Nichts wurde importiert.",
   "refusalBankLineDecided": "Diese Bewegung wurde inzwischen entschieden (zugeordnet, abgeglichen oder geprüft). Die Liste zeigt den aktuellen Stand.",
   "refusalBankLineRefused": "Diese Bewegung kann das nicht begleichen: Richtung, Währung, Betrag oder Stand passen nicht. Nichts wurde geändert.",
-  "refusalBankFileRefused": "Der Server hat den Auszug vollständig abgelehnt (zu groß, zu viele Bewegungen oder mehrere Währungen). Nichts wurde importiert."
+  "refusalBankFileRefused": "Der Server hat den Auszug vollständig abgelehnt (zu groß, zu viele Bewegungen oder mehrere Währungen). Nichts wurde importiert.",
+  "bankUndoTitle": "Diesen Abgleich rückgängig machen?",
+  "bankUndoBody": "Die Bewegung ist wieder offen und die Zahlung wieder nur als geleistet erfasst. Der Abgleich und der Grund der Rücknahme bleiben festgehalten.",
+  "bankUndoReasonLabel": "Grund der Rücknahme",
+  "bankUndoReasonRequired": "Geben Sie an, warum der Abgleich rückgängig gemacht wird.",
+  "bankUndoConfirm": "Rückgängig machen"
 }
