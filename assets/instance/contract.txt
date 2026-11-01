@@ -2106,7 +2106,7 @@ routine public.deskilo_schema_version() -> integer | function | invoker | stable
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
 routine public.directory_identity_unlinked() -> trigger | function | definer | volatile | exec:service_role | body:ee068aa5fb8e
 routine public.discard_setup_step_draft(p_workspace_id uuid, p_step text, p_expected_version integer) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f3a158307f8f
-routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3010ff33462d
+routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:b855cb698f0a
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
 routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:42537c6febc6
 routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void | function | definer | volatile | exec:authenticated,service_role | body:ecca59e978a3
@@ -2711,7 +2711,7 @@ routine public.remove_database_admin(p_target uuid) -> jsonb | function | define
 routine public.rename_administrator_role(p_workspace_id uuid, p_names jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:43ea7b4c414c
 routine public.reopen_book_period_v1(p_workspace_id uuid, p_period_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:827c5e7a01c3
 routine public.reorder_levels(p_workspace_id uuid, p_level_ids uuid[], p_expected uuid[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:99f01185617c
-routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:b4a4812f9fc5
+routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5dab0722816c
 routine public.report_image_names(p_workspace_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:0d0dafdd6573
 routine public.request_guest_visit(p_workspace_id uuid, p_site_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_client_request_id uuid, p_message text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:50e24d8f05cb
 routine public.request_invoice_issue(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:497bbdf8767a
@@ -2883,7 +2883,7 @@ routine public.set_payment_credentials(p_workspace_id uuid, p_provider text, p_c
 routine public.set_personal_preferences(p_patch jsonb, p_workspace_id uuid, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:1ef8b7ceb65f
 routine public.set_public_profile(p_publish boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:8c68799c6b52
 routine public.set_rating(p_workspace uuid, p_kind text, p_resource uuid, p_stars integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:52f6fe395e15
-routine public.set_repartition_rule(p_workspace_id uuid, p_rule jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:4fc42a26a4ae
+routine public.set_repartition_rule(p_workspace_id uuid, p_rule jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:1f0162367d12
 routine public.set_role_permission(p_workspace_id uuid, p_role text, p_permission text, p_enabled boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d7cd84d7fda5
 routine public.set_role_permissions(p_workspace_id uuid, p_role text, p_permissions text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:75d64e57ab19
 routine public.set_room_rental_audience_v1(p_workspace_id uuid, p_rental_id uuid, p_audience jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ea0c113bfe19
@@ -3075,6 +3075,7 @@ routine public.workspace_twin_id(p_workspace_id uuid) -> uuid | function | defin
 routine public.workspaces_administrator_role() -> trigger | function | definer | volatile | exec:service_role | body:7826864bdda3
 routine public.workspaces_delegated_columns() -> trigger | function | invoker | volatile | exec:service_role | body:b9a923b53a18
 routine public.workspaces_hosted_here() -> trigger | function | definer | volatile | exec:service_role | body:80161ebd0ca7
+routine public.workspaces_money_feature_guard() -> trigger | function | invoker | volatile | exec:service_role | body:07407883ec6d
 routine public.workspaces_money_locale_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e93c2718d56e
 routine public.workspaces_network_id_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:09c693249fe1
 routine public.workspaces_network_id_stamp() -> trigger | function | definer | volatile | exec:service_role | body:7859aca20bbd
@@ -3445,6 +3446,7 @@ trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_access
 trigger workspaces.workspaces_administrator_role CREATE TRIGGER workspaces_administrator_role AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_administrator_role()
 trigger workspaces.workspaces_delegated_columns CREATE TRIGGER workspaces_delegated_columns BEFORE UPDATE ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_delegated_columns()
 trigger workspaces.workspaces_hosted_here CREATE TRIGGER workspaces_hosted_here BEFORE INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_hosted_here()
+trigger workspaces.workspaces_money_feature_guard CREATE TRIGGER workspaces_money_feature_guard BEFORE UPDATE OF payment_instructions, subscription_levels, subscription_vat_rate_id ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_money_feature_guard()
 trigger workspaces.workspaces_money_locale_guard CREATE TRIGGER workspaces_money_locale_guard BEFORE UPDATE OF currency_code, country_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_money_locale_guard()
 trigger workspaces.workspaces_network_id_immutable CREATE TRIGGER workspaces_network_id_immutable BEFORE UPDATE OF network_id ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_network_id_immutable()
 trigger workspaces.workspaces_network_id_stamp CREATE TRIGGER workspaces_network_id_stamp BEFORE INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_network_id_stamp()

@@ -75,6 +75,9 @@ public.conversation_participants.mcp_delegated_deny
 public.conversation_participants.personal_native_session
 public.conversations.conversations_select
 public.conversations.mcp_delegated_deny
+public.credit_products.credit_products_feature_delete
+public.credit_products.credit_products_feature_insert
+public.credit_products.credit_products_feature_update
 public.credit_products.credit_products_select
 public.credit_products.credit_products_write
 public.credit_products.credit_products_write_permitted
@@ -121,6 +124,9 @@ public.federation_inbox_receipts.mcp_delegated_deny
 public.federation_inbox_receipts.personal_native_session
 public.federation_keys.mcp_delegated_deny
 public.federation_keys.personal_native_session
+public.fee_bands.fee_bands_feature_delete
+public.fee_bands.fee_bands_feature_insert
+public.fee_bands.fee_bands_feature_update
 public.fee_bands.fee_bands_select
 public.fee_bands.fee_bands_write
 public.fee_bands.mcp_delegated_deny
@@ -253,6 +259,9 @@ public.opening_hours_history.mcp_delegated_deny
 public.outgoing_payments.mcp_delegated_deny
 public.outgoing_payments.outgoing_payments_select
 public.packages.mcp_delegated_deny
+public.packages.packages_feature_delete
+public.packages.packages_feature_insert
+public.packages.packages_feature_update
 public.packages.packages_select
 public.packages.packages_write
 public.packages.packages_write_permitted

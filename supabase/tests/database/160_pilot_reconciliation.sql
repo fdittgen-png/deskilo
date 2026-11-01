@@ -21,7 +21,7 @@ begin
    values (uo,'00000000-0000-0000-0000-000000000000','authenticated','authenticated','owner@pilot1917.test','',now(),now(),now()),
           (um,'00000000-0000-0000-0000-000000000000','authenticated','authenticated','member@pilot1917.test','',now(),now(),now());
   insert into public.workspaces(name,country_code,currency_code,timezone,created_by,street,city,postal_code,vat_regime,feature_flags)
-   values ('Pilot 1917','FR','EUR','Europe/Paris',uo,'1 rue du Pilote','Pézenas','34120','not_subject','{"invoicing":true}')
+   values ('Pilot 1917','FR','EUR','Europe/Paris',uo,'1 rue du Pilote','Pézenas','34120','not_subject','{"invoicing":true,"expenseRepartition":true}')
    returning id into ws;
   insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (ws,uo,true,true,'2026-01-01');
   -- 1 % of September's 22 open days × 2 = one included half-day.
