@@ -124,7 +124,10 @@ class _WorkspaceOverviewScreenState
       child: Text(text, key: ValueKey(key), style: title),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(workspace?.name ?? l10n.overviewTitle)),
+      // Inside the navigation shell the shell's own bar is the title.
+      appBar: StatefulNavigationShell.maybeOf(context) != null
+          ? null
+          : AppBar(title: Text(workspace?.name ?? l10n.overviewTitle)),
       body: ListView(
         key: const ValueKey('workspace-overview'),
         padding: AppSpacing.gutterAll,
