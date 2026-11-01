@@ -140,7 +140,7 @@ begin
       raise exception '% is a text', k using errcode = '22023';
     end if;
     v := btrim(p_args->>k);
-    if v ~ '[[:cntrl:]]' or char_length(v) > case k when 'bank_name' then 120 else 42 end then
+    if v ~ '[[:cntrl:]]' or char_length(v) > (case k when 'bank_name' then 120 else 42 end) then
       raise exception '% is one short line', k using errcode = '22023';
     end if;
     if k in ('iban', 'qr_iban') then
@@ -180,6 +180,11 @@ declare
 begin
   perform public.mcp_setup_arguments(p_args, array['workspace_id', 'request_id',
     'iban', 'bic', 'bank_name', 'account_number', 'bank_code', 'qr_iban']);
+  -- The Payment methods screen sits behind the money functionality: with it
+  -- off nobody is asked (42501 is what the confirmation maps to not_exposed).
+  if not public.feature_effective(p_workspace_id, 'moneyTab') then
+    raise exception 'money is switched off in this space' using errcode = '42501';
+  end if;
   v := public.payment_instructions_plan(p_workspace_id, p_args);
   if v->'changes' = '[]'::jsonb then
     raise exception 'the bank account changes nothing' using errcode = '22023';
@@ -223,7 +228,7 @@ begin
    where m.workspace_id = c.workspace_id and m.user_id = auth.uid() and m.status = 'active';
   select m.id into v_owner from public.members m
    where m.workspace_id = c.workspace_id and m.is_owner and m.status = 'active'
-   order by m.created_at, m.id limit 1;
+   order by m.joined_at, m.id limit 1;
   update public.workspaces w
      set payment_instructions = coalesce(w.payment_instructions, '{}'::jsonb)
        || (select jsonb_object_agg(ch->>'field', ch->'to') from jsonb_array_elements(v->'changes') ch)
