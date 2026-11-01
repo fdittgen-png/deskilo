@@ -13176,6 +13176,12 @@
     }
   },
   "recapEmpty": "Nessuna inversione contabile in questo periodo.",
+  "recordedPaymentsEmpty": "Nessun pagamento è stato abbinato a una fattura in questo periodo.",
+  "recordedPaymentsMore": "Mostra altri pagamenti",
+  "recordedPaymentsOff": "Il denaro è disattivato in questo spazio.",
+  "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsTitle": "Pagamenti ricevuti",
+  "recordedPaymentsUnnamed": "Pagamento",
   "recordingPrivacyBadge": "Modalità ripresa — persone inventate",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

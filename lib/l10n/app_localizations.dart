@@ -33300,6 +33300,42 @@ abstract class AppLocalizations {
   /// **'Nothing was reverse-charged in this period.'**
   String get recapEmpty;
 
+  /// Empty state of the payments list
+  ///
+  /// In en, this message translates to:
+  /// **'No payments were matched to an invoice in this period.'**
+  String get recordedPaymentsEmpty;
+
+  /// Button: shows the next page of payments
+  ///
+  /// In en, this message translates to:
+  /// **'Show more payments'**
+  String get recordedPaymentsMore;
+
+  /// Shown when the money area is switched off
+  ///
+  /// In en, this message translates to:
+  /// **'Money is switched off in this space.'**
+  String get recordedPaymentsOff;
+
+  /// The days the payments list covers
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {from} – {to}'**
+  String recordedPaymentsPeriod(String from, String to);
+
+  /// Screen title: the payments behind the collected figure
+  ///
+  /// In en, this message translates to:
+  /// **'Payments received'**
+  String get recordedPaymentsTitle;
+
+  /// Row title when a payment names neither an invoice nor a payer
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get recordedPaymentsUnnamed;
+
   /// #1514 recording privacy: recordingPrivacyBadge
   ///
   /// In en, this message translates to:

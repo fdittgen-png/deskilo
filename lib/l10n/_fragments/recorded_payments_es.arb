@@ -1,0 +1,8 @@
+{
+  "recordedPaymentsTitle": "Pagos recibidos",
+  "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
+  "recordedPaymentsMore": "Mostrar más pagos",
+  "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
+  "recordedPaymentsUnnamed": "Pago",
+  "recordedPaymentsPeriod": "Periodo: {from} – {to}"
+}

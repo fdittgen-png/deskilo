@@ -20034,6 +20034,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recapEmpty => 'Nessuna inversione contabile in questo periodo.';
 
   @override
+  String get recordedPaymentsEmpty =>
+      'Nessun pagamento è stato abbinato a una fattura in questo periodo.';
+
+  @override
+  String get recordedPaymentsMore => 'Mostra altri pagamenti';
+
+  @override
+  String get recordedPaymentsOff => 'Il denaro è disattivato in questo spazio.';
+
+  @override
+  String recordedPaymentsPeriod(String from, String to) {
+    return 'Periodo: $from – $to';
+  }
+
+  @override
+  String get recordedPaymentsTitle => 'Pagamenti ricevuti';
+
+  @override
+  String get recordedPaymentsUnnamed => 'Pagamento';
+
+  @override
   String get recordingPrivacyBadge => 'Modalità ripresa — persone inventate';
 
   @override

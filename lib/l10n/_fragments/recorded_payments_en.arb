@@ -1,0 +1,34 @@
+{
+  "recordedPaymentsTitle": "Payments received",
+  "@recordedPaymentsTitle": {
+    "description": "Screen title: the payments behind the collected figure"
+  },
+  "recordedPaymentsEmpty": "No payments were matched to an invoice in this period.",
+  "@recordedPaymentsEmpty": {
+    "description": "Empty state of the payments list"
+  },
+  "recordedPaymentsMore": "Show more payments",
+  "@recordedPaymentsMore": {
+    "description": "Button: shows the next page of payments"
+  },
+  "recordedPaymentsOff": "Money is switched off in this space.",
+  "@recordedPaymentsOff": {
+    "description": "Shown when the money area is switched off"
+  },
+  "recordedPaymentsUnnamed": "Payment",
+  "@recordedPaymentsUnnamed": {
+    "description": "Row title when a payment names neither an invoice nor a payer"
+  },
+  "recordedPaymentsPeriod": "Period: {from} – {to}",
+  "@recordedPaymentsPeriod": {
+    "description": "The days the payments list covers",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  }
+}

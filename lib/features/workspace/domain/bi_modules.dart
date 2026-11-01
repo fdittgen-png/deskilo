@@ -173,7 +173,7 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     drill: BiDrill(
-      route: '/money/status',
+      route: '/money/payments',
       permission: WorkspacePermission.viewFinances,
       carriesPeriod: true,
     ),
