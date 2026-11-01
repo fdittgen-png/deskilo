@@ -486,6 +486,6 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'percent': McpField(McpFieldType.integer, required: true),
     },
-    output: ['created', 'percent', 'levels'], group: 'financial',
+    output: ['created', 'percent'], group: 'financial',
   ),
 };

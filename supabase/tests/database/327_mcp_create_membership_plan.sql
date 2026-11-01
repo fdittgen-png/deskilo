@@ -10,7 +10,7 @@
 -- manager are refused, a proposal whose offer changed meanwhile is stale and a
 -- declined one never runs.
 begin;
-select plan(33);
+select plan(32);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -189,10 +189,8 @@ select throws_ok($$select public.mcp_execute_v1(public.installation_id(), '00000
   'P0001', null, 'nobody signed in is refused');
 select is(current_setting('t.c1')::jsonb->>'status', 'acknowledged', 'the person confirms it in the app');
 select is(pg_temp.got('t.r10'), 'completed:', 'the same request_id then runs it');
-select is(current_setting('t.r10')::jsonb->'data' - 'levels', '{"created": true, "percent": 30}'::jsonb,
-  'the answer says the plan was created');
-select is(current_setting('t.r10')::jsonb->'data'->'levels', current_setting('t.after')::jsonb,
-  'and returns the plans now offered, which are the stored ones');
+select is(current_setting('t.r10')::jsonb->'data', '{"created": true, "percent": 30}'::jsonb,
+  'the answer says the plan was created, at which percentage, and nothing else');
 select is(current_setting('t.after')::jsonb, '{"enabled_presets": [50, 100], "extra_levels": [30], "allow_custom": true}'::jsonb,
   'the level joined the extras, through the command');
 select is(pg_temp.got('t.r11'), 'completed:', 'a repeated call answers the same outcome');

@@ -3597,7 +3597,7 @@
    "handler": true,
    "dispatch": true,
    "title": "Offer a new membership plan",
-   "description": "A membership plan is a subscription level: the percentage of the full subscription a member can choose, as the owner adds it on the billing screen. Give the percentage as a whole number; the range the workspace allows comes from its template and anything outside it, or a plan already offered, is refused. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the percentage and the workspace; then call again with the same request_id and arguments. Needs the money functionality to be on in the workspace. The answer says whether the plan was created and returns the plans now offered.",
+   "description": "A membership plan is a subscription level: the percentage of the full subscription a member can choose, as the owner adds it on the billing screen. Give the percentage as a whole number; the range the workspace allows comes from its template and anything outside it, or a plan already offered, is refused. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the percentage and the workspace; then call again with the same request_id and arguments. Needs the money functionality to be on in the workspace. The answer says whether the plan was created and at which percentage.",
    "rpc": null,
    "authority": {
     "kind": "permission",
@@ -3640,8 +3640,7 @@
    },
    "output": [
     "created",
-    "percent",
-    "levels"
+    "percent"
    ],
    "group": "financial",
    "label": {
