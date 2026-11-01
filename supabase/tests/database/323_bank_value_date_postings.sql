@@ -41,7 +41,7 @@ select ('00000000-0000-4000-8000-0000063500e'||n)::uuid, '00000000-0000-4000-800
 insert into public.ledger_entries (id, workspace_id, member_id, kind, category, amount_cents, description, period, occurred_on)
 select ('00000000-0000-4000-8000-0000063500f'||n)::uuid, '00000000-0000-4000-8000-0000063500b1',
        '00000000-0000-4000-8000-0000063500c1', 'credit', 'payment',
-       case when n in (4, 5) then 6000 else 12000 end, 'p' || n, '2026-03', '2026-03-1' || n
+       case when n in (4, 5) then 6000 else 12000 end, 'p' || n, '2026-03', ('2026-03-1' || n)::date
   from generate_series(1, 6) n;
 -- n=1 A, 2 B, 3 C, 4 and 5 D's instalments, 6 stale.
 insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at, payment_ledger_id)
