@@ -7104,6 +7104,8 @@ const Set<String> uiLabelKeys = {
   'featureMoneyTab',
   'featureMoneyTabDesc',
   'featureMore',
+  'featureMtdSubmissionDesc',
+  'featureMtdSubmissionTitle',
   'featureMultiSite',
   'featureMultiSiteDesc',
   'featureNavigationStyle',

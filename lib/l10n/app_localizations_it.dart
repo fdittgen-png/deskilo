@@ -8833,6 +8833,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMore => 'Altro';
 
   @override
+  String get featureMtdSubmissionDesc =>
+      'Inviare a HMRC dall\'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte.';
+
+  @override
+  String get featureMtdSubmissionTitle => 'Inviare l\'IVA britannica a HMRC';
+
+  @override
   String get featureMultiSite => 'Sedi';
 
   @override

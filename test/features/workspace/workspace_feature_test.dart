@@ -58,6 +58,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.accountingConnectors,
   // #2380 — reading the bank's statements is asked for.
   WorkspaceFeature.bankImport,
+  // #2470 — filing a VAT return with the tax authority is asked for.
+  WorkspaceFeature.mtdSubmission,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -219,6 +221,7 @@ void main() {
       'foreignCurrencyPurchases': true,
       'accountingConnectors': true,
       'bankImport': true,
+      'mtdSubmission': true,
       'guestParticipation': true,
     });
 

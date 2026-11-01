@@ -48,7 +48,7 @@ import {
   refreshTokens,
   sameSecret,
 } from "../_shared/accounting_oauth.ts";
-import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
+import { clientOf, type Deps, json, resolved, rotatedMeanwhile, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
 import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
 import { revoke, verify } from "./lifecycle.ts";
 
@@ -191,6 +191,11 @@ async function refresh(
   const tokens = refreshToken
     ? await refreshTokens(deps.fetcher ?? fetch, target, client, refreshToken, now)
     : { reason: "refused" as const, detail: "no refresh token" };
+  // A refused refresh is not an expired sign-in when a concurrent request
+  // already rotated the single-use refresh token: the connection stands.
+  if (isFailure(tokens) && await rotatedMeanwhile(deps, connectionId, refreshToken)) {
+    return json({ status: "connected" });
+  }
   const write = isFailure(tokens) ? expiredWrite(tokens) : connectedWrite(tokens);
   if (!await store(deps, connectionId, write)) return json({ error: "the connection could not be saved" }, 500);
   return json({ status: write.patch.status ?? "unchanged" });

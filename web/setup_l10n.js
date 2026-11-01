@@ -1357,6 +1357,10 @@ window.SETUP_L10N={
    "planDecor": [
     "Draw the room on the plan",
     "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay."
+   ],
+   "mtdSubmission": [
+    "Submit UK VAT returns to HMRC",
+    "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only."
    ]
   },
   "process": {
@@ -3045,6 +3049,10 @@ window.SETUP_L10N={
    "planDecor": [
     "Dessiner la salle sur le plan",
     "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent."
+   ],
+   "mtdSubmission": [
+    "Déposer la TVA britannique auprès de HMRC",
+    "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
    ]
   },
   "process": {
@@ -4733,6 +4741,10 @@ window.SETUP_L10N={
    "planDecor": [
     "Den Raum im Plan zeichnen",
     "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben."
+   ],
+   "mtdSubmission": [
+    "Britische USt-Erklärung an HMRC senden",
+    "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
    ]
   },
   "process": {
@@ -6421,6 +6433,10 @@ window.SETUP_L10N={
    "planDecor": [
     "Dibujar la sala en el plano",
     "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen."
+   ],
+   "mtdSubmission": [
+    "Presentar el IVA británico a HMRC",
+    "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
    ]
   },
   "process": {
@@ -8109,6 +8125,10 @@ window.SETUP_L10N={
    "planDecor": [
     "Disegnare la sala sulla pianta",
     "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano."
+   ],
+   "mtdSubmission": [
+    "Inviare l'IVA britannica a HMRC",
+    "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
    ]
   },
   "process": {

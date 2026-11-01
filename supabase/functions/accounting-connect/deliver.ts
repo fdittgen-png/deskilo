@@ -51,7 +51,7 @@ import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
 import { sageAccounting } from "../_shared/accounting_sage.ts";
 import { xeroAccounting } from "../_shared/accounting_xero.ts";
 import { businessCentral } from "../_shared/accounting_business_central.ts";
-import { type CallerDb, clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
+import { type CallerDb, clientOf, type Deps, json, resolved, rotatedMeanwhile, store, UUID } from "./connection.ts";
 
 /** The targets this server delivers to, by target id. */
 export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAdapter> = {
@@ -192,6 +192,10 @@ async function freshToken(
   if (!client || !refreshToken) return null;
   const tokens = await refreshTokens(deps.fetcher ?? fetch, target, client, refreshToken, now);
   if (isFailure(tokens)) {
+    // A concurrent request may have rotated the single-use refresh token:
+    // its newer access token stands, the connection is not expired.
+    const rotated = await rotatedMeanwhile(deps, held.id, refreshToken);
+    if (rotated) return rotated;
     await store(deps, held.id, expiredWrite(tokens));
     return null;
   }

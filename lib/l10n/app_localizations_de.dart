@@ -8844,6 +8844,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureMore => 'Mehr';
 
   @override
+  String get featureMtdSubmissionDesc =>
+      'Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei.';
+
+  @override
+  String get featureMtdSubmissionTitle =>
+      'Britische USt-Erklärung an HMRC senden';
+
+  @override
   String get featureMultiSite => 'Standorte';
 
   @override

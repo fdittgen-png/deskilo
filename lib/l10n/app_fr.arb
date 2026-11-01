@@ -6247,6 +6247,8 @@
   "featureMoneyTab": "Relevé et solde",
   "featureMoneyTabDesc": "Factures mensuelles, paiements et dépenses.",
   "featureMore": "Plus",
+  "featureMtdSubmissionDesc": "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste.",
+  "featureMtdSubmissionTitle": "Déposer la TVA britannique auprès de HMRC",
   "featureMultiSite": "Sites",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"

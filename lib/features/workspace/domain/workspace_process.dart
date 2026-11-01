@@ -178,6 +178,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.bankImport,
       WorkspaceFeature.vatManagement,
       WorkspaceFeature.vatDeclarations,
+      WorkspaceFeature.mtdSubmission,
       WorkspaceFeature.vatGroups,
       WorkspaceFeature.vatRateHistory,
       WorkspaceFeature.vatCounterparty,

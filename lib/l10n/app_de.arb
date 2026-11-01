@@ -6247,6 +6247,8 @@
   "featureMoneyTab": "Abrechnung und Saldo",
   "featureMoneyTabDesc": "Monatsrechnungen, Zahlungen und Ausgaben.",
   "featureMore": "Mehr",
+  "featureMtdSubmissionDesc": "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei.",
+  "featureMtdSubmissionTitle": "Britische USt-Erklärung an HMRC senden",
   "featureMultiSite": "Standorte",
   "@featureMultiSite": {
     "description": "#945 sites: featureMultiSite"

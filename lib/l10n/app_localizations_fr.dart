@@ -8857,6 +8857,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMore => 'Plus';
 
   @override
+  String get featureMtdSubmissionDesc =>
+      'Envoyer la déclaration de TVA britannique préparée à HMRC depuis l\'application, par Making Tax Digital, et garder l\'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste.';
+
+  @override
+  String get featureMtdSubmissionTitle =>
+      'Déposer la TVA britannique auprès de HMRC';
+
+  @override
   String get featureMultiSite => 'Sites';
 
   @override

@@ -31,6 +31,9 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.mcpAccess:
       'an assistant needs a server endpoint and an OAuth account',
   WorkspaceFeature.webMcp: 'needs mcpAccess, which needs a server',
+  WorkspaceFeature.mtdSubmission:
+      'filing with HMRC needs the installation\'s HMRC application and a '
+      'connected VAT registration, which a visitor cannot have',
   WorkspaceFeature.recordingPrivacy:
       'filming mode would replace the invented cast by other invented '
       'people on every screen',

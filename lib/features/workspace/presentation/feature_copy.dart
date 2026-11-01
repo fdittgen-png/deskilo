@@ -292,6 +292,7 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureAccountingConnectorsDesc,
       WorkspaceFeature.bankImport => l10n.featureBankImportDesc,
       WorkspaceFeature.planDecor => l10n.featurePlanDecorDesc,
+      WorkspaceFeature.mtdSubmission => l10n.featureMtdSubmissionDesc,
       _ => feature.name,
     };
 

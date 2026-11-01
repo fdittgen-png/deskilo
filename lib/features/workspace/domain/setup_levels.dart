@@ -212,6 +212,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.accountingConnectors,
         WorkspaceFeature.bankImport,
         WorkspaceFeature.einvoiceCustomerDelivery,
+        WorkspaceFeature.mtdSubmission,
       },
     ),
   ],

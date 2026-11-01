@@ -1216,6 +1216,12 @@
       "capabilities": []
     },
     {
+      "key": "mtdSubmission",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "multiSite",
       "maturity": "beta",
       "lifecycle": "active",

@@ -40,7 +40,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // 2026-09-25 — 114 manifest features (#1654) outgrow 18000 px.
   // 2026-10-01 — #1850 gave every tile a maturity line; 20000 px dropped
   // the tail.
-  Size size = const Size(800, 24000),
+  Size size = const Size(800, 26000),
   // #1327 — the screen opens on the process overview. Every caller of
   // this helper pins the switches, so it opens that view unless asked
   // not to.
