@@ -53,4 +53,35 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
   WorkspaceFeature.recapitulativeStatement:
       'Available only where the manifest says (availableIn: the EU), and '
       'only a list filed beside the VAT return (#2354).',
+  WorkspaceFeature.calendarValidations:
+      'Off leaves the calendar as it was: the decisions are still taken, the '
+      'calendar just carries none of them (#843).',
+  WorkspaceFeature.configurationTransfer:
+      'Off leaves the space file as it was: it carries settings and the floor '
+      'plan only (#916).',
+  WorkspaceFeature.inputVat:
+      'Off leaves the VAT return as it was: it declares the VAT collected '
+      'only (#2357).',
+  WorkspaceFeature.paymentReminders:
+      'Off keeps reminders a manual action, as before (#726).',
+  WorkspaceFeature.invoicingWizard:
+      'Off leaves the separate screens the guided month-close runs over '
+      '(#827).',
+  WorkspaceFeature.reportDesigner:
+      'Off leaves the editor sheet the full-screen designer sits over (#822).',
+  WorkspaceFeature.reportDesignExchange:
+      'Off leaves designs editable in the designer, as before (#864).',
+  WorkspaceFeature.validationScopes:
+      'Off keeps who validates as before: the owner and the admins (#732).',
+  WorkspaceFeature.validationChain:
+      'Off keeps every validation asked at once, and nobody validating their '
+      'own event, as before (#840).',
+  WorkspaceFeature.salesTax:
+      'Not an optional extra for a seller in the United States: with it off '
+      'such a seller cannot issue, and it is an invoicing mode of that '
+      'seller only (#2362).',
+  WorkspaceFeature.viesVerification:
+      'Off issues a general service reverse-charged to a business abroad '
+      'outside the app: it is issued here only after a valid VIES check '
+      '(#2354).',
 };
