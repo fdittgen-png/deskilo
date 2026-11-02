@@ -284,8 +284,11 @@ grant execute on function public.accounting_connection_target_v1(uuid) to servic
 -- is attempted, so a failed local write never loses it: the next attempt
 -- files the kept receipt and posts nothing.
 create table public.hmrc_submissions (
-  declaration_id uuid primary key references public.vat_declarations(id) on delete cascade,
+  declaration_id uuid primary key references public.vat_declarations(id) on delete restrict,
   workspace_id uuid not null references public.workspaces(id) on delete cascade,
+  -- the figures this submission is for: a re-prepared return with other
+  -- lines never inherits an earlier acceptance
+  boxes_sha256 text not null check (boxes_sha256 ~ '^[0-9a-f]{64}$'),
   state text not null check (state in ('in_flight', 'accepted', 'unconfirmed')),
   holder text not null check (char_length(holder) between 8 and 100),
   claim_until timestamptz not null,
@@ -303,7 +306,7 @@ revoke all on public.hmrc_submissions from public, anon, authenticated;
 -- whose outcome is unknown (unconfirmed, or a claim that ran out) may be
 -- tried again: HMRC refuses a duplicate by its own code.
 create or replace function public.claim_hmrc_submission(
-  p_declaration_id uuid, p_holder text, p_seconds integer
+  p_declaration_id uuid, p_holder text, p_seconds integer, p_boxes_sha256 text
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
   s public.hmrc_submissions;
@@ -313,13 +316,20 @@ begin
   if char_length(btrim(coalesce(p_holder, ''))) not between 8 and 100 then
     raise exception 'a claim holder is 8 to 100 characters' using errcode = '22023';
   end if;
+  if coalesce(p_boxes_sha256, '') !~ '^[0-9a-f]{64}$' then
+    raise exception 'the digest of the submitted figures is required' using errcode = '22023';
+  end if;
   select workspace_id into v_ws from public.vat_declarations where id = p_declaration_id;
   if v_ws is null then raise exception 'unknown declaration' using errcode = 'P0002'; end if;
   select * into s from public.hmrc_submissions where declaration_id = p_declaration_id for update;
   if s.declaration_id is null then
-    insert into public.hmrc_submissions (declaration_id, workspace_id, state, holder, claim_until)
-    values (p_declaration_id, v_ws, 'in_flight', p_holder, v_until);
+    insert into public.hmrc_submissions (declaration_id, workspace_id, boxes_sha256, state, holder, claim_until)
+    values (p_declaration_id, v_ws, p_boxes_sha256, 'in_flight', p_holder, v_until);
     return jsonb_build_object('claimed', true);
+  end if;
+  if s.state = 'accepted' and s.boxes_sha256 <> p_boxes_sha256 then
+    -- HMRC took an earlier version of this return: its receipt is not this one's.
+    return jsonb_build_object('claimed', false, 'state', 'accepted_for_other_figures');
   end if;
   if s.state = 'accepted' then
     return jsonb_build_object('claimed', false, 'state', 'accepted',
@@ -329,13 +339,14 @@ begin
   if s.state = 'in_flight' and s.claim_until > now() and s.holder <> p_holder then
     return jsonb_build_object('claimed', false, 'state', 'in_flight');
   end if;
-  update public.hmrc_submissions set state = 'in_flight', holder = p_holder, claim_until = v_until
+  update public.hmrc_submissions set state = 'in_flight', holder = p_holder, claim_until = v_until,
+         boxes_sha256 = p_boxes_sha256
    where declaration_id = p_declaration_id;
   return jsonb_build_object('claimed', true);
 end;
 $fn$;
-revoke execute on function public.claim_hmrc_submission(uuid, text, integer) from public, anon, authenticated;
-grant execute on function public.claim_hmrc_submission(uuid, text, integer) to service_role;
+revoke execute on function public.claim_hmrc_submission(uuid, text, integer, text) from public, anon, authenticated;
+grant execute on function public.claim_hmrc_submission(uuid, text, integer, text) to service_role;
 
 -- HMRC accepted: keep the receipt (only the holder of the claim may).
 create or replace function public.record_hmrc_acceptance(

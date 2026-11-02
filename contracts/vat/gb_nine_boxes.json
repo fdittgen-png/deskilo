@@ -98,7 +98,7 @@
           "percent": 20,
           "gross_cents": 12000,
           "net_cents": 10099,
-          "vat_cents": 2020,
+          "vat_cents": 1901,
           "invoice_count": 1,
           "category": "S"
         },
@@ -106,20 +106,74 @@
           "percent": 20,
           "gross_cents": 90000,
           "net_cents": 75099,
-          "vat_cents": 15020,
+          "vat_cents": 14901,
           "invoice_count": 5,
           "direction": "input",
           "category": "S"
         }
       ],
       "boxes": {
-        "vatDueSales": 20.2,
+        "vatDueSales": 19.01,
         "vatDueAcquisitions": 0.0,
-        "totalVatDue": 20.2,
-        "vatReclaimedCurrPeriod": 150.2,
+        "totalVatDue": 19.01,
+        "vatReclaimedCurrPeriod": 149.01,
         "netVatDue": 130.0,
         "totalValueSalesExVAT": 100,
         "totalValuePurchasesExVAT": 750,
+        "totalValueGoodsSuppliedExVAT": 0,
+        "totalAcquisitionsExVAT": 0
+      }
+    },
+    {
+      "name": "a purchase credit note and a correction",
+      "lines": [
+        {
+          "percent": 20,
+          "gross_cents": 24000,
+          "net_cents": 20000,
+          "vat_cents": 4000,
+          "invoice_count": 2,
+          "category": "S"
+        },
+        {
+          "percent": 20,
+          "gross_cents": 3600,
+          "net_cents": 3000,
+          "vat_cents": 600,
+          "invoice_count": 1,
+          "category": "S",
+          "correction": true,
+          "corrects": "R-2025-4",
+          "corrects_start": "2025-10-01",
+          "corrects_end": "2025-12-31"
+        },
+        {
+          "percent": 20,
+          "gross_cents": -24000,
+          "net_cents": -20000,
+          "vat_cents": -4000,
+          "invoice_count": 1,
+          "direction": "input",
+          "category": "S"
+        },
+        {
+          "percent": 20,
+          "gross_cents": 6000,
+          "net_cents": 5000,
+          "vat_cents": 1000,
+          "invoice_count": 3,
+          "direction": "input",
+          "category": "S"
+        }
+      ],
+      "boxes": {
+        "vatDueSales": 46.0,
+        "vatDueAcquisitions": 0.0,
+        "totalVatDue": 46.0,
+        "vatReclaimedCurrPeriod": -30.0,
+        "netVatDue": 76.0,
+        "totalValueSalesExVAT": 230,
+        "totalValuePurchasesExVAT": -150,
         "totalValueGoodsSuppliedExVAT": 0,
         "totalAcquisitionsExVAT": 0
       }

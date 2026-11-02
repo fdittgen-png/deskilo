@@ -5,6 +5,7 @@
 // obligation, then the submission; only a receipt files the return, and an
 // unconfirmed answer files nothing and is never retried here.
 import { assert, assertEquals } from "jsr:@std/assert@1";
+import { nineBoxesFromLines } from "../_shared/hmrc_boxes.ts";
 import { type Deps, handle } from "./index.ts";
 
 const WS = "11111111-1111-4111-8111-111111111111";
@@ -96,6 +97,7 @@ function world(opts: {
   heldTenant?: string;
   fileError?: boolean;
   claim?: Record<string, unknown>;
+  keepError?: boolean;
   hmrc?: (req: Http) => Response | Promise<Response>;
 } = {}) {
   const rpcs: Rpc[] = [];
@@ -140,7 +142,13 @@ function world(opts: {
           error: null,
         });
       }
-      if (fn === "record_hmrc_acceptance" || fn === "release_hmrc_submission") {
+      if (fn === "record_hmrc_acceptance") {
+        return Promise.resolve({
+          data: null,
+          error: opts.keepError ? { code: "XX000" } : null,
+        });
+      }
+      if (fn === "release_hmrc_submission") {
         return Promise.resolve({ data: null, error: null });
       }
       if (fn === "file_vat_declaration_hmrc_v1") {
@@ -397,6 +405,94 @@ Deno.test("an attempt that does not reach acceptance releases its claim: deleted
   });
   await handle(post(submit), noObligation.deps);
   assertEquals(sentOf(noObligation), false, "nothing was posted");
+});
+
+Deno.test("a receipt that could not be KEPT keeps the row unconfirmed and goes back to the person when the filing fails too", async () => {
+  const sentOf = (w: ReturnType<typeof world>) =>
+    w.rpcs.find((r) => r.fn === "release_hmrc_submission")!.args.p_sent;
+  const both = world({ keepError: true, fileError: true });
+  const res = await handle(post(submit), both.deps);
+  assertEquals(res.status, 500);
+  const out = await res.json();
+  assertEquals(out.error, "accepted_not_recorded");
+  assertEquals(out.receipt.formBundleNumber, "256660290587");
+  assertEquals(
+    sentOf(both),
+    true,
+    "not kept: the row stays unconfirmed, not 'accepted'",
+  );
+  // Kept, but the local filing failed: the row is accepted and a retry only files.
+  const kept = world({ fileError: true });
+  assertEquals((await handle(post(submit), kept.deps)).status, 500);
+  assertEquals(sentOf(kept), false);
+  // Not kept but filed here: the return is filed, the answer is the receipt.
+  const filedOnly = world({ keepError: true });
+  assertEquals(
+    (await (await handle(post(submit), filedOnly.deps)).json()).status,
+    "filed",
+  );
+});
+
+Deno.test("an acceptance of other figures is never reused: the claim carries a digest of the submitted boxes", async () => {
+  const a = world();
+  await handle(post(submit), a.deps);
+  const digestA = a.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+    .p_boxes_sha256 as string;
+  assertEquals(/^[0-9a-f]{64}$/.test(digestA), true);
+  // The same return again gives the same digest; other lines give another.
+  const again = world();
+  await handle(post(submit), again.deps);
+  assertEquals(
+    again.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+      .p_boxes_sha256,
+    digestA,
+  );
+  const otherLines = LINES.map((l) => ({ ...l }));
+  otherLines[0].vat_cents += 100;
+  otherLines[0].net_cents += 500;
+  const otherBoxes = nineBoxesFromLines(otherLines)!;
+  const b = world({
+    context: {
+      ...CONTEXT,
+      lines: otherLines,
+      total_vat_cents: CONTEXT.total_vat_cents + 100,
+    },
+  });
+  await handle(post({ ...submit, boxes: otherBoxes }), b.deps);
+  assertEquals(
+    b.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+      .p_boxes_sha256 === digestA,
+    false,
+  );
+  // HMRC took an earlier version of this return: nothing is posted or filed.
+  const stale = world({
+    claim: { claimed: false, state: "accepted_for_other_figures" },
+  });
+  const res = await handle(post(submit), stale.deps);
+  assertEquals(res.status, 409);
+  assertEquals((await res.json()).error, "accepted_for_other_figures");
+  assertEquals(stale.http.length, 0);
+  assertEquals(filedCalls(stale).length, 0);
+});
+
+Deno.test("a return with an EU acquisition is refused as such, before any claim or call", async () => {
+  const lines = [...LINES, {
+    percent: 20,
+    gross_cents: 6000,
+    net_cents: 5000,
+    vat_cents: 1000,
+    invoice_count: 1,
+    category: "acquisition",
+  }];
+  const w = world({ context: { ...CONTEXT, lines } });
+  const res = await handle(post(submit), w.deps);
+  assertEquals(res.status, 422);
+  assertEquals((await res.json()).error, "acquisition_not_supported");
+  assertEquals(w.http.length, 0);
+  assertEquals(
+    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission").length,
+    0,
+  );
 });
 
 Deno.test("an obligations read that fails is unreachable, not unconfirmed: nothing was sent", async () => {

@@ -20,7 +20,11 @@
 // and nothing is retried here; a later duplicate is HMRC's to report.
 
 import { hmrcEndpoints } from "../_shared/hmrc_endpoints.ts";
-import { differingBoxes, nineBoxesFromLines } from "../_shared/hmrc_boxes.ts";
+import {
+  differingBoxes,
+  hasAcquisitionLines,
+  nineBoxesFromLines,
+} from "../_shared/hmrc_boxes.ts";
 import {
   type ClientValues,
   fraudHeaders,
@@ -95,6 +99,12 @@ function subjectOf(authorization: string): string {
   } catch {
     return "";
   }
+}
+
+async function sha256Hex(text: string): Promise<string> {
+  const bytes = new TextEncoder().encode(text);
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
+  return [...digest].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 const failureStatus: Record<HmrcFailure["reason"], number> = {
@@ -281,6 +291,9 @@ export async function hmrcSubmit(
   // The nine boxes are the SERVER's, computed from the prepared return's own
   // lines (the contract shared with the Dart form catalogue). What the page
   // shows must equal them to the penny, box by box; otherwise nothing leaves.
+  if (hasAcquisitionLines(c.lines)) {
+    return json({ error: "acquisition_not_supported" }, 422);
+  }
   const boxes = nineBoxesFromLines(c.lines);
   if (!boxes) return json({ error: "return_not_computable" }, 409);
   const pence = (n: number) => Math.round(n * 100);
@@ -308,10 +321,22 @@ export async function hmrcSubmit(
   // One submission at a time per return; a return HMRC already accepted is
   // only filed here from the receipt kept, and posts nothing.
   const holder = crypto.randomUUID();
+  // The figures this submission is for: a return prepared again with other
+  // lines never inherits an earlier acceptance.
+  const keys = Object.keys(boxes).sort() as (keyof typeof boxes)[];
+  const digest = await sha256Hex(
+    JSON.stringify([
+      c.period_start,
+      c.period_end,
+      p.vrn,
+      ...keys.map((k) => [k, pence(boxes[k])]),
+    ]),
+  );
   const claim = await deps.service().rpc("claim_hmrc_submission", {
     p_declaration_id: c.declaration_id,
     p_holder: holder,
     p_seconds: 60,
+    p_boxes_sha256: digest,
   });
   const claimed = claim.data as
     | {
@@ -326,6 +351,11 @@ export async function hmrcSubmit(
     return json({ error: "submission_unavailable" }, 503);
   }
   if (!claimed.claimed) {
+    if (claimed.state === "accepted_for_other_figures") {
+      // HMRC took an earlier version of this return; its receipt is not this
+      // one's and nothing is filed or posted from here.
+      return json({ error: "accepted_for_other_figures" }, 409);
+    }
     if (claimed.state === "accepted" && claimed.form_bundle_number) {
       const kept = {
         formBundleNumber: claimed.form_bundle_number,
@@ -390,14 +420,17 @@ export async function hmrcSubmit(
     }
     // HMRC has the return. Keep the receipt FIRST, then file it here; a
     // failed local write leaves the receipt kept and the next attempt files it.
-    await deps.service().rpc("record_hmrc_acceptance", {
+    const kept = await deps.service().rpc("record_hmrc_acceptance", {
       p_declaration_id: c.declaration_id,
       p_holder: holder,
       p_form_bundle: result.receipt.formBundleNumber,
       p_processing_date: result.receipt.processingDate,
       p_charge_ref: result.receipt.chargeRefNumber ?? "",
     });
-    sentToHmrc = false; // accepted, not in flight: nothing to release
+    // Only a KEPT receipt ends the attempt as accepted. If keeping it failed
+    // the row stays unconfirmed (HMRC has the return, we may hold no receipt)
+    // and the receipt goes back in the answer.
+    sentToHmrc = Boolean(kept.error);
     if (!await fileHere(result.receipt)) {
       console.error(
         "accounting-connect: HMRC accepted a return that could not be filed here",

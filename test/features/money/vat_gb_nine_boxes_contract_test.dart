@@ -38,8 +38,14 @@ final _cases = <String, List<Map<String, Object?>>>{
     {'percent': 5, 'gross_cents': 10500, 'net_cents': 10000, 'vat_cents': 500, 'invoice_count': 1, 'direction': 'input', 'category': 'S'},
   ],
   'a repayment': [
-    {'percent': 20, 'gross_cents': 12000, 'net_cents': 10099, 'vat_cents': 2020, 'invoice_count': 1, 'category': 'S'},
-    {'percent': 20, 'gross_cents': 90000, 'net_cents': 75099, 'vat_cents': 15020, 'invoice_count': 5, 'direction': 'input', 'category': 'S'},
+    {'percent': 20, 'gross_cents': 12000, 'net_cents': 10099, 'vat_cents': 1901, 'invoice_count': 1, 'category': 'S'},
+    {'percent': 20, 'gross_cents': 90000, 'net_cents': 75099, 'vat_cents': 14901, 'invoice_count': 5, 'direction': 'input', 'category': 'S'},
+  ],
+  'a purchase credit note and a correction': [
+    {'percent': 20, 'gross_cents': 24000, 'net_cents': 20000, 'vat_cents': 4000, 'invoice_count': 2, 'category': 'S'},
+    {'percent': 20, 'gross_cents': 3600, 'net_cents': 3000, 'vat_cents': 600, 'invoice_count': 1, 'category': 'S', 'correction': true, 'corrects': 'R-2025-4', 'corrects_start': '2025-10-01', 'corrects_end': '2025-12-31'},
+    {'percent': 20, 'gross_cents': -24000, 'net_cents': -20000, 'vat_cents': -4000, 'invoice_count': 1, 'direction': 'input', 'category': 'S'},
+    {'percent': 20, 'gross_cents': 6000, 'net_cents': 5000, 'vat_cents': 1000, 'invoice_count': 3, 'direction': 'input', 'category': 'S'},
   ],
   'nothing': [],
 };

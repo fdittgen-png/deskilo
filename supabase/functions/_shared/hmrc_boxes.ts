@@ -43,6 +43,17 @@ function lineOf(raw: unknown): Line | null {
 const wholeDown = (cents: number) =>
   Math.sign(cents) * Math.floor(Math.abs(cents) / 100) * 100;
 
+/** Whether [lines] hold an EU acquisition: the UK boxes 2 and 9 are filed as
+ * zero for a coworking space, so a return that has one is not submitted
+ * from here rather than filed with wrong figures. */
+export function hasAcquisitionLines(lines: unknown): boolean {
+  return Array.isArray(lines) &&
+    lines.some((l) =>
+      typeof l === "object" && l !== null &&
+      (l as Record<string, unknown>).category === ACQUISITION
+    );
+}
+
 /** The nine boxes of [lines] (a declaration's `lines`), or null when the
  * lines are not the shape the server stores. */
 export function nineBoxesFromLines(lines: unknown): NineBoxes | null {
