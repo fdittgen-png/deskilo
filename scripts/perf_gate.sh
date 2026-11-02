@@ -165,7 +165,9 @@ check byo_signin                waits_human      1 1
 check invitation_join           waits_human      1 1
 # The link fills the field: nothing is typed on the way to Join.
 check invitation_join           fields_entered   0 0
-check pending_leave_return      back_corrections 2 2
+# #2136 (99c12c923): returning from Me selects the workspace; only the
+# return from Assistants uses Back. A selection is not a Back correction.
+check pending_leave_return      back_corrections 1 1
 check wizard_keyboard_back_edit back_corrections 1 1
 check wizard_keyboard_back_edit user_edits       1 1
 
