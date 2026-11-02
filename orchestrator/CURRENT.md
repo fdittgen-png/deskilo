@@ -18,7 +18,7 @@ Two implementation checkpoints maximum, normal two PRs/hard four, one migration 
 | --- | --- | --- |
 | Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Scope, ownership, handoffs, evidence and efficiency |
 | Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Final review/merge, sole #2596/ledger writer; additional owner tasks |
-| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | Independent read-only contract review supporting E2 |
+| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | CI-harness fixes: benchmark initialization and dictionary port isolation |
 | Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 approver queue/count and decision-detail read consistency |
 
 All three sessions previously personally acknowledged two-way routing. New assignments above were queued; delivery is not a personal ACK.
@@ -77,5 +77,7 @@ Keep `hosting/godaddy` (production deployment source) and `coord/cloud-codex`. P
 Development project reference: `zwzbynivewivvjmripeb`. No secret values are stored here. Cloud tooling must be rediscovered; the historical cloud report lacked Flutter/Dart/native toolchains.
 
 ## CI triage assignment
+
+**12:10 UTC CI fix assignment:** E1 owns the second bounded local implementation checkpoint: benchmark bundled-tax-reference initialization and diagnosed dictionary stack port/config isolation. Dedicated owned worktree from fresh master; reserved tool/bench initialization/tests, dictionary-refresh.yml and necessary local-stack/config tests only. E2 retains0654/UI/DB aggregate ownership. Reviewer independently reviews both; no new migration or public ref for CI fixes. Benchmark fix reuses existing initializer, not increased timeouts/budgets. Port fix must establish ownership/config cause and preserve DB_URL/topology consumers; no arbitrary kills, guessed-port guarantee or migration edits.
 
 Verified latest implementation PR workflows began 10:06:19 UTC; master Quality41429206046 completed SUCCESS10:52:01. Two separate failed master runs assigned to E1 for bounded read-only root-cause triage: Dictionary refresh41429205871/job125223256424, Migration replay; Nightly Journey latency41434774314/job125241749287, Benchmark journeys. No blind rerun or new implementation stream. Reviewer/E2 finish settled local integration rather than treating publication hold as a reason to leave all work idle.
