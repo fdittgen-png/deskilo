@@ -18,8 +18,6 @@
 
       "lib/core/help/help_anchors.dart": 515,
 
-      "lib/core/instance/instance_doctor.dart": 508,
-
       "lib/core/instance/mcp_readiness_checks.dart": 554,
 
       "lib/core/mcp/mcp_operations.dart": 527,

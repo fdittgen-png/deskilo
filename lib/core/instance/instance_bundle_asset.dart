@@ -2,10 +2,12 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart' show GZipDecoder;
-import 'package:flutter/foundation.dart' show Uint8List, compute, visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, compute, kIsWeb, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../backend/auth_callback_guard.dart';
+import 'instance_builder.dart';
 import 'instance_bundle.dart';
 import 'instance_doctor.dart';
 import 'instance_policies.dart';
@@ -35,6 +37,11 @@ InstanceBundle decodeInstanceBundleAsset(Uint8List bytes) {
   );
 }
 
+/// Use the same callback as sign-in, including before first-start bootstrap.
+Map<String, Object?> instanceAuthPatchForRuntime() => kIsWeb
+    ? InstanceAuthConfig.patchForWebCallback(bootAuthCallbackGuard?.callback ?? Uri.base)
+    : InstanceAuthConfig.patch;
+
 /// How the wizard gets its bundle — the asset, or a small one in tests.
 @Riverpod(keepAlive: true)
 Future<InstanceBundle> Function() instanceBundleLoader(Ref ref) =>
@@ -56,7 +63,7 @@ Future<List<DoctorFinding>> Function(SupabaseManagement api, String projectRef)
     instanceDoctorRunner(Ref ref) => (api, projectRef) async {
           final bundle = await ref.read(instanceBundleLoaderProvider)();
           final policies = await loadInstancePoliciesAsset();
-          return InstanceDoctor(api).examine(
+          return InstanceDoctor(api, expectedAuth: instanceAuthPatchForRuntime()).examine(
             projectRef,
             required: int.tryParse(bundle.schemaVersion) ?? requiredSchemaVersion,
             bundleMigrations: [for (final m in bundle.schema) m.name],

@@ -4,11 +4,11 @@
 // in-app wizard runs, for people who prefer a shell:
 //
 //   dart run tool/instance.dart orgs     --token <personal access token>
-//   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3]
-//   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N]
+//   dart run tool/instance.dart create   --token … --org <organisation id> --name <project name> [--region eu-west-3] [--site-url <app URL>]
+//   dart run tool/instance.dart install  --token … --ref <project ref> [--skip N] [--site-url <app URL>]
 //   dart run tool/instance.dart record   --token … --ref <project ref> --through NNNN
-//   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public | --support-json]
-//   dart run tool/instance.dart auth     --token … --ref <project ref>
+//   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public | --support-json] [--site-url <app URL>]
+//   dart run tool/instance.dart auth     --token … --ref <project ref> [--site-url <app URL>]
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
 //   dart run tool/instance.dart enrol --token … --ref <personal home> list | add --workspace-ref W [--not-accepting] [--apply] | revoke --installation UUID [--apply]
@@ -75,8 +75,21 @@ Future<int> run(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins|enrol --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins|enrol --token … [--org … --name … --region … --ref … --skip N --through NNNN --site-url …]');
     return 2;
+  }
+  Map<String, Object?>? authPatch;
+  final requestedSite = args.option('site-url');
+  if (requestedSite != null) {
+    try {
+      authPatch = InstanceAuthConfig.patchForWebCallback(Uri.parse(requestedSite));
+    } on FormatException {
+      stderr.writeln('site-url must be a valid web application URL');
+      return 2;
+    } on ArgumentError {
+      stderr.writeln('site-url must be a valid web application URL');
+      return 2;
+    }
   }
   final api = DioSupabaseManagement(token);
   final builder = InstanceBuilder(api);
@@ -106,7 +119,7 @@ Future<int> run(List<String> argv) async {
           databasePassword: password,
           onStatus: (s) => stdout.writeln('project: $s'),
         );
-        return await _install(builder, project.ref, 0);
+        return await _install(builder, project.ref, 0, authPatch: authPatch);
       case 'install':
         final ref = args.option('ref');
         if (ref == null) {
@@ -117,7 +130,7 @@ Future<int> run(List<String> argv) async {
         // #1314 — without --skip the install resumes from what the
         // project recorded.
         final skip = args.option('skip');
-        return await _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0);
+        return await _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0, authPatch: authPatch);
       case 'record':
         final ref = args.option('ref');
         final through = args.option('through');
@@ -137,10 +150,11 @@ Future<int> run(List<String> argv) async {
           stderr.writeln('auth needs --ref');
           return 2;
         }
-        await builder.configureAuth(ref);
+        await builder.configureAuth(ref, authPatch: authPatch);
+        final appliedAuth = authPatch ?? InstanceAuthConfig.patch;
         stdout
-          ..writeln('site URL:      ${InstanceAuthConfig.siteUrl}')
-          ..writeln('redirect URLs: ${InstanceAuthConfig.redirectAllowList}')
+          ..writeln('site URL:      ${appliedAuth['site_url']}')
+          ..writeln('redirect URLs: ${appliedAuth['uri_allow_list']}')
           ..writeln('sign-in settings applied to $ref');
         return 0;
       case 'doctor':
@@ -154,7 +168,7 @@ Future<int> run(List<String> argv) async {
           return await runSupportDoctor(() async {
             final policies = File(instancePoliciesAssetPath);
             final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
-            return InstanceDoctor(api).examine(ref,
+            return InstanceDoctor(api, expectedAuth: authPatch).examine(ref,
                 required: int.parse(bundle.schemaVersion),
                 bundleMigrations: [for (final m in bundle.schema) m.name],
                 expectedPolicies: policies.existsSync()
@@ -167,7 +181,7 @@ Future<int> run(List<String> argv) async {
         // #1312 — the version is judged against the migrations this
         // checkout would install, in numbers, and names what is missing.
         final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
-        final findings = await InstanceDoctor(api).examine(
+        final findings = await InstanceDoctor(api, expectedAuth: authPatch).examine(
           ref,
           required: int.parse(bundle.schemaVersion),
           bundleMigrations: [for (final m in bundle.schema) m.name],
@@ -218,7 +232,8 @@ Future<int> run(List<String> argv) async {
   }
 }
 
-Future<int> _install(InstanceBuilder builder, String ref, int? skip) async {
+Future<int> _install(InstanceBuilder builder, String ref, int? skip,
+    {Map<String, Object?>? authPatch}) async {
   final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
   stdout.writeln('schema: ${bundle.schema.length} migrations '
       '(${skip == null ? 'resuming after the schema version, or what the project recorded' : 'skipping $skip'})');
@@ -229,7 +244,7 @@ Future<int> _install(InstanceBuilder builder, String ref, int? skip) async {
   await builder.deployFunctions(ref, bundle, onProgress: (p) {
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });
-  await builder.configureAuth(ref);
+  await builder.configureAuth(ref, authPatch: authPatch);
   final endpoint = await builder.endpointOf(ref);
   stdout
     ..writeln('ready: ${endpoint.url}')
