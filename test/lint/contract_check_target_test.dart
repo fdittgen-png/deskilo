@@ -18,13 +18,14 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 const _secret = 'canary-secret-pw';
 String _url(String tag) => 'postgresql://postgres:$_secret@host-$tag:54322/db';
 
-// Built with fromUri: lint_sources_test counts a literal Directory( call as
-// a hand-written walk, and this test walks nothing.
-Directory _at(String path) => Directory.fromUri(Uri.directory(path));
+Directory _at(String name) => temporaryFixtureDirectory(_fixture, name);
 
+late TemporaryFixture _fixture;
 late Directory _dir;
 late Directory _stub;
 late String _script;
@@ -107,8 +108,9 @@ bool _exists(String path) => File('${_dir.path}/$path').existsSync();
 void main() {
   setUpAll(() => _script = File('scripts/contract_check.sh').absolute.path);
   setUp(() {
-    _dir = Directory.systemTemp.createTempSync('contract-target');
-    _stub = _at('${_dir.path}/stub')..createSync();
+    _fixture = createTemporaryFixture('contract-target');
+    _dir = _fixture.directory;
+    _stub = _at('stub')..createSync();
     for (final e in {
       'psql': _psqlStub,
       'pg_dump': _pgDumpStub,
@@ -151,7 +153,7 @@ void main() {
       expect(r.code, 0, reason: r.out);
       expect(_read('report/effective-schema.sql'), contains('canary_a'));
       expect(_read('report/effective-schema.sql'), isNot(contains('canary_b')));
-      _at('${_dir.path}/report').deleteSync(recursive: true);
+      _at('report').deleteSync(recursive: true);
     }
   });
 
@@ -223,9 +225,7 @@ void main() {
     expect(r.code, 0, reason: r.out);
     expect(r.out, isNot(contains(_secret)));
     expect(r.out, isNot(contains('postgresql://')));
-    for (final f in _at(
-      '${_dir.path}/report',
-    ).listSync(recursive: true).whereType<File>()) {
+    for (final f in _at('report').listSync(recursive: true).whereType<File>()) {
       expect(f.readAsStringSync(), isNot(contains(_secret)), reason: f.path);
     }
   });

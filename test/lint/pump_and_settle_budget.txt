@@ -1,5 +1,5 @@
 # #2603 -- pumpAndSettle calls per test file (files with 10 or more).
-# Only falls: test/lint/pump_and_settle_budget_test.dart explains and records.
+# Reviewed interaction growth and reductions: see pump_and_settle_budget_test.dart.
 11 test/app/entry_intents_flow_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
 25 test/app/shell/shell_drawer_test.dart

@@ -108,13 +108,17 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('approval-detail-retry')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     expect(find.byKey(const ValueKey('purchase-reject')), findsNothing);
   });
@@ -149,12 +153,16 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     container.read(_canApprove.notifier).state = false;
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
   });
@@ -188,15 +196,19 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.deny = true;
     container.invalidate(
       purchaseApprovalPageProvider((workspaceId: 'ws', after: null)),
     );
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
   });
@@ -227,13 +239,17 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.deny = true;
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(purchases.decisions, 0);
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
@@ -297,20 +313,24 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.gate = Completer<void>();
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pump();
     container.read(_purchasesEnabled.notifier).state = false;
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
     reads.gate!.complete();
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(purchases.decisions, 0);
   });
   testWidgets('a refused decision refreshes the page and scoped detail', (
@@ -340,13 +360,17 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    // Wait for the modal's actual transition before tapping its controls.
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 2),
+    );
     final previousPages = reads.pages;
     final previousDetails = reads.calls;
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump();
     expect(purchases.decisions, 1);
     expect(reads.pages, greaterThan(previousPages));
     expect(reads.calls, greaterThan(previousDetails + 1));

@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2604 — a lint test takes its file list from `lint_sources.dart`.
-//
-// `lint_sources.dart` exists because eight lint tests each hand-rolled the
-// same directory walk and the copies diverged. The walk is one; this is the
-// ratchet that keeps it one while the remaining hand-written walks are
-// moved over, a few at a time. A lint test that calls `Directory(` itself
-// and is not listed fails; a listed file that no longer does fails too, so
-// the list can only shrink and a finished migration cannot be un-finished.
+// #2604: source enumeration belongs in lint_sources.dart. Detect executable
+// Directory constructors without treating comments or fixture strings as walks;
+// system-temp fixture children use the bounded shared helper.
 import 'dart:io';
 
+import 'package:analyzer/dart/analysis/utilities.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -19,13 +17,44 @@ import 'lint_sources.dart';
 /// remove a name when its file stops; never add one.
 const _stillWalkingByHand = <String>{};
 
-final _directoryCall = RegExp(r'\bDirectory\(');
+// Parse syntax so examples in string literals or comments do not count.
+// All direct constructors, including named constructors, are refused. Temp
+// fixture children use the bounded shared helper; source walks use shared APIs.
+class _DirectoryCalls extends RecursiveAstVisitor<void> {
+  bool found = false;
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    Expression? expression = node.target;
+    while (expression is ParenthesizedExpression) {
+      expression = expression.expression;
+    }
+    final target = expression?.toSource();
+    final directEnumeration =
+        (node.methodName.name == 'list' ||
+            node.methodName.name == 'listSync') &&
+        (target == 'Directory.current' || target == 'Directory.systemTemp');
+    if ((node.target == null && node.methodName.name == 'Directory') ||
+        target == 'Directory' ||
+        directEnumeration) {
+      found = true;
+    }
+    super.visitMethodInvocation(node);
+  }
 
-bool _callsDirectory(File file) => file
-    .readAsLinesSync()
-    .map((l) => l.trim())
-    .where((l) => !l.startsWith('//'))
-    .any(_directoryCall.hasMatch);
+  @override
+  void visitInstanceCreationExpression(InstanceCreationExpression node) {
+    if (node.constructorName.type.toSource() == 'Directory') found = true;
+    super.visitInstanceCreationExpression(node);
+  }
+}
+
+bool _callsDirectory(String source) {
+  final visitor = _DirectoryCalls();
+  final parsed = parseString(content: source, throwIfDiagnostics: false);
+  if (parsed.errors.isNotEmpty) return true;
+  parsed.unit.accept(visitor);
+  return visitor.found;
+}
 
 void main() {
   test('only the listed lint files build their own Directory walk', () {
@@ -34,7 +63,7 @@ void main() {
         if (f.path.endsWith('.dart') &&
             !f.path.endsWith('/lint_sources.dart') &&
             !f.path.endsWith('/lint_sources_test.dart') &&
-            _callsDirectory(f))
+            _callsDirectory(f.readAsStringSync()))
           f.uri.pathSegments.last,
     };
     expect(
@@ -53,20 +82,109 @@ void main() {
     );
   });
 
+  test('constructor detection ignores comments and strings, refuses walks', () {
+    expect(
+      _callsDirectory(
+        "// Directory('lib')\nfinal text = \"Directory('lib')\";",
+      ),
+      isFalse,
+    );
+    expect(
+      _callsDirectory(
+        "void f() { Directory('lib').listSync(recursive: true); }",
+      ),
+      isTrue,
+    );
+    expect(
+      _callsDirectory(
+        "void f() { Directory.fromUri(Uri.directory('lib')).listSync(); }",
+      ),
+      isTrue,
+    );
+    expect(
+      _callsDirectory(
+        "void f() { Directory.current.listSync(recursive: true); }",
+      ),
+      isTrue,
+    );
+    expect(
+      _callsDirectory("void f() { Directory.systemTemp.listSync(); }"),
+      isTrue,
+    );
+    expect(_callsDirectory("void f() { Directory.current.list(); }"), isTrue);
+    expect(
+      _callsDirectory("void f() { (Directory.current).listSync(); }"),
+      isTrue,
+    );
+    expect(
+      _callsDirectory("void f() { Directory.systemTemp.list(); }"),
+      isTrue,
+    );
+    expect(
+      _callsDirectory(
+        "void f() { Directory.systemTemp.createTempSync('fixture'); }",
+      ),
+      isFalse,
+    );
+  });
+
+  test('unowned checkout-shaped directory in system temp is refused', () {
+    final checkout = Directory.systemTemp.createTempSync('unowned-checkout');
+    addTearDown(() => checkout.deleteSync(recursive: true));
+    Directory('${checkout.path}/lib').createSync();
+    expect(
+      () => temporaryFixtureDirectory(checkout, 'lib'),
+      throwsArgumentError,
+    );
+  });
+
+  test('replaced fixture root cannot point at the checkout', () {
+    final checkout = Directory.systemTemp.createTempSync(
+      'replacement-checkout',
+    );
+    addTearDown(() => checkout.deleteSync(recursive: true));
+    Directory('${checkout.path}/lib').createSync();
+    final fixture = createTemporaryFixture('replaced');
+    final path = fixture.directory.path;
+    fixture.directory.deleteSync();
+    final link = Link(path)..createSync(checkout.path);
+    addTearDown(link.deleteSync);
+    expect(
+      () => temporaryFixtureDirectory(fixture, 'lib'),
+      throwsArgumentError,
+    );
+  });
+
   group('the shared walks', () {
+    late TemporaryFixture fixture;
     late Directory dir;
     setUp(() {
-      dir = Directory.systemTemp.createTempSync('lint-sources');
+      fixture = createTemporaryFixture('lint-sources');
+      dir = fixture.directory;
       for (final n in ['0002_b.sql', '0001_a.sql', 'note.md', 'x.txt']) {
         File('${dir.path}/$n').writeAsStringSync('-');
       }
-      Directory('${dir.path}/sub').createSync();
+      temporaryFixtureDirectory(fixture, 'sub').createSync();
       File('${dir.path}/sub/0003_c.sql').writeAsStringSync('-');
       File('${dir.path}/sub/deep.md').writeAsStringSync('-');
     });
     tearDown(() => dir.deleteSync(recursive: true));
 
     String name(File f) => f.uri.pathSegments.last;
+
+    test('fixture children stay in system temp', () {
+      expect(temporaryFixtureDirectory(fixture, 'sub').existsSync(), isTrue);
+      expect(
+        () => temporaryFixtureDirectory(fixture, '../lib'),
+        throwsArgumentError,
+      );
+      expect(() => createTemporaryFixture('../checkout'), throwsArgumentError);
+      Link('${dir.path}/escape').createSync(Directory.systemTemp.path);
+      expect(
+        () => temporaryFixtureDirectory(fixture, 'escape'),
+        throwsArgumentError,
+      );
+    });
 
     test('sqlFiles lists the .sql files in path order, flat by default', () {
       expect(sqlFiles(dir.path).map(name), ['0001_a.sql', '0002_b.sql']);
