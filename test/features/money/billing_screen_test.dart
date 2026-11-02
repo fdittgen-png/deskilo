@@ -19,11 +19,12 @@ Future<FakeMoneyRepository> pumpBilling(
   WidgetTester tester, {
   FakeMoneyRepository? money,
   FakeWorkspaceRepository? workspace,
+  Size size = const Size(800, 1400),
 }) async {
   money ??= FakeMoneyRepository();
   // The editor stacks both sections; a taller surface keeps every control
   // hit-testable without scrolling choreography.
-  await tester.binding.setSurfaceSize(const Size(800, 1400));
+  await tester.binding.setSurfaceSize(size);
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
@@ -419,4 +420,32 @@ void main() {
     expect(find.text('€'), findsWidgets);
   });
 
+  // #3072 acceptance — at the desktop and the phone width of the issue: one
+  // Save for the page, and every text field names itself, wherever the
+  // page is scrolled to.
+  for (final size in const [Size(1192, 760), Size(390, 844)]) {
+    testWidgets('at ${size.width.toInt()}x${size.height.toInt()} the page has '
+        'one Save and every field keeps a persistent label (#3072)',
+        (tester) async {
+      await pumpBilling(tester, size: size);
+      expect(find.byKey(const ValueKey('billing-save')), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Save'), findsOneWidget,
+          reason: 'one Save covers the fee bands, the levels and the VAT');
+
+      final unlabelled = <String>{};
+      var fields = 0;
+      for (var step = 0; step < 10; step++) {
+        for (final field in tester.widgetList<TextField>(find.byType(TextField))) {
+          fields++;
+          final label = field.decoration?.labelText ?? '';
+          if (label.trim().isEmpty) unlabelled.add('${field.key ?? field.hashCode}');
+        }
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -300));
+        await tester.pump();
+      }
+      expect(fields, greaterThan(0));
+      expect(unlabelled, isEmpty,
+          reason: 'a placeholder is an example, not a label');
+    });
+  }
 }
