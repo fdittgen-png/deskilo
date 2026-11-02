@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #3070: the decision write refuses stale authorization without side effects.
 begin;
-select plan(24);
+select plan(29);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000035a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000035a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a2@deskilo.test','',now(),now(),now());
@@ -10,6 +10,11 @@ insert into public.workspaces (id,name,country_code,currency_code,timezone,creat
 insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status,joined_at) values
 ('00000000-0000-4000-8000-0000000035a4','00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035a1',true,true,'active',now()),
 ('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035a2',false,false,'active',now());
+-- A custom role supplies the actor's permission in the role-race cases.
+insert into public.workspace_roles (id,workspace_id,key,permissions)
+values ('00000000-0000-4000-8000-0000000035f1','00000000-0000-4000-8000-0000000035a3','decision_reviewer',array['approveExpenses']);
+insert into public.workspace_role_members (workspace_id,role_id,member_id)
+values ('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035f1','00000000-0000-4000-8000-0000000035a5');
 insert into public.suppliers (id,workspace_id,supplier_number,name) values ('00000000-0000-4000-8000-0000000035a6','00000000-0000-4000-8000-0000000035a3','1','Repro supplier');
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
 ('00000000-0000-4000-8000-0000000035a7','00000000-0000-4000-8000-0000000035a3','bill','draft','EUR','00000000-0000-4000-8000-0000000035a6','00000000-0000-4000-8000-0000000035a4','00000000-0000-4000-8000-0000000035a4','unpaid');
@@ -51,12 +56,20 @@ select id,'00000000-0000-4000-8000-0000000035a3','bill','draft','EUR','00000000-
        '00000000-0000-4000-8000-0000000035a4','00000000-0000-4000-8000-0000000035a4','unpaid'
 from unnest(array['00000000-0000-4000-8000-0000000035d1'::uuid,
                   '00000000-0000-4000-8000-0000000035d2'::uuid,
-                  '00000000-0000-4000-8000-0000000035d4'::uuid]) id;
+                  '00000000-0000-4000-8000-0000000035d4'::uuid,
+                  '00000000-0000-4000-8000-0000000035d5'::uuid,
+                  '00000000-0000-4000-8000-0000000035d6'::uuid,
+                  '00000000-0000-4000-8000-0000000035d7'::uuid,
+                  '00000000-0000-4000-8000-0000000035d8'::uuid]) id;
 insert into public.purchase_lines (workspace_id,purchase_id,line_no,gross_cents)
 select '00000000-0000-4000-8000-0000000035a3',id,1,120 from public.purchase_documents
-where id in ('00000000-0000-4000-8000-0000000035d1','00000000-0000-4000-8000-0000000035d2','00000000-0000-4000-8000-0000000035d4');
+where id in ('00000000-0000-4000-8000-0000000035d1','00000000-0000-4000-8000-0000000035d2','00000000-0000-4000-8000-0000000035d4',
+             '00000000-0000-4000-8000-0000000035d5','00000000-0000-4000-8000-0000000035d6',
+             '00000000-0000-4000-8000-0000000035d7','00000000-0000-4000-8000-0000000035d8');
 update public.purchase_documents set state='pending'
-where id in ('00000000-0000-4000-8000-0000000035d1','00000000-0000-4000-8000-0000000035d2','00000000-0000-4000-8000-0000000035d4');
+where id in ('00000000-0000-4000-8000-0000000035d1','00000000-0000-4000-8000-0000000035d2','00000000-0000-4000-8000-0000000035d4',
+             '00000000-0000-4000-8000-0000000035d5','00000000-0000-4000-8000-0000000035d6',
+             '00000000-0000-4000-8000-0000000035d7','00000000-0000-4000-8000-0000000035d8');
 
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind)
 values ('00000000-0000-4000-8000-0000000035d3','00000000-0000-4000-8000-0000000035a3','bill','draft','EUR','00000000-0000-4000-8000-0000000035a6','00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035a5','unpaid');
@@ -122,5 +135,28 @@ update public.workspaces set feature_flags=feature_flags || '{"purchases":true}'
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
 set local role authenticated;
 select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d3',1,true,'','00000000-0000-4000-8000-0000000035cf')->>'state','approved','owner wide permission retains non-maker approval');
+reset role;
+update public.workspaces set feature_flags=feature_flags || '{"customRoles":true}', role_permissions='{"member":[]}' where id='00000000-0000-4000-8000-0000000035a3';
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
+set local role authenticated;
+select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5')->>'can_reject','true','custom role grants a decision');
+reset role;
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
+set local role authenticated;
+select public.assign_workspace_role('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035f1',false);
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')$$,'42501','purchase decision is not available','removed custom assignment refuses decision');
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
+select public.assign_workspace_role('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035f1',true);
+select public.set_workspace_role('00000000-0000-4000-8000-0000000035a3','decision_reviewer',array[]::text[],'{}'::jsonb,0,true);
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')$$,'42501','purchase decision is not available','removed role permission refuses decision');
+reset role;
+select is((select state::text from public.purchase_documents where id='00000000-0000-4000-8000-0000000035d5'),'pending','custom role refusals preserve bill');
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
+set local role authenticated;
+select public.set_workspace_role('00000000-0000-4000-8000-0000000035a3','decision_reviewer',array['approveExpenses']::text[],'{}'::jsonb,0,true);
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
+select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')->>'state','rejected','restored custom role allows decision');
 select * from finish();
 rollback;

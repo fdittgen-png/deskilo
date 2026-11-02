@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
--- #3070: authorize each supplier-bill decision while holding the workspace
--- and actor membership rows through the transaction. The existing command,
--- idempotency, maker-checker rule and member-receipt flow are unchanged.
+-- #3070: authorize each supplier-bill decision while holding the workspace,
+-- actor membership, assigned role definitions and assignments through the
+-- transaction. Existing idempotency, maker-checker and receipt flow remain.
 do $patch$
 declare
   v_proc regprocedure := 'public.decide_purchase_v1(uuid, uuid, integer, boolean, text, uuid)'::regprocedure;
@@ -19,9 +19,23 @@ declare
   if not found then
     raise exception using errcode = '42501', message = 'purchase decision is not available';
   end if;
-  perform 1 from public.members m where m.workspace_id = p_workspace_id
-    and m.user_id = auth.uid() for share;
-  if not found or public.feature_effective(p_workspace_id, 'purchases') is not true
+  -- The member UPDATE lock also conflicts with the immediate FK KEY SHARE
+  -- acquired when a new custom-role assignment is inserted. This prevents a
+  -- newly granted role from appearing after the assignment lock scan.
+  select m.id into v_me from public.members m where m.workspace_id = p_workspace_id
+    and m.user_id = auth.uid() for update;
+  if v_me is null then
+    raise exception using errcode = '42501', message = 'purchase decision is not available';
+  end if;
+  -- member_custom_permissions reads every role assignment for this member.
+  -- Lock definitions first (role deletion cascades to assignments), then
+  -- assignments, in a deterministic order before evaluating permission.
+  perform r.id from public.workspace_roles r
+    join public.workspace_role_members rm on rm.role_id = r.id
+   where rm.member_id = v_me order by r.id for share of r;
+  perform rm.id from public.workspace_role_members rm
+   where rm.member_id = v_me order by rm.id for share;
+  if public.feature_effective(p_workspace_id, 'purchases') is not true
       or not coalesce(public.has_permission(p_workspace_id, 'approveExpenses'), false) then
     raise exception using errcode = '42501', message = 'purchase decision is not available';
   end if;

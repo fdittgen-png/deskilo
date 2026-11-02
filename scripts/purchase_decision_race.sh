@@ -21,6 +21,7 @@ delete from public.purchase_obligations where workspace_id='$WS';
 delete from public.purchase_sources where workspace_id='$WS';
 delete from public.purchase_documents where workspace_id='$WS';
 delete from public.suppliers where workspace_id='$WS';
+delete from public.events where workspace_id='$WS';
 alter table public.members disable trigger user;
 delete from public.members where workspace_id='$WS';
 alter table public.members enable trigger user;
@@ -212,8 +213,70 @@ revoke_first parent "$PARENT_OFF" "$PARENT_ON"
 revoke_first permission "$PERMISSION_OFF" "$PERMISSION_ON"
 revoke_first membership "$MEMBER_OFF" "$MEMBER_ON"
 repeatable_snapshot
+# Exercise the real custom-role mutators with no built-in approval grant.
+ROLE=00000000-0000-4000-8000-0000000035f1
+ROLE_OFF="$OWNER_CLAIMS select public.set_workspace_role('$WS','decision_reviewer',array[]::text[],'{}'::jsonb,0,true);"
+ROLE_ON="$OWNER_CLAIMS select public.set_workspace_role('$WS','decision_reviewer',array['approveExpenses']::text[],'{}'::jsonb,0,true);"
+ASSIGN_OFF="$OWNER_CLAIMS select public.assign_workspace_role('$MEMBER','$ROLE',false);"
+ASSIGN_ON="$OWNER_CLAIMS select public.assign_workspace_role('$MEMBER','$ROLE',true);"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',true));" >/dev/null
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_OFF" >/dev/null
+revoke_first custom_role_definition "$ROLE_OFF" "$ROLE_ON"
+revoke_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON"
+# The assignment insert takes an FK key-share lock on the member. Verify
+# both orders so an inserted grant cannot appear after the guard's role scan.
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_OFF" >/dev/null
+rm -f "$DIR/ready" "$DIR/release"
+PGAPPNAME="$HOLDER_APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/holder.log" 2>&1 <<SQL &
+begin;
+$ASSIGN_ON
+\! touch '$DIR/ready'
+\! while [ ! -f '$DIR/release' ]; do sleep 0.1; done
+commit;
+SQL
+holder=$!
+wait_ready
+GRANT_BILL=00000000-0000-4000-8000-0000000035d7
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$CLAIMS select public.decide_purchase_v1('$WS','$GRANT_BILL',1,false,'No','$GRANT_BILL');" > "$DIR/grant.log" 2>&1 &
+waiter=$!
+wait_for_lock
+touch "$DIR/release"
+wait "$holder" || fail 'assignment grant transaction failed'
+wait "$waiter" || fail 'decision did not see committed custom-role grant'
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state from public.purchase_documents where id='$GRANT_BILL'")
+[ "$result" = rejected ] || fail "decision after grant had unexpected state: $result"
+
+# A built-in grant allows a decision while a concurrent custom-role insert
+# waits. Once the decision commits, the assignment may complete normally.
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_OFF" >/dev/null
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_ON" >/dev/null
+rm -f "$DIR/ready" "$DIR/release"
+GRANT_BILL=00000000-0000-4000-8000-0000000035d8
+PGAPPNAME="$HOLDER_APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/holder.log" 2>&1 <<SQL &
+$CLAIMS
+begin;
+select public.decide_purchase_v1('$WS','$GRANT_BILL',1,false,'No','$GRANT_BILL');
+\! touch '$DIR/ready'
+\! while [ ! -f '$DIR/release' ]; do sleep 0.1; done
+commit;
+SQL
+holder=$!
+wait_ready
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_ON" > "$DIR/grant.log" 2>&1 &
+waiter=$!
+wait_for_lock
+touch "$DIR/release"
+wait "$holder" || fail 'decision before assignment grant failed'
+wait "$waiter" || fail 'assignment grant after decision failed'
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state || ':' || (select count(*) from public.workspace_role_members where member_id='$MEMBER' and role_id='$ROLE')::text from public.purchase_documents where id='$GRANT_BILL'")
+[ "$result" = rejected:1 ] || fail "decision/assignment after grant had unexpected state: $result"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_OFF" >/dev/null
+decision_first custom_role_definition "$ROLE_OFF" "$ROLE_ON" 00000000-0000-4000-8000-0000000035d5
+decision_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON" 00000000-0000-4000-8000-0000000035d6
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',false));" >/dev/null
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_ON" >/dev/null
 decision_first feature "$FEATURE_OFF" "$FEATURE_ON" 00000000-0000-4000-8000-0000000035a7
 decision_first parent "$PARENT_OFF" "$PARENT_ON" 00000000-0000-4000-8000-0000000035d1
 decision_first permission "$PERMISSION_OFF" "$PERMISSION_ON" 00000000-0000-4000-8000-0000000035d2
 decision_first membership "$MEMBER_OFF" "$MEMBER_ON" 00000000-0000-4000-8000-0000000035d4
-echo 'purchase authorization: feature, parent, permission and membership serialize in both orders'
+echo 'purchase authorization: feature, parent, permission, membership and custom-role revocations serialize in both orders'
