@@ -60,3 +60,9 @@ NOT RUN/BLOCKED + precise reason | remaining owner and next action
 ```
 
 A test count is not a measure of complete acceptance. Preserve failing regressions, denied-role proofs, concurrency assertions, original exits and source/input provenance. Do not copy secrets or raw auth records into this branch.
+
+## Private approver-read candidate — 11:20 UTC
+
+Private local candidate `fa5445801737f6a992a7109e54fea682cdbdb3ea`, clean, in `/private/tmp/deskilo-3070-approver-reads`, branch `feat/3070-approver-reads`. 0654 exclusively RESERVED, NOT APPLIED, SHA-256 `8dee1ebe3218d9a29b5ac3983e202ad25a4a1224d8c6604b3efc5505c15d3cdc`. E2 reports fatal-info analysis passed, 692 lint tests and 54 affected tests passed; Demo actor/threshold 3 and detail retry passed. Original numeric test exits not separately copied here. Migration execution and 25-assertion pgTAP 340 NOT RUN; local Docker/Postgres unavailable. E1 exact-head read-only contract review requested; reviewer assessing established transaction-safe rollback harness route. No persistent dev application, public ref or final merge approval. Genuine APPLIED/contract records and full required CI remain pending.
+
+This is a separate checkpoint after merged #3252; do not reuse its approval as approval of this candidate. First broad lint caught a raw spinner and grant syntax missed by focused checks; corrected, focused 22 passed, then final lint passed. Add state-primitives and migration-grants to affected focused preflight next time. Rerun only invalidated checks; no duplicate rerun requested for current passing gates.
