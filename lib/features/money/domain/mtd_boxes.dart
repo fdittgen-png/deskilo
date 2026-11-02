@@ -23,7 +23,7 @@ const mtdBoxFields = [
 ];
 
 /// Boxes 1-5 are in pounds with pence; boxes 6-9 in whole pounds.
-bool mtdBoxIsWhole(String field) => mtdBoxFields.indexOf(field) >= 5;
+bool _isWhole(String field) => mtdBoxFields.indexOf(field) >= 5;
 
 /// The nine boxes of [declaration] in CENTS (boxes 6-9 are whole pounds, so
 /// multiples of 100), keyed by HMRC's field names.
@@ -44,7 +44,7 @@ Map<String, int> mtdBoxCents(VatDeclaration declaration) {
 
 /// One box as the CSV writes it: pounds and pence, or whole pounds.
 String mtdBoxText(String field, int cents) {
-  if (mtdBoxIsWhole(field)) return (cents ~/ 100).toString();
+  if (_isWhole(field)) return (cents ~/ 100).toString();
   final sign = cents < 0 ? '-' : '';
   final abs = cents.abs();
   return '$sign${abs ~/ 100}.${(abs % 100).toString().padLeft(2, '0')}';
@@ -54,5 +54,5 @@ String mtdBoxText(String field, int cents) {
 /// whole), exactly the values [mtdBoxText] writes.
 Map<String, num> mtdBoxPounds(VatDeclaration declaration) => {
   for (final e in mtdBoxCents(declaration).entries)
-    e.key: mtdBoxIsWhole(e.key) ? e.value ~/ 100 : e.value / 100,
+    e.key: _isWhole(e.key) ? e.value ~/ 100 : e.value / 100,
 };

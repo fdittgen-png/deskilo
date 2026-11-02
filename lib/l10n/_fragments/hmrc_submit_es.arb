@@ -6,7 +6,7 @@
   "hmrcVrnLine": "Registro de IVA {vrn}",
   "hmrcNoVrn": "Añada primero su número de IVA británico en la identidad legal.",
   "hmrcConnect": "Conectar con HMRC",
-  "hmrcConnectHint": "Inicia sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.",
+  "hmrcConnectHint": "Inicie sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.",
   "hmrcConnected": "Conectado con HMRC.",
   "hmrcPending": "Esperando a que termine de iniciar sesión en HMRC.",
   "hmrcExpired": "El inicio de sesión en HMRC ha caducado. Conecte de nuevo.",

@@ -10694,7 +10694,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get hmrcConnectHint =>
-      'Inicia sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.';
+      'Inicie sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.';
 
   @override
   String get hmrcConnected => 'Conectado con HMRC.';

@@ -7354,7 +7354,7 @@
   "hmrcBox8": "Casilla 8 · Entregas de bienes a la UE",
   "hmrcBox9": "Casilla 9 · Adquisiciones de bienes de la UE",
   "hmrcConnect": "Conectar con HMRC",
-  "hmrcConnectHint": "Inicia sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.",
+  "hmrcConnectHint": "Inicie sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.",
   "hmrcConnected": "Conectado con HMRC.",
   "hmrcDemoNote": "Demo: no se envía nada a HMRC. El recibo es simulado.",
   "hmrcExpired": "El inicio de sesión en HMRC ha caducado. Conecte de nuevo.",

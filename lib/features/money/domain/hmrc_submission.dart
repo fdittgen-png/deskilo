@@ -8,6 +8,8 @@
 // a timeout or an empty answer is UNCONFIRMED: nothing is filed, no receipt is
 // invented, and nothing is retried automatically.
 
+import '../../../core/data/json_reader.dart';
+
 /// The state of the workspace's HMRC sign-in.
 enum HmrcLink { pending, connected, expired, error }
 
@@ -27,16 +29,16 @@ class HmrcConnection {
 
   bool get isConnected => link == HmrcLink.connected;
 
-  factory HmrcConnection.fromJson(Map<String, Object?> json) => HmrcConnection(
-    id: '${json['id']}',
-    issuerSiteId: '${json['issuer_site_id']}',
-    link: switch (json['status']) {
+  factory HmrcConnection.fromReader(JsonReader r) => HmrcConnection(
+    id: r.string('id'),
+    issuerSiteId: r.string('issuer_site_id'),
+    link: switch (r.stringOrNull('status')) {
       'connected' => HmrcLink.connected,
       'expired' => HmrcLink.expired,
       'error' => HmrcLink.error,
       _ => HmrcLink.pending,
     },
-    statusDetail: '${json['status_detail'] ?? ''}',
+    statusDetail: r.stringOr('status_detail'),
   );
 }
 
@@ -52,13 +54,12 @@ class HmrcState {
   final HmrcConnection? connection;
 
   factory HmrcState.fromJson(Object? json) {
-    if (json is! Map) return const HmrcState();
-    final connection = json['connection'];
+    final r = JsonReader.orEmpty(json, context: 'hmrc_connection_v1');
     return HmrcState(
-      vrn: json['vrn'] is String ? json['vrn'] as String : null,
-      connection: connection is Map
-          ? HmrcConnection.fromJson(Map<String, Object?>.from(connection))
-          : null,
+      vrn: r.stringOrNull('vrn'),
+      connection: r.objectOrNull('connection') == null
+          ? null
+          : HmrcConnection.fromReader(r.objectOrNull('connection')!),
     );
   }
 }
@@ -76,13 +77,11 @@ class HmrcReceipt {
   final String? chargeRefNumber;
 
   factory HmrcReceipt.fromJson(Object? json) {
-    final Map<Object?, Object?> m = json is Map ? json : const {};
+    final r = JsonReader.orEmpty(json, context: 'hmrc receipt');
     return HmrcReceipt(
-      formBundleNumber: '${m['formBundleNumber'] ?? ''}',
-      processingDate: '${m['processingDate'] ?? ''}',
-      chargeRefNumber: m['chargeRefNumber'] is String
-          ? m['chargeRefNumber'] as String
-          : null,
+      formBundleNumber: r.stringOr('formBundleNumber'),
+      processingDate: r.stringOr('processingDate'),
+      chargeRefNumber: r.stringOrNull('chargeRefNumber'),
     );
   }
 }

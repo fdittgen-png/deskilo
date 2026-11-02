@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -30,20 +30,19 @@ Widget hmrcSubmitButton(
   key: ValueKey('vat-decl-mtd-${declaration.id}'),
   icon: const Icon(Icons.send_outlined, size: 18),
   label: Text(context.l10n.hmrcSubmitButton),
-  onPressed: () => showModalBottomSheet<void>(
+  onPressed: () => showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    builder: (_) => HmrcSubmitSheet(
+    builder: (_) => _HmrcSubmitSheet(
       declaration: declaration,
       issuerSiteId: issuerSiteId,
     ),
   ),
 );
 
-class HmrcSubmitSheet extends ConsumerStatefulWidget {
-  const HmrcSubmitSheet({
-    super.key,
+class _HmrcSubmitSheet extends ConsumerStatefulWidget {
+  const _HmrcSubmitSheet({
     required this.declaration,
     required this.issuerSiteId,
   });
@@ -52,10 +51,10 @@ class HmrcSubmitSheet extends ConsumerStatefulWidget {
   final String? issuerSiteId;
 
   @override
-  ConsumerState<HmrcSubmitSheet> createState() => _HmrcSubmitSheetState();
+  ConsumerState<_HmrcSubmitSheet> createState() => _HmrcSubmitSheetState();
 }
 
-class _HmrcSubmitSheetState extends ConsumerState<HmrcSubmitSheet> {
+class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   bool _busy = false;
   HmrcOutcome? _outcome;
 
@@ -64,11 +63,11 @@ class _HmrcSubmitSheetState extends ConsumerState<HmrcSubmitSheet> {
     if (site == null || _busy) return;
     setState(() => _busy = true);
     try {
-      final url = await ref
-          .read(hmrcRepositoryProvider)
-          .startConnect(widget.declaration.workspaceId, site);
-      // The Demo's sign-in is synthetic: no page opens.
-      if (!state.demo) await ref.read(linkLauncherProvider)(url);
+      await ref.read(connectHmrcProvider).call(
+        workspaceId: widget.declaration.workspaceId,
+        issuerSiteId: site,
+        state: state,
+      );
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
     } finally {
       if (mounted) setState(() => _busy = false);

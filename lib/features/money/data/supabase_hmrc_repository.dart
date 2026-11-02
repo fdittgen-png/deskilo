@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/data/json_reader.dart';
+import '../../../core/trace/trace_logger.dart';
 
 import '../domain/hmrc_submission.dart';
 
@@ -64,48 +68,58 @@ class SupabaseHmrcRepository implements HmrcRepository {
         return const HmrcUnconfirmed(code: 'NO_RECEIPT');
       }
       return HmrcFiled(receipt);
-    } on FunctionException catch (e) {
+    } on FunctionException catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'hmrc submit answered ${e.status}',
+        stackTrace: st,
+      );
       return hmrcOutcomeOfRefusal(e.status, e.details);
     }
   }
 }
 
-/// The outcome a non-2xx answer of the function stands for. Public so the
-/// mapping is tested without a network.
+const _refusalOfError = <String, HmrcRefusal>{
+  'hmrc_not_configured': HmrcRefusal.notConfigured,
+  'connect_hmrc_first': HmrcRefusal.notConnected,
+  'wrong_registration': HmrcRefusal.wrongRegistration,
+  'sign_in_again': HmrcRefusal.signInAgain,
+  'figures_differ_from_return': HmrcRefusal.figuresDiffer,
+  'return_not_computable': HmrcRefusal.figuresDiffer,
+  'acquisition_not_supported': HmrcRefusal.acquisitionNotSupported,
+  'no_open_obligation': HmrcRefusal.noOpenObligation,
+  'already_submitted': HmrcRefusal.alreadySubmitted,
+  'not_authorised': HmrcRefusal.notAuthorised,
+  'refused': HmrcRefusal.refused,
+  'invalid_return': HmrcRefusal.refused,
+  'busy': HmrcRefusal.busy,
+  'in_flight': HmrcRefusal.inFlight,
+  'accepted_for_other_figures': HmrcRefusal.acceptedForOtherFigures,
+  'unreachable': HmrcRefusal.unreachable,
+};
+
+/// The outcome a non-2xx answer of the function stands for, read by its
+/// `error` and never by the status alone. Public so the mapping is tested
+/// without a network.
+@visibleForTesting
 HmrcOutcome hmrcOutcomeOfRefusal(int status, Object? details) {
-  final Map<Object?, Object?> body = details is Map ? details : const {};
-  final error = '${body['error'] ?? ''}';
-  final code = '${body['code'] ?? ''}';
+  final body = JsonReader.orEmpty(details, context: 'accounting-connect');
+  final error = body.stringOr('error');
+  final code = body.stringOr('code');
   if (error == 'accepted_not_recorded') {
-    return HmrcAcceptedNotRecorded(HmrcReceipt.fromJson(body['receipt']));
+    return HmrcAcceptedNotRecorded(HmrcReceipt.fromJson(details is Map ? details['receipt'] : null));
   }
-  if (error == 'unconfirmed' || status == 504) {
-    return HmrcUnconfirmed(code: code);
-  }
+  if (error == 'unconfirmed' || status == 504) return HmrcUnconfirmed(code: code);
   if (error == 'fraud_headers_missing') {
+    final missing = details is Map ? details['missing'] : null;
     return HmrcRefused(
       HmrcRefusal.fraudHeadersMissing,
-      missing: [for (final m in (body['missing'] as List? ?? const [])) '$m'],
+      missing: [for (final m in missing is List ? missing : const []) '$m'],
     );
   }
-  final refusal = switch (error) {
-    'hmrc_not_configured' => HmrcRefusal.notConfigured,
-    'connect_hmrc_first' => HmrcRefusal.notConnected,
-    'wrong_registration' => HmrcRefusal.wrongRegistration,
-    'sign_in_again' => HmrcRefusal.signInAgain,
-    'figures_differ_from_return' ||
-    'return_not_computable' => HmrcRefusal.figuresDiffer,
-    'acquisition_not_supported' => HmrcRefusal.acquisitionNotSupported,
-    'no_open_obligation' => HmrcRefusal.noOpenObligation,
-    'already_submitted' => HmrcRefusal.alreadySubmitted,
-    'not_authorised' => HmrcRefusal.notAuthorised,
-    'refused' || 'invalid_return' => HmrcRefusal.refused,
-    'busy' => HmrcRefusal.busy,
-    'in_flight' => HmrcRefusal.inFlight,
-    'accepted_for_other_figures' => HmrcRefusal.acceptedForOtherFigures,
-    'unreachable' => HmrcRefusal.unreachable,
-    _ when status == 403 => HmrcRefusal.notAllowed,
-    _ => HmrcRefusal.other,
-  };
-  return HmrcRefused(refusal, code: code);
+  return HmrcRefused(
+    _refusalOfError[error] ??
+        (status == 403 ? HmrcRefusal.notAllowed : HmrcRefusal.other),
+    code: code,
+  );
 }

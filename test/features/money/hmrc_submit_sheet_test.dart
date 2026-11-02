@@ -109,13 +109,20 @@ Future<_FakeHmrc> _pump(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
-          body: HmrcSubmitSheet(declaration: _declaration(), issuerSiteId: 's1'),
+          body: Builder(
+            builder: (context) => hmrcSubmitButton(
+              context,
+              _declaration(),
+              issuerSiteId: 's1',
+            ),
+          ),
         ),
       ),
     ),
   );
-  await tester.pump();
-  await tester.pump();
+  // The person opens the sheet from the declaration's own button.
+  await tester.tap(find.byKey(const ValueKey('vat-decl-mtd-d1')));
+  await tester.pumpAndSettle();
   return fake;
 }
 
