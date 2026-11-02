@@ -39,11 +39,23 @@ InstanceBundle decodeInstanceBundleAsset(Uint8List bytes) {
   );
 }
 
-/// Reuse the guard callback; before startup, use the deployment base.
+/// Configure the deployment base while keeping guard redirects within it.
 Map<String, Object?> instanceAuthPatchForRuntime() {
   if (!kIsWeb) return InstanceAuthConfig.patch;
-  return InstanceAuthConfig.patchForWebBase(
-      bootAuthCallbackGuard?.callback ?? deploymentBaseUri()!);
+  final base = deploymentBaseUri()!;
+  final patch = InstanceAuthConfig.patchForWebBase(base);
+  final callback = bootAuthCallbackGuard?.callback;
+  if (callback != null) {
+    final site = Uri.parse(patch['site_url']! as String);
+    final prefix = site.path.endsWith('/') ? site.path : '${site.path}/';
+    final webCallback = callback.scheme == 'http' || callback.scheme == 'https';
+    if (!webCallback || callback.host.isEmpty || callback.userInfo.isNotEmpty ||
+        callback.origin != site.origin ||
+        (callback.path != site.path && !callback.path.startsWith(prefix))) {
+      throw StateError('The sign-in callback is outside the deployment base; check the web build and reload.');
+    }
+  }
+  return patch;
 }
 
 /// How the wizard gets its bundle — the asset, or a small one in tests.
