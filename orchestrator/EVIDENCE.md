@@ -21,12 +21,12 @@ PR [#3251](https://github.com/fdittgen-png/deskilo/pull/3251), issue #2470.
 | --- | --- |
 | `06ef97302d32fa4d7b037f0e2029da8e4c18a10c` | Draft proof head; [run 41418089707 attempt 1](https://github.com/fdittgen-png/deskilo/actions/runs/41418089707), database job 125187066177. Replay and pgTAP 338 passed, all 6,449 pgTAP assertions passed, actual HMRC first/delayed/rollback races passed. Overall Quality FAILED on pending Effective contract. A separately reproduced refresh-failure UI defect prevents approval of this head. |
 | `62e055307b1b61e97b468a84d869a5e3b40698a3` | Corrects UI acknowledgement reset and regression. Compared directly with proof: only hmrc_submit_sheet.dart and its test differ. Analyzer exit 0; guarded lint plus affected tests 732 passed. Database/migration/race inputs unchanged. |
-| `84275da130d53696997fcaf385fdc320021a48f7` | Adds genuine APPLIED/contract records only after corrected UI candidate. Reviewer APPROVED exact head, ready and auto-merge armed; [final run 41420626290](https://github.com/fdittgen-png/deskilo/actions/runs/41420626290) was still running at inspection. Never use the proof run as final-head green CI. |
+| `84275da130d53696997fcaf385fdc320021a48f7` | Adds genuine APPLIED/contract records only after corrected UI candidate. Reviewer APPROVED exact head; [final run 41420626290 attempt 1](https://github.com/fdittgen-png/deskilo/actions/runs/41420626290) completed SUCCESS, ten jobs successful. Merged 09:42:40 UTC as `189fb73ed13357bc22c399191475a6a412680a61`. Final-head evidence supersedes the earlier pending snapshot, without changing the proof run outcome. |
 
 Migration `0652_hmrc_recovery.sql` SHA-256:
 `8a05fb7ecdf2523bb863b1c6031a36921e6ad46e71c342040391334e77d13196`.
 
-Reviewer applied these exact bytes on dev `zwzbynivewivvjmripeb` under transactional guard, original exit 0. Postcheck: schema 652; marker column/v2 present; authenticated denied/service_role allowed. Ledger APPLIED; merge pending at snapshot. Pre/post application rollback harnesses intentionally returned HARNESS OK via original exit 1, with independent rollback/state checks. Preserve that distinction.
+Reviewer applied these exact bytes on dev `zwzbynivewivvjmripeb` under transactional guard, original exit 0. Postcheck: schema 652; marker column/v2 present; authenticated denied/service_role allowed. Ledger APPLIED and MERGED after #3251 integration. Pre/post application rollback harnesses intentionally returned HARNESS OK via original exit 1, with independent rollback/state checks. Preserve that distinction.
 
 The contract predictor initially failed to consume the CLI JSON envelope (exit 255). Normalizing its rows and retrying exited 0; final candidate contract matches the proof replay artifact byte for byte. Do not hide the original failure.
 
@@ -35,6 +35,8 @@ Local evidence: `/private/tmp/deskilo-2470-db-ci.log`, `/private/tmp/deskilo-247
 Deno receipt: 21 tests passed. Local full pgTAP/two-session execution was NOT RUN because an isolated local database was unavailable; CI supplied the actual database proof. No real HMRC call or production migration is inferred.
 
 ## Current 3070 evidence
+
+At 09:53 UTC, reviewer ledger records 0653 APPLIED on dev at 09:51:38, reviewed SQL head `70eaf2d187602ce724bde906347b0401debae5c2`, SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b`. E2 reports rolled-back harness `HARNESS_RESULTS count=27 failures=none`, including 2,007 distinct paged rows and roles/tenant/feature/balance cases; original numeric exit is not yet copied into this Git receipt (UNKNOWN here). Independent post-rollback schema was 652 and function absent; reviewer post-apply reports 653, both RPCs present, anon denied. APPLIED/contract source integration, full candidate pgTAP/CI, Demo and final review still pending. Last E2 local head `a683e3772d0fbd3c0162098ec2f1f586ebbb91fb`; SQL bytes unchanged from reviewed source. Do not treat this report as final-head approval.
 
 E2's decoder/provider/page/fake tests have passed on intermediate read-client candidates. Some fake cases include 2,101-row continuation, separate currencies and partial/settled data. This is not PostgreSQL evidence or an end-to-end Demo journey. Generated localization was previously held unnecessarily; it is now released. Final UI/backend/Demo verification remains outstanding.
 
