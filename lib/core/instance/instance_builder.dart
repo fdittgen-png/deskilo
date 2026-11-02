@@ -64,7 +64,7 @@ abstract final class InstanceAuthConfig {
         callback.userInfo.isNotEmpty ||
         RegExp(r'[\*\[\]{}\\,]').hasMatch(callback.host + callback.path) ||
         RegExp(r'%(?:2a|2c|5b|5c|5d|7b|7d)', caseSensitive: false).hasMatch(callback.path)) {
-      throw ArgumentError('invalid web base URL');
+      throw ArgumentError('Invalid web base URL; configure a valid HTTP(S) deployment URL.');
     }
     final path = callback.path.isEmpty ? '/' : callback.path;
     final site = '${callback.origin}$path';

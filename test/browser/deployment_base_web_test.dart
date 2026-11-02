@@ -47,5 +47,14 @@ void main() {
     bootAuthCallbackGuard = null;
     web.window.history.replaceState(null, '', '/app/other-route#/another');
     expect(deploymentBaseUri(), deployment);
+    for (final invalid in ['', 'relative/', '//other.example/', 'https://[']) {
+      base.setAttribute('href', invalid);
+      expect(deploymentBaseUri, throwsA(isA<StateError>().having(
+          (error) => error.message, 'message', contains('configure the build base href'))));
+    }
+    base.remove();
+    expect(deploymentBaseUri, throwsA(isA<StateError>().having(
+          (error) => error.message, 'message', contains('configure the build base href'))));
+    web.document.head!.appendChild(base);
   });
 }
