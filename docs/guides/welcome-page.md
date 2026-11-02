@@ -40,7 +40,7 @@ The page says only what the guide documents (#2400):
 - **Messages**: only the people in a conversation can open it in the app; they are not end-to-end encrypted.
 - **Accounts**: one account per server; spaces on other servers ask for a sign-in there.
 - **Comparison**: ways of working (provider-run service, spreadsheet + chat), never named or unnamed products' features.
-- **Hosting and prices**: the same dates and amounts in `h1.p`, `q1.a`, the Pricing section (`pr.*`), the README cost paragraph and the `fastlane/metadata` listings; the source is `docs/business/business-plan.md`. The tariff is marked as planned until the owner confirms it.
+- **Hosting and prices**: the same dates and amounts in `h1.p`, `q1.a`, the Pricing section (`pr.*`), the README cost paragraph and the `fastlane/metadata` listings. The tariff is marked as planned until the owner confirms it.
 
 A link with `class="guide-link"` or `"setup-guide-link"` and a `data-anchor` follows the reader's language and
 keeps the anchor. The demo buttons open `#/demo` (the older `#/auth?demo=1` still works). The pause buttons (`.motion-btn`) stop everything that
