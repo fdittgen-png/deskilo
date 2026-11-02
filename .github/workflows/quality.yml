@@ -193,6 +193,16 @@ jobs:
           echo "$code" > shard/tests-exit.txt
           exit "$code"
 
+      # The selected file also runs in the VM shard; this separate, required
+      # browser execution proves the real deployment-base/startup behavior.
+      - name: Browser startup regression
+        id: browser_startup
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          flutter test --platform chrome --file-reporter json:shard/browser-startup.jsonl test/browser/deployment_base_web_test.dart
+          dart run tool/quality_browser_evidence.dart shard/browser-startup.jsonl
+
       - name: Shard envelope
         id: envelope
         if: always()
@@ -218,6 +228,7 @@ jobs:
             shard/envelope.json
             shard/tests.jsonl
             shard/lcov.info
+            shard/browser-startup.jsonl
 
       # The job is red when its tests are, and when its envelope could not
       # be written; the aggregate additionally refuses a shard whose
@@ -227,6 +238,7 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Tests=${{ steps.tests.outcome }}" \
+            "Browser startup=${{ steps.browser_startup.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
   # #2600 — the features, in shards of similar cost. The split is a
