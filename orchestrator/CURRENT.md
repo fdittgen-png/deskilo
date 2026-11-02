@@ -13,7 +13,7 @@ GitHub Pages is unavailable (reviewer verified former URL/API404). Actions is en
 
 ## Active assignments
 
-- **Reviewer** (01a19b63-22e4-72c1-8ea5-49e361e4ff4f): sole #2596/ledger writer and merger; finish #3254, exact-head follow-up reviews, allocate next migration after fresh master/ledger check. Manual check enforcement remains mandatory. Repository allows squash; use exact-head squash, no admin bypass.
+- **Reviewer** (01a19b63-22e4-72c1-8ea5-49e361e4ff4f): sole #2596/ledger writer and merger; #3254 merged, exact-head follow-up reviews, allocate next migration after fresh master/ledger check. Manual check enforcement remains mandatory. Repository allows squash; use exact-head squash, no admin bypass.
 - **E1** (01a19b63-49df-7961-ba1c-1faa87cdd67a): released to integrate local selector+Back candidate81031c once from fresh master and publish in freed PR slot. No rebase, no change to active3254, no MCP work. Retain valid evidence; run required integration gates.
 - **E2** (01a19b63-6e38-7be2-8b35-f6c3d9f28930): own merged3253 cleanup, then bounded #3070 server write-time decision authorization checkpoint below.
 - Root orchestrates scope and takeover records. Dispatch queued to all three; queue delivery is not personal acknowledgement.
@@ -36,7 +36,7 @@ Acceptance: allowed-path parity; stale-client refusal after feature/permission/d
 
 ## E1 follow-up and remaining CI
 
-PR3254 remains OPEN at **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0** as independently checked after3253 merge. Narrow bootstrap approval only; reviewer reconciles required CI and merge eligibility.
+PR3254 independently verified MERGED **2026-11-02 13:34:12Z**, squash **6639ec299346e88e887fd70f7f23b04b54643609** from reviewed **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0**. Reviewer reports exact-head Quality/Web success, deploy skipped. Bootstrap initialization only; nightly performance remains unresolved. E1 cleans only its merged bootstrap checkout and preserves separate selector WIP. Both3253/3254 slots are released; advance existing E1/E2 assignments. E2 reports3253 owned checkout/branch removed, remote absent and claim archived at .agent-work/archive/3070-3253-merged.json.
 
 Local **81031c823aea5e47a2fd3305a929d74331b2b94d**, /private/tmp/deskilo-recording-selector: boolean recordingPrivacy selector plus approved historical Back correction to exactly1. Focused selector6/privacy-Demo7, targeted analyzer and metric17 reported pass. Preserve privacy/workspace/actor/repository change semantics; synthetic tests are not real-server authorization proof. E2 independent review was assigned; reviewer consolidates receipt.
 
