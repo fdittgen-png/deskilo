@@ -2122,6 +2122,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankUndoTitle => '¿Deshacer esta conciliación?';
 
   @override
+  String get bankUnmatchBody =>
+      'La factura vuelve a estar abierta. El pago sigue registrado y este movimiento puede conciliarse de nuevo con él. La conciliación y el motivo por el que se deshizo quedan registrados. El pago sigue con este miembro: puede conciliarse de nuevo con una de sus facturas, no con la de otro miembro.';
+
+  @override
+  String get bankUnmatchConfirm => 'Deshacer';
+
+  @override
+  String get bankUnmatchReasonRequired =>
+      'Indique por qué se deshace la conciliación.';
+
+  @override
+  String get bankUnmatchTitle => '¿Deshacer esta conciliación con la factura?';
+
+  @override
   String get baseRoleNote =>
       'Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman; ninguno quita nada.';
 
@@ -7647,6 +7661,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeInvoicePayment => 'Pago de factura';
+
+  @override
+  String get eventTypeInvoicePaymentReversed => 'Conciliación de pago deshecha';
 
   @override
   String get eventTypeInvoiceReminder => 'Recordatorio de pago';
@@ -20402,6 +20419,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalBankLineRefused =>
       'Este movimiento no puede liquidar eso: su sentido, moneda, importe o estado no encajan. No se ha cambiado nada.';
+
+  @override
+  String get refusalBankMatchBeyondLink =>
+      'Esta conciliación hizo más que vincular un pago (emitió una nota de crédito, forma parte de una liquidación agrupada o se dio de baja), por lo que no se puede deshacer aquí. No se cambió nada.';
+
+  @override
+  String get refusalBankMatchClosedPeriod =>
+      'Este pago tiene fecha dentro de un periodo contable cerrado, por lo que su conciliación no se puede deshacer. No se cambió nada.';
+
+  @override
+  String get refusalBankMatchSeveralPayments =>
+      'Hay otros pagos conciliados con esta factura, así que este no se puede deshacer por separado. No se cambió nada.';
 
   @override
   String get refusalChangedMeanwhile =>

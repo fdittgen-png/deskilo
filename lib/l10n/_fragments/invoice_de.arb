@@ -1379,5 +1379,9 @@
   "retentionUnconfirmed": "noch nicht bestätigt",
   "@retentionUnconfirmed": {
     "description": "#2571 retention clocks"
+  },
+  "eventTypeInvoicePaymentReversed": "Zahlungszuordnung rückgängig gemacht",
+  "@eventTypeInvoicePaymentReversed": {
+    "description": "#2380 event type: a match of money in was undone (0650)."
   }
 }

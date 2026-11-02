@@ -195,6 +195,27 @@ class BankImportCommands {
     );
   }
 
+  /// Undoes [line]'s match to an invoice for [reason] under [requestId]; null
+  /// when nothing was sent: the movement is not money in matched to an
+  /// invoice, or no reason is given. A reason longer than its column is cut
+  /// to it. The server decides whether this match is one it undoes and says
+  /// why not in a refusal the caller shows.
+  Future<BankLineStatus?> unmatchIn(
+    StoredBankLine line, {
+    required String reason,
+    required String requestId,
+  }) async {
+    final why = reason.trim();
+    if (line.status != BankLineStatus.matched || !line.isMoneyIn || why.isEmpty) {
+      return null;
+    }
+    return _repository.unmatchIn(
+      line.id,
+      reason: _cut(why, BankColumnWidths.unreconcileReason),
+      requestId: requestId,
+    );
+  }
+
   /// #2380 — the original file of [statement], as it was imported.
   Future<Uint8List> original(String workspaceId, StoredBankStatement statement) =>
       _repository.fetchOriginal(workspaceId, statement.sourceSha256);

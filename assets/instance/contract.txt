@@ -168,6 +168,19 @@ constraint asset_valuation_rows.system_company_present CHECK ((company_id IS NOT
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.badge_auth_attempts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_line_unmatches.bank_line_unmatches_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+constraint bank_line_unmatches.bank_line_unmatches_line_id_fkey FOREIGN KEY (line_id) REFERENCES bank_statement_lines(id) ON DELETE CASCADE
+constraint bank_line_unmatches.bank_line_unmatches_matched_by_member_id_fkey FOREIGN KEY (matched_by_member_id) REFERENCES members(id) ON DELETE SET NULL
+constraint bank_line_unmatches.bank_line_unmatches_original_event_id_fkey FOREIGN KEY (original_event_id) REFERENCES events(id)
+constraint bank_line_unmatches.bank_line_unmatches_payment_ledger_id_fkey FOREIGN KEY (payment_ledger_id) REFERENCES ledger_entries(id)
+constraint bank_line_unmatches.bank_line_unmatches_pkey PRIMARY KEY (id)
+constraint bank_line_unmatches.bank_line_unmatches_reason_check CHECK (((char_length(reason) >= 1) AND (char_length(reason) <= 300)))
+constraint bank_line_unmatches.bank_line_unmatches_request UNIQUE (workspace_id, request_id)
+constraint bank_line_unmatches.bank_line_unmatches_reversal_event_id_fkey FOREIGN KEY (reversal_event_id) REFERENCES events(id)
+constraint bank_line_unmatches.bank_line_unmatches_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint bank_line_unmatches.bank_line_unmatches_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bank_line_unmatches.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_line_unmatches.system_company_present CHECK ((company_id IS NOT NULL))
 constraint bank_line_unreconciliations.bank_line_unreconciliations_line_id_fkey FOREIGN KEY (line_id) REFERENCES bank_statement_lines(id) ON DELETE CASCADE
 constraint bank_line_unreconciliations.bank_line_unreconciliations_pkey PRIMARY KEY (id)
 constraint bank_line_unreconciliations.bank_line_unreconciliations_reason_check CHECK (((char_length(reason) >= 1) AND (char_length(reason) <= 300)))
@@ -450,7 +463,7 @@ constraint events.events_reservation_id_fkey FOREIGN KEY (reservation_id) REFERE
 constraint events.events_status_check CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))
 constraint events.events_subject_member_id_fkey FOREIGN KEY (subject_member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint events.events_subject_member_id_same_workspace FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
-constraint events.events_type_check CHECK (((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))
+constraint events.events_type_check CHECK (((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))
 constraint events.events_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint events.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint events.system_company_present CHECK ((company_id IS NOT NULL))
@@ -2039,7 +2052,7 @@ routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | s
 routine public.book_local_day(p_workspace_id uuid, p_at timestamp with time zone) -> date | function | definer | stable | exec:service_role | body:331853c631d1
 routine public.book_period_closed(p_workspace_id uuid, p_day date) -> boolean | function | definer | stable | exec:service_role | body:48ddadaf666d
 routine public.book_period_json(p book_periods) -> jsonb | function | definer | stable | exec:service_role | body:6e70242182da
-routine public.book_period_match_guard() -> trigger | function | definer | volatile | exec:service_role | body:39234ea98fd0
+routine public.book_period_match_guard() -> trigger | function | definer | volatile | exec:service_role | body:d96b788952db
 routine public.book_period_vat_close() -> trigger | function | definer | volatile | exec:service_role | body:95211731251d
 routine public.book_period_void_guard() -> trigger | function | definer | volatile | exec:service_role | body:3433704ee819
 routine public.book_periods_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e4ac451a0495
@@ -2159,7 +2172,7 @@ routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | in
 routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fdaaf680cd2d
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
-routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:93a6104313b9
+routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:844b894f9c9f
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:5f4ba165c976
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:88b1b882d2e1
@@ -3039,6 +3052,7 @@ routine public.touch_conversation() -> trigger | function | definer | volatile |
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
+routine public.unmatch_bank_line_in_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6ff13d82475f
 routine public.unreconcile_bank_line_out_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afe6df043a4c
 routine public.unset_my_kiosk(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f2b9fedee125
 routine public.update_managed_identity(p_member_id uuid, p_identity jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:42ab2e5f4c08
@@ -3158,6 +3172,7 @@ trigger analytics_history.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger asset_valuation_batches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_batches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_rows FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bank_line_unmatches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_line_unmatches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bank_line_unreconciliations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_line_unreconciliations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bank_statement_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statement_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bank_statements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3254,7 +3269,7 @@ trigger instance_owner_claims.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invitations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
-trigger invoice_matches.book_period_match_guard CREATE TRIGGER book_period_match_guard BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION book_period_match_guard()
+trigger invoice_matches.book_period_match_guard CREATE TRIGGER book_period_match_guard BEFORE INSERT OR DELETE OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION book_period_match_guard()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

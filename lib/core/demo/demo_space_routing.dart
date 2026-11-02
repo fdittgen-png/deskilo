@@ -183,9 +183,13 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // one in-memory store; the facade stays for the tests that read it.
     moneyRepositoryProvider.overrideWith(money),
     // #2380 — the main space's last bank statement; the second has none yet.
-    bankStatementRepositoryProvider.overrideWith(
-      (ref) => pick(ref, homeBank, secondBank, londonBank),
-    ),
+    bankStatementRepositoryProvider.overrideWith((ref) {
+      return pick<FakeBankStatementRepository>(ref, homeBank, secondBank, londonBank)
+        ..actingMemberId = (() => fixture.activeMemberId)
+        ..mayUnmatch = (() => ref
+            .read(myPermissionsProvider)
+            .contains(WorkspacePermission.issueInvoices));
+    }),
     // #3060 F5 — the register a plain member reads is their own invoices,
     // as on the server.
     invoiceQueriesProvider.overrideWith((ref) {

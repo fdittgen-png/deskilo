@@ -95,5 +95,33 @@
   "bankUndoBody": "Die Bewegung ist wieder offen und die Zahlung wieder nur als geleistet erfasst. Der Abgleich und der Grund der Rücknahme bleiben festgehalten.",
   "bankUndoReasonLabel": "Grund der Rücknahme",
   "bankUndoReasonRequired": "Geben Sie an, warum der Abgleich rückgängig gemacht wird.",
-  "bankUndoConfirm": "Rückgängig machen"
+  "bankUndoConfirm": "Rückgängig machen",
+  "bankUnmatchTitle": "Diese Zuordnung rückgängig machen?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
+  "bankUnmatchBody": "Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten. Die Zahlung bleibt bei diesem Mitglied: Sie kann erneut einer seiner Rechnungen zugeordnet werden, nicht der eines anderen Mitglieds.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "refusalBankMatchBeyondLink": "Diese Zuordnung hat mehr getan, als eine Zahlung zu verknüpfen (sie hat eine Gutschrift ausgestellt, gehört zu einer Sammelabrechnung oder wurde abgeschrieben) und kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchSeveralPayments": "Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
+  "refusalBankMatchClosedPeriod": "Diese Zahlung liegt in einem abgeschlossenen Buchungszeitraum; ihre Zuordnung kann nicht rückgängig gemacht werden. Nichts wurde geändert.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "bankUnmatchReasonRequired": "Geben Sie an, warum die Zuordnung rückgängig gemacht wird.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchConfirm": "Rückgängig machen",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  }
 }

@@ -1379,5 +1379,9 @@
   "retentionUnconfirmed": "non ancora confermata",
   "@retentionUnconfirmed": {
     "description": "#2571 retention clocks"
+  },
+  "eventTypeInvoicePaymentReversed": "Abbinamento del pagamento annullato",
+  "@eventTypeInvoicePaymentReversed": {
+    "description": "#2380 event type: a match of money in was undone (0650)."
   }
 }
