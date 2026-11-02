@@ -69,6 +69,7 @@ const Set<String> validationRuleKeys = {
   'member_join',
   'space_reservation',
   'invoice_payment',
+  'invoice_payment_reversed',
   'reservation_delete',
   'invoice_reminder',
   'price_negotiation',
