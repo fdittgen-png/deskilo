@@ -27,3 +27,11 @@ Current decisions below supersede conflicting historical inbox entries. A replac
 4. Separate design acceptance, source review, verification, application, merge and external acceptance. None implies the next.
 5. Preserve useful old evidence under its original SHA; never relabel it as new-head proof. This avoided discarding valid HMRC database evidence while fixing a UI regression.
 6. Prefer one coherent checkpoint and final combined metadata push. Extra messages, audits and CI runs are costs, not progress.
+
+## Explicit Back-metric correction and bounded capability work
+
+Orchestrator inspected commit `99c12c9236ebb0aa27000238b4d355f689e11b98` (#2136): pendingLeaveReturn removed the Profiles Back action and replaced it with workspace selection from Me, while retaining the Assistants Back. Decision: correct the gate to exactly **one actual Back**, with regression/source reference. This supersedes the earlier no-metric-change hold for this specific stale expectation only. Do not redefine workspace selection as Back, add meaningless navigation, or relax the **eight-trip ceiling** or timeouts.
+
+E1 implements the previously authorized recordingPrivacy boolean selection with privacy/workspace/account regressions as a separate follow-up. Additional bounded MCP dedup design may be reviewed for genuinely equivalent account/session/target/lease context only; preserve connected-target isolation, validation, invalidation and failure/expiration semantics. Reviewer may approve a sound concrete design within that scope without another owner approval round. No blind personal-cache reuse. If no safe design exists, report a real remaining performance blocker; do not loosen the ceiling.
+
+Keep active #3254 bootstrap head unchanged. No third PR while #3253/#3254 occupy the normal two-PR cap; one coherent follow-up after a slot clears. E2 frozen candidate unchanged, upstream semantic dependency communicated. A corrected Back expectation or 13->11 selector improvement alone is not a green nightly workflow.
