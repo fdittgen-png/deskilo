@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/demo_visit.dart';
+import '../../../features/kiosk/providers/kiosk_mode.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
@@ -127,6 +128,11 @@ Future<bool> _showDemoEntrySheet(
   if (ref.read(demoEntryProvider)) return false;
   if (await _identityOrNull(visit) != before) return false;
   if (!context.mounted) return false;
+  // #3235 — a signed-in person's workspace may have changed while the sheet
+  // was open: the Demo flag switched off or the kiosk locked. Read both again,
+  // resolved; the public Demo of a visitor who is not signed in is not asked.
+  if (before != null && !await _signedInMayStillEnter(ref)) return false;
+  if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {
     return false;
@@ -163,6 +169,21 @@ Future<bool> _showDemoEntrySheet(
   if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
   ref.read(demoEntryProvider.notifier).enter();
   return true;
+}
+
+/// Whether the signed-in workspace still allows a Demo visit: the Demo flag
+/// on, and no locked kiosk. Unresolved or failing reads refuse.
+Future<bool> _signedInMayStillEnter(WidgetRef ref) async {
+  try {
+    final features = await ref.read(enabledFeaturesProvider.future);
+    final member = await ref.read(myMemberProvider.future);
+    if (!features.contains(WorkspaceFeature.demoMode)) return false;
+    return member?.isKiosk != true ||
+        !features.contains(WorkspaceFeature.kioskMode) ||
+        ref.read(kioskModeProvider) == KioskModeDecision.rejected;
+  } on Object {
+    return false;
+  }
 }
 
 /// Who is signed in; null when nobody is, or the session cannot be read —
