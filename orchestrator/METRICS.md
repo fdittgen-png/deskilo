@@ -77,3 +77,7 @@ Merge was reconciled in orchestration around 09:48 UTC, approximately six minute
 E1 independently reviewed #3252 exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53` from 10:05:55 to 10:07:30 UTC: **1m 35s**, no actionable findings and no duplicate tests. Reviewer approved that head and armed merge while final CI remains pending. This measures review elapsed time, not saved time versus a counterfactual or complete feature throughput.
 
 One broad local gate first caught an unkeyed retry control; E2 fixed it and reran. Add affected recorder lint to focused preflight before broad candidate gates. Exact rerun duration/token cost is UNKNOWN; do not rerun the already-passing candidate just to apply this lesson retroactively.
+
+## Missed merge handoff — 10:59 UTC
+
+#3252 merged 10:29:22 UTC; live reconciliation happened at 10:58:37 UTC, **29m 15s later**. Reviewer and engineer CURRENT summaries still described pending CI/review. All five candidate workflows had completed successfully. This is observed merge-to-reconciliation latency, not CI execution or proof that both sessions were idle throughout. Root missed the handoff; the owner prompted correction. Cleanup/ledger release and bounded residual preparation were then queued. No numerical savings claim is justified. On future armed merges, explicitly assign the existing merge owner to verify completion and send the receipt during its active work; do not imply background observation after a turn ends or create an unauthorized watcher.
