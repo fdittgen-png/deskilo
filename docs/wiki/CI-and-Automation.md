@@ -51,14 +51,18 @@ The individual shard names and other workflows are not in that verified required
 flowchart TD
     E[PR, master push, schedule or dispatch] --> C[Classify change]
     E --> G[Gate shard and preconditions]
-    E --> M[Money and reservations shard]
-    E --> W[Workspace, me, events and auth shard]
-    E --> R[Other features, app and a11y shard]
+    E --> M[Money a-m and reservations shard]
+    E --> M2[Money n-z, me and auth shard]
+    E --> W[Workspace shard]
+    E --> R[Other features shard]
+    E --> K[Core, app, profile and a11y shard]
     C --> D[Database verification or evidenced stand-down]
     G --> A[Required code aggregate and coverage]
     M --> A
+    M2 --> A
     W --> A
     R --> A
+    K --> A
     C --> Q[Required final quality report]
     A --> Q
     D --> Q
@@ -84,10 +88,14 @@ The assignment comes from [`tool/quality_rows/selection.dart`](https://github.co
 
 | Shard ID | Job name | Selection | Job timeout |
 | --- | --- | --- | --- |
-| `gate` | `quality · test · gates` | All `test/**/*_test.dart` outside `test/features/`, except `test/app/` and `test/a11y/`; includes lint, tool, i18n, UX, perf, and core tests | 30 min |
-| `money` | `quality · test · money and reservations` | `test/features/money/` and `test/features/reservations/` | 30 min |
-| `workspace` | `quality · test · workspace, me, events and auth` | `test/features/workspace/`, `me/`, `events/`, and `auth/` | 30 min |
-| `rest` | `quality · test · other features, app and a11y` | All remaining feature tests, plus `test/app/` and `test/a11y/` | 30 min |
+| `gate` | `quality · test · gates` | All `test/**/*_test.dart` outside `test/features/`, except `test/core/`, `test/app/` and `test/a11y/`; includes lint, tool, i18n, UX and perf tests | 30 min |
+| `money` | `quality · test · money a-m and reservations` | `test/features/money/` files whose path under it sorts before `n`, and `test/features/reservations/` | 30 min |
+| `money2` | `quality · test · money n-z, me and auth` | `test/features/money/` files from `n` on, `test/features/me/` and `auth/` | 30 min |
+| `workspace` | `quality · test · workspace` | `test/features/workspace/` | 30 min |
+| `rest` | `quality · test · other features` | All remaining feature tests, including `events/` | 30 min |
+| `core` | `quality · test · core, app, profile and a11y` | `test/core/`, `test/app/`, `test/a11y/` and `test/features/profile/` | 30 min |
+
+The split follows measured file times (#3166): each feature shard carries about 11-12 minutes of tests, so a job takes about 13-14 minutes with setup against the 30-minute cap. The gate keeps the fewest tests because the same job also runs the analysis and the codegen gate. Money is the one folder split inside, by the first character of the file's path under it.
 
 A new root test directory defaults to `gate`; a new feature directory defaults to `rest`. The aggregate independently walks the test tree and proves that every required file is assigned exactly once. Database-backed topology execution additionally runs in the database job with its stack configuration.
 

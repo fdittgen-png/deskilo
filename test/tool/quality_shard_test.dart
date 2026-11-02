@@ -55,6 +55,16 @@ String _stream(List<String> files) {
 ProcessResult _dart(List<String> args) =>
     Process.runSync('dart', ['run', 'tool/quality_shard.dart', ...args]);
 
+/// #3166 — every shard of the default plan.
+const _allShards = [
+  gateShard,
+  moneyShard,
+  money2Shard,
+  workspaceShard,
+  restShard,
+  coreShard,
+];
+
 void main() {
   group('selection', () {
     test('the required set is exactly what a bare flutter test selects, and '
@@ -95,17 +105,25 @@ void main() {
       expect(shardOf('test/lint/a_test.dart'), gateShard);
       expect(shardOf('test/brand_new_root/a_test.dart'), gateShard);
       expect(shardOf('test/helpers/x_test.dart'), gateShard);
+      expect(shardOf('test/tool/a_test.dart'), gateShard);
+      // #3166 — money is split by the first character under it.
       expect(shardOf('test/features/money/a_test.dart'), moneyShard);
+      expect(shardOf('test/features/money/domain/a_test.dart'), moneyShard);
+      expect(shardOf('test/features/money/m_test.dart'), moneyShard);
+      expect(shardOf('test/features/money/n_test.dart'), money2Shard);
+      expect(shardOf('test/features/money/sub/z_test.dart'), money2Shard);
       expect(shardOf('test/features/reservations/a_test.dart'), moneyShard);
       expect(
         shardOf('test/features/workspace/domain/a_test.dart'),
         workspaceShard,
       );
-      expect(shardOf('test/features/me/a_test.dart'), workspaceShard);
-      expect(shardOf('test/features/events/a_test.dart'), workspaceShard);
-      expect(shardOf('test/features/auth/a_test.dart'), workspaceShard);
-      expect(shardOf('test/app/a_test.dart'), restShard);
-      expect(shardOf('test/a11y/a_test.dart'), restShard);
+      expect(shardOf('test/features/me/a_test.dart'), money2Shard);
+      expect(shardOf('test/features/auth/a_test.dart'), money2Shard);
+      expect(shardOf('test/features/events/a_test.dart'), restShard);
+      expect(shardOf('test/core/a_test.dart'), coreShard);
+      expect(shardOf('test/app/a_test.dart'), coreShard);
+      expect(shardOf('test/a11y/a_test.dart'), coreShard);
+      expect(shardOf('test/features/profile/a_test.dart'), coreShard);
       expect(shardOf('test/features/money_extra/a_test.dart'), restShard);
       expect(shardOf('test/features/mcp/a_test.dart'), restShard);
       expect(shardOf('test/features/a_test.dart'), restShard);
@@ -278,9 +296,9 @@ void main() {
       '${dir.path}/merged.info',
     ]);
 
-    test('four complete shards: the plan reads them, the rows are green for '
+    test('six complete shards: the plan reads them, the rows are green for '
         'the suite, and the LCOV merges', () {
-      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
+      for (final id in _allShards) {
         final r = envelope(id);
         expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
       }
@@ -302,9 +320,7 @@ void main() {
     test(
       'a shard that never wrote its artifact fails the rows and the merge',
       () {
-        envelope(gateShard);
-        envelope(moneyShard);
-        envelope(workspaceShard);
+        _allShards.where((id) => id != restShard).forEach(envelope);
         expect(plan().exitCode, 0);
         expect(rows().exitCode, 1);
         final m = mergeCov();
@@ -314,16 +330,14 @@ void main() {
     );
 
     test('a shard with no LCOV fails the merge although its tests passed', () {
-      envelope(gateShard);
-      envelope(moneyShard);
-      envelope(workspaceShard);
+      _allShards.where((id) => id != restShard).forEach(envelope);
       envelope(restShard, lcovFile: false);
       expect(plan().exitCode, 0);
       expect(mergeCov().exitCode, 1);
     });
 
     test('a stream edited after the envelope was written fails the shard', () {
-      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
+      for (final id in _allShards) {
         envelope(id);
       }
       File('${dir.path}/testshard-rest/tests.jsonl').writeAsStringSync('\n');
@@ -332,7 +346,7 @@ void main() {
     });
 
     test('a candidate other than the plan\'s fails every shard', () {
-      for (final id in [gateShard, moneyShard, workspaceShard, restShard]) {
+      for (final id in _allShards) {
         envelope(id);
       }
       final r = _dart([
