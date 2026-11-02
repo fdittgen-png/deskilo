@@ -58,9 +58,13 @@ class _FakeHmrc implements HmrcRepository {
   final submitted = <Map<String, num>>[];
   final markers = <String?>[];
   int connects = 0;
+  bool failStateRead = false;
 
   @override
-  Future<HmrcState> state(String workspaceId) async => stateNow;
+  Future<HmrcState> state(String workspaceId) async {
+    if (failStateRead) throw StateError('state unavailable');
+    return stateNow;
+  }
 
   @override
   Future<Uri> startConnect(String workspaceId, String issuerSiteId) async {
@@ -299,6 +303,41 @@ void main() {
     await tester.pump();
     expect(fake.submitted, hasLength(1));
     expect(fake.markers, ['attempt-1']);
+  });
+
+  testWidgets('refresh failure and a new attempt never reuse the old check', (tester) async {
+    const first = HmrcState(
+      vrn: '123456789',
+      connection: HmrcConnection(id: 'c1', issuerSiteId: 's1', link: HmrcLink.connected),
+      unconfirmedDeclarationIds: ['d1'], recoveryMarkers: {'d1': 'attempt-1'},
+    );
+    final fake = await _pump(tester, state: first);
+    final container = ProviderScope.containerOf(tester.element(find.byKey(const ValueKey('hmrc-submit'))));
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNotNull);
+    fake.failStateRead = true;
+    container.invalidate(hmrcStateProvider('ws-1'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('hmrc-submit')), findsNothing);
+    expect(fake.submitted, isEmpty);
+    fake.failStateRead = false;
+    container.invalidate(hmrcStateProvider('ws-1'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull, reason: 'a failed refresh invalidates the old check');
+    fake.stateNow = const HmrcState(
+      vrn: '123456789',
+      connection: HmrcConnection(id: 'c1', issuerSiteId: 's1', link: HmrcLink.connected),
+      unconfirmedDeclarationIds: ['d1'], recoveryMarkers: {'d1': 'attempt-2'},
+    );
+    container.invalidate(hmrcStateProvider('ws-1'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull);
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('hmrc-submit')));
+    await tester.pumpAndSettle();
+    expect(fake.markers, ['attempt-2']);
   });
 
   testWidgets('another return being unconfirmed does not lock this one', (tester) async {

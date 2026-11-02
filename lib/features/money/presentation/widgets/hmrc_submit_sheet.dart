@@ -134,6 +134,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     final l10n = context.l10n;
     final workspaceId = widget.declaration.workspaceId;
     final client = ref.watch(hmrcClientValuesProvider);
+    ref.listen(hmrcStateProvider(workspaceId), (previous, next) {
+      if (next.isLoading || next.hasError) {
+        _checkedAtHmrc = false;
+        _checkedMarker = null;
+      }
+    });
     final state = ref.watch(hmrcStateProvider(workspaceId));
     final cents = mtdBoxCents(widget.declaration);
     return SafeArea(
