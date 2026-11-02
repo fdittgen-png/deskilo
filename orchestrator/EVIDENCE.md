@@ -132,3 +132,12 @@ Bootstrap3f5 remains independently source-approved. E1 now limited to recording 
 GitHub repository API independently confirms private=true/visibility=private, current account admin access. Reviewer reports Pages404/Actions enabled; master protected=false and protection/ruleset403 due private-plan limitation. Required exact-head review and CI remain manual mandatory merge conditions; no bypass or public restoration authorized. Privacy does not erase previous copies/history.
 
 PR3253 published at reviewed d8d3c467; five workflows started12:37:18, independently verified in_progress12:37:48: Quality41446196242, Web41446196206, SAF-T41446196087, E-invoice41446196014, VAT41446196007. Reviewer owns through completion/merge handoff, E2 fixes actual failures. No success/merge claimed at this snapshot. Earlier publication-held statements are superseded, not retroactively proof that work was published then.
+
+
+## Completed idle-window deliverable: #2380 reference crosswalk
+
+E2 started13:55:14Z after2m17s idle and completed a bounded source crosswalk, no patch/worktree. Orchestrator independently fetched issuecomment6413817194: QR/RF derive from immutable invoice number; no invoices.payment_reference column, QRR collision scheme separately unresolved. This supersedes the original stored-column premise.
+
+E2 source report: Invoice/EInvoiceInput/callers lack produced scheme/reference, mutable workspace free-text reference is not authoritative; Swiss PDF builds reference/account together from current settings; bank matching derives both references; UBL/CII currently omit BT-83. A reference-only mapping can pair QRR with the wrong ordinary account. No DB prerequisite established. Next coherent leaf needs authoritative reference+account input, consistent PDF/XML behavior, explicit historical account/reference and collision semantics, official schema validation and Demo/tests. No implementation design approved by this crosswalk; preserve import/unmatch and no new generation under the wait-task scope.
+
+This finite task prevented starting an invalid narrow patch; no quantified time/token savings claimed.0655 remains primary. Conditional next wait task assigned to E2: exact dictionary PR-create failure/diff diagnosis from existing run41447938544, <=10min, read-only, transferred from reviewer to avoid duplication. No rerun, permission change or branch publication. Reviewer to provide concrete0655 findings/proof path; E1 independent concurrency review continues.
