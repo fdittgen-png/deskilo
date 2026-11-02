@@ -898,6 +898,22 @@
   "bankUndoReasonLabel": "Pourquoi il est annulé",
   "bankUndoReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
   "bankUndoTitle": "Annuler ce rapprochement ?",
+  "bankUnmatchBody": "La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "bankUnmatchConfirm": "Annuler le rapprochement",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  },
+  "bankUnmatchReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchTitle": "Annuler ce rapprochement avec la facture ?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
   "baseRoleNote": "Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s'y ajoutent ; aucun ne retire quoi que ce soit.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -5675,6 +5691,10 @@
     "description": "#982 validation domains: eventTypeInvoiceIssue"
   },
   "eventTypeInvoicePayment": "Paiement de facture",
+  "eventTypeInvoicePaymentReversed": "Rapprochement de paiement annulé",
+  "@eventTypeInvoicePaymentReversed": {
+    "description": "#2380 event type: a match of money in was undone (0650)."
+  },
   "eventTypeInvoiceReminder": "Rappel de paiement",
   "eventTypeInvoiceVoid": "Annulation de facture",
   "@eventTypeInvoiceVoid": {
@@ -13279,6 +13299,18 @@
   "refusalBankFileRefused": "Le serveur a refusé le relevé en entier (trop grand, trop de mouvements ou plusieurs devises). Rien n'a été importé.",
   "refusalBankLineDecided": "Ce mouvement a été traité entre-temps (rapproché ou vérifié). La liste montre où il en est.",
   "refusalBankLineRefused": "Ce mouvement ne peut pas régler cela : son sens, sa devise, son montant ou son état ne conviennent pas. Rien n'a changé.",
+  "refusalBankMatchBeyondLink": "Ce rapprochement a fait plus que lier un paiement (il a émis un avoir, relève d'un regroupement ou a été passé en perte) : il ne peut pas être annulé ici. Rien n'a été modifié.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchClosedPeriod": "Ce paiement est daté dans une période comptable clôturée : son rapprochement ne peut pas être annulé. Rien n'a été modifié.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchSeveralPayments": "D'autres paiements sont rapprochés de cette facture : celui-ci ne peut pas être annulé seul. Rien n'a été modifié.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
   "refusalMoneyLocaleLocked": "La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré.",
   "@refusalMoneyLocaleLocked": {

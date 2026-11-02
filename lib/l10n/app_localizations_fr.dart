@@ -2124,6 +2124,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankUndoTitle => 'Annuler ce rapprochement ?';
 
   @override
+  String get bankUnmatchBody =>
+      'La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés.';
+
+  @override
+  String get bankUnmatchConfirm => 'Annuler le rapprochement';
+
+  @override
+  String get bankUnmatchReasonRequired =>
+      'Indiquez pourquoi le rapprochement est annulé.';
+
+  @override
+  String get bankUnmatchTitle => 'Annuler ce rapprochement avec la facture ?';
+
+  @override
   String get baseRoleNote =>
       'Chacun a exactement un rôle de base : Utilisateur, Administrateur, Copropriétaire ou Propriétaire. Les autres rôles s\'y ajoutent ; aucun ne retire quoi que ce soit.';
 
@@ -7661,6 +7675,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeInvoicePayment => 'Paiement de facture';
+
+  @override
+  String get eventTypeInvoicePaymentReversed =>
+      'Rapprochement de paiement annulé';
 
   @override
   String get eventTypeInvoiceReminder => 'Rappel de paiement';
@@ -20292,6 +20310,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalBankLineRefused =>
       'Ce mouvement ne peut pas régler cela : son sens, sa devise, son montant ou son état ne conviennent pas. Rien n\'a changé.';
+
+  @override
+  String get refusalBankMatchBeyondLink =>
+      'Ce rapprochement a fait plus que lier un paiement (il a émis un avoir, relève d\'un regroupement ou a été passé en perte) : il ne peut pas être annulé ici. Rien n\'a été modifié.';
+
+  @override
+  String get refusalBankMatchClosedPeriod =>
+      'Ce paiement est daté dans une période comptable clôturée : son rapprochement ne peut pas être annulé. Rien n\'a été modifié.';
+
+  @override
+  String get refusalBankMatchSeveralPayments =>
+      'D\'autres paiements sont rapprochés de cette facture : celui-ci ne peut pas être annulé seul. Rien n\'a été modifié.';
 
   @override
   String get refusalChangedMeanwhile =>

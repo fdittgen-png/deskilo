@@ -206,6 +206,10 @@ const Map<String, String> _notExported = {
       '#2380 — the movements of a bank file read into the space, and their links to the '
           'payments, invoices and outgoing payments of this server, which are '
           'exported themselves',
+  'bank_line_unmatches':
+      '#2380 — the record of a match of money in undone: it names a bank line, '
+          'an invoice, a payment credit and two events of this server, which are '
+          'exported or kept themselves',
   'bank_line_unreconciliations':
       '#2380 — the record of a reconciliation of money out undone: it names a '
           'bank line and an outgoing payment of this server, which are exported '

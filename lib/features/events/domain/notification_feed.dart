@@ -126,6 +126,8 @@ const _moneyEvents = <EventType>{
   EventType.adjustment,
   EventType.serviceCharge,
   EventType.invoicePayment,
+  // #2380 — the record of a match undone: Money, and no payment in itself.
+  EventType.invoicePaymentReversed,
   EventType.invoiceWriteoff,
   EventType.invoiceReminder,
   EventType.priceNegotiation,

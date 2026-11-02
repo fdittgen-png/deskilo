@@ -95,5 +95,33 @@
   "bankUndoBody": "Le mouvement redevient ouvert et le paiement n'est de nouveau qu'enregistré comme effectué. Le rapprochement et la raison de son annulation restent conservés.",
   "bankUndoReasonLabel": "Pourquoi il est annulé",
   "bankUndoReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
-  "bankUndoConfirm": "Annuler le rapprochement"
+  "bankUndoConfirm": "Annuler le rapprochement",
+  "bankUnmatchTitle": "Annuler ce rapprochement avec la facture ?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
+  "bankUnmatchBody": "La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "refusalBankMatchBeyondLink": "Ce rapprochement a fait plus que lier un paiement (il a émis un avoir, relève d'un regroupement ou a été passé en perte) : il ne peut pas être annulé ici. Rien n'a été modifié.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchSeveralPayments": "D'autres paiements sont rapprochés de cette facture : celui-ci ne peut pas être annulé seul. Rien n'a été modifié.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
+  "refusalBankMatchClosedPeriod": "Ce paiement est daté dans une période comptable clôturée : son rapprochement ne peut pas être annulé. Rien n'a été modifié.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "bankUnmatchReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchConfirm": "Annuler le rapprochement",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  }
 }

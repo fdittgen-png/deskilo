@@ -477,5 +477,33 @@
   "bankUndoConfirm": "Undo",
   "@bankUndoConfirm": {
     "description": "#2380 Undo dialog: the button that undoes the reconciliation."
+  },
+  "bankUnmatchTitle": "Undo this match?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
+  "bankUnmatchBody": "The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "refusalBankMatchBeyondLink": "This match did more than link a payment (it issued a credit note, belongs to a settlement, or was written off), so it cannot be undone here. Nothing was changed.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchSeveralPayments": "Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
+  "refusalBankMatchClosedPeriod": "This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "bankUnmatchReasonRequired": "Say why the match is undone.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchConfirm": "Undo",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
   }
 }

@@ -3541,6 +3541,30 @@ abstract class AppLocalizations {
   /// **'Undo this reconciliation?'**
   String get bankUndoTitle;
 
+  /// #2380 money-in unmatch: what the undoing does
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record.'**
+  String get bankUnmatchBody;
+
+  /// #2380 money-in unmatch: the confirm button.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get bankUnmatchConfirm;
+
+  /// #2380 money-in unmatch: the reason is required.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the match is undone.'**
+  String get bankUnmatchReasonRequired;
+
+  /// #2380 money-in unmatch: the dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Undo this match?'**
+  String get bankUnmatchTitle;
+
   /// the mandatory base role
   ///
   /// In en, this message translates to:
@@ -12922,6 +12946,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice payment'**
   String get eventTypeInvoicePayment;
+
+  /// #2380 event type: a match of money in was undone (0650).
+  ///
+  /// In en, this message translates to:
+  /// **'Payment match undone'**
+  String get eventTypeInvoicePaymentReversed;
 
   /// No description provided for @eventTypeInvoiceReminder.
   ///
@@ -33671,6 +33701,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.'**
   String get refusalBankLineRefused;
+
+  /// #2380 Refusal DKB04: the match did more than link a payment.
+  ///
+  /// In en, this message translates to:
+  /// **'This match did more than link a payment (it issued a credit note, belongs to a settlement, or was written off), so it cannot be undone here. Nothing was changed.'**
+  String get refusalBankMatchBeyondLink;
+
+  /// #2380 Refusal DKB06: the payment is dated inside a closed period.
+  ///
+  /// In en, this message translates to:
+  /// **'This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.'**
+  String get refusalBankMatchClosedPeriod;
+
+  /// #2380 Refusal DKB05: other payments are matched to the invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.'**
+  String get refusalBankMatchSeveralPayments;
 
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///

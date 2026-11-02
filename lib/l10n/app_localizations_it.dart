@@ -2118,6 +2118,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankUndoTitle => 'Annullare questa riconciliazione?';
 
   @override
+  String get bankUnmatchBody =>
+      'La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L\'abbinamento e il motivo dell\'annullamento restano registrati.';
+
+  @override
+  String get bankUnmatchConfirm => 'Annulla l\'abbinamento';
+
+  @override
+  String get bankUnmatchReasonRequired =>
+      'Indichi perché l\'abbinamento viene annullato.';
+
+  @override
+  String get bankUnmatchTitle => 'Annullare questo abbinamento?';
+
+  @override
   String get baseRoleNote =>
       'Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.';
 
@@ -7645,6 +7659,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeInvoicePayment => 'Pagamento fattura';
+
+  @override
+  String get eventTypeInvoicePaymentReversed =>
+      'Abbinamento del pagamento annullato';
 
   @override
   String get eventTypeInvoiceReminder => 'Promemoria di pagamento';
@@ -20249,6 +20267,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalBankLineRefused =>
       'Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.';
+
+  @override
+  String get refusalBankMatchBeyondLink =>
+      'Questo abbinamento ha fatto più che collegare un pagamento (ha emesso una nota di credito, fa parte di un raggruppamento o è stato stornato), quindi non può essere annullato qui. Nulla è stato modificato.';
+
+  @override
+  String get refusalBankMatchClosedPeriod =>
+      'Questo pagamento ha una data compresa in un periodo contabile chiuso: il suo abbinamento non può essere annullato. Nulla è stato modificato.';
+
+  @override
+  String get refusalBankMatchSeveralPayments =>
+      'A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.';
 
   @override
   String get refusalChangedMeanwhile =>

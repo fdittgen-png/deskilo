@@ -22,6 +22,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
     EventType.memberJoin: l10n.eventTypeMemberJoin,
     EventType.spaceReservation: l10n.eventTypeSpaceReservation,
     EventType.invoicePayment: l10n.eventTypeInvoicePayment,
+    EventType.invoicePaymentReversed: l10n.eventTypeInvoicePaymentReversed,
     EventType.reservationDelete: l10n.eventTypeReservationDelete,
     EventType.usageCorrection: l10n.eventTypeUsageCorrection,
     EventType.usageRecordDelete: l10n.eventTypeUsageRecordDelete,

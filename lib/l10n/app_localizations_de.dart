@@ -2121,6 +2121,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankUndoTitle => 'Diesen Abgleich rückgängig machen?';
 
   @override
+  String get bankUnmatchBody =>
+      'Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten.';
+
+  @override
+  String get bankUnmatchConfirm => 'Rückgängig machen';
+
+  @override
+  String get bankUnmatchReasonRequired =>
+      'Geben Sie an, warum die Zuordnung rückgängig gemacht wird.';
+
+  @override
+  String get bankUnmatchTitle => 'Diese Zuordnung rückgängig machen?';
+
+  @override
   String get baseRoleNote =>
       'Jede Person hat genau eine Basisrolle: Benutzer, Administrator, Mit-Eigentümer oder Eigentümer. Weitere Rollen kommen hinzu; keine nimmt etwas weg.';
 
@@ -7657,6 +7671,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeInvoicePayment => 'Rechnungszahlung';
+
+  @override
+  String get eventTypeInvoicePaymentReversed =>
+      'Zahlungszuordnung rückgängig gemacht';
 
   @override
   String get eventTypeInvoiceReminder => 'Zahlungserinnerung';
@@ -20275,6 +20293,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalBankLineRefused =>
       'Diese Bewegung kann das nicht begleichen: Richtung, Währung, Betrag oder Stand passen nicht. Nichts wurde geändert.';
+
+  @override
+  String get refusalBankMatchBeyondLink =>
+      'Diese Zuordnung hat mehr getan, als eine Zahlung zu verknüpfen (sie hat eine Gutschrift ausgestellt, gehört zu einer Sammelabrechnung oder wurde abgeschrieben) und kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.';
+
+  @override
+  String get refusalBankMatchClosedPeriod =>
+      'Diese Zahlung liegt in einem abgeschlossenen Buchungszeitraum; ihre Zuordnung kann nicht rückgängig gemacht werden. Nichts wurde geändert.';
+
+  @override
+  String get refusalBankMatchSeveralPayments =>
+      'Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.';
 
   @override
   String get refusalChangedMeanwhile =>
