@@ -8,13 +8,15 @@ const String kSchemaUpdateRoute = '/server-update';
 /// schema compares as [schema]?
 ///
 /// Only `behind` gates, signed in or not, and it leaves open what it takes
-/// to get out: the Server screen and its wizard, the help, the privacy page.
+/// to get out: the Server screen and its wizard, the help, the privacy page, and the
+/// Demo (#3247), which runs on no server.
 /// `unknown` — not yet answered, or offline — gates nothing, so a start
 /// without a network behaves exactly as before the gate existed.
 String? schemaGateRedirect(SchemaCompatibility? schema, String location) {
   final atUpdate = location == kSchemaUpdateRoute;
   if (schema == SchemaCompatibility.behind) {
     final exempt = location.startsWith('/server') ||
+        location == '/demo' ||
         location == '/help' ||
         location == '/privacy';
     return exempt ? null : kSchemaUpdateRoute;

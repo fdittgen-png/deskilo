@@ -233,24 +233,41 @@ RouteDecision? _kioskDecision(RouteFacts facts, String path) {
   }
 }
 
+/// #1312 — a server older than the app gates every route but the way out,
+/// and is then the ONLY rule; an unanswered check changes nothing. Null:
+/// the rules below decide.
+///
+/// #3247 — the Demo runs on no server (its scope answers the schema itself),
+/// so a skew does not lock out its entry, nor the older link to it
+/// ([demoEntry]): both go on to the rules below, where the kiosk lock still
+/// decides first.
+RouteDecision? _schemaDecision(
+  RouteRequest request,
+  RouteFacts facts,
+  RouteDecision? demoEntry,
+) {
+  final path = request.location;
+  final schemaGate = schemaGateRedirect(facts.schema, path);
+  if (facts.schema != SchemaCompatibility.behind) {
+    return schemaGate == null
+        ? null
+        : RouteDecision.go(facts.home, RouteReason.schemaCurrent);
+  }
+  if (path == '/demo' || demoEntry != null) return null;
+  return schemaGate == null
+      ? const RouteDecision.stay()
+      : RouteDecision.go(schemaGate, RouteReason.schemaBehind);
+}
+
 /// The policy: one hop for [request] under [facts]. Pure — reads its
 /// arguments and nothing else, writes nothing.
 @visibleForTesting
 RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
   final path = request.location;
-  // #1312 — a server older than the app gates every route but the way
-  // out, and is then the ONLY rule; an unanswered check changes nothing.
-  final schemaGate = schemaGateRedirect(facts.schema, path);
-  if (facts.schema == SchemaCompatibility.behind) {
-    return schemaGate == null
-        ? const RouteDecision.stay()
-        : RouteDecision.go(schemaGate, RouteReason.schemaBehind);
-  }
-  if (schemaGate != null) {
-    return RouteDecision.go(facts.home, RouteReason.schemaCurrent);
-  }
-  if (facts.auth == AuthFact.loading) return const RouteDecision.stay();
   final demoEntry = _demoLinkRedirect(request);
+  final schemaHop = _schemaDecision(request, facts, demoEntry);
+  if (schemaHop != null) return schemaHop;
+  if (facts.auth == AuthFact.loading) return const RouteDecision.stay();
   if (demoEntry != null) return demoEntry;
 
   final kind = classifyRoute(path);

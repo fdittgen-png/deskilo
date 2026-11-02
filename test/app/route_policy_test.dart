@@ -23,6 +23,7 @@ const profileDown = RouteFacts(auth: AuthFact.signedIn, privacy: PrivacyFact.una
 const listDown = RouteFacts(auth: AuthFact.signedIn, workspaces: WorkspacesFact.unavailable);
 const behindOut = RouteFacts(auth: AuthFact.signedOut, schema: SchemaCompatibility.behind);
 const behindIn = RouteFacts(auth: AuthFact.signedIn, schema: SchemaCompatibility.behind);
+const behindLocked = RouteFacts(auth: AuthFact.signedIn, schema: SchemaCompatibility.behind, kiosk: KioskFact.locked);
 const gate = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.gatePending);
 const locked = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.locked);
 const released = RouteFacts(auth: AuthFact.signedIn, kiosk: KioskFact.released);
@@ -136,6 +137,14 @@ final rows = <Row>[
   stay('behind: the server screen is the way out', '/server', behindOut),
   stay('behind: the wizard is the way out', '/server/new-instance', behindOut),
   stay('behind: the notice stays', '/server-update', behindIn),
+  // #3247 — the Demo runs on no server: a skew does not lock it out.
+  stay('behind, signed out: the demo entry opens', '/demo', behindOut),
+  stay('behind, signed in: the demo entry opens', '/demo?space=pezenas&persona=owner', behindIn),
+  go('behind, signed out: the older demo link opens the entry, not the notice', '/auth?demo=1&space=leipzig', behindOut, '/demo?space=leipzig', RouteReason.demoLink),
+  go('behind, signed in: the older demo link opens the entry, not the notice', '/auth?demo=1', behindIn, '/demo', RouteReason.demoLink),
+  go('behind: a plain sign-in is still the notice', '/auth?foo=1', behindOut, '/server-update', RouteReason.schemaBehind),
+  go('behind: the live routes still go to the notice', '/reserve', behindIn, '/server-update', RouteReason.schemaBehind),
+  go('behind, kiosk locked: the lock decides first, and the pad (a live route) ends at the notice', '/demo', behindLocked, '/kiosk', RouteReason.kioskLocked, settled: '/server-update'),
   go('current: the notice bounces home', '/server-update', member, '/reserve', RouteReason.schemaCurrent),
 ];
 
