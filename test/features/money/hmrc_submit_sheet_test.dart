@@ -220,6 +220,47 @@ void main() {
     expect(find.text(_en.hmrcFiled('R-2')), findsOneWidget);
   });
 
+  testWidgets('a reopened sheet keeps Submit off for a return the server recorded as unconfirmed, until the person checked', (tester) async {
+    final fake = await _pump(
+      tester,
+      state: const HmrcState(
+        vrn: '123456789',
+        connection: HmrcConnection(id: 'c1', issuerSiteId: 's1', link: HmrcLink.connected),
+        unconfirmedDeclarationIds: ['d1'],
+      ),
+    );
+    final submit = find.byKey(const ValueKey('hmrc-submit'));
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+    await tester.tap(submit, warnIfMissed: false);
+    await tester.pump();
+    expect(fake.submitted, isEmpty);
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNotNull);
+    await tester.tap(submit);
+    await tester.pump();
+    await tester.pump();
+    expect(fake.submitted, hasLength(1));
+  });
+
+  testWidgets('another return being unconfirmed does not lock this one', (tester) async {
+    await _pump(
+      tester,
+      state: const HmrcState(
+        vrn: '123456789',
+        connection: HmrcConnection(id: 'c1', issuerSiteId: 's1', link: HmrcLink.connected),
+        unconfirmedDeclarationIds: ['other'],
+      ),
+    );
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNotNull);
+    expect(find.byKey(const ValueKey('hmrc-checked')), findsNothing);
+  });
+
+  test('the connection read carries the unconfirmed return ids, and none when the wire omits them', () {
+    expect(HmrcState.fromJson({'vrn': '1', 'unconfirmed_declaration_ids': ['a', 'b'], 'connection': null}).unconfirmedDeclarationIds, ['a', 'b']);
+    expect(HmrcState.fromJson({'vrn': '1', 'connection': null}).unconfirmedDeclarationIds, isEmpty);
+  });
+
   testWidgets('a port that throws after the post reads unconfirmed, never "not allowed"', (tester) async {
     await _pump(tester, outcome: () async => throw const SocketLikeError());
     await tester.tap(find.byKey(const ValueKey('hmrc-submit')));

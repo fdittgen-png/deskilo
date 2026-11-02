@@ -44,7 +44,12 @@ class HmrcConnection {
 
 /// What the VAT returns screen needs before it offers the submission.
 class HmrcState {
-  const HmrcState({this.vrn, this.connection, this.demo = false});
+  const HmrcState({
+    this.vrn,
+    this.connection,
+    this.demo = false,
+    this.unconfirmedDeclarationIds = const [],
+  });
 
   /// The Demo's synthetic HMRC: no sign-in page opens and no call is made.
   final bool demo;
@@ -53,10 +58,15 @@ class HmrcState {
   final String? vrn;
   final HmrcConnection? connection;
 
+  /// Returns whose last submission ended unconfirmed: they stay off until the
+  /// person says they checked at HMRC, on any device and after a reload.
+  final List<String> unconfirmedDeclarationIds;
+
   factory HmrcState.fromJson(Object? json) {
     final r = JsonReader.orEmpty(json, context: 'hmrc_connection_v1');
     return HmrcState(
       vrn: r.stringOrNull('vrn'),
+      unconfirmedDeclarationIds: r.strings('unconfirmed_declaration_ids'),
       connection: r.objectOrNull('connection') == null
           ? null
           : HmrcConnection.fromReader(r.objectOrNull('connection')!),

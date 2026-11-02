@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/demo_hmrc_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
@@ -208,6 +209,22 @@ void main() {
     }
     expect({mine[DemoPersona.owner], mine[DemoPersona.admin], mine[DemoPersona.member]}, hasLength(3));
   });
+
+  test('a Demo reset while a submit is pending: the pending one lands on the discarded store, the new session stays prepared', () async {
+    final root = ProviderContainer();
+    addTearDown(root.dispose);
+    final controller = root.read(demoSessionControllerProvider.notifier);
+    final old = root.read(demoSessionControllerProvider).fixture;
+    final connection = await _connect(old);
+    final d = _prepared(old);
+    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    controller.reset();
+    await pending;
+    final fresh = root.read(demoSessionControllerProvider).fixture;
+    expect(fresh, isNot(same(old)));
+    expect(_prepared(fresh).isPrepared, isTrue);
+    expect((await fresh.london.hmrc.state(demoLondonSpaceId)).connection, isNull);
+  });
 }
 
 /// The rounding of three 20 % lines: each invoice's VAT is rounded alone.
@@ -227,6 +244,6 @@ void _unknownSpace() {
     );
     addTearDown(container.dispose);
     await container.read(currentWorkspaceProvider.future);
-    expect(() => container.read(moneyRepositoryProvider), throwsA(anything));
+    expect(() => container.read(moneyRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
   });
 }
