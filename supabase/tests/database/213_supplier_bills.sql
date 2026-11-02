@@ -171,8 +171,8 @@ select ok((pg_temp.call(pg_temp.u(1), format('select public.submit_purchase_v1(%
 
 -- ── B: the second person decides ───────────────────────────────────────
 select ok((pg_temp.decide(pg_temp.u(1), current_setting('t.p1'), 1, true, '', 11)::text) like '%another person must decide%', 'B: the submitter cannot decide their own bill');
-select ok((pg_temp.decide(pg_temp.u(2), current_setting('t.p1'), 1, true, '', 12)::text) like '%may not decide purchases%', 'B: a plain member cannot decide');
-select ok((pg_temp.decide(pg_temp.u(5), current_setting('t.p1'), 1, true, '', 13)::text) like '%not an active member%', 'B: nor a foreign owner');
+select is(pg_temp.decide(pg_temp.u(2), current_setting('t.p1'), 1, true, '', 12)->>'error', 'purchase decision is not available', 'B: a plain member cannot decide');
+select is(pg_temp.decide(pg_temp.u(5), current_setting('t.p1'), 1, true, '', 13)->>'error', 'purchase decision is not available', 'B: nor a foreign owner');
 select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.p1'), 9, true, '', 14)::text) like '%stale revision%', 'B: a stale revision is refused');
 select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.p1'), 1, false, '', 15)::text) like '%state why it is rejected%', 'B: a rejection needs its reason');
 select is((select count(*)::int from public.purchase_obligations where workspace_id = current_setting('t.a')::uuid and creditor_kind = 'supplier'), 0, 'B: readback: no refusal filed a payable');
