@@ -29,13 +29,14 @@ No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconcilia
 
 ## Active #3070 checkpoint
 
-**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer allocates a fresh migration number only after checking master/ledger; none is confirmed reserved at this snapshot. No dev application authorized by this assignment.
+**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; none is yet confirmed reserved in this snapshot. E2 may write numbered local SQL only after that receipt. No dev application authorized by this assignment.
 
-Source-backed concern: approveExpenses permits route entry but existing purchase list/detail reads may omit other submitters' pending items. Reproduce it against actual decision authorization before changing access. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
+Reviewer source check confirms different predicates in 0461 purchase RLS/0587 detail and 0468 decision authorization. Reproduce intended eligibility before changing access. 0483 permits self-approval strictly below configured purchase.single_approval_below_units (default 0); self-rejection remains prohibited. Never blanket-exclude own rows. Verify member-receipt versus supplier-bill semantics and minimize newly disclosed fields. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
 
 Acceptance:
 
-- Queue, count and detail enforce the same intended decision eligibility and preserve tenant, feature, delegation and self-approval rules. No blanket wide purchase access or write redesign.
+- Queue, count and decision-detail enforce intended current eligibility and preserve active membership, tenant, feature, delegation and threshold-based self-approval rules. Preserve broader existing read scopes; no blanket wide purchase access or write redesign. Tests cover below/equal/above threshold, default zero, self-rejection prohibition and permission/status changes.
+- E2 exclusively owns implicated purchase read domain/repository/providers, approvals screen/drawer, existing Demo/coverage, scoped tests and reserved SQL/contract/bundle integration. E1 reviews read-only. Supplier To-pay and unrelated registry/write changes are outside these locks.
 - Loading/error/unavailable is distinct from true zero; retained stale data must not imply fresh results.
 - Stable, complete paging within declared limits; do not claim offset traversal is a snapshot. Existing fetchAllPages throws at 100,000 rows, unlike the former payable 2,000-row cap. No long-lived snapshot architecture without demonstrated need.
 - Existing Demo exercises approver-only pending item, allowed detail, existing decision and refreshed queue/count; include denied access, paging and error recovery.
