@@ -7353,6 +7353,7 @@
   "hmrcBox7": "Case 7 · Total des achats hors TVA",
   "hmrcBox8": "Case 8 · Livraisons de biens vers l'UE",
   "hmrcBox9": "Case 9 · Acquisitions de biens depuis l'UE",
+  "hmrcChecked": "J'ai vérifié chez HMRC",
   "hmrcConnect": "Se connecter à HMRC",
   "hmrcConnectHint": "Vous vous connectez chez HMRC ; nous ne voyons jamais votre mot de passe. Revenez ici quand HMRC vous a redirigé.",
   "hmrcConnected": "Connecté à HMRC.",

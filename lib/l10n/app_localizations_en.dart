@@ -10618,6 +10618,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hmrcBox9 => 'Box 9 · Acquisitions of goods from the EU';
 
   @override
+  String get hmrcChecked => 'I checked at HMRC';
+
+  @override
   String get hmrcConnect => 'Connect to HMRC';
 
   @override

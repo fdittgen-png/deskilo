@@ -93,7 +93,7 @@ class DemoTaxReporting implements TaxReportingRepository {
   /// channel `hmrc_mtd` and a receipt that says it is simulated. Not part of
   /// the repository port: only the Demo's HMRC adapter calls it, after its
   /// own checks.
-  void fileAsHmrcDemo(String declarationId, String receipt) {
+  void fileAsHmrcDemo(String declarationId, String receipt, {required DateTime at}) {
     final index = _m.vatDeclarations.indexWhere((d) => d.id == declarationId);
     if (index == -1) throw StateError('unknown declaration');
     final d = _m.vatDeclarations[index];
@@ -112,7 +112,7 @@ class DemoTaxReporting implements TaxReportingRepository {
       currency: d.currency,
       invoiceCount: d.invoiceCount,
       createdAt: d.createdAt,
-      submittedAt: d.periodEnd.add(const Duration(days: 20)),
+      submittedAt: at,
       submittedChannel: 'hmrc_mtd',
       submittedReceipt: receipt,
       number: 'DECL-${d.periodEnd.year}-${(index + 1).toString().padLeft(4, '0')}',

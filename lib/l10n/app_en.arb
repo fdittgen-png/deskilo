@@ -12633,6 +12633,10 @@
   "@hmrcBox9": {
     "description": "#2470 HMRC MTD submission"
   },
+  "hmrcChecked": "I checked at HMRC",
+  "@hmrcChecked": {
+    "description": "#2470 after an unconfirmed answer: the person says they checked at HMRC before submitting again"
+  },
   "hmrcConnect": "Connect to HMRC",
   "@hmrcConnect": {
     "description": "#2470 HMRC MTD submission"

@@ -57,15 +57,23 @@ class _HmrcSubmitSheet extends ConsumerStatefulWidget {
 
 class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   bool _busy = false;
+
+  /// After an unconfirmed answer the person must say they checked at HMRC
+  /// before the return can be submitted again: never a blind second post.
+  bool _checkedAtHmrc = false;
   HmrcOutcome? _outcome;
 
   /// Runs one action with the buttons off and its outcome (if any) shown:
   /// the single place the sheet's busy state changes.
-  Future<void> _run(Future<HmrcOutcome?> Function() action) async {
+  Future<void> _run(
+    Future<HmrcOutcome?> Function() action, {
+    required HmrcOutcome onError,
+  }) async {
     if (_busy) return;
     setState(() {
       _busy = true;
       _outcome = null;
+      _checkedAtHmrc = false;
     });
     HmrcOutcome? outcome;
     try {
@@ -73,7 +81,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     } on Object catch (e, st) {
       // The server (or the Demo) refused the person: said, not thrown.
       TraceLogger.instance.warn('money', 'hmrc action refused', stackTrace: st);
-      outcome = const HmrcRefused(HmrcRefusal.notAllowed);
+      outcome = onError;
     }
     if (!mounted) return;
     setState(() {
@@ -96,7 +104,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       );
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
       return null;
-    });
+    }, onError: const HmrcRefused(HmrcRefusal.notAllowed));
   }
 
   Future<void> _submit(HmrcConnection connection, HmrcClientValues client) =>
@@ -106,6 +114,9 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
           connection: connection,
           client: client,
         ),
+        // The port never throws; if something still does, the post may have
+        // left: unconfirmed.
+        onError: const HmrcUnconfirmed(code: 'CLIENT'),
       );
 
   @override
@@ -162,6 +173,8 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     );
   }
 
+  bool get _awaitingCheck => _outcome is HmrcUnconfirmed && !_checkedAtHmrc;
+
   Widget _body(AppLocalizations l10n, HmrcState s, HmrcClientValues values) {
     final connection = s.connection;
     return Column(
@@ -202,11 +215,18 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
             const SizedBox(height: AppSpacing.sm),
             FilledButton(
               key: const ValueKey('hmrc-submit'),
-              onPressed: _busy || _outcome is HmrcFiled
+              onPressed:
+                  _busy || _outcome is HmrcFiled || _awaitingCheck
                   ? null
                   : () => _submit(connection, values),
               child: Text(l10n.hmrcSubmitNow),
             ),
+            if (_awaitingCheck)
+              TextButton(
+                key: const ValueKey('hmrc-checked'),
+                onPressed: () => setState(() => _checkedAtHmrc = true),
+                child: Text(l10n.hmrcChecked),
+              ),
           ],
         ],
       ],

@@ -42,5 +42,6 @@
   "hmrcRefusalAcceptedForOtherFigures": "HMRC ha accettato una versione precedente di questa dichiarazione con altre cifre. Verifichi su HMRC; non è stato inviato nulla.",
   "hmrcRefusalFraudHeadersMissing": "Il browser non ha fornito i dati richiesti da HMRC. Non è stato inviato nulla.",
   "hmrcRefusalUnreachable": "HMRC non è raggiungibile. Non è stato inviato nulla.",
-  "hmrcRefusalOther": "L'invio non è riuscito. Non risulta presentato nulla."
+  "hmrcRefusalOther": "L'invio non è riuscito. Non risulta presentato nulla.",
+  "hmrcChecked": "Ho verificato su HMRC"
 }

@@ -86,25 +86,16 @@ void main() {
     expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull);
   });
 
-  testWidgets('an administrator sees the door but is refused, and nothing is filed', (tester) async {
+  testWidgets('an administrator is turned away from the UK VAT returns, and nothing is filed', (tester) async {
     final (journey, container) = await _open(tester, space: 'london', persona: DemoPersona.admin);
     expect(container.read(currentWorkspaceProvider).value?.id, demoLondonSpaceId);
     final declaration = journey.fixture.london.money.vatDeclarations.single;
-    // Only the owner files VAT returns: the door may be shown, the connect is refused.
-    if (_mtd(declaration.id).evaluate().isEmpty) {
-      expect(container.read(routerProvider).routeInformationProvider.value.uri.path, isNot('/vat-declarations'),
-          reason: 'the screen itself refuses an administrator');
-      expect(declaration.isPrepared, isTrue);
-      return;
-    }
-    await tester.ensureVisible(_mtd(declaration.id));
-    await tester.tap(_mtd(declaration.id));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('hmrc-connect')));
-    await tester.pumpAndSettle();
-    expect(find.text(_en.hmrcRefusalNotAllowed), findsOneWidget);
-    expect(find.byKey(const ValueKey('hmrc-submit')), findsNothing);
-    expect(journey.fixture.london.money.vatDeclarations.single.isPrepared, isTrue);
+    // Only the owner files VAT returns: the screen itself redirects the
+    // administrator, so no door is shown (the repository refuses a connect
+    // and a submit as well, pinned in demo_hmrc_repository_test).
+    expect(container.read(routerProvider).routeInformationProvider.value.uri.path, '/money');
+    expect(_mtd(declaration.id), findsNothing);
+    expect(declaration.isPrepared, isTrue);
   });
 
   testWidgets('the French space has no door to HMRC', (tester) async {

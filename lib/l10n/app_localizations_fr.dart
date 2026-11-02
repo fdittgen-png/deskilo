@@ -10719,6 +10719,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hmrcBox9 => 'Case 9 · Acquisitions de biens depuis l\'UE';
 
   @override
+  String get hmrcChecked => 'J\'ai vérifié chez HMRC';
+
+  @override
   String get hmrcConnect => 'Se connecter à HMRC';
 
   @override

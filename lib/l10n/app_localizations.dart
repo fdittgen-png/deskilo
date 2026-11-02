@@ -17591,6 +17591,12 @@ abstract class AppLocalizations {
   /// **'Box 9 · Acquisitions of goods from the EU'**
   String get hmrcBox9;
 
+  /// #2470 after an unconfirmed answer: the person says they checked at HMRC before submitting again
+  ///
+  /// In en, this message translates to:
+  /// **'I checked at HMRC'**
+  String get hmrcChecked;
+
   /// #2470 HMRC MTD submission
   ///
   /// In en, this message translates to:

@@ -42,5 +42,6 @@
   "hmrcRefusalAcceptedForOtherFigures": "HMRC a accepté une version antérieure de cette déclaration avec d'autres chiffres. Vérifiez chez HMRC ; rien n'a été envoyé.",
   "hmrcRefusalFraudHeadersMissing": "Votre navigateur n'a pas fourni les informations exigées par HMRC. Rien n'a été envoyé.",
   "hmrcRefusalUnreachable": "HMRC est injoignable. Rien n'a été envoyé.",
-  "hmrcRefusalOther": "Le dépôt a échoué. Rien n'est enregistré."
+  "hmrcRefusalOther": "Le dépôt a échoué. Rien n'est enregistré.",
+  "hmrcChecked": "J'ai vérifié chez HMRC"
 }

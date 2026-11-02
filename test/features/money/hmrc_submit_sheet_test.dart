@@ -193,6 +193,42 @@ void main() {
     }
   });
 
+  testWidgets('after an unconfirmed answer the return cannot be submitted again until the person says they checked at HMRC', (tester) async {
+    var calls = 0;
+    final fake = await _pump(tester, outcome: () async {
+      calls++;
+      return calls == 1
+          ? const HmrcUnconfirmed(code: 'CLIENT')
+          : const HmrcFiled(HmrcReceipt(formBundleNumber: 'R-2'));
+    });
+    final submit = find.byKey(const ValueKey('hmrc-submit'));
+    await tester.tap(submit);
+    await tester.pump();
+    await tester.pump();
+    expect(find.text(_en.hmrcUnconfirmed), findsOneWidget);
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull, reason: 'no blind second post');
+    await tester.tap(submit, warnIfMissed: false);
+    await tester.pump();
+    expect(fake.submitted, hasLength(1));
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNotNull);
+    await tester.tap(submit);
+    await tester.pump();
+    await tester.pump();
+    expect(fake.submitted, hasLength(2));
+    expect(find.text(_en.hmrcFiled('R-2')), findsOneWidget);
+  });
+
+  testWidgets('a port that throws after the post reads unconfirmed, never "not allowed"', (tester) async {
+    await _pump(tester, outcome: () async => throw const SocketLikeError());
+    await tester.tap(find.byKey(const ValueKey('hmrc-submit')));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text(_en.hmrcUnconfirmed), findsOneWidget);
+    expect(find.text(_en.hmrcRefusalNotAllowed), findsNothing);
+  });
+
   testWidgets('not connected: no submit, a connect that opens HMRC\'s page', (tester) async {
     final launched = <Uri>[];
     final fake = await _pump(
@@ -236,8 +272,15 @@ void main() {
     expect(kind(422, {'error': 'acquisition_not_supported'}), HmrcRefusal.acquisitionNotSupported);
     expect(kind(422, {'error': 'fraud_headers_missing', 'missing': ['Gov-Client-Device-ID']}), HmrcRefusal.fraudHeadersMissing);
     expect(kind(403, {}), HmrcRefusal.notAllowed);
-    expect(kind(500, {'error': 'weird'}), HmrcRefusal.other);
+    expect(kind(422, {'error': 'weird'}), HmrcRefusal.other);
+    // A server fault that names nothing we know may have come after the post.
+    expect(hmrcOutcomeOfRefusal(500, {'error': 'weird'}), isA<HmrcUnconfirmed>());
+    expect(hmrcOutcomeOfRefusal(0, 'SocketException'), isA<HmrcUnconfirmed>());
     expect(hmrcOutcomeOfRefusal(504, {'error': 'unconfirmed'}), isA<HmrcUnconfirmed>());
     expect(hmrcOutcomeOfRefusal(500, {'error': 'accepted_not_recorded', 'receipt': {'formBundleNumber': 'R'}}), isA<HmrcAcceptedNotRecorded>());
   });
+}
+
+class SocketLikeError implements Exception {
+  const SocketLikeError();
 }

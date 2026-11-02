@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (one read function; the accounting connection list is restated whole from
--- 0595 with one added condition)
+-- (one read function; the accounting connection list is restated from 0595
+-- by an anchored patch with one added condition)
 --
 -- 0649 (#2470) -- the client slice of the HMRC MTD VAT submission.
 --

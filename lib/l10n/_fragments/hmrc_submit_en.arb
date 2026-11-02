@@ -194,5 +194,9 @@
   "hmrcRefusalOther": "The submission failed. Nothing is filed.",
   "@hmrcRefusalOther": {
     "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcChecked": "I checked at HMRC",
+  "@hmrcChecked": {
+    "description": "#2470 after an unconfirmed answer: the person says they checked at HMRC before submitting again"
   }
 }

@@ -42,5 +42,6 @@
   "hmrcRefusalAcceptedForOtherFigures": "HMRC hat eine frühere Fassung dieser Erklärung mit anderen Zahlen angenommen. Prüfen Sie bei HMRC; es wurde nichts gesendet.",
   "hmrcRefusalFraudHeadersMissing": "Ihr Browser hat die von HMRC verlangten Angaben nicht geliefert. Es wurde nichts gesendet.",
   "hmrcRefusalUnreachable": "HMRC war nicht erreichbar. Es wurde nichts gesendet.",
-  "hmrcRefusalOther": "Die Einreichung ist fehlgeschlagen. Es ist nichts eingereicht."
+  "hmrcRefusalOther": "Die Einreichung ist fehlgeschlagen. Es ist nichts eingereicht.",
+  "hmrcChecked": "Ich habe bei HMRC geprüft"
 }

@@ -4497,6 +4497,7 @@ Map<String, _Getter> _part14() => {
   'guideHostStopped': (l) => l.guideHostStopped,
   'helpHintMessagesTip2': (l) => l.helpHintMessagesTip2,
   'helpTopicDeployment': (l) => l.helpTopicDeployment,
+  'hmrcChecked': (l) => l.hmrcChecked,
   'hmrcRefusalNotAuthorised': (l) => l.hmrcRefusalNotAuthorised,
   'holidayNewYear': (l) => l.holidayNewYear,
   'holidayVictory1945': (l) => l.holidayVictory1945,

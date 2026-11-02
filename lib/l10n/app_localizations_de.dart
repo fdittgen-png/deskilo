@@ -10700,6 +10700,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hmrcBox9 => 'Feld 9 · Erwerb von Waren aus der EU';
 
   @override
+  String get hmrcChecked => 'Ich habe bei HMRC geprüft';
+
+  @override
   String get hmrcConnect => 'Mit HMRC verbinden';
 
   @override

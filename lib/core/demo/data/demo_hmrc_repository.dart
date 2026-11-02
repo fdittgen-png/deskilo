@@ -12,6 +12,7 @@ import '../../../features/money/domain/mtd_boxes.dart';
 import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../time/date_text.dart';
+import '../seed/demo_london_seed.dart';
 import 'money_repository.dart';
 import 'workspace_repository.dart';
 
@@ -44,6 +45,9 @@ class DemoHmrcRepository implements HmrcRepository {
 
   @override
   Future<HmrcState> state(String workspaceId) async {
+    // Only the London space has a UK registration to file for; any other
+    // space (a German VAT number is nine digits too) has none.
+    if (workspaceId != demoLondonSpaceId) return const HmrcState(demo: true);
     final digits = _workspaces.workspaces
         .where((w) => w.id == workspaceId)
         .map((w) => w.vatId.toUpperCase().replaceAll(RegExp(r'^(GB|XI)'), '').replaceAll(RegExp(r'\D'), ''))
@@ -57,14 +61,18 @@ class DemoHmrcRepository implements HmrcRepository {
 
   @override
   Future<Uri> startConnect(String workspaceId, String issuerSiteId) async {
+    if (workspaceId != demoLondonSpaceId) {
+      throw StateError('only the London space files through HMRC');
+    }
     if (!_mayFile) throw StateError('only the owner connects HMRC');
     _connection = HmrcConnection(
       id: 'demo-hmrc-connection',
       issuerSiteId: issuerSiteId,
       link: HmrcLink.connected,
     );
-    // The Demo's sign-in is synthetic: the caller opens nothing.
-    return Uri.parse('https://www.tax.service.gov.uk/oauth/authorize?demo=1');
+    // The Demo's sign-in is synthetic: nothing opens, so nothing that looks
+    // like HMRC's page is returned.
+    return Uri.parse('demo:hmrc-sign-in');
   }
 
   @override
@@ -122,7 +130,7 @@ class DemoHmrcRepository implements HmrcRepository {
       formBundleNumber: 'DEMO-${declaration.periodEnd.year}${twoDigits(declaration.periodEnd.month)}-${twoDigits(_attempts)}',
       processingDate: _today.toUtc().toIso8601String(),
     );
-    _money.taxReporting.fileAsHmrcDemo(declaration.id, receipt.formBundleNumber);
+    _money.taxReporting.fileAsHmrcDemo(declaration.id, receipt.formBundleNumber, at: _today);
     return HmrcFiled(receipt, demo: true);
   }
 

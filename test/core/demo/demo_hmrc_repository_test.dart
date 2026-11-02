@@ -7,10 +7,14 @@
 import 'package:deskilo/core/demo/data/demo_hmrc_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _client = HmrcClientValues(
@@ -33,6 +37,7 @@ Future<HmrcConnection> _connect(DemoFixture f) async {
 }
 
 void main() {
+  _unknownSpace();
   test('the London space has a prepared return of the last closed quarter, made by the invoices', () {
     final f = DemoFixture.build();
     final d = _prepared(f);
@@ -158,9 +163,70 @@ void main() {
     final second = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
     expect(second, isA<HmrcFiled>());
   });
+
+  test('a submit that completes after the persona changed files nothing', () async {
+    final f = DemoFixture.build();
+    final connection = await _connect(f);
+    final d = _prepared(f);
+    final pending = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    f.becomePersona(DemoPersona.admin);
+    expect(((await pending) as HmrcRefused).refusal, HmrcRefusal.notAllowed);
+    expect(_prepared(f).isPrepared, isTrue);
+  });
+
+  test('a submit still running on a discarded fixture does not touch the fresh one', () async {
+    final old = DemoFixture.build();
+    final connection = await _connect(old);
+    final d = _prepared(old);
+    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final fresh = DemoFixture.build();
+    await pending;
+    expect(_prepared(fresh).isPrepared, isTrue, reason: 'the reset store is its own');
+    expect((await fresh.london.hmrc.state(demoLondonSpaceId)).connection, isNull);
+  });
+
+  test('the other spaces answer state without a registration and refuse to connect', () async {
+    final f = DemoFixture.build();
+    for (final id in ['ws-1', 'ws-2']) {
+      expect((await f.london.hmrc.state(id)).vrn, isNull, reason: id);
+      await expectLater(f.london.hmrc.startConnect(id, 'site'), throwsStateError, reason: id);
+    }
+  });
+
+  test('London persona isolation: the kiosk does not see the space, the others are three different people', () {
+    final f = DemoFixture.build();
+    final mine = <DemoPersona, String>{};
+    final listed = <DemoPersona, bool>{};
+    for (final p in DemoPersona.values) {
+      f.becomePersona(p);
+      mine[p] = f.london.workspaces.myMember.id;
+      listed[p] = f.workspaces.workspaces.any((w) => w.id == demoLondonSpaceId);
+    }
+    expect(listed[DemoPersona.kiosk], isFalse);
+    for (final p in [DemoPersona.owner, DemoPersona.admin, DemoPersona.member]) {
+      expect(listed[p], isTrue, reason: p.name);
+    }
+    expect({mine[DemoPersona.owner], mine[DemoPersona.admin], mine[DemoPersona.member]}, hasLength(3));
+  });
 }
 
 /// The rounding of three 20 % lines: each invoice's VAT is rounded alone.
 int _roundingOf(int a, int b, int c) =>
     ((a * 20 / 100).round() + (b * 20 / 100).round() + (c * 20 / 100).round()) -
     ((a + b + c) * 20 ~/ 100);
+
+void _unknownSpace() {
+  test('a space the Demo does not know fails closed: no space repository is guessed', () async {
+    final f = DemoFixture.build();
+    final unknown = f.workspaces.workspaces.first.copyWith(id: 'ws-unknown');
+    final container = ProviderContainer(
+      overrides: [
+        ...demoOverrides(f),
+        currentWorkspaceProvider.overrideWith((ref) async => unknown),
+      ],
+    );
+    addTearDown(container.dispose);
+    await container.read(currentWorkspaceProvider.future);
+    expect(() => container.read(moneyRepositoryProvider), throwsA(anything));
+  });
+}

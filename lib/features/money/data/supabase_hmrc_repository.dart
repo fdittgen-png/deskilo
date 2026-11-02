@@ -75,6 +75,15 @@ class SupabaseHmrcRepository implements HmrcRepository {
         stackTrace: st,
       );
       return hmrcOutcomeOfRefusal(e.status, e.details);
+    } on Object catch (e, st) {
+      // A dropped connection, a timeout: the return may have reached HMRC.
+      // It is unconfirmed, never "you may not file".
+      TraceLogger.instance.warn(
+        'money',
+        'hmrc submit failed (${e.runtimeType})',
+        stackTrace: st,
+      );
+      return const HmrcUnconfirmed(code: 'CLIENT');
     }
   }
 }
@@ -96,6 +105,8 @@ const _refusalOfError = <String, HmrcRefusal>{
   'in_flight': HmrcRefusal.inFlight,
   'accepted_for_other_figures': HmrcRefusal.acceptedForOtherFigures,
   'unreachable': HmrcRefusal.unreachable,
+  'token': HmrcRefusal.signInAgain,
+  'submission_unavailable': HmrcRefusal.unreachable,
 };
 
 /// The outcome a non-2xx answer of the function stands for, read by its
@@ -117,9 +128,15 @@ HmrcOutcome hmrcOutcomeOfRefusal(int status, Object? details) {
       missing: [for (final m in missing is List ? missing : const []) '$m'],
     );
   }
+  final known = _refusalOfError[error];
+  // No answer at all (status 0: the connection dropped) or a server fault
+  // that names nothing we know may have come after the post: unconfirmed,
+  // not a safe "nothing is filed".
+  if (known == null && (status < 100 || status >= 500)) {
+    return HmrcUnconfirmed(code: status < 100 ? 'CLIENT' : code);
+  }
   return HmrcRefused(
-    _refusalOfError[error] ??
-        (status == 403 ? HmrcRefusal.notAllowed : HmrcRefusal.other),
+    known ?? (status == 403 ? HmrcRefusal.notAllowed : HmrcRefusal.other),
     code: code,
   );
 }

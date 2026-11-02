@@ -7353,6 +7353,7 @@
   "hmrcBox7": "Casella 7 · Totale acquisti senza IVA",
   "hmrcBox8": "Casella 8 · Cessioni di beni verso l'UE",
   "hmrcBox9": "Casella 9 · Acquisti di beni dalla UE",
+  "hmrcChecked": "Ho verificato su HMRC",
   "hmrcConnect": "Collegare a HMRC",
   "hmrcConnectHint": "Accede a HMRC; non vediamo mai la sua password. Torni qui quando HMRC l'ha reindirizzata.",
   "hmrcConnected": "Collegato a HMRC.",

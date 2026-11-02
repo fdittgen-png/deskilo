@@ -7353,6 +7353,7 @@
   "hmrcBox7": "Feld 7 · Einkäufe gesamt ohne USt",
   "hmrcBox8": "Feld 8 · Warenlieferungen in die EU",
   "hmrcBox9": "Feld 9 · Erwerb von Waren aus der EU",
+  "hmrcChecked": "Ich habe bei HMRC geprüft",
   "hmrcConnect": "Mit HMRC verbinden",
   "hmrcConnectHint": "Sie melden sich bei HMRC an; wir sehen Ihr Passwort nie. Kommen Sie zurück, wenn HMRC Sie zurückgeleitet hat.",
   "hmrcConnected": "Mit HMRC verbunden.",
