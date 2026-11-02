@@ -8,6 +8,7 @@ void main() {
   test('page count and full cursor survive decoding', () {
     final page = PurchaseApprovalPage.fromJson({
       'count': 201,
+      'version': 'v1',
       'rows': <Object>[],
       'next': {'created': '2026-01-01T00:00:00Z', 'id': 'last'},
     });
@@ -16,6 +17,7 @@ void main() {
     expect(
       () => PurchaseApprovalPage.fromJson({
         'count': 1,
+        'version': 'v1',
         'rows': <Object>[],
         'next': {'created': 'x'},
       }),

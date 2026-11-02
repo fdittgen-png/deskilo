@@ -40,7 +40,7 @@ class _Reads implements PurchaseApprovalReads {
   Future<PurchaseApprovalPage> page(
     String workspaceId, {
     PurchaseApprovalCursor? after,
-  }) async => const PurchaseApprovalPage(rows: [], count: 0);
+  }) async => const PurchaseApprovalPage(rows: [], count: 0, version: 'v');
 }
 
 void main() {

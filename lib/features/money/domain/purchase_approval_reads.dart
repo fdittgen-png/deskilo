@@ -11,6 +11,7 @@ class PurchaseApprovalPage {
   const PurchaseApprovalPage({
     required this.rows,
     required this.count,
+    required this.version,
     this.next,
   });
 
@@ -20,6 +21,7 @@ class PurchaseApprovalPage {
     return PurchaseApprovalPage(
       rows: [for (final row in json.list('rows')) PurchaseSummary.fromRow(row)],
       count: json.integer('count'),
+      version: json.string('version'),
       next: cursor == null
           ? null
           : (created: cursor.string('created'), id: cursor.string('id')),
@@ -28,6 +30,9 @@ class PurchaseApprovalPage {
 
   final List<PurchaseSummary> rows;
   final int count;
+
+  /// Detects changes between page requests; it cannot make them a snapshot.
+  final String version;
   final PurchaseApprovalCursor? next;
 }
 

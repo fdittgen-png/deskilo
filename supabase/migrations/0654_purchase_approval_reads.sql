@@ -1,7 +1,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- #3070: actionable supplier bills for the approver, not wide purchase access.
--- Each page/count is a statement snapshot; separate pages can see changes.
+-- Each page/count is a statement snapshot. A version detects changed rows
+-- between pages but cannot make multiple requests one snapshot. Queues over
+-- 100000 eligible bills fail explicitly instead of returning partial data.
 
 create or replace function public.purchase_approval_actor(p_workspace_id uuid)
 returns uuid language plpgsql stable security definer set search_path = public as $fn$
@@ -25,9 +27,9 @@ revoke execute on function public.purchase_approval_actor(uuid) from public, ano
 -- Match decide_purchase_v1's 0483 maker/checker rule. Member receipts are
 -- decided by expense validation, not by decide_purchase_v1.
 create or replace function public.purchase_approval_eligible(p_workspace_id uuid, p_member_id uuid)
-returns table (id uuid, created_datetime timestamptz, can_approve boolean, can_reject boolean, gross_cents bigint)
+returns table (id uuid, created_datetime timestamptz, revision int, can_approve boolean, can_reject boolean, gross_cents bigint)
 language sql stable security definer set search_path = public as $fn$
-  select d.id, d.created_datetime,
+  select d.id, d.created_datetime, d.revision,
          (not maker.is_maker or totals.gross_cents < coalesce(
            (public.setting_value(p_workspace_id, 'purchase.single_approval_below_units') #>> '{}')::bigint, 0) * 100),
          not maker.is_maker, totals.gross_cents
@@ -49,13 +51,13 @@ create or replace function public.purchase_approval_page_v1(
 declare
   v_member uuid := public.purchase_approval_actor(p_workspace_id);
   v_limit int := least(greatest(coalesce(p_limit, 100), 1), 200);
-  v_rows jsonb; v_total bigint; v_n int; v_created timestamptz; v_id uuid;
+  v_rows jsonb; v_total bigint; v_version text; v_n int; v_created timestamptz; v_id uuid;
 begin
   if (p_after_created is null) <> (p_after_id is null) then
     raise exception using errcode = '22023', message = 'both cursor fields are required';
   end if;
   with eligible as materialized (
-    select * from public.purchase_approval_eligible(p_workspace_id, v_member)
+    select * from public.purchase_approval_eligible(p_workspace_id, v_member) limit 100001
   ), page as (
     select e.*, row_number() over (order by e.created_datetime desc, e.id desc) as rn
       from eligible e
@@ -63,6 +65,9 @@ begin
      order by e.created_datetime desc, e.id desc limit v_limit + 1
   )
   select (select count(*) from eligible),
+         (select md5(coalesce(string_agg(id::text || ':' || revision::text || ':' ||
+                   extract(epoch from created_datetime)::text || ':' || gross_cents::text || ':' ||
+                   can_approve::text || ':' || can_reject::text, ',' order by id), '')) from eligible),
          coalesce(jsonb_agg(jsonb_build_object(
            'id', d.id, 'kind', d.kind, 'state', d.state, 'category', d.category,
            'original_reference', d.original_reference, 'currency', d.currency,
@@ -72,9 +77,12 @@ begin
          count(*)::int,
          (array_agg(p.created_datetime order by p.rn) filter (where p.rn = v_limit))[1],
          (array_agg(p.id order by p.rn) filter (where p.rn = v_limit))[1]
-    into v_total, v_rows, v_n, v_created, v_id
+    into v_total, v_version, v_rows, v_n, v_created, v_id
     from page p join public.purchase_documents d on d.id = p.id and d.workspace_id = p_workspace_id;
-  return jsonb_build_object('count', v_total, 'rows', v_rows,
+  if v_total > 100000 then
+    raise exception using errcode = '54000', message = 'purchase approval queue exceeds read limit';
+  end if;
+  return jsonb_build_object('count', v_total, 'version', v_version, 'rows', v_rows,
     'next', case when v_n > v_limit then jsonb_build_object('created', v_created, 'id', v_id) end);
 end;
 $fn$;

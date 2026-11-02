@@ -91,6 +91,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
         resolved.any(
           (p) =>
               p.count != resolved.first.count ||
+              p.version != resolved.first.version ||
               p.rows.any((r) => !ids.add(r.id)),
         ) ||
         [

@@ -41,9 +41,17 @@ class FakePurchaseApprovalReads implements PurchaseApprovalReads {
         ? rows
         : rows.where((d) => d.id.compareTo(after.id) < 0).toList();
     final page = rest.take(_pageSize).toList();
+    final versions = <String>[];
+    for (final row in rows) {
+      final detail = await purchases.fetchDetail(workspaceId, row.id);
+      versions.add(
+        '${row.id}:${detail.revision}:${purchases.isDemoMaker(row.id)}',
+      );
+    }
     return PurchaseApprovalPage(
       rows: page,
       count: rows.length,
+      version: versions.join(','),
       next: rest.length > page.length
           ? (created: _cursorDate, id: page.last.id)
           : null,

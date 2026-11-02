@@ -30,7 +30,11 @@ Widget _app(Future<List<PurchaseSummary>> Function() read) => ProviderScope(
           if (d.state == PurchaseState.pending && d.kind == PurchaseKind.bill)
             d,
       ];
-      return PurchaseApprovalPage(rows: pending, count: pending.length);
+      return PurchaseApprovalPage(
+        rows: pending,
+        count: pending.length,
+        version: 'v',
+      );
     }),
   ],
   child: const MaterialApp(
@@ -74,7 +78,7 @@ void main() {
     expect(find.text('Nothing waits for your approval.'), findsNothing);
   });
   testWidgets(
-    'page continuation reads further bills and stale counts offer retry',
+    'page continuation detects equal-count queue change and offers retry',
     (tester) async {
       const cursor = (created: '2026-01-01T00:00:00Z', id: '1');
       var bad = false;
@@ -86,12 +90,14 @@ void main() {
                 return PurchaseApprovalPage(
                   rows: [_doc('1', PurchaseState.pending)],
                   count: 2,
+                  version: 'v1',
                   next: cursor,
                 );
               }
               return PurchaseApprovalPage(
                 rows: [_doc('2', PurchaseState.pending)],
-                count: bad ? 1 : 2,
+                count: 2,
+                version: bad ? 'v2' : 'v1',
               );
             }),
           ],
@@ -107,8 +113,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('approval-2')), findsOneWidget);
       bad = true;
-      ProviderScope.containerOf(tester.element(find.byType(PurchaseApprovalsView)))
-        .invalidate(purchaseApprovalPageProvider((workspaceId: 'ws', after: cursor)));
+      ProviderScope.containerOf(
+        tester.element(find.byType(PurchaseApprovalsView)),
+      ).invalidate(
+        purchaseApprovalPageProvider((workspaceId: 'ws', after: cursor)),
+      );
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
       bad = false;

@@ -28,12 +28,16 @@ void main() {
       findsOneWidget,
     );
     await tester.pumpWidget(
-      _view(const AsyncData(PurchaseApprovalPage(rows: [], count: 0))),
+      _view(
+        const AsyncData(PurchaseApprovalPage(rows: [], count: 0, version: 'v')),
+      ),
     );
     expect(find.byType(Badge), findsNothing);
     expect(find.byIcon(Icons.error_outline), findsNothing);
     await tester.pumpWidget(
-      _view(const AsyncData(PurchaseApprovalPage(rows: [], count: 3))),
+      _view(
+        const AsyncData(PurchaseApprovalPage(rows: [], count: 3, version: 'v')),
+      ),
     );
     expect(find.text('3'), findsOneWidget);
   });

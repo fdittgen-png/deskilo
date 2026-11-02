@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(25);
+select plan(28);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -71,6 +71,16 @@ set local role authenticated;
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3',null,null,50)->>'count')::int,206,'count covers all pages');
 select isnt(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3',null,null,50)->'next','null'::jsonb,'first page has continuation');
 select is(pg_temp.approvals_walk(),206,'keyset traversal reaches every unique eligible row');
+select set_config('t.approval_version',public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'version',true);
+reset role;
+update public.purchase_documents set state='rejected' where id=(select id from public.purchase_documents
+ where workspace_id='00000000-0000-4000-8000-0000000034a3' and kind='bill' and state='pending'
+ and submitter_member_id='00000000-0000-4000-8000-0000000034a4' order by id limit 1);
+insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
+('00000000-0000-4000-8000-0000000034ae','00000000-0000-4000-8000-0000000034a3','bill','pending','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a4','00000000-0000-4000-8000-0000000034a4','unpaid');
+set local role authenticated;
+select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,206,'replacement can preserve the count');
+select isnt(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'version',current_setting('t.approval_version'),'replacement changes the page version');
 reset role;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000034a2","role":"authenticated","client_id":"delegated"}',true);
 set local role authenticated;
@@ -82,6 +92,11 @@ set local role authenticated;
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9')$$,'42501','purchase approvals are not available','removed permission refuses detail');
 reset role;
 update public.workspaces set role_permissions='{"member":["approveExpenses"]}' where id='00000000-0000-4000-8000-0000000034a3';
+update public.members set status='paused' where id='00000000-0000-4000-8000-0000000034a5';
+set local role authenticated;
+select throws_ok($$select public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')$$,'42501','purchase approvals are not available','inactive member cannot read approvals');
+reset role;
+update public.members set status='active' where id='00000000-0000-4000-8000-0000000034a5';
 update public.workspaces set feature_flags=feature_flags || '{"purchases":false}'  where id='00000000-0000-4000-8000-0000000034a3';
 set local role authenticated;
 select throws_ok($$select public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')$$,'42501','purchase approvals are not available','feature off refuses page');
