@@ -35,6 +35,7 @@ class SupplierBalanceLine extends ConsumerWidget {
         children: [
           Expanded(child: Text(l10n.suppliersBalanceUnavailable)),
           TextButton(
+            key: ValueKey('supplier-balance-retry-$supplierId'),
             onPressed: () =>
                 ref.invalidate(supplierBalancesProvider(workspaceId)),
             child: Text(l10n.commonRetry),
