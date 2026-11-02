@@ -48,4 +48,28 @@ begin
 end
 $patch$;
 
+-- Unassignment deletes an assignment before recording an event whose subject
+-- has immediate member foreign keys. Lock the subject first, matching the
+-- decision guard's member-before-assignment order, so the event FK check
+-- cannot complete a member/assignment lock cycle. Preserve the existing
+-- authorization, off-state service operation and event behavior.
+do $patch$
+declare
+  v_proc regprocedure := 'public.assign_workspace_role(uuid, uuid, boolean)'::regprocedure;
+  v_def text := pg_get_functiondef(v_proc);
+  v_anchor text := $old$  else
+    delete from public.workspace_role_members
+     where role_id = p_role_id and member_id = p_member_id;$old$;
+  v_replacement text := $new$  else
+    perform 1 from public.members where id = p_member_id for update;
+    delete from public.workspace_role_members
+     where role_id = p_role_id and member_id = p_member_id;$new$;
+begin
+  if (length(v_def) - length(replace(v_def, v_anchor, ''))) <> length(v_anchor) then
+    raise exception 'role unassignment lock anchor mismatch';
+  end if;
+  execute replace(v_def, v_anchor, v_replacement);
+end
+$patch$;
+
 select public.set_deskilo_schema_version(655);

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #3070: the decision write refuses stale authorization without side effects.
 begin;
-select plan(31);
+select plan(32);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000035a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000035a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a2@deskilo.test','',now(),now(),now());
@@ -181,5 +181,11 @@ set local role authenticated;
 select public.set_workspace_role('00000000-0000-4000-8000-0000000035a3','decision_reviewer',array['approveExpenses']::text[],'{}'::jsonb,0,true);
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
 select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')->>'state','rejected','restored custom role allows decision');
+-- 0356 permits removal of an existing role even after the feature is off.
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
+select public.set_feature_flags('00000000-0000-4000-8000-0000000035a3','{"customRoles":false}'::jsonb);
+select public.assign_workspace_role('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035f1',false);
+reset role;
+select is((select count(*)::int from public.workspace_role_members where role_id='00000000-0000-4000-8000-0000000035f1' and member_id='00000000-0000-4000-8000-0000000035a5'),0,'existing role removal remains available with customRoles off');
 select * from finish();
 rollback;
