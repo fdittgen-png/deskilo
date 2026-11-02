@@ -2,6 +2,7 @@
 
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/purchase_approval_reads.dart';
+import 'purchase_exchange_rates.dart';
 import 'purchase_repository.dart';
 
 /// The Demo approver reviews bills submitted by another Demo member. Member
@@ -77,7 +78,25 @@ class FakePurchaseApprovalReads implements PurchaseApprovalReads {
       supplierNumber: original.supplierNumber,
       dueOn: original.dueOn,
     );
+    final currency = original.summary.currency;
+    const space = DemoPurchaseExchangeRates.spaceCurrency;
+    final held = currency == space
+        ? null
+        : await purchases.fetchExchangeRate(workspaceId, purchaseId);
+    final fx = PurchaseApprovalFx(
+      status: currency == space
+          ? PurchaseApprovalFxStatus.sameCurrency
+          : held == null
+              ? PurchaseApprovalFxStatus.missing
+              : PurchaseApprovalFxStatus.recorded,
+      currency: currency,
+      functionalCurrency: space,
+      rate: held?.entry.rate.toString(),
+      rateDate: held?.entry.rateDate,
+      source: held?.entry.source,
+    );
     return PurchaseApprovalDetail(
+      fx: fx,
       detail: detail,
       canApprove: true,
       canReject: !purchases.isDemoMaker(purchaseId),

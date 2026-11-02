@@ -19158,7 +19158,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseApprovalEvidenceUnavailable =>
-      'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.';
+      'Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.';
+
+  @override
+  String get purchaseApprovalFxSame => 'The bill is in the workspace currency.';
+
+  @override
+  String get purchaseApprovalFxUnavailable =>
+      'The exchange rate is unavailable in this approval view.';
 
   @override
   String get purchaseApprovalReceiptsUnavailable =>

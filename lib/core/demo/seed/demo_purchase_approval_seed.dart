@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../features/money/domain/accounting_amount.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/supplier.dart';
 import '../data/purchase_repository.dart';
@@ -38,4 +39,28 @@ void seedDemoPurchaseApproval(
       supplierNumber: supplier.number,
     ),
   );
+  final foreign = PurchaseSummary(
+    id: 'demo-bill-approval-fx',
+    kind: PurchaseKind.bill,
+    state: PurchaseState.pending,
+    category: 'Equipment',
+    reference: 'FX-APPROVAL',
+    currency: 'CHF',
+    grossCents: 12500,
+    receivedOn: today,
+  );
+  purchases
+    ..add(PurchaseDetail(
+    summary: foreign,
+    revision: 1,
+    lines: const [PurchaseLine(lineNo: 1, description: 'Equipment', grossCents: 12500)],
+    sources: const [],
+    supplierName: supplier.name,
+    supplierNumber: supplier.number,
+  ))
+    ..rememberRate(foreign, ExchangeRateEntry(
+    rate: ExactDecimal.parse('1.0456789012'),
+    rateDate: today,
+    source: 'bank',
+  ));
 }

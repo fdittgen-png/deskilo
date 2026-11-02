@@ -32019,8 +32019,20 @@ abstract class AppLocalizations {
   /// No description provided for @purchaseApprovalEvidenceUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.'**
+  /// **'Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.'**
   String get purchaseApprovalEvidenceUnavailable;
+
+  /// No description provided for @purchaseApprovalFxSame.
+  ///
+  /// In en, this message translates to:
+  /// **'The bill is in the workspace currency.'**
+  String get purchaseApprovalFxSame;
+
+  /// No description provided for @purchaseApprovalFxUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate is unavailable in this approval view.'**
+  String get purchaseApprovalFxUnavailable;
 
   /// No description provided for @purchaseApprovalReceiptsUnavailable.
   ///

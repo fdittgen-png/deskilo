@@ -18,5 +18,7 @@
   },
   "purchaseApprovalVisibleReceipts": "Ricevute dei membri in attesa che può visualizzare",
   "purchaseApprovalReceiptsUnavailable": "Impossibile caricare le ricevute in attesa.",
-  "purchaseApprovalEvidenceUnavailable": "I documenti giustificativi e l’eventuale tasso di cambio non sono disponibili in questa vista di approvazione. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto."
+  "purchaseApprovalEvidenceUnavailable": "I documenti giustificativi non sono disponibili in questa vista. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto.",
+  "purchaseApprovalFxSame": "La fattura è nella valuta dello spazio.",
+  "purchaseApprovalFxUnavailable": "Il tasso di cambio non è disponibile in questa vista."
 }

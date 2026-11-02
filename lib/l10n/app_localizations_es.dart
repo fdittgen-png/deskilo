@@ -19296,7 +19296,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchaseApprovalEvidenceUnavailable =>
-      'Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.';
+      'Los justificantes no están disponibles en esta vista. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.';
+
+  @override
+  String get purchaseApprovalFxSame =>
+      'La factura está en la moneda del espacio.';
+
+  @override
+  String get purchaseApprovalFxUnavailable =>
+      'El tipo de cambio no está disponible en esta vista.';
 
   @override
   String get purchaseApprovalReceiptsUnavailable =>

@@ -77,28 +77,37 @@ Widget _app(_Purchases purchases, {required bool scoped}) => ProviderScope(
 );
 
 void main() {
-  testWidgets(
-    'scoped detail does not query an unavailable rate or claim it is missing',
-    (tester) async {
-      final purchases = _Purchases()
-        ..add(_bill)
-        ..unavailable = true;
-      await tester.pumpWidget(_app(purchases, scoped: true));
-      await tester.tap(find.text('Open'));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('purchase-line-1')), findsOneWidget);
-      expect(
-        find.text(
-          'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.',
-        ),
-        findsOneWidget,
-      );
-      expect(find.byKey(const ValueKey('purchase-fx')), findsNothing);
-      expect(find.byKey(const ValueKey('purchase-fx-edit')), findsNothing);
-      expect(find.textContaining('No exchange rate is recorded'), findsNothing);
-      expect(purchases.rateReads, 0);
-    },
-  );
+  testWidgets('scoped approver sees exact recorded rate without editing', (tester) async {
+    final purchases = _Purchases()
+      ..add(_bill)
+      ..rememberRate(_summary, ExchangeRateEntry(
+        rate: ExactDecimal.parse('1.0456789012'),
+        rateDate: DateTime(2026, 5, 12),
+        source: 'bank',
+      ));
+    await tester.pumpWidget(_app(purchases, scoped: true));
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('purchase-line-1')), findsOneWidget);
+    expect(find.textContaining('1 CHF = 1.0456789012 EUR'), findsOneWidget);
+    expect(find.byKey(const ValueKey('purchase-approval-fx')), findsOneWidget);
+    expect(find.byKey(const ValueKey('purchase-fx-edit')), findsNothing);
+    expect(find.byKey(const ValueKey('purchase-approval-evidence-unavailable')), findsOneWidget);
+  });
+
+  testWidgets('scoped missing rate is distinct from a refused read and retry', (tester) async {
+    final purchases = _Purchases()..add(_bill)..unavailable = true;
+    await tester.pumpWidget(_app(purchases, scoped: true));
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
+    expect(find.textContaining('No exchange rate is recorded'), findsNothing);
+    purchases.unavailable = false;
+    await tester.tap(find.byKey(const ValueKey('approval-detail-retry')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('No exchange rate is recorded'), findsOneWidget);
+    expect(find.byKey(const ValueKey('purchase-fx-edit')), findsNothing);
+  });
 
   testWidgets(
     'broad purchase detail retains recorded FX and its edit control',

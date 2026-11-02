@@ -36,12 +36,52 @@ class PurchaseApprovalPage {
   final PurchaseApprovalCursor? next;
 }
 
+/// Read-only rate information for this eligible purchase, or its absence.
+enum PurchaseApprovalFxStatus { unavailable, sameCurrency, missing, recorded }
+
+class PurchaseApprovalFx {
+  const PurchaseApprovalFx({
+    required this.status,
+    this.currency,
+    this.functionalCurrency,
+    this.rate,
+    this.rateDate,
+    this.source,
+  });
+
+  factory PurchaseApprovalFx.fromJson(JsonReader json) {
+    final status = switch (json.string('status')) {
+      'same_currency' => PurchaseApprovalFxStatus.sameCurrency,
+      'missing' => PurchaseApprovalFxStatus.missing,
+      'recorded' => PurchaseApprovalFxStatus.recorded,
+      _ => throw const FormatException('Unknown approval exchange rate state'),
+    };
+    return PurchaseApprovalFx(
+      status: status,
+      currency: json.string('currency'),
+      functionalCurrency: json.string('functional_currency'),
+      rate: status == PurchaseApprovalFxStatus.recorded ? json.string('rate') : null,
+      rateDate: status == PurchaseApprovalFxStatus.recorded ? json.dateTime('rate_date') : null,
+      source: status == PurchaseApprovalFxStatus.recorded ? json.string('source') : null,
+    );
+  }
+
+  final PurchaseApprovalFxStatus status;
+  final String? currency;
+  final String? functionalCurrency;
+  /// Exact decimal text from the server; never converted through a double.
+  final String? rate;
+  final DateTime? rateDate;
+  final String? source;
+}
+
 /// A pending bill and the actions the current approver may perform now.
 class PurchaseApprovalDetail {
   const PurchaseApprovalDetail({
     required this.detail,
     required this.canApprove,
     required this.canReject,
+    this.fx = const PurchaseApprovalFx(status: PurchaseApprovalFxStatus.unavailable),
   });
 
   factory PurchaseApprovalDetail.fromJson(Object? raw) {
@@ -50,12 +90,17 @@ class PurchaseApprovalDetail {
       detail: PurchaseDetail.fromJson(json.raw('detail')),
       canApprove: json.boolOr('can_approve', fallback: false),
       canReject: json.boolOr('can_reject', fallback: false),
+      fx: switch (json.objectOrNull('fx')) {
+        final fx? => PurchaseApprovalFx.fromJson(fx),
+        null => const PurchaseApprovalFx(status: PurchaseApprovalFxStatus.unavailable),
+      },
     );
   }
 
   final PurchaseDetail detail;
   final bool canApprove;
   final bool canReject;
+  final PurchaseApprovalFx fx;
 }
 
 abstract interface class PurchaseApprovalReads {

@@ -384,11 +384,13 @@ class _PurchaseDetailView extends ConsumerWidget {
             s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),
         if (s.legacy) Text(l10n.purchasesLegacyTag),
-        if (approval != null)
+        if (approval case final scoped?) ...[
           Text(
             l10n.purchaseApprovalEvidenceUnavailable,
             key: const ValueKey('purchase-approval-evidence-unavailable'),
           ),
+          ApprovalExchangeRateTile(fx: scoped.fx),
+        ],
         _decisionBar(detail),
         const SizedBox(height: AppSpacing.sm),
         Text('${l10n.purchasesSupplier}: $supplier'),
