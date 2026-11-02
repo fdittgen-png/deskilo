@@ -344,6 +344,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
     feature: WorkspaceFeature.invoiceSettlement,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
+    defaultOn: false,
     requires: WorkspaceFeature.invoicing,
   ),
   // #812 — the process view: journey bar, next move, stage strip.
@@ -376,6 +377,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
       feature: WorkspaceFeature.planMemberPhotos,
       surface: FeatureSurface.reserve,
       tier: FeatureTier.platform,
+      defaultOn: false,
     ),
   // #711 — a member's own numbers, dates, clock and zone. Default ON;
   // OFF makes every member read as the app always did (the UI

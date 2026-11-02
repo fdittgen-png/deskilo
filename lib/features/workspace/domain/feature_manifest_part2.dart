@@ -24,6 +24,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
     feature: WorkspaceFeature.expenseRepartition,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
+    defaultOn: false,
     requires: WorkspaceFeature.invoicing,
   ),
   // #831 — the fold of settled sources under their settlement.
@@ -102,6 +103,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
     feature: WorkspaceFeature.supplyExpenses,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
+    defaultOn: false,
     requires: WorkspaceFeature.services,
   ),
   // #732 — a validation rule names its scope: admins, listed persons of
@@ -331,6 +333,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
     feature: WorkspaceFeature.priceNegotiations,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
+    defaultOn: false,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #767 — subscriptions the space pays for keep paying themselves:
@@ -339,6 +342,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
     feature: WorkspaceFeature.scheduledExpenses,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
+    defaultOn: false,
     requires: WorkspaceFeature.moneyTab,
   ),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
