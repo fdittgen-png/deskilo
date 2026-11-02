@@ -32019,19 +32019,19 @@ abstract class AppLocalizations {
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'Nothing waits for your approval.'**
+  /// **'No supplier bills await your approval.'**
   String get purchaseApprovalsEmpty;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'The documents waiting for approval could not be read.'**
+  /// **'The supplier bills awaiting approval could not be read.'**
   String get purchaseApprovalsRefused;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'To approve'**
+  /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
 
   /// #2577 the guided purchase / expense entry

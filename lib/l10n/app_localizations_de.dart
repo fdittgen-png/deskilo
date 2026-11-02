@@ -19339,14 +19339,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicProfileTitle => 'Öffentliches Profil';
 
   @override
-  String get purchaseApprovalsEmpty => 'Nichts wartet auf Ihre Genehmigung.';
+  String get purchaseApprovalsEmpty =>
+      'Keine Lieferantenrechnung wartet auf Ihre Genehmigung.';
 
   @override
   String get purchaseApprovalsRefused =>
-      'Die zu genehmigenden Belege konnten nicht gelesen werden.';
+      'Die zu genehmigenden Lieferantenrechnungen konnten nicht gelesen werden.';
 
   @override
-  String get purchaseApprovalsTitle => 'Zu genehmigen';
+  String get purchaseApprovalsTitle => 'Lieferantenrechnungen zur Genehmigung';
 
   @override
   String get purchaseEntryAdd => 'Einkauf / Ausgabe hinzufügen';

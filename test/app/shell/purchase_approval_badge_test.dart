@@ -24,7 +24,7 @@ void main() {
     );
     expect(find.byIcon(Icons.error_outline), findsOneWidget);
     expect(
-      find.byTooltip('The documents waiting for approval could not be read.'),
+      find.byTooltip('The supplier bills awaiting approval could not be read.'),
       findsOneWidget,
     );
     await tester.pumpWidget(

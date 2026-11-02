@@ -19354,14 +19354,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicProfileTitle => 'Profil public';
 
   @override
-  String get purchaseApprovalsEmpty => 'Rien n’attend votre approbation.';
+  String get purchaseApprovalsEmpty =>
+      'Aucune facture fournisseur n’attend votre approbation.';
 
   @override
   String get purchaseApprovalsRefused =>
-      'Les documents à approuver n’ont pas pu être lus.';
+      'Les factures fournisseurs à approuver n’ont pas pu être lues.';
 
   @override
-  String get purchaseApprovalsTitle => 'À approuver';
+  String get purchaseApprovalsTitle => 'Factures fournisseurs à approuver';
 
   @override
   String get purchaseEntryAdd => 'Ajouter un achat / une dépense';

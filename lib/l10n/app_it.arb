@@ -12430,15 +12430,15 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
-  "purchaseApprovalsEmpty": "Nulla attende la sua approvazione.",
+  "purchaseApprovalsEmpty": "Nessuna fattura fornitore attende la sua approvazione.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "Non è stato possibile leggere i documenti da approvare.",
+  "purchaseApprovalsRefused": "Non è stato possibile leggere le fatture fornitori da approvare.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "Da approvare",
+  "purchaseApprovalsTitle": "Fatture fornitori da approvare",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },

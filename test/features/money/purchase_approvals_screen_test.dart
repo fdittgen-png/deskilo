@@ -68,14 +68,14 @@ void main() {
       _app(() async => [_doc('2', PurchaseState.approved)]),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Nothing waits for your approval.'), findsOneWidget);
+    expect(find.text('No supplier bills await your approval.'), findsOneWidget);
   });
 
   testWidgets('a failed read says so instead of an empty list', (tester) async {
     await tester.pumpWidget(_app(() async => throw StateError('refused')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
-    expect(find.text('Nothing waits for your approval.'), findsNothing);
+    expect(find.text('No supplier bills await your approval.'), findsNothing);
   });
   testWidgets(
     'page continuation detects equal-count queue change and offers retry',

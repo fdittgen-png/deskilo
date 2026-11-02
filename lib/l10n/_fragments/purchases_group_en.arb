@@ -4,15 +4,15 @@
   "@navPurchasesGroup": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "To approve",
+  "purchaseApprovalsTitle": "Supplier bills to approve",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsEmpty": "Nothing waits for your approval.",
+  "purchaseApprovalsEmpty": "No supplier bills await your approval.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "The documents waiting for approval could not be read.",
+  "purchaseApprovalsRefused": "The supplier bills awaiting approval could not be read.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   }

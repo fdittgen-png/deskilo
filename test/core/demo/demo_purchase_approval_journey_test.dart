@@ -106,6 +106,7 @@ void main() {
           .go('/money/purchases/approvals');
       await tester.pumpAndSettle();
       expect(find.byType(PurchaseApprovalsScreen), findsOneWidget);
+      expect(find.text('Supplier bills to approve'), findsOneWidget);
       final container = ProviderScope.containerOf(
         tester.element(find.byType(PurchaseApprovalsScreen)),
       );
