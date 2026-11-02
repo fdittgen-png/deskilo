@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(48);
+select plan(51);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -123,15 +123,24 @@ select isnt(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034
 select is(pg_temp.approvals_walk(),206,'keyset traversal reaches every unique eligible row');
 select set_config('t.approval_version',public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'version',true);
 reset role;
-update public.purchase_documents set state='rejected' where id=(select id from public.purchase_documents
+create temporary table approval_before as
+ select id from public.purchase_approval_eligible('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a5');
+create temporary table approval_target as
+ select id from public.purchase_documents
  where workspace_id='00000000-0000-4000-8000-0000000034a3' and kind='bill' and state='pending'
  and submitter_member_id='00000000-0000-4000-8000-0000000034a4'
- and submitted_by_member_id='00000000-0000-4000-8000-0000000034a4' order by id limit 1);
+ and submitted_by_member_id='00000000-0000-4000-8000-0000000034a4' order by id limit 1;
+select ok(exists(select 1 from approval_before b join approval_target t using(id)), 'selected replacement target is eligible before transition');
+update public.purchase_documents set state='rejected' where id=(select id from approval_target);
+select is(array(select id from approval_before except select id from public.purchase_approval_eligible('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a5')),
+          array(select id from approval_target), 'transition removes exactly the selected eligible id');
 set local role authenticated;
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,205,'removing an eligible non-maker reduces the count');
 reset role;
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
 ('00000000-0000-4000-8000-0000000034ae','00000000-0000-4000-8000-0000000034a3','bill','pending','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a4','00000000-0000-4000-8000-0000000034a4','unpaid');
+select is(array(select id from public.purchase_approval_eligible('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a5') except select id from approval_before),
+          array['00000000-0000-4000-8000-0000000034ae'::uuid], 'replacement adds exactly the new eligible id');
 set local role authenticated;
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,206,'replacement can preserve the count');
 select isnt(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'version',current_setting('t.approval_version'),'replacement changes the page version');
