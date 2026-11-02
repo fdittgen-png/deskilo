@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(36);
+select plan(41);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -53,18 +53,23 @@ select ok(not (public.purchase_approval_detail_v1('00000000-0000-4000-8000-00000
 select is(jsonb_array_length(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')#>'{detail,sources}'),0,'decision detail omits source identifiers and hashes');
 select is(jsonb_array_length(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')#>'{detail,obligations}'),0,'decision detail omits member obligations');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9')$$,'42501','purchase approval is not available','own bill at zero threshold is excluded');
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9',1,true,'','00000000-0000-4000-8000-0000000034b3')$$,'P0001','another person must decide a purchase you submitted','default zero refuses own positive bill approval');
 select throws_ok($$select public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3',now(),null)$$,'22023','both cursor fields are required','partial cursor rejected');
 select throws_ok($$select public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034aa')$$,'42501','purchase approvals are not available','other workspace rejected');
 reset role;
 insert into public.setting_values (scope,workspace_id,key,value) values ('workspace','00000000-0000-4000-8000-0000000034a3','purchase.single_approval_below_units','1');
 set local role authenticated;
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,2,'own bill below threshold is eligible');
+select is(jsonb_array_length(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->'rows'),2,'page length agrees with count at this limit');
+select ok((select count(*)=2 from jsonb_array_elements(public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->'rows') r where r->>'id' in ('00000000-0000-4000-8000-0000000034a7','00000000-0000-4000-8000-0000000034a9')),'page contains precisely the non-maker and eligible own bill');
 select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9')->>'can_approve','true','own bill below threshold can be approved');
 select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9')->>'can_reject','false','own bill cannot be rejected');
 select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9',1,false,'No','00000000-0000-4000-8000-0000000034ad')$$,'P0001','another person must decide a purchase you submitted','existing write rejects self rejection');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ab')$$,'42501','purchase approval is not available','own bill equal to threshold excluded');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034af')$$,'42501','purchase approval is not available','own sender is excluded at equal threshold even when drafter differs');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034b1')$$,'42501','purchase approval is not available','own drafter above threshold is excluded even when sender differs');
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034af',1,true,'','00000000-0000-4000-8000-0000000034b4')$$,'P0001','another person must decide a purchase you submitted','actual write rejects own sender at threshold');
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034b1',1,true,'','00000000-0000-4000-8000-0000000034b5')$$,'P0001','another person must decide a purchase you submitted','actual write rejects own drafter above threshold');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ac')$$,'42501','purchase approval is not available','member receipt belongs to validation flow');
 select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7',1,false,'Repro','00000000-0000-4000-8000-0000000034a8')->>'state','rejected','existing decision succeeds');
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,1,'decided bill is no longer counted');
