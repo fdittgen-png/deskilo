@@ -35,6 +35,8 @@
 // member does not run (#1050). Reinstalling the schema to repair one
 // setting would be absurd, so this is the door for it. The token is
 // read from --token or the SUPABASE_ACCESS_TOKEN environment variable.
+// Without --site-url, CLI and native setup retain the legacy Pages default;
+// supply the deployed web base explicitly for GoDaddy or a custom host.
 //
 // `doctor` (#1075) reads a live project and says whether people can
 // actually sign in: Site URL and redirect allow-list against
@@ -64,7 +66,11 @@ import 'instance/support_doctor.dart';
 // Dart ignores what `main` returns; the exit code is set here.
 Future<void> main(List<String> argv) async => exitCode = await run(argv);
 
-Future<int> run(List<String> argv) async {
+Future<int> run(List<String> argv, {
+  SupabaseManagement? apiOverride,
+  InstanceBundle Function()? bundleLoader,
+  void Function(List<DoctorFinding>)? onDoctorFindings,
+}) async {
   if (mcpCommands.contains(argv.firstOrNull)) return runMcp(argv);
   if (argv.firstOrNull == 'federation-hook') {
     return runFederationHook(argv.skip(1).toList());
@@ -91,7 +97,9 @@ Future<int> run(List<String> argv) async {
       return 2;
     }
   }
-  final api = DioSupabaseManagement(token);
+  final api = apiOverride ?? DioSupabaseManagement(token);
+  final loadBundle = bundleLoader ??
+      () => parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
   final builder = InstanceBuilder(api);
   try {
     switch (args.command) {
@@ -119,7 +127,7 @@ Future<int> run(List<String> argv) async {
           databasePassword: password,
           onStatus: (s) => stdout.writeln('project: $s'),
         );
-        return await _install(builder, project.ref, 0, authPatch: authPatch);
+        return await _install(builder, project.ref, 0, authPatch: authPatch, bundle: loadBundle());
       case 'install':
         final ref = args.option('ref');
         if (ref == null) {
@@ -130,7 +138,7 @@ Future<int> run(List<String> argv) async {
         // #1314 — without --skip the install resumes from what the
         // project recorded.
         final skip = args.option('skip');
-        return await _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0, authPatch: authPatch);
+        return await _install(builder, ref, skip == null ? null : int.tryParse(skip) ?? 0, authPatch: authPatch, bundle: loadBundle());
       case 'record':
         final ref = args.option('ref');
         final through = args.option('through');
@@ -139,7 +147,7 @@ Future<int> run(List<String> argv) async {
               'migration the project already has');
           return 2;
         }
-        final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+        final bundle = loadBundle();
         final count = await builder.recordApplied(ref, bundle, through);
         stdout.writeln('recorded $count migrations through $through as applied '
             'on $ref — nothing was run');
@@ -167,7 +175,7 @@ Future<int> run(List<String> argv) async {
           final evidence = await loadSupportEvidence();
           return await runSupportDoctor(() async {
             final policies = File(instancePoliciesAssetPath);
-            final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+            final bundle = loadBundle();
             return InstanceDoctor(api, expectedAuth: authPatch).examine(ref,
                 required: int.parse(bundle.schemaVersion),
                 bundleMigrations: [for (final m in bundle.schema) m.name],
@@ -180,7 +188,7 @@ Future<int> run(List<String> argv) async {
         final policiesFile = File(instancePoliciesAssetPath);
         // #1312 — the version is judged against the migrations this
         // checkout would install, in numbers, and names what is missing.
-        final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+        final bundle = loadBundle();
         final findings = await InstanceDoctor(api, expectedAuth: authPatch).examine(
           ref,
           required: int.parse(bundle.schemaVersion),
@@ -189,6 +197,7 @@ Future<int> run(List<String> argv) async {
               ? parseInstancePolicies(policiesFile.readAsStringSync())
               : const {},
         );
+        onDoctorFindings?.call(findings);
         // A run whose log is public publishes counts, never names.
         stdout.write(doctorReport(ref, findings,
             redacted: args.option('public') != null));
@@ -233,8 +242,7 @@ Future<int> run(List<String> argv) async {
 }
 
 Future<int> _install(InstanceBuilder builder, String ref, int? skip,
-    {Map<String, Object?>? authPatch}) async {
-  final bundle = parseInstanceBundle(encodeInstanceBundle(buildInstanceBundle('.')));
+    {Map<String, Object?>? authPatch, required InstanceBundle bundle}) async {
   stdout.writeln('schema: ${bundle.schema.length} migrations '
       '(${skip == null ? 'resuming after the schema version, or what the project recorded' : 'skipping $skip'})');
   await builder.installSchema(ref, bundle, skip: skip, onProgress: (p) {

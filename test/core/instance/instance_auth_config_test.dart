@@ -91,6 +91,16 @@ void main() {
     expect(patch['uri_allow_list'] as String, isNot(contains(redirect.query)));
   });
 
+  test('doctor shell-quotes the exact custom site safely', () {
+    final patch = InstanceAuthConfig.patchForWebBase(
+      Uri.parse("https://example.test/a'b/"),
+    );
+    final finding = InstanceDoctor.checkAuthConfig(
+      InstanceAuthConfig.patch, expectedAuth: patch,
+    ).firstWhere((f) => f.title == 'Site URL is not the app');
+    expect(finding.detail, contains("--site-url 'https://example.test/a'\\''b/'"));
+  });
+
   test(
     'builder and doctor use the same explicitly supplied web target',
     () async {
@@ -122,7 +132,7 @@ void main() {
       );
       expect(
         mismatch.where((f) => f.title.contains('allow-list')).single.detail,
-        contains('--site-url <app-url>'),
+        contains("--site-url 'https://example.test/coworking/'"),
       );
     },
   );

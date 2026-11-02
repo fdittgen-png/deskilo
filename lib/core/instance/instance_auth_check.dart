@@ -10,9 +10,10 @@ List<DoctorFinding> checkInstanceAuthConfig(
   final expected = expectedAuth ?? InstanceAuthConfig.patch;
   final expectedSite = expected['site_url'] as String;
   final expectedRedirects = expected['uri_allow_list'] as String;
+  final quotedSite = "'${expectedSite.replaceAll("'", "'\\''")}'";
   final command = expectedSite == InstanceAuthConfig.siteUrl
       ? 'dart run tool/instance.dart auth --ref <ref>'
-      : 'dart run tool/instance.dart auth --ref <ref> --site-url <app-url>';
+      : 'dart run tool/instance.dart auth --ref <ref> --site-url $quotedSite';
   final findings = <DoctorFinding>[];
   final siteUrl = '${config['site_url'] ?? ''}';
   final allowList = '${config['uri_allow_list'] ?? ''}';

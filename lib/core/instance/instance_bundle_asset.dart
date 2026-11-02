@@ -2,10 +2,11 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart' show GZipDecoder;
-import 'package:flutter/foundation.dart' show Uint8List, compute, visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, compute, kIsWeb, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../backend/auth_callback_guard.dart';
 import 'deployment_base_native.dart'
     if (dart.library.js_interop) 'deployment_base_web.dart';
 import 'instance_builder.dart';
@@ -38,10 +39,11 @@ InstanceBundle decodeInstanceBundleAsset(Uint8List bytes) {
   );
 }
 
-/// The deployment base is independent of the current route and auth flow.
+/// Reuse the guard callback; before startup, use the deployment base.
 Map<String, Object?> instanceAuthPatchForRuntime() {
-  final base = deploymentBaseUri();
-  return base == null ? InstanceAuthConfig.patch : InstanceAuthConfig.patchForWebBase(base);
+  if (!kIsWeb) return InstanceAuthConfig.patch;
+  return InstanceAuthConfig.patchForWebBase(
+      bootAuthCallbackGuard?.callback ?? deploymentBaseUri()!);
 }
 
 /// How the wizard gets its bundle — the asset, or a small one in tests.
