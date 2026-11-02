@@ -1798,63 +1798,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.';
 
   @override
-  String get bankReconBookingDate =>
-      'Gespeichertes Buchungsdatum (gegebenenfalls Valutadatum)';
-
-  @override
-  String get bankReconValueDate =>
-      'Gespeichertes Valutadatum (gegebenenfalls Buchungsdatum)';
-
-  @override
-  String get bankReconNotIncluded =>
-      'Bankabstimmungsberichte sind für diesen Export nicht verfügbar.';
-
-  @override
-  String get bankReconTitle => 'Bankabstimmungsbericht';
-
-  @override
-  String get bankReconAccount => 'Konto';
-
-  @override
-  String get bankReconObservedDates => 'Daten gespeicherter Bewegungen';
-
-  @override
-  String get bankReconRequestedPeriod => 'Angefragter Zeitraum';
-
-  @override
-  String get bankReconCoverage =>
-      'Teilweise Abdeckung: Der gemeldete Bankzeitraum und die vollständige Kontoabdeckung sind nicht belegt.';
-
-  @override
-  String get bankReconSeparateReads =>
-      'Auszüge, Bewegungen und Quelle werden getrennt gelesen; dies ist keine feste Momentaufnahme.';
-
-  @override
-  String get bankReconOriginalUnavailable =>
-      'Originalquelle nicht verfügbar oder nicht zugänglich';
-
-  @override
-  String get bankReconOpening => 'Anfangssaldo laut Bank';
-
-  @override
-  String get bankReconClosing => 'Schlusssaldo laut Bank';
-
-  @override
-  String get bankReconArithmeticDifference => 'Rechnerische Auszugsdifferenz';
-
-  @override
-  String get bankReconSourceUnassociated =>
-      'Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.';
-
-  @override
-  String get bankReconBooksUnavailable =>
-      'Differenz zum Buchwerk nicht verfügbar: kontobezogener Anfangssaldo und vollständige Buchungen fehlen.';
-
-  @override
-  String get bankReconClearingUnavailable =>
-      'Verrechnungssaldo nicht verfügbar: Anfangssaldo und vollständige Abrechnungsdaten fehlen.';
-
-  @override
   String get bankBasisAmount => 'gleicher Betrag und Zahler';
 
   @override
@@ -2070,6 +2013,63 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankOutTitle => 'Die als geleistet erfasste Zahlung';
+
+  @override
+  String get bankReconAccount => 'Konto';
+
+  @override
+  String get bankReconArithmeticDifference => 'Rechnerische Auszugsdifferenz';
+
+  @override
+  String get bankReconBookingDate =>
+      'Gespeichertes Buchungsdatum (gegebenenfalls Valutadatum)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Differenz zum Buchwerk nicht verfügbar: kontobezogener Anfangssaldo und vollständige Buchungen fehlen.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Verrechnungssaldo nicht verfügbar: Anfangssaldo und vollständige Abrechnungsdaten fehlen.';
+
+  @override
+  String get bankReconClosing => 'Schlusssaldo laut Bank';
+
+  @override
+  String get bankReconCoverage =>
+      'Teilweise Abdeckung: Der gemeldete Bankzeitraum und die vollständige Kontoabdeckung sind nicht belegt.';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Bankabstimmungsberichte sind für diesen Export nicht verfügbar.';
+
+  @override
+  String get bankReconObservedDates => 'Daten gespeicherter Bewegungen';
+
+  @override
+  String get bankReconOpening => 'Anfangssaldo laut Bank';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Originalquelle nicht verfügbar oder nicht zugänglich';
+
+  @override
+  String get bankReconRequestedPeriod => 'Angefragter Zeitraum';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Auszüge, Bewegungen und Quelle werden getrennt gelesen; dies ist keine feste Momentaufnahme.';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.';
+
+  @override
+  String get bankReconTitle => 'Bankabstimmungsbericht';
+
+  @override
+  String get bankReconValueDate =>
+      'Gespeichertes Valutadatum (gegebenenfalls Buchungsdatum)';
 
   @override
   String bankRefusedAtLine(String reason, int line) {

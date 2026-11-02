@@ -1783,63 +1783,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeTokenOnce => 'Save this QR now — it is shown only once.';
 
   @override
-  String get bankReconBookingDate =>
-      'Stored booking date (may default to value date)';
-
-  @override
-  String get bankReconValueDate =>
-      'Stored value date (may default to booking date)';
-
-  @override
-  String get bankReconNotIncluded =>
-      'Bank reconciliation reports are unavailable for this export.';
-
-  @override
-  String get bankReconTitle => 'Bank reconciliation report';
-
-  @override
-  String get bankReconAccount => 'Account';
-
-  @override
-  String get bankReconObservedDates => 'Stored movement dates';
-
-  @override
-  String get bankReconRequestedPeriod => 'Requested period';
-
-  @override
-  String get bankReconCoverage =>
-      'Partial coverage: the bank-reported period and complete account coverage are not established.';
-
-  @override
-  String get bankReconSeparateReads =>
-      'Statements, movements and source are separate reads; this is not a frozen snapshot.';
-
-  @override
-  String get bankReconOriginalUnavailable =>
-      'Original source unavailable or inaccessible';
-
-  @override
-  String get bankReconOpening => 'Opening balance stated by bank';
-
-  @override
-  String get bankReconClosing => 'Closing balance stated by bank';
-
-  @override
-  String get bankReconArithmeticDifference => 'Statement arithmetic difference';
-
-  @override
-  String get bankReconSourceUnassociated =>
-      'Some source movements have no verified retained-line association; their status is unavailable.';
-
-  @override
-  String get bankReconBooksUnavailable =>
-      'Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.';
-
-  @override
-  String get bankReconClearingUnavailable =>
-      'Provider clearing unavailable: clearing opening and complete settlement facts are missing.';
-
-  @override
   String get bankBasisAmount => 'same amount and payer';
 
   @override
@@ -2054,6 +1997,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankOutTitle => 'The payment recorded as made';
+
+  @override
+  String get bankReconAccount => 'Account';
+
+  @override
+  String get bankReconArithmeticDifference => 'Statement arithmetic difference';
+
+  @override
+  String get bankReconBookingDate =>
+      'Stored booking date (may default to value date)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Provider clearing unavailable: clearing opening and complete settlement facts are missing.';
+
+  @override
+  String get bankReconClosing => 'Closing balance stated by bank';
+
+  @override
+  String get bankReconCoverage =>
+      'Partial coverage: the bank-reported period and complete account coverage are not established.';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Bank reconciliation reports are unavailable for this export.';
+
+  @override
+  String get bankReconObservedDates => 'Stored movement dates';
+
+  @override
+  String get bankReconOpening => 'Opening balance stated by bank';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Original source unavailable or inaccessible';
+
+  @override
+  String get bankReconRequestedPeriod => 'Requested period';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Statements, movements and source are separate reads; this is not a frozen snapshot.';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Some source movements have no verified retained-line association; their status is unavailable.';
+
+  @override
+  String get bankReconTitle => 'Bank reconciliation report';
+
+  @override
+  String get bankReconValueDate =>
+      'Stored value date (may default to booking date)';
 
   @override
   String bankRefusedAtLine(String reason, int line) {

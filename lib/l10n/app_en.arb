@@ -2057,22 +2057,6 @@
   "@badgeTokenOnce": {
     "description": "Warning under the freshly issued badge QR; the raw token is never recoverable later"
   },
-  "bankReconBookingDate": "Stored booking date (may default to value date)",
-  "bankReconValueDate": "Stored value date (may default to booking date)",
-  "bankReconNotIncluded": "Bank reconciliation reports are unavailable for this export.",
-  "bankReconTitle": "Bank reconciliation report",
-  "bankReconAccount": "Account",
-  "bankReconObservedDates": "Stored movement dates",
-  "bankReconRequestedPeriod": "Requested period",
-  "bankReconCoverage": "Partial coverage: the bank-reported period and complete account coverage are not established.",
-  "bankReconSeparateReads": "Statements, movements and source are separate reads; this is not a frozen snapshot.",
-  "bankReconOriginalUnavailable": "Original source unavailable or inaccessible",
-  "bankReconOpening": "Opening balance stated by bank",
-  "bankReconClosing": "Closing balance stated by bank",
-  "bankReconArithmeticDifference": "Statement arithmetic difference",
-  "bankReconSourceUnassociated": "Some source movements have no verified retained-line association; their status is unavailable.",
-  "bankReconBooksUnavailable": "Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.",
-  "bankReconClearingUnavailable": "Provider clearing unavailable: clearing opening and complete settlement facts are missing.",
   "bankBasisAmount": "same amount and payer",
   "@bankBasisAmount": {
     "description": "#2380 Why suggested: same amount, same payer, recent."
@@ -2369,6 +2353,70 @@
   "bankOutTitle": "The payment recorded as made",
   "@bankOutTitle": {
     "description": "#2380 Reconcile dialog title for money out."
+  },
+  "bankReconAccount": "Account",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "bankReconArithmeticDifference": "Statement arithmetic difference",
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 partial bank reconciliation report: bankReconArithmeticDifference."
+  },
+  "bankReconBookingDate": "Stored booking date (may default to value date)",
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "bankReconBooksUnavailable": "Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.",
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "bankReconClearingUnavailable": "Provider clearing unavailable: clearing opening and complete settlement facts are missing.",
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "bankReconClosing": "Closing balance stated by bank",
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "bankReconCoverage": "Partial coverage: the bank-reported period and complete account coverage are not established.",
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "bankReconNotIncluded": "Bank reconciliation reports are unavailable for this export.",
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "bankReconObservedDates": "Stored movement dates",
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "bankReconOpening": "Opening balance stated by bank",
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "bankReconOriginalUnavailable": "Original source unavailable or inaccessible",
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "bankReconRequestedPeriod": "Requested period",
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "bankReconSeparateReads": "Statements, movements and source are separate reads; this is not a frozen snapshot.",
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "bankReconSourceUnassociated": "Some source movements have no verified retained-line association; their status is unavailable.",
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "bankReconTitle": "Bank reconciliation report",
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconValueDate": "Stored value date (may default to booking date)",
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
   },
   "bankRefusedAtLine": "{reason} (line {line})",
   "@bankRefusedAtLine": {

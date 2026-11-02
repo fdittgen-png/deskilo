@@ -1,0 +1,67 @@
+{
+  "@@locale": "es",
+  "bankReconAccount": "Cuenta",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "bankReconArithmeticDifference": "Diferencia aritmética del extracto",
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 partial bank reconciliation report: bankReconArithmeticDifference."
+  },
+  "bankReconBookingDate": "Fecha contable guardada (puede usar la fecha valor)",
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "bankReconBooksUnavailable": "Diferencia con libros no disponible: faltan el saldo inicial contable de la cuenta y los asientos completos.",
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "bankReconClearingUnavailable": "Saldo de compensación no disponible: faltan el saldo inicial y los datos completos de liquidación.",
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "bankReconClosing": "Saldo final indicado por el banco",
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "bankReconCoverage": "Cobertura parcial: no se ha establecido el periodo declarado por el banco ni la cobertura completa de la cuenta.",
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "bankReconNotIncluded": "Los informes de conciliación bancaria no están disponibles para esta exportación.",
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "bankReconObservedDates": "Fechas de movimientos registrados",
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "bankReconOpening": "Saldo inicial indicado por el banco",
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "bankReconOriginalUnavailable": "Fuente original no disponible o inaccesible",
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "bankReconRequestedPeriod": "Periodo solicitado",
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "bankReconSeparateReads": "Extractos, movimientos y fuente se leen por separado; no forman una instantánea fija.",
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "bankReconSourceUnassociated": "Algunos movimientos de la fuente no tienen una asociación verificada con una línea conservada; su estado no está disponible.",
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "bankReconTitle": "Informe de conciliación bancaria",
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconValueDate": "Fecha valor guardada (puede usar la fecha contable)",
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
+  }
+}

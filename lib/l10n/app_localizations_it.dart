@@ -1793,64 +1793,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salvi questo QR adesso — viene mostrato una sola volta.';
 
   @override
-  String get bankReconBookingDate =>
-      'Data contabile registrata (può usare la data valuta)';
-
-  @override
-  String get bankReconValueDate =>
-      'Data valuta registrata (può usare la data contabile)';
-
-  @override
-  String get bankReconNotIncluded =>
-      'I rapporti di riconciliazione bancaria non sono disponibili per questa esportazione.';
-
-  @override
-  String get bankReconTitle => 'Rapporto di riconciliazione bancaria';
-
-  @override
-  String get bankReconAccount => 'Conto';
-
-  @override
-  String get bankReconObservedDates => 'Date dei movimenti registrati';
-
-  @override
-  String get bankReconRequestedPeriod => 'Periodo richiesto';
-
-  @override
-  String get bankReconCoverage =>
-      'Copertura parziale: il periodo dichiarato dalla banca e la copertura completa del conto non sono accertati.';
-
-  @override
-  String get bankReconSeparateReads =>
-      'Estratti, movimenti e fonte sono letti separatamente; non costituiscono una fotografia fissa.';
-
-  @override
-  String get bankReconOriginalUnavailable =>
-      'Fonte originale non disponibile o inaccessibile';
-
-  @override
-  String get bankReconOpening => 'Saldo iniziale indicato dalla banca';
-
-  @override
-  String get bankReconClosing => 'Saldo finale indicato dalla banca';
-
-  @override
-  String get bankReconArithmeticDifference =>
-      'Differenza aritmetica dell’estratto';
-
-  @override
-  String get bankReconSourceUnassociated =>
-      'Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.';
-
-  @override
-  String get bankReconBooksUnavailable =>
-      'Differenza con i libri non disponibile: mancano il saldo contabile iniziale del conto e le registrazioni complete.';
-
-  @override
-  String get bankReconClearingUnavailable =>
-      'Saldo di compensazione non disponibile: mancano saldo iniziale e dati completi di regolamento.';
-
-  @override
   String get bankBasisAmount => 'stesso importo e pagatore';
 
   @override
@@ -2068,6 +2010,64 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankOutTitle => 'Il pagamento registrato come effettuato';
+
+  @override
+  String get bankReconAccount => 'Conto';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Differenza aritmetica dell’estratto';
+
+  @override
+  String get bankReconBookingDate =>
+      'Data contabile registrata (può usare la data valuta)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Differenza con i libri non disponibile: mancano il saldo contabile iniziale del conto e le registrazioni complete.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Saldo di compensazione non disponibile: mancano saldo iniziale e dati completi di regolamento.';
+
+  @override
+  String get bankReconClosing => 'Saldo finale indicato dalla banca';
+
+  @override
+  String get bankReconCoverage =>
+      'Copertura parziale: il periodo dichiarato dalla banca e la copertura completa del conto non sono accertati.';
+
+  @override
+  String get bankReconNotIncluded =>
+      'I rapporti di riconciliazione bancaria non sono disponibili per questa esportazione.';
+
+  @override
+  String get bankReconObservedDates => 'Date dei movimenti registrati';
+
+  @override
+  String get bankReconOpening => 'Saldo iniziale indicato dalla banca';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Fonte originale non disponibile o inaccessibile';
+
+  @override
+  String get bankReconRequestedPeriod => 'Periodo richiesto';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Estratti, movimenti e fonte sono letti separatamente; non costituiscono una fotografia fissa.';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.';
+
+  @override
+  String get bankReconTitle => 'Rapporto di riconciliazione bancaria';
+
+  @override
+  String get bankReconValueDate =>
+      'Data valuta registrata (può usare la data contabile)';
 
   @override
   String bankRefusedAtLine(String reason, int line) {

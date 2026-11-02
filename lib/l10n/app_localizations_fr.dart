@@ -1798,63 +1798,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Enregistrez ce QR maintenant — il n\'est affiché qu\'une seule fois.';
 
   @override
-  String get bankReconBookingDate =>
-      'Date comptable enregistrée (par défaut, date de valeur)';
-
-  @override
-  String get bankReconValueDate =>
-      'Date de valeur enregistrée (par défaut, date comptable)';
-
-  @override
-  String get bankReconNotIncluded =>
-      'Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.';
-
-  @override
-  String get bankReconTitle => 'Rapport de rapprochement bancaire';
-
-  @override
-  String get bankReconAccount => 'Compte';
-
-  @override
-  String get bankReconObservedDates => 'Dates des mouvements enregistrés';
-
-  @override
-  String get bankReconRequestedPeriod => 'Période demandée';
-
-  @override
-  String get bankReconCoverage =>
-      'Couverture partielle : la période déclarée par la banque et la couverture complète du compte ne sont pas établies.';
-
-  @override
-  String get bankReconSeparateReads =>
-      'Les relevés, mouvements et sources sont lus séparément ; ce n’est pas un instantané figé.';
-
-  @override
-  String get bankReconOriginalUnavailable =>
-      'Source originale indisponible ou inaccessible';
-
-  @override
-  String get bankReconOpening => 'Solde initial indiqué par la banque';
-
-  @override
-  String get bankReconClosing => 'Solde final indiqué par la banque';
-
-  @override
-  String get bankReconArithmeticDifference => 'Écart arithmétique du relevé';
-
-  @override
-  String get bankReconSourceUnassociated =>
-      'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
-
-  @override
-  String get bankReconBooksUnavailable =>
-      'Écart avec les livres indisponible : solde comptable initial lié au compte et écritures complètes manquants.';
-
-  @override
-  String get bankReconClearingUnavailable =>
-      'Compte de compensation indisponible : solde initial et données complètes de règlement manquants.';
-
-  @override
   String get bankBasisAmount => 'même montant et même payeur';
 
   @override
@@ -2073,6 +2016,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankOutTitle => 'Le paiement enregistré comme effectué';
+
+  @override
+  String get bankReconAccount => 'Compte';
+
+  @override
+  String get bankReconArithmeticDifference => 'Écart arithmétique du relevé';
+
+  @override
+  String get bankReconBookingDate =>
+      'Date comptable enregistrée (par défaut, date de valeur)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Écart avec les livres indisponible : solde comptable initial lié au compte et écritures complètes manquants.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Compte de compensation indisponible : solde initial et données complètes de règlement manquants.';
+
+  @override
+  String get bankReconClosing => 'Solde final indiqué par la banque';
+
+  @override
+  String get bankReconCoverage =>
+      'Couverture partielle : la période déclarée par la banque et la couverture complète du compte ne sont pas établies.';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.';
+
+  @override
+  String get bankReconObservedDates => 'Dates des mouvements enregistrés';
+
+  @override
+  String get bankReconOpening => 'Solde initial indiqué par la banque';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Source originale indisponible ou inaccessible';
+
+  @override
+  String get bankReconRequestedPeriod => 'Période demandée';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Les relevés, mouvements et sources sont lus séparément ; ce n’est pas un instantané figé.';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
+
+  @override
+  String get bankReconTitle => 'Rapport de rapprochement bancaire';
+
+  @override
+  String get bankReconValueDate =>
+      'Date de valeur enregistrée (par défaut, date comptable)';
 
   @override
   String bankRefusedAtLine(String reason, int line) {
