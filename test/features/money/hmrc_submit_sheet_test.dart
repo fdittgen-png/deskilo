@@ -5,6 +5,7 @@
 // outcome is said in words (filed with the receipt, unconfirmed, refused, kept
 // but not recorded); a non-web build says to use the web app; and the sheet
 // sends nothing before HMRC is connected.
+// test-inventory: structure is the invariant — the submit button must remain disabled while a check is required.
 import 'dart:async';
 
 import 'package:deskilo/core/links/link_launcher.dart';
