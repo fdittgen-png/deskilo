@@ -226,7 +226,10 @@ void main() {
     // shards and their aggregate) and each restores the same lockfile-keyed
     // pub cache the one job did before: 3 became 6. 2026-10-31 #3166: a
     // fourth test shard restores the same lockfile-keyed cache: 7.
-    expect(seen, 7, reason: 'cache steps counted on 2026-10-31: pub x5, '
+    // 2026-11-02 #3166: the five-run p95 of the four shards was 18.2-20.6
+    // minutes against the 18-minute bar, so two more test shards (money2 and
+    // core) each restore the same lockfile-keyed pub cache: 9.
+    expect(seen, 9, reason: 'cache steps counted on 2026-11-02: pub x7, '
         'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }
