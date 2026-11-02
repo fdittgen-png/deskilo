@@ -13,26 +13,52 @@ const DECL = "44444444-4444-4444-8444-444444444444";
 const USER = "55555555-5555-4555-8555-555555555555";
 const API = "https://test-api.service.hmrc.gov.uk";
 
+// The prepared return of the shared contract case "sales and purchases":
+// the server's own lines, whose nine boxes are the contract file's.
+const LINES = [{
+  "percent": 20,
+  "gross_cents": 126600,
+  "net_cents": 105500,
+  "vat_cents": 21100,
+  "invoice_count": 4,
+  "category": "S",
+}, {
+  "percent": 0,
+  "gross_cents": 33399,
+  "net_cents": 33399,
+  "vat_cents": 0,
+  "invoice_count": 1,
+  "category": "Z",
+}, {
+  "percent": 20,
+  "gross_cents": 28800,
+  "net_cents": 24000,
+  "vat_cents": 4800,
+  "invoice_count": 2,
+  "direction": "input",
+  "category": "S",
+}];
 const CONTEXT = {
   declaration_id: DECL,
   workspace_id: WS,
   period_start: "2026-01-01",
   period_end: "2026-03-31",
-  total_vat_cents: 6965, // box 3 109.75 - box 4 40.10
+  total_vat_cents: 16300, // box 3 211.00 - box 4 48.00
+  lines: LINES,
   vrn: "123456789",
   connection_id: CONN,
 };
 
 const BOXES = {
-  vatDueSales: 105.5,
-  vatDueAcquisitions: 4.25,
-  totalVatDue: 109.75,
-  vatReclaimedCurrPeriod: 40.1,
-  netVatDue: 69.65,
-  totalValueSalesExVAT: 500,
-  totalValuePurchasesExVAT: 240,
-  totalValueGoodsSuppliedExVAT: 0,
-  totalAcquisitionsExVAT: 20,
+  "vatDueSales": 211.0,
+  "vatDueAcquisitions": 0.0,
+  "totalVatDue": 211.0,
+  "vatReclaimedCurrPeriod": 48.0,
+  "netVatDue": 163.0,
+  "totalValueSalesExVAT": 1388,
+  "totalValuePurchasesExVAT": 240,
+  "totalValueGoodsSuppliedExVAT": 0,
+  "totalAcquisitionsExVAT": 0,
 };
 
 const CLIENT = {
@@ -69,6 +95,7 @@ function world(opts: {
   env?: Record<string, string | undefined>;
   heldTenant?: string;
   fileError?: boolean;
+  claim?: Record<string, unknown>;
   hmrc?: (req: Http) => Response | Promise<Response>;
 } = {}) {
   const rpcs: Rpc[] = [];
@@ -105,6 +132,15 @@ function world(opts: {
         return Promise.resolve({ data: true, error: null });
       }
       if (fn === "release_accounting_refresh_lease") {
+        return Promise.resolve({ data: null, error: null });
+      }
+      if (fn === "claim_hmrc_submission") {
+        return Promise.resolve({
+          data: opts.claim ?? { claimed: true },
+          error: null,
+        });
+      }
+      if (fn === "record_hmrc_acceptance" || fn === "release_hmrc_submission") {
         return Promise.resolve({ data: null, error: null });
       }
       if (fn === "file_vat_declaration_hmrc_v1") {
@@ -168,7 +204,7 @@ const post = (body: unknown, extra: Record<string, string> = {}) =>
     headers: {
       Authorization: `Bearer ${jwt}`,
       "content-type": "application/json",
-      "x-forwarded-for": "198.51.100.7, 10.0.0.1",
+      "x-forwarded-for": "203.0.113.50, 198.51.100.7",
       "x-forwarded-port": "49152",
       ...extra,
     },
@@ -206,12 +242,42 @@ Deno.test("a submission: gates, figures, obligation, return, then the receipt fi
     post1.headers["Gov-Client-Connection-Method"],
     "WEB_APP_VIA_SERVER",
   );
-  assertEquals(post1.headers["Gov-Client-Public-IP"], "198.51.100.7");
+  assertEquals(
+    post1.headers["Gov-Client-Public-IP"],
+    "198.51.100.7",
+    "the hop the proxy appended last",
+  );
   assertEquals(post1.headers["Gov-Client-Public-Port"], "49152");
   assertEquals(post1.headers["Gov-Vendor-Public-IP"], "203.0.113.9");
   const sent = JSON.parse(post1.body);
   assertEquals(sent.periodKey, "26A1");
   assertEquals(sent.finalised, true);
+  // The order: claim, HMRC, the receipt KEPT, then filed, the claim released.
+  assertEquals(
+    w.rpcs.filter((r) =>
+      [
+        "claim_hmrc_submission",
+        "record_hmrc_acceptance",
+        "file_vat_declaration_hmrc_v1",
+        "release_hmrc_submission",
+      ].includes(r.fn)
+    ).map((r) => r.fn),
+    [
+      "claim_hmrc_submission",
+      "record_hmrc_acceptance",
+      "file_vat_declaration_hmrc_v1",
+      "release_hmrc_submission",
+    ],
+  );
+  assertEquals(
+    w.rpcs.find((r) => r.fn === "release_hmrc_submission")!.args.p_sent,
+    false,
+  );
+  assertEquals(
+    post1.headers["Gov-Client-User-IDs"],
+    `deskilo=${USER}`,
+    "the user id is the verified sign-in's",
+  );
   const filed = filedCalls(w);
   assertEquals(filed.length, 1);
   assertEquals(filed[0], {
@@ -233,12 +299,120 @@ Deno.test("a caller the database refuses reaches neither HMRC nor the filing", a
   assertEquals(filedCalls(w).length, 0);
 });
 
-Deno.test("figures that differ from the server's prepared return are refused before any HMRC call", async () => {
-  const w = world({ context: { ...CONTEXT, total_vat_cents: 7000 } });
+Deno.test("a client figure that differs from the server's boxes, in ANY box, is refused before HMRC", async () => {
+  // Box 6 alone: boxes 3 and 4 still agree with the declaration's VAT.
+  const w = world();
+  const res = await handle(
+    post({
+      ...submit,
+      boxes: { ...BOXES, totalValueSalesExVAT: BOXES.totalValueSalesExVAT + 1 },
+    }),
+    w.deps,
+  );
+  assertEquals(res.status, 409);
+  const out = await res.json();
+  assertEquals(out.error, "figures_differ_from_return");
+  assertEquals(out.boxes, ["totalValueSalesExVAT"]);
+  assertEquals(w.http.length, 0);
+  assertEquals(
+    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission").length,
+    0,
+    "nothing is claimed either",
+  );
+  // The server's own totals are checked too.
+  const other = world({ context: { ...CONTEXT, total_vat_cents: 7000 } });
+  assertEquals((await handle(post(submit), other.deps)).status, 409);
+  assertEquals(other.http.length, 0);
+});
+
+Deno.test("what is submitted is the server's boxes, whatever shape the client sent them in", async () => {
+  const w = world();
+  await handle(post({ ...submit, boxes: { ...BOXES, extra: 1 } }), w.deps);
+  const sent = JSON.parse(w.http[1].body);
+  assertEquals(
+    Object.keys(sent).sort(),
+    ["finalised", "periodKey", ...Object.keys(BOXES)].sort(),
+  );
+});
+
+Deno.test("a double tap is in_flight: one claim, one POST", async () => {
+  const w = world({ claim: { claimed: false, state: "in_flight" } });
   const res = await handle(post(submit), w.deps);
   assertEquals(res.status, 409);
-  assertEquals((await res.json()).error, "figures_differ_from_return");
+  assertEquals((await res.json()).error, "in_flight");
   assertEquals(w.http.length, 0);
+});
+
+Deno.test("a return HMRC already accepted is filed from the kept receipt and posts nothing", async () => {
+  const w = world({
+    claim: {
+      claimed: false,
+      state: "accepted",
+      form_bundle_number: "999",
+      processing_date: "d",
+      charge_ref_number: "",
+    },
+  });
+  const res = await handle(post(submit), w.deps);
+  const out = await res.json();
+  assertEquals(out.status, "filed");
+  assertEquals(out.receipt.formBundleNumber, "999");
+  assertEquals(w.http.length, 0);
+  assertEquals(filedCalls(w)[0].args.p_receipt, "999");
+});
+
+Deno.test("an attempt that does not reach acceptance releases its claim: deleted when nothing was sent, unconfirmed when the outcome is unknown", async () => {
+  const sentOf = (w: ReturnType<typeof world>) =>
+    w.rpcs.find((r) => r.fn === "release_hmrc_submission")!.args.p_sent;
+  const refused = world({
+    hmrc: (r) =>
+      r.method === "GET"
+        ? Response.json(OBLIGATIONS)
+        : Response.json({ code: "TAX_PERIOD_NOT_ENDED" }, { status: 403 }),
+  });
+  await handle(post(submit), refused.deps);
+  assertEquals(sentOf(refused), false, "HMRC refused it: nothing is held");
+  const duplicate = world({
+    hmrc: (r) =>
+      r.method === "GET"
+        ? Response.json(OBLIGATIONS)
+        : Response.json({ code: "DUPLICATE_SUBMISSION" }, { status: 403 }),
+  });
+  await handle(post(submit), duplicate.deps);
+  assertEquals(
+    sentOf(duplicate),
+    true,
+    "HMRC has it but we hold no receipt: unconfirmed",
+  );
+  const down = world({
+    hmrc: (r) => {
+      if (r.method === "GET") return Response.json(OBLIGATIONS);
+      throw new Error("timeout");
+    },
+  });
+  await handle(post(submit), down.deps);
+  assertEquals(sentOf(down), true);
+  const noObligation = world({
+    hmrc: () => Response.json({ obligations: [] }),
+  });
+  await handle(post(submit), noObligation.deps);
+  assertEquals(sentOf(noObligation), false, "nothing was posted");
+});
+
+Deno.test("an obligations read that fails is unreachable, not unconfirmed: nothing was sent", async () => {
+  const w = world({
+    hmrc: () => {
+      throw new Error("offline");
+    },
+  });
+  const res = await handle(post(submit), w.deps);
+  assertEquals(res.status, 502);
+  assertEquals((await res.json()).error, "unreachable");
+  assertEquals(
+    w.rpcs.find((r) => r.fn === "release_hmrc_submission")!.args.p_sent,
+    false,
+  );
+  assertEquals(filedCalls(w).length, 0);
 });
 
 Deno.test("no open obligation for the period: nothing is posted", async () => {

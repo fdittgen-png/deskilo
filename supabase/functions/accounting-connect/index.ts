@@ -58,6 +58,7 @@ import {
   resolved,
   STATUS_DETAIL_LENGTH,
   store,
+  targetIdOf,
   targetOf,
   UUID,
 } from "./connection.ts";
@@ -277,13 +278,16 @@ async function refresh(
   if (!UUID.test(connectionId)) {
     return json({ error: "connection_id required" }, 400);
   }
-  const held = await resolved(deps, connectionId);
-  const allowed = await deps.caller(authorization).rpc(manageableRpc(held?.target_id), {
-    p_connection_id: connectionId,
-  });
+  // Which door asks is read without the secrets; they are decrypted only
+  // once the database has said the caller may manage the connection.
+  const allowed = await deps.caller(authorization).rpc(
+    manageableRpc(await targetIdOf(deps, connectionId)),
+    { p_connection_id: connectionId },
+  );
   if (allowed.error || !allowed.data) {
     return json({ error: "not allowed to manage this connection" }, 403);
   }
+  const held = await resolved(deps, connectionId);
   const target = held ? targetOf(deps, held.target_id) : undefined;
   if (!held || held.auth_kind !== "oauth2" || !target) {
     return json({ error: "this connection is not signed in to" }, 400);

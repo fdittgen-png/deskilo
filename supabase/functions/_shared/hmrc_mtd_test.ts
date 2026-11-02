@@ -338,6 +338,35 @@ Deno.test("refusals are read by HMRC's documented body code, not by the status a
   );
 });
 
+Deno.test("a nested duplicate wins among the business errors; a call carries a timeout below the lease", async () => {
+  const dup = await submitReturn(
+    play(403, {
+      code: "BUSINESS_ERROR",
+      errors: [{ code: "SOMETHING" }, { code: "DUPLICATE_SUBMISSION" }],
+    }),
+    BASE,
+    "123456789",
+    "at",
+    fraudHeaders(CLIENT, VENDOR),
+    "26A1",
+    BOXES,
+  );
+  assertEquals(dup.ok === false && dup.reason, "already_submitted");
+  const seen: Seen[] = [];
+  await openObligations(
+    play(200, { obligations: [] }, seen),
+    BASE,
+    "123456789",
+    "at",
+    {},
+    "2026-01-01",
+    "2026-12-31",
+  );
+  assertEquals(seen[0].init.signal instanceof AbortSignal, true);
+  const body = returnBody("26A1", { ...BOXES, extra: 1 } as never);
+  assertEquals("extra" in body, false, "only the nine boxes are projected");
+});
+
 Deno.test("a success whose body is not an object is no receipt", async () => {
   for (const body of [null, "ok", [1]]) {
     const r = await submitReturn(

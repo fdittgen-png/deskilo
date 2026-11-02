@@ -1,0 +1,143 @@
+{
+  "note": "The UK nine boxes of the prepared lines, as vatFormBoxes(GB) computes them; the Dart test and the edge function both reproduce these.",
+  "cases": [
+    {
+      "name": "sales and purchases",
+      "lines": [
+        {
+          "percent": 20,
+          "gross_cents": 126600,
+          "net_cents": 105500,
+          "vat_cents": 21100,
+          "invoice_count": 4,
+          "category": "S"
+        },
+        {
+          "percent": 0,
+          "gross_cents": 33399,
+          "net_cents": 33399,
+          "vat_cents": 0,
+          "invoice_count": 1,
+          "category": "Z"
+        },
+        {
+          "percent": 20,
+          "gross_cents": 28800,
+          "net_cents": 24000,
+          "vat_cents": 4800,
+          "invoice_count": 2,
+          "direction": "input",
+          "category": "S"
+        }
+      ],
+      "boxes": {
+        "vatDueSales": 211.0,
+        "vatDueAcquisitions": 0.0,
+        "totalVatDue": 211.0,
+        "vatReclaimedCurrPeriod": 48.0,
+        "netVatDue": 163.0,
+        "totalValueSalesExVAT": 1388,
+        "totalValuePurchasesExVAT": 240,
+        "totalValueGoodsSuppliedExVAT": 0,
+        "totalAcquisitionsExVAT": 0
+      }
+    },
+    {
+      "name": "a credit note, an acquisition and a correction",
+      "lines": [
+        {
+          "percent": 20,
+          "gross_cents": 60000,
+          "net_cents": 50000,
+          "vat_cents": 10000,
+          "invoice_count": 3,
+          "category": "S"
+        },
+        {
+          "percent": 20,
+          "gross_cents": -12000,
+          "net_cents": -10000,
+          "vat_cents": -2000,
+          "invoice_count": 1,
+          "category": "S"
+        },
+        {
+          "percent": 20,
+          "gross_cents": 6000,
+          "net_cents": 5000,
+          "vat_cents": 1000,
+          "invoice_count": 1,
+          "category": "acquisition"
+        },
+        {
+          "percent": 5,
+          "gross_cents": 10500,
+          "net_cents": 10000,
+          "vat_cents": 500,
+          "invoice_count": 1,
+          "direction": "input",
+          "category": "S"
+        }
+      ],
+      "boxes": {
+        "vatDueSales": 80.0,
+        "vatDueAcquisitions": 0.0,
+        "totalVatDue": 80.0,
+        "vatReclaimedCurrPeriod": 5.0,
+        "netVatDue": 75.0,
+        "totalValueSalesExVAT": 400,
+        "totalValuePurchasesExVAT": 100,
+        "totalValueGoodsSuppliedExVAT": 0,
+        "totalAcquisitionsExVAT": 0
+      }
+    },
+    {
+      "name": "a repayment",
+      "lines": [
+        {
+          "percent": 20,
+          "gross_cents": 12000,
+          "net_cents": 10099,
+          "vat_cents": 2020,
+          "invoice_count": 1,
+          "category": "S"
+        },
+        {
+          "percent": 20,
+          "gross_cents": 90000,
+          "net_cents": 75099,
+          "vat_cents": 15020,
+          "invoice_count": 5,
+          "direction": "input",
+          "category": "S"
+        }
+      ],
+      "boxes": {
+        "vatDueSales": 20.2,
+        "vatDueAcquisitions": 0.0,
+        "totalVatDue": 20.2,
+        "vatReclaimedCurrPeriod": 150.2,
+        "netVatDue": 130.0,
+        "totalValueSalesExVAT": 100,
+        "totalValuePurchasesExVAT": 750,
+        "totalValueGoodsSuppliedExVAT": 0,
+        "totalAcquisitionsExVAT": 0
+      }
+    },
+    {
+      "name": "nothing",
+      "lines": [],
+      "boxes": {
+        "vatDueSales": 0.0,
+        "vatDueAcquisitions": 0.0,
+        "totalVatDue": 0.0,
+        "vatReclaimedCurrPeriod": 0.0,
+        "netVatDue": 0.0,
+        "totalValueSalesExVAT": 0,
+        "totalValuePurchasesExVAT": 0,
+        "totalValueGoodsSuppliedExVAT": 0,
+        "totalAcquisitionsExVAT": 0
+      }
+    }
+  ]
+}

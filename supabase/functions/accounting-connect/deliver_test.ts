@@ -308,7 +308,7 @@ function world(opts: {
       if (fn === "release_accounting_refresh_lease") {
         return Promise.resolve({ data: null, error: null });
       }
-      if (fn === "set_accounting_credentials") {
+      if (fn === "set_accounting_credentials" || fn === "set_accounting_credentials_leased") {
         stored.push(args);
         return Promise.resolve({ data: { id: CONN }, error: null });
       }

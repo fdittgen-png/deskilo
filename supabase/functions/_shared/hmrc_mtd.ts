@@ -19,6 +19,11 @@ import type { Fetch } from "./accounting_oauth.ts";
 export const HMRC_SCOPES = ["read:vat", "write:vat"];
 const ACCEPT = "application/vnd.hmrc.1.0+json";
 
+/** A call to HMRC gives up after this long: below the 30 s refresh lease, so
+ * a hanging request can never outlive the lease that protects the single-use
+ * refresh token. */
+export const HMRC_TIMEOUT_MS = 20_000;
+
 /** The OAuth target of an HMRC installation. HMRC's sign-in page is on its
  * own host (sandbox `https://test-www.tax.service.gov.uk`, production
  * `https://www.tax.service.gov.uk`), apart from the API and token host
@@ -122,7 +127,19 @@ export function returnBody(
       "box 5 is the difference of box 3 and box 4, unsigned",
     );
   }
-  return { periodKey, ...boxes, finalised: true };
+  return {
+    periodKey,
+    vatDueSales: boxes.vatDueSales,
+    vatDueAcquisitions: boxes.vatDueAcquisitions,
+    totalVatDue: boxes.totalVatDue,
+    vatReclaimedCurrPeriod: boxes.vatReclaimedCurrPeriod,
+    netVatDue: boxes.netVatDue,
+    totalValueSalesExVAT: boxes.totalValueSalesExVAT,
+    totalValuePurchasesExVAT: boxes.totalValuePurchasesExVAT,
+    totalValueGoodsSuppliedExVAT: boxes.totalValueGoodsSuppliedExVAT,
+    totalAcquisitionsExVAT: boxes.totalAcquisitionsExVAT,
+    finalised: true,
+  };
 }
 
 // ── fraud-prevention headers (WEB_APP_VIA_SERVER) ─────────────────────────
@@ -210,7 +227,7 @@ export function fraudHeaders(
     "Gov-Vendor-Product-Name": enc(vendor.productName),
     "Gov-Vendor-Version": vendor.version,
     "Gov-Vendor-Public-IP": vendor.publicIp,
-    "Gov-Vendor-Forwarded": `by=${vendor.publicIp}&for=${client.publicIp}`,
+    "Gov-Vendor-Forwarded": `by=${enc(vendor.publicIp)}&for=${enc(client.publicIp)}`,
   };
   // Only when the person used a second factor: never invented.
   if (client.multiFactor) {
@@ -258,7 +275,7 @@ async function call(
 ): Promise<{ ok: true; body: Record<string, unknown> } | HmrcFailure> {
   let res: Response;
   try {
-    res = await fetchImpl(url, init);
+    res = await fetchImpl(url, { ...init, signal: AbortSignal.timeout(HMRC_TIMEOUT_MS) });
   } catch {
     return { ok: false, reason: "unreachable", status: 0, code: "NETWORK" };
   }
@@ -293,12 +310,13 @@ function errorCode(body: unknown, status: number): string {
   if (top === "BUSINESS_ERROR") {
     const errors = (body as Record<string, unknown>).errors;
     if (Array.isArray(errors)) {
-      for (const e of errors.slice(0, 5)) {
-        const inner = (e as Record<string, unknown> | null)?.code;
-        if (typeof inner === "string" && inner.length > 0) {
-          return inner.slice(0, 60);
-        }
-      }
+      const inner = errors.slice(0, 5)
+        .map((e) => (e as Record<string, unknown> | null)?.code)
+        .filter((c): c is string => typeof c === "string" && c.length > 0);
+      // The duplicate decides when it is among them: it says HMRC already
+      // has the return.
+      if (inner.includes("DUPLICATE_SUBMISSION")) return "DUPLICATE_SUBMISSION";
+      if (inner.length > 0) return inner[0].slice(0, 60);
     }
   }
   return top.slice(0, 60);
@@ -451,6 +469,7 @@ export async function validateHeaders(
     res = await fetchImpl(url, {
       method: "GET",
       headers: authed(accessToken, fraud),
+      signal: AbortSignal.timeout(HMRC_TIMEOUT_MS),
     });
   } catch {
     return { ok: false, reason: "unreachable", status: 0, code: "NETWORK" };

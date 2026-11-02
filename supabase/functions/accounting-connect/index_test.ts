@@ -53,6 +53,9 @@ function world(
           },
         );
       }
+      if (fn === "accounting_connection_target_v1") {
+        return Promise.resolve({ data: target, error: null });
+      }
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
           data: {
@@ -80,7 +83,10 @@ function world(
         if (leaseHolder === args.p_holder) leaseHolder = "";
         return Promise.resolve({ data: null, error: null });
       }
-      if (fn === "set_accounting_credentials") {
+      if (
+        fn === "set_accounting_credentials" ||
+        fn === "set_accounting_credentials_leased"
+      ) {
         for (
           const [k, v] of Object.entries(
             args.p_secrets as Record<string, string>,
@@ -412,25 +418,105 @@ Deno.test("a lease that is never free is busy, not expired, and nothing is spent
 
 Deno.test("HMRC connects and refreshes through its own doors, on its own hosts, with the client in the form body", async () => {
   const bodies: URLSearchParams[] = [];
-  const w = world({ target: "hmrc_mtd", token: (body) => {
-    bodies.push(body);
-    return new Response(JSON.stringify({ access_token: "AT", refresh_token: "RT", expires_in: 14400 }));
-  } });
+  const w = world({
+    target: "hmrc_mtd",
+    token: (body) => {
+      bodies.push(body);
+      return new Response(
+        JSON.stringify({
+          access_token: "AT",
+          refresh_token: "RT",
+          expires_in: 14400,
+        }),
+      );
+    },
+  });
   const res = await handle(
-    post({ action: "authorize", workspace_id: WS, issuer_site_id: SITE, target_id: "hmrc_mtd", display_name: "HMRC" }),
+    post({
+      action: "authorize",
+      workspace_id: WS,
+      issuer_site_id: SITE,
+      target_id: "hmrc_mtd",
+      display_name: "HMRC",
+    }),
     w.deps,
   );
   const out = await res.json();
-  assert(String(out.authorize_url).startsWith("https://test-www.tax.service.gov.uk/oauth/authorize?"));
-  assert(!String(out.authorize_url).includes("app-secret"), "the secret is never in the sign-in URL");
-  assertEquals(w.calls.filter((c) => c.fn.startsWith("open_")).map((c) => `${c.as}:${c.fn}`), ["caller:open_hmrc_connection_v1"]);
+  assert(
+    String(out.authorize_url).startsWith(
+      "https://test-www.tax.service.gov.uk/oauth/authorize?",
+    ),
+  );
+  assert(
+    !String(out.authorize_url).includes("app-secret"),
+    "the secret is never in the sign-in URL",
+  );
+  assertEquals(
+    w.calls.filter((c) => c.fn.startsWith("open_")).map((c) =>
+      `${c.as}:${c.fn}`
+    ),
+    ["caller:open_hmrc_connection_v1"],
+  );
   const state = new URL(out.authorize_url).searchParams.get("state")!;
-  await handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`), w.deps);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
   assertEquals(bodies[0].get("client_secret"), "app-secret");
-  const refreshed = await handle(post({ action: "refresh", connection_id: CONN }), w.deps);
+  const refreshed = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
   assertEquals(await refreshed.json(), { status: "connected" });
-  assert(w.calls.some((c) => c.fn === "hmrc_connection_manageable_v1" && c.as === "caller"));
-  assert(!w.calls.some((c) => c.fn === "accounting_connection_manageable_v1"), "never the accounting door for HMRC");
+  assert(
+    w.calls.some((c) =>
+      c.fn === "hmrc_connection_manageable_v1" && c.as === "caller"
+    ),
+  );
+  assert(
+    !w.calls.some((c) => c.fn === "accounting_connection_manageable_v1"),
+    "never the accounting door for HMRC",
+  );
+});
+
+Deno.test("a refresh that outlived its lease writes nothing and is busy, not expired", async () => {
+  const w = world({
+    token: (body) =>
+      body.get("grant_type") === "refresh_token"
+        ? new Response(
+          JSON.stringify({ access_token: "AT-late", refresh_token: "RT-late" }),
+        )
+        : new Response(
+          JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+        ),
+  });
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const real = w.deps.service;
+  w.deps.service = () => ({
+    rpc: (fn, args) =>
+      fn === "set_accounting_credentials_leased"
+        ? Promise.resolve({ data: null, error: { code: "55P03" } })
+        : real().rpc(fn, args),
+  });
+  const res = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
+  assertEquals(res.status, 503);
+  assertEquals(
+    w.vault.refresh_token,
+    "RT",
+    "the late pair was refused by the database",
+  );
+  assertEquals(w.state().status, "connected");
 });
 
 Deno.test("a delegated token, no token, a bad body and an unknown action are refused", async () => {

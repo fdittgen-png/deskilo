@@ -218,10 +218,10 @@ export async function refreshExclusive(
       // A writer outside the lease may still have rotated the pair.
       const rotated = await rotatedMeanwhile(deps, connectionId, current);
       if (rotated) return { status: "rotated", accessToken: rotated };
-      await store(deps, connectionId, expiredWrite(tokens));
+      await storeLeased(deps, connectionId, holder, expiredWrite(tokens));
       return { status: "failed", failure: tokens };
     }
-    if (!await store(deps, connectionId, connectedWrite(tokens))) {
+    if (!await storeLeased(deps, connectionId, holder, connectedWrite(tokens))) {
       return { status: "busy" };
     }
     return { status: "refreshed", accessToken: tokens.accessToken };
@@ -231,6 +231,34 @@ export async function refreshExclusive(
       p_holder: holder,
     });
   }
+}
+
+/** The same write, but only while [holder] still holds the connection's
+ * refresh lease: the database refuses (55P03) a writer whose lease ran out,
+ * so a slow refresh cannot overwrite the pair a later holder stored. */
+export async function storeLeased(
+  deps: Deps,
+  connectionId: string,
+  holder: string,
+  write: { secrets: Record<string, string>; patch: Record<string, unknown> },
+): Promise<boolean> {
+  const { error } = await deps.service().rpc("set_accounting_credentials_leased", {
+    p_connection_id: connectionId,
+    p_holder: holder,
+    p_secrets: write.secrets,
+    p_patch: write.patch,
+  });
+  if (error) console.error("accounting-connect: the credentials were not stored (lease)");
+  return !error;
+}
+
+/** The target of a connection, read WITHOUT its secrets: which door to use
+ * is decided before anything is decrypted. */
+export async function targetIdOf(deps: Deps, connectionId: string): Promise<string | undefined> {
+  const { data, error } = await deps.service().rpc("accounting_connection_target_v1", {
+    p_connection_id: connectionId,
+  });
+  return !error && typeof data === "string" ? data : undefined;
 }
 
 export async function store(

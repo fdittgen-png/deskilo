@@ -84,6 +84,9 @@ async function tokenCall(
   let res: Response;
   try {
     res = await fetchImpl(target.tokenUrl, {
+      // Below the 30 s refresh lease: a hanging token call must not outlive
+      // the lease that protects a single-use refresh token.
+      signal: AbortSignal.timeout(20_000),
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded",

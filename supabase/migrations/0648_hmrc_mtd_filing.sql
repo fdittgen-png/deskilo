@@ -112,7 +112,7 @@ begin
   end if;
   if not public.feature_effective(p_workspace_id, 'mtdSubmission')
      or not public.feature_effective(p_workspace_id, 'vatDeclarations') then
-    raise exception 'MTD submission is switched off in this space' using errcode = '0A000';
+    raise exception 'MTD submission is switched off in this space' using errcode = '55000';
   end if;
   if not exists (select 1 from public.workspaces w where w.id = p_workspace_id and upper(w.country_code) = 'GB') then
     raise exception 'MTD is for UK spaces' using errcode = '0A000';
@@ -208,6 +208,9 @@ begin
   if v_vrn is null or c.remote_tenant_id is distinct from v_vrn then
     raise exception 'the connection is for another VAT registration' using errcode = 'DKA03';
   end if;
+  if public.vat_period_overlaps_filed(d.workspace_id, d.period_start, d.period_end) then
+    raise exception 'this period overlaps a filed return: its changes are declared as corrections of the next period' using errcode = 'DKA03';
+  end if;
   select * into v_sum from public.vat_return_summary(d.workspace_id, d.period_start, d.period_end);
   if (v_sum.lines, v_sum.total_net_cents, v_sum.total_vat_cents, v_sum.invoice_count)
      is distinct from (d.lines, d.total_net_cents, d.total_vat_cents, d.invoice_count) then
@@ -244,22 +247,159 @@ $fn$;
 revoke execute on function public.revoke_hmrc_connection_v1(uuid) from public, anon;
 grant execute on function public.revoke_hmrc_connection_v1(uuid) to authenticated;
 
+-- The token writer for a refresh: refuses (55P03) a writer that no longer
+-- holds a live lease on the connection, so a refresh that ran past its lease
+-- cannot overwrite the pair a later holder stored.
+create or replace function public.set_accounting_credentials_leased(
+  p_connection_id uuid, p_holder text, p_secrets jsonb, p_patch jsonb
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  c public.accounting_connections;
+begin
+  select * into c from public.accounting_connections where id = p_connection_id for update;
+  if c.id is null then raise exception 'unknown connection' using errcode = 'P0002'; end if;
+  if c.refresh_lease_holder is distinct from p_holder or c.refresh_lease_until is null
+     or c.refresh_lease_until < now() then
+    raise exception 'the refresh lease of this connection is no longer yours' using errcode = '55P03';
+  end if;
+  return public.set_accounting_credentials(p_connection_id, p_secrets, p_patch);
+end;
+$fn$;
+revoke execute on function public.set_accounting_credentials_leased(uuid, text, jsonb, jsonb)
+  from public, anon, authenticated;
+grant execute on function public.set_accounting_credentials_leased(uuid, text, jsonb, jsonb) to service_role;
+
+-- The target of a connection, without its secrets: the edge function asks
+-- which door to use BEFORE it decrypts anything.
+create or replace function public.accounting_connection_target_v1(p_connection_id uuid)
+returns text language sql stable security definer set search_path = public as $fn$
+  select c.target_id from public.accounting_connections c where c.id = p_connection_id;
+$fn$;
+revoke execute on function public.accounting_connection_target_v1(uuid) from public, anon, authenticated;
+grant execute on function public.accounting_connection_target_v1(uuid) to service_role;
+
+-- ── one submission to HMRC at a time per return, and the receipt kept ─────
+-- A return is submitted by ONE caller at a time (a double tap is `in_flight`),
+-- and once HMRC accepted it the receipt is kept here BEFORE the local filing
+-- is attempted, so a failed local write never loses it: the next attempt
+-- files the kept receipt and posts nothing.
+create table public.hmrc_submissions (
+  declaration_id uuid primary key references public.vat_declarations(id) on delete cascade,
+  workspace_id uuid not null references public.workspaces(id) on delete cascade,
+  state text not null check (state in ('in_flight', 'accepted', 'unconfirmed')),
+  holder text not null check (char_length(holder) between 8 and 100),
+  claim_until timestamptz not null,
+  form_bundle_number text not null default '' check (char_length(form_bundle_number) <= 100),
+  processing_date text not null default '' check (char_length(processing_date) <= 60),
+  charge_ref_number text not null default '' check (char_length(charge_ref_number) <= 100),
+  check ((state = 'accepted') = (form_bundle_number <> ''))
+);
+select public.ensure_system_columns('hmrc_submissions');
+alter table public.hmrc_submissions enable row level security;
+revoke all on public.hmrc_submissions from public, anon, authenticated;
+
+-- {claimed: true} when [p_holder] may post; otherwise {claimed: false, state}
+-- with the kept receipt when HMRC already accepted it. An earlier attempt
+-- whose outcome is unknown (unconfirmed, or a claim that ran out) may be
+-- tried again: HMRC refuses a duplicate by its own code.
+create or replace function public.claim_hmrc_submission(
+  p_declaration_id uuid, p_holder text, p_seconds integer
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  s public.hmrc_submissions;
+  v_ws uuid;
+  v_until timestamptz := now() + make_interval(secs => least(greatest(coalesce(p_seconds, 30), 5), 120));
+begin
+  if char_length(btrim(coalesce(p_holder, ''))) not between 8 and 100 then
+    raise exception 'a claim holder is 8 to 100 characters' using errcode = '22023';
+  end if;
+  select workspace_id into v_ws from public.vat_declarations where id = p_declaration_id;
+  if v_ws is null then raise exception 'unknown declaration' using errcode = 'P0002'; end if;
+  select * into s from public.hmrc_submissions where declaration_id = p_declaration_id for update;
+  if s.declaration_id is null then
+    insert into public.hmrc_submissions (declaration_id, workspace_id, state, holder, claim_until)
+    values (p_declaration_id, v_ws, 'in_flight', p_holder, v_until);
+    return jsonb_build_object('claimed', true);
+  end if;
+  if s.state = 'accepted' then
+    return jsonb_build_object('claimed', false, 'state', 'accepted',
+      'form_bundle_number', s.form_bundle_number, 'processing_date', s.processing_date,
+      'charge_ref_number', s.charge_ref_number);
+  end if;
+  if s.state = 'in_flight' and s.claim_until > now() and s.holder <> p_holder then
+    return jsonb_build_object('claimed', false, 'state', 'in_flight');
+  end if;
+  update public.hmrc_submissions set state = 'in_flight', holder = p_holder, claim_until = v_until
+   where declaration_id = p_declaration_id;
+  return jsonb_build_object('claimed', true);
+end;
+$fn$;
+revoke execute on function public.claim_hmrc_submission(uuid, text, integer) from public, anon, authenticated;
+grant execute on function public.claim_hmrc_submission(uuid, text, integer) to service_role;
+
+-- HMRC accepted: keep the receipt (only the holder of the claim may).
+create or replace function public.record_hmrc_acceptance(
+  p_declaration_id uuid, p_holder text, p_form_bundle text, p_processing_date text, p_charge_ref text
+) returns void language plpgsql security definer set search_path = public as $fn$
+begin
+  update public.hmrc_submissions
+     set state = 'accepted', form_bundle_number = left(btrim(coalesce(p_form_bundle, '')), 100),
+         processing_date = left(coalesce(p_processing_date, ''), 60),
+         charge_ref_number = left(coalesce(p_charge_ref, ''), 100)
+   where declaration_id = p_declaration_id and holder = p_holder and state = 'in_flight'
+     and btrim(coalesce(p_form_bundle, '')) <> '';
+  if not found then
+    raise exception 'this submission is no longer yours' using errcode = '55P03';
+  end if;
+end;
+$fn$;
+revoke execute on function public.record_hmrc_acceptance(uuid, text, text, text, text) from public, anon, authenticated;
+grant execute on function public.record_hmrc_acceptance(uuid, text, text, text, text) to service_role;
+
+-- The attempt ended without a receipt. Nothing was sent (p_sent false): the
+-- claim is deleted. Something was sent and the outcome is unknown: it stays
+-- `unconfirmed` for the next attempt and the person's check at HMRC.
+create or replace function public.release_hmrc_submission(
+  p_declaration_id uuid, p_holder text, p_sent boolean
+) returns void language plpgsql security definer set search_path = public as $fn$
+begin
+  if p_sent then
+    update public.hmrc_submissions set state = 'unconfirmed'
+     where declaration_id = p_declaration_id and holder = p_holder and state = 'in_flight';
+  else
+    delete from public.hmrc_submissions
+     where declaration_id = p_declaration_id and holder = p_holder and state = 'in_flight';
+  end if;
+end;
+$fn$;
+revoke execute on function public.release_hmrc_submission(uuid, text, boolean) from public, anon, authenticated;
+grant execute on function public.release_hmrc_submission(uuid, text, boolean) to service_role;
+
 -- ── anchored patches (pg_temp.anchor_replace) ─────────────────────────────
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text
 language plpgsql
 as $f$
 declare
+  v_count integer;
   v_pattern text;
-  v_out text;
 begin
-  if position(p_old in p_def) > 0 then
+  -- Exactly one occurrence, or the patch stops: a restatement that changed
+  -- two places, or none, is never silently written.
+  v_count := (char_length(p_def) - char_length(replace(p_def, p_old, ''))) / greatest(char_length(p_old), 1);
+  if v_count = 1 then
     return replace(p_def, p_old, p_new);
+  end if;
+  if v_count > 1 then
+    raise exception 'anchor occurs % times: %', v_count, left(p_old, 80);
   end if;
   v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
   v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
-  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
-  return case when v_out = p_def then null else v_out end;
+  select count(*) into v_count from regexp_matches(p_def, v_pattern, 'g');
+  if v_count <> 1 then
+    raise exception 'anchor occurs % times (whitespace-tolerant): %', v_count, left(p_old, 80);
+  end if;
+  return regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'));
 end
 $f$;
 revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
@@ -267,6 +407,7 @@ revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
 do $migration$
 declare
   v_def text;
+  v_sig text;
 begin
   -- The token writer checks the flag of the connection's own target.
   select pg_get_functiondef('public.set_accounting_credentials(uuid,jsonb,jsonb)'::regprocedure) into v_def;
@@ -285,19 +426,25 @@ begin
     $a$if v_ways is null or btrim(coalesce(p_target_id, '')) = 'hmrc_mtd' then$a$);
   if v_def is null then raise exception '0648: open_accounting_connection_v1 anchor missing'; end if;
   execute v_def;
-  select pg_get_functiondef('public.accounting_connection_manageable_v1(uuid)'::regprocedure) into v_def;
-  v_def := pg_temp.anchor_replace(v_def,
-    $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
-    $a$if c.target_id = 'hmrc_mtd' then raise exception 'use hmrc_connection_manageable_v1' using errcode = '22023'; end if;
+  for v_sig in select unnest(array[
+      'public.accounting_connection_manageable_v1(uuid)',
+      'public.revoke_accounting_connection_v1(uuid)',
+      'public.save_accounting_map_v1(uuid,text,text,text,text,text)']) loop
+    select pg_get_functiondef(v_sig::regprocedure) into v_def;
+    v_def := pg_temp.anchor_replace(v_def,
+      $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
+      $a$if c.target_id = 'hmrc_mtd' then raise exception 'an HMRC connection has its own doors' using errcode = '22023'; end if;
   perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$);
-  if v_def is null then raise exception '0648: accounting_connection_manageable_v1 anchor missing'; end if;
-  execute v_def;
-  select pg_get_functiondef('public.revoke_accounting_connection_v1(uuid)'::regprocedure) into v_def;
+    execute v_def;
+  end loop;
+  -- a map belongs to a connection: its delete door looks the connection up.
+  select pg_get_functiondef('public.delete_accounting_map_v1(uuid)'::regprocedure) into v_def;
   v_def := pg_temp.anchor_replace(v_def,
-    $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
-    $a$if c.target_id = 'hmrc_mtd' then raise exception 'use revoke_hmrc_connection_v1' using errcode = '22023'; end if;
-  perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$);
-  if v_def is null then raise exception '0648: revoke_accounting_connection_v1 anchor missing'; end if;
+    $a$perform public.accounting_connector_actor(m.workspace_id, 'manageBilling');$a$,
+    $a$if exists (select 1 from public.accounting_connections k where k.id = m.connection_id and k.target_id = 'hmrc_mtd') then
+    raise exception 'an HMRC connection has its own doors' using errcode = '22023';
+  end if;
+  perform public.accounting_connector_actor(m.workspace_id, 'manageBilling');$a$);
   execute v_def;
 
   -- The channel hmrc_mtd is accepted only inside the HMRC wrapper below.
@@ -326,7 +473,7 @@ begin
   if d.id is null then raise exception 'unknown declaration' using errcode = 'P0002'; end if;
   if not public.feature_effective(d.workspace_id, 'mtdSubmission')
      or not exists (select 1 from public.workspaces w where w.id = d.workspace_id and upper(w.country_code) = 'GB') then
-    raise exception 'MTD submission is not available in this space' using errcode = '0A000';
+    raise exception 'MTD submission is not available in this space' using errcode = '55000';
   end if;
   if not exists (select 1 from public.members m
                   where m.workspace_id = d.workspace_id and m.user_id = p_actor_user and m.status = 'active'

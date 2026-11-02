@@ -20,6 +20,7 @@
 // and nothing is retried here; a later duplicate is HMRC's to report.
 
 import { hmrcEndpoints } from "../_shared/hmrc_endpoints.ts";
+import { differingBoxes, nineBoxesFromLines } from "../_shared/hmrc_boxes.ts";
 import {
   type ClientValues,
   fraudHeaders,
@@ -41,17 +42,26 @@ const text = (v: unknown, max: number): string =>
 
 /** The browser's own values, as the web client collected them. Nothing is
  * guessed here: a missing value stays empty and the headers refuse. */
-function clientOf(raw: unknown, request: Request, now: Date): ClientValues {
+function clientOf(
+  raw: unknown,
+  request: Request,
+  now: Date,
+  userId: string,
+): ClientValues {
   const c = typeof raw === "object" && raw !== null
     ? raw as Record<string, unknown>
     : {};
-  const forwarded = text(request.headers.get("x-forwarded-for"), 200).split(
-    ",",
-  )[0].trim();
+  // The address the trusted proxy in front of this function appended last:
+  // an earlier hop is whatever the client claimed.
+  const hops = text(request.headers.get("x-forwarded-for"), 400).split(",").map(
+    (h) => h.trim(),
+  ).filter(Boolean);
+  const forwarded = hops.length > 0 ? hops[hops.length - 1] : "";
   return {
     browserJsUserAgent: text(c.browser_js_user_agent, 400),
     deviceId: text(c.device_id, 100),
-    userId: text(c.user_id, 100),
+    // Who the person is comes from the verified sign-in, never from the page.
+    userId,
     timezone: text(c.timezone, 20),
     screens: text(c.screens, 200),
     windowSize: text(c.window_size, 100),
@@ -111,6 +121,8 @@ type Context = {
   period_start: string;
   period_end: string;
   total_vat_cents: number;
+  /** The prepared return's own lines (the server computes the boxes from them). */
+  lines: unknown;
   vrn: string;
   connection_id: string;
 };
@@ -189,6 +201,7 @@ async function prepare(
     body.client,
     request,
     (deps.now ?? (() => new Date()))(),
+    subjectOf(authorization),
   );
   let fraud: Record<string, string>;
   try {
@@ -260,13 +273,16 @@ export async function hmrcSubmit(
   authorization: string,
   body: Record<string, unknown>,
 ): Promise<Response> {
-  const boxes = boxesOf(body.boxes);
-  if (!boxes) return json({ error: "nine boxes required" }, 400);
+  const sent = boxesOf(body.boxes);
+  if (!sent) return json({ error: "nine boxes required" }, 400);
   const p = await prepare(deps, request, authorization, body, true);
   if ("response" in p) return p.response;
   const c = p.context!;
-  // The figures are the server's own prepared return, shown as nine boxes:
-  // the net of box 3 and box 4 IS the declaration's VAT, to the penny.
+  // The nine boxes are the SERVER's, computed from the prepared return's own
+  // lines (the contract shared with the Dart form catalogue). What the page
+  // shows must equal them to the penny, box by box; otherwise nothing leaves.
+  const boxes = nineBoxesFromLines(c.lines);
+  if (!boxes) return json({ error: "return_not_computable" }, 409);
   const pence = (n: number) => Math.round(n * 100);
   if (
     pence(boxes.totalVatDue) - pence(boxes.vatReclaimedCurrPeriod) !==
@@ -274,62 +290,138 @@ export async function hmrcSubmit(
   ) {
     return json({ error: "figures_differ_from_return" }, 409);
   }
-  const obligations = await openObligations(
-    deps.fetcher ?? fetch,
-    p.api,
-    p.vrn,
-    p.token,
-    p.fraud,
-    c.period_start,
-    c.period_end,
-  );
-  if (!obligations.ok) return failed(obligations);
-  const open = obligationFor(
-    obligations.obligations,
-    c.period_start,
-    c.period_end,
-  );
-  if (!open) return json({ error: "no_open_obligation" }, 422);
-  let result;
+  const differing = differingBoxes(boxes, sent);
+  if (differing.length > 0) {
+    return json({ error: "figures_differ_from_return", boxes: differing }, 409);
+  }
+
+  const actor = subjectOf(authorization);
+  const fileHere = async (receipt: { formBundleNumber: string }) => {
+    const filed = await deps.service().rpc("file_vat_declaration_hmrc_v1", {
+      p_declaration_id: c.declaration_id,
+      p_actor_user: actor,
+      p_receipt: receipt.formBundleNumber,
+    });
+    return !filed.error;
+  };
+
+  // One submission at a time per return; a return HMRC already accepted is
+  // only filed here from the receipt kept, and posts nothing.
+  const holder = crypto.randomUUID();
+  const claim = await deps.service().rpc("claim_hmrc_submission", {
+    p_declaration_id: c.declaration_id,
+    p_holder: holder,
+    p_seconds: 60,
+  });
+  const claimed = claim.data as
+    | {
+      claimed?: boolean;
+      state?: string;
+      form_bundle_number?: string;
+      processing_date?: string;
+      charge_ref_number?: string;
+    }
+    | null;
+  if (claim.error || !claimed) {
+    return json({ error: "submission_unavailable" }, 503);
+  }
+  if (!claimed.claimed) {
+    if (claimed.state === "accepted" && claimed.form_bundle_number) {
+      const kept = {
+        formBundleNumber: claimed.form_bundle_number,
+        processingDate: claimed.processing_date ?? "",
+        chargeRefNumber: claimed.charge_ref_number || null,
+      };
+      return await fileHere(kept)
+        ? json({ status: "filed", channel: "hmrc_mtd", receipt: kept })
+        : json({ error: "accepted_not_recorded", receipt: kept }, 500);
+    }
+    return json({ error: "in_flight" }, 409);
+  }
+
+  let sentToHmrc = false;
   try {
-    result = await submitReturn(
+    const obligations = await openObligations(
       deps.fetcher ?? fetch,
       p.api,
       p.vrn,
       p.token,
       p.fraud,
-      open.periodKey,
-      boxes,
+      c.period_start,
+      c.period_end,
     );
-  } catch (e) {
-    if (e instanceof HmrcInputError) {
-      return json({ error: "invalid_return", field: e.field }, 422);
+    if (!obligations.ok) {
+      // Nothing was posted: a failed read is not an unconfirmed return.
+      return obligations.reason === "unreachable"
+        ? json({ error: "unreachable", code: obligations.code }, 502)
+        : failed(obligations);
     }
-    throw e;
-  }
-  if (!result.ok) return failed(result);
-  // HMRC has the return. The receipt files it here; if that write fails the
-  // receipt is handed back, because HMRC will refuse a second submission.
-  const actor = subjectOf(authorization);
-  const filed = await deps.service().rpc("file_vat_declaration_hmrc_v1", {
-    p_declaration_id: c.declaration_id,
-    p_actor_user: actor,
-    p_receipt: result.receipt.formBundleNumber,
-  });
-  if (filed.error) {
-    console.error(
-      "accounting-connect: HMRC accepted a return that could not be filed here",
+    const open = obligationFor(
+      obligations.obligations,
+      c.period_start,
+      c.period_end,
     );
-    return json(
-      { error: "accepted_not_recorded", receipt: result.receipt },
-      500,
-    );
+    if (!open) return json({ error: "no_open_obligation" }, 422);
+    let result;
+    try {
+      sentToHmrc = true;
+      result = await submitReturn(
+        deps.fetcher ?? fetch,
+        p.api,
+        p.vrn,
+        p.token,
+        p.fraud,
+        open.periodKey,
+        boxes,
+      );
+    } catch (e) {
+      sentToHmrc = false;
+      if (e instanceof HmrcInputError) {
+        return json({ error: "invalid_return", field: e.field }, 422);
+      }
+      throw e;
+    }
+    if (!result.ok) {
+      // A refusal means HMRC did not take it, except "already submitted",
+      // whose receipt we do not hold: that one stays unconfirmed.
+      sentToHmrc = result.reason === "unreachable" ||
+        result.reason === "already_submitted";
+      return failed(result);
+    }
+    // HMRC has the return. Keep the receipt FIRST, then file it here; a
+    // failed local write leaves the receipt kept and the next attempt files it.
+    await deps.service().rpc("record_hmrc_acceptance", {
+      p_declaration_id: c.declaration_id,
+      p_holder: holder,
+      p_form_bundle: result.receipt.formBundleNumber,
+      p_processing_date: result.receipt.processingDate,
+      p_charge_ref: result.receipt.chargeRefNumber ?? "",
+    });
+    sentToHmrc = false; // accepted, not in flight: nothing to release
+    if (!await fileHere(result.receipt)) {
+      console.error(
+        "accounting-connect: HMRC accepted a return that could not be filed here",
+      );
+      return json(
+        { error: "accepted_not_recorded", receipt: result.receipt },
+        500,
+      );
+    }
+    return json({
+      status: "filed",
+      channel: "hmrc_mtd",
+      receipt: result.receipt,
+    });
+  } finally {
+    // Ends an attempt that did not reach acceptance: nothing sent deletes the
+    // claim, an unknown outcome keeps it `unconfirmed`. (After acceptance the
+    // row is `accepted` and this changes nothing.)
+    await deps.service().rpc("release_hmrc_submission", {
+      p_declaration_id: c.declaration_id,
+      p_holder: holder,
+      p_sent: sentToHmrc,
+    });
   }
-  return json({
-    status: "filed",
-    channel: "hmrc_mtd",
-    receipt: result.receipt,
-  });
 }
 
 export async function hmrcValidateHeaders(
