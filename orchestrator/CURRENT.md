@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 11:02 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
+Snapshot: **2026-11-02 11:20 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
 
 ## Owner instruction and authority
 
@@ -29,7 +29,9 @@ No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconcilia
 
 ## Active #3070 checkpoint
 
-**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; none is yet confirmed reserved in this snapshot. E2 may write numbered local SQL only after that receipt. No dev application authorized by this assignment.
+Private local candidate `fa5445801737f6a992a7109e54fea682cdbdb3ea`, clean, in `/private/tmp/deskilo-3070-approver-reads`, branch `feat/3070-approver-reads`. 0654 exclusively RESERVED, NOT APPLIED, SHA-256 `8dee1ebe3218d9a29b5ac3983e202ad25a4a1224d8c6604b3efc5505c15d3cdc`. E2 reports fatal-info analysis passed, 692 lint tests and 54 affected tests passed; Demo actor/threshold 3 and detail retry passed. Original numeric test exits not separately copied here. Migration execution and 25-assertion pgTAP 340 NOT RUN; local Docker/Postgres unavailable. E1 exact-head read-only contract review requested; reviewer assessing established transaction-safe rollback harness route. No persistent dev application, public ref or final merge approval. Genuine APPLIED/contract records and full required CI remain pending.
+
+**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; 0654 is now confirmed exclusively reserved. E2 may write numbered local SQL only after that receipt. No dev application authorized by this assignment.
 
 Reviewer source check confirms different predicates in 0461 purchase RLS/0587 detail and 0468 decision authorization. Reproduce intended eligibility before changing access. 0483 permits self-approval strictly below configured purchase.single_approval_below_units (default 0); self-rejection remains prohibited. Never blanket-exclude own rows. Verify member-receipt versus supplier-bill semantics and minimize newly disclosed fields. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
 
