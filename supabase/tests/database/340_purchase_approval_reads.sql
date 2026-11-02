@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(41);
+select plan(44);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -13,7 +13,11 @@ insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status,joi
 ('00000000-0000-4000-8000-0000000034a5','00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a2',false,false,'active',now());
 insert into public.suppliers (id,workspace_id,supplier_number,name) values ('00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a3','1','Repro supplier');
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
-('00000000-0000-4000-8000-0000000034a7','00000000-0000-4000-8000-0000000034a3','bill','pending','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a4','00000000-0000-4000-8000-0000000034a4','unpaid');
+('00000000-0000-4000-8000-0000000034a7','00000000-0000-4000-8000-0000000034a3','bill','draft','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a4','00000000-0000-4000-8000-0000000034a4','unpaid');
+
+insert into public.purchase_lines (workspace_id,purchase_id,line_no,description,gross_cents) values
+('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7',1,'Synthetic goods',120);
+update public.purchase_documents set state='pending' where id='00000000-0000-4000-8000-0000000034a7';
 
 -- Source metadata exists but is not part of the scoped approval read.
 insert into public.purchase_sources (workspace_id,purchase_id,source_kind,source_id,original_hash,original_reference)
@@ -48,6 +52,13 @@ select is((select count(*)::int from public.purchase_documents where id='0000000
 select throws_ok($$select public.purchase_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')$$,'P0001','unknown purchase','ordinary detail remains restricted');
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,1,'only other person bill actionable with default threshold');
 select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')->>'can_reject','true','other person bill can be rejected');
+select is((select array_agg(k order by k) from jsonb_object_keys(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')->'detail') k),
+  array['category','currency','due_on','id','kind','legacy_qualification','lines','obligations','original_reference','revision','sources','state','supplier']::text[],
+  'decision detail exposes exactly the approved top-level allowlist');
+select is((select array_agg(k order by k) from jsonb_object_keys(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')#>'{detail,supplier}') k),
+  array['name','supplier_number']::text[], 'supplier exposes only its displayed name and number');
+select is((select array_agg(k order by k) from jsonb_object_keys(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')#>'{detail,lines,0}') k),
+  array['description','gross_cents','line_no','place_name','recognition_kind','recoverable_tax_cents','tax_cents']::text[], 'line exposes exactly the decision-display fields');
 select ok(not (public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')->'detail' ? 'supplier_snapshot'),'decision detail omits supplier snapshot');
 select ok(not (public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')->'detail' ? 'submitter_member_id'),'decision detail omits member identity');
 select is(jsonb_array_length(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')#>'{detail,sources}'),0,'decision detail omits source identifiers and hashes');
