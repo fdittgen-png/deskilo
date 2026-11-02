@@ -98,7 +98,8 @@ class PurchaseDecisionBar extends ConsumerWidget {
       action: () async {
         if (reads != null) {
           final current = await reads.detail(workspaceId, detail.summary.id);
-          if (current.detail.revision != detail.revision ||
+          if (!context.mounted ||
+              current.detail.revision != detail.revision ||
               (approve ? !current.canApprove : !current.canReject)) {
             throw StateError('purchase approval changed');
           }

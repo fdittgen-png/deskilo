@@ -1,11 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #3070: a refused decision detail offers retry and respects action flags.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,11 +22,14 @@ import 'package:flutter_test/flutter_test.dart';
 class _Reads implements PurchaseApprovalReads {
   int calls = 0;
   bool deny = false;
+  Completer<void>? gate;
   @override
   Future<PurchaseApprovalDetail> detail(
     String workspaceId,
     String purchaseId,
   ) async {
+    final pending = gate;
+    if (pending != null) await pending.future;
     if (deny || calls++ == 0) throw StateError('denied');
     return const PurchaseApprovalDetail(
       detail: PurchaseDetail(
@@ -64,6 +74,7 @@ class _CountingPurchases extends FakePurchaseRepository {
 }
 
 final _canApprove = StateProvider<bool>((ref) => true);
+final _purchasesEnabled = StateProvider<bool>((ref) => true);
 
 void main() {
   testWidgets('detail error can retry and own bill cannot be rejected', (
@@ -212,5 +223,77 @@ void main() {
     expect(purchases.decisions, 0);
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
+  });
+  testWidgets('switching purchases off hides actions in an open sheet', (
+    tester,
+  ) async {
+    final reads = _Reads()..calls = 1;
+    final purchases = _CountingPurchases();
+    final container = ProviderContainer(
+      overrides: [
+        currentWorkspaceProvider.overrideWith(
+          (ref) async => const Workspace(
+            id: 'ws',
+            name: 'Space',
+            countryCode: 'FR',
+            currencyCode: 'EUR',
+            timezone: 'UTC',
+            inviteCode: '',
+          ),
+        ),
+        myMemberProvider.overrideWith(
+          (ref) async => const Member(
+            id: 'm',
+            workspaceId: 'ws',
+            userId: 'u',
+            isAdmin: false,
+            isOwner: false,
+            status: MemberStatus.active,
+          ),
+        ),
+        myPermissionsProvider.overrideWith(
+          (ref) => {WorkspacePermission.approveExpenses},
+        ),
+        enabledFeaturesSyncProvider.overrideWith(
+          (ref) =>
+              ref.watch(_purchasesEnabled) ? {WorkspaceFeature.purchases} : {},
+        ),
+        purchaseApprovalReadsProvider.overrideWithValue(reads),
+        purchaseRepositoryProvider.overrideWithValue(purchases),
+      ],
+    );
+    addTearDown(container.dispose);
+    await container.read(currentWorkspaceProvider.future);
+    await container.read(myMemberProvider.future);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Builder(
+              builder: (context) => TextButton(
+                onPressed: () => showPurchaseForDecision(context, 'ws', 'own'),
+                child: const Text('Open'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
+    reads.gate = Completer<void>();
+    await tester.tap(find.byKey(const ValueKey('purchase-approve')));
+    await tester.pump();
+    container.read(_purchasesEnabled.notifier).state = false;
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
+    expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
+    reads.gate!.complete();
+    await tester.pumpAndSettle();
+    expect(purchases.decisions, 0);
   });
 }
