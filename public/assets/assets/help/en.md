@@ -387,10 +387,10 @@ You are in a space and want to reach a screen. Everything is in one menu, and a 
 
 **Steps**
 
-1. Tap the ☰ button at the top left. The menu opens with your space's name, **Back to Me** and the daily destinations: **Reserve**, **Calendar**, **Members**, **Money**.
+1. Tap the ☰ button at the top left. The menu opens with your space's name, **Back to Me** and the daily destinations: **Reserve**, **Calendar**, **Members**, **My finances**.
 2. Tap a destination to open it. A blue number beside it counts what waits there.
-3. Open **Reporting**, **People & access**, **Billing & payments** or **Workspace setup** to see the administration tools your role allows.
-4. At the bottom, **Documents**, **Privacy & data** and **Settings** are always close.
+3. Open **Reporting**, **People & access**, **Sales & collections**, **Cash & accounting** or **Workspace setup** to see the administration tools your role allows.
+4. At the bottom, **Document library**, **Privacy & data** and **Settings** are always close.
 5. Tap the avatar at the top right, or **Back to Me**, to leave the space and return to [Me](app:/me).
 
 ![](assets/help/images/user-start-navigation--groups.en.b8fa17aa9.jpg)
@@ -2238,7 +2238,7 @@ You run a community and want to host DesKilo yourself.
 
 ## Money
 
-Everything you owe, have paid and have been invoiced lives in the **Money** tab: one place to read the month, settle it, find an invoice and ask for a change.
+Everything you owe, have paid and have been invoiced lives in the **My finances** tab: one place to read the month, settle it, find an invoice and ask for a change.
 
 In this chapter:
 - [Read your statement](help:user.money.statement) and [what an invoice changes](help:user.money.statement.invoiced)
@@ -2260,7 +2260,7 @@ You want to know where the month stands: what you used, what it costs and what i
 
 **Steps**
 
-1. Open [Money](app:/money) and stay on **Statement**.
+1. Open [My finances](app:/money) and stay on **Statement**.
 2. Use the arrows beside the month name to browse other months.
 3. Read **Balance** first: **Outstanding** in red means you owe it, **Settled** means nothing is left.
 4. Read **This month** below it: the days you used out of the days your plan includes, and the days left.
@@ -2285,7 +2285,7 @@ You want to know which figure to trust once the workspace has sent you an invoic
 
 **Steps**
 
-1. Open [Money](app:/money) and go back to the invoiced month with the left arrow.
+1. Open [My finances](app:/money) and go back to the invoiced month with the left arrow.
 2. Look for the card named **Invoice** (or **Credit note** when the total is negative) followed by its number.
 3. Read the state on the card, then **Invoice total**; a partly paid invoice also shows **Paid so far** and **Remaining to pay**.
 
@@ -2306,7 +2306,7 @@ You want to settle your balance and know how the workspace expects the money.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Payments**.
+1. Open [My finances](app:/money) and choose **Payments**.
 2. Check **Balance** under **Pay**; overdue invoices from all periods are called out above it.
 3. Read **Payment instructions**: the bank details, the payment reference to quote and the other ways the workspace accepts. Tap an IBAN or a value to copy it.
 4. If the button is there, tap **Pay online**.
@@ -2330,7 +2330,7 @@ You paid by transfer, cash or another way and you want the workspace to know.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** and tap **Record a payment**.
+1. Open [My finances](app:/money), choose **Payments** and tap **Record a payment**.
 2. Enter the **Amount**.
 3. Tap how you paid: **Bank transfer**, **Cash**, **PayPal**, **TWINT**, **Card**, **Wero**, **Lydia**, **Wise** or **Other**. Tap it again to clear it.
 4. Check **Payment date** and **Applies to**, the month this payment settles.
@@ -2353,7 +2353,7 @@ You want to find an invoice, see whether it is paid and get its PDF.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Invoices**.
+1. Open [My finances](app:/money) and choose **Invoices**.
 2. Read the list, newest first. Each row shows the number, a status chip, the month, the date and the amount.
 3. Tap an invoice to open it.
 4. Tap **Quick view** to read it on screen, **Download PDF** to save it or **Share PDF** to send it.
@@ -2379,7 +2379,7 @@ You want to see, booking by booking, what was billed this month.
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Usage**.
+1. Open [My finances](app:/money) and choose **Usage**.
 2. Pick the month with the arrows.
 3. Read each card: the day, the time, the place, then **Booked**, **Present** and **Billed**.
 4. For a booking you left early, tap **Bill the time I was here**, add a reason if you like and tap **Ask**.
@@ -2403,7 +2403,7 @@ You want to see what is waiting on you in money matters, without reading the who
 
 **Steps**
 
-1. Open [Money](app:/money).
+1. Open [My finances](app:/money).
 2. Tap **Finance alerts**, the row at the top. The number on the bell is how many are waiting.
 3. Read the list: the requests you must confirm come first, then the money events.
 
@@ -2425,7 +2425,7 @@ You want a document about your own money, to read, keep or send to your accounta
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Documents**.
+1. Open [My finances](app:/money) and choose **Documents**.
 2. Pick the month with the arrows, for the reports that depend on a month.
 3. Tap a report: **My conditions**, **Payments report**, **Consumption report** or **This month's statement (PDF)**.
 4. Choose **Quick view**, **Download PDF** or **Share PDF**.
@@ -2450,7 +2450,7 @@ You want to know whether you pay the workspace tariff or a price agreed just for
 
 **Steps**
 
-1. Open [Money](app:/money) and choose **Documents**.
+1. Open [My finances](app:/money) and choose **Documents**.
 2. Read **My negotiated prices**: for **Monthly fee**, **Overage per half-day** and **Discount on supplements**, **Tariff** shows what everyone pays and **Mine** what you pay.
 3. Tap **Who can see this** to learn who can read your prices.
 
@@ -2471,7 +2471,7 @@ You want the statutes, a guide or the statements your workspace has shared.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Documents** and tap **Document library**, or go straight to [Documents](app:/documents).
+1. Open [My finances](app:/money), choose **Documents** and tap **Document library**, or go straight to [Document library](app:/documents).
 2. Find your document under its category: **Statutes & legal**, **Financial statements**, **Meeting minutes**, **Guides & manuals** or **Other documents**.
 3. Tap it. It opens in your browser from wherever it is stored.
 
@@ -2493,7 +2493,7 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** and tap **Submit an expense**.
+1. Open [My finances](app:/money), choose **Payments** and tap **Submit an expense**.
 2. Enter the **Amount**.
 3. Pick a **Category**: **Coffee & kitchen**, **Equipment**, **Supplies** or **Other**.
 4. Write a **Description**.
@@ -2519,7 +2519,7 @@ An expense is waiting and you decide whether the workspace pays it.
 
 **Steps**
 
-1. Open [Events](app:/events), or tap **Finance alerts** in [Money](app:/money).
+1. Open [Events](app:/events), or tap **Finance alerts** in [My finances](app:/money).
 2. Look under **Waiting for your confirmation** for the line naming the amount and the member.
 3. Tap **Accept** to confirm it, or the cross to **Decline** it.
 
@@ -2531,6 +2531,14 @@ An expense is waiting and you decide whether the workspace pays it.
 - **Finance alerts** in Money appears when the **Events tab** feature is on.
 
 **See also:** [Finance alerts](help:user.money.alerts)
+
+### Supplier balances
+
+**Audience:** Administrator · Owner
+
+Open **Purchases** and then **Suppliers**. Each supplier's outstanding balance is separate from its annual purchase-document spend, and amounts in different currencies are shown separately. An amount on hold is part of the outstanding balance but is not currently payable.
+
+Choose **View supplier payables** to see that supplier's bills and their remaining amounts. Use **Load more** when offered. If the balance or list is unavailable, retry rather than treating it as zero. The workspace needs Purchases enabled and you need permission to view finances or manage purchases.
 
 ### How amounts are shown
 
@@ -2556,7 +2564,7 @@ You belong to several spaces and want all your invoices, payments and reminders 
 
 **Steps**
 
-1. Open [Money](app:/money), choose **Payments** or **Invoices**, and tap **Open for** your space on the card **Your finances across spaces**.
+1. Open [My finances](app:/money), choose **Payments** or **Invoices**, and tap **Open for** your space on the card **Your finances across spaces**.
 2. Choose a tab: **Outstanding**, **Paid**, **Payments** or **Reminders**.
 3. If you belong to several spaces, filter by space at the top.
 
@@ -3443,6 +3451,8 @@ You want members to check in by tapping a card, with no phone.
 - The badge manager also lets you issue a **New badge**, **Revoke** one, and **Save as PDF** for printing. A revoked badge can be deleted for good.
 - **Signs me in** is off by default: a badge that checks you in does not log you in until the member chooses to.
 - Each member can also make their own badge in their personal settings.
+- Badge sign-in security: failed PIN attempts across all cards of the workspace share a ceiling, 50 by default during the badge lockout window (15 minutes by default). Workspace settings → Security lets an owner tighten the ceiling to 1–50. Reaching it pauses badge sign-in until attempts leave that window and sends the owners an alert in Events. Other workspaces keep working. The setup questionnaire records the chosen ceiling as an answer to enter in the app.
+- When you manage a member’s badges, a notice asks for a PIN refresh if its recorded length is below the current minimum or its length is unknown because it was set before length tracking. Older PINs keep working until their owner changes them; the badge manager never reveals the PIN or its hash.
 
 **See also:** [A wall tablet for check-in](help:user.kiosk.mode)
 
@@ -5335,6 +5345,7 @@ You want reminders to leave on their own.
 - Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
 - Off: you send each reminder yourself.
 - When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.
+- A server accepting a push request does not prove that a device received it. The delivery outcome stays unknown when the push service does not disclose device delivery; the reminder remains recorded and the amount owed is unchanged.
 
 **See also:** [Reminder rules](help:user.money.reminders.rules)
 
@@ -7705,6 +7716,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 - Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.
 - The detailed checklist is for the operator: see [Platforms](help:user.advanced.platforms) and [Your own server](help:user.advanced.own-server).
 - Push text never carries a name or a time: this is deliberate, for privacy.
+- Pair the push secret on each installation: store the same private random value in Vault as `deskilo_push_shared_secret` first, then as `PUSH_SHARED_SECRET` for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.
 
 **See also:** [Push notifications on this device](help:user.privacy.push)
 
@@ -8250,9 +8262,10 @@ You want to see the finished product before you make decisions. The demo workspa
 
 **Steps**
 
-1. On the sign-in screen, tap **Explore the demo workspace**, then **Start exploring**. See [The demo workspace](help:user.advanced.demo).
+1. On the sign-in screen, tap **Explore the demo workspace**, then **Start exploring**. When you are already signed in, tap **Try it in the demo** on a setup step instead: you stay signed in and the demo opens at that step. See [The demo workspace](help:user.advanced.demo).
 2. Use **View as** to move between **The owner**, **An administrator** and **A member**. Do the three exercises of each person below.
 3. Tap **Reset the demo** when you want it back as it started.
+4. If you opened the demo from your workspace, tap **Return to my workspace** when you finish: you come back to the same setup screen with the choices you had not applied yet. Changes made in the demo never reach your workspace.
 
 *As a member*
 

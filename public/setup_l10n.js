@@ -5,6 +5,7 @@ window.SETUP_L10N={
  "en": {
   "s": {
    "setupTitle": "DesKilo — Setup Assistant",
+   "setupHow": "How this page works",
    "setupLanguage": "Language",
    "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it into a space you created (Workspace → Import workspace (XML)). Each answer says whether the import applies it, whether it is typed in the app, or whether it stays in the file only; the last step lists what remains to do in the app.",
    "setupGuideHtml": "The complete user guide — with a screenshot of every screen, long forms merged into one image — is {link} (English · Français · Deutsch · Español · Italiano) and in the app (Settings → Help).",
@@ -152,6 +153,7 @@ window.SETUP_L10N={
    "identityTimezoneHint": "IANA name. Every booking slot is anchored to it; each member can display the time in their own.",
    "identityLanguage": "Workspace language",
    "identityLanguageHint": "Invitations and reports are written in it by default.",
+   "identityAdvanced": "Advanced: server and network settings",
    "identityAddress": "Postal address",
    "identityAddressHint": "Printed on invoices and on the kiosk receipt.",
    "identityAddressPlaceholder": "12 Example Street, London SW1A 1AA",
@@ -184,6 +186,7 @@ window.SETUP_L10N={
    "availHalfDayHours": "Hours worth a half day",
    "availFullDayHours": "Hours worth a full day",
    "availClosures": "Closure days",
+   "tableRemoveRow": "Remove this row",
    "colDate": "Date",
    "availAddClosure": "Add a closure day",
    "availPolicies": "Booking policies",
@@ -614,7 +617,145 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
    "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
    "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
-   "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."
+   "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration.",
+   "legalLandTax": "Land and the option to tax",
+   "legalLandTaxHint": "In the United Kingdom a licence to occupy a desk or an office is exempt (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.",
+   "legalOptionToTax": "We opted to tax the building",
+   "legalOptionDate": "Option effective from",
+   "legalOptionRef": "HMRC notification reference",
+   "legalFacilitiesPackage": "We sell a serviced package of facilities",
+   "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not.",
+   "legalLetting": "Letting and the option (Switzerland)",
+   "legalLettingHint": "A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22) by showing the tax openly on the invoice.",
+   "legalBareLetting": "We only let bare rooms",
+   "legalBareLettingDesc": "Off: every property line is a package, taxed at the normal rate. On: exempt unless you opted.",
+   "legalChOption": "We opted for taxation (art. 22 MWSTG)",
+   "legalCaTax": "GST/HST and QST (Canada)",
+   "legalCaTaxHint": "The VAT ID above is your GST/HST business number with its RT account (123456789 RT0001). If you charge the QST, add your Revenu Québec number: both are printed on the invoice.",
+   "legalQstNumber": "QST registration number (Revenu Québec)",
+   "legalQuickMethod": "We use the quick method of accounting",
+   "legalQuickMethodDesc": "The return flags it. The remittance rates are the CRA's and are not computed by the app.",
+   "payQrIban": "QR-IBAN (Swiss QR-bill)",
+   "payQrIbanHint": "Optional: with it, the QR-bill carries a QRR reference",
+   "payErrQrIban": "The QR-IBAN is a Swiss or Liechtenstein IBAN whose institution identifier (digits 5 to 9) lies between 30000 and 31999.",
+   "webmcpSecretSet": "[set]",
+   "webmcpErrInvalid": "{key}: {reason}",
+   "webmcpReasonBool": "expected true or false",
+   "webmcpReasonEnum": "this value is not one of the allowed values",
+   "webmcpReasonInt": "expected a whole number",
+   "webmcpReasonNum": "expected a number",
+   "webmcpReasonRange": "the number must lie between {min} and {max}",
+   "webmcpReasonDays": "expected a list of weekdays, \"1\" (Monday) to \"7\" (Sunday)",
+   "webmcpReasonDates": "expected a list of dates written YYYY-MM-DD",
+   "webmcpReasonText": "expected text",
+   "webmcpReasonTime": "expected a time written HH:MM",
+   "webmcpReasonDate": "expected a date written YYYY-MM-DD, or empty",
+   "webmcpReasonColor": "expected a colour written #RRGGBB, or empty",
+   "webmcpErrCollection": "{key} is a list of records that the questionnaire edits on screen; the tools do not set it.",
+   "webmcpErrUnknownKey": "Unknown parameter: {key}.",
+   "webmcpErrNeeds": "{key} only applies while the feature {feature} is on; turn that feature on first.",
+   "webmcpErrEmpty": "Provide at least one entry.",
+   "webmcpErrAtomic": "Nothing was changed: {n} answer(s) are refused, see errors.",
+   "webmcpErrFormat": "Only the XML format exists.",
+   "webmcpErrBlocked": "The questionnaire has {n} blocking finding(s); fix them before exporting.",
+   "webmcpErrNoRates": "No suggested VAT rates exist for the country {country}.",
+   "webmcpListParameters": "List the questions of the DesKilo setup questionnaire: key, type, allowed values or range, default, the switch a question depends on, and the label in the page language. Optionally filter by feature or text.",
+   "webmcpGetAnswers": "Return every current answer of the questionnaire (secrets are masked) and the findings that still block the export.",
+   "webmcpSetAnswer": "Answer one question with the same checks as the page. A feature switch also turns on the switches it needs; a question that depends on a switch that is off is refused and names it.",
+   "webmcpSetAnswers": "Answer several questions at once, all or nothing: if any answer is refused nothing changes and each refusal is listed per key. Feature switches are applied first.",
+   "webmcpExplain": "Explain one question: its label and help, allowed values, default, current value, what it depends on and what depends on it.",
+   "webmcpDiff": "List the answers that differ from the questionnaire defaults.",
+   "webmcpExport": "Return the configuration file (XML) exactly as the Export button produces it; refused while a blocking finding remains.",
+   "webmcpReset": "Reset the given questions to their defaults, or every answer when no key is given.",
+   "webmcpSeedRates": "Fill the VAT rates with the rates suggested for the chosen country, as the suggestion button does.",
+   "webmcpArgFeature": "Only the questions of this feature (key without the features. prefix).",
+   "webmcpArgQuery": "Text to look for in keys, labels and help.",
+   "webmcpArgKey": "The parameter key, as list_parameters returns it (for example country, or features.invoicing).",
+   "webmcpArgValue": "The answer: a boolean, a string, a number or a list, as the parameter type says.",
+   "webmcpArgAnswers": "An object mapping parameter keys to answers.",
+   "webmcpArgFormat": "The export format; only xml exists.",
+   "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
+   "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
+   "featuresAvailabilityEu": "the EU member states",
+   "setupDemoHtml": "Prefer to see it first? <a href=\"./#/demo?space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere.",
+   "levelsWhy": "Plain questions about your space set the level of each process: what it does, never more. The expert view keeps every switch.",
+   "levelsOffline": "This page prepares a file and works offline: it cannot see your space and says nothing about what is ready. The app shows that once the file is imported.",
+   "levelsExpertHint": "An answer sets every level again. Fine-tune single switches in the expert view; the levels here follow them.",
+   "levelsExpertOpen": "Open the expert view: every switch",
+   "setupExpertSwitches": "Show every switch (expert view)",
+   "levelsOk": "Levels: {list}.",
+   "levelsUnanswered": "No question answered: the switches of the next step decide.",
+   "networkRoles": "This server's role",
+   "networkRolesHint": "Combined: people's accounts and the space on one server (the usual choice). Workspace host: the accounts live on another server, the personal home, named below.",
+   "networkCombined": "Combined: accounts and spaces",
+   "networkWorkspaceHost": "Workspace host: spaces only",
+   "networkHomeUrl": "Personal home URL",
+   "networkHomeUrlHint": "The https:// address of the server where your members keep their accounts.",
+   "networkHomeKey": "Personal home publishable key",
+   "networkHomeKeyHint": "Its publishable key (sb_publishable_…), never a secret one. The instance wizard checks both before recording them.",
+   "networkErrHome": "The personal home needs an https:// address without a path and a publishable key.",
+   "reqNetworkHome": "Required because this server hosts spaces only: its members need a personal home.",
+   "optSeconds": "{n} seconds",
+   "optOneMinute": "1 minute",
+   "enrolAccepting": "Accepts new spaces once enrolled at a personal home",
+   "enrolAcceptingHint": "Only for a workspace server whose members keep their accounts on a personal home: the home's operator enrols it there (instance wizard or command line) and may offer it for new spaces. Untick to host only the spaces it already has.",
+   "enrolLifetime": "Identity status lifetime",
+   "enrolLifetimeHint": "How long a workspace server relies on a person's status signed by the personal home. A suspended account is refused new requests within this time, at most 15 minutes. Set in the app's settings.",
+   "enrolReconcile": "Identity status refresh",
+   "enrolReconcileHint": "How often a workspace server refreshes the statuses it holds, even when nobody uses the app. Set in the app's settings.",
+   "enrolSkew": "Allowed clock difference",
+   "enrolSkewHint": "Clock difference between the personal home and a workspace server still accepted, 30 seconds at most. Set in the app's settings.",
+   "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes.",
+   "optEntries": "{n} entries",
+   "optCharacters": "{n} characters",
+   "dirPageSize": "New discussion: entries per page",
+   "dirPageSizeHint": "How many workspaces, people or groups the personal home lists at a time when a member starts a discussion; the next ones come with Show more. Set in the app's settings.",
+   "dirQueryLength": "New discussion: longest search",
+   "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings.",
+   "inboxPageSize": "Inbox: conversations per page",
+   "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings.",
+   "biDetailPageSize": "Payments: rows per page",
+   "biDetailPageSizeHint": "How many payments one page of the collected figure's detail lists; the next page continues where it stopped. Set in the app's workspace settings.",
+   "fedRetention": "Backchannel retention",
+   "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
+   "fedAnswerWait": "Backchannel answer wait",
+   "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings.",
+   "supLookupWait": "Supplier lookup wait",
+   "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
+   "supLookupRate": "Supplier lookups per minute",
+   "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
+   "recordsHostingCountry": "Where this server keeps its data",
+   "recordsHostingNone": "Not declared",
+   "recordsHostingCountryHint": "The country where the database and its backups are, as your hosting contract states it. The app says only what you declare here; left undeclared, it states no location. Set in the app's platform settings.",
+   "recordsCraReference": "CRA authorisation to keep records outside Canada",
+   "recordsCraReferenceHint": "A Canadian business keeps its records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). If your server is outside Canada, the reference of that authorisation; leave it empty if you hold none. Set in the app's workspace settings.",
+   "mapTiles": "Map tile server",
+   "mapTilesHint": "Where the discovery map's tiles come from, as an https template with {z}, {x} and {y} (no user name, password or #, not a private network). Leave empty for OpenStreetMap. Set in the app's platform settings (Region and maps).",
+   "mapGeocoder": "Address lookup service",
+   "mapGeocoderHint": "The Photon-compatible service that places a published address on the map: an https address with no user name, password, ? or #, not on a private network. Leave empty for the public Photon service. Set in the app's platform settings (Region and maps).",
+   "regionCurrency": "Default currency",
+   "regionCurrencyHint": "What amounts are shown in before a workspace is connected, and where a new workspace starts. It never stands in for a missing invoice currency. Set in the app's platform settings (Region and maps).",
+   "regionCountry": "Default country",
+   "regionCountryHint": "Where a new workspace starts when the device's region is unknown. A suggestion only; it decides no tax or issuer country. Set in the app's platform settings (Region and maps).",
+   "regionLocale": "Default number and date format",
+   "regionLocaleHint": "The format used before a member or workspace has chosen one. A member's own choice always wins. Set in the app's platform settings (Region and maps).",
+   "optPerMinute": "{n} per minute",
+   "bankMaxBytes": "Largest bank statement file",
+   "bankMaxBytesHint": "A larger file is refused whole before it is read. A setting of the server, set in the app's settings.",
+   "bankMaxLines": "Movements per bank statement",
+   "bankMaxLinesHint": "A statement with more movements is refused whole; split it by period at the bank. Set in the app's settings.",
+   "bankMatchWindow": "Invoice window for a payment without reference",
+   "bankMatchWindowHint": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone; a person always confirms. Set in the app's settings.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movements",
+   "accountingTitle": "Books and bank",
+   "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
+   "accountingOk": "The bank statements' bounds and suggestion window are set.",
+   "retUsYears": "US state record retention",
+   "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+   "retUsRule": "The retention rule applies",
+   "badgeFailureLimit": "Badge sign-in failures per workspace",
+   "badgeFailureLimitHint": "After this many failed PIN attempts across the workspace, badge sign-in pauses for the lockout window and owners receive an alert. Set a value from 1 to 50 in Workspace settings → Security; 50 is the default. The XML keeps this answer for setup; enter it in the app."
   },
   "feature": {
    "calendarTab": [
@@ -626,7 +767,7 @@ window.SETUP_L10N={
     "Activity feed and pending confirmations."
    ],
    "moneyTab": [
-    "Money tab",
+    "Statement and balance",
     "Monthly bills, payments and expenses."
    ],
    "services": [
@@ -643,7 +784,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF export",
-    "Export the monthly bill as a PDF."
+    "Export the monthly bill and the analytics reports as a PDF."
    ],
    "seriesBooking": [
     "Series booking",
@@ -707,7 +848,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Data export (Excel)",
-    "Download all workspace data as an Excel workbook."
+    "Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook."
    ],
    "workingHours": [
     "Working hours",
@@ -814,8 +955,8 @@ window.SETUP_L10N={
     "Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data."
    ],
    "financeFaces": [
-    "Finances in four faces",
-    "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column."
+    "Statement, payments, invoices, documents",
+    "My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column."
    ],
    "paymentReminders": [
     "Automatic payment reminders",
@@ -1136,6 +1277,90 @@ window.SETUP_L10N={
    "inputVat": [
     "Input VAT",
     "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only."
+   ],
+   "configurableSettings": [
+    "Configurable settings",
+    "Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace's administrators their own values."
+   ],
+   "salesTax": [
+    "Sales tax (United States)",
+    "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue."
+   ],
+   "meetingRooms": [
+    "Meeting rooms",
+    "A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats' slot. Off: no rooms."
+   ],
+   "parking": [
+    "Parking",
+    "A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking."
+   ],
+   "webMcp": [
+    "Browser agent tools",
+    "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered."
+   ],
+   "purchases": [
+    "Purchases",
+    "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched."
+   ],
+   "premisesLease": [
+    "Premises lease",
+    "The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are."
+   ],
+   "assetRegister": [
+    "Equipment register",
+    "The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered."
+   ],
+   "externalRooms": [
+    "Rented rooms",
+    "A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes."
+   ],
+   "accountingPeriods": [
+    "Accounting periods",
+    "Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged."
+   ],
+   "biReportDesigner": [
+    "Report designer (analytics)",
+    "Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read."
+   ],
+   "purchaseAnalytics": [
+    "Purchase figures (analytics)",
+    "What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure."
+   ],
+   "workspaceOverview": [
+    "Workspace overview",
+    "One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are."
+   ],
+   "setupGuide": [
+    "Setup guide",
+    "One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space."
+   ],
+   "dataReport": [
+    "Data report (PDF)",
+    "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals."
+   ],
+   "personalShell": [
+    "Personal shell (five destinations)",
+    "Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs."
+   ],
+   "foreignCurrencyPurchases": [
+    "Purchases in another currency",
+    "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused."
+   ],
+   "accountingConnectors": [
+    "Accounting systems",
+    "Connects each issuer's books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see."
+   ],
+   "bankImport": [
+    "Bank statements",
+    "Reads the bank's statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made."
+   ],
+   "planDecor": [
+    "Draw the room on the plan",
+    "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay."
+   ],
+   "mtdSubmission": [
+    "Submit UK VAT returns to HMRC",
+    "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only."
    ]
   },
   "process": {
@@ -1297,7 +1522,10 @@ window.SETUP_L10N={
    "viewCalendar": "See the calendar",
    "viewDirectory": "See the member directory",
    "viewMyMoney": "See their own account and invoices",
-   "viewDocuments": "See the shared documents"
+   "viewDocuments": "See the shared documents",
+   "managePurchases": "Capture supplier bills",
+   "recordOutgoingPayments": "Record payments to members",
+   "manageLease": "Record the premises lease"
   },
   "domain": {
    "payment": "Payment",
@@ -1320,7 +1548,9 @@ window.SETUP_L10N={
    "refund": "Refund",
    "member_status_change": "Membership change",
    "subscription_change": "Subscription change",
-   "matrix_change": "Permission matrix change"
+   "matrix_change": "Permission matrix change",
+   "lease_change": "Lease change",
+   "commitment_variance": "Rent difference"
   },
   "country": {
    "AT": "Austria",
@@ -1355,11 +1585,119 @@ window.SETUP_L10N={
    "GB": "United Kingdom",
    "US": "United States",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "association": "The space is run by an association, a cooperative or a club",
+    "approve_bookings": "Bookings wait for an approval; members do not book directly",
+    "members_owe_money": "Members owe the space money (rent, passes, extras)",
+    "issue_invoices": "You issue invoices",
+    "pay_online": "Members pay online",
+    "vat_registered": "The space is registered for VAT",
+    "keep_books": "You keep accounting books",
+    "tracks_purchases": "You track what the space buys",
+    "several_rooms_or_sites": "Several rooms, a meeting room or several sites",
+    "door_tablet": "A tablet at the door checks people in",
+    "public_page": "A public page shows the space",
+    "organised": "Committees, own roles or approvals by several people"
+   },
+   "process": {
+    "bookings": "Bookings",
+    "community": "Community",
+    "money": "Money",
+    "payments": "Payments",
+    "tax": "Tax",
+    "purchases": "Purchases",
+    "presentation": "Presentation",
+    "operations": "Operations",
+    "assistant": "Assistant"
+   },
+   "level": {
+    "bookings_simple": "Shared places",
+    "bookings_resources": "Rooms and resources",
+    "bookings_measured": "Measured use",
+    "community_basic": "Basic",
+    "community_organised": "Organised",
+    "money_none": "No money",
+    "money_statements": "Statements",
+    "money_invoices": "Invoices",
+    "payments_off": "By transfer",
+    "payments_online": "Online",
+    "tax_none": "No VAT",
+    "tax_vat": "VAT",
+    "tax_books": "Books",
+    "purchases_none": "None",
+    "purchases_expenses": "Expenses",
+    "purchases_full": "Full purchasing",
+    "presentation_basic": "Basic",
+    "presentation_branded": "Your colours",
+    "presentation_public": "Public page",
+    "operations_basic": "Basic",
+    "operations_insight": "Figures",
+    "operations_advanced": "Advanced",
+    "assistant_off": "Off",
+    "assistant_on": "On"
+   },
+   "reason": {
+    "door_tablet": "Because a tablet at the door checks people in",
+    "keeps_books": "Because you keep accounting books",
+    "later": "Because an assistant can come later",
+    "members_only": "Because only members see the space",
+    "members_owe": "Because members owe the space money",
+    "no_money": "Because no money changes hands",
+    "no_purchases": "Because the space buys nothing it tracks",
+    "no_vat": "Because the space is not registered for VAT",
+    "organised": "Because several people decide together",
+    "pay_by_transfer": "Because members pay by transfer",
+    "pay_online": "Because members pay online",
+    "public_page": "Because the space has a public page",
+    "several_rooms": "Because there are several rooms or sites",
+    "shared_places": "Because members share the places",
+    "small_community": "Because the community is small",
+    "start_simple": "Because you want to start simple",
+    "tracks_purchases": "Because you track what the space buys",
+    "vat_registered": "Because the space is registered for VAT",
+    "issues_invoices": "Because you issue invoices",
+    "association": "Because an association decides together, with its board",
+    "approve_bookings": "Because bookings wait for an approval"
+   },
+   "preset": {
+    "essentiel": "Essential",
+    "standard": "Standard",
+    "complet": "Complete"
+   },
+   "threshold": {
+    "immediate": "The small-business VAT exemption ends on the supply that takes the net turnover of the year past {limit}.",
+    "other": "The small-business VAT exemption ends with the year whose net turnover passes {limit}."
+   },
+   "duty": {
+    "receive_all": "every business must be able to receive e-invoices",
+    "issue_large": "large and mid-sized businesses must issue e-invoices",
+    "issue_all": "every business must issue e-invoices",
+    "e_reporting": "sales to consumers and abroad, and the payments of services, must be e-reported",
+    "invoice_records": "every invoice must be recorded in a hash-chained register (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "What your space does",
+    "setupLevelsQuestions": "About your space",
+    "setupLevelsPresets": "Quick start",
+    "setupLevelsChoice": "What it needs",
+    "setupLevelsGap": "{level} needs {needed}",
+    "setupAnswerUnknown": "Not sure yet",
+    "setupAnswerUnknownNote": "Not decided yet: {list} stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.",
+    "setupObligationsTitle": "What the law asks in {country}",
+    "setupObligationUnconfirmed": "Not confirmed for this country — ask your accountant.",
+    "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
+    "setupObligationSource": "Source: {source}",
+    "eInvoiceMandateSince": "Since {date}: {duty}.",
+    "eInvoiceMandateFrom": "From {date}: {duty}."
+   }
   }
  },
  "fr": {
   "s": {
    "setupTitle": "DesKilo — Assistant de configuration",
+   "setupHow": "Comment ça marche",
    "setupLanguage": "Langue",
    "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe dans un espace que vous avez créé (Espace de coworking → Importer l'espace (XML)). Chaque réponse indique si l'import l'applique, si elle se saisit dans l'app ou si elle reste dans le fichier seulement ; la dernière étape liste ce qui reste à faire dans l'app.",
    "setupGuideHtml": "Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est {link} (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).",
@@ -1507,6 +1845,7 @@ window.SETUP_L10N={
    "identityTimezoneHint": "Nom IANA. Tous les créneaux de réservation s'y ancrent ; chaque membre peut afficher l'heure dans le sien.",
    "identityLanguage": "Langue de l'espace",
    "identityLanguageHint": "Les invitations et rapports y sont rédigés par défaut.",
+   "identityAdvanced": "Avancé : serveur et réseau",
    "identityAddress": "Adresse postale",
    "identityAddressHint": "Imprimée sur les factures et le reçu de la borne.",
    "identityAddressPlaceholder": "12 rue Exemple, 34120 Pézenas",
@@ -1539,6 +1878,7 @@ window.SETUP_L10N={
    "availHalfDayHours": "Heures valant une demi-journée",
    "availFullDayHours": "Heures valant une journée",
    "availClosures": "Jours de fermeture",
+   "tableRemoveRow": "Supprimer cette ligne",
    "colDate": "Date",
    "availAddClosure": "Ajouter un jour de fermeture",
    "availPolicies": "Règles de réservation",
@@ -1969,7 +2309,145 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
    "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
    "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
-   "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."
+   "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration.",
+   "legalLandTax": "Immobilier et option pour la taxation",
+   "legalLandTaxHint": "Au Royaume-Uni, une licence d'occupation d'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l'immeuble. L'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.",
+   "legalOptionToTax": "Nous avons opté pour la taxation de l'immeuble",
+   "legalOptionDate": "Option en vigueur depuis le",
+   "legalOptionRef": "Référence de notification au HMRC",
+   "legalFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
+   "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option.",
+   "legalLetting": "Location et option (Suisse)",
+   "legalLettingHint": "Un poste ou un bureau avec des services (centre d'affaires) est imposable au taux normal. La simple location de locaux est exclue du champ de l'impôt, sans déduction de l'impôt préalable (art. 21 al. 2 ch. 21 LTVA), sauf option pour l'imposition (art. 22), en indiquant l'impôt ouvertement sur la facture.",
+   "legalBareLetting": "Nous ne louons que des locaux nus",
+   "legalBareLettingDesc": "Désactivé : chaque ligne est une prestation globale, imposée au taux normal. Activé : exclue, sauf option.",
+   "legalChOption": "Nous avons opté (art. 22 LTVA)",
+   "legalCaTax": "TPS/TVH et TVQ (Canada)",
+   "legalCaTaxHint": "Le numéro de TVA ci-dessus est votre numéro d'entreprise de TPS/TVH avec son compte RT (123456789 RT0001). Si vous percevez la TVQ, ajoutez votre numéro de Revenu Québec : les deux figurent sur la facture.",
+   "legalQstNumber": "Numéro d'inscription à la TVQ (Revenu Québec)",
+   "legalQuickMethod": "Nous utilisons la méthode rapide de comptabilité",
+   "legalQuickMethodDesc": "La déclaration le signale. Les taux de versement sont ceux de l'ARC et ne sont pas calculés par l'application.",
+   "payQrIban": "QR-IBAN (facture QR suisse)",
+   "payQrIbanHint": "Facultatif : la facture QR porte alors une référence QRR",
+   "payErrQrIban": "Le QR-IBAN est un IBAN suisse ou liechtensteinois dont l'identifiant de l'institution (chiffres 5 à 9) est compris entre 30000 et 31999.",
+   "webmcpSecretSet": "[renseigné]",
+   "webmcpErrInvalid": "{key} : {reason}",
+   "webmcpReasonBool": "vrai ou faux attendu",
+   "webmcpReasonEnum": "cette valeur ne fait pas partie des valeurs permises",
+   "webmcpReasonInt": "nombre entier attendu",
+   "webmcpReasonNum": "nombre attendu",
+   "webmcpReasonRange": "le nombre doit être compris entre {min} et {max}",
+   "webmcpReasonDays": "liste de jours attendue, « 1 » (lundi) à « 7 » (dimanche)",
+   "webmcpReasonDates": "liste de dates AAAA-MM-JJ attendue",
+   "webmcpReasonText": "texte attendu",
+   "webmcpReasonTime": "heure HH:MM attendue",
+   "webmcpReasonDate": "date AAAA-MM-JJ attendue, ou vide",
+   "webmcpReasonColor": "couleur #RRGGBB attendue, ou vide",
+   "webmcpErrCollection": "{key} est une liste d’enregistrements que le questionnaire modifie à l’écran ; les outils ne la renseignent pas.",
+   "webmcpErrUnknownKey": "Paramètre inconnu : {key}.",
+   "webmcpErrNeeds": "{key} ne s’applique que si la fonctionnalité {feature} est activée ; activez-la d’abord.",
+   "webmcpErrEmpty": "Fournissez au moins une entrée.",
+   "webmcpErrAtomic": "Rien n’a été modifié : {n} réponse(s) refusée(s), voir errors.",
+   "webmcpErrFormat": "Seul le format XML existe.",
+   "webmcpErrBlocked": "Le questionnaire a {n} point(s) bloquant(s) ; corrigez-les avant d’exporter.",
+   "webmcpErrNoRates": "Aucun taux de TVA suggéré pour le pays {country}.",
+   "webmcpListParameters": "Liste les questions du questionnaire de configuration DesKilo : clé, type, valeurs permises ou plage, valeur par défaut, interrupteur dont la question dépend, et libellé dans la langue de la page. Filtrable par fonctionnalité ou texte.",
+   "webmcpGetAnswers": "Renvoie toutes les réponses actuelles du questionnaire (secrets masqués) et les points qui bloquent encore l’export.",
+   "webmcpSetAnswer": "Répond à une question avec les mêmes contrôles que la page. Un interrupteur de fonctionnalité active aussi ceux dont il dépend ; une question liée à un interrupteur désactivé est refusée et le nomme.",
+   "webmcpSetAnswers": "Répond à plusieurs questions d’un coup, tout ou rien : si une réponse est refusée rien ne change et chaque refus est listé par clé. Les interrupteurs de fonctionnalités sont appliqués en premier.",
+   "webmcpExplain": "Explique une question : libellé et aide, valeurs permises, valeur par défaut, valeur actuelle, ce dont elle dépend et ce qui dépend d’elle.",
+   "webmcpDiff": "Liste les réponses qui diffèrent des valeurs par défaut du questionnaire.",
+   "webmcpExport": "Renvoie le fichier de configuration (XML) exactement comme le bouton Exporter le produit ; refusé tant qu’un point bloquant subsiste.",
+   "webmcpReset": "Remet les questions indiquées à leur valeur par défaut, ou toutes les réponses si aucune clé n’est donnée.",
+   "webmcpSeedRates": "Remplit les taux de TVA avec ceux suggérés pour le pays choisi, comme le bouton de suggestion.",
+   "webmcpArgFeature": "Seulement les questions de cette fonctionnalité (clé sans le préfixe features.).",
+   "webmcpArgQuery": "Texte à chercher dans les clés, libellés et aides.",
+   "webmcpArgKey": "La clé du paramètre, telle que list_parameters la renvoie (par exemple country, ou features.invoicing).",
+   "webmcpArgValue": "La réponse : booléen, texte, nombre ou liste, selon le type du paramètre.",
+   "webmcpArgAnswers": "Un objet associant des clés de paramètres à des réponses.",
+   "webmcpArgFormat": "Le format d’export ; seul xml existe.",
+   "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser.",
+   "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
+   "featuresAvailabilityEu": "les États membres de l'UE",
+   "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/demo?space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé.",
+   "levelsWhy": "Des questions simples sur votre espace fixent le niveau de chaque processus : ce qu’il fait, jamais plus. La vue experte garde chaque interrupteur.",
+   "levelsOffline": "Cette page prépare un fichier et fonctionne hors ligne : elle ne voit pas votre espace et ne dit rien de ce qui est prêt. L’application le montre une fois le fichier importé.",
+   "levelsExpertHint": "Chaque réponse fixe à nouveau tous les niveaux. Ajustez un interrupteur précis dans la vue experte ; les niveaux ici le suivent.",
+   "levelsExpertOpen": "Ouvrir la vue experte : chaque interrupteur",
+   "setupExpertSwitches": "Afficher chaque interrupteur (vue experte)",
+   "levelsOk": "Niveaux : {list}.",
+   "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident.",
+   "networkRoles": "Rôle de ce serveur",
+   "networkRolesHint": "Combinée : les comptes des personnes et l’espace sur un seul serveur (le choix habituel). Hôte d’espaces : les comptes vivent sur un autre serveur, le domicile personnel, indiqué ci-dessous.",
+   "networkCombined": "Combinée : comptes et espaces",
+   "networkWorkspaceHost": "Hôte d’espaces : espaces seulement",
+   "networkHomeUrl": "URL du domicile personnel",
+   "networkHomeUrlHint": "L’adresse https:// du serveur où vos membres gardent leurs comptes.",
+   "networkHomeKey": "Clé publiable du domicile personnel",
+   "networkHomeKeyHint": "Sa clé publiable (sb_publishable_…), jamais une clé secrète. L’assistant d’instance vérifie les deux avant de les enregistrer.",
+   "networkErrHome": "Le domicile personnel demande une adresse https:// sans chemin et une clé publiable.",
+   "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel.",
+   "optSeconds": "{n} secondes",
+   "optOneMinute": "1 minute",
+   "enrolAccepting": "Accepte de nouveaux espaces une fois inscrit sur un domicile personnel",
+   "enrolAcceptingHint": "Seulement pour un serveur d'espaces dont les membres gardent leur compte sur un domicile personnel : l'exploitant du domicile l'y inscrit (assistant d'instance ou ligne de commande) et peut le proposer pour de nouveaux espaces. Décochez pour n'héberger que les espaces qu'il a déjà.",
+   "enrolLifetime": "Durée de validité du statut d'identité",
+   "enrolLifetimeHint": "Combien de temps un serveur d'espaces se fie au statut d'une personne signé par le domicile personnel. Un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, 15 minutes au plus. Se règle dans les paramètres de l'app.",
+   "enrolReconcile": "Actualisation du statut d'identité",
+   "enrolReconcileHint": "À quelle fréquence un serveur d'espaces actualise les statuts qu'il détient, même quand personne n'utilise l'app. Se règle dans les paramètres de l'app.",
+   "enrolSkew": "Écart d'horloge toléré",
+   "enrolSkewHint": "Écart d'horloge entre le domicile personnel et un serveur d'espaces encore accepté, 30 secondes au plus. Se règle dans les paramètres de l'app.",
+   "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations.",
+   "optEntries": "{n} entrées",
+   "optCharacters": "{n} caractères",
+   "dirPageSize": "Nouvelle discussion : entrées par page",
+   "dirPageSizeHint": "Combien d’espaces, de personnes ou de groupes la maison personnelle liste à la fois quand un membre commence une discussion ; les suivants viennent avec Afficher plus. Se règle dans les paramètres de l’app.",
+   "dirQueryLength": "Nouvelle discussion : recherche la plus longue",
+   "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app.",
+   "inboxPageSize": "Boîte de réception : conversations par page",
+   "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application.",
+   "biDetailPageSize": "Paiements : lignes par page",
+   "biDetailPageSizeHint": "Combien de paiements une page du détail du montant encaissé affiche ; la page suivante reprend là où elle s'arrête. Se règle dans les paramètres de l'espace de l'application.",
+   "fedRetention": "Conservation des échanges entre serveurs",
+   "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
+   "fedAnswerWait": "Attente de réponse entre serveurs",
+   "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app.",
+   "supLookupWait": "Attente de la recherche fournisseur",
+   "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
+   "supLookupRate": "Recherches fournisseur par minute",
+   "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
+   "recordsHostingCountry": "Où ce serveur conserve ses données",
+   "recordsHostingNone": "Non déclaré",
+   "recordsHostingCountryHint": "Le pays où se trouvent la base de données et ses sauvegardes, tel que l'indique votre contrat d'hébergement. L'application ne dit que ce que vous déclarez ici ; sans déclaration, elle n'indique aucun lieu. Se règle dans les paramètres de la plateforme de l'application.",
+   "recordsCraReference": "Autorisation de l'ARC de conserver les registres hors du Canada",
+   "recordsCraReferenceHint": "Une entreprise canadienne conserve ses registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Si votre serveur est hors du Canada, la référence de cette autorisation ; laissez vide si vous n'en avez pas. Se règle dans les paramètres de l'espace de l'application.",
+   "mapTiles": "Serveur de tuiles de la carte",
+   "mapTilesHint": "D'où viennent les tuiles de la carte de découverte : un modèle https avec {z}, {x} et {y} (sans nom d'utilisateur, mot de passe ni #, pas sur un réseau privé). Laissez vide pour OpenStreetMap. Réglé dans les paramètres de plateforme de l'application (Région et cartes).",
+   "mapGeocoder": "Service de recherche d'adresse",
+   "mapGeocoderHint": "Le service compatible Photon qui place une adresse publiée sur la carte : une adresse https sans nom d'utilisateur, mot de passe, ? ni #, pas sur un réseau privé. Laissez vide pour le service public Photon. Réglé dans les paramètres de plateforme de l'application (Région et cartes).",
+   "regionCurrency": "Devise par défaut",
+   "regionCurrencyHint": "Dans quelle devise les montants s'affichent avant qu'un espace de travail soit connecté, et celle d'un nouvel espace. Elle ne remplace jamais la devise manquante d'une facture. Réglé dans les paramètres de plateforme de l'application (Région et cartes).",
+   "regionCountry": "Pays par défaut",
+   "regionCountryHint": "Le pays d'un nouvel espace de travail quand la région de l'appareil est inconnue. Une simple suggestion : elle ne décide d'aucun pays émetteur ni d'aucune taxe. Réglé dans les paramètres de plateforme de l'application (Région et cartes).",
+   "regionLocale": "Format par défaut des nombres et dates",
+   "regionLocaleHint": "Le format utilisé avant qu'un membre ou un espace de travail en ait choisi un. Le choix du membre l'emporte toujours. Réglé dans les paramètres de plateforme de l'application (Région et cartes).",
+   "optPerMinute": "{n} par minute",
+   "bankMaxBytes": "Taille maximale d'un relevé bancaire",
+   "bankMaxBytesHint": "Un fichier plus grand est refusé en entier avant d'être lu. Réglage du serveur, dans les paramètres de l'app.",
+   "bankMaxLines": "Mouvements par relevé bancaire",
+   "bankMaxLinesHint": "Un relevé qui en contient davantage est refusé en entier ; scindez-le par période à la banque. Se règle dans les paramètres de l'app.",
+   "bankMatchWindow": "Fenêtre des factures pour un paiement sans référence",
+   "bankMatchWindowHint": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur ; une personne confirme toujours. Se règle dans les paramètres de l'app.",
+   "optMegabytes": "{n} Mo",
+   "optMovements": "{n} mouvements",
+   "accountingTitle": "Comptabilité et banque",
+   "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
+   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
+   "retUsYears": "Conservation des pièces, État américain",
+   "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+   "retUsRule": "La règle de conservation s'applique",
+   "badgeFailureLimit": "Échecs de connexion par badge de l’espace",
+   "badgeFailureLimitHint": "Après ce nombre d’échecs de PIN dans l’espace, la connexion par badge est suspendue pendant la fenêtre de blocage et les propriétaires reçoivent une alerte. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut. Le XML conserve cette réponse ; saisissez-la dans l’application."
   },
   "feature": {
    "calendarTab": [
@@ -1981,7 +2459,7 @@ window.SETUP_L10N={
     "Fil d'activité et confirmations en attente."
    ],
    "moneyTab": [
-    "Onglet Finances",
+    "Relevé et solde",
     "Factures mensuelles, paiements et dépenses."
    ],
    "services": [
@@ -1998,7 +2476,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Export PDF",
-    "Exporter la facture mensuelle en PDF."
+    "Exporter la facture mensuelle et les rapports d’analyse en PDF."
    ],
    "seriesBooking": [
     "Réservation en série",
@@ -2062,7 +2540,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Export des données (Excel)",
-    "Télécharger toutes les données de l’espace dans un classeur Excel."
+    "Télécharger toutes les données de l’espace dans un classeur Excel, et les rapports d’analyse en fichier CSV ou en classeur."
    ],
    "workingHours": [
     "Horaires de travail",
@@ -2169,8 +2647,8 @@ window.SETUP_L10N={
     "Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données."
    ],
    "financeFaces": [
-    "Finances en quatre volets",
-    "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
+    "Relevé, paiements, factures, documents",
+    "Mes finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
    ],
    "paymentReminders": [
     "Relances de paiement automatiques",
@@ -2491,6 +2969,90 @@ window.SETUP_L10N={
    "inputVat": [
     "TVA déductible",
     "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée."
+   ],
+   "configurableSettings": [
+    "Réglages configurables",
+    "Limites, délais et valeurs par défaut que l'on modifie dans l'application sans attendre une version : l'opérateur fixe les valeurs par défaut, les administrateurs d'un espace les leurs."
+   ],
+   "salesTax": [
+    "Taxe de vente (États-Unis)",
+    "Un vendeur aux États-Unis facture des prix hors taxe et la taxe de vente du code postal du site, indiquée à part par juridiction ; le certificat d'exonération d'un client retire une ligne de la taxe. Désactivé : un tel vendeur ne peut pas facturer."
+   ],
+   "meetingRooms": [
+    "Salles de réunion",
+    "Une salle du plan avec sa propre capacité, réservée dans son propre créneau (une heure par défaut) à côté du créneau des places. Désactivé : pas de salles."
+   ],
+   "parking": [
+    "Parking",
+    "Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking."
+   ],
+   "webMcp": [
+    "Outils pour agent de navigateur",
+    "Permet à un agent IA du navigateur d'utiliser les fonctions propres de l'application, chacune avec la confirmation de la personne et les droits qu'elle a déjà. Nécessite l'interface MCP. Désactivé : aucun outil n'est proposé."
+   ],
+   "purchases": [
+    "Achats",
+    "Un seul document pour ce que l'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts."
+   ],
+   "premisesLease": [
+    "Bail des locaux",
+    "Le bail que l'espace détient comme locataire : le bailleur, les locaux, la durée, le préavis et le dépôt de garantie, avec son loyer et ses charges et leur historique. Chaque montant génère la dépense planifiée de sa charge. Désactivé : aucun bail n'est enregistré et les dépenses planifiées restent telles quelles."
+   ],
+   "assetRegister": [
+    "Registre des équipements",
+    "Les équipements durables que l'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n'est enregistré."
+   ],
+   "externalRooms": [
+    "Salles louées",
+    "Une salle que l'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l'espace et rien ne change."
+   ],
+   "accountingPeriods": [
+    "Périodes comptables",
+    "Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n'est verrouillé et les exports ne sont pas consignés."
+   ],
+   "biReportDesigner": [
+    "Concepteur de rapports (analyses)",
+    "Transformez une analyse enregistrée en rapport modifiable, fait de pages et de cartes. Un rapport garde la question, jamais les chiffres : chacun ne voit que ce que ses propres droits permettent. Désactivé : les vues enregistrées restent telles quelles et les rapports existants restent lisibles."
+   ],
+   "purchaseAnalytics": [
+    "Indicateurs d'achats (analyses)",
+    "Ce que l'espace doit à ses fournisseurs, doit rembourser à ses membres, a encore à examiner et a payé, sur la page d'analyses, à partir des achats eux-mêmes. Désactivé : les achats restent tels quels et la page d'analyses n'affiche aucun indicateur d'achats."
+   ],
+   "workspaceOverview": [
+    "Vue d'ensemble de l'espace",
+    "Une page avec ce qui attend la personne et les indicateurs qu'elle peut lire — capacité, ventes, achats et trésorerie — chacun ouvrant sa source. Désactivé : la liste d'attention et la page d'analyses restent inchangées."
+   ],
+   "setupGuide": [
+    "Guide de mise en place",
+    "Une seule liste de tâches, de la création de l'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l'espace."
+   ],
+   "dataReport": [
+    "Rapport de données (PDF)",
+    "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux."
+   ],
+   "personalShell": [
+    "Interface personnelle (cinq destinations)",
+    "Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets."
+   ],
+   "foreignCurrencyPurchases": [
+    "Achats dans une autre devise",
+    "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée."
+   ],
+   "accountingConnectors": [
+    "Systèmes comptables",
+    "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir."
+   ],
+   "bankImport": [
+    "Relevés bancaires",
+    "Lit les relevés de la banque (camt.053/054, MT940, CODA, OFX/QFX ou un tableur) dans l'espace, chaque mouvement une seule fois, et propose la facture que chaque paiement règle d'après la référence QR ou RF imprimée dessus, son numéro ou son montant ; une personne confirme chaque rapprochement, le reste demeure dans une liste de travail. Un paiement sortant rapproche un paiement déjà enregistré comme effectué."
+   ],
+   "planDecor": [
+    "Dessiner la salle sur le plan",
+    "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent."
+   ],
+   "mtdSubmission": [
+    "Déposer la TVA britannique auprès de HMRC",
+    "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
    ]
   },
   "process": {
@@ -2652,7 +3214,10 @@ window.SETUP_L10N={
    "viewCalendar": "Voir le calendrier",
    "viewDirectory": "Voir l'annuaire des membres",
    "viewMyMoney": "Voir son propre compte et ses factures",
-   "viewDocuments": "Voir les documents partagés"
+   "viewDocuments": "Voir les documents partagés",
+   "managePurchases": "Saisir les factures fournisseur",
+   "recordOutgoingPayments": "Enregistrer les paiements aux membres",
+   "manageLease": "Enregistrer le bail des locaux"
   },
   "domain": {
    "payment": "Paiement",
@@ -2675,7 +3240,9 @@ window.SETUP_L10N={
    "refund": "Remboursement",
    "member_status_change": "Changement d'adhésion",
    "subscription_change": "Changement d'abonnement",
-   "matrix_change": "Changement de la matrice des permissions"
+   "matrix_change": "Changement de la matrice des permissions",
+   "lease_change": "Changement du bail",
+   "commitment_variance": "Écart de loyer"
   },
   "country": {
    "AT": "Autriche",
@@ -2710,11 +3277,119 @@ window.SETUP_L10N={
    "GB": "Royaume-Uni",
    "US": "États-Unis",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "association": "L’espace est géré par une association, une coopérative ou un club",
+    "approve_bookings": "Les réservations attendent une validation ; les membres ne réservent pas directement",
+    "members_owe_money": "Les membres doivent de l’argent à l’espace (loyer, carnets, extras)",
+    "issue_invoices": "Vous émettez des factures",
+    "pay_online": "Les membres paient en ligne",
+    "vat_registered": "L’espace est assujetti à la TVA",
+    "keep_books": "Vous tenez une comptabilité",
+    "tracks_purchases": "Vous suivez les achats de l’espace",
+    "several_rooms_or_sites": "Plusieurs salles, une salle de réunion ou plusieurs sites",
+    "door_tablet": "Une tablette à l’entrée enregistre les arrivées",
+    "public_page": "Une page publique présente l’espace",
+    "organised": "Comités, rôles propres ou validations à plusieurs"
+   },
+   "process": {
+    "bookings": "Réservations",
+    "community": "Communauté",
+    "money": "Argent",
+    "payments": "Paiements",
+    "tax": "Fiscalité",
+    "purchases": "Achats",
+    "presentation": "Présentation",
+    "operations": "Fonctionnement",
+    "assistant": "Assistant"
+   },
+   "level": {
+    "bookings_simple": "Places partagées",
+    "bookings_resources": "Salles et ressources",
+    "bookings_measured": "Usage mesuré",
+    "community_basic": "Simple",
+    "community_organised": "Organisée",
+    "money_none": "Pas d’argent",
+    "money_statements": "Relevés",
+    "money_invoices": "Factures",
+    "payments_off": "Par virement",
+    "payments_online": "En ligne",
+    "tax_none": "Pas de TVA",
+    "tax_vat": "TVA",
+    "tax_books": "Comptabilité",
+    "purchases_none": "Aucun",
+    "purchases_expenses": "Dépenses",
+    "purchases_full": "Achats complets",
+    "presentation_basic": "Simple",
+    "presentation_branded": "Vos couleurs",
+    "presentation_public": "Page publique",
+    "operations_basic": "Simple",
+    "operations_insight": "Indicateurs",
+    "operations_advanced": "Avancé",
+    "assistant_off": "Désactivé",
+    "assistant_on": "Activé"
+   },
+   "reason": {
+    "door_tablet": "Parce qu’une tablette à l’entrée enregistre les arrivées",
+    "keeps_books": "Parce que vous tenez une comptabilité",
+    "later": "Parce qu’un assistant peut venir plus tard",
+    "members_only": "Parce que seuls les membres voient l’espace",
+    "members_owe": "Parce que les membres doivent de l’argent à l’espace",
+    "no_money": "Parce qu’aucun argent ne circule",
+    "no_purchases": "Parce que l’espace ne suit pas ses achats",
+    "no_vat": "Parce que l’espace n’est pas assujetti à la TVA",
+    "organised": "Parce que plusieurs personnes décident ensemble",
+    "pay_by_transfer": "Parce que les membres paient par virement",
+    "pay_online": "Parce que les membres paient en ligne",
+    "public_page": "Parce que l’espace a une page publique",
+    "several_rooms": "Parce qu’il y a plusieurs salles ou sites",
+    "shared_places": "Parce que les membres partagent les places",
+    "small_community": "Parce que la communauté est petite",
+    "start_simple": "Parce que vous voulez commencer simplement",
+    "tracks_purchases": "Parce que vous suivez les achats de l’espace",
+    "vat_registered": "Parce que l’espace est assujetti à la TVA",
+    "issues_invoices": "Parce que vous émettez des factures",
+    "association": "Parce qu’une association décide ensemble, avec son bureau",
+    "approve_bookings": "Parce que les réservations attendent une validation"
+   },
+   "preset": {
+    "essentiel": "Essentiel",
+    "standard": "Standard",
+    "complet": "Complet"
+   },
+   "threshold": {
+    "immediate": "La franchise en base de TVA prend fin avec la prestation qui fait dépasser {limit} au chiffre d’affaires net de l’année.",
+    "other": "La franchise en base de TVA prend fin avec l’année dont le chiffre d’affaires net dépasse {limit}."
+   },
+   "duty": {
+    "receive_all": "toute entreprise doit pouvoir recevoir des factures électroniques",
+    "issue_large": "les grandes entreprises et les ETI doivent émettre des factures électroniques",
+    "issue_all": "toute entreprise doit émettre des factures électroniques",
+    "e_reporting": "les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)",
+    "invoice_records": "chaque facture doit être enregistrée dans un registre chaîné (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Ce que fait votre espace",
+    "setupLevelsQuestions": "À propos de votre espace",
+    "setupLevelsPresets": "Démarrage rapide",
+    "setupLevelsChoice": "Ce qu’il lui faut",
+    "setupLevelsGap": "{level} demande {needed}",
+    "setupAnswerUnknown": "Je ne sais pas encore",
+    "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.",
+    "setupObligationsTitle": "Ce que demande la loi : {country}",
+    "setupObligationUnconfirmed": "Non confirmé pour ce pays — demandez à votre comptable.",
+    "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
+    "setupObligationSource": "Source : {source}",
+    "eInvoiceMandateSince": "Depuis le {date} : {duty}.",
+    "eInvoiceMandateFrom": "À partir du {date} : {duty}."
+   }
   }
  },
  "de": {
   "s": {
    "setupTitle": "DesKilo — Konfigurationsassistent",
+   "setupHow": "So funktioniert diese Seite",
    "setupLanguage": "Sprache",
    "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie in einen Raum, den Sie angelegt haben (Workspace → Workspace importieren (XML)). Jede Antwort sagt, ob der Import sie übernimmt, ob sie in der App eingetragen wird oder ob sie nur in der Datei bleibt; der letzte Schritt listet, was in der App noch zu tun ist.",
    "setupGuideHtml": "Das vollständige Benutzerhandbuch — mit einem Screenshot jedes Bildschirms, lange Formulare zu einem Bild zusammengefügt — finden Sie {link} (English · Français · Deutsch · Español · Italiano) und in der App (Einstellungen → Hilfe).",
@@ -2862,6 +3537,7 @@ window.SETUP_L10N={
    "identityTimezoneHint": "IANA-Name. Alle Buchungszeitfenster sind darin verankert; jedes Mitglied kann die Uhrzeit in seiner eigenen anzeigen.",
    "identityLanguage": "Sprache des Arbeitsbereichs",
    "identityLanguageHint": "Einladungen und Berichte werden standardmäßig in dieser Sprache verfasst.",
+   "identityAdvanced": "Erweitert: Server und Netzwerk",
    "identityAddress": "Postanschrift",
    "identityAddressHint": "Wird auf Rechnungen und dem Kiosk-Beleg gedruckt.",
    "identityAddressPlaceholder": "Musterstraße 12, 10115 Berlin",
@@ -2894,6 +3570,7 @@ window.SETUP_L10N={
    "availHalfDayHours": "Stunden für einen halben Tag",
    "availFullDayHours": "Stunden für einen ganzen Tag",
    "availClosures": "Schließtage",
+   "tableRemoveRow": "Diese Zeile entfernen",
    "colDate": "Datum",
    "availAddClosure": "Schließtag hinzufügen",
    "availPolicies": "Buchungsregeln",
@@ -3324,7 +4001,145 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
    "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
    "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
-   "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."
+   "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration.",
+   "legalLandTax": "Grundstücke und Option zur Besteuerung",
+   "legalLandTaxHint": "Im Vereinigten Königreich ist die Überlassung eines Arbeitsplatzes oder Büros steuerfrei (VAT Act 1994, Schedule 9, Group 1), außer Sie haben für das Gebäude zur Besteuerung optiert. Die Option macht die Miete steuerpflichtig zum Regelsatz und erlaubt den Vorsteuerabzug auf die Kosten; das HMRC muss informiert werden.",
+   "legalOptionToTax": "Wir haben für das Gebäude zur Besteuerung optiert",
+   "legalOptionDate": "Option wirksam ab",
+   "legalOptionRef": "Mitteilungsreferenz beim HMRC",
+   "legalFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
+   "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option.",
+   "legalLetting": "Vermietung und Option (Schweiz)",
+   "legalLettingHint": "Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.",
+   "legalBareLetting": "Wir vermieten nur Räume",
+   "legalBareLettingDesc": "Aus: jede Zeile ist ein Paket, zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
+   "legalChOption": "Wir haben optiert (Art. 22 MWSTG)",
+   "legalCaTax": "GST/HST und QST (Kanada)",
+   "legalCaTaxHint": "Die USt-IdNr. oben ist Ihre GST/HST-Geschäftsnummer mit RT-Konto (123456789 RT0001). Erheben Sie die QST, ergänzen Sie Ihre Nummer bei Revenu Québec: beide stehen auf der Rechnung.",
+   "legalQstNumber": "QST-Registrierungsnummer (Revenu Québec)",
+   "legalQuickMethod": "Wir nutzen die Quick Method",
+   "legalQuickMethodDesc": "Die Meldung kennzeichnet es. Die Abführungssätze sind die der CRA und werden von der App nicht berechnet.",
+   "payQrIban": "QR-IBAN (Schweizer QR-Rechnung)",
+   "payQrIbanHint": "Optional: damit trägt die QR-Rechnung eine QRR-Referenz",
+   "payErrQrIban": "Die QR-IBAN ist eine Schweizer oder liechtensteinische IBAN, deren Bankenclearing-Nummer (Stellen 5 bis 9) zwischen 30000 und 31999 liegt.",
+   "webmcpSecretSet": "[gesetzt]",
+   "webmcpErrInvalid": "{key}: {reason}",
+   "webmcpReasonBool": "true oder false erwartet",
+   "webmcpReasonEnum": "dieser Wert gehört nicht zu den erlaubten Werten",
+   "webmcpReasonInt": "ganze Zahl erwartet",
+   "webmcpReasonNum": "Zahl erwartet",
+   "webmcpReasonRange": "die Zahl muss zwischen {min} und {max} liegen",
+   "webmcpReasonDays": "Liste von Wochentagen erwartet, „1“ (Montag) bis „7“ (Sonntag)",
+   "webmcpReasonDates": "Liste von Daten im Format JJJJ-MM-TT erwartet",
+   "webmcpReasonText": "Text erwartet",
+   "webmcpReasonTime": "Uhrzeit im Format HH:MM erwartet",
+   "webmcpReasonDate": "Datum im Format JJJJ-MM-TT erwartet, oder leer",
+   "webmcpReasonColor": "Farbe im Format #RRGGBB erwartet, oder leer",
+   "webmcpErrCollection": "{key} ist eine Liste von Datensätzen, die der Fragebogen am Bildschirm bearbeitet; die Werkzeuge setzen sie nicht.",
+   "webmcpErrUnknownKey": "Unbekannter Parameter: {key}.",
+   "webmcpErrNeeds": "{key} gilt nur, solange die Funktion {feature} aktiv ist; schalten Sie sie zuerst ein.",
+   "webmcpErrEmpty": "Geben Sie mindestens einen Eintrag an.",
+   "webmcpErrAtomic": "Nichts wurde geändert: {n} Antwort(en) abgelehnt, siehe errors.",
+   "webmcpErrFormat": "Es gibt nur das XML-Format.",
+   "webmcpErrBlocked": "Der Fragebogen hat {n} blockierende Punkt(e); beheben Sie sie vor dem Export.",
+   "webmcpErrNoRates": "Für das Land {country} gibt es keine vorgeschlagenen MwSt-Sätze.",
+   "webmcpListParameters": "Listet die Fragen des DesKilo-Einrichtungsfragebogens: Schlüssel, Typ, erlaubte Werte oder Bereich, Standard, die Funktion, von der die Frage abhängt, und die Bezeichnung in der Seitensprache. Filterbar nach Funktion oder Text.",
+   "webmcpGetAnswers": "Gibt alle aktuellen Antworten des Fragebogens zurück (Geheimnisse maskiert) und die Punkte, die den Export noch blockieren.",
+   "webmcpSetAnswer": "Beantwortet eine Frage mit denselben Prüfungen wie die Seite. Ein Funktionsschalter schaltet auch die nötigen Schalter ein; eine Frage, die von einem ausgeschalteten Schalter abhängt, wird abgelehnt und nennt ihn.",
+   "webmcpSetAnswers": "Beantwortet mehrere Fragen auf einmal, ganz oder gar nicht: wird eine Antwort abgelehnt, ändert sich nichts, und jede Ablehnung wird je Schlüssel aufgelistet. Funktionsschalter werden zuerst angewendet.",
+   "webmcpExplain": "Erklärt eine Frage: Bezeichnung und Hilfe, erlaubte Werte, Standard, aktueller Wert, wovon sie abhängt und was von ihr abhängt.",
+   "webmcpDiff": "Listet die Antworten, die von den Standardwerten des Fragebogens abweichen.",
+   "webmcpExport": "Gibt die Konfigurationsdatei (XML) genau so zurück, wie die Schaltfläche Exportieren sie erzeugt; abgelehnt, solange ein blockierender Punkt besteht.",
+   "webmcpReset": "Setzt die genannten Fragen auf ihre Standardwerte zurück, oder alle Antworten, wenn kein Schlüssel angegeben ist.",
+   "webmcpSeedRates": "Füllt die MwSt-Sätze mit den für das gewählte Land vorgeschlagenen, wie die Vorschlags-Schaltfläche.",
+   "webmcpArgFeature": "Nur die Fragen dieser Funktion (Schlüssel ohne Präfix features.).",
+   "webmcpArgQuery": "Text, der in Schlüsseln, Bezeichnungen und Hilfen gesucht wird.",
+   "webmcpArgKey": "Der Parameterschlüssel, wie list_parameters ihn liefert (zum Beispiel country oder features.invoicing).",
+   "webmcpArgValue": "Die Antwort: Boolean, Text, Zahl oder Liste, je nach Parametertyp.",
+   "webmcpArgAnswers": "Ein Objekt, das Parameterschlüssel auf Antworten abbildet.",
+   "webmcpArgFormat": "Das Exportformat; es gibt nur xml.",
+   "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
+   "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
+   "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
+   "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/demo?space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet.",
+   "levelsWhy": "Einfache Fragen zu Ihrem Space legen die Stufe jedes Prozesses fest: was er tut, nie mehr. Die Expertenansicht behält jeden Schalter.",
+   "levelsOffline": "Diese Seite bereitet eine Datei vor und arbeitet offline: Sie sieht Ihren Space nicht und sagt nichts darüber, was bereit ist. Das zeigt die App, sobald die Datei importiert ist.",
+   "levelsExpertHint": "Jede Antwort setzt alle Stufen neu. Einzelne Schalter stellen Sie in der Expertenansicht ein; die Stufen hier folgen ihnen.",
+   "levelsExpertOpen": "Expertenansicht öffnen: jeder Schalter",
+   "setupExpertSwitches": "Jeden Schalter zeigen (Expertenansicht)",
+   "levelsOk": "Stufen: {list}.",
+   "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden.",
+   "networkRoles": "Rolle dieses Servers",
+   "networkRolesHint": "Kombiniert: Konten der Personen und der Space auf einem Server (die übliche Wahl). Space-Host: Die Konten liegen auf einem anderen Server, dem persönlichen Zuhause, das Sie unten angeben.",
+   "networkCombined": "Kombiniert: Konten und Spaces",
+   "networkWorkspaceHost": "Space-Host: nur Spaces",
+   "networkHomeUrl": "URL des persönlichen Zuhauses",
+   "networkHomeUrlHint": "Die https://-Adresse des Servers, auf dem Ihre Mitglieder ihre Konten haben.",
+   "networkHomeKey": "Öffentlicher Schlüssel des persönlichen Zuhauses",
+   "networkHomeKeyHint": "Sein öffentlicher Schlüssel (sb_publishable_…), nie ein geheimer. Der Instanz-Assistent prüft beides, bevor er es speichert.",
+   "networkErrHome": "Das persönliche Zuhause braucht eine https://-Adresse ohne Pfad und einen öffentlichen Schlüssel.",
+   "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause.",
+   "optSeconds": "{n} Sekunden",
+   "optOneMinute": "1 Minute",
+   "enrolAccepting": "Nimmt neue Spaces an, sobald bei einem persönlichen Zuhause registriert",
+   "enrolAcceptingHint": "Nur für einen Workspace-Server, dessen Mitglieder ihre Konten auf einem persönlichen Zuhause führen: Der Betreiber des Zuhauses registriert ihn dort (Instanz-Assistent oder Kommandozeile) und kann ihn für neue Spaces anbieten. Abwählen, um nur die vorhandenen Spaces zu hosten.",
+   "enrolLifetime": "Gültigkeit des Identitätsstatus",
+   "enrolLifetimeHint": "Wie lange sich ein Workspace-Server auf den vom persönlichen Zuhause signierten Status einer Person verlässt. Ein gesperrtes Konto wird innerhalb dieser Zeit für neue Anfragen abgewiesen, höchstens 15 Minuten. Wird in den Einstellungen der App festgelegt.",
+   "enrolReconcile": "Aktualisierung des Identitätsstatus",
+   "enrolReconcileHint": "Wie oft ein Workspace-Server die gehaltenen Status aktualisiert, auch wenn niemand die App nutzt. Wird in den Einstellungen der App festgelegt.",
+   "enrolSkew": "Erlaubte Uhrabweichung",
+   "enrolSkewHint": "Noch akzeptierte Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, höchstens 30 Sekunden. Wird in den Einstellungen der App festgelegt.",
+   "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen.",
+   "optEntries": "{n} Einträge",
+   "optCharacters": "{n} Zeichen",
+   "dirPageSize": "Neue Unterhaltung: Einträge pro Seite",
+   "dirPageSizeHint": "Wie viele Spaces, Personen oder Gruppen das persönliche Zuhause auf einmal anzeigt, wenn ein Mitglied eine Unterhaltung beginnt; die nächsten kommen mit Mehr anzeigen. Wird in den Einstellungen der App festgelegt.",
+   "dirQueryLength": "Neue Unterhaltung: längste Suche",
+   "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt.",
+   "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
+   "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt.",
+   "biDetailPageSize": "Zahlungen: Zeilen pro Seite",
+   "biDetailPageSizeHint": "Wie viele Zahlungen eine Seite der Details zum eingenommenen Betrag zeigt; die nächste Seite setzt dort fort, wo sie aufhört. Wird in den Space-Einstellungen der App festgelegt.",
+   "fedRetention": "Aufbewahrung des Server-Austauschs",
+   "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
+   "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
+   "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt.",
+   "supLookupWait": "Wartezeit der Lieferantensuche",
+   "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
+   "supLookupRate": "Lieferantensuchen pro Minute",
+   "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
+   "recordsHostingCountry": "Wo dieser Server seine Daten aufbewahrt",
+   "recordsHostingNone": "Nicht erklärt",
+   "recordsHostingCountryHint": "Das Land, in dem die Datenbank und ihre Sicherungen liegen, wie Ihr Hosting-Vertrag es angibt. Die App sagt nur, was Sie hier erklären; ohne Erklärung nennt sie keinen Ort. Wird in den Plattformeinstellungen der App eingestellt.",
+   "recordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+   "recordsCraReferenceHint": "Ein kanadisches Unternehmen bewahrt seine Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Steht Ihr Server außerhalb Kanadas, das Aktenzeichen dieser Genehmigung; leer lassen, wenn Sie keine haben. Wird in den Einstellungen des Bereichs in der App eingestellt.",
+   "mapTiles": "Kachelserver der Karte",
+   "mapTilesHint": "Woher die Kacheln der Entdecken-Karte kommen, als https-Vorlage mit {z}, {x} und {y} (ohne Benutzername, Passwort oder #, nicht in einem privaten Netz). Leer lassen für OpenStreetMap. Eingestellt in den Plattform-Einstellungen der App (Region und Karten).",
+   "mapGeocoder": "Adresssuchdienst",
+   "mapGeocoderHint": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Karte platziert: eine https-Adresse ohne Benutzername, Passwort, ? oder #, nicht in einem privaten Netz. Leer lassen für den öffentlichen Photon-Dienst. Eingestellt in den Plattform-Einstellungen der App (Region und Karten).",
+   "regionCurrency": "Standardwährung",
+   "regionCurrencyHint": "In welcher Währung Beträge angezeigt werden, bevor ein Arbeitsbereich verbunden ist, und womit ein neuer Arbeitsbereich beginnt. Sie ersetzt nie eine fehlende Rechnungswährung. Eingestellt in den Plattform-Einstellungen der App (Region und Karten).",
+   "regionCountry": "Standardland",
+   "regionCountryHint": "Womit ein neuer Arbeitsbereich beginnt, wenn die Region des Geräts unbekannt ist. Nur ein Vorschlag; er bestimmt kein Ausstellerland und keine Steuer. Eingestellt in den Plattform-Einstellungen der App (Region und Karten).",
+   "regionLocale": "Standardformat für Zahlen und Datum",
+   "regionLocaleHint": "Das Format, bevor ein Mitglied oder Arbeitsbereich eines gewählt hat. Die eigene Wahl des Mitglieds gilt immer. Eingestellt in den Plattform-Einstellungen der App (Region und Karten).",
+   "optPerMinute": "{n} pro Minute",
+   "bankMaxBytes": "Größte Kontoauszugsdatei",
+   "bankMaxBytesHint": "Eine größere Datei wird vollständig abgelehnt, bevor sie gelesen wird. Eine Servereinstellung, in den Einstellungen der App.",
+   "bankMaxLines": "Bewegungen je Kontoauszug",
+   "bankMaxLinesHint": "Ein Auszug mit mehr Bewegungen wird vollständig abgelehnt; teilen Sie ihn bei der Bank nach Zeitraum auf. In den Einstellungen der App.",
+   "bankMatchWindow": "Rechnungsfenster für eine Zahlung ohne Referenz",
+   "bankMatchWindowHint": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden; bestätigt wird immer von einer Person. In den Einstellungen der App.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} Bewegungen",
+   "accountingTitle": "Buchhaltung und Bank",
+   "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
+   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
+   "retUsYears": "Aufbewahrung, US-Bundesstaat",
+   "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+   "retUsRule": "Die Aufbewahrungsregel gilt",
+   "badgeFailureLimit": "Fehlversuche der Badge-Anmeldung pro Workspace",
+   "badgeFailureLimitHint": "Nach so vielen fehlgeschlagenen PIN-Versuchen im Workspace pausiert die Badge-Anmeldung für das Sperrfenster; Eigentümer erhalten eine Warnung. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich, standardmäßig 50. Die XML-Datei bewahrt die Antwort auf; tragen Sie sie in der App ein."
   },
   "feature": {
    "calendarTab": [
@@ -3336,7 +4151,7 @@ window.SETUP_L10N={
     "Aktivitätsverlauf und ausstehende Bestätigungen."
    ],
    "moneyTab": [
-    "Finanzen-Tab",
+    "Abrechnung und Saldo",
     "Monatsrechnungen, Zahlungen und Ausgaben."
    ],
    "services": [
@@ -3353,7 +4168,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF-Export",
-    "Die Monatsrechnung als PDF exportieren."
+    "Die Monatsrechnung und die Analyseberichte als PDF exportieren."
    ],
    "seriesBooking": [
     "Serienbuchung",
@@ -3417,7 +4232,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Datenexport (Excel)",
-    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen."
+    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen, und die Analyseberichte als CSV-Datei oder Arbeitsmappe."
    ],
    "workingHours": [
     "Arbeitszeiten",
@@ -3524,8 +4339,8 @@ window.SETUP_L10N={
     "Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten."
    ],
    "financeFaces": [
-    "Finanzen in vier Ansichten",
-    "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte."
+    "Abrechnung, Zahlungen, Rechnungen, Dokumente",
+    "Meine Finanzen hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte."
    ],
    "paymentReminders": [
     "Automatische Zahlungserinnerungen",
@@ -3846,6 +4661,90 @@ window.SETUP_L10N={
    "inputVat": [
     "Vorsteuer",
     "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer."
+   ],
+   "configurableSettings": [
+    "Konfigurierbare Einstellungen",
+    "Grenzen, Fristen und Standardwerte, die Sie in der App ändern, statt auf eine Version zu warten: Der Plattformbetreiber legt die Standardwerte fest, die Administratoren eines Arbeitsbereichs ihre eigenen."
+   ],
+   "salesTax": [
+    "Sales Tax (USA)",
+    "Ein Verkäufer in den USA stellt Nettopreise aus und weist die Sales Tax der Postleitzahl des Standorts getrennt je Jurisdiktion aus; die Befreiungsbescheinigung eines Kunden nimmt eine Zeile aus der Steuer. Aus: ein solcher Verkäufer kann keine Rechnung stellen."
+   ],
+   "meetingRooms": [
+    "Besprechungsräume",
+    "Ein Raum im Plan mit eigener Kapazität, gebucht in einem eigenen Zeitfenster (standardmäßig eine Stunde) neben dem Zeitfenster der Plätze. Aus: keine Räume."
+   ],
+   "parking": [
+    "Parkplatz",
+    "Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz."
+   ],
+   "webMcp": [
+    "Werkzeuge für Browser-Agenten",
+    "Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten."
+   ],
+   "purchases": [
+    "Einkäufe",
+    "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert."
+   ],
+   "premisesLease": [
+    "Mietvertrag der Räume",
+    "Der Mietvertrag, den der Space als Mieter hält: Vermieter, Räume, Laufzeit, Kündigungsfrist und Kaution, mit Miete und Nebenkosten und deren Verlauf. Jeder Betrag erzeugt die geplante Ausgabe seiner Kostenart. Aus: kein Mietvertrag wird erfasst, die geplanten Ausgaben bleiben unverändert."
+   ],
+   "assetRegister": [
+    "Anlagenregister",
+    "Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst."
+   ],
+   "externalRooms": [
+    "Gemietete Räume",
+    "Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich."
+   ],
+   "accountingPeriods": [
+    "Buchungsperioden",
+    "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert."
+   ],
+   "biReportDesigner": [
+    "Berichtsdesigner (Analysen)",
+    "Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar."
+   ],
+   "purchaseAnalytics": [
+    "Einkaufskennzahlen (Analysen)",
+    "Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl."
+   ],
+   "workspaceOverview": [
+    "Überblick über den Raum",
+    "Eine Seite mit dem, was die Person erwartet, und den Kennzahlen, die sie lesen darf — Kapazität, Verkauf, Einkauf und Geld — jede öffnet ihre Quelle. Aus: Die Liste der offenen Punkte und die Analyseseite bleiben, wie sie sind."
+   ],
+   "setupGuide": [
+    "Einrichtungsassistent",
+    "Eine Aufgabenliste von der Gründung des Bereichs bis zur Eröffnung: was erledigt ist, was als Nächstes kommt und warum, in dem Umfang, den Sie für jeden Teil wählen."
+   ],
+   "dataReport": [
+    "Datenbericht (PDF)",
+    "Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen."
+   ],
+   "personalShell": [
+    "Persönliche Oberfläche (fünf Ziele)",
+    "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs."
+   ],
+   "foreignCurrencyPurchases": [
+    "Einkäufe in anderer Währung",
+    "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt."
+   ],
+   "accountingConnectors": [
+    "Buchhaltungssysteme",
+    "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will."
+   ],
+   "bankImport": [
+    "Kontoauszüge",
+    "Liest die Kontoauszugsdateien der Bank (camt.053/054, MT940, CODA, OFX/QFX oder eine Tabelle) in den Space ein, jede Bewegung nur einmal, und schlägt die Rechnung vor, die eine Zahlung begleicht – anhand der darauf gedruckten QR- oder RF-Referenz, ihrer Nummer oder ihres Betrags; jede Zuordnung bestätigt eine Person, der Rest bleibt in einer Arbeitsliste. Eine ausgehende Zahlung gleicht eine bereits als geleistet erfasste Zahlung ab."
+   ],
+   "planDecor": [
+    "Den Raum im Plan zeichnen",
+    "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben."
+   ],
+   "mtdSubmission": [
+    "Britische USt-Erklärung an HMRC senden",
+    "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
    ]
   },
   "process": {
@@ -4007,7 +4906,10 @@ window.SETUP_L10N={
    "viewCalendar": "Den Kalender sehen",
    "viewDirectory": "Das Mitgliederverzeichnis sehen",
    "viewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
-   "viewDocuments": "Die geteilten Dokumente sehen"
+   "viewDocuments": "Die geteilten Dokumente sehen",
+   "managePurchases": "Lieferantenrechnungen erfassen",
+   "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
+   "manageLease": "Mietvertrag der Räume erfassen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -4030,7 +4932,9 @@ window.SETUP_L10N={
    "refund": "Erstattung",
    "member_status_change": "Mitgliedschaftsänderung",
    "subscription_change": "Abonnementänderung",
-   "matrix_change": "Änderung der Berechtigungsmatrix"
+   "matrix_change": "Änderung der Berechtigungsmatrix",
+   "lease_change": "Mietvertragsänderung",
+   "commitment_variance": "Mietabweichung"
   },
   "country": {
    "AT": "Österreich",
@@ -4065,11 +4969,119 @@ window.SETUP_L10N={
    "GB": "Vereinigtes Königreich",
    "US": "Vereinigte Staaten",
    "CA": "Kanada"
+  },
+  "journey": {
+   "question": {
+    "association": "Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum",
+    "approve_bookings": "Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt",
+    "members_owe_money": "Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)",
+    "issue_invoices": "Sie stellen Rechnungen",
+    "pay_online": "Mitglieder zahlen online",
+    "vat_registered": "Der Raum ist umsatzsteuerpflichtig",
+    "keep_books": "Sie führen Bücher",
+    "tracks_purchases": "Sie verfolgen, was der Raum einkauft",
+    "several_rooms_or_sites": "Mehrere Räume, ein Besprechungsraum oder mehrere Standorte",
+    "door_tablet": "Ein Tablet am Eingang erfasst die Ankunft",
+    "public_page": "Eine öffentliche Seite zeigt den Raum",
+    "organised": "Gremien, eigene Rollen oder Freigaben durch mehrere"
+   },
+   "process": {
+    "bookings": "Buchungen",
+    "community": "Gemeinschaft",
+    "money": "Geld",
+    "payments": "Zahlungen",
+    "tax": "Steuern",
+    "purchases": "Einkauf",
+    "presentation": "Auftritt",
+    "operations": "Betrieb",
+    "assistant": "Assistent"
+   },
+   "level": {
+    "bookings_simple": "Geteilte Plätze",
+    "bookings_resources": "Räume und Ressourcen",
+    "bookings_measured": "Gemessene Nutzung",
+    "community_basic": "Einfach",
+    "community_organised": "Organisiert",
+    "money_none": "Kein Geld",
+    "money_statements": "Kontoauszüge",
+    "money_invoices": "Rechnungen",
+    "payments_off": "Per Überweisung",
+    "payments_online": "Online",
+    "tax_none": "Keine USt.",
+    "tax_vat": "USt.",
+    "tax_books": "Buchhaltung",
+    "purchases_none": "Keiner",
+    "purchases_expenses": "Ausgaben",
+    "purchases_full": "Voller Einkauf",
+    "presentation_basic": "Einfach",
+    "presentation_branded": "Ihre Farben",
+    "presentation_public": "Öffentliche Seite",
+    "operations_basic": "Einfach",
+    "operations_insight": "Kennzahlen",
+    "operations_advanced": "Fortgeschritten",
+    "assistant_off": "Aus",
+    "assistant_on": "An"
+   },
+   "reason": {
+    "door_tablet": "Weil ein Tablet am Eingang die Ankunft erfasst",
+    "keeps_books": "Weil Sie Bücher führen",
+    "later": "Weil ein Assistent später kommen kann",
+    "members_only": "Weil nur Mitglieder den Raum sehen",
+    "members_owe": "Weil Mitglieder dem Raum Geld schulden",
+    "no_money": "Weil kein Geld fließt",
+    "no_purchases": "Weil der Raum keine Einkäufe verfolgt",
+    "no_vat": "Weil der Raum nicht umsatzsteuerpflichtig ist",
+    "organised": "Weil mehrere gemeinsam entscheiden",
+    "pay_by_transfer": "Weil Mitglieder per Überweisung zahlen",
+    "pay_online": "Weil Mitglieder online zahlen",
+    "public_page": "Weil der Raum eine öffentliche Seite hat",
+    "several_rooms": "Weil es mehrere Räume oder Standorte gibt",
+    "shared_places": "Weil Mitglieder die Plätze teilen",
+    "small_community": "Weil die Gemeinschaft klein ist",
+    "start_simple": "Weil Sie einfach beginnen möchten",
+    "tracks_purchases": "Weil Sie verfolgen, was der Raum einkauft",
+    "vat_registered": "Weil der Raum umsatzsteuerpflichtig ist",
+    "issues_invoices": "Weil Sie Rechnungen stellen",
+    "association": "Weil ein Verein mit seinem Vorstand gemeinsam entscheidet",
+    "approve_bookings": "Weil Buchungen auf eine Freigabe warten"
+   },
+   "preset": {
+    "essentiel": "Basis",
+    "standard": "Standard",
+    "complet": "Komplett"
+   },
+   "threshold": {
+    "immediate": "Die Kleinunternehmerregelung endet mit dem Umsatz, der den Nettoumsatz des Jahres über {limit} bringt.",
+    "other": "Die Kleinunternehmerregelung endet mit dem Jahr, dessen Nettoumsatz {limit} übersteigt."
+   },
+   "duty": {
+    "receive_all": "jedes Unternehmen muss E-Rechnungen empfangen können",
+    "issue_large": "große Unternehmen (Umsatz über 800 000 €) müssen E-Rechnungen ausstellen",
+    "issue_all": "jedes Unternehmen muss E-Rechnungen ausstellen",
+    "e_reporting": "Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden",
+    "invoice_records": "jede Rechnung muss in einem verketteten Register erfasst werden (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Was Ihr Raum tut",
+    "setupLevelsQuestions": "Über Ihren Raum",
+    "setupLevelsPresets": "Schnellstart",
+    "setupLevelsChoice": "Was er braucht",
+    "setupLevelsGap": "{level} braucht {needed}",
+    "setupAnswerUnknown": "Weiß ich noch nicht",
+    "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
+    "setupObligationsTitle": "Was das Gesetz verlangt: {country}",
+    "setupObligationUnconfirmed": "Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.",
+    "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
+    "setupObligationSource": "Quelle: {source}",
+    "eInvoiceMandateSince": "Seit {date}: {duty}.",
+    "eInvoiceMandateFrom": "Ab {date}: {duty}."
+   }
   }
  },
  "es": {
   "s": {
    "setupTitle": "DesKilo — Asistente de configuración",
+   "setupHow": "Cómo funciona esta página",
    "setupLanguage": "Idioma",
    "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que sus respuestas anteriores hacen posibles (las funciones que no activa, el régimen de IVA que no tiene, el país que no aplica — no se le pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Sus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
    "setupGuideHtml": "La guía de usuario completa — con una captura de cada pantalla, los formularios largos fusionados en una imagen — está {link} (English · Français · Deutsch · Español · Italiano) y en la app (Ajustes → Ayuda).",
@@ -4217,6 +5229,7 @@ window.SETUP_L10N={
    "identityTimezoneHint": "Nombre IANA. Todas las franjas de reserva se anclan a ella; cada miembro puede ver la hora en la suya.",
    "identityLanguage": "Idioma del espacio",
    "identityLanguageHint": "Las invitaciones y los informes se redactan en él de forma predeterminada.",
+   "identityAdvanced": "Avanzado: servidor y red",
    "identityAddress": "Dirección postal",
    "identityAddressHint": "Se imprime en las facturas y en el recibo del quiosco.",
    "identityAddressPlaceholder": "Calle Mayor 12, 28013 Madrid",
@@ -4249,6 +5262,7 @@ window.SETUP_L10N={
    "availHalfDayHours": "Horas que valen media jornada",
    "availFullDayHours": "Horas que valen una jornada",
    "availClosures": "Días de cierre",
+   "tableRemoveRow": "Eliminar esta fila",
    "colDate": "Fecha",
    "availAddClosure": "Añadir un día de cierre",
    "availPolicies": "Políticas de reserva",
@@ -4679,7 +5693,145 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Conectar el proveedor de pagos en línea en la app: sus claves nunca van en el archivo.",
    "todoEinvoice": "Introducir en la app la dirección y las credenciales de la plataforma de facturación electrónica: el archivo nunca las aplica.",
    "todoInvoiceOutside": "Las facturas de un espacio en {country} se emiten fuera de la app.",
-   "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración."
+   "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración.",
+   "legalLandTax": "Inmuebles y opción de tributación",
+   "legalLandTaxHint": "En el Reino Unido, la cesión de un puesto o de una oficina está exenta (VAT Act 1994, anexo 9, grupo 1) salvo que se haya optado por gravar el edificio. La opción grava el alquiler al tipo general y permite deducir el IVA de sus costes; hay que informar a HMRC.",
+   "legalOptionToTax": "Hemos optado por gravar el edificio",
+   "legalOptionDate": "Opción vigente desde",
+   "legalOptionRef": "Referencia de notificación a HMRC",
+   "legalFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
+   "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción.",
+   "legalLetting": "Alquiler y opción (Suiza)",
+   "legalLettingHint": "Un puesto u oficina con servicios (centro de negocios) tributa al tipo normal. El simple alquiler de locales está exento sin deducción del impuesto soportado (art. 21 apdo. 2 n.º 21 LIVA suiza), salvo que opte por la tributación (art. 22), mostrando el impuesto abiertamente en la factura.",
+   "legalBareLetting": "Solo alquilamos locales desnudos",
+   "legalBareLettingDesc": "Desactivado: cada línea es un paquete, al tipo normal. Activado: exento, salvo opción.",
+   "legalChOption": "Hemos optado (art. 22 LIVA suiza)",
+   "legalCaTax": "GST/HST y QST (Canadá)",
+   "legalCaTaxHint": "El NIF-IVA de arriba es su número de empresa GST/HST con su cuenta RT (123456789 RT0001). Si cobra el QST, añada su número de Revenu Québec: ambos figuran en la factura.",
+   "legalQstNumber": "Número de registro del QST (Revenu Québec)",
+   "legalQuickMethod": "Usamos el método rápido de contabilidad",
+   "legalQuickMethodDesc": "La declaración lo señala. Los tipos de ingreso son los de la CRA y la aplicación no los calcula.",
+   "payQrIban": "QR-IBAN (factura QR suiza)",
+   "payQrIbanHint": "Opcional: con él, la factura QR lleva una referencia QRR",
+   "payErrQrIban": "El QR-IBAN es un IBAN suizo o de Liechtenstein cuyo identificador de entidad (dígitos 5 a 9) está entre 30000 y 31999.",
+   "webmcpSecretSet": "[definido]",
+   "webmcpErrInvalid": "{key}: {reason}",
+   "webmcpReasonBool": "se espera true o false",
+   "webmcpReasonEnum": "este valor no es uno de los permitidos",
+   "webmcpReasonInt": "se espera un número entero",
+   "webmcpReasonNum": "se espera un número",
+   "webmcpReasonRange": "el número debe estar entre {min} y {max}",
+   "webmcpReasonDays": "se espera una lista de días, «1» (lunes) a «7» (domingo)",
+   "webmcpReasonDates": "se espera una lista de fechas AAAA-MM-DD",
+   "webmcpReasonText": "se espera texto",
+   "webmcpReasonTime": "se espera una hora HH:MM",
+   "webmcpReasonDate": "se espera una fecha AAAA-MM-DD, o vacío",
+   "webmcpReasonColor": "se espera un color #RRGGBB, o vacío",
+   "webmcpErrCollection": "{key} es una lista de registros que el cuestionario edita en pantalla; las herramientas no la rellenan.",
+   "webmcpErrUnknownKey": "Parámetro desconocido: {key}.",
+   "webmcpErrNeeds": "{key} solo se aplica mientras la función {feature} está activa; actívela primero.",
+   "webmcpErrEmpty": "Indique al menos una entrada.",
+   "webmcpErrAtomic": "No se cambió nada: {n} respuesta(s) rechazada(s), vea errors.",
+   "webmcpErrFormat": "Solo existe el formato XML.",
+   "webmcpErrBlocked": "El cuestionario tiene {n} punto(s) bloqueante(s); corríjalos antes de exportar.",
+   "webmcpErrNoRates": "No hay tasas de IVA sugeridas para el país {country}.",
+   "webmcpListParameters": "Lista las preguntas del cuestionario de configuración de DesKilo: clave, tipo, valores permitidos o rango, valor por defecto, la función de la que depende y la etiqueta en el idioma de la página. Se puede filtrar por función o texto.",
+   "webmcpGetAnswers": "Devuelve todas las respuestas actuales del cuestionario (secretos ocultos) y los puntos que aún bloquean la exportación.",
+   "webmcpSetAnswer": "Responde una pregunta con las mismas comprobaciones que la página. Una función activa también las que necesita; una pregunta que depende de una función desactivada se rechaza y la nombra.",
+   "webmcpSetAnswers": "Responde varias preguntas a la vez, todo o nada: si se rechaza una respuesta no cambia nada y cada rechazo se lista por clave. Las funciones se aplican primero.",
+   "webmcpExplain": "Explica una pregunta: etiqueta y ayuda, valores permitidos, valor por defecto, valor actual, de qué depende y qué depende de ella.",
+   "webmcpDiff": "Lista las respuestas que difieren de los valores por defecto del cuestionario.",
+   "webmcpExport": "Devuelve el archivo de configuración (XML) exactamente como lo produce el botón Exportar; se rechaza mientras quede un punto bloqueante.",
+   "webmcpReset": "Restablece las preguntas indicadas a sus valores por defecto, o todas las respuestas si no se indica ninguna clave.",
+   "webmcpSeedRates": "Rellena las tasas de IVA con las sugeridas para el país elegido, como el botón de sugerencia.",
+   "webmcpArgFeature": "Solo las preguntas de esta función (clave sin el prefijo features.).",
+   "webmcpArgQuery": "Texto a buscar en claves, etiquetas y ayudas.",
+   "webmcpArgKey": "La clave del parámetro, tal como la devuelve list_parameters (por ejemplo country o features.invoicing).",
+   "webmcpArgValue": "La respuesta: booleano, texto, número o lista, según el tipo del parámetro.",
+   "webmcpArgAnswers": "Un objeto que asocia claves de parámetros con respuestas.",
+   "webmcpArgFormat": "El formato de exportación; solo existe xml.",
+   "webmcpArgKeys": "Claves de parámetros a restablecer; omitir para restablecer todo.",
+   "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
+   "featuresAvailabilityEu": "los Estados miembros de la UE",
+   "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/demo?space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada.",
+   "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. La vista experta conserva cada interruptor.",
+   "levelsOffline": "Esta página prepara un archivo y funciona sin conexión: no ve su espacio y no dice nada de lo que está listo. La aplicación lo muestra una vez importado el archivo.",
+   "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en la vista experta; los niveles de aquí los siguen.",
+   "levelsExpertOpen": "Abrir la vista experta: cada interruptor",
+   "setupExpertSwitches": "Mostrar cada interruptor (vista experta)",
+   "levelsOk": "Niveles: {list}.",
+   "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente.",
+   "networkRoles": "Función de este servidor",
+   "networkRolesHint": "Combinada: las cuentas de las personas y el espacio en un solo servidor (la opción habitual). Anfitrión de espacios: las cuentas están en otro servidor, el hogar personal, indicado abajo.",
+   "networkCombined": "Combinada: cuentas y espacios",
+   "networkWorkspaceHost": "Anfitrión de espacios: solo espacios",
+   "networkHomeUrl": "URL del hogar personal",
+   "networkHomeUrlHint": "La dirección https:// del servidor donde sus miembros tienen sus cuentas.",
+   "networkHomeKey": "Clave publicable del hogar personal",
+   "networkHomeKeyHint": "Su clave publicable (sb_publishable_…), nunca una secreta. El asistente de instancia comprueba ambas antes de guardarlas.",
+   "networkErrHome": "El hogar personal necesita una dirección https:// sin ruta y una clave publicable.",
+   "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal.",
+   "optSeconds": "{n} segundos",
+   "optOneMinute": "1 minuto",
+   "enrolAccepting": "Acepta espacios nuevos una vez inscrito en un hogar personal",
+   "enrolAcceptingHint": "Solo para un servidor de espacios cuyos miembros tienen su cuenta en un hogar personal: el operador del hogar lo inscribe allí (asistente de instancia o línea de comandos) y puede ofrecerlo para espacios nuevos. Desmárquelo para alojar solo los espacios que ya tiene.",
+   "enrolLifetime": "Validez del estado de identidad",
+   "enrolLifetimeHint": "Cuánto tiempo un servidor de espacios se fía del estado de una persona firmado por el hogar personal. A una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo, 15 minutos como máximo. Se ajusta en la configuración de la app.",
+   "enrolReconcile": "Actualización del estado de identidad",
+   "enrolReconcileHint": "Con qué frecuencia un servidor de espacios actualiza los estados que guarda, aunque nadie use la app. Se ajusta en la configuración de la app.",
+   "enrolSkew": "Desfase de reloj permitido",
+   "enrolSkewHint": "Desfase de reloj entre el hogar personal y un servidor de espacios que aún se acepta, 30 segundos como máximo. Se ajusta en la configuración de la app.",
+   "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones.",
+   "optEntries": "{n} entradas",
+   "optCharacters": "{n} caracteres",
+   "dirPageSize": "Nueva conversación: entradas por página",
+   "dirPageSizeHint": "Cuántos espacios, personas o grupos muestra a la vez el hogar personal cuando un miembro empieza una conversación; los siguientes llegan con Mostrar más. Se configura en los ajustes de la app.",
+   "dirQueryLength": "Nueva conversación: búsqueda más larga",
+   "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app.",
+   "inboxPageSize": "Bandeja de entrada: conversaciones por página",
+   "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación.",
+   "biDetailPageSize": "Pagos: filas por página",
+   "biDetailPageSizeHint": "Cuántos pagos muestra una página del detalle del importe cobrado; la página siguiente continúa donde se detuvo. Se configura en los ajustes del espacio de la aplicación.",
+   "fedRetention": "Conservación de los intercambios entre servidores",
+   "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
+   "fedAnswerWait": "Espera de respuesta entre servidores",
+   "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app.",
+   "supLookupWait": "Espera de la búsqueda de proveedores",
+   "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
+   "supLookupRate": "Búsquedas de proveedores por minuto",
+   "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
+   "recordsHostingCountry": "Dónde conserva este servidor sus datos",
+   "recordsHostingNone": "No declarado",
+   "recordsHostingCountryHint": "El país donde se encuentran la base de datos y sus copias de seguridad, tal como lo indica su contrato de alojamiento. La aplicación solo dice lo que usted declara aquí; sin declaración, no indica ningún lugar. Se ajusta en la configuración de la plataforma de la aplicación.",
+   "recordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+   "recordsCraReferenceHint": "Una empresa canadiense conserva sus registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Si su servidor está fuera de Canadá, la referencia de esa autorización; déjelo vacío si no tiene ninguna. Se ajusta en la configuración del espacio de la aplicación.",
+   "mapTiles": "Servidor de teselas del mapa",
+   "mapTilesHint": "De dónde vienen las teselas del mapa de descubrimiento, como plantilla https con {z}, {x} e {y} (sin nombre de usuario, contraseña ni #, no en una red privada). Déjelo vacío para OpenStreetMap. Se ajusta en los parámetros de plataforma de la aplicación (Región y mapas).",
+   "mapGeocoder": "Servicio de búsqueda de direcciones",
+   "mapGeocoderHint": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa: una dirección https sin nombre de usuario, contraseña, ? ni #, no en una red privada. Déjelo vacío para el servicio público Photon. Se ajusta en los parámetros de plataforma de la aplicación (Región y mapas).",
+   "regionCurrency": "Moneda por defecto",
+   "regionCurrencyHint": "En qué moneda se muestran los importes antes de conectar un espacio de trabajo, y con cuál empieza uno nuevo. Nunca sustituye la moneda que falte en una factura. Se ajusta en los parámetros de plataforma de la aplicación (Región y mapas).",
+   "regionCountry": "País por defecto",
+   "regionCountryHint": "Con qué país empieza un espacio nuevo cuando se desconoce la región del dispositivo. Solo una sugerencia; no decide ningún país emisor ni impuesto. Se ajusta en los parámetros de plataforma de la aplicación (Región y mapas).",
+   "regionLocale": "Formato por defecto de números y fechas",
+   "regionLocaleHint": "El formato usado antes de que un miembro o un espacio elija uno. La elección del miembro siempre prevalece. Se ajusta en los parámetros de plataforma de la aplicación (Región y mapas).",
+   "optPerMinute": "{n} por minuto",
+   "bankMaxBytes": "Tamaño máximo de un extracto bancario",
+   "bankMaxBytesHint": "Un archivo mayor se rechaza entero antes de leerse. Ajuste del servidor, en la configuración de la app.",
+   "bankMaxLines": "Movimientos por extracto bancario",
+   "bankMaxLinesHint": "Un extracto con más movimientos se rechaza entero; divídalo por periodo en el banco. Se ajusta en la configuración de la app.",
+   "bankMatchWindow": "Ventana de facturas para un pago sin referencia",
+   "bankMatchWindowHint": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador; siempre confirma una persona. Se ajusta en la configuración de la app.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movimientos",
+   "accountingTitle": "Contabilidad y banco",
+   "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
+   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
+   "retUsYears": "Conservación de registros, estado de EE. UU.",
+   "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+   "retUsRule": "Se aplica la regla de conservación",
+   "badgeFailureLimit": "Intentos fallidos de acceso con credencial por espacio",
+   "badgeFailureLimitHint": "Tras este número de PIN fallidos en el espacio, el acceso con credencial se pausa durante la ventana de bloqueo y los propietarios reciben una alerta. Elija de 1 a 50 en los ajustes del espacio → Seguridad; 50 por defecto. El XML conserva la respuesta; introdúzcala en la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -4691,7 +5843,7 @@ window.SETUP_L10N={
     "Actividad y confirmaciones pendientes."
    ],
    "moneyTab": [
-    "Pestaña Finanzas",
+    "Extracto y saldo",
     "Facturas mensuales, pagos y gastos."
    ],
    "services": [
@@ -4708,7 +5860,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Exportar PDF",
-    "Exportar la factura mensual como PDF."
+    "Exporte la factura mensual y los informes de análisis como PDF."
    ],
    "seriesBooking": [
     "Reserva en serie",
@@ -4772,7 +5924,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Exportación de datos (Excel)",
-    "Descargar todos los datos del espacio en un libro de Excel."
+    "Descargue todos los datos del espacio en un libro de Excel, y los informes de análisis como archivo CSV o libro."
    ],
    "workingHours": [
     "Horario laboral",
@@ -4879,8 +6031,8 @@ window.SETUP_L10N={
     "Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos."
    ],
    "financeFaces": [
-    "Finanzas en cuatro vistas",
-    "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
+    "Extracto, pagos, facturas, documentos",
+    "Mis finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
    ],
    "paymentReminders": [
     "Recordatorios de pago automáticos",
@@ -5201,6 +6353,90 @@ window.SETUP_L10N={
    "inputVat": [
     "IVA soportado",
     "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido."
+   ],
+   "configurableSettings": [
+    "Ajustes configurables",
+    "Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos."
+   ],
+   "salesTax": [
+    "Impuesto sobre las ventas (EE. UU.)",
+    "Un vendedor en Estados Unidos factura con precios netos y el impuesto sobre las ventas del código postal de la sede, indicado aparte por jurisdicción; el certificado de exención de un cliente saca una línea del impuesto. Desactivado: ese vendedor no puede facturar."
+   ],
+   "meetingRooms": [
+    "Salas de reuniones",
+    "Una sala del plano con su propia capacidad, reservada en su propio tramo (una hora por defecto) junto al tramo de los puestos. Desactivado: sin salas."
+   ],
+   "parking": [
+    "Aparcamiento",
+    "Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento."
+   ],
+   "webMcp": [
+    "Herramientas para agentes del navegador",
+    "Permite que un agente de IA del navegador use las funciones propias de la aplicación, cada una con la confirmación de la persona y los permisos que ya tiene. Requiere la interfaz MCP. Desactivado: no se ofrece ninguna herramienta."
+   ],
+   "purchases": [
+    "Compras",
+    "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian."
+   ],
+   "premisesLease": [
+    "Contrato de alquiler del local",
+    "El contrato de alquiler que el espacio tiene como inquilino: el arrendador, el local, la duración, el preaviso y la fianza, con su renta y sus gastos y su historial. Cada importe genera el gasto programado de su concepto. Desactivado: no se registra ningún contrato y los gastos programados quedan como están."
+   ],
+   "assetRegister": [
+    "Registro de equipos",
+    "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo."
+   ],
+   "externalRooms": [
+    "Salas alquiladas",
+    "Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia."
+   ],
+   "accountingPeriods": [
+    "Periodos contables",
+    "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran."
+   ],
+   "biReportDesigner": [
+    "Diseñador de informes (análisis)",
+    "Convierte un análisis guardado en un informe editable de páginas y tarjetas. Un informe guarda la pregunta, nunca las cifras: cada persona solo ve lo que permiten sus propios derechos. Desactivado: las vistas guardadas no cambian y los informes existentes siguen siendo legibles."
+   ],
+   "purchaseAnalytics": [
+    "Indicadores de compras (análisis)",
+    "Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras."
+   ],
+   "workspaceOverview": [
+    "Resumen del espacio",
+    "Una página con lo que espera a la persona y las cifras que puede leer — capacidad, ventas, compras y tesorería — cada una abriendo su origen. Desactivado: la lista de pendientes y la página de análisis quedan como están."
+   ],
+   "setupGuide": [
+    "Guía de configuración",
+    "Una sola lista de tareas, desde crear el espacio hasta abrirlo: qué está hecho, qué sigue y por qué, con el nivel que elija para cada parte del espacio."
+   ],
+   "dataReport": [
+    "Informe de datos (PDF)",
+    "Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales."
+   ],
+   "personalShell": [
+    "Interfaz personal (cinco destinos)",
+    "Yo en cinco destinos: Resumen, Mis espacios, Descubrir, Mensajes y Mis datos, con una barra lateral en una ventana ancha, un riel en una mediana y una barra en el teléfono. Desactivada, Yo conserva sus cuatro pestañas."
+   ],
+   "foreignCurrencyPurchases": [
+    "Compras en otra moneda",
+    "Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza."
+   ],
+   "accountingConnectors": [
+    "Sistemas contables",
+    "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver."
+   ],
+   "bankImport": [
+    "Extractos bancarios",
+    "Lee los extractos del banco (camt.053/054, MT940, CODA, OFX/QFX o una hoja de cálculo) en el espacio, cada movimiento una sola vez, y propone la factura que liquida cada pago por la referencia QR o RF impresa en ella, su número o su importe; una persona confirma cada conciliación y el resto queda en una lista de trabajo. Un pago saliente concilia un pago ya registrado como realizado."
+   ],
+   "planDecor": [
+    "Dibujar la sala en el plano",
+    "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen."
+   ],
+   "mtdSubmission": [
+    "Presentar el IVA británico a HMRC",
+    "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
    ]
   },
   "process": {
@@ -5362,7 +6598,10 @@ window.SETUP_L10N={
    "viewCalendar": "Ver el calendario",
    "viewDirectory": "Ver el directorio de miembros",
    "viewMyMoney": "Ver su propia cuenta y sus facturas",
-   "viewDocuments": "Ver los documentos compartidos"
+   "viewDocuments": "Ver los documentos compartidos",
+   "managePurchases": "Registrar facturas de proveedor",
+   "recordOutgoingPayments": "Registrar pagos a miembros",
+   "manageLease": "Registrar el contrato de alquiler"
   },
   "domain": {
    "payment": "Pago",
@@ -5385,7 +6624,9 @@ window.SETUP_L10N={
    "refund": "Reembolso",
    "member_status_change": "Cambio de membresía",
    "subscription_change": "Cambio de suscripción",
-   "matrix_change": "Cambio de la matriz de permisos"
+   "matrix_change": "Cambio de la matriz de permisos",
+   "lease_change": "Cambio del contrato de alquiler",
+   "commitment_variance": "Diferencia de alquiler"
   },
   "country": {
    "AT": "Austria",
@@ -5420,11 +6661,119 @@ window.SETUP_L10N={
    "GB": "Reino Unido",
    "US": "Estados Unidos",
    "CA": "Canadá"
+  },
+  "journey": {
+   "question": {
+    "association": "El espacio lo gestiona una asociación, una cooperativa o un club",
+    "approve_bookings": "Las reservas esperan una aprobación; los miembros no reservan directamente",
+    "members_owe_money": "Los miembros deben dinero al espacio (alquiler, bonos, extras)",
+    "issue_invoices": "Emite facturas",
+    "pay_online": "Los miembros pagan en línea",
+    "vat_registered": "El espacio está sujeto al IVA",
+    "keep_books": "Lleva la contabilidad",
+    "tracks_purchases": "Sigue lo que compra el espacio",
+    "several_rooms_or_sites": "Varias salas, una sala de reuniones o varias sedes",
+    "door_tablet": "Una tableta en la entrada registra las llegadas",
+    "public_page": "Una página pública presenta el espacio",
+    "organised": "Comités, roles propios o aprobaciones de varias personas"
+   },
+   "process": {
+    "bookings": "Reservas",
+    "community": "Comunidad",
+    "money": "Dinero",
+    "payments": "Pagos",
+    "tax": "Impuestos",
+    "purchases": "Compras",
+    "presentation": "Presentación",
+    "operations": "Operación",
+    "assistant": "Asistente"
+   },
+   "level": {
+    "bookings_simple": "Plazas compartidas",
+    "bookings_resources": "Salas y recursos",
+    "bookings_measured": "Uso medido",
+    "community_basic": "Básico",
+    "community_organised": "Organizada",
+    "money_none": "Sin dinero",
+    "money_statements": "Extractos",
+    "money_invoices": "Facturas",
+    "payments_off": "Por transferencia",
+    "payments_online": "En línea",
+    "tax_none": "Sin IVA",
+    "tax_vat": "IVA",
+    "tax_books": "Contabilidad",
+    "purchases_none": "Ninguna",
+    "purchases_expenses": "Gastos",
+    "purchases_full": "Compras completas",
+    "presentation_basic": "Básica",
+    "presentation_branded": "Sus colores",
+    "presentation_public": "Página pública",
+    "operations_basic": "Básica",
+    "operations_insight": "Indicadores",
+    "operations_advanced": "Avanzada",
+    "assistant_off": "Desactivado",
+    "assistant_on": "Activado"
+   },
+   "reason": {
+    "door_tablet": "Porque una tableta en la entrada registra las llegadas",
+    "keeps_books": "Porque lleva la contabilidad",
+    "later": "Porque un asistente puede venir más tarde",
+    "members_only": "Porque solo los miembros ven el espacio",
+    "members_owe": "Porque los miembros deben dinero al espacio",
+    "no_money": "Porque no circula dinero",
+    "no_purchases": "Porque el espacio no sigue sus compras",
+    "no_vat": "Porque el espacio no está sujeto al IVA",
+    "organised": "Porque varias personas deciden juntas",
+    "pay_by_transfer": "Porque los miembros pagan por transferencia",
+    "pay_online": "Porque los miembros pagan en línea",
+    "public_page": "Porque el espacio tiene una página pública",
+    "several_rooms": "Porque hay varias salas o sedes",
+    "shared_places": "Porque los miembros comparten las plazas",
+    "small_community": "Porque es una comunidad pequeña",
+    "start_simple": "Porque conviene empezar sencillo",
+    "tracks_purchases": "Porque sigue lo que compra el espacio",
+    "vat_registered": "Porque el espacio está sujeto al IVA",
+    "issues_invoices": "Porque emite facturas",
+    "association": "Porque una asociación decide en conjunto, con su junta",
+    "approve_bookings": "Porque las reservas esperan una aprobación"
+   },
+   "preset": {
+    "essentiel": "Esencial",
+    "standard": "Estándar",
+    "complet": "Completo"
+   },
+   "threshold": {
+    "immediate": "La franquicia de IVA para pequeñas empresas termina con la operación que lleva el volumen de negocio neto del año por encima de {limit}.",
+    "other": "La franquicia de IVA para pequeñas empresas termina con el año cuyo volumen de negocio neto supera {limit}."
+   },
+   "duty": {
+    "receive_all": "toda empresa debe poder recibir facturas electrónicas",
+    "issue_large": "las grandes y medianas empresas deben emitir facturas electrónicas",
+    "issue_all": "toda empresa debe emitir facturas electrónicas",
+    "e_reporting": "las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse",
+    "invoice_records": "cada factura debe registrarse en un registro encadenado (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Lo que hace su espacio",
+    "setupLevelsQuestions": "Sobre su espacio",
+    "setupLevelsPresets": "Inicio rápido",
+    "setupLevelsChoice": "Lo que necesita",
+    "setupLevelsGap": "{level} necesita {needed}",
+    "setupAnswerUnknown": "Aún no lo sé",
+    "setupAnswerUnknownNote": "Aún sin decidir: {list} se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa.",
+    "setupObligationsTitle": "Lo que exige la ley en {country}",
+    "setupObligationUnconfirmed": "No confirmado para este país — consulte a su asesor contable.",
+    "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
+    "setupObligationSource": "Fuente: {source}",
+    "eInvoiceMandateSince": "Desde el {date}: {duty}.",
+    "eInvoiceMandateFrom": "A partir del {date}: {duty}."
+   }
   }
  },
  "it": {
   "s": {
    "setupTitle": "DesKilo — Assistente di configurazione",
+   "setupHow": "Come funziona questa pagina",
    "setupLanguage": "Lingua",
    "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le Sue risposte precedenti rendono possibili (le funzionalità che non attiva, il regime IVA che non ha, il paese che non si applica — non Le viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le Sue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
    "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",
@@ -5572,6 +6921,7 @@ window.SETUP_L10N={
    "identityTimezoneHint": "Nome IANA. Tutti gli slot di prenotazione vi sono ancorati; ogni membro può visualizzare l'ora nel proprio.",
    "identityLanguage": "Lingua dello spazio",
    "identityLanguageHint": "Inviti e report vengono redatti in questa lingua per impostazione predefinita.",
+   "identityAdvanced": "Avanzate: server e rete",
    "identityAddress": "Indirizzo postale",
    "identityAddressHint": "Stampato sulle fatture e sulla ricevuta del chiosco.",
    "identityAddressPlaceholder": "Via Roma 12, 20121 Milano",
@@ -5604,6 +6954,7 @@ window.SETUP_L10N={
    "availHalfDayHours": "Ore che valgono una mezza giornata",
    "availFullDayHours": "Ore che valgono una giornata",
    "availClosures": "Giorni di chiusura",
+   "tableRemoveRow": "Rimuovere questa riga",
    "colDate": "Data",
    "availAddClosure": "Aggiungi giorno di chiusura",
    "availPolicies": "Regole di prenotazione",
@@ -6034,7 +7385,145 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Collegare il fornitore di pagamenti online nell'app: le sue chiavi non vanno mai nel file.",
    "todoEinvoice": "Inserire nell'app l'indirizzo e le credenziali della piattaforma di fatturazione elettronica: il file non le applica mai.",
    "todoInvoiceOutside": "Le fatture di uno spazio in {country} si emettono fuori dall'app.",
-   "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione."
+   "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione.",
+   "legalLandTax": "Immobili e opzione per l'imposizione",
+   "legalLandTaxHint": "Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l'imposizione dell'edificio. L'opzione rende il canone imponibile all'aliquota ordinaria e consente di detrarre l'IVA sui costi; l'HMRC va informato.",
+   "legalOptionToTax": "Abbiamo optato per l'imposizione dell'edificio",
+   "legalOptionDate": "Opzione efficace dal",
+   "legalOptionRef": "Riferimento di notifica all'HMRC",
+   "legalFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
+   "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione.",
+   "legalLetting": "Locazione e opzione (Svizzera)",
+   "legalLettingHint": "Una postazione o un ufficio con servizi (business center) è imponibile all'aliquota normale. La semplice locazione di locali è esclusa dall'imposta, senza deduzione dell'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo opzione per l'imposizione (art. 22), indicando l'imposta apertamente in fattura.",
+   "legalBareLetting": "Affittiamo solo locali nudi",
+   "legalBareLettingDesc": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
+   "legalChOption": "Abbiamo optato (art. 22 LIVA)",
+   "legalCaTax": "GST/HST e QST (Canada)",
+   "legalCaTaxHint": "La partita IVA sopra è il suo numero d'impresa GST/HST con il conto RT (123456789 RT0001). Se applica la QST, aggiunga il numero di Revenu Québec: entrambi compaiono in fattura.",
+   "legalQstNumber": "Numero di registrazione QST (Revenu Québec)",
+   "legalQuickMethod": "Utilizziamo il quick method",
+   "legalQuickMethodDesc": "La dichiarazione lo segnala. Le aliquote di versamento sono quelle della CRA e l'app non le calcola.",
+   "payQrIban": "QR-IBAN (fattura QR svizzera)",
+   "payQrIbanHint": "Facoltativo: con esso la fattura QR porta un riferimento QRR",
+   "payErrQrIban": "Il QR-IBAN è un IBAN svizzero o liechtensteinese il cui identificativo dell'istituto (cifre da 5 a 9) è compreso tra 30000 e 31999.",
+   "webmcpSecretSet": "[impostato]",
+   "webmcpErrInvalid": "{key}: {reason}",
+   "webmcpReasonBool": "atteso true o false",
+   "webmcpReasonEnum": "questo valore non è tra quelli consentiti",
+   "webmcpReasonInt": "atteso un numero intero",
+   "webmcpReasonNum": "atteso un numero",
+   "webmcpReasonRange": "il numero deve essere compreso tra {min} e {max}",
+   "webmcpReasonDays": "attesa una lista di giorni, «1» (lunedì) a «7» (domenica)",
+   "webmcpReasonDates": "attesa una lista di date AAAA-MM-GG",
+   "webmcpReasonText": "atteso un testo",
+   "webmcpReasonTime": "atteso un orario HH:MM",
+   "webmcpReasonDate": "attesa una data AAAA-MM-GG, o vuota",
+   "webmcpReasonColor": "atteso un colore #RRGGBB, o vuoto",
+   "webmcpErrCollection": "{key} è un elenco di record che il questionario modifica a schermo; gli strumenti non lo compilano.",
+   "webmcpErrUnknownKey": "Parametro sconosciuto: {key}.",
+   "webmcpErrNeeds": "{key} si applica solo se la funzione {feature} è attiva; attivala prima.",
+   "webmcpErrEmpty": "Indica almeno una voce.",
+   "webmcpErrAtomic": "Nulla è stato modificato: {n} risposta/e rifiutata/e, vedi errors.",
+   "webmcpErrFormat": "Esiste solo il formato XML.",
+   "webmcpErrBlocked": "Il questionario ha {n} punto/i bloccante/i; correggili prima di esportare.",
+   "webmcpErrNoRates": "Nessuna aliquota IVA suggerita per il paese {country}.",
+   "webmcpListParameters": "Elenca le domande del questionario di configurazione DesKilo: chiave, tipo, valori consentiti o intervallo, predefinito, la funzione da cui dipende e l’etichetta nella lingua della pagina. Filtrabile per funzione o testo.",
+   "webmcpGetAnswers": "Restituisce tutte le risposte attuali del questionario (segreti nascosti) e i punti che bloccano ancora l’esportazione.",
+   "webmcpSetAnswer": "Risponde a una domanda con gli stessi controlli della pagina. Un interruttore di funzione attiva anche quelli necessari; una domanda che dipende da un interruttore spento viene rifiutata e lo nomina.",
+   "webmcpSetAnswers": "Risponde a più domande insieme, tutto o niente: se una risposta è rifiutata nulla cambia e ogni rifiuto è elencato per chiave. Gli interruttori di funzione sono applicati per primi.",
+   "webmcpExplain": "Spiega una domanda: etichetta e aiuto, valori consentiti, predefinito, valore attuale, da cosa dipende e cosa dipende da essa.",
+   "webmcpDiff": "Elenca le risposte che differiscono dai valori predefiniti del questionario.",
+   "webmcpExport": "Restituisce il file di configurazione (XML) esattamente come lo produce il pulsante Esporta; rifiutato finché resta un punto bloccante.",
+   "webmcpReset": "Ripristina le domande indicate ai valori predefiniti, o tutte le risposte se non è indicata alcuna chiave.",
+   "webmcpSeedRates": "Compila le aliquote IVA con quelle suggerite per il paese scelto, come il pulsante di suggerimento.",
+   "webmcpArgFeature": "Solo le domande di questa funzione (chiave senza il prefisso features.).",
+   "webmcpArgQuery": "Testo da cercare in chiavi, etichette e aiuti.",
+   "webmcpArgKey": "La chiave del parametro, come la restituisce list_parameters (ad esempio country o features.invoicing).",
+   "webmcpArgValue": "La risposta: booleano, testo, numero o elenco, secondo il tipo del parametro.",
+   "webmcpArgAnswers": "Un oggetto che associa chiavi di parametri a risposte.",
+   "webmcpArgFormat": "Il formato di esportazione; esiste solo xml.",
+   "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
+   "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
+   "featuresAvailabilityEu": "gli Stati membri dell'UE",
+   "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/demo?space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla.",
+   "levelsWhy": "Semplici domande sul Suo spazio fissano il livello di ogni processo: ciò che fa, mai di più. La vista esperta conserva ogni interruttore.",
+   "levelsOffline": "Questa pagina prepara un file e funziona offline: non vede il Suo spazio e non dice nulla su ciò che è pronto. Lo mostra l’app una volta importato il file.",
+   "levelsExpertHint": "Ogni risposta fissa di nuovo tutti i livelli. Regoli i singoli interruttori nella vista esperta; i livelli qui li seguono.",
+   "levelsExpertOpen": "Apri la vista esperta: ogni interruttore",
+   "setupExpertSwitches": "Mostra ogni interruttore (vista esperta)",
+   "levelsOk": "Livelli: {list}.",
+   "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo.",
+   "networkRoles": "Ruolo di questo server",
+   "networkRolesHint": "Combinata: gli account delle persone e lo spazio su un unico server (la scelta abituale). Host di spazi: gli account si trovano su un altro server, la casa personale, indicata qui sotto.",
+   "networkCombined": "Combinata: account e spazi",
+   "networkWorkspaceHost": "Host di spazi: solo spazi",
+   "networkHomeUrl": "URL della casa personale",
+   "networkHomeUrlHint": "L’indirizzo https:// del server dove i Suoi membri hanno i loro account.",
+   "networkHomeKey": "Chiave pubblicabile della casa personale",
+   "networkHomeKeyHint": "La sua chiave pubblicabile (sb_publishable_…), mai una segreta. La procedura guidata dell’istanza verifica entrambe prima di registrarle.",
+   "networkErrHome": "La casa personale richiede un indirizzo https:// senza percorso e una chiave pubblicabile.",
+   "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale.",
+   "optSeconds": "{n} secondi",
+   "optOneMinute": "1 minuto",
+   "enrolAccepting": "Accetta nuovi spazi una volta iscritto presso una casa personale",
+   "enrolAcceptingHint": "Solo per un server di spazi i cui membri tengono l'account su una casa personale: il gestore della casa lo iscrive lì (procedura guidata dell'istanza o riga di comando) e può proporlo per nuovi spazi. Tolga la spunta per ospitare solo gli spazi che ha già.",
+   "enrolLifetime": "Validità dello stato di identità",
+   "enrolLifetimeHint": "Per quanto tempo un server di spazi si affida allo stato di una persona firmato dalla casa personale. A un account sospeso vengono rifiutate le nuove richieste entro questo tempo, al massimo 15 minuti. Si imposta nelle impostazioni dell'app.",
+   "enrolReconcile": "Aggiornamento dello stato di identità",
+   "enrolReconcileHint": "Ogni quanto un server di spazi aggiorna gli stati che conserva, anche quando nessuno usa l'app. Si imposta nelle impostazioni dell'app.",
+   "enrolSkew": "Scarto d'orologio ammesso",
+   "enrolSkewHint": "Scarto d'orologio tra la casa personale e un server di spazi ancora accettato, al massimo 30 secondi. Si imposta nelle impostazioni dell'app.",
+   "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti.",
+   "optEntries": "{n} voci",
+   "optCharacters": "{n} caratteri",
+   "dirPageSize": "Nuova conversazione: voci per pagina",
+   "dirPageSizeHint": "Quanti spazi, persone o gruppi la casa personale elenca alla volta quando un membro avvia una conversazione; i successivi arrivano con Mostra altro. Si imposta nelle impostazioni dell'app.",
+   "dirQueryLength": "Nuova conversazione: ricerca più lunga",
+   "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app.",
+   "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
+   "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app.",
+   "biDetailPageSize": "Pagamenti: righe per pagina",
+   "biDetailPageSizeHint": "Quanti pagamenti mostra una pagina del dettaglio dell'importo incassato; la pagina successiva riprende da dove si è fermata. Si imposta nelle impostazioni dello spazio dell'app.",
+   "fedRetention": "Conservazione degli scambi tra server",
+   "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
+   "fedAnswerWait": "Attesa della risposta tra server",
+   "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app.",
+   "supLookupWait": "Attesa della ricerca fornitore",
+   "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
+   "supLookupRate": "Ricerche fornitore al minuto",
+   "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
+   "recordsHostingCountry": "Dove questo server conserva i suoi dati",
+   "recordsHostingNone": "Non dichiarato",
+   "recordsHostingCountryHint": "Il paese in cui si trovano il database e i suoi backup, come indica il Suo contratto di hosting. L'app dice solo ciò che Lei dichiara qui; senza dichiarazione non indica alcun luogo. Si imposta nelle impostazioni della piattaforma dell'app.",
+   "recordsCraReference": "Autorizzazione della CRA a conservare le scritture fuori dal Canada",
+   "recordsCraReferenceHint": "Un'impresa canadese conserva le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Se il Suo server è fuori dal Canada, il riferimento di tale autorizzazione; lasci vuoto se non ne ha. Si imposta nelle impostazioni dello spazio dell'app.",
+   "mapTiles": "Server delle tessere della mappa",
+   "mapTilesHint": "Da dove vengono le tessere della mappa di scoperta, come modello https con {z}, {x} e {y} (senza nome utente, password né #, non in una rete privata). Lasci vuoto per OpenStreetMap. Si imposta nelle impostazioni di piattaforma dell'app (Regione e mappe).",
+   "mapGeocoder": "Servizio di ricerca indirizzi",
+   "mapGeocoderHint": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa: un indirizzo https senza nome utente, password, ? né #, non in una rete privata. Lasci vuoto per il servizio pubblico Photon. Si imposta nelle impostazioni di piattaforma dell'app (Regione e mappe).",
+   "regionCurrency": "Valuta predefinita",
+   "regionCurrencyHint": "In quale valuta si mostrano gli importi prima che uno spazio di lavoro sia collegato, e da quale parte uno nuovo. Non sostituisce mai la valuta mancante di una fattura. Si imposta nelle impostazioni di piattaforma dell'app (Regione e mappe).",
+   "regionCountry": "Paese predefinito",
+   "regionCountryHint": "Da quale paese parte un nuovo spazio quando la regione del dispositivo è sconosciuta. Solo un suggerimento; non decide alcun paese emittente né imposta. Si imposta nelle impostazioni di piattaforma dell'app (Regione e mappe).",
+   "regionLocale": "Formato predefinito di numeri e date",
+   "regionLocaleHint": "Il formato usato prima che un membro o uno spazio ne scelga uno. La scelta del membro prevale sempre. Si imposta nelle impostazioni di piattaforma dell'app (Regione e mappe).",
+   "optPerMinute": "{n} al minuto",
+   "bankMaxBytes": "Dimensione massima di un estratto conto",
+   "bankMaxBytesHint": "Un file più grande viene rifiutato per intero prima di essere letto. Impostazione del server, nelle impostazioni dell'app.",
+   "bankMaxLines": "Movimenti per estratto conto",
+   "bankMaxLinesHint": "Un estratto con più movimenti viene rifiutato per intero; lo suddivida per periodo presso la banca. Si imposta nelle impostazioni dell'app.",
+   "bankMatchWindow": "Finestra delle fatture per un pagamento senza riferimento",
+   "bankMatchWindowHint": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore; conferma sempre una persona. Si imposta nelle impostazioni dell'app.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movimenti",
+   "accountingTitle": "Contabilità e banca",
+   "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
+   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
+   "retUsYears": "Conservazione dei documenti, stato USA",
+   "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+   "retUsRule": "Vale la regola di conservazione",
+   "badgeFailureLimit": "Tentativi falliti di accesso con badge per spazio",
+   "badgeFailureLimitHint": "Dopo questo numero di PIN errati nello spazio, l’accesso con badge si sospende per la finestra di blocco e i proprietari ricevono un avviso. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 per impostazione predefinita. Il file XML conserva la risposta; inserirla nell’app."
   },
   "feature": {
    "calendarTab": [
@@ -6046,7 +7535,7 @@ window.SETUP_L10N={
     "Cronologia delle attività e conferme in sospeso."
    ],
    "moneyTab": [
-    "Scheda Finanze",
+    "Estratto e saldo",
     "Fatture mensili, pagamenti e spese."
    ],
    "services": [
@@ -6063,7 +7552,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Esportazione PDF",
-    "Esporti la fattura mensile come PDF."
+    "Esporti la fattura mensile e i report di analisi come PDF."
    ],
    "seriesBooking": [
     "Prenotazione in serie",
@@ -6127,7 +7616,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Esportazione dati (Excel)",
-    "Scaricare tutti i dati dello spazio in una cartella Excel."
+    "Scarichi tutti i dati dello spazio in una cartella Excel, e i report di analisi come file CSV o cartella di lavoro."
    ],
    "workingHours": [
     "Orario di lavoro",
@@ -6234,8 +7723,8 @@ window.SETUP_L10N={
     "Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati."
    ],
    "financeFaces": [
-    "Finanze in quattro viste",
-    "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna."
+    "Estratto, pagamenti, fatture, documenti",
+    "Le mie finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna."
    ],
    "paymentReminders": [
     "Solleciti di pagamento automatici",
@@ -6556,6 +8045,90 @@ window.SETUP_L10N={
    "inputVat": [
     "IVA a credito",
     "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito."
+   ],
+   "configurableSettings": [
+    "Impostazioni configurabili",
+    "Limiti, termini e valori predefiniti che si modificano nell'app senza attendere una versione: l'operatore imposta i valori predefiniti, gli amministratori di uno spazio i propri."
+   ],
+   "salesTax": [
+    "Imposta sulle vendite (Stati Uniti)",
+    "Un venditore negli Stati Uniti fattura prezzi al netto e indica a parte la sales tax del codice postale della sede, per giurisdizione; il certificato di esenzione di un cliente toglie una riga dall'imposta. Disattivato: un tale venditore non può fatturare."
+   ],
+   "meetingRooms": [
+    "Sale riunioni",
+    "Una sala della pianta con la propria capienza, prenotata in una fascia propria (un'ora per impostazione predefinita) accanto alla fascia dei posti. Disattivato: nessuna sala."
+   ],
+   "parking": [
+    "Parcheggio",
+    "Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio."
+   ],
+   "webMcp": [
+    "Strumenti per agenti del browser",
+    "Permette a un agente IA nel browser di usare le funzioni proprie dell'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l'interfaccia MCP. Disattivato: nessuno strumento viene offerto."
+   ],
+   "purchases": [
+    "Acquisti",
+    "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati."
+   ],
+   "premisesLease": [
+    "Contratto di locazione dei locali",
+    "Il contratto di locazione che lo spazio detiene come conduttore: il locatore, i locali, la durata, il preavviso e il deposito, con canone e spese e il loro storico. Ogni importo genera la spesa programmata della sua voce. Disattivato: nessun contratto viene registrato e le spese programmate restano invariate."
+   ],
+   "assetRegister": [
+    "Registro delle attrezzature",
+    "Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata."
+   ],
+   "externalRooms": [
+    "Sale in affitto",
+    "Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia."
+   ],
+   "accountingPeriods": [
+    "Periodi contabili",
+    "Chiudere un periodo dei libri: nessuna fattura datata al suo interno può essere annullata, nessun incasso abbinato al suo interno, e ogni esportazione contabile viene registrata. Disattivato: nulla viene bloccato e le esportazioni non vengono registrate."
+   ],
+   "biReportDesigner": [
+    "Editor di report (analisi)",
+    "Trasforma un'analisi salvata in un report modificabile fatto di pagine e schede. Un report conserva la domanda, mai le cifre: ognuno vede solo ciò che i propri diritti consentono. Disattivato: le viste salvate restano invariate e i report esistenti restano leggibili."
+   ],
+   "purchaseAnalytics": [
+    "Indicatori degli acquisti (analisi)",
+    "Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti."
+   ],
+   "workspaceOverview": [
+    "Panoramica dello spazio",
+    "Una pagina con ciò che attende la persona e le cifre che può leggere — capacità, vendite, acquisti e cassa — ciascuna apre la sua fonte. Disattivato: l'elenco delle attività e la pagina delle analisi restano come sono."
+   ],
+   "setupGuide": [
+    "Guida alla configurazione",
+    "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che sceglie per ogni parte dello spazio."
+   ],
+   "dataReport": [
+    "Rapporto dati (PDF)",
+    "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali."
+   ],
+   "personalShell": [
+    "Interfaccia personale (cinque destinazioni)",
+    "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede."
+   ],
+   "foreignCurrencyPurchases": [
+    "Acquisti in altra valuta",
+    "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata."
+   ],
+   "accountingConnectors": [
+    "Sistemi contabili",
+    "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane e bexio tramite la loro API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere."
+   ],
+   "bankImport": [
+    "Estratti conto",
+    "Legge gli estratti conto della banca (camt.053/054, MT940, CODA, OFX/QFX o un foglio di calcolo) nello spazio, ogni movimento una sola volta, e propone la fattura che ogni pagamento salda in base al riferimento QR o RF stampato su di essa, al suo numero o al suo importo; una persona conferma ogni abbinamento e il resto rimane in un elenco di lavoro. Un pagamento in uscita riconcilia un pagamento già registrato come effettuato."
+   ],
+   "planDecor": [
+    "Disegnare la sala sulla pianta",
+    "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano."
+   ],
+   "mtdSubmission": [
+    "Inviare l'IVA britannica a HMRC",
+    "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
    ]
   },
   "process": {
@@ -6717,7 +8290,10 @@ window.SETUP_L10N={
    "viewCalendar": "Vedere il calendario",
    "viewDirectory": "Vedere l'elenco dei membri",
    "viewMyMoney": "Vedere il proprio conto e le proprie fatture",
-   "viewDocuments": "Vedere i documenti condivisi"
+   "viewDocuments": "Vedere i documenti condivisi",
+   "managePurchases": "Registrare le fatture dei fornitori",
+   "recordOutgoingPayments": "Registrare i pagamenti ai soci",
+   "manageLease": "Registrare il contratto di locazione"
   },
   "domain": {
    "payment": "Pagamento",
@@ -6740,7 +8316,9 @@ window.SETUP_L10N={
    "refund": "Rimborso",
    "member_status_change": "Cambio di adesione",
    "subscription_change": "Cambio di abbonamento",
-   "matrix_change": "Modifica della matrice dei permessi"
+   "matrix_change": "Modifica della matrice dei permessi",
+   "lease_change": "Modifica del contratto di locazione",
+   "commitment_variance": "Differenza di affitto"
   },
   "country": {
    "AT": "Austria",
@@ -6775,6 +8353,113 @@ window.SETUP_L10N={
    "GB": "Regno Unito",
    "US": "Stati Uniti",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "association": "Lo spazio è gestito da un’associazione, una cooperativa o un club",
+    "approve_bookings": "Le prenotazioni attendono un’approvazione; i membri non prenotano direttamente",
+    "members_owe_money": "I membri devono denaro allo spazio (affitto, carnet, extra)",
+    "issue_invoices": "Emette fatture",
+    "pay_online": "I membri pagano online",
+    "vat_registered": "Lo spazio è soggetto a IVA",
+    "keep_books": "Tiene la contabilità",
+    "tracks_purchases": "Segue gli acquisti dello spazio",
+    "several_rooms_or_sites": "Più sale, una sala riunioni o più sedi",
+    "door_tablet": "Un tablet all’ingresso registra gli arrivi",
+    "public_page": "Una pagina pubblica presenta lo spazio",
+    "organised": "Comitati, ruoli propri o approvazioni di più persone"
+   },
+   "process": {
+    "bookings": "Prenotazioni",
+    "community": "Comunità",
+    "money": "Denaro",
+    "payments": "Pagamenti",
+    "tax": "Fisco",
+    "purchases": "Acquisti",
+    "presentation": "Presentazione",
+    "operations": "Gestione",
+    "assistant": "Assistente"
+   },
+   "level": {
+    "bookings_simple": "Posti condivisi",
+    "bookings_resources": "Sale e risorse",
+    "bookings_measured": "Uso misurato",
+    "community_basic": "Semplice",
+    "community_organised": "Organizzata",
+    "money_none": "Nessun denaro",
+    "money_statements": "Estratti",
+    "money_invoices": "Fatture",
+    "payments_off": "Con bonifico",
+    "payments_online": "Online",
+    "tax_none": "Nessuna IVA",
+    "tax_vat": "IVA",
+    "tax_books": "Contabilità",
+    "purchases_none": "Nessuno",
+    "purchases_expenses": "Spese",
+    "purchases_full": "Acquisti completi",
+    "presentation_basic": "Semplice",
+    "presentation_branded": "I suoi colori",
+    "presentation_public": "Pagina pubblica",
+    "operations_basic": "Semplice",
+    "operations_insight": "Indicatori",
+    "operations_advanced": "Avanzata",
+    "assistant_off": "Spento",
+    "assistant_on": "Acceso"
+   },
+   "reason": {
+    "door_tablet": "Perché un tablet all’ingresso registra gli arrivi",
+    "keeps_books": "Perché tiene la contabilità",
+    "later": "Perché un assistente può arrivare più tardi",
+    "members_only": "Perché solo i membri vedono lo spazio",
+    "members_owe": "Perché i membri devono denaro allo spazio",
+    "no_money": "Perché non circola denaro",
+    "no_purchases": "Perché lo spazio non segue i suoi acquisti",
+    "no_vat": "Perché lo spazio non è soggetto a IVA",
+    "organised": "Perché più persone decidono insieme",
+    "pay_by_transfer": "Perché i membri pagano con bonifico",
+    "pay_online": "Perché i membri pagano online",
+    "public_page": "Perché lo spazio ha una pagina pubblica",
+    "several_rooms": "Perché ci sono più sale o sedi",
+    "shared_places": "Perché i membri condividono i posti",
+    "small_community": "Perché è una piccola comunità",
+    "start_simple": "Perché conviene iniziare in modo semplice",
+    "tracks_purchases": "Perché segue gli acquisti dello spazio",
+    "vat_registered": "Perché lo spazio è soggetto a IVA",
+    "issues_invoices": "Perché emette fatture",
+    "association": "Perché un’associazione decide insieme, con il suo consiglio",
+    "approve_bookings": "Perché le prenotazioni attendono un’approvazione"
+   },
+   "preset": {
+    "essentiel": "Essenziale",
+    "standard": "Standard",
+    "complet": "Completo"
+   },
+   "threshold": {
+    "immediate": "Il regime IVA delle piccole imprese termina con l’operazione che porta il fatturato netto dell’anno oltre {limit}.",
+    "other": "Il regime IVA delle piccole imprese termina con l’anno il cui fatturato netto supera {limit}."
+   },
+   "duty": {
+    "receive_all": "ogni impresa deve poter ricevere fatture elettroniche",
+    "issue_large": "le grandi e medie imprese devono emettere fatture elettroniche",
+    "issue_all": "ogni impresa deve emettere fatture elettroniche",
+    "e_reporting": "le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi",
+    "invoice_records": "ogni fattura deve essere registrata in un registro concatenato (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Che cosa fa il suo spazio",
+    "setupLevelsQuestions": "Sul suo spazio",
+    "setupLevelsPresets": "Avvio rapido",
+    "setupLevelsChoice": "Che cosa serve",
+    "setupLevelsGap": "{level} richiede {needed}",
+    "setupAnswerUnknown": "Non lo so ancora",
+    "setupAnswerUnknownNote": "Non ancora deciso: {list} restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa.",
+    "setupObligationsTitle": "Cosa chiede la legge in {country}",
+    "setupObligationUnconfirmed": "Non confermato per questo paese — chieda al Suo commercialista.",
+    "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",
+    "setupObligationSource": "Fonte: {source}",
+    "eInvoiceMandateSince": "Dal {date}: {duty}.",
+    "eInvoiceMandateFrom": "Dal {date}: {duty}."
+   }
   }
  }
 };

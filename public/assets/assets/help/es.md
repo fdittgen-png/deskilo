@@ -387,10 +387,10 @@ Usted está en un espacio y quiere llegar a una pantalla. Todo está en un únic
 
 **Pasos**
 
-1. Toque el botón ☰ de la parte superior izquierda. El menú se abre con el nombre de su espacio, **Volver a Yo** y los destinos diarios: **Reservar**, **Calendario**, **Miembros**, **Dinero**.
+1. Toque el botón ☰ de la parte superior izquierda. El menú se abre con el nombre de su espacio, **Volver a Yo** y los destinos diarios: **Reservar**, **Calendario**, **Miembros**, **Mis finanzas**.
 2. Toque un destino para abrirlo. Un número azul a su lado cuenta lo que le espera allí.
-3. Abra **Informes**, **Miembros y acceso**, **Facturación y pagos** o **Configurar el espacio** para ver las herramientas de administración que su rol permite.
-4. Abajo, **Documentos**, **Privacidad y datos** y **Ajustes** siempre están a mano.
+3. Abra **Informes**, **Miembros y acceso**, **Ventas y cobros**, **Tesorería y contabilidad** o **Configurar el espacio** para ver las herramientas de administración que su rol permite.
+4. Abajo, **Biblioteca de documentos**, **Privacidad y datos** y **Ajustes** siempre están a mano.
 5. Toque el avatar de la parte superior derecha, o **Volver a Yo**, para salir del espacio y volver a [Yo](app:/me).
 
 ![](assets/help/images/user-start-navigation--groups.es.b8fa17aa9.jpg)
@@ -2238,7 +2238,7 @@ Usted dirige una comunidad y quiere alojar DesKilo por su cuenta.
 
 ## Finanzas
 
-Todo lo que debe, lo que ha pagado y lo que se le ha facturado está en la pestaña **Finanzas**: un único lugar para leer el mes, saldarlo, encontrar una factura y pedir un cambio.
+Todo lo que debe, lo que ha pagado y lo que se le ha facturado está en la pestaña **Mis finanzas**: un único lugar para leer el mes, saldarlo, encontrar una factura y pedir un cambio.
 
 En este capítulo:
 - [Consulte su extracto](help:user.money.statement) y [qué cambia una factura](help:user.money.statement.invoiced)
@@ -2260,7 +2260,7 @@ Quiere saber cómo va el mes: lo que ha usado, lo que cuesta y lo que queda por 
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y quédese en **Extracto**.
+1. Abra [Mis finanzas](app:/money) y quédese en **Extracto**.
 2. Use las flechas junto al nombre del mes para ver otros meses.
 3. Lea primero **Saldo**: **Pendiente** en rojo significa que usted debe esa cantidad; **Al día** significa que no queda nada.
 4. Lea debajo **Este mes**: los días que ha usado de los días que incluye su plan, y los días que le quedan.
@@ -2285,7 +2285,7 @@ Quiere saber qué cifra debe tener en cuenta cuando el espacio le ha enviado la 
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y vuelva al mes facturado con la flecha izquierda.
+1. Abra [Mis finanzas](app:/money) y vuelva al mes facturado con la flecha izquierda.
 2. Busque la tarjeta llamada **Factura** (o **Nota de crédito** cuando el total es negativo) seguida de su número.
 3. Lea el estado en la tarjeta y después **Total de la factura**; una factura pagada en parte muestra además **Pagado hasta ahora** y **Pendiente de pago**.
 
@@ -2306,7 +2306,7 @@ Quiere saldar su saldo y saber cómo espera el espacio recibir el dinero.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y elija **Pagos**.
+1. Abra [Mis finanzas](app:/money) y elija **Pagos**.
 2. Compruebe **Saldo** bajo **Pagar**; las facturas vencidas de todos los periodos aparecen destacadas encima.
 3. Lea **Instrucciones de pago**: los datos bancarios, la referencia de pago que debe indicar y las demás formas de pago que acepta el espacio. Pulse un IBAN o un valor para copiarlo.
 4. Si aparece el botón, pulse **Pagar en línea**.
@@ -2330,7 +2330,7 @@ Ha pagado por transferencia, en efectivo o de otra manera y quiere que el espaci
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Pagos** y pulse **Registrar un pago**.
+1. Abra [Mis finanzas](app:/money), elija **Pagos** y pulse **Registrar un pago**.
 2. Introduzca el **Importe**.
 3. Pulse cómo ha pagado: **Transferencia**, **Efectivo**, **PayPal**, **TWINT**, **Tarjeta**, **Wero**, **Lydia**, **Wise** u **Otro**. Púlselo de nuevo para quitarlo.
 4. Compruebe **Fecha del pago** y **Se aplica a**, el mes que salda este pago.
@@ -2353,7 +2353,7 @@ Quiere encontrar una factura, ver si está pagada y obtener su PDF.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y elija **Facturas**.
+1. Abra [Mis finanzas](app:/money) y elija **Facturas**.
 2. Lea la lista, de la más reciente a la más antigua. Cada fila muestra el número, una etiqueta de estado, el mes, la fecha y el importe.
 3. Pulse una factura para abrirla.
 4. Pulse **Vista rápida** para leerla en pantalla, **Descargar PDF** para guardarla o **Compartir PDF** para enviarla.
@@ -2379,7 +2379,7 @@ Quiere ver, reserva por reserva, lo que se ha facturado este mes.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y elija **Uso**.
+1. Abra [Mis finanzas](app:/money) y elija **Uso**.
 2. Elija el mes con las flechas.
 3. Lea cada tarjeta: el día, la hora, el lugar y después **Reservado**, **Presente** y **Facturado**.
 4. Si se marchó antes de tiempo de una reserva, pulse **Facturar el tiempo que estuve**, añada un motivo si lo desea y pulse **Pedir**.
@@ -2403,7 +2403,7 @@ Quiere ver lo que le espera en asuntos de dinero, sin leer todo el flujo de nove
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money).
+1. Abra [Mis finanzas](app:/money).
 2. Pulse **Avisos financieros**, la fila de arriba. El número de la campana indica cuántos están pendientes.
 3. Lea la lista: primero las solicitudes que debe confirmar y después los eventos de dinero.
 
@@ -2425,7 +2425,7 @@ Quiere un documento sobre su propio dinero, para leerlo, conservarlo o enviarlo 
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y elija **Documentos**.
+1. Abra [Mis finanzas](app:/money) y elija **Documentos**.
 2. Elija el mes con las flechas, para los informes que dependen de un mes.
 3. Pulse un informe: **Mis condiciones**, **Informe de pagos**, **Informe de consumo** o **Extracto del mes (PDF)**.
 4. Elija **Vista rápida**, **Descargar PDF** o **Compartir PDF**.
@@ -2450,7 +2450,7 @@ Quiere saber si paga la tarifa del espacio o un precio acordado solo para usted.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money) y elija **Documentos**.
+1. Abra [Mis finanzas](app:/money) y elija **Documentos**.
 2. Lea **Mis precios negociados**: para **Cuota mensual**, **Exceso por medio día** y **Descuento en suplementos**, **Tarifa** muestra lo que paga todo el mundo y **Mía** lo que paga usted.
 3. Pulse **Quién puede ver esto** para saber quién puede leer sus precios.
 
@@ -2471,7 +2471,7 @@ Quiere los estatutos, una guía o los estados que su espacio ha compartido.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Documentos** y pulse **Biblioteca de documentos**, o vaya directamente a [Documentos](app:/documents).
+1. Abra [Mis finanzas](app:/money), elija **Documentos** y pulse **Biblioteca de documentos**, o vaya directamente a [Biblioteca de documentos](app:/documents).
 2. Encuentre su documento en su categoría: **Estatutos y legal**, **Estados financieros**, **Actas de reuniones**, **Guías y manuales** u **Otros documentos**.
 3. Púlselo. Se abre en su navegador desde el lugar donde esté almacenado.
 
@@ -2493,7 +2493,7 @@ Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Pagos** y pulse **Enviar un gasto**.
+1. Abra [Mis finanzas](app:/money), elija **Pagos** y pulse **Enviar un gasto**.
 2. Introduzca el **Importe**.
 3. Elija una **Categoría**: **Café y cocina**, **Equipamiento**, **Material** u **Otro**.
 4. Escriba una **Descripción**.
@@ -2519,7 +2519,7 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 
 **Pasos**
 
-1. Abra [Eventos](app:/events), o pulse **Avisos financieros** en [Finanzas](app:/money).
+1. Abra [Eventos](app:/events), o pulse **Avisos financieros** en [Mis finanzas](app:/money).
 2. Busque, bajo **Esperando su confirmación**, la línea que indica el importe y el miembro.
 3. Pulse **Aceptar** para confirmarlo, o la cruz para **Rechazar** el gasto.
 
@@ -2531,6 +2531,14 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 - **Avisos financieros** en Finanzas solo aparece cuando la función **Pestaña Eventos** está activada.
 
 **Véase también:** [Avisos financieros](help:user.money.alerts)
+
+### Saldos de proveedores
+
+**Público:** Administrador/a · Propietario
+
+Abra **Compras** y después **Proveedores**. El saldo pendiente de cada proveedor es distinto del gasto anual en documentos de compra; las monedas se muestran por separado. Un importe en espera forma parte del saldo pendiente, pero no se puede pagar actualmente.
+
+Elija **Ver pagos pendientes del proveedor** para consultar sus facturas y los importes restantes. Use **Cargar más** cuando aparezca. Si el saldo o la lista no están disponibles, vuelva a intentarlo en lugar de suponer que son cero. Compras debe estar activado y necesita permiso para ver las finanzas o gestionar compras.
 
 ### Cómo se muestran los importes
 
@@ -2556,7 +2564,7 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Sus finanzas en todos sus espacios**.
+1. Abra [Mis finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Sus finanzas en todos sus espacios**.
 2. Elija una pestaña: **Pendiente**, **Pagadas**, **Pagos** o **Recordatorios**.
 3. Si pertenece a varios espacios, filtre por espacio en la parte superior.
 
@@ -3443,6 +3451,8 @@ Usted quiere que los miembros registren su llegada acercando una tarjeta, sin te
 - El gestor de credenciales también permite emitir una **Nueva credencial**, **Revocar** una y **Guardar como PDF** para imprimir. Una credencial revocada puede eliminarse definitivamente.
 - **Inicia mi sesión** está desactivado por defecto: una credencial que registra la llegada no inicia la sesión hasta que el miembro lo decida.
 - Cada miembro también puede crear su propia credencial en sus ajustes personales.
+- Seguridad del acceso con credencial: los PIN fallidos de todas las tarjetas del espacio comparten un límite, 50 por defecto durante la ventana de bloqueo (15 minutos por defecto). En los ajustes del espacio → Seguridad, un propietario puede reducirlo a 1–50. Al alcanzarlo, se pausa el acceso con credencial hasta que los intentos salgan de esa ventana y los propietarios reciben una alerta en los eventos. Los demás espacios siguen disponibles. El cuestionario guarda el límite elegido como respuesta para introducir en la aplicación.
+- Al gestionar las credenciales de un miembro, un aviso pide renovar el PIN si su longitud registrada está por debajo del mínimo actual o se desconoce porque se creó antes del registro de longitud. Los PIN antiguos siguen funcionando hasta que su titular los cambie; el gestor no muestra el PIN ni su hash.
 
 **Véase también:** [Una tableta de pared para registrar la llegada](help:user.kiosk.mode)
 
@@ -5335,6 +5345,7 @@ Quiere que los recordatorios salgan solos.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
 - Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
+- Que el servidor acepte una solicitud push no prueba que un dispositivo la haya recibido. El resultado sigue siendo desconocido si el servicio push no revela la entrega; el recordatorio sigue registrado y el importe adeudado no cambia.
 
 **Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
 
@@ -7705,6 +7716,7 @@ El push no viene con la aplicación por sí solo. Si usted ejecuta su espacio en
 - Sin los pasos 1 a 4, no se envía ningún push, digan lo que digan los interruptores. El flujo, la campana y los mensajes siguen funcionando.
 - La lista de comprobación detallada es para el operador: véase [Plataformas](help:user.advanced.platforms) y [Su propio servidor](help:user.advanced.own-server).
 - El texto del push nunca lleva un nombre ni una hora: es deliberado, por privacidad.
+- Empareje el secreto push en cada instalación: guarde primero el mismo valor aleatorio privado en Vault como `deskilo_push_shared_secret` y después como `PUSH_SHARED_SECRET` para la función push. Pruebe un mensaje y un recordatorio tras emparejarlo. Las instalaciones aún no emparejadas conservan el envío anterior con un aviso; las configuradas rechazan llamadas sin el secreto o credencial de servicio. Nunca copie el secreto en la aplicación ni en el XML de configuración.
 
 **Véase también:** [Notificaciones push en este dispositivo](help:user.privacy.push)
 
@@ -8250,9 +8262,10 @@ Quiere ver el producto terminado antes de tomar decisiones. El espacio de demost
 
 **Pasos**
 
-1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Véase [El espacio de demostración](help:user.advanced.demo).
+1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Si ya ha iniciado sesión, pulse en cambio **Probarlo en la demo** en un paso de configuración: su sesión sigue abierta y la demo se abre en ese paso. Véase [El espacio de demostración](help:user.advanced.demo).
 2. Use **Ver como** para pasar entre **Propietario**, **Administrador/a** y **Miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
 3. Pulse **Reiniciar la demo** cuando quiera dejarla como al principio.
+4. Si abrió la demo desde su espacio, pulse **Volver a mi espacio** al terminar: vuelve a la misma pantalla de configuración, con las elecciones que aún no había aplicado. Los cambios hechos en la demo nunca llegan a su espacio.
 
 *Como miembro*
 

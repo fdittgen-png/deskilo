@@ -9,7 +9,7 @@
 <link rel="icon" href="../favicon.png">
 <link rel="stylesheet" href="guide.css">
 </head>
-<body>
+<body data-book="setup">
 <header class="bar">
   <button class="icon-btn menu-btn" type="button" aria-label="Contenido" aria-expanded="false">☰</button>
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>DesKilo</span></a>
@@ -2681,6 +2681,7 @@
 <li>Sin los pasos 1 a 4, no se envía ningún push, digan lo que digan los interruptores. El flujo, la campana y los mensajes siguen funcionando.</li>
 <li>La lista de comprobación detallada es para el operador: véase <a href="es.html#user.advanced.platforms">Plataformas</a> y <a href="es.html#user.advanced.own-server">Su propio servidor</a>.</li>
 <li>El texto del push nunca lleva un nombre ni una hora: es deliberado, por privacidad.</li>
+<li>Empareje el secreto push en cada instalación: guarde primero el mismo valor aleatorio privado en Vault como <code>deskilo_push_shared_secret</code> y después como <code>PUSH_SHARED_SECRET</code> para la función push. Pruebe un mensaje y un recordatorio tras emparejarlo. Las instalaciones aún no emparejadas conservan el envío anterior con un aviso; las configuradas rechazan llamadas sin el secreto o credencial de servicio. Nunca copie el secreto en la aplicación ni en el XML de configuración.</li>
 </ul>
 <p class="see-also"><strong>Véase también:</strong> <a href="es.html#user.privacy.push">Notificaciones push en este dispositivo</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>Lo que controlan los miembros <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propietario</span><span class="role role-admin">Administrador/a</span></div></header><div class="body"><p>Quiere decir con honestidad a sus miembros qué pueden desactivar.</p>
@@ -3589,9 +3590,10 @@
 </div></header><article class="section no-media" id="setup.training.week0" data-roles="owner"><header><h3>Semana 0: eche un vistazo a la demo <a class="permalink" href="#setup.training.week0" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propietario</span></div></header><div class="body"><p>Quiere ver el producto terminado antes de tomar decisiones. El espacio de demostración <em>Atelier du Marché</em> es inventado, está abierto a cualquiera y no cambia nada real.</p>
 <h4 class="lbl lbl-steps">Pasos</h4>
 <ol>
-<li>En la pantalla de inicio de sesión, pulse <strong>Explorar el espacio de demostración</strong> y después <strong>Empezar</strong>. Véase <a href="es.html">El espacio de demostración</a>.</li>
+<li>En la pantalla de inicio de sesión, pulse <strong>Explorar el espacio de demostración</strong> y después <strong>Empezar</strong>. Si ya ha iniciado sesión, pulse en cambio <strong>Probarlo en la demo</strong> en un paso de configuración: su sesión sigue abierta y la demo se abre en ese paso. Véase <a href="es.html">El espacio de demostración</a>.</li>
 <li>Use <strong>Ver como</strong> para pasar entre <strong>Propietario</strong>, <strong>Administrador/a</strong> y <strong>Miembro</strong>. Haga los tres ejercicios de cada persona que figuran a continuación.</li>
 <li>Pulse <strong>Reiniciar la demo</strong> cuando quiera dejarla como al principio.</li>
+<li>Si abrió la demo desde su espacio, pulse <strong>Volver a mi espacio</strong> al terminar: vuelve a la misma pantalla de configuración, con las elecciones que aún no había aplicado. Los cambios hechos en la demo nunca llegan a su espacio.</li>
 </ol>
 <p><em>Como miembro</em></p>
 <table>
@@ -3974,6 +3976,8 @@
 </div>
 <button class="to-top" type="button" aria-label="Ir arriba">↑</button>
 <dialog class="lightbox" aria-label="Ampliar la captura"><form method="dialog"><button class="icon-btn" type="submit" aria-label="Cerrar">✕</button></form><img alt=""></dialog>
+<script src="../webmcp.js"></script>
 <script src="guide.js"></script>
+<script src="guide_webmcp.js"></script>
 </body>
 </html>

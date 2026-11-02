@@ -9,7 +9,7 @@
 <link rel="icon" href="../favicon.png">
 <link rel="stylesheet" href="guide.css">
 </head>
-<body>
+<body data-book="setup">
 <header class="bar">
   <button class="icon-btn menu-btn" type="button" aria-label="Inhalt" aria-expanded="false">☰</button>
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>DesKilo</span></a>
@@ -2681,6 +2681,7 @@
 <li>Ohne die Schritte 1 bis 4 wird nichts gepusht, was die Schalter auch sagen. Der Feed, die Glocke und die Nachrichten funktionieren weiterhin.</li>
 <li>Die ausführliche Checkliste ist für den Betreiber: siehe <a href="de.html">Plattformen</a> und <a href="de.html#user.advanced.own-server">Ihr eigener Server</a>.</li>
 <li>Der Push-Text enthält nie einen Namen oder eine Uhrzeit: Das ist Absicht, aus Datenschutzgründen.</li>
+<li>Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als <code>deskilo_push_shared_secret</code>, danach als <code>PUSH_SHARED_SECRET</code> für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Noch nicht eingerichtete Installationen behalten den bisherigen Versand mit einer Warnung; konfigurierte Installationen verweigern Aufrufe ohne Geheimnis oder Dienstzugangsdaten. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="de.html">Push-Benachrichtigungen auf diesem Gerät</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>Was Mitglieder selbst steuern <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-admin">Administrator:in</span></div></header><div class="body"><p>Sie möchten Ihren Mitgliedern ehrlich sagen, was sie ausschalten können.</p>
@@ -3589,9 +3590,10 @@
 </div></header><article class="section no-media" id="setup.training.week0" data-roles="owner"><header><h3>Woche 0: Die Demo erkunden <a class="permalink" href="#setup.training.week0" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span></div></header><div class="body"><p>Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der Demo-Workspace <em>Atelier du Marché</em> ist erfunden, für alle offen und ändert nichts Echtes.</p>
 <h4 class="lbl lbl-steps">Schritte</h4>
 <ol>
-<li>Tippen Sie auf dem Anmeldebildschirm auf <strong>Den Demobereich erkunden</strong> und dann auf <strong>Loslegen</strong>. Siehe <a href="de.html#user.advanced.demo">Der Demo-Workspace</a>.</li>
+<li>Tippen Sie auf dem Anmeldebildschirm auf <strong>Den Demobereich erkunden</strong> und dann auf <strong>Loslegen</strong>. Sind Sie bereits angemeldet, tippen Sie stattdessen bei einem Einrichtungsschritt auf <strong>In der Demo ausprobieren</strong>: Sie bleiben angemeldet, und die Demo öffnet sich bei diesem Schritt. Siehe <a href="de.html#user.advanced.demo">Der Demo-Workspace</a>.</li>
 <li>Wechseln Sie mit <strong>Ansicht als</strong> zwischen <strong>Inhaber</strong>, <strong>Administrator:in</strong> und <strong>Mitglied</strong>. Machen Sie unten die drei Übungen jeder Person.</li>
 <li>Tippen Sie auf <strong>Demo zurücksetzen</strong>, wenn Sie den Anfangszustand wiederhaben möchten.</li>
+<li>Haben Sie die Demo aus Ihrem Bereich geöffnet, tippen Sie am Ende auf <strong>Zurück zu meinem Bereich</strong>: Sie kehren zum selben Einrichtungsbildschirm zurück, mit den noch nicht angewendeten Auswahlen. Änderungen in der Demo erreichen nie Ihren Bereich.</li>
 </ol>
 <p><em>Als Mitglied</em></p>
 <table>
@@ -3974,6 +3976,8 @@
 </div>
 <button class="to-top" type="button" aria-label="Nach oben">↑</button>
 <dialog class="lightbox" aria-label="Screenshot vergrößern"><form method="dialog"><button class="icon-btn" type="submit" aria-label="Schließen">✕</button></form><img alt=""></dialog>
+<script src="../webmcp.js"></script>
 <script src="guide.js"></script>
+<script src="guide_webmcp.js"></script>
 </body>
 </html>

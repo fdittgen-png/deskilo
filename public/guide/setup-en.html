@@ -9,7 +9,7 @@
 <link rel="icon" href="../favicon.png">
 <link rel="stylesheet" href="guide.css">
 </head>
-<body>
+<body data-book="setup">
 <header class="bar">
   <button class="icon-btn menu-btn" type="button" aria-label="Contents" aria-expanded="false">☰</button>
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>DesKilo</span></a>
@@ -2681,6 +2681,7 @@
 <li>Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.</li>
 <li>The detailed checklist is for the operator: see <a href="en.html#user.advanced.platforms">Platforms</a> and <a href="en.html#user.advanced.own-server">Your own server</a>.</li>
 <li>Push text never carries a name or a time: this is deliberate, for privacy.</li>
+<li>Pair the push secret on each installation: store the same private random value in Vault as <code>deskilo_push_shared_secret</code> first, then as <code>PUSH_SHARED_SECRET</code> for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.privacy.push">Push notifications on this device</a></p>
 </div></article><article class="section" id="setup.notify.members" data-roles="owner admin"><header><h3>What members control <a class="permalink" href="#setup.notify.members" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-admin">Administrator</span></div></header><div class="body"><p>You want to tell your members honestly what they can switch off.</p>
@@ -3589,9 +3590,10 @@
 </div></header><article class="section no-media" id="setup.training.week0" data-roles="owner"><header><h3>Week 0: look around the demo <a class="permalink" href="#setup.training.week0" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span></div></header><div class="body"><p>You want to see the finished product before you make decisions. The demo workspace <em>Atelier du Marché</em> is invented, open to anybody and changes nothing real.</p>
 <h4 class="lbl lbl-steps">Steps</h4>
 <ol>
-<li>On the sign-in screen, tap <strong>Explore the demo workspace</strong>, then <strong>Start exploring</strong>. See <a href="en.html#user.advanced.demo">The demo workspace</a>.</li>
+<li>On the sign-in screen, tap <strong>Explore the demo workspace</strong>, then <strong>Start exploring</strong>. When you are already signed in, tap <strong>Try it in the demo</strong> on a setup step instead: you stay signed in and the demo opens at that step. See <a href="en.html#user.advanced.demo">The demo workspace</a>.</li>
 <li>Use <strong>View as</strong> to move between <strong>The owner</strong>, <strong>An administrator</strong> and <strong>A member</strong>. Do the three exercises of each person below.</li>
 <li>Tap <strong>Reset the demo</strong> when you want it back as it started.</li>
+<li>If you opened the demo from your workspace, tap <strong>Return to my workspace</strong> when you finish: you come back to the same setup screen with the choices you had not applied yet. Changes made in the demo never reach your workspace.</li>
 </ol>
 <p><em>As a member</em></p>
 <table>
@@ -3974,6 +3976,8 @@
 </div>
 <button class="to-top" type="button" aria-label="Back to top">↑</button>
 <dialog class="lightbox" aria-label="Enlarge the screenshot"><form method="dialog"><button class="icon-btn" type="submit" aria-label="Close">✕</button></form><img alt=""></dialog>
+<script src="../webmcp.js"></script>
 <script src="guide.js"></script>
+<script src="guide_webmcp.js"></script>
 </body>
 </html>

@@ -387,10 +387,10 @@ Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in 
 
 **Schritte**
 
-1. Tippen Sie oben links auf die Schaltfläche ☰. Das Menü öffnet sich mit dem Namen Ihres Spaces, **Zurück zu Ich** und den täglichen Zielen: **Reservieren**, **Kalender**, **Mitglieder**, **Finanzen**.
+1. Tippen Sie oben links auf die Schaltfläche ☰. Das Menü öffnet sich mit dem Namen Ihres Spaces, **Zurück zu Ich** und den täglichen Zielen: **Reservieren**, **Kalender**, **Mitglieder**, **Meine Finanzen**.
 2. Tippen Sie auf ein Ziel, um es zu öffnen. Eine blaue Zahl daneben zählt, was dort wartet.
-3. Öffnen Sie **Reporting**, **Mitglieder und Zugang**, **Abrechnung & Zahlungen** oder **Workspace einrichten**, um die Verwaltungswerkzeuge zu sehen, die Ihre Rolle zulässt.
-4. Ganz unten sind **Dokumente**, **Datenschutz & Daten** und **Einstellungen** immer griffbereit.
+3. Öffnen Sie **Reporting**, **Mitglieder und Zugang**, **Verkauf & Zahlungseingang**, **Geld & Buchhaltung** oder **Workspace einrichten**, um die Verwaltungswerkzeuge zu sehen, die Ihre Rolle zulässt.
+4. Ganz unten sind **Dokumentbibliothek**, **Datenschutz & Daten** und **Einstellungen** immer griffbereit.
 5. Tippen Sie oben rechts auf den Avatar oder auf **Zurück zu Ich**, um den Space zu verlassen und zu [Ich](app:/me) zurückzukehren.
 
 ![](assets/help/images/user-start-navigation--groups.de.b8fa17aa9.jpg)
@@ -2238,7 +2238,7 @@ Sie leiten eine Gemeinschaft und möchten DesKilo selbst hosten.
 
 ## Finanzen
 
-Alles, was Sie schulden, bezahlt haben und was Ihnen in Rechnung gestellt wurde, finden Sie im Reiter **Finanzen**: ein Ort, um den Monat zu lesen, zu begleichen, eine Rechnung zu finden und eine Änderung zu beantragen.
+Alles, was Sie schulden, bezahlt haben und was Ihnen in Rechnung gestellt wurde, finden Sie im Reiter **Meine Finanzen**: ein Ort, um den Monat zu lesen, zu begleichen, eine Rechnung zu finden und eine Änderung zu beantragen.
 
 In diesem Kapitel:
 - [Ihre Abrechnung lesen](help:user.money.statement) und [was eine Rechnung ändert](help:user.money.statement.invoiced)
@@ -2260,7 +2260,7 @@ Sie möchten wissen, wo der Monat steht: was Sie genutzt haben, was es kostet un
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und bleiben Sie auf **Abrechnung**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und bleiben Sie auf **Abrechnung**.
 2. Blättern Sie mit den Pfeilen neben dem Monatsnamen zu anderen Monaten.
 3. Lesen Sie zuerst **Saldo**: **Ausstehend** in Rot bedeutet, dass Sie den Betrag schulden, **Beglichen** bedeutet, dass nichts mehr offen ist.
 4. Lesen Sie darunter **Diesen Monat**: die genutzten Tage von den Tagen, die Ihr Tarif enthält, und die verbleibenden Tage.
@@ -2285,7 +2285,7 @@ Sie möchten wissen, welcher Betrag maßgeblich ist, sobald der Workspace Ihnen 
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und gehen Sie mit dem linken Pfeil zum abgerechneten Monat zurück.
+1. Öffnen Sie [Meine Finanzen](app:/money) und gehen Sie mit dem linken Pfeil zum abgerechneten Monat zurück.
 2. Suchen Sie die Karte **Rechnung** (oder **Gutschrift**, wenn die Summe negativ ist) mit ihrer Nummer.
 3. Lesen Sie den Status auf der Karte, dann **Rechnungsbetrag**; eine teilweise bezahlte Rechnung zeigt außerdem **Bereits bezahlt** und **Restbetrag**.
 
@@ -2306,7 +2306,7 @@ Sie möchten Ihren Saldo begleichen und wissen, wie der Workspace das Geld erwar
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und wählen Sie **Zahlungen**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie **Zahlungen**.
 2. Prüfen Sie **Saldo** unter **Zahlen**; überfällige Rechnungen aus allen Zeiträumen werden darüber hervorgehoben.
 3. Lesen Sie die **Zahlungshinweise**: die Bankverbindung, den anzugebenden Verwendungszweck und die anderen Zahlungswege, die der Workspace akzeptiert. Tippen Sie auf eine IBAN oder einen Wert, um ihn zu kopieren.
 4. Wenn die Schaltfläche vorhanden ist, tippen Sie auf **Online bezahlen**.
@@ -2330,7 +2330,7 @@ Sie haben per Überweisung, bar oder auf anderem Weg bezahlt und möchten, dass 
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money), wählen Sie **Zahlungen** und tippen Sie auf **Zahlung erfassen**.
+1. Öffnen Sie [Meine Finanzen](app:/money), wählen Sie **Zahlungen** und tippen Sie auf **Zahlung erfassen**.
 2. Geben Sie den **Betrag** ein.
 3. Tippen Sie auf die Zahlungsart: **Überweisung**, **Bar**, **PayPal**, **TWINT**, **Karte**, **Wero**, **Lydia**, **Wise** oder **Sonstiges**. Tippen Sie erneut darauf, um die Auswahl aufzuheben.
 4. Prüfen Sie **Zahlungsdatum** und **Gilt für**, den Monat, den diese Zahlung begleicht.
@@ -2353,7 +2353,7 @@ Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalt
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und wählen Sie **Rechnungen**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie **Rechnungen**.
 2. Lesen Sie die Liste, die neueste zuerst. Jede Zeile zeigt die Nummer, einen Status-Chip, den Monat, das Datum und den Betrag.
 3. Tippen Sie auf eine Rechnung, um sie zu öffnen.
 4. Tippen Sie auf **Schnellansicht**, um sie auf dem Bildschirm zu lesen, auf **PDF herunterladen**, um sie zu speichern, oder auf **PDF teilen**, um sie zu versenden.
@@ -2379,7 +2379,7 @@ Sie möchten Buchung für Buchung sehen, was in diesem Monat berechnet wurde.
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und wählen Sie **Nutzung**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie **Nutzung**.
 2. Wählen Sie den Monat mit den Pfeilen.
 3. Lesen Sie jede Karte: den Tag, die Uhrzeit, den Platz, dann **Gebucht**, **Anwesend** und **Berechnet**.
 4. Tippen Sie bei einer Buchung, die Sie früher verlassen haben, auf **Die Zeit berechnen, in der ich da war**, nennen Sie auf Wunsch einen Grund und tippen Sie auf **Anfragen**.
@@ -2403,7 +2403,7 @@ Sie möchten sehen, was in Gelddingen auf Sie wartet, ohne den ganzen Feed zu le
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money).
+1. Öffnen Sie [Meine Finanzen](app:/money).
 2. Tippen Sie auf **Finanzmeldungen**, die Zeile ganz oben. Die Zahl an der Glocke zeigt, wie viele warten.
 3. Lesen Sie die Liste: zuerst die Anfragen, die Sie bestätigen müssen, dann die Geldereignisse.
 
@@ -2425,7 +2425,7 @@ Sie möchten ein Dokument über Ihr eigenes Geld, zum Lesen, Aufbewahren oder We
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und wählen Sie **Dokumente**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie **Dokumente**.
 2. Wählen Sie mit den Pfeilen den Monat, für Berichte, die von einem Monat abhängen.
 3. Tippen Sie auf einen Bericht: **Meine Konditionen**, **Zahlungsbericht**, **Verbrauchsbericht** oder **Monatsabrechnung (PDF)**.
 4. Wählen Sie **Schnellansicht**, **PDF herunterladen** oder **PDF teilen**.
@@ -2450,7 +2450,7 @@ Sie möchten wissen, ob Sie den Tarif des Workspace zahlen oder einen eigens fü
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money) und wählen Sie **Dokumente**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie **Dokumente**.
 2. Lesen Sie **Meine verhandelten Preise**: Bei **Monatsbeitrag**, **Überschreitung je halben Tag** und **Rabatt auf Zuschläge** zeigt **Tarif**, was alle zahlen, und **Meine**, was Sie zahlen.
 3. Tippen Sie auf **Wer das sehen kann**, um zu erfahren, wer Ihre Preise lesen darf.
 
@@ -2471,7 +2471,7 @@ Sie möchten die Satzung, eine Anleitung oder die Abschlüsse lesen, die Ihr Wor
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money), wählen Sie **Dokumente** und tippen Sie auf **Dokumentbibliothek**, oder gehen Sie direkt zu [Dokumente](app:/documents).
+1. Öffnen Sie [Meine Finanzen](app:/money), wählen Sie **Dokumente** und tippen Sie auf **Dokumentbibliothek**, oder gehen Sie direkt zu [Dokumentbibliothek](app:/documents).
 2. Suchen Sie Ihr Dokument unter seiner Kategorie: **Satzung & Rechtliches**, **Finanzberichte**, **Protokolle**, **Anleitungen & Handbücher** oder **Weitere Dokumente**.
 3. Tippen Sie darauf. Es öffnet sich in Ihrem Browser von dort, wo es gespeichert ist.
 
@@ -2493,7 +2493,7 @@ Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen 
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money), wählen Sie **Zahlungen** und tippen Sie auf **Ausgabe einreichen**.
+1. Öffnen Sie [Meine Finanzen](app:/money), wählen Sie **Zahlungen** und tippen Sie auf **Ausgabe einreichen**.
 2. Geben Sie den **Betrag** ein.
 3. Wählen Sie eine **Kategorie**: **Kaffee & Küche**, **Ausstattung**, **Verbrauchsmaterial** oder **Sonstiges**.
 4. Schreiben Sie eine **Beschreibung**.
@@ -2519,7 +2519,7 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 
 **Schritte**
 
-1. Öffnen Sie [Ereignisse](app:/events) oder tippen Sie in [Finanzen](app:/money) auf **Finanzmeldungen**.
+1. Öffnen Sie [Ereignisse](app:/events) oder tippen Sie in [Meine Finanzen](app:/money) auf **Finanzmeldungen**.
 2. Suchen Sie unter **Wartet auf Ihre Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
 3. Tippen Sie auf **Annehmen**, um sie zu bestätigen, oder auf das Kreuz, um sie **Ablehnen**.
 
@@ -2531,6 +2531,14 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 - **Finanzmeldungen** in Finanzen erscheint nur, wenn die Funktion **Ereignis-Tab** eingeschaltet ist.
 
 **Siehe auch:** [Finanzmeldungen](help:user.money.alerts)
+
+### Lieferantensalden
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Einkauf** und dann **Lieferanten**. Der offene Betrag je Lieferant ist vom Jahresbetrag der Einkaufsbelege getrennt; verschiedene Währungen werden getrennt angezeigt. Ein zurückgestellter Betrag gehört zum offenen Saldo, ist aber derzeit nicht zahlbar.
+
+Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und Restbeträge zu sehen. Nutzen Sie **Mehr laden**, wenn angeboten. Ist der Saldo oder die Liste nicht verfügbar, versuchen Sie es erneut, statt null anzunehmen. Einkäufe muss aktiviert sein; Sie brauchen die Berechtigung, Finanzen einzusehen oder Einkäufe zu verwalten.
 
 ### Wie Beträge angezeigt werden
 
@@ -2556,7 +2564,7 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 **Schritte**
 
-1. Öffnen Sie [Finanzen](app:/money), wählen Sie **Zahlungen** oder **Rechnungen** und tippen Sie bei Ihrem Space auf der Karte **Ihre Finanzen in allen Workspaces** auf *Für … öffnen*.
+1. Öffnen Sie [Meine Finanzen](app:/money), wählen Sie **Zahlungen** oder **Rechnungen** und tippen Sie bei Ihrem Space auf der Karte **Ihre Finanzen in allen Workspaces** auf *Für … öffnen*.
 2. Wählen Sie einen Reiter: **Ausstehend**, **Bezahlt**, **Zahlungen** oder **Erinnerungen**.
 3. Wenn Sie mehreren Spaces angehören, filtern Sie oben nach Space.
 
@@ -3443,6 +3451,8 @@ Sie möchten, dass Mitglieder sich mit dem Antippen einer Karte einchecken, ohne
 - Die Badge-Verwaltung lässt Sie auch einen **Neuer Badge** ausstellen, einen **Widerrufen** und **Als PDF speichern** zum Drucken. Ein widerrufenes Badge lässt sich endgültig löschen.
 - **Meldet mich an** ist standardmäßig aus: Ein Badge, das Sie eincheckt, meldet Sie nicht an, bis das Mitglied es wählt.
 - Jedes Mitglied kann sein eigenes Badge auch in seinen persönlichen Einstellungen erstellen.
+- Sicherheit der Badge-Anmeldung: Fehlgeschlagene PIN-Versuche aller Karten eines Workspaces teilen ein Limit, standardmäßig 50 innerhalb des Sperrfensters (standardmäßig 15 Minuten). In den Workspace-Einstellungen → Sicherheit kann ein Eigentümer das Limit auf 1–50 senken. Sobald es erreicht ist, pausiert die Badge-Anmeldung, bis die Versuche aus dem Zeitfenster fallen; Eigentümer erhalten eine Warnung in den Ereignissen. Andere Workspaces bleiben verfügbar. Der Fragebogen hält das gewählte Limit als Antwort zur Eingabe in der App fest.
+- Beim Verwalten der Badges eines Mitglieds erscheint ein Hinweis zur PIN-Erneuerung, wenn die erfasste Länge unter dem aktuellen Minimum liegt oder unbekannt ist, weil die PIN vor der Längenerfassung gesetzt wurde. Ältere PINs bleiben bis zur Änderung durch ihren Inhaber gültig; die Verwaltung zeigt weder PIN noch Hash an.
 
 **Siehe auch:** [Ein Wand-Tablet für den Check-in](help:user.kiosk.mode)
 
@@ -5335,6 +5345,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
 - Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
+- Eine vom Server angenommene Push-Anfrage beweist keinen Empfang auf einem Gerät. Wenn der Push-Dienst die Geräteauslieferung nicht offenlegt, bleibt das Ergebnis unbekannt; die Erinnerung bleibt erfasst und der geschuldete Betrag unverändert.
 
 **Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
 
@@ -7705,6 +7716,7 @@ Push gehört nicht von selbst zur App. Betreiben Sie Ihren Space auf der gemeins
 - Ohne die Schritte 1 bis 4 wird nichts gepusht, was die Schalter auch sagen. Der Feed, die Glocke und die Nachrichten funktionieren weiterhin.
 - Die ausführliche Checkliste ist für den Betreiber: siehe [Plattformen](help:user.advanced.platforms) und [Ihr eigener Server](help:user.advanced.own-server).
 - Der Push-Text enthält nie einen Namen oder eine Uhrzeit: Das ist Absicht, aus Datenschutzgründen.
+- Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als `deskilo_push_shared_secret`, danach als `PUSH_SHARED_SECRET` für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Noch nicht eingerichtete Installationen behalten den bisherigen Versand mit einer Warnung; konfigurierte Installationen verweigern Aufrufe ohne Geheimnis oder Dienstzugangsdaten. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.
 
 **Siehe auch:** [Push-Benachrichtigungen auf diesem Gerät](help:user.privacy.push)
 
@@ -8250,9 +8262,10 @@ Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der De
 
 **Schritte**
 
-1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Siehe [Der Demo-Workspace](help:user.advanced.demo).
+1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Sind Sie bereits angemeldet, tippen Sie stattdessen bei einem Einrichtungsschritt auf **In der Demo ausprobieren**: Sie bleiben angemeldet, und die Demo öffnet sich bei diesem Schritt. Siehe [Der Demo-Workspace](help:user.advanced.demo).
 2. Wechseln Sie mit **Ansicht als** zwischen **Inhaber**, **Administrator:in** und **Mitglied**. Machen Sie unten die drei Übungen jeder Person.
 3. Tippen Sie auf **Demo zurücksetzen**, wenn Sie den Anfangszustand wiederhaben möchten.
+4. Haben Sie die Demo aus Ihrem Bereich geöffnet, tippen Sie am Ende auf **Zurück zu meinem Bereich**: Sie kehren zum selben Einrichtungsbildschirm zurück, mit den noch nicht angewendeten Auswahlen. Änderungen in der Demo erreichen nie Ihren Bereich.
 
 *Als Mitglied*
 
