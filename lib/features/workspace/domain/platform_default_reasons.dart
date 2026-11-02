@@ -25,6 +25,24 @@ import 'workspace_feature.dart';
 /// The stated reasons, by feature. Only platform entries with `defaultOn:
 /// true` may appear here; the test refuses any other, and an empty text.
 const Map<WorkspaceFeature, String> platformDefaultReasons = {
+  WorkspaceFeature.expenseRepartition:
+      'A configured space can preview a shared expense distribution; '
+      'validation precedes charges or credits (#828).',
+  WorkspaceFeature.invoiceSettlement:
+      'A configured space can explicitly consolidate open invoices while '
+      'preserving their source and settlement lineage (#804).',
+  WorkspaceFeature.priceNegotiations:
+      'A configured space can propose individual terms; access is limited '
+      'and a proposal goes through validation (#739).',
+  WorkspaceFeature.scheduledExpenses:
+      'A configured space can schedule expenses with validation; each '
+      'occurrence is presented for confirmation (#767).',
+  WorkspaceFeature.supplyExpenses:
+      'A configured space can explicitly submit a supply expense; its '
+      'validation reimburses the buyer and restocks a service (#731).',
+  WorkspaceFeature.planMemberPhotos:
+      'A configured space can show occupants’ profile photos on its '
+      'reserve map; ordinary creation leaves the feature off (#620).',
   WorkspaceFeature.nfcSeatTags:
       'Seat tags need an explicitly assigned UID; NFC scanning is offered '
       'only on a capable device (#604).',
