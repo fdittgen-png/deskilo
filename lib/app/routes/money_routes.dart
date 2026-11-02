@@ -183,6 +183,8 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         to: state.uri.queryParameters['to'],
       ),
     ),
+    // The original short link goes through the canonical route's guards.
+    GoRoute(path: '/suppliers', redirect: (context, state) => '/money/suppliers'),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(
       path: '/money/suppliers',

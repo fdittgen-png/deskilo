@@ -48,6 +48,7 @@ class DrawerEntries {
     required this.onBranch,
     required this.go,
     this.setupOpen = false,
+    this.openToPay,
   });
 
   final BuildContext context;
@@ -62,6 +63,9 @@ class DrawerEntries {
 
   /// #3077 — the setup guide has a milestone open: its door is offered.
   final bool setupOpen;
+
+  /// Opens the existing workspace-wide payable flow.
+  final VoidCallback? openToPay;
 
   /// Leaves the drawer and goes (or pushes) to [route].
   final void Function(String route, {bool push}) go;
@@ -158,6 +162,12 @@ class DrawerEntries {
             l10n.purchaseApprovalsTitle,
             () => go('/money/purchases/approvals'),
             route: '/money/purchases/approvals'),
+      if (features.contains(WorkspaceFeature.purchases) &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.managePurchases)) &&
+          openToPay != null)
+        DrawerEntry('drawer-purchases-to-pay', Icons.outbox_outlined,
+            l10n.cashHubToPay, openToPay!),
       if (money &&
           (may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.manageBilling) ||

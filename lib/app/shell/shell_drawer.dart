@@ -18,6 +18,7 @@ import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/money/domain/purchase_approval_reads.dart';
+import '../../features/money/presentation/widgets/purchases_sheet.dart';
 import '../../features/money/providers/purchase_approval_provider.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
@@ -70,6 +71,39 @@ AsyncValue<PurchaseApprovalPage>? _waitingApprovals(
   );
 }
 
+void _goFromDrawer(
+  BuildContext context,
+  String route, {
+  required bool permanent,
+  required bool push,
+}) {
+  if (!permanent) Navigator.of(context).pop();
+  if (push) {
+    unawaited(context.push(route));
+  } else {
+    context.go(route);
+  }
+}
+
+void _openToPay(
+  BuildContext context,
+  String workspaceId,
+  Set<WorkspacePermission> permissions, {
+  required bool permanent,
+}) {
+  final navigator = Navigator.of(context);
+  if (!permanent) navigator.pop();
+  unawaited(showPurchasesSheet(
+    navigator.context,
+    workspaceId,
+    canCapture: permissions.contains(WorkspacePermission.managePurchases),
+    canPay: permissions.contains(WorkspacePermission.recordOutgoingPayments),
+    canDecide: permissions.contains(WorkspacePermission.approveExpenses),
+    canOffset: permissions.contains(WorkspacePermission.issueInvoices),
+    toPay: true,
+  ));
+}
+
 /// Whether the shell navigates through the drawer — the web build
 /// always, native per the user's choice (#969) or the device's default
 /// (#2414), and tests that ask for it.
@@ -116,14 +150,8 @@ class ShellDrawer extends ConsumerWidget {
       permissions: ref.watch(myPermissionsProvider),
     );
 
-    void go(String route, {bool push = true}) {
-      if (!permanent) Navigator.of(context).pop();
-      if (push) {
-        unawaited(context.push(route));
-      } else {
-        context.go(route);
-      }
-    }
+    void go(String route, {bool push = true}) =>
+        _goFromDrawer(context, route, permanent: permanent, push: push);
 
     final entries = DrawerEntries(
       context: context,
@@ -137,6 +165,9 @@ class ShellDrawer extends ConsumerWidget {
       onBranch: onBranch,
       go: go,
       setupOpen: setupGuideOpenFor(ref, workspace?.id),
+      openToPay: workspace == null
+          ? null
+          : () => _openToPay(context, workspace.id, perms, permanent: permanent),
     );
     final navigation = entries.navigation();
     final administration = [
@@ -293,6 +324,7 @@ List<Widget> _financeGroups(
       'drawer-purchases',
       'drawer-suppliers',
       'drawer-purchase-approvals',
+      'drawer-purchases-to-pay',
     }, from: all),
     group(
       'finance',

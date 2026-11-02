@@ -82,6 +82,9 @@ void main() {
     );
     expect(mayOpen('/money/suppliers', treasurer), isTrue);
     expect(mayOpen('/money/suppliers', secretary), isFalse);
+    expect(mayOpen('/suppliers', treasurer), isTrue);
+    expect(mayOpen('/suppliers', secretary), isFalse);
+    expect(mayOpen('/suppliers', {WorkspacePermission.approveExpenses}), isFalse);
     expect(
       mayOpen('/money/purchases', {WorkspacePermission.viewMyMoney}),
       isTrue,
