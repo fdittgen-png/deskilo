@@ -6,6 +6,7 @@
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/workspace/domain/setup_level_demo.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
@@ -24,6 +25,15 @@ void main() {
     expect(link.workspaceId, demoSecondSpaceId);
     expect(link.persona, DemoPersona.owner);
     expect(link.to, '/setup');
+  });
+
+  test('#2470 — a link opens the London space at the UK VAT returns, and says so again', () {
+    final link = DemoLink.parse({'space': 'london', 'persona': 'owner', 'to': '/vat-declarations'});
+    expect(link.workspaceId, demoLondonSpaceId);
+    expect(link.to, '/vat-declarations');
+    expect(link.toQuery(), {'space': 'london', 'persona': 'owner', 'to': '/vat-declarations'});
+    // An unknown space is still nothing, and never London.
+    expect(DemoLink.parse({'space': 'camden'}).workspaceId, isNull);
   });
 
   test('what the link may not choose is ignored', () {

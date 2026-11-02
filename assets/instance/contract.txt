@@ -1949,7 +1949,7 @@ routine public.accounting_connection_manageable_v1(p_connection_id uuid) -> json
 routine public.accounting_connection_target_v1(p_connection_id uuid) -> text | function | definer | stable | exec:service_role | body:5058e93f876b
 routine public.accounting_connection_targets() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:900b1cffae4c
 routine public.accounting_connection_tenant_guard() -> trigger | function | definer | volatile | exec:service_role | body:6a47c72547e5
-routine public.accounting_connections_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4524b6ead9b6
+routine public.accounting_connections_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:99f1d689f32c
 routine public.accounting_connector_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:9e3b2cb3bf81
 routine public.accounting_credentials_resolved(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fd972c886c6e
 routine public.accounting_delivery_json(d accounting_deliveries) -> jsonb | function | definer | stable | exec:service_role | body:0753a6267fb5
@@ -2216,6 +2216,7 @@ routine public.has_permission(ws uuid, perm text) -> boolean | function | define
 routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c89e4a3763c3
 routine public.hmrc_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:eba9808c9249
 routine public.hmrc_connection_manageable_v1(p_connection_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c157eece1062
+routine public.hmrc_connection_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9231ffe80ab6
 routine public.hmrc_filing_context_v1(p_declaration_id uuid, p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:939dfa7ac6ed
 routine public.hmrc_vrn(p_vat_id text) -> text | function | invoker | immutable | exec:service_role | body:33d816d51b86
 routine public.holds_template_grant(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9497ef467747
