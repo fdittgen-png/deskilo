@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app/theme.dart';
@@ -212,9 +213,11 @@ Future<List<Member>> workspaceMembers(Ref ref) async {
 /// inline rather than through `recordingPrivacyProvider`: that provider is
 /// built ON this file, and a file cannot import the library that imports
 /// it without a cycle. The condition is the same one.
-bool _recordingOn(Ref ref) => ref
-    .watch(enabledFeaturesSyncProvider)
-    .contains(WorkspaceFeature.recordingPrivacy);
+bool _recordingOn(Ref ref) => ref.watch(
+      enabledFeaturesSyncProvider.select(
+        (features) => features.contains(WorkspaceFeature.recordingPrivacy),
+      ),
+    );
 
 /// All my membership rows across workspaces — one per profile (#89).
 @Riverpod(keepAlive: true)
