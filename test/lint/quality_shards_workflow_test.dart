@@ -16,20 +16,24 @@ const _attempt = '-attempt-\${{ github.run_attempt }}';
 const _shardJobs = {
   gateShard: 'gate',
   moneyShard: 'money',
+  money2Shard: 'money2',
   workspaceShard: 'workspace',
   restShard: 'rest',
+  coreShard: 'core',
 };
 
-/// #3166 — each shard's cap: 30 minutes for all four. The four-way split
-/// measured 809-1157 s per job over three green runs (the largest 19.3
-/// minutes, setup included), so 30 minutes leaves 55 % headroom and still
-/// ends a hung job instead of holding the runner for three quarters of an
-/// hour.
+/// #3166 — each shard's cap: 30 minutes for all six. The four-way split
+/// measured up to 20.6 minutes per job over five green runs (setup
+/// included) against the 18-minute bar; the six-way split puts each feature
+/// shard at about 11-12 minutes of tests. The 30-minute cap still ends a
+/// hung job instead of holding the runner for three quarters of an hour.
 const _timeouts = {
   gateShard: '30',
   moneyShard: '30',
+  money2Shard: '30',
   workspaceShard: '30',
   restShard: '30',
+  coreShard: '30',
 };
 
 YamlMap _jobs() =>
@@ -167,7 +171,10 @@ void main() {
           for (final n in const [
             'testshard-gate',
             'testshard-money',
+            'testshard-money2',
+            'testshard-workspace',
             'testshard-rest',
+            'testshard-core',
             'quality-code',
             'quality-database',
             'quality-timings',

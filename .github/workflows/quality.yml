@@ -67,11 +67,11 @@ jobs:
         with:
           artifact: quality-classification-attempt-${{ github.run_attempt }}
 
-  # #2600 — the quality suite runs as four shards (#3166) on four runners, and
+  # #2600 — the quality suite runs as six shards (#3166) on six runners, and
   # the required context below is the AGGREGATE of them. This is the fast
   # gate: the preconditions (l10n, codegen, the push package, analyze) and
-  # every test outside test/features — lint, tool, i18n, ux, perf, core
-  # and anything a new root folder adds (app and a11y run in the rest
+  # every test outside test/features — lint, tool, i18n, ux, perf and
+  # anything a new root folder adds (core, app and a11y run in the core
   # shard, #3166). It fails first.
   gate:
     name: quality · test · gates
@@ -229,11 +229,11 @@ jobs:
             "Tests=${{ steps.tests.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
-  # #2600 — the features, in two shards of similar cost. The split is a
+  # #2600 — the features, in shards of similar cost. The split is a
   # rule in tool/quality_rows/selection.dart; a new feature folder lands in
-  # the second by default.
+  # the last by default.
   money:
-    name: quality · test · money and reservations
+    name: quality · test · money a-m and reservations
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
@@ -265,7 +265,7 @@ jobs:
       - name: Select the files of this shard
         run: dart run tool/quality_shard.dart select --shard money --out shard/files.txt
 
-      - name: Tests with coverage (money, reservations)
+      - name: Tests with coverage (money a-m, reservations)
         id: tests
         continue-on-error: true
         run: |
@@ -315,7 +315,7 @@ jobs:
             "Shard envelope=${{ steps.envelope.outcome }}"
 
   workspace:
-    name: quality · test · workspace, me, events and auth
+    name: quality · test · workspace
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
@@ -348,7 +348,7 @@ jobs:
       - name: Select the files of this shard
         run: dart run tool/quality_shard.dart select --shard workspace --out shard/files.txt
 
-      - name: Tests with coverage (workspace, me, events, auth)
+      - name: Tests with coverage (workspace)
         id: tests
         continue-on-error: true
         run: |
@@ -398,7 +398,7 @@ jobs:
             "Shard envelope=${{ steps.envelope.outcome }}"
 
   rest:
-    name: quality · test · other features, app and a11y
+    name: quality · test · other features
     runs-on: ubuntu-latest
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
@@ -479,10 +479,178 @@ jobs:
             "Tests=${{ steps.tests.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
+  # #3166 — six shards: the measured work (about 10,300 file-seconds over
+  # the suite) split so that each feature shard runs about 11-12 minutes of
+  # tests (about 13-14 with setup), p95 under 18 against the 30-minute cap.
+  # The split is a rule in tool/quality_rows/selection.dart.
+  money2:
+    name: quality · test · money n-z, me and auth
+    runs-on: ubuntu-latest
+    # #3166 — before the four-way split: 22.8 min (money and workspace)
+    # and 22.7 min (other); after it 809-1157 s per job over three green
+    # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      # #2600 — this shard's files come from tool/quality_shard.dart, the
+      # same walk of test/ the aggregate job proves the plan against; the
+      # list is never typed in this file. The exit code is captured as the
+      # verdict and written beside the stream; the envelope records it with
+      # hashes of what this run produced, and nothing in between may
+      # replace it.
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard money2 --out shard/files.txt
+
+      - name: Tests with coverage (money n-z, me, auth)
+        id: tests
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
+          set +e
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
+          code=$?
+          set -e
+          echo "$code" > shard/tests-exit.txt
+          exit "$code"
+
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard money2 \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard money2)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-money2-attempt-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
+  core:
+    name: quality · test · core, app, profile and a11y
+    runs-on: ubuntu-latest
+    # #3166 — before the four-way split: 22.8 min (money and workspace)
+    # and 22.7 min (other); after it 809-1157 s per job over three green
+    # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      # #2600 — this shard's files come from tool/quality_shard.dart, the
+      # same walk of test/ the aggregate job proves the plan against; the
+      # list is never typed in this file. The exit code is captured as the
+      # verdict and written beside the stream; the envelope records it with
+      # hashes of what this run produced, and nothing in between may
+      # replace it.
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard core --out shard/files.txt
+
+      - name: Tests with coverage (core, app, profile, a11y)
+        id: tests
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
+          set +e
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
+          code=$?
+          set -e
+          echo "$code" > shard/tests-exit.txt
+          exit "$code"
+
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard core \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard core)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-core-attempt-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
   code:
     # The name is the REQUIRED STATUS CHECK on master, and this job is
     # still what carries it: now the aggregate of the preconditions and
-    # the four test shards, plus the disciplines and the coverage floors.
+    # the six test shards, plus the disciplines and the coverage floors.
     # Renaming it would silently make every pull request unmergeable,
     # because branch protection waits for a context that would never
     # report again. (It waited for exactly that for one push; ci.yml's
@@ -497,7 +665,7 @@ jobs:
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [gate, money, workspace, rest]
+    needs: [gate, money, money2, workspace, rest, core]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -516,7 +684,7 @@ jobs:
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
 
-      # #2639 — exactly this attempt's four shards (#3166), each into the
+      # #2639 — exactly this attempt's six shards (#3166), each into the
       # directory the reader expects. A shard from an earlier attempt has
       # another name and is never found; the plan step then refuses.
       - uses: actions/download-artifact@v4
@@ -543,6 +711,18 @@ jobs:
         with:
           name: testshard-rest-attempt-${{ github.run_attempt }}
           path: shards/testshard-rest
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: testshard-money2-attempt-${{ github.run_attempt }}
+          path: shards/testshard-money2
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: testshard-core-attempt-${{ github.run_attempt }}
+          path: shards/testshard-core
 
       # What the shards were promised, re-derived from this tree: every
       # test file exactly once, none unclassified, none shared.
@@ -596,7 +776,7 @@ jobs:
           dart run tool/test_timings.dart \
             --plan report/plan.json --shards shards \
             --candidate "$GITHUB_SHA" \
-            --profile 'quality.yml: flutter test --coverage, 3 shards' \
+            --profile 'quality.yml: flutter test --coverage, 6 shards' \
             --runtime "$(flutter --version | head -n 1)" \
             --out report/test-timings.md \
             --raw-out report/test-events.jsonl
@@ -677,9 +857,11 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Fast gate and its tests=${{ needs.gate.result }}" \
-            "Money and reservation tests=${{ needs.money.result }}" \
-            "Workspace, me, events and auth tests=${{ needs.workspace.result }}" \
-            "Other feature, app and a11y tests=${{ needs.rest.result }}" \
+            "Money a-m and reservation tests=${{ needs.money.result }}" \
+            "Money n-z, me and auth tests=${{ needs.money2.result }}" \
+            "Workspace tests=${{ needs.workspace.result }}" \
+            "Other feature tests=${{ needs.rest.result }}" \
+            "Core, app, profile and a11y tests=${{ needs.core.result }}" \
             "Test plan=${{ steps.plan.outcome }}" \
             "Discipline rows=${{ steps.rows.outcome }}" \
             "Coverage merge=${{ steps.lcov.outcome }}" \
@@ -1153,7 +1335,7 @@ jobs:
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [classify, gate, money, workspace, rest, code, database]
+    needs: [classify, gate, money, money2, workspace, rest, core, code, database]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -1199,9 +1381,11 @@ jobs:
           bash scripts/job_gate.sh \
             "classify the change=${{ needs.classify.result }}" \
             "quality · test · gates=${{ needs.gate.result }}" \
-            "quality · test · money and reservations=${{ needs.money.result }}" \
-            "quality · test · workspace, me, events and auth=${{ needs.workspace.result }}" \
-            "quality · test · other features, app and a11y=${{ needs.rest.result }}" \
+            "quality · test · money a-m and reservations=${{ needs.money.result }}" \
+            "quality · test · money n-z, me and auth=${{ needs.money2.result }}" \
+            "quality · test · workspace=${{ needs.workspace.result }}" \
+            "quality · test · other features=${{ needs.rest.result }}" \
+            "quality · test · core, app, profile and a11y=${{ needs.core.result }}" \
             "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
             "quality · database=${{ needs.database.result }}" \
             "Classification input=${{ steps.dl_classification.outcome }}" \
