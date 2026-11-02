@@ -61,6 +61,25 @@ List<File> _filesWithExtension(String root, String extension,
 /// walk is always this file's (#2604).
 Directory directoryAt(String path) => Directory(path);
 
+/// A direct child of an existing system-temp fixture directory. Source-tree
+/// paths, nested names and symlink children are refused.
+Directory temporaryFixtureDirectory(Directory parent, String name) {
+  if (name.isEmpty || name == '.' || name == '..' ||
+      name.contains('/') || name.contains('\\')) {
+    throw ArgumentError.value(name, 'name');
+  }
+  final temp = Directory.systemTemp.resolveSymbolicLinksSync();
+  final root = parent.resolveSymbolicLinksSync();
+  if (!root.startsWith('$temp/')) {
+    throw ArgumentError.value(parent.path, 'parent', 'not a temp fixture');
+  }
+  final path = '$root/$name';
+  if (FileSystemEntity.typeSync(path, followLinks: false) == FileSystemEntityType.link) {
+    throw ArgumentError.value(name, 'name', 'symlink child');
+  }
+  return Directory(path);
+}
+
 /// The names of the directories directly under [root], sorted (#2604).
 List<String> directoryNames(String root) => [
       for (final d in Directory(root).listSync().whereType<Directory>())
