@@ -19339,14 +19339,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicProfileTitle => 'Öffentliches Profil';
 
   @override
-  String get purchaseApprovalsEmpty => 'Nichts wartet auf Ihre Genehmigung.';
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'Ausstehende Belege konnten nicht geladen werden.';
+
+  @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Ausstehende Mitgliederbelege, die Sie einsehen können';
+
+  @override
+  String get purchaseApprovalsEmpty =>
+      'Keine Lieferantenrechnung wartet auf Ihre Genehmigung.';
 
   @override
   String get purchaseApprovalsRefused =>
-      'Die zu genehmigenden Belege konnten nicht gelesen werden.';
+      'Die zu genehmigenden Lieferantenrechnungen konnten nicht gelesen werden.';
 
   @override
-  String get purchaseApprovalsTitle => 'Zu genehmigen';
+  String get purchaseApprovalsTitle => 'Lieferantenrechnungen zur Genehmigung';
 
   @override
   String get purchaseEntryAdd => 'Einkauf / Ausgabe hinzufügen';

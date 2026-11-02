@@ -10,6 +10,8 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
+import '../../domain/purchase_approval_reads.dart';
+import '../../providers/purchase_approval_provider.dart';
 import '../../providers/purchase_providers.dart';
 import 'purchase_claims.dart';
 import 'purchase_decision_bar.dart';
@@ -128,24 +130,26 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final purchases = widget.supplierId == null
-        ? ref.watch(purchasesProvider(workspaceId)).value ?? const <PurchaseSummary>[]
+        ? ref.watch(purchasesProvider(workspaceId)).value ??
+              const <PurchaseSummary>[]
         : const <PurchaseSummary>[];
     return SheetShell(
       title: l10n.purchasesTitle,
       children: [
         const SizedBox(height: AppSpacing.sm),
-        if (widget.supplierId == null) SegmentedButton<bool>(
-          key: const ValueKey('purchases-tabs'),
-          segments: [
-            ButtonSegment(
-              value: false,
-              label: Text(l10n.purchasesTabDocuments),
-            ),
-            ButtonSegment(value: true, label: Text(l10n.purchasesTabToPay)),
-          ],
-          selected: {_toPay},
-          onSelectionChanged: (s) => setState(() => _toPay = s.first),
-        ),
+        if (widget.supplierId == null)
+          SegmentedButton<bool>(
+            key: const ValueKey('purchases-tabs'),
+            segments: [
+              ButtonSegment(
+                value: false,
+                label: Text(l10n.purchasesTabDocuments),
+              ),
+              ButtonSegment(value: true, label: Text(l10n.purchasesTabToPay)),
+            ],
+            selected: {_toPay},
+            onSelectionChanged: (s) => setState(() => _toPay = s.first),
+          ),
         const SizedBox(height: AppSpacing.sm),
         if (widget.supplierId case final supplierId?)
           SupplierPayablesView(
@@ -160,8 +164,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
             workspaceId: workspaceId,
             canPay: widget.canPay,
             canOffset: widget.canOffset,
-            onOpen: (id) =>
-                _showDetailSheet(context, workspaceId, id, widget),
+            onOpen: (id) => _showDetailSheet(context, workspaceId, id, widget),
           )
         else ...[
           Text(
@@ -195,28 +198,30 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
     );
   }
 
-  List<Widget> _documents(BuildContext context, List<PurchaseSummary> purchases) {
+  List<Widget> _documents(
+    BuildContext context,
+    List<PurchaseSummary> purchases,
+  ) {
     final l10n = context.l10n;
     return [
-        for (final p in purchases)
-          ListTile(
-            key: ValueKey('purchase-${p.id}'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(
-              p.reference.isEmpty
-                  ? purchaseKindLabel(l10n, p.kind)
-                  : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
-            ),
-            subtitle: Text(
-              [
-                purchaseStateLabel(l10n, p.state),
-                if (p.category.isNotEmpty) p.category,
-              ].join(' · '),
-            ),
-            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
-            onTap: () =>
-                _showDetailSheet(context, workspaceId, p.id, widget),
+      for (final p in purchases)
+        ListTile(
+          key: ValueKey('purchase-${p.id}'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            p.reference.isEmpty
+                ? purchaseKindLabel(l10n, p.kind)
+                : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
           ),
+          subtitle: Text(
+            [
+              purchaseStateLabel(l10n, p.state),
+              if (p.category.isNotEmpty) p.category,
+            ].join(' · '),
+          ),
+          trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+          onTap: () => _showDetailSheet(context, workspaceId, p.id, widget),
+        ),
     ];
   }
 }
@@ -268,14 +273,54 @@ Future<void> showPurchaseForDecision(
 ) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (_) => _PurchaseDetailView(
+  builder: (_) => _ApprovalPurchaseDetailView(
     workspaceId: workspaceId,
     purchaseId: purchaseId,
-    canPay: false,
-    canCapture: false,
-    canDecide: true,
   ),
 );
+
+class _ApprovalPurchaseDetailView extends ConsumerWidget {
+  const _ApprovalPurchaseDetailView({
+    required this.workspaceId,
+    required this.purchaseId,
+  });
+  final String workspaceId;
+  final String purchaseId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final key = (workspaceId: workspaceId, purchaseId: purchaseId);
+    final result = ref.watch(purchaseApprovalDetailProvider(key));
+    if (result.isLoading) {
+      return SheetShell(
+        title: context.l10n.purchasesTitle,
+        children: const [LoadingView()],
+      );
+    }
+    if (result.hasError) {
+      return SheetShell(
+        title: context.l10n.purchasesTitle,
+        children: [
+          Text(context.l10n.purchaseApprovalsRefused),
+          TextButton(
+            key: const ValueKey('approval-detail-retry'),
+            onPressed: () =>
+                ref.invalidate(purchaseApprovalDetailProvider(key)),
+            child: Text(context.l10n.commonRetry),
+          ),
+        ],
+      );
+    }
+    return _PurchaseDetailView(
+      workspaceId: workspaceId,
+      purchaseId: purchaseId,
+      canPay: false,
+      canCapture: false,
+      canDecide: true,
+      approval: result.requireValue,
+    );
+  }
+}
 
 /// One purchase document as the server read it.
 class _PurchaseDetailView extends ConsumerWidget {
@@ -285,6 +330,7 @@ class _PurchaseDetailView extends ConsumerWidget {
     required this.canPay,
     required this.canCapture,
     required this.canDecide,
+    this.approval,
   });
 
   final String workspaceId;
@@ -292,19 +338,31 @@ class _PurchaseDetailView extends ConsumerWidget {
   final bool canPay;
   final bool canCapture;
   final bool canDecide;
+  final PurchaseApprovalDetail? approval;
+
+  Widget _decisionBar(PurchaseDetail detail) => PurchaseDecisionBar(
+    workspaceId: workspaceId,
+    detail: detail,
+    canCapture: canCapture,
+    canDecide: canDecide && (approval?.canApprove ?? true),
+    canReject: approval?.canReject ?? true,
+    closeOnDecision: approval != null,
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final detail = ref
-        .watch(
-          purchaseDetailProvider((
-            workspaceId: workspaceId,
-            purchaseId: purchaseId,
-          )),
-        )
-        .value;
+    final detail =
+        approval?.detail ??
+        ref
+            .watch(
+              purchaseDetailProvider((
+                workspaceId: workspaceId,
+                purchaseId: purchaseId,
+              )),
+            )
+            .value;
     if (detail == null) {
       return SheetShell(
         title: l10n.purchasesTitle,
@@ -326,12 +384,12 @@ class _PurchaseDetailView extends ConsumerWidget {
             s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),
         if (s.legacy) Text(l10n.purchasesLegacyTag),
-        PurchaseDecisionBar(
-          workspaceId: workspaceId,
-          detail: detail,
-          canCapture: canCapture,
-          canDecide: canDecide,
-        ),
+        if (approval != null)
+          Text(
+            l10n.purchaseApprovalEvidenceUnavailable,
+            key: const ValueKey('purchase-approval-evidence-unavailable'),
+          ),
+        _decisionBar(detail),
         const SizedBox(height: AppSpacing.sm),
         Text('${l10n.purchasesSupplier}: $supplier'),
         if (s.reference.isNotEmpty)
@@ -367,11 +425,12 @@ class _PurchaseDetailView extends ConsumerWidget {
           key: const ValueKey('purchase-total'),
         ),
         // Another currency than the space's: the rate the books read it at.
-        PurchaseExchangeRateTile(
-          workspaceId: workspaceId,
-          summary: s,
-          canEdit: canCapture || canDecide,
-        ),
+        if (approval == null)
+          PurchaseExchangeRateTile(
+            workspaceId: workspaceId,
+            summary: s,
+            canEdit: canCapture || canDecide,
+          ),
         if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
           Text(l10n.purchasesTaxPartial),
         if (detail.obligations.isNotEmpty)

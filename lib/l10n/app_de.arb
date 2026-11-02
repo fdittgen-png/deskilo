@@ -12430,15 +12430,18 @@
   "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.",
   "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
   "publicProfileTitle": "Öffentliches Profil",
-  "purchaseApprovalsEmpty": "Nichts wartet auf Ihre Genehmigung.",
+  "purchaseApprovalEvidenceUnavailable": "Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.",
+  "purchaseApprovalReceiptsUnavailable": "Ausstehende Belege konnten nicht geladen werden.",
+  "purchaseApprovalVisibleReceipts": "Ausstehende Mitgliederbelege, die Sie einsehen können",
+  "purchaseApprovalsEmpty": "Keine Lieferantenrechnung wartet auf Ihre Genehmigung.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "Die zu genehmigenden Belege konnten nicht gelesen werden.",
+  "purchaseApprovalsRefused": "Die zu genehmigenden Lieferantenrechnungen konnten nicht gelesen werden.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "Zu genehmigen",
+  "purchaseApprovalsTitle": "Lieferantenrechnungen zur Genehmigung",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
