@@ -40,6 +40,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/purchases/approvals': {_P.approveExpenses},
   '/money/payments': {_P.viewFinances},
   '/money/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
+  '/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
   '/money/sales': {_P.viewFinances, _P.issueInvoices, _P.manageBilling},
   '/money/accounting': accountingPageRights,
   '/money/cash': {_P.viewFinances, _P.manageBilling, _P.managePurchases},

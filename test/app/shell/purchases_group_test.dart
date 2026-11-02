@@ -9,6 +9,8 @@ import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
 import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,6 +60,7 @@ Future<void> _open(
   required Map<String, dynamic> flags,
   required bool manager,
   required _ApprovalReads approvals,
+  Set<WorkspacePermission>? permissions,
 }) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
@@ -72,6 +75,7 @@ Future<void> _open(
       overrides: [
         ...standardTestOverrides(workspace: workspace),
         webShellProvider.overrideWithValue(true),
+        if (permissions != null) myPermissionsProvider.overrideWithValue(permissions),
         purchaseApprovalReadsProvider.overrideWithValue(approvals),
         purchasesProvider.overrideWith(
           (ref, id) async => [
@@ -113,6 +117,7 @@ void main() {
     await _expandGroup(tester);
     expect(find.byKey(const ValueKey('drawer-purchases')), findsOneWidget);
     expect(find.byKey(const ValueKey('drawer-suppliers')), findsOneWidget);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('drawer-purchase-approvals')),
       findsOneWidget,
@@ -148,6 +153,57 @@ void main() {
     expect(approvals.requests, isNotEmpty);
   });
 
+  for (final permission in [
+    WorkspacePermission.viewFinances,
+    WorkspacePermission.managePurchases,
+  ]) {
+    testWidgets('wide reader $permission can open the To-pay entry', (tester) async {
+      await _open(tester,
+        flags: const {'purchases': true, 'supplyExpenses': true},
+        manager: false,
+        approvals: _ApprovalReads(),
+        permissions: {permission},
+      );
+      await _expandGroup(tester);
+      expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsOneWidget);
+    });
+  }
+
+  testWidgets('To pay is absent when purchases is off even for a wide reader', (tester) async {
+    await _open(tester,
+      flags: const {'purchases': false, 'supplyExpenses': true},
+      manager: true,
+      approvals: _ApprovalReads(),
+    );
+    await _expandGroup(tester);
+    expect(find.byKey(const ValueKey('drawer-suppliers')), findsOneWidget);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsNothing);
+  });
+
+  testWidgets('billing permission alone does not grant workspace-wide payables', (tester) async {
+    await _open(tester,
+      flags: const {'purchases': true, 'supplyExpenses': true},
+      manager: false,
+      approvals: _ApprovalReads(),
+      permissions: {WorkspacePermission.manageBilling},
+    );
+    await _expandGroup(tester);
+    expect(find.byKey(const ValueKey('drawer-suppliers')), findsOneWidget);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsNothing);
+  });
+
+  testWidgets('an approver alone never sees workspace-wide payables', (tester) async {
+    await _open(tester,
+      flags: const {'purchases': true, 'supplyExpenses': true},
+      manager: false,
+      approvals: _ApprovalReads(),
+      permissions: {WorkspacePermission.approveExpenses},
+    );
+    await _expandGroup(tester);
+    expect(find.byKey(const ValueKey('drawer-purchase-approvals')), findsOneWidget);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsNothing);
+  });
+
   testWidgets('the suppliers and the approvals are absent when their '
       'features are off', (tester) async {
     await _open(
@@ -158,6 +214,7 @@ void main() {
     );
     expect(find.text('Purchases & suppliers'), findsNothing);
     expect(find.byKey(const ValueKey('drawer-suppliers')), findsNothing);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsNothing);
     expect(
       find.byKey(const ValueKey('drawer-purchase-approvals')),
       findsNothing,
@@ -173,6 +230,7 @@ void main() {
       approvals: _ApprovalReads(),
     );
     expect(find.byKey(const ValueKey('drawer-suppliers')), findsNothing);
+    expect(find.byKey(const ValueKey('drawer-purchases-to-pay')), findsNothing);
     expect(
       find.byKey(const ValueKey('drawer-purchase-approvals')),
       findsNothing,
