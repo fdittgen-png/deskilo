@@ -51,12 +51,18 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:deskilo/features/workspace/domain/platform_default_reasons.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 
 import 'code_health.dart' show isMeasured;
 
 const String baselinePath = 'docs/design/FEATURE_AUDIT_BASELINE.json';
+
+/// The features whose default-on has a stated reason (#2519).
+final Set<String> _reasonNames = {
+  for (final f in platformDefaultReasons.keys) f.name,
+};
 
 /// The registry facts the audit needs, as plain data: feature name -> the
 /// name it requires (or null). Fixtures build their own.
@@ -1007,8 +1013,10 @@ String summary(AuditReport r) {
   list('Gated by the server only', r.serverOnlyFlags);
   b
     ..writeln(
-      'Platform tier, default on: ${r.platformDefaultOn.length} '
-      '(information, see --json)',
+      'Platform tier, default on: ${r.platformDefaultOn.length}, '
+      '${r.platformDefaultOn.where((f) => !_reasonNames.contains(f)).length} '
+      'without a stated reason (platform_default_reasons.dart; '
+      'information, see --json)',
     )
     ..writeln();
   list('Subprocesses with one capability', r.singleCapabilitySubprocesses);
