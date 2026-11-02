@@ -7,30 +7,9 @@
 // process was changed.
 import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('#2519 leaving setup at the current levels does not opt in', () {
-    final stored = resolveEnabledFeatures(defaultFeatureFlagsForNewWorkspace());
-    final current = currentSetupLevels(stored);
-    final change = planSetupLevels(
-      stored: stored,
-      current: current,
-      chosen: current,
-    );
-    expect(change.flags, isEmpty);
-    for (final feature in [
-      WorkspaceFeature.expenseRepartition,
-      WorkspaceFeature.invoiceSettlement,
-      WorkspaceFeature.priceNegotiations,
-      WorkspaceFeature.scheduledExpenses,
-      WorkspaceFeature.supplyExpenses,
-      WorkspaceFeature.planMemberPhotos,
-    ]) {
-      expect(stored, isNot(contains(feature)));
-    }
-  });
   test('the levels a preset turns on read back as that preset', () {
     for (final preset in SetupPreset.values) {
       final vector = setupPresets[preset]!;

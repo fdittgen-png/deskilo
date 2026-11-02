@@ -74,7 +74,7 @@ void main() {
     // #2370 — accountingConnectors: the accounting systems are asked for.
     // #2380 — bankImport: reading the bank's statements is asked for.
     // #2470 — mtdSubmission: filing with the tax authority is asked for.
-    expect(onCount, featureManifest.length - 58);
+    expect(onCount, featureManifest.length - 52);
   });
 
   testWidgets(

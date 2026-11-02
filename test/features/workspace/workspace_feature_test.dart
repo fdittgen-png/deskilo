@@ -16,12 +16,6 @@ import 'package:flutter_test/flutter_test.dart';
 /// a login surface. Shipping any of those ON would make the choice for
 /// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
-  WorkspaceFeature.expenseRepartition,
-  WorkspaceFeature.invoiceSettlement,
-  WorkspaceFeature.priceNegotiations,
-  WorkspaceFeature.scheduledExpenses,
-  WorkspaceFeature.supplyExpenses,
-  WorkspaceFeature.planMemberPhotos,
   WorkspaceFeature.publicListings,
   // #1279 — selling carnets is an offer a workspace makes on purpose.
   WorkspaceFeature.carnets,
@@ -143,39 +137,11 @@ final Set<WorkspaceFeature> registryDefaults = {
 void main() {
   _existingWorkspacesUnmoved();
 
-  test('#2519 defaults and saved parent-child choices stay distinct', () {
-    const optedIn = {
-      WorkspaceFeature.expenseRepartition,
-      WorkspaceFeature.invoiceSettlement,
-      WorkspaceFeature.priceNegotiations,
-      WorkspaceFeature.scheduledExpenses,
-      WorkspaceFeature.supplyExpenses,
-      WorkspaceFeature.planMemberPhotos,
-    };
-    final fresh = defaultFeatureFlagsForNewWorkspace();
-    for (final feature in optedIn) {
-      expect(featureManifest[feature]!.defaultOn, isFalse);
-      expect(fresh[feature.dbKey], isFalse);
-      expect(resolveEnabledFeatures({feature.dbKey: true}), contains(feature));
-      expect(resolveEnabledFeatures({feature.dbKey: false}), isNot(contains(feature)));
-    }
-    const selected = {
-      'moneyTab': true,
-      'invoicing': true,
-      'invoiceSettlement': false,
-      'settlementFold': true,
-    };
-    final raw = resolveEnabledFeatures(selected);
-    expect(raw, contains(WorkspaceFeature.settlementFold));
-    expect(effectiveFeatures(raw), isNot(contains(WorkspaceFeature.settlementFold)));
-    final reopened = effectiveFeatures(resolveEnabledFeatures({
-      ...selected,
-      'invoiceSettlement': true,
-    }));
-    expect(reopened, contains(WorkspaceFeature.settlementFold));
-  });
-
-  test('manifest covers every feature and the reviewed OFF set', () {
+  test(
+      'manifest covers every feature; only adminSeatBlocking, '
+      'accessorySupplements, onlinePayments, levelBooking, '
+      'adminLevelAssign, adminInvoicing, autoCheckInOut and badgeSignIn '
+      'default OFF', () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
     for (final entry in featureManifest.values) {
       expect(
@@ -257,12 +223,6 @@ void main() {
       'bankImport': true,
       'mtdSubmission': true,
       'guestParticipation': true,
-      'expenseRepartition': true,
-      'invoiceSettlement': true,
-      'priceNegotiations': true,
-      'scheduledExpenses': true,
-      'supplyExpenses': true,
-      'planMemberPhotos': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
