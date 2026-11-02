@@ -56,15 +56,15 @@ abstract final class InstanceAuthConfig {
   static const String redirectAllowList =
       'deskilo://**,https://fdittgen-png.github.io/deskilo/**';
 
-  /// The current web callback is the authority for a web-created instance.
+  /// The deployment base is the authority for a web-created instance.
   /// Never include transient flow parameters or fragments in saved config.
-  static Map<String, Object?> patchForWebCallback(Uri callback) {
+  static Map<String, Object?> patchForWebBase(Uri callback) {
     if ((callback.scheme != 'https' && callback.scheme != 'http') ||
         callback.host.isEmpty ||
         callback.userInfo.isNotEmpty ||
         RegExp(r'[\*\[\]{}\\,]').hasMatch(callback.host + callback.path) ||
         RegExp(r'%(?:2a|2c|5b|5c|5d|7b|7d)', caseSensitive: false).hasMatch(callback.path)) {
-      throw ArgumentError('invalid web callback');
+      throw ArgumentError('invalid web base URL');
     }
     final path = callback.path.isEmpty ? '/' : callback.path;
     final site = '${callback.origin}$path';

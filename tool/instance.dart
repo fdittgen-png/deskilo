@@ -82,7 +82,7 @@ Future<int> run(List<String> argv) async {
   final requestedSite = args.option('site-url');
   if (requestedSite != null) {
     try {
-      authPatch = InstanceAuthConfig.patchForWebCallback(Uri.parse(requestedSite));
+      authPatch = InstanceAuthConfig.patchForWebBase(Uri.parse(requestedSite));
     } on FormatException {
       stderr.writeln('site-url must be a valid web application URL');
       return 2;

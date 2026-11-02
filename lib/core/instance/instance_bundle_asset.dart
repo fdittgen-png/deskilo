@@ -2,11 +2,12 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart' show GZipDecoder;
-import 'package:flutter/foundation.dart' show Uint8List, compute, kIsWeb, visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, compute, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../backend/auth_callback_guard.dart';
+import 'deployment_base_native.dart'
+    if (dart.library.js_interop) 'deployment_base_web.dart';
 import 'instance_builder.dart';
 import 'instance_bundle.dart';
 import 'instance_doctor.dart';
@@ -37,10 +38,11 @@ InstanceBundle decodeInstanceBundleAsset(Uint8List bytes) {
   );
 }
 
-/// Use the same callback as sign-in, including before first-start bootstrap.
-Map<String, Object?> instanceAuthPatchForRuntime() => kIsWeb
-    ? InstanceAuthConfig.patchForWebCallback(bootAuthCallbackGuard?.callback ?? Uri.base)
-    : InstanceAuthConfig.patch;
+/// The deployment base is independent of the current route and auth flow.
+Map<String, Object?> instanceAuthPatchForRuntime() {
+  final base = deploymentBaseUri();
+  return base == null ? InstanceAuthConfig.patch : InstanceAuthConfig.patchForWebBase(base);
+}
 
 /// How the wizard gets its bundle — the asset, or a small one in tests.
 @Riverpod(keepAlive: true)
