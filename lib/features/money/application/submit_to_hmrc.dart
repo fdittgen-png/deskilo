@@ -17,10 +17,12 @@ class SubmitToHmrc {
     required VatDeclaration declaration,
     required HmrcConnection connection,
     required HmrcClientValues client,
+    String? recoveryMarker,
   }) => _repository.submit(
     declarationId: declaration.id,
     connectionId: connection.id,
     boxes: mtdBoxPounds(declaration),
     client: client,
+    recoveryMarker: recoveryMarker,
   );
 }

@@ -49,6 +49,7 @@ class HmrcState {
     this.connection,
     this.demo = false,
     this.unconfirmedDeclarationIds = const [],
+    this.recoveryMarkers = const {},
   });
 
   /// The Demo's synthetic HMRC: no sign-in page opens and no call is made.
@@ -62,11 +63,18 @@ class HmrcState {
   /// person says they checked at HMRC, on any device and after a reload.
   final List<String> unconfirmedDeclarationIds;
 
+  /// Attempt identifiers for an explicit checked-at-HMRC decision.
+  final Map<String, String> recoveryMarkers;
+
   factory HmrcState.fromJson(Object? json) {
     final r = JsonReader.orEmpty(json, context: 'hmrc_connection_v1');
     return HmrcState(
       vrn: r.stringOrNull('vrn'),
       unconfirmedDeclarationIds: r.strings('unconfirmed_declaration_ids'),
+      recoveryMarkers: {
+        for (final entry in (r.objectOrNull('recovery_markers')?.json ?? const {}).entries)
+          if (entry.value is String) entry.key: entry.value as String,
+      },
       connection: r.objectOrNull('connection') == null
           ? null
           : HmrcConnection.fromReader(r.objectOrNull('connection')!),
@@ -212,5 +220,6 @@ abstract interface class HmrcRepository {
     required String connectionId,
     required Map<String, num> boxes,
     required HmrcClientValues client,
+    String? recoveryMarker,
   });
 }
