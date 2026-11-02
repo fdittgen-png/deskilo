@@ -13,6 +13,11 @@
 // moves a value to the registry deletes its entry. An entry that turns out
 // not to be a business value moves to `_allowed` WITH its reason.
 //
+// A value in an SQL function is not counted here: the text of a migration
+// file is history (an anchored patch rewrites the body in place), so the
+// function the database runs is measured by
+// supabase/tests/database/336_business_literals_effective.sql.
+//
 // The same shape as `tax_literals_test.dart` (VAT has its own ratchet).
 import 'dart:io';
 
@@ -63,26 +68,6 @@ const _tracked = <_Tracked>[
   // minutes) left the ratchet with 0451 (S2): create_invitation now states
   // expires_at from the setting, and the confirmation default calls
   // mcp_confirmation_expires_at().
-];
-
-typedef _TrackedSql = ({
-  String what,
-  String function,
-  String pattern,
-  int ceiling,
-  String movesIn,
-});
-
-/// The same, counted in the LIVE definition of an SQL function (the latest
-/// `create or replace function public.<name>(` in supabase/migrations). Every
-/// S2 and S4 value is SQL-only and lives here.
-const _trackedSql = <_TrackedSql>[
-  (what: 'MCP notice read-state purge (90 days)', function: 'mark_instance_notice_read',
-   pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
-  (what: 'MCP notice read-state purge (90 days)', function: 'instance_notify_operators',
-   pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
-  (what: 'VIES evidence freshness (90 days)', function: 'member_vies_verified',
-   pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
 ];
 
 /// Entries reviewed as NOT business values, keyed by `file::what`, with the
@@ -150,24 +135,6 @@ void main() {
           ceiling: t.ceiling,
           actual: actual,
           perFile: {t.file: actual},
-        ),
-      );
-    });
-  }
-
-  for (final t in _trackedSql) {
-    test('${t.what} (${t.function}) stays at its ceiling until ${t.movesIn} moves it', () {
-      final actual =
-          RegExp(t.pattern).allMatches(latestFunctionDefinition(t.function)).length;
-      expect(
-        actual,
-        t.ceiling,
-        reason: ratchetMessage(
-          rule: _rule,
-          kind: '${t.what} in public.${t.function}',
-          ceiling: t.ceiling,
-          actual: actual,
-          perFile: {'public.${t.function}': actual},
         ),
       );
     });
