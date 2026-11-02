@@ -1,5 +1,9 @@
 # Current orchestration state
 
+## Latest dispatch correction — DECISION2379-PL-2
+
+The PL snapshot proposal has no demonstrated real producer. Do not implement a hypothetical external importer or permanently refusing export as delivery. E1 is instructed to preserve useful pinned schema/provenance work locally, record the exact missing authoritative source-book producer, and move immediately to #3235 outstanding SIGNED-IN Demo return/navigation verification and any reproduced defect. Native Back requires an actually available authorized native environment, not browser emulation. Existing signed-out receipts are not sufficient and must not be repeated unnecessarily. Keep #3262 frozen. E2 continues #2380 report; reviewer coordinates only actual shared Demo files and updates #2596. No new SQL/producer lifecycle allocated; PL resumes on a concrete implementable producer contract. This supersedes the E1 Polish implementation assignment below. Dispatch delivered to E1/reviewer; execution ACK pending.
+
 ## Highest owner priority — continue to verified closure
 
 The owner explicitly instructed on 2026-11-02: never stop until all issues are closed, inform every session, and have sessions remind the orchestrator if it proposes an unnecessary stop. This supersedes historical drain-only/stop-after-current instructions. Continue authorized, useful work across independent implementation, tests, Demo, review and closure while another step is externally blocked. A CI or review wait is not a team-wide stop. All three existing sessions were directly queued this instruction.
