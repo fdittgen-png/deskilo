@@ -52,6 +52,19 @@ final rows = <Row>[
   // signed in
   go('signed in on sign-in goes home', '/auth', member, '/reserve', RouteReason.alreadySignedIn),
   go('signed in on sign-in returns to the validated target', '/auth', const RouteFacts(auth: AuthFact.signedIn, home: '/money'), '/money', RouteReason.alreadySignedIn),
+  // #3235 — the demo entry is public, for a signed-in person too, and the
+  // older `/auth?demo=1` link opens it instead of the sign-in screen.
+  stay('signed out: the demo entry is reachable', '/demo', out),
+  stay('signed in: the demo entry is reachable', '/demo', member),
+  stay('signed in: the demo entry keeps its link', '/demo?space=pezenas&persona=owner&to=%2Ffeatures', member),
+  stay('not accepted yet: the demo entry is a public entry', '/demo', unconsented),
+  go('signed out: the older demo link opens the entry', '/auth?demo=1&space=leipzig&persona=member&to=/calendar', out, '/demo?space=leipzig&persona=member&to=%2Fcalendar', RouteReason.demoLink),
+  go('signed in: the older demo link opens the entry, not the sign-in', '/auth?demo=1&space=leipzig&persona=member&to=/calendar', member, '/demo?space=leipzig&persona=member&to=%2Fcalendar', RouteReason.demoLink),
+  go('older demo link: only validated values are kept', '/auth?demo=1&space=ws-real&to=https://evil.example&token=x', member, '/demo', RouteReason.demoLink),
+  go('signed in: a plain sign-in still goes home', '/auth?foo=1', member, '/reserve', RouteReason.alreadySignedIn),
+  go('kiosk locked: the demo entry is no way out of the lock', '/demo', locked, '/kiosk', RouteReason.kioskLocked),
+  go('kiosk locked: the older demo link ends at the kiosk', '/auth?demo=1', locked, '/demo', RouteReason.demoLink, settled: '/kiosk'),
+  go('kiosk gate pending: the demo entry waits behind the gate', '/demo', gate, '/kiosk-gate', RouteReason.kioskGate),
   stay('member: a workspace route opens', '/reserve', member),
   stay("member: a permission route is the guard's business", '/settings', member),
   go('unknown route is refused home', '/nowhere', member, '/reserve', RouteReason.unknownRoute),

@@ -62,8 +62,7 @@ void main() {
 
   test('every setup step can be tried in the demo, at its own screen', () {
     for (final step in setupSteps) {
-      final link = demoLinkUri(to: step.route);
-      final query = Uri.parse(link.fragment).queryParameters;
+      final query = DemoLink.example(to: step.route).toQuery();
       expect(DemoLink.parse(query).to, step.route, reason: step.id);
     }
   });
@@ -79,8 +78,7 @@ void main() {
           continue;
         }
         expect(route, isNotNull, reason: where);
-        final link = demoLinkUri(to: route);
-        final query = Uri.parse(link.fragment).queryParameters;
+        final query = DemoLink.example(to: route).toQuery();
         expect(DemoLink.parse(query).to, route, reason: where);
         expect(query['space'], 'pezenas', reason: where);
       }
@@ -89,10 +87,38 @@ void main() {
 
   test('the demo link names the space and the persona, and leaves out a '
       'screen the demo does not allow', () {
-    final link = demoLinkUri(space: 'leipzig', to: '/nowhere');
-    expect(link.toString(), startsWith('https://'));
-    final query = Uri.parse(link.fragment).queryParameters;
-    expect(query, {'demo': '1', 'space': 'leipzig', 'persona': 'owner'});
+    final query = DemoLink.parse({
+      'space': 'leipzig',
+      'persona': 'owner',
+      'to': '/nowhere',
+    }).toQuery();
+    expect(query, {'space': 'leipzig', 'persona': 'owner'});
+  });
+
+  test('#3235 — toQuery names exactly what parse accepted, nothing else', () {
+    final parsed = DemoLink.parse({
+      'persona': 'member',
+      'space': 'leipzig',
+      'to': '/calendar',
+      'token': 'secret',
+      'redirect': 'https://example.com',
+    });
+    expect(parsed.toQuery(), {
+      'space': 'leipzig',
+      'persona': 'member',
+      'to': '/calendar',
+    });
+    // A target the demo does not allow, and an unknown space, are dropped.
+    expect(
+      DemoLink.parse({'space': 'ws-real', 'to': 'https://example.com'}).toQuery(),
+      isEmpty,
+    );
+    expect(DemoLink.example(to: '/nowhere').to, isNull);
+    expect(DemoLink.example(to: '/features').toQuery(), {
+      'space': 'pezenas',
+      'persona': 'owner',
+      'to': '/features',
+    });
   });
 
   test('every persona in either space survives the round trip', () {
@@ -101,8 +127,10 @@ void main() {
         ('pezenas', 'ws-1'),
         ('leipzig', demoSecondSpaceId),
       ]) {
-        final uri = demoLinkUri(space: space, persona: persona, to: '/calendar');
-        final link = DemoLink.parse(Uri.parse(uri.fragment).queryParameters);
+        final link = DemoLink.parse(
+          DemoLink(persona: persona, workspaceId: id, to: '/calendar')
+              .toQuery(),
+        );
         expect(
           (link.persona, link.workspaceId, link.to),
           (persona, id, '/calendar'),

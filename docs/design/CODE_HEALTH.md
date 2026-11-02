@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `f063da186f39dab4160924122cb3edc80b38225d` on 2026-10-31.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `694ad8ee2451db979bdc946da6ef309247ce5315` on 2026-11-01.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,14 +10,14 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2281 |
-| functions | 13188 |
-| cyclomatic>=9 | 1310 |
+| files | 2305 |
+| functions | 13318 |
+| cyclomatic>=9 | 1323 |
 | cyclomatic>=25 | 75 |
-| cognitive>=15 | 494 |
-| cognitive>=30 | 71 |
+| cognitive>=15 | 501 |
+| cognitive>=30 | 69 |
 | length>=150 | 45 |
-| parameters>=5 | 586 |
+| parameters>=5 | 591 |
 | parameters>=7 | 146 |
 | partOfFiles | 22 |
 
@@ -45,9 +45,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 42 | 37 | 175 | 3 | `lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices` |
 | 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
 | 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
-| 40 | 48 | 141 | 2 | `lib/app/route_policy.dart#resolveDestination` |
 | 40 | 19 | 55 | 2 | `lib/features/money/domain/vat_forms.dart#fillVatForm` |
 | 40 | 38 | 143 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 | 39 | 24 | 144 | 1 | `lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build` |
 | 38 | 26 | 123 | 2 | `lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build` |
+| 38 | 23 | 199 | 1 | `lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#_RefPickerSheetState.build` |
 

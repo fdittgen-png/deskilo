@@ -101,5 +101,29 @@
         "type": "String"
       }
     }
+  },
+  "demoSessionReturn": "Volver a mi espacio",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
+  },
+  "demoEntryBodySignedIn": "Todo en él es inventado. Su sesión sigue abierta. Los cambios que haga aquí solo afectan a la demo. Vuelva a su espacio cuando termine.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryUnavailable": "La demo no está disponible en este espacio.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoEntryBack": "Volver a mi espacio",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
+  "demoEntrySignIn": "Iniciar sesión",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
+  },
+  "demoEntryFailed": "No se pudo abrir la demo. Su espacio no ha cambiado.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
   }
 }
