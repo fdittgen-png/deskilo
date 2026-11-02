@@ -3,8 +3,9 @@
 // #3070 — the approvals queue: only the documents waiting for a decision,
 // an empty state when nothing waits, and a refusal that says so.
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
 import 'package:deskilo/features/money/presentation/screens/purchase_approvals_screen.dart';
-import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,17 @@ PurchaseSummary _doc(String id, PurchaseState state) => PurchaseSummary(
 );
 
 Widget _app(Future<List<PurchaseSummary>> Function() read) => ProviderScope(
-  overrides: [purchasesProvider.overrideWith((ref, id) => read())],
+  overrides: [
+    purchaseApprovalPageProvider.overrideWith((ref, key) async {
+      final all = await read();
+      final pending = [
+        for (final d in all)
+          if (d.state == PurchaseState.pending && d.kind == PurchaseKind.bill)
+            d,
+      ];
+      return PurchaseApprovalPage(rows: pending, count: pending.length);
+    }),
+  ],
   child: const MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
@@ -49,7 +60,9 @@ void main() {
   });
 
   testWidgets('nothing waiting shows the empty state', (tester) async {
-    await tester.pumpWidget(_app(() async => [_doc('2', PurchaseState.approved)]));
+    await tester.pumpWidget(
+      _app(() async => [_doc('2', PurchaseState.approved)]),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Nothing waits for your approval.'), findsOneWidget);
   });
@@ -60,4 +73,49 @@ void main() {
     expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
     expect(find.text('Nothing waits for your approval.'), findsNothing);
   });
+  testWidgets(
+    'page continuation reads further bills and stale counts offer retry',
+    (tester) async {
+      const cursor = (created: '2026-01-01T00:00:00Z', id: '1');
+      var bad = false;
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            purchaseApprovalPageProvider.overrideWith((ref, key) async {
+              if (key.after == null) {
+                return PurchaseApprovalPage(
+                  rows: [_doc('1', PurchaseState.pending)],
+                  count: 2,
+                  next: cursor,
+                );
+              }
+              return PurchaseApprovalPage(
+                rows: [_doc('2', PurchaseState.pending)],
+                count: bad ? 1 : 2,
+              );
+            }),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(body: PurchaseApprovalsView(workspaceId: 'ws')),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('approval-load-more')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('approval-2')), findsOneWidget);
+      bad = true;
+      ProviderScope.containerOf(tester.element(find.byType(PurchaseApprovalsView)))
+        .invalidate(purchaseApprovalPageProvider((workspaceId: 'ws', after: cursor)));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
+      bad = false;
+      await tester.tap(find.byKey(const ValueKey('approvals-retry')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('approval-1')), findsOneWidget);
+      expect(find.byKey(const ValueKey('approval-load-more')), findsOneWidget);
+    },
+  );
 }

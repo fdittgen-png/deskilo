@@ -20,6 +20,7 @@ import '../data/purchase_receipt_line.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
 import '../data/workspace_repository.dart';
+import 'demo_purchase_approval_seed.dart';
 
 /// The three in-memory repositories of the purchase side, seeded.
 class DemoPurchasing {
@@ -38,10 +39,11 @@ DemoPurchasing seedDemoPurchasing(
   DateTime now, {
   FakeMoneyRepository? money,
   (FakeWorkspaceRepository, FakeFloorPlanRepository)? plan,
+  String Function()? actor,
 }) {
   final suppliers = FakeSupplierRepository()..suppliers.addAll(_suppliers);
   final inbox = FakeEInvoiceInboxRepository();
-  final purchases = FakePurchaseRepository.demo();
+  final purchases = FakePurchaseRepository.demo(actor: actor);
   // #2573 — a line names the demo space's own sites, levels and offices.
   if (plan != null) {
     purchases.placesOf = (ws) => demoPurchasePlaces(plan.$1, plan.$2, ws);
@@ -53,6 +55,7 @@ DemoPurchasing seedDemoPurchasing(
   }
   _seedInbox(inbox, today);
   _seedBills(purchases, today);
+  seedDemoPurchaseApproval(purchases, today, _suppliers[2]);
   _seedForeignBill(purchases, today);
   _seedReimbursedReceipt(purchases, today);
   return DemoPurchasing(
@@ -379,20 +382,31 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
 }
 
 /// The earlier bill makes the same supplier's paid and part-paid states visible.
-void _seedSettledCleaning(FakePurchaseRepository purchases, Supplier supplier, DateTime today) {
+void _seedSettledCleaning(
+  FakePurchaseRepository purchases,
+  Supplier supplier,
+  DateTime today,
+) {
   DateTime ago(int days) => today.subtract(Duration(days: days));
   purchases.addApprovedBill(
     _document(
-      'demo-bill-cleaning-paid', PurchaseKind.bill, PurchaseState.draft,
+      'demo-bill-cleaning-paid',
+      PurchaseKind.bill,
+      PurchaseState.draft,
       _meta('NC-previous', ago(40), supplier: supplier, dueOn: ago(10)),
       [_bought(1, 'Cleaning, previous month', 6000, 20)],
     ),
     'demo-supplier-cleaning',
-    payments: [SettlementAllocation(
-      id: 'demo-sup-alloc-cleaning-paid', isReversal: false,
-      amountCents: 6000, method: 'bank_transfer', reference: 'Wire NC-previous',
+    payments: [
+      SettlementAllocation(
+        id: 'demo-sup-alloc-cleaning-paid',
+        isReversal: false,
+        amountCents: 6000,
+        method: 'bank_transfer',
+        reference: 'Wire NC-previous',
       paidOn: ago(15),
-    )],
+      ),
+    ],
   );
 }
 
