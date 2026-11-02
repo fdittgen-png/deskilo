@@ -117,17 +117,10 @@ class BankReconciliationReader {
         issue: BankSourceIssue.unsupportedFormat,
       );
     }
-    final List<int> bytes;
-    try {
-      bytes = await repository.fetchOriginal(
-        workspaceId,
-        statement.sourceSha256,
-      );
-    } on Exception {
-      // The storage service may conceal a refusal as absence. Reauthorize
-      // the statement and lines before preserving them as an incomplete report.
-      throw const BankOriginalUnavailable();
-    }
+    final bytes = await repository.fetchOriginal(
+      workspaceId,
+      statement.sourceSha256,
+    );
     final analysis = analyzeBankSource(
       statement: statement,
       lines: lines,

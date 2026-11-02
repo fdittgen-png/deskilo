@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Authorized reads preserve source uncertainty and reject refusal instead of fabricating a report.
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/application/bank_reconciliation_reader.dart';
@@ -8,6 +9,7 @@ import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/bank/reconciliation_report.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class _Bank implements BankStatementRepository {
   _Bank(this.statements, this.lines);
@@ -18,7 +20,7 @@ class _Bank implements BankStatementRepository {
   bool refuse = false;
   bool refuseLines = false;
   bool unavailableOriginal = false;
-  bool failedOriginalRead = false;
+  Exception? sourceFailure;
   bool revokeAfterSource = false;
   int originalReads = 0;
   int statementReads = 0;
@@ -29,7 +31,7 @@ class _Bank implements BankStatementRepository {
   ) async {
     originalReads++;
     if (unavailableOriginal) throw const BankOriginalUnavailable();
-    if (failedOriginalRead) throw Exception('storage unavailable');
+    if (sourceFailure case final failure?) throw failure;
     throw StateError('source refused');
   }
 
@@ -144,16 +146,6 @@ void main() {
       expect(report.statementDifferenceCents, isNull);
       expect(bank.statementReads, 2);
       bank
-        ..unavailableOriginal = false
-        ..failedOriginalRead = true;
-      final failed = await BankReconciliationReader(bank).read(
-        workspaceId: 'w',
-        statementId: 'source',
-        sourceLimits: const BankFileLimits(maxBytes: 1024, maxLines: 10),
-      );
-      expect(failed.sourceIssue, BankSourceIssue.readUnavailable);
-      expect(failed.statementDifferenceCents, isNull);
-      bank
         ..originalReads = 0
         ..revokeAfterSource = true;
       await expectLater(
@@ -201,6 +193,39 @@ void main() {
       expect(result.lines.single, same(line));
       expect(result.unresolved.single.remittance, 'Named unmatched');
       expect(bank.originalReads, 0);
+    },
+  );
+
+  test(
+    'storage denial, server failure and network failure propagate',
+    () async {
+      final sourced = StoredBankStatement(
+        id: 'source',
+        format: BankFileFormat.camt053,
+        account: 'account',
+        currency: 'EUR',
+        from: day,
+        to: day,
+        lineCount: 0,
+        openCount: 0,
+        sourceSha256: 'digest',
+      );
+      for (final failure in <Exception>[
+        const StorageException('denied', statusCode: '403'),
+        const StorageException('server failure', statusCode: '500'),
+        const SocketException('network unavailable'),
+      ]) {
+        final bank = _Bank([sourced], [])..sourceFailure = failure;
+        await expectLater(
+          BankReconciliationReader(bank).read(
+            workspaceId: 'w',
+            statementId: 'source',
+            sourceLimits: const BankFileLimits(maxBytes: 1024, maxLines: 10),
+          ),
+          throwsA(same(failure)),
+        );
+        expect(bank.statementReads, 1);
+      }
     },
   );
 
