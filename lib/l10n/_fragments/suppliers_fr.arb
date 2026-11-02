@@ -8,6 +8,8 @@
   "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
   "suppliersViewPayables": "Voir les dettes fournisseur",
   "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "suppliersPayablesUnavailable": "Dettes indisponibles",
+  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
   "suppliersLoadMore": "Charger plus",
   "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
   "suppliersTitle": "Fournisseurs",

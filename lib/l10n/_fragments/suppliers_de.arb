@@ -8,6 +8,8 @@
   "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
   "suppliersViewPayables": "Lieferantenverbindlichkeiten anzeigen",
   "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "suppliersPayablesUnavailable": "Verbindlichkeiten nicht verfügbar",
+  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
   "suppliersLoadMore": "Mehr laden",
   "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
   "suppliersTitle": "Lieferanten",

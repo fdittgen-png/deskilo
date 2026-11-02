@@ -79,10 +79,10 @@ void main() {
       )),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Balance unavailable'), findsOneWidget);
+    expect(find.text('Payables unavailable'), findsOneWidget);
     await tester.tap(find.text('Retry'));
     await tester.pumpAndSettle();
-    expect(find.text('Balance unavailable'), findsNothing);
+    expect(find.text('Payables unavailable'), findsNothing);
   });
 
   testWidgets('refusal shows an error and allows a fresh retry', (
@@ -109,7 +109,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Balance unavailable'), findsOneWidget);
+    expect(find.text('Payables unavailable'), findsOneWidget);
     repo.fail = false;
     await tester.tap(find.text('Retry'));
     await tester.pumpAndSettle();

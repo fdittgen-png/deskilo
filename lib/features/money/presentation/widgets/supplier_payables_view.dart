@@ -49,7 +49,7 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
 
   Widget _unavailable(BuildContext context) => Column(
     children: [
-      Text(context.l10n.suppliersBalanceUnavailable),
+      Text(context.l10n.suppliersPayablesUnavailable),
       TextButton(onPressed: _restart, child: Text(context.l10n.commonRetry)),
     ],
   );
