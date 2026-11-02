@@ -78,3 +78,23 @@ This proves route feasibility ONLY, not canonical340 or CI. Next: E1 offline gen
 ## Highest-priority owner efficiency directive
 
 The owner explicitly requires all issues to be resolved as efficiently in time/tokens and as pragmatically as possible. Prefer smallest complete acceptance, existing code/flows, exact-input evidence reuse and focused checks; batch findings, avoid repeated diagnoses, speculative frameworks and acknowledgement loops. Read current receipts before stale queued reports. On actual merge reconcile promptly, release locks and clean owned work. No fake savings, incomplete issue closure or bypass of correctness/confidentiality/required checks. These expectations apply to orchestrator as well as engineers/reviewer.
+
+
+## Owner-directed idle-time scheduling — 2026-11-02
+
+At every claim/review/push/CI/merge or blocking handoff, check whether an engineer can advance useful independent work. For an expected wait over five minutes, report once: UTC start | blocking dependency and owner | expected free window (range or UNKNOWN) | useful parallel task | return trigger. On resumption, record actual end/duration once. Tests running do not imply the session is idle. No periodic heartbeat, watcher, repeated ACK or fabricated ETA.
+
+Priority for wait work: unblock the active dependency through a nonduplicated independent review; finish a missing acceptance/evidence subtask using existing artifacts; prepare the smallest implementable next leaf against current source and latest issue corrections. Do not use an old issue body to rebuild delivered work. Read only the selected issue/necessary corrections, not the entire backlog on every handoff. No extra runs merely to fill time.
+
+Keep frozen CI candidates immutable. A bounded, interruptible side task uses an isolated worktree if editing, explicit disjoint locks, one prepared follow-up maximum per engineer and the existing normal two-PR/hard-four cap. No third simultaneous editing worker or second migration tenure. Current candidate findings and eligible merge/cleanup preempt side work. Proof-only CI publication may follow the established reviewer-controlled path; lack of final artifacts must be labeled rather than creating silent idle time.
+
+Measure reported idle intervals, dispatch-to-start latency, useful accepted deliverables, invalidated tests/CI, conflict/rework and merge handoff delay. Do not count a queue receipt as work started or equate utilization with throughput. Audit these at material handoffs; no claim of always-on monitoring between turns.
+
+### First measured dispatch
+
+Verified45 open issues, including operator/provider-gated and deferred work. E1 reported idle13:53:00Z awaiting3255 CI/reviewer, expected durationUNKNOWN. E2 reported actual idle13:52:57Z awaiting0655 review/proof, expected durationUNKNOWN. At13:55:09Z assignments queued; personal CURRENT updates confirm:
+- E1 started13:55:16Z: idle **2m16s**. Independent01501c56 concurrency-script fidelity and lock-order inversion review, read-only, <=15-minute deliverable, split from reviewer SQL/live-helper/DB ownership. Then bounded2599 existing-run timing/acceptance evidence if still waiting.
+- E2 started13:55:14Z: idle **2m17s**. Bounded2380 QR/RF stored-reference-to-UBL/CII gap crosswalk; latest residual comment6571197332, not delivered import/unmatch. Conditional isolated mapping/test patch only if existing contract suffices and locks are disjoint; no new DB/registry/shared Demo work or PR before slot/lock check.
+- Reviewer current dependency is0655 contract/live-helper/real DB proof and3255 CI/merge; current free-window report requested, not assumed idle.
+
+Total observed engineer idle **4m33s**, not a before/after savings estimate. Assignment-to-start after observed dispatch was7s/5s. Outcomes and any interruption/resumption remain to be recorded; no throughput improvement claimed yet.
