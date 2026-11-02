@@ -2229,7 +2229,7 @@ routine public.has_permission(ws uuid, perm text) -> boolean | function | define
 routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c89e4a3763c3
 routine public.hmrc_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:eba9808c9249
 routine public.hmrc_connection_manageable_v1(p_connection_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c157eece1062
-routine public.hmrc_connection_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9231ffe80ab6
+routine public.hmrc_connection_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2784a490ff41
 routine public.hmrc_filing_context_v1(p_declaration_id uuid, p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:939dfa7ac6ed
 routine public.hmrc_vrn(p_vat_id text) -> text | function | invoker | immutable | exec:service_role | body:33d816d51b86
 routine public.holds_template_grant(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9497ef467747
