@@ -332,11 +332,14 @@ export async function hmrcSubmit(
       ...keys.map((k) => [k, pence(boxes[k])]),
     ]),
   );
-  const claim = await deps.service().rpc("claim_hmrc_submission", {
+  const claim = await deps.service().rpc("claim_hmrc_submission_v2", {
     p_declaration_id: c.declaration_id,
     p_holder: holder,
     p_seconds: 60,
     p_boxes_sha256: digest,
+    p_recovery_marker: typeof body.recovery_marker === "string"
+      ? body.recovery_marker
+      : null,
   });
   const claimed = claim.data as
     | {
@@ -366,7 +369,9 @@ export async function hmrcSubmit(
         ? json({ status: "filed", channel: "hmrc_mtd", receipt: kept })
         : json({ error: "accepted_not_recorded", receipt: kept }, 500);
     }
-    return json({ error: "in_flight" }, 409);
+    return claimed.state === "unconfirmed"
+      ? json({ error: "unconfirmed" }, 409)
+      : json({ error: "in_flight" }, 409);
   }
 
   let sentToHmrc = false;
@@ -431,7 +436,7 @@ export async function hmrcSubmit(
     // the row stays unconfirmed (HMRC has the return, we may hold no receipt)
     // and the receipt goes back in the answer.
     sentToHmrc = Boolean(kept.error);
-    if (!await fileHere(result.receipt)) {
+    if (kept.error || !await fileHere(result.receipt)) {
       console.error(
         "accounting-connect: HMRC accepted a return that could not be filed here",
       );

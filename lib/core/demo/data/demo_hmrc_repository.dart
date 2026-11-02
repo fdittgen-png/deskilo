@@ -7,6 +7,10 @@
 // makes (the right, the connection, the prepared return unchanged, the nine
 // boxes equal to the ones the prepared lines give, an open obligation) and
 // after a receipt; a scripted unconfirmed or refused answer files nothing.
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+
 import '../../../features/money/domain/hmrc_submission.dart';
 import '../../../features/money/domain/mtd_boxes.dart';
 import '../../../features/money/domain/vat_declaration.dart';
@@ -26,16 +30,25 @@ class DemoHmrcRepository implements HmrcRepository {
     required this._workspaces,
     required this._today,
     this.script,
-  });
+    String? initiallyUnconfirmed,
+  }) {
+    if (initiallyUnconfirmed != null) {
+      _uncertain[initiallyUnconfirmed] = _marker(initiallyUnconfirmed, 0);
+    }
+  }
 
   final FakeMoneyRepository _money;
   final FakeWorkspaceRepository _workspaces;
   final DateTime _today;
   final DemoHmrcScript? script;
 
+  static String _marker(String declarationId, int attempt) =>
+      sha256.convert(utf8.encode('demo-hmrc-recovery-v1|$declarationId|$attempt')).toString();
+
   HmrcConnection? _connection;
   bool _inFlight = false;
   int _attempts = 0;
+  final Map<String, String> _uncertain = {};
 
   /// Owner or active co-owner: who may connect and file, as on the server.
   bool get _mayFile {
@@ -55,6 +68,8 @@ class DemoHmrcRepository implements HmrcRepository {
     return HmrcState(
       vrn: digits != null && digits.length == 9 ? digits : null,
       connection: _connection,
+      unconfirmedDeclarationIds: _uncertain.keys.toList(),
+      recoveryMarkers: Map.unmodifiable(_uncertain),
       demo: true,
     );
   }
@@ -81,14 +96,29 @@ class DemoHmrcRepository implements HmrcRepository {
     required String connectionId,
     required Map<String, num> boxes,
     required HmrcClientValues client,
+    String? recoveryMarker,
   }) async {
     // One submission of a return at a time: a second tap is in_flight.
+    if (!_mayFile) return const HmrcRefused(HmrcRefusal.notAllowed);
     if (_inFlight) return const HmrcRefused(HmrcRefusal.inFlight);
+    if (_connection == null || _connection!.id != connectionId || !_connection!.isConnected) {
+      return const HmrcRefused(HmrcRefusal.notConnected);
+    }
+    final marker = _uncertain[declarationId];
+    if (marker != null && marker != recoveryMarker) {
+      return const HmrcUnconfirmed(code: 'CHECK_REQUIRED');
+    }
     _inFlight = true;
     try {
       // The claim and the call are not one step: let a second tap in.
       await Future<void>.delayed(Duration.zero);
-      return _run(declarationId, connectionId, boxes);
+      final result = _run(declarationId, connectionId, boxes);
+      if (result is HmrcUnconfirmed || (result is HmrcRefused && result.refusal == HmrcRefusal.alreadySubmitted)) {
+        _uncertain[declarationId] = _marker(declarationId, _attempts);
+      } else if (result is HmrcFiled) {
+        _uncertain.remove(declarationId);
+      }
+      return result;
     } finally {
       _inFlight = false;
     }
