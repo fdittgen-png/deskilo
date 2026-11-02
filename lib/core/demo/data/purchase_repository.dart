@@ -1,20 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/purchase.dart';
 import 'purchase_exchange_rates.dart';
+import 'purchase_maker_tracking.dart';
 import 'purchase_receipt_line.dart';
 
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
 /// what the dialog saved, replaying a request id as the server does.
 class FakePurchaseRepository
-    with NoFiledPurchases, DemoPurchasePlaces, DemoPurchaseExchangeRates
+    with
+        NoFiledPurchases,
+        DemoPurchasePlaces,
+        DemoPurchaseExchangeRates,
+        DemoPurchaseMakerTracking
     implements PurchaseRepository {
-  FakePurchaseRepository();
+  FakePurchaseRepository({String Function()? actor})
+    : actor = actor ?? _defaultActor;
 
+  static String _defaultActor() => 'member-1';
+  @override
+  final String Function() actor;
   /// The demo space: two approved claims of the demo members, one untouched
   /// and one part-paid, so the To-pay tab, a payment and a reversal can all
   /// be tried exactly as in production.
-  factory FakePurchaseRepository.demo() => FakePurchaseRepository()
+  factory FakePurchaseRepository.demo({String Function()? actor}) =>
+      FakePurchaseRepository(actor: actor)
     ..payables.addAll([
       _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning supplies'),
       _demoClaim('demo-claim-3', 'member-1', 5400, 'event catering'),
@@ -51,7 +61,6 @@ class FakePurchaseRepository
   /// The VAT rate of each claim's receipt (the demo states what the server
   /// would have read from the lines).
   final Map<String, double> claimRates = {};
-
   static PayableRow _demoClaim(
     String id,
     String member,
@@ -84,16 +93,19 @@ class FakePurchaseRepository
   );
 
   final List<PurchaseDetail> _documents = [];
-
   /// A document the demo space already holds (a bill captured, a receipt
   /// awaiting approval or refused).
-  void add(PurchaseDetail document) => _documents.add(document);
-  final Map<String, String> _requests = {};
+  void add(PurchaseDetail document) {
+    _documents.add(document);
+    if (document.summary.kind == PurchaseKind.bill) {
+      billMaker[document.summary.id] = 'member-3';
+    }
+  }
 
+  final Map<String, String> _requests = {};
   /// The claims the demo shows; the server derives them from approved
   /// receipts, the demo only keeps what a test or a scenario hands it.
   final List<PayableRow> payables = [];
-
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => [
     for (final p in payables)
@@ -146,7 +158,6 @@ class FakePurchaseRepository
   ];
 
   final Map<String, PurchaseObligation> _paid = {};
-
   int _row(String obligationId) =>
       payables.indexWhere((r) => r.obligation.id == obligationId);
 
@@ -244,7 +255,7 @@ class FakePurchaseRepository
 
   /// A bill sent for approval and waiting for a second person.
   void addPendingBill(PurchaseDetail bill) =>
-      _documents.add(_inState(bill, PurchaseState.pending));
+      add(_inState(bill, PurchaseState.pending));
 
   @override
   Future<PurchaseObligation> offsetClaim(
@@ -324,6 +335,9 @@ class FakePurchaseRepository
       throw StateError('only a draft bill or receipt can be submitted');
     }
     _documents[i] = _inState(d, PurchaseState.pending);
+    if (d.summary.kind == PurchaseKind.bill) {
+      billSubmitter[purchaseId] = actor();
+    }
     _requests[requestId] = purchaseId;
     return PurchaseState.pending;
   }
@@ -411,7 +425,6 @@ class FakePurchaseRepository
     _documents[i] = _inState(d, PurchaseState.approved);
     return PurchaseState.approved;
   }
-
   @override
   Future<PurchaseObligation> reverseAllocation(
     String workspaceId, {
@@ -461,7 +474,6 @@ class FakePurchaseRepository
     _store(i, next);
     return _paid[requestId] = next;
   }
-
   @override
   Future<String> saveDraft(
     String workspaceId,
@@ -475,6 +487,7 @@ class FakePurchaseRepository
     final i = _documents.indexWhere((d) => d.summary.id == id);
     if (i < 0) {
       _documents.add(detail);
+      if (detail.summary.kind == PurchaseKind.bill) billMaker[id] = actor();
     } else {
       _documents[i] = detail;
     }

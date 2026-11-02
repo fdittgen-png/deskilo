@@ -19,6 +19,7 @@ class DrawerTile extends StatelessWidget {
     required this.entry,
     required this.path,
     required this.badge,
+    this.trailing,
     super.key,
   });
 
@@ -27,6 +28,9 @@ class DrawerTile extends StatelessWidget {
 
   /// The count that badges the entry; 0 for none.
   final int badge;
+
+  /// An explicit loading or unavailable indicator in place of a count.
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,9 @@ class DrawerTile extends StatelessWidget {
       shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
       selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
-      trailing: badge > 0 ? Badge.count(count: badge, maxCount: 99) : null,
+      trailing:
+          trailing ??
+          (badge > 0 ? Badge.count(count: badge, maxCount: 99) : null),
       onTap: e.onTap,
     );
   }

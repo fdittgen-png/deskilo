@@ -19295,14 +19295,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get publicProfileTitle => 'Perfil público';
 
   @override
-  String get purchaseApprovalsEmpty => 'Nada espera su aprobación.';
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'No se pudieron cargar los comprobantes pendientes.';
+
+  @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Comprobantes pendientes de miembros que puede consultar';
+
+  @override
+  String get purchaseApprovalsEmpty =>
+      'Ninguna factura de proveedor espera su aprobación.';
 
   @override
   String get purchaseApprovalsRefused =>
-      'No se pudieron leer los documentos por aprobar.';
+      'No se pudieron leer las facturas de proveedores por aprobar.';
 
   @override
-  String get purchaseApprovalsTitle => 'Por aprobar';
+  String get purchaseApprovalsTitle => 'Facturas de proveedores por aprobar';
 
   @override
   String get purchaseEntryAdd => 'Añadir compra / gasto';

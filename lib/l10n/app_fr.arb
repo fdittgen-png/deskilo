@@ -12430,15 +12430,18 @@
   "publicProfilePublishBody": "N'importe qui sur Internet, connecté ou non, pourra lire votre nom, votre métier et votre présentation via votre lien. Vos coordonnées, votre présence et vos espaces restent privés.",
   "publicProfilePublishTitle": "Publier un profil public ?",
   "publicProfileTitle": "Profil public",
-  "purchaseApprovalsEmpty": "Rien n’attend votre approbation.",
+  "purchaseApprovalEvidenceUnavailable": "Les justificatifs et le taux de change éventuel ne sont pas disponibles dans cette vue d’approbation. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat.",
+  "purchaseApprovalReceiptsUnavailable": "Impossible de charger les justificatifs en attente.",
+  "purchaseApprovalVisibleReceipts": "Justificatifs de membres en attente que vous pouvez consulter",
+  "purchaseApprovalsEmpty": "Aucune facture fournisseur n’attend votre approbation.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "Les documents à approuver n’ont pas pu être lus.",
+  "purchaseApprovalsRefused": "Les factures fournisseurs à approuver n’ont pas pu être lues.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "À approuver",
+  "purchaseApprovalsTitle": "Factures fournisseurs à approuver",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },

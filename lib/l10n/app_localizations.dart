@@ -32016,22 +32016,40 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// No description provided for @purchaseApprovalEvidenceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.'**
+  String get purchaseApprovalEvidenceUnavailable;
+
+  /// No description provided for @purchaseApprovalReceiptsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending receipts could not be loaded.'**
+  String get purchaseApprovalReceiptsUnavailable;
+
+  /// No description provided for @purchaseApprovalVisibleReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending member receipts you can view'**
+  String get purchaseApprovalVisibleReceipts;
+
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'Nothing waits for your approval.'**
+  /// **'No supplier bills await your approval.'**
   String get purchaseApprovalsEmpty;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'The documents waiting for approval could not be read.'**
+  /// **'The supplier bills awaiting approval could not be read.'**
   String get purchaseApprovalsRefused;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'To approve'**
+  /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
 
   /// #2577 the guided purchase / expense entry

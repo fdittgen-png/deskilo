@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_credit_repository.dart';
 import '../domain/credit_product.dart';
+import '../domain/purchase.dart' show purchaseDecidePermission;
 
 part 'credit_providers.g.dart';
 
@@ -40,3 +41,26 @@ Future<int> memberCreditBalance(Ref ref, String memberId) =>
 final spaceCurrencyProvider = Provider.autoDispose<String?>(
   (ref) => ref.watch(currentWorkspaceProvider).value?.currencyCode,
 );
+
+/// Fail closed while identity/workspace is uncertain or the approval grant is gone.
+final purchaseApprovalAccessProvider = Provider.family<bool, String>((
+  ref,
+  workspaceId,
+) {
+  final workspace = ref.watch(currentWorkspaceProvider);
+  final member = ref.watch(myMemberProvider);
+  final permissions = ref.watch(myPermissionsProvider);
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  if (workspace.isLoading ||
+      workspace.hasError ||
+      member.isLoading ||
+      member.hasError) {
+    return false;
+  }
+  return workspace.value?.id == workspaceId &&
+      member.value?.status.name == 'active' &&
+      features.any((feature) => feature.name == 'purchases') &&
+      permissions.any(
+        (permission) => permission.wireName == purchaseDecidePermission,
+      );
+});

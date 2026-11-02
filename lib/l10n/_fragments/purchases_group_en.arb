@@ -4,16 +4,19 @@
   "@navPurchasesGroup": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "To approve",
+  "purchaseApprovalsTitle": "Supplier bills to approve",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsEmpty": "Nothing waits for your approval.",
+  "purchaseApprovalsEmpty": "No supplier bills await your approval.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "The documents waiting for approval could not be read.",
+  "purchaseApprovalsRefused": "The supplier bills awaiting approval could not be read.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
-  }
+  },
+  "purchaseApprovalVisibleReceipts": "Pending member receipts you can view",
+  "purchaseApprovalReceiptsUnavailable": "Pending receipts could not be loaded.",
+  "purchaseApprovalEvidenceUnavailable": "Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details."
 }
