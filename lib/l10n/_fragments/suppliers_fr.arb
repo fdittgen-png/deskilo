@@ -1,5 +1,15 @@
 {
   "@@locale": "fr",
+  "suppliersOutstanding": "Solde dû : {amount}",
+  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "suppliersNoOutstanding": "Aucun solde dû",
+  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "suppliersBalanceUnavailable": "Solde indisponible",
+  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "suppliersViewPayables": "Voir les dettes fournisseur",
+  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "suppliersLoadMore": "Charger plus",
+  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
   "suppliersTitle": "Fournisseurs",
   "@suppliersTitle": {
     "description": "#2567 suppliers"

@@ -1,5 +1,15 @@
 {
   "@@locale": "en",
+  "suppliersOutstanding": "Outstanding: {amount}",
+  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "suppliersNoOutstanding": "No outstanding balance",
+  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "suppliersBalanceUnavailable": "Balance unavailable",
+  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "suppliersViewPayables": "View supplier payables",
+  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "suppliersLoadMore": "Load more",
+  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
   "suppliersTitle": "Suppliers",
   "@suppliersTitle": {
     "description": "#2567 suppliers"
