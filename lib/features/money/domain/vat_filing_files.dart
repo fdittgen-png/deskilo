@@ -47,6 +47,7 @@ import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 import '../../../core/time/date_text.dart';
+import 'mtd_boxes.dart';
 import 'vat_declaration.dart';
 import 'vat_filing_ca.dart';
 import 'vat_filing_ech0217.dart';
@@ -185,19 +186,6 @@ class VatFilingParty {
   };
 }
 
-/// The HMRC field names of the nine boxes, in the order of the form.
-const _mtdFields = [
-  'vatDueSales',
-  'vatDueAcquisitions',
-  'totalVatDue',
-  'vatReclaimedCurrPeriod',
-  'netVatDue',
-  'totalValueSalesExVAT',
-  'totalValuePurchasesExVAT',
-  'totalValueGoodsSuppliedExVAT',
-  'totalAcquisitionsExVAT',
-];
-
 /// The nine boxes of the UK return as one CSV row for MTD bridging
 /// software (#2359). [vatId] is the registration number; the row names its
 /// nine digits as `vrn`.
@@ -211,25 +199,13 @@ String mtdBridgingCsv({
   if (digits.length < 9) {
     throw const VatFilingFileException(VatFilingFileProblem.vatNumber);
   }
-  final values = <String, String>{};
-  for (final box in vatFormBoxes(
-    'GB',
-    declaration.lines,
-    periodEnd: declaration.periodEnd,
-  )) {
-    if (box.hasBase && box.baseKey.isNotEmpty) {
-      values[box.baseKey] = (box.netCents ~/ 100).toString();
-    }
-    if (box.hasTax && box.taxKey.isNotEmpty) {
-      values[box.taxKey] = _euros(box.vatCents);
-    }
-  }
-  final header = ['vrn', 'periodStart', 'periodEnd', ..._mtdFields];
+  final cents = mtdBoxCents(declaration);
+  final header = ['vrn', 'periodStart', 'periodEnd', ...mtdBoxFields];
   final row = [
     digits.substring(0, 9),
     isoDay(declaration.periodStart),
     isoDay(declaration.periodEnd),
-    for (final field in _mtdFields) values[field] ?? '0',
+    for (final field in mtdBoxFields) mtdBoxText(field, cents[field]!),
   ];
   return '${header.join(',')}\r\n${row.join(',')}\r\n';
 }
