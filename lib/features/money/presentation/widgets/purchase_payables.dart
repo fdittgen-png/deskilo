@@ -11,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
+import '../../providers/supplier_balance_provider.dart';
 import 'purchase_labels.dart';
 import 'purchase_offset_dialog.dart';
 import 'purchase_payment_dialogs.dart';
@@ -37,6 +38,8 @@ class PurchasePayablesView extends ConsumerWidget {
     required this.onOpen,
     this.canPay = false,
     this.canOffset = false,
+    this.supplierRows,
+    this.onPayablesChanged,
     super.key,
   });
 
@@ -50,13 +53,22 @@ class PurchasePayablesView extends ConsumerWidget {
   /// The signed-in person may also settle an invoice (issueInvoices).
   final bool canOffset;
 
+  /// A supplier-scoped page assembled by the explicit-continuation reader.
+  /// Null keeps the existing workspace-wide list.
+  final List<PayableRow>? supplierRows;
+  final VoidCallback? onPayablesChanged;
+
   Future<void> _offset(
     BuildContext context,
     WidgetRef ref,
     PurchaseObligation claim,
   ) async {
     final saved = await showOffsetDialog(context, workspaceId, claim);
-    ref.invalidate(payablesProvider(workspaceId));
+    ref
+      ..invalidate(payablesProvider(workspaceId))
+      ..invalidate(supplierBalancesProvider(workspaceId))
+      ..invalidate(supplierPayablesPageProvider);
+    onPayablesChanged?.call();
     if (saved != true || !context.mounted) return;
     ref.invalidate(invoiceMatchesProvider);
     AppSnack.success(context, context.l10n.purchasesOffsetSaved);
@@ -69,7 +81,11 @@ class PurchasePayablesView extends ConsumerWidget {
   ) async {
     final saved = await showReimbursementDialog(context, workspaceId, claim);
     // Saved or not, the claim is read again: a lost answer may have landed.
-    ref.invalidate(payablesProvider(workspaceId));
+    ref
+      ..invalidate(payablesProvider(workspaceId))
+      ..invalidate(supplierBalancesProvider(workspaceId))
+      ..invalidate(supplierPayablesPageProvider);
+    onPayablesChanged?.call();
     if (saved != true || !context.mounted) return;
     AppSnack.success(context, context.l10n.purchasesPaySaved);
   }
@@ -78,7 +94,9 @@ class PurchasePayablesView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final payables = ref.watch(payablesProvider(workspaceId));
+    final payables = supplierRows == null
+        ? ref.watch(payablesProvider(workspaceId))
+        : AsyncValue.data(supplierRows!);
     final names = ref.watch(memberLabelsProvider);
     final rows = payables.value;
     if (rows == null) {
@@ -162,8 +180,10 @@ class PurchasePayablesView extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        group(l10n.purchasesOwedMembers, CreditorKind.member),
-        const SizedBox(height: AppSpacing.md),
+        if (supplierRows == null) ...[
+          group(l10n.purchasesOwedMembers, CreditorKind.member),
+          const SizedBox(height: AppSpacing.md),
+        ],
         group(l10n.purchasesOwedSuppliers, CreditorKind.supplier),
       ],
     );

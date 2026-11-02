@@ -20,6 +20,7 @@ import 'purchase_link_inbox.dart';
 import 'purchase_payables.dart';
 import 'purchase_receipt_sheet.dart';
 import 'purchase_status_chips.dart';
+import 'supplier_payables_view.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
 /// offer it; the server shows a member their own documents and a manager all.
@@ -31,6 +32,7 @@ Future<void> showPurchasesSheet(
   bool canDecide = false,
   bool canOffset = false,
   bool toPay = false,
+  String? supplierId,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -41,6 +43,7 @@ Future<void> showPurchasesSheet(
     canDecide: canDecide,
     canOffset: canOffset,
     toPay: toPay,
+    supplierId: supplierId,
   ),
 );
 
@@ -54,11 +57,15 @@ class PurchasesView extends ConsumerStatefulWidget {
     this.canDecide = false,
     this.canOffset = false,
     this.toPay = false,
+    this.supplierId,
     super.key,
   });
 
   /// #2577 — opened on what is still to pay (the Cash page).
   final bool toPay;
+
+  /// Restricts the existing payable list at the server to this supplier.
+  final String? supplierId;
 
   final String workspaceId;
 
@@ -80,7 +87,7 @@ class PurchasesView extends ConsumerStatefulWidget {
 }
 
 class _PurchasesViewState extends ConsumerState<PurchasesView> {
-  late var _toPay = widget.toPay;
+  late var _toPay = widget.toPay || widget.supplierId != null;
 
   String get workspaceId => widget.workspaceId;
 
@@ -102,14 +109,14 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final purchases =
-        ref.watch(purchasesProvider(workspaceId)).value ??
-        const <PurchaseSummary>[];
+    final purchases = widget.supplierId == null
+        ? ref.watch(purchasesProvider(workspaceId)).value ?? const <PurchaseSummary>[]
+        : const <PurchaseSummary>[];
     return SheetShell(
       title: l10n.purchasesTitle,
       children: [
         const SizedBox(height: AppSpacing.sm),
-        SegmentedButton<bool>(
+        if (widget.supplierId == null) SegmentedButton<bool>(
           key: const ValueKey('purchases-tabs'),
           segments: [
             ButtonSegment(
@@ -122,7 +129,15 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
           onSelectionChanged: (s) => setState(() => _toPay = s.first),
         ),
         const SizedBox(height: AppSpacing.sm),
-        if (_toPay)
+        if (widget.supplierId case final supplierId?)
+          SupplierPayablesView(
+            workspaceId: workspaceId,
+            supplierId: supplierId,
+            canPay: widget.canPay,
+            canOffset: widget.canOffset,
+            onOpen: (id) => _showDetailSheet(context, workspaceId, id, widget),
+          )
+        else if (_toPay)
           PurchasePayablesView(
             workspaceId: workspaceId,
             canPay: widget.canPay,

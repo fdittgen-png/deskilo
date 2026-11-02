@@ -26,15 +26,20 @@ class SupplierBalanceLine extends ConsumerWidget {
     final l10n = context.l10n;
     final result = ref.watch(supplierBalancesProvider(workspaceId));
     // Do not show an older successful amount during a refresh or error.
-    if (result.isLoading) return const LoadingView();
+    if (result.isLoading) {
+      return const SizedBox(height: 40, child: LoadingView());
+    }
     if (result.hasError) {
-      return Row(children: [
-        Expanded(child: Text(l10n.suppliersBalanceUnavailable)),
-        TextButton(
-          onPressed: () => ref.invalidate(supplierBalancesProvider(workspaceId)),
-          child: Text(l10n.commonRetry),
-        ),
-      ]);
+      return Row(
+        children: [
+          Expanded(child: Text(l10n.suppliersBalanceUnavailable)),
+          TextButton(
+            onPressed: () =>
+                ref.invalidate(supplierBalancesProvider(workspaceId)),
+            child: Text(l10n.commonRetry),
+          ),
+        ],
+      );
     }
     final balances = result.requireValue
         .where((balance) => balance.supplierId == supplierId)
@@ -46,9 +51,12 @@ class SupplierBalanceLine extends ConsumerWidget {
           Text(l10n.suppliersNoOutstanding)
         else
           for (final balance in balances)
-            Text(l10n.suppliersOutstanding(
-              moneyFormat(balance.currency).formatMinor(balance.remainingCents),
-            )),
+            Text(
+              l10n.suppliersOutstanding(
+                moneyFormat(balance.currency)
+                    .formatMinor(balance.remainingCents),
+              ),
+            ),
         TextButton(
           key: ValueKey('supplier-payables-$supplierId'),
           onPressed: onOpenPayables,
