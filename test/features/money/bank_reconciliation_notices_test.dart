@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// Custom and positioned reports retain mandatory limitations in previews and PDFs.
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';

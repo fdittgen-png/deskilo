@@ -11,6 +11,7 @@ import '../domain/archive_bundle.dart' show textBytes;
 import '../domain/bank/bank_records.dart' show bankStatementReaders;
 import '../domain/bank/reconciliation_report.dart';
 import '../providers/bank_statement_providers.dart';
+import 'bank_reconciliation_pdf.dart';
 import 'bank_reconciliation_words.dart';
 import 'invoice_documents.dart';
 import 'report_layout_actions.dart';
@@ -93,9 +94,7 @@ class BankReconciliationArchive {
         docId: 'bank_reconciliation',
         data: data,
       );
-      final pdf = await letterDocPdf(
-        context,
-        ref,
+      final pdf = await BankReconciliationPdf(context, ref).build(
         report: rendered,
         title: title,
         layoutXml: letterLayoutXml(ref, docId: 'bank_reconciliation'),

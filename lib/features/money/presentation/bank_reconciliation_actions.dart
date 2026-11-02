@@ -7,6 +7,7 @@ import '../../../core/i18n/money_format.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/bank/reconciliation_report.dart';
 import '../providers/bank_statement_providers.dart';
+import 'bank_reconciliation_pdf.dart';
 import 'bank_reconciliation_words.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
@@ -86,9 +87,7 @@ class BankReconciliationActions {
         if (!sameScope()) {
           throw StateError('workspace changed while opening bank report');
         }
-        return letterDocPdf(
-          context,
-          ref,
+        return BankReconciliationPdf(context, ref).build(
           report: rendered,
           title: title,
           layoutXml: letterLayoutXml(ref, docId: 'bank_reconciliation'),

@@ -33,7 +33,6 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   required String title,
   String? layoutXml,
   Map<String, Object?> data = const {},
-  List<String> mandatoryNotices = const [],
 }) => letterPdfOf(
   ref,
   (
@@ -46,7 +45,6 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   // #917 — read before the first await: the context must not be used
   // across an async gap, and the answer cannot change mid-render.
   pageLabel: context.l10n.invoicePdfPage,
-  mandatoryNotices: mandatoryNotices,
   watermark: developmentMark(context, ref),
 );
 
