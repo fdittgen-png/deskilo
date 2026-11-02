@@ -173,15 +173,27 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
+      body: LayoutBuilder(builder: (context, constraints) {
+        final minHeight = constraints.maxHeight > AppSpacing.xl * 2
+            ? constraints.maxHeight - AppSpacing.xl * 2 : 0.0;
+        return SingleChildScrollView(
           padding: AppSpacing.xlAll,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 420),
-            child: _pendingEmail == null ? _form(l10n) : _pending(),
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox.shrink(),
+                Center(child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  child: _pendingEmail == null ? _form(l10n) : _pending(),
+                )),
+                const AuthBuildVersion(),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
