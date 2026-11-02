@@ -59,7 +59,7 @@ const _recipes = <String, (int, List<String>, Map<String, int>)>{
   'invitation_join': (9, ['join'], {'waits_human': 1, 'fields_entered': 0}),
   'owner_first_booking': (14, ['create', 'book'], {}),
   'byo_signin': (11, ['verify', 'sign_in'], {'waits_human': 1}),
-  'pending_leave_return': (8, ['request', 'withdraw'], {'back_corrections': 2}),
+  'pending_leave_return': (8, ['request', 'withdraw'], {'back_corrections': 1}),
   'wizard_keyboard_back_edit':
       (5, ['create'], {'back_corrections': 1, 'user_edits': 1}),
 };
@@ -184,6 +184,18 @@ void main() {
   });
 
   group('#1456 onboarding recipes', () {
+    test('#2136 records one actual Back and keeps the eight-trip ceiling', () {
+      expect(run(_record()).code, 0);
+      for (final count in [0, 2]) {
+        final r = run(_record(override: {'pending_leave_return.back_corrections': count}));
+        expect(r.code, 1, reason: r.out);
+        expect(r.out, contains('pending_leave_return.back_corrections is $count'));
+      }
+      final trips = run(_record(override: {'pending_leave_return.trips': 9}));
+      expect(trips.code, 1, reason: trips.out);
+      expect(trips.out, contains('pending_leave_return.trips is 9, outside [1, 8]'));
+    });
+
     test('every recipe is gated, by name', () {
       final r = run(_record());
       expect(r.code, 0, reason: r.out);
