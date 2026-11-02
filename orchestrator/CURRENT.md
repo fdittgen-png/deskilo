@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot after verified #3253 merge at **2026-11-02 13:31:55 UTC**. This replaces prior pending/failed-head snapshots. Refresh live GitHub before acting.
+Snapshot reconciled through **2026-11-02 14:35 UTC**, including #3255 merge. This replaces prior pending/failed-head snapshots. Refresh live GitHub before acting.
 
 ## Owner priority and publication decision
 
@@ -65,6 +65,10 @@ Development project reference: `zwzbynivewivvjmripeb`. No secret values are stor
 
 
 
-## #3255 active follow-up
+## #3255 completed; #2599 ready for final review
 
-Independently verified OPEN at **789a6769b5f3e27ffac94907ce6f7f0c92caa7fe**. Quality **41454152999** in progress; Web **41454152818** queued at reconciliation. E1 merged e238a819 master once; selector/Back source and scoped tests unchanged from fc39/81031, plus eight focused integration tests passed after Demo/approval consumer changes. Prior exact-input selector6/privacy-Demo7/gate17/analyzers retained; reviewer consolidates exact-head acceptance and required CI. No automatic extra master merge for3254 bootstrap absent actual integration need/conflict/policy. Preserve active CI. Trip ceiling8 unchanged, no MCP scope, nightly remains unresolved. Review/CI handoff queued to reviewer; delivery not acknowledgement.
+GitHub independently confirms #3255 MERGED **2026-11-02 14:33:46 UTC**, squash **fb464b78deec3afab4df3ed62675b8f699334b83**, from reviewed **b04a297091e956e79c94534ca2ffc3a8ce5deb46**. Exact-head Quality41457846551 and Web41457846972 completedSUCCESS. E1 cleanup/release queued immediately. Selector reduces unrelated provider rebuilds; Back contract is exactly1, trip ceiling8 unchanged. Nightly remains unresolved.
+
+#2599 local candidate **937a4f6f49de46efd13a6d22bc2d4499d8c614eb**, /private/tmp/deskilo-2599-lint. E2 independent delta review reports no actionable findings after durable pump-growth rationale, unique receipt-detail assertions and owned fixture-root/same-temp unowned-checkout regression. E1 reports latest7 focused/analyzer0, prior13/9 delta proof and original708 only for unchanged inputs. Reviewer final acceptance and PR/requiredCI remain; no merge or speedup claim. E2 explicitly handed off two purchase-widget test files; no actual overlap with0655 candidate. Both normalPR slots released; do not artificially serialize disjoint ready candidates.
+
+E2 #3070 candidate c34028f0, 0655 RESERVED/NOT APPLIED at latest verified session receipt. Concrete reviewer contract/proof path remains the critical dependency; true concurrency needs isolatedCI, no dev apply shortcut. E1 already reviewed revised race-test delta. Owner idle-time protocol and measured intervals are in OPERATING.md; wait tasks produced2380 contract crosswalk, dictionary diagnosis and2599 fixes.
