@@ -163,7 +163,11 @@ void main() {
       'ws-1',
       kind: CreditorKind.supplier,
     )).map((c) => c.obligation).toList();
-    expect(suppliersOwed, hasLength(3));
+    expect(
+      suppliersOwed.where((o) => o.creditorId == 'demo-supplier-cleaning')
+          .map((o) => o.remainingCents),
+      containsAll([0, 4400]),
+    );
     expect(
       suppliersOwed.map((o) => o.remainingCents),
       containsAll([0, 4400, 4790]),

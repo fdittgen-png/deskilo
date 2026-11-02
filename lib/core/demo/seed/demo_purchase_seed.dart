@@ -307,7 +307,8 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
       ),
     )
     // Approved by a second person and now owed to the supplier: the cleaning
-    // bill part-paid, the bank charges paid in full; the catering bill waits.
+    // bill part-paid and an earlier bill settled; the bank charges are paid
+    // in full, and the catering bill waits.
     ..addApprovedBill(
       _document(
         'demo-bill-cleaning',
@@ -325,6 +326,26 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
           method: 'bank_transfer',
           reference: 'Wire NC-8810 (part)',
           paidOn: ago(3),
+        ),
+      ],
+    )
+    ..addApprovedBill(
+      _document(
+        'demo-bill-cleaning-paid',
+        bill,
+        draft,
+        _meta('NC-previous', ago(40), supplier: cleaning, dueOn: ago(10)),
+        [_bought(1, 'Cleaning, previous month', 6000, 20)],
+      ),
+      'demo-supplier-cleaning',
+      payments: [
+        SettlementAllocation(
+          id: 'demo-sup-alloc-cleaning-paid',
+          isReversal: false,
+          amountCents: 6000,
+          method: 'bank_transfer',
+          reference: 'Wire NC-previous',
+          paidOn: ago(15),
         ),
       ],
     )

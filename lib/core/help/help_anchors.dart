@@ -17,6 +17,8 @@
 /// `test/lint/help_anchor_test.dart` refuses an anchor that is missing
 /// from any of the five guides, a duplicate, and a malformed id.
 abstract final class HelpAnchor {
+  /// The supplier balance and its scoped payable list.
+  static const moneySupplierBalance = 'user.money.suppliers.balance';
   // ── money · VAT ────────────────────────────────────────────────────
   /// The rate table: names, percentages, groups, the default star.
   static const moneyVatRates = 'user.money.vat.rates';
@@ -392,6 +394,7 @@ abstract final class HelpAnchor {
 
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
+    moneySupplierBalance,
     advancedDeploy,
     advancedTroubleshooting,
     invoicingAccountingExport,

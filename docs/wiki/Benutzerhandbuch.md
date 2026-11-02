@@ -2643,6 +2643,15 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 
 **Siehe auch:** [Finanzmeldungen](#finanzmeldungen)
 
+<!-- anchor: user.money.suppliers.balance -->
+### Lieferantensalden
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Einkauf** und dann **Lieferanten**. Der offene Betrag je Lieferant ist vom Jahresbetrag der Einkaufsbelege getrennt; verschiedene Währungen werden getrennt angezeigt. Ein zurückgestellter Betrag gehört zum offenen Saldo, ist aber derzeit nicht zahlbar.
+
+Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und Restbeträge zu sehen. Nutzen Sie **Mehr laden**, wenn angeboten. Ist der Saldo oder die Liste nicht verfügbar, versuchen Sie es erneut, statt null anzunehmen. Einkäufe muss aktiviert sein; Sie brauchen die Berechtigung, Finanzen einzusehen oder Einkäufe zu verwalten.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

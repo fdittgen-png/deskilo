@@ -2532,6 +2532,14 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 
 **Véase también:** [Avisos financieros](help:user.money.alerts)
 
+### Saldos de proveedores
+
+**Público:** Administrador/a · Propietario
+
+Abra **Compras** y después **Proveedores**. El saldo pendiente de cada proveedor es distinto del gasto anual en documentos de compra; las monedas se muestran por separado. Un importe en espera forma parte del saldo pendiente, pero no se puede pagar actualmente.
+
+Elija **Ver pagos pendientes del proveedor** para consultar sus facturas y los importes restantes. Use **Cargar más** cuando aparezca. Si el saldo o la lista no están disponibles, vuelva a intentarlo en lugar de suponer que son cero. Compras debe estar activado y necesita permiso para ver las finanzas o gestionar compras.
+
 ### Cómo se muestran los importes
 
 **Público:** Todos

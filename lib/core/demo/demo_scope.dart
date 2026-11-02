@@ -12,6 +12,7 @@ import 'package:deskilo/core/demo/data/personal_message_directory_repository.dar
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
+import 'package:deskilo/core/demo/data/supplier_balance_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
 //
@@ -61,6 +62,7 @@ import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
+import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
@@ -230,6 +232,9 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     // #2863 — the registry a supplier is looked up in answers from fixtures.
     companyLookupRepositoryProvider.overrideWithValue(FakeCompanyLookupRepository()),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
+    supplierBalanceRepositoryProvider.overrideWithValue(
+      FakeSupplierBalanceRepository(workspaceId: 'ws-1', purchases: purchasing.purchases),
+    ),
     bookProfileRepositoryProvider.overrideWithValue(main.books), retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),

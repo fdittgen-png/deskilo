@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -41,7 +43,10 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
     final canReadBalances = data.purchasesOn &&
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.suppliersTitle)),
+      appBar: AppBar(
+        title: Text(l10n.suppliersTitle),
+        actions: [HelpDot(l10n.suppliersTitle, anchor: HelpAnchor.moneySupplierBalance)],
+      ),
       body: workspace == null
           ? const SizedBox.shrink()
           : Column(

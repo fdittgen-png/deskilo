@@ -250,6 +250,7 @@ class SuppliersView extends ConsumerWidget {
                 ].join('\n')),
                 if (onOpenPayables case final open?)
                   SupplierBalanceLine(
+                    key: ValueKey('supplier-balance-${s.id}'),
                     workspaceId: workspaceId,
                     supplierId: s.id,
                     onOpenPayables: () => open(s.id),

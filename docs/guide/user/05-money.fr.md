@@ -307,6 +307,15 @@ Une dépense attend et vous décidez si l'espace la paie.
 
 **Voir aussi:** [Les alertes financières](help:user.money.alerts)
 
+<!-- anchor: user.money.suppliers.balance -->
+### Soldes des fournisseurs
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Achats**, puis **Fournisseurs**. Le solde dû à chaque fournisseur est distinct des achats enregistrés pour l'année ; les devises sont affichées séparément. Un montant en attente fait partie du solde dû, mais n'est pas payable actuellement.
+
+Choisissez **Voir les dettes fournisseur** pour consulter ses factures et les montants restants. Utilisez **Charger plus** si proposé. Si le solde ou la liste est indisponible, réessayez au lieu de le considérer comme nul. La fonction Achats doit être activée et vous devez pouvoir voir les finances ou gérer les achats.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

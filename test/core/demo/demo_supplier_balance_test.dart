@@ -2,7 +2,11 @@
 
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_balance_repository.dart';
+import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 PayableRow _row(
@@ -35,6 +39,22 @@ PayableRow _row(
 );
 
 void main() {
+  test('Demo scope uses the fake and refuses another workspace', () async {
+    final container = ProviderContainer(
+      overrides: demoOverrides(DemoFixture.build()),
+    );
+    addTearDown(container.dispose);
+    final repo = container.read(supplierBalanceRepositoryProvider);
+    expect(repo, isA<FakeSupplierBalanceRepository>());
+    final balances = await repo.fetchBalances('ws-1');
+    expect(
+      balances
+          .singleWhere((b) => b.supplierId == 'demo-supplier-cleaning')
+          .remainingCents,
+      4400,
+    );
+    await expectLater(repo.fetchBalances('ws-2'), throwsStateError);
+  });
   test('continuation reaches every Demo payable beyond 2000 rows', () async {
     final purchases = FakePurchaseRepository();
     for (var i = 0; i < 2101; i++) {

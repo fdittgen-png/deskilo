@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:deskilo/features/money/domain/supplier_balance.dart';
 import 'package:deskilo/features/money/presentation/widgets/supplier_balance_line.dart';
 import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
@@ -9,6 +11,54 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets(
+    'refresh hides a stale balance and an error does not become zero',
+    (tester) async {
+      var reads = 0;
+      final refresh = Completer<List<SupplierBalance>>();
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            supplierBalancesProvider('ws').overrideWith((ref) {
+              reads++;
+              return reads == 1
+                  ? Future.value([
+                      const SupplierBalance(
+                        supplierId: 's',
+                        currency: 'EUR',
+                        remainingCents: 150,
+                        heldCents: 0,
+                      ),
+                    ])
+                  : refresh.future;
+            }),
+          ],
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(
+              body: SupplierBalanceLine(
+                workspaceId: 'ws',
+                supplierId: 's',
+                onOpenPayables: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Outstanding:'), findsOneWidget);
+      ProviderScope.containerOf(
+        tester.element(find.byType(SupplierBalanceLine)),
+      ).invalidate(supplierBalancesProvider('ws'));
+      await tester.pump();
+      expect(find.textContaining('Outstanding:'), findsNothing);
+      refresh.completeError(StateError('offline'));
+      await tester.pumpAndSettle();
+      expect(find.text('Balance unavailable'), findsOneWidget);
+      expect(find.text('No outstanding balance'), findsNothing);
+    },
+  );
   testWidgets('balance stays currency-separated and opens supplier payables', (
     tester,
   ) async {
