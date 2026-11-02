@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 class _Reads implements PurchaseApprovalReads {
   int calls = 0;
+  int pages = 0;
   bool deny = false;
   Completer<void>? gate;
   @override
@@ -54,11 +55,15 @@ class _Reads implements PurchaseApprovalReads {
   Future<PurchaseApprovalPage> page(
     String workspaceId, {
     PurchaseApprovalCursor? after,
-  }) async => const PurchaseApprovalPage(rows: [], count: 0, version: 'v');
+  }) async {
+    pages++;
+    return const PurchaseApprovalPage(rows: [], count: 0, version: 'v');
+  }
 }
 
 class _CountingPurchases extends FakePurchaseRepository {
   int decisions = 0;
+  bool refuse = false;
   @override
   Future<PurchaseState> decideBill(
     String workspaceId,
@@ -69,6 +74,7 @@ class _CountingPurchases extends FakePurchaseRepository {
     required String requestId,
   }) async {
     decisions++;
+    if (refuse) throw StateError('server refused');
     return PurchaseState.approved;
   }
 }
@@ -295,5 +301,42 @@ void main() {
     reads.gate!.complete();
     await tester.pumpAndSettle();
     expect(purchases.decisions, 0);
+  });
+  testWidgets('a refused decision refreshes the page and scoped detail', (
+    tester,
+  ) async {
+    final reads = _Reads()..calls = 1;
+    final purchases = _CountingPurchases()..refuse = true;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseApprovalAccessProvider.overrideWith((ref, id) => true),
+          purchaseApprovalReadsProvider.overrideWithValue(reads),
+          purchaseRepositoryProvider.overrideWithValue(purchases),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Builder(
+              builder: (context) => TextButton(
+                onPressed: () => showPurchaseForDecision(context, 'ws', 'own'),
+                child: const Text('Open'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    final previousPages = reads.pages;
+    final previousDetails = reads.calls;
+    await tester.tap(find.byKey(const ValueKey('purchase-approve')));
+    await tester.pumpAndSettle();
+    expect(purchases.decisions, 1);
+    expect(reads.pages, greaterThan(previousPages));
+    expect(reads.calls, greaterThan(previousDetails + 1));
+    expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
   });
 }
