@@ -30,24 +30,24 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'Issuing a badge is an explicit action under the kiosk; camera '
       'scanning requires a supported device (#604).',
   WorkspaceFeature.invoiceAddressWindow:
-      'Invoices need the recipient in the envelope window; the country '
-      'supplies a default side that the owner can override (#868).',
+      'Off disables window positioning; on uses the country side unless '
+      'the owner chooses another, so invoices fit the envelope (#868).',
   WorkspaceFeature.managedProfiles:
-      'An admin must explicitly create a managed profile; it permits '
-      'onboarding before an account and bound handover later (#887).',
+      'Off hides the admin creation action; on creates nothing until an '
+      'admin explicitly creates a managed profile (#887).',
   WorkspaceFeature.memberPaymentTerms:
-      'Without an override the workspace terms apply; a permitted person '
-      'must request a change and validation decides it (#881).',
+      'Off hides the terms card; on changes no terms until an authorised '
+      'request is validated, and absent overrides inherit workspace terms '
+      '(#881).',
   WorkspaceFeature.memberReports:
-      'Members can obtain their financial agreement and monthly payments '
-      'report themselves instead of depending on an admin to send them '
-      '(#494).',
+      'Off hides member report actions; on offers agreement and payments '
+      'documents for a person to generate on request (#494).',
   WorkspaceFeature.reportTexts:
-      'The owner must add text to change a report; absent language '
-      'variants fall back to the default (#880).',
+      'Off hides the text editor; on changes no text until the owner adds '
+      'it, and absent language variants fall back to the default (#880).',
   WorkspaceFeature.vatReport:
-      'The VAT period report exposes the taxable positions and their '
-      'reconciliation with declaration boxes for the accountant (#878).',
+      'Off hides the period PDF and CSV actions; on offers these exports '
+      'on request and does not file the return (#878).',
   WorkspaceFeature.coOwner:
       'The owner explicitly appoints a successor; the server succession '
       'safeguard remains on even when this appointment UI is off (#341).',
@@ -58,18 +58,17 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'Under the kiosk, badges require explicit registration and NFC '
       'tapping needs a capable device (#341).',
   WorkspaceFeature.usageRecords:
-      'The member-facing trail explains billed time; an early-departure '
-      'correction is requested and validated, not automatic (#833).',
+      'Off hides the usage face records; on exposes the billing trail, '
+      'while a correction still requires a request and validation (#833).',
   WorkspaceFeature.letterStandard:
-      'Person-facing reports need the standard window-envelope layout; '
-      'a kind without a custom design uses its default layout (#874).',
+      'Off leaves the existing bands or design; on supplies a standard '
+      'window-envelope layout to an undesigned person-facing kind (#874).',
   WorkspaceFeature.vatDeclarations:
-      'The VAT screen offers period declarations only for a registered '
-      'workspace; preparing a return does not submit it (#534).',
+      'Off hides declaration entry points; on offers a registered workspace '
+      'period preparation, while filing is a separate action (#534).',
   WorkspaceFeature.usageReport:
-      'The month-end report shows a member what was consumed against the '
-      'subscription paid ahead; it needs usage records and member reports '
-      '(#873).',
+      'Off hides the consumption report action; on offers a generated '
+      'report when usage records and member reports are enabled (#873).',
   WorkspaceFeature.dataAccessLog:
       'Off hides the row; the server-written log is still written, because '
       'the record is not optional (#719).',
