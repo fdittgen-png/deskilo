@@ -30,13 +30,16 @@ function world(
   const target = opts.target ?? "pennylane_api";
   const calls: Call[] = [];
   const vault: Record<string, string> = {};
+  let leaseHolder = "";
   let state: Record<string, unknown> = { status: "pending" };
   const answer = (as: string) => ({
     rpc: (fn: string, args: Record<string, unknown>) => {
       calls.push({ as, fn, args });
       if (
         fn === "open_accounting_connection_v1" ||
-        fn === "accounting_connection_manageable_v1"
+        fn === "accounting_connection_manageable_v1" ||
+        fn === "open_hmrc_connection_v1" ||
+        fn === "hmrc_connection_manageable_v1"
       ) {
         return Promise.resolve(
           opts.allowed === false ? { data: null, error: { code: "42501" } } : {
@@ -49,6 +52,9 @@ function world(
             error: null,
           },
         );
+      }
+      if (fn === "accounting_connection_target_v1") {
+        return Promise.resolve({ data: target, error: null });
       }
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
@@ -67,7 +73,20 @@ function world(
         calls.push({ as, fn: `eu:${args.p_code}`, args });
         return Promise.resolve({ data: args.p_code === "IE", error: null });
       }
-      if (fn === "set_accounting_credentials") {
+      // The refresh lease (0648): one holder at a time.
+      if (fn === "claim_accounting_refresh_lease") {
+        const free = !leaseHolder || leaseHolder === args.p_holder;
+        if (free) leaseHolder = String(args.p_holder);
+        return Promise.resolve({ data: free, error: null });
+      }
+      if (fn === "release_accounting_refresh_lease") {
+        if (leaseHolder === args.p_holder) leaseHolder = "";
+        return Promise.resolve({ data: null, error: null });
+      }
+      if (
+        fn === "set_accounting_credentials" ||
+        fn === "set_accounting_credentials_leased"
+      ) {
         for (
           const [k, v] of Object.entries(
             args.p_secrets as Record<string, string>,
@@ -97,6 +116,7 @@ function world(
       opts.configured === false ? undefined : ({
         [`ACCOUNTING_${target.toUpperCase()}_CLIENT_ID`]: "app-id",
         [`ACCOUNTING_${target.toUpperCase()}_CLIENT_SECRET`]: "app-secret",
+        HMRC_ENVIRONMENT: "sandbox",
       } as Record<string, string>)[name],
     redirectUri: "https://x.test/functions/v1/accounting-connect",
     fetcher:
@@ -314,6 +334,187 @@ Deno.test("a refused refresh after a concurrent rotation keeps the connection (s
     w.vault.refresh_token,
     "RT-NEWER",
     "the newer pair is not overwritten",
+  );
+  assertEquals(w.state().status, "connected");
+});
+
+Deno.test("two concurrent refreshes call the provider once; the loser takes the winner's pair (lease)", async () => {
+  let refreshCalls = 0;
+  const spent = new Set<string>();
+  const w = world({
+    token: (body) => {
+      if (body.get("grant_type") !== "refresh_token") {
+        return new Response(
+          JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+        );
+      }
+      refreshCalls++;
+      const used = body.get("refresh_token") ?? "";
+      if (spent.has(used)) {
+        return new Response(JSON.stringify({ error: "invalid_grant" }), {
+          status: 400,
+        });
+      }
+      spent.add(used);
+      return new Response(
+        JSON.stringify({ access_token: "AT-2", refresh_token: "RT-2" }),
+      );
+    },
+  });
+  w.deps.sleep = () => new Promise((r) => setTimeout(r, 0));
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const [a, b] = await Promise.all([
+    handle(post({ action: "refresh", connection_id: CONN }), w.deps),
+    handle(post({ action: "refresh", connection_id: CONN }), w.deps),
+  ]);
+  assertEquals([await a.json(), await b.json()], [{ status: "connected" }, {
+    status: "connected",
+  }]);
+  assertEquals(refreshCalls, 1, "the single-use token is spent once");
+  assertEquals(w.vault.refresh_token, "RT-2");
+  assertEquals(w.state().status, "connected");
+});
+
+Deno.test("a lease that is never free is busy, not expired, and nothing is spent", async () => {
+  let refreshCalls = 0;
+  const w = world({
+    token: (body) => {
+      if (body.get("grant_type") === "refresh_token") refreshCalls++;
+      return new Response(
+        JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+      );
+    },
+  });
+  w.deps.sleep = () => Promise.resolve();
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const real = w.deps.service;
+  w.deps.service = () => ({
+    rpc: (fn, args) =>
+      fn === "claim_accounting_refresh_lease"
+        ? Promise.resolve({ data: false, error: null })
+        : real().rpc(fn, args),
+  });
+  const res = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
+  assertEquals(res.status, 503);
+  assertEquals(refreshCalls, 0);
+  assertEquals(w.state().status, "connected");
+  assertEquals(w.vault.refresh_token, "RT");
+});
+
+Deno.test("HMRC connects and refreshes through its own doors, on its own hosts, with the client in the form body", async () => {
+  const bodies: URLSearchParams[] = [];
+  const w = world({
+    target: "hmrc_mtd",
+    token: (body) => {
+      bodies.push(body);
+      return new Response(
+        JSON.stringify({
+          access_token: "AT",
+          refresh_token: "RT",
+          expires_in: 14400,
+        }),
+      );
+    },
+  });
+  const res = await handle(
+    post({
+      action: "authorize",
+      workspace_id: WS,
+      issuer_site_id: SITE,
+      target_id: "hmrc_mtd",
+      display_name: "HMRC",
+    }),
+    w.deps,
+  );
+  const out = await res.json();
+  assert(
+    String(out.authorize_url).startsWith(
+      "https://test-www.tax.service.gov.uk/oauth/authorize?",
+    ),
+  );
+  assert(
+    !String(out.authorize_url).includes("app-secret"),
+    "the secret is never in the sign-in URL",
+  );
+  assertEquals(
+    w.calls.filter((c) => c.fn.startsWith("open_")).map((c) =>
+      `${c.as}:${c.fn}`
+    ),
+    ["caller:open_hmrc_connection_v1"],
+  );
+  const state = new URL(out.authorize_url).searchParams.get("state")!;
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  assertEquals(bodies[0].get("client_secret"), "app-secret");
+  const refreshed = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
+  assertEquals(await refreshed.json(), { status: "connected" });
+  assert(
+    w.calls.some((c) =>
+      c.fn === "hmrc_connection_manageable_v1" && c.as === "caller"
+    ),
+  );
+  assert(
+    !w.calls.some((c) => c.fn === "accounting_connection_manageable_v1"),
+    "never the accounting door for HMRC",
+  );
+});
+
+Deno.test("a refresh that outlived its lease writes nothing and is busy, not expired", async () => {
+  const w = world({
+    token: (body) =>
+      body.get("grant_type") === "refresh_token"
+        ? new Response(
+          JSON.stringify({ access_token: "AT-late", refresh_token: "RT-late" }),
+        )
+        : new Response(
+          JSON.stringify({ access_token: "AT", refresh_token: "RT" }),
+        ),
+  });
+  const state = await signIn(w);
+  await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    ),
+    w.deps,
+  );
+  const real = w.deps.service;
+  w.deps.service = () => ({
+    rpc: (fn, args) =>
+      fn === "set_accounting_credentials_leased"
+        ? Promise.resolve({ data: null, error: { code: "55P03" } })
+        : real().rpc(fn, args),
+  });
+  const res = await handle(
+    post({ action: "refresh", connection_id: CONN }),
+    w.deps,
+  );
+  assertEquals(res.status, 503);
+  assertEquals(
+    w.vault.refresh_token,
+    "RT",
+    "the late pair was refused by the database",
   );
   assertEquals(w.state().status, "connected");
 });

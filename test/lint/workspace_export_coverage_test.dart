@@ -246,6 +246,9 @@ const Map<String, String> _notExported = {
       '#2370 — what was handed to an accounting system, per document, '
           'with its digest; evidence of this server\'s transfers, which a '
           'copy never made',
+  'hmrc_submissions':
+      '#2470 — the in-flight claim and the kept receipt of a submission to '
+          'HMRC; evidence of this server\'s own filing, which a copy never made',
   'supplier_bank_revisions':
       '#2567 — sensitive payee bank details and their change history; '
           'never part of a workbook that is shared on',

@@ -25,8 +25,7 @@
 //        is delivered to it.
 
 import { revokeToken } from "../_shared/accounting_oauth.ts";
-import { oauthTargets } from "../_shared/accounting_targets.ts";
-import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
+import { clientOf, type Deps, json, manageableRpc, resolved, STATUS_DETAIL_LENGTH, store, targetIdOf, targetOf, UUID } from "./connection.ts";
 import { adapterContext, deliveryAdapters } from "./deliver.ts";
 
 type Remote = "revoked" | "failed" | "not_supported";
@@ -35,15 +34,18 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
   const connectionId = typeof body.connection_id === "string" ? body.connection_id : "";
   if (!UUID.test(connectionId)) return json({ error: "connection_id required" }, 400);
   const caller = deps.caller(authorization);
-  const allowed = await caller.rpc("accounting_connection_manageable_v1", { p_connection_id: connectionId });
-  if (allowed.error || !allowed.data) return json({ error: "not allowed to manage this connection" }, 403);
   // The tokens are read before the Vault is cleared, and kept in memory
-  // for the one call below.
+  // for the one call below. The target says which door asks the question.
+  const targetId = await targetIdOf(deps, connectionId);
+  const allowed = await caller.rpc(manageableRpc(targetId), { p_connection_id: connectionId });
+  if (allowed.error || !allowed.data) return json({ error: "not allowed to manage this connection" }, 403);
   const held = await resolved(deps, connectionId);
-  const revoked = await caller.rpc("revoke_accounting_connection_v1", { p_connection_id: connectionId });
+  const revoked = await caller.rpc(held?.target_id === "hmrc_mtd" ? "revoke_hmrc_connection_v1" : "revoke_accounting_connection_v1", {
+    p_connection_id: connectionId,
+  });
   if (revoked.error || !revoked.data) return json({ error: "the connection could not be revoked" }, 500);
   let remote: Remote = "not_supported";
-  const target = held ? oauthTargets[held.target_id] : undefined;
+  const target = held ? targetOf(deps, held.target_id) : undefined;
   const client = held ? clientOf(deps, held.target_id) : null;
   if (held && !held.revoked && held.auth_kind === "oauth2" && target?.revokeUrl && client) {
     const refresh = held.secrets.refresh_token ?? "";
@@ -70,7 +72,7 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
 export async function verify(deps: Deps, authorization: string, body: Record<string, unknown>): Promise<Response> {
   const connectionId = typeof body.connection_id === "string" ? body.connection_id : "";
   if (!UUID.test(connectionId)) return json({ error: "connection_id required" }, 400);
-  const allowed = await deps.caller(authorization).rpc("accounting_connection_manageable_v1", {
+  const allowed = await deps.caller(authorization).rpc(manageableRpc(await targetIdOf(deps, connectionId)), {
     p_connection_id: connectionId,
   });
   if (allowed.error || !allowed.data) return json({ error: "not allowed to manage this connection" }, 403);

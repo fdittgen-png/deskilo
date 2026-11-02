@@ -320,6 +320,8 @@ const Map<String, AccountingCapability> accountingCapabilities = {
   // #2376 — the adapter delivers each posting once as a ledger entry, read
   // back by its external reference; no live exchange has happened (no
   // sandbox account yet).
+  // #2470 — played from HMRC's public specification; no registered application and no sandbox submission yet.
+  'hmrc_mtd': AccountingCapability(formatId: 'hmrc_mtd', state: QualificationState.implemented, specification: 'HMRC VAT (MTD) API 1.0, obligations and returns'),
   'pennylane_api': AccountingCapability(
     formatId: 'pennylane_api',
     state: QualificationState.implemented,

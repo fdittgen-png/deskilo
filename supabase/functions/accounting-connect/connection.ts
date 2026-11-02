@@ -6,8 +6,24 @@
 // those secrets. No secret leaves this function in an answer.
 
 import { CORS } from "../_shared/cors.ts";
-import { clientEnvName } from "../_shared/accounting_targets.ts";
-import type { Fetch, OAuthClient } from "../_shared/accounting_oauth.ts";
+import {
+  clientEnvName,
+  type OAuthTarget,
+  oauthTargets,
+} from "../_shared/accounting_targets.ts";
+import { hmrcEndpoints } from "../_shared/hmrc_endpoints.ts";
+import { hmrcTarget } from "../_shared/hmrc_mtd.ts";
+import {
+  connectedWrite,
+  expiredWrite,
+  isFailure,
+} from "../_shared/accounting_oauth.ts";
+import type {
+  Fetch,
+  OAuthClient,
+  TokenFailure,
+  TokenSet,
+} from "../_shared/accounting_oauth.ts";
 
 /** The width of `accounting_connections.status_detail` (0595): the most
  * of a target's words a connection keeps. */
@@ -46,6 +62,8 @@ export type Deps = {
   redirectUri: string;
   fetcher?: Fetch;
   now?: () => Date;
+  /** Waiting for another writer's refresh; injected so tests do not wait. */
+  sleep?: (ms: number) => Promise<void>;
 };
 
 export const json = (body: unknown, status = 200) =>
@@ -53,6 +71,27 @@ export const json = (body: unknown, status = 200) =>
     status,
     headers: { ...CORS, "Content-Type": "application/json" },
   });
+
+/** The OAuth description of target [id]: the static table, or HMRC's, which
+ * takes its hosts from the installation's chosen environment (exact approved
+ * origins, never a client value). Undefined when the target is not signed in
+ * to, or HMRC is not configured. */
+export function targetOf(
+  deps: Pick<Deps, "env">,
+  id: string,
+): OAuthTarget | undefined {
+  if (id === "hmrc_mtd") {
+    const e = hmrcEndpoints(deps.env);
+    return e ? hmrcTarget(e.api, e.signIn) : undefined;
+  }
+  return oauthTargets[id];
+}
+
+/** The caller-token door that says whether the person may manage a
+ * connection of [targetId]: HMRC has its own (MTD's flag and the owner right,
+ * not accountingConnectors). */
+export const manageableRpc = (targetId: string | undefined) =>
+  targetId === "hmrc_mtd" ? "hmrc_connection_manageable_v1" : "accounting_connection_manageable_v1";
 
 export function clientOf(deps: Deps, targetId: string): OAuthClient | null {
   const clientId = deps.env(clientEnvName(targetId, "CLIENT_ID")) ?? "";
@@ -104,6 +143,122 @@ export async function rotatedMeanwhile(
   return current !== "" && current !== usedRefreshToken && access !== ""
     ? access
     : null;
+}
+
+/** How long one writer may hold a connection's refresh, and how long and
+ * how often another waits for it. */
+export const REFRESH_LEASE_SECONDS = 30;
+export const REFRESH_POLL_MS = 250;
+export const REFRESH_POLL_MAX = 40;
+
+export type Refreshed =
+  | { status: "refreshed" | "rotated"; accessToken: string }
+  | { status: "failed"; failure: TokenFailure }
+  | { status: "busy" | "gone" };
+
+/** Refreshes the connection's token set EXACTLY ONCE across every writer.
+ * HMRC's refresh tokens are single-use, so a writer claims the
+ * connection's lease before it calls the token endpoint; any other writer
+ * waits and re-reads, and takes the pair the first one stored. A loser
+ * therefore never spends a spent token and never clears the winner's pair.
+ * [run] performs the provider call with the refresh token held at that
+ * moment. */
+export async function refreshExclusive(
+  deps: Deps,
+  connectionId: string,
+  seenRefreshToken: string,
+  run: (refreshToken: string) => Promise<TokenSet | TokenFailure>,
+): Promise<Refreshed> {
+  const holder = crypto.randomUUID();
+  const sleep = deps.sleep ??
+    ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
+  let claimed = false;
+  for (let attempt = 0; attempt < REFRESH_POLL_MAX && !claimed; attempt++) {
+    const { data, error } = await deps.service().rpc(
+      "claim_accounting_refresh_lease",
+      {
+        p_connection_id: connectionId,
+        p_holder: holder,
+        p_seconds: REFRESH_LEASE_SECONDS,
+      },
+    );
+    if (error) return { status: "busy" };
+    if (data === true) {
+      claimed = true;
+      break;
+    }
+    // Someone else holds it: their pair may be stored already.
+    const rotated = await rotatedMeanwhile(
+      deps,
+      connectionId,
+      seenRefreshToken,
+    );
+    if (rotated) return { status: "rotated", accessToken: rotated };
+    await sleep(REFRESH_POLL_MS);
+  }
+  if (!claimed) return { status: "busy" };
+  try {
+    const held = await resolved(deps, connectionId);
+    if (!held || held.revoked) return { status: "gone" };
+    const current = held.secrets.refresh_token ?? "";
+    if (current === "") {
+      return {
+        status: "failed",
+        failure: { reason: "refused", detail: "no refresh token" },
+      };
+    }
+    // Another writer finished between our read and our claim.
+    if (
+      current !== seenRefreshToken && (held.secrets.access_token ?? "") !== ""
+    ) {
+      return { status: "rotated", accessToken: held.secrets.access_token };
+    }
+    const tokens = await run(current);
+    if (isFailure(tokens)) {
+      // A writer outside the lease may still have rotated the pair.
+      const rotated = await rotatedMeanwhile(deps, connectionId, current);
+      if (rotated) return { status: "rotated", accessToken: rotated };
+      await storeLeased(deps, connectionId, holder, expiredWrite(tokens));
+      return { status: "failed", failure: tokens };
+    }
+    if (!await storeLeased(deps, connectionId, holder, connectedWrite(tokens))) {
+      return { status: "busy" };
+    }
+    return { status: "refreshed", accessToken: tokens.accessToken };
+  } finally {
+    await deps.service().rpc("release_accounting_refresh_lease", {
+      p_connection_id: connectionId,
+      p_holder: holder,
+    });
+  }
+}
+
+/** The same write, but only while [holder] still holds the connection's
+ * refresh lease: the database refuses (55P03) a writer whose lease ran out,
+ * so a slow refresh cannot overwrite the pair a later holder stored. */
+export async function storeLeased(
+  deps: Deps,
+  connectionId: string,
+  holder: string,
+  write: { secrets: Record<string, string>; patch: Record<string, unknown> },
+): Promise<boolean> {
+  const { error } = await deps.service().rpc("set_accounting_credentials_leased", {
+    p_connection_id: connectionId,
+    p_holder: holder,
+    p_secrets: write.secrets,
+    p_patch: write.patch,
+  });
+  if (error) console.error("accounting-connect: the credentials were not stored (lease)");
+  return !error;
+}
+
+/** The target of a connection, read WITHOUT its secrets: which door to use
+ * is decided before anything is decrypted. */
+export async function targetIdOf(deps: Deps, connectionId: string): Promise<string | undefined> {
+  const { data, error } = await deps.service().rpc("accounting_connection_target_v1", {
+    p_connection_id: connectionId,
+  });
+  return !error && typeof data === "string" ? data : undefined;
 }
 
 export async function store(

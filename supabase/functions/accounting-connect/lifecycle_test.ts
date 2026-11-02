@@ -32,6 +32,7 @@ function world(opts: {
           ? { data: null, error: { code: "42501" } }
           : { data: { id: CONN, workspace_id: "w", target_id: target, auth_kind: opts.authKind ?? "oauth2" }, error: null });
       }
+      if (fn === "accounting_connection_target_v1") return Promise.resolve({ data: target, error: null });
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
           data: {

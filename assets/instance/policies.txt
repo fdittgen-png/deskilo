@@ -136,6 +136,7 @@ public.financial_command_receipts.mcp_delegated_deny
 public.guest_participation_audit.mcp_delegated_deny
 public.guest_participation_audit.personal_native_session
 public.guest_participations.mcp_delegated_deny
+public.hmrc_submissions.mcp_delegated_deny
 public.identity_authority.identity_public_authority
 public.identity_authority.mcp_delegated_deny
 public.identity_authority.personal_native_session

@@ -37,19 +37,33 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
-import { type OAuthTarget, oauthTargets } from "../_shared/accounting_targets.ts";
+import {
+  type OAuthTarget,
+} from "../_shared/accounting_targets.ts";
 import {
   authorizeUrl,
   connectedWrite,
   exchangeCode,
-  expiredWrite,
   isFailure,
   newState,
   refreshTokens,
   sameSecret,
 } from "../_shared/accounting_oauth.ts";
-import { clientOf, type Deps, json, resolved, rotatedMeanwhile, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
+import {
+  clientOf,
+  type Deps,
+  json,
+  manageableRpc,
+  refreshExclusive,
+  resolved,
+  STATUS_DETAIL_LENGTH,
+  store,
+  targetIdOf,
+  targetOf,
+  UUID,
+} from "./connection.ts";
 import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
+import { hmrcObligations, hmrcSubmit, hmrcValidateHeaders } from "./hmrc.ts";
 import { revoke, verify } from "./lifecycle.ts";
 
 export type { Deps } from "./connection.ts";
@@ -60,7 +74,10 @@ export const MAX_BODY_BYTES = 4096;
 
 /** The page the browser shows after the redirect: plain words, no data. */
 const page = (text: string, status = 200) =>
-  new Response(text, { status, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  new Response(text, {
+    status,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 
 async function authorize(
   deps: Deps,
@@ -68,10 +85,14 @@ async function authorize(
   body: Record<string, unknown>,
 ): Promise<Response> {
   const targetId = typeof body.target_id === "string" ? body.target_id : "";
-  const target: OAuthTarget | undefined = oauthTargets[targetId];
+  const target: OAuthTarget | undefined = targetOf(deps, targetId);
   if (!target) return json({ error: "this target is not signed in to" }, 400);
-  const workspaceId = typeof body.workspace_id === "string" ? body.workspace_id : "";
-  const issuer = typeof body.issuer_site_id === "string" ? body.issuer_site_id : "";
+  const workspaceId = typeof body.workspace_id === "string"
+    ? body.workspace_id
+    : "";
+  const issuer = typeof body.issuer_site_id === "string"
+    ? body.issuer_site_id
+    : "";
   if (!UUID.test(workspaceId) || !UUID.test(issuer)) {
     return json({ error: "workspace_id and issuer_site_id required" }, 400);
   }
@@ -79,93 +100,171 @@ async function authorize(
   if (!client) return json({ error: "oauth_not_configured" }, 503);
   // The database decides who may connect, with the caller's own token: a
   // new connection, or signing an existing one in again.
-  const again = typeof body.connection_id === "string" ? body.connection_id : "";
+  const again = typeof body.connection_id === "string"
+    ? body.connection_id
+    : "";
   const opened = again
-    ? await deps.caller(authorization).rpc("accounting_connection_manageable_v1", {
+    ? await deps.caller(authorization).rpc(manageableRpc(targetId), {
       p_connection_id: again,
+    })
+    : targetId === "hmrc_mtd"
+    ? await deps.caller(authorization).rpc("open_hmrc_connection_v1", {
+      p_workspace_id: workspaceId,
+      p_issuer_site_id: issuer,
+      p_display_name: typeof body.display_name === "string" ? body.display_name : "",
     })
     : await deps.caller(authorization).rpc("open_accounting_connection_v1", {
       p_workspace_id: workspaceId,
       p_issuer_site_id: issuer,
       p_target_id: targetId,
       p_auth_kind: "oauth2",
-      p_display_name: typeof body.display_name === "string" ? body.display_name : "",
+      p_display_name: typeof body.display_name === "string"
+        ? body.display_name
+        : "",
     });
-  const row = opened.data as { id?: string; target_id?: string; auth_kind?: string } | null;
-  if (opened.error || !row?.id || row.target_id !== targetId || row.auth_kind !== "oauth2") {
+  const row = opened.data as {
+    id?: string;
+    target_id?: string;
+    auth_kind?: string;
+  } | null;
+  if (
+    opened.error || !row?.id || row.target_id !== targetId ||
+    row.auth_kind !== "oauth2"
+  ) {
     return json({ error: "not allowed to connect this issuer" }, 403);
   }
   const connectionId = String(row.id);
   const state = newState();
   const issuedAt = (deps.now ?? (() => new Date()))().toISOString();
-  if (!await store(deps, connectionId, { secrets: { oauth_state: state, oauth_state_at: issuedAt }, patch: {} })) {
+  if (
+    !await store(deps, connectionId, {
+      secrets: { oauth_state: state, oauth_state_at: issuedAt },
+      patch: {},
+    })
+  ) {
     return json({ error: "the connection could not be prepared" }, 500);
   }
   return json({
     connection_id: connectionId,
-    authorize_url: authorizeUrl(target, client, deps.redirectUri, `${connectionId}.${state}`),
+    authorize_url: authorizeUrl(
+      target,
+      client,
+      deps.redirectUri,
+      `${connectionId}.${state}`,
+    ),
   });
 }
 
 async function callback(deps: Deps, url: URL): Promise<Response> {
-  const [connectionId, state] = (url.searchParams.get("state") ?? "").split(".");
+  const [connectionId, state] = (url.searchParams.get("state") ?? "").split(
+    ".",
+  );
   const code = url.searchParams.get("code") ?? "";
-  if (!UUID.test(connectionId ?? "") || !state) return page("This sign-in link is not valid.", 400);
+  if (!UUID.test(connectionId ?? "") || !state) {
+    return page("This sign-in link is not valid.", 400);
+  }
   const held = await resolved(deps, connectionId);
-  if (!held || held.revoked || !sameSecret(held.secrets.oauth_state ?? "", state)) {
+  if (
+    !held || held.revoked || !sameSecret(held.secrets.oauth_state ?? "", state)
+  ) {
     return page("This sign-in link is not valid any more.", 400);
   }
-  const target = oauthTargets[held.target_id];
+  const target = targetOf(deps, held.target_id);
   const client = target ? clientOf(deps, held.target_id) : null;
-  if (!target || !client) return page("This server cannot sign in to this target.", 503);
+  if (!target || !client) {
+    return page("This server cannot sign in to this target.", 503);
+  }
   const now = (deps.now ?? (() => new Date()))();
   const issuedAt = Date.parse(held.secrets.oauth_state_at ?? "");
-  if (!Number.isFinite(issuedAt) || now.getTime() - issuedAt > target.stateLifetimeMs) {
-    await store(deps, connectionId, { secrets: { oauth_state: "", oauth_state_at: "" }, patch: {} });
-    return page("This sign-in link has expired. Start again from DesKilo.", 400);
+  if (
+    !Number.isFinite(issuedAt) ||
+    now.getTime() - issuedAt > target.stateLifetimeMs
+  ) {
+    await store(deps, connectionId, {
+      secrets: { oauth_state: "", oauth_state_at: "" },
+      patch: {},
+    });
+    return page(
+      "This sign-in link has expired. Start again from DesKilo.",
+      400,
+    );
   }
   if (!code) {
-    const denied = (url.searchParams.get("error") ?? "access_denied").slice(0, 100);
+    const denied = (url.searchParams.get("error") ?? "access_denied").slice(
+      0,
+      100,
+    );
     await store(deps, connectionId, {
       secrets: { oauth_state: "", oauth_state_at: "" },
       patch: { status: "error", status_detail: denied },
     });
     return page("The sign-in was not completed. You can close this page.", 400);
   }
-  const tokens = await exchangeCode(deps.fetcher ?? fetch, target, client, code, deps.redirectUri, now);
+  const tokens = await exchangeCode(
+    deps.fetcher ?? fetch,
+    target,
+    client,
+    code,
+    deps.redirectUri,
+    now,
+  );
   if (isFailure(tokens)) {
     await store(deps, connectionId, {
       secrets: { oauth_state: "", oauth_state_at: "" },
       patch: { status: "error", status_detail: tokens.detail },
     });
-    return page("The target refused the sign-in. You can close this page and try again.", 502);
+    return page(
+      "The target refused the sign-in. You can close this page and try again.",
+      502,
+    );
   }
   const adapterOf = deliveryAdapters[held.target_id];
-  let tenant = target.tenantParam ? url.searchParams.get(target.tenantParam) ?? undefined : undefined;
+  let tenant = target.tenantParam
+    ? url.searchParams.get(target.tenantParam) ?? undefined
+    : undefined;
   let refused: string | null = null;
   // A target whose redirect names no company (Xero): the one the sign-in
   // authorised, read with the new token.
   const signedIn = !target.tenantParam
-    ? await adapterOf?.(adapterContext(deps, held.target_id, tokens.accessToken, "")).signedInTenant?.()
+    ? await adapterOf?.(
+      adapterContext(deps, held.target_id, tokens.accessToken, ""),
+    ).signedInTenant?.()
     : undefined;
   if (signedIn && "refused" in signedIn) refused = signedIn.refused;
   if (signedIn && "tenant" in signedIn) tenant = signedIn.tenant;
   // A connection signed in again stays the company it was made for.
-  if (!refused && tenant && held.remote_tenant_id && tenant !== held.remote_tenant_id) {
-    refused = "this sign-in reached another company than the one this connection was made for";
+  if (
+    !refused && tenant && held.remote_tenant_id &&
+    tenant !== held.remote_tenant_id
+  ) {
+    refused =
+      "this sign-in reached another company than the one this connection was made for";
   }
-  refused ??= await adapterOf?.(adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? "")).prepare() ?? null;
+  refused ??= await adapterOf?.(
+    adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? ""),
+  ).prepare() ?? null;
   if (refused) {
     await store(deps, connectionId, {
       secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: { status: "error", status_detail: refused.slice(0, STATUS_DETAIL_LENGTH) },
+      patch: {
+        status: "error",
+        status_detail: refused.slice(0, STATUS_DETAIL_LENGTH),
+      },
     });
-    return page("The target refused this company. The reason is shown in DesKilo.", 409);
+    return page(
+      "The target refused this company. The reason is shown in DesKilo.",
+      409,
+    );
   }
   if (!await store(deps, connectionId, connectedWrite(tokens, tenant))) {
-    return page("The connection could not be saved. You can close this page and try again.", 500);
+    return page(
+      "The connection could not be saved. You can close this page and try again.",
+      500,
+    );
   }
-  return page("The connection is made. You can close this page and return to DesKilo.");
+  return page(
+    "The connection is made. You can close this page and return to DesKilo.",
+  );
 }
 
 async function refresh(
@@ -173,14 +272,23 @@ async function refresh(
   authorization: string,
   body: Record<string, unknown>,
 ): Promise<Response> {
-  const connectionId = typeof body.connection_id === "string" ? body.connection_id : "";
-  if (!UUID.test(connectionId)) return json({ error: "connection_id required" }, 400);
-  const allowed = await deps.caller(authorization).rpc("accounting_connection_manageable_v1", {
-    p_connection_id: connectionId,
-  });
-  if (allowed.error || !allowed.data) return json({ error: "not allowed to manage this connection" }, 403);
+  const connectionId = typeof body.connection_id === "string"
+    ? body.connection_id
+    : "";
+  if (!UUID.test(connectionId)) {
+    return json({ error: "connection_id required" }, 400);
+  }
+  // Which door asks is read without the secrets; they are decrypted only
+  // once the database has said the caller may manage the connection.
+  const allowed = await deps.caller(authorization).rpc(
+    manageableRpc(await targetIdOf(deps, connectionId)),
+    { p_connection_id: connectionId },
+  );
+  if (allowed.error || !allowed.data) {
+    return json({ error: "not allowed to manage this connection" }, 403);
+  }
   const held = await resolved(deps, connectionId);
-  const target = held ? oauthTargets[held.target_id] : undefined;
+  const target = held ? targetOf(deps, held.target_id) : undefined;
   if (!held || held.auth_kind !== "oauth2" || !target) {
     return json({ error: "this connection is not signed in to" }, 400);
   }
@@ -188,17 +296,25 @@ async function refresh(
   if (!client) return json({ error: "oauth_not_configured" }, 503);
   const refreshToken = held.secrets.refresh_token ?? "";
   const now = (deps.now ?? (() => new Date()))();
-  const tokens = refreshToken
-    ? await refreshTokens(deps.fetcher ?? fetch, target, client, refreshToken, now)
-    : { reason: "refused" as const, detail: "no refresh token" };
-  // A refused refresh is not an expired sign-in when a concurrent request
-  // already rotated the single-use refresh token: the connection stands.
-  if (isFailure(tokens) && await rotatedMeanwhile(deps, connectionId, refreshToken)) {
-    return json({ status: "connected" });
+  // One refresh at a time per connection, across every writer (single-use
+  // refresh tokens): the lease first, then the provider.
+  const result = await refreshExclusive(
+    deps,
+    connectionId,
+    refreshToken,
+    (token) => refreshTokens(deps.fetcher ?? fetch, target, client, token, now),
+  );
+  switch (result.status) {
+    case "refreshed":
+    case "rotated":
+      return json({ status: "connected" });
+    case "failed":
+      return json({ status: "expired" });
+    case "busy":
+      return json({ error: "refresh_busy" }, 503);
+    default:
+      return json({ error: "this connection is not signed in to" }, 400);
   }
-  const write = isFailure(tokens) ? expiredWrite(tokens) : connectedWrite(tokens);
-  if (!await store(deps, connectionId, write)) return json({ error: "the connection could not be saved" }, 500);
-  return json({ status: write.patch.status ?? "unchanged" });
 }
 
 export async function handle(req: Request, deps: Deps): Promise<Response> {
@@ -212,11 +328,15 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const authorization = req.headers.get("Authorization") ?? "";
   if (!authorization) return json({ error: "not signed in" }, 401);
   const text = await req.text();
-  if (text.length > MAX_BODY_BYTES) return json({ error: "body too large" }, 400);
+  if (text.length > MAX_BODY_BYTES) {
+    return json({ error: "body too large" }, 400);
+  }
   let body: Record<string, unknown>;
   try {
     const parsed = JSON.parse(text);
-    if (typeof parsed !== "object" || parsed === null) throw new Error("not an object");
+    if (typeof parsed !== "object" || parsed === null) {
+      throw new Error("not an object");
+    }
     body = parsed as Record<string, unknown>;
   } catch {
     return json({ error: "invalid body" }, 400);
@@ -232,6 +352,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       return revoke(deps, authorization, body);
     case "verify":
       return verify(deps, authorization, body);
+    case "hmrc_obligations":
+      return hmrcObligations(deps, req, authorization, body);
+    case "hmrc_submit":
+      return hmrcSubmit(deps, req, authorization, body);
+    case "hmrc_validate_headers":
+      return hmrcValidateHeaders(deps, req, authorization, body);
     default:
       return json({ error: "unknown action" }, 400);
   }
@@ -247,11 +373,15 @@ if (import.meta.main) {
       return {
         rpc: (fn, args) => client.rpc(fn, args),
         from: (table) => ({
-          select: (columns) => ({ in: (column, values) => client.from(table).select(columns).in(column, values) }),
+          select: (columns) => ({
+            in: (column, values) =>
+              client.from(table).select(columns).in(column, values),
+          }),
         }),
       };
     },
-    service: () => createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+    service: () =>
+      createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
     env: (name) => Deno.env.get(name),
     redirectUri: `${url}/functions/v1/accounting-connect`,
   };
