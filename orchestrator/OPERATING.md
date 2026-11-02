@@ -50,3 +50,7 @@ Local Docker/psql unavailable and Colima resource guard refused startup. Respect
 At handoff, CI failure and merge, review measured waits, invalidated repeated checks, CI cycles, conflicts and token trends. Fix the cause, record the result and avoid inventing savings. Locks should cover actual overlapping files/contracts; the l10n hold was removed after source comparison proved no overlap.
 
 Use Git-accessible receipts for critical conclusions. Keep secrets out of messages, URLs and logs. Missing credentials/human/device/provider gates stay explicit. If permissions block an action, preserve the blocker and follow the platform approval mechanism; do not route around a rejection.
+
+## Confidential business information
+
+Owner rule: business-plan information is strictly confidential and must never be shared on GitHub. This applies to source and history, issue/PR text, wiki and coordination documents, fixtures, generated outputs, CI logs and artifacts. Redaction must remove the confidential information, not merely relabel it. Keep private investigations and detailed exposure inventories in an owner-authorized private location; public handovers contain only generic policy/status. Do not copy confidential material into this knowledge base. Current-tree deletion does not establish history/cache/external-copy removal; report each containment limit accurately. Coordinate shared-reference changes with current implementers before rewriting history, and respect platform access/approval controls.
