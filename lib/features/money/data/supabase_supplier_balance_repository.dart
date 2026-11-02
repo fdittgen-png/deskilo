@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/json_reader.dart';
 import '../domain/supplier_balance.dart';
+import '../domain/supplier_payables_page.dart';
 
 /// Reads the complete server aggregate rather than summing a capped page.
 class SupabaseSupplierBalanceRepository implements SupplierBalanceRepository {
@@ -20,4 +21,19 @@ class SupabaseSupplierBalanceRepository implements SupplierBalanceRepository {
     final result = JsonReader.of(json, context: 'supplier_balances_v1');
     return [for (final row in result.list('rows')) SupplierBalance.fromJson(row)];
   }
+
+  @override
+  Future<SupplierPayablesPage> fetchPayables(
+    String workspaceId,
+    String supplierId, {
+    SupplierPayablesCursor? after,
+  }) async => SupplierPayablesPage.fromJson(await _client.rpc<Object?>(
+    'supplier_payables_page_v1',
+    params: {
+      'p_workspace_id': workspaceId,
+      'p_supplier_id': supplierId,
+      'p_after_created': ?after?.created,
+      'p_after_id': ?after?.id,
+    },
+  ));
 }

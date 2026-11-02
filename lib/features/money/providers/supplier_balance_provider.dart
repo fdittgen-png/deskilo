@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/supabase_supplier_balance_repository.dart';
 import '../domain/supplier_balance.dart';
+import '../domain/supplier_payables_page.dart';
 import 'credit_providers.dart';
 
 final supplierBalanceRepositoryProvider = Provider<SupplierBalanceRepository>(
@@ -16,3 +17,14 @@ final supplierBalancesProvider = FutureProvider.autoDispose
       (ref, workspaceId) =>
           ref.watch(supplierBalanceRepositoryProvider).fetchBalances(workspaceId),
     );
+
+/// Each request names a supplier and cursor, so callers cannot mistake a
+/// partial result for the complete list.
+final supplierPayablesPageProvider = FutureProvider.autoDispose.family<
+  SupplierPayablesPage,
+  ({String workspaceId, String supplierId, SupplierPayablesCursor? after})
+>((ref, key) => ref.watch(supplierBalanceRepositoryProvider).fetchPayables(
+  key.workspaceId,
+  key.supplierId,
+  after: key.after,
+));

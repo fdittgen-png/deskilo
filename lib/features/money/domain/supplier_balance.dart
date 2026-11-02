@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import '../../../core/data/json_reader.dart';
+import 'supplier_payables_page.dart';
 
 /// A server-computed outstanding amount for one supplier and currency.
 /// Unlike the paged payable list, this is a complete workspace aggregate.
@@ -28,4 +29,10 @@ class SupplierBalance {
 /// One complete snapshot for the workspace, with separate currency rows.
 abstract interface class SupplierBalanceRepository {
   Future<List<SupplierBalance>> fetchBalances(String workspaceId);
+
+  Future<SupplierPayablesPage> fetchPayables(
+    String workspaceId,
+    String supplierId, {
+    SupplierPayablesCursor? after,
+  });
 }
