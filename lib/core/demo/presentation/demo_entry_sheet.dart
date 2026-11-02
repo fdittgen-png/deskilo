@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/demo_visit.dart';
+import '../../../features/auth/providers/auth_providers.dart';
+import '../../../features/kiosk/providers/kiosk_mode.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
@@ -17,6 +19,7 @@ import '../../theme/app_spacing.dart';
 import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
+import '../demo_reload_marker_provider.dart';
 import '../demo_session.dart';
 
 /// The button that offers the demonstration space.
@@ -79,10 +82,14 @@ Future<bool> _showDemoEntrySheet(
   // Already inside the demo, or a visit is open: no second one, and the
   // first return target stands.
   if (ref.read(demoEntryProvider)) return false;
+  if (!await _DemoEntryAccess.authReady(context, ref)) return false;
+  if (!context.mounted) return false;
   final l10n = context.l10n;
   final visit = ref.read(demoVisitProvider.notifier);
   final before = await _identityOrNull(visit);
   if (!context.mounted) return false;
+  // An identity read failure is not evidence that a signed-in user signed out.
+  if (ref.read(authStateProvider).value != before?.userId) return false;
   final route = before == null ? null : visit.currentRoute();
   final start = await showAppSheet<bool>(
     context: context,
@@ -123,8 +130,9 @@ Future<bool> _showDemoEntrySheet(
     ),
   );
   if (!(start ?? false) || !context.mounted) return false;
-  if (ref.read(demoEntryProvider)) return false;
-  if (await _identityOrNull(visit) != before) return false;
+  if (!await _DemoEntryAccess.afterConsent(context, ref, visit, before)) {
+    return false;
+  }
   if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {
@@ -141,15 +149,89 @@ Future<bool> _showDemoEntrySheet(
     }
   } on Object {
     visit.cancel();
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(content: Text(l10n.demoEntryFailed)),
-    );
+    ScaffoldMessenger.maybeOf(context)
+        ?.showSnackBar(SnackBar(content: Text(l10n.demoEntryFailed)));
+    return false;
+  }
+  final marker = ref.read(demoReloadMarkerProvider);
+  if (marker != null && !marker.arm()) {
+    visit.cancel();
+    if (context.mounted) {
+      ScaffoldMessenger.maybeOf(context)
+          ?.showSnackBar(SnackBar(content: Text(l10n.demoEntryFailed)));
+    }
     return false;
   }
   beforeEnter?.call();
   if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
   ref.read(demoEntryProvider.notifier).enter();
   return true;
+}
+
+/// Resolve authority after consent; synchronous defaults are not sufficient.
+class _DemoEntryAccess {
+  static Future<bool> authReady(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(authStateProvider.future);
+      if (!context.mounted) return false;
+      final state = ref.read(authStateProvider);
+      return !state.isLoading && !state.hasError;
+    } on Object {
+      return false;
+    }
+  }
+
+  static Future<bool> afterConsent(
+    BuildContext context,
+    WidgetRef ref,
+    DemoVisit visit,
+    DemoIdentity? before,
+  ) async {
+    if (ref.read(demoEntryProvider)) return false;
+    final auth = ref.read(authStateProvider);
+    if (auth.isLoading || auth.hasError || auth.value != before?.userId) {
+      return false;
+    }
+    if (before != null && !await _signedInMayEnter(context, ref)) return false;
+    if (!context.mounted || await _identityOrNull(visit) != before) {
+      return false;
+    }
+    if (!context.mounted) return false;
+    return before == null || _resolvedMayEnter(ref);
+  }
+
+  static Future<bool> _signedInMayEnter(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    try {
+      await ref.read(enabledFeaturesProvider.future);
+      if (!context.mounted) return false;
+      await ref.read(myMemberProvider.future);
+      if (!context.mounted) return false;
+      return _resolvedMayEnter(ref);
+    } on Object {
+      return false;
+    }
+  }
+
+  static bool _resolvedMayEnter(WidgetRef ref) {
+    final featureState = ref.read(enabledFeaturesProvider);
+    final memberState = ref.read(myMemberProvider);
+    if (featureState.isLoading ||
+        featureState.hasError ||
+        !featureState.hasValue ||
+        memberState.isLoading ||
+        memberState.hasError ||
+        !memberState.hasValue) {
+      return false;
+    }
+    final features = featureState.value!;
+    if (!features.contains(WorkspaceFeature.demoMode)) return false;
+    return memberState.value?.isKiosk != true ||
+        !features.contains(WorkspaceFeature.kioskMode) ||
+        ref.read(kioskModeProvider) == KioskModeDecision.rejected;
+  }
 }
 
 /// Who is signed in; null when nobody is, or the session cannot be read —
