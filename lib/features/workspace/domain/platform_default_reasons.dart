@@ -4,9 +4,11 @@
 // ON in the registry.
 //
 // A platform entry with `defaultOn: true` is the registry's exception to
-// its own tier. Normal workspace creation stores platform features off;
-// the registry default is used by the Demo and server-choice feature set
-// (#2566). docs/AGENT_RULES.md allows it for a feature that is neither risky
+// its own tier. Normal workspace creation stores platform features off,
+// except environmentPairs when creating a twin. Registry defaults feed
+// the Demo fake, server choice, personal shell and workspace loading or
+// no-workspace fallbacks (#2566). docs/AGENT_RULES.md allows it for a feature
+// that is neither risky
 // nor in need of owner setup, and the epic asks that the reason be written
 // down. Each entry here is that reason in one sentence, taken from what the
 // feature's own code or issue states: what OFF does (so that starting on
