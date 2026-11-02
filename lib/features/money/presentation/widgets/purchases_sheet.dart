@@ -32,7 +32,6 @@ Future<void> showPurchasesSheet(
   bool canDecide = false,
   bool canOffset = false,
   bool toPay = false,
-  String? supplierId,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -43,7 +42,26 @@ Future<void> showPurchasesSheet(
     canDecide: canDecide,
     canOffset: canOffset,
     toPay: toPay,
+  ),
+);
+
+/// Opens the same payable view with its supplier filter applied at the server.
+Future<void> showSupplierPayablesSheet(
+  BuildContext context,
+  String workspaceId,
+  String supplierId, {
+  required bool canCapture,
+  bool canPay = false,
+  bool canDecide = false,
+}) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => PurchasesView(
+    workspaceId: workspaceId,
     supplierId: supplierId,
+    canCapture: canCapture,
+    canPay: canPay,
+    canDecide: canDecide,
   ),
 );
 

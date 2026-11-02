@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3070 — Payable page decoding retains explicit continuation and rejects broken cursors.
 
 import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/supplier_payables_page.dart';

@@ -331,26 +331,6 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
     )
     ..addApprovedBill(
       _document(
-        'demo-bill-cleaning-paid',
-        bill,
-        draft,
-        _meta('NC-previous', ago(40), supplier: cleaning, dueOn: ago(10)),
-        [_bought(1, 'Cleaning, previous month', 6000, 20)],
-      ),
-      'demo-supplier-cleaning',
-      payments: [
-        SettlementAllocation(
-          id: 'demo-sup-alloc-cleaning-paid',
-          isReversal: false,
-          amountCents: 6000,
-          method: 'bank_transfer',
-          reference: 'Wire NC-previous',
-          paidOn: ago(15),
-        ),
-      ],
-    )
-    ..addApprovedBill(
-      _document(
         'demo-bill-bank',
         bill,
         draft,
@@ -395,6 +375,25 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         [_bought(1, 'Catering, open evening', 22000, 10)],
       ),
     );
+  _seedSettledCleaning(purchases, cleaning, today);
+}
+
+/// The earlier bill makes the same supplier's paid and part-paid states visible.
+void _seedSettledCleaning(FakePurchaseRepository purchases, Supplier supplier, DateTime today) {
+  DateTime ago(int days) => today.subtract(Duration(days: days));
+  purchases.addApprovedBill(
+    _document(
+      'demo-bill-cleaning-paid', PurchaseKind.bill, PurchaseState.draft,
+      _meta('NC-previous', ago(40), supplier: supplier, dueOn: ago(10)),
+      [_bought(1, 'Cleaning, previous month', 6000, 20)],
+    ),
+    'demo-supplier-cleaning',
+    payments: [SettlementAllocation(
+      id: 'demo-sup-alloc-cleaning-paid', isReversal: false,
+      amountCents: 6000, method: 'bank_transfer', reference: 'Wire NC-previous',
+      paidOn: ago(15),
+    )],
+  );
 }
 
 /// A yearly software licence billed in Swiss francs, sent for approval

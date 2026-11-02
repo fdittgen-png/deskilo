@@ -11,7 +11,6 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/purchase.dart';
 import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
@@ -39,7 +38,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
     final data = MoneyViewData.gates(ref);
     final workspace = data.workspace;
     final lookupOn = data.supplierLookupOn;
-    final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
+    final held = MoneyViewData.purchasePermissionNames(ref);
     final canReadBalances = data.purchasesOn &&
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
     return Scaffold(
@@ -73,14 +72,13 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
                     query: _search.text,
                     onOpenPayables: !canReadBalances
                         ? null
-                        : (supplierId) => showPurchasesSheet(
+                        : (supplierId) => showSupplierPayablesSheet(
                             context,
                             workspace.id,
-                            supplierId: supplierId,
+                            supplierId,
                             canCapture: held.contains(purchaseManagePermission),
                             canPay: held.contains(purchasePayPermission),
                             canDecide: held.contains(purchaseDecidePermission),
-                            canOffset: held.contains(purchaseOffsetPermission),
                           ),
                   ),
                 ),

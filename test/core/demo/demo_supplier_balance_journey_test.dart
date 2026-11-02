@@ -3,7 +3,6 @@
 // bill through the same supplier screen and scoped payable list.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
-import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/features/money/presentation/screens/suppliers_screen.dart';
 import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ void main() {
     tester.view.physicalSize = const Size(900, 3200);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    final journey = DemoJourney.start(persona: DemoPersona.owner);
+    final journey = DemoJourney.start();
     addTearDown(journey.dispose);
     journey.root
         .read(pendingDemoLinkProvider.notifier)

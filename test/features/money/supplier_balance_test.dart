@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3070 — Supplier balance decoding preserves currencies and rejects missing amounts.
 
 import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/supplier_balance.dart';

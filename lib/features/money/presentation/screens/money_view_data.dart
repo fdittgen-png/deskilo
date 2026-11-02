@@ -94,6 +94,11 @@ class MoneyViewData {
   final MemberAccount? account;
   final Set<WorkspaceFeature> features;
 
+  /// The permission names used by the purchase entry points.
+  static Set<String> purchasePermissionNames(WidgetRef ref) => {
+    for (final permission in ref.watch(myPermissionsProvider)) permission.wireName,
+  };
+
   Statement? get statement => statementAsync.value;
 
   bool _on(WorkspaceFeature f) => features.contains(f);

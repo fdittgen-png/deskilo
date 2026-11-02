@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3070 — Supplier balance displays held amounts separately and never turns read errors into zero.
 
 import 'dart:async';
 

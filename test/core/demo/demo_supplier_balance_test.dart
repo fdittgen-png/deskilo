@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3070 — Demo balances use scoped obligations, preserve currencies and page beyond 2000 rows.
 
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_balance_repository.dart';

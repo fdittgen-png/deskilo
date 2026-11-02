@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
 import '../../domain/supplier_payables_page.dart';
@@ -82,7 +83,7 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
         ),
     ];
     if (pages.any((page) => page.isLoading)) {
-      return const SizedBox(height: 40, child: LoadingView());
+      return const SizedBox(height: AppSpacing.xl, child: LoadingView());
     }
     if (pages.any((page) => page.hasError)) {
       return _unavailable(context);

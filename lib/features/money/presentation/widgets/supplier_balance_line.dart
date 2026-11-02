@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../providers/supplier_balance_provider.dart';
 
@@ -27,7 +28,7 @@ class SupplierBalanceLine extends ConsumerWidget {
     final result = ref.watch(supplierBalancesProvider(workspaceId));
     // Do not show an older successful amount during a refresh or error.
     if (result.isLoading) {
-      return const SizedBox(height: 40, child: LoadingView());
+      return const SizedBox(height: AppSpacing.xl, child: LoadingView());
     }
     if (result.hasError) {
       return Row(

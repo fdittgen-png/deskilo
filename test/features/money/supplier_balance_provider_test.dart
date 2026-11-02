@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3070 — Balance and payable reads preserve workspace, supplier and cursor scope.
 
 import 'package:deskilo/features/money/domain/supplier_balance.dart';
 import 'package:deskilo/features/money/domain/supplier_payables_page.dart';

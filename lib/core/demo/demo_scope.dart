@@ -3,7 +3,6 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
-import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
@@ -12,7 +11,6 @@ import 'package:deskilo/core/demo/data/personal_message_directory_repository.dar
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
-import 'package:deskilo/core/demo/data/supplier_balance_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
 //
@@ -41,6 +39,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_purchasing_overrides.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
@@ -56,14 +55,10 @@ import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
-import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
-import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
-import 'package:deskilo/features/money/providers/supplier_balance_provider.dart';
-import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
@@ -228,13 +223,7 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
   final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt, actor: fixture.actor.memberId);
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
-    supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
-    // #2863 — the registry a supplier is looked up in answers from fixtures.
-    companyLookupRepositoryProvider.overrideWithValue(FakeCompanyLookupRepository()),
-    purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
-    supplierBalanceRepositoryProvider.overrideWithValue(
-      FakeSupplierBalanceRepository(workspaceId: 'ws-1', purchases: purchasing.purchases),
-    ),
+    ...demoPurchasingOverrides(purchasing),
     bookProfileRepositoryProvider.overrideWithValue(main.books), retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
