@@ -1,74 +1,54 @@
 # Current orchestration state
 
-Snapshot reconciled through **2026-11-02 14:35 UTC**, including #3255 merge. This replaces prior pending/failed-head snapshots. Refresh live GitHub before acting.
+Snapshot reconciled after #3257 merge at 2026-11-02 17:19:59 UTC. Refresh live GitHub, #2596 and each session's CURRENT before acting. Older queued receipts are not new instructions.
 
-## Owner priority and publication decision
+## Operating agreement
 
-Owner directive, highest importance: resolve open issues pragmatically with maximum time/token efficiency. Small coherent changes, exact-input evidence reuse, concise delta communication, no duplicate diagnoses/tests or generic approval loops. Correctness, confidentiality and required checks remain mandatory.
+Owner priority: implement open issues correctly and pragmatically with minimum elapsed time, tokens and avoidable CI/review churn. Two implementation slots; normally two open PRs, hard cap four including drafts; one migration tenure. One prepared disjoint follow-up per engineer while a frozen candidate runs CI. Reviewer alone writes #2596 and migration ledger and merges/closes issues. No watcher, recurring jobs, repeated ACK loops, automatic rebases or duplicate passing tests.
 
-Repository **fdittgen-png/deskilo is PRIVATE**, independently verified through GitHub API. Reviewer changed visibility under the urgent containment/unblocking direction. **Private publication is now authorized; the blanket publication hold is released.** Do not restore public visibility or expose confidential material. Privacy is repository access containment, not erasure of historic clones, forks, caches or refs. Private incident cleanup remains separate.
+Repository fdittgen-png/deskilo remains PRIVATE. Preserve hosting/godaddy and coord/cloud-codex. No public repository restoration, confidential material publication, shared-history rewrite or billing change is implied. Manual exact-head review and required CI remain mandatory because prior private-plan checks could not enforce branch protection. Squash only; no admin bypass. Confidential business information must not enter GitHub even in private coordination.
 
-GitHub Pages is unavailable (reviewer verified former URL/API404). Actions is enabled. Current plan does not enforce private branch protections (master protected=false; protection/ruleset API403 requiring Pro/public). Reviewer is sole merger and must manually verify exact expected HEAD, source approval and all previously required CI checks. No bypass/admin merge, unreviewed direct-master push or merge while checks fail/pending. Preserve hosting/godaddy and all WIP. No billing/plan upgrade is implied.
+## Active team and assignments
 
+- Orchestrator: 01a19218-9136-7920-bff3-4a1a4b345d3a. Scope, dispatch coordination and this knowledge base.
+- Reviewer: 01a19b63-22e4-72c1-8ea5-49e361e4ff4f. Sole queue/ledger writer and exact-head merger; reviews candidates and executes authorized database proof/application.
+- E1: 01a19b63-49df-7961-ba1c-1faa87cdd67a. Login footer #3260 is PR #3261, reviewed head 9a5a3d41426ff6d1fb5b22903590dc3abb279a16; required CI remains in progress at this check, no failure observed. Keep frozen. Isolated follow-up #3259 at /private/tmp/deskilo-instance-origin addresses new-instance deployment/auth URL configuration. Clean reviewed candidate323bebd is ON HOLD: doctor prints placeholder rather than exact safely quoted site URL, and four actual CLI dispatch propagation tests are absent. E1 must resolve consolidated findings before another READY handoff. Browser-base runtime proof or its explicit limitation is required; native tests are not browser proof.
+- E2: 01a19b63-6e38-7be2-8b35-f6c3d9f28930. #3257 cleanup verified complete. Newly assigned bounded read-only #3070 evidence/FX acceptance and least-privilege source/storage contract crosswalk, reusing #3253/#3257. Return precise necessary evidence/currency data, existing authorization paths, proposed file locks/tests/Demo and stop condition. No new entitlement, SQL, migration reservation or live mutation yet. Dispatch receipt is not personal ACK.
+- DeepSeek: owner requested peer developer onboarding. Identity engineer-3-deepseek; no product claim, coding slot, verified running harness or two-way ACK yet. Full local handover /private/tmp/deskilo-deepseek-handover.txt. Prepared return mailbox .agent-work/coordination/deepseek/inbox/orchestrator.md; each other sender owns its own file. Verify communication once on actual startup. Do not create a third editing stream automatically.
 
-## Active assignments
+## Latest verified completions
 
-- **Reviewer** (01a19b63-22e4-72c1-8ea5-49e361e4ff4f): sole #2596/ledger writer and merger; #3254 merged, exact-head follow-up reviews, allocate next migration after fresh master/ledger check. Manual check enforcement remains mandatory. Repository allows squash; use exact-head squash, no admin bypass.
-- **E1** (01a19b63-49df-7961-ba1c-1faa87cdd67a): released to integrate local selector+Back candidate81031c once from fresh master and publish in freed PR slot. No rebase, no change to active3254, no MCP work. Retain valid evidence; run required integration gates.
-- **E2** (01a19b63-6e38-7be2-8b35-f6c3d9f28930): own merged3253 cleanup, then bounded #3070 server write-time decision authorization checkpoint below.
-- Root orchestrates scope and takeover records. Dispatch queued to all three; queue delivery is not personal acknowledgement.
+- #3258 MERGED 16:59:01Z as 2f3e66f006218ebf14ce5382d31f036e770d353e from reviewed d08b804537834531314b162690e6376a7fb3050a. Required exact-head Quality41479106429 and Web passed. Owner's GoDaddy package repair only; no live deployment. E1 owned worktree/branch removed, evidence retained.
+- #3257 MERGED 17:19:59Z as 8f7693575a3096bbc3930ff3a6c845b586fba67d from reviewed b11fc717c32df68d73e77852a4753810564b906c. Root independently verified GitHub merge. Reviewer reports final exact-head Quality/Web, pgTAP6559, forced race and effective contract PASS. 0655 migration/APPLIED SHA256 6c638a539b9146a05e73870eb3a5d07bca4ec2913e296c277f8d794f3b10f026 matches dev, schema655; ledger MERGED and lane released. E2 clean owned worktree/local branch removed, remote absent, claim archived3070-decision-3257-merged.json. Parent #3070 stays open.
+- Preserve the 8fc2 real40P01 deadlock failure. Corrected2c9 proof passed race/6559 but its whole job failed pending contract. Later actual applied metadata and finalb11 CI completed the checkpoint; no universal deadlock-freedom claim.
+- #3256 merged acb75481 (lint-policy/fixture checks); #3255 merged fb464b78 (privacy selector/Back metric); #3254 merged6639ec29 (benchmark initialization). Their owned worktrees were cleaned. #2599 parent and nightly performance remain unresolved; do not reimplement these leaves.
 
-Two coding checkpoints, normal two open PRs/hard four, one migration tenure. E2 can prepare locally while3254 plus E1 follow-up occupy normal PR cap. No watchers, repeated ACK loops or unchanged broad reruns.
+## GoDaddy delivery and origin scope
 
-## #3253 completed
+Working live URL https://www.deskilo.org/app/ rendered sign-in; healthz returned ok. Last independently checked BUILD was old ef3a7cf3de347b1eb086d205974c41d486fdcd99, built2026-10-12. Do not call it a current deployment.
+GoDaddy hosting administration requires a fresh login; no verified Actions deployment credential or private-branch auto-pull/publish channel. A branch push/package/release is not live deployment proof. GitHub Pages stopped after repository privatization.
 
-GitHub independently confirms squash **e238a819172b4295abd3e5eb4baf0f3941653a1d**, merged13:31:55Z from reviewed **925bb3c959ee224ed2a0f2a98063ba99f450201d**. Reviewer reports all five final-head workflows successful, actual pgTAP340 plus338 files/6527 tests and effective contract PASS. Master0654/APPLIED hash independently matched by reviewer; ledger MERGED, lane released.
+Corrected private build-only41479107698 atd08 succeeded, push=false. Actual ZIP artifact13160310852 SHA25664a00294b33f55642c6f4eebd3de18778bfff4addbef944fb9eac1d70552ab98; source SHA and1359 offline digests matched. Reviewer bounded private inspection of1501 files plus decoded gzip found no selected incident/credential/path/map/repository-metadata/unsafe-entry matches. Not exhaustive or live proof; private findings stay outside GitHub. Earlier414779 package failed Linux tr/grep SIGPIPE; keep original failure, do not rerun its fixed diagnosis.
 
-Migration hash **a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9**. Preserve failed d8 core-shard evidence: stale drawer fixture used old purchases-list injection. Test-only925 correction exercised actual scoped page provider/gate and refusal state; six focused tests/analyzer/pump gate passed. No SQL/fixture change. This closes selected read checkpoint, not parent3070.
+Intended SQL/Edge distribution is not automatically forbidden. Preserve instance bundle and working wizard/doctor; no source stripping or capability removal absent concrete confidential finding.
 
-## Next #3070 scope: write-time authorization
+Origin decision: use verified deployment base (Flutter base href/document.baseURI), not routed Uri.base.path, backend guard.origin or flow-bearing callback URLs. Required base element and validation must not silently fall back to a guessed route. Optional --site-url must propagate through auth/doctor/create/install, while the documented legacy CLI default remains unchanged. Wizard/doctor share effective target; native callback stays supported. Doctor repair guidance must include exact safely quoted effective URL, not <app-url>. No global wildcard/auth framework or live provider config mutation. Existing backend allowlists UNKNOWN; lack of redirect in OTP recovery is not proof of failure. #3259 stays open for source correction plus actual host delivery and post-deploy exact BUILD SHA, health and browser evidence.
 
-Prioritize write-time feature/delegation decision consistency over evidence/FX access. E2 audits existing purchase decision entry points and implements server enforcement of intended purchases feature, active workspace/member, delegation and approver eligibility at decision. Preserve tenant boundaries, existing wide permissions, 0483 self-approval strictly below configured threshold, self-rejection prohibition, receipt validation semantics and RPC compatibility.
+## Login footer
 
-Reserve only implicated decision RPC/eligibility, scoped client refusal handling, meaningful deterministic Demo refusal/recovery and tests, plus reviewer-controlled migration aggregates. No migration number assumed: reviewer assigns after fresh checks. No new evidence/FX entitlement, general authorization rewrite or receipt-voting expansion.
+#3261 adds installed package version/build at bottom, reusing appVersionProvider and existing translations. It is not a git SHA or CI run number. Safe-area60px and keyboard260px/scroll380px were actually verified; auth17/affected lint15/analyzer passed. Original broad853-pass/1-skip/1-pump-failure stays failed; deterministic focused correction passed separately. Source accepted at9a5; final CI/merge/deployment still pending. No periodic master merge for disjoint changes.
 
-Acceptance: allowed-path parity; stale-client refusal after feature/permission/delegation/status changes; threshold boundaries; no side effects on refusal. Specify and prove concurrent revocation ordering where claimed; client preflight or unchecked sequential reads do not establish atomic guarantees. Reviewer resolves concrete contract within this scope without another owner/orchestrator approval loop. Use canonical fixture and established proof route; focused failures first, combined final artifacts and CI. Parent stays open for remaining acceptance.
+## Checkout and evidence constraints
 
-## E1 follow-up and remaining CI
+Mac root /Users/floriandittgen/orgcowrk is inspection/coordination with unrelated existing state, not the implementation base. Work only in owned isolated worktrees from fresh master. Never overwrite another session's dirty work.
+Development project zwzbynivewivvjmripeb. Reviewer allocates next migration from fresh master plus ledger; none is reserved by this snapshot after0655 release. Do not modify applied bytes or substitute production. Local Docker/psql unavailability and resource guards must not be bypassed. Existing isolated Quality CI and reviewer-controlled real rolled-back pgTAP are established proof routes; distinguish rollback, race, replay and final CI.
 
-PR3254 independently verified MERGED **2026-11-02 13:34:12Z**, squash **6639ec299346e88e887fd70f7f23b04b54643609** from reviewed **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0**. Reviewer reports exact-head Quality/Web success, deploy skipped. Bootstrap initialization only; nightly performance remains unresolved. E1 cleans only its merged bootstrap checkout and preserves separate selector WIP. Both3253/3254 slots are released; advance existing E1/E2 assignments. E2 reports3253 owned checkout/branch removed, remote absent and claim archived at .agent-work/archive/3070-3253-merged.json.
+## Remaining/deferred work
 
-Local **81031c823aea5e47a2fd3305a929d74331b2b94d**, /private/tmp/deskilo-recording-selector: boolean recordingPrivacy selector plus approved historical Back correction to exactly1. Focused selector6/privacy-Demo7, targeted analyzer and metric17 reported pass. Preserve privacy/workspace/actor/repository change semantics; synthetic tests are not real-server authorization proof. E2 independent review was assigned; reviewer consolidates receipt.
+#2470 real HMRC app/sandbox and receipt limitations remain; #3092 device/push credentials and #2578 full direct-DB performance evidence remain external. #3235 actual browser/native evidence is not replaced by source tests. #2581 prior automatic rejection must not be bypassed via another role/tool. #3141 release/provider gates remain separate.
+#2832–#2836/#3120 deferred, #2855/#2494 paused unless current owner/queue resumes.
+Nightly trip ceiling8 is unchanged; selector trace13->11 is partial, MCP sharing investigation closed, no green-nightly claim.
+Dictionary manual reviewed delivery waits for stable current schema/output; do not repeat startup/port diagnosis or infer a suppressed PR-creation error.
+Unknown current device availability, remote pairing or cloud-session presence stays UNKNOWN.
 
-Trip ceiling stays8. Selector trace reduced13->11; observed no-delay capability schedule offers at most two hypothetical joins (leaves9), not universal scheduling proof. Actual-session authority unresolved. MCP investigation CLOSED for current checkpoint: no new auth/session machinery, further traces, blind cache sharing or budget relaxation. Follow-up does not establish green nightly.
-
-Dictionary41447938544 succeeded on7438b12; original54322 collision owner/cause remains unproven. No port edits or speculative retry needed.
-
-## Checkout and branch state
-
-Root `/Users/floriandittgen/orgcowrk` is an inspection/coordination checkout, observed detached at `c352b2cf3e407e7b93e5fa802d5c9466dc96f933`, not the current implementation base. Pre-existing root changes in .claude/settings.json, .mcp.json and supabase/.temp/cli-latest plus untracked artifacts are preserved. Always create an isolated worktree from freshly fetched origin/master. Git remote: fdittgen-png/deskilo. Default development branch: master.
-
-Keep `hosting/godaddy` (production deployment source) and `coord/cloud-codex`. Preserve `/private/tmp/deskilo-cloud-exchange`; do not assume ownership of that existing checkout.
-
-## External or deferred work
-
-- #2470: real HMRC Developer Hub application and recorded sandbox acceptance still missing.
-- #3235: signed-in real-browser return and native Back evidence remain; code is already merged. Do not reimplement or invent identity/device proof.
-- #3092: paired Vault/Edge push secrets, FCM account and permitted recipient/device evidence remain missing.
-- #2578: full one-transaction performance proof NOT RUN; direct development connection needed. Management API timeout/split timings do not substitute. Keep the documented synthetic dev marker; do not delete its owner/tombstones.
-- #2581: positive export proof blocked by an automatic rejection of test-identity creation. Do not retry via SQL, another role or another credential route.
-- Provider/certificate gates such as #2377/#3159 and release/drop gate #3141 remain separate from code completion.
-- #2832–#2836 and #3120 are deferred next-version work; #2855 wider guides and #2494 refactoring remain paused unless current owner/queue explicitly resumes them.
-- Available Android/iPhone devices, remote-phone pairing and active cloud-session presence: **UNKNOWN currently**. No always-on connection or watcher is assumed.
-
-Development project reference: `zwzbynivewivvjmripeb`. No secret values are stored here. Cloud tooling must be rediscovered; the historical cloud report lacked Flutter/Dart/native toolchains.
-
-
-
-## #3255 completed; #2599 ready for final review
-
-GitHub independently confirms #3255 MERGED **2026-11-02 14:33:46 UTC**, squash **fb464b78deec3afab4df3ed62675b8f699334b83**, from reviewed **b04a297091e956e79c94534ca2ffc3a8ce5deb46**. Exact-head Quality41457846551 and Web41457846972 completedSUCCESS. E1 cleanup/release queued immediately. Selector reduces unrelated provider rebuilds; Back contract is exactly1, trip ceiling8 unchanged. Nightly remains unresolved.
-
-#2599 local candidate **937a4f6f49de46efd13a6d22bc2d4499d8c614eb**, /private/tmp/deskilo-2599-lint. E2 independent delta review reports no actionable findings after durable pump-growth rationale, unique receipt-detail assertions and owned fixture-root/same-temp unowned-checkout regression. E1 reports latest7 focused/analyzer0, prior13/9 delta proof and original708 only for unchanged inputs. Reviewer final acceptance and PR/requiredCI remain; no merge or speedup claim. E2 explicitly handed off two purchase-widget test files; no actual overlap with0655 candidate. Both normalPR slots released; do not artificially serialize disjoint ready candidates.
-
-E2 #3070 candidate c34028f0, 0655 RESERVED/NOT APPLIED at latest verified session receipt. Concrete reviewer contract/proof path remains the critical dependency; true concurrency needs isolatedCI, no dev apply shortcut. E1 already reviewed revised race-test delta. Owner idle-time protocol and measured intervals are in OPERATING.md; wait tasks produced2380 contract crosswalk, dictionary diagnosis and2599 fixes.
+This is a takeover snapshot, not a second dispatch queue. Reviewer maintains #2596; preserve evidence provenance and update CURRENT at material handoffs.
