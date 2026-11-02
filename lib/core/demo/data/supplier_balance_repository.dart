@@ -28,8 +28,9 @@ class FakeSupplierBalanceRepository implements SupplierBalanceRepository {
     for (final row in purchases.payables) {
       final obligation = row.obligation;
       if (obligation.creditorKind != CreditorKind.supplier ||
-          obligation.state == ObligationState.cancelled)
+          obligation.state == ObligationState.cancelled) {
         continue;
+      }
       final key = (obligation.creditorId, obligation.currency);
       totals[key] = (totals[key] ?? 0) + obligation.remainingCents;
     }
