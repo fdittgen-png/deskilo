@@ -13,6 +13,7 @@ import 'package:deskilo/core/app_info.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/demo_entry.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,10 +46,16 @@ Future<GoRouter> pump(
   double textScale = 1,
   bool reducedMotion = false,
   double keyboardInset = 0,
+  double safeBottom = 0,
   String? appVersion,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
+  tester.view.viewInsets = FakeViewPadding(bottom: keyboardInset);
+  tester.view.viewPadding = FakeViewPadding(bottom: safeBottom);
+  tester.view.padding = FakeViewPadding(
+    bottom: safeBottom > keyboardInset ? safeBottom - keyboardInset : 0,
+  );
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
@@ -63,6 +70,10 @@ Future<GoRouter> pump(
           textScaler: TextScaler.linear(textScale),
           disableAnimations: reducedMotion,
           viewInsets: EdgeInsets.only(bottom: keyboardInset),
+          viewPadding: EdgeInsets.only(bottom: safeBottom),
+          padding: EdgeInsets.only(
+            bottom: safeBottom > keyboardInset ? safeBottom - keyboardInset : 0,
+          ),
         ),
         child: const DeskiloApp(),
       ),
@@ -93,6 +104,18 @@ void main() {
     });
   }
 
+  testWidgets('footer respects device bottom safe area', (tester) async {
+    await pump(tester, size: const Size(400, 1200), safeBottom: 60,
+        appVersion: '1.2.3+42');
+    final screen = tester.element(find.byType(AuthScreen));
+    expect(tester.view.viewPadding.bottom, 60);
+    // The root SystemInsetsGuard consumes the inset before the auth screen.
+    expect(MediaQuery.paddingOf(screen).bottom, 0);
+    expect(tester.getSize(find.byType(Scaffold).first).height, 1140);
+    final footer = find.byKey(const ValueKey('auth-build-version'));
+    expect(tester.getBottomLeft(footer).dy, lessThanOrEqualTo(1116));
+  });
+
   testWidgets('unavailable metadata does not invent a build', (tester) async {
     await pump(tester, appVersion: '');
     expect(find.byKey(const ValueKey('auth-build-version')), findsNothing);
@@ -102,6 +125,13 @@ void main() {
   testWidgets('small keyboard viewport keeps version and Demo reachable', (tester) async {
     await pump(tester, keyboardInset: 260,
         textScale: 2, reducedMotion: true, appVersion: '1.2.3');
+    final screen = tester.element(find.byType(AuthScreen));
+    expect(MediaQuery.viewInsetsOf(screen).bottom, 260);
+    expect(tester.getSize(find.byType(Scaffold).first).height, 640);
+    final scroll = find.descendant(
+      of: find.byType(AuthScreen), matching: find.byType(SingleChildScrollView),
+    ).first;
+    expect(tester.getSize(scroll).height, 380);
     final footer = find.byKey(const ValueKey('auth-build-version'));
     await tester.ensureVisible(footer);
     expect(tester.getBottomLeft(footer).dy, lessThanOrEqualTo(380));
