@@ -2692,7 +2692,7 @@ routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_man
 routine public.purchase_allocations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:d49cfc07ddd5
 routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:866a954639c4
 routine public.purchase_approval_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:3dab76d294d2
-routine public.purchase_approval_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2709f943a59a
+routine public.purchase_approval_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0c0bb5fb849f
 routine public.purchase_approval_eligible(p_workspace_id uuid, p_member_id uuid) -> TABLE(id uuid, created_datetime timestamp with time zone, revision integer, can_approve boolean, can_reject boolean, gross_cents bigint) | function | definer | stable | exec:service_role | body:fa650b2e5b44
 routine public.purchase_approval_page_v1(p_workspace_id uuid, p_after_created timestamp with time zone, p_after_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:afd6084e1b29
 routine public.purchase_bridge_expense(p_event events) -> uuid | function | definer | volatile | exec:service_role | body:0f3850d27cee
