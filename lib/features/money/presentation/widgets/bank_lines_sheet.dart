@@ -100,6 +100,8 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
       line.isMoneyIn ? widget.canMatch : widget.canReconcile,
     BankLineStatus.recorded => line.isMoneyIn && widget.canMatch,
     BankLineStatus.reconciled => widget.canReconcile,
+    // #2380 — a confirmed match of money in is undone by whoever matches.
+    BankLineStatus.matched => line.isMoneyIn && widget.canMatch,
     _ => false,
   };
 
@@ -146,6 +148,12 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
         final requestId = newRequestId();
         action = () =>
             commands.unreconcileOut(line, reason: reason, requestId: requestId);
+      case BankLineStatus.matched when line.isMoneyIn:
+        final reason = await showBankUndoDialog(context, ofMatch: true);
+        if (reason == null) return;
+        final requestId = newRequestId();
+        action = () =>
+            commands.unmatchIn(line, reason: reason, requestId: requestId);
       case BankLineStatus.duplicate ||
           BankLineStatus.recorded ||
           BankLineStatus.pending ||

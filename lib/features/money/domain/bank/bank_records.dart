@@ -293,6 +293,18 @@ abstract interface class BankStatementRepository {
     required String reason,
     required String requestId,
   });
+
+  /// Undoes the match of money in to an invoice, once, for [reason] (0650):
+  /// the invoice is open again, the movement keeps its payment and reads
+  /// [BankLineStatus.recorded], and the undoing is kept on record. Only the
+  /// exact, single-payment, open-period match is undone: the server refuses
+  /// the others with a known code. The same [requestId] again changes
+  /// nothing.
+  Future<BankLineStatus> unmatchIn(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  });
 }
 
 /// A calendar day of the wire (`YYYY-MM-DD`) at UTC midnight.

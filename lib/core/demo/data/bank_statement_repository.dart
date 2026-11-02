@@ -10,6 +10,7 @@ import '../../../features/money/domain/bank/bank_statement.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/swiss_qr_bill.dart';
 import '../../time/date_text.dart';
+import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
 
 /// The bank statements in memory, with the server's rules the screens
@@ -240,6 +241,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
     BankLineStatus status, {
     String? invoiceId,
     String? invoiceNumber,
+    bool clearInvoice = false,
   }) {
     final (statement, i) = _find(lineId);
     final l = _lines[statement]![i];
@@ -257,8 +259,8 @@ class FakeBankStatementRepository implements BankStatementRepository {
       reference: l.reference,
       endToEndId: l.endToEndId,
       remittance: l.remittance,
-      invoiceId: invoiceId ?? l.invoiceId,
-      invoiceNumber: invoiceNumber ?? l.invoiceNumber,
+      invoiceId: clearInvoice ? null : invoiceId ?? l.invoiceId,
+      invoiceNumber: clearInvoice ? null : invoiceNumber ?? l.invoiceNumber,
     );
     return status;
   }
@@ -396,6 +398,30 @@ class FakeBankStatementRepository implements BankStatementRepository {
       reason: reason.trim(),
     );
     return _set(lineId, BankLineStatus.open);
+  }
+
+  final unmatches = <String, DemoUnmatch>{}; // #2380, by request id
+  DateTime? booksClosedThrough; // #2380, the last day the books are closed
+  String Function() actingMemberId = () => 'member-1'; // the active persona
+  bool Function() mayUnmatch = () => true; // issueInvoices
+
+  @override
+  Future<BankLineStatus> unmatchIn(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  }) async {
+    final why = reason.trim();
+    demoRequireIssueRight(allowed: mayUnmatch());
+    if (demoUnmatchIsReplay(unmatches, requestId, lineId, why)) {
+      return _line(lineId).status;
+    }
+    final target = demoUnmatchTarget(money: money, line: _line(lineId),
+        paymentId: _payments[lineId], closedThrough: booksClosedThrough);
+    demoApplyUnmatch(money, target, actingMemberId(), today);
+    unmatches[requestId] = (lineId: lineId, invoiceId: target.invoice.id,
+        paymentId: target.payment.id, reason: why);
+    return _set(lineId, BankLineStatus.recorded, clearInvoice: true);
   }
 }
 

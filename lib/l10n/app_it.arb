@@ -898,6 +898,22 @@
   "bankUndoReasonLabel": "Perché viene annullata",
   "bankUndoReasonRequired": "Indichi perché la riconciliazione viene annullata.",
   "bankUndoTitle": "Annullare questa riconciliazione?",
+  "bankUnmatchBody": "La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L'abbinamento e il motivo dell'annullamento restano registrati. Il pagamento resta presso questo membro: può essere abbinato di nuovo a una delle sue fatture, non a quella di un altro membro.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "bankUnmatchConfirm": "Annulla l'abbinamento",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  },
+  "bankUnmatchReasonRequired": "Indichi perché l'abbinamento viene annullato.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchTitle": "Annullare questo abbinamento?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
   "baseRoleNote": "Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -5675,6 +5691,10 @@
     "description": "#982 validation domains: eventTypeInvoiceIssue"
   },
   "eventTypeInvoicePayment": "Pagamento fattura",
+  "eventTypeInvoicePaymentReversed": "Abbinamento del pagamento annullato",
+  "@eventTypeInvoicePaymentReversed": {
+    "description": "#2380 event type: a match of money in was undone (0650)."
+  },
   "eventTypeInvoiceReminder": "Promemoria di pagamento",
   "eventTypeInvoiceVoid": "Annullamento fattura",
   "@eventTypeInvoiceVoid": {
@@ -13324,6 +13344,18 @@
   "refusalBankFileRefused": "Il server ha rifiutato l'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla.",
   "refusalBankLineDecided": "Questo movimento è stato deciso nel frattempo (abbinato, riconciliato o verificato). L'elenco mostra il suo stato attuale.",
   "refusalBankLineRefused": "Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.",
+  "refusalBankMatchBeyondLink": "Questo abbinamento ha fatto più che collegare un pagamento (ha emesso una nota di credito, fa parte di un raggruppamento o è stato stornato), quindi non può essere annullato qui. Nulla è stato modificato.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchClosedPeriod": "Questo pagamento ha una data compresa in un periodo contabile chiuso: il suo abbinamento non può essere annullato. Nulla è stato modificato.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchSeveralPayments": "A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
   "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",
   "@refusalMoneyLocaleLocked": {

@@ -95,5 +95,33 @@
   "bankUndoBody": "Il movimento torna aperto e il pagamento risulta di nuovo solo registrato come effettuato. La riconciliazione e il motivo dell'annullamento restano registrati.",
   "bankUndoReasonLabel": "Perché viene annullata",
   "bankUndoReasonRequired": "Indichi perché la riconciliazione viene annullata.",
-  "bankUndoConfirm": "Annulla la riconciliazione"
+  "bankUndoConfirm": "Annulla la riconciliazione",
+  "bankUnmatchTitle": "Annullare questo abbinamento?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
+  "bankUnmatchBody": "La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L'abbinamento e il motivo dell'annullamento restano registrati. Il pagamento resta presso questo membro: può essere abbinato di nuovo a una delle sue fatture, non a quella di un altro membro.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "refusalBankMatchBeyondLink": "Questo abbinamento ha fatto più che collegare un pagamento (ha emesso una nota di credito, fa parte di un raggruppamento o è stato stornato), quindi non può essere annullato qui. Nulla è stato modificato.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchSeveralPayments": "A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
+  "refusalBankMatchClosedPeriod": "Questo pagamento ha una data compresa in un periodo contabile chiuso: il suo abbinamento non può essere annullato. Nulla è stato modificato.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "bankUnmatchReasonRequired": "Indichi perché l'abbinamento viene annullato.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchConfirm": "Annulla l'abbinamento",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  }
 }

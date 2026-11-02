@@ -51,6 +51,18 @@ enum KnownRefusal {
   /// #2380 (DKB03) — a bank statement file the server refuses whole.
   bankFileRefused,
 
+  /// #2380 (DKB04) — a match of money in that did more than link a payment
+  /// (a credit note, a settlement, a write-off): not undone here.
+  bankMatchBeyondLink,
+
+  /// #2380 (DKB05) — the invoice has other payments matched: this one is
+  /// not undone alone.
+  bankMatchSeveralPayments,
+
+  /// #2380 (DKB06) — the payment is dated inside a closed period of the
+  /// books: its match is not undone.
+  bankMatchClosedPeriod,
+
   /// #2571 (DKE01) — a destructive step over records still under retention:
   /// the server deleted nothing.
   retentionKept,
@@ -95,11 +107,14 @@ const List<String> changedMeanwhileSubstrings = [
   'invoice already matched',
 ];
 
-/// #2380 — the bank statement codes of 0603.
+/// #2380 — the bank statement codes of 0603 and 0650.
 const Map<String, KnownRefusal> _bankRefusals = {
   'DKB01': KnownRefusal.bankLineDecided,
   'DKB02': KnownRefusal.bankLineRefused,
   'DKB03': KnownRefusal.bankFileRefused,
+  'DKB04': KnownRefusal.bankMatchBeyondLink,
+  'DKB05': KnownRefusal.bankMatchSeveralPayments,
+  'DKB06': KnownRefusal.bankMatchClosedPeriod,
 };
 
 /// Which family [error] belongs to, or null when it is none of them.
@@ -149,6 +164,10 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.bankLineDecided => l10n.refusalBankLineDecided,
       KnownRefusal.bankLineRefused => l10n.refusalBankLineRefused,
       KnownRefusal.bankFileRefused => l10n.refusalBankFileRefused,
+      KnownRefusal.bankMatchBeyondLink => l10n.refusalBankMatchBeyondLink,
+      KnownRefusal.bankMatchSeveralPayments =>
+        l10n.refusalBankMatchSeveralPayments,
+      KnownRefusal.bankMatchClosedPeriod => l10n.refusalBankMatchClosedPeriod,
       KnownRefusal.retentionKept =>
         l10n.retentionResetRefused(l10n.retentionKeptReview),
       null => null,

@@ -2104,6 +2104,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankUndoTitle => 'Undo this reconciliation?';
 
   @override
+  String get bankUnmatchBody =>
+      'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record. The payment stays with this member: it can be matched again to one of their invoices, not to another member\'s.';
+
+  @override
+  String get bankUnmatchConfirm => 'Undo';
+
+  @override
+  String get bankUnmatchReasonRequired => 'Say why the match is undone.';
+
+  @override
+  String get bankUnmatchTitle => 'Undo this match?';
+
+  @override
   String get baseRoleNote =>
       'Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.';
 
@@ -7596,6 +7609,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeInvoicePayment => 'Invoice payment';
+
+  @override
+  String get eventTypeInvoicePaymentReversed => 'Payment match undone';
 
   @override
   String get eventTypeInvoiceReminder => 'Payment reminder';
@@ -20248,6 +20264,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalBankLineRefused =>
       'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.';
+
+  @override
+  String get refusalBankMatchBeyondLink =>
+      'This match did more than link a payment (it issued a credit note, belongs to a settlement, or was written off), so it cannot be undone here. Nothing was changed.';
+
+  @override
+  String get refusalBankMatchClosedPeriod =>
+      'This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.';
+
+  @override
+  String get refusalBankMatchSeveralPayments =>
+      'Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.';
 
   @override
   String get refusalChangedMeanwhile =>

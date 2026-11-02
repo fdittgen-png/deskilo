@@ -95,5 +95,33 @@
   "bankUndoBody": "El movimiento vuelve a estar abierto y el pago vuelve a figurar solo como registrado como realizado. La conciliación y el motivo por el que se deshizo quedan registrados.",
   "bankUndoReasonLabel": "Por qué se deshace",
   "bankUndoReasonRequired": "Indique por qué se deshace la conciliación.",
-  "bankUndoConfirm": "Deshacer"
+  "bankUndoConfirm": "Deshacer",
+  "bankUnmatchTitle": "¿Deshacer esta conciliación con la factura?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
+  "bankUnmatchBody": "La factura vuelve a estar abierta. El pago sigue registrado y este movimiento puede conciliarse de nuevo con él. La conciliación y el motivo por el que se deshizo quedan registrados. El pago sigue con este miembro: puede conciliarse de nuevo con una de sus facturas, no con la de otro miembro.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "refusalBankMatchBeyondLink": "Esta conciliación hizo más que vincular un pago (emitió una nota de crédito, forma parte de una liquidación agrupada o se dio de baja), por lo que no se puede deshacer aquí. No se cambió nada.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchSeveralPayments": "Hay otros pagos conciliados con esta factura, así que este no se puede deshacer por separado. No se cambió nada.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+  },
+  "refusalBankMatchClosedPeriod": "Este pago tiene fecha dentro de un periodo contable cerrado, por lo que su conciliación no se puede deshacer. No se cambió nada.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "bankUnmatchReasonRequired": "Indique por qué se deshace la conciliación.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchConfirm": "Deshacer",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  }
 }

@@ -2495,6 +2495,22 @@
   "@bankUndoTitle": {
     "description": "#2380 Undo dialog: the title, asking to undo a reconciliation of money out."
   },
+  "bankUnmatchBody": "The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record. The payment stays with this member: it can be matched again to one of their invoices, not to another member's.",
+  "@bankUnmatchBody": {
+    "description": "#2380 money-in unmatch: what the undoing does"
+  },
+  "bankUnmatchConfirm": "Undo",
+  "@bankUnmatchConfirm": {
+    "description": "#2380 money-in unmatch: the confirm button."
+  },
+  "bankUnmatchReasonRequired": "Say why the match is undone.",
+  "@bankUnmatchReasonRequired": {
+    "description": "#2380 money-in unmatch: the reason is required."
+  },
+  "bankUnmatchTitle": "Undo this match?",
+  "@bankUnmatchTitle": {
+    "description": "#2380 money-in unmatch: the dialog title"
+  },
   "baseRoleNote": "Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -9540,6 +9556,10 @@
   "eventTypeInvoicePayment": "Invoice payment",
   "@eventTypeInvoicePayment": {
     "description": "Event type label + validation settings card (0067)"
+  },
+  "eventTypeInvoicePaymentReversed": "Payment match undone",
+  "@eventTypeInvoicePaymentReversed": {
+    "description": "#2380 event type: a match of money in was undone (0650)."
   },
   "eventTypeInvoiceReminder": "Payment reminder",
   "eventTypeInvoiceVoid": "Invoice cancellation",
@@ -24267,6 +24287,18 @@
   "refusalBankLineRefused": "This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.",
   "@refusalBankLineRefused": {
     "description": "#2380 Refusal DKB02: the movement and its choice do not go together."
+  },
+  "refusalBankMatchBeyondLink": "This match did more than link a payment (it issued a credit note, belongs to a settlement, or was written off), so it cannot be undone here. Nothing was changed.",
+  "@refusalBankMatchBeyondLink": {
+    "description": "#2380 Refusal DKB04: the match did more than link a payment."
+  },
+  "refusalBankMatchClosedPeriod": "This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.",
+  "@refusalBankMatchClosedPeriod": {
+    "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchSeveralPayments": "Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.",
+  "@refusalBankMatchSeveralPayments": {
+    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
   },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {

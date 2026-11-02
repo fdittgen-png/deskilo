@@ -141,4 +141,15 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
     'p_reason': reason,
     'p_request_id': requestId,
   });
+
+  @override
+  Future<BankLineStatus> unmatchIn(
+    String lineId, {
+    required String reason,
+    required String requestId,
+  }) => _status('unmatch_bank_line_in_v1', {
+    'p_line_id': lineId,
+    'p_reason': reason,
+    'p_request_id': requestId,
+  });
 }

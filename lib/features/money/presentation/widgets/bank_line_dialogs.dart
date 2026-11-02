@@ -278,15 +278,21 @@ class _BankOutDialogState extends State<_BankOutDialog> {
   }
 }
 
-/// Why the reconciliation of a movement out is undone; null when the
-/// person keeps it.
-Future<String?> showBankUndoDialog(BuildContext context) => showDialog<String>(
+/// Why the reconciliation of a movement out is undone (or, with [ofMatch],
+/// the match of a movement in); null when the person keeps it.
+Future<String?> showBankUndoDialog(
+  BuildContext context, {
+  bool ofMatch = false,
+}) => showDialog<String>(
   context: context,
-  builder: (_) => const _BankUndoDialog(),
+  builder: (_) => _BankUndoDialog(ofMatch: ofMatch),
 );
 
 class _BankUndoDialog extends StatefulWidget {
-  const _BankUndoDialog();
+  const _BankUndoDialog({required this.ofMatch});
+
+  /// Money in: the words are those of a match, not of a reconciliation.
+  final bool ofMatch;
 
   @override
   State<_BankUndoDialog> createState() => _BankUndoDialogState();
@@ -305,7 +311,12 @@ class _BankUndoDialogState extends State<_BankUndoDialog> {
   void _submit() {
     final reason = _reason.text.trim();
     if (reason.isEmpty) {
-      setState(() => _error = context.l10n.bankUndoReasonRequired);
+      final l10n = context.l10n;
+      setState(
+        () => _error = widget.ofMatch
+            ? l10n.bankUnmatchReasonRequired
+            : l10n.bankUndoReasonRequired,
+      );
       return;
     }
     Navigator.of(context).pop(reason);
@@ -315,13 +326,13 @@ class _BankUndoDialogState extends State<_BankUndoDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n.bankUndoTitle),
+      title: Text(widget.ofMatch ? l10n.bankUnmatchTitle : l10n.bankUndoTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n.bankUndoBody),
+            Text(widget.ofMatch ? l10n.bankUnmatchBody : l10n.bankUndoBody),
             const FormGap.small(),
             AppTextField(
               key: const ValueKey('bank-undo-reason'),
@@ -343,7 +354,9 @@ class _BankUndoDialogState extends State<_BankUndoDialog> {
         FilledButton(
           key: const ValueKey('bank-undo-confirm'),
           onPressed: _submit,
-          child: Text(l10n.bankUndoConfirm),
+          child: Text(
+            widget.ofMatch ? l10n.bankUnmatchConfirm : l10n.bankUndoConfirm,
+          ),
         ),
       ],
     );

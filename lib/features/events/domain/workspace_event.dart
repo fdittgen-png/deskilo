@@ -40,6 +40,11 @@ enum EventType {
   /// quorum — a reject REOPENS the invoice.
   invoicePayment('invoice_payment'),
 
+  /// #2380 (0650) — a confirmed match of money in was undone: a record on
+  /// the timeline beside the payment it undid. Applied, never pending, with
+  /// no validation policy; it moves no money and is not a payment.
+  invoicePaymentReversed('invoice_payment_reversed'),
+
   /// A member's request to delete a PAST or CHECKED-IN booking (0097,
   /// #492): confirm cancels it (unused), reject keeps it on the record
   /// (the check-in was merely forgotten). Always another person decides.
