@@ -62,3 +62,12 @@ For each new feature or changed user-facing behavior, include a reachable, repro
 
 ## Owner follow-up — review whether Demo cases fit (2026-11-01)
 Send Astra a concise proposed case for each user-facing checkpoint: feature acceptance; persona/scoped starting data; actual entry and steps; visible outcome plus repository/state readback; meaningful refusal/error case; existing Demo adapter/test/coverage paths. Astra reviews the fit and gives specific improvements. Use the real application flow with a synthetic boundary adapter, not a parallel mock screen or a success message with no state change. Prove reset/isolation; simulated receipts/download behavior do not establish provider/backend/native acceptance. Keep the existing coding-slot limits and e1's single queue. No owner approval request or new watcher/job.
+
+
+## OWNER — DRAIN ONLY, 2026-11-02 07:23 UTC
+
+The owner is replacing the current sessions. Finish only work already started (including necessary verification, commits, pushes, reviews and merges), then report DONE AND IDLE and stop. Start no new issues/checkpoints/follow-up slices. Prior continuity/auto-dispatch instructions are superseded. If you have no active claim, remain idle; do not claim a queued issue.
+
+Current local drain: a2 PR #3248 / #2470 / migration 0651; a4 PR #3249 / #3247. e1 reviews/merges, reconciles source versus applied migrations, and consolidates the replacement handover; gate finishes existing evidence. Report any cloud-owned active work or local-only changes through this existing Git channel and #2596. Keep secrets out of handover. Preserve hosting/godaddy and this coordination branch. Stop only your own recurring auto-pick/liveness jobs after the current work is settled; do not kill shared inbox watchers.
+
+Authoritative instruction: https://github.com/fdittgen-png/deskilo/issues/2596#issuecomment-6571507807 . Local handover target: ~/.deskilo-exchange/HANDOVER-to-codex-20261102.md, with Git-accessible references to be posted on #2596. Receipt by this cloud session is not yet confirmed.
