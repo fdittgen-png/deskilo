@@ -126,3 +126,9 @@ One-sample focused trace `/tmp/deskilo-ci-pending-phase.log` exited0; temporary 
 Back metric counts explicit probe.back. #1816 used Back from Profiles and Back from Assistants; #2136 commit99c12c923 replaced the first with workspace selection from Me. Current recipe truthfully has one Back, while gate requires2. Reclassifying selection or adding meaningless navigation is not a valid correction. No budget/metric change authorized; full nightly remains red.
 
 Bootstrap3f5 remains independently source-approved. E1 now limited to recording the old/new metric contract and a bounded read-only investigation of paired membership rebuilds; no generic lifecycle rewrite or broad reruns to chase the target. A meaningful provider improvement, if established, must preserve context/authorization and be judged separately from the stale metric contract. Gate completion requires an explicit contract/product resolution; it is not a mechanical initialization fix. Dictionary ownership remains unknown, no edit.
+
+## Private containment and resumed implementation — 12:38 UTC
+
+GitHub repository API independently confirms private=true/visibility=private, current account admin access. Reviewer reports Pages404/Actions enabled; master protected=false and protection/ruleset403 due private-plan limitation. Required exact-head review and CI remain manual mandatory merge conditions; no bypass or public restoration authorized. Privacy does not erase previous copies/history.
+
+PR3253 published at reviewed d8d3c467; five workflows started12:37:18, independently verified in_progress12:37:48: Quality41446196242, Web41446196206, SAF-T41446196087, E-invoice41446196014, VAT41446196007. Reviewer owns through completion/merge handoff, E2 fixes actual failures. No success/merge claimed at this snapshot. Earlier publication-held statements are superseded, not retroactively proof that work was published then.
