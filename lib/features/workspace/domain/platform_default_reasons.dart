@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2519 — why a PLATFORM feature ("asked for, never assumed") still starts
-// ON in a new workspace.
+// ON in the registry.
 //
 // A platform entry with `defaultOn: true` is the registry's exception to
-// its own tier: a new workspace stores it on, an existing one does not
-// (#2566). docs/AGENT_RULES.md allows it for a feature that is neither risky
+// its own tier. Normal workspace creation stores platform features off,
+// except environmentPairs when creating a twin. Registry defaults feed
+// the Demo fake, server choice, personal shell and workspace loading or
+// no-workspace fallbacks (#2566). docs/AGENT_RULES.md allows it for a feature
+// that is neither risky
 // nor in need of owner setup, and the epic asks that the reason be written
 // down. Each entry here is that reason in one sentence, taken from what the
 // feature's own code or issue states: what OFF does (so that starting on
@@ -22,6 +25,70 @@ import 'workspace_feature.dart';
 /// The stated reasons, by feature. Only platform entries with `defaultOn:
 /// true` may appear here; the test refuses any other, and an empty text.
 const Map<WorkspaceFeature, String> platformDefaultReasons = {
+  WorkspaceFeature.expenseRepartition:
+      'A configured space can preview a shared expense distribution; '
+      'validation precedes charges or credits (#828).',
+  WorkspaceFeature.invoiceSettlement:
+      'A configured space can explicitly consolidate open invoices while '
+      'preserving their source and settlement lineage (#804).',
+  WorkspaceFeature.priceNegotiations:
+      'A configured space can propose individual terms; access is limited '
+      'and a proposal goes through validation (#739).',
+  WorkspaceFeature.scheduledExpenses:
+      'A configured space can schedule expenses with validation; each '
+      'occurrence is presented for confirmation (#767).',
+  WorkspaceFeature.supplyExpenses:
+      'A configured space can explicitly submit a supply expense; its '
+      'validation reimburses the buyer and restocks a service (#731).',
+  WorkspaceFeature.planMemberPhotos:
+      'A configured space can show occupants’ profile photos on its '
+      'reserve map; ordinary creation leaves the feature off (#620).',
+  WorkspaceFeature.nfcSeatTags:
+      'Seat tags need an explicitly assigned UID; NFC scanning is offered '
+      'only on a capable device (#604).',
+  WorkspaceFeature.qrBadges:
+      'An authorised user explicitly issues a badge under the kiosk; camera '
+      'scanning requires a supported device (#604).',
+  WorkspaceFeature.invoiceAddressWindow:
+      'Off disables window positioning; on uses the country side unless '
+      'the owner chooses another, so invoices fit the envelope (#868).',
+  WorkspaceFeature.managedProfiles:
+      'Off hides the admin creation action; on creates nothing until an '
+      'admin explicitly creates a managed profile (#887).',
+  WorkspaceFeature.memberPaymentTerms:
+      'Off hides the terms card; on changes no terms until an authorised '
+      'request is validated, and absent overrides inherit workspace terms '
+      '(#881).',
+  WorkspaceFeature.memberReports:
+      'Off hides member report actions; on offers agreement and payments '
+      'documents for a person to generate on request (#494).',
+  WorkspaceFeature.reportTexts:
+      'Off hides the text editor; on changes no text until the owner adds '
+      'it, and absent language variants fall back to the default (#880).',
+  WorkspaceFeature.vatReport:
+      'Off hides the period PDF and CSV actions; on offers these exports '
+      'on request and does not file the return (#878).',
+  WorkspaceFeature.coOwner:
+      'The owner explicitly appoints a successor; the server succession '
+      'safeguard remains on even when this appointment UI is off (#341).',
+  WorkspaceFeature.kioskMode:
+      'The owner explicitly designates a kiosk account; enabling the '
+      'feature does not configure a device (#341).',
+  WorkspaceFeature.nfcBadges:
+      'Under the kiosk, authorised registration is explicit and NFC '
+      'tapping needs a capable device (#341).',
+  WorkspaceFeature.usageRecords:
+      'Off hides the usage face records; on exposes the billing trail, '
+      'while a correction still requires a request and validation (#833).',
+  WorkspaceFeature.letterStandard:
+      'Off leaves the existing bands or design; on supplies a standard '
+      'window-envelope layout to an undesigned person-facing kind (#874).',
+  WorkspaceFeature.vatDeclarations:
+      'Off hides declaration entry points; on offers a registered workspace '
+      'period preparation, while filing is a separate action (#534).',
+  WorkspaceFeature.usageReport:
+      'Off hides the consumption report action; on offers a generated '
+      'report when usage records and member reports are enabled (#873).',
   WorkspaceFeature.dataAccessLog:
       'Off hides the row; the server-written log is still written, because '
       'the record is not optional (#719).',
