@@ -101,5 +101,29 @@
         "type": "String"
       }
     }
+  },
+  "demoSessionReturn": "Zurück zu meinem Bereich",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
+  },
+  "demoEntryBodySignedIn": "Alles darin ist erfunden. Sie bleiben angemeldet. Änderungen hier betreffen nur die Demo. Kehren Sie zu Ihrem Bereich zurück, wenn Sie fertig sind.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryUnavailable": "Die Demo ist in diesem Bereich nicht verfügbar.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoEntryBack": "Zurück zu meinem Bereich",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
+  "demoEntrySignIn": "Anmelden",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
+  },
+  "demoEntryFailed": "Die Demo konnte nicht geöffnet werden. Ihr Bereich ist unverändert.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
   }
 }

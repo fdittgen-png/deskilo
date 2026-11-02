@@ -7,6 +7,8 @@
 // space's country asks, from the tax reference data, with "ask your
 // accountant" where nobody confirmed it.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/demo_entry.dart';
+import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
@@ -14,6 +16,7 @@ import 'package:deskilo/features/workspace/domain/setup_level_demo.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_levels_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -204,10 +207,22 @@ void main() {
         reason: p.name,
       );
     }
+    // #3235 — inside the app, after the visitor agreed; never a link out.
     await _tap(tester, 'setup-level-demo-bookings');
-    final query = Uri.parse(opened.single.fragment).queryParameters;
-    expect(query['space'], 'pezenas');
-    expect(query['to'], '/nfc-config');
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    expect(opened, isEmpty, reason: 'no URL leaves the app for the example');
+    await tester.tap(find.byKey(const Key('demo-entry-start')));
+    await tester.pumpAndSettle();
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(SetupLevelsScreen)),
+    );
+    expect(container.read(demoEntryProvider), isTrue);
+    final link = container.read(pendingDemoLinkProvider);
+    expect(
+      (link?.workspaceId, link?.persona, link?.to),
+      ('ws-1', DemoPersona.owner, '/nfc-config'),
+      reason: 'the demo starts at the screen that shows the level',
+    );
 
     await _pump(
       tester,

@@ -5811,14 +5811,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoEntryAction => 'Esplora lo spazio dimostrativo';
 
   @override
+  String get demoEntryBack => 'Torna al mio spazio';
+
+  @override
   String get demoEntryBody =>
       'Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fa raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com\'era quando vuole.';
+
+  @override
+  String get demoEntryBodySignedIn =>
+      'Tutto qui dentro è inventato. La sua sessione resta aperta. Le modifiche fatte qui riguardano solo la demo. Torni al suo spazio quando ha finito.';
+
+  @override
+  String get demoEntryFailed =>
+      'Non è stato possibile aprire la demo. Il suo spazio è invariato.';
+
+  @override
+  String get demoEntrySignIn => 'Accedi';
 
   @override
   String get demoEntryStart => 'Inizia';
 
   @override
   String get demoEntryTitle => 'Uno spazio da guardare';
+
+  @override
+  String get demoEntryUnavailable =>
+      'La demo non è disponibile in questo spazio.';
 
   @override
   String get demoPersonaAdmin => 'Amministratore';
@@ -5847,6 +5865,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get demoSessionResetDone => 'La demo è tornata come all\'inizio.';
+
+  @override
+  String get demoSessionReturn => 'Torna al mio spazio';
 
   @override
   String get demoSessionViewAs => 'Vedi come';

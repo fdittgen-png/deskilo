@@ -16,9 +16,10 @@ Vuole vedere il prodotto finito prima di prendere decisioni. Lo spazio dimostrat
 
 **Passaggi**
 
-1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**, poi **Inizia**. Vedi [Lo spazio dimostrativo](help:user.advanced.demo).
+1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**, poi **Inizia**. Se ha già effettuato l'accesso, tocchi invece **Provarlo nella demo** in un passaggio di configurazione: la sessione resta aperta e la demo si apre su quel passaggio. Vedi [Lo spazio dimostrativo](help:user.advanced.demo).
 2. Usi **Vedi come** per passare tra **Proprietario**, **Amministratore** e **Membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
 3. Tocchi **Reimposta la demo** quando la vuole come all'inizio.
+4. Se ha aperto la demo dal suo spazio, tocchi **Torna al mio spazio** al termine: torna alla stessa schermata di configurazione, con le scelte non ancora applicate. Le modifiche fatte nella demo non raggiungono mai il suo spazio.
 
 *Come membro*
 

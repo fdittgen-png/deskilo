@@ -5783,14 +5783,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get demoEntryAction => 'Explore the demo workspace';
 
   @override
+  String get demoEntryBack => 'Back to my workspace';
+
+  @override
   String get demoEntryBody =>
       'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.';
+
+  @override
+  String get demoEntryBodySignedIn =>
+      'Everything in it is made up. You stay signed in. Changes here affect only the demo. Return to your workspace when you finish.';
+
+  @override
+  String get demoEntryFailed =>
+      'The demo could not be opened. Your workspace is unchanged.';
+
+  @override
+  String get demoEntrySignIn => 'Sign in';
 
   @override
   String get demoEntryStart => 'Start exploring';
 
   @override
   String get demoEntryTitle => 'A workspace to look around';
+
+  @override
+  String get demoEntryUnavailable =>
+      'The demo is not available in this workspace.';
 
   @override
   String get demoPersonaAdmin => 'An administrator';
@@ -5819,6 +5837,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get demoSessionResetDone => 'The demo is back as it started.';
+
+  @override
+  String get demoSessionReturn => 'Return to my workspace';
 
   @override
   String get demoSessionViewAs => 'View as';

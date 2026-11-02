@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2872 (ADR 0047 §9) — a link into the demo that says where to start:
-// `#/auth?demo=1&space=leipzig&persona=owner&to=/setup`. The demo still
+// `#/demo?space=leipzig&persona=owner&to=/setup` (the older `#/auth?demo=1` form still works). The demo still
 // explains itself first and still asks; the link only chooses the space,
 // the viewpoint and the screen once the visitor agreed. The screen is one
 // of [demoLinkRoutes], never a free path (no open redirect), and anything
@@ -9,7 +9,6 @@
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../instance/instance_builder.dart';
 import 'demo_persona.dart';
 import 'seed/demo_second_space_seed.dart';
 
@@ -57,20 +56,6 @@ bool _demoLinkAllows(String? to) =>
     to != null &&
     (demoLinkRoutes.contains(to) || RegExp(r'^/setup/step/[a-z_]+$').hasMatch(to));
 
-/// #2872 — the public demo opened at [to], as [persona], in [space]
-/// (`pezenas`, where everything is set up, or `leipzig`, half way): what a
-/// setup step's "Try it in the demo" opens. A [to] the demo does not allow
-/// is left out, so the demo starts where it always does.
-Uri demoLinkUri({
-  String space = 'pezenas',
-  DemoPersona persona = DemoPersona.owner,
-  String? to,
-}) => Uri.parse(
-  '${InstanceAuthConfig.siteUrl}#/auth?demo=1&space=$space'
-  '&persona=${persona.name}'
-  '${_demoLinkAllows(to) ? '&to=$to' : ''}',
-);
-
 /// Where a link asks the demo to start.
 class DemoLink {
   const DemoLink({this.persona, this.workspaceId, this.to});
@@ -82,11 +67,19 @@ class DemoLink {
         .where((p) => p.name == query['persona'])
         .firstOrNull,
     workspaceId: switch (query['space']) {
-      'pezenas' => 'ws-1',
+      'pezenas' => demoFirstSpaceId,
       'leipzig' => demoSecondSpaceId,
       _ => null,
     },
     to: _demoLinkAllows(query['to']) ? query['to'] : null,
+  );
+
+  /// The link a setup step's example uses from inside the app (#3235): the
+  /// owner of the complete space, at [to] when the demo allows it.
+  factory DemoLink.example({String? to}) => DemoLink(
+    persona: DemoPersona.owner,
+    workspaceId: demoFirstSpaceId,
+    to: _demoLinkAllows(to) ? to : null,
   );
 
   final DemoPersona? persona;
@@ -94,6 +87,18 @@ class DemoLink {
   final String? to;
 
   bool get isEmpty => persona == null && workspaceId == null && to == null;
+
+  /// The query that names exactly this link (#3235): only what [parse]
+  /// accepts, so a redirect built from it carries nothing else.
+  Map<String, String> toQuery() => {
+    'space': ?switch (workspaceId) {
+      null => null,
+      demoSecondSpaceId => 'leipzig',
+      _ => 'pezenas',
+    },
+    'persona': ?persona?.name,
+    'to': ?to,
+  };
 }
 
 /// The link the visitor arrived with, until the demo has applied it. It

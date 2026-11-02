@@ -28,6 +28,7 @@
 // proves that every row settles in one — a redirect that lands on a
 // location the policy would redirect again is a loop by another name.
 import 'package:meta/meta.dart';
+import '../core/demo/demo_link.dart';
 import '../core/instance/schema_compatibility.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import 'route_classes.dart';
@@ -151,6 +152,9 @@ enum RouteReason {
   schemaCurrent,
   signInRequired,
   alreadySignedIn,
+
+  /// #3235 — the older `/auth?demo=1` link: the demo entry, whoever asks.
+  demoLink,
   kioskGate,
   kioskLocked,
   kioskReleased,
@@ -193,6 +197,42 @@ class RouteDecision {
       stays ? 'stay${reason == null ? '' : ' ($reason)'}' : '$redirect ($reason)';
 }
 
+/// #3235 — `/auth?demo=1&...` was the public demo link. It opens the same
+/// entry as `/demo`, signed in or not, and carries only what the demo link
+/// parser accepts; the sign-in screen is not shown to a signed-in person for
+/// it, and the kiosk lock still decides on the next hop.
+RouteDecision? _demoLinkRedirect(RouteRequest request) {
+  if (request.location != '/auth' || request.query['demo'] != '1') return null;
+  final query = DemoLink.parse(request.query).toQuery();
+  return RouteDecision.go(
+    Uri(path: '/demo', queryParameters: query.isEmpty ? null : query)
+        .toString(),
+    RouteReason.demoLink,
+  );
+}
+
+/// The kiosk lock (0043) behind the kiosk gate, for a signed-in person at
+/// [path]: null when nothing about the pad changes where they may be.
+RouteDecision? _kioskDecision(RouteFacts facts, String path) {
+  final atKiosk = path == '/kiosk';
+  final atGate = path == '/kiosk-gate';
+  switch (facts.kiosk) {
+    case KioskFact.gatePending:
+      return atGate
+          ? const RouteDecision.stay()
+          : const RouteDecision.go('/kiosk-gate', RouteReason.kioskGate);
+    case KioskFact.locked:
+      return atKiosk
+          ? const RouteDecision.stay()
+          : const RouteDecision.go('/kiosk', RouteReason.kioskLocked);
+    case KioskFact.released:
+    case KioskFact.notKiosk:
+      return atKiosk || atGate
+          ? RouteDecision.go(facts.home, RouteReason.kioskReleased)
+          : null;
+  }
+}
+
 /// The policy: one hop for [request] under [facts]. Pure — reads its
 /// arguments and nothing else, writes nothing.
 @visibleForTesting
@@ -210,6 +250,8 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
     return RouteDecision.go(facts.home, RouteReason.schemaCurrent);
   }
   if (facts.auth == AuthFact.loading) return const RouteDecision.stay();
+  final demoEntry = _demoLinkRedirect(request);
+  if (demoEntry != null) return demoEntry;
 
   final kind = classifyRoute(path);
   final home = facts.home;
@@ -233,21 +275,8 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
   // route to the kiosk view until the pad restarts; rejected lets this
   // run behave normally. A wall device has no personal consent to give,
   // so the lock is decided before the consent (#771).
-  final atKiosk = path == '/kiosk';
-  final atGate = path == '/kiosk-gate';
-  switch (facts.kiosk) {
-    case KioskFact.gatePending:
-      if (!atGate) return const RouteDecision.go('/kiosk-gate', RouteReason.kioskGate);
-      return const RouteDecision.stay();
-    case KioskFact.locked:
-      if (!atKiosk) return const RouteDecision.go('/kiosk', RouteReason.kioskLocked);
-      return const RouteDecision.stay();
-    case KioskFact.released:
-    case KioskFact.notKiosk:
-      if (atKiosk || atGate) {
-        return RouteDecision.go(home, RouteReason.kioskReleased);
-      }
-  }
+  final kioskHop = _kioskDecision(facts, path);
+  if (kioskHop != null) return kioskHop;
 
   // #751 — the GDPR consent gates everything but the public entries and
   // itself. Fails CLOSED once the profile query has settled; a fetch

@@ -104,6 +104,9 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.authentication,
   ),
+  // #3235 — the demo's public entry; its journey is walked in
+  // test/ux/demo_while_signed_in_test.dart, not yet recorded as a task.
+  RouteCoverage('/demo', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/help', CoverageStatus.planned, owner: '#1881 C'),
   RouteCoverage(
     '/privacy',

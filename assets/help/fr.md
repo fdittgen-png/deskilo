@@ -8254,9 +8254,10 @@ Vous voulez voir le produit terminé avant de prendre des décisions. L'espace d
 
 **Étapes**
 
-1. Sur l'écran de connexion, touchez **Explorer l'espace de démonstration**, puis **Commencer**. Voir [L'espace de démonstration](help:user.advanced.demo).
+1. Sur l'écran de connexion, touchez **Explorer l'espace de démonstration**, puis **Commencer**. Si vous êtes déjà connecté, touchez plutôt **L’essayer dans la démo** sur une étape de mise en place : votre connexion est conservée et la démo s'ouvre à cette étape. Voir [L'espace de démonstration](help:user.advanced.demo).
 2. Utilisez **Voir en tant que** pour passer de **Le propriétaire** à **Un administrateur** puis **Un membre**. Faites les trois exercices de chaque personne ci-dessous.
 3. Touchez **Réinitialiser la démo** quand vous voulez la retrouver comme au départ.
+4. Si vous avez ouvert la démo depuis votre espace, touchez **Revenir à mon espace** quand vous avez terminé : vous retrouvez le même écran de mise en place, avec les choix que vous n'aviez pas encore appliqués. Les modifications faites dans la démo n'atteignent jamais votre espace.
 
 *En tant que membre*
 
