@@ -11,6 +11,8 @@
 // prepared return is made by the same engine every demo space uses
 // (`saveVatDeclaration`), so its nine boxes come from the invoices and not
 // from a number typed here.
+import 'package:meta/meta.dart';
+
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/workspace/domain/member.dart';
@@ -18,21 +20,24 @@ import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
+import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 
 const demoLondonSpaceId = 'ws-3';
-const demoLondonSpaceName = 'Camden Yard Cowork';
+const _spaceName = 'Camden Yard Cowork';
+@visibleForTesting
 const demoLondonSiteId = 'uk-site-camden';
 
 /// A synthetic UK VAT registration (nine digits; the last two are HMRC's check
 /// digits for 9999041, so it validates like a real one and is nobody's).
+@visibleForTesting
 const demoLondonVrn = '999904143';
 
 /// The features of the London space: a new space's, plus VAT returns and the
 /// MTD submission. Accounting connectors stay off: MTD does not need them.
-final Map<String, bool> demoLondonFeatureFlags = {
+final Map<String, bool> _featureFlags = {
   ...defaultFeatureFlagsForNewWorkspace(),
   'moneyTab': true,
   'invoicing': true,
@@ -44,12 +49,12 @@ final Map<String, bool> demoLondonFeatureFlags = {
 Workspace demoLondonSpace() => Workspace(
   id: demoLondonSpaceId,
   rolePermissions: everydayMatrix(),
-  name: demoLondonSpaceName,
+  name: _spaceName,
   countryCode: 'GB',
   currencyCode: 'GBP',
   timezone: 'Europe/London',
   inviteCode: 'CAMDEN2026',
-  featureFlags: demoLondonFeatureFlags,
+  featureFlags: _featureFlags,
   environment: 'prod',
   address: '12 Chalk Farm Road\nLondon NW1 8AA',
   street: '12 Chalk Farm Road',
@@ -126,20 +131,22 @@ void seedLondonMoney(FakeMoneyRepository money, DateTime now) {
     double percent,
   ) {
     final vat = (netCents * percent / 100).round();
+    final period =
+        '${quarter.start.year}-${twoDigits(quarter.start.month + month)}';
     return Invoice(
       id: id,
       workspaceId: demoLondonSpaceId,
       memberId: memberId,
       number: 'CY-${quarter.start.year}-${id.split('-').last}',
       issuedAt: DateTime(quarter.start.year, quarter.start.month + month, 10),
-      period: '${quarter.start.year}-${(quarter.start.month + month).toString().padLeft(2, '0')}',
-      title: 'Desk membership',
-      lines: [InvoiceLine(label: 'Desk membership', amountCents: netCents + vat, vatPercent: percent)],
+      period: period,
+      title: period,
+      lines: [InvoiceLine(label: period, amountCents: netCents + vat, vatPercent: percent)],
       totalCents: netCents + vat,
       currency: 'GBP',
       memberName: name,
       memberAddress: '',
-      workspaceName: demoLondonSpaceName,
+      workspaceName: _spaceName,
       workspaceAddress: '12 Chalk Farm Road, London NW1 8AA',
       issuerName: 'Ada Lindqvist',
       signature: 'demo',

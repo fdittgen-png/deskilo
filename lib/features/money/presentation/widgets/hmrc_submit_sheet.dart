@@ -59,52 +59,54 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   bool _busy = false;
   HmrcOutcome? _outcome;
 
+  /// Runs one action with the buttons off and its outcome (if any) shown:
+  /// the single place the sheet's busy state changes.
+  Future<void> _run(Future<HmrcOutcome?> Function() action) async {
+    if (_busy) return;
+    setState(() {
+      _busy = true;
+      _outcome = null;
+    });
+    HmrcOutcome? outcome;
+    try {
+      outcome = await action();
+    } on Object catch (e, st) {
+      // The server (or the Demo) refused the person: said, not thrown.
+      TraceLogger.instance.warn('money', 'hmrc action refused', stackTrace: st);
+      outcome = const HmrcRefused(HmrcRefusal.notAllowed);
+    }
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _outcome = outcome;
+    });
+    if (outcome is HmrcFiled || outcome is HmrcAcceptedNotRecorded) {
+      ref.invalidate(vatDeclarationsProvider);
+    }
+  }
+
   Future<void> _connect(HmrcState state) async {
     final site = widget.issuerSiteId;
-    if (site == null || _busy) return;
-    setState(() => _busy = true);
-    try {
+    if (site == null) return;
+    await _run(() async {
       await ref.read(connectHmrcProvider).call(
         workspaceId: widget.declaration.workspaceId,
         issuerSiteId: site,
         state: state,
       );
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
-    } on Object catch (e, st) {
-      // The server (or the Demo) refused the person: said, not thrown.
-      TraceLogger.instance.warn('money', 'hmrc connect refused', stackTrace: st);
-      if (mounted) {
-        setState(() => _outcome = const HmrcRefused(HmrcRefusal.notAllowed));
-      }
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
+      return null;
+    });
   }
 
-  Future<void> _submit(HmrcConnection connection, HmrcClientValues client) async {
-    // One command: the button is disabled from the first activation.
-    if (_busy) return;
-    setState(() {
-      _busy = true;
-      _outcome = null;
-    });
-    try {
-      final outcome = await ref
-          .read(submitToHmrcProvider)
-          .call(
-            declaration: widget.declaration,
-            connection: connection,
-            client: client,
-          );
-      if (!mounted) return;
-      setState(() => _outcome = outcome);
-      if (outcome is HmrcFiled || outcome is HmrcAcceptedNotRecorded) {
-        ref.invalidate(vatDeclarationsProvider);
-      }
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
+  Future<void> _submit(HmrcConnection connection, HmrcClientValues client) =>
+      _run(
+        () => ref.read(submitToHmrcProvider).call(
+          declaration: widget.declaration,
+          connection: connection,
+          client: client,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {

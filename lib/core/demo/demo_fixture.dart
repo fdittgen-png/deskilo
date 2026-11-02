@@ -190,17 +190,9 @@ class DemoFixture {
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
     // The second space, in Leipzig: Ada and Bruno are members there too.
-    final secondSpace = DemoSecondSpaceData.build(
-      home: workspaces,
-      actor: () => actor.memberId,
-      now: today,
-    )..viewAs(actor.memberId, workspaces);
-    // The third space, in London: the UK VAT return, filed through MTD.
-    final london = DemoLondonData.build(
-      home: workspaces,
-      actor: () => actor.memberId,
-      now: today,
-    )..viewAs(actor.memberId, workspaces);
+    final secondSpace = DemoSecondSpaceData.build(home: workspaces, actor: () => actor.memberId, now: today)
+      ..viewAs(actor.memberId, workspaces);
+    final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId

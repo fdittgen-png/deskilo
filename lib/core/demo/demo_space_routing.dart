@@ -43,6 +43,7 @@ import 'data/my_reservations_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/series_previewer.dart';
 import 'demo_fixture.dart';
+import 'demo_london_space.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
@@ -198,35 +199,10 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         return ref.read(myMemberProvider).value?.id ?? '';
       };
     }),
-    memberAccountQueriesProvider.overrideWith(
-      (ref) => money(ref).accountQueries,
-    ),
-    memberAccountCommandsProvider.overrideWith(
-      (ref) => money(ref).accountCommands,
-    ),
-    reportTemplateRepositoryProvider.overrideWith(
-      (ref) => money(ref).reportTemplates,
-    ),
-    invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
+    ..._moneyPortOverrides(money),
     // #2585
     invoiceActionCommandsProvider.overrideWith(
       (ref) => pick(ref, homeActions, secondActions, londonActions),
-    ),
-    taxReportingRepositoryProvider.overrideWith(
-      (ref) => money(ref).taxReporting,
-    ),
-    commercialTermsProvider.overrideWith((ref) => money(ref).commercialTerms),
-    expenseRepositoryProvider.overrideWith((ref) => money(ref).expenses),
-    dunningRepositoryProvider.overrideWith((ref) => money(ref).dunning),
-    billingRulesRepositoryProvider.overrideWith((ref) => money(ref).billing),
-    documentNumberingProvider.overrideWith((ref) => money(ref).numbering),
-    paymentGatewayRepositoryProvider.overrideWith(
-      (ref) => money(ref).paymentGateway,
-    ),
-    eInvoiceTransmissionsProvider.overrideWith((ref) => money(ref).eInvoices),
-    // #2365
-    accountingSourceQueriesProvider.overrideWith(
-      (ref) => money(ref).accountingSource,
     ),
     creditRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.credits, second.credits, london.credits),
@@ -245,20 +221,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     financeKpiRepositoryProvider.overrideWith(
       (ref) => pick(ref, homeKpi, secondKpi, londonKpi),
     ),
-    // #2470 — the HMRC port is the Demo's: nothing leaves the process.
-    hmrcRepositoryProvider.overrideWith((ref) => london.hmrc),
-    // The Demo sends nothing, so the browser's fraud-prevention values are
-    // synthetic too: the journey is the same on every build.
-    hmrcClientValuesProvider.overrideWith(
-      (ref) async => const HmrcClientValues(
-        browserJsUserAgent: 'Demo browser',
-        deviceId: 'demo-device',
-        timezone: 'UTC+00:00',
-        screens: 'width=1280&height=800&scaling-factor=1&colour-depth=24',
-        windowSize: 'width=1280&height=720',
-        doNotTrack: false,
-      ),
-    ),
+    ..._hmrcOverrides(london),
     // #2578 — the payments behind the collected figure, from the same
     // matches the finance cards sum.
     recordedPaymentsRepositoryProvider.overrideWith(
@@ -266,3 +229,51 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
   ];
 }
+
+/// The money ports of the space the scope is looking at: each has its own
+/// demo adapter over that space's one in-memory store (#2591).
+List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) => [
+  memberAccountQueriesProvider.overrideWith(
+    (ref) => money(ref).accountQueries,
+  ),
+  memberAccountCommandsProvider.overrideWith(
+    (ref) => money(ref).accountCommands,
+  ),
+  reportTemplateRepositoryProvider.overrideWith(
+    (ref) => money(ref).reportTemplates,
+  ),
+  invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
+  taxReportingRepositoryProvider.overrideWith(
+    (ref) => money(ref).taxReporting,
+  ),
+  commercialTermsProvider.overrideWith((ref) => money(ref).commercialTerms),
+  expenseRepositoryProvider.overrideWith((ref) => money(ref).expenses),
+  dunningRepositoryProvider.overrideWith((ref) => money(ref).dunning),
+  billingRulesRepositoryProvider.overrideWith((ref) => money(ref).billing),
+  documentNumberingProvider.overrideWith((ref) => money(ref).numbering),
+  paymentGatewayRepositoryProvider.overrideWith(
+    (ref) => money(ref).paymentGateway,
+  ),
+  eInvoiceTransmissionsProvider.overrideWith((ref) => money(ref).eInvoices),
+  // #2365
+  accountingSourceQueriesProvider.overrideWith(
+    (ref) => money(ref).accountingSource,
+  ),
+];
+
+/// #2470 — the HMRC port is the Demo's: nothing leaves the process, so the
+/// browser's fraud-prevention values are synthetic too and the journey is the
+/// same on every build.
+List<Override> _hmrcOverrides(DemoLondonData london) => [
+  hmrcRepositoryProvider.overrideWith((ref) => london.hmrc),
+  hmrcClientValuesProvider.overrideWith(
+    (ref) async => const HmrcClientValues(
+      browserJsUserAgent: 'Demo browser',
+      deviceId: 'demo-device',
+      timezone: 'UTC+00:00',
+      screens: 'width=1280&height=800&scaling-factor=1&colour-depth=24',
+      windowSize: 'width=1280&height=720',
+      doNotTrack: false,
+    ),
+  ),
+];

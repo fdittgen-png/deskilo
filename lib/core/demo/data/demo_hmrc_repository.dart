@@ -11,6 +11,7 @@ import '../../../features/money/domain/hmrc_submission.dart';
 import '../../../features/money/domain/mtd_boxes.dart';
 import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/workspace/domain/member.dart';
+import '../../time/date_text.dart';
 import 'money_repository.dart';
 import 'workspace_repository.dart';
 
@@ -118,7 +119,7 @@ class DemoHmrcRepository implements HmrcRepository {
     final scripted = script?.call(_attempts);
     if (scripted != null) return scripted;
     final receipt = HmrcReceipt(
-      formBundleNumber: 'DEMO-${declaration.periodEnd.year}${declaration.periodEnd.month.toString().padLeft(2, '0')}-${_attempts.toString().padLeft(3, '0')}',
+      formBundleNumber: 'DEMO-${declaration.periodEnd.year}${twoDigits(declaration.periodEnd.month)}-${twoDigits(_attempts)}',
       processingDate: _today.toUtc().toIso8601String(),
     );
     _money.taxReporting.fileAsHmrcDemo(declaration.id, receipt.formBundleNumber);
