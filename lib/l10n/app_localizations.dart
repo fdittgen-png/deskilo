@@ -32016,11 +32016,11 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
-  /// No description provided for @purchaseApprovalVisibleReceipts.
+  /// No description provided for @purchaseApprovalEvidenceUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Pending member receipts you can view'**
-  String get purchaseApprovalVisibleReceipts;
+  /// **'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.'**
+  String get purchaseApprovalEvidenceUnavailable;
 
   /// No description provided for @purchaseApprovalReceiptsUnavailable.
   ///
@@ -32028,11 +32028,11 @@ abstract class AppLocalizations {
   /// **'Pending receipts could not be loaded.'**
   String get purchaseApprovalReceiptsUnavailable;
 
-  /// No description provided for @purchaseApprovalEvidenceUnavailable.
+  /// No description provided for @purchaseApprovalVisibleReceipts.
   ///
   /// In en, this message translates to:
-  /// **'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.'**
-  String get purchaseApprovalEvidenceUnavailable;
+  /// **'Pending member receipts you can view'**
+  String get purchaseApprovalVisibleReceipts;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///

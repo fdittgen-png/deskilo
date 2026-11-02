@@ -12430,9 +12430,9 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
-  "purchaseApprovalVisibleReceipts": "Ricevute dei membri in attesa che può visualizzare",
-  "purchaseApprovalReceiptsUnavailable": "Impossibile caricare le ricevute in attesa.",
   "purchaseApprovalEvidenceUnavailable": "I documenti giustificativi e l’eventuale tasso di cambio non sono disponibili in questa vista di approvazione. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto.",
+  "purchaseApprovalReceiptsUnavailable": "Impossibile caricare le ricevute in attesa.",
+  "purchaseApprovalVisibleReceipts": "Ricevute dei membri in attesa che può visualizzare",
   "purchaseApprovalsEmpty": "Nessuna fattura fornitore attende la sua approvazione.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"

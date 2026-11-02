@@ -15,5 +15,8 @@
   "purchaseApprovalsRefused": "No se pudieron leer las facturas de proveedores por aprobar.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
-  }
+  },
+  "purchaseApprovalVisibleReceipts": "Comprobantes pendientes de miembros que puede consultar",
+  "purchaseApprovalReceiptsUnavailable": "No se pudieron cargar los comprobantes pendientes.",
+  "purchaseApprovalEvidenceUnavailable": "Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra."
 }

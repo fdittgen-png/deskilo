@@ -19157,16 +19157,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get publicProfileTitle => 'Public profile';
 
   @override
-  String get purchaseApprovalVisibleReceipts =>
-      'Pending member receipts you can view';
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.';
 
   @override
   String get purchaseApprovalReceiptsUnavailable =>
       'Pending receipts could not be loaded.';
 
   @override
-  String get purchaseApprovalEvidenceUnavailable =>
-      'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.';
+  String get purchaseApprovalVisibleReceipts =>
+      'Pending member receipts you can view';
 
   @override
   String get purchaseApprovalsEmpty => 'No supplier bills await your approval.';

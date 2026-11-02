@@ -12430,9 +12430,9 @@
   "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.",
   "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
   "publicProfileTitle": "Öffentliches Profil",
-  "purchaseApprovalVisibleReceipts": "Ausstehende Mitgliederbelege, die Sie einsehen können",
-  "purchaseApprovalReceiptsUnavailable": "Ausstehende Belege konnten nicht geladen werden.",
   "purchaseApprovalEvidenceUnavailable": "Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.",
+  "purchaseApprovalReceiptsUnavailable": "Ausstehende Belege konnten nicht geladen werden.",
+  "purchaseApprovalVisibleReceipts": "Ausstehende Mitgliederbelege, die Sie einsehen können",
   "purchaseApprovalsEmpty": "Keine Lieferantenrechnung wartet auf Ihre Genehmigung.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"

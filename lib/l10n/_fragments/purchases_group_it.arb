@@ -15,5 +15,8 @@
   "purchaseApprovalsRefused": "Non è stato possibile leggere le fatture fornitori da approvare.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
-  }
+  },
+  "purchaseApprovalVisibleReceipts": "Ricevute dei membri in attesa che può visualizzare",
+  "purchaseApprovalReceiptsUnavailable": "Impossibile caricare le ricevute in attesa.",
+  "purchaseApprovalEvidenceUnavailable": "I documenti giustificativi e l’eventuale tasso di cambio non sono disponibili in questa vista di approvazione. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto."
 }

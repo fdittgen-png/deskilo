@@ -15,5 +15,8 @@
   "purchaseApprovalsRefused": "Die zu genehmigenden Lieferantenrechnungen konnten nicht gelesen werden.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
-  }
+  },
+  "purchaseApprovalVisibleReceipts": "Ausstehende Mitgliederbelege, die Sie einsehen können",
+  "purchaseApprovalReceiptsUnavailable": "Ausstehende Belege konnten nicht geladen werden.",
+  "purchaseApprovalEvidenceUnavailable": "Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen."
 }
