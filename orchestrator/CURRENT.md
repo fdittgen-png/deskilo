@@ -4,6 +4,10 @@ Snapshot: **2026-11-02 11:57 UTC**. Refresh live #2596, GitHub and each session 
 
 ## Owner instruction and authority
 
+**Owner directive, highest importance:** resolve all issues pragmatically with maximum time/token efficiency. Use the smallest complete change, concise delta communication, valid evidence reuse and prompt verified merge handoffs. This does not waive correctness, confidentiality or required checks.
+
+**Latest coordination correction:** the publication hold is separate from authorized development-database integration. Reviewer may apply immutable0654 through the existing dev protocol once exact candidate review, applicable gates and matching rollback proof are satisfactory; then E2 records genuine APPLIED/contract artifacts and completes invalidated final gates. No further routine orchestrator approval is required. Public ref/PR creation remains held pending the existing confidentiality visibility/branch-control decision. No application is claimed yet. This supersedes prior blanket no-dev-apply wording, not real unresolved review findings.
+
 Implement open issues efficiently under one orchestrator, with meaningful Demo use cases for changed behavior. Retired Claude sessions remain stopped. Orchestrator coordinates/advises; engineers implement and test; reviewer owns exact-head merge, closure, dispatch and migration ledger. Existing sandbox and approval controls still apply.
 
 Two implementation checkpoints maximum, normal two PRs/hard four, one migration tenure. No new watchers or recurring jobs. Confidentiality remediation takes priority; keep all confidential information and detailed incident records off GitHub.
@@ -31,7 +35,7 @@ No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconcilia
 
 **11:57 UTC verification update:** clean private candidate `c84e6cc3ec1f7e2131c3d72a47384e2058b120a1`. Actual canonical340 **real pgTAP PASS: plan1..51, 51 sequential ok, zero not ok** in one rolled-back linked-dev transaction. Executed bundle SHA-256 `5413b5df26cde07d9e9ac4475333efd084a6b3d7794ea520699dc2dc8112affd`; migration `a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9`, fixture `724146802a090f8853d09a730753f701f6250ecf67d23c7b443234fb6b8dd369`. Original CLI exit1 with explicit PGTAP_PASS intentional rollback; independent postcheck exit0/schema653, extension and four routines absent. Reviewer receipt inspected at `~/.deskilo-exchange/evidence/3070-pgtap-c84e6c/receipt.json`. This is genuine hosted rollback pgTAP, not isolated full replay, final CI or application. 0654 RESERVED/NOT APPLIED; no public ref. Full final-head review and application/publication prerequisites remain.
 
-**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; 0654 is now confirmed exclusively reserved. E2 may write numbered local SQL only after that receipt. No dev application authorized by this assignment.
+**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; 0654 is now confirmed exclusively reserved. E2 may write numbered local SQL only after that receipt. Dev application is conditional on the reviewed exact-byte protocol above.
 
 Reviewer source check confirms different predicates in 0461 purchase RLS/0587 detail and 0468 decision authorization. Reproduce intended eligibility before changing access. 0483 permits self-approval strictly below configured purchase.single_approval_below_units (default 0); self-rejection remains prohibited. Never blanket-exclude own rows. Verify member-receipt versus supplier-bill semantics and minimize newly disclosed fields. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
 
@@ -45,7 +49,7 @@ Acceptance:
 - Focused permissions/paging/state tests and affected recorder lint before broad candidate gates. Preserve original exits and exact-head evidence; no redundant reruns.
 - Supplier To-pay/scheduling deep link is a separate residual, excluded from this checkpoint.
 
-No new public implementation ref or PR while incident publication direction remains unresolved. Local implementation and private preservation may proceed. No new public incident details. Publication hold is separate from implementation readiness; do not fabricate CI or applied state.
+No new public implementation ref or PR while incident publication direction remains unresolved. Local implementation, private preservation and conditionally authorized dev integration may proceed. No new public incident details. Publication hold is separate from implementation readiness; do not fabricate CI or applied state.
 
 ## Reviewer assistance and handoffs
 
@@ -71,3 +75,7 @@ Keep `hosting/godaddy` (production deployment source) and `coord/cloud-codex`. P
 - Available Android/iPhone devices, remote-phone pairing and active cloud-session presence: **UNKNOWN currently**. No always-on connection or watcher is assumed.
 
 Development project reference: `zwzbynivewivvjmripeb`. No secret values are stored here. Cloud tooling must be rediscovered; the historical cloud report lacked Flutter/Dart/native toolchains.
+
+## CI triage assignment
+
+Verified latest implementation PR workflows began 10:06:19 UTC; master Quality41429206046 completed SUCCESS10:52:01. Two separate failed master runs assigned to E1 for bounded read-only root-cause triage: Dictionary refresh41429205871/job125223256424, Migration replay; Nightly Journey latency41434774314/job125241749287, Benchmark journeys. No blind rerun or new implementation stream. Reviewer/E2 finish settled local integration rather than treating publication hold as a reason to leave all work idle.
