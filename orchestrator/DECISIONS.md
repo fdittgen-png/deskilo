@@ -2,6 +2,21 @@
 
 Current decisions below supersede conflicting historical inbox entries. A replacement orchestrator should preserve them unless the owner changes direction or new source evidence materially contradicts the premise.
 
+## DECISION3070-CLOSE-1 — explicit supersession of DECISION3070-FX-1
+
+Recorded by the owner-delegated orchestrator on 2026-11-02 at 18:23 UTC.
+
+DECISION3070-FX-1 was an explicit prior orchestration direction, not merely a reviewer suggestion. Its requirement to keep parent #3070 open because original evidence/XML is unavailable is **expressly superseded** by this closure decision. Do not silently reinterpret the prior instruction as never having existed.
+
+Only that parent-closure dependency is removed. The FX-1 implementation boundary remains: scoped recorded-FX read for eligible pending-bill approvers, no broad FX or original-document/XML entitlement, no editing, no inferred booked total, and unchanged authorization/write protections. Original evidence remains unavailable and the UI must continue to state that limitation truthfully. This decision neither implements nor approves original-document disclosure.
+
+Basis: the orchestrator independently read the issue body and all current corrections. Original-document/XML opening is not specified as #3070 acceptance; it arose later in review/product discussion. Preserve the limitation in the closing crosswalk rather than silently claiming it solved. A future evidence-access feature needs its own explicit scope and disclosure contract.
+
+#3070 may close only after the remaining agreed work is delivered: /suppliers compatibility redirect to the canonical gated /money/suppliers screen, gated Purchases-group entry to the existing To-pay workflow, meaningful Demo/permission/route evidence, required exact-head review and CI, merge and relevant public delivery, then the reviewer's complete acceptance crosswalk. No new receipt-voting machinery is required; preserve existing receipt reading and truthful bill-only count.
+
+E2's active claim is /private/tmp/deskilo-3070-final, branch feat/3070-final-navigation from 63b4a25e. This clarification does not add work or require another design/owner approval round.
+
+
 | Revision | Decision | Evidence and implication |
 | --- | --- | --- |
 | Team activation | New team implements open issues; retired Claude drain remains | [Owner activation](https://github.com/fdittgen-png/deskilo/issues/2596#issuecomment-6572827522). Three existing Codex sessions; no extra spawned team. |
