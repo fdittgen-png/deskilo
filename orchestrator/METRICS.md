@@ -71,3 +71,9 @@ Use targeted metadata and current summaries. Do not repeatedly read full session
 The fixed 67-minute baseline above is unchanged. After its cutoff, #3251 merged at 09:42:40 UTC: PR creation to merge **35m 23s**. Final Quality run 41420626290 attempt 1 succeeded, start 09:26:15 → final update 09:42:28, **16m 13s**, ten jobs successful. Both measured checkpoints are now merged, but only #3250 merged inside the token window. Do not divide both completions by that window or imply all issue acceptance is done.
 
 Merge was reconciled in orchestration around 09:48 UTC, approximately six minutes after the actual merge; this is an observed coordination lag, not proof the engineer was idle for the entire interval. Reviewer then released the lane, reserved 0653 and applied reviewed #3070 bytes at 09:51:38. Improvement: check and publish actual merge at dependency handoff, release only overlapping locks promptly, and distinguish queued notification from current ownership. No extra monitoring job is introduced.
+
+## Review handoff observation — 10:08 UTC
+
+E1 independently reviewed #3252 exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53` from 10:05:55 to 10:07:30 UTC: **1m 35s**, no actionable findings and no duplicate tests. Reviewer approved that head and armed merge while final CI remains pending. This measures review elapsed time, not saved time versus a counterfactual or complete feature throughput.
+
+One broad local gate first caught an unkeyed retry control; E2 fixed it and reran. Add affected recorder lint to focused preflight before broad candidate gates. Exact rerun duration/token cost is UNKNOWN; do not rerun the already-passing candidate just to apply this lesson retroactively.
