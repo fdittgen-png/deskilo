@@ -55,6 +55,7 @@ class _FakeHmrc implements HmrcRepository {
   HmrcState stateNow;
   final Future<HmrcOutcome> Function() outcome;
   final submitted = <Map<String, num>>[];
+  final markers = <String?>[];
   int connects = 0;
 
   @override
@@ -72,9 +73,17 @@ class _FakeHmrc implements HmrcRepository {
     required String connectionId,
     required Map<String, num> boxes,
     required HmrcClientValues client,
-  }) {
+    String? recoveryMarker,
+  }) async {
     submitted.add(boxes);
-    return outcome();
+    markers.add(recoveryMarker);
+    final result = await outcome();
+    if (result is HmrcUnconfirmed ||
+        (result is HmrcRefused && result.refusal == HmrcRefusal.alreadySubmitted)) {
+      stateNow = HmrcState(vrn: stateNow.vrn, connection: stateNow.connection,
+        unconfirmedDeclarationIds: [declarationId], recoveryMarkers: {declarationId: 'attempt-1'});
+    }
+    return result;
   }
 }
 
@@ -217,7 +226,20 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(fake.submitted, hasLength(2));
+    expect(fake.markers, [null, 'attempt-1']);
     expect(find.text(_en.hmrcFiled('R-2')), findsOneWidget);
+  });
+
+  testWidgets('duplicate refusal remains uncertain until checked, with no invented receipt', (tester) async {
+    final fake = await _pump(tester, outcome: () async => const HmrcRefused(HmrcRefusal.alreadySubmitted));
+    final submit = find.byKey(const ValueKey('hmrc-submit'));
+    await tester.tap(submit);
+    await tester.pump();
+    await tester.pump();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+    expect(find.text(_en.hmrcRefusalAlreadySubmitted), findsOneWidget);
+    expect(find.byKey(const ValueKey('hmrc-checked')), findsOneWidget);
+    expect(fake.submitted, hasLength(1));
   });
 
   testWidgets('a reopened sheet keeps Submit off for a return the server recorded as unconfirmed, until the person checked', (tester) async {
@@ -227,6 +249,7 @@ void main() {
         vrn: '123456789',
         connection: HmrcConnection(id: 'c1', issuerSiteId: 's1', link: HmrcLink.connected),
         unconfirmedDeclarationIds: ['d1'],
+        recoveryMarkers: {'d1': 'attempt-1'},
       ),
     );
     final submit = find.byKey(const ValueKey('hmrc-submit'));
@@ -241,6 +264,7 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(fake.submitted, hasLength(1));
+    expect(fake.markers, ['attempt-1']);
   });
 
   testWidgets('another return being unconfirmed does not lock this one', (tester) async {

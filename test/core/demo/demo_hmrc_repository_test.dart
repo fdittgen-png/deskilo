@@ -160,9 +160,32 @@ void main() {
     expect(first, isA<HmrcUnconfirmed>());
     expect(_prepared(f).isPrepared, isTrue);
     expect(_prepared(f).submittedReceipt, isEmpty);
-    // Nothing retries on its own: only a new submission, which now runs.
-    final second = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final refused = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    expect(refused, isA<HmrcUnconfirmed>());
+    final marker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final second = await scripted.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect(second, isA<HmrcFiled>());
+  });
+
+  test('an old check cannot recover a later unconfirmed Demo attempt', () async {
+    final f = DemoFixture.build();
+    final scripted = DemoHmrcRepository(
+      money: f.london.money, workspaces: f.london.workspaces, today: f.seededAt,
+      script: (attempt) => attempt <= 2 ? const HmrcUnconfirmed(code: 'TIMEOUT') : null,
+    );
+    await scripted.startConnect(demoLondonSpaceId, demoLondonSiteId);
+    final connection = (await scripted.state(demoLondonSpaceId)).connection!;
+    final d = _prepared(f);
+    Future<HmrcOutcome> submit([String? marker]) => scripted.submit(
+      declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
+    expect(await submit(), isA<HmrcUnconfirmed>());
+    final firstMarker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    expect(await submit(firstMarker), isA<HmrcUnconfirmed>());
+    final secondMarker = (await scripted.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    expect(secondMarker, isNot(firstMarker));
+    expect(await submit(firstMarker), isA<HmrcUnconfirmed>());
+    expect(_prepared(f).isPrepared, isTrue);
+    expect(await submit(secondMarker), isA<HmrcFiled>());
   });
 
   test('a submit that completes after the persona changed files nothing', () async {

@@ -49,6 +49,7 @@ class SupabaseHmrcRepository implements HmrcRepository {
     required String connectionId,
     required Map<String, num> boxes,
     required HmrcClientValues client,
+    String? recoveryMarker,
   }) async {
     try {
       final response = await _client.functions.invoke(
@@ -59,6 +60,7 @@ class SupabaseHmrcRepository implements HmrcRepository {
           'declaration_id': declarationId,
           'boxes': boxes,
           'client': client.toJson(),
+          'recovery_marker': recoveryMarker,
         },
       );
       final data = response.data;

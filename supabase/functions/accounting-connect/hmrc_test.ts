@@ -136,7 +136,7 @@ function world(opts: {
       if (fn === "release_accounting_refresh_lease") {
         return Promise.resolve({ data: null, error: null });
       }
-      if (fn === "claim_hmrc_submission") {
+      if (fn === "claim_hmrc_submission_v2") {
         return Promise.resolve({
           data: opts.claim ?? { claimed: true },
           error: null,
@@ -264,14 +264,14 @@ Deno.test("a submission: gates, figures, obligation, return, then the receipt fi
   assertEquals(
     w.rpcs.filter((r) =>
       [
-        "claim_hmrc_submission",
+        "claim_hmrc_submission_v2",
         "record_hmrc_acceptance",
         "file_vat_declaration_hmrc_v1",
         "release_hmrc_submission",
       ].includes(r.fn)
     ).map((r) => r.fn),
     [
-      "claim_hmrc_submission",
+      "claim_hmrc_submission_v2",
       "record_hmrc_acceptance",
       "file_vat_declaration_hmrc_v1",
       "release_hmrc_submission",
@@ -323,7 +323,7 @@ Deno.test("a client figure that differs from the server's boxes, in ANY box, is 
   assertEquals(out.boxes, ["totalValueSalesExVAT"]);
   assertEquals(w.http.length, 0);
   assertEquals(
-    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission").length,
+    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission_v2").length,
     0,
     "nothing is claimed either",
   );
@@ -349,6 +349,18 @@ Deno.test("a double tap is in_flight: one claim, one POST", async () => {
   assertEquals(res.status, 409);
   assertEquals((await res.json()).error, "in_flight");
   assertEquals(w.http.length, 0);
+});
+
+Deno.test("uncertain claim without a checked marker never reaches HMRC; marker travels to the claim", async () => {
+  for (const marker of [undefined, false, "stale-marker"]) {
+    const w = world({ claim: { claimed: false, state: "unconfirmed" } });
+    const res = await handle(post({ ...submit, recovery_marker: marker }), w.deps);
+    assertEquals(res.status, 409);
+    assertEquals((await res.json()).error, "unconfirmed");
+    assertEquals(w.http.length, 0);
+    assertEquals(w.rpcs.find((r) => r.fn === "claim_hmrc_submission_v2")!.args.p_recovery_marker,
+      typeof marker === "string" ? marker : null);
+  }
 });
 
 Deno.test("a return HMRC already accepted is filed from the kept receipt and posts nothing", async () => {
@@ -425,25 +437,23 @@ Deno.test("a receipt that could not be KEPT keeps the row unconfirmed and goes b
   const kept = world({ fileError: true });
   assertEquals((await handle(post(submit), kept.deps)).status, 500);
   assertEquals(sentOf(kept), false);
-  // Not kept but filed here: the return is filed, the answer is the receipt.
+  // A failed receipt write must not file, even if the filing RPC would succeed.
   const filedOnly = world({ keepError: true });
-  assertEquals(
-    (await (await handle(post(submit), filedOnly.deps)).json()).status,
-    "filed",
-  );
+  assertEquals((await (await handle(post(submit), filedOnly.deps)).json()).error, "accepted_not_recorded");
+  assertEquals(filedOnly.rpcs.filter((r) => r.fn === "file_vat_declaration_hmrc_v1").length, 0);
 });
 
 Deno.test("an acceptance of other figures is never reused: the claim carries a digest of the submitted boxes", async () => {
   const a = world();
   await handle(post(submit), a.deps);
-  const digestA = a.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+  const digestA = a.rpcs.find((r) => r.fn === "claim_hmrc_submission_v2")!.args
     .p_boxes_sha256 as string;
   assertEquals(/^[0-9a-f]{64}$/.test(digestA), true);
   // The same return again gives the same digest; other lines give another.
   const again = world();
   await handle(post(submit), again.deps);
   assertEquals(
-    again.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+    again.rpcs.find((r) => r.fn === "claim_hmrc_submission_v2")!.args
       .p_boxes_sha256,
     digestA,
   );
@@ -460,7 +470,7 @@ Deno.test("an acceptance of other figures is never reused: the claim carries a d
   });
   await handle(post({ ...submit, boxes: otherBoxes }), b.deps);
   assertEquals(
-    b.rpcs.find((r) => r.fn === "claim_hmrc_submission")!.args
+    b.rpcs.find((r) => r.fn === "claim_hmrc_submission_v2")!.args
       .p_boxes_sha256 === digestA,
     false,
   );
@@ -490,7 +500,7 @@ Deno.test("a return with an EU acquisition is refused as such, before any claim 
   assertEquals((await res.json()).error, "acquisition_not_supported");
   assertEquals(w.http.length, 0);
   assertEquals(
-    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission").length,
+    w.rpcs.filter((r) => r.fn === "claim_hmrc_submission_v2").length,
     0,
   );
 });

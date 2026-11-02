@@ -61,6 +61,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   /// After an unconfirmed answer the person must say they checked at HMRC
   /// before the return can be submitted again: never a blind second post.
   bool _checkedAtHmrc = false;
+  String? _checkedMarker;
   HmrcOutcome? _outcome;
 
   /// Runs one action with the buttons off and its outcome (if any) shown:
@@ -74,6 +75,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       _busy = true;
       _outcome = null;
       _checkedAtHmrc = false;
+      _checkedMarker = null;
     });
     HmrcOutcome? outcome;
     try {
@@ -88,6 +90,10 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       _busy = false;
       _outcome = outcome;
     });
+    if (outcome is HmrcUnconfirmed ||
+        (outcome is HmrcRefused && outcome.refusal == HmrcRefusal.alreadySubmitted)) {
+      ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
+    }
     if (outcome is HmrcFiled || outcome is HmrcAcceptedNotRecorded) {
       ref.invalidate(vatDeclarationsProvider);
     }
@@ -107,17 +113,20 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     }, onError: const HmrcRefused(HmrcRefusal.notAllowed));
   }
 
-  Future<void> _submit(HmrcConnection connection, HmrcClientValues client) =>
-      _run(
+  Future<void> _submit(HmrcConnection connection, HmrcClientValues client) {
+    final marker = _checkedAtHmrc ? _checkedMarker : null;
+    return _run(
         () => ref.read(submitToHmrcProvider).call(
           declaration: widget.declaration,
           connection: connection,
           client: client,
+          recoveryMarker: marker,
         ),
         // The port never throws; if something still does, the post may have
         // left: unconfirmed.
         onError: const HmrcUnconfirmed(code: 'CLIENT'),
       );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +186,10 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   /// (a reopened sheet, another device): Submit stays off until the person
   /// says they checked at HMRC.
   bool _awaitingCheck(HmrcState s) =>
-      !_checkedAtHmrc &&
+      (!_checkedAtHmrc || _checkedMarker == null ||
+          _checkedMarker != s.recoveryMarkers[widget.declaration.id]) &&
       (_outcome is HmrcUnconfirmed ||
+          (_outcome is HmrcRefused && (_outcome! as HmrcRefused).refusal == HmrcRefusal.alreadySubmitted) ||
           (_outcome is! HmrcFiled && s.unconfirmedDeclarationIds.contains(widget.declaration.id)));
 
   Widget _body(AppLocalizations l10n, HmrcState s, HmrcClientValues values) {
@@ -230,7 +241,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
             if (_awaitingCheck(s))
               TextButton(
                 key: const ValueKey('hmrc-checked'),
-                onPressed: () => setState(() => _checkedAtHmrc = true),
+                onPressed: s.recoveryMarkers[widget.declaration.id] == null
+                    ? null
+                    : () => setState(() {
+                        _checkedMarker = s.recoveryMarkers[widget.declaration.id];
+                        _checkedAtHmrc = true;
+                      }),
                 child: Text(l10n.hmrcChecked),
               ),
           ],
