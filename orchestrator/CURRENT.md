@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 11:20 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
+Snapshot: **2026-11-02 11:57 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
 
 ## Owner instruction and authority
 
@@ -29,7 +29,7 @@ No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconcilia
 
 ## Active #3070 checkpoint
 
-Private local candidate `fa5445801737f6a992a7109e54fea682cdbdb3ea`, clean, in `/private/tmp/deskilo-3070-approver-reads`, branch `feat/3070-approver-reads`. 0654 exclusively RESERVED, NOT APPLIED, SHA-256 `8dee1ebe3218d9a29b5ac3983e202ad25a4a1224d8c6604b3efc5505c15d3cdc`. E2 reports fatal-info analysis passed, 692 lint tests and 54 affected tests passed; Demo actor/threshold 3 and detail retry passed. Original numeric test exits not separately copied here. Migration execution and 25-assertion pgTAP 340 NOT RUN; local Docker/Postgres unavailable. E1 exact-head read-only contract review requested; reviewer assessing established transaction-safe rollback harness route. No persistent dev application, public ref or final merge approval. Genuine APPLIED/contract records and full required CI remain pending.
+**11:57 UTC verification update:** clean private candidate `c84e6cc3ec1f7e2131c3d72a47384e2058b120a1`. Actual canonical340 **real pgTAP PASS: plan1..51, 51 sequential ok, zero not ok** in one rolled-back linked-dev transaction. Executed bundle SHA-256 `5413b5df26cde07d9e9ac4475333efd084a6b3d7794ea520699dc2dc8112affd`; migration `a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9`, fixture `724146802a090f8853d09a730753f701f6250ecf67d23c7b443234fb6b8dd369`. Original CLI exit1 with explicit PGTAP_PASS intentional rollback; independent postcheck exit0/schema653, extension and four routines absent. Reviewer receipt inspected at `~/.deskilo-exchange/evidence/3070-pgtap-c84e6c/receipt.json`. This is genuine hosted rollback pgTAP, not isolated full replay, final CI or application. 0654 RESERVED/NOT APPLIED; no public ref. Full final-head review and application/publication prerequisites remain.
 
 **Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; 0654 is now confirmed exclusively reserved. E2 may write numbered local SQL only after that receipt. No dev application authorized by this assignment.
 
