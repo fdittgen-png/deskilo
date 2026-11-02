@@ -1,53 +1,54 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 10:59 UTC**. Verify live facts before acting.
+Snapshot: **2026-11-02 11:02 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
 
-**10:59 UTC live reconciliation:** #3252 MERGED at 10:29:22 UTC as `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c`, approved head `927f49e8eebdbb711ae809fe94d24bc31098cb53`. All five candidate workflows completed SUCCESS, including Quality 41426054668. Reviewer reconciliation COMPLETE: run 41426054668 attempt 1, database job 125213290066, pgTAP 339 OK and all 6,476 PASS. Fresh master `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c` and dev schema 653; merged migration/APPLIED SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b` matches reviewed dev. Ledger MERGED, tenure RELEASED; #2596 and reviewer CURRENT updated. E2 instructed to clean only owned merged work, archive claim, then prepare a bounded remaining #3070 approvals/count acceptance crosswalk. Parent #3070 remains open. No new implementation branch/migration is assigned yet; incident publication constraints remain unresolved.
+## Owner instruction and authority
 
-The detailed 10:08 snapshot below is retained for ownership/context. Its CI-pending, unmerged and tenure statements are superseded by this latest reconciliation; ledger reconciliation is confirmed complete; E2 own cleanup remains subject to its completion receipt.
+Implement open issues efficiently under one orchestrator, with meaningful Demo use cases for changed behavior. Retired Claude sessions remain stopped. Orchestrator coordinates/advises; engineers implement and test; reviewer owns exact-head merge, closure, dispatch and migration ledger. Existing sandbox and approval controls still apply.
 
-## Owner instruction
+Two implementation checkpoints maximum, normal two PRs/hard four, one migration tenure. No new watchers or recurring jobs. Confidentiality remediation takes priority; keep all confidential information and detailed incident records off GitHub.
 
-The replacement team implements the open issues under one orchestrator. The old Claude sessions completed their drain and remain stopped. Routine implementation, review, commits, pushes and eligible merges are delegated. The owner wants efficient time/token use, pragmatic fixes and meaningful Demo use cases for changed behavior.
+## Current team
 
-The orchestrator coordinates/advises and does not execute product code, migration SQL or deployments. Read-only inspection and authorized coordination writes are in use. Runtime sandbox controls still apply: blanket conversational permission is not a technical override or permission to bypass a rejected action.
-
-## Team and active work
-
-| Role | Existing session UUID | Current responsibility |
+| Role | Session UUID | Current assignment |
 | --- | --- | --- |
-| Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Priorities, shared ownership, decisions, efficiency and handover |
-| Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Exact-head review, eligible merges, closure, #2596 and migration ledger |
-| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | #2470 recovery merged; cleanup complete; independent review available |
-| Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 supplier balance and scoped payable navigation |
+| Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Scope, ownership, handoffs, evidence and efficiency |
+| Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Final review/merge, sole #2596/ledger writer; additional owner tasks |
+| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | Independent read-only contract review supporting E2 |
+| Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 approver queue/count and decision-detail read consistency |
 
-All three replacement sessions personally acknowledged the roster and reverse messaging. Their names/titles can change; route by UUID and refresh identity during takeover.
+All three sessions previously personally acknowledged two-way routing. New assignments above were queued; delivery is not a personal ACK.
 
-### Engineer 1
+## Completed checkpoints
 
-PR [#3251](https://github.com/fdittgen-png/deskilo/pull/3251) **MERGED at 09:42:40 UTC** as **189fb73ed13357bc22c399191475a6a412680a61**, from approved head **84275da130d53696997fcaf385fdc320021a48f7**. Final Quality run 41420626290 succeeded. E1 reports its clean worktree/local branch removed, remote branch absent and claim archived.
+- #3250 / #2519: merged `246e9a55e6da987bab5246c7bd4998567c3fbc37`, approved `be1f64ec2c936102858a8d846545194c892f6fae`. R3 reasons/zero ratchet only; all registry defaults retained. Own cleanup complete. Parent remains open.
+- #3251 / #2470: merged `189fb73ed13357bc22c399191475a6a412680a61`, approved `84275da130d53696997fcaf385fdc320021a48f7`. 0652 applied/merged, required CI green, own cleanup complete, locks released. Real HMRC application/sandbox and unproved accepted-return receipt reconstruction remain.
+- #3252 / #3070 balance/navigation: merged **7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c**, approved **927f49e8eebdbb711ae809fe94d24bc31098cb53**, at 10:29:22 UTC. Five workflows passed. Quality run 41426054668 attempt 1, database job 125213290066: pgTAP 339 OK, all **6,476 PASS**. E1 independent review no actionable findings; local analyzer/745 guarded tests passed. Master/dev schema 653; migration/APPLIED hash `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b` matches reviewed dev. Ledger MERGED, tenure released. E2 reports own clean worktree/branch removed and claim archived. Parent #3070 stays open.
 
-Migration **0652 is APPLIED and MERGED**, hash **8a05fb7ecdf2523bb863b1c6031a36921e6ad46e71c342040391334e77d13196**. Reviewer ledger confirms master schema 652 and released tenure. E1 released HMRC, London Demo, DEMO_COVERAGE and database aggregate locks; reviewer explicitly handed #3070 SQL/Demo/aggregate integration to E2.
+No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconciliation interval is recorded in METRICS.
 
-E1 has no new implementation claim at this snapshot; remains available to independently review any reviewer-authored #3070 test. #2470 stays open for real HMRC application/sandbox acceptance and unproved accepted-return receipt reconstruction. Do not equate this recovery checkpoint with complete issue acceptance.
+## Active #3070 checkpoint
 
-### Engineer 2
+**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer allocates a fresh migration number only after checking master/ledger; none is confirmed reserved at this snapshot. No dev application authorized by this assignment.
 
-At 10:08 UTC, reviewer APPROVED exact #3252 head `927f49e8eebdbb711ae809fe94d24bc31098cb53`; E1 independently reviewed the same head without actionable findings. Exact-head squash auto-merge is armed, with no bypass. GitHub still reports OPEN/unmerged; Quality 41426054668 and Web checks are running, three schema workflows succeeded. Required final CI and true pgTAP remain pending; 0653 tenure stays held until verified merge. #3070 remains open for approvals/count and other residual scope.
+Source-backed concern: approveExpenses permits route entry but existing purchase list/detail reads may omit other submitters' pending items. Reproduce it against actual decision authorization before changing access. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
 
-#2519 reasons/enforcement completed in [#3250](https://github.com/fdittgen-png/deskilo/pull/3250), merge **246e9a55e6da987bab5246c7bd4998567c3fbc37**, approved head **be1f64ec2c936102858a8d846545194c892f6fae**. Own branch/worktree removed and claim archived. The epic remains open; reviewer records exact remaining acceptance rather than assuming parent closure.
+Acceptance:
 
-Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, review-ready PR [#3252](https://github.com/fdittgen-png/deskilo/pull/3252), verified exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53`, OPEN and non-draft. E2 reports analyzer exit 0 and 745 guarded tests passed; final CI and real pgTAP remain pending. Exact-head approval has now been received. Quality run 41426054668 is in progress. E1 completed independent exact-head review without actionable findings; reviewer retains final merge authority. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
+- Queue, count and detail enforce the same intended decision eligibility and preserve tenant, feature, delegation and self-approval rules. No blanket wide purchase access or write redesign.
+- Loading/error/unavailable is distinct from true zero; retained stale data must not imply fresh results.
+- Stable, complete paging within declared limits; do not claim offset traversal is a snapshot. Existing fetchAllPages throws at 100,000 rows, unlike the former payable 2,000-row cap. No long-lived snapshot architecture without demonstrated need.
+- Existing Demo exercises approver-only pending item, allowed detail, existing decision and refreshed queue/count; include denied access, paging and error recovery.
+- Focused permissions/paging/state tests and affected recorder lint before broad candidate gates. Preserve original exits and exact-head evidence; no redundant reruns.
+- Supplier To-pay/scheduling deep link is a separate residual, excluded from this checkpoint.
 
-The reviewer accepted the read direction with required corrections: use the complete remaining-balance rule including `applied_invoice`, signed allocations and cancelled state; explicitly enforce supplier-wide permission, workspace and purchases-feature gates; preserve old RPC compatibility and keyset continuation beyond 2,000 rows. Do not sum the old capped 20×100 client fetch and present it as complete.
+No new public implementation ref or PR while incident publication direction remains unresolved. Local implementation and private preservation may proceed. No new public incident details. Publication hold is separate from implementation readiness; do not fabricate CI or applied state.
 
-**Lock correction at 09:38 UTC:** #3251 changes no ARB/localization/help files. E2 may generate and verify its localization outputs and run UI tests now. Older instructions holding all l10n/help until #3251 merge are superseded. That hold has ended: E1 released shared locks and reviewer handed SQL/Demo/aggregate integration to E2. E2 status may lag the handoff receipt; use reviewer CURRENT and ledger to reconcile.
+## Reviewer assistance and handoffs
 
-**0653_supplier_balance_reads is APPLIED to dev, not merged**, at 09:51:38 UTC by reviewer. Reviewed SQL head `70eaf2d187602ce724bde906347b0401debae5c2`, SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b`. Ledger reports schema 653, both RPCs present and anon denied. Master remains schema 652. E2 rollback harness reports 27 assertions with no failures; final pgTAP/CI and exact-head review remain pending. Next: inspect final candidate artifacts/Demo evidence, exact-head independent review and required CI/pgTAP receipts; merge only when eligible. Tenure remains E2 until merge.
+Reviewer coding help is allowed only within an existing checkpoint, with explicit exclusive files and independent E1 review; no self-approval or extra helper PR. No reviewer-authored helper changes are confirmed here.
 
-### Reviewer implementation assistance
-
-The owner permits bounded coding help when review capacity is free. Reviewer may help #3070 with one explicitly handed-off adversarial pagination/recovery test file in a separate worktree. E2 must first supply a compilable SHA and exclusive file ownership; E2 integrates into the same PR. No duplicate tests/helper PR/third checkpoint. E1 independently reviews reviewer-authored changes; the reviewer cannot self-approve them. No reviewer helper-authored code was confirmed at snapshot. E1 now has an independent read-only #3252 review assignment to use existing capacity while the reviewer handles additional owner tasks; no extra coding checkpoint.
+At actual merge, reviewer verifies receipt/required evidence, updates dispatch/ledger and releases overlapping tenure; engineer cleans only owned verified-merged work and reports residual scope. Do not leave CURRENT at “pending” after completion or imply continuous background monitoring. Reconcile at normal active work boundaries without adding a watcher.
 
 ## Checkout and branch state
 
