@@ -98,3 +98,12 @@ Verified45 open issues, including operator/provider-gated and deferred work. E1 
 - Reviewer current dependency is0655 contract/live-helper/real DB proof and3255 CI/merge; current free-window report requested, not assumed idle.
 
 Total observed engineer idle **4m33s**, not a before/after savings estimate. Assignment-to-start after observed dispatch was7s/5s. Outcomes and any interruption/resumption remain to be recorded; no throughput improvement claimed yet.
+
+
+## Concrete lessons from3255 and2599
+
+3255 missed the existing667-line gate before pushing670 lines. Identify implicated limits/gates before publication; no full local suite merely for reassurance.2599 initial tests missed durable growth rationale after baseline rewrite, uniquely opened receipt detail, property-based directory enumeration and owned fixture-root boundaries. Prove real consumer outcomes and end-to-end lifecycle with meaningful negative/bypass cases, not just focused pass counts.
+
+Verify environment facts: the actual Mac checkout was NOT under resolved systemTemp; that claim was retracted. Synthetic same-temp checkout proof and source-level possibility do not establish an observed live bypass. Orchestrator must verify before repeating such claims.
+
+Batch related findings and settle bytes before the next handoff. Run relevant guarded lint/affected checks and analyzer; attribute each result to exact inputs, reuse only unchanged evidence. Original exits/TAP/aggregate failures override reassuring step labels under continue-on-error. No partial proof becomes fullCI or epic acceptance, and no speedup is inferred. Apply these lessons only where relevant; this retrospective requests no duplicate tests or new scope.
