@@ -77,6 +77,7 @@ void main() {
           _row('held', 's', 'EUR', 100, state: ObligationState.held),
           _row('cancelled', 's', 'EUR', 300, state: ObligationState.cancelled),
           _row('other-currency', 's', 'GBP', 200),
+          _row('negative', 's', 'CHF', -25),
           _row('other-supplier', 'other', 'EUR', 900),
         ]);
       final repo = FakeSupplierBalanceRepository(
@@ -89,7 +90,12 @@ void main() {
           for (final b in balances)
             (b.supplierId, b.currency): b.remainingCents,
         },
-        {('s', 'EUR'): 500, ('s', 'GBP'): 200, ('other', 'EUR'): 900},
+        {
+          ('s', 'EUR'): 500,
+          ('s', 'GBP'): 200,
+          ('s', 'CHF'): -25,
+          ('other', 'EUR'): 900,
+        },
       );
       expect(
         balances
@@ -105,6 +111,7 @@ void main() {
         'held',
         'cancelled',
         'other-currency',
+        'negative',
       });
       expect(page.next, isNull);
       await expectLater(
