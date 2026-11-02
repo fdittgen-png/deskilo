@@ -1,61 +1,48 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 11:57 UTC**. Refresh live #2596, GitHub and each session CURRENT before acting. Historical receipts live in EVIDENCE and DECISIONS.
+Snapshot: **2026-11-02 12:38 UTC**. This replaces earlier publication-held and CI-pending dispatch snapshots. Refresh live GitHub and session CURRENT before acting.
 
-## Owner instruction and authority
+## Owner priority and publication decision
 
-**Owner directive, highest importance:** resolve all issues pragmatically with maximum time/token efficiency. Use the smallest complete change, concise delta communication, valid evidence reuse and prompt verified merge handoffs. This does not waive correctness, confidentiality or required checks.
+Owner directive, highest importance: resolve open issues pragmatically with maximum time/token efficiency. Small coherent changes, exact-input evidence reuse, concise delta communication, no duplicate diagnoses/tests or generic approval loops. Correctness, confidentiality and required checks remain mandatory.
 
-**Latest coordination correction:** the publication hold is separate from authorized development-database integration. Reviewer may apply immutable0654 through the existing dev protocol once exact candidate review, applicable gates and matching rollback proof are satisfactory; then E2 records genuine APPLIED/contract artifacts and completes invalidated final gates. No further routine orchestrator approval is required. Public ref/PR creation remains held pending the existing confidentiality visibility/branch-control decision. Application is now confirmed in the latest receipt below. This supersedes prior blanket no-dev-apply wording, not real unresolved review findings.
+Repository **fdittgen-png/deskilo is PRIVATE**, independently verified through GitHub API. Reviewer changed visibility under the urgent containment/unblocking direction. **Private publication is now authorized; the blanket publication hold is released.** Do not restore public visibility or expose confidential material. Privacy is repository access containment, not erasure of historic clones, forks, caches or refs. Private incident cleanup remains separate.
 
-Implement open issues efficiently under one orchestrator, with meaningful Demo use cases for changed behavior. Retired Claude sessions remain stopped. Orchestrator coordinates/advises; engineers implement and test; reviewer owns exact-head merge, closure, dispatch and migration ledger. Existing sandbox and approval controls still apply.
+GitHub Pages is unavailable (reviewer verified former URL/API404). Actions is enabled. Current plan does not enforce private branch protections (master protected=false; protection/ruleset API403 requiring Pro/public). Reviewer is sole merger and must manually verify exact expected HEAD, source approval and all previously required CI checks. No bypass/admin merge, unreviewed direct-master push or merge while checks fail/pending. Preserve hosting/godaddy and all WIP. No billing/plan upgrade is implied.
 
-Two implementation checkpoints maximum, normal two PRs/hard four, one migration tenure. No new watchers or recurring jobs. Confidentiality remediation takes priority; keep all confidential information and detailed incident records off GitHub.
+## Team and active ownership
 
-## Current team
-
-| Role | Session UUID | Current assignment |
+| Role | Session UUID | Assignment |
 | --- | --- | --- |
-| Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Scope, ownership, handoffs, evidence and efficiency |
-| Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Final review/merge, sole #2596/ledger writer; additional owner tasks |
-| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | CI-harness fixes: benchmark initialization and dictionary port isolation |
-| Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 approver queue/count and decision-detail read consistency |
+| Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Dispatch scope, efficiency, ownership and takeover records |
+| Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Sole queue/ledger/merge writer; #3253 CI through completion; incident |
+| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | Publish narrowly approved benchmark bootstrap; bounded metric diagnosis |
+| Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 approver-read PR #3253, CI findings and owned cleanup |
 
-All three sessions previously personally acknowledged two-way routing. New assignments above were queued; delivery is not a personal ACK.
+Two coding checkpoints maximum. Normal two PRs/hard four, one migration tenure. No new watcher/recurring job. Read current receipts rather than reacting to stale queued reports.
 
-## Completed checkpoints
+## #3070 implementation CI is active
 
-- #3250 / #2519: merged `246e9a55e6da987bab5246c7bd4998567c3fbc37`, approved `be1f64ec2c936102858a8d846545194c892f6fae`. R3 reasons/zero ratchet only; all registry defaults retained. Own cleanup complete. Parent remains open.
-- #3251 / #2470: merged `189fb73ed13357bc22c399191475a6a412680a61`, approved `84275da130d53696997fcaf385fdc320021a48f7`. 0652 applied/merged, required CI green, own cleanup complete, locks released. Real HMRC application/sandbox and unproved accepted-return receipt reconstruction remain.
-- #3252 / #3070 balance/navigation: merged **7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c**, approved **927f49e8eebdbb711ae809fe94d24bc31098cb53**, at 10:29:22 UTC. Five workflows passed. Quality run 41426054668 attempt 1, database job 125213290066: pgTAP 339 OK, all **6,476 PASS**. E1 independent review no actionable findings; local analyzer/745 guarded tests passed. Master/dev schema 653; migration/APPLIED hash `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b` matches reviewed dev. Ledger MERGED, tenure released. E2 reports own clean worktree/branch removed and claim archived. Parent #3070 stays open.
+[PR #3253](https://github.com/fdittgen-png/deskilo/pull/3253), exact reviewed head **d8d3c4673813ce873247ed315ee88c9e349de633**, OPEN/non-draft, verified 12:37:48 UTC. Quality run **41446196242**, Web **41446196206**, SAF-T **41446196087**, E-invoice **41446196014**, VAT **41446196007** all in progress, started12:37:18 UTC. Do not infer success or merge.
 
-No completed checkpoint is waiting for CI. The 29m15s missed merge-to-reconciliation interval is recorded in METRICS.
+0654 APPLIED dev at12:13:03 UTC, SHA-256 **a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9**. Schema654, bodies/grants independently matched. Actual canonical340 real pgTAP51/51 passed in rollback before and after application. Genuine APPLIED/contract committed; final artifact delta27 gates passed. c777 analyzer/692 lint retained for unchanged code. Reviewer exact-head source acceptance: no actionable defect in selected checkpoint, conditional on final CI/full replay. Evidence details in EVIDENCE.md.
 
-## Active #3070 checkpoint
+Reviewer remains actively responsible through current CI completion, failed-step diagnosis and eligible merge; no unattended generic “pending” handoff. At verified merge reconcile hash/ledger, release0654 tenure, notify E2cleanup and dispatch next bounded acceptance. E2 handles actual failures without blind retries.
 
-**0654 APPLIED at 2026-11-02 12:13:03 UTC** by reviewer, source `c7774b3eeb1d98b9b41e3e78e7647ab5cfd11cc7`, migration SHA-256 `a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9`. Reviewer reports full analyzer/affected tests/692 lint passing before application. Independent postcheck schema654, four function bodies match, anon denied and only page/detail granted authenticated. Canonical340 real pgTAP **51/51 passed before application and against applied live functions in rollback**; post-apply intentional CLI exit1/PGTAP_PASS, independent postcheck exit0/schema654, temporary pgTAP absent and bodies/grants unchanged. Ledger APPLIED confirmed. Evidence `~/.deskilo-exchange/evidence/3070-0654-applied/`. E2 has committed genuine APPLIED/contract/bundle at clean private HEAD `d8d3c4673813ce873247ed315ee88c9e349de633`. APPLIED hash and four dev-derived contract lines independently matched; E2 reports record/build/predict and27 affected immutability/contract/instance/grant gates passed. c777 analyzer/692 lint retained only for verified unchanged code; matching real pgTAP51 pre/post application retained. Reviewer exact-head source review COMPLETE for clean `d8d3c4673813ce873247ed315ee88c9e349de633`: final delta only APPLIED hash and four dev-matched contract lines; migration/fixture match real pgTAP51 pre/post proof; no remaining actionable source finding in selected checkpoint. Local gates passed. READY TO PUBLISH when current hold is resolved; final-head required CI/full replay still pending. This is conditional source acceptance, not merge approval or parent closure. Write-time gates, remote freshness and evidence/FX remain parent residuals. Public ref/CI still held; parent #3070 remains open for atomic write-gate and evidence/FX residuals.
+Parent #3070 remains open for atomic write-time feature/delegation gates, remote freshness and evidence/FX access; supplier To-pay/scheduling is separate. Existing receipt read-only reachability is preserved independently of bill loading/error. No new receipt voting or blanket entitlement.
 
-**Local-only implementation authorized.** E2 owns approver queue/count plus decision-detail read consistency. E1 independently reviews the contract without editing E2 files or rerunning tests. Reviewer is explicitly authorized to reserve a fresh migration number for the confirmed read-contract gap after checking master/ledger; 0654 is now confirmed exclusively reserved. E2 may write numbered local SQL only after that receipt. Dev application is conditional on the reviewed exact-byte protocol above.
+## E1 benchmark checkpoint
 
-Reviewer source check confirms different predicates in 0461 purchase RLS/0587 detail and 0468 decision authorization. Reproduce intended eligibility before changing access. 0483 permits self-approval strictly below configured purchase.single_approval_below_units (default 0); self-rejection remains prohibited. Never blanket-exclude own rows. Verify member-receipt versus supplier-bill semantics and minimize newly disclosed fields. Existing approvals screen/queue/drawer already exist; do not rebuild them or claim a confirmed production incident.
+Clean private **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0** in /private/tmp/deskilo-ci-harness: one bootstrap export. Reviewer narrowly source-approved; focused invitation RED->GREEN, default11/11 with9 samples and targeted analysis pass; tested file matches committed bytes. Private bootstrap-only PR now authorized, no duplicate tests. It does NOT make nightly green.
 
-Acceptance:
+Remaining perf gate: pending_leave_return13 trips>8 and Back1vs2. Trace identifies real calls; one historical Back was replaced by workspace selection in #2136. No budget relaxation, fake Back, blind cross-context cache sharing or broad provider refactor. Only bounded cause diagnosis with concrete evidence. Dictionary failure is start-time54322 occupied, owner unknown; no SQL defect, port change or blind rerun authorized; dictionary/stack editing locks released.
 
-- Queue, count and decision-detail enforce intended current eligibility and preserve active membership, tenant, feature, delegation and threshold-based self-approval rules. Preserve broader existing read scopes; no blanket wide purchase access or write redesign. Tests cover below/equal/above threshold, default zero, self-rejection prohibition and permission/status changes.
-- E2 exclusively owns implicated purchase read domain/repository/providers, approvals screen/drawer, existing Demo/coverage, scoped tests and reserved SQL/contract/bundle integration. E1 reviews read-only. Supplier To-pay and unrelated registry/write changes are outside these locks.
-- Loading/error/unavailable is distinct from true zero; retained stale data must not imply fresh results.
-- Stable, complete paging within declared limits; do not claim offset traversal is a snapshot. Existing fetchAllPages throws at 100,000 rows, unlike the former payable 2,000-row cap. No long-lived snapshot architecture without demonstrated need.
-- Existing Demo exercises approver-only pending item, allowed detail, existing decision and refreshed queue/count; include denied access, paging and error recovery.
-- Focused permissions/paging/state tests and affected recorder lint before broad candidate gates. Preserve original exits and exact-head evidence; no redundant reruns.
-- Supplier To-pay/scheduling deep link is a separate residual, excluded from this checkpoint.
+## Recently completed
 
-No new public implementation ref or PR while incident publication direction remains unresolved. Local implementation, private preservation and conditionally authorized dev integration may proceed. No new public incident details. Publication hold is separate from implementation readiness; do not fabricate CI or applied state.
-
-## Reviewer assistance and handoffs
-
-Reviewer coding help is allowed only within an existing checkpoint, with explicit exclusive files and independent E1 review; no self-approval or extra helper PR. No reviewer-authored helper changes are confirmed here.
-
-At actual merge, reviewer verifies receipt/required evidence, updates dispatch/ledger and releases overlapping tenure; engineer cleans only owned verified-merged work and reports residual scope. Do not leave CURRENT at “pending” after completion or imply continuous background monitoring. Reconcile at normal active work boundaries without adding a watcher.
+- #3250/#2519 merged246e9a55; reasons/zero ratchet only, defaults retained; cleanup complete, parent open.
+- #3251/#2470 merged189fb73;0652 applied/merged; cleanup/locks released. Provider sandbox and receipt-reconstruction limits remain.
+- #3252/#3070 balance/navigation merged7438b12c at10:29:22, schema653, 6476pgTAP passed; cleanup complete and0653 tenure released.
+- Offline proof builder is fixture-specific, not a general SQL parser. Actual canonical proof belongs to executed5413b5df; later settled1a4fd597 only offline verified. No duplicate probe for unchanged SQL/fixture.
 
 ## Checkout and branch state
 
