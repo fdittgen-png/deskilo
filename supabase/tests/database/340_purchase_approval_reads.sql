@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(44);
+select plan(45);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -115,7 +115,11 @@ select set_config('t.approval_version',public.purchase_approval_page_v1('0000000
 reset role;
 update public.purchase_documents set state='rejected' where id=(select id from public.purchase_documents
  where workspace_id='00000000-0000-4000-8000-0000000034a3' and kind='bill' and state='pending'
- and submitter_member_id='00000000-0000-4000-8000-0000000034a4' order by id limit 1);
+ and submitter_member_id='00000000-0000-4000-8000-0000000034a4'
+ and submitted_by_member_id='00000000-0000-4000-8000-0000000034a4' order by id limit 1);
+set local role authenticated;
+select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,205,'removing an eligible non-maker reduces the count');
+reset role;
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
 ('00000000-0000-4000-8000-0000000034ae','00000000-0000-4000-8000-0000000034a3','bill','pending','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a4','00000000-0000-4000-8000-0000000034a4','unpaid');
 set local role authenticated;
