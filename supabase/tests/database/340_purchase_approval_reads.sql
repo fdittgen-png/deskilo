@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(30);
+select plan(31);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -25,6 +25,11 @@ insert into public.purchase_documents (id,workspace_id,kind,state,currency,suppl
 insert into public.purchase_lines (workspace_id,purchase_id,line_no,gross_cents) values
 ('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034af',1,100);
 update public.purchase_documents set state='pending' where id='00000000-0000-4000-8000-0000000034af';
+insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
+('00000000-0000-4000-8000-0000000034b1','00000000-0000-4000-8000-0000000034a3','bill','draft','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a5','00000000-0000-4000-8000-0000000034a4','unpaid');
+insert into public.purchase_lines (workspace_id,purchase_id,line_no,gross_cents) values
+('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034b1',1,150);
+update public.purchase_documents set state='pending' where id='00000000-0000-4000-8000-0000000034b1';
 insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind) values
 ('00000000-0000-4000-8000-0000000034ab','00000000-0000-4000-8000-0000000034a3','bill','draft','EUR','00000000-0000-4000-8000-0000000034a6','00000000-0000-4000-8000-0000000034a5','00000000-0000-4000-8000-0000000034a5','unpaid');
 insert into public.purchase_lines (workspace_id,purchase_id,line_no,gross_cents) values
@@ -50,6 +55,7 @@ select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034
 select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a9',1,false,'No','00000000-0000-4000-8000-0000000034ad')$$,'P0001','another person must decide a purchase you submitted','existing write rejects self rejection');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ab')$$,'42501','purchase approval is not available','own bill equal to threshold excluded');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034af')$$,'42501','purchase approval is not available','own sender is excluded at equal threshold even when drafter differs');
+select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034b1')$$,'42501','purchase approval is not available','own drafter above threshold is excluded even when sender differs');
 select throws_ok($$select public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ac')$$,'42501','purchase approval is not available','member receipt belongs to validation flow');
 select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7',1,false,'Repro','00000000-0000-4000-8000-0000000034a8')->>'state','rejected','existing decision succeeds');
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,1,'decided bill is no longer counted');
