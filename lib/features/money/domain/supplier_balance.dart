@@ -24,3 +24,8 @@ class SupplierBalance {
   final String currency;
   final int remainingCents;
 }
+
+/// One complete snapshot for the workspace, with separate currency rows.
+abstract interface class SupplierBalanceRepository {
+  Future<List<SupplierBalance>> fetchBalances(String workspaceId);
+}
