@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 09:43 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
+Snapshot: **2026-11-02 09:53 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
 
 ## Owner instruction
 
@@ -14,28 +14,30 @@ The orchestrator coordinates/advises and does not execute product code, migratio
 | --- | --- | --- |
 | Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Priorities, shared ownership, decisions, efficiency and handover |
 | Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Exact-head review, eligible merges, closure, #2596 and migration ledger |
-| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | #2470 HMRC recovery, PR #3251 final integration |
+| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | #2470 recovery merged; cleanup complete; independent review available |
 | Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 supplier balance and scoped payable navigation |
 
 All three replacement sessions personally acknowledged the roster and reverse messaging. Their names/titles can change; route by UUID and refresh identity during takeover.
 
 ### Engineer 1
 
-PR [#3251](https://github.com/fdittgen-png/deskilo/pull/3251), branch `fix/2470-expired-hmrc-recovery`, worktree `/private/tmp/deskilo-2470-recovery`, approved head **84275da130d53696997fcaf385fdc320021a48f7**. Reviewer marked ready and armed exact-head squash auto-merge. Final Quality/Web checks were running at the last GitHub inspection. Do not infer merge from arming.
+PR [#3251](https://github.com/fdittgen-png/deskilo/pull/3251) **MERGED at 09:42:40 UTC** as **189fb73ed13357bc22c399191475a6a412680a61**, from approved head **84275da130d53696997fcaf385fdc320021a48f7**. Final Quality run 41420626290 succeeded. E1 reports its clean worktree/local branch removed, remote branch absent and claim archived.
 
-Migration **0652 is APPLIED on development**, merge pending, hash **8a05fb7ecdf2523bb863b1c6031a36921e6ad46e71c342040391334e77d13196**. APPLIED and contract are in the candidate. Reviewer reports schema 652, marker/v2 present, authenticated denied and service-role allowed. Proof and final-head evidence are distinguished in EVIDENCE.
+Migration **0652 is APPLIED and MERGED**, hash **8a05fb7ecdf2523bb863b1c6031a36921e6ad46e71c342040391334e77d13196**. Reviewer ledger confirms master schema 652 and released tenure. E1 released HMRC, London Demo, DEMO_COVERAGE and database aggregate locks; reviewer explicitly handed #3070 SQL/Demo/aggregate integration to E2.
 
-E1 retains HMRC contracts, 0652/database aggregate files, London Demo and its DEMO_COVERAGE changes through integration. Next: final CI, actual merge receipt, safe own-worktree/branch cleanup, then reviewer releases migration tenure. #2470 stays open for real HMRC application/sandbox acceptance and explicitly recorded residuals.
+E1 has no new implementation claim at this snapshot; remains available to independently review any reviewer-authored #3070 test. #2470 stays open for real HMRC application/sandbox acceptance and unproved accepted-return receipt reconstruction. Do not equate this recovery checkpoint with complete issue acceptance.
 
 ### Engineer 2
 
 #2519 reasons/enforcement completed in [#3250](https://github.com/fdittgen-png/deskilo/pull/3250), merge **246e9a55e6da987bab5246c7bd4998567c3fbc37**, approved head **be1f64ec2c936102858a8d846545194c892f6fae**. Own branch/worktree removed and claim archived. The epic remains open; reviewer records exact remaining acceptance rather than assuming parent closure.
 
-Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, last observed local head `7fa529f29` (refresh full SHA). No PR at snapshot. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
+Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, last observed local head `a683e3772d0fbd3c0162098ec2f1f586ebbb91fb` (refresh before review). No PR at snapshot. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
 
 The reviewer accepted the read direction with required corrections: use the complete remaining-balance rule including `applied_invoice`, signed allocations and cancelled state; explicitly enforce supplier-wide permission, workspace and purchases-feature gates; preserve old RPC compatibility and keyset continuation beyond 2,000 rows. Do not sum the old capped 20×100 client fetch and present it as complete.
 
-**Lock correction at 09:38 UTC:** #3251 changes no ARB/localization/help files. E2 may generate and verify its localization outputs and run UI tests now. Older instructions holding all l10n/help until #3251 merge are superseded. SQL implementation, migration numbering and shared database aggregates still wait for 0652 handoff. London Demo and DEMO_COVERAGE overlap remains coordinated.
+**Lock correction at 09:38 UTC:** #3251 changes no ARB/localization/help files. E2 may generate and verify its localization outputs and run UI tests now. Older instructions holding all l10n/help until #3251 merge are superseded. That hold has ended: E1 released shared locks and reviewer handed SQL/Demo/aggregate integration to E2. E2 status may lag the handoff receipt; use reviewer CURRENT and ledger to reconcile.
+
+**0653_supplier_balance_reads is APPLIED to dev, not merged**, at 09:51:38 UTC by reviewer. Reviewed SQL head `70eaf2d187602ce724bde906347b0401debae5c2`, SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b`. Ledger reports schema 653, both RPCs present and anon denied. Master remains schema 652. E2 rollback harness reports 27 assertions with no failures; final pgTAP/CI and exact-head review remain pending. Next: genuine APPLIED/contract artifacts, meaningful supplier Demo journey, consolidated final gates and one PR. Tenure remains E2 until merge.
 
 ### Reviewer implementation assistance
 
