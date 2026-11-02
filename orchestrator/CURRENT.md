@@ -63,3 +63,8 @@ Keep `hosting/godaddy` (production deployment source) and `coord/cloud-codex`. P
 
 Development project reference: `zwzbynivewivvjmripeb`. No secret values are stored here. Cloud tooling must be rediscovered; the historical cloud report lacked Flutter/Dart/native toolchains.
 
+
+
+## #3255 active follow-up
+
+Independently verified OPEN at **789a6769b5f3e27ffac94907ce6f7f0c92caa7fe**. Quality **41454152999** in progress; Web **41454152818** queued at reconciliation. E1 merged e238a819 master once; selector/Back source and scoped tests unchanged from fc39/81031, plus eight focused integration tests passed after Demo/approval consumer changes. Prior exact-input selector6/privacy-Demo7/gate17/analyzers retained; reviewer consolidates exact-head acceptance and required CI. No automatic extra master merge for3254 bootstrap absent actual integration need/conflict/policy. Preserve active CI. Trip ceiling8 unchanged, no MCP scope, nightly remains unresolved. Review/CI handoff queued to reviewer; delivery not acknowledgement.
