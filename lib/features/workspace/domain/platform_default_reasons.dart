@@ -22,6 +22,53 @@ import 'workspace_feature.dart';
 /// The stated reasons, by feature. Only platform entries with `defaultOn:
 /// true` may appear here; the test refuses any other, and an empty text.
 const Map<WorkspaceFeature, String> platformDefaultReasons = {
+  WorkspaceFeature.nfcSeatTags:
+      'The owner explicitly configures a tag on a seat; the original tag '
+      'feature decision kept the configuration and scan path on (#604).',
+  WorkspaceFeature.qrBadges:
+      'Issuing a badge is an explicit action in the kiosk badge manager; '
+      'the original badge decision kept this path on (#604).',
+  WorkspaceFeature.invoiceAddressWindow:
+      'Invoices need the recipient in the envelope window; the country '
+      'supplies a default side that the owner can override (#868).',
+  WorkspaceFeature.managedProfiles:
+      'An admin must explicitly create a managed profile; it permits '
+      'onboarding before an account and bound handover later (#887).',
+  WorkspaceFeature.memberPaymentTerms:
+      'Without an override the workspace terms apply; a permitted person '
+      'must request a change and validation decides it (#881).',
+  WorkspaceFeature.memberReports:
+      'Members can obtain their financial agreement and monthly payments '
+      'report themselves instead of depending on an admin to send them '
+      '(#494).',
+  WorkspaceFeature.reportTexts:
+      'The owner must add text to change a report; absent language '
+      'variants fall back to the default (#880).',
+  WorkspaceFeature.vatReport:
+      'The VAT period report exposes the taxable positions and their '
+      'reconciliation with declaration boxes for the accountant (#878).',
+  WorkspaceFeature.coOwner:
+      'The owner can appoint a successor before departure; appointment is '
+      'explicit and the server succession safeguard remains on (#341).',
+  WorkspaceFeature.kioskMode:
+      'The original feature audit kept the kiosk available by default; '
+      'an owner still configures the kiosk account (#341).',
+  WorkspaceFeature.nfcBadges:
+      'The original feature audit kept badges available by default under '
+      'the kiosk; credentials still need to be configured (#341).',
+  WorkspaceFeature.usageRecords:
+      'The member-facing trail explains billed time; an early-departure '
+      'correction is requested and validated, not automatic (#833).',
+  WorkspaceFeature.letterStandard:
+      'Person-facing reports need the standard window-envelope layout; '
+      'a kind without a custom design uses its default layout (#874).',
+  WorkspaceFeature.vatDeclarations:
+      'The VAT screen offers period declarations only for a registered '
+      'workspace; preparing a return does not submit it (#534).',
+  WorkspaceFeature.usageReport:
+      'The month-end report shows a member what was consumed against the '
+      'subscription paid ahead; it needs usage records and member reports '
+      '(#873).',
   WorkspaceFeature.dataAccessLog:
       'Off hides the row; the server-written log is still written, because '
       'the record is not optional (#719).',
