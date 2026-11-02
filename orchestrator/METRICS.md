@@ -65,3 +65,9 @@ At a normal handoff, failure or merge, capture the same four role IDs and nonove
 Track claim→first commit→PR→approval→merge timestamps, active blocked intervals with reason/owner, actual head/run/attempt counts, intentional proof runs versus defect-driven reruns, overwritten decisions, conflicts, authored files, review findings and escaped defects. Compare equivalent task classes, not a documentation PR with a financial concurrency feature. CI aggregates should distinguish elapsed critical path from parallel job wall sum.
 
 Use targeted metadata and current summaries. Do not repeatedly read full session histories, run full tests or create CI executions solely to measure them. No recurring job/watcher is created. The next report should say what improved, regressed or remains unmeasured and name one concrete orchestration correction.
+
+## Post-baseline completion update — 09:53 UTC
+
+The fixed 67-minute baseline above is unchanged. After its cutoff, #3251 merged at 09:42:40 UTC: PR creation to merge **35m 23s**. Final Quality run 41420626290 attempt 1 succeeded, start 09:26:15 → final update 09:42:28, **16m 13s**, ten jobs successful. Both measured checkpoints are now merged, but only #3250 merged inside the token window. Do not divide both completions by that window or imply all issue acceptance is done.
+
+Merge was reconciled in orchestration around 09:48 UTC, approximately six minutes after the actual merge; this is an observed coordination lag, not proof the engineer was idle for the entire interval. Reviewer then released the lane, reserved 0653 and applied reviewed #3070 bytes at 09:51:38. Improvement: check and publish actual merge at dependency handoff, release only overlapping locks promptly, and distinguish queued notification from current ownership. No extra monitoring job is introduced.
