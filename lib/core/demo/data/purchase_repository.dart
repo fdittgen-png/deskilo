@@ -20,6 +20,9 @@ class FakePurchaseRepository
   static String _defaultActor() => 'member-1';
   @override
   final String Function() actor;
+
+  /// Demo decision access is checked at the command, not only on the screen.
+  bool Function(String workspaceId)? mayDecide;
   /// The demo space: two approved claims of the demo members, one untouched
   /// and one part-paid, so the To-pay tab, a payment and a reversal can all
   /// be tried exactly as in production.
@@ -351,6 +354,9 @@ class FakePurchaseRepository
     required String reason,
     required String requestId,
   }) async {
+    if (mayDecide?.call(workspaceId) == false) {
+      throw StateError('purchase decision is not available');
+    }
     final i = _doc(purchaseId);
     if (i < 0) throw StateError('unknown purchase');
     final d = _documents[i];
