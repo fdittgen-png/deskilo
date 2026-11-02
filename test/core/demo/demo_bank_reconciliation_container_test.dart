@@ -2,6 +2,7 @@
 //
 // The Demo report keeps matched and unmatched movements distinct through source, UI and archive.
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/bank_reconciliation_fixture.dart';
@@ -174,6 +175,30 @@ void main() {
       utf8.decode(archive!['bank-reconciliation/coverage.txt']!),
       contains(l10n.bankReconCoverage),
     );
+    final output = Platform.environment['BANK_NOTICE_PDF_DIR'];
+    if (output != null) {
+      for (final item in archive!.entries.where(
+        (e) => e.key.endsWith('.pdf'),
+      )) {
+        final file = File('$output/archive-${item.key.split('/').last}')
+          ..writeAsBytesSync(item.value);
+        final extracted = Process.runSync('pdftotext', [
+          '-layout',
+          file.path,
+          '-',
+        ]);
+        expect(extracted.exitCode, 0, reason: '${extracted.stderr}');
+        final text = '${extracted.stdout}'.replaceAll(RegExp(r'\s+'), ' ');
+        for (final notice in [
+          l10n.bankReconCoverage,
+          l10n.bankReconSeparateReads,
+          l10n.bankReconBooksUnavailable,
+          l10n.bankReconClearingUnavailable,
+        ]) {
+          expect(text, contains(notice));
+        }
+      }
+    }
     entry.remove();
     await tester.pump();
 

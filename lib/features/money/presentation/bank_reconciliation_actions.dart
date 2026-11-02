@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/bank/reconciliation_report.dart';
+import '../domain/invoice_report.dart';
 import '../providers/bank_statement_providers.dart';
+import 'bank_reconciliation_words.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
@@ -65,6 +67,7 @@ class BankReconciliationActions {
         date: date.format,
       ),
     };
+    final notices = bankReconciliationNotices(words, report);
     final rendered = renderLetterDoc(
       context,
       ref,
@@ -76,7 +79,9 @@ class BankReconciliationActions {
       ref,
       keyPrefix: 'bank-reconciliation-report',
       render: () {
-        return sameScope() ? rendered : null;
+        return sameScope()
+            ? withBankReconciliationNotices(rendered, notices)
+            : null;
       },
       buildPdf: () {
         if (!sameScope()) {
@@ -89,8 +94,21 @@ class BankReconciliationActions {
           title: title,
           layoutXml: letterLayoutXml(ref, docId: 'bank_reconciliation'),
           data: data,
+          mandatoryNotices: notices,
         );
       },
     );
   }
 }
+
+/// Notices are outside editable bands, including the quick preview.
+InvoiceReport withBankReconciliationNotices(
+  InvoiceReport report,
+  List<String> notices,
+) => InvoiceReport(
+  header: report.header,
+  body: [...report.body, for (final notice in notices) ReportText(notice)],
+  footer: report.footer,
+  continuation: report.continuation,
+  numberFirstPage: report.numberFirstPage,
+);

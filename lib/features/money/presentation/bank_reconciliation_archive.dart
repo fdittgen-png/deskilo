@@ -86,6 +86,7 @@ class BankReconciliationArchive {
           date: date.format,
         ),
       };
+      final notices = bankReconciliationNotices(words, report);
       final rendered = renderLetterDoc(
         context,
         ref,
@@ -99,6 +100,7 @@ class BankReconciliationArchive {
         title: title,
         layoutXml: letterLayoutXml(ref, docId: 'bank_reconciliation'),
         data: data,
+        mandatoryNotices: notices,
       );
       if (!context.mounted) {
         throw StateError('report context no longer available');

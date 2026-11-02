@@ -22,3 +22,17 @@ BankReconciliationWords bankReconciliationWordsOf(AppLocalizations l10n) =>
       bookDifferenceUnavailable: l10n.bankReconBooksUnavailable,
       status: (line) => bankLineStatusLabel(l10n, line),
     );
+
+/// These limitations belong to the report, not to its editable template.
+List<String> bankReconciliationNotices(
+  BankReconciliationWords words,
+  BankReconciliationReport report,
+) => [
+  words.coverageUnavailable,
+  words.separateReadsNotice,
+  words.bookDifferenceUnavailable,
+  words.clearingUnavailable,
+  if (report.sourceUnavailableOrInaccessible)
+    words.sourceUnavailableOrInaccessible,
+  if (report.sourceAssociationUnavailable) words.sourceAssociationUnavailable,
+];
