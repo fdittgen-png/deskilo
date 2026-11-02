@@ -3,12 +3,12 @@
 // The Demo report keeps matched and unmatched movements distinct through source, UI and archive.
 import 'dart:convert';
 
-import 'package:crypto/crypto.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/bank_reconciliation_fixture.dart';
 import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
+import 'package:deskilo/features/money/application/bank_import_commands.dart';
 import 'package:deskilo/features/money/application/bank_reconciliation_reader.dart';
-import 'package:deskilo/features/money/domain/bank/bank_file.dart';
+import 'package:deskilo/features/money/domain/bank/bank_import_settings.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/bank_reconciliation_archive.dart';
@@ -70,20 +70,15 @@ void main() {
         .replaceFirst('DEMO-REPORT-202601', 'DEMO-REPORT-ADDED');
     const limits = BankFileLimits(maxBytes: 100000, maxLines: 100);
     Future<String> importSource(String source, String fileName) async {
-      final bytes = utf8.encode(source);
-      final digest = sha256.convert(bytes).toString();
-      final parsed = parseBankFile(
-        bytes,
-        format: BankFileFormat.camt053,
-        limits: limits,
-      );
-      await bank.storeOriginal('ws-1', sourceSha256: digest, bytes: bytes);
-      return (await bank.importStatement(
+      final outcome = await BankImportCommands(bank).importFile(
         'ws-1',
-        statement: parsed,
-        sourceSha256: digest,
+        bytes: utf8.encode(source),
         fileName: fileName,
-      )).statementId;
+        format: BankFileFormat.camt053,
+        settings: const BankImportSettings(maxBytes: 100000, maxLines: 100),
+      );
+      expect(outcome.refused, isNull);
+      return outcome.result!.statementId;
     }
 
     final reader = BankReconciliationReader(bank);

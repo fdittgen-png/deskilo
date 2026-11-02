@@ -9,6 +9,7 @@ import 'package:xml/xml.dart';
 import 'bank_file.dart';
 import 'bank_records.dart';
 import 'bank_statement.dart';
+import 'bank_statement_fit.dart';
 
 List<StoredBankLine>? verifiedBankSourceMovements({
   required StoredBankStatement statement,
@@ -58,14 +59,16 @@ BankStatement? _verifiedSource(
   }
   BankStatement source;
   try {
-    source = parseBankFile(original, format: statement.format, limits: limits);
+    source = fitBankStatement(
+      parseBankFile(original, format: statement.format, limits: limits),
+    );
   } on BankFileException {
     return null;
   } on FormatException {
     return null;
   }
   if (!_singleCamtBalanceScope(original, source.currency)) return null;
-  if (source.account != statement.account ||
+  if (source.account.trim().toUpperCase() != statement.account ||
       source.currency != statement.currency ||
       source.statementId != statement.statementRef ||
       source.openingCents != statement.openingCents ||

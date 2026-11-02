@@ -111,6 +111,86 @@ void main() {
     expect(report.statementDifferenceCents, 0);
     expect(report.unresolved, hasLength(lines.length));
     expect(verify([changed, ...lines.skip(1)], bytes), isFalse);
+
+    StoredBankLine variant({
+      int? position,
+      DateTime? bookingDate,
+      DateTime? valueDate,
+      int? amount,
+      String? currency,
+      String? transaction,
+      String? name,
+      String? iban,
+      String? reference,
+      String? endToEnd,
+      String? remittance,
+    }) => StoredBankLine(
+      id: first.id,
+      position: position ?? first.position,
+      bookingDate: bookingDate ?? first.bookingDate,
+      valueDate: valueDate ?? first.valueDate,
+      amountCents: amount ?? first.amountCents,
+      currency: currency ?? first.currency,
+      status: first.status,
+      transactionId: transaction ?? first.transactionId,
+      counterpartyName: name ?? first.counterpartyName,
+      counterpartyIban: iban ?? first.counterpartyIban,
+      reference: reference ?? first.reference,
+      endToEndId: endToEnd ?? first.endToEndId,
+      remittance: remittance ?? first.remittance,
+    );
+    for (final mismatch in [
+      variant(position: 2),
+      variant(position: 99),
+      variant(bookingDate: first.bookingDate.add(const Duration(days: 1))),
+      variant(valueDate: first.valueDate.add(const Duration(days: 1))),
+      variant(amount: first.amountCents + 1),
+      variant(currency: 'EUR'),
+      variant(transaction: '${first.transactionId}x'),
+      variant(name: '${first.counterpartyName}x'),
+      variant(iban: '${first.counterpartyIban}X'),
+      variant(reference: '${first.reference}X'),
+      variant(endToEnd: '${first.endToEndId}X'),
+      variant(remittance: '${first.remittance}X'),
+    ]) {
+      expect(verify([mismatch, ...lines.skip(1)], bytes), isFalse);
+    }
+    StoredBankStatement withMismatch({
+      String? account,
+      String? currency,
+      int? opening,
+      int? closing,
+    }) => StoredBankStatement(
+      id: 's',
+      format: BankFileFormat.camt053,
+      account: account ?? parsed.account,
+      currency: currency ?? parsed.currency,
+      from: parsed.from,
+      to: parsed.to,
+      lineCount: lines.length,
+      openCount: lines.length,
+      sourceSha256: sha256.convert(bytes).toString(),
+      statementRef: parsed.statementId,
+      openingCents: opening ?? parsed.openingCents,
+      closingCents: closing ?? parsed.closingCents,
+    );
+    for (final bad in [
+      withMismatch(account: 'other'),
+      withMismatch(currency: 'EUR'),
+      withMismatch(opening: parsed.openingCents! + 1),
+      withMismatch(closing: parsed.closingCents! + 1),
+    ]) {
+      expect(
+        verifiedBankSourceMovements(
+          statement: bad,
+          lines: lines,
+          original: bytes,
+          limits: limits,
+        ),
+        isNull,
+      );
+    }
+
     expect(verify(lines.sublist(1), bytes), isFalse);
     // A known trailing transaction can be skipped on import while the RPC's
     // stored count still equals a contiguous fetched prefix.
