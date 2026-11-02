@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3259 — A routed startup cannot replace the deployed base with a screen
+// path, and an unsafe or missing base cannot silently configure sign-in.
 @TestOn('browser')
 library;
 

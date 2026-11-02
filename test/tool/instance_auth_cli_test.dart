@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3259 — Every CLI setup and doctor path uses the explicit deployment
+// target, while omitting the option retains the existing legacy default.
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
