@@ -32016,6 +32016,18 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// No description provided for @purchaseApprovalVisibleReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending member receipts you can view'**
+  String get purchaseApprovalVisibleReceipts;
+
+  /// No description provided for @purchaseApprovalReceiptsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending receipts could not be loaded.'**
+  String get purchaseApprovalReceiptsUnavailable;
+
   /// No description provided for @purchaseApprovalEvidenceUnavailable.
   ///
   /// In en, this message translates to:

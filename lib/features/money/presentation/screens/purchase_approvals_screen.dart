@@ -11,8 +11,10 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../domain/purchase.dart';
 import '../../domain/purchase_approval_reads.dart';
 import '../../providers/purchase_approval_provider.dart';
+import '../../providers/purchase_providers.dart';
 import '../widgets/purchase_labels.dart';
 import '../widgets/purchases_sheet.dart';
 import 'money_view_data.dart';
@@ -120,42 +122,87 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     }
     final docs = [for (final page in resolved) ...page.rows];
     final next = resolved.last.next;
-    return docs.isEmpty
-        ? EmptyState(
+    return ListView(
+      padding: AppSpacing.mdAll,
+      children: [
+        if (docs.isEmpty)
+          EmptyState(
             icon: Icons.task_alt_outlined,
             title: l10n.purchaseApprovalsEmpty,
-          )
-        : ListView(
-            padding: AppSpacing.mdAll,
-            children: [
-              for (final p in docs)
-                ListTile(
-                  key: ValueKey('approval-${p.id}'),
-                  title: Text(
-                    p.reference.isEmpty
-                        ? purchaseKindLabel(l10n, p.kind)
-                        : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
-                  ),
-                  subtitle: p.category.isEmpty ? null : Text(p.category),
-                  trailing: Text(
-                    moneyFormat(p.currency).formatMinor(p.grossCents),
-                  ),
-                  onTap: () async {
-                    await showPurchaseForDecision(
-                      context,
-                      widget.workspaceId,
-                      p.id,
-                    );
-                    if (mounted) _restart();
-                  },
-                ),
-              if (next != null)
-                TextButton(
-                  key: const ValueKey('approval-load-more'),
-                  onPressed: () => setState(() => _cursors.add(next)),
-                  child: Text(l10n.suppliersLoadMore),
-                ),
-            ],
-          );
+          ),
+        for (final p in docs)
+          ListTile(
+            key: ValueKey('approval-${p.id}'),
+            title: Text(
+              p.reference.isEmpty
+                  ? purchaseKindLabel(l10n, p.kind)
+                  : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
+            ),
+            subtitle: p.category.isEmpty ? null : Text(p.category),
+            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+            onTap: () async {
+              await showPurchaseForDecision(context, widget.workspaceId, p.id);
+              if (mounted) _restart();
+            },
+          ),
+        if (next != null)
+          TextButton(
+            key: const ValueKey('approval-load-more'),
+            onPressed: () => setState(() => _cursors.add(next)),
+            child: Text(l10n.suppliersLoadMore),
+          ),
+        _VisiblePendingReceipts(workspaceId: widget.workspaceId),
+      ],
+    );
+  }
+}
+
+/// The former queue also exposed RLS-visible pending receipts. This separate
+/// read-only section uses the original purchase read and does not affect the
+/// supplier-bill decision count or grant receipt validation rights.
+class _VisiblePendingReceipts extends ConsumerWidget {
+  const _VisiblePendingReceipts({required this.workspaceId});
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final receipts = ref.watch(purchasesProvider(workspaceId));
+    if (receipts.isLoading) return const LoadingView();
+    if (receipts.hasError) {
+      return Column(
+        children: [
+          Text(l10n.purchaseApprovalReceiptsUnavailable),
+          TextButton(
+            key: const ValueKey('approval-receipts-retry'),
+            onPressed: () => ref.invalidate(purchasesProvider(workspaceId)),
+            child: Text(l10n.commonRetry),
+          ),
+        ],
+      );
+    }
+    final visible = receipts.requireValue.where(
+      (p) =>
+          p.kind == PurchaseKind.memberReceipt &&
+          p.state == PurchaseState.pending,
+    );
+    if (visible.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.purchaseApprovalVisibleReceipts),
+        for (final p in visible)
+          ListTile(
+            key: ValueKey('approval-receipt-${p.id}'),
+            title: Text(
+              p.reference.isEmpty
+                  ? purchaseKindLabel(l10n, p.kind)
+                  : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
+            ),
+            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+            onTap: () => showPurchaseDetail(context, workspaceId, p.id),
+          ),
+      ],
+    );
   }
 }

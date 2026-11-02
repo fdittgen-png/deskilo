@@ -2,7 +2,7 @@
 -- #3070: approver-only reads match the supplier decision eligibility and
 -- never grant blanket purchase visibility; count and page share a predicate.
 begin;
-select plan(45);
+select plan(48);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000034a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000034a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro34a2@deskilo.test','',now(),now(),now());
@@ -49,6 +49,16 @@ insert into public.purchase_documents (id,workspace_id,kind,state,currency,submi
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000034a2","role":"authenticated"}',true);
 set local role authenticated;
 select is((select count(*)::int from public.purchase_documents where id='00000000-0000-4000-8000-0000000034a7'),0,'approver-only retains no wide table access');
+select is((select count(*)::int from public.purchase_documents where id='00000000-0000-4000-8000-0000000034ac'),0,'unrelated receipt is not listed for approver-only reader');
+select throws_ok($$select public.purchase_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ac')$$,'P0001','unknown purchase','unrelated receipt detail remains denied');
+reset role;
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000034a1","role":"authenticated"}',true);
+set local role authenticated;
+select is(public.purchase_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034ac')->>'id','00000000-0000-4000-8000-0000000034ac','wide reader retains receipt detail access');
+reset role;
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000034a2","role":"authenticated"}',true);
+set local role authenticated;
+
 select throws_ok($$select public.purchase_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')$$,'P0001','unknown purchase','ordinary detail remains restricted');
 select is((public.purchase_approval_page_v1('00000000-0000-4000-8000-0000000034a3')->>'count')::int,1,'only other person bill actionable with default threshold');
 select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000034a3','00000000-0000-4000-8000-0000000034a7')->>'can_reject','true','other person bill can be rejected');

@@ -22888,6 +22888,8 @@
   "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
   "publicProfilePublishTitle": "Publish a public profile?",
   "publicProfileTitle": "Public profile",
+  "purchaseApprovalVisibleReceipts": "Pending member receipts you can view",
+  "purchaseApprovalReceiptsUnavailable": "Pending receipts could not be loaded.",
   "purchaseApprovalEvidenceUnavailable": "Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.",
   "purchaseApprovalsEmpty": "No supplier bills await your approval.",
   "@purchaseApprovalsEmpty": {

@@ -19339,6 +19339,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicProfileTitle => 'Öffentliches Profil';
 
   @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Ausstehende Mitgliederbelege, die Sie einsehen können';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'Ausstehende Belege konnten nicht geladen werden.';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.';
 

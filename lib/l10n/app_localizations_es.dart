@@ -19295,6 +19295,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get publicProfileTitle => 'Perfil público';
 
   @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Comprobantes pendientes de miembros que puede consultar';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'No se pudieron cargar los comprobantes pendientes.';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.';
 

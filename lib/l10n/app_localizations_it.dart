@@ -19315,6 +19315,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get publicProfileTitle => 'Profilo pubblico';
 
   @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Ricevute dei membri in attesa che può visualizzare';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'Impossibile caricare le ricevute in attesa.';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'I documenti giustificativi e l’eventuale tasso di cambio non sono disponibili in questa vista di approvazione. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto.';
 
