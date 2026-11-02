@@ -1,18 +1,18 @@
 # Current orchestration state
 
-Verified 2026-11-02 18:19 UTC. Refresh live GitHub and each session CURRENT before acting. This is takeover knowledge, not a second dispatch queue.
+Verified 2026-11-02 18:31 UTC. Refresh live GitHub and each session CURRENT before acting. This is takeover knowledge, not a second dispatch queue.
 
-## Public web app — RESTORED
+## Public web app — RESTORED, updated to 63b4a25
 
-https://fdittgen-png.github.io/deskilo/ is restored: HTTP200, live BUILD source 1c438088b90efaefd6ca847d09ea5bded00a2f18 and base /deskilo/, Edge opened the existing authenticated workspace. Screenshot /private/tmp/deskilo-pages-restored.jpg. This is the accepted recovery baseline, not latest master after the FX merge.
+https://fdittgen-png.github.io/deskilo/ is live. Pages deployment41500973888 SUCCESS at public artifact-only commit8a98612c9412a1f68dbd1f041dd7b7d589ce5a06; live BUILD identifies63b4a25ebb5e4572634f32f2ed4cb6eda6e5de42 and /deskilo/. Root refreshed Edge and verified existing authenticated workspace renders. Screenshot /private/tmp/deskilo-pages-63b-live.jpg. This verifies app availability/startup with retained session, not a new sign-in or FX-specific live flow.
 
-Hosting is now the separate PUBLIC artifact-only repository fdittgen-png/fdittgen-png.github.io. Deployment commit 2a0228c818b9830b5885550782afed298b10882e; Actions run 41499002457 SUCCESS. Pages uses workflow mode, HTTPS, no custom domain. App output lives in site/deskilo; site/404.html is its exact SPA fallback. Push to main triggers Deploy public web app; workflow_dispatch redeploys the current package. New app versions require a reviewed build before upload, not a private source/history mirror.
+Hosting is the separate PUBLIC artifact-only repository fdittgen-png/fdittgen-png.github.io, Pages workflow mode/HTTPS/no custom domain. App output site/deskilo; site/404.html is matching SPA fallback. Push to main triggers Deploy public web app; workflow_dispatch redeploys current package. New versions need vetted build artifacts, not a source/history mirror. Source repository fdittgen-png/deskilo remains PRIVATE. Business-plan confidentiality must not make the app unavailable; do not privatize/delete the public artifact host as source containment.
 
-The owner explicitly clarified that business-plan confidentiality must NOT make the app private or unavailable. Keep source repository fdittgen-png/deskilo PRIVATE while its historical confidential material is contained. Do not privatize/delete the artifact hosting repository as a source-repository containment action. Do not expose confidential documents/history or strip intended runtime instance assets without a concrete finding.
+Current package: reviewer LOCAL Flutter3.47.5 release from63b4a25, base/deskilo, ZIP SHA2562f4f4fcb7b76f4a58113dad7b7fa8b302c379dbc194f3da0ef3a72d20df386ca. Reviewer reports exact source tree equal to accepted #3263 Web synthetic tree, whose CI base was /; do not relabel this /deskilo package as CI-produced. Bounded private1500-file/one-gzip scan found no selected incident/credential/maps/history matches. Local Chromium startup and offline probe passed. Root verified ZIP hash/CRC/safe paths/no symlinks, all1500 extracted bytes and1359 offline hashes, BUILD/base/SPA, then checksum-compared the final public staging tree. GitHub deployment and live checks succeeded. Preserve private scan contents outside GitHub; bounded scan is not exhaustive.
 
-Recovery provenance: reviewer built unmodified accepted master1c438088 locally with Flutter3.47.5 and /deskilo/; this was not an exact-master CI build artifact. Immutable recovery ZIP SHA256 5ba91a1f2272168dbf733ef29288e4a66ec8101a0ce51bd9d2b3618c7ae0d3b3. Reviewer bounded incident/credential/history/map inspection found no matches, local Chromium startup and offline probe passed. Root independently verified 1500 extracted files equal the reviewed ZIP, safe paths/no symlinks and all1359 offline hashes. GitHub deployment and actual live browser then passed. Private review details stay outside GitHub. Do not delay recovery for every advancing master commit.
+Initial restoration remains rollback: deployment2a0228c818b9830b5885550782afed298b10882e / run41499002457 deployed accepted1c438088 from local ZIP5ba91a1f2272168dbf733ef29288e4a66ec8101a0ce51bd9d2b3618c7ae0d3b3; live verified screenshot /private/tmp/deskilo-pages-restored.jpg. Root promoted the already-completed63b package once, without another rebuild. Do not chase each advancing master or restart recovery work.
 
-GoDaddy https://www.deskilo.org/app/ still serves older ef3a7cf3 (October12); no new GoDaddy deployment occurred. Host administration needs login and authenticated private-repo delivery is unverified. It no longer blocks public app availability. Preserve hosting/godaddy.
+GoDaddy https://www.deskilo.org/app/ still serves older ef3a7cf3 (October12); no new GoDaddy deployment. Host administration/private-source delivery remain unverified and no longer block public app availability. Preserve hosting/godaddy.
 
 ## Team and current work
 
