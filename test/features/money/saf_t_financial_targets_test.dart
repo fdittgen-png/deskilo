@@ -193,6 +193,16 @@ void main() {
     }
   });
 
+  test('Polish target is not offered before source coverage is established', () {
+    final target = targetsFor('PL').singleWhere((t) => t.id == 'jpk_kr_pl');
+    expect(target.format, isNull);
+    expect(target.capability.state, QualificationState.specificationNeeded);
+    expect(target.capability.obligations, containsAll([
+      Obligation.completePostedBooks, Obligation.targetAcceptance,
+    ]));
+    expect(formatsFor('PL').map((f) => f.id), isNot(contains('jpk_kr_pl')));
+  });
+
   testWidgets('the sheet shows the notice, then the Norwegian file with its '
       'local-book note', (tester) async {
     final l10n = lookupAppLocalizations(const Locale('en'));

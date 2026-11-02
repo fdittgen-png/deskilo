@@ -13,6 +13,7 @@ library;
 
 import 'package:meta/meta.dart';
 
+import 'accounting_capability_poland.dart';
 import 'accounting_format.dart';
 
 /// How far a format's production has been qualified. Ordered: a later
@@ -143,6 +144,7 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     specification:
         'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd',
   ),
+  'jpk_kr_pl': polandJpkCapability,
   'saft_ro': AccountingCapability(
     formatId: 'saft_ro',
     state: QualificationState.locallyValidated,

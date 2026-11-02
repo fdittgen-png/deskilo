@@ -22,7 +22,8 @@ extension SafTFinancialExports on AccountingExportRun {
     await exportGenericJournal(
       context,
       () async => switch (posted) {
-        final JournalPosted books => _written(books, contact, await _parties(books)),
+        final JournalPosted books => _written(books, contact, format.id == 'jpk_kr_pl'
+            ? const <String, SafTParty>{} : await _parties(books)),
         final other? => other,
         null => const JournalNeedsLocalBook(),
       },

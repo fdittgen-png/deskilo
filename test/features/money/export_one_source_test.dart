@@ -46,6 +46,7 @@ const _postedWhenLocalBook = {
   'saft_no',
   'saft_dk',
   'saft_ro',
+  'jpk_kr_pl',
   'faia_lu',
   'saft_oecd_full',
   // #2377 — the Swiss journal and its Banana layout.
@@ -69,6 +70,7 @@ const _named = {
   'saft_no',
   'saft_dk',
   'saft_ro',
+  'jpk_kr_pl',
   'faia_lu',
   'saft_oecd_full',
   'ch_kmu',

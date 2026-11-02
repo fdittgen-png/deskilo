@@ -97,6 +97,18 @@ const List<AccountingTarget> safTFinancialTargets = [
     format: _faiaLuFormat,
   ),
   AccountingTarget(
+    id: 'jpk_kr_pl',
+    vendor: 'Polish Ministry of Finance',
+    authority: true,
+    product: 'JPK_KR_PD',
+    edition: '(1) v1-1',
+    countries: {'PL'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: _ledgerOperations,
+    taxCodeModel: TaxCodeModel.perRate,
+  ),
+  AccountingTarget(
     id: 'saft_ro',
     vendor: 'ANAF',
     authority: true,

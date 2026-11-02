@@ -14,6 +14,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/jpk_kr_pd_writer.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
@@ -21,6 +22,7 @@ import 'package:deskilo/features/money/domain/saf_t_financial.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+import 'support/jpk_kr_pd_sample.dart';
 import 'support/seeded_export_year.dart';
 
 const _site = 'site';
@@ -296,6 +298,22 @@ int _text(XmlElement e, String name) =>
 
 void main() {
   final samples = Platform.environment['SAFT_SAMPLES_DIR'];
+  if (samples != null) {
+    test('writes the Polish profile schema sample', () {
+      final result = buildJpkKrPd(jpkSampleRequest(jpkSampleFacts()));
+      expect(result, isA<JpkKrPdFile>());
+      Directory(samples).createSync(recursive: true);
+      File('$samples/jpk_kr_pl.xml').writeAsStringSync((result as JpkKrPdFile).xml);
+    });
+  }
+
+  test('Polish export names missing source facts instead of inventing them', () {
+    final result = buildSafTFinancial(_request(SafTFinancialProfile.poland, country: 'PL'));
+    expect(result, isA<SafTFinancialRefused>());
+    final gaps = (result as SafTFinancialRefused).gaps;
+    expect(gaps.any((gap) => gap.kind == SafTGapKind.polishFact &&
+        gap.subject.contains('Income-tax reconciliation')), isTrue);
+  });
 
   test('the seeded year has both sides of the fiscal year start', () {
     expect(_request(SafTFinancialProfile.oecd).opening, isNotEmpty);
