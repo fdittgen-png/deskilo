@@ -173,7 +173,13 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     );
   }
 
-  bool get _awaitingCheck => _outcome is HmrcUnconfirmed && !_checkedAtHmrc;
+  /// Unconfirmed in this sheet, or recorded by the server for this return
+  /// (a reopened sheet, another device): Submit stays off until the person
+  /// says they checked at HMRC.
+  bool _awaitingCheck(HmrcState s) =>
+      !_checkedAtHmrc &&
+      (_outcome is HmrcUnconfirmed ||
+          (_outcome is! HmrcFiled && s.unconfirmedDeclarationIds.contains(widget.declaration.id)));
 
   Widget _body(AppLocalizations l10n, HmrcState s, HmrcClientValues values) {
     final connection = s.connection;
@@ -216,12 +222,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
             FilledButton(
               key: const ValueKey('hmrc-submit'),
               onPressed:
-                  _busy || _outcome is HmrcFiled || _awaitingCheck
+                  _busy || _outcome is HmrcFiled || _awaitingCheck(s)
                   ? null
                   : () => _submit(connection, values),
               child: Text(l10n.hmrcSubmitNow),
             ),
-            if (_awaitingCheck)
+            if (_awaitingCheck(s))
               TextButton(
                 key: const ValueKey('hmrc-checked'),
                 onPressed: () => setState(() => _checkedAtHmrc = true),
