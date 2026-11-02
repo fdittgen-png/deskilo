@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot reconciled after #3257 merge at 2026-11-02 17:19:59 UTC. Refresh live GitHub, #2596 and each session's CURRENT before acting. Older queued receipts are not new instructions.
+Snapshot reconciled after #3261 merge at 2026-11-02 17:28:09 UTC. Refresh live GitHub, #2596 and each session's CURRENT before acting. Older queued receipts are not new instructions.
 
 ## Operating agreement
 
@@ -17,6 +17,8 @@ Repository fdittgen-png/deskilo remains PRIVATE. Preserve hosting/godaddy and co
 - DeepSeek: owner requested peer developer onboarding. Identity engineer-3-deepseek; no product claim, coding slot, verified running harness or two-way ACK yet. Full local handover /private/tmp/deskilo-deepseek-handover.txt. Prepared return mailbox .agent-work/coordination/deepseek/inbox/orchestrator.md; each other sender owns its own file. Verify communication once on actual startup. Do not create a third editing stream automatically.
 
 ## Latest verified completions
+
+- #3261 MERGED17:28:09Z as1c438088b90efaefd6ca847d09ea5bded00a2f18 from reviewed9a5a3d41426ff6d1fb5b22903590dc3abb279a16. Root independently verified merge. Required Quality41486848164/Web41486848219 passed; reviewer closed #3260 with acceptance receipt. Owned cleanup requested, unrelated #3259 WIP preserved. Live deployment remains separate.
 
 - #3258 MERGED 16:59:01Z as 2f3e66f006218ebf14ce5382d31f036e770d353e from reviewed d08b804537834531314b162690e6376a7fb3050a. Required exact-head Quality41479106429 and Web passed. Owner's GoDaddy package repair only; no live deployment. E1 owned worktree/branch removed, evidence retained.
 - #3257 MERGED 17:19:59Z as 8f7693575a3096bbc3930ff3a6c845b586fba67d from reviewed b11fc717c32df68d73e77852a4753810564b906c. Root independently verified GitHub merge. Reviewer reports final exact-head Quality/Web, pgTAP6559, forced race and effective contract PASS. 0655 migration/APPLIED SHA256 6c638a539b9146a05e73870eb3a5d07bca4ec2913e296c277f8d794f3b10f026 matches dev, schema655; ledger MERGED and lane released. E2 clean owned worktree/local branch removed, remote absent, claim archived3070-decision-3257-merged.json. Parent #3070 stays open.
@@ -36,7 +38,7 @@ Origin decision: use verified deployment base (Flutter base href/document.baseUR
 
 ## Login footer
 
-#3261 adds installed package version/build at bottom, reusing appVersionProvider and existing translations. It is not a git SHA or CI run number. Safe-area60px and keyboard260px/scroll380px were actually verified; auth17/affected lint15/analyzer passed. Original broad853-pass/1-skip/1-pump-failure stays failed; deterministic focused correction passed separately. Source accepted at9a5; final Quality/Web verified SUCCESS, reviewer merge handoff sent. Actual merge/deployment still pending at check. No periodic master merge for disjoint changes.
+#3261 adds installed package version/build at bottom, reusing appVersionProvider and existing translations. It is not a git SHA or CI run number. Safe-area60px and keyboard260px/scroll380px were actually verified; auth17/affected lint15/analyzer passed. Original broad853-pass/1-skip/1-pump-failure stays failed; deterministic focused correction passed separately. Source accepted at9a5; final Quality/Web SUCCESS and #3261 now MERGED, #3260 closed. Hosted deployment remains pending; do not claim current live site shows the footer. No periodic master merge for disjoint changes.
 
 ## Checkout and evidence constraints
 
