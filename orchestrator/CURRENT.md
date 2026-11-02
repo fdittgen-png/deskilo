@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 09:53 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
+Snapshot: **2026-11-02 10:07 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
 
 ## Owner instruction
 
@@ -31,17 +31,17 @@ E1 has no new implementation claim at this snapshot; remains available to indepe
 
 #2519 reasons/enforcement completed in [#3250](https://github.com/fdittgen-png/deskilo/pull/3250), merge **246e9a55e6da987bab5246c7bd4998567c3fbc37**, approved head **be1f64ec2c936102858a8d846545194c892f6fae**. Own branch/worktree removed and claim archived. The epic remains open; reviewer records exact remaining acceptance rather than assuming parent closure.
 
-Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, last observed local head `a683e3772d0fbd3c0162098ec2f1f586ebbb91fb` (refresh before review). No PR at snapshot. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
+Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, review-ready PR [#3252](https://github.com/fdittgen-png/deskilo/pull/3252), verified exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53`, OPEN and non-draft. E2 reports analyzer exit 0 and 745 guarded tests passed; final CI and real pgTAP remain pending. Quality run 41426054668 is in progress. E1 is assigned independent read-only exact-head review; reviewer retains final merge authority. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
 
 The reviewer accepted the read direction with required corrections: use the complete remaining-balance rule including `applied_invoice`, signed allocations and cancelled state; explicitly enforce supplier-wide permission, workspace and purchases-feature gates; preserve old RPC compatibility and keyset continuation beyond 2,000 rows. Do not sum the old capped 20×100 client fetch and present it as complete.
 
 **Lock correction at 09:38 UTC:** #3251 changes no ARB/localization/help files. E2 may generate and verify its localization outputs and run UI tests now. Older instructions holding all l10n/help until #3251 merge are superseded. That hold has ended: E1 released shared locks and reviewer handed SQL/Demo/aggregate integration to E2. E2 status may lag the handoff receipt; use reviewer CURRENT and ledger to reconcile.
 
-**0653_supplier_balance_reads is APPLIED to dev, not merged**, at 09:51:38 UTC by reviewer. Reviewed SQL head `70eaf2d187602ce724bde906347b0401debae5c2`, SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b`. Ledger reports schema 653, both RPCs present and anon denied. Master remains schema 652. E2 rollback harness reports 27 assertions with no failures; final pgTAP/CI and exact-head review remain pending. Next: genuine APPLIED/contract artifacts, meaningful supplier Demo journey, consolidated final gates and one PR. Tenure remains E2 until merge.
+**0653_supplier_balance_reads is APPLIED to dev, not merged**, at 09:51:38 UTC by reviewer. Reviewed SQL head `70eaf2d187602ce724bde906347b0401debae5c2`, SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b`. Ledger reports schema 653, both RPCs present and anon denied. Master remains schema 652. E2 rollback harness reports 27 assertions with no failures; final pgTAP/CI and exact-head review remain pending. Next: inspect final candidate artifacts/Demo evidence, exact-head independent review and required CI/pgTAP receipts; merge only when eligible. Tenure remains E2 until merge.
 
 ### Reviewer implementation assistance
 
-The owner permits bounded coding help when review capacity is free. Reviewer may help #3070 with one explicitly handed-off adversarial pagination/recovery test file in a separate worktree. E2 must first supply a compilable SHA and exclusive file ownership; E2 integrates into the same PR. No duplicate tests/helper PR/third checkpoint. E1 independently reviews reviewer-authored changes; the reviewer cannot self-approve them. No helper handoff or authored code was confirmed at snapshot.
+The owner permits bounded coding help when review capacity is free. Reviewer may help #3070 with one explicitly handed-off adversarial pagination/recovery test file in a separate worktree. E2 must first supply a compilable SHA and exclusive file ownership; E2 integrates into the same PR. No duplicate tests/helper PR/third checkpoint. E1 independently reviews reviewer-authored changes; the reviewer cannot self-approve them. No reviewer helper-authored code was confirmed at snapshot. E1 now has an independent read-only #3252 review assignment to use existing capacity while the reviewer handles additional owner tasks; no extra coding checkpoint.
 
 ## Checkout and branch state
 
