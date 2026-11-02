@@ -84,4 +84,23 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'Off issues a general service reverse-charged to a business abroad '
       'outside the app: it is issued here only after a valid VIES check '
       '(#2354).',
+  WorkspaceFeature.kioskMemberPhotos:
+      'Off shows the name initial, like everywhere else; the photo is the one '
+      'the member set on their own profile (#616).',
+  WorkspaceFeature.reportLayouts:
+      'A kind without a layout is drawn by its bands as before; only a kind '
+      'the owner gave a layout changes (#875).',
+  WorkspaceFeature.einvoiceCustomerDelivery:
+      'A second leg beside the government platform that only shows on the '
+      'send sheet of an issued invoice; the government channel and the VAT '
+      'declarations are unchanged (#568).',
+  WorkspaceFeature.invoiceJourney:
+      'A presentation of the existing invoice lifecycle: nothing changes in '
+      'the data or the RPCs (#812).',
+  WorkspaceFeature.invoicePdfTemplate:
+      'Owner-written intro and footer on the PDF only: the e-invoice XML '
+      'never sees it (#454).',
+  WorkspaceFeature.whatsappIntegration:
+      'Members share a number on their own profile and one tap opens a chat '
+      'with it; there is no server-side WhatsApp integration (#223).',
 };
