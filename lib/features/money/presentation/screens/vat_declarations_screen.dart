@@ -40,6 +40,7 @@ import '../vat_filing_file_actions.dart';
 import '../vat_register_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
+import '../widgets/hmrc_submit_sheet.dart';
 import '../widgets/vat_declaration_card.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_mark_filed_dialog.dart';
@@ -354,6 +355,13 @@ class _VatDeclarationsScreenState
         label: Text(label),
         onPressed: () => exportVatFilingFile(context, ref.read(saveVatFilingFileProvider), declaration),
       ),
+    // #2470 — the same nine boxes, submitted to HMRC (web build; the sheet
+    // says so elsewhere).
+    if (ref.watch(saveVatFilingFileProvider).country == 'GB' &&
+        ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.mtdSubmission) &&
+        VatDeclarationRow(declaration).canMarkFiled)
+      hmrcSubmitButton(context, declaration,
+          issuerSiteId: ref.watch(sitesProvider).value?.firstOrNull?.id),
     if (VatDeclarationRow(declaration).canMarkFiled)
       OutlinedButton.icon(
         key: ValueKey(

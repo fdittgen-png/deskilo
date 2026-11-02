@@ -12588,6 +12588,202 @@
   "helpTopicWindowEnvelope": "The window-envelope contract",
   "helpTopicWorkingHours": "Working hours",
   "helpTopicWorkspaceId": "Workspace ID",
+  "hmrcAcceptedNotRecorded": "HMRC accepted the return (receipt {receipt}) but it could not be recorded here. Try again: nothing is sent twice.",
+  "@hmrcAcceptedNotRecorded": {
+    "description": "#2470 HMRC MTD submission",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "hmrcBox1": "Box 1 · VAT due on sales",
+  "@hmrcBox1": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox2": "Box 2 · VAT due on EU acquisitions",
+  "@hmrcBox2": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox3": "Box 3 · Total VAT due",
+  "@hmrcBox3": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox4": "Box 4 · VAT reclaimed on purchases",
+  "@hmrcBox4": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox5": "Box 5 · Net VAT to pay or reclaim",
+  "@hmrcBox5": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox6": "Box 6 · Total sales, excluding VAT",
+  "@hmrcBox6": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox7": "Box 7 · Total purchases, excluding VAT",
+  "@hmrcBox7": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox8": "Box 8 · Supplies of goods to the EU",
+  "@hmrcBox8": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcBox9": "Box 9 · Acquisitions of goods from the EU",
+  "@hmrcBox9": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcConnect": "Connect to HMRC",
+  "@hmrcConnect": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcConnectHint": "You sign in at HMRC; we never see your password. Come back here when HMRC has sent you back.",
+  "@hmrcConnectHint": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcConnected": "Connected to HMRC.",
+  "@hmrcConnected": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcDemoNote": "Demo: nothing is sent to HMRC. The receipt is simulated.",
+  "@hmrcDemoNote": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcExpired": "The HMRC sign-in has expired. Connect again.",
+  "@hmrcExpired": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcFiled": "Filed with HMRC. Receipt {receipt}.",
+  "@hmrcFiled": {
+    "description": "#2470 HMRC MTD submission",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "hmrcFiledDemo": "Filed in the Demo. Simulated receipt {receipt}; nothing was sent to HMRC.",
+  "@hmrcFiledDemo": {
+    "description": "#2470 HMRC MTD submission",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "hmrcNoVrn": "Add your UK VAT number in the legal identity first.",
+  "@hmrcNoVrn": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcPending": "Waiting for you to finish signing in at HMRC.",
+  "@hmrcPending": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalAcceptedForOtherFigures": "HMRC accepted an earlier version of this return with other figures. Check at HMRC; nothing was sent.",
+  "@hmrcRefusalAcceptedForOtherFigures": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalAcquisitionNotSupported": "This return has EU acquisitions, which cannot be submitted from here. Use the bridging file.",
+  "@hmrcRefusalAcquisitionNotSupported": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalAlreadySubmitted": "HMRC says this period was already submitted. Check at HMRC and record the receipt by hand.",
+  "@hmrcRefusalAlreadySubmitted": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalBusy": "HMRC is busy. Wait a moment and try again.",
+  "@hmrcRefusalBusy": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalFiguresDiffer": "The figures no longer match the prepared return. Prepare it again.",
+  "@hmrcRefusalFiguresDiffer": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalFraudHeadersMissing": "Your browser did not give the details HMRC requires. Nothing was sent.",
+  "@hmrcRefusalFraudHeadersMissing": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalInFlight": "A submission of this return is already in progress.",
+  "@hmrcRefusalInFlight": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalNoOpenObligation": "HMRC has no open obligation for this period.",
+  "@hmrcRefusalNoOpenObligation": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalNotAllowed": "You may not file VAT returns for this space.",
+  "@hmrcRefusalNotAllowed": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalNotAuthorised": "HMRC does not allow this sign-in to file for this registration.",
+  "@hmrcRefusalNotAuthorised": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalNotConfigured": "This installation has no HMRC application set up yet.",
+  "@hmrcRefusalNotConfigured": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalNotConnected": "Connect to HMRC first.",
+  "@hmrcRefusalNotConnected": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalOther": "The submission failed. Nothing is filed.",
+  "@hmrcRefusalOther": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalRefused": "HMRC refused the return. Nothing is filed.",
+  "@hmrcRefusalRefused": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalSignInAgain": "Sign in at HMRC again.",
+  "@hmrcRefusalSignInAgain": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalUnreachable": "HMRC could not be reached. Nothing was sent.",
+  "@hmrcRefusalUnreachable": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcRefusalWrongRegistration": "The HMRC connection is for another VAT registration.",
+  "@hmrcRefusalWrongRegistration": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcSheetIntro": "These are the nine boxes of your prepared return, exactly as the bridging file carries them. HMRC receives them as they are; once it accepts them, the return is filed here with HMRC's receipt.",
+  "@hmrcSheetIntro": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcSheetTitle": "Submit to HMRC",
+  "@hmrcSheetTitle": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcSignedIn": "I have signed in",
+  "@hmrcSignedIn": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcSubmitButton": "Submit through MTD",
+  "@hmrcSubmitButton": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcSubmitNow": "Submit this return to HMRC",
+  "@hmrcSubmitNow": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcUnconfirmed": "No confirmation from HMRC. Nothing is filed here. Check at HMRC before trying again.",
+  "@hmrcUnconfirmed": {
+    "description": "#2470 HMRC MTD submission"
+  },
+  "hmrcVrnLine": "VAT registration {vrn}",
+  "@hmrcVrnLine": {
+    "description": "#2470 HMRC MTD submission",
+    "placeholders": {
+      "vrn": {
+        "type": "String"
+      }
+    }
+  },
+  "hmrcWebOnly": "Submitting to HMRC works in the web app. Open it in your browser, or hand the bridging file to your software.",
+  "@hmrcWebOnly": {
+    "description": "#2470 HMRC MTD submission"
+  },
   "holidayAllSaints": "All Saints' Day",
   "@holidayAllSaints": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"

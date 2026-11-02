@@ -17531,6 +17531,270 @@ abstract class AppLocalizations {
   /// **'Workspace ID'**
   String get helpTopicWorkspaceId;
 
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC accepted the return (receipt {receipt}) but it could not be recorded here. Try again: nothing is sent twice.'**
+  String hmrcAcceptedNotRecorded(String receipt);
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 1 · VAT due on sales'**
+  String get hmrcBox1;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 2 · VAT due on EU acquisitions'**
+  String get hmrcBox2;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 3 · Total VAT due'**
+  String get hmrcBox3;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 4 · VAT reclaimed on purchases'**
+  String get hmrcBox4;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 5 · Net VAT to pay or reclaim'**
+  String get hmrcBox5;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 6 · Total sales, excluding VAT'**
+  String get hmrcBox6;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 7 · Total purchases, excluding VAT'**
+  String get hmrcBox7;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 8 · Supplies of goods to the EU'**
+  String get hmrcBox8;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Box 9 · Acquisitions of goods from the EU'**
+  String get hmrcBox9;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to HMRC'**
+  String get hmrcConnect;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'You sign in at HMRC; we never see your password. Come back here when HMRC has sent you back.'**
+  String get hmrcConnectHint;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to HMRC.'**
+  String get hmrcConnected;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Demo: nothing is sent to HMRC. The receipt is simulated.'**
+  String get hmrcDemoNote;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'The HMRC sign-in has expired. Connect again.'**
+  String get hmrcExpired;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Filed with HMRC. Receipt {receipt}.'**
+  String hmrcFiled(String receipt);
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Filed in the Demo. Simulated receipt {receipt}; nothing was sent to HMRC.'**
+  String hmrcFiledDemo(String receipt);
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Add your UK VAT number in the legal identity first.'**
+  String get hmrcNoVrn;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for you to finish signing in at HMRC.'**
+  String get hmrcPending;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC accepted an earlier version of this return with other figures. Check at HMRC; nothing was sent.'**
+  String get hmrcRefusalAcceptedForOtherFigures;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'This return has EU acquisitions, which cannot be submitted from here. Use the bridging file.'**
+  String get hmrcRefusalAcquisitionNotSupported;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC says this period was already submitted. Check at HMRC and record the receipt by hand.'**
+  String get hmrcRefusalAlreadySubmitted;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC is busy. Wait a moment and try again.'**
+  String get hmrcRefusalBusy;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'The figures no longer match the prepared return. Prepare it again.'**
+  String get hmrcRefusalFiguresDiffer;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Your browser did not give the details HMRC requires. Nothing was sent.'**
+  String get hmrcRefusalFraudHeadersMissing;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'A submission of this return is already in progress.'**
+  String get hmrcRefusalInFlight;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC has no open obligation for this period.'**
+  String get hmrcRefusalNoOpenObligation;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'You may not file VAT returns for this space.'**
+  String get hmrcRefusalNotAllowed;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC does not allow this sign-in to file for this registration.'**
+  String get hmrcRefusalNotAuthorised;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'This installation has no HMRC application set up yet.'**
+  String get hmrcRefusalNotConfigured;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to HMRC first.'**
+  String get hmrcRefusalNotConnected;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'The submission failed. Nothing is filed.'**
+  String get hmrcRefusalOther;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC refused the return. Nothing is filed.'**
+  String get hmrcRefusalRefused;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in at HMRC again.'**
+  String get hmrcRefusalSignInAgain;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC could not be reached. Nothing was sent.'**
+  String get hmrcRefusalUnreachable;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'The HMRC connection is for another VAT registration.'**
+  String get hmrcRefusalWrongRegistration;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'These are the nine boxes of your prepared return, exactly as the bridging file carries them. HMRC receives them as they are; once it accepts them, the return is filed here with HMRC\'s receipt.'**
+  String get hmrcSheetIntro;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Submit to HMRC'**
+  String get hmrcSheetTitle;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'I have signed in'**
+  String get hmrcSignedIn;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Submit through MTD'**
+  String get hmrcSubmitButton;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Submit this return to HMRC'**
+  String get hmrcSubmitNow;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmation from HMRC. Nothing is filed here. Check at HMRC before trying again.'**
+  String get hmrcUnconfirmed;
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'VAT registration {vrn}'**
+  String hmrcVrnLine(String vrn);
+
+  /// #2470 HMRC MTD submission
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting to HMRC works in the web app. Open it in your browser, or hand the bridging file to your software.'**
+  String get hmrcWebOnly;
+
   /// #1274 public holiday name, keyed by what public_holidays() returns
   ///
   /// In en, this message translates to:

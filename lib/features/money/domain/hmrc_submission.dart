@@ -42,7 +42,10 @@ class HmrcConnection {
 
 /// What the VAT returns screen needs before it offers the submission.
 class HmrcState {
-  const HmrcState({this.vrn, this.connection});
+  const HmrcState({this.vrn, this.connection, this.demo = false});
+
+  /// The Demo's synthetic HMRC: no sign-in page opens and no call is made.
+  final bool demo;
 
   /// The nine digits of the space's UK VAT number; null when it has none.
   final String? vrn;

@@ -10668,6 +10668,169 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicWorkspaceId => 'Workspace-ID';
 
   @override
+  String hmrcAcceptedNotRecorded(String receipt) {
+    return 'HMRC hat die Erklärung angenommen (Quittung $receipt), sie konnte hier aber nicht erfasst werden. Versuchen Sie es erneut: Es wird nichts doppelt gesendet.';
+  }
+
+  @override
+  String get hmrcBox1 => 'Feld 1 · Umsatzsteuer auf Verkäufe';
+
+  @override
+  String get hmrcBox2 => 'Feld 2 · USt auf EU-Erwerbe';
+
+  @override
+  String get hmrcBox3 => 'Feld 3 · USt gesamt';
+
+  @override
+  String get hmrcBox4 => 'Feld 4 · Vorsteuer auf Einkäufe';
+
+  @override
+  String get hmrcBox5 => 'Feld 5 · USt-Saldo (Zahlung oder Erstattung)';
+
+  @override
+  String get hmrcBox6 => 'Feld 6 · Verkäufe gesamt ohne USt';
+
+  @override
+  String get hmrcBox7 => 'Feld 7 · Einkäufe gesamt ohne USt';
+
+  @override
+  String get hmrcBox8 => 'Feld 8 · Warenlieferungen in die EU';
+
+  @override
+  String get hmrcBox9 => 'Feld 9 · Erwerb von Waren aus der EU';
+
+  @override
+  String get hmrcConnect => 'Mit HMRC verbinden';
+
+  @override
+  String get hmrcConnectHint =>
+      'Sie melden sich bei HMRC an; wir sehen Ihr Passwort nie. Kommen Sie zurück, wenn HMRC Sie zurückgeleitet hat.';
+
+  @override
+  String get hmrcConnected => 'Mit HMRC verbunden.';
+
+  @override
+  String get hmrcDemoNote =>
+      'Demo: Es wird nichts an HMRC gesendet. Die Quittung ist simuliert.';
+
+  @override
+  String get hmrcExpired =>
+      'Die HMRC-Anmeldung ist abgelaufen. Verbinden Sie erneut.';
+
+  @override
+  String hmrcFiled(String receipt) {
+    return 'Bei HMRC eingereicht. Quittung $receipt.';
+  }
+
+  @override
+  String hmrcFiledDemo(String receipt) {
+    return 'In der Demo eingereicht. Simulierte Quittung $receipt; es wurde nichts an HMRC gesendet.';
+  }
+
+  @override
+  String get hmrcNoVrn =>
+      'Tragen Sie zuerst Ihre britische USt-Nummer in der rechtlichen Identität ein.';
+
+  @override
+  String get hmrcPending =>
+      'Warten darauf, dass Sie die Anmeldung bei HMRC beenden.';
+
+  @override
+  String get hmrcRefusalAcceptedForOtherFigures =>
+      'HMRC hat eine frühere Fassung dieser Erklärung mit anderen Zahlen angenommen. Prüfen Sie bei HMRC; es wurde nichts gesendet.';
+
+  @override
+  String get hmrcRefusalAcquisitionNotSupported =>
+      'Diese Erklärung enthält EU-Erwerbe, die von hier nicht eingereicht werden können. Verwenden Sie die Brückendatei.';
+
+  @override
+  String get hmrcRefusalAlreadySubmitted =>
+      'HMRC meldet, dass dieser Zeitraum bereits eingereicht wurde. Prüfen Sie bei HMRC und erfassen Sie die Quittung von Hand.';
+
+  @override
+  String get hmrcRefusalBusy =>
+      'HMRC ist ausgelastet. Warten Sie einen Moment und versuchen Sie es erneut.';
+
+  @override
+  String get hmrcRefusalFiguresDiffer =>
+      'Die Zahlen stimmen nicht mehr mit der vorbereiteten Erklärung überein. Bereiten Sie sie erneut vor.';
+
+  @override
+  String get hmrcRefusalFraudHeadersMissing =>
+      'Ihr Browser hat die von HMRC verlangten Angaben nicht geliefert. Es wurde nichts gesendet.';
+
+  @override
+  String get hmrcRefusalInFlight =>
+      'Eine Einreichung dieser Erklärung läuft bereits.';
+
+  @override
+  String get hmrcRefusalNoOpenObligation =>
+      'HMRC hat für diesen Zeitraum keine offene Verpflichtung.';
+
+  @override
+  String get hmrcRefusalNotAllowed =>
+      'Sie dürfen für diesen Bereich keine USt-Erklärungen einreichen.';
+
+  @override
+  String get hmrcRefusalNotAuthorised =>
+      'HMRC erlaubt dieser Anmeldung nicht, für diese Nummer einzureichen.';
+
+  @override
+  String get hmrcRefusalNotConfigured =>
+      'Diese Installation hat noch keine HMRC-Anwendung eingerichtet.';
+
+  @override
+  String get hmrcRefusalNotConnected => 'Verbinden Sie zuerst mit HMRC.';
+
+  @override
+  String get hmrcRefusalOther =>
+      'Die Einreichung ist fehlgeschlagen. Es ist nichts eingereicht.';
+
+  @override
+  String get hmrcRefusalRefused =>
+      'HMRC hat die Erklärung abgelehnt. Es ist nichts eingereicht.';
+
+  @override
+  String get hmrcRefusalSignInAgain => 'Melden Sie sich erneut bei HMRC an.';
+
+  @override
+  String get hmrcRefusalUnreachable =>
+      'HMRC war nicht erreichbar. Es wurde nichts gesendet.';
+
+  @override
+  String get hmrcRefusalWrongRegistration =>
+      'Die HMRC-Verbindung gehört zu einer anderen USt-Nummer.';
+
+  @override
+  String get hmrcSheetIntro =>
+      'Das sind die neun Felder Ihrer vorbereiteten Erklärung, genau wie die Brückendatei sie enthält. HMRC erhält sie unverändert; sobald HMRC sie annimmt, gilt die Erklärung hier mit der Quittung von HMRC als eingereicht.';
+
+  @override
+  String get hmrcSheetTitle => 'An HMRC einreichen';
+
+  @override
+  String get hmrcSignedIn => 'Ich habe mich angemeldet';
+
+  @override
+  String get hmrcSubmitButton => 'Über MTD einreichen';
+
+  @override
+  String get hmrcSubmitNow => 'Diese Erklärung an HMRC einreichen';
+
+  @override
+  String get hmrcUnconfirmed =>
+      'Keine Bestätigung von HMRC. Hier ist nichts eingereicht. Prüfen Sie bei HMRC, bevor Sie es erneut versuchen.';
+
+  @override
+  String hmrcVrnLine(String vrn) {
+    return 'USt-Nummer $vrn';
+  }
+
+  @override
+  String get hmrcWebOnly =>
+      'Die Einreichung bei HMRC funktioniert in der Web-App. Öffnen Sie sie im Browser oder geben Sie die Brückendatei an Ihre Software.';
+
+  @override
   String get holidayAllSaints => 'Allerheiligen';
 
   @override

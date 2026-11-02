@@ -10687,6 +10687,167 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpTopicWorkspaceId => 'ID de l\'espace';
 
   @override
+  String hmrcAcceptedNotRecorded(String receipt) {
+    return 'HMRC a accepté la déclaration (accusé $receipt) mais elle n\'a pas pu être enregistrée ici. Réessayez : rien n\'est envoyé deux fois.';
+  }
+
+  @override
+  String get hmrcBox1 => 'Case 1 · TVA due sur les ventes';
+
+  @override
+  String get hmrcBox2 => 'Case 2 · TVA due sur les acquisitions UE';
+
+  @override
+  String get hmrcBox3 => 'Case 3 · Total de la TVA due';
+
+  @override
+  String get hmrcBox4 => 'Case 4 · TVA récupérée sur les achats';
+
+  @override
+  String get hmrcBox5 => 'Case 5 · TVA nette à payer ou à récupérer';
+
+  @override
+  String get hmrcBox6 => 'Case 6 · Total des ventes hors TVA';
+
+  @override
+  String get hmrcBox7 => 'Case 7 · Total des achats hors TVA';
+
+  @override
+  String get hmrcBox8 => 'Case 8 · Livraisons de biens vers l\'UE';
+
+  @override
+  String get hmrcBox9 => 'Case 9 · Acquisitions de biens depuis l\'UE';
+
+  @override
+  String get hmrcConnect => 'Se connecter à HMRC';
+
+  @override
+  String get hmrcConnectHint =>
+      'Vous vous connectez chez HMRC ; nous ne voyons jamais votre mot de passe. Revenez ici quand HMRC vous a redirigé.';
+
+  @override
+  String get hmrcConnected => 'Connecté à HMRC.';
+
+  @override
+  String get hmrcDemoNote =>
+      'Démo : rien n\'est envoyé à HMRC. L\'accusé est simulé.';
+
+  @override
+  String get hmrcExpired => 'La connexion à HMRC a expiré. Reconnectez-vous.';
+
+  @override
+  String hmrcFiled(String receipt) {
+    return 'Déposé auprès de HMRC. Accusé $receipt.';
+  }
+
+  @override
+  String hmrcFiledDemo(String receipt) {
+    return 'Déposé dans la démo. Accusé simulé $receipt ; rien n\'a été envoyé à HMRC.';
+  }
+
+  @override
+  String get hmrcNoVrn =>
+      'Renseignez d\'abord votre numéro de TVA britannique dans l\'identité légale.';
+
+  @override
+  String get hmrcPending =>
+      'En attente de la fin de votre connexion chez HMRC.';
+
+  @override
+  String get hmrcRefusalAcceptedForOtherFigures =>
+      'HMRC a accepté une version antérieure de cette déclaration avec d\'autres chiffres. Vérifiez chez HMRC ; rien n\'a été envoyé.';
+
+  @override
+  String get hmrcRefusalAcquisitionNotSupported =>
+      'Cette déclaration comporte des acquisitions UE, qui ne peuvent pas être déposées d\'ici. Utilisez le fichier passerelle.';
+
+  @override
+  String get hmrcRefusalAlreadySubmitted =>
+      'HMRC indique que cette période a déjà été déposée. Vérifiez chez HMRC et saisissez l\'accusé à la main.';
+
+  @override
+  String get hmrcRefusalBusy =>
+      'HMRC est occupé. Patientez un instant et réessayez.';
+
+  @override
+  String get hmrcRefusalFiguresDiffer =>
+      'Les chiffres ne correspondent plus à la déclaration préparée. Préparez-la de nouveau.';
+
+  @override
+  String get hmrcRefusalFraudHeadersMissing =>
+      'Votre navigateur n\'a pas fourni les informations exigées par HMRC. Rien n\'a été envoyé.';
+
+  @override
+  String get hmrcRefusalInFlight =>
+      'Un dépôt de cette déclaration est déjà en cours.';
+
+  @override
+  String get hmrcRefusalNoOpenObligation =>
+      'HMRC n\'a aucune obligation ouverte pour cette période.';
+
+  @override
+  String get hmrcRefusalNotAllowed =>
+      'Vous ne pouvez pas déposer de déclarations de TVA pour cet espace.';
+
+  @override
+  String get hmrcRefusalNotAuthorised =>
+      'HMRC n\'autorise pas cette connexion à déposer pour ce numéro.';
+
+  @override
+  String get hmrcRefusalNotConfigured =>
+      'Cette installation n\'a pas encore d\'application HMRC.';
+
+  @override
+  String get hmrcRefusalNotConnected => 'Connectez-vous d\'abord à HMRC.';
+
+  @override
+  String get hmrcRefusalOther => 'Le dépôt a échoué. Rien n\'est enregistré.';
+
+  @override
+  String get hmrcRefusalRefused =>
+      'HMRC a refusé la déclaration. Rien n\'est enregistré.';
+
+  @override
+  String get hmrcRefusalSignInAgain => 'Reconnectez-vous chez HMRC.';
+
+  @override
+  String get hmrcRefusalUnreachable =>
+      'HMRC est injoignable. Rien n\'a été envoyé.';
+
+  @override
+  String get hmrcRefusalWrongRegistration =>
+      'La connexion HMRC concerne un autre numéro de TVA.';
+
+  @override
+  String get hmrcSheetIntro =>
+      'Voici les neuf cases de votre déclaration préparée, exactement comme le fichier passerelle les porte. HMRC les reçoit telles quelles ; dès qu\'il les accepte, la déclaration est enregistrée ici avec l\'accusé de HMRC.';
+
+  @override
+  String get hmrcSheetTitle => 'Déposer auprès de HMRC';
+
+  @override
+  String get hmrcSignedIn => 'Je me suis connecté';
+
+  @override
+  String get hmrcSubmitButton => 'Déposer via MTD';
+
+  @override
+  String get hmrcSubmitNow => 'Déposer cette déclaration auprès de HMRC';
+
+  @override
+  String get hmrcUnconfirmed =>
+      'Pas de confirmation de HMRC. Rien n\'est enregistré ici. Vérifiez chez HMRC avant de réessayer.';
+
+  @override
+  String hmrcVrnLine(String vrn) {
+    return 'Numéro de TVA $vrn';
+  }
+
+  @override
+  String get hmrcWebOnly =>
+      'Le dépôt auprès de HMRC fonctionne dans l\'application web. Ouvrez-la dans votre navigateur, ou remettez le fichier passerelle à votre logiciel.';
+
+  @override
   String get holidayAllSaints => 'Toussaint';
 
   @override

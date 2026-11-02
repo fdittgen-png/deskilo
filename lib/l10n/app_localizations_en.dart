@@ -10586,6 +10586,163 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTopicWorkspaceId => 'Workspace ID';
 
   @override
+  String hmrcAcceptedNotRecorded(String receipt) {
+    return 'HMRC accepted the return (receipt $receipt) but it could not be recorded here. Try again: nothing is sent twice.';
+  }
+
+  @override
+  String get hmrcBox1 => 'Box 1 · VAT due on sales';
+
+  @override
+  String get hmrcBox2 => 'Box 2 · VAT due on EU acquisitions';
+
+  @override
+  String get hmrcBox3 => 'Box 3 · Total VAT due';
+
+  @override
+  String get hmrcBox4 => 'Box 4 · VAT reclaimed on purchases';
+
+  @override
+  String get hmrcBox5 => 'Box 5 · Net VAT to pay or reclaim';
+
+  @override
+  String get hmrcBox6 => 'Box 6 · Total sales, excluding VAT';
+
+  @override
+  String get hmrcBox7 => 'Box 7 · Total purchases, excluding VAT';
+
+  @override
+  String get hmrcBox8 => 'Box 8 · Supplies of goods to the EU';
+
+  @override
+  String get hmrcBox9 => 'Box 9 · Acquisitions of goods from the EU';
+
+  @override
+  String get hmrcConnect => 'Connect to HMRC';
+
+  @override
+  String get hmrcConnectHint =>
+      'You sign in at HMRC; we never see your password. Come back here when HMRC has sent you back.';
+
+  @override
+  String get hmrcConnected => 'Connected to HMRC.';
+
+  @override
+  String get hmrcDemoNote =>
+      'Demo: nothing is sent to HMRC. The receipt is simulated.';
+
+  @override
+  String get hmrcExpired => 'The HMRC sign-in has expired. Connect again.';
+
+  @override
+  String hmrcFiled(String receipt) {
+    return 'Filed with HMRC. Receipt $receipt.';
+  }
+
+  @override
+  String hmrcFiledDemo(String receipt) {
+    return 'Filed in the Demo. Simulated receipt $receipt; nothing was sent to HMRC.';
+  }
+
+  @override
+  String get hmrcNoVrn => 'Add your UK VAT number in the legal identity first.';
+
+  @override
+  String get hmrcPending => 'Waiting for you to finish signing in at HMRC.';
+
+  @override
+  String get hmrcRefusalAcceptedForOtherFigures =>
+      'HMRC accepted an earlier version of this return with other figures. Check at HMRC; nothing was sent.';
+
+  @override
+  String get hmrcRefusalAcquisitionNotSupported =>
+      'This return has EU acquisitions, which cannot be submitted from here. Use the bridging file.';
+
+  @override
+  String get hmrcRefusalAlreadySubmitted =>
+      'HMRC says this period was already submitted. Check at HMRC and record the receipt by hand.';
+
+  @override
+  String get hmrcRefusalBusy => 'HMRC is busy. Wait a moment and try again.';
+
+  @override
+  String get hmrcRefusalFiguresDiffer =>
+      'The figures no longer match the prepared return. Prepare it again.';
+
+  @override
+  String get hmrcRefusalFraudHeadersMissing =>
+      'Your browser did not give the details HMRC requires. Nothing was sent.';
+
+  @override
+  String get hmrcRefusalInFlight =>
+      'A submission of this return is already in progress.';
+
+  @override
+  String get hmrcRefusalNoOpenObligation =>
+      'HMRC has no open obligation for this period.';
+
+  @override
+  String get hmrcRefusalNotAllowed =>
+      'You may not file VAT returns for this space.';
+
+  @override
+  String get hmrcRefusalNotAuthorised =>
+      'HMRC does not allow this sign-in to file for this registration.';
+
+  @override
+  String get hmrcRefusalNotConfigured =>
+      'This installation has no HMRC application set up yet.';
+
+  @override
+  String get hmrcRefusalNotConnected => 'Connect to HMRC first.';
+
+  @override
+  String get hmrcRefusalOther => 'The submission failed. Nothing is filed.';
+
+  @override
+  String get hmrcRefusalRefused => 'HMRC refused the return. Nothing is filed.';
+
+  @override
+  String get hmrcRefusalSignInAgain => 'Sign in at HMRC again.';
+
+  @override
+  String get hmrcRefusalUnreachable =>
+      'HMRC could not be reached. Nothing was sent.';
+
+  @override
+  String get hmrcRefusalWrongRegistration =>
+      'The HMRC connection is for another VAT registration.';
+
+  @override
+  String get hmrcSheetIntro =>
+      'These are the nine boxes of your prepared return, exactly as the bridging file carries them. HMRC receives them as they are; once it accepts them, the return is filed here with HMRC\'s receipt.';
+
+  @override
+  String get hmrcSheetTitle => 'Submit to HMRC';
+
+  @override
+  String get hmrcSignedIn => 'I have signed in';
+
+  @override
+  String get hmrcSubmitButton => 'Submit through MTD';
+
+  @override
+  String get hmrcSubmitNow => 'Submit this return to HMRC';
+
+  @override
+  String get hmrcUnconfirmed =>
+      'No confirmation from HMRC. Nothing is filed here. Check at HMRC before trying again.';
+
+  @override
+  String hmrcVrnLine(String vrn) {
+    return 'VAT registration $vrn';
+  }
+
+  @override
+  String get hmrcWebOnly =>
+      'Submitting to HMRC works in the web app. Open it in your browser, or hand the bridging file to your software.';
+
+  @override
   String get holidayAllSaints => 'All Saints\' Day';
 
   @override

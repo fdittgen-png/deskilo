@@ -10658,6 +10658,169 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicWorkspaceId => 'ID del espacio';
 
   @override
+  String hmrcAcceptedNotRecorded(String receipt) {
+    return 'HMRC aceptó la declaración (recibo $receipt) pero no se pudo registrar aquí. Inténtelo de nuevo: no se envía nada dos veces.';
+  }
+
+  @override
+  String get hmrcBox1 => 'Casilla 1 · IVA devengado en ventas';
+
+  @override
+  String get hmrcBox2 => 'Casilla 2 · IVA devengado en adquisiciones UE';
+
+  @override
+  String get hmrcBox3 => 'Casilla 3 · Total de IVA devengado';
+
+  @override
+  String get hmrcBox4 => 'Casilla 4 · IVA deducido en compras';
+
+  @override
+  String get hmrcBox5 => 'Casilla 5 · IVA neto a pagar o recuperar';
+
+  @override
+  String get hmrcBox6 => 'Casilla 6 · Total de ventas sin IVA';
+
+  @override
+  String get hmrcBox7 => 'Casilla 7 · Total de compras sin IVA';
+
+  @override
+  String get hmrcBox8 => 'Casilla 8 · Entregas de bienes a la UE';
+
+  @override
+  String get hmrcBox9 => 'Casilla 9 · Adquisiciones de bienes de la UE';
+
+  @override
+  String get hmrcConnect => 'Conectar con HMRC';
+
+  @override
+  String get hmrcConnectHint =>
+      'Inicia sesión en HMRC; nunca vemos su contraseña. Vuelva aquí cuando HMRC le haya redirigido.';
+
+  @override
+  String get hmrcConnected => 'Conectado con HMRC.';
+
+  @override
+  String get hmrcDemoNote =>
+      'Demo: no se envía nada a HMRC. El recibo es simulado.';
+
+  @override
+  String get hmrcExpired =>
+      'El inicio de sesión en HMRC ha caducado. Conecte de nuevo.';
+
+  @override
+  String hmrcFiled(String receipt) {
+    return 'Presentado a HMRC. Recibo $receipt.';
+  }
+
+  @override
+  String hmrcFiledDemo(String receipt) {
+    return 'Presentado en la demo. Recibo simulado $receipt; no se envió nada a HMRC.';
+  }
+
+  @override
+  String get hmrcNoVrn =>
+      'Añada primero su número de IVA británico en la identidad legal.';
+
+  @override
+  String get hmrcPending =>
+      'Esperando a que termine de iniciar sesión en HMRC.';
+
+  @override
+  String get hmrcRefusalAcceptedForOtherFigures =>
+      'HMRC aceptó una versión anterior de esta declaración con otras cifras. Compruebe en HMRC; no se envió nada.';
+
+  @override
+  String get hmrcRefusalAcquisitionNotSupported =>
+      'Esta declaración tiene adquisiciones UE, que no se pueden presentar desde aquí. Use el archivo puente.';
+
+  @override
+  String get hmrcRefusalAlreadySubmitted =>
+      'HMRC indica que este periodo ya se presentó. Compruebe en HMRC y registre el recibo a mano.';
+
+  @override
+  String get hmrcRefusalBusy =>
+      'HMRC está ocupado. Espere un momento e inténtelo de nuevo.';
+
+  @override
+  String get hmrcRefusalFiguresDiffer =>
+      'Las cifras ya no coinciden con la declaración preparada. Prepárela de nuevo.';
+
+  @override
+  String get hmrcRefusalFraudHeadersMissing =>
+      'Su navegador no dio los datos que exige HMRC. No se envió nada.';
+
+  @override
+  String get hmrcRefusalInFlight =>
+      'Ya hay una presentación de esta declaración en curso.';
+
+  @override
+  String get hmrcRefusalNoOpenObligation =>
+      'HMRC no tiene ninguna obligación abierta para este periodo.';
+
+  @override
+  String get hmrcRefusalNotAllowed =>
+      'No puede presentar declaraciones de IVA para este espacio.';
+
+  @override
+  String get hmrcRefusalNotAuthorised =>
+      'HMRC no permite que este inicio de sesión presente para este registro.';
+
+  @override
+  String get hmrcRefusalNotConfigured =>
+      'Esta instalación aún no tiene una aplicación de HMRC.';
+
+  @override
+  String get hmrcRefusalNotConnected => 'Conecte primero con HMRC.';
+
+  @override
+  String get hmrcRefusalOther =>
+      'La presentación falló. No se ha presentado nada.';
+
+  @override
+  String get hmrcRefusalRefused =>
+      'HMRC rechazó la declaración. No se ha presentado nada.';
+
+  @override
+  String get hmrcRefusalSignInAgain => 'Inicie sesión de nuevo en HMRC.';
+
+  @override
+  String get hmrcRefusalUnreachable =>
+      'No se pudo contactar con HMRC. No se envió nada.';
+
+  @override
+  String get hmrcRefusalWrongRegistration =>
+      'La conexión con HMRC es de otro registro de IVA.';
+
+  @override
+  String get hmrcSheetIntro =>
+      'Estas son las nueve casillas de su declaración preparada, exactamente como las lleva el archivo puente. HMRC las recibe tal cual; cuando las acepta, la declaración queda presentada aquí con el recibo de HMRC.';
+
+  @override
+  String get hmrcSheetTitle => 'Presentar a HMRC';
+
+  @override
+  String get hmrcSignedIn => 'Ya he iniciado sesión';
+
+  @override
+  String get hmrcSubmitButton => 'Presentar por MTD';
+
+  @override
+  String get hmrcSubmitNow => 'Presentar esta declaración a HMRC';
+
+  @override
+  String get hmrcUnconfirmed =>
+      'Sin confirmación de HMRC. Aquí no se ha presentado nada. Compruebe en HMRC antes de reintentar.';
+
+  @override
+  String hmrcVrnLine(String vrn) {
+    return 'Registro de IVA $vrn';
+  }
+
+  @override
+  String get hmrcWebOnly =>
+      'La presentación a HMRC funciona en la aplicación web. Ábrala en su navegador o entregue el archivo puente a su software.';
+
+  @override
   String get holidayAllSaints => 'Todos los Santos';
 
   @override
