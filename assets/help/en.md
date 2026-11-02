@@ -8254,9 +8254,10 @@ You want to see the finished product before you make decisions. The demo workspa
 
 **Steps**
 
-1. On the sign-in screen, tap **Explore the demo workspace**, then **Start exploring**. See [The demo workspace](help:user.advanced.demo).
+1. On the sign-in screen, tap **Explore the demo workspace**, then **Start exploring**. When you are already signed in, tap **Try it in the demo** on a setup step instead: you stay signed in and the demo opens at that step. See [The demo workspace](help:user.advanced.demo).
 2. Use **View as** to move between **The owner**, **An administrator** and **A member**. Do the three exercises of each person below.
 3. Tap **Reset the demo** when you want it back as it started.
+4. If you opened the demo from your workspace, tap **Return to my workspace** when you finish: you come back to the same setup screen with the choices you had not applied yet. Changes made in the demo never reach your workspace.
 
 *As a member*
 

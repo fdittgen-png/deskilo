@@ -101,5 +101,29 @@
         "type": "String"
       }
     }
+  },
+  "demoSessionReturn": "Return to my workspace",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
+  },
+  "demoEntryBodySignedIn": "Everything in it is made up. You stay signed in. Changes here affect only the demo. Return to your workspace when you finish.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryUnavailable": "The demo is not available in this workspace.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoEntryBack": "Back to my workspace",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
+  "demoEntrySignIn": "Sign in",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
+  },
+  "demoEntryFailed": "The demo could not be opened. Your workspace is unchanged.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
   }
 }

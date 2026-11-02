@@ -17,9 +17,12 @@
 // every screen that read the old fixture or the old identity. The session
 // controller stays in the OUTER container: one inside would be disposed
 // by the very reset it was asked to perform.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/demo_visit.dart';
 import '../../../app/router.dart';
 import '../../../features/workspace/providers/active_workspace_providers.dart';
 import '../../../l10n/app_localizations.dart';
@@ -87,9 +90,16 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
 
   /// Leaves the demonstration space, and forgets the session with it: the
   /// next visitor starts from the canonical dataset, as after a restart.
+  ///
+  /// #3235 — a signed-in person is taken back to where they started, if
+  /// the account, installation and workspace are still the ones that
+  /// started the visit; everyone else lands where the router's guards send
+  /// them. The live tree below is remounted by the entry flag.
   void _leave() {
+    final visit = ref.read(demoVisitProvider.notifier);
     ref.read(demoEntryProvider.notifier).leave();
     ref.invalidate(demoSessionControllerProvider);
+    unawaited(visit.finish());
   }
 
   @override
@@ -103,6 +113,7 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
         onReset: controller.reset,
         onViewAs: controller.viewAs,
         onLeave: _leave,
+        returnsToWorkspace: ref.watch(demoVisitProvider) != null,
         child: widget.child,
       ),
     );
@@ -123,6 +134,7 @@ class DemoEnvironment extends InheritedWidget {
     required this.onViewAs,
     required this.onLeave,
     required super.child,
+    this.returnsToWorkspace = false,
     super.key,
   });
 
@@ -131,12 +143,17 @@ class DemoEnvironment extends InheritedWidget {
   final ValueChanged<DemoPersona> onViewAs;
   final VoidCallback onLeave;
 
+  /// #3235 — the visit started from a signed-in person's workspace, and
+  /// leaving takes them back to it.
+  final bool returnsToWorkspace;
+
   /// The environment, or null in live mode.
   static DemoEnvironment? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DemoEnvironment>();
 
   @override
-  bool updateShouldNotify(DemoEnvironment old) => old.persona != persona;
+  bool updateShouldNotify(DemoEnvironment old) =>
+      old.persona != persona || old.returnsToWorkspace != returnsToWorkspace;
 }
 
 /// The compact control every Demo screen carries: what this space is, who
@@ -226,7 +243,11 @@ class DemoControls extends StatelessWidget {
                   TextButton.icon(
                     key: leaveKey,
                     icon: const Icon(Icons.logout),
-                    label: Text(l10n.demoSessionLeave),
+                    label: Text(
+                      env.returnsToWorkspace
+                          ? l10n.demoSessionReturn
+                          : l10n.demoSessionLeave,
+                    ),
                     onPressed: env.onLeave,
                   ),
                 ],

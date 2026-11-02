@@ -16,10 +16,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/demo/presentation/demo_setup_card.dart';
 import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -27,6 +27,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
@@ -278,6 +279,10 @@ class _NextCard extends ConsumerWidget {
     // #2872 — see the step done in a space where it is set up; not from
     // inside the demo itself.
     final inDemo = DemoEnvironment.maybeOf(context) != null;
+    // #3235 — and only where the demo is switched on.
+    final demoOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.demoMode);
     return Card(
       key: const ValueKey('setup-guide-next'),
       color: theme.colorScheme.primaryContainer,
@@ -303,11 +308,14 @@ class _NextCard extends ConsumerWidget {
                   style: theme.textTheme.bodySmall,
                 ),
                 const Spacer(),
-                if (!inDemo)
+                if (!inDemo && demoOn)
                   TextButton(
                     key: ValueKey('setup-guide-demo-${step.step}'),
-                    onPressed: () =>
-                        ref.read(linkLauncherProvider)(demoLinkUri(to: step.route)),
+                    onPressed: () => offerDemoEntry(
+                      context,
+                      ref,
+                      link: DemoLink.example(to: step.route),
+                    ),
                     child: Text(l10n.setupGuideTryDemo),
                   ),
                 FilledButton(

@@ -29,8 +29,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:188` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:195` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:283` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:327` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:334` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:329` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:336` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:13` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:14` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:15` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |

@@ -85,6 +85,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/account-messages', RouteClass.nativeAccount),
   RouteRule('/settings/public-page', RouteClass.workspace),
   RouteRule('/auth', RouteClass.publicEntry),
+  // #3235 — the demo entry: public, for a signed-in person too.
+  RouteRule('/demo', RouteClass.publicEntry),
   RouteRule('/help', RouteClass.publicEntry),
   RouteRule('/privacy', RouteClass.publicEntry),
   RouteRule('/server', RouteClass.publicEntry),

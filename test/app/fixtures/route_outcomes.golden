@@ -17,6 +17,7 @@ signed-out on  /connections -> /auth
 signed-out on  /consent -> /auth
 signed-out on  /conversation/:conversationId -> /auth
 signed-out on  /database/assistant-approvals -> /auth
+signed-out on  /demo -> (open)
 signed-out on  /deployment -> /auth
 signed-out on  /developer -> /auth
 signed-out on  /directory -> /auth
@@ -144,6 +145,7 @@ signed-out off /connections -> /auth
 signed-out off /consent -> /auth
 signed-out off /conversation/:conversationId -> /auth
 signed-out off /database/assistant-approvals -> /auth
+signed-out off /demo -> (open)
 signed-out off /deployment -> /auth
 signed-out off /developer -> /auth
 signed-out off /directory -> /auth
@@ -271,6 +273,7 @@ no-space on  /connections -> (open)
 no-space on  /consent -> /me
 no-space on  /conversation/:conversationId -> /me
 no-space on  /database/assistant-approvals -> (open)
+no-space on  /demo -> (open)
 no-space on  /deployment -> /me
 no-space on  /developer -> (open)
 no-space on  /directory -> /me
@@ -398,6 +401,7 @@ no-space off /connections -> (open)
 no-space off /consent -> /me
 no-space off /conversation/:conversationId -> /me
 no-space off /database/assistant-approvals -> (open)
+no-space off /demo -> (open)
 no-space off /deployment -> /me
 no-space off /developer -> (open)
 no-space off /directory -> /me
@@ -525,6 +529,7 @@ member on  /connections -> (open)
 member on  /consent -> /reserve
 member on  /conversation/:conversationId -> (open)
 member on  /database/assistant-approvals -> (open)
+member on  /demo -> (open)
 member on  /deployment -> /calendar
 member on  /developer -> (open)
 member on  /directory -> (open)
@@ -652,6 +657,7 @@ member off /connections -> (open)
 member off /consent -> /reserve
 member off /conversation/:conversationId -> /messages
 member off /database/assistant-approvals -> (open)
+member off /demo -> (open)
 member off /deployment -> /messages
 member off /developer -> (open)
 member off /directory -> /messages
@@ -779,6 +785,7 @@ admin on  /connections -> (open)
 admin on  /consent -> /reserve
 admin on  /conversation/:conversationId -> (open)
 admin on  /database/assistant-approvals -> (open)
+admin on  /demo -> (open)
 admin on  /deployment -> /settings
 admin on  /developer -> (open)
 admin on  /directory -> (open)
@@ -906,6 +913,7 @@ admin off /connections -> (open)
 admin off /consent -> /reserve
 admin off /conversation/:conversationId -> /messages
 admin off /database/assistant-approvals -> (open)
+admin off /demo -> (open)
 admin off /deployment -> /settings
 admin off /developer -> (open)
 admin off /directory -> /messages
@@ -1033,6 +1041,7 @@ owner on  /connections -> (open)
 owner on  /consent -> /reserve
 owner on  /conversation/:conversationId -> (open)
 owner on  /database/assistant-approvals -> (open)
+owner on  /demo -> (open)
 owner on  /deployment -> /settings
 owner on  /developer -> (open)
 owner on  /directory -> (open)
@@ -1160,6 +1169,7 @@ owner off /connections -> (open)
 owner off /consent -> /reserve
 owner off /conversation/:conversationId -> /messages
 owner off /database/assistant-approvals -> (open)
+owner off /demo -> (open)
 owner off /deployment -> /settings
 owner off /developer -> (open)
 owner off /directory -> /messages

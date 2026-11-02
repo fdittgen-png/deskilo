@@ -74,6 +74,9 @@ const Map<String, String> _notWorkspace = {
   '/oauth/consent': 'account',
   '/account-activity': 'account',
   '/discover': 'entry',
+  // #3235 — the demo's public entry: the demoMode flag is answered on the
+  // page itself, which says so instead of redirecting.
+  '/demo': 'entry',
   // #2211 — readable by anyone, signed in or not.
   '/p/:id': 'entry',
   '/connections': 'account',

@@ -4038,9 +4038,25 @@
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
   },
+  "demoEntryBack": "Torna al mio spazio",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
   "demoEntryBody": "Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fa raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com'era quando vuole.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryBodySignedIn": "Tutto qui dentro è inventato. La sua sessione resta aperta. Le modifiche fatte qui riguardano solo la demo. Torni al suo spazio quando ha finito.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryFailed": "Non è stato possibile aprire la demo. Il suo spazio è invariato.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
+  },
+  "demoEntrySignIn": "Accedi",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
   },
   "demoEntryStart": "Inizia",
   "@demoEntryStart": {
@@ -4049,6 +4065,10 @@
   "demoEntryTitle": "Uno spazio da guardare",
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryUnavailable": "La demo non è disponibile in questo spazio.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
   },
   "demoPersonaAdmin": "Amministratore",
   "@demoPersonaAdmin": {
@@ -4085,6 +4105,10 @@
   "demoSessionResetDone": "La demo è tornata come all'inizio.",
   "@demoSessionResetDone": {
     "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionReturn": "Torna al mio spazio",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
   },
   "demoSessionViewAs": "Vedi come",
   "@demoSessionViewAs": {

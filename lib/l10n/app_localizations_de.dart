@@ -5824,14 +5824,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get demoEntryAction => 'Den Demobereich erkunden';
 
   @override
+  String get demoEntryBack => 'Zurück zu meinem Bereich';
+
+  @override
   String get demoEntryBody =>
       'Alles darin ist erfunden: die Personen, die Buchungen und die Rechnungen sind für die Demonstration ausgedacht. Nichts davon erreicht einen echten Bereich, nichts verlässt dieses Gerät, und ein Konto ist nicht nötig. Das Zurücksetzen stellt alles wieder her, wann immer Sie möchten.';
+
+  @override
+  String get demoEntryBodySignedIn =>
+      'Alles darin ist erfunden. Sie bleiben angemeldet. Änderungen hier betreffen nur die Demo. Kehren Sie zu Ihrem Bereich zurück, wenn Sie fertig sind.';
+
+  @override
+  String get demoEntryFailed =>
+      'Die Demo konnte nicht geöffnet werden. Ihr Bereich ist unverändert.';
+
+  @override
+  String get demoEntrySignIn => 'Anmelden';
 
   @override
   String get demoEntryStart => 'Loslegen';
 
   @override
   String get demoEntryTitle => 'Ein Bereich zum Umsehen';
+
+  @override
+  String get demoEntryUnavailable =>
+      'Die Demo ist in diesem Bereich nicht verfügbar.';
 
   @override
   String get demoPersonaAdmin => 'Administrator:in';
@@ -5860,6 +5878,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get demoSessionResetDone => 'Die Demo ist wieder im Ausgangszustand.';
+
+  @override
+  String get demoSessionReturn => 'Zurück zu meinem Bereich';
 
   @override
   String get demoSessionViewAs => 'Ansicht als';

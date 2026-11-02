@@ -4038,9 +4038,25 @@
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
   },
+  "demoEntryBack": "Zurück zu meinem Bereich",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
   "demoEntryBody": "Alles darin ist erfunden: die Personen, die Buchungen und die Rechnungen sind für die Demonstration ausgedacht. Nichts davon erreicht einen echten Bereich, nichts verlässt dieses Gerät, und ein Konto ist nicht nötig. Das Zurücksetzen stellt alles wieder her, wann immer Sie möchten.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryBodySignedIn": "Alles darin ist erfunden. Sie bleiben angemeldet. Änderungen hier betreffen nur die Demo. Kehren Sie zu Ihrem Bereich zurück, wenn Sie fertig sind.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryFailed": "Die Demo konnte nicht geöffnet werden. Ihr Bereich ist unverändert.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
+  },
+  "demoEntrySignIn": "Anmelden",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
   },
   "demoEntryStart": "Loslegen",
   "@demoEntryStart": {
@@ -4049,6 +4065,10 @@
   "demoEntryTitle": "Ein Bereich zum Umsehen",
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryUnavailable": "Die Demo ist in diesem Bereich nicht verfügbar.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
   },
   "demoPersonaAdmin": "Administrator:in",
   "@demoPersonaAdmin": {
@@ -4085,6 +4105,10 @@
   "demoSessionResetDone": "Die Demo ist wieder im Ausgangszustand.",
   "@demoSessionResetDone": {
     "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionReturn": "Zurück zu meinem Bereich",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
   },
   "demoSessionViewAs": "Ansicht als",
   "@demoSessionViewAs": {

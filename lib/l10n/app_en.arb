@@ -7163,9 +7163,25 @@
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
   },
+  "demoEntryBack": "Back to my workspace",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
   "demoEntryBody": "Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryBodySignedIn": "Everything in it is made up. You stay signed in. Changes here affect only the demo. Return to your workspace when you finish.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryFailed": "The demo could not be opened. Your workspace is unchanged.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
+  },
+  "demoEntrySignIn": "Sign in",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
   },
   "demoEntryStart": "Start exploring",
   "@demoEntryStart": {
@@ -7174,6 +7190,10 @@
   "demoEntryTitle": "A workspace to look around",
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryUnavailable": "The demo is not available in this workspace.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
   },
   "demoPersonaAdmin": "An administrator",
   "@demoPersonaAdmin": {
@@ -7210,6 +7230,10 @@
   "demoSessionResetDone": "The demo is back as it started.",
   "@demoSessionResetDone": {
     "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionReturn": "Return to my workspace",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
   },
   "demoSessionViewAs": "View as",
   "@demoSessionViewAs": {

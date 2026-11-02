@@ -8254,9 +8254,10 @@ Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der De
 
 **Schritte**
 
-1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Siehe [Der Demo-Workspace](help:user.advanced.demo).
+1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Sind Sie bereits angemeldet, tippen Sie stattdessen bei einem Einrichtungsschritt auf **In der Demo ausprobieren**: Sie bleiben angemeldet, und die Demo öffnet sich bei diesem Schritt. Siehe [Der Demo-Workspace](help:user.advanced.demo).
 2. Wechseln Sie mit **Ansicht als** zwischen **Inhaber**, **Administrator:in** und **Mitglied**. Machen Sie unten die drei Übungen jeder Person.
 3. Tippen Sie auf **Demo zurücksetzen**, wenn Sie den Anfangszustand wiederhaben möchten.
+4. Haben Sie die Demo aus Ihrem Bereich geöffnet, tippen Sie am Ende auf **Zurück zu meinem Bereich**: Sie kehren zum selben Einrichtungsbildschirm zurück, mit den noch nicht angewendeten Auswahlen. Änderungen in der Demo erreichen nie Ihren Bereich.
 
 *Als Mitglied*
 

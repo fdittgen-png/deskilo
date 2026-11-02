@@ -9805,11 +9805,35 @@ abstract class AppLocalizations {
   /// **'Explore the demo workspace'**
   String get demoEntryAction;
 
+  /// #3235 demo visit: demoEntryBack
+  ///
+  /// In en, this message translates to:
+  /// **'Back to my workspace'**
+  String get demoEntryBack;
+
   /// #1379 demo entry: demoEntryBody
   ///
   /// In en, this message translates to:
   /// **'Everything in it is made up: the people, the bookings and the bills are invented for the demonstration. Nothing you do here reaches a real workspace, nothing leaves this device, and no account is needed. Reset puts it back whenever you like.'**
   String get demoEntryBody;
+
+  /// #3235 demo visit: demoEntryBodySignedIn
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in it is made up. You stay signed in. Changes here affect only the demo. Return to your workspace when you finish.'**
+  String get demoEntryBodySignedIn;
+
+  /// #3235 demo visit: demoEntryFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The demo could not be opened. Your workspace is unchanged.'**
+  String get demoEntryFailed;
+
+  /// #3235 demo visit: demoEntrySignIn
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get demoEntrySignIn;
 
   /// #1379 demo entry: demoEntryStart
   ///
@@ -9822,6 +9846,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A workspace to look around'**
   String get demoEntryTitle;
+
+  /// #3235 demo visit: demoEntryUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The demo is not available in this workspace.'**
+  String get demoEntryUnavailable;
 
   /// #1376 demo personas: demoPersonaAdmin
   ///
@@ -9876,6 +9906,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The demo is back as it started.'**
   String get demoSessionResetDone;
+
+  /// #3235 demo visit: demoSessionReturn
+  ///
+  /// In en, this message translates to:
+  /// **'Return to my workspace'**
+  String get demoSessionReturn;
 
   /// #1376 demo personas: demoSessionViewAs
   ///

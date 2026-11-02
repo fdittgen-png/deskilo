@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -33,6 +33,7 @@ import '../../domain/setup_levels.dart';
 import '../../domain/setup_step_reach.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/held_setup_choices.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../feature_copy.dart';
@@ -93,7 +94,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     if (journey case AsyncLoading(hasValue: false)) return const LoadingView();
     final stored = resolveEnabledFeatures(workspace.featureFlags);
     final current = currentSetupLevels(stored);
-    final saved = _restoreOnce(journey, current);
+    final saved = _restoreOnce(journey, current, workspace.id);
     final recommended = recommendSetupLevels(_answers);
     final vector = {
       for (final p in SetupProcess.values)
@@ -144,6 +145,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
                 ? l10n.setupReason(recommended[p]!.reason)
                 : null,
             onChanged: (level) => setState(() => _chosen[p] = level),
+            onSeeDemo: (route) => _seeDemo(route, workspace.id),
           ),
         for (final gap in gaps)
           InlineBanner(icon: Icons.link_off, text: _gapWords(l10n, gap)),
@@ -170,14 +172,60 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   SetupJourney? _restoreOnce(
     AsyncValue<SetupJourney?> journey,
     SetupLevelVector current,
+    String workspaceId,
   ) {
     final saved = journey.value;
     if (!_restored && journey.hasValue && !journey.isLoading) {
       _restored = true;
       _unknown.clear();
       _answers = saved?.answers ?? setupAnswersFromLevels(current);
+      // #3235 — back from the demo example: what was not applied yet.
+      final held = _held(workspaceId);
+      if (held != null) {
+        _answers = held.answers;
+        _answered = held.answered;
+        _chosen
+          ..clear()
+          ..addAll(held.chosen);
+        _unknown
+          ..clear()
+          ..addAll(held.unknown);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            ref.read(heldSetupChoicesControllerProvider.notifier).clear();
+          }
+        });
+      }
     }
     return saved;
+  }
+
+  HeldSetupChoices? _held(String workspaceId) => ref
+      .read(heldSetupChoicesControllerProvider.notifier)
+      .heldFor(ref.read(currentAccountIdProvider), workspaceId);
+
+  /// #3235 — opens the demo example of a level. The answers that are not
+  /// applied yet are held for the way back, once the visitor agreed; the
+  /// visit applies nothing and writes nothing.
+  Future<void> _seeDemo(String route, String workspaceId) async {
+    final user = ref.read(currentAccountIdProvider);
+    await offerDemoEntry(
+      context,
+      ref,
+      link: DemoLink.example(to: route),
+      beforeEnter: () => user == null
+          ? null
+          : ref.read(heldSetupChoicesControllerProvider.notifier).hold(
+                HeldSetupChoices(
+                  userId: user,
+                  workspaceId: workspaceId,
+                  answers: _answers,
+                  answered: _answered,
+                  chosen: Map.of(_chosen),
+                  unknown: Set.of(_unknown),
+                ),
+              ),
+    );
   }
 
   /// Whether applying would change nothing: no feature, and nothing new to
@@ -333,6 +381,7 @@ class _ProcessLevel extends ConsumerWidget {
     required this.level,
     required this.reason,
     required this.onChanged,
+    required this.onSeeDemo,
   });
 
   final SetupProcess process;
@@ -340,10 +389,17 @@ class _ProcessLevel extends ConsumerWidget {
   final String? reason;
   final ValueChanged<String> onChanged;
 
+  /// Opens the demo example at a route.
+  final ValueChanged<String> onSeeDemo;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final demo = DemoEnvironment.maybeOf(context) != null
+    // #3235 — not inside the demo, and only where the demo is switched on.
+    final demoOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.demoMode);
+    final demo = DemoEnvironment.maybeOf(context) != null || !demoOn
         ? null
         : setupLevelDemoRoute(process, level);
     return ListTile(
@@ -357,8 +413,7 @@ class _ProcessLevel extends ConsumerWidget {
             TextButton(
               key: ValueKey('setup-level-demo-${process.name}'),
               style: TextButton.styleFrom(padding: EdgeInsets.zero),
-              onPressed: () =>
-                  ref.read(linkLauncherProvider)(demoLinkUri(to: demo)),
+              onPressed: () => onSeeDemo(demo),
               child: Text(l10n.setupLevelsSeeDemo),
             ),
         ],

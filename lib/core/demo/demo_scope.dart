@@ -133,6 +133,7 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
+import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
@@ -289,8 +290,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
 
       // The repositories. Each of these would otherwise be constructed
       // from `Supabase.instance.client`; inside this scope none of them
-      // is, which is what makes an external effect impossible rather
-      // than refused.
+      // is, so an external effect is impossible rather than refused.
       authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, ...featureSheetsFromApp, // #2495
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
@@ -334,7 +334,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ..._purchasingOverrides(fixture, main), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
-      connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]),
+      connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]), ...demoNoBackendOverrides(), // #3235
       _demoPersonalContext, demoWorkspaceContext(_kDemoInstallationId), savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), discoveryViewStoreProvider.overrideWithValue(fixture.prefs.discoveryView), // #2555 — the persona at the fictional installation; saved pages in the session
       // #1834 — Demo never opens another server's sign-in.
       identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()), workspaceHostRepositoryProvider.overrideWithValue(const LocalOnlyWorkspaceHostRepository()), // #2562 C2c: on its own server only

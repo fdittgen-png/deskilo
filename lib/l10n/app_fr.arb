@@ -4038,9 +4038,25 @@
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
   },
+  "demoEntryBack": "Retour à mon espace",
+  "@demoEntryBack": {
+    "description": "#3235 demo visit: demoEntryBack"
+  },
   "demoEntryBody": "Tout y est inventé : les personnes, les réservations et les factures sont créées pour la démonstration. Rien de ce que vous y faites n'atteint un espace réel, rien ne quitte cet appareil, et aucun compte n'est nécessaire. La réinitialisation le remet en état quand vous voulez.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
+  },
+  "demoEntryBodySignedIn": "Tout y est inventé. Votre connexion est conservée. Les modifications faites ici ne concernent que la démo. Revenez à votre espace quand vous avez terminé.",
+  "@demoEntryBodySignedIn": {
+    "description": "#3235 demo visit: demoEntryBodySignedIn"
+  },
+  "demoEntryFailed": "La démo n'a pas pu s'ouvrir. Votre espace n'a pas changé.",
+  "@demoEntryFailed": {
+    "description": "#3235 demo visit: demoEntryFailed"
+  },
+  "demoEntrySignIn": "Se connecter",
+  "@demoEntrySignIn": {
+    "description": "#3235 demo visit: demoEntrySignIn"
   },
   "demoEntryStart": "Commencer",
   "@demoEntryStart": {
@@ -4049,6 +4065,10 @@
   "demoEntryTitle": "Un espace où regarder",
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
+  },
+  "demoEntryUnavailable": "La démo n'est pas disponible dans cet espace.",
+  "@demoEntryUnavailable": {
+    "description": "#3235 demo visit: demoEntryUnavailable"
   },
   "demoPersonaAdmin": "Un administrateur",
   "@demoPersonaAdmin": {
@@ -4085,6 +4105,10 @@
   "demoSessionResetDone": "La démo est revenue à son état initial.",
   "@demoSessionResetDone": {
     "description": "#1375 demo session: demoSessionResetDone"
+  },
+  "demoSessionReturn": "Revenir à mon espace",
+  "@demoSessionReturn": {
+    "description": "#3235 demo visit: demoSessionReturn"
   },
   "demoSessionViewAs": "Voir en tant que",
   "@demoSessionViewAs": {

@@ -43,7 +43,7 @@ The page says only what the guide documents (#2400):
 - **Hosting and prices**: the same dates and amounts in `h1.p`, `q1.a`, the Pricing section (`pr.*`), the README cost paragraph and the `fastlane/metadata` listings; the source is `docs/business/business-plan.md`. The tariff is marked as planned until the owner confirms it.
 
 A link with `class="guide-link"` or `"setup-guide-link"` and a `data-anchor` follows the reader's language and
-keeps the anchor. The demo buttons open `#/auth?demo=1`. The pause buttons (`.motion-btn`) stop everything that
+keeps the anchor. The demo buttons open `#/demo` (the older `#/auth?demo=1` still works). The pause buttons (`.motion-btn`) stop everything that
 moves on its own and remember it (`deskilo.welcome.still`).
 
 ## Changing the screenshots

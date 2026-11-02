@@ -7,6 +7,7 @@
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
@@ -52,6 +53,7 @@ Future<FakeLocalSetupRepository> _pump(
   WidgetTester tester, {
   List<Uri>? opened,
   bool inDemo = false,
+  Map<String, dynamic> featureFlags = const {},
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
@@ -60,7 +62,12 @@ Future<FakeLocalSetupRepository> _pump(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(localSetup: repository),
+        ...standardTestOverrides(
+          localSetup: repository,
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: featureFlags,
+          ),
+        ),
         if (opened != null)
           linkLauncherProvider.overrideWithValue((uri) async {
             opened.add(uri);
@@ -134,18 +141,22 @@ void main() {
     expect(find.textContaining('About 5–10 min until'), findsOneWidget);
   });
 
-  testWidgets('the next step can be tried in the demo, at its own screen', (
-    tester,
-  ) async {
+  testWidgets('#3235 — the next step opens its example inside the app, after '
+      'the visitor agreed, and never as an outgoing link', (tester) async {
     final opened = <Uri>[];
     await _pump(tester, opened: opened);
     await tester.tap(find.byKey(const ValueKey('setup-guide-demo-places')));
-    await tester.pump();
-    expect(opened, hasLength(1));
-    expect(
-      Uri.parse(opened.single.fragment).queryParameters['to'],
-      '/workspace-settings',
-    );
+    await tester.pumpAndSettle();
+    // The explanation first, in the words of someone who stays signed in.
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    expect(find.text(englishL10n.demoEntryBodySignedIn), findsOneWidget);
+    expect(opened, isEmpty, reason: 'no URL leaves the app for the example');
+  });
+
+  testWidgets('#3235 — with the demo switched off the guide offers no example',
+      (tester) async {
+    await _pump(tester, featureFlags: {'demoMode': false});
+    expect(find.byKey(const ValueKey('setup-guide-demo-places')), findsNothing);
   });
 
   testWidgets('inside the demo, the guide does not send to the demo', (
