@@ -37,7 +37,7 @@ SQL
 finish() {
   local rc=$?
   trap - EXIT
-  touch "$DIR/release" "$DIR/start"
+  touch "$DIR/release" "$DIR/start" "$DIR/decision_release"
   if [ -n "${waiter:-}" ] && kill -0 "$waiter" 2>/dev/null; then
     kill "$waiter" 2>/dev/null || true
     wait "$waiter" 2>/dev/null || true
@@ -226,7 +226,7 @@ revoke_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON"
 # The assignment insert takes an FK key-share lock on the member. Verify
 # both orders so an inserted grant cannot appear after the guard's role scan.
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_OFF" >/dev/null
-rm -f "$DIR/ready" "$DIR/release"
+rm -f "$DIR/ready" "$DIR/release" "$DIR/decision_ready" "$DIR/decision_release"
 PGAPPNAME="$HOLDER_APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/holder.log" 2>&1 <<SQL &
 begin;
 $ASSIGN_ON
@@ -237,14 +237,47 @@ SQL
 holder=$!
 wait_ready
 GRANT_BILL=00000000-0000-4000-8000-0000000035d7
-PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$CLAIMS select public.decide_purchase_v1('$WS','$GRANT_BILL',1,false,'No','$GRANT_BILL');" > "$DIR/grant.log" 2>&1 &
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/grant.log" 2>&1 <<SQL &
+$CLAIMS
+begin;
+select public.decide_purchase_v1('$WS','$GRANT_BILL',1,false,'No','$GRANT_BILL');
+\! touch '$DIR/decision_ready'
+\! while [ ! -f '$DIR/decision_release' ]; do sleep 0.1; done
+commit;
+SQL
 waiter=$!
 wait_for_lock
 touch "$DIR/release"
 wait "$holder" || fail 'assignment grant transaction failed'
-wait "$waiter" || fail 'decision did not see committed custom-role grant'
-result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state from public.purchase_documents where id='$GRANT_BILL'")
-[ "$result" = rejected ] || fail "decision after grant had unexpected state: $result"
+# Decision must see the grant and hold its locks before a real revocation is
+# attempted. The same holder-PID correlation proves revocation waits on it.
+n=0
+while [ "$n" -lt 100 ] && [ ! -f "$DIR/decision_ready" ]; do
+  n=$((n + 1))
+  kill -0 "$waiter" 2>/dev/null || fail 'decision after grant failed before acquiring its locks'
+  sleep 0.1
+done
+[ -f "$DIR/decision_ready" ] || fail 'decision after grant did not complete'
+holder=$waiter
+ORIGINAL_HOLDER_APP=$HOLDER_APP
+ORIGINAL_APP=$APP
+HOLDER_APP=$APP
+APP="deskilo_3070_revoke_$$"
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_OFF" > "$DIR/revocation.log" 2>&1 &
+waiter=$!
+wait_for_lock
+touch "$DIR/decision_release"
+wait "$holder" || fail 'decision after grant did not commit'
+wait "$waiter" || fail 'revocation after granted decision did not complete'
+HOLDER_APP=$ORIGINAL_HOLDER_APP
+APP=$ORIGINAL_APP
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state || ':' || (select count(*) from public.workspace_role_members where member_id='$MEMBER' and role_id='$ROLE')::text from public.purchase_documents where id='$GRANT_BILL'")
+[ "$result" = rejected:0 ] || fail "grant-decision-revocation ordering was wrong: $result"
+if psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$CLAIMS select public.decide_purchase_v1('$WS','$GRANT_BILL',1,false,'No','$GRANT_BILL');" > "$DIR/refused.log" 2>&1; then
+  fail 'replay succeeded after revocation of the newly granted role'
+fi
+grep -q 'purchase decision is not available' "$DIR/refused.log" || fail 'grant-revocation replay had wrong refusal'
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_ON" >/dev/null
 
 # A built-in grant allows a decision while a concurrent custom-role insert
 # waits. Once the decision commits, the assignment may complete normally.
