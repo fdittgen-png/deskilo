@@ -55,13 +55,13 @@ void main() {
     expect(find.text('from 0%'), findsOneWidget);
     expect(find.text('from 25%'), findsOneWidget);
     expect(find.text('from 50%'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '25'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '100'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '25'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '100'), findsOneWidget);
     // Fees in major units: 150 and 250; overage 15 and 8.
-    expect(find.widgetWithText(TextFormField, '150'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '250'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '8'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '150'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '250'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '15'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '8'), findsOneWidget);
   });
 
   testWidgets('editing a fee persists the whole band set via the RPC shape',
@@ -69,7 +69,7 @@ void main() {
     final money = await pumpBilling(tester);
 
     await tester.enterText(
-      find.widgetWithText(TextFormField, '250'),
+      find.widgetWithText(TextField, '250'),
       '300',
     );
     await tester.tap(find.text('Save').first);
@@ -87,7 +87,7 @@ void main() {
     final before = List.of(money.feeBands);
 
     // Second band's upper boundary below the first band's 25.
-    await tester.enterText(find.widgetWithText(TextFormField, '50'), '20');
+    await tester.enterText(find.widgetWithText(TextField, '50'), '20');
     await tester.tap(find.text('Save').first);
     await tester.pumpAndSettle();
 
@@ -140,11 +140,11 @@ void main() {
     // The first band's upper bound extended to the removed row's 50,
     // keeping ITS prices (overage 15); the removed band's fee 150 and
     // overage 8 vanish with the row.
-    expect(find.widgetWithText(TextFormField, '50'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '25'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '150'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '8'), findsNothing);
+    expect(find.widgetWithText(TextField, '50'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '25'), findsNothing);
+    expect(find.widgetWithText(TextField, '15'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '150'), findsNothing);
+    expect(find.widgetWithText(TextField, '8'), findsNothing);
 
     await tester.tap(find.text('Save').first);
     await tester.pumpAndSettle();
@@ -162,7 +162,7 @@ void main() {
 
     // Raise the first band's upper boundary 25 → 30: the second row's
     // derived lower boundary must follow immediately, before any save.
-    await tester.enterText(find.widgetWithText(TextFormField, '25'), '30');
+    await tester.enterText(find.widgetWithText(TextField, '25'), '30');
     await tester.pump();
 
     expect(find.text('from 30%'), findsOneWidget);
@@ -182,12 +182,12 @@ void main() {
     expect(find.text('from 0%'), findsOneWidget);
     expect(find.text('from 50%'), findsOneWidget);
     expect(find.text('from 25%'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '25'), findsNothing);
+    expect(find.widgetWithText(TextField, '25'), findsNothing);
     // The survivors keep their own prices; the removed band's overage 15
     // vanishes with it.
-    expect(find.widgetWithText(TextFormField, '150'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '250'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '15'), findsNothing);
+    expect(find.widgetWithText(TextField, '150'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '250'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '15'), findsNothing);
 
     await tester.tap(find.text('Save').first);
     await tester.pumpAndSettle();
@@ -337,7 +337,7 @@ void main() {
     final money = await pumpBilling(tester);
 
     expect(find.byKey(const ValueKey('billing-save-2')), findsNothing);
-    await tester.enterText(find.widgetWithText(TextFormField, '250'), '300');
+    await tester.enterText(find.widgetWithText(TextField, '250'), '300');
     await tester.tap(find.byKey(const ValueKey('billing-percent-value-25')));
     await tester.pump();
     expect(money.feeBands.last.feeCents, 25000, reason: 'not saved yet');
@@ -357,12 +357,12 @@ void main() {
     final money = await pumpBilling(tester);
 
     await tester.tap(find.byKey(const ValueKey('billing-percent-value-25')));
-    await tester.enterText(find.widgetWithText(TextFormField, '50'), '20');
+    await tester.enterText(find.widgetWithText(TextField, '50'), '20');
     await tester.tap(find.byKey(const ValueKey('billing-save')));
     await _settle(tester);
 
     expect(find.text('Bands must increase and end at 100%.'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '20'), findsOneWidget);
+    expect(find.widgetWithText(TextField, '20'), findsOneWidget);
     expect(money.subscriptionLevels.enabledPresets, contains(25));
   });
 
@@ -380,7 +380,7 @@ void main() {
   testWidgets('a dirty page asks before it is left; Keep editing stays, '
       'Discard leaves (#3072)', (tester) async {
     await pumpBilling(tester);
-    await tester.enterText(find.widgetWithText(TextFormField, '250'), '300');
+    await tester.enterText(find.widgetWithText(TextField, '250'), '300');
     await tester.pump();
     unawaited(Navigator.of(
             tester.element(find.byKey(const ValueKey('billing-save'))))
