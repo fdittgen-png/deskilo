@@ -22,7 +22,7 @@ void main() {
                 supplierId: 's',
                 currency: 'EUR',
                 remainingCents: 150,
-                heldCents: 0,
+                heldCents: 50,
               ),
               const SupplierBalance(
                 supplierId: 's',
@@ -54,6 +54,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.textContaining('Outstanding:'), findsNWidgets(2));
+    expect(find.textContaining('On hold:'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('supplier-payables-s')));
     expect(opened, isTrue);
   });
