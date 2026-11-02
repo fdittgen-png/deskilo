@@ -56,3 +56,17 @@ Advance local81031c selector+Back1 through review and next PR slot independently
 ### Observed overlap bound reinforces stop decision
 
 E1 reports one no-delay sample on bootstrap 3f5e75ce, original future returned unchanged; log /tmp/deskilo-ci-capability-overlap.log, exit0, instrumentation restored and worktree clean. Personal/active reads were serial at entry and overlapped after request and withdrawal. This observed schedule offers at most two in-flight joins: combined hypothetically with selector reduction13->11, that leaves9 above unchanged ceiling8. This is not a universal scheduling bound or implemented saving; actual-session authority remains unproven. No further traces or MCP implementation for this checkpoint. Advance81031c independently. Decision queued to E1 and reviewer; delivery is not personal acknowledgement.
+
+
+## DECISION0655-PROOF-1 — draft CI proof before dev application
+
+Authorized **2026-11-02 14:53 UTC**. For E2 #3070 migration0655 only, one private draft proof PR/push may precede development application. This explicit sequencing exception supersedes the normal apply-before-first-push ritual and any prior generic PR hold for this checkpoint. It does not waive source review, required local gates or merge gates.
+
+Reason: localDocker/psql unavailable; true independent-session races and anchored-function effective contract need the existing isolated quality.yml replay path. Do not apply dev just to obtain proof or wait for unavailable local infrastructure. Reuse established0652 proof sequencing.
+
+1. Settle required focused/broad gates, reviewer source/race contract review and immutable rollback-bundle review. Publish one draft proof candidate, explicitly0655NOTAPPLIED and APPLIED/effectivecontractPENDING. No fabricated artifacts, new workflow, watcher, permission prompt or merge.
+2. Execute existing isolated replay, actual pgTAP341 and real independent-session race. Record exacthead/run/attempt and migration/fixture/race/bundle hashes, original exits and replay contract artifact. Expected pending-contract/artifact failure is not a passing overall run; any genuine replay/race/assertion failure must be fixed and verified.
+3. Reviewer accepts actual proof for the exact SQL bytes, applies those bytes on dev and verifies schema/bodies/grants/state. Ledger changesRESERVED->APPLIED only after realapplication.
+4. E2 produces genuine APPLIED, dev-derived contract and required bundle, combining necessary reviewed fixes/artifacts in one final push. Final exact-head source review and all requiredCI must pass before reviewer merge; no bypass.
+
+Two normal PR slots permit disjoint2599 and this proof in parallel; one migration lane remains. Decision queued to E2/reviewer/E1. Queue delivery does not imply source approval or actual proof. Historical receipt attribution remains unchanged.
