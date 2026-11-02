@@ -27,7 +27,9 @@ done
 base="http://127.0.0.1:$port"
 code=$(curl -sS --max-time 5 -o /dev/null -w '%{http_code}' "$base/")
 [ "$code" = 302 ] || { echo "root: expected 302, got $code" >&2; exit 1; }
-if ! curl -fsS --max-time 5 -D - -o /dev/null "$base/" | tr -d '\r' | grep -qi '^Location: /welcome/#top$'; then
+curl -fsS --max-time 5 -D "$scratch/root.headers" -o /dev/null "$base/"
+tr -d '\r' < "$scratch/root.headers" > "$scratch/root.normalized"
+if ! grep -qi '^Location: /welcome/#top$' "$scratch/root.normalized"; then
   echo 'root redirect does not target the welcome page' >&2
   exit 1
 fi
@@ -43,7 +45,8 @@ if ! grep -Fq '<base href="/app/">' "$scratch/index.html"; then
 fi
 curl -fsS --max-time 5 "$base/app/money" > "$scratch/deep-link.html"
 cmp -s "$scratch/index.html" "$scratch/deep-link.html" || { echo 'app deep link did not return the app entry' >&2; exit 1; }
-if ! curl -fsS --max-time 5 "$base/BUILD.txt" | grep -Fxq "source: fdittgen-png/deskilo@$source_sha"; then
+curl -fsS --max-time 5 "$base/BUILD.txt" > "$scratch/build.txt"
+if ! grep -Fxq "source: fdittgen-png/deskilo@$source_sha" "$scratch/build.txt"; then
   echo 'package source SHA does not match the requested build' >&2
   exit 1
 fi
