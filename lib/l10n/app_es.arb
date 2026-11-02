@@ -12430,6 +12430,7 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus espacios siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfileTitle": "Perfil público",
+  "purchaseApprovalEvidenceUnavailable": "Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.",
   "purchaseApprovalsEmpty": "Ninguna factura de proveedor espera su aprobación.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"

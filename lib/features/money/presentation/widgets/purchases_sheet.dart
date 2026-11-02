@@ -341,9 +341,12 @@ class _PurchaseDetailView extends ConsumerWidget {
   final PurchaseApprovalDetail? approval;
 
   Widget _decisionBar(PurchaseDetail detail) => PurchaseDecisionBar(
-    workspaceId: workspaceId, detail: detail, canCapture: canCapture,
+    workspaceId: workspaceId,
+    detail: detail,
+    canCapture: canCapture,
     canDecide: canDecide && (approval?.canApprove ?? true),
-    canReject: approval?.canReject ?? true, closeOnDecision: approval != null,
+    canReject: approval?.canReject ?? true,
+    closeOnDecision: approval != null,
   );
 
   @override
@@ -381,6 +384,11 @@ class _PurchaseDetailView extends ConsumerWidget {
             s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),
         if (s.legacy) Text(l10n.purchasesLegacyTag),
+        if (approval != null)
+          Text(
+            l10n.purchaseApprovalEvidenceUnavailable,
+            key: const ValueKey('purchase-approval-evidence-unavailable'),
+          ),
         _decisionBar(detail),
         const SizedBox(height: AppSpacing.sm),
         Text('${l10n.purchasesSupplier}: $supplier'),

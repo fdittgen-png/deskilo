@@ -19354,6 +19354,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicProfileTitle => 'Profil public';
 
   @override
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Les justificatifs et le taux de change éventuel ne sont pas disponibles dans cette vue d’approbation. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat.';
+
+  @override
   String get purchaseApprovalsEmpty =>
       'Aucune facture fournisseur n’attend votre approbation.';
 

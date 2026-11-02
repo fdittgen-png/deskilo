@@ -32016,6 +32016,12 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// No description provided for @purchaseApprovalEvidenceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.'**
+  String get purchaseApprovalEvidenceUnavailable;
+
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:

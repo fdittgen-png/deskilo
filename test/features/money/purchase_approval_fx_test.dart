@@ -87,6 +87,12 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('purchase-line-1')), findsOneWidget);
+      expect(
+        find.text(
+          'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.',
+        ),
+        findsOneWidget,
+      );
       expect(find.byKey(const ValueKey('purchase-fx')), findsNothing);
       expect(find.byKey(const ValueKey('purchase-fx-edit')), findsNothing);
       expect(find.textContaining('No exchange rate is recorded'), findsNothing);
@@ -112,6 +118,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('purchase-fx-bill')));
       await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('purchase-approval-evidence-unavailable')),
+        findsNothing,
+      );
       expect(find.byKey(const ValueKey('purchase-fx')), findsOneWidget);
       expect(find.textContaining('1 CHF = 1.06 EUR'), findsOneWidget);
       expect(find.byKey(const ValueKey('purchase-fx-edit')), findsOneWidget);

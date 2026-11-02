@@ -19157,6 +19157,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get publicProfileTitle => 'Public profile';
 
   @override
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Source evidence and any exchange rate are unavailable in this approval view. To review them, ask someone authorized to access the purchase details.';
+
+  @override
   String get purchaseApprovalsEmpty => 'No supplier bills await your approval.';
 
   @override
