@@ -10,6 +10,8 @@
   "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
   "suppliersPayablesUnavailable": "Pagos pendientes no disponibles",
   "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
+  "suppliersHeld": "En espera: {amount}",
+  "@suppliersHeld": {"description": "#3070 portion of the supplier balance on hold", "placeholders": {"amount": {"type": "String"}}},
   "suppliersLoadMore": "Cargar más",
   "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
   "suppliersTitle": "Proveedores",

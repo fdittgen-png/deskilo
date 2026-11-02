@@ -10,16 +10,23 @@ void main() {
       'supplier_id': 'supplier-a',
       'currency': 'EUR',
       'remaining_cents': 1250,
+      'held_cents': 300,
     });
     final gbp = SupplierBalance.fromJson({
       'supplier_id': 'supplier-a',
       'currency': 'GBP',
       'remaining_cents': 300,
+      'held_cents': 0,
     });
-    expect((eur.supplierId, eur.currency, eur.remainingCents),
-        ('supplier-a', 'EUR', 1250));
-    expect((gbp.supplierId, gbp.currency, gbp.remainingCents),
-        ('supplier-a', 'GBP', 300));
+    expect(
+      (eur.supplierId, eur.currency, eur.remainingCents),
+      ('supplier-a', 'EUR', 1250),
+    );
+    expect(eur.heldCents, 300);
+    expect(
+      (gbp.supplierId, gbp.currency, gbp.remainingCents),
+      ('supplier-a', 'GBP', 300),
+    );
   });
 
   test('a missing amount is an error, not a zero balance', () {

@@ -50,13 +50,20 @@ class SupplierBalanceLine extends ConsumerWidget {
         if (balances.isEmpty)
           Text(l10n.suppliersNoOutstanding)
         else
-          for (final balance in balances)
+          for (final balance in balances) ...[
             Text(
               l10n.suppliersOutstanding(
                 moneyFormat(balance.currency)
                     .formatMinor(balance.remainingCents),
               ),
             ),
+            if (balance.heldCents != 0)
+              Text(
+                l10n.suppliersHeld(
+                  moneyFormat(balance.currency).formatMinor(balance.heldCents),
+                ),
+              ),
+          ],
         TextButton(
           key: ValueKey('supplier-payables-$supplierId'),
           onPressed: onOpenPayables,

@@ -10,6 +10,7 @@ class SupplierBalance {
     required this.supplierId,
     required this.currency,
     required this.remainingCents,
+    required this.heldCents,
   });
 
   factory SupplierBalance.fromJson(Object? raw) {
@@ -18,12 +19,16 @@ class SupplierBalance {
       supplierId: row.string('supplier_id'),
       currency: row.string('currency'),
       remainingCents: row.integer('remaining_cents'),
+      heldCents: row.integer('held_cents'),
     );
   }
 
   final String supplierId;
   final String currency;
   final int remainingCents;
+
+  /// The portion of remainingCents on hold, not currently payable.
+  final int heldCents;
 }
 
 /// One complete snapshot for the workspace, with separate currency rows.

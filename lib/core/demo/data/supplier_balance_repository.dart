@@ -25,6 +25,7 @@ class FakeSupplierBalanceRepository implements SupplierBalanceRepository {
   Future<List<SupplierBalance>> fetchBalances(String requested) async {
     _checkWorkspace(requested);
     final totals = <(String, String), int>{};
+    final held = <(String, String), int>{};
     for (final row in purchases.payables) {
       final obligation = row.obligation;
       if (obligation.creditorKind != CreditorKind.supplier ||
@@ -33,6 +34,9 @@ class FakeSupplierBalanceRepository implements SupplierBalanceRepository {
       }
       final key = (obligation.creditorId, obligation.currency);
       totals[key] = (totals[key] ?? 0) + obligation.remainingCents;
+      if (obligation.state == ObligationState.held) {
+        held[key] = (held[key] ?? 0) + obligation.remainingCents;
+      }
     }
     return [
       for (final MapEntry(key: (supplier, currency), value: amount)
@@ -41,6 +45,7 @@ class FakeSupplierBalanceRepository implements SupplierBalanceRepository {
           supplierId: supplier,
           currency: currency,
           remainingCents: amount,
+          heldCents: held[(supplier, currency)] ?? 0,
         ),
     ];
   }
