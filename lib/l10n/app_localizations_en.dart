@@ -2002,7 +2002,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankReconAccount => 'Account';
 
   @override
-  String get bankReconArithmeticDifference => 'Statement arithmetic difference';
+  String get bankReconArithmeticDifference =>
+      'Statement file arithmetic difference (movements accepted by the import parser)';
 
   @override
   String get bankReconBookingDate =>
@@ -2024,6 +2025,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Partial coverage: the bank-reported period and complete account coverage are not established.';
 
   @override
+  String get bankReconCsvMappingUnavailable =>
+      'CSV column mapping was not retained';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Statement-file arithmetic compares the file balances with movements accepted by the import parser; it is not reconciliation with the books.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'File format or source limits cannot verify statement arithmetic';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Source movement identity missing or duplicated';
+
+  @override
   String get bankReconNotIncluded =>
       'Bank reconciliation reports are unavailable for this export.';
 
@@ -2038,6 +2055,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Original source unavailable or inaccessible';
 
   @override
+  String get bankReconReadUnavailable =>
+      'Original source unavailable or inaccessible; absence cannot be distinguished from denial';
+
+  @override
   String get bankReconRequestedPeriod => 'Requested period';
 
   @override
@@ -2045,11 +2066,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Statements, movements and source are separate reads; this is not a frozen snapshot.';
 
   @override
+  String get bankReconSourceNotRetained =>
+      'Original source not retained or digest unavailable';
+
+  @override
   String get bankReconSourceUnassociated =>
       'Some source movements have no verified retained-line association; their status is unavailable.';
 
   @override
+  String get bankReconSourceVerificationFailed =>
+      'Source hash, parsing, account, currency or balance facts could not be verified';
+
+  @override
   String get bankReconTitle => 'Bank reconciliation report';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Source movements without verified retained-row association';
 
   @override
   String get bankReconValueDate =>

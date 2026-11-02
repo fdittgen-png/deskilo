@@ -6,7 +6,6 @@ import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/bank/reconciliation_report.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/presentation/bank_reconciliation_actions.dart';
 import 'package:deskilo/features/money/presentation/bank_reconciliation_words.dart';
 import 'package:deskilo/features/money/presentation/letter_doc_pdf.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
@@ -32,6 +31,7 @@ void main() {
     lines: const [],
     sourceUnavailableOrInaccessible: true,
     sourceAssociationUnavailable: true,
+    unmappedSourceCount: 2,
   );
   final notices = bankReconciliationNotices(words, report);
   final data = <String, Object?>{
@@ -56,14 +56,32 @@ void main() {
         containsAll([
           l10n.bankReconCoverage,
           l10n.bankReconSeparateReads,
+          l10n.bankReconFileArithmeticScope,
           l10n.bankReconBooksUnavailable,
           l10n.bankReconClearingUnavailable,
           l10n.bankReconOriginalUnavailable,
           l10n.bankReconSourceUnassociated,
+          '${l10n.bankReconUnmappedCount}: 2',
         ]),
       );
     });
   }
+
+  test('unavailable source reason survives a custom design', () {
+    final unavailable = BankReconciliationReport(
+      statement: report.statement,
+      lines: const [],
+      sourceIssue: BankSourceIssue.readUnavailable,
+    );
+    final result = withBankReconciliationNotices(
+      renderReportBands(bands: designs['custom']!, data: data)!,
+      bankReconciliationNotices(words, unavailable),
+    );
+    expect(
+      result.body.whereType<ReportText>().map((b) => b.text),
+      contains(l10n.bankReconReadUnavailable),
+    );
+  });
 
   testWidgets('band and positioned PDF retain a separate notice body', (
     tester,

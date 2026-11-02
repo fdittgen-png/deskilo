@@ -3,6 +3,15 @@
 // the bank account's entire period or any provider clearing account is complete.
 import 'bank_records.dart';
 
+enum BankSourceIssue {
+  notRetained,
+  csvMapping,
+  unsupportedFormat,
+  verificationFailed,
+  ambiguousIdentity,
+  readUnavailable,
+}
+
 class BankReconciliationReport {
   BankReconciliationReport({
     required this.statement,
@@ -10,6 +19,9 @@ class BankReconciliationReport {
     this.acceptedSourceLinesMatch = false,
     this.sourceUnavailableOrInaccessible = false,
     this.sourceAssociationUnavailable = false,
+    this.fileDifferenceCents,
+    this.unmappedSourceCount,
+    this.sourceIssue,
     this.requestedFrom,
     this.requestedTo,
   }) : lines = List.unmodifiable(lines);
@@ -20,10 +32,13 @@ class BankReconciliationReport {
   /// Explicit user-selected range, distinct from stored movement dates.
   /// Source movements may have been suppressed; their status is not linked.
   final bool sourceAssociationUnavailable;
+  final int? fileDifferenceCents;
+  final int? unmappedSourceCount;
+  final BankSourceIssue? sourceIssue;
   final DateTime? requestedFrom;
   final DateTime? requestedTo;
 
-  /// True only when accepted booked movements from the retained original
+  /// True only when movements accepted by the parser from the retained original
   /// have been compared with stored rows. The parser may exclude pending
   /// movements; matching these rows does not prove full account coverage.
   final bool acceptedSourceLinesMatch;
@@ -36,6 +51,7 @@ class BankReconciliationReport {
   /// calculate when a line is ambiguous, missing, duplicated or in another
   /// currency; a missing balance is never treated as zero.
   int? get statementDifferenceCents {
+    if (fileDifferenceCents != null) return fileDifferenceCents;
     final opening = statement.openingCents;
     final closing = statement.closingCents;
     if (!acceptedSourceLinesMatch ||
@@ -88,6 +104,9 @@ class BankReconciliationWords {
     required this.clearingUnavailable,
     required this.bookDifferenceUnavailable,
     required this.status,
+    this.sourceIssueText = _emptySourceIssue,
+    this.unmappedLabel = '',
+    this.fileArithmeticScope = '',
   });
   final String account;
   final String coverageUnavailable;
@@ -105,7 +124,12 @@ class BankReconciliationWords {
   final String clearingUnavailable;
   final String bookDifferenceUnavailable;
   final String Function(StoredBankLine) status;
+  final String Function(BankSourceIssue) sourceIssueText;
+  final String unmappedLabel;
+  final String fileArithmeticScope;
 }
+
+String _emptySourceIssue(BankSourceIssue issue) => '';
 
 /// Designer data for the selected imported statement. The arithmetic check
 /// is labelled as such and never claims a reconciliation against the books.
@@ -142,6 +166,12 @@ Map<String, Object?> bankReconciliationReportData(
         ),
       row(words.coverageUnavailable, '', words.unavailable),
       row(words.separateReadsNotice, '', ''),
+      if (words.fileArithmeticScope.isNotEmpty)
+        row(words.fileArithmeticScope, '', ''),
+      if (report.sourceIssue != null)
+        row(words.sourceIssueText(report.sourceIssue!), '', words.unavailable),
+      if (report.unmappedSourceCount != null)
+        row(words.unmappedLabel, '', '${report.unmappedSourceCount}'),
       if (report.sourceUnavailableOrInaccessible)
         row(words.sourceUnavailableOrInaccessible, '', words.unavailable),
       if (report.sourceAssociationUnavailable)

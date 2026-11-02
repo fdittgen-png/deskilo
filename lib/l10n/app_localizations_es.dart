@@ -2020,7 +2020,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Diferencia aritmética del extracto';
+      'Diferencia aritmética del archivo (movimientos aceptados por el analizador de importación)';
 
   @override
   String get bankReconBookingDate =>
@@ -2042,6 +2042,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cobertura parcial: no se ha establecido el periodo declarado por el banco ni la cobertura completa de la cuenta.';
 
   @override
+  String get bankReconCsvMappingUnavailable =>
+      'No se conservó la correspondencia de columnas CSV';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'El cálculo del archivo compara sus saldos con los movimientos aceptados por el analizador de importación; no es una conciliación con los libros.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'El formato o los límites de la fuente no permiten verificar el cálculo';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identidad del movimiento de la fuente ausente o duplicada';
+
+  @override
   String get bankReconNotIncluded =>
       'Los informes de conciliación bancaria no están disponibles para esta exportación.';
 
@@ -2056,6 +2072,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Fuente original no disponible o inaccesible';
 
   @override
+  String get bankReconReadUnavailable =>
+      'Fuente original no disponible o inaccesible; no se distingue ausencia de denegación';
+
+  @override
   String get bankReconRequestedPeriod => 'Periodo solicitado';
 
   @override
@@ -2063,11 +2083,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Extractos, movimientos y fuente se leen por separado; no forman una instantánea fija.';
 
   @override
+  String get bankReconSourceNotRetained =>
+      'Fuente original no conservada o huella no disponible';
+
+  @override
   String get bankReconSourceUnassociated =>
       'Algunos movimientos de la fuente no tienen una asociación verificada con una línea conservada; su estado no está disponible.';
 
   @override
+  String get bankReconSourceVerificationFailed =>
+      'No se pudo verificar la huella, el análisis, la cuenta, la moneda o los saldos de la fuente';
+
+  @override
   String get bankReconTitle => 'Informe de conciliación bancaria';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Movimientos de la fuente sin asociación verificada a una línea conservada';
 
   @override
   String get bankReconValueDate =>

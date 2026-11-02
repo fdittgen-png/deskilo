@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:deskilo/features/money/application/bank_reconciliation_reader.dart';
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
+import 'package:deskilo/features/money/domain/bank/reconciliation_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Bank implements BankStatementRepository {
@@ -17,6 +18,7 @@ class _Bank implements BankStatementRepository {
   bool refuse = false;
   bool refuseLines = false;
   bool unavailableOriginal = false;
+  bool failedOriginalRead = false;
   bool revokeAfterSource = false;
   int originalReads = 0;
   int statementReads = 0;
@@ -27,6 +29,7 @@ class _Bank implements BankStatementRepository {
   ) async {
     originalReads++;
     if (unavailableOriginal) throw const BankOriginalUnavailable();
+    if (failedOriginalRead) throw Exception('storage unavailable');
     throw StateError('source refused');
   }
 
@@ -68,6 +71,7 @@ void main() {
     final reader = BankReconciliationReader(bank);
     final report = await reader.read(workspaceId: 'w', statementId: 's');
     expect(report.statement.id, 's');
+    expect(report.sourceIssue, BankSourceIssue.csvMapping);
     expect(bank.workspace, 'w');
     expect(bank.statement, 's');
     await expectLater(
@@ -135,9 +139,20 @@ void main() {
         sourceLimits: const BankFileLimits(maxBytes: 1024, maxLines: 10),
       );
       expect(report.sourceUnavailableOrInaccessible, isTrue);
+      expect(report.sourceIssue, BankSourceIssue.readUnavailable);
       expect(report.acceptedSourceLinesMatch, isFalse);
       expect(report.statementDifferenceCents, isNull);
       expect(bank.statementReads, 2);
+      bank
+        ..unavailableOriginal = false
+        ..failedOriginalRead = true;
+      final failed = await BankReconciliationReader(bank).read(
+        workspaceId: 'w',
+        statementId: 'source',
+        sourceLimits: const BankFileLimits(maxBytes: 1024, maxLines: 10),
+      );
+      expect(failed.sourceIssue, BankSourceIssue.readUnavailable);
+      expect(failed.statementDifferenceCents, isNull);
       bank
         ..originalReads = 0
         ..revokeAfterSource = true;
@@ -149,6 +164,43 @@ void main() {
         ),
         throwsStateError,
       );
+    },
+  );
+
+  test(
+    'missing original preserves independently read movement and status',
+    () async {
+      final noOriginal = StoredBankStatement(
+        id: 'missing',
+        format: BankFileFormat.camt053,
+        account: 'account',
+        currency: 'EUR',
+        from: day,
+        to: day,
+        lineCount: 1,
+        openCount: 1,
+      );
+      final line = StoredBankLine(
+        id: 'row',
+        position: 1,
+        bookingDate: day,
+        valueDate: day,
+        amountCents: 250,
+        currency: 'EUR',
+        status: BankLineStatus.open,
+        remittance: 'Named unmatched',
+      );
+      final bank = _Bank([noOriginal], [line]);
+      final result = await BankReconciliationReader(bank).read(
+        workspaceId: 'w',
+        statementId: 'missing',
+        sourceLimits: const BankFileLimits(maxBytes: 1024, maxLines: 10),
+      );
+      expect(result.sourceIssue, BankSourceIssue.notRetained);
+      expect(result.statementDifferenceCents, isNull);
+      expect(result.lines.single, same(line));
+      expect(result.unresolved.single.remittance, 'Named unmatched');
+      expect(bank.originalReads, 0);
     },
   );
 

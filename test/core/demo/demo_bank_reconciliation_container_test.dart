@@ -108,7 +108,8 @@ void main() {
     expect(after.unresolved.single.remittance, 'Named unmatched stationery');
 
     // A later overlapping file repeats both bank IDs. Without a persisted
-    // source-to-canonical association, statuses and arithmetic stay unknown.
+    // source-to-canonical association, statuses stay unknown. The verified
+    // file arithmetic is independent of those stored-row statuses.
     final overlapId = await importSource(xml, 'overlap.xml');
     expect(await bank.fetchLines(overlapId), isEmpty);
     final overlap = await reader.read(
@@ -117,7 +118,8 @@ void main() {
       sourceLimits: limits,
     );
     expect(overlap.sourceAssociationUnavailable, isTrue);
-    expect(overlap.statementDifferenceCents, isNull);
+    expect(overlap.unmappedSourceCount, 2);
+    expect(overlap.statementDifferenceCents, 0);
 
     // Exercise the real Demo entry into the statement's report quick view.
     Future<void> settle() async {
@@ -192,6 +194,7 @@ void main() {
         for (final notice in [
           l10n.bankReconCoverage,
           l10n.bankReconSeparateReads,
+          l10n.bankReconFileArithmeticScope,
           l10n.bankReconBooksUnavailable,
           l10n.bankReconClearingUnavailable,
         ]) {

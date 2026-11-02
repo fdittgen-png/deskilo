@@ -64,8 +64,13 @@ class BankReconciliationReader {
       return BankReconciliationReport(
         statement: statement,
         lines: verified.lines ?? lines,
-        acceptedSourceLinesMatch: verified.lines != null,
-        sourceAssociationUnavailable: verified.unassociated,
+        acceptedSourceLinesMatch:
+            verified.lines != null && verified.issue == null,
+        sourceAssociationUnavailable:
+            verified.unmapped != null && verified.lines == null,
+        fileDifferenceCents: verified.difference,
+        unmappedSourceCount: verified.unmapped,
+        sourceIssue: verified.issue,
         requestedFrom: year == null ? null : DateTime.utc(year),
         requestedTo: year == null ? null : DateTime.utc(year, 12, 31),
       );
@@ -74,20 +79,60 @@ class BankReconciliationReader {
     }
   }
 
-  Future<({List<StoredBankLine>? lines, bool unassociated})> _verify(
+  Future<
+    ({
+      List<StoredBankLine>? lines,
+      int? difference,
+      int? unmapped,
+      BankSourceIssue? issue,
+    })
+  >
+  _verify(
     String workspaceId,
     StoredBankStatement statement,
     List<StoredBankLine> lines,
     BankFileLimits? limits,
   ) async {
-    if (limits == null ||
-        statement.sourceSha256.isEmpty ||
-        statement.format != BankFileFormat.camt053) {
-      return (lines: null, unassociated: false);
+    if (statement.format == BankFileFormat.csv) {
+      return (
+        lines: null,
+        difference: null,
+        unmapped: null,
+        issue: BankSourceIssue.csvMapping,
+      );
     }
-    final bytes = await repository.fetchOriginal(
-      workspaceId,
-      statement.sourceSha256,
+    if (statement.sourceSha256.isEmpty) {
+      return (
+        lines: null,
+        difference: null,
+        unmapped: null,
+        issue: BankSourceIssue.notRetained,
+      );
+    }
+    if (statement.format != BankFileFormat.camt053 || limits == null) {
+      return (
+        lines: null,
+        difference: null,
+        unmapped: null,
+        issue: BankSourceIssue.unsupportedFormat,
+      );
+    }
+    final List<int> bytes;
+    try {
+      bytes = await repository.fetchOriginal(
+        workspaceId,
+        statement.sourceSha256,
+      );
+    } on Exception {
+      // The storage service may conceal a refusal as absence. Reauthorize
+      // the statement and lines before preserving them as an incomplete report.
+      throw const BankOriginalUnavailable();
+    }
+    final analysis = analyzeBankSource(
+      statement: statement,
+      lines: lines,
+      original: bytes,
+      limits: limits,
     );
     final direct = verifiedBankSourceMovements(
       statement: statement,
@@ -97,14 +142,9 @@ class BankReconciliationReader {
     );
     return (
       lines: direct,
-      unassociated:
-          direct == null &&
-          bankSourceHasUnassociatedRows(
-            statement: statement,
-            lines: lines,
-            original: bytes,
-            limits: limits,
-          ),
+      difference: analysis.difference,
+      unmapped: analysis.unmapped,
+      issue: analysis.issue,
     );
   }
 
@@ -124,6 +164,7 @@ class BankReconciliationReader {
       statement: selected.single,
       lines: lines,
       sourceUnavailableOrInaccessible: true,
+      sourceIssue: BankSourceIssue.readUnavailable,
       requestedFrom: year == null ? null : DateTime.utc(year),
       requestedTo: year == null ? null : DateTime.utc(year, 12, 31),
     );

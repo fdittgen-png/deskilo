@@ -876,9 +876,9 @@
   "@bankReconAccount": {
     "description": "#2380 partial bank reconciliation report: bankReconAccount."
   },
-  "bankReconArithmeticDifference": "Écart arithmétique du relevé",
+  "bankReconArithmeticDifference": "Écart arithmétique du fichier de relevé (mouvements acceptés par l’analyseur d’import)",
   "@bankReconArithmeticDifference": {
-    "description": "#2380 partial bank reconciliation report: bankReconArithmeticDifference."
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
   },
   "bankReconBookingDate": "Date comptable enregistrée (par défaut, date de valeur)",
   "@bankReconBookingDate": {
@@ -900,6 +900,22 @@
   "@bankReconCoverage": {
     "description": "#2380 partial bank reconciliation report: bankReconCoverage."
   },
+  "bankReconCsvMappingUnavailable": "Correspondance des colonnes CSV non conservée",
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "bankReconFileArithmeticScope": "Le calcul du fichier compare ses soldes aux mouvements acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.",
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "bankReconFormatUnavailable": "Format ou limites de source ne permettant pas de vérifier le calcul",
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "bankReconIdentityAmbiguous": "Identifiant de mouvement source manquant ou dupliqué",
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
   "bankReconNotIncluded": "Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.",
   "@bankReconNotIncluded": {
     "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
@@ -916,6 +932,10 @@
   "@bankReconOriginalUnavailable": {
     "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
   },
+  "bankReconReadUnavailable": "Source originale indisponible ou inaccessible ; absence et refus ne peuvent être distingués",
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
   "bankReconRequestedPeriod": "Période demandée",
   "@bankReconRequestedPeriod": {
     "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
@@ -924,13 +944,25 @@
   "@bankReconSeparateReads": {
     "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
   },
+  "bankReconSourceNotRetained": "Source originale non conservée ou empreinte indisponible",
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
   "bankReconSourceUnassociated": "Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.",
   "@bankReconSourceUnassociated": {
     "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
   },
+  "bankReconSourceVerificationFailed": "Empreinte, analyse, compte, devise ou soldes de la source non vérifiables",
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
   "bankReconTitle": "Rapport de rapprochement bancaire",
   "@bankReconTitle": {
     "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconUnmappedCount": "Mouvements source sans association vérifiée à une ligne conservée",
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
   },
   "bankReconValueDate": "Date de valeur enregistrée (par défaut, date comptable)",
   "@bankReconValueDate": {

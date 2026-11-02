@@ -876,9 +876,9 @@
   "@bankReconAccount": {
     "description": "#2380 partial bank reconciliation report: bankReconAccount."
   },
-  "bankReconArithmeticDifference": "Diferencia aritmética del extracto",
+  "bankReconArithmeticDifference": "Diferencia aritmética del archivo (movimientos aceptados por el analizador de importación)",
   "@bankReconArithmeticDifference": {
-    "description": "#2380 partial bank reconciliation report: bankReconArithmeticDifference."
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
   },
   "bankReconBookingDate": "Fecha contable guardada (puede usar la fecha valor)",
   "@bankReconBookingDate": {
@@ -900,6 +900,22 @@
   "@bankReconCoverage": {
     "description": "#2380 partial bank reconciliation report: bankReconCoverage."
   },
+  "bankReconCsvMappingUnavailable": "No se conservó la correspondencia de columnas CSV",
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "bankReconFileArithmeticScope": "El cálculo del archivo compara sus saldos con los movimientos aceptados por el analizador de importación; no es una conciliación con los libros.",
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "bankReconFormatUnavailable": "El formato o los límites de la fuente no permiten verificar el cálculo",
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "bankReconIdentityAmbiguous": "Identidad del movimiento de la fuente ausente o duplicada",
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
   "bankReconNotIncluded": "Los informes de conciliación bancaria no están disponibles para esta exportación.",
   "@bankReconNotIncluded": {
     "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
@@ -916,6 +932,10 @@
   "@bankReconOriginalUnavailable": {
     "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
   },
+  "bankReconReadUnavailable": "Fuente original no disponible o inaccesible; no se distingue ausencia de denegación",
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
   "bankReconRequestedPeriod": "Periodo solicitado",
   "@bankReconRequestedPeriod": {
     "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
@@ -924,13 +944,25 @@
   "@bankReconSeparateReads": {
     "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
   },
+  "bankReconSourceNotRetained": "Fuente original no conservada o huella no disponible",
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
   "bankReconSourceUnassociated": "Algunos movimientos de la fuente no tienen una asociación verificada con una línea conservada; su estado no está disponible.",
   "@bankReconSourceUnassociated": {
     "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
   },
+  "bankReconSourceVerificationFailed": "No se pudo verificar la huella, el análisis, la cuenta, la moneda o los saldos de la fuente",
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
   "bankReconTitle": "Informe de conciliación bancaria",
   "@bankReconTitle": {
     "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconUnmappedCount": "Movimientos de la fuente sin asociación verificada a una línea conservada",
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
   },
   "bankReconValueDate": "Fecha valor guardada (puede usar la fecha contable)",
   "@bankReconValueDate": {

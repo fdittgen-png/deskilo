@@ -2018,7 +2018,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankReconAccount => 'Konto';
 
   @override
-  String get bankReconArithmeticDifference => 'Rechnerische Auszugsdifferenz';
+  String get bankReconArithmeticDifference =>
+      'Rechnerische Differenz der Auszugsdatei (vom Importparser angenommene Bewegungen)';
 
   @override
   String get bankReconBookingDate =>
@@ -2040,6 +2041,22 @@ class AppLocalizationsDe extends AppLocalizations {
       'Teilweise Abdeckung: Der gemeldete Bankzeitraum und die vollständige Kontoabdeckung sind nicht belegt.';
 
   @override
+  String get bankReconCsvMappingUnavailable =>
+      'CSV-Spaltenzuordnung wurde nicht aufbewahrt';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Die Auszugsdatei-Berechnung vergleicht ihre Salden mit den vom Importparser angenommenen Bewegungen; sie ist kein Abgleich mit der Buchhaltung.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Dateiformat oder Quellgrenzen erlauben keine Prüfung der Berechnung';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Quellbewegungskennung fehlt oder ist doppelt';
+
+  @override
   String get bankReconNotIncluded =>
       'Bankabstimmungsberichte sind für diesen Export nicht verfügbar.';
 
@@ -2054,6 +2071,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Originalquelle nicht verfügbar oder nicht zugänglich';
 
   @override
+  String get bankReconReadUnavailable =>
+      'Originalquelle nicht verfügbar oder nicht zugänglich; Fehlen und Verweigerung sind nicht unterscheidbar';
+
+  @override
   String get bankReconRequestedPeriod => 'Angefragter Zeitraum';
 
   @override
@@ -2061,11 +2082,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'Auszüge, Bewegungen und Quelle werden getrennt gelesen; dies ist keine feste Momentaufnahme.';
 
   @override
+  String get bankReconSourceNotRetained =>
+      'Originalquelle nicht aufbewahrt oder Prüfsumme nicht verfügbar';
+
+  @override
   String get bankReconSourceUnassociated =>
       'Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.';
 
   @override
+  String get bankReconSourceVerificationFailed =>
+      'Quellprüfsumme, Verarbeitung, Konto, Währung oder Salden nicht überprüfbar';
+
+  @override
   String get bankReconTitle => 'Bankabstimmungsbericht';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Quellbewegungen ohne geprüfte Zuordnung zu einer gespeicherten Zeile';
 
   @override
   String get bankReconValueDate =>

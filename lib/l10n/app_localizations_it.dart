@@ -2016,7 +2016,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Differenza aritmetica dell’estratto';
+      'Differenza aritmetica del file (movimenti accettati dall’analizzatore di importazione)';
 
   @override
   String get bankReconBookingDate =>
@@ -2038,6 +2038,22 @@ class AppLocalizationsIt extends AppLocalizations {
       'Copertura parziale: il periodo dichiarato dalla banca e la copertura completa del conto non sono accertati.';
 
   @override
+  String get bankReconCsvMappingUnavailable =>
+      'Mappatura delle colonne CSV non conservata';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Il calcolo del file confronta i suoi saldi con i movimenti accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Formato o limiti della fonte non consentono di verificare il calcolo';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identità del movimento della fonte mancante o duplicata';
+
+  @override
   String get bankReconNotIncluded =>
       'I rapporti di riconciliazione bancaria non sono disponibili per questa esportazione.';
 
@@ -2052,6 +2068,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fonte originale non disponibile o inaccessibile';
 
   @override
+  String get bankReconReadUnavailable =>
+      'Fonte originale non disponibile o inaccessibile; assenza e rifiuto non sono distinguibili';
+
+  @override
   String get bankReconRequestedPeriod => 'Periodo richiesto';
 
   @override
@@ -2059,11 +2079,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Estratti, movimenti e fonte sono letti separatamente; non costituiscono una fotografia fissa.';
 
   @override
+  String get bankReconSourceNotRetained =>
+      'Fonte originale non conservata o impronta non disponibile';
+
+  @override
   String get bankReconSourceUnassociated =>
       'Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.';
 
   @override
+  String get bankReconSourceVerificationFailed =>
+      'Impronta, analisi, conto, valuta o saldi della fonte non verificabili';
+
+  @override
   String get bankReconTitle => 'Rapporto di riconciliazione bancaria';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Movimenti della fonte senza associazione verificata a una riga conservata';
 
   @override
   String get bankReconValueDate =>

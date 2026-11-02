@@ -10,6 +10,7 @@ import 'bank_file.dart';
 import 'bank_records.dart';
 import 'bank_statement.dart';
 import 'bank_statement_fit.dart';
+import 'reconciliation_report.dart';
 
 List<StoredBankLine>? verifiedBankSourceMovements({
   required StoredBankStatement statement,
@@ -19,7 +20,8 @@ List<StoredBankLine>? verifiedBankSourceMovements({
 }) {
   final source = _verifiedSource(statement, lines, original, limits);
   if (source == null) return null;
-  if (source.lines.length != lines.length ||
+  if (lines.length != statement.lineCount ||
+      source.lines.length != lines.length ||
       lines.map((line) => line.id).toSet().length != lines.length ||
       lines.map((line) => line.position).toSet().length != lines.length) {
     return null;
@@ -33,15 +35,67 @@ List<StoredBankLine>? verifiedBankSourceMovements({
   return [for (var i = 0; i < source.lines.length; i++) byPosition[i + 1]!];
 }
 
-/// Reports a source gap without inferring any cross-statement association.
-bool bankSourceHasUnassociatedRows({
+/// File arithmetic is independent of the separately read retained-row status.
+/// Empty or repeated identities cannot establish distinct accepted movements.
+({int? difference, int? unmapped, BankSourceIssue? issue}) analyzeBankSource({
   required StoredBankStatement statement,
   required List<StoredBankLine> lines,
   required List<int> original,
   required BankFileLimits limits,
 }) {
   final source = _verifiedSource(statement, lines, original, limits);
-  return source != null && source.lines.length > lines.length;
+  if (source == null) {
+    return (
+      difference: null,
+      unmapped: null,
+      issue: BankSourceIssue.verificationFailed,
+    );
+  }
+  final ids = source.lines.map((line) => line.transactionId.trim()).toList();
+  if (ids.any((id) => id.isEmpty) || ids.toSet().length != ids.length) {
+    return (
+      difference: null,
+      unmapped: null,
+      issue: BankSourceIssue.ambiguousIdentity,
+    );
+  }
+  final opening = source.openingCents;
+  final closing = source.closingCents;
+  if (opening == null ||
+      closing == null ||
+      source.lines.any((line) => line.currency != source.currency)) {
+    return (
+      difference: null,
+      unmapped: null,
+      issue: BankSourceIssue.verificationFailed,
+    );
+  }
+  final byPosition = <int, StoredBankLine>{};
+  final duplicatePositions = <int>{};
+  for (final line in lines) {
+    if (byPosition.containsKey(line.position)) {
+      duplicatePositions.add(line.position);
+    }
+    byPosition[line.position] = line;
+  }
+  var unmapped = 0;
+  for (var i = 0; i < source.lines.length; i++) {
+    final position = i + 1;
+    final line = byPosition[position];
+    if (line == null ||
+        duplicatePositions.contains(position) ||
+        !_sameMovement(source.lines[i], line)) {
+      unmapped++;
+    }
+  }
+  return (
+    difference:
+        closing -
+        opening -
+        source.lines.fold<int>(0, (sum, line) => sum + line.amountCents),
+    unmapped: unmapped,
+    issue: null,
+  );
 }
 
 BankStatement? _verifiedSource(
@@ -72,8 +126,7 @@ BankStatement? _verifiedSource(
       source.currency != statement.currency ||
       source.statementId != statement.statementRef ||
       source.openingCents != statement.openingCents ||
-      source.closingCents != statement.closingCents ||
-      lines.length != statement.lineCount) {
+      source.closingCents != statement.closingCents) {
     return null;
   }
   return source;

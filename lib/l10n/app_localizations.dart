@@ -3391,10 +3391,10 @@ abstract class AppLocalizations {
   /// **'Account'**
   String get bankReconAccount;
 
-  /// #2380 partial bank reconciliation report: bankReconArithmeticDifference.
+  /// #2380 statement-file arithmetic limitation: bankReconArithmeticDifference.
   ///
   /// In en, this message translates to:
-  /// **'Statement arithmetic difference'**
+  /// **'Statement file arithmetic difference (movements accepted by the import parser)'**
   String get bankReconArithmeticDifference;
 
   /// #2380 partial bank reconciliation report: bankReconBookingDate.
@@ -3427,6 +3427,30 @@ abstract class AppLocalizations {
   /// **'Partial coverage: the bank-reported period and complete account coverage are not established.'**
   String get bankReconCoverage;
 
+  /// #2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV column mapping was not retained'**
+  String get bankReconCsvMappingUnavailable;
+
+  /// #2380 scope of statement-file arithmetic, mandatory in customized output.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement-file arithmetic compares the file balances with movements accepted by the import parser; it is not reconciliation with the books.'**
+  String get bankReconFileArithmeticScope;
+
+  /// #2380 statement-file arithmetic limitation: bankReconFormatUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'File format or source limits cannot verify statement arithmetic'**
+  String get bankReconFormatUnavailable;
+
+  /// #2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous.
+  ///
+  /// In en, this message translates to:
+  /// **'Source movement identity missing or duplicated'**
+  String get bankReconIdentityAmbiguous;
+
   /// #2380 partial bank reconciliation report: bankReconNotIncluded.
   ///
   /// In en, this message translates to:
@@ -3451,6 +3475,12 @@ abstract class AppLocalizations {
   /// **'Original source unavailable or inaccessible'**
   String get bankReconOriginalUnavailable;
 
+  /// #2380 statement-file arithmetic limitation: bankReconReadUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source unavailable or inaccessible; absence cannot be distinguished from denial'**
+  String get bankReconReadUnavailable;
+
   /// #2380 partial bank reconciliation report: bankReconRequestedPeriod.
   ///
   /// In en, this message translates to:
@@ -3463,17 +3493,35 @@ abstract class AppLocalizations {
   /// **'Statements, movements and source are separate reads; this is not a frozen snapshot.'**
   String get bankReconSeparateReads;
 
+  /// #2380 statement-file arithmetic limitation: bankReconSourceNotRetained.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source not retained or digest unavailable'**
+  String get bankReconSourceNotRetained;
+
   /// #2380 partial bank reconciliation report: bankReconSourceUnassociated.
   ///
   /// In en, this message translates to:
   /// **'Some source movements have no verified retained-line association; their status is unavailable.'**
   String get bankReconSourceUnassociated;
 
+  /// #2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Source hash, parsing, account, currency or balance facts could not be verified'**
+  String get bankReconSourceVerificationFailed;
+
   /// #2380 partial bank reconciliation report: bankReconTitle.
   ///
   /// In en, this message translates to:
   /// **'Bank reconciliation report'**
   String get bankReconTitle;
+
+  /// #2380 statement-file arithmetic limitation: bankReconUnmappedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Source movements without verified retained-row association'**
+  String get bankReconUnmappedCount;
 
   /// #2380 partial bank reconciliation report: bankReconValueDate.
   ///

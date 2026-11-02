@@ -181,6 +181,15 @@ void main() {
       withMismatch(closing: parsed.closingCents! + 1),
     ]) {
       expect(
+        analyzeBankSource(
+          statement: bad,
+          lines: lines,
+          original: bytes,
+          limits: limits,
+        ).issue,
+        BankSourceIssue.verificationFailed,
+      );
+      expect(
         verifiedBankSourceMovements(
           statement: bad,
           lines: lines,
@@ -196,6 +205,49 @@ void main() {
     // stored count still equals a contiguous fetched prefix.
     final skippedTrailing = lines.take(lines.length - 1).toList();
     expect(verify(skippedTrailing, bytes), isFalse);
+    final fileOnly = analyzeBankSource(
+      statement: statement(skippedTrailing.length),
+      lines: skippedTrailing,
+      original: bytes,
+      limits: limits,
+    );
+    expect(fileOnly.difference, 0);
+    expect(fileOnly.unmapped, 1);
+    expect(fileOnly.issue, isNull);
+    final badHash = analyzeBankSource(
+      statement: statement(lines.length),
+      lines: lines,
+      original: [...bytes, 32],
+      limits: limits,
+    );
+    expect(badHash.difference, isNull);
+    expect(badHash.issue, BankSourceIssue.verificationFailed);
+    final duplicateBytes = utf8.encode(
+      utf8.decode(bytes).replaceFirst('BANK-0002', 'BANK-0001'),
+    );
+    final duplicateStatement = StoredBankStatement(
+      id: 'duplicate',
+      format: BankFileFormat.camt053,
+      account: parsed.account,
+      currency: parsed.currency,
+      from: parsed.from,
+      to: parsed.to,
+      lineCount: lines.length,
+      openCount: lines.length,
+      sourceSha256: sha256.convert(duplicateBytes).toString(),
+      statementRef: parsed.statementId,
+      openingCents: parsed.openingCents,
+      closingCents: parsed.closingCents,
+    );
+    final duplicate = analyzeBankSource(
+      statement: duplicateStatement,
+      lines: lines,
+      original: duplicateBytes,
+      limits: limits,
+    );
+    expect(duplicate.issue, BankSourceIssue.ambiguousIdentity);
+    expect(duplicate.difference, isNull);
+
     final incomplete = BankReconciliationReport(
       statement: statement(skippedTrailing.length),
       lines: skippedTrailing,

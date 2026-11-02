@@ -2021,7 +2021,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankReconAccount => 'Compte';
 
   @override
-  String get bankReconArithmeticDifference => 'Écart arithmétique du relevé';
+  String get bankReconArithmeticDifference =>
+      'Écart arithmétique du fichier de relevé (mouvements acceptés par l’analyseur d’import)';
 
   @override
   String get bankReconBookingDate =>
@@ -2043,6 +2044,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'Couverture partielle : la période déclarée par la banque et la couverture complète du compte ne sont pas établies.';
 
   @override
+  String get bankReconCsvMappingUnavailable =>
+      'Correspondance des colonnes CSV non conservée';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Le calcul du fichier compare ses soldes aux mouvements acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Format ou limites de source ne permettant pas de vérifier le calcul';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identifiant de mouvement source manquant ou dupliqué';
+
+  @override
   String get bankReconNotIncluded =>
       'Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.';
 
@@ -2057,6 +2074,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Source originale indisponible ou inaccessible';
 
   @override
+  String get bankReconReadUnavailable =>
+      'Source originale indisponible ou inaccessible ; absence et refus ne peuvent être distingués';
+
+  @override
   String get bankReconRequestedPeriod => 'Période demandée';
 
   @override
@@ -2064,11 +2085,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les relevés, mouvements et sources sont lus séparément ; ce n’est pas un instantané figé.';
 
   @override
+  String get bankReconSourceNotRetained =>
+      'Source originale non conservée ou empreinte indisponible';
+
+  @override
   String get bankReconSourceUnassociated =>
       'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
 
   @override
+  String get bankReconSourceVerificationFailed =>
+      'Empreinte, analyse, compte, devise ou soldes de la source non vérifiables';
+
+  @override
   String get bankReconTitle => 'Rapport de rapprochement bancaire';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Mouvements source sans association vérifiée à une ligne conservée';
 
   @override
   String get bankReconValueDate =>
