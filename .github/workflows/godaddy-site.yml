@@ -4,14 +4,14 @@
 name: Publish · GoDaddy site package
 
 # Builds the web app and assembles the whole www.deskilo.org site as a Node.js package:
-# the app at the root, with the welcome page, the user guide, the setup guide and the
+# the app under /app/, with the welcome page, the user guide, the setup guide and the
 # setup questionnaire beside it, served by a dependency-free server.
 #
 #   gh workflow run godaddy-site.yml                    # build from master, update the branch
 #   gh workflow run godaddy-site.yml -f push=false      # build only: the zip as an artifact
 #
 # The result lands in two places, both always current:
-#   * the branch `hosting/godaddy` (protected, must be kept) — GoDaddy's Node.js tool deploys it;
+#   * the branch `hosting/godaddy` (protected, must be kept) — the host can pull it;
 #   * `deskilo-site.zip` on the rolling pre-release `godaddy-site` — unzip it on the host.
 # The package's own files (server.js, build/build-site.mjs, README) live on that branch.
 
@@ -82,10 +82,10 @@ jobs:
 
       - name: Build the web app
         # --pwa-strategy=none: no offline-first service worker serving the PREVIOUS build after a
-        # deploy. --base-href /: the app is the site's home, not a sub-path.
+        # deploy. The existing Node server serves the app under /app/.
         run: |
           flutter pub get
-          flutter build web --release --no-web-resources-cdn --pwa-strategy=none --base-href /
+          flutter build web --release --no-web-resources-cdn --pwa-strategy=none --base-href /app/
           dart run tool/task_tool_manifest.dart
 
       - uses: actions/upload-artifact@v4
@@ -111,6 +111,14 @@ jobs:
           ref: ${{ env.SITE_BRANCH }}
           path: site
 
+      # The smoke script follows the dispatched workflow revision even when
+      # the caller deliberately builds an older application ref.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: source
+          persist-credentials: false
+
       - name: Assemble the package
         env:
           SOURCE_SHA: ${{ needs.build.outputs.sha }}
@@ -122,19 +130,12 @@ jobs:
           (cd site && zip -qr ../deskilo-site.zip server.js package.json README.md public)
           ls -lh deskilo-site.zip
           echo "### Package" >> "$GITHUB_STEP_SUMMARY"
-          echo "Built from \`$SOURCE_SHA\`, $(du -sh site/public | cut -f1) unpacked, $(du -h deskilo-site.zip | cut -f1) zipped." >> "$GITHUB_STEP_SUMMARY"
+          echo "Built from \`$SOURCE_SHA\`, $(du -sh site/public | cut -f1) unpacked, $(du -h deskilo-site.zip | cut -f1) zipped. Package publication does not verify host pull, restart or live health." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Smoke-test the package
-        run: |
-          set -euo pipefail
-          (cd site && PORT=4999 node server.js & echo $! > /tmp/site.pid)
-          sleep 2
-          for path in / /welcome/ /guide/en.html /guide/setup-en.html /setup.html /main.dart.js /money /healthz; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:4999$path")
-            echo "$path -> $code"
-            [ "$code" = 200 ] || { echo "::error::$path answered $code"; kill "$(cat /tmp/site.pid)"; exit 1; }
-          done
-          kill "$(cat /tmp/site.pid)"
+        env:
+          SOURCE_SHA: ${{ needs.build.outputs.sha }}
+        run: bash source/scripts/godaddy_site_smoke.sh site "$SOURCE_SHA"
 
       - uses: actions/upload-artifact@v4
         with:
