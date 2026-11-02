@@ -1796,6 +1796,63 @@ class AppLocalizationsEs extends AppLocalizations {
       'Guarde este QR ahora — solo se muestra una vez.';
 
   @override
+  String get bankReconBookingDate =>
+      'Fecha contable guardada (puede usar la fecha valor)';
+
+  @override
+  String get bankReconValueDate =>
+      'Fecha valor guardada (puede usar la fecha contable)';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Los informes de conciliación bancaria no están disponibles para esta exportación.';
+
+  @override
+  String get bankReconTitle => 'Informe de conciliación bancaria';
+
+  @override
+  String get bankReconAccount => 'Cuenta';
+
+  @override
+  String get bankReconObservedDates => 'Fechas de movimientos registrados';
+
+  @override
+  String get bankReconRequestedPeriod => 'Periodo solicitado';
+
+  @override
+  String get bankReconCoverage =>
+      'Cobertura parcial: no se ha establecido el periodo declarado por el banco ni la cobertura completa de la cuenta.';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Extractos, movimientos y fuente se leen por separado; no forman una instantánea fija.';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Fuente original no disponible o inaccesible';
+
+  @override
+  String get bankReconOpening => 'Saldo inicial indicado por el banco';
+
+  @override
+  String get bankReconClosing => 'Saldo final indicado por el banco';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Diferencia aritmética del extracto';
+
+  @override
+  String get bankReconCanonical => 'Movimiento conservado anteriormente';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Diferencia con libros no disponible: faltan el saldo inicial contable de la cuenta y los asientos completos.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Saldo de compensación no disponible: faltan el saldo inicial y los datos completos de liquidación.';
+
+  @override
   String get bankBasisAmount => 'mismo importe y pagador';
 
   @override

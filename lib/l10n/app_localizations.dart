@@ -3025,6 +3025,102 @@ abstract class AppLocalizations {
   /// **'Save this QR now — it is shown only once.'**
   String get badgeTokenOnce;
 
+  /// No description provided for @bankReconBookingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored booking date (may default to value date)'**
+  String get bankReconBookingDate;
+
+  /// No description provided for @bankReconValueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored value date (may default to booking date)'**
+  String get bankReconValueDate;
+
+  /// No description provided for @bankReconNotIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reconciliation reports are unavailable for this export.'**
+  String get bankReconNotIncluded;
+
+  /// No description provided for @bankReconTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reconciliation report'**
+  String get bankReconTitle;
+
+  /// No description provided for @bankReconAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get bankReconAccount;
+
+  /// No description provided for @bankReconObservedDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored movement dates'**
+  String get bankReconObservedDates;
+
+  /// No description provided for @bankReconRequestedPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested period'**
+  String get bankReconRequestedPeriod;
+
+  /// No description provided for @bankReconCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial coverage: the bank-reported period and complete account coverage are not established.'**
+  String get bankReconCoverage;
+
+  /// No description provided for @bankReconSeparateReads.
+  ///
+  /// In en, this message translates to:
+  /// **'Statements, movements and source are separate reads; this is not a frozen snapshot.'**
+  String get bankReconSeparateReads;
+
+  /// No description provided for @bankReconOriginalUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source unavailable or inaccessible'**
+  String get bankReconOriginalUnavailable;
+
+  /// No description provided for @bankReconOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance stated by bank'**
+  String get bankReconOpening;
+
+  /// No description provided for @bankReconClosing.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing balance stated by bank'**
+  String get bankReconClosing;
+
+  /// No description provided for @bankReconArithmeticDifference.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement arithmetic difference'**
+  String get bankReconArithmeticDifference;
+
+  /// No description provided for @bankReconCanonical.
+  ///
+  /// In en, this message translates to:
+  /// **'Previously retained movement'**
+  String get bankReconCanonical;
+
+  /// No description provided for @bankReconBooksUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.'**
+  String get bankReconBooksUnavailable;
+
+  /// No description provided for @bankReconClearingUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider clearing unavailable: clearing opening and complete settlement facts are missing.'**
+  String get bankReconClearingUnavailable;
+
   /// #2380 Why suggested: same amount, same payer, recent.
   ///
   /// In en, this message translates to:

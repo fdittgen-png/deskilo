@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2380 — the bank statements of a space and the movements of each.
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/settings/active_settings.dart';
 import '../application/bank_import_commands.dart';
+import '../application/bank_reconciliation_reader.dart';
 import '../data/supabase_bank_statement_repository.dart';
 import '../domain/bank/bank_import_settings.dart';
 import '../domain/bank/bank_match.dart';
@@ -12,11 +14,22 @@ import '../domain/bank/bank_records.dart';
 import 'credit_providers.dart';
 import 'money_providers.dart';
 
+// Shared workspace context needed by bank report consumers.
+export '../../workspace/domain/workspace_feature.dart' show WorkspaceFeature;
+export '../../workspace/providers/workspace_providers.dart'
+    show currentWorkspaceProvider, enabledFeaturesSyncProvider, myMemberProvider, myPermissionsProvider;
+
 part 'bank_statement_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 BankStatementRepository bankStatementRepository(Ref ref) =>
     SupabaseBankStatementRepository(ref.watch(moneyClientProvider));
+
+/// The report reads bank data through the existing authorized repository.
+final bankReconciliationReaderProvider = Provider<BankReconciliationReader>(
+  (ref) => BankReconciliationReader(ref.watch(bankStatementRepositoryProvider)),
+  name: 'bankReconciliationReaderProvider',
+);
 
 @riverpod
 BankImportCommands bankImportCommands(Ref ref) =>

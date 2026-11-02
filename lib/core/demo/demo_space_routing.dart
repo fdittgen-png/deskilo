@@ -36,6 +36,7 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
+import 'data/bank_statement_demo_seed.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money_repository.dart';

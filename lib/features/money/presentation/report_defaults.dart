@@ -622,6 +622,7 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
+      ReportDocSlot(key: 'bank_reconciliation') => bankReconciliationBands(l10n),
       ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') =>
         bookReportBands(l10n, docId),
       ReportDocSlot(key: 'badges') => defaultBadgeSheetBands(l10n),

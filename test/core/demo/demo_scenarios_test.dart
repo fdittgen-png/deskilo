@@ -17,7 +17,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
-import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
+import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
@@ -617,7 +617,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'payment reported as made',
     (w) async {
       final repo = seedDemoBankStatements(w.f.money, w.now);
-      final statement = (await repo.fetchStatements('ws-1')).single;
+      final statement = (await repo.fetchStatements('ws-1'))
+          .singleWhere((s) => s.statementRef == 'DEMO-NTFCTN-1');
       final lines = await repo.fetchLines(statement.id);
       final open = openInvoices(w.f.money.invoices, w.f.money.invoiceMatchesStore);
       final byReference = BankWorkList(lines, open, windowDays: 60).referenceBatch;

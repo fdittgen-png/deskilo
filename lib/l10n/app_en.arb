@@ -2057,6 +2057,22 @@
   "@badgeTokenOnce": {
     "description": "Warning under the freshly issued badge QR; the raw token is never recoverable later"
   },
+  "bankReconBookingDate": "Stored booking date (may default to value date)",
+  "bankReconValueDate": "Stored value date (may default to booking date)",
+  "bankReconNotIncluded": "Bank reconciliation reports are unavailable for this export.",
+  "bankReconTitle": "Bank reconciliation report",
+  "bankReconAccount": "Account",
+  "bankReconObservedDates": "Stored movement dates",
+  "bankReconRequestedPeriod": "Requested period",
+  "bankReconCoverage": "Partial coverage: the bank-reported period and complete account coverage are not established.",
+  "bankReconSeparateReads": "Statements, movements and source are separate reads; this is not a frozen snapshot.",
+  "bankReconOriginalUnavailable": "Original source unavailable or inaccessible",
+  "bankReconOpening": "Opening balance stated by bank",
+  "bankReconClosing": "Closing balance stated by bank",
+  "bankReconArithmeticDifference": "Statement arithmetic difference",
+  "bankReconCanonical": "Previously retained movement",
+  "bankReconBooksUnavailable": "Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.",
+  "bankReconClearingUnavailable": "Provider clearing unavailable: clearing opening and complete settlement facts are missing.",
   "bankBasisAmount": "same amount and payer",
   "@bankBasisAmount": {
     "description": "#2380 Why suggested: same amount, same payer, recent."

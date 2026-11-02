@@ -52,7 +52,8 @@ void main() {
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('bank-statements-button')));
     await _settle(tester);
-    final statement = (await bank.fetchStatements('ws-1')).single;
+    final statement = (await bank.fetchStatements('ws-1'))
+        .singleWhere((s) => s.statementRef == 'DEMO-NTFCTN-1');
     await tester.tap(find.byKey(ValueKey('bank-statement-${statement.id}')));
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('bank-confirm-references')));
