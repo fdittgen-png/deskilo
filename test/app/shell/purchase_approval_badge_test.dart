@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #3070: unavailable or loading approval counts do not appear as a true zero.
+// Reproduce Riverpod retained refresh/error states to verify the badge.
+// ignore_for_file: invalid_use_of_internal_member
 import 'package:deskilo/app/shell/purchase_approval_badge.dart';
 import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -47,12 +49,14 @@ void main() {
       const old = AsyncData(
         PurchaseApprovalPage(rows: [], count: 7, version: 'old'),
       );
+      // Reproduce Riverpod's retained refresh state explicitly for this regression.
       final loading = const AsyncLoading<PurchaseApprovalPage>()
           .copyWithPrevious(old);
       expect(loading.value?.count, 7);
       await tester.pumpWidget(_view(loading));
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('7'), findsNothing);
+      // Reproduce the retained value on refresh failure too.
       final failure = AsyncError<PurchaseApprovalPage>(
         StateError('offline'),
         StackTrace.current,

@@ -108,11 +108,13 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('approval-detail-retry')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     expect(find.byKey(const ValueKey('purchase-reject')), findsNothing);
   });
@@ -147,10 +149,12 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     container.read(_canApprove.notifier).state = false;
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
   });
@@ -184,13 +188,15 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.deny = true;
     container.invalidate(
       purchaseApprovalPageProvider((workspaceId: 'ws', after: null)),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
   });
@@ -221,11 +227,13 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.deny = true;
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(purchases.decisions, 0);
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
@@ -289,17 +297,20 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsOneWidget);
     reads.gate = Completer<void>();
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pump();
     container.read(_purchasesEnabled.notifier).state = false;
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('purchase-approve')), findsNothing);
     expect(find.byKey(const ValueKey('approval-detail-retry')), findsOneWidget);
     reads.gate!.complete();
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(purchases.decisions, 0);
   });
   testWidgets('a refused decision refreshes the page and scoped detail', (
@@ -329,11 +340,13 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     final previousPages = reads.pages;
     final previousDetails = reads.calls;
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(purchases.decisions, 1);
     expect(reads.pages, greaterThan(previousPages));
     expect(reads.calls, greaterThan(previousDetails + 1));

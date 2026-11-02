@@ -61,7 +61,8 @@ void main() {
         ],
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('approval-1')), findsOneWidget);
     expect(find.byKey(const ValueKey('approval-2')), findsNothing);
     expect(find.byKey(const ValueKey('approval-3')), findsNothing);
@@ -109,7 +110,8 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(
         find.text('No supplier bills await your approval.'),
         findsOneWidget,
@@ -118,16 +120,19 @@ void main() {
       await tester.tap(
         find.byKey(const ValueKey('approval-receipt-receipt-1')),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.textContaining('R-1'), findsWidgets);
       expect(detailReads, 1);
       Navigator.of(tester.element(find.textContaining('R-1').last)).pop();
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       visible = false;
       ProviderScope.containerOf(
         tester.element(find.byType(PurchaseApprovalsView)),
       ).invalidate(purchasesProvider('ws'));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(
         find.byKey(const ValueKey('approval-receipt-receipt-1')),
         findsNothing,
@@ -176,10 +181,12 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.byKey(const ValueKey('approval-receipt-r')), findsOneWidget);
     billRead.completeError(StateError('bill read refused'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('approval-receipt-r')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.textContaining('Receipt R'), findsWidgets);
   });
 
@@ -214,12 +221,14 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
     expect(find.text('Pending receipts could not be loaded.'), findsOneWidget);
     refused = false;
     await tester.tap(find.byKey(const ValueKey('approval-receipts-retry')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(
       find.byKey(const ValueKey('approval-receipt-retry-r')),
       findsOneWidget,
@@ -231,13 +240,15 @@ void main() {
     await tester.pumpWidget(
       _app(() async => [_doc('2', PurchaseState.approved)]),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('No supplier bills await your approval.'), findsOneWidget);
   });
 
   testWidgets('a failed read says so instead of an empty list', (tester) async {
     await tester.pumpWidget(_app(() async => throw StateError('refused')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
     expect(find.text('No supplier bills await your approval.'), findsNothing);
   });
@@ -273,9 +284,11 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byKey(const ValueKey('approval-load-more')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.byKey(const ValueKey('approval-2')), findsOneWidget);
       bad = true;
       ProviderScope.containerOf(
@@ -283,11 +296,13 @@ void main() {
       ).invalidate(
         purchaseApprovalPageProvider((workspaceId: 'ws', after: cursor)),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
       bad = false;
       await tester.tap(find.byKey(const ValueKey('approvals-retry')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.byKey(const ValueKey('approval-1')), findsOneWidget);
       expect(find.byKey(const ValueKey('approval-load-more')), findsOneWidget);
     },
