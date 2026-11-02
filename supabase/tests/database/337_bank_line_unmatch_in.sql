@@ -22,7 +22,7 @@
 -- same credit. Other matches stay. The record is read by the statements'
 -- readers only and written by nobody; the command is not anon's.
 begin;
-select plan(50);
+select plan(56);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -64,8 +64,8 @@ begin
   insert into public.workspace_roles (workspace_id, key, permissions)
   values (ws, 'reader', array['viewFinances']) returning id into r_r;
   insert into public.workspace_role_members (workspace_id, role_id, member_id) values (ws, r_r, m_r);
-  -- Eight invoices of the payer (no period: nothing else constrains them).
-  for i in 1..8 loop
+  -- Ten invoices of the payer (no period: nothing else constrains them).
+  for i in 1..10 loop
     insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines,
                                  total_cents, currency, member_name, workspace_name, issuer_name, signature)
     values (ws, m_p, m_o, 'UM-' || i, 'Invoice ' || i, '[]'::jsonb,
@@ -93,7 +93,7 @@ begin
   for i in 1..10 loop
     perform set_config('um.l' || i, (select id from public.bank_statement_lines where workspace_id = ws and position = i)::text, false);
   end loop;
-  for i in 1..8 loop
+  for i in 1..10 loop
     perform set_config('um.i' || i, (select id from public.invoices where workspace_id = ws and number = 'UM-' || i)::text, false);
   end loop;
   perform set_config('um.lx', (select id from public.bank_statement_lines where workspace_id = ws2)::text, false);
@@ -300,6 +300,31 @@ select ok(not has_function_privilege('anon', 'public.unmatch_bank_line_in_v1(uui
           'the command is not anon''s');
 select is(public.event_type_view_permissions('invoice_payment_reversed'), array['viewFinances', 'issueInvoices'],
           'the undoing is read by whoever reads the payment');
+-- Every branch of event_type_view_permissions, as 0639 had it, plus the new type.
+select ok((select bool_and(public.event_type_view_permissions(c.t) = string_to_array(c.want, ','))
+             from (values
+               ('payment', 'viewFinances,issueInvoices'), ('adjustment', 'viewFinances,issueInvoices'),
+               ('service_charge', 'viewFinances,issueInvoices'), ('invoice_payment', 'viewFinances,issueInvoices'),
+               ('invoice_payment_reversed', 'viewFinances,issueInvoices'), ('invoice_writeoff', 'viewFinances,issueInvoices'),
+               ('invoice_reminder', 'viewFinances,issueInvoices'), ('invoice_issue', 'viewFinances,issueInvoices'),
+               ('invoice_void', 'viewFinances,issueInvoices'), ('refund', 'viewFinances,issueInvoices'),
+               ('usage_correction', 'viewFinances,issueInvoices'), ('usage_record_delete', 'viewFinances,issueInvoices'),
+               ('expense', 'approveExpenses,viewFinances'), ('expense_schedule', 'approveExpenses,viewFinances'),
+               ('expense_repartition', 'approveExpenses,viewFinances'),
+               ('reservation', 'manageReservations'), ('space_reservation', 'manageReservations'),
+               ('reservation_delete', 'manageReservations'),
+               ('quota', 'manageReservations,viewFinances,issueInvoices'),
+               ('member_join', 'manageMembers'), ('member_status_change', 'manageMembers'),
+               ('subscription_change', 'manageMembers'), ('role_change', 'manageMembers'),
+               ('matrix_change', 'manageRoles,manageMembers'),
+               ('price_negotiation', 'viewNegotiations'),
+               ('payment_terms_change', 'paymentTermsEdit,viewNegotiations'),
+               ('lease_change', 'manageLease,viewFinances'),
+               ('commitment_variance', 'managePurchases,viewFinances'),
+               ('badge_security_alert', 'workspaceSettings'),
+               ('payment_instructions_change', 'manageIntegrations'),
+               ('a_type_nobody_knows', 'manageConfiguration')) c(t, want)),
+          'the restated event_type_view_permissions answers every branch as before');
 select throws_ok(format($t$insert into public.validation_policies (workspace_id, event_type) values (%L, 'invoice_payment_reversed')$t$,
           pg_temp.v('ws')), '23514', null, 'the undoing is a record: it can have no validation policy');
 
@@ -316,6 +341,11 @@ delete from public.invoice_match_payments where invoice_id = pg_temp.v('i7')::uu
 select is(pg_temp.undo('owner', pg_temp.v('l7'), 'gone meanwhile', '00000000-0000-4000-8000-0000065000ea') ->> 'refused',
           'DKB01', 'a match that went before the lock is refused as decided meanwhile');
 
+-- The guard, as 0504 had it: a payment dated in the OPEN period is booked.
+select lives_ok(format($t$insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at)
+          values (%L, %L, 10000, 'exact', now())$t$, pg_temp.v('ws'), pg_temp.v('i9')),
+          'the guard lets a payment dated in an open period be booked');
+
 -- A match still awaiting its validation is rejected there, not undone here.
 insert into public.validation_policies (workspace_id, event_type) values (pg_temp.v('ws')::uuid, 'invoice_payment');
 select is(pg_temp.match('l8', 'i8') ->> 'status', 'pending', 'with a rule for payments, L8 is matched pending');
@@ -331,6 +361,18 @@ select throws_ok(format($t$delete from public.invoice_matches where invoice_id =
           'P0001', null, 'the books'' guard refuses a plain DELETE of a confirmed match in a closed period');
 select lives_ok(format($t$delete from public.invoice_matches where invoice_id = %L$t$, pg_temp.v('i8')),
           'a PENDING match is still removed by the rejection path, closed period or not');
+select throws_ok(format($t$insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at)
+          values (%L, %L, 10000, 'exact', now())$t$, pg_temp.v('ws'), pg_temp.v('i10')),
+          'P0001', null, 'the guard still refuses a payment dated inside a closed period to be booked');
+select throws_ok(format($t$update public.invoice_matches set paid_cents = 9999 where invoice_id = %L$t$, pg_temp.v('i7')),
+          'P0001', null, 'and a change of the amount of a payment of a closed period');
+select lives_ok(format($t$update public.invoice_matches set note = 'checked' where invoice_id = %L$t$, pg_temp.v('i7')),
+          'but a change that is not a date or an amount is not the guard''s business');
+-- A cascade (trigger depth 2) is not an undoing: deleting the invoice takes its match.
+alter table public.invoices disable trigger user;
+select lives_ok(format($t$delete from public.invoices where id = %L$t$, pg_temp.v('i4')),
+          'the guard does not stand in the way of a cascade from a deleted invoice');
+alter table public.invoices enable trigger user;
 
 select * from finish();
 rollback;

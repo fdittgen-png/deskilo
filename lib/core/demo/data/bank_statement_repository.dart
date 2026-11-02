@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/bank/bank_match.dart';
 import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/swiss_qr_bill.dart';
 import '../../time/date_text.dart';
+import 'bank_unmatch_in.dart';
 import 'money_repository.dart';
 
 /// The bank statements in memory, with the server's rules the screens
@@ -401,17 +400,8 @@ class FakeBankStatementRepository implements BankStatementRepository {
     return _set(lineId, BankLineStatus.open);
   }
 
-  /// The matches undone, as the server records them: the line, the invoice
-  /// and the payment it consumed, and why, by request id.
-  final unmatches =
-      <String, ({String lineId, String invoiceId, String paymentId, String reason})>{};
-
-  /// #2380 — the last day the books are closed through; null when none is.
-  /// A payment matched on or before it is not undone (0650's guard).
-  DateTime? booksClosedThrough;
-
-  PostgrestException _refused(String code, String message) =>
-      PostgrestException(message: message, code: code);
+  final unmatches = <String, DemoUnmatch>{}; // #2380, by request id
+  DateTime? booksClosedThrough; // #2380, the last day the books are closed
 
   @override
   Future<BankLineStatus> unmatchIn(
@@ -419,95 +409,15 @@ class FakeBankStatementRepository implements BankStatementRepository {
     required String reason,
     required String requestId,
   }) async {
-    final done = unmatches[requestId];
-    if (done != null) {
-      if (done.lineId != lineId) {
-        throw _refused(
-          '22023',
-          'this request id was already used for a different request',
-        );
-      }
+    final why = reason.trim();
+    if (demoUnmatchIsReplay(unmatches, requestId, lineId, why)) {
       return _line(lineId).status;
     }
-    if (reason.trim().isEmpty) {
-      throw _refused('22023', 'state why the match is undone');
-    }
-    final line = _line(lineId);
-    if (!line.isMoneyIn) {
-      throw _refused(
-        'DKB02',
-        'money out settles no invoice: undo its reconciliation',
-      );
-    }
-    final invoiceId = line.invoiceId;
-    final paymentId = _payments[lineId];
-    final match = invoiceId == null ? null : money.invoiceMatchesStore[invoiceId];
-    if (invoiceId == null ||
-        paymentId == null ||
-        match == null ||
-        (line.status != BankLineStatus.matched &&
-            line.status != BankLineStatus.pending)) {
-      throw _refused('DKB01', 'this movement settles no invoice');
-    }
-    if (match.pending || line.status == BankLineStatus.pending) {
-      throw _refused('DKB01', 'this match awaits its validation: reject it there');
-    }
-    final invoice = money.invoices.firstWhere((i) => i.id == invoiceId);
-    final payment = money.ledger.firstWhere((e) => e.id == paymentId);
-    if (match.resolution == 'over_credit_note' ||
-        match.writeoffAt != null ||
-        invoice.settledByInvoiceId != null ||
-        money.invoices.any((i) => i.settledByInvoiceId == invoiceId)) {
-      throw _refused(
-        'DKB04',
-        'this match did more than link a payment: it cannot be undone here',
-      );
-    }
-    if (match.paymentLedgerId != paymentId ||
-        match.paidCents != payment.amountCents) {
-      throw _refused('DKB05', 'other payments are matched to this invoice');
-    }
-    final closed = booksClosedThrough;
-    if (closed != null && !match.matchedAt.isAfter(closed)) {
-      throw _refused(
-        'DKB06',
-        'this payment is dated inside a closed period of the books',
-      );
-    }
-    // The match goes, the payment credit stays; the undoing is on record
-    // and on the timeline, and it is not a payment.
-    money.invoiceMatchesStore.remove(invoiceId);
-    money.consumedPaymentIds.remove(paymentId);
-    final events = money.eventRepository;
-    if (events != null) {
-      events.events.add(
-        WorkspaceEvent(
-          id: 'invrev-${events.events.length + 1}',
-          workspaceId: invoice.workspaceId,
-          type: EventType.invoicePaymentReversed,
-          action: EventAction.created,
-          actorMemberId: 'member-1',
-          subjectMemberId: invoice.memberId,
-          payload: {
-            'invoice_id': invoiceId,
-            'number': invoice.number,
-            'line_id': lineId,
-            'payment_ledger_id': paymentId,
-            'amount_cents': payment.amountCents,
-            'resolution': match.resolution,
-            'reason': reason.trim(),
-          },
-          status: EventStatus.applied,
-          createdAt: today,
-        ),
-      );
-    }
-    unmatches[requestId] = (
-      lineId: lineId,
-      invoiceId: invoiceId,
-      paymentId: paymentId,
-      reason: reason.trim(),
-    );
+    final target = demoUnmatchTarget(money: money, line: _line(lineId),
+        paymentId: _payments[lineId], closedThrough: booksClosedThrough);
+    demoApplyUnmatch(money, target, why, today);
+    unmatches[requestId] = (lineId: lineId, invoiceId: target.invoice.id,
+        paymentId: target.payment.id, reason: why);
     return _set(lineId, BankLineStatus.recorded, clearInvoice: true);
   }
 }
