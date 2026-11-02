@@ -70,7 +70,8 @@ class DemoTaxReporting implements TaxReportingRepository {
       lines: lines,
       totalNetCents: lines.fold(0, (sum, l) => sum + l.netCents),
       totalVatCents: lines.fold(0, (sum, l) => sum + l.vatCents),
-      currency: 'EUR',
+      // The currency the space's invoices are in (a UK space bills in pounds).
+      currency: _m.invoices.firstOrNull?.currency ?? 'EUR',
       invoiceCount: documents.length,
       createdAt: DateTime.utc(2026, 8, 11),
     );
@@ -80,6 +81,42 @@ class DemoTaxReporting implements TaxReportingRepository {
       _m.vatDeclarations.add(declaration);
     }
     return declaration.id;
+  }
+
+  /// #2470 — the lines the period would be prepared with RIGHT NOW, without
+  /// saving them: the Demo's HMRC compares them with the prepared return to
+  /// refuse a submission whose figures changed after the preparation.
+  List<VatDeclarationLine> preparedLinesNow(DateTime start, DateTime end) =>
+      vatReturnLinesOf(_vatReturn(start, end), declarations: _m.vatDeclarations);
+
+  /// #2470 — files the prepared return as the Demo's simulated HMRC did: the
+  /// channel `hmrc_mtd` and a receipt that says it is simulated. Not part of
+  /// the repository port: only the Demo's HMRC adapter calls it, after its
+  /// own checks.
+  void fileAsHmrcDemo(String declarationId, String receipt) {
+    final index = _m.vatDeclarations.indexWhere((d) => d.id == declarationId);
+    if (index == -1) throw StateError('unknown declaration');
+    final d = _m.vatDeclarations[index];
+    if (d.isFiled) throw StateError('declaration already filed');
+    if (!d.isPrepared) throw StateError('prepare the return before filing it');
+    _m.vatDeclared.addAll(vatDeclaredBy(_vatReturn(d.periodStart, d.periodEnd)));
+    _m.vatDeclarations[index] = VatDeclaration(
+      id: d.id,
+      workspaceId: d.workspaceId,
+      periodStart: d.periodStart,
+      periodEnd: d.periodEnd,
+      status: 'filed',
+      lines: d.lines,
+      totalNetCents: d.totalNetCents,
+      totalVatCents: d.totalVatCents,
+      currency: d.currency,
+      invoiceCount: d.invoiceCount,
+      createdAt: d.createdAt,
+      submittedAt: d.periodEnd.add(const Duration(days: 20)),
+      submittedChannel: 'hmrc_mtd',
+      submittedReceipt: receipt,
+      number: 'DECL-${d.periodEnd.year}-${(index + 1).toString().padLeft(4, '0')}',
+    );
   }
 
   @override

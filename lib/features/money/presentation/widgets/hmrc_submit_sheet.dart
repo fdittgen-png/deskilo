@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -69,6 +70,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
         state: state,
       );
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
+    } on Object catch (e, st) {
+      // The server (or the Demo) refused the person: said, not thrown.
+      TraceLogger.instance.warn('money', 'hmrc connect refused', stackTrace: st);
+      if (mounted) {
+        setState(() => _outcome = const HmrcRefused(HmrcRefusal.notAllowed));
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }

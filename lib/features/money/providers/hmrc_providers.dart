@@ -5,7 +5,6 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meta/meta.dart';
 
 import '../../../core/browser/browser_facts.dart';
 import '../../../core/links/link_launcher.dart';
@@ -17,8 +16,7 @@ import '../data/supabase_hmrc_repository.dart';
 import '../domain/hmrc_submission.dart';
 import 'credit_providers.dart';
 
-/// The HMRC port. A test (and the Demo scope) swaps it.
-@visibleForTesting
+/// The HMRC port. The Demo scope swaps it for its own.
 final hmrcRepositoryProvider = Provider<HmrcRepository>(
   (ref) => SupabaseHmrcRepository(ref.watch(moneyClientProvider)),
 );

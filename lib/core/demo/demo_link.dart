@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'demo_persona.dart';
+import 'seed/demo_london_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
 part 'demo_link.g.dart';
@@ -22,6 +23,7 @@ const demoLinkRoutes = {
   '/workspace-settings',
   '/settings', // #3077 — the settings' resume banner, for a tester
   '/workspace-overview',
+  '/vat-declarations',
   '/features',
   '/calendar',
   '/members',
@@ -61,7 +63,7 @@ class DemoLink {
   const DemoLink({this.persona, this.workspaceId, this.to});
 
   /// From the auth link's query: `persona` by name, `space` as `pezenas`
-  /// or `leipzig`, `to` only when [_demoLinkAllows] it.
+  /// `leipzig` or `london`, `to` only when [_demoLinkAllows] it.
   factory DemoLink.parse(Map<String, String> query) => DemoLink(
     persona: DemoPersona.values
         .where((p) => p.name == query['persona'])
@@ -69,6 +71,7 @@ class DemoLink {
     workspaceId: switch (query['space']) {
       'pezenas' => demoFirstSpaceId,
       'leipzig' => demoSecondSpaceId,
+      'london' => demoLondonSpaceId,
       _ => null,
     },
     to: _demoLinkAllows(query['to']) ? query['to'] : null,
@@ -94,6 +97,7 @@ class DemoLink {
     'space': ?switch (workspaceId) {
       null => null,
       demoSecondSpaceId => 'leipzig',
+      demoLondonSpaceId => 'london',
       _ => 'pezenas',
     },
     'persona': ?persona?.name,

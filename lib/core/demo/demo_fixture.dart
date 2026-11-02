@@ -39,6 +39,7 @@ import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
 import 'demo_clock.dart';
 import 'demo_dataset.dart';
+import 'demo_london_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
@@ -107,6 +108,7 @@ class DemoFixture {
     required this.outward,
     required this.seededAt,
     required this.secondSpace,
+    required this.london,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -193,6 +195,12 @@ class DemoFixture {
       actor: () => actor.memberId,
       now: today,
     )..viewAs(actor.memberId, workspaces);
+    // The third space, in London: the UK VAT return, filed through MTD.
+    final london = DemoLondonData.build(
+      home: workspaces,
+      actor: () => actor.memberId,
+      now: today,
+    )..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
@@ -256,6 +264,7 @@ class DemoFixture {
       seededAt: today,
       holds: holds,
       secondSpace: secondSpace,
+      london: london,
     );
   }
 
@@ -310,6 +319,7 @@ class DemoFixture {
 
   /// The second space (Leipzig), with repositories of its own.
   final DemoSecondSpaceData secondSpace;
+  final DemoLondonData london;
 
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
@@ -332,6 +342,7 @@ class DemoFixture {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
     secondSpace.viewAs(persona.memberId, workspaces);
+    london.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).
