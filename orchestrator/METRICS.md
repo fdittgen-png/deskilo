@@ -81,3 +81,17 @@ One broad local gate first caught an unkeyed retry control; E2 fixed it and rera
 ## Missed merge handoff — 10:59 UTC
 
 #3252 merged 10:29:22 UTC; live reconciliation happened at 10:58:37 UTC, **29m 15s later**. Reviewer and engineer CURRENT summaries still described pending CI/review. All five candidate workflows had completed successfully. This is observed merge-to-reconciliation latency, not CI execution or proof that both sessions were idle throughout. Root missed the handoff; the owner prompted correction. Cleanup/ledger release and bounded residual preparation were then queued. No numerical savings claim is justified. On future armed merges, explicitly assign the existing merge owner to verify completion and send the receipt during its active work; do not imply background observation after a turn ends or create an unauthorized watcher.
+
+## Database verification review — 0654
+
+Observed receipts: original failed shim at 11:34:47 UTC; corrected 48-assertion shim success at 11:48:10 UTC, **13m 23s elapsed**. This interval includes diagnosis, implementation and review; it is not all avoidable waste and does not measure complete checkpoint time.
+
+- One initial runtime failure: replacement chose an already-ineligible sender-self equality bill; eligible IDs removed = none, one added, 206 -> 207. No duplicate-count defect was established by that result.
+- Two generated bundles rejected BEFORE execution: embedded plan44 versus expected45, then plan44 versus expected48. Review prevented invalid DB runs; exact-source generation/preflight should catch these earlier and reduce review round trips.
+- Two focused diagnostic executions reproduced the same target-selection problem. The second did not recover the original run selection; retain that evidence limit. Share one diagnosis and require a new question before repeating it.
+- Corrected custom shim: 48 assertions, intentional rollback exit1, fresh postcheck exit0/schema653/new routines absent. Real pgTAP and isolated CI remain NOT RUN.
+- Additional broad-test rework arose from raw-spinner and grant-syntax lint; focused preflight now includes affected state-primitives, migration-grants and recorder checks.
+
+Improvement assignments: E1 minimal offline source/plan/hash validator; reviewer one-time feasibility assessment of genuine rolled-back pgTAP; E2 explicit fixture eligibility/intermediate-state assertions. Root must consolidate scope messages and review handoffs instead of re-sending complete instructions for every micro-delta.
+
+For the next candidate track: offline-rejected bundles, database executions per distinct input hash, repeated diagnostics without a new question, first-valid-bundle pass rate, failure-to-diagnosis and diagnosis-to-corrected-proof time, broad reruns, verification-blocked time separately from coding time, and token usage only when attributable telemetry exists. Targets: zero stale-plan bundles reaching reviewer execution, zero unchanged blind reruns, one shared root-cause receipt per diagnosed defect. These are targets, not achieved savings; percent improvement and database-attributable token savings remain UNKNOWN.
