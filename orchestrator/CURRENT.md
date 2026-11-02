@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Verified 2026-11-02 18:31 UTC. Refresh live GitHub and each session CURRENT before acting. This is takeover knowledge, not a second dispatch queue.
+Verified 2026-11-02 18:38 UTC. Refresh live GitHub and each session CURRENT before acting. This is takeover knowledge, not a second dispatch queue.
 
 ## Public web app — RESTORED, updated to 63b4a25
 
@@ -14,11 +14,21 @@ Initial restoration remains rollback: deployment2a0228c818b9830b5885550782afed29
 
 GoDaddy https://www.deskilo.org/app/ still serves older ef3a7cf3 (October12); no new GoDaddy deployment. Host administration/private-source delivery remain unverified and no longer block public app availability. Preserve hosting/godaddy.
 
+## Active infrastructure blocker — GitHub Actions billing
+
+Verified 2026-11-02 18:38 UTC. #3262 exact4323c7cd142c0f5dc28c9cc875150c9efce04817 Quality41497810344 completed FAILURE. Classifier, all six test shards, Linux browser startup/gate and database passed. Aggregate125470557277 and report125470867672 have zero steps; annotations explicitly say jobs were not started because recent account payments failed OR spending limit needs increasing. Aggregate/coverage verdict NOT RUN; do not call it an executed failing test or green overall CI.
+
+Exact cause/amount remains UNKNOWN. Root read-only billing API returned404 with CLI explanation that user scope is missing; Edge billing page is signed out. No account credentials, spending limits, payment settings or visibility changed. Existing repo self-hosted runners count0. Account-owner billing access is needed at https://github.com/settings/billing . No public-source workaround, fabricated success, new VM or guard bypass.
+
+Reviewer holds merge. No blind reruns, empty commits or new pushes solely to trigger blocked jobs. Once billing is cleared, one coherent whole Quality workflow rerun is required by existing same-attempt artifact policy; do not use failed-jobs-only rerun. Preserve original run/attempt evidence.
+
+E1 may run a bounded LOCAL aggregation/coverage diagnostic using existing exact-run/attempt artifacts and tools if feasible, without repeating tests or adding infrastructure. Keep exact hashes/exits; it cannot substitute for required hosted checks. E2 continues existing3070 navigation, local gates and review, no unrelated checkpoint. Root notified all three sessions. Public app63b remains live; this block does not undo the completed Pages deployment.
+
 ## Team and current work
 
 - Root orchestrator: 01a19218-9136-7920-bff3-4a1a4b345d3a. Scope, coordination and this knowledge base. Owns /private/tmp/deskilo-public-pages hosting checkout.
 - Reviewer: 01a19b63-22e4-72c1-8ea5-49e361e4ff4f. Sole #2596/ledger writer, exact-head review, eligible squash merges and acceptance closure.
-- E1: 01a19b63-49df-7961-ba1c-1faa87cdd67a. #3259 origin correction PR3262 now4323c7cd142c0f5dc28c9cc875150c9efce04817, OPEN, final Quality running. Prior b8 Quality41492069945 failed because browser-only deployment_base_web_test was selected but never loaded by VM shard; E1 owns coherent selection AND actual browser evidence repair, no gate weakening. Existing browser red/green and source tests retain exact-byte scope. No live provider configuration changes.
+- E1: 01a19b63-49df-7961-ba1c-1faa87cdd67a. #3259 origin correction PR3262 now4323c7cd142c0f5dc28c9cc875150c9efce04817, OPEN, Quality blocked by billing as described above. Prior b8 Quality41492069945 failed because browser-only deployment_base_web_test was selected but never loaded by VM shard; E1 owns coherent selection AND actual browser evidence repair, no gate weakening. Existing browser red/green and source tests retain exact-byte scope. No live provider configuration changes.
 - E2: 01a19b63-6e38-7be2-8b35-f6c3d9f28930. #3263 merged 63b4a25e at 18:11:56 UTC; owned cleanup verified. DECISION3070-CLOSE-1 now authorizes one final UI completion checkpoint: preserve /money/suppliers as canonical, add /suppliers compatibility redirect with equivalent access/route declarations, and add the missing gated Purchases-group entry to the existing To-pay workflow. Reuse existing destination permissions, supported filters and truthful labels; no new payment engine, flags or SQL. Include actual Demo navigation/readback and feature/member denial tests. E2 claims shell/router/access/classes/coverage and needed scoped tests/Demo, excluding E1 instance/browser-CI/budget outputs. One coherent PR, then whole-issue acceptance review and relevant public delivery. Messages queued to all three sessions; personal ACK not yet observed.
 - DeepSeek: engineer-3-deepseek onboarding prepared /private/tmp/deskilo-deepseek-handover.txt and .agent-work/coordination/deepseek/inbox/orchestrator.md. No running harness/two-way ACK/claim verified. Read this CURRENT over old handover snapshots; do not add a third editing stream automatically.
 
