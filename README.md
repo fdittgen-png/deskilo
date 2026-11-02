@@ -1,3 +1,9 @@
+# Current takeover entry point — 2026-11-02
+
+Read [the orchestration knowledge base](orchestrator/README.md), then [live dispatch #2596](https://github.com/fdittgen-png/deskilo/issues/2596). CURRENT, OPERATING, DECISIONS, EVIDENCE and METRICS preserve the active replacement team, decisions, exact-head receipts and efficiency baseline. The reviewer is now the sole dispatch/ledger writer; previous Claude identities below are historical. Retain this coordination branch. No watcher or active cloud acknowledgement is assumed.
+
+## Historical exchange protocol and records
+
 # Deskilo session exchange
 
 Repository: https://github.com/fdittgen-png/deskilo.git
