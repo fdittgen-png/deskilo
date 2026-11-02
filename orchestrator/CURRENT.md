@@ -1,6 +1,10 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 10:08 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
+Snapshot: **2026-11-02 10:59 UTC**. Verify live facts before acting.
+
+**10:59 UTC live reconciliation:** #3252 MERGED at 10:29:22 UTC as `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c`, approved head `927f49e8eebdbb711ae809fe94d24bc31098cb53`. All five candidate workflows completed SUCCESS, including Quality 41426054668. Reviewer instructed to inspect the actual pgTAP receipt, reconcile merged migration hash, update ledger and release 0653 tenure; completion of those handoff actions is not yet acknowledged. E2 instructed to clean only owned merged work, archive claim, then prepare a bounded remaining #3070 approvals/count acceptance crosswalk. Parent #3070 remains open. No new implementation branch/migration is assigned yet; incident publication constraints remain unresolved.
+
+The detailed 10:08 snapshot below is retained for ownership/context. Its CI-pending, unmerged and tenure statements are superseded by this latest reconciliation; actual cleanup/ledger completion requires session receipt.
 
 ## Owner instruction
 
