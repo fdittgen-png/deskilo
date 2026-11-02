@@ -1,0 +1,214 @@
+{
+  "window": {
+    "from": "2026-11-02T08:32:00Z",
+    "untilExclusive": "2026-11-02T09:39:00Z"
+  },
+  "rows": [
+    {
+      "role": "orchestrator",
+      "records": 127,
+      "input": 17236613,
+      "cached": 16839936,
+      "output": 56414,
+      "reasoning": 20124,
+      "first": "2026-11-02T08:36:25.507Z",
+      "last": "2026-11-02T09:38:53.165Z"
+    },
+    {
+      "role": "reviewer",
+      "records": 138,
+      "input": 18702905,
+      "cached": 18366080,
+      "output": 44676,
+      "reasoning": 3614,
+      "first": "2026-11-02T08:35:23.017Z",
+      "last": "2026-11-02T09:38:56.650Z"
+    },
+    {
+      "role": "engineer1",
+      "records": 363,
+      "input": 91693621,
+      "cached": 90568064,
+      "output": 83264,
+      "reasoning": 19328,
+      "first": "2026-11-02T08:34:53.479Z",
+      "last": "2026-11-02T09:38:59.537Z"
+    },
+    {
+      "role": "engineer2",
+      "records": 381,
+      "input": 67824645,
+      "cached": 67471616,
+      "output": 79968,
+      "reasoning": 15459,
+      "first": "2026-11-02T08:34:48.802Z",
+      "last": "2026-11-02T09:38:55.416Z"
+    }
+  ],
+  "total": {
+    "records": 1009,
+    "input": 195457784,
+    "cached": 193245696,
+    "output": 264322,
+    "uncached": 2212088,
+    "cachedPct": 98.86825279877316,
+    "avgInputPerResponse": 193714.35480673934
+  },
+  "early": {
+    "minutes": 28,
+    "records": 491,
+    "input": 63663959,
+    "cached": 62516992,
+    "output": 143314,
+    "uncached": 1146967,
+    "cachedPct": 98.19840453214667,
+    "avgInputPerResponse": 129661.83095723014
+  },
+  "late": {
+    "minutes": 39,
+    "records": 518,
+    "input": 131793825,
+    "cached": 130728704,
+    "output": 121008,
+    "uncached": 1065121,
+    "cachedPct": 99.19182784170654,
+    "avgInputPerResponse": 254428.23359073358
+  },
+  "slices": [
+    {
+      "role": "orchestrator",
+      "early": {
+        "records": 59,
+        "input": 6076482,
+        "cached": 5740544,
+        "output": 33427
+      },
+      "late": {
+        "records": 68,
+        "input": 11160131,
+        "cached": 11099392,
+        "output": 22987
+      }
+    },
+    {
+      "role": "reviewer",
+      "early": {
+        "records": 81,
+        "input": 7756957,
+        "cached": 7499520,
+        "output": 27408
+      },
+      "late": {
+        "records": 57,
+        "input": 10945948,
+        "cached": 10866560,
+        "output": 17268
+      }
+    },
+    {
+      "role": "engineer1",
+      "early": {
+        "records": 144,
+        "input": 24990846,
+        "cached": 24659072,
+        "output": 44482
+      },
+      "late": {
+        "records": 219,
+        "input": 66702775,
+        "cached": 65908992,
+        "output": 38782
+      }
+    },
+    {
+      "role": "engineer2",
+      "early": {
+        "records": 207,
+        "input": 24839674,
+        "cached": 24617856,
+        "output": 37997
+      },
+      "late": {
+        "records": 174,
+        "input": 42984971,
+        "cached": 42853760,
+        "output": 41971
+      }
+    }
+  ],
+  "prs": {
+    "3250": {
+      "created": "2026-11-02T09:02:39Z",
+      "merged": "2026-11-02T09:19:50Z",
+      "head": "be1f64ec2c936102858a8d846545194c892f6fae",
+      "merge": "246e9a55e6da987bab5246c7bd4998567c3fbc37"
+    },
+    "3251": {
+      "created": "2026-11-02T09:07:17Z",
+      "merged": null,
+      "head": "84275da130d53696997fcaf385fdc320021a48f7",
+      "merge": "08c449ec873b52e041fac4884cacdd970c93bc6c"
+    }
+  },
+  "runs": [
+    {
+      "id": "41417491528",
+      "head": "be1f64ec2c936102858a8d846545194c892f6fae",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "created": "2026-11-02T09:02:43Z",
+      "started": "2026-11-02T09:02:43Z",
+      "updated": "2026-11-02T09:19:15Z",
+      "completedJobCount": 10,
+      "jobCount": 10,
+      "completedJobSeconds": 5575,
+      "longestCompletedJobSeconds": 886,
+      "workflowSeconds": 992,
+      "url": "https://github.com/fdittgen-png/deskilo/actions/runs/41417491528"
+    },
+    {
+      "id": "41418089707",
+      "head": "06ef97302d32fa4d7b037f0e2029da8e4c18a10c",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "failure",
+      "created": "2026-11-02T09:07:21Z",
+      "started": "2026-11-02T09:07:21Z",
+      "updated": "2026-11-02T09:23:36Z",
+      "completedJobCount": 10,
+      "jobCount": 10,
+      "completedJobSeconds": 5565,
+      "longestCompletedJobSeconds": 908,
+      "workflowSeconds": 975,
+      "url": "https://github.com/fdittgen-png/deskilo/actions/runs/41418089707"
+    },
+    {
+      "id": "41420626290",
+      "head": "84275da130d53696997fcaf385fdc320021a48f7",
+      "attempt": 1,
+      "status": "in_progress",
+      "conclusion": null,
+      "created": "2026-11-02T09:26:15Z",
+      "started": "2026-11-02T09:26:15Z",
+      "updated": "2026-11-02T09:41:08Z",
+      "completedJobCount": 7,
+      "jobCount": 9,
+      "completedJobSeconds": 5021,
+      "longestCompletedJobSeconds": 887,
+      "workflowSeconds": null,
+      "url": "https://github.com/fdittgen-png/deskilo/actions/runs/41420626290"
+    }
+  ],
+  "method": {
+    "tokens": "Deduplicated response_id token_usage_record usage fields in fixed half-open UTC window; not cumulative thread usage. Output is not augmented by reasoning.",
+    "ci": "GitHub Actions run/job metadata sampled around 2026-11-02T09:41Z; workflow duration start to updated_at only for completed runs; sum completed job durations only.",
+    "limitations": [
+      "No monetary cost reconciliation",
+      "Mixed task complexity and startup/cache effects",
+      "No issue-specific token allocation",
+      "Pending run durations incomplete",
+      "No controlled improvement estimate"
+    ]
+  }
+}
