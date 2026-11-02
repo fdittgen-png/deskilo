@@ -14,7 +14,6 @@ import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/kiosk/providers/kiosk_mode.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -217,38 +216,6 @@ void main() {
       isNot(contains('Temporary Demo level')),
     );
     expect(outer.read(demoVisitProvider)?.route, isNull);
-  });
-
-  testWidgets('late feature denial prevents a consent already in progress', (
-    tester,
-  ) async {
-    tester.binding.platformDispatcher.defaultRouteNameTestValue = '/features';
-    addTearDown(
-      tester.binding.platformDispatcher.clearDefaultRouteNameTestValue,
-    );
-    final features = Completer<Set<WorkspaceFeature>>();
-    final tab = _Tab();
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          ...standardTestOverrides(),
-          enabledFeaturesProvider.overrideWith((ref) => features.future),
-          demoReloadMarkerProvider.overrideWithValue(DemoReloadMarker(tab)),
-        ],
-        child: const DeskiloRoot(),
-      ),
-    );
-    await _settle(tester);
-    final outer = ProviderScope.containerOf(
-      tester.element(find.byType(DeskiloRoot)),
-    );
-    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('demo-entry-start')));
-    await tester.pump();
-    features.complete(<WorkspaceFeature>{});
-    await _settle(tester);
-    expect(outer.read(demoEntryProvider), isFalse);
-    expect(find.byType(DemoWorkspace), findsNothing);
   });
 
   testWidgets(

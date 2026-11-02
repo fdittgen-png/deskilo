@@ -6,9 +6,19 @@ enum DemoReloadMarkerState { absent, armed, invalid, unavailable }
 /// A cold start with a tab hint must not mount an inner live route. Explicit
 /// Demo links keep their validated parameters; authentication callbacks stay
 /// available to the existing callback and route guards.
+///
+/// Only a marker that was actually read counts: a tab whose storage cannot
+/// be read starts normally — `arm` fails there, so no Demo visit can have
+/// left one behind. An invitation continuation keeps its destination.
 bool needsDemoReloadEntry(DemoReloadMarkerState state, Uri route) {
-  if (state == DemoReloadMarkerState.absent) return false;
+  if (state == DemoReloadMarkerState.absent ||
+      state == DemoReloadMarkerState.unavailable) {
+    return false;
+  }
   if (route.path == '/demo') return false;
+  if (route.path == '/onboarding' && route.queryParameters['join'] == '1') {
+    return false;
+  }
   if (route.path == '/auth') {
     if (route.queryParameters['demo'] == '1') return false;
     if (route.queryParameters.keys.any(

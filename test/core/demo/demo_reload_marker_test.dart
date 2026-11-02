@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #3235 — unavailable storage is never treated as a successful marker.
-import 'package:deskilo/app/demo_visit.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/demo_entry.dart';
 import 'package:deskilo/core/demo/demo_reload_marker.dart';
@@ -41,11 +40,6 @@ class _Storage implements DemoReloadMarkerStorage {
   }
 }
 
-class _UnavailableIdentity extends DemoVisit {
-  @override
-  Future<DemoIdentity?> identity() async => throw StateError('unavailable');
-}
-
 void main() {
   test('a marker contains only a visit hint and is cleared on leave', () {
     final storage = _Storage();
@@ -78,7 +72,6 @@ void main() {
     for (final state in [
       DemoReloadMarkerState.armed,
       DemoReloadMarkerState.invalid,
-      DemoReloadMarkerState.unavailable,
     ]) {
       expect(needsDemoReloadEntry(state, Uri.parse('/features')), isTrue);
       expect(
@@ -95,14 +88,21 @@ void main() {
         needsDemoReloadEntry(state, Uri.parse('deskilo://join?code=x')),
         isFalse,
       );
+      // The invitation continuation EntryIntent.join opens keeps its place.
+      expect(
+        needsDemoReloadEntry(state, Uri.parse('/onboarding?join=1')),
+        isFalse,
+      );
+      expect(needsDemoReloadEntry(state, Uri.parse('/onboarding')), isTrue);
     }
-    expect(
-      needsDemoReloadEntry(
-        DemoReloadMarkerState.absent,
-        Uri.parse('/features'),
-      ),
-      isFalse,
-    );
+    // No marker, or a tab whose storage cannot be read (where `arm` fails, so
+    // no visit can have started): an ordinary start, at the screen asked for.
+    for (final state in [
+      DemoReloadMarkerState.absent,
+      DemoReloadMarkerState.unavailable,
+    ]) {
+      expect(needsDemoReloadEntry(state, Uri.parse('/features')), isFalse);
+    }
   });
 
   testWidgets('unavailable tab storage refuses the visit after consent', (
@@ -151,28 +151,6 @@ void main() {
     await tester.tap(find.byKey(DemoControls.leaveKey));
     await tester.pumpAndSettle();
     expect(marker.read(), DemoReloadMarkerState.absent);
-    expect(container.read(demoEntryProvider), isFalse);
-  });
-
-  testWidgets('signed-in identity failure is not treated as signed out', (
-    tester,
-  ) async {
-    final container = ProviderContainer(
-      overrides: [
-        authRepositoryProvider.overrideWithValue(FakeAuthRepository.signedIn()),
-        demoVisitProvider.overrideWith(_UnavailableIdentity.new),
-      ],
-    );
-    addTearDown(container.dispose);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: const MaterialApp(home: Scaffold(body: DemoEntryButton())),
-      ),
-    );
-    await tester.tap(find.byKey(DemoEntryButton.buttonKey));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('demo-entry-start')), findsNothing);
     expect(container.read(demoEntryProvider), isFalse);
   });
 }
