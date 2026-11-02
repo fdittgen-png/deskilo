@@ -24,11 +24,11 @@ import 'workspace_feature.dart';
 /// true` may appear here; the test refuses any other, and an empty text.
 const Map<WorkspaceFeature, String> platformDefaultReasons = {
   WorkspaceFeature.nfcSeatTags:
-      'The owner explicitly configures a tag on a seat; the original tag '
-      'feature decision kept the configuration and scan path on (#604).',
+      'Seat tags need an explicitly assigned UID; NFC scanning is offered '
+      'only on a capable device (#604).',
   WorkspaceFeature.qrBadges:
-      'Issuing a badge is an explicit action in the kiosk badge manager; '
-      'the original badge decision kept this path on (#604).',
+      'Issuing a badge is an explicit action under the kiosk; camera '
+      'scanning requires a supported device (#604).',
   WorkspaceFeature.invoiceAddressWindow:
       'Invoices need the recipient in the envelope window; the country '
       'supplies a default side that the owner can override (#868).',
@@ -49,14 +49,14 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'The VAT period report exposes the taxable positions and their '
       'reconciliation with declaration boxes for the accountant (#878).',
   WorkspaceFeature.coOwner:
-      'The owner can appoint a successor before departure; appointment is '
-      'explicit and the server succession safeguard remains on (#341).',
+      'The owner explicitly appoints a successor; the server succession '
+      'safeguard remains on even when this appointment UI is off (#341).',
   WorkspaceFeature.kioskMode:
-      'The original feature audit kept the kiosk available by default; '
-      'an owner still configures the kiosk account (#341).',
+      'The owner explicitly designates a kiosk account; enabling its '
+      'parent feature does not configure a device (#341).',
   WorkspaceFeature.nfcBadges:
-      'The original feature audit kept badges available by default under '
-      'the kiosk; credentials still need to be configured (#341).',
+      'Under the kiosk, badges require explicit registration and NFC '
+      'tapping needs a capable device (#341).',
   WorkspaceFeature.usageRecords:
       'The member-facing trail explains billed time; an early-departure '
       'correction is requested and validated, not automatic (#833).',
