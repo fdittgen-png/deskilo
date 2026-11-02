@@ -11,8 +11,12 @@ MEMBER=00000000-0000-4000-8000-0000000035a5
 OWNER=00000000-0000-4000-8000-0000000035a1
 DIR=$(mktemp -d)
 created=0
+barrier_created=0
 cleanup() {
   local cleanup_status=0
+  if [ "$barrier_created" = 1 ]; then
+    psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c 'drop trigger if exists test_3070_unassign_barrier on public.events; drop function if exists public.test_3070_unassign_barrier();' >/dev/null 2>&1 || cleanup_status=1
+  fi
   if [ "$created" = 1 ]; then
     psql "$DB_URL" -qX -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL || cleanup_status=1
 begin;
@@ -37,7 +41,7 @@ SQL
 finish() {
   local rc=$?
   trap - EXIT
-  touch "$DIR/release" "$DIR/start" "$DIR/decision_release"
+  touch "$DIR/release" "$DIR/start" "$DIR/decision_release" "$DIR/barrier_release"
   if [ -n "${waiter:-}" ] && kill -0 "$waiter" 2>/dev/null; then
     kill "$waiter" 2>/dev/null || true
     wait "$waiter" 2>/dev/null || true
@@ -46,6 +50,12 @@ finish() {
     kill "$holder" 2>/dev/null || true
     wait "$holder" 2>/dev/null || true
   fi
+  for extra in "${barrier_pid:-}" "${revoke_pid:-}"; do
+    if [ -n "$extra" ] && kill -0 "$extra" 2>/dev/null; then
+      kill "$extra" 2>/dev/null || true
+      wait "$extra" 2>/dev/null || true
+    fi
+  done
   cleanup || rc=1
   exit "$rc"
 }
@@ -226,6 +236,103 @@ psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_OFF" >/dev/null
 revoke_first custom_roles_feature "$CUSTOM_OFF" "$CUSTOM_ON"
 revoke_first custom_role_definition "$ROLE_OFF" "$ROLE_ON"
 revoke_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON"
+# Confirm this actor's custom assignment is the sole source of permission.
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "$CLAIMS select public.has_permission('$WS','approveExpenses');" | tail -1)
+[ "$result" = t ] || fail 'custom-only actor is not authorized before barrier'
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select count(*) from public.workspace_role_members where workspace_id='$WS' and member_id='$MEMBER' and role_id='$ROLE'")
+[ "$result" = 1 ] || fail "targeted assignment is not uniquely present: $result"
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select count(*) from public.workspace_role_members where member_id='$MEMBER'")
+[ "$result" = 1 ] || fail "actor has additional role assignments: $result"
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select (not is_owner and not is_admin and co_owner <> 'active' and status='active') from public.members where id='$MEMBER'")
+[ "$result" = t ] || fail 'actor has a built-in wide role or is inactive'
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select coalesce(role_permissions->'member' ? 'approveExpenses',false) from public.workspaces where id='$WS'")
+[ "$result" = f ] || fail 'built-in member permission would mask the custom-role revocation'
+
+# Force the actual unassignment RPC to pause after deleting the targeted
+# assignment but before its role_change event INSERT checks member FKs.
+# A test-only trigger is installed only in this disposable replay database.
+# This exposes a member->assignment / assignment->event-member inversion;
+# neither a deadlock victim nor an unintended decision is an acceptable pass.
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/barrier-setup.log" 2>&1 <<SQL || fail 'unassignment barrier setup failed'
+begin;
+do \$\$ begin
+  if to_regprocedure('public.test_3070_unassign_barrier()') is not null then
+    raise exception 'test barrier already exists';
+  end if;
+end \$\$;
+create function public.test_3070_unassign_barrier() returns trigger language plpgsql as \$\$
+begin
+  if new.workspace_id = '$WS' and new.subject_member_id = '$MEMBER'
+     and new.type = 'role_change' and new.payload->>'assign' = 'false' then
+    perform pg_advisory_xact_lock(30700655);
+  end if;
+  return new;
+end \$\$;
+create trigger test_3070_unassign_barrier before insert on public.events
+for each row execute function public.test_3070_unassign_barrier();
+commit;
+SQL
+barrier_created=1
+OLD_APP=$APP
+OLD_HOLDER_APP=$HOLDER_APP
+HOLDER_APP="deskilo_3070_barrier_$$"
+APP="deskilo_3070_unassign_$$"
+rm -f "$DIR/ready" "$DIR/barrier_release"
+PGAPPNAME="$HOLDER_APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/barrier.log" 2>&1 <<SQL &
+begin;
+select pg_advisory_xact_lock(30700655);
+\! touch '$DIR/ready'
+\! while [ ! -f '$DIR/barrier_release' ]; do sleep 0.1; done
+commit;
+SQL
+barrier_pid=$!
+holder=$barrier_pid
+wait_ready
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/unassign.log" 2>&1 <<SQL &
+\set VERBOSITY verbose
+begin;
+$ASSIGN_OFF
+commit;
+SQL
+revoke_pid=$!
+waiter=$revoke_pid
+wait_for_lock
+# Actual delete has reached the targeted event trigger. Decision must now
+# block on the revoker: either its member lock or the assignment row.
+HOLDER_APP=$APP
+APP="deskilo_3070_decide_$$"
+holder=$revoke_pid
+PGAPPNAME="$APP" psql "$DB_URL" -qX -v ON_ERROR_STOP=1 > "$DIR/interleaved-decision.log" 2>&1 <<SQL &
+\set VERBOSITY verbose
+$CLAIMS
+select public.decide_purchase_v1('$WS','00000000-0000-4000-8000-0000000035a7',1,false,'No','00000000-0000-4000-8000-0000000035a7');
+SQL
+waiter=$!
+wait_for_lock
+touch "$DIR/barrier_release"
+wait "$barrier_pid" || fail 'event barrier release failed'
+if ! wait "$revoke_pid"; then
+  if grep -q '40P01' "$DIR/unassign.log"; then
+    fail 'actual unassignment deadlocked (SQLSTATE 40P01; original verbose log follows)'
+  fi
+  fail 'actual unassignment failed during interleaving'
+fi
+if wait "$waiter"; then fail 'decision succeeded after interleaved role removal'; fi
+if grep -q '40P01' "$DIR/interleaved-decision.log"; then
+  fail 'interleaved decision deadlocked (SQLSTATE 40P01; original verbose log follows)'
+fi
+grep -q '42501.*purchase decision is not available' "$DIR/interleaved-decision.log" || fail 'interleaved decision did not refuse with SQLSTATE 42501'
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state || ':' || (select count(*) from public.purchase_requests where workspace_id='$WS')::text || ':' || (select count(*) from public.purchase_obligations where workspace_id='$WS')::text from public.purchase_documents where id='00000000-0000-4000-8000-0000000035a7'")
+[ "$result" = 'pending:0:0' ] || fail "interleaved refusal changed state: $result"
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select count(*) from public.workspace_role_members where workspace_id='$WS' and member_id='$MEMBER' and role_id='$ROLE'")
+[ "$result" = 0 ] || fail "targeted assignment not removed: $result"
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c 'drop trigger test_3070_unassign_barrier on public.events; drop function public.test_3070_unassign_barrier();' >/dev/null
+barrier_created=0
+HOLDER_APP=$OLD_HOLDER_APP
+APP=$OLD_APP
+psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_ON" >/dev/null
+result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select count(*) from public.workspace_role_members where workspace_id='$WS' and member_id='$MEMBER' and role_id='$ROLE'")
+[ "$result" = 1 ] || fail "targeted assignment not restored: $result"
 # The assignment insert takes an FK key-share lock on the member. Verify
 # both orders so an inserted grant cannot appear after the guard's role scan.
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$ASSIGN_OFF" >/dev/null

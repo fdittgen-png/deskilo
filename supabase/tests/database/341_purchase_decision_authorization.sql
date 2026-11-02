@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #3070: the decision write refuses stale authorization without side effects.
 begin;
-select plan(29);
+select plan(31);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values
 ('00000000-0000-4000-8000-0000000035a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a1@deskilo.test','',now(),now(),now()),
 ('00000000-0000-4000-8000-0000000035a2','00000000-0000-0000-0000-000000000000','authenticated','authenticated','repro35a2@deskilo.test','',now(),now(),now());
@@ -139,16 +139,36 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000000
 set local role authenticated;
 select is(public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d3',1,true,'','00000000-0000-4000-8000-0000000035cf')->>'state','approved','owner wide permission retains non-maker approval');
 reset role;
+-- A role held by another member and a second workspace are isolated from
+-- the actor's first-workspace grant. This is rollback-only fixture data.
+insert into public.workspace_role_members (workspace_id,role_id,member_id)
+values ('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035f1','00000000-0000-4000-8000-0000000035a4');
+insert into public.workspaces (id,name,country_code,currency_code,timezone,created_by,feature_flags,role_permissions)
+values ('00000000-0000-4000-8000-0000000035e1','Other workspace','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000000035a1','{"moneyTab":true,"purchases":true,"customRoles":true}','{"member":[]}');
+insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status,joined_at) values
+('00000000-0000-4000-8000-0000000035e2','00000000-0000-4000-8000-0000000035e1','00000000-0000-4000-8000-0000000035a1',true,true,'active',now()),
+('00000000-0000-4000-8000-0000000035e3','00000000-0000-4000-8000-0000000035e1','00000000-0000-4000-8000-0000000035a2',false,false,'active',now());
+insert into public.suppliers (id,workspace_id,supplier_number,name)
+values ('00000000-0000-4000-8000-0000000035e4','00000000-0000-4000-8000-0000000035e1','1','Other supplier');
+insert into public.purchase_documents (id,workspace_id,kind,state,currency,supplier_id,submitter_member_id,submitted_by_member_id,payer_kind)
+values ('00000000-0000-4000-8000-0000000035e5','00000000-0000-4000-8000-0000000035e1','bill','draft','EUR','00000000-0000-4000-8000-0000000035e4','00000000-0000-4000-8000-0000000035e2','00000000-0000-4000-8000-0000000035e2','unpaid');
+insert into public.purchase_lines (workspace_id,purchase_id,line_no,gross_cents)
+values ('00000000-0000-4000-8000-0000000035e1','00000000-0000-4000-8000-0000000035e5',1,120);
+update public.purchase_documents set state='pending' where id='00000000-0000-4000-8000-0000000035e5';
 update public.workspaces set feature_flags=feature_flags || '{"customRoles":true}', role_permissions='{"member":[]}' where id='00000000-0000-4000-8000-0000000035a3';
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
 set local role authenticated;
 select is(public.purchase_approval_detail_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5')->>'can_reject','true','custom role grants a decision');
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000035e1','00000000-0000-4000-8000-0000000035e5',1,false,'No','00000000-0000-4000-8000-0000000035e5')$$,'42501','purchase decision is not available','first workspace grant does not authorize a second workspace');
 reset role;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
 set local role authenticated;
 select public.assign_workspace_role('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035f1',false);
+reset role;
+select is((select count(*)::int from public.workspace_role_members where role_id='00000000-0000-4000-8000-0000000035f1' and member_id='00000000-0000-4000-8000-0000000035a4'),1,'another member retains the grant');
+set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a2","role":"authenticated"}',true);
-select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')$$,'42501','purchase decision is not available','removed custom assignment refuses decision');
+select throws_ok($$select public.decide_purchase_v1('00000000-0000-4000-8000-0000000035a3','00000000-0000-4000-8000-0000000035d5',1,false,'No','00000000-0000-4000-8000-0000000035d5')$$,'42501','purchase decision is not available','another member grant does not authorize actor after own assignment removal');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000000035a1","role":"authenticated"}',true);
 select public.assign_workspace_role('00000000-0000-4000-8000-0000000035a5','00000000-0000-4000-8000-0000000035f1',true);
 select public.set_workspace_role('00000000-0000-4000-8000-0000000035a3','decision_reviewer',array[]::text[],'{}'::jsonb,0,true);
