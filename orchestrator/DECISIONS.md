@@ -35,3 +35,13 @@ Orchestrator inspected commit `99c12c9236ebb0aa27000238b4d355f689e11b98` (#2136)
 E1 implements the previously authorized recordingPrivacy boolean selection with privacy/workspace/account regressions as a separate follow-up. Additional bounded MCP dedup design may be reviewed for genuinely equivalent account/session/target/lease context only; preserve connected-target isolation, validation, invalidation and failure/expiration semantics. Reviewer may approve a sound concrete design within that scope without another owner approval round. No blind personal-cache reuse. If no safe design exists, report a real remaining performance blocker; do not loosen the ceiling.
 
 Keep active #3254 bootstrap head unchanged. No third PR while #3253/#3254 occupy the normal two-PR cap; one coherent follow-up after a slot clears. E2 frozen candidate unchanged, upstream semantic dependency communicated. A corrected Back expectation or 13->11 selector improvement alone is not a green nightly workflow.
+
+## MCP sharing design review — implementation not yet approved
+
+Metric correction implemented locally at81031c823aea5e47a2fd3305a929d74331b2b94d atop selectorfc39; reported17 gate tests pass including Back0/2 refusal and trips9 refusal. Active3254 unchanged; no third PR.
+
+Source inspection confirms authState publishes IDs, registry retirement listener compares IDs, ActiveMcpTargetClient pre/post checks account, and commands.read retains a registry lease. These checks alone do not prove same-ID session replacement equivalence. In-flight coalescing is NOT yet authorized for implementation.
+
+First prove personal/active capability requests overlap under unchanged benchmark scheduling, using one bounded start/completion trace. No injected delay or altered fake to manufacture a saving. If there is no overlap, stop this design as a way to achieve the measured budget.
+
+Potential minimal seam: instance-local capability reader beneath both callers, with active MCP entering it inside its existing commands.read/client.run path; preserve every caller lease and pre/post validation. No account-ID global map or bypass using a personal result. Require real opaque auth/session-generation plus concrete client/repository identity; unknown provenance means no sharing. Same-account replacement, sign-out, client change and mutations fence old completions. Preserve connected-target/issuer/purpose isolation, per-waiter currentness, independent failures and slot cleanup that cannot delete a newer flight. Existing repository overrides must retain real metering and scope; no whole-auth refactor without demonstrated value and concrete reviewed contract. Selector/Back fixes need not wait for this unresolved design. Eight-trip ceiling remains.
