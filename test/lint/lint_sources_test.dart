@@ -24,8 +24,18 @@ class _DirectoryCalls extends RecursiveAstVisitor<void> {
   bool found = false;
   @override
   void visitMethodInvocation(MethodInvocation node) {
+    Expression? expression = node.target;
+    while (expression is ParenthesizedExpression) {
+      expression = expression.expression;
+    }
+    final target = expression?.toSource();
+    final directEnumeration =
+        (node.methodName.name == 'list' ||
+            node.methodName.name == 'listSync') &&
+        (target == 'Directory.current' || target == 'Directory.systemTemp');
     if ((node.target == null && node.methodName.name == 'Directory') ||
-        node.target?.toSource() == 'Directory') {
+        target == 'Directory' ||
+        directEnumeration) {
       found = true;
     }
     super.visitMethodInvocation(node);
@@ -89,6 +99,25 @@ void main() {
       _callsDirectory(
         "void f() { Directory.fromUri(Uri.directory('lib')).listSync(); }",
       ),
+      isTrue,
+    );
+    expect(
+      _callsDirectory(
+        "void f() { Directory.current.listSync(recursive: true); }",
+      ),
+      isTrue,
+    );
+    expect(
+      _callsDirectory("void f() { Directory.systemTemp.listSync(); }"),
+      isTrue,
+    );
+    expect(_callsDirectory("void f() { Directory.current.list(); }"), isTrue);
+    expect(
+      _callsDirectory("void f() { (Directory.current).listSync(); }"),
+      isTrue,
+    );
+    expect(
+      _callsDirectory("void f() { Directory.systemTemp.list(); }"),
       isTrue,
     );
     expect(
