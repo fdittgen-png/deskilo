@@ -20554,7 +20554,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.';
+      'I pagamenti abbinati a questa fattura non corrispondono all\'importo dell\'abbinamento (forse uno attende ancora la convalida): non può essere annullato qui. Nulla è stato modificato.';
 
   @override
   String get refusalChangedMeanwhile =>

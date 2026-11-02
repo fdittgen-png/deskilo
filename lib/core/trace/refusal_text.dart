@@ -55,8 +55,8 @@ enum KnownRefusal {
   /// (a credit note, a settlement, a write-off): not undone here.
   bankMatchBeyondLink,
 
-  /// #2380 (DKB05) — the invoice has other payments matched: this one is
-  /// not undone alone.
+  /// #2380 (DKB05) — the invoice's payments do not add up to its match
+  /// (0657; one may await its validation): not restated by guesswork.
   bankMatchSeveralPayments,
 
   /// #2380 (DKB06) — the payment is dated inside a closed period of the

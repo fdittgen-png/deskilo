@@ -13453,9 +13453,9 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.",
+  "refusalBankMatchSeveralPayments": "I pagamenti abbinati a questa fattura non corrispondono all'importo dell'abbinamento (forse uno attende ancora la convalida): non può essere annullato qui. Nulla è stato modificato.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
   "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",

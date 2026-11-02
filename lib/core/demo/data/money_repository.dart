@@ -138,6 +138,11 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   /// #506 — every payment a match (or additional payment) consumed.
   final consumedPaymentIds = <String>{};
 
+  /// #2380 (0657) — invoiceId → one row per payment of its match, oldest
+  /// first, as invoice_match_payments keeps them: [InvoiceMatch.paidCents]
+  /// is that payment's amount. The aggregate stays [invoiceMatchesStore].
+  final invoiceMatchPaymentsStore = <String, List<InvoiceMatch>>{};
+
   /// #2355 — the instalments recorded one by one; tests seed them here.
   final invoiceInstalmentsStore = <String, List<TaxPointPayment>>{};
 

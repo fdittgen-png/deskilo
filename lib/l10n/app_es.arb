@@ -13453,9 +13453,9 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Hay otros pagos conciliados con esta factura, así que este no se puede deshacer por separado. No se cambió nada.",
+  "refusalBankMatchSeveralPayments": "Los pagos conciliados con esta factura no suman el importe de la conciliación (quizá uno espera aún su validación), así que no se puede deshacer aquí. No se cambió nada.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
   "refusalMoneyLocaleLocked": "La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.",

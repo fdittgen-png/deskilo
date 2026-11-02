@@ -490,9 +490,9 @@
   "@refusalBankMatchBeyondLink": {
     "description": "#2380 Refusal DKB04: the match did more than link a payment."
   },
-  "refusalBankMatchSeveralPayments": "Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.",
+  "refusalBankMatchSeveralPayments": "The payments matched to this invoice do not add up to its match (one may still await its validation), so it cannot be undone here. Nothing was changed.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
   },
   "refusalBankMatchClosedPeriod": "This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.",
   "@refusalBankMatchClosedPeriod": {

@@ -108,9 +108,9 @@
   "@refusalBankMatchBeyondLink": {
     "description": "#2380 Refusal DKB04: the match did more than link a payment."
   },
-  "refusalBankMatchSeveralPayments": "Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.",
+  "refusalBankMatchSeveralPayments": "Die dieser Rechnung zugeordneten Zahlungen ergeben nicht den Betrag der Zuordnung (eine wartet vielleicht noch auf ihre Freigabe); sie kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
   },
   "refusalBankMatchClosedPeriod": "Diese Zahlung liegt in einem abgeschlossenen Buchungszeitraum; ihre Zuordnung kann nicht rückgängig gemacht werden. Nichts wurde geändert.",
   "@refusalBankMatchClosedPeriod": {

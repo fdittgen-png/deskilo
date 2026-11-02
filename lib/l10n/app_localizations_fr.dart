@@ -20596,7 +20596,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'D\'autres paiements sont rapprochés de cette facture : celui-ci ne peut pas être annulé seul. Rien n\'a été modifié.';
+      'Les paiements rapprochés de cette facture ne correspondent pas au montant du rapprochement (l\'un attend peut-être encore sa validation) : il ne peut pas être annulé ici. Rien n\'a été modifié.';
 
   @override
   String get refusalChangedMeanwhile =>

@@ -20581,7 +20581,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.';
+      'Die dieser Rechnung zugeordneten Zahlungen ergeben nicht den Betrag der Zuordnung (eine wartet vielleicht noch auf ihre Freigabe); sie kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.';
 
   @override
   String get refusalChangedMeanwhile =>

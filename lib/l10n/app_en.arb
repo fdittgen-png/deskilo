@@ -24397,9 +24397,9 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.",
+  "refusalBankMatchSeveralPayments": "The payments matched to this invoice do not add up to its match (one may still await its validation), so it cannot be undone here. Nothing was changed.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
   },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
