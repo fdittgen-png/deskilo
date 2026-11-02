@@ -99,6 +99,16 @@ void main() {
     );
   });
 
+  test('unowned checkout-shaped directory in system temp is refused', () {
+    final checkout = Directory.systemTemp.createTempSync('unowned-checkout');
+    addTearDown(() => checkout.deleteSync(recursive: true));
+    Directory('${checkout.path}/lib').createSync();
+    expect(
+      () => temporaryFixtureDirectory(checkout, 'lib'),
+      throwsArgumentError,
+    );
+  });
+
   test('replaced fixture root cannot point at the checkout', () {
     final fixture = createTemporaryFixture('replaced');
     final path = fixture.directory.path;
