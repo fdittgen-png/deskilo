@@ -67,6 +67,7 @@ class DemoLondonData {
         workspaces: space,
         today: now,
         script: hmrcScript,
+        initiallyUnconfirmed: money.vatDeclarations.single.id,
       ),
     );
   }

@@ -71,6 +71,15 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('hmrc-connect')));
     await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull);
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('hmrc-submit')), findsNothing);
+    await tester.tap(_mtd(declaration.id));
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull);
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('hmrc-submit')));
     await tester.pumpAndSettle();
 
@@ -84,6 +93,10 @@ void main() {
     // One submission: the filed return offers no second.
     expect(find.byKey(const ValueKey('hmrc-submit')), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byKey(const ValueKey('hmrc-submit'))).onPressed, isNull);
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(f.london.money.vatDeclarations.single.status, 'filed');
+    expect(_mtd(declaration.id), findsNothing);
   });
 
   testWidgets('an administrator is turned away from the UK VAT returns, and nothing is filed', (tester) async {

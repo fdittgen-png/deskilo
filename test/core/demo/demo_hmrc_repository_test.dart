@@ -68,11 +68,13 @@ void main() {
     final deBefore = f.secondSpace.money.vatDeclarations.map((d) => (d.id, d.status)).toList();
     final connection = await _connect(f);
     final d = _prepared(f);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final outcome = await f.london.hmrc.submit(
       declarationId: d.id,
       connectionId: connection.id,
       boxes: _boxes(d),
       client: _client,
+      recoveryMarker: marker,
     );
     expect(outcome, isA<HmrcFiled>());
     final filed = outcome as HmrcFiled;
@@ -83,14 +85,15 @@ void main() {
     expect(f.money.vatDeclarations.map((d) => (d.id, d.status, d.submittedReceipt)).toList(), frBefore);
     expect(f.secondSpace.money.vatDeclarations.map((d) => (d.id, d.status)).toList(), deBefore);
     // Once: the filed return is not submitted again.
-    final again = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final again = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect(again, isA<HmrcRefused>());
   });
 
   test('nothing is sent before HMRC is connected', () async {
     final f = DemoFixture.build();
     final d = _prepared(f);
-    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect((outcome as HmrcRefused).refusal, HmrcRefusal.notConnected);
     expect(_prepared(f).isPrepared, isTrue);
   });
@@ -99,7 +102,8 @@ void main() {
     final f = DemoFixture.build()..becomePersona(DemoPersona.admin);
     await expectLater(f.london.hmrc.startConnect(demoLondonSpaceId, demoLondonSiteId), throwsStateError);
     final d = _prepared(f);
-    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: 'demo-hmrc-connection', boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect((outcome as HmrcRefused).refusal, HmrcRefusal.notAllowed);
     expect(_prepared(f).isPrepared, isTrue);
   });
@@ -108,8 +112,9 @@ void main() {
     final f = DemoFixture.build();
     final connection = await _connect(f);
     final d = _prepared(f);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final sent = {..._boxes(d), 'totalValueSalesExVAT': _boxes(d)['totalValueSalesExVAT']! + 1};
-    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: sent, client: _client);
+    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: sent, client: _client, recoveryMarker: marker);
     expect((outcome as HmrcRefused).refusal, HmrcRefusal.figuresDiffer);
     expect(_prepared(f).isPrepared, isTrue);
   });
@@ -118,9 +123,10 @@ void main() {
     final f = DemoFixture.build();
     final connection = await _connect(f);
     final d = _prepared(f);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
     final extra = f.london.money.invoices.first;
     f.london.money.invoices.add(extra.copyWith(id: 'uk-inv-late', number: 'CY-late'));
-    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final outcome = await f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect((outcome as HmrcRefused).refusal, HmrcRefusal.figuresDiffer);
     expect(_prepared(f).isPrepared, isTrue);
   });
@@ -140,8 +146,9 @@ void main() {
     final f = DemoFixture.build();
     final connection = await _connect(f);
     final d = _prepared(f);
-    final first = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
-    final second = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final first = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
+    final second = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     expect(((await second) as HmrcRefused).refusal, HmrcRefusal.inFlight);
     expect(await first, isA<HmrcFiled>());
   });
@@ -192,7 +199,8 @@ void main() {
     final f = DemoFixture.build();
     final connection = await _connect(f);
     final d = _prepared(f);
-    final pending = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final marker = (await f.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final pending = f.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     f.becomePersona(DemoPersona.admin);
     expect(((await pending) as HmrcRefused).refusal, HmrcRefusal.notAllowed);
     expect(_prepared(f).isPrepared, isTrue);
@@ -202,7 +210,8 @@ void main() {
     final old = DemoFixture.build();
     final connection = await _connect(old);
     final d = _prepared(old);
-    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final marker = (await old.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     final fresh = DemoFixture.build();
     await pending;
     expect(_prepared(fresh).isPrepared, isTrue, reason: 'the reset store is its own');
@@ -240,7 +249,8 @@ void main() {
     final old = root.read(demoSessionControllerProvider).fixture;
     final connection = await _connect(old);
     final d = _prepared(old);
-    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client);
+    final marker = (await old.london.hmrc.state(demoLondonSpaceId)).recoveryMarkers[d.id];
+    final pending = old.london.hmrc.submit(declarationId: d.id, connectionId: connection.id, boxes: _boxes(d), client: _client, recoveryMarker: marker);
     controller.reset();
     await pending;
     final fresh = root.read(demoSessionControllerProvider).fixture;

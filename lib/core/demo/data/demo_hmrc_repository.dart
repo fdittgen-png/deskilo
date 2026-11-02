@@ -30,12 +30,20 @@ class DemoHmrcRepository implements HmrcRepository {
     required this._workspaces,
     required this._today,
     this.script,
-  });
+    String? initiallyUnconfirmed,
+  }) {
+    if (initiallyUnconfirmed != null) {
+      _uncertain[initiallyUnconfirmed] = _marker(initiallyUnconfirmed, 0);
+    }
+  }
 
   final FakeMoneyRepository _money;
   final FakeWorkspaceRepository _workspaces;
   final DateTime _today;
   final DemoHmrcScript? script;
+
+  static String _marker(String declarationId, int attempt) =>
+      sha256.convert(utf8.encode('demo-hmrc-recovery-v1|$declarationId|$attempt')).toString();
 
   HmrcConnection? _connection;
   bool _inFlight = false;
@@ -93,6 +101,9 @@ class DemoHmrcRepository implements HmrcRepository {
     // One submission of a return at a time: a second tap is in_flight.
     if (!_mayFile) return const HmrcRefused(HmrcRefusal.notAllowed);
     if (_inFlight) return const HmrcRefused(HmrcRefusal.inFlight);
+    if (_connection == null || _connection!.id != connectionId || !_connection!.isConnected) {
+      return const HmrcRefused(HmrcRefusal.notConnected);
+    }
     final marker = _uncertain[declarationId];
     if (marker != null && marker != recoveryMarker) {
       return const HmrcUnconfirmed(code: 'CHECK_REQUIRED');
@@ -103,7 +114,7 @@ class DemoHmrcRepository implements HmrcRepository {
       await Future<void>.delayed(Duration.zero);
       final result = _run(declarationId, connectionId, boxes);
       if (result is HmrcUnconfirmed || (result is HmrcRefused && result.refusal == HmrcRefusal.alreadySubmitted)) {
-        _uncertain[declarationId] = sha256.convert(utf8.encode('demo-hmrc-recovery-v1|$declarationId|$_attempts')).toString();
+        _uncertain[declarationId] = _marker(declarationId, _attempts);
       } else if (result is HmrcFiled) {
         _uncertain.remove(declarationId);
       }

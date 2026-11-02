@@ -35,6 +35,8 @@ begin
       'token_expires_at', c.token_expires_at) end);
 end;
 $fn$;
+revoke execute on function public.hmrc_connection_v1(uuid) from public, anon;
+grant execute on function public.hmrc_connection_v1(uuid) to authenticated;
 
 create or replace function public.claim_hmrc_submission_v2(
   p_declaration_id uuid, p_holder text, p_seconds integer, p_boxes_sha256 text,
@@ -96,5 +98,7 @@ create or replace function public.claim_hmrc_submission(
 ) returns jsonb language sql security definer set search_path = public as $fn$
   select public.claim_hmrc_submission_v2(p_declaration_id, p_holder, p_seconds, p_boxes_sha256, null);
 $fn$;
+revoke execute on function public.claim_hmrc_submission(uuid, text, integer, text) from public, anon, authenticated;
+grant execute on function public.claim_hmrc_submission(uuid, text, integer, text) to service_role;
 
 select public.set_deskilo_schema_version(652);

@@ -242,6 +242,39 @@ void main() {
     expect(fake.submitted, hasLength(1));
   });
 
+  testWidgets('an unknown outcome with no server marker needs an explicit check before retry', (tester) async {
+    final fake = await _pump(tester, outcome: () async => throw StateError('no answer'));
+    final submit = find.byKey(const ValueKey('hmrc-submit'));
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNotNull);
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+    expect(fake.markers, [null, null]);
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+  });
+
+  testWidgets('a no-marker retry that finds an active lease requires a fresh check', (tester) async {
+    var attempt = 0;
+    final fake = await _pump(tester, outcome: () async {
+      if (attempt++ == 0) throw StateError('connection lost');
+      return const HmrcRefused(HmrcRefusal.inFlight);
+    });
+    final submit = find.byKey(const ValueKey('hmrc-submit'));
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('hmrc-checked')));
+    await tester.pump();
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+    expect(fake.markers, [null, null]);
+    expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+    expect(find.byKey(const ValueKey('hmrc-checked')), findsOneWidget);
+  });
+
   testWidgets('a reopened sheet keeps Submit off for a return the server recorded as unconfirmed, until the person checked', (tester) async {
     final fake = await _pump(
       tester,

@@ -91,7 +91,8 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       _outcome = outcome;
     });
     if (outcome is HmrcUnconfirmed ||
-        (outcome is HmrcRefused && outcome.refusal == HmrcRefusal.alreadySubmitted)) {
+        (outcome is HmrcRefused &&
+            (outcome.refusal == HmrcRefusal.alreadySubmitted || outcome.refusal == HmrcRefusal.inFlight))) {
       ref.invalidate(hmrcStateProvider(widget.declaration.workspaceId));
     }
     if (outcome is HmrcFiled || outcome is HmrcAcceptedNotRecorded) {
@@ -114,7 +115,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   }
 
   Future<void> _submit(HmrcConnection connection, HmrcClientValues client) {
-    final marker = _checkedAtHmrc ? _checkedMarker : null;
+    final marker = _checkedAtHmrc && _checkedMarker != '' ? _checkedMarker : null;
     return _run(
         () => ref.read(submitToHmrcProvider).call(
           declaration: widget.declaration,
@@ -187,9 +188,10 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
   /// says they checked at HMRC.
   bool _awaitingCheck(HmrcState s) =>
       (!_checkedAtHmrc || _checkedMarker == null ||
-          _checkedMarker != s.recoveryMarkers[widget.declaration.id]) &&
+          _checkedMarker != (s.recoveryMarkers[widget.declaration.id] ?? '')) &&
       (_outcome is HmrcUnconfirmed ||
-          (_outcome is HmrcRefused && (_outcome! as HmrcRefused).refusal == HmrcRefusal.alreadySubmitted) ||
+          (_outcome is HmrcRefused &&
+              [HmrcRefusal.alreadySubmitted, HmrcRefusal.inFlight].contains((_outcome! as HmrcRefused).refusal)) ||
           (_outcome is! HmrcFiled && s.unconfirmedDeclarationIds.contains(widget.declaration.id)));
 
   Widget _body(AppLocalizations l10n, HmrcState s, HmrcClientValues values) {
@@ -241,12 +243,10 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
             if (_awaitingCheck(s))
               TextButton(
                 key: const ValueKey('hmrc-checked'),
-                onPressed: s.recoveryMarkers[widget.declaration.id] == null
-                    ? null
-                    : () => setState(() {
-                        _checkedMarker = s.recoveryMarkers[widget.declaration.id];
-                        _checkedAtHmrc = true;
-                      }),
+                onPressed: () => setState(() {
+                  _checkedMarker = s.recoveryMarkers[widget.declaration.id] ?? '';
+                  _checkedAtHmrc = true;
+                }),
                 child: Text(l10n.hmrcChecked),
               ),
           ],
