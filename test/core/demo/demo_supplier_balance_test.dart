@@ -11,6 +11,7 @@ PayableRow _row(
   String currency,
   int remaining, {
   ObligationState state = ObligationState.open,
+  AppliedInvoice? invoice,
 }) => PayableRow(
   obligation: PurchaseObligation(
     id: id,
@@ -20,8 +21,9 @@ PayableRow _row(
     amountCents: 1000,
     currency: currency,
     state: state,
-    appliedCents: 0,
+    appliedCents: invoice == null ? 0 : 1000,
     remainingCents: remaining,
+    appliedInvoice: invoice,
   ),
   purchase: PurchaseSummary(
     id: 'purchase-$id',
@@ -61,6 +63,17 @@ void main() {
         ..payables.addAll([
           _row('partial', 's', 'EUR', 400),
           _row('settled', 's', 'EUR', 0),
+          _row(
+            'applied',
+            's',
+            'EUR',
+            0,
+            invoice: const AppliedInvoice(
+              id: 'i',
+              number: 'I-1',
+              totalCents: -1000,
+            ),
+          ),
           _row('held', 's', 'EUR', 100, state: ObligationState.held),
           _row('cancelled', 's', 'EUR', 300, state: ObligationState.cancelled),
           _row('other-currency', 's', 'GBP', 200),
@@ -88,6 +101,7 @@ void main() {
       expect(page.rows.map((r) => r.obligation.id).toSet(), {
         'partial',
         'settled',
+        'applied',
         'held',
         'cancelled',
         'other-currency',
