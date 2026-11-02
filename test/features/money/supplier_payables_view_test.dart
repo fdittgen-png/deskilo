@@ -68,10 +68,9 @@ void main() {
     expect(repo.seen, [null, (created: '2026-01-01T00:00:00Z', id: 'last')]);
     expect(find.byKey(const ValueKey('supplier-payables-more')), findsNothing);
     repo.firstPageChanged = true;
-    final container = ProviderScope.containerOf(
+    ProviderScope.containerOf(
       tester.element(find.byType(SupplierPayablesView)),
-    );
-    container.invalidate(
+    ).invalidate(
       supplierPayablesPageProvider((
         workspaceId: 'ws',
         supplierId: 'supplier',
@@ -80,7 +79,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Payables unavailable'), findsOneWidget);
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.byKey(const ValueKey('supplier-payables-retry')));
     await tester.pumpAndSettle();
     expect(find.text('Payables unavailable'), findsNothing);
   });
@@ -111,7 +110,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Payables unavailable'), findsOneWidget);
     repo.fail = false;
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.byKey(const ValueKey('supplier-payables-retry')));
     await tester.pumpAndSettle();
     expect(
       find.byKey(const ValueKey('supplier-payables-more')),

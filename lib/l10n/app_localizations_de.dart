@@ -25633,6 +25633,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliersArchivedTag => 'archiviert';
 
   @override
+  String get suppliersBalanceUnavailable => 'Saldo nicht verfügbar';
+
+  @override
   String get suppliersBank => 'Bankverbindung';
 
   @override
@@ -25707,8 +25710,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliersFieldTaxId => 'Steuernummer (USt-IdNr. mit Länderpräfix)';
 
   @override
+  String suppliersHeld(String amount) {
+    return 'Zurückgestellt: $amount';
+  }
+
+  @override
   String get suppliersIntro =>
       'Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.';
+
+  @override
+  String get suppliersLoadMore => 'Mehr laden';
+
+  @override
+  String get suppliersNoOutstanding => 'Kein offener Betrag';
+
+  @override
+  String suppliersOutstanding(String amount) {
+    return 'Offener Betrag: $amount';
+  }
+
+  @override
+  String get suppliersPayablesUnavailable =>
+      'Verbindlichkeiten nicht verfügbar';
 
   @override
   String get suppliersRefused =>
@@ -25768,6 +25791,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get suppliersTitle => 'Lieferanten';
+
+  @override
+  String get suppliersViewPayables => 'Lieferantenverbindlichkeiten anzeigen';
 
   @override
   String get supplyClassGeneral =>
