@@ -18,5 +18,7 @@
   },
   "purchaseApprovalVisibleReceipts": "Justificatifs de membres en attente que vous pouvez consulter",
   "purchaseApprovalReceiptsUnavailable": "Impossible de charger les justificatifs en attente.",
-  "purchaseApprovalEvidenceUnavailable": "Les justificatifs et le taux de change éventuel ne sont pas disponibles dans cette vue d’approbation. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat."
+  "purchaseApprovalEvidenceUnavailable": "Les justificatifs ne sont pas disponibles dans cette vue. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat.",
+  "purchaseApprovalFxSame": "La facture est dans la devise de l’espace.",
+  "purchaseApprovalFxUnavailable": "Le taux de change est indisponible dans cette vue."
 }

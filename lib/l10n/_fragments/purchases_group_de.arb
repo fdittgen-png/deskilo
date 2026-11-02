@@ -18,5 +18,7 @@
   },
   "purchaseApprovalVisibleReceipts": "Ausstehende Mitgliederbelege, die Sie einsehen können",
   "purchaseApprovalReceiptsUnavailable": "Ausstehende Belege konnten nicht geladen werden.",
-  "purchaseApprovalEvidenceUnavailable": "Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen."
+  "purchaseApprovalEvidenceUnavailable": "Belege sind in dieser Ansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.",
+  "purchaseApprovalFxSame": "Die Rechnung lautet auf die Währung des Arbeitsbereichs.",
+  "purchaseApprovalFxUnavailable": "Der Wechselkurs ist in dieser Ansicht nicht verfügbar."
 }

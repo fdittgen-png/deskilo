@@ -18,5 +18,7 @@
   },
   "purchaseApprovalVisibleReceipts": "Comprobantes pendientes de miembros que puede consultar",
   "purchaseApprovalReceiptsUnavailable": "No se pudieron cargar los comprobantes pendientes.",
-  "purchaseApprovalEvidenceUnavailable": "Los justificantes y el tipo de cambio, si lo hay, no están disponibles en esta vista de aprobación. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra."
+  "purchaseApprovalEvidenceUnavailable": "Los justificantes no están disponibles en esta vista. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.",
+  "purchaseApprovalFxSame": "La factura está en la moneda del espacio.",
+  "purchaseApprovalFxUnavailable": "El tipo de cambio no está disponible en esta vista."
 }

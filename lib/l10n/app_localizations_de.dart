@@ -19340,7 +19340,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchaseApprovalEvidenceUnavailable =>
-      'Belege und ein gegebenenfalls vorhandener Wechselkurs sind in dieser Genehmigungsansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.';
+      'Belege sind in dieser Ansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.';
+
+  @override
+  String get purchaseApprovalFxSame =>
+      'Die Rechnung lautet auf die Währung des Arbeitsbereichs.';
+
+  @override
+  String get purchaseApprovalFxUnavailable =>
+      'Der Wechselkurs ist in dieser Ansicht nicht verfügbar.';
 
   @override
   String get purchaseApprovalReceiptsUnavailable =>

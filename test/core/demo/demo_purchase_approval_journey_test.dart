@@ -61,6 +61,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('approval-demo-bill-approval')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('purchase-line-1')), findsOneWidget);
+    expect(find.text('The bill is in the workspace currency.'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pumpAndSettle();
     expect(
