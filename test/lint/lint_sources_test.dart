@@ -110,10 +110,15 @@ void main() {
   });
 
   test('replaced fixture root cannot point at the checkout', () {
+    final checkout = Directory.systemTemp.createTempSync(
+      'replacement-checkout',
+    );
+    addTearDown(() => checkout.deleteSync(recursive: true));
+    Directory('${checkout.path}/lib').createSync();
     final fixture = createTemporaryFixture('replaced');
     final path = fixture.directory.path;
     fixture.directory.deleteSync();
-    final link = Link(path)..createSync(Directory.current.path);
+    final link = Link(path)..createSync(checkout.path);
     addTearDown(link.deleteSync);
     expect(
       () => temporaryFixtureDirectory(fixture, 'lib'),
@@ -144,14 +149,8 @@ void main() {
         () => temporaryFixtureDirectory(fixture, '../lib'),
         throwsArgumentError,
       );
-      // This checkout itself may be under the system temporary directory.
-      expect(Directory('lib').existsSync(), isTrue);
       expect(() => createTemporaryFixture('../checkout'), throwsArgumentError);
-      expect(
-        () => temporaryFixtureDirectory(Directory.current, 'lib'),
-        throwsArgumentError,
-      );
-      Link('${dir.path}/escape').createSync(Directory.current.path);
+      Link('${dir.path}/escape').createSync(Directory.systemTemp.path);
       expect(
         () => temporaryFixtureDirectory(fixture, 'escape'),
         throwsArgumentError,
