@@ -1999,6 +1999,96 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankOutTitle => 'The payment recorded as made';
 
   @override
+  String get bankReconAccount => 'Account';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Statement file arithmetic difference (supported booked movements)';
+
+  @override
+  String get bankReconBookingDate =>
+      'Stored booking date (may default to value date)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Provider clearing unavailable: clearing opening and complete settlement facts are missing.';
+
+  @override
+  String get bankReconClosing => 'Closing balance stated by bank';
+
+  @override
+  String get bankReconCoverage =>
+      'Partial coverage: the bank-reported period and complete account coverage are not established.';
+
+  @override
+  String get bankReconCsvMappingUnavailable =>
+      'CSV column mapping was not retained';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Statement-file arithmetic compares the file balances with supported booked movements accepted by the import parser; it is not reconciliation with the books.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'File format or source limits cannot verify statement arithmetic';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Source movement identity missing or duplicated';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Bank reconciliation reports are unavailable for this export.';
+
+  @override
+  String get bankReconObservedDates => 'Stored movement dates';
+
+  @override
+  String get bankReconOpening => 'Opening balance stated by bank';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Original source unavailable or inaccessible';
+
+  @override
+  String get bankReconReadUnavailable =>
+      'Original source unavailable or inaccessible; absence cannot be distinguished from denial';
+
+  @override
+  String get bankReconRequestedPeriod => 'Requested period';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Statements, movements and source are separate reads; this is not a frozen snapshot.';
+
+  @override
+  String get bankReconSourceNotRetained =>
+      'Original source not retained or digest unavailable';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Some source movements have no verified retained-line association; their status is unavailable.';
+
+  @override
+  String get bankReconSourceVerificationFailed =>
+      'Source hash, parsing, entry status or amounts, account, currency or balances could not be verified.';
+
+  @override
+  String get bankReconTitle => 'Bank reconciliation report';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Source movements without verified retained-row association';
+
+  @override
+  String get bankReconValueDate =>
+      'Stored value date (may default to booking date)';
+
+  @override
   String bankRefusedAtLine(String reason, int line) {
     return '$reason (line $line)';
   }

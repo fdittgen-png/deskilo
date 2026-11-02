@@ -2012,6 +2012,96 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankOutTitle => 'Il pagamento registrato come effettuato';
 
   @override
+  String get bankReconAccount => 'Conto';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Differenza aritmetica del file (movimenti contabilizzati supportati)';
+
+  @override
+  String get bankReconBookingDate =>
+      'Data contabile registrata (può usare la data valuta)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Differenza con i libri non disponibile: mancano il saldo contabile iniziale del conto e le registrazioni complete.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Saldo di compensazione non disponibile: mancano saldo iniziale e dati completi di regolamento.';
+
+  @override
+  String get bankReconClosing => 'Saldo finale indicato dalla banca';
+
+  @override
+  String get bankReconCoverage =>
+      'Copertura parziale: il periodo dichiarato dalla banca e la copertura completa del conto non sono accertati.';
+
+  @override
+  String get bankReconCsvMappingUnavailable =>
+      'Mappatura delle colonne CSV non conservata';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Il calcolo del file confronta i suoi saldi con i movimenti contabilizzati supportati e accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Formato o limiti della fonte non consentono di verificare il calcolo';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identità del movimento della fonte mancante o duplicata';
+
+  @override
+  String get bankReconNotIncluded =>
+      'I rapporti di riconciliazione bancaria non sono disponibili per questa esportazione.';
+
+  @override
+  String get bankReconObservedDates => 'Date dei movimenti registrati';
+
+  @override
+  String get bankReconOpening => 'Saldo iniziale indicato dalla banca';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Fonte originale non disponibile o inaccessibile';
+
+  @override
+  String get bankReconReadUnavailable =>
+      'Fonte originale non disponibile o inaccessibile; assenza e rifiuto non sono distinguibili';
+
+  @override
+  String get bankReconRequestedPeriod => 'Periodo richiesto';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Estratti, movimenti e fonte sono letti separatamente; non costituiscono una fotografia fissa.';
+
+  @override
+  String get bankReconSourceNotRetained =>
+      'Fonte originale non conservata o impronta non disponibile';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.';
+
+  @override
+  String get bankReconSourceVerificationFailed =>
+      'Impronta, analisi, stato o importi dei movimenti, conto, valuta o saldi della fonte non verificabili.';
+
+  @override
+  String get bankReconTitle => 'Rapporto di riconciliazione bancaria';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Movimenti della fonte senza associazione verificata a una riga conservata';
+
+  @override
+  String get bankReconValueDate =>
+      'Data valuta registrata (può usare la data contabile)';
+
+  @override
   String bankRefusedAtLine(String reason, int line) {
     return '$reason (riga $line)';
   }

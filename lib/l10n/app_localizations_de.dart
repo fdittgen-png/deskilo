@@ -2015,6 +2015,96 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankOutTitle => 'Die als geleistet erfasste Zahlung';
 
   @override
+  String get bankReconAccount => 'Konto';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Rechnerische Differenz der Auszugsdatei (unterstützte gebuchte Bewegungen)';
+
+  @override
+  String get bankReconBookingDate =>
+      'Gespeichertes Buchungsdatum (gegebenenfalls Valutadatum)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Differenz zum Buchwerk nicht verfügbar: kontobezogener Anfangssaldo und vollständige Buchungen fehlen.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Verrechnungssaldo nicht verfügbar: Anfangssaldo und vollständige Abrechnungsdaten fehlen.';
+
+  @override
+  String get bankReconClosing => 'Schlusssaldo laut Bank';
+
+  @override
+  String get bankReconCoverage =>
+      'Teilweise Abdeckung: Der gemeldete Bankzeitraum und die vollständige Kontoabdeckung sind nicht belegt.';
+
+  @override
+  String get bankReconCsvMappingUnavailable =>
+      'CSV-Spaltenzuordnung wurde nicht aufbewahrt';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Die Auszugsdatei-Berechnung vergleicht ihre Salden mit unterstützten gebuchten Bewegungen, die der Importparser annimmt; sie ist kein Abgleich mit der Buchhaltung.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Dateiformat oder Quellgrenzen erlauben keine Prüfung der Berechnung';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Quellbewegungskennung fehlt oder ist doppelt';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Bankabstimmungsberichte sind für diesen Export nicht verfügbar.';
+
+  @override
+  String get bankReconObservedDates => 'Daten gespeicherter Bewegungen';
+
+  @override
+  String get bankReconOpening => 'Anfangssaldo laut Bank';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Originalquelle nicht verfügbar oder nicht zugänglich';
+
+  @override
+  String get bankReconReadUnavailable =>
+      'Originalquelle nicht verfügbar oder nicht zugänglich; Fehlen und Verweigerung sind nicht unterscheidbar';
+
+  @override
+  String get bankReconRequestedPeriod => 'Angefragter Zeitraum';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Auszüge, Bewegungen und Quelle werden getrennt gelesen; dies ist keine feste Momentaufnahme.';
+
+  @override
+  String get bankReconSourceNotRetained =>
+      'Originalquelle nicht aufbewahrt oder Prüfsumme nicht verfügbar';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.';
+
+  @override
+  String get bankReconSourceVerificationFailed =>
+      'Quellprüfsumme, Verarbeitung, Status oder Beträge der Bewegungen, Konto, Währung oder Salden nicht überprüfbar.';
+
+  @override
+  String get bankReconTitle => 'Bankabstimmungsbericht';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Quellbewegungen ohne geprüfte Zuordnung zu einer gespeicherten Zeile';
+
+  @override
+  String get bankReconValueDate =>
+      'Gespeichertes Valutadatum (gegebenenfalls Buchungsdatum)';
+
+  @override
   String bankRefusedAtLine(String reason, int line) {
     return '$reason (Zeile $line)';
   }

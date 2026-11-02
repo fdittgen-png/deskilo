@@ -2018,6 +2018,96 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankOutTitle => 'Le paiement enregistré comme effectué';
 
   @override
+  String get bankReconAccount => 'Compte';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Écart arithmétique du fichier (mouvements comptabilisés pris en charge)';
+
+  @override
+  String get bankReconBookingDate =>
+      'Date comptable enregistrée (par défaut, date de valeur)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Écart avec les livres indisponible : solde comptable initial lié au compte et écritures complètes manquants.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Compte de compensation indisponible : solde initial et données complètes de règlement manquants.';
+
+  @override
+  String get bankReconClosing => 'Solde final indiqué par la banque';
+
+  @override
+  String get bankReconCoverage =>
+      'Couverture partielle : la période déclarée par la banque et la couverture complète du compte ne sont pas établies.';
+
+  @override
+  String get bankReconCsvMappingUnavailable =>
+      'Correspondance des colonnes CSV non conservée';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Le calcul du fichier compare ses soldes aux mouvements comptabilisés pris en charge et acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Format ou limites de source ne permettant pas de vérifier le calcul';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identifiant de mouvement source manquant ou dupliqué';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.';
+
+  @override
+  String get bankReconObservedDates => 'Dates des mouvements enregistrés';
+
+  @override
+  String get bankReconOpening => 'Solde initial indiqué par la banque';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Source originale indisponible ou inaccessible';
+
+  @override
+  String get bankReconReadUnavailable =>
+      'Source originale indisponible ou inaccessible ; absence et refus ne peuvent être distingués';
+
+  @override
+  String get bankReconRequestedPeriod => 'Période demandée';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Les relevés, mouvements et sources sont lus séparément ; ce n’est pas un instantané figé.';
+
+  @override
+  String get bankReconSourceNotRetained =>
+      'Source originale non conservée ou empreinte indisponible';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
+
+  @override
+  String get bankReconSourceVerificationFailed =>
+      'Empreinte, analyse, statut ou montants des mouvements, compte, devise ou soldes de la source non vérifiables.';
+
+  @override
+  String get bankReconTitle => 'Rapport de rapprochement bancaire';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Mouvements source sans association vérifiée à une ligne conservée';
+
+  @override
+  String get bankReconValueDate =>
+      'Date de valeur enregistrée (par défaut, date comptable)';
+
+  @override
   String bankRefusedAtLine(String reason, int line) {
     return '$reason (ligne $line)';
   }

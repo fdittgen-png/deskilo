@@ -98,6 +98,8 @@ const List<ReportKind> fixedReportKinds = [
       numbersFirstPage: true),
   ReportKind(id: 'journals', slot: ReportDocSlot('journals'),
       numbersFirstPage: true),
+  ReportKind(id: 'bank_reconciliation', slot: ReportDocSlot('bank_reconciliation'),
+      numbersFirstPage: true),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];

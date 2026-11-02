@@ -34,3 +34,15 @@ ReportBands bookReportBands(AppLocalizations l10n, String kindId) {
     footer: '> ${l10n.bookReportFooter}',
   );
 }
+
+/// A statement report is not the book ledger: it must not reuse the book
+/// footer that claims its rows come from postings or the FEC.
+ReportBands bankReconciliationBands(AppLocalizations l10n) {
+  final title = reportKindLabel(l10n, reportKindById('bank_reconciliation')!);
+  return ReportBands(
+    header: '# {{ workspace }}\n> {{ workspace_address }}\n---\n# $title\n> {{ book_period }}',
+    continuation: '{{ workspace }} — $title — {{ book_period }}\n---',
+    body: '{% for row in book_rows %}{{ row.label }}{% if row.detail != "" %} · {{ row.detail }}{% endif %} | {{ row.balance }}\n{% endfor %}',
+    footer: '> {{ workspace }}',
+  );
+}

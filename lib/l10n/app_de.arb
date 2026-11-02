@@ -872,6 +872,102 @@
   "bankMatchTitle": "{amount} zuordnen",
   "bankOutNone": "Keine Zahlung dieses Betrags ist als geleistet erfasst.",
   "bankOutTitle": "Die als geleistet erfasste Zahlung",
+  "bankReconAccount": "Konto",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "bankReconArithmeticDifference": "Rechnerische Differenz der Auszugsdatei (unterstützte gebuchte Bewegungen)",
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
+  },
+  "bankReconBookingDate": "Gespeichertes Buchungsdatum (gegebenenfalls Valutadatum)",
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "bankReconBooksUnavailable": "Differenz zum Buchwerk nicht verfügbar: kontobezogener Anfangssaldo und vollständige Buchungen fehlen.",
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "bankReconClearingUnavailable": "Verrechnungssaldo nicht verfügbar: Anfangssaldo und vollständige Abrechnungsdaten fehlen.",
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "bankReconClosing": "Schlusssaldo laut Bank",
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "bankReconCoverage": "Teilweise Abdeckung: Der gemeldete Bankzeitraum und die vollständige Kontoabdeckung sind nicht belegt.",
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "bankReconCsvMappingUnavailable": "CSV-Spaltenzuordnung wurde nicht aufbewahrt",
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "bankReconFileArithmeticScope": "Die Auszugsdatei-Berechnung vergleicht ihre Salden mit unterstützten gebuchten Bewegungen, die der Importparser annimmt; sie ist kein Abgleich mit der Buchhaltung.",
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "bankReconFormatUnavailable": "Dateiformat oder Quellgrenzen erlauben keine Prüfung der Berechnung",
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "bankReconIdentityAmbiguous": "Quellbewegungskennung fehlt oder ist doppelt",
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
+  "bankReconNotIncluded": "Bankabstimmungsberichte sind für diesen Export nicht verfügbar.",
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "bankReconObservedDates": "Daten gespeicherter Bewegungen",
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "bankReconOpening": "Anfangssaldo laut Bank",
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "bankReconOriginalUnavailable": "Originalquelle nicht verfügbar oder nicht zugänglich",
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "bankReconReadUnavailable": "Originalquelle nicht verfügbar oder nicht zugänglich; Fehlen und Verweigerung sind nicht unterscheidbar",
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
+  "bankReconRequestedPeriod": "Angefragter Zeitraum",
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "bankReconSeparateReads": "Auszüge, Bewegungen und Quelle werden getrennt gelesen; dies ist keine feste Momentaufnahme.",
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "bankReconSourceNotRetained": "Originalquelle nicht aufbewahrt oder Prüfsumme nicht verfügbar",
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
+  "bankReconSourceUnassociated": "Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.",
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "bankReconSourceVerificationFailed": "Quellprüfsumme, Verarbeitung, Status oder Beträge der Bewegungen, Konto, Währung oder Salden nicht überprüfbar.",
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
+  "bankReconTitle": "Bankabstimmungsbericht",
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconUnmappedCount": "Quellbewegungen ohne geprüfte Zuordnung zu einer gespeicherten Zeile",
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
+  },
+  "bankReconValueDate": "Gespeichertes Valutadatum (gegebenenfalls Buchungsdatum)",
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
+  },
   "bankRefusedAtLine": "{reason} (Zeile {line})",
   "bankRefusedBadAmount": "Ein Betrag in der Datei ist kein gültiger Betrag. Nichts wurde importiert.",
   "bankRefusedBadCurrency": "Die Datei enthält eine unbekannte Währung oder mehrere Währungen auf einem Konto. Nichts wurde importiert.",
