@@ -2019,7 +2019,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Rechnerische Differenz der Auszugsdatei (vom Importparser angenommene Bewegungen)';
+      'Rechnerische Differenz der Auszugsdatei (unterstützte gebuchte Bewegungen)';
 
   @override
   String get bankReconBookingDate =>
@@ -2046,7 +2046,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankReconFileArithmeticScope =>
-      'Die Auszugsdatei-Berechnung vergleicht ihre Salden mit den vom Importparser angenommenen Bewegungen; sie ist kein Abgleich mit der Buchhaltung.';
+      'Die Auszugsdatei-Berechnung vergleicht ihre Salden mit unterstützten gebuchten Bewegungen, die der Importparser annimmt; sie ist kein Abgleich mit der Buchhaltung.';
 
   @override
   String get bankReconFormatUnavailable =>
@@ -2091,7 +2091,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankReconSourceVerificationFailed =>
-      'Quellprüfsumme, Verarbeitung, Konto, Währung oder Salden nicht überprüfbar';
+      'Quellprüfsumme, Verarbeitung, Status oder Beträge der Bewegungen, Konto, Währung oder Salden nicht überprüfbar.';
 
   @override
   String get bankReconTitle => 'Bankabstimmungsbericht';

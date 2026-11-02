@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/application/bank_import_commands.dart';
 import 'package:deskilo/features/money/application/bank_reconciliation_reader.dart';
 import 'package:deskilo/features/money/domain/bank/bank_import_settings.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
+import 'package:deskilo/features/money/domain/bank/reconciliation_report.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/bank_reconciliation_archive.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
@@ -98,6 +99,25 @@ void main() {
     );
     expect(baseline.statementDifferenceCents, 0);
     expect(baseline.unresolved, isEmpty);
+    final pendingXml = baselineXml
+        .replaceFirst('DEMO-REPORT-BASE', 'DEMO-REPORT-PENDING')
+        .replaceFirst('DEMO-REPORT-1', 'DEMO-PENDING-BOOKED')
+        .replaceFirst(
+          '  </Stmt>',
+          '<Ntry><Amt Ccy="EUR">1.00</Amt><CdtDbtInd>CRDT</CdtDbtInd>'
+              '<Sts><Cd>PDNG</Cd></Sts><BookgDt><Dt>2026-01-25</Dt></BookgDt>'
+              '<AcctSvcrRef>DEMO-PENDING</AcctSvcrRef></Ntry>  </Stmt>',
+        );
+    final pendingId = await importSource(pendingXml, 'pending.xml');
+    final pending = await reader.read(
+      workspaceId: 'ws-1',
+      statementId: pendingId,
+      sourceLimits: limits,
+    );
+    expect(pending.sourceIssue, BankSourceIssue.verificationFailed);
+    expect(pending.statementDifferenceCents, isNull);
+    expect(pending.lines, hasLength(1));
+    expect(pending.lines.single.transactionId, 'DEMO-PENDING-BOOKED');
     final addedId = await importSource(addedXml, 'added.xml');
     final after = await reader.read(
       workspaceId: 'ws-1',

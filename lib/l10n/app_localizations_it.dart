@@ -2016,7 +2016,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Differenza aritmetica del file (movimenti accettati dall’analizzatore di importazione)';
+      'Differenza aritmetica del file (movimenti contabilizzati supportati)';
 
   @override
   String get bankReconBookingDate =>
@@ -2043,7 +2043,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankReconFileArithmeticScope =>
-      'Il calcolo del file confronta i suoi saldi con i movimenti accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.';
+      'Il calcolo del file confronta i suoi saldi con i movimenti contabilizzati supportati e accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.';
 
   @override
   String get bankReconFormatUnavailable =>
@@ -2088,7 +2088,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankReconSourceVerificationFailed =>
-      'Impronta, analisi, conto, valuta o saldi della fonte non verificabili';
+      'Impronta, analisi, stato o importi dei movimenti, conto, valuta o saldi della fonte non verificabili.';
 
   @override
   String get bankReconTitle => 'Rapporto di riconciliazione bancaria';

@@ -15,14 +15,20 @@ void main() {
   test(
     'actual import fitting and source verification agree on long fields',
     () async {
-      final xml =
-          File('test/features/money/fixtures/bank/camt053_statement.xml')
-              .readAsStringSync()
-              .replaceFirst('STMT-2026-01', 'S' * 150)
-              .replaceFirst('Demo Member One', 'N' * 160)
-              .replaceFirst('E2E-0001', 'E' * 160)
-              .replaceFirst('CH5604835012345678009', 'CH${'1' * 40}')
-              .replaceFirst('Invoice 2026-0042', 'R' * 1200);
+      final original = File(
+        'test/features/money/fixtures/bank/camt053_statement.xml',
+      ).readAsStringSync();
+      final pendingStart = original.lastIndexOf('      <Ntry>');
+      final pendingEnd =
+          original.indexOf('      </Ntry>', pendingStart) +
+          '      </Ntry>'.length;
+      final xml = original
+          .replaceRange(pendingStart, pendingEnd, '')
+          .replaceFirst('STMT-2026-01', 'S' * 150)
+          .replaceFirst('Demo Member One', 'N' * 160)
+          .replaceFirst('E2E-0001', 'E' * 160)
+          .replaceFirst('CH5604835012345678009', 'CH${'1' * 40}')
+          .replaceFirst('Invoice 2026-0042', 'R' * 1200);
       final bank = FakeBankStatementRepository(
         money: FakeMoneyRepository(),
         today: DateTime.utc(2026),

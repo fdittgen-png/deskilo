@@ -876,7 +876,7 @@
   "@bankReconAccount": {
     "description": "#2380 partial bank reconciliation report: bankReconAccount."
   },
-  "bankReconArithmeticDifference": "Rechnerische Differenz der Auszugsdatei (vom Importparser angenommene Bewegungen)",
+  "bankReconArithmeticDifference": "Rechnerische Differenz der Auszugsdatei (unterstützte gebuchte Bewegungen)",
   "@bankReconArithmeticDifference": {
     "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
   },
@@ -904,7 +904,7 @@
   "@bankReconCsvMappingUnavailable": {
     "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
   },
-  "bankReconFileArithmeticScope": "Die Auszugsdatei-Berechnung vergleicht ihre Salden mit den vom Importparser angenommenen Bewegungen; sie ist kein Abgleich mit der Buchhaltung.",
+  "bankReconFileArithmeticScope": "Die Auszugsdatei-Berechnung vergleicht ihre Salden mit unterstützten gebuchten Bewegungen, die der Importparser annimmt; sie ist kein Abgleich mit der Buchhaltung.",
   "@bankReconFileArithmeticScope": {
     "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
   },
@@ -952,7 +952,7 @@
   "@bankReconSourceUnassociated": {
     "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
   },
-  "bankReconSourceVerificationFailed": "Quellprüfsumme, Verarbeitung, Konto, Währung oder Salden nicht überprüfbar",
+  "bankReconSourceVerificationFailed": "Quellprüfsumme, Verarbeitung, Status oder Beträge der Bewegungen, Konto, Währung oder Salden nicht überprüfbar.",
   "@bankReconSourceVerificationFailed": {
     "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
   },

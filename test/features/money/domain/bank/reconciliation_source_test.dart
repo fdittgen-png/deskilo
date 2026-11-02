@@ -14,9 +14,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('retained source verifies all stored lines, not just stored count', () {
-    final bytes = File(
+    final original = File(
       'test/features/money/fixtures/bank/camt053_statement.xml',
-    ).readAsBytesSync();
+    ).readAsStringSync();
+    final pendingStart = original.lastIndexOf('      <Ntry>');
+    final pendingEnd =
+        original.indexOf('      </Ntry>', pendingStart) +
+        '      </Ntry>'.length;
+    final bytes = utf8.encode(
+      original.replaceRange(pendingStart, pendingEnd, ''),
+    );
     const limits = BankFileLimits(maxBytes: 1000000, maxLines: 1000);
     final parsed = parseBankFile(
       bytes,
@@ -102,6 +109,67 @@ void main() {
       isNull,
       reason: 'CSV mapping was not retained and must not be guessed',
     );
+    final pendingBytes = utf8.encode(original);
+    final pendingStatement = StoredBankStatement(
+      id: 'pending',
+      format: BankFileFormat.camt053,
+      account: parsed.account,
+      currency: parsed.currency,
+      from: parsed.from,
+      to: parsed.to,
+      lineCount: lines.length,
+      openCount: lines.length,
+      sourceSha256: sha256.convert(pendingBytes).toString(),
+      statementRef: parsed.statementId,
+      openingCents: parsed.openingCents,
+      closingCents: parsed.closingCents,
+    );
+    final pending = analyzeBankSource(
+      statement: pendingStatement,
+      lines: lines,
+      original: pendingBytes,
+      limits: limits,
+    );
+    expect(pending.difference, isNull);
+    expect(pending.issue, BankSourceIssue.verificationFailed);
+    final parts = utf8.decode(bytes).split('<TxDtls>');
+    final cancelling =
+        '${parts[0]}<TxDtls><Amt Ccy="CHF">121.00</Amt>${parts[1]}'
+        '<TxDtls><Amt Ccy="CHF">79.50</Amt>${parts.skip(2).join('<TxDtls>')}';
+    for (final badSource in [
+      cancelling,
+      utf8.decode(bytes).replaceFirst('<Sts><Cd>BOOK</Cd></Sts>', ''),
+      utf8
+          .decode(bytes)
+          .replaceFirst('<Sts><Cd>BOOK</Cd></Sts>', '<Sts><Cd>INFO</Cd></Sts>'),
+      utf8
+          .decode(bytes)
+          .replaceFirst('<TxDtls>', '<TxDtls><Amt Ccy="CHF">121.00</Amt>'),
+    ]) {
+      final invalidBytes = utf8.encode(badSource);
+      final invalidStatement = StoredBankStatement(
+        id: 'invalid',
+        format: BankFileFormat.camt053,
+        account: parsed.account,
+        currency: parsed.currency,
+        from: parsed.from,
+        to: parsed.to,
+        lineCount: lines.length,
+        openCount: lines.length,
+        sourceSha256: sha256.convert(invalidBytes).toString(),
+        statementRef: parsed.statementId,
+        openingCents: parsed.openingCents,
+        closingCents: parsed.closingCents,
+      );
+      final rejected = analyzeBankSource(
+        statement: invalidStatement,
+        lines: lines,
+        original: invalidBytes,
+        limits: limits,
+      );
+      expect(rejected.difference, isNull);
+      expect(rejected.issue, BankSourceIssue.verificationFailed);
+    }
     expect(verify(lines, bytes), isTrue);
     final report = BankReconciliationReport(
       statement: statement(lines.length),

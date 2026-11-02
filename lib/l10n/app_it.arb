@@ -876,7 +876,7 @@
   "@bankReconAccount": {
     "description": "#2380 partial bank reconciliation report: bankReconAccount."
   },
-  "bankReconArithmeticDifference": "Differenza aritmetica del file (movimenti accettati dall’analizzatore di importazione)",
+  "bankReconArithmeticDifference": "Differenza aritmetica del file (movimenti contabilizzati supportati)",
   "@bankReconArithmeticDifference": {
     "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
   },
@@ -904,7 +904,7 @@
   "@bankReconCsvMappingUnavailable": {
     "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
   },
-  "bankReconFileArithmeticScope": "Il calcolo del file confronta i suoi saldi con i movimenti accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.",
+  "bankReconFileArithmeticScope": "Il calcolo del file confronta i suoi saldi con i movimenti contabilizzati supportati e accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.",
   "@bankReconFileArithmeticScope": {
     "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
   },
@@ -952,7 +952,7 @@
   "@bankReconSourceUnassociated": {
     "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
   },
-  "bankReconSourceVerificationFailed": "Impronta, analisi, conto, valuta o saldi della fonte non verificabili",
+  "bankReconSourceVerificationFailed": "Impronta, analisi, stato o importi dei movimenti, conto, valuta o saldi della fonte non verificabili.",
   "@bankReconSourceVerificationFailed": {
     "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
   },

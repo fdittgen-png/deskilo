@@ -2022,7 +2022,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Écart arithmétique du fichier de relevé (mouvements acceptés par l’analyseur d’import)';
+      'Écart arithmétique du fichier (mouvements comptabilisés pris en charge)';
 
   @override
   String get bankReconBookingDate =>
@@ -2049,7 +2049,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankReconFileArithmeticScope =>
-      'Le calcul du fichier compare ses soldes aux mouvements acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.';
+      'Le calcul du fichier compare ses soldes aux mouvements comptabilisés pris en charge et acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.';
 
   @override
   String get bankReconFormatUnavailable =>
@@ -2094,7 +2094,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankReconSourceVerificationFailed =>
-      'Empreinte, analyse, compte, devise ou soldes de la source non vérifiables';
+      'Empreinte, analyse, statut ou montants des mouvements, compte, devise ou soldes de la source non vérifiables.';
 
   @override
   String get bankReconTitle => 'Rapport de rapprochement bancaire';

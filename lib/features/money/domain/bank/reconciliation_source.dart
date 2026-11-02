@@ -10,6 +10,7 @@ import 'bank_file.dart';
 import 'bank_records.dart';
 import 'bank_statement.dart';
 import 'bank_statement_fit.dart';
+import 'bank_values.dart';
 import 'reconciliation_report.dart';
 
 List<StoredBankLine>? verifiedBankSourceMovements({
@@ -129,7 +130,7 @@ BankStatement? _verifiedSource(
   } on FormatException {
     return null;
   }
-  if (!_singleCamtBalanceScope(original, source.currency)) return null;
+  if (!_singleCamtBalanceScope(original, source)) return null;
   if (source.account.trim().toUpperCase() != statement.account ||
       source.currency != statement.currency ||
       source.statementId != statement.statementRef ||
@@ -155,7 +156,8 @@ bool _sameMovement(BankLine expected, StoredBankLine actual) =>
 // readCamt can combine reports and accepts balance amounts with a currency
 // different from the account. Restrict arithmetic to a single statement
 // with explicit matching currencies and unambiguous balance directions.
-bool _singleCamtBalanceScope(List<int> original, String currency) {
+bool _singleCamtBalanceScope(List<int> original, BankStatement source) {
+  final currency = source.currency;
   try {
     final doc = XmlDocument.parse(utf8.decode(original));
     final messages = doc.rootElement.childElements
@@ -166,6 +168,7 @@ bool _singleCamtBalanceScope(List<int> original, String currency) {
         .where((e) => e.name.local == 'Stmt')
         .toList();
     if (statements.length != 1) return false;
+    if (!_bookedEntriesMatch(statements.single, source)) return false;
     final balances = statements.single.childElements
         .where((e) => e.name.local == 'Bal')
         .toList();
@@ -199,7 +202,60 @@ bool _singleCamtBalanceScope(List<int> original, String currency) {
     return true;
   } on XmlException {
     return false;
+  } on BankFileException {
+    return false;
   } on FormatException {
     return false;
   }
+}
+
+/// Each supported source entry must be booked and its parsed detail amounts
+/// must add to that same entry, so opposite discrepancies cannot cancel.
+bool _bookedEntriesMatch(XmlElement statement, BankStatement source) {
+  final currency = source.currency;
+  var offset = 0;
+  for (final entry in statement.childElements.where(
+    (e) => e.name.local == 'Ntry',
+  )) {
+    final statuses = entry.childElements
+        .where((e) => e.name.local == 'Sts')
+        .toList();
+    final amounts = entry.childElements
+        .where((e) => e.name.local == 'Amt')
+        .toList();
+    final signs = entry.childElements
+        .where((e) => e.name.local == 'CdtDbtInd')
+        .toList();
+    if (statuses.length != 1 ||
+        amounts.length != 1 ||
+        signs.length != 1 ||
+        amounts.single.getAttribute('Ccy') != currency) {
+      return false;
+    }
+    final children = statuses.single.childElements.toList();
+    final code = children.isEmpty
+        ? statuses.single.innerText.trim()
+        : children.length == 1 && children.single.name.local == 'Cd'
+        ? children.single.innerText.trim()
+        : '';
+    final sign = signs.single.innerText.trim();
+    if (code != 'BOOK' || !{'CRDT', 'DBIT'}.contains(sign)) return false;
+    final amount = bankAmount(amounts.single.innerText, currency);
+    if (amount < 0) return false;
+    final details = [
+      for (final group in entry.childElements.where(
+        (e) => e.name.local == 'NtryDtls',
+      ))
+        ...group.childElements.where((e) => e.name.local == 'TxDtls'),
+    ];
+    final count = details.isEmpty ? 1 : details.length;
+    if (offset + count > source.lines.length) return false;
+    final parsedTotal = source.lines
+        .skip(offset)
+        .take(count)
+        .fold<int>(0, (sum, line) => sum + line.amountCents);
+    if (parsedTotal != (sign == 'DBIT' ? -amount : amount)) return false;
+    offset += count;
+  }
+  return offset == source.lines.length;
 }

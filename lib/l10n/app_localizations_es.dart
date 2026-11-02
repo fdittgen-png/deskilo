@@ -2020,7 +2020,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Diferencia aritmética del archivo (movimientos aceptados por el analizador de importación)';
+      'Diferencia aritmética del archivo (movimientos contabilizados admitidos)';
 
   @override
   String get bankReconBookingDate =>
@@ -2047,7 +2047,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankReconFileArithmeticScope =>
-      'El cálculo del archivo compara sus saldos con los movimientos aceptados por el analizador de importación; no es una conciliación con los libros.';
+      'El cálculo del archivo compara sus saldos con movimientos contabilizados admitidos y aceptados por el analizador de importación; no es una conciliación con los libros.';
 
   @override
   String get bankReconFormatUnavailable =>
@@ -2092,7 +2092,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankReconSourceVerificationFailed =>
-      'No se pudo verificar la huella, el análisis, la cuenta, la moneda o los saldos de la fuente';
+      'No se pudo verificar la huella, el análisis, el estado o los importes de los movimientos, la cuenta, la moneda o los saldos de la fuente.';
 
   @override
   String get bankReconTitle => 'Informe de conciliación bancaria';

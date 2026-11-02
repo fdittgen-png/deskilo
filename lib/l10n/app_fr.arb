@@ -876,7 +876,7 @@
   "@bankReconAccount": {
     "description": "#2380 partial bank reconciliation report: bankReconAccount."
   },
-  "bankReconArithmeticDifference": "Écart arithmétique du fichier de relevé (mouvements acceptés par l’analyseur d’import)",
+  "bankReconArithmeticDifference": "Écart arithmétique du fichier (mouvements comptabilisés pris en charge)",
   "@bankReconArithmeticDifference": {
     "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
   },
@@ -904,7 +904,7 @@
   "@bankReconCsvMappingUnavailable": {
     "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
   },
-  "bankReconFileArithmeticScope": "Le calcul du fichier compare ses soldes aux mouvements acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.",
+  "bankReconFileArithmeticScope": "Le calcul du fichier compare ses soldes aux mouvements comptabilisés pris en charge et acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.",
   "@bankReconFileArithmeticScope": {
     "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
   },
@@ -952,7 +952,7 @@
   "@bankReconSourceUnassociated": {
     "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
   },
-  "bankReconSourceVerificationFailed": "Empreinte, analyse, compte, devise ou soldes de la source non vérifiables",
+  "bankReconSourceVerificationFailed": "Empreinte, analyse, statut ou montants des mouvements, compte, devise ou soldes de la source non vérifiables.",
   "@bankReconSourceVerificationFailed": {
     "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
   },

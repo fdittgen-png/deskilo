@@ -3394,7 +3394,7 @@ abstract class AppLocalizations {
   /// #2380 statement-file arithmetic limitation: bankReconArithmeticDifference.
   ///
   /// In en, this message translates to:
-  /// **'Statement file arithmetic difference (movements accepted by the import parser)'**
+  /// **'Statement file arithmetic difference (supported booked movements)'**
   String get bankReconArithmeticDifference;
 
   /// #2380 partial bank reconciliation report: bankReconBookingDate.
@@ -3436,7 +3436,7 @@ abstract class AppLocalizations {
   /// #2380 scope of statement-file arithmetic, mandatory in customized output.
   ///
   /// In en, this message translates to:
-  /// **'Statement-file arithmetic compares the file balances with movements accepted by the import parser; it is not reconciliation with the books.'**
+  /// **'Statement-file arithmetic compares the file balances with supported booked movements accepted by the import parser; it is not reconciliation with the books.'**
   String get bankReconFileArithmeticScope;
 
   /// #2380 statement-file arithmetic limitation: bankReconFormatUnavailable.
@@ -3508,7 +3508,7 @@ abstract class AppLocalizations {
   /// #2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed.
   ///
   /// In en, this message translates to:
-  /// **'Source hash, parsing, account, currency or balance facts could not be verified'**
+  /// **'Source hash, parsing, entry status or amounts, account, currency or balances could not be verified.'**
   String get bankReconSourceVerificationFailed;
 
   /// #2380 partial bank reconciliation report: bankReconTitle.

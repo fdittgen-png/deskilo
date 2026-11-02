@@ -2003,7 +2003,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankReconArithmeticDifference =>
-      'Statement file arithmetic difference (movements accepted by the import parser)';
+      'Statement file arithmetic difference (supported booked movements)';
 
   @override
   String get bankReconBookingDate =>
@@ -2030,7 +2030,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankReconFileArithmeticScope =>
-      'Statement-file arithmetic compares the file balances with movements accepted by the import parser; it is not reconciliation with the books.';
+      'Statement-file arithmetic compares the file balances with supported booked movements accepted by the import parser; it is not reconciliation with the books.';
 
   @override
   String get bankReconFormatUnavailable =>
@@ -2075,7 +2075,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankReconSourceVerificationFailed =>
-      'Source hash, parsing, account, currency or balance facts could not be verified';
+      'Source hash, parsing, entry status or amounts, account, currency or balances could not be verified.';
 
   @override
   String get bankReconTitle => 'Bank reconciliation report';
