@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 12:38 UTC**. This replaces earlier publication-held and CI-pending dispatch snapshots. Refresh live GitHub and session CURRENT before acting.
+Snapshot after verified #3253 merge at **2026-11-02 13:31:55 UTC**. This replaces prior pending/failed-head snapshots. Refresh live GitHub before acting.
 
 ## Owner priority and publication decision
 
@@ -10,39 +10,39 @@ Repository **fdittgen-png/deskilo is PRIVATE**, independently verified through G
 
 GitHub Pages is unavailable (reviewer verified former URL/API404). Actions is enabled. Current plan does not enforce private branch protections (master protected=false; protection/ruleset API403 requiring Pro/public). Reviewer is sole merger and must manually verify exact expected HEAD, source approval and all previously required CI checks. No bypass/admin merge, unreviewed direct-master push or merge while checks fail/pending. Preserve hosting/godaddy and all WIP. No billing/plan upgrade is implied.
 
-## Team and active ownership
 
-| Role | Session UUID | Assignment |
-| --- | --- | --- |
-| Orchestrator | 01a19218-9136-7920-bff3-4a1a4b345d3a | Dispatch scope, efficiency, ownership and takeover records |
-| Reviewer | 01a19b63-22e4-72c1-8ea5-49e361e4ff4f | Sole queue/ledger/merge writer; #3253 CI through completion; incident |
-| Engineer 1 | 01a19b63-49df-7961-ba1c-1faa87cdd67a | Publish narrowly approved benchmark bootstrap; bounded metric diagnosis |
-| Engineer 2 | 01a19b63-6e38-7be2-8b35-f6c3d9f28930 | #3070 approver-read PR #3253, CI findings and owned cleanup |
+## Active assignments
 
-Two coding checkpoints maximum. Normal two PRs/hard four, one migration tenure. No new watcher/recurring job. Read current receipts rather than reacting to stale queued reports.
+- **Reviewer** (01a19b63-22e4-72c1-8ea5-49e361e4ff4f): sole #2596/ledger writer and merger; finish #3254, exact-head follow-up reviews, allocate next migration after fresh master/ledger check. Manual check enforcement remains mandatory. Repository allows squash; use exact-head squash, no admin bypass.
+- **E1** (01a19b63-49df-7961-ba1c-1faa87cdd67a): released to integrate local selector+Back candidate81031c once from fresh master and publish in freed PR slot. No rebase, no change to active3254, no MCP work. Retain valid evidence; run required integration gates.
+- **E2** (01a19b63-6e38-7be2-8b35-f6c3d9f28930): own merged3253 cleanup, then bounded #3070 server write-time decision authorization checkpoint below.
+- Root orchestrates scope and takeover records. Dispatch queued to all three; queue delivery is not personal acknowledgement.
 
-## #3070 implementation CI is active
+Two coding checkpoints, normal two open PRs/hard four, one migration tenure. E2 can prepare locally while3254 plus E1 follow-up occupy normal PR cap. No watchers, repeated ACK loops or unchanged broad reruns.
 
-[PR #3253](https://github.com/fdittgen-png/deskilo/pull/3253), exact reviewed head **d8d3c4673813ce873247ed315ee88c9e349de633**, OPEN/non-draft, verified 12:37:48 UTC. Quality run **41446196242**, Web **41446196206**, SAF-T **41446196087**, E-invoice **41446196014**, VAT **41446196007** all in progress, started12:37:18 UTC. Do not infer success or merge.
+## #3253 completed
 
-0654 APPLIED dev at12:13:03 UTC, SHA-256 **a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9**. Schema654, bodies/grants independently matched. Actual canonical340 real pgTAP51/51 passed in rollback before and after application. Genuine APPLIED/contract committed; final artifact delta27 gates passed. c777 analyzer/692 lint retained for unchanged code. Reviewer exact-head source acceptance: no actionable defect in selected checkpoint, conditional on final CI/full replay. Evidence details in EVIDENCE.md.
+GitHub independently confirms squash **e238a819172b4295abd3e5eb4baf0f3941653a1d**, merged13:31:55Z from reviewed **925bb3c959ee224ed2a0f2a98063ba99f450201d**. Reviewer reports all five final-head workflows successful, actual pgTAP340 plus338 files/6527 tests and effective contract PASS. Master0654/APPLIED hash independently matched by reviewer; ledger MERGED, lane released.
 
-Reviewer remains actively responsible through current CI completion, failed-step diagnosis and eligible merge; no unattended generic “pending” handoff. At verified merge reconcile hash/ledger, release0654 tenure, notify E2cleanup and dispatch next bounded acceptance. E2 handles actual failures without blind retries.
+Migration hash **a4f51b73d1aa339939f4d2e0f7a0adb4f8fea9018625750a137648ed3a0cf1e9**. Preserve failed d8 core-shard evidence: stale drawer fixture used old purchases-list injection. Test-only925 correction exercised actual scoped page provider/gate and refusal state; six focused tests/analyzer/pump gate passed. No SQL/fixture change. This closes selected read checkpoint, not parent3070.
 
-Parent #3070 remains open for atomic write-time feature/delegation gates, remote freshness and evidence/FX access; supplier To-pay/scheduling is separate. Existing receipt read-only reachability is preserved independently of bill loading/error. No new receipt voting or blanket entitlement.
+## Next #3070 scope: write-time authorization
 
-## E1 benchmark checkpoint
+Prioritize write-time feature/delegation decision consistency over evidence/FX access. E2 audits existing purchase decision entry points and implements server enforcement of intended purchases feature, active workspace/member, delegation and approver eligibility at decision. Preserve tenant boundaries, existing wide permissions, 0483 self-approval strictly below configured threshold, self-rejection prohibition, receipt validation semantics and RPC compatibility.
 
-Clean private **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0** in /private/tmp/deskilo-ci-harness: one bootstrap export. Reviewer narrowly source-approved; focused invitation RED->GREEN, default11/11 with9 samples and targeted analysis pass; tested file matches committed bytes. Private bootstrap-only PR now authorized, no duplicate tests. It does NOT make nightly green.
+Reserve only implicated decision RPC/eligibility, scoped client refusal handling, meaningful deterministic Demo refusal/recovery and tests, plus reviewer-controlled migration aggregates. No migration number assumed: reviewer assigns after fresh checks. No new evidence/FX entitlement, general authorization rewrite or receipt-voting expansion.
 
-Remaining perf gate: pending_leave_return13 trips>8 and Back1vs2. Trace identifies real calls; one historical Back was replaced by workspace selection in #2136. No budget relaxation, fake Back, blind cross-context cache sharing or broad provider refactor. Only bounded cause diagnosis with concrete evidence. Dictionary failure is start-time54322 occupied, owner unknown; no SQL defect, port change or blind rerun authorized; dictionary/stack editing locks released.
+Acceptance: allowed-path parity; stale-client refusal after feature/permission/delegation/status changes; threshold boundaries; no side effects on refusal. Specify and prove concurrent revocation ordering where claimed; client preflight or unchecked sequential reads do not establish atomic guarantees. Reviewer resolves concrete contract within this scope without another owner/orchestrator approval loop. Use canonical fixture and established proof route; focused failures first, combined final artifacts and CI. Parent stays open for remaining acceptance.
 
-## Recently completed
+## E1 follow-up and remaining CI
 
-- #3250/#2519 merged246e9a55; reasons/zero ratchet only, defaults retained; cleanup complete, parent open.
-- #3251/#2470 merged189fb73;0652 applied/merged; cleanup/locks released. Provider sandbox and receipt-reconstruction limits remain.
-- #3252/#3070 balance/navigation merged7438b12c at10:29:22, schema653, 6476pgTAP passed; cleanup complete and0653 tenure released.
-- Offline proof builder is fixture-specific, not a general SQL parser. Actual canonical proof belongs to executed5413b5df; later settled1a4fd597 only offline verified. No duplicate probe for unchanged SQL/fixture.
+PR3254 remains OPEN at **3f5e75ce9e5ed5da4543f0e3faf1f97da02203f0** as independently checked after3253 merge. Narrow bootstrap approval only; reviewer reconciles required CI and merge eligibility.
+
+Local **81031c823aea5e47a2fd3305a929d74331b2b94d**, /private/tmp/deskilo-recording-selector: boolean recordingPrivacy selector plus approved historical Back correction to exactly1. Focused selector6/privacy-Demo7, targeted analyzer and metric17 reported pass. Preserve privacy/workspace/actor/repository change semantics; synthetic tests are not real-server authorization proof. E2 independent review was assigned; reviewer consolidates receipt.
+
+Trip ceiling stays8. Selector trace reduced13->11; observed no-delay capability schedule offers at most two hypothetical joins (leaves9), not universal scheduling proof. Actual-session authority unresolved. MCP investigation CLOSED for current checkpoint: no new auth/session machinery, further traces, blind cache sharing or budget relaxation. Follow-up does not establish green nightly.
+
+Dictionary41447938544 succeeded on7438b12; original54322 collision owner/cause remains unproven. No port edits or speculative retry needed.
 
 ## Checkout and branch state
 
@@ -63,22 +63,3 @@ Keep `hosting/godaddy` (production deployment source) and `coord/cloud-codex`. P
 
 Development project reference: `zwzbynivewivvjmripeb`. No secret values are stored here. Cloud tooling must be rediscovered; the historical cloud report lacked Flutter/Dart/native toolchains.
 
-## CI triage assignment
-
-**12:10 UTC CI fix assignment:** E1 owns the second bounded local implementation checkpoint: benchmark bundled-tax-reference initialization and diagnosed dictionary stack port/config isolation. Dedicated owned worktree from fresh master; reserved tool/bench initialization/tests, dictionary-refresh.yml and necessary local-stack/config tests only. E2 retains0654/UI/DB aggregate ownership. Reviewer independently reviews both; no new migration or public ref for CI fixes. Benchmark fix reuses existing initializer, not increased timeouts/budgets. Port fix must establish ownership/config cause and preserve DB_URL/topology consumers; no arbitrary kills, guessed-port guarantee or migration edits.
-
-Verified latest implementation PR workflows began 10:06:19 UTC; master Quality41429206046 completed SUCCESS10:52:01. Two separate failed master runs assigned to E1 for bounded read-only root-cause triage: Dictionary refresh41429205871/job125223256424, Migration replay; Nightly Journey latency41434774314/job125241749287, Benchmark journeys. No blind rerun or new implementation stream. Reviewer/E2 finish settled local integration rather than treating publication hold as a reason to leave all work idle.
-
-## Authorized provider follow-up, separate from active CI
-
-E1 diagnostic changing _recordingOn to select only recordingPrivacy reduced actual myMember calls4->2 and journey trips13->11 in one sample; capability reads6 and true Back1 unchanged. Initial missing select import caused compile exit1; corrected probe exit0, all temporary edits restored. This establishes a bounded producer dependency improvement, not full nightly success or an irreducible lower bound.
-
-E1 authorized to implement that boolean selection/import and focused tests in a separate local follow-up. Reserve workspace/providers/workspace_providers.dart and scoped privacy/context tests; helper affects myMember, workspaceMembers and managedIdentity. Verify unrelated flags do not refetch; privacy toggles still transform data; same-privacy workspace/actor/repository changes preserve access isolation. Existing Demo privacy use case retained. Reviewer and E2 notified of upstream dependency, E2 candidate unchanged.
-
-Do not add this change to active bootstrap PR3254 or invalidate its CI; prepare locally and publish only after a normal PR slot clears, integrating once with fresh master. PR3253 and3254 remain the two active review/CI checkpoints. No blanket capability-cache sharing, budget changes, fake Back or generic refactor.
-
-## Selector candidate ready for independent review
-
-Clean local `fc39faa5d8e017ddf8cf9e4ec50dddc3e0cdd514`, `/private/tmp/deskilo-recording-selector`, branch `fix/recording-feature-selector`, based on7438b12c. Boolean privacy selection preserves three providers; focused red unrelated-flag refetch2vs1, then6 focused green and7 existing privacy/Demo, targeted analyzer0 after directive-order correction. Tests include off/on unrelated changes, privacy toggles, and synthetic workspace/actor/repository switches; they do not prove real server authorization. Logs `/tmp/deskilo-selector-{red,focused-final,privacy-demo,analyze-final}.log`.
-
-E2 assigned bounded read-only independent review of upstream/privacy behavior during CI wait, no edits/test reruns. Reviewer uses consolidated receipt and retains merge ownership. At12:56:52UTC #3253/#3254 still open; no third PR. On first eligible merge release slot promptly, integrate selector once from fresh master, run only invalidated checks. Existing Back1 correction is already authorized; separate immutable review deltas, keep trip ceiling8. Do not hold proven corrections for an unverified capability-cache design or amend active3254 merely to add scope.
