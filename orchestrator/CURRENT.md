@@ -1,5 +1,11 @@
 # Current orchestration state
 
+## Highest owner priority — continue to verified closure
+
+The owner explicitly instructed on 2026-11-02: never stop until all issues are closed, inform every session, and have sessions remind the orchestrator if it proposes an unnecessary stop. This supersedes historical drain-only/stop-after-current instructions. Continue authorized, useful work across independent implementation, tests, Demo, review and closure while another step is externally blocked. A CI or review wait is not a team-wide stop. All three existing sessions were directly queued this instruction.
+
+Sessions must challenge a blanket stop and identify a concrete next safe action. Preserve honest acceptance, required CI/review, confidentiality, actual file locks and owner-presence boundaries; no fabricated closure or unauthorized funding. Explicitly deferred scope must be reconciled rather than silently reclassified. Two coding slots, one bounded local follow-up each, reviewer as sole queue/ledger/closure writer. Report actual idle intervals and blockers with a useful next action; do not create recurring watchers or flood status messages.
+
 Verified 2026-11-02 18:38 UTC. Refresh live GitHub and each session CURRENT before acting. This is takeover knowledge, not a second dispatch queue.
 
 ## Public web app — RESTORED, updated to 63b4a25
