@@ -825,7 +825,7 @@
   "bankReconOpening": "Anfangssaldo laut Bank",
   "bankReconClosing": "Schlusssaldo laut Bank",
   "bankReconArithmeticDifference": "Rechnerische Auszugsdifferenz",
-  "bankReconCanonical": "Bereits gespeicherte Bewegung",
+  "bankReconSourceUnassociated": "Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.",
   "bankReconBooksUnavailable": "Differenz zum Buchwerk nicht verfügbar: kontobezogener Anfangssaldo und vollständige Buchungen fehlen.",
   "bankReconClearingUnavailable": "Verrechnungssaldo nicht verfügbar: Anfangssaldo und vollständige Abrechnungsdaten fehlen.",
   "bankBasisAmount": "gleicher Betrag und Zahler",

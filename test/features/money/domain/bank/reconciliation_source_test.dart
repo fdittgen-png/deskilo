@@ -116,25 +116,6 @@ void main() {
     // stored count still equals a contiguous fetched prefix.
     final skippedTrailing = lines.take(lines.length - 1).toList();
     expect(verify(skippedTrailing, bytes), isFalse);
-    final canonical = lines.last;
-    final recovered = verifiedBankSourceMovements(
-      statement: statement(skippedTrailing.length),
-      lines: skippedTrailing,
-      original: bytes,
-      limits: limits,
-      candidates: [
-        (account: parsed.account, currency: parsed.currency, line: canonical),
-      ],
-    );
-    expect(recovered?.map((line) => line.id), lines.map((line) => line.id));
-    final recoveredReport = BankReconciliationReport(
-      statement: statement(skippedTrailing.length),
-      lines: recovered!,
-      acceptedSourceLinesMatch: true,
-      canonicalMovementIds: {canonical.id},
-    );
-    expect(recoveredReport.statementDifferenceCents, 0);
-
     final incomplete = BankReconciliationReport(
       statement: statement(skippedTrailing.length),
       lines: skippedTrailing,

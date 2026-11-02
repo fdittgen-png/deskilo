@@ -1828,7 +1828,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankReconArithmeticDifference => 'Statement arithmetic difference';
 
   @override
-  String get bankReconCanonical => 'Previously retained movement';
+  String get bankReconSourceUnassociated =>
+      'Some source movements have no verified retained-line association; their status is unavailable.';
 
   @override
   String get bankReconBooksUnavailable =>

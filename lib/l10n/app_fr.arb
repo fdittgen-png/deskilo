@@ -825,7 +825,7 @@
   "bankReconOpening": "Solde initial indiqué par la banque",
   "bankReconClosing": "Solde final indiqué par la banque",
   "bankReconArithmeticDifference": "Écart arithmétique du relevé",
-  "bankReconCanonical": "Mouvement conservé auparavant",
+  "bankReconSourceUnassociated": "Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.",
   "bankReconBooksUnavailable": "Écart avec les livres indisponible : solde comptable initial lié au compte et écritures complètes manquants.",
   "bankReconClearingUnavailable": "Compte de compensation indisponible : solde initial et données complètes de règlement manquants.",
   "bankBasisAmount": "même montant et même payeur",

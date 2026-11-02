@@ -2070,7 +2070,7 @@
   "bankReconOpening": "Opening balance stated by bank",
   "bankReconClosing": "Closing balance stated by bank",
   "bankReconArithmeticDifference": "Statement arithmetic difference",
-  "bankReconCanonical": "Previously retained movement",
+  "bankReconSourceUnassociated": "Some source movements have no verified retained-line association; their status is unavailable.",
   "bankReconBooksUnavailable": "Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.",
   "bankReconClearingUnavailable": "Provider clearing unavailable: clearing opening and complete settlement facts are missing.",
   "bankBasisAmount": "same amount and payer",

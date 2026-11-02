@@ -9,26 +9,31 @@ import 'package:xml/xml.dart';
 import 'bank_file.dart';
 import 'bank_records.dart';
 import 'bank_statement.dart';
-import 'reconciliation_overlap.dart';
 
 List<StoredBankLine>? verifiedBankSourceMovements({
   required StoredBankStatement statement,
   required List<StoredBankLine> lines,
   required List<int> original,
   required BankFileLimits limits,
-  List<BankCanonicalLine> candidates = const [],
 }) {
   final source = _verifiedSource(statement, lines, original, limits);
   if (source == null) return null;
-  return mapBankSourceMovements(
-    source: source,
-    ownLines: lines,
-    candidates: candidates,
-  );
+  if (source.lines.length != lines.length ||
+      lines.map((line) => line.id).toSet().length != lines.length ||
+      lines.map((line) => line.position).toSet().length != lines.length) {
+    return null;
+  }
+  final byPosition = {for (final line in lines) line.position: line};
+  for (var i = 0; i < source.lines.length; i++) {
+    final expected = source.lines[i];
+    final actual = byPosition[i + 1];
+    if (actual == null || !_sameMovement(expected, actual)) return null;
+  }
+  return [for (var i = 0; i < source.lines.length; i++) byPosition[i + 1]!];
 }
 
-/// Only query other statements when a valid source actually has omitted rows.
-bool bankSourceNeedsCanonicalLookup({
+/// Reports a source gap without inferring any cross-statement association.
+bool bankSourceHasUnassociatedRows({
   required StoredBankStatement statement,
   required List<StoredBankLine> lines,
   required List<int> original,
@@ -70,6 +75,18 @@ BankStatement? _verifiedSource(
   }
   return source;
 }
+
+bool _sameMovement(BankLine expected, StoredBankLine actual) =>
+    expected.bookingDate == actual.bookingDate &&
+    expected.valueDate == actual.valueDate &&
+    expected.amountCents == actual.amountCents &&
+    expected.currency == actual.currency &&
+    expected.transactionId.trim() == actual.transactionId &&
+    expected.counterpartyName == actual.counterpartyName &&
+    expected.counterpartyIban == actual.counterpartyIban &&
+    expected.reference == actual.reference &&
+    expected.endToEndId == actual.endToEndId &&
+    expected.remittance == actual.remittance;
 
 // readCamt can combine reports and accepts balance amounts with a currency
 // different from the account. Restrict arithmetic to a single statement

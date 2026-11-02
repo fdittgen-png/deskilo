@@ -92,7 +92,8 @@ void main() {
           separateReadsNotice: 'Reads are not a snapshot',
           sourceUnavailableOrInaccessible:
               'Original unavailable or inaccessible',
-          canonicalMovement: 'Previously retained movement',
+          sourceAssociationUnavailable:
+              'Source movements have no verified association',
           opening: 'Opening',
           closing: 'Closing',
           statementDifference: 'Statement arithmetic difference',
@@ -152,7 +153,8 @@ void main() {
         valueDate: 'Value',
         separateReadsNotice: 'Reads are not a snapshot',
         sourceUnavailableOrInaccessible: 'Original unavailable or inaccessible',
-        canonicalMovement: 'Previously retained movement',
+        sourceAssociationUnavailable:
+            'Source movements have no verified association',
         opening: 'Opening',
         closing: 'Closing',
         statementDifference: 'Statement arithmetic difference',

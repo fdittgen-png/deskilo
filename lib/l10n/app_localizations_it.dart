@@ -1839,7 +1839,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'Differenza aritmetica dell’estratto';
 
   @override
-  String get bankReconCanonical => 'Movimento conservato in precedenza';
+  String get bankReconSourceUnassociated =>
+      'Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.';
 
   @override
   String get bankReconBooksUnavailable =>

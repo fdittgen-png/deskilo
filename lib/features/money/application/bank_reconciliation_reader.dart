@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/bank/bank_records.dart';
 import '../domain/bank/bank_statement.dart';
-import '../domain/bank/reconciliation_overlap.dart';
 import '../domain/bank/reconciliation_report.dart';
 import '../domain/bank/reconciliation_source.dart';
 
@@ -23,12 +22,7 @@ class BankReconciliationReader {
     if (selected.length != 1) {
       throw StateError('statement unavailable or ambiguous');
     }
-    return _readSelected(
-      workspaceId,
-      selected.single,
-      sourceLimits,
-      statements,
-    );
+    return _readSelected(workspaceId, selected.single, sourceLimits);
   }
 
   /// Reads each statement overlapping the year from one authorized statement
@@ -46,13 +40,7 @@ class BankReconciliationReader {
     for (final statement in statements) {
       if (statement.from.year <= year && statement.to.year >= year) {
         reports.add(
-          await _readSelected(
-            workspaceId,
-            statement,
-            sourceLimits,
-            statements,
-            year: year,
-          ),
+          await _readSelected(workspaceId, statement, sourceLimits, year: year),
         );
       }
     }
@@ -62,8 +50,7 @@ class BankReconciliationReader {
   Future<BankReconciliationReport> _readSelected(
     String workspaceId,
     StoredBankStatement statement,
-    BankFileLimits? sourceLimits,
-    List<StoredBankStatement> statements, {
+    BankFileLimits? sourceLimits, {
     int? year,
   }) async {
     final lines = await repository.fetchLines(statement.id);
@@ -73,17 +60,12 @@ class BankReconciliationReader {
         statement,
         lines,
         sourceLimits,
-        statements,
       );
-      final ownIds = {for (final line in lines) line.id};
       return BankReconciliationReport(
         statement: statement,
-        lines: verified ?? lines,
-        acceptedSourceLinesMatch: verified != null,
-        canonicalMovementIds: {
-          for (final line in verified ?? <StoredBankLine>[])
-            if (!ownIds.contains(line.id)) line.id,
-        },
+        lines: verified.lines ?? lines,
+        acceptedSourceLinesMatch: verified.lines != null,
+        sourceAssociationUnavailable: verified.unassociated,
         requestedFrom: year == null ? null : DateTime.utc(year),
         requestedTo: year == null ? null : DateTime.utc(year, 12, 31),
       );
@@ -92,17 +74,16 @@ class BankReconciliationReader {
     }
   }
 
-  Future<List<StoredBankLine>?> _verify(
+  Future<({List<StoredBankLine>? lines, bool unassociated})> _verify(
     String workspaceId,
     StoredBankStatement statement,
     List<StoredBankLine> lines,
     BankFileLimits? limits,
-    List<StoredBankStatement> statements,
   ) async {
     if (limits == null ||
         statement.sourceSha256.isEmpty ||
         statement.format != BankFileFormat.camt053) {
-      return null;
+      return (lines: null, unassociated: false);
     }
     final bytes = await repository.fetchOriginal(
       workspaceId,
@@ -114,45 +95,17 @@ class BankReconciliationReader {
       original: bytes,
       limits: limits,
     );
-    if (direct != null ||
-        !bankSourceNeedsCanonicalLookup(
-          statement: statement,
-          lines: lines,
-          original: bytes,
-          limits: limits,
-        )) {
-      return direct;
-    }
-    final candidates = await _candidates(statement, statements);
-    return verifiedBankSourceMovements(
-      statement: statement,
-      lines: lines,
-      original: bytes,
-      limits: limits,
-      candidates: candidates,
+    return (
+      lines: direct,
+      unassociated:
+          direct == null &&
+          bankSourceHasUnassociatedRows(
+            statement: statement,
+            lines: lines,
+            original: bytes,
+            limits: limits,
+          ),
     );
-  }
-
-  Future<List<BankCanonicalLine>> _candidates(
-    StoredBankStatement statement,
-    List<StoredBankStatement> statements,
-  ) async {
-    final candidates = <BankCanonicalLine>[];
-    for (final other in statements) {
-      if (other.id == statement.id ||
-          other.account != statement.account ||
-          other.currency != statement.currency) {
-        continue;
-      }
-      for (final line in await repository.fetchLines(other.id)) {
-        candidates.add((
-          account: other.account,
-          currency: other.currency,
-          line: line,
-        ));
-      }
-    }
-    return candidates;
   }
 
   Future<BankReconciliationReport> _unavailable(

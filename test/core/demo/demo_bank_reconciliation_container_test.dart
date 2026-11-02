@@ -111,9 +111,8 @@ void main() {
     expect(after.statementDifferenceCents, 0);
     expect(after.unresolved.single.remittance, 'Named unmatched stationery');
 
-    // A later overlapping file repeats both bank IDs. Import stores neither
-    // again; the report must associate each source movement to its unique
-    // prior same-account line instead of treating suppression as absence.
+    // A later overlapping file repeats both bank IDs. Without a persisted
+    // source-to-canonical association, statuses and arithmetic stay unknown.
     final overlapId = await importSource(xml, 'overlap.xml');
     expect(await bank.fetchLines(overlapId), isEmpty);
     final overlap = await reader.read(
@@ -121,9 +120,8 @@ void main() {
       statementId: overlapId,
       sourceLimits: limits,
     );
-    expect(overlap.canonicalMovementIds, hasLength(2));
-    expect(overlap.statementDifferenceCents, 0);
-    expect(overlap.unresolved.single.remittance, 'Named unmatched stationery');
+    expect(overlap.sourceAssociationUnavailable, isTrue);
+    expect(overlap.statementDifferenceCents, isNull);
 
     // Exercise the real Demo entry into the statement's report quick view.
     Future<void> settle() async {
@@ -136,7 +134,7 @@ void main() {
     await settle();
     await tester.tap(find.byKey(const ValueKey('bank-statements-button')));
     await settle();
-    final overlapTile = find.byKey(ValueKey('bank-statement-$overlapId'));
+    final overlapTile = find.byKey(ValueKey('bank-statement-$addedId'));
     await tester.ensureVisible(overlapTile);
     await tester.tap(overlapTile);
     await settle();

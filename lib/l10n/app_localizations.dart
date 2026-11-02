@@ -3103,11 +3103,11 @@ abstract class AppLocalizations {
   /// **'Statement arithmetic difference'**
   String get bankReconArithmeticDifference;
 
-  /// No description provided for @bankReconCanonical.
+  /// No description provided for @bankReconSourceUnassociated.
   ///
   /// In en, this message translates to:
-  /// **'Previously retained movement'**
-  String get bankReconCanonical;
+  /// **'Some source movements have no verified retained-line association; their status is unavailable.'**
+  String get bankReconSourceUnassociated;
 
   /// No description provided for @bankReconBooksUnavailable.
   ///

@@ -1843,7 +1843,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankReconArithmeticDifference => 'Écart arithmétique du relevé';
 
   @override
-  String get bankReconCanonical => 'Mouvement conservé auparavant';
+  String get bankReconSourceUnassociated =>
+      'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
 
   @override
   String get bankReconBooksUnavailable =>

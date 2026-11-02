@@ -9,7 +9,7 @@ class BankReconciliationReport {
     required List<StoredBankLine> lines,
     this.acceptedSourceLinesMatch = false,
     this.sourceUnavailableOrInaccessible = false,
-    this.canonicalMovementIds = const {},
+    this.sourceAssociationUnavailable = false,
     this.requestedFrom,
     this.requestedTo,
   }) : lines = List.unmodifiable(lines);
@@ -18,8 +18,8 @@ class BankReconciliationReport {
   final List<StoredBankLine> lines;
 
   /// Explicit user-selected range, distinct from stored movement dates.
-  /// Movements originally retained by another statement, mapped by bank ID.
-  final Set<String> canonicalMovementIds;
+  /// Source movements may have been suppressed; their status is not linked.
+  final bool sourceAssociationUnavailable;
   final DateTime? requestedFrom;
   final DateTime? requestedTo;
 
@@ -41,11 +41,7 @@ class BankReconciliationReport {
     if (!acceptedSourceLinesMatch ||
         opening == null ||
         closing == null ||
-        lines.length != statement.lineCount + canonicalMovementIds.length ||
-        !lines
-            .map((line) => line.id)
-            .toSet()
-            .containsAll(canonicalMovementIds) ||
+        lines.length != statement.lineCount ||
         lines.map((line) => line.id).toSet().length != lines.length ||
         lines.any(
           (line) =>
@@ -84,7 +80,7 @@ class BankReconciliationWords {
     required this.valueDate,
     required this.separateReadsNotice,
     required this.sourceUnavailableOrInaccessible,
-    required this.canonicalMovement,
+    required this.sourceAssociationUnavailable,
     required this.opening,
     required this.closing,
     required this.statementDifference,
@@ -101,7 +97,7 @@ class BankReconciliationWords {
   final String valueDate;
   final String separateReadsNotice;
   final String sourceUnavailableOrInaccessible;
-  final String canonicalMovement;
+  final String sourceAssociationUnavailable;
   final String opening;
   final String closing;
   final String statementDifference;
@@ -148,14 +144,14 @@ Map<String, Object?> bankReconciliationReportData(
       row(words.separateReadsNotice, '', ''),
       if (report.sourceUnavailableOrInaccessible)
         row(words.sourceUnavailableOrInaccessible, '', words.unavailable),
+      if (report.sourceAssociationUnavailable)
+        row(words.sourceAssociationUnavailable, '', words.unavailable),
       row(words.opening, '', amount(statement.openingCents)),
       for (final line in report.lines)
         row(
           '${words.bookingDate}: ${date(line.bookingDate)} · ${words.valueDate}: ${date(line.valueDate)}',
           [
             words.status(line),
-            if (report.canonicalMovementIds.contains(line.id))
-              words.canonicalMovement,
             line.counterpartyName,
             line.reference,
             line.remittance,

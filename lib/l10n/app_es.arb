@@ -825,7 +825,7 @@
   "bankReconOpening": "Saldo inicial indicado por el banco",
   "bankReconClosing": "Saldo final indicado por el banco",
   "bankReconArithmeticDifference": "Diferencia aritmética del extracto",
-  "bankReconCanonical": "Movimiento conservado anteriormente",
+  "bankReconSourceUnassociated": "Algunos movimientos de la fuente no tienen una asociación verificada con una línea conservada; su estado no está disponible.",
   "bankReconBooksUnavailable": "Diferencia con libros no disponible: faltan el saldo inicial contable de la cuenta y los asientos completos.",
   "bankReconClearingUnavailable": "Saldo de compensación no disponible: faltan el saldo inicial y los datos completos de liquidación.",
   "bankBasisAmount": "mismo importe y pagador",

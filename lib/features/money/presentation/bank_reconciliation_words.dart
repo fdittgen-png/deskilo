@@ -13,7 +13,7 @@ BankReconciliationWords bankReconciliationWordsOf(AppLocalizations l10n) =>
       valueDate: l10n.bankReconValueDate,
       separateReadsNotice: l10n.bankReconSeparateReads,
       sourceUnavailableOrInaccessible: l10n.bankReconOriginalUnavailable,
-      canonicalMovement: l10n.bankReconCanonical,
+      sourceAssociationUnavailable: l10n.bankReconSourceUnassociated,
       opening: l10n.bankReconOpening,
       closing: l10n.bankReconClosing,
       statementDifference: l10n.bankReconArithmeticDifference,

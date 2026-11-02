@@ -1843,7 +1843,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankReconArithmeticDifference => 'Rechnerische Auszugsdifferenz';
 
   @override
-  String get bankReconCanonical => 'Bereits gespeicherte Bewegung';
+  String get bankReconSourceUnassociated =>
+      'Einige Quellbewegungen haben keine geprüfte Zuordnung zu einer gespeicherten Zeile; ihr Status ist nicht verfügbar.';
 
   @override
   String get bankReconBooksUnavailable =>
