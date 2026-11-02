@@ -214,6 +214,32 @@ void main() {
     expect(fileOnly.difference, 0);
     expect(fileOnly.unmapped, 1);
     expect(fileOnly.issue, isNull);
+    final second = lines[1];
+    final duplicateRow = StoredBankLine(
+      id: first.id,
+      position: second.position,
+      bookingDate: second.bookingDate,
+      valueDate: second.valueDate,
+      amountCents: second.amountCents,
+      currency: second.currency,
+      status: second.status,
+      transactionId: second.transactionId,
+      counterpartyName: second.counterpartyName,
+      counterpartyIban: second.counterpartyIban,
+      reference: second.reference,
+      endToEndId: second.endToEndId,
+      remittance: second.remittance,
+    );
+    final duplicateRows = [first, duplicateRow, ...lines.skip(2)];
+    final duplicateAssociation = analyzeBankSource(
+      statement: statement(duplicateRows.length),
+      lines: duplicateRows,
+      original: bytes,
+      limits: limits,
+    );
+    expect(duplicateAssociation.unmapped, 2);
+    expect(duplicateAssociation.difference, 0);
+
     final badHash = analyzeBankSource(
       statement: statement(lines.length),
       lines: lines,

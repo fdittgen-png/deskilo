@@ -22,6 +22,7 @@ List<StoredBankLine>? verifiedBankSourceMovements({
   if (source == null) return null;
   if (lines.length != statement.lineCount ||
       source.lines.length != lines.length ||
+      lines.any((line) => line.id.isEmpty) ||
       lines.map((line) => line.id).toSet().length != lines.length ||
       lines.map((line) => line.position).toSet().length != lines.length) {
     return null;
@@ -72,7 +73,12 @@ List<StoredBankLine>? verifiedBankSourceMovements({
   }
   final byPosition = <int, StoredBankLine>{};
   final duplicatePositions = <int>{};
+  final seenIds = <String>{};
+  final duplicateIds = <String>{};
   for (final line in lines) {
+    if (!seenIds.add(line.id)) {
+      duplicateIds.add(line.id);
+    }
     if (byPosition.containsKey(line.position)) {
       duplicatePositions.add(line.position);
     }
@@ -84,6 +90,8 @@ List<StoredBankLine>? verifiedBankSourceMovements({
     final line = byPosition[position];
     if (line == null ||
         duplicatePositions.contains(position) ||
+        line.id.isEmpty ||
+        duplicateIds.contains(line.id) ||
         !_sameMovement(source.lines[i], line)) {
       unmapped++;
     }
