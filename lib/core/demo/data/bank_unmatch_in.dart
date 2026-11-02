@@ -28,7 +28,7 @@ typedef DemoUnmatchTarget = ({
 });
 
 /// A refusal carrying the server's code, so the screens word it as they do.
-PostgrestException demoRefusal(String code, String message) =>
+PostgrestException _refusal(String code, String message) =>
     PostgrestException(message: message, code: code);
 
 /// Whether this request was answered before (and so changes nothing); the
@@ -42,14 +42,14 @@ bool demoUnmatchIsReplay(
   final earlier = done[requestId];
   if (earlier != null) {
     if (earlier.lineId != lineId) {
-      throw demoRefusal(
+      throw _refusal(
         '22023',
         'this request id was already used for a different request',
       );
     }
     return true;
   }
-  if (reason.isEmpty) throw demoRefusal('22023', 'state why the match is undone');
+  if (reason.isEmpty) throw _refusal('22023', 'state why the match is undone');
   return false;
 }
 
@@ -61,7 +61,7 @@ DemoUnmatchTarget demoUnmatchTarget({
   required DateTime? closedThrough,
 }) {
   if (!line.isMoneyIn) {
-    throw demoRefusal('DKB02', 'money out settles no invoice: undo its reconciliation');
+    throw _refusal('DKB02', 'money out settles no invoice: undo its reconciliation');
   }
   final invoiceId = line.invoiceId;
   final match = invoiceId == null ? null : money.invoiceMatchesStore[invoiceId];
@@ -70,10 +70,10 @@ DemoUnmatchTarget demoUnmatchTarget({
       match == null ||
       (line.status != BankLineStatus.matched &&
           line.status != BankLineStatus.pending)) {
-    throw demoRefusal('DKB01', 'this movement settles no invoice');
+    throw _refusal('DKB01', 'this movement settles no invoice');
   }
   if (match.pending || line.status == BankLineStatus.pending) {
-    throw demoRefusal('DKB01', 'this match awaits its validation: reject it there');
+    throw _refusal('DKB01', 'this match awaits its validation: reject it there');
   }
   final invoice = money.invoices.firstWhere((i) => i.id == invoiceId);
   final payment = money.ledger.firstWhere((e) => e.id == paymentId);
@@ -81,16 +81,16 @@ DemoUnmatchTarget demoUnmatchTarget({
       match.writeoffAt != null ||
       invoice.settledByInvoiceId != null ||
       money.invoices.any((i) => i.settledByInvoiceId == invoiceId)) {
-    throw demoRefusal(
+    throw _refusal(
       'DKB04',
       'this match did more than link a payment: it cannot be undone here',
     );
   }
   if (match.paymentLedgerId != paymentId || match.paidCents != payment.amountCents) {
-    throw demoRefusal('DKB05', 'other payments are matched to this invoice');
+    throw _refusal('DKB05', 'other payments are matched to this invoice');
   }
   if (closedThrough != null && !match.matchedAt.isAfter(closedThrough)) {
-    throw demoRefusal(
+    throw _refusal(
       'DKB06',
       'this payment is dated inside a closed period of the books',
     );
