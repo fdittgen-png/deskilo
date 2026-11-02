@@ -27,7 +27,7 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'Seat tags need an explicitly assigned UID; NFC scanning is offered '
       'only on a capable device (#604).',
   WorkspaceFeature.qrBadges:
-      'Issuing a badge is an explicit action under the kiosk; camera '
+      'An authorised user explicitly issues a badge under the kiosk; camera '
       'scanning requires a supported device (#604).',
   WorkspaceFeature.invoiceAddressWindow:
       'Off disables window positioning; on uses the country side unless '
@@ -52,10 +52,10 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
       'The owner explicitly appoints a successor; the server succession '
       'safeguard remains on even when this appointment UI is off (#341).',
   WorkspaceFeature.kioskMode:
-      'The owner explicitly designates a kiosk account; enabling its '
-      'parent feature does not configure a device (#341).',
+      'The owner explicitly designates a kiosk account; enabling the '
+      'feature does not configure a device (#341).',
   WorkspaceFeature.nfcBadges:
-      'Under the kiosk, badges require explicit registration and NFC '
+      'Under the kiosk, authorised registration is explicit and NFC '
       'tapping needs a capable device (#341).',
   WorkspaceFeature.usageRecords:
       'Off hides the usage face records; on exposes the billing trail, '
