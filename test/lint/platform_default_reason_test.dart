@@ -4,7 +4,7 @@
 // reason", as a ratchet and not a waiver.
 //
 // A platform feature is "asked for, never assumed" (FeatureTier), yet some
-// start ON in a new workspace. The reason is written beside the registry in
+// are ON in the registry. The reason is written beside the registry in
 // `platformDefaultReasons`. This counts the platform default-on entries
 // that still have none and holds the count where it is: up means a new
 // platform default-on entry arrived without its reason (state it, or make

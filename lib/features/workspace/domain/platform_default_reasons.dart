@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2519 — why a PLATFORM feature ("asked for, never assumed") still starts
-// ON in a new workspace.
+// ON in the registry.
 //
 // A platform entry with `defaultOn: true` is the registry's exception to
-// its own tier: a new workspace stores it on, an existing one does not
+// its own tier. Normal workspace creation stores platform features off;
+// the registry default is used by the Demo and server-choice feature set
 // (#2566). docs/AGENT_RULES.md allows it for a feature that is neither risky
 // nor in need of owner setup, and the epic asks that the reason be written
 // down. Each entry here is that reason in one sentence, taken from what the
