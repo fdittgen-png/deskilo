@@ -71,7 +71,15 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListView(
+    padding: AppSpacing.mdAll,
+    children: [
+      _billContent(context),
+      _VisiblePendingReceipts(workspaceId: widget.workspaceId),
+    ],
+  );
+
+  Widget _billContent(BuildContext context) {
     final l10n = context.l10n;
     final pages = [
       for (final after in _cursors)
@@ -122,8 +130,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     }
     final docs = [for (final page in resolved) ...page.rows];
     final next = resolved.last.next;
-    return ListView(
-      padding: AppSpacing.mdAll,
+    return Column(
       children: [
         if (docs.isEmpty)
           EmptyState(
@@ -151,7 +158,6 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
             onPressed: () => setState(() => _cursors.add(next)),
             child: Text(l10n.suppliersLoadMore),
           ),
-        _VisiblePendingReceipts(workspaceId: widget.workspaceId),
       ],
     );
   }

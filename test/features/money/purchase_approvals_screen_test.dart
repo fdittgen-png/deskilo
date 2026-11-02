@@ -2,6 +2,8 @@
 //
 // #3070 — the approvals queue: only the documents waiting for a decision,
 // an empty state when nothing waits, and a refusal that says so.
+import 'dart:async';
+
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
 import 'package:deskilo/features/money/presentation/screens/purchase_approvals_screen.dart';
@@ -133,6 +135,97 @@ void main() {
       expect(detailReads, 1);
     },
   );
+
+  testWidgets('visible receipt opens while bill read loads and after refusal', (
+    tester,
+  ) async {
+    const receipt = PurchaseSummary(
+      id: 'r',
+      kind: PurchaseKind.memberReceipt,
+      state: PurchaseState.pending,
+      category: '',
+      reference: 'Receipt R',
+      currency: 'EUR',
+      grossCents: 500,
+    );
+    final billRead = Completer<PurchaseApprovalPage>();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseApprovalPageProvider.overrideWith(
+            (ref, key) => billRead.future,
+          ),
+          purchasesProvider.overrideWith((ref, id) async => [receipt]),
+          purchaseDetailProvider.overrideWith(
+            (ref, key) async => const PurchaseDetail(
+              summary: receipt,
+              revision: 1,
+              lines: [],
+              sources: [],
+            ),
+          ),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: PurchaseApprovalsView(workspaceId: 'ws')),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byKey(const ValueKey('approval-receipt-r')), findsOneWidget);
+    billRead.completeError(StateError('bill read refused'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('approval-receipt-r')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Receipt R'), findsWidgets);
+  });
+
+  testWidgets('receipt read refusal is shown and can recover independently', (
+    tester,
+  ) async {
+    var refused = true;
+    const receipt = PurchaseSummary(
+      id: 'retry-r',
+      kind: PurchaseKind.memberReceipt,
+      state: PurchaseState.pending,
+      category: '',
+      reference: 'Retry receipt',
+      currency: 'EUR',
+      grossCents: 500,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseApprovalPageProvider.overrideWith(
+            (ref, key) async => throw StateError('bill refused'),
+          ),
+          purchasesProvider.overrideWith((ref, id) async {
+            if (refused) throw StateError('receipt refused');
+            return [receipt];
+          }),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: PurchaseApprovalsView(workspaceId: 'ws')),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
+    expect(find.text('Pending receipts could not be loaded.'), findsOneWidget);
+    refused = false;
+    await tester.tap(find.byKey(const ValueKey('approval-receipts-retry')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('approval-receipt-retry-r')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('approvals-error')), findsOneWidget);
+  });
 
   testWidgets('nothing waiting shows the empty state', (tester) async {
     await tester.pumpWidget(
