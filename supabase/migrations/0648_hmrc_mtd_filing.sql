@@ -300,6 +300,9 @@ create table public.hmrc_submissions (
 select public.ensure_system_columns('hmrc_submissions');
 alter table public.hmrc_submissions enable row level security;
 revoke all on public.hmrc_submissions from public, anon, authenticated;
+-- House pattern: a delegated (assistant) token never reaches the filing record.
+create policy mcp_delegated_deny on public.hmrc_submissions as restrictive for all to authenticated
+  using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- {claimed: true} when [p_holder] may post; otherwise {claimed: false, state}
 -- with the kept receipt when HMRC already accepted it. An earlier attempt
