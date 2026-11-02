@@ -19,7 +19,12 @@ List<Override> demoPurchasingOverrides(DemoPurchasing purchasing) => [
   companyLookupRepositoryProvider.overrideWithValue(
     FakeCompanyLookupRepository(),
   ),
-  purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
+  purchaseRepositoryProvider.overrideWith((ref) {
+    final purchases = purchasing.purchases
+      ..mayDecide = (workspaceId) =>
+          ref.read(purchaseApprovalAccessProvider(workspaceId));
+    return purchases;
+  }),
   purchaseApprovalReadsProvider.overrideWith(
     (ref) => FakePurchaseApprovalReads(
       purchasing.purchases,

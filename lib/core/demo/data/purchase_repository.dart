@@ -351,6 +351,7 @@ class FakePurchaseRepository
     required String reason,
     required String requestId,
   }) async {
+    requireDemoDecisionAccess(workspaceId);
     final i = _doc(purchaseId);
     if (i < 0) throw StateError('unknown purchase');
     final d = _documents[i];
