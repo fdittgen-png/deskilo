@@ -93,6 +93,20 @@ void main() {
     expect(_shardJobs.length, defaultShards(['test/a_test.dart']).length);
   });
 
+  test('the browser startup proof is executed, checked and gates the job', () {
+    final gate = _jobs()['gate'] as YamlMap;
+    final steps = (gate['steps'] as YamlList).cast<YamlMap>();
+    final browser = steps.firstWhere((s) => s['id'] == 'browser_startup');
+    expect(browser['continue-on-error'], isTrue);
+    final script = '${browser['run']}';
+    expect(script, contains('--platform chrome'));
+    expect(script, contains('test/browser/deployment_base_web_test.dart'));
+    expect(script, contains('quality_browser_evidence.dart shard/browser-startup.jsonl'));
+    expect(_run(gate), contains('steps.browser_startup.outcome'));
+    final upload = steps.firstWhere((s) => '${s['uses']}'.startsWith('actions/upload-artifact'));
+    expect('${(upload['with'] as YamlMap)['path']}', contains('shard/browser-startup.jsonl'));
+  });
+
   test('no workflow step lists test files or directories by hand', () {
     final jobs = _jobs();
     for (final id in _shardJobs.values) {

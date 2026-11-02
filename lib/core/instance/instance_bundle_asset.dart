@@ -2,10 +2,14 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart' show GZipDecoder;
-import 'package:flutter/foundation.dart' show Uint8List, compute, visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, compute, kIsWeb, visibleForTesting;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../backend/auth_callback_guard.dart';
+import 'deployment_base_native.dart'
+    if (dart.library.js_interop) 'deployment_base_web.dart';
+import 'instance_builder.dart';
 import 'instance_bundle.dart';
 import 'instance_doctor.dart';
 import 'instance_policies.dart';
@@ -35,6 +39,25 @@ InstanceBundle decodeInstanceBundleAsset(Uint8List bytes) {
   );
 }
 
+/// Configure the deployment base while keeping guard redirects within it.
+Map<String, Object?> instanceAuthPatchForRuntime() {
+  if (!kIsWeb) return InstanceAuthConfig.patch;
+  final base = deploymentBaseUri()!;
+  final patch = InstanceAuthConfig.patchForWebBase(base);
+  final callback = bootAuthCallbackGuard?.callback;
+  if (callback != null) {
+    final site = Uri.parse(patch['site_url']! as String);
+    final prefix = site.path.endsWith('/') ? site.path : '${site.path}/';
+    final webCallback = callback.scheme == 'http' || callback.scheme == 'https';
+    if (!webCallback || callback.host.isEmpty || callback.userInfo.isNotEmpty ||
+        callback.origin != site.origin ||
+        (callback.path != site.path && !callback.path.startsWith(prefix))) {
+      throw StateError('The sign-in callback is outside the deployment base; check the web build and reload.');
+    }
+  }
+  return patch;
+}
+
 /// How the wizard gets its bundle — the asset, or a small one in tests.
 @Riverpod(keepAlive: true)
 Future<InstanceBundle> Function() instanceBundleLoader(Ref ref) =>
@@ -56,7 +79,7 @@ Future<List<DoctorFinding>> Function(SupabaseManagement api, String projectRef)
     instanceDoctorRunner(Ref ref) => (api, projectRef) async {
           final bundle = await ref.read(instanceBundleLoaderProvider)();
           final policies = await loadInstancePoliciesAsset();
-          return InstanceDoctor(api).examine(
+          return InstanceDoctor(api, expectedAuth: instanceAuthPatchForRuntime()).examine(
             projectRef,
             required: int.tryParse(bundle.schemaVersion) ?? requiredSchemaVersion,
             bundleMigrations: [for (final m in bundle.schema) m.name],
