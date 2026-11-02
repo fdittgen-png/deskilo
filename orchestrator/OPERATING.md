@@ -54,3 +54,17 @@ Use Git-accessible receipts for critical conclusions. Keep secrets out of messag
 ## Confidential business information
 
 Owner rule: business-plan information is strictly confidential and must never be shared on GitHub. This applies to source and history, issue/PR text, wiki and coordination documents, fixtures, generated outputs, CI logs and artifacts. Redaction must remove the confidential information, not merely relabel it. Keep private investigations and detailed exposure inventories in an owner-authorized private location; public handovers contain only generic policy/status. Do not copy confidential material into this knowledge base. Current-tree deletion does not establish history/cache/external-copy removal; report each containment limit accurately. Coordinate shared-reference changes with current implementers before rewriting history, and respect platform access/approval controls.
+
+## Database proof efficiency — adopted 2026-11-02
+
+Select the proof route at claim time: local isolated PostgreSQL if already usable; otherwise the established authorized rollback probe; isolated CI when publication permits. Record missing Docker/psql/resource capacity once and revisit only after an actual environment change. Do not repeatedly retry startup or bypass guards, create external infrastructure or apply a candidate merely to obtain test evidence.
+
+Use one canonical committed fixture. Generate the harness from immutable source; manifest records candidate, migration, fixture, harness, expected baseline/schema/roles, plan and generator version. An offline preflight must reject stale source, unsupported transformation, embedded-plan mismatch and tampered input before network/DB execution. Source plan and expected runtime assertion count must agree; static counting alone is not runtime proof. E1 owns a minimal local-only builder/validator assignment, reviewer reviews it; completion is not yet claimed. Avoid a general SQL parser/framework or another product PR.
+
+Prove fixture eligibility before transitions, including maker identities and threshold boundaries. On failure capture selected IDs, eligible removed/added sets, count and unique count using synthetic data. One focused diagnosis per unresolved cause; share its receipt and rerun only for a new question. Never fix expected totals merely to suppress a failure.
+
+Reviewer executes one reviewed immutable transaction with original exit/result plus independent rollback postcheck. A deliberate nonzero exit is success only when the expected complete success marker and postcheck agree; assertion failure remains failure. Keep custom shim, genuine pgTAP, concurrency/replay and final exact-head CI as distinct evidence levels.
+
+Reuse prior proof for unchanged relevant migration/fixture/harness/environment inputs, with original candidate attribution. Client-only deltas require affected client checks, not automatic database repetition. Batch material contract findings before broad gates; include recorder, state-primitives and migration-grants in focused preflight. No fabricated APPLIED/contract artifacts or blanket final-head pass.
+
+Existing project reference describes real pgTAP within a rolled-back probe; reviewer must assess that route once for actual extension/role/session/transaction support. Do not assume an old recipe works or call a shim pgTAP. See [Supabase database testing guidance](https://supabase.com/docs/guides/local-development/testing/overview). Public publication and persistent application holds remain separate.
