@@ -2,9 +2,9 @@
 
 Snapshot: **2026-11-02 10:59 UTC**. Verify live facts before acting.
 
-**10:59 UTC live reconciliation:** #3252 MERGED at 10:29:22 UTC as `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c`, approved head `927f49e8eebdbb711ae809fe94d24bc31098cb53`. All five candidate workflows completed SUCCESS, including Quality 41426054668. Reviewer instructed to inspect the actual pgTAP receipt, reconcile merged migration hash, update ledger and release 0653 tenure; completion of those handoff actions is not yet acknowledged. E2 instructed to clean only owned merged work, archive claim, then prepare a bounded remaining #3070 approvals/count acceptance crosswalk. Parent #3070 remains open. No new implementation branch/migration is assigned yet; incident publication constraints remain unresolved.
+**10:59 UTC live reconciliation:** #3252 MERGED at 10:29:22 UTC as `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c`, approved head `927f49e8eebdbb711ae809fe94d24bc31098cb53`. All five candidate workflows completed SUCCESS, including Quality 41426054668. Reviewer reconciliation COMPLETE: run 41426054668 attempt 1, database job 125213290066, pgTAP 339 OK and all 6,476 PASS. Fresh master `7438b12c5881a348d64f19b3ef9bbfb0b7d26e2c` and dev schema 653; merged migration/APPLIED SHA-256 `018f543347d5847d49237de5c47cdf14575ce52547401eb8efe3dc0e0179733b` matches reviewed dev. Ledger MERGED, tenure RELEASED; #2596 and reviewer CURRENT updated. E2 instructed to clean only owned merged work, archive claim, then prepare a bounded remaining #3070 approvals/count acceptance crosswalk. Parent #3070 remains open. No new implementation branch/migration is assigned yet; incident publication constraints remain unresolved.
 
-The detailed 10:08 snapshot below is retained for ownership/context. Its CI-pending, unmerged and tenure statements are superseded by this latest reconciliation; actual cleanup/ledger completion requires session receipt.
+The detailed 10:08 snapshot below is retained for ownership/context. Its CI-pending, unmerged and tenure statements are superseded by this latest reconciliation; ledger reconciliation is confirmed complete; E2 own cleanup remains subject to its completion receipt.
 
 ## Owner instruction
 
