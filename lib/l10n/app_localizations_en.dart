@@ -25375,6 +25375,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersArchivedTag => 'archived';
 
   @override
+  String get suppliersBalanceUnavailable => 'Balance unavailable';
+
+  @override
   String get suppliersBank => 'Bank details';
 
   @override
@@ -25450,8 +25453,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tax identifier (VAT number with country prefix)';
 
   @override
+  String suppliersHeld(String amount) {
+    return 'On hold: $amount';
+  }
+
+  @override
   String get suppliersIntro =>
       'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.';
+
+  @override
+  String get suppliersLoadMore => 'Load more';
+
+  @override
+  String get suppliersNoOutstanding => 'No outstanding balance';
+
+  @override
+  String suppliersOutstanding(String amount) {
+    return 'Outstanding: $amount';
+  }
+
+  @override
+  String get suppliersPayablesUnavailable => 'Payables unavailable';
 
   @override
   String get suppliersRefused =>
@@ -25511,6 +25533,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suppliersTitle => 'Suppliers';
+
+  @override
+  String get suppliersViewPayables => 'View supplier payables';
 
   @override
   String get supplyClassGeneral =>

@@ -16969,6 +16969,10 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
+  "suppliersBalanceUnavailable": "Solde indisponible",
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBank": "Coordonnées bancaires",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -17074,9 +17078,39 @@
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
   },
+  "suppliersHeld": "En attente : {amount}",
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersIntro": "Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.",
   "@suppliersIntro": {
     "description": "#2567 suppliers"
+  },
+  "suppliersLoadMore": "Charger plus",
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersNoOutstanding": "Aucun solde dû",
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersOutstanding": "Solde dû : {amount}",
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersPayablesUnavailable": "Dettes indisponibles",
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
   },
   "suppliersRefused": "Le fournisseur n’a pas pu être enregistré. Un numéro ou un identifiant fiscal est peut-être déjà utilisé, ou vous ne gérez pas les fournisseurs.",
   "@suppliersRefused": {
@@ -17158,6 +17192,10 @@
   "suppliersTitle": "Fournisseurs",
   "@suppliersTitle": {
     "description": "#2567 suppliers"
+  },
+  "suppliersViewPayables": "Voir les dettes fournisseur",
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Prestation générale (non rattachée aux locaux)",
   "supplyClassHelper": "Un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d'un autre pays de l'UE autoliquide alors la TVA.",

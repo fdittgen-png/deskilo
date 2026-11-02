@@ -6,9 +6,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../domain/purchase.dart';
+import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
 import 'money_view_data.dart';
 
@@ -34,8 +38,14 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
     final data = MoneyViewData.gates(ref);
     final workspace = data.workspace;
     final lookupOn = data.supplierLookupOn;
+    final held = MoneyViewData.purchasePermissionNames(ref);
+    final canReadBalances = data.purchasesOn &&
+        (held.contains('viewFinances') || held.contains(purchaseManagePermission));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.suppliersTitle)),
+      appBar: AppBar(
+        title: Text(l10n.suppliersTitle),
+        actions: [HelpDot(l10n.suppliersTitle, anchor: HelpAnchor.moneySupplierBalance)],
+      ),
       body: workspace == null
           ? const SizedBox.shrink()
           : Column(
@@ -60,6 +70,16 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
                     lookupOn: lookupOn,
                     embedded: true,
                     query: _search.text,
+                    onOpenPayables: !canReadBalances
+                        ? null
+                        : (supplierId) => showSupplierPayablesSheet(
+                            context,
+                            workspace.id,
+                            supplierId,
+                            canCapture: held.contains(purchaseManagePermission),
+                            canPay: held.contains(purchasePayPermission),
+                            canDecide: held.contains(purchaseDecidePermission),
+                          ),
                   ),
                 ),
               ],

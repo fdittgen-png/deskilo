@@ -25609,6 +25609,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get suppliersArchivedTag => 'archiviato';
 
   @override
+  String get suppliersBalanceUnavailable => 'Saldo non disponibile';
+
+  @override
   String get suppliersBank => 'Coordinate bancarie';
 
   @override
@@ -25684,8 +25687,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Identificativo fiscale (partita IVA con prefisso paese)';
 
   @override
+  String suppliersHeld(String amount) {
+    return 'In sospeso: $amount';
+  }
+
+  @override
   String get suppliersIntro =>
       'I beneficiari dei Suoi acquisti. Un fornitore si riconosce da un identificativo fiscale verificato, mai dal solo nome.';
+
+  @override
+  String get suppliersLoadMore => 'Carica altro';
+
+  @override
+  String get suppliersNoOutstanding => 'Nessun saldo da pagare';
+
+  @override
+  String suppliersOutstanding(String amount) {
+    return 'Da pagare: $amount';
+  }
+
+  @override
+  String get suppliersPayablesUnavailable => 'Debiti non disponibili';
 
   @override
   String get suppliersRefused =>
@@ -25745,6 +25767,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get suppliersTitle => 'Fornitori';
+
+  @override
+  String get suppliersViewPayables => 'Vedi debiti verso il fornitore';
 
   @override
   String get supplyClassGeneral => 'Servizio generico (non connesso ai locali)';

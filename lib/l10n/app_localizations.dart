@@ -42053,6 +42053,12 @@ abstract class AppLocalizations {
   /// **'archived'**
   String get suppliersArchivedTag;
 
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Balance unavailable'**
+  String get suppliersBalanceUnavailable;
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -42191,11 +42197,41 @@ abstract class AppLocalizations {
   /// **'Tax identifier (VAT number with country prefix)'**
   String get suppliersFieldTaxId;
 
+  /// #3070 portion of the supplier balance on hold
+  ///
+  /// In en, this message translates to:
+  /// **'On hold: {amount}'**
+  String suppliersHeld(String amount);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
   /// **'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.'**
   String get suppliersIntro;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get suppliersLoadMore;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'No outstanding balance'**
+  String get suppliersNoOutstanding;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding: {amount}'**
+  String suppliersOutstanding(String amount);
+
+  /// #3070 supplier payable read error
+  ///
+  /// In en, this message translates to:
+  /// **'Payables unavailable'**
+  String get suppliersPayablesUnavailable;
 
   /// #2567 suppliers
   ///
@@ -42292,6 +42328,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Suppliers'**
   String get suppliersTitle;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'View supplier payables'**
+  String get suppliersViewPayables;
 
   /// #2354 place of supply: supplyClassGeneral
   ///

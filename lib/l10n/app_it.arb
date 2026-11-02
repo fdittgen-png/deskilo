@@ -16969,6 +16969,10 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
+  "suppliersBalanceUnavailable": "Saldo non disponibile",
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBank": "Coordinate bancarie",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -17074,9 +17078,39 @@
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
   },
+  "suppliersHeld": "In sospeso: {amount}",
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersIntro": "I beneficiari dei Suoi acquisti. Un fornitore si riconosce da un identificativo fiscale verificato, mai dal solo nome.",
   "@suppliersIntro": {
     "description": "#2567 suppliers"
+  },
+  "suppliersLoadMore": "Carica altro",
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersNoOutstanding": "Nessun saldo da pagare",
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersOutstanding": "Da pagare: {amount}",
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersPayablesUnavailable": "Debiti non disponibili",
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
   },
   "suppliersRefused": "Impossibile salvare il fornitore. Un numero o un identificativo fiscale potrebbe essere già in uso, oppure non gestisce i fornitori.",
   "@suppliersRefused": {
@@ -17158,6 +17192,10 @@
   "suppliersTitle": "Fornitori",
   "@suppliersTitle": {
     "description": "#2567 suppliers"
+  },
+  "suppliersViewPayables": "Vedi debiti verso il fornitore",
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Servizio generico (non connesso ai locali)",
   "supplyClassHelper": "Una postazione, un ufficio o una sala è tassato dove si trova l'immobile, per qualsiasi cliente. Scelga «servizio generico» solo per ciò che non è legato ai locali, come la gestione della posta o un ufficio virtuale: un'impresa di un altro Paese UE assolve allora l'IVA con l'inversione contabile.",

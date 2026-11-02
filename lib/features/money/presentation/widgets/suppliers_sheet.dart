@@ -19,6 +19,7 @@ import '../../domain/supplier.dart';
 import '../../domain/supplier_standing.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import 'supplier_balance_line.dart';
 import 'supplier_bank_dialog.dart';
 import 'supplier_dialogs.dart';
 
@@ -44,6 +45,7 @@ class SuppliersView extends ConsumerWidget {
     this.lookupOn = false,
     this.embedded = false,
     this.query = '',
+    this.onOpenPayables,
     super.key,
   });
 
@@ -54,6 +56,9 @@ class SuppliersView extends ConsumerWidget {
 
   /// #3070 — what the list is narrowed to: a name, a number or a tax id.
   final String query;
+
+  /// Available only where the caller can read workspace-wide payables.
+  final void Function(String supplierId)? onOpenPayables;
 
   /// Whether the form may ask a company registry (#2863).
   final bool lookupOn;
@@ -231,8 +236,10 @@ class SuppliersView extends ConsumerWidget {
               '${s.number} · ${s.name}'
               '${s.isActive ? '' : ' (${l10n.suppliersArchivedTag})'}',
             ),
-            subtitle: Text(
-              [
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text([
                 _taxLine(l10n, s),
                 if (standings[s.id] case final st?
                     when st.lastBillOn != null)
@@ -240,7 +247,15 @@ class SuppliersView extends ConsumerWidget {
                     appFormatOf(context).date(st.lastBillOn!),
                     moneyFormat(st.currency).formatMinor(st.yearGrossCents),
                   ),
-              ].join('\n'),
+                ].join('\n')),
+                if (onOpenPayables case final open?)
+                  SupplierBalanceLine(
+                    key: ValueKey('supplier-balance-${s.id}'),
+                    workspaceId: workspaceId,
+                    supplierId: s.id,
+                    onOpenPayables: () => open(s.id),
+                  ),
+              ],
             ),
             trailing: Wrap(
               children: [

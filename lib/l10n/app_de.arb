@@ -16969,6 +16969,10 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
+  "suppliersBalanceUnavailable": "Saldo nicht verfügbar",
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBank": "Bankverbindung",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -17074,9 +17078,39 @@
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
   },
+  "suppliersHeld": "Zurückgestellt: {amount}",
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersIntro": "Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.",
   "@suppliersIntro": {
     "description": "#2567 suppliers"
+  },
+  "suppliersLoadMore": "Mehr laden",
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersNoOutstanding": "Kein offener Betrag",
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersOutstanding": "Offener Betrag: {amount}",
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersPayablesUnavailable": "Verbindlichkeiten nicht verfügbar",
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
   },
   "suppliersRefused": "Der Lieferant konnte nicht gespeichert werden. Eine Nummer oder Steuernummer ist eventuell schon vergeben, oder Sie verwalten keine Lieferanten.",
   "@suppliersRefused": {
@@ -17158,6 +17192,10 @@
   "suppliersTitle": "Lieferanten",
   "@suppliersTitle": {
     "description": "#2567 suppliers"
+  },
+  "suppliersViewPayables": "Lieferantenverbindlichkeiten anzeigen",
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)",
   "supplyClassHelper": "Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.",
