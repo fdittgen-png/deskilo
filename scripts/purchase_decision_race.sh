@@ -219,8 +219,11 @@ ROLE_OFF="$OWNER_CLAIMS select public.set_workspace_role('$WS','decision_reviewe
 ROLE_ON="$OWNER_CLAIMS select public.set_workspace_role('$WS','decision_reviewer',array['approveExpenses']::text[],'{}'::jsonb,0,true);"
 ASSIGN_OFF="$OWNER_CLAIMS select public.assign_workspace_role('$MEMBER','$ROLE',false);"
 ASSIGN_ON="$OWNER_CLAIMS select public.assign_workspace_role('$MEMBER','$ROLE',true);"
+CUSTOM_OFF="$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',false));"
+CUSTOM_ON="$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',true));"
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',true));" >/dev/null
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_OFF" >/dev/null
+revoke_first custom_roles_feature "$CUSTOM_OFF" "$CUSTOM_ON"
 revoke_first custom_role_definition "$ROLE_OFF" "$ROLE_ON"
 revoke_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON"
 # The assignment insert takes an FK key-share lock on the member. Verify
@@ -304,6 +307,7 @@ wait "$waiter" || fail 'assignment grant after decision failed'
 result=$(psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "select state || ':' || (select count(*) from public.workspace_role_members where member_id='$MEMBER' and role_id='$ROLE')::text from public.purchase_documents where id='$GRANT_BILL'")
 [ "$result" = rejected:1 ] || fail "decision/assignment after grant had unexpected state: $result"
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$PERMISSION_OFF" >/dev/null
+decision_first custom_roles_feature "$CUSTOM_OFF" "$CUSTOM_ON" 00000000-0000-4000-8000-0000000035d9
 decision_first custom_role_definition "$ROLE_OFF" "$ROLE_ON" 00000000-0000-4000-8000-0000000035d5
 decision_first custom_role_assignment "$ASSIGN_OFF" "$ASSIGN_ON" 00000000-0000-4000-8000-0000000035d6
 psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -c "$OWNER_CLAIMS select public.set_feature_flags('$WS',jsonb_build_object('customRoles',false));" >/dev/null
