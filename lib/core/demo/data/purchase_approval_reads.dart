@@ -67,8 +67,18 @@ class FakePurchaseApprovalReads implements PurchaseApprovalReads {
     if (!rows.any((d) => d.id == purchaseId)) {
       throw StateError('purchase approval is not available');
     }
+    final original = await purchases.fetchDetail(workspaceId, purchaseId);
+    final detail = PurchaseDetail(
+      summary: original.summary,
+      revision: original.revision,
+      lines: original.lines,
+      sources: const [],
+      supplierName: original.supplierName,
+      supplierNumber: original.supplierNumber,
+      dueOn: original.dueOn,
+    );
     return PurchaseApprovalDetail(
-      detail: await purchases.fetchDetail(workspaceId, purchaseId),
+      detail: detail,
       canApprove: true,
       canReject: !purchases.isDemoMaker(purchaseId),
     );

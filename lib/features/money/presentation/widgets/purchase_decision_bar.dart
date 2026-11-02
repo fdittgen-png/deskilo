@@ -86,28 +86,38 @@ class PurchaseDecisionBar extends ConsumerWidget {
     final reason = approve ? '' : await _askReason(context);
     if (!approve && (reason == null || reason.trim().isEmpty)) return;
     if (!context.mounted) return;
+    final reads = closeOnDecision
+        ? ref.read(purchaseApprovalReadsProvider)
+        : null;
+    final commands = ref.read(purchaseCommandProvider);
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'bill decision failed',
       errorText: context.l10n.purchasesDecisionRefused,
       action: () async {
-        await ref
-            .read(purchaseCommandProvider)
-            .decide(
-              workspaceId,
-              detail,
-              approve: approve,
-              reason: reason ?? '',
-              requestId: newRequestId(),
-            );
+        if (reads != null) {
+          final current = await reads.detail(workspaceId, detail.summary.id);
+          if (current.detail.revision != detail.revision ||
+              (approve ? !current.canApprove : !current.canReject)) {
+            throw StateError('purchase approval changed');
+          }
+        }
+        await commands.decide(
+          workspaceId,
+          detail,
+          approve: approve,
+          reason: reason ?? '',
+          requestId: newRequestId(),
+        );
       },
     );
+    if (!context.mounted) return;
     _refresh(ref);
-    if (ok && context.mounted && closeOnDecision) {
+    if (ok && closeOnDecision) {
       Navigator.of(context).pop();
     }
-    if (ok && context.mounted && !closeOnDecision) {
+    if (ok && !closeOnDecision) {
       final l10n = context.l10n;
       AppSnack.success(
         context,

@@ -417,11 +417,12 @@ class _PurchaseDetailView extends ConsumerWidget {
           key: const ValueKey('purchase-total'),
         ),
         // Another currency than the space's: the rate the books read it at.
-        PurchaseExchangeRateTile(
-          workspaceId: workspaceId,
-          summary: s,
-          canEdit: canCapture || canDecide,
-        ),
+        if (approval == null)
+          PurchaseExchangeRateTile(
+            workspaceId: workspaceId,
+            summary: s,
+            canEdit: canCapture || canDecide,
+          ),
         if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
           Text(l10n.purchasesTaxPartial),
         if (detail.obligations.isNotEmpty)

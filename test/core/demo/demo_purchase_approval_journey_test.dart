@@ -30,6 +30,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          purchaseApprovalAccessProvider.overrideWith((ref, id) => true),
           purchaseRepositoryProvider.overrideWithValue(demo.purchases),
           purchaseApprovalReadsProvider.overrideWithValue(
             FakePurchaseApprovalReads(demo.purchases),

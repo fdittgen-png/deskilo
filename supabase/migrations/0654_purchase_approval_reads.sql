@@ -106,41 +106,24 @@ begin
   end if;
   select * into d from public.purchase_documents
    where workspace_id = p_workspace_id and id = p_purchase_id;
+  -- Only fields rendered for this pending decision: no source identifiers,
+  -- hashes, snapshots, personal member data or unrelated obligations.
   v_detail := jsonb_build_object(
     'id', d.id, 'kind', d.kind, 'state', d.state, 'revision', d.revision,
     'category', d.category, 'currency', d.currency,
-    'original_reference', d.original_reference, 'original_date', d.original_date,
-    'received_on', d.received_on, 'service_from', d.service_from, 'service_to', d.service_to,
-    'due_on', d.due_on, 'payer_kind', d.payer_kind, 'payer_member_id', d.payer_member_id,
-    'submitter_member_id', d.submitter_member_id, 'approved_event_id', d.approved_event_id,
-    'classification_status', d.classification_status,
+    'original_reference', d.original_reference, 'due_on', d.due_on,
     'legacy_qualification', d.legacy_qualification,
-    'supplier', (select jsonb_build_object('id', s.id, 'supplier_number', s.supplier_number,
+    'supplier', (select jsonb_build_object('supplier_number', s.supplier_number,
                                            'name', s.name)
-                   from public.suppliers s where s.id = d.supplier_id),
-    'supplier_snapshot', d.supplier_snapshot, 'recipient_snapshot', d.recipient_snapshot,
+                   from public.suppliers s where s.workspace_id = p_workspace_id and s.id = d.supplier_id),
     'lines', coalesce((select jsonb_agg(jsonb_build_object(
-        'line_no', l.line_no, 'description', l.description, 'quantity', l.quantity,
-        'unit', l.unit, 'gross_cents', l.gross_cents, 'net_cents', l.net_cents,
-        'tax_cents', l.tax_cents, 'tax_rate_percent', l.tax_rate_percent,
+        'line_no', l.line_no, 'description', l.description,
+        'gross_cents', l.gross_cents, 'tax_cents', l.tax_cents,
         'recoverable_tax_cents', l.recoverable_tax_cents,
-        'nonrecoverable_tax_cents', l.nonrecoverable_tax_cents,
-        'recognition_kind', l.recognition_kind,
-        'cost_site_id', l.cost_site_id, 'resource_kind', l.resource_kind,
-        'resource_id', l.resource_id, 'place_name', public.purchase_place_name(l))
+        'recognition_kind', l.recognition_kind, 'place_name', public.purchase_place_name(l))
         order by l.line_no)
-        from public.purchase_lines l where l.purchase_id = d.id), '[]'::jsonb),
-    'sources', coalesce((select jsonb_agg(jsonb_build_object(
-        'source_kind', s.source_kind, 'source_id', s.source_id, 'role', s.role,
-        'original_hash', s.original_hash, 'original_reference', s.original_reference)
-        order by s.created_datetime)
-        from public.purchase_sources s where s.purchase_id = d.id), '[]'::jsonb),
-    -- A member reads only their own claim; a manager all of them.
-    'obligations', coalesce((select jsonb_agg(public.purchase_obligation_json(o)
-                                              order by o.created_datetime, o.id)
-        from public.purchase_obligations o
-       where o.purchase_id = d.id
-         and (o.creditor_member_id = v_member)), '[]'::jsonb));
+        from public.purchase_lines l where l.workspace_id = p_workspace_id and l.purchase_id = d.id), '[]'::jsonb),
+    'sources', '[]'::jsonb, 'obligations', '[]'::jsonb);
   return jsonb_build_object('detail', v_detail, 'can_approve', v_approve, 'can_reject', v_reject);
 end;
 $fn$;
