@@ -41,4 +41,26 @@ void main() {
     );
     expect(find.text('3'), findsOneWidget);
   });
+  testWidgets(
+    'retained old count is hidden while refreshing and after failure',
+    (tester) async {
+      const old = AsyncData(
+        PurchaseApprovalPage(rows: [], count: 7, version: 'old'),
+      );
+      final loading = const AsyncLoading<PurchaseApprovalPage>()
+          .copyWithPrevious(old);
+      expect(loading.value?.count, 7);
+      await tester.pumpWidget(_view(loading));
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('7'), findsNothing);
+      final failure = AsyncError<PurchaseApprovalPage>(
+        StateError('offline'),
+        StackTrace.current,
+      ).copyWithPrevious(old);
+      expect(failure.value?.count, 7);
+      await tester.pumpWidget(_view(failure));
+      expect(find.byIcon(Icons.error_outline), findsOneWidget);
+      expect(find.text('7'), findsNothing);
+    },
+  );
 }
