@@ -1,6 +1,6 @@
 # Current orchestration state
 
-Snapshot: **2026-11-02 10:07 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
+Snapshot: **2026-11-02 10:08 UTC**. Verify GitHub and current session summaries before acting. All times are UTC unless explicitly marked.
 
 ## Owner instruction
 
@@ -29,9 +29,11 @@ E1 has no new implementation claim at this snapshot; remains available to indepe
 
 ### Engineer 2
 
+At 10:08 UTC, reviewer APPROVED exact #3252 head `927f49e8eebdbb711ae809fe94d24bc31098cb53`; E1 independently reviewed the same head without actionable findings. Exact-head squash auto-merge is armed, with no bypass. GitHub still reports OPEN/unmerged; Quality 41426054668 and Web checks are running, three schema workflows succeeded. Required final CI and true pgTAP remain pending; 0653 tenure stays held until verified merge. #3070 remains open for approvals/count and other residual scope.
+
 #2519 reasons/enforcement completed in [#3250](https://github.com/fdittgen-png/deskilo/pull/3250), merge **246e9a55e6da987bab5246c7bd4998567c3fbc37**, approved head **be1f64ec2c936102858a8d846545194c892f6fae**. Own branch/worktree removed and claim archived. The epic remains open; reviewer records exact remaining acceptance rather than assuming parent closure.
 
-Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, review-ready PR [#3252](https://github.com/fdittgen-png/deskilo/pull/3252), verified exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53`, OPEN and non-draft. E2 reports analyzer exit 0 and 745 guarded tests passed; final CI and real pgTAP remain pending. Quality run 41426054668 is in progress. E1 is assigned independent read-only exact-head review; reviewer retains final merge authority. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
+Current claim: **#3070**, branch `feat/3070-supplier-balance`, worktree `/private/tmp/deskilo-3070-supplier-balance`, review-ready PR [#3252](https://github.com/fdittgen-png/deskilo/pull/3252), verified exact head `927f49e8eebdbb711ae809fe94d24bc31098cb53`, OPEN and non-draft. E2 reports analyzer exit 0 and 745 guarded tests passed; final CI and real pgTAP remain pending. Exact-head approval has now been received. Quality run 41426054668 is in progress. E1 completed independent exact-head review without actionable findings; reviewer retains final merge authority. Existing supplier list/last bill/annual spend are already implemented. Deliver authoritative outstanding balances and supplier-scoped payable navigation, with complete currency-separated amounts and actual Demo workflow.
 
 The reviewer accepted the read direction with required corrections: use the complete remaining-balance rule including `applied_invoice`, signed allocations and cancelled state; explicitly enforce supplier-wide permission, workspace and purchases-feature gates; preserve old RPC compatibility and keyset continuation beyond 2,000 rows. Do not sum the old capped 20×100 client fetch and present it as complete.
 
