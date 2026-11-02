@@ -47,6 +47,13 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
     });
   }
 
+  Widget _unavailable(BuildContext context) => Column(
+    children: [
+      Text(context.l10n.suppliersBalanceUnavailable),
+      TextButton(onPressed: _restart, child: Text(context.l10n.commonRetry)),
+    ],
+  );
+
   @override
   void didUpdateWidget(SupplierPayablesView oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -74,29 +81,16 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
       return const SizedBox(height: 40, child: LoadingView());
     }
     if (pages.any((page) => page.hasError)) {
-      return Column(
-        children: [
-          Text(context.l10n.suppliersBalanceUnavailable),
-          TextButton(
-            onPressed: _restart,
-            child: Text(context.l10n.commonRetry),
-          ),
-        ],
-      );
+      return _unavailable(context);
     }
     final resolved = [for (final page in pages) page.requireValue];
+    for (var i = 0; i < resolved.length - 1; i++) {
+      if (resolved[i].next != _cursors[i + 1]) return _unavailable(context);
+    }
     final rows = <PayableRow>[for (final page in resolved) ...page.rows];
     final next = resolved.last.next;
     if (next != null && _cursors.contains(next)) {
-      return Column(
-        children: [
-          Text(context.l10n.suppliersBalanceUnavailable),
-          TextButton(
-            onPressed: _restart,
-            child: Text(context.l10n.commonRetry),
-          ),
-        ],
-      );
+      return _unavailable(context);
     }
     return Column(
       children: [

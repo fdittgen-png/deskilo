@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 class _Pages implements SupplierBalanceRepository {
   final seen = <SupplierPayablesCursor?>[];
   bool fail = false;
+  bool firstPageChanged = false;
 
   @override
   Future<List<SupplierBalance>> fetchBalances(String workspaceId) async => [];
@@ -27,7 +28,7 @@ class _Pages implements SupplierBalanceRepository {
     if (fail) throw StateError('refused');
     return SupplierPayablesPage(
       rows: const [],
-      next: after == null
+      next: after == null && !firstPageChanged
           ? (created: '2026-01-01T00:00:00Z', id: 'last')
           : null,
     );
@@ -66,6 +67,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.seen, [null, (created: '2026-01-01T00:00:00Z', id: 'last')]);
     expect(find.byKey(const ValueKey('supplier-payables-more')), findsNothing);
+    repo.firstPageChanged = true;
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(SupplierPayablesView)),
+    );
+    container.invalidate(
+      supplierPayablesPageProvider((
+        workspaceId: 'ws',
+        supplierId: 'supplier',
+        after: null,
+      )),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Balance unavailable'), findsOneWidget);
+    await tester.tap(find.text('Retry'));
+    await tester.pumpAndSettle();
+    expect(find.text('Balance unavailable'), findsNothing);
   });
 
   testWidgets('refusal shows an error and allows a fresh retry', (
