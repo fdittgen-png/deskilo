@@ -123,6 +123,7 @@ void main() {
       await tester.pump();
       await tester.pump();
       expect(find.textContaining('R-1'), findsWidgets);
+      expect(find.byKey(const ValueKey('purchase-total')), findsOneWidget);
       expect(detailReads, 1);
       Navigator.of(tester.element(find.textContaining('R-1').last)).pop();
       await tester.pump();
@@ -188,6 +189,7 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(find.textContaining('Receipt R'), findsWidgets);
+    expect(find.byKey(const ValueKey('purchase-total')), findsOneWidget);
   });
 
   testWidgets('receipt read refusal is shown and can recover independently', (
