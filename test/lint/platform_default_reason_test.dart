@@ -17,9 +17,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'literal_ratchet.dart';
 
 /// Platform default-on entries without a stated reason, on 2026-11-02:
-/// 51 entries, 24 reasons stated from what their own code or catalogue
-/// text says (13, then 11 more).
-const _withoutReason = 27;
+/// 51 entries, 30 reasons stated from what their own code, catalogue text or
+/// issue says (13, 11, then 6 more); the other 21 say what the feature is,
+/// not why it starts on, and stay counted.
+const _withoutReason = 21;
 
 Set<WorkspaceFeature> _platformDefaultOn() => {
   for (final e in featureManifest.values)
