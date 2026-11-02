@@ -99,14 +99,28 @@ void main() {
     );
   });
 
+  test('replaced fixture root cannot point at the checkout', () {
+    final fixture = createTemporaryFixture('replaced');
+    final path = fixture.directory.path;
+    fixture.directory.deleteSync();
+    final link = Link(path)..createSync(Directory.current.path);
+    addTearDown(link.deleteSync);
+    expect(
+      () => temporaryFixtureDirectory(fixture, 'lib'),
+      throwsArgumentError,
+    );
+  });
+
   group('the shared walks', () {
+    late TemporaryFixture fixture;
     late Directory dir;
     setUp(() {
-      dir = Directory.systemTemp.createTempSync('lint-sources');
+      fixture = createTemporaryFixture('lint-sources');
+      dir = fixture.directory;
       for (final n in ['0002_b.sql', '0001_a.sql', 'note.md', 'x.txt']) {
         File('${dir.path}/$n').writeAsStringSync('-');
       }
-      temporaryFixtureDirectory(dir, 'sub').createSync();
+      temporaryFixtureDirectory(fixture, 'sub').createSync();
       File('${dir.path}/sub/0003_c.sql').writeAsStringSync('-');
       File('${dir.path}/sub/deep.md').writeAsStringSync('-');
     });
@@ -115,18 +129,21 @@ void main() {
     String name(File f) => f.uri.pathSegments.last;
 
     test('fixture children stay in system temp', () {
-      expect(temporaryFixtureDirectory(dir, 'sub').existsSync(), isTrue);
+      expect(temporaryFixtureDirectory(fixture, 'sub').existsSync(), isTrue);
       expect(
-        () => temporaryFixtureDirectory(dir, '../lib'),
+        () => temporaryFixtureDirectory(fixture, '../lib'),
         throwsArgumentError,
       );
+      // This checkout itself may be under the system temporary directory.
+      expect(Directory('lib').existsSync(), isTrue);
+      expect(() => createTemporaryFixture('../checkout'), throwsArgumentError);
       expect(
         () => temporaryFixtureDirectory(Directory.current, 'lib'),
         throwsArgumentError,
       );
       Link('${dir.path}/escape').createSync(Directory.current.path);
       expect(
-        () => temporaryFixtureDirectory(dir, 'escape'),
+        () => temporaryFixtureDirectory(fixture, 'escape'),
         throwsArgumentError,
       );
     });

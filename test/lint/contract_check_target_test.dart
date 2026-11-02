@@ -23,8 +23,9 @@ import 'lint_sources.dart';
 const _secret = 'canary-secret-pw';
 String _url(String tag) => 'postgresql://postgres:$_secret@host-$tag:54322/db';
 
-Directory _at(String name) => temporaryFixtureDirectory(_dir, name);
+Directory _at(String name) => temporaryFixtureDirectory(_fixture, name);
 
+late TemporaryFixture _fixture;
 late Directory _dir;
 late Directory _stub;
 late String _script;
@@ -107,7 +108,8 @@ bool _exists(String path) => File('${_dir.path}/$path').existsSync();
 void main() {
   setUpAll(() => _script = File('scripts/contract_check.sh').absolute.path);
   setUp(() {
-    _dir = Directory.systemTemp.createTempSync('contract-target');
+    _fixture = createTemporaryFixture('contract-target');
+    _dir = _fixture.directory;
     _stub = _at('stub')..createSync();
     for (final e in {
       'psql': _psqlStub,
