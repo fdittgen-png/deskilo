@@ -252,15 +252,18 @@ begin
   end if;
 
   -- The record of the reversal first, then the match goes; the credit stays.
+  -- The subject is the acting staff member, never the invoice's member (events_select
+  -- lets a subject read its events), and the reason is not in the payload: it
+  -- stays in bank_line_unmatches, which the invoice's member cannot read.
   insert into public.events
     (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status, decided_at)
   values
-    (v_reversal, v_ws, 'invoice_payment_reversed', 'created', v_me, v_invoice.member_id,
+    (v_reversal, v_ws, 'invoice_payment_reversed', 'created', v_me, v_me,
      jsonb_build_object(
        'invoice_id', v_invoice.id, 'number', v_invoice.number,
        'line_id', v_line.id, 'payment_ledger_id', v_line.payment_ledger_id,
        'amount_cents', v_pay.amount_cents, 'resolution', v_pay.resolution,
-       'original_event_id', v_pay.event_id, 'unmatch_id', v_unmatch, 'reason', v_reason),
+       'original_event_id', v_pay.event_id, 'unmatch_id', v_unmatch),
      'applied', now());
   insert into public.bank_line_unmatches
     (id, workspace_id, line_id, invoice_id, payment_ledger_id, amount_cents, resolution,

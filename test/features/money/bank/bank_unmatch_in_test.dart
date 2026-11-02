@@ -150,6 +150,10 @@ void main() {
     expect(reversed, hasLength(1));
     expect(reversed.single.status, EventStatus.applied);
     expect(reversed.single.payload['invoice_id'], 'id-I1');
+    expect(reversed.single.payload.containsKey('reason'), isFalse,
+        reason: 'the staff reason is not on the timeline the payer reads');
+    expect(reversed.single.subjectMemberId, isNot('m1'),
+        reason: 'the event is not about the invoice member');
     expect(
       events.events.where((e) => e.type == EventType.invoicePayment),
       isEmpty,
@@ -176,6 +180,15 @@ void main() {
       isNull,
       reason: 'a movement that is not matched sends nothing',
     );
+  });
+
+  test('refused without the right that matches, whatever the screen shows',
+      () async {
+    bank.mayUnmatch = () => false;
+    final first = (await line(1)).id;
+    expect(await _code(() => bank.unmatchIn(first, reason: 'x', requestId: 'n1')), '42501');
+    expect(bank.unmatches, isEmpty);
+    expect(money.invoiceMatchesStore.containsKey('id-I1'), isTrue);
   });
 
   test('matched again: the same payment, no second credit, the invoice '

@@ -2125,7 +2125,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bankUnmatchBody =>
-      'La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés.';
+      'La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés. Le paiement reste chez ce membre : il peut de nouveau être rapproché d\'une de ses factures, pas de celle d\'un autre membre.';
 
   @override
   String get bankUnmatchConfirm => 'Annuler le rapprochement';

@@ -22,7 +22,7 @@
 -- same credit. Other matches stay. The record is read by the statements'
 -- readers only and written by nobody; the command is not anon's.
 begin;
-select plan(56);
+select plan(58);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -259,8 +259,12 @@ select is((select e.status || '/' || (e.payload ->> 'unmatch_id' = u.id::text) |
                   || (u.reversal_event_id = e.id) || '/' || e.subject_member_id::text
              from public.bank_line_unmatches u join public.events e on e.id = u.reversal_event_id
             where e.type = 'invoice_payment_reversed'),
-          'applied/true/true/true/' || pg_temp.v('m_p'),
+          'applied/true/true/true/' || pg_temp.v('m_o'),
           'one applied invoice_payment_reversed event is linked to the original event and the record');
+select is((select count(*)::int from public.events
+            where type = 'invoice_payment_reversed'
+              and (subject_member_id = (select id from public.members where id = pg_temp.v('m_p')::uuid) or payload ? 'reason' or payload::text like '%wrong invoice%')), 0,
+          'the reversal does not name the invoice''s member and carries no reason: the invoice''s member cannot read the staff''s words');
 
 -- Exactly once.
 select is(pg_temp.undo('owner', pg_temp.v('l1'), 'again', '00000000-0000-4000-8000-0000065000e7') ->> 'unmatch_id',
@@ -292,6 +296,8 @@ select is(pg_temp.as_role('payer', 'select count(*)::text from public.bank_line_
           'the payer, a plain member, reads none');
 select is(pg_temp.as_role('stranger', 'select count(*)::text from public.bank_line_unmatches'), '0',
           'the owner of another space reads none');
+select is(pg_temp.as_role('payer', $s$select count(*)::text from public.events where type = 'invoice_payment_reversed'$s$), '0',
+          'the invoice''s own member reads no reversal event and so not the staff''s reason');
 select is(pg_temp.as_role('owner', 'with d as (delete from public.bank_line_unmatches returning 1) select count(*)::text from d'),
           '42501', 'the owner may not delete the record');
 select is(pg_temp.as_role('owner', $s$with u as (update public.bank_line_unmatches set reason = 'x' returning 1) select count(*)::text from u$s$),

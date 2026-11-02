@@ -402,6 +402,8 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   final unmatches = <String, DemoUnmatch>{}; // #2380, by request id
   DateTime? booksClosedThrough; // #2380, the last day the books are closed
+  String Function() actingMemberId = () => 'member-1'; // the active persona
+  bool Function() mayUnmatch = () => true; // issueInvoices
 
   @override
   Future<BankLineStatus> unmatchIn(
@@ -410,12 +412,13 @@ class FakeBankStatementRepository implements BankStatementRepository {
     required String requestId,
   }) async {
     final why = reason.trim();
+    demoRequireIssueRight(allowed: mayUnmatch());
     if (demoUnmatchIsReplay(unmatches, requestId, lineId, why)) {
       return _line(lineId).status;
     }
     final target = demoUnmatchTarget(money: money, line: _line(lineId),
         paymentId: _payments[lineId], closedThrough: booksClosedThrough);
-    demoApplyUnmatch(money, target, why, today);
+    demoApplyUnmatch(money, target, actingMemberId(), today);
     unmatches[requestId] = (lineId: lineId, invoiceId: target.invoice.id,
         paymentId: target.payment.id, reason: why);
     return _set(lineId, BankLineStatus.recorded, clearInvoice: true);

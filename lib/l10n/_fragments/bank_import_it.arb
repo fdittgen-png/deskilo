@@ -100,7 +100,7 @@
   "@bankUnmatchTitle": {
     "description": "#2380 money-in unmatch: the dialog title"
   },
-  "bankUnmatchBody": "La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L'abbinamento e il motivo dell'annullamento restano registrati.",
+  "bankUnmatchBody": "La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L'abbinamento e il motivo dell'annullamento restano registrati. Il pagamento resta presso questo membro: può essere abbinato di nuovo a una delle sue fatture, non a quella di un altro membro.",
   "@bankUnmatchBody": {
     "description": "#2380 money-in unmatch: what the undoing does"
   },

@@ -3544,7 +3544,7 @@ abstract class AppLocalizations {
   /// #2380 money-in unmatch: what the undoing does
   ///
   /// In en, this message translates to:
-  /// **'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record.'**
+  /// **'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record. The payment stays with this member: it can be matched again to one of their invoices, not to another member\'s.'**
   String get bankUnmatchBody;
 
   /// #2380 money-in unmatch: the confirm button.

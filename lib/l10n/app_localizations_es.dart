@@ -2123,7 +2123,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankUnmatchBody =>
-      'La factura vuelve a estar abierta. El pago sigue registrado y este movimiento puede conciliarse de nuevo con él. La conciliación y el motivo por el que se deshizo quedan registrados.';
+      'La factura vuelve a estar abierta. El pago sigue registrado y este movimiento puede conciliarse de nuevo con él. La conciliación y el motivo por el que se deshizo quedan registrados. El pago sigue con este miembro: puede conciliarse de nuevo con una de sus facturas, no con la de otro miembro.';
 
   @override
   String get bankUnmatchConfirm => 'Deshacer';

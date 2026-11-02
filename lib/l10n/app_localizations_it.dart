@@ -2119,7 +2119,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bankUnmatchBody =>
-      'La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L\'abbinamento e il motivo dell\'annullamento restano registrati.';
+      'La fattura torna aperta. Il pagamento resta registrato e questo movimento può essere abbinato di nuovo ad esso. L\'abbinamento e il motivo dell\'annullamento restano registrati. Il pagamento resta presso questo membro: può essere abbinato di nuovo a una delle sue fatture, non a quella di un altro membro.';
 
   @override
   String get bankUnmatchConfirm => 'Annulla l\'abbinamento';

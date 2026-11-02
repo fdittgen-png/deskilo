@@ -31,6 +31,11 @@ typedef DemoUnmatchTarget = ({
 PostgrestException _refusal(String code, String message) =>
     PostgrestException(message: message, code: code);
 
+/// The right that matches a payment is the right that undoes the match.
+void demoRequireIssueRight({required bool allowed}) {
+  if (!allowed) throw _refusal('42501', 'issuing invoices is not allowed');
+}
+
 /// Whether this request was answered before (and so changes nothing); the
 /// refusals of a request id used for another line and of a blank reason.
 bool demoUnmatchIsReplay(
@@ -89,7 +94,8 @@ DemoUnmatchTarget demoUnmatchTarget({
   if (match.paymentLedgerId != paymentId || match.paidCents != payment.amountCents) {
     throw _refusal('DKB05', 'other payments are matched to this invoice');
   }
-  if (closedThrough != null && !match.matchedAt.isAfter(closedThrough)) {
+  final day = DateTime(match.matchedAt.year, match.matchedAt.month, match.matchedAt.day);
+  if (closedThrough != null && !day.isAfter(closedThrough)) {
     throw _refusal(
       'DKB06',
       'this payment is dated inside a closed period of the books',
@@ -102,7 +108,7 @@ DemoUnmatchTarget demoUnmatchTarget({
 void demoApplyUnmatch(
   FakeMoneyRepository money,
   DemoUnmatchTarget target,
-  String reason,
+  String actorMemberId,
   DateTime today,
 ) {
   final invoice = target.invoice;
@@ -116,15 +122,16 @@ void demoApplyUnmatch(
       workspaceId: invoice.workspaceId,
       type: EventType.invoicePaymentReversed,
       action: EventAction.created,
-      actorMemberId: 'member-1',
-      subjectMemberId: invoice.memberId,
+      actorMemberId: actorMemberId,
+      // The acting staff member, never the invoice's member: the subject
+      // reads the events about them, and the reason must not reach the payer.
+      subjectMemberId: actorMemberId,
       payload: {
         'invoice_id': invoice.id,
         'number': invoice.number,
         'payment_ledger_id': target.payment.id,
         'amount_cents': target.payment.amountCents,
         'resolution': target.match.resolution,
-        'reason': reason,
       },
       status: EventStatus.applied,
       createdAt: today,

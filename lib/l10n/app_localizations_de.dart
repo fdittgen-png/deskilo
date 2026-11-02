@@ -2122,7 +2122,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankUnmatchBody =>
-      'Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten.';
+      'Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten. Die Zahlung bleibt bei diesem Mitglied: Sie kann erneut einer seiner Rechnungen zugeordnet werden, nicht der eines anderen Mitglieds.';
 
   @override
   String get bankUnmatchConfirm => 'Rückgängig machen';

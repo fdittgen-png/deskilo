@@ -2105,7 +2105,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankUnmatchBody =>
-      'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record.';
+      'The invoice becomes open again. The payment stays recorded, and this movement can be matched to it again. The match and why it was undone stay on record. The payment stays with this member: it can be matched again to one of their invoices, not to another member\'s.';
 
   @override
   String get bankUnmatchConfirm => 'Undo';

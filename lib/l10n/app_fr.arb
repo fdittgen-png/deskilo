@@ -898,7 +898,7 @@
   "bankUndoReasonLabel": "Pourquoi il est annulé",
   "bankUndoReasonRequired": "Indiquez pourquoi le rapprochement est annulé.",
   "bankUndoTitle": "Annuler ce rapprochement ?",
-  "bankUnmatchBody": "La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés.",
+  "bankUnmatchBody": "La facture redevient ouverte. Le paiement reste enregistré, et ce mouvement peut de nouveau lui être rapproché. Le rapprochement et la raison de son annulation restent conservés. Le paiement reste chez ce membre : il peut de nouveau être rapproché d'une de ses factures, pas de celle d'un autre membre.",
   "@bankUnmatchBody": {
     "description": "#2380 money-in unmatch: what the undoing does"
   },

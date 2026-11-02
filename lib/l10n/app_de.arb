@@ -898,7 +898,7 @@
   "bankUndoReasonLabel": "Grund der Rücknahme",
   "bankUndoReasonRequired": "Geben Sie an, warum der Abgleich rückgängig gemacht wird.",
   "bankUndoTitle": "Diesen Abgleich rückgängig machen?",
-  "bankUnmatchBody": "Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten.",
+  "bankUnmatchBody": "Die Rechnung ist wieder offen. Die Zahlung bleibt erfasst, und diese Bewegung kann ihr erneut zugeordnet werden. Die Zuordnung und der Grund der Rücknahme bleiben festgehalten. Die Zahlung bleibt bei diesem Mitglied: Sie kann erneut einer seiner Rechnungen zugeordnet werden, nicht der eines anderen Mitglieds.",
   "@bankUnmatchBody": {
     "description": "#2380 money-in unmatch: what the undoing does"
   },
