@@ -44,6 +44,16 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
+/// A workspace selection that resolves only when the test says so.
+class _SlowWorkspace extends ActiveWorkspaceId {
+  _SlowWorkspace(this._later);
+  final Future<String?> _later;
+  static var _builds = 0;
+  @override
+  Future<String?> build() =>
+      _builds++ == 0 ? Future.value('ws-1') : _later;
+}
+
 void main() {
   testWidgets('a cold inner route opens guarded consent, then fresh Demo', (
     tester,
@@ -311,6 +321,43 @@ void main() {
     // flag then resolves ON: the consent given by the first account is void.
     auth.signInAs('user-2');
     features.complete(WorkspaceFeature.values.toSet());
+    await _settle(tester);
+    expect(outer.read(demoEntryProvider), isFalse);
+    expect(find.byType(DemoWorkspace), findsNothing);
+  });
+
+  testWidgets('an account change during the final identity read enters '
+      'nothing', (tester) async {
+    tester.binding.platformDispatcher.defaultRouteNameTestValue = '/features';
+    addTearDown(
+      tester.binding.platformDispatcher.clearDefaultRouteNameTestValue,
+    );
+    _SlowWorkspace._builds = 0;
+    final workspace = Completer<String?>();
+    final auth = FakeAuthRepository(userId: 'user-1');
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(auth: auth),
+          activeWorkspaceIdProvider.overrideWith(() => _SlowWorkspace(workspace.future)),
+          demoReloadMarkerProvider.overrideWithValue(DemoReloadMarker(_Tab())),
+        ],
+        child: const DeskiloRoot(),
+      ),
+    );
+    await _settle(tester);
+    final outer = ProviderScope.containerOf(
+      tester.element(find.byType(DeskiloRoot)),
+    );
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    // From here the workspace is read again, and that read waits.
+    outer.invalidate(activeWorkspaceIdProvider);
+    await tester.tap(find.byKey(const Key('demo-entry-start')));
+    await tester.pump();
+    // Another account signs in while the identity read awaits the
+    // workspace: the consent given by the first account is void.
+    auth.signInAs('user-2');
+    workspace.complete('ws-1');
     await _settle(tester);
     expect(outer.read(demoEntryProvider), isFalse);
     expect(find.byType(DemoWorkspace), findsNothing);

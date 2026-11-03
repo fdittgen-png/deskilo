@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/demo_visit.dart';
+import '../../../features/auth/providers/auth_providers.dart';
 import '../../../features/kiosk/providers/kiosk_mode.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
@@ -126,14 +127,7 @@ Future<bool> _showDemoEntrySheet(
   );
   if (!(start ?? false) || !context.mounted) return false;
   if (ref.read(demoEntryProvider)) return false;
-  // #3235 — a signed-in person's workspace may have changed while the sheet
-  // was open: the Demo flag switched off or the kiosk locked. Read both again,
-  // resolved; the public Demo of a visitor who is not signed in is not asked.
-  // The identity is read after them, last before the visit begins, so an
-  // account or workspace that changed during those reads enters nothing.
-  if (before != null && !await _signedInMayStillEnter(ref)) return false;
-  if (!context.mounted) return false;
-  if (await _identityOrNull(visit) != before) return false;
+  if (!await _consentStillHolds(context, ref, visit, before)) return false;
   if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {
@@ -171,6 +165,26 @@ Future<bool> _showDemoEntrySheet(
   if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
   ref.read(demoEntryProvider.notifier).enter();
   return true;
+}
+
+/// #3235 — after consent: a signed-in person's workspace may have changed
+/// while the sheet was open (the Demo flag switched off, the kiosk locked),
+/// so both are read again, resolved; the public Demo of a visitor who is not
+/// signed in is not asked. The identity is read after them, last before the
+/// visit begins, and the account and workspace standing then must still be
+/// the ones consented (the identity read itself awaits).
+Future<bool> _consentStillHolds(
+  BuildContext context,
+  WidgetRef ref,
+  DemoVisit visit,
+  DemoIdentity? before,
+) async {
+  if (before != null && !await _signedInMayStillEnter(ref)) return false;
+  if (!context.mounted) return false;
+  if (await _identityOrNull(visit) != before) return false;
+  if (!context.mounted || before == null) return true;
+  return ref.read(authStateProvider).value == before.userId &&
+      ref.read(activeWorkspaceIdProvider).value == before.workspaceId;
 }
 
 /// Whether the signed-in workspace still allows a Demo visit: the Demo flag
