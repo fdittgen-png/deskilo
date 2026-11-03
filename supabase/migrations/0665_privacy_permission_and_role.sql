@@ -92,7 +92,7 @@ returns jsonb language sql immutable set search_path = '' as $fn$
     'es', 'Administrador de datos personales',
     'it', 'Amministratore dei dati personali');
 $fn$;
-revoke execute on function public.personal_data_admin_role_names() from public, anon;
+revoke execute on function public.personal_data_admin_role_names() from public, anon, authenticated;
 
 -- One seeded role per workspace; a role the owner has already created, renamed
 -- or deleted under this key is left as it is (the unique key makes the insert a
