@@ -92,8 +92,6 @@ class FakePurchaseRepository
   );
 
   final List<PurchaseDetail> _documents = [];
-
-  /// The documents the space holds, for the figures computed over them.
   List<PurchaseDetail> get documents => List.unmodifiable(_documents);
   /// A document the demo space already holds (a bill captured, a receipt
   /// awaiting approval or refused).

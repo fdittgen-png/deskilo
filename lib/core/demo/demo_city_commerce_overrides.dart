@@ -127,32 +127,6 @@ List<Override> demoCityCommerceOverrides(
   final homeRooms = seedDemoRooms(fixture.seededAt);
   final homeValuations = seedDemoValuations(fixture.seededAt);
   final homeCommitments = seedDemoCommitments(fixture.seededAt);
-  final homePurchaseKpi = DemoPurchaseKpiRepository(
-    purchases: purchasing.purchases,
-    now: fixture.seededAt,
-  );
-  final londonPurchaseKpi = DemoPurchaseKpiRepository(
-    purchases: londonPurchasing.purchases,
-    now: fixture.seededAt,
-    currency: 'GBP',
-  );
-  final nyPurchaseKpi = DemoPurchaseKpiRepository(
-    purchases: nyPurchasing.purchases,
-    now: fixture.seededAt,
-    currency: 'USD',
-  );
-  final londonCostKpi = DemoCostKpiRepository(
-    purchases: londonPurchasing.purchases,
-    invoices: () => fixture.london.money.invoices,
-    now: fixture.seededAt,
-    currency: 'GBP',
-  );
-  final nyCostKpi = DemoCostKpiRepository(
-    purchases: nyPurchasing.purchases,
-    invoices: () => fixture.newYork.money.invoices,
-    now: fixture.seededAt,
-    currency: 'USD',
-  );
   T choose<T>(Ref ref, T home, T london, T ny) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => london,
@@ -202,18 +176,54 @@ List<Override> demoCityCommerceOverrides(
     leaseCommitmentRepositoryProvider.overrideWith(
       (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments),
     ),
-    // #2582 — the purchase figures over these documents.
-    purchaseKpiRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homePurchaseKpi, londonPurchaseKpi, nyPurchaseKpi),
+    ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing),
+  ];
+}
+
+/// #2582 — the purchase and cost figures over each space's own documents, in
+/// its own currency; the older spaces' cost figures need a server.
+List<Override> _kpiOverrides(
+  DemoFixture fixture,
+  DemoPurchasing home,
+  DemoPurchasing london,
+  DemoPurchasing newYork,
+) {
+  final now = fixture.seededAt;
+  final purchase = (
+    DemoPurchaseKpiRepository(purchases: home.purchases, now: now),
+    DemoPurchaseKpiRepository(purchases: london.purchases, now: now, currency: 'GBP'),
+    DemoPurchaseKpiRepository(purchases: newYork.purchases, now: now, currency: 'USD'),
+  );
+  final cost = (
+    DemoCostKpiRepository(
+      purchases: london.purchases,
+      invoices: () => fixture.london.money.invoices,
+      now: now,
+      currency: 'GBP',
     ),
-    // The cost figures of the two cities, over their own documents and
-    // invoices; the older spaces still have no server to read them from.
+    DemoCostKpiRepository(
+      purchases: newYork.purchases,
+      invoices: () => fixture.newYork.money.invoices,
+      now: now,
+      currency: 'USD',
+    ),
+  );
+  T choose<T>(Ref ref, T home, T london, T ny) =>
+      switch (ref.watch(currentWorkspaceProvider).value?.id) {
+        demoLondonSpaceId => london,
+        demoNewYorkSpaceId => ny,
+        _ => home,
+      };
+  return [
+    purchaseKpiRepositoryProvider.overrideWith(
+      (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3),
+    ),
     costKpiRepositoryProvider.overrideWith(
       (ref) => choose<CostKpiRepository>(
         ref,
         const UnavailableCostKpiRepository(),
-        londonCostKpi,
-        nyCostKpi,
+        cost.$1,
+        cost.$2,
       ),
     ),
   ];

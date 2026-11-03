@@ -8,6 +8,7 @@ import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_purchases.dart';
+import '../../time/date_text.dart';
 import 'purchase_repository.dart';
 
 class DemoCostKpiRepository implements CostKpiRepository {
@@ -23,8 +24,7 @@ class DemoCostKpiRepository implements CostKpiRepository {
   final DateTime now;
   final String currency;
 
-  static String _month(DateTime d) =>
-      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}';
+  static String _month(DateTime d) => yearMonth(d.year, d.month);
 
   @override
   Future<CostSummaryKpi> summary(
