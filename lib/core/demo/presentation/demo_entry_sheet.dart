@@ -127,7 +127,7 @@ Future<bool> _showDemoEntrySheet(
   );
   if (!(start ?? false) || !context.mounted) return false;
   if (ref.read(demoEntryProvider)) return false;
-  if (!await _consentStillHolds(context, ref, visit, before)) return false;
+  if (!await _Consent.holds(context, ref, visit, before)) return false;
   if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {
@@ -167,38 +167,41 @@ Future<bool> _showDemoEntrySheet(
   return true;
 }
 
-/// #3235 — after consent: a signed-in person's workspace may have changed
-/// while the sheet was open (the Demo flag switched off, the kiosk locked),
-/// so both are read again, resolved; the public Demo of a visitor who is not
-/// signed in is not asked. The identity is read after them, last before the
-/// visit begins, and the account and workspace standing then must still be
-/// the ones consented (the identity read itself awaits).
-Future<bool> _consentStillHolds(
-  BuildContext context,
-  WidgetRef ref,
-  DemoVisit visit,
-  DemoIdentity? before,
-) async {
-  if (before != null && !await _signedInMayStillEnter(ref)) return false;
-  if (!context.mounted) return false;
-  if (await _identityOrNull(visit) != before) return false;
-  if (!context.mounted || before == null) return true;
-  return ref.read(authStateProvider).value == before.userId &&
-      ref.read(activeWorkspaceIdProvider).value == before.workspaceId;
-}
+/// #3235 — the checks that must still pass after consent.
+abstract final class _Consent {
+  /// #3235 — after consent: a signed-in person's workspace may have changed
+  /// while the sheet was open (the Demo flag switched off, the kiosk locked),
+  /// so both are read again, resolved; the public Demo of a visitor who is not
+  /// signed in is not asked. The identity is read after them, last before the
+  /// visit begins, and the account and workspace standing then must still be
+  /// the ones consented (the identity read itself awaits).
+  static Future<bool> holds(
+    BuildContext context,
+    WidgetRef ref,
+    DemoVisit visit,
+    DemoIdentity? before,
+  ) async {
+    if (before != null && !await _signedInMayStillEnter(ref)) return false;
+    if (!context.mounted) return false;
+    if (await _identityOrNull(visit) != before) return false;
+    if (!context.mounted || before == null) return true;
+    return ref.read(authStateProvider).value == before.userId &&
+        ref.read(activeWorkspaceIdProvider).value == before.workspaceId;
+  }
 
-/// Whether the signed-in workspace still allows a Demo visit: the Demo flag
-/// on, and no locked kiosk. Unresolved or failing reads refuse.
-Future<bool> _signedInMayStillEnter(WidgetRef ref) async {
-  try {
-    final features = await ref.read(enabledFeaturesProvider.future);
-    final member = await ref.read(myMemberProvider.future);
-    if (!features.contains(WorkspaceFeature.demoMode)) return false;
-    return member?.isKiosk != true ||
-        !features.contains(WorkspaceFeature.kioskMode) ||
-        ref.read(kioskModeProvider) == KioskModeDecision.rejected;
-  } on Object {
-    return false;
+  /// Whether the signed-in workspace still allows a Demo visit: the Demo flag
+  /// on, and no locked kiosk. Unresolved or failing reads refuse.
+  static Future<bool> _signedInMayStillEnter(WidgetRef ref) async {
+    try {
+      final features = await ref.read(enabledFeaturesProvider.future);
+      final member = await ref.read(myMemberProvider.future);
+      if (!features.contains(WorkspaceFeature.demoMode)) return false;
+      return member?.isKiosk != true ||
+          !features.contains(WorkspaceFeature.kioskMode) ||
+          ref.read(kioskModeProvider) == KioskModeDecision.rejected;
+    } on Object {
+      return false;
+    }
   }
 }
 
