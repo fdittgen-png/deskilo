@@ -42,6 +42,15 @@
 -- nobody lacking the right. The lists only gain; nothing is removed or
 -- reordered, so no earlier choice of an owner is changed.
 --
+-- A workspace whose members have never booked and whose matrix lacks the right
+-- is NOT granted it: that is the state the product already names "members
+-- cannot book yet" (the required setup step member_rights and the readiness
+-- section member_permissions, reason members_cannot_book, 0399), so no
+-- capability an owner relied on is taken away, while a blanket grant would
+-- switch the right on for every space whose owner never did. Its owner already
+-- sees the step; the first refused booking says "ask an owner to let members
+-- book".
+--
 -- Refusal: 'not allowed to make reservations' (42501). The client words it
 -- (bookingErrorText) in the five languages.
 

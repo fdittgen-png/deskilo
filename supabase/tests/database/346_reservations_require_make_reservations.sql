@@ -4,6 +4,9 @@
 -- makeReservations, on every path that books for the caller: a single
 -- booking, the idempotent one, a series, and the kiosk's reserve for the
 -- badge's member. On a new space the member matrix is empty (0373), so:
+--   * the owner reads the missing right as a required readiness section and an
+--     open setup step (the migration does not grant it to a space where nobody
+--     books yet; that is the state the product already names);
 --   * a plain member and an admin (no 'admin' list: the defaults of
 --     member_has_permission do not hold it) are refused, 42501, and nothing is
 --     written;
@@ -16,7 +19,7 @@
 --     lost the right can still be checked OUT: removing a right never traps
 --     someone checked in.
 begin;
-select plan(16);
+select plan(18);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -113,6 +116,20 @@ select throws_ok($$ select pg_temp.series(9) $$, '42501', 'not allowed to make r
 reset role;
 select is((select count(*)::int from public.reservations where workspace_id = pg_temp.ws()), 0,
           'and nothing was written');
+
+-- The owner is told, on the surfaces that already exist: the setup step and the
+-- readiness section name the missing right (a space where nobody has booked yet
+-- keeps the empty matrix: the migration only protects people who already book).
+reset role;
+select pg_temp.act_as(pg_temp.u('a1'));
+select is((select s->>'state' || '/' || (s->>'required') || '/' || coalesce(s->>'reason', '')
+             from jsonb_array_elements(public.workspace_readiness(pg_temp.ws())) s
+            where s->>'section' = 'member_permissions'),
+          'needs_configuration/true/members_cannot_book',
+          'the owner reads the missing right as a required readiness section');
+select is((select s->>'state' from jsonb_array_elements(public.workspace_setup_status(pg_temp.ws())->'steps') s
+            where s->>'step' = 'member_rights'),
+          'needs_configuration', 'and as an open setup step');
 
 -- 2. An admin: the 'admin' list is absent, its defaults do not hold the right.
 select pg_temp.act_as(pg_temp.u('a3'));
