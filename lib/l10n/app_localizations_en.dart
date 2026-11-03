@@ -7605,6 +7605,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventPrivacyIncident(String kind, String note) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'data_breach': 'a data breach',
+      'wrong_invoice': 'a wrong invoice',
+      'other': 'another incident',
+    });
+    return 'A privacy incident was recorded: $_temp0. $note';
+  }
+
+  @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
     return '$actor requests $halfDays extra half-days for $period';
   }
@@ -7739,6 +7749,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypePriceNegotiation => 'Price negotiation';
+
+  @override
+  String get eventTypePrivacyIncident => 'Privacy incident';
 
   @override
   String get eventTypeQuota => 'Extra half-days';
@@ -17908,6 +17921,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageNegotiations => 'Manage commercial agreements';
 
   @override
+  String get permManagePrivacy => 'Handle personal data and rights requests';
+
+  @override
   String get permManagePurchases => 'Capture supplier bills';
 
   @override
@@ -18791,6 +18807,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.';
+
+  @override
+  String get privacySelfServiceOff =>
+      'This workspace handles data requests itself. File a rights request and the personal data admin will answer it.';
 
   @override
   String get privacySpaceNotice => 'This space\'s privacy notice';
@@ -22934,6 +22954,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.';
 
   @override
+  String get settingHintPrivacyMemberSelfService =>
+      'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
 
@@ -23179,6 +23203,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPresenceResyncAfterAwayMinutes =>
       'Re-read after being away';
+
+  @override
+  String get settingLabelPrivacyMemberSelfService =>
+      'Members export and erase their own data directly';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

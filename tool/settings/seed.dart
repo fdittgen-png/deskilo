@@ -1238,6 +1238,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Failed PIN attempts across all badges of one workspace within the badge lockout window. Reaching this ceiling pauses badge sign-in and alerts the owners. May be tightened, never loosened.',
     ),
   ),
+  (
+    since: 'privacy_self_service_and_incident',
+    row: (
+      key: 'privacy.member_self_service',
+      type: 'bool',
+      defaultValue: true,
+      min: null,
+      max: null,
+      unit: '',
+      group: 'security',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'managePrivacy',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'export_my_data, erase_my_membership (#3278)',
+      note: 'Whether a member exports and erases their own data directly from the app. Off: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.',
+    ),
+  ),
 
   (
     since: 'directory_endpoints',

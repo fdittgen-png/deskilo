@@ -9464,6 +9464,17 @@
       }
     }
   },
+  "eventPrivacyIncident": "A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "eventQuotaRequested": "{actor} requests {halfDays} extra half-days for {period}",
   "@eventQuotaRequested": {
     "description": "Feed line of a quota-extension request event",
@@ -9693,6 +9704,7 @@
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
   },
   "eventTypePriceNegotiation": "Price negotiation",
+  "eventTypePrivacyIncident": "Privacy incident",
   "eventTypeQuota": "Extra half-days",
   "@eventTypeQuota": {
     "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
@@ -21539,6 +21551,7 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Manage commercial agreements",
+  "permManagePrivacy": "Handle personal data and rights requests",
   "permManagePurchases": "Capture supplier bills",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -22460,6 +22473,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
   "privacySpaceNotice": "This space's privacy notice",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -27247,6 +27261,7 @@
   "@settingHintPresenceResyncAfterAwayMinutes": {
     "description": "#3098 settings: Setting hint."
   },
+  "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
   "settingHintPurchasePaymentChecker": "A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -27528,6 +27543,7 @@
   "@settingLabelPresenceResyncAfterAwayMinutes": {
     "description": "#3098 settings: Setting label."
   },
+  "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
   "settingLabelPurchasePaymentChecker": "Payments a second person records from (currency units)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

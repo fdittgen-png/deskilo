@@ -5715,6 +5715,17 @@
   },
   "eventPriceNegotiationItems": "{count} Artikel",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
+  "eventPrivacyIncident": "Ein Datenschutzvorfall wurde erfasst: {kind, select, data_breach{eine Datenpanne} wrong_invoice{eine falsche Rechnung} other{ein anderer Vorfall}}. {note}",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
   "eventReject": "Ablehnen",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
@@ -5824,6 +5835,7 @@
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
   },
   "eventTypePriceNegotiation": "Preisverhandlung",
+  "eventTypePrivacyIncident": "Datenschutzvorfall",
   "eventTypeQuota": "Zusätzliche halbe Tage",
   "eventTypeRefund": "Erstattung",
   "@eventTypeRefund": {
@@ -11708,6 +11720,7 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Geschäftsvereinbarungen verwalten",
+  "permManagePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten",
   "permManagePurchases": "Lieferantenrechnungen erfassen",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -12286,6 +12299,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacySelfServiceOff": "Dieser Bereich bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.",
   "privacySpaceNotice": "Die Datenschutzhinweise dieses Bereichs",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -15718,6 +15732,7 @@
     "description": "#2486 settings: Setting hint."
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.",
+  "settingHintPrivacyMemberSelfService": "true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.",
   "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15900,6 +15915,7 @@
     "description": "#2486 settings: Setting label."
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
+  "settingLabelPrivacyMemberSelfService": "Mitglieder exportieren und löschen ihre Daten selbst",
   "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

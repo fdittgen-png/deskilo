@@ -7657,6 +7657,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventPrivacyIncident(String kind, String note) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'data_breach': 'una filtración de datos',
+      'wrong_invoice': 'una factura errónea',
+      'other': 'otro incidente',
+    });
+    return 'Se registró un incidente de privacidad: $_temp0. $note';
+  }
+
+  @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
     return '$actor solicita $halfDays medias jornadas extra para $period';
   }
@@ -7792,6 +7802,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypePriceNegotiation => 'Negociación de precios';
+
+  @override
+  String get eventTypePrivacyIncident => 'Incidente de privacidad';
 
   @override
   String get eventTypeQuota => 'Medias jornadas extra';
@@ -18035,6 +18048,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageNegotiations => 'Gestionar los acuerdos comerciales';
 
   @override
+  String get permManagePrivacy =>
+      'Gestionar los datos personales y las solicitudes de derechos';
+
+  @override
   String get permManagePurchases => 'Registrar facturas de proveedor';
 
   @override
@@ -18923,6 +18940,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
+
+  @override
+  String get privacySelfServiceOff =>
+      'Este espacio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.';
 
   @override
   String get privacySpaceNotice => 'El aviso de privacidad de este espacio';
@@ -23115,6 +23136,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.';
 
   @override
+  String get settingHintPrivacyMemberSelfService =>
+      'true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.';
 
@@ -23382,6 +23407,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelPresenceResyncAfterAwayMinutes =>
       'Releer tras una ausencia';
+
+  @override
+  String get settingLabelPrivacyMemberSelfService =>
+      'Los miembros exportan y borran ellos mismos sus datos';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

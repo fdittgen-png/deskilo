@@ -1525,7 +1525,8 @@ window.SETUP_L10N={
    "viewDocuments": "See the shared documents",
    "managePurchases": "Capture supplier bills",
    "recordOutgoingPayments": "Record payments to members",
-   "manageLease": "Record the premises lease"
+   "manageLease": "Record the premises lease",
+   "managePrivacy": "Handle personal data and rights requests"
   },
   "domain": {
    "payment": "Payment",
@@ -3217,7 +3218,8 @@ window.SETUP_L10N={
    "viewDocuments": "Voir les documents partagés",
    "managePurchases": "Saisir les factures fournisseur",
    "recordOutgoingPayments": "Enregistrer les paiements aux membres",
-   "manageLease": "Enregistrer le bail des locaux"
+   "manageLease": "Enregistrer le bail des locaux",
+   "managePrivacy": "Gérer les données personnelles et les demandes de droits"
   },
   "domain": {
    "payment": "Paiement",
@@ -4909,7 +4911,8 @@ window.SETUP_L10N={
    "viewDocuments": "Die geteilten Dokumente sehen",
    "managePurchases": "Lieferantenrechnungen erfassen",
    "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
-   "manageLease": "Mietvertrag der Räume erfassen"
+   "manageLease": "Mietvertrag der Räume erfassen",
+   "managePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten"
   },
   "domain": {
    "payment": "Zahlung",
@@ -6601,7 +6604,8 @@ window.SETUP_L10N={
    "viewDocuments": "Ver los documentos compartidos",
    "managePurchases": "Registrar facturas de proveedor",
    "recordOutgoingPayments": "Registrar pagos a miembros",
-   "manageLease": "Registrar el contrato de alquiler"
+   "manageLease": "Registrar el contrato de alquiler",
+   "managePrivacy": "Gestionar los datos personales y las solicitudes de derechos"
   },
   "domain": {
    "payment": "Pago",
@@ -8293,7 +8297,8 @@ window.SETUP_L10N={
    "viewDocuments": "Vedere i documenti condivisi",
    "managePurchases": "Registrare le fatture dei fornitori",
    "recordOutgoingPayments": "Registrare i pagamenti ai soci",
-   "manageLease": "Registrare il contratto di locazione"
+   "manageLease": "Registrare il contratto di locazione",
+   "managePrivacy": "Gestire i dati personali e le richieste di diritti"
   },
   "domain": {
    "payment": "Pagamento",

@@ -15,9 +15,10 @@ void main() {
   // 31→32 (2026-10-16): #2573 managePurchases — capture the supplier bills.
   // 32→33 (2026-10-17): #2574 recordOutgoingPayments — record cash paid out.
   // 33→34 (2026-10-18): #2569 manageLease — record the premises lease.
-  test('the catalog carries 34 permissions, wire names equal to Dart names',
+  // 34→35 (2026-11-03): #3278 managePrivacy — personal data and rights requests.
+  test('the catalog carries 35 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(34));
+    expect(WorkspacePermission.values, hasLength(35));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }
@@ -54,6 +55,7 @@ void main() {
       WorkspacePermission.recordOutgoingPayments,
       // #2569 — the lease is recorded by who is given the right.
       WorkspacePermission.manageLease,
+      WorkspacePermission.managePrivacy,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }

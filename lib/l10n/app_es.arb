@@ -5715,6 +5715,17 @@
   },
   "eventPriceNegotiationItems": "{count} artículos",
   "eventPriceNegotiationLine": "{actor} propone condiciones para {member}: {terms}",
+  "eventPrivacyIncident": "Se registró un incidente de privacidad: {kind, select, data_breach{una filtración de datos} wrong_invoice{una factura errónea} other{otro incidente}}. {note}",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
@@ -5824,6 +5835,7 @@
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
   },
   "eventTypePriceNegotiation": "Negociación de precios",
+  "eventTypePrivacyIncident": "Incidente de privacidad",
   "eventTypeQuota": "Medias jornadas extra",
   "eventTypeRefund": "Reembolso",
   "@eventTypeRefund": {
@@ -11708,6 +11720,7 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Gestionar los acuerdos comerciales",
+  "permManagePrivacy": "Gestionar los datos personales y las solicitudes de derechos",
   "permManagePurchases": "Registrar facturas de proveedor",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -12286,6 +12299,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacySelfServiceOff": "Este espacio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "privacySpaceNotice": "El aviso de privacidad de este espacio",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -15718,6 +15732,7 @@
     "description": "#2486 settings: Setting hint."
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.",
+  "settingHintPrivacyMemberSelfService": "true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.",
   "settingHintPurchasePaymentChecker": "Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15900,6 +15915,7 @@
     "description": "#2486 settings: Setting label."
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Releer tras una ausencia",
+  "settingLabelPrivacyMemberSelfService": "Los miembros exportan y borran ellos mismos sus datos",
   "settingLabelPurchasePaymentChecker": "Pagos que registra una segunda persona desde (unidades monetarias)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
