@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 (0657) -- one payment of an invoice that has several is undone.
+-- #2380 (0657, 0658) -- one payment of an invoice that has several is undone.
 -- I3 (200.00) is part-paid by L3 (100.00, 'first part') and L10 (50.00,
 -- 'second part'): one aggregate match of 150.00 and two payment rows.
 -- Undoing L3, the older one: its payment row goes, the match is 50.00 with
@@ -10,10 +10,12 @@
 -- again with the same credit. Undoing L10, now the latest: the match is
 -- restated from L3 (its link, date and note). Undoing L3 again, the last
 -- payment: the match goes, I3 is open. A match whose amount its payments do
--- not explain is refused (DKB05); a remaining payment dated inside a closed
--- period of the books is refused (DKB06), and nothing is undone.
+-- not explain is refused (DKB05). A remaining payment is dated by its
+-- confirmation (0658): submitted in a closed period but confirmed in the open
+-- one, the match is restated at the confirmation; confirmed inside the closed
+-- period, the undoing is refused (DKB06) and nothing changes.
 begin;
-select plan(17);
+select plan(21);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -211,14 +213,31 @@ update public.invoice_matches set paid_cents = paid_cents + 1 where invoice_id =
 select is(pg_temp.undo('owner', pg_temp.v('l1'), 'wrong', '00000000-0000-4000-8000-0000065700e4') ->> 'refused',
           'DKB05', 'a match whose amount its payments do not add up to is refused');
 
--- A remaining payment dated inside a closed period: refused, nothing undone.
+-- A payment submitted in a period that is closed now but CONFIRMED in the
+-- open one (0658): the match restated from it takes the confirmation's date.
 update public.invoice_matches set paid_cents = paid_cents - 1 where invoice_id = pg_temp.v('i3')::uuid;
+select set_config('um.c1', (select payment_ledger_id::text from public.bank_statement_lines where id = pg_temp.v('l1')::uuid), false);
 update public.invoice_match_payments set matched_at = now() - interval '40 days'
- where payment_ledger_id = (select payment_ledger_id from public.bank_statement_lines where id = pg_temp.v('l1')::uuid);
+ where payment_ledger_id = current_setting('um.c1')::uuid;
 insert into public.book_periods (workspace_id, period_from, period_to, reason)
 values (pg_temp.v('ws')::uuid, current_date - 45, current_date - 35, 'owner');
-select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8000-0000065700e5') ->> 'refused',
+select ok((select e.decided_at::date = current_date from public.invoice_match_payments p
+             join public.events e on e.id = p.event_id where p.payment_ledger_id = current_setting('um.c1')::uuid),
+          'positive control: L1 was submitted 40 days ago and confirmed today');
+select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8000-0000065700e5') ->> 'status',
+          'recorded', 'undoing L10 is not refused for the period L1 was only submitted in');
+select is((select payment_ledger_id::text || '/' || (matched_at::date = current_date) from public.invoice_matches
+            where invoice_id = pg_temp.v('i3')::uuid), current_setting('um.c1') || '/true',
+          'the match is restated from L1, dated by its confirmation, not back-dated into the closed period');
+
+-- Confirmed inside the closed period as well: refused, nothing undone.
+select pg_temp.match('l10', 'i3', 'under_accepted', 'rest again');
+update public.events set decided_at = now() - interval '40 days'
+ where id = (select event_id from public.invoice_match_payments where payment_ledger_id = current_setting('um.c1')::uuid);
+select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8000-0000065700e6') ->> 'refused',
           'DKB06', 'the match would take a date inside a closed period: refused');
+select is((select paid_cents from public.invoice_matches where invoice_id = pg_temp.v('i3')::uuid), 15000,
+          'and nothing was undone');
 
 select * from finish();
 rollback;
