@@ -6,11 +6,15 @@ import '../../../features/money/domain/room_rental.dart';
 /// shows: a rental sits on a room of an external level, ends no earlier than
 /// it starts, and a level with a rental stays external.
 class FakeRoomRentalRepository implements RoomRentalRepository {
+  /// The space's currency; a US space does not rent rooms in euros.
+  final String currency;
+
   FakeRoomRentalRepository({
     Iterable<RoomLevel> levels = const [],
     Iterable<RentableRoom> rooms = const [],
     Iterable<RoomRental> rentals = const [],
     this.supplierName = 'Landlord',
+    this.currency = 'EUR',
     Iterable<RoomPlan> plans = const [],
   }) : plans = [...plans],
        levels = [...levels],
@@ -92,7 +96,7 @@ class FakeRoomRentalRepository implements RoomRentalRepository {
       costKind: command.costKind,
       costCents: command.costCents,
       period: command.period,
-      currency: 'EUR',
+      currency: currency,
       audienceAll: command.audienceAll,
       audience: command.audience,
       fees: command.fees,

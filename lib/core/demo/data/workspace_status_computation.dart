@@ -51,7 +51,8 @@ WorkspaceStatus demoWorkspaceStatus(
   return WorkspaceStatus(
     from: from,
     to: to,
-    currency: 'EUR',
+    // The currency the invoices are in: pounds in London, dollars in New York.
+    currency: invoices.isEmpty ? 'EUR' : invoices.first.currency,
     invoicedCents: counted
         .where((i) => i.totalCents > 0)
         .fold(0, (sum, i) => sum + i.totalCents),

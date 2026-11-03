@@ -11,10 +11,12 @@ import '../../features/money/providers/book_profile_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
+import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/asset_valuation_repository.dart';
 import 'data/book_profile_repository.dart';
+import 'data/demo_cost_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/premises_lease_repository.dart';
@@ -116,8 +118,8 @@ List<Override> demoCityCommerceOverrides(
       'Harlem Studio',
     ],
   );
-  final londonRooms = FakeRoomRentalRepository();
-  final nyRooms = FakeRoomRentalRepository();
+  final londonRooms = FakeRoomRentalRepository(currency: 'GBP');
+  final nyRooms = FakeRoomRentalRepository(currency: 'USD');
   final londonValuations = FakeAssetValuationRepository();
   final nyValuations = FakeAssetValuationRepository();
   final londonCommitments = FakeLeaseCommitmentRepository();
@@ -132,10 +134,24 @@ List<Override> demoCityCommerceOverrides(
   final londonPurchaseKpi = DemoPurchaseKpiRepository(
     purchases: londonPurchasing.purchases,
     now: fixture.seededAt,
+    currency: 'GBP',
   );
   final nyPurchaseKpi = DemoPurchaseKpiRepository(
     purchases: nyPurchasing.purchases,
     now: fixture.seededAt,
+    currency: 'USD',
+  );
+  final londonCostKpi = DemoCostKpiRepository(
+    purchases: londonPurchasing.purchases,
+    invoices: () => fixture.london.money.invoices,
+    now: fixture.seededAt,
+    currency: 'GBP',
+  );
+  final nyCostKpi = DemoCostKpiRepository(
+    purchases: nyPurchasing.purchases,
+    invoices: () => fixture.newYork.money.invoices,
+    now: fixture.seededAt,
+    currency: 'USD',
   );
   T choose<T>(Ref ref, T home, T london, T ny) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
@@ -189,6 +205,16 @@ List<Override> demoCityCommerceOverrides(
     // #2582 — the purchase figures over these documents.
     purchaseKpiRepositoryProvider.overrideWith(
       (ref) => choose(ref, homePurchaseKpi, londonPurchaseKpi, nyPurchaseKpi),
+    ),
+    // The cost figures of the two cities, over their own documents and
+    // invoices; the older spaces still have no server to read them from.
+    costKpiRepositoryProvider.overrideWith(
+      (ref) => choose<CostKpiRepository>(
+        ref,
+        const UnavailableCostKpiRepository(),
+        londonCostKpi,
+        nyCostKpi,
+      ),
     ),
   ];
 }

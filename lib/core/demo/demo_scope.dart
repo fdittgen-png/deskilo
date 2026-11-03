@@ -77,7 +77,6 @@ import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
-import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/domain/sample_data.dart';
 import '../../features/workspace/domain/workspace_host.dart';
 import '../../features/workspace/providers/bi_providers.dart';
@@ -227,8 +226,8 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 /// What only a server can answer: Demo offers nothing in its place.
 List<Override> _serverOnlyOverrides() => [
   // #2582 — the purchase figures are _purchasingOverrides'; the cost
-  // figures need the server's ledger of every source.
-  costKpiRepositoryProvider.overrideWithValue(const UnavailableCostKpiRepository()),
+  // figures of the cities are demo_city_commerce_overrides', and the older
+  // spaces' need the server's ledger of every source.
   costAllocationRepositoryProvider.overrideWithValue(const UnavailableCostAllocationRepository()),
   // #2583 — the overview's own figures need the server.
   overviewKpiRepositoryProvider.overrideWithValue(
