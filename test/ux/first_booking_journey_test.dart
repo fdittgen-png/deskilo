@@ -15,10 +15,15 @@
 //      repositories (the "reload"): the places are done, the progress made
 //      stays, and the booking right is still open -- nothing completes
 //      falsely. The next action is now the right.
-//   4. The right is granted: the "Take bookings" outcome is reached, the
-//      booking step is open.
-//   5. A member books a valid slot; the owner reads the same booking, and
-//      the booking step is done. The later outcomes remain listed.
+//   4. The owner grants the right with the step page's own "Let members
+//      book" action: the "Take bookings" outcome is reached, the booking step
+//      is open, and the guide moves on to the next outcome.
+//   5. A member books a free slot on the Reserve screen; the owner reads the
+//      same booking, and the booking step is done. The later outcomes remain
+//      listed.
+//
+// The resource is a harness fixture (the plan the editor would save), as the
+// issue's walkthrough words it; the rights and the booking are the screens'.
 import 'dart:collection';
 
 import 'package:deskilo/app/app.dart';
@@ -28,7 +33,7 @@ import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
-import 'package:deskilo/features/plan/domain/half_day_windows.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -37,6 +42,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
+import '../helpers/reserve_view.dart';
 
 /// Every workspace id reads the same sources: the one clean space under test.
 class _OneSpace extends MapBase<String, DemoSetupSources> {
@@ -117,12 +123,14 @@ String _path(WidgetTester tester) => _container(
   tester,
 ).read(routerProvider).routeInformationProvider.value.uri.path;
 
-/// Starts the app afresh over [space] and opens the setup guide.
+/// Starts the app afresh over [space] and opens the setup guide the way an
+/// owner does: from the resume banner the Reserve screen shows.
 Future<void> _reloadIntoGuide(WidgetTester tester, _Space space) async {
   await tester.pumpWidget(const SizedBox());
   await tester.pumpWidget(space.app());
   await tester.pumpAndSettle();
-  _container(tester).read(routerProvider).go('/setup');
+  expect(_path(tester), '/reserve', reason: 'the space opens on a restart');
+  await tester.tap(find.byKey(const ValueKey('setup-resume-open')));
   await tester.pumpAndSettle();
   expect(find.byType(SetupGuideScreen), findsOneWidget);
 }
@@ -197,12 +205,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(_path(tester), '/setup/step/member_rights');
 
-    // 4. The right is granted: the outcome is reached, the booking is open.
-    await space.workspace.setRolePermission(
-      id,
-      'member',
-      'makeReservations',
-      enabled: true,
+    // 4. The owner grants the right on the step's own page.
+    expect(
+      find.byKey(const ValueKey('setup-rights-preset-makeReservations')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('setup-rights-apply')));
+    await tester.pumpAndSettle();
+    expect(
+      space.workspace.workspaces.single.rolePermissions['member'],
+      contains('makeReservations'),
+      reason: 'the screen persisted the right',
     );
     await _reloadIntoGuide(tester, space);
     expect(await space.reached('bookable'), isTrue);
@@ -218,23 +231,36 @@ void main() {
       reason: 'the next action moves on to the next outcome',
     );
 
-    // 5. A member books; the owner reads the same booking.
+    // 5. A member books a free slot on the Reserve screen.
     final seat = space.plan.seats.single;
-    final window = HalfDayWindows.morning(kTestNow);
     space.bookingMember = 'member-2';
-    final booking = await space.reservations.create(
-      workspaceId: id,
-      seatId: seat.id,
-      startsAt: window.start,
-      endsAt: window.end,
-    );
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(space.app());
+    await tester.pumpAndSettle();
+    expect(_path(tester), '/reserve');
+    await pickReserveView(tester, 'week');
+    await tester.pumpAndSettle();
+    final day = WeekGrid.dayStampOf(kTestNow.add(const Duration(days: 1)));
+    await tester.tap(find.byKey(ValueKey('week-free-${seat.id}-$day-pm')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('booking-confirm')));
+    await tester.pumpAndSettle();
     space.bookingMember = 'member-1';
-    final seen = await space.reservations.fetchById(booking);
-    expect(seen?.workspaceId, id);
-    expect(seen?.seatId, seat.id);
-    expect(seen?.memberId, 'member-2');
-    expect(seen?.startsAt, window.start);
-    expect(seen?.endsAt, window.end);
+
+    // The owner reads the same booking.
+    final booked = (await space.reservations.fetchWindow(
+      id,
+      from: kTestNow.subtract(const Duration(days: 1)),
+      to: kTestNow.add(const Duration(days: 8)),
+    )).single;
+    expect(booked.workspaceId, id);
+    expect(booked.seatId, seat.id);
+    expect(booked.memberId, 'member-2');
+    expect(
+      WeekGrid.dayStampOf(booked.startsAt),
+      day,
+      reason: 'the slot the member picked',
+    );
     await _reloadIntoGuide(tester, space);
     expect(await space.step('first_booking'), SetupStepState.ready);
     expect(await space.reached('bookable'), isTrue);
