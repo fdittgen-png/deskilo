@@ -4308,6 +4308,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung.';
 
   @override
+  String get bookingNotAllowedError =>
+      'Sie dürfen in diesem Bereich keine Buchungen vornehmen. Bitten Sie eine Inhaberin oder einen Inhaber, Mitgliedern das Buchen zu erlauben.';
+
+  @override
   String get bookingOnePlace =>
       'Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.';
 

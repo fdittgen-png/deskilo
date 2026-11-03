@@ -12,6 +12,10 @@
   "levelSupplementLabel": "Prenotazioni del piano",
   "levelNotAllowed": "Non è autorizzato a prenotare un tavolo, ufficio o piano intero.",
   "levelConflict": "Il piano ha prenotazioni in quel periodo.",
+  "bookingNotAllowedError": "Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Ha già una prenotazione in quel periodo — un posto alla volta.",
   "bookingCheckedInElsewhere": "Ha fatto check-in altrove — faccia prima il check-out lì.",
   "spaceNotWholeBookable": "Questo spazio non è configurato per la prenotazione intera — il proprietario attiva \"Prenotabile per intero\" nell'editor.",

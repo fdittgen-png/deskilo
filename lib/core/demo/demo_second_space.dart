@@ -11,13 +11,13 @@
 // change made to the Leipzig row is the change Me › Home lists.
 import '../../features/workspace/domain/workspace.dart';
 import 'data/accessory_repository.dart';
+import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
 import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
-import 'data/reservation_repository.dart';
 import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
@@ -48,7 +48,7 @@ class DemoSecondSpaceData {
     seedLeipzigSpaceLife(space, now);
     final plan = FakeFloorPlanRepository();
     seedLeipzigPlan(plan);
-    final reservations = FakeReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor);
     seedLeipzigBookings(reservations, now);
     final events = FakeEventRepository(actor: actor);
     seedLeipzigRequests(events, now);
@@ -73,7 +73,7 @@ class DemoSecondSpaceData {
 
   final FakeWorkspaceRepository workspaces;
   final FakeFloorPlanRepository floorPlan;
-  final FakeReservationRepository reservations;
+  final RightsCheckedReservationRepository reservations;
   final FakeEventRepository events;
   final FakeCalendarRepository calendar;
   final FakeMoneyRepository money;

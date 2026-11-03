@@ -2973,6 +2973,10 @@
   "bookingMoreOptions": "Altre opzioni",
   "bookingNoLongerCheckedIn": "Questa prenotazione non è più in corso — è stata chiusa nel frattempo.",
   "bookingNotAMember": "Non è più membro di questo spazio — chieda un invito a un amministratore.",
+  "bookingNotAllowedError": "Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Ha già una prenotazione in quel periodo — un posto alla volta.",
   "bookingOpenDetails": "Dettagli",
   "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro.",

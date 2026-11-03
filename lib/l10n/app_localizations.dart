@@ -7273,6 +7273,12 @@ abstract class AppLocalizations {
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
 
+  /// Refusal when the member does not hold makeReservations (#3269)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not make reservations in this space. Ask an owner to let members book.'**
+  String get bookingNotAllowedError;
+
   /// Refusal when the member already holds an overlapping active reservation (#412)
   ///
   /// In en, this message translates to:

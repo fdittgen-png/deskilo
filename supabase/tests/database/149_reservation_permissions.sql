@@ -26,10 +26,13 @@ begin
          'authenticated', 'resv-' || n || '@deskilo.test', '', now(), now(), now()
     from (values (u_owner, 'owner'), (u_admin, 'admin'), (u_role, 'role'),
                  (u_plain, 'plain'), (u_subject, 'subject')) v(u, n);
+  -- #3269: members and admins book only with the right (the owner grants it);
+  -- the admin list keeps the defaults it had, plus the right.
   insert into public.workspaces (name, country_code, currency_code, timezone,
-                                 created_by, feature_flags)
+                                 created_by, feature_flags, role_permissions)
   values ('Reservation permissions', 'FR', 'EUR', 'Europe/Paris', u_owner,
-          '{"customRoles": true, "levelBooking": true}'::jsonb)
+          '{"customRoles": true, "levelBooking": true}'::jsonb,
+          '{"member": ["makeReservations"], "admin": ["manageMembers","manageDocuments","manageServices","approveExpenses","viewFinances","viewNegotiations","manageNegotiations","manageSites","manageReservations","operateKiosk","exportData","viewPersonalData","deployToDev","accessProd","makeReservations"]}'::jsonb)
   returning id into ws;
   -- Bookings below are for the coming days through the real RPCs: open
   -- every weekday so the file does not turn red on a Friday.

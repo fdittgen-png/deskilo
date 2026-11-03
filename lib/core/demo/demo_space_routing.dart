@@ -38,6 +38,7 @@ import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
 import 'data/bank_statement_demo_seed.dart';
 import 'data/bank_statement_repository.dart';
+import 'data/booking_right_reservations.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
@@ -151,7 +152,11 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       (ref) => pick(ref, home.chargingStations, second.chargingStations, london.chargingStations),
     ),
     reservationRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.reservations, second.reservations, london.reservations),
+      (ref) => pick<RightsCheckedReservationRepository>(ref, home.reservations, second.reservations, london.reservations)
+        // #3269 -- as on the server, a booking needs makeReservations.
+        ..mayBook = (() => ref
+            .read(myPermissionsProvider)
+            .contains(WorkspacePermission.makeReservations)),
     ),
     // #2553 — the visitor's own bookings of both spaces, one installation.
     myReservationsRepositoryProvider.overrideWithValue(myReservations),

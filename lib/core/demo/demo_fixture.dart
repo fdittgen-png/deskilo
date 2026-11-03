@@ -18,6 +18,7 @@ import '../../features/workspace/domain/bi_saved_view.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/book_profile_repository.dart';
+import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
 import 'data/deployment_repository.dart';
@@ -32,7 +33,6 @@ import 'data/plan_resource_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/public_directory_repository.dart';
 import 'data/realtime_sync.dart';
-import 'data/reservation_repository.dart';
 import 'data/stores.dart';
 import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
@@ -126,7 +126,7 @@ class DemoFixture {
     // are built with a reader rather than a captured id, so a persona
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
-    final reservations = FakeReservationRepository(actor: () => actor.memberId);
+    final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId);
     final events = FakeEventRepository(actor: () => actor.memberId);
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
@@ -270,7 +270,7 @@ class DemoFixture {
   final FakeAuthRepository auth;
   final FakeWorkspaceRepository workspaces;
   final FakeFloorPlanRepository floorPlan;
-  final FakeReservationRepository reservations;
+  final RightsCheckedReservationRepository reservations;
   final FakeEventRepository events;
   final FakeCalendarRepository calendar;
   final FakeMoneyRepository money;

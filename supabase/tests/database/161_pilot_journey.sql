@@ -32,6 +32,8 @@ select set_config('deskilo.j.ws', public.create_workspace(
   'Pilot journey', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
 select public.apply_workspace_template(current_setting('deskilo.j.ws')::uuid,
   (select id from public.workspace_templates where key = 'tiny'));
+-- #3269: a member books only with the right; the owner grants it, as the setup step says.
+select public.set_role_permission(current_setting('deskilo.j.ws')::uuid, 'member', 'makeReservations', true);
 select set_config('deskilo.j.code',
   (select invite_code from public.workspaces where id = current_setting('deskilo.j.ws')::uuid), true);
 select set_config('deskilo.j.seat',
