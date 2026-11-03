@@ -651,9 +651,10 @@ select is(
                  (select count(*) from public.credit_products where workspace_id = pg_temp.ws()),
                  (select count(*) from public.workspace_roles where workspace_id = pg_temp.ws() and not builtin),
                  (select count(*) from public.levels where workspace_id = pg_temp.ws()))),
-  '2 2 3 2',
-  'a second apply merges: still two bands, two carnets, three roles and '
-  'two levels — nothing sold twice and nothing deleted');
+  '2 2 4 2',
+  'a second apply merges: still two bands, two carnets, four roles (the three '
+  'of the template and the seeded Personal Data Admin) and two levels — '
+  'nothing sold twice and nothing deleted');
 
 select is(
   (select format('%s %s %s',
@@ -680,10 +681,10 @@ select is(
   (select string_agg(x.key, ',' order by x.sort_order)
      from public.workspace_roles x where x.workspace_id = pg_temp.ws()
       and not x.builtin),
-  'tresorier,secretaire,referent_salle',
+  'tresorier,secretaire,referent_salle,personal_data_admin',
   'the three roles inherited from the generic association template — '
   'inherited, not asked for: the report names no officer, and the '
-  'review says so');
+  'review says so — then the seeded Personal Data Admin (0665)');
 
 select * from finish();
 rollback;

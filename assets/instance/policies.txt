@@ -115,6 +115,7 @@ public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
 public.events.events_select
 public.events.mcp_delegated_deny
+public.events.privacy_incident_holders_only
 public.exchange_rate_sources.exchange_rate_sources_read
 public.exchange_rate_sources.mcp_delegated_deny
 public.exchange_rate_sources.personal_native_session

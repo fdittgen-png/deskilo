@@ -11,7 +11,7 @@
 --     holder of managePrivacy (owner, co-owner, the role's member) and none to an
 --     admin or a plain member; the type is read by managePrivacy only.
 begin;
-select plan(18);
+select plan(22);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -137,6 +137,30 @@ select is(public.event_type_view_permissions('privacy_incident'), array['manageP
 select is((select count(*)::int from public.events
             where workspace_id = pg_temp.ws() and type = 'privacy_incident'
               and payload ->> 'note' = 'a laptop was lost'), 3, 'the note travels in the payload');
+
+-- Who can READ it: events_select also admits the actor or subject and any member
+-- under a wildcard validation policy; the restrictive policy narrows the type to
+-- the holders of the right now.
+select pg_temp.act_as(pg_temp.u('c2'));
+select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
+  'a plain member reads no incident event');
+reset role;
+select pg_temp.act_as(pg_temp.u('c4'));
+select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
+  'an admin without managePrivacy reads none');
+reset role;
+select pg_temp.act_as(pg_temp.u('c5'));
+select ok((select count(*)::int from public.events where type = 'privacy_incident') > 0,
+  'the Personal Data Admin reads them');
+reset role;
+-- The role is taken away: the same person is still the subject of two events,
+-- and reads none.
+delete from public.workspace_role_members rm using public.members m
+ where rm.member_id = m.id and m.workspace_id = pg_temp.ws() and m.user_id = pg_temp.u('c5');
+select pg_temp.act_as(pg_temp.u('c5'));
+select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
+  'a former holder, still the subject of the events, reads none');
+reset role;
 
 select * from finish();
 rollback;

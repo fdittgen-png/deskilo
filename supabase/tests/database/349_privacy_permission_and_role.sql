@@ -10,9 +10,12 @@
 --   * `rights_controller` is true for an owner, for viewPersonalData (an admin,
 --     as before) and for managePrivacy, false for everyone else;
 --   * the role is seeded in a new workspace, once (the function is idempotent),
---     holds only managePrivacy, is not built in, and has its five names.
+--     holds only managePrivacy, is not built in, and has its five names;
+--   * a workspace whose owner chose an EXPLICIT co-owner list keeps that choice:
+--     0665 does not add the permission to it (the owner always holds it), and
+--     both resolvers agree.
 begin;
-select plan(16);
+select plan(19);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -113,6 +116,19 @@ select ok(public.ensure_personal_data_admin_role(pg_temp.ws())
 select is((select count(*)::int from public.workspace_roles
             where workspace_id = pg_temp.ws() and key = 'personal_data_admin'), 1,
   'and leaves exactly one role per workspace');
+
+-- An explicit co-owner list is the owner's choice and is not widened: the
+-- co-owner of such a workspace does not hold managePrivacy, the owner still does.
+update public.workspaces
+   set role_permissions = '{"co_owner": ["viewPersonalData"]}'::jsonb
+ where id = pg_temp.ws();
+select ok(not pg_temp.holds('b4'),
+  'an explicit co-owner list without the permission does not give it (has_permission)');
+select ok(not (select public.member_has_permission(m.id, 'managePrivacy')
+                 from public.members m
+                where m.workspace_id = pg_temp.ws() and m.user_id = pg_temp.u('b4')),
+  'and the other resolver agrees (member_has_permission)');
+select ok(pg_temp.holds('b1'), 'the owner holds it whatever the lists say');
 
 select * from finish();
 rollback;
