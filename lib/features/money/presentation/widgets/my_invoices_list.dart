@@ -9,7 +9,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_ubl.dart';
@@ -206,20 +205,20 @@ class MyInvoicesList extends ConsumerWidget {
     await showInvoiceDetailSheet(
       context,
       ref: ref,
-      invoice: invoice,
-      match: match,
-      settledByNumber: settledByNumberOf(
-          invoice, ref.read(invoicesProvider).value ?? const []),
-      canIssue: ref
-          .read(myPermissionsProvider)
-          .contains(WorkspacePermission.issueInvoices),
-      isEu: isEuCountry(country),
-      reminder: reminder,
-      journey: readInvoiceJourney(
-        ref,
-        invoice,
+      view: InvoiceDetailView(
+        invoice: invoice,
         match: match,
+        settledByNumber: settledByNumberOf(
+            invoice, ref.read(invoicesProvider).value ?? const []),
+        canIssue: mayIssueInvoices(ref),
+        isEu: isEuCountry(country),
         reminder: reminder,
+        journey: readInvoiceJourney(
+          ref,
+          invoice,
+          match: match,
+          reminder: reminder,
+        ),
       ),
     );
   }

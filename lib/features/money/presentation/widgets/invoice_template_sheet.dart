@@ -1,53 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdf/widgets.dart' as pw;
 
-import '../../../../core/files/file_names.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
-import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
-import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_pdf_template.dart';
-import '../../domain/invoice_report.dart';
-import '../../domain/report_kind.dart';
 import '../../domain/report_template_assembly.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart';
 import '../invoice_documents.dart';
 import '../report_defaults.dart';
-import '../report_design_actions.dart';
 import '../report_edit_history.dart';
-import '../report_kind_labels.dart';
-import '../report_layout_design_actions.dart';
 import '../screens/report_editor_screen.dart';
+import 'invoice_template_editor_actions.dart';
 import 'report_editor_dialogs.dart';
 import 'report_history_controls.dart';
-import 'report_image_picker.dart';
 import 'report_layout_panel.dart';
-import 'report_layout_preview_dialog.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
-import 'report_preview.dart';
 import 'report_template_toolbar.dart';
 import 'report_texts_panel.dart';
-import 'template_live_data.dart';
 
-part 'invoice_template_sheet_part1.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -102,118 +83,141 @@ class ReportTemplateEditor extends ConsumerStatefulWidget {
       _ReportTemplateEditorState();
 }
 
-class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
-  late final TextEditingController _header;
-  late final TextEditingController _body;
-  late final TextEditingController _footer;
-  bool _busy = false;
+class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
+    with ReportTemplateEditorActions {
+  @override
+  late final TextEditingController editorHeader;
+  @override
+  late final TextEditingController editorBody;
+  @override
+  late final TextEditingController editorFooter;
+  @override
+  bool editorBusy = false;
 
   /// The document being edited (#472/#476): 'invoice', 'proforma',
   /// 'statement', or 'rN' for reminder level N — every one its own
   /// report.
-  String _doc = 'invoice';
+  @override
+  String editorDoc = 'invoice';
 
   /// #488 — WYSIWYG mode: the bands as typed, reorderable rows instead
   /// of raw markup. Both modes edit the SAME controllers. #822 — the
   /// page opens in it.
-  late bool _visual = widget.asPage;
+  @override
+  late bool editorVisual = widget.asPage;
 
   /// Bumped whenever the controllers change from OUTSIDE the visual
   /// editors (doc switch, preset, reset, undo) — recreates them so
   /// they re-seed from the new text.
-  int _visualEpoch = 0;
+  @override
+  int editorVisualEpoch = 0;
 
   /// The TEMPLATE language being edited (#496): '' = the default
   /// template every language falls back to; a language code edits that
   /// language's overlay (empty bands = inherit the default).
-  String _lang = '';
+  @override
+  String editorLang = '';
 
   /// Unsaved edits per language|document, so switching loses nothing.
-  final Map<String, ReportBands> _drafts = {};
+  @override
+  final Map<String, ReportBands> editorDrafts = {};
 
   /// #875 — positioned layouts edited this session, by kind id; ''
   /// means "remove, fall back to the bands". Saved with the bands.
-  final Map<String, String> _layoutDrafts = {};
+  @override
+  final Map<String, String> editorLayoutDrafts = {};
 
   /// #880 — the owner's texts per language ('' = the default language),
   /// edited in the Texts panel; absent = untouched, read from the
   /// stored template.
-  final Map<String, Map<String, String>> _textDrafts = {};
+  @override
+  final Map<String, Map<String, String>> editorTextDrafts = {};
 
   /// #822 — one undo history per language|document.
   final Map<String, ReportEditHistory> _histories = {};
 
   /// True while undo/redo/switch writes the controllers, so the
   /// listener does not record the restore as an edit.
-  bool _restoring = false;
+  @override
+  bool editorRestoring = false;
 
   /// #822 — whether anything changed since open or the last save.
-  bool _dirty = false;
+  @override
+  bool editorDirty = false;
 
   /// Renewed with every epoch: a fresh key makes the designer (and its
   /// band editors) re-seed from the controllers after a reset, preset,
   /// undo or switch — a kept GlobalKey would carry the old state over.
-  var _designerKey = GlobalKey<ReportPageDesignerState>();
+  @override
+  GlobalKey<ReportPageDesignerState> editorDesignerKey =
+      GlobalKey<ReportPageDesignerState>();
 
   @override
   void initState() {
     super.initState();
-    _header = TextEditingController(text: widget.initial.header);
-    _body = TextEditingController(text: widget.initial.body);
-    _footer = TextEditingController(text: widget.initial.footer);
-    for (final c in [_header, _body, _footer]) {
-      c.addListener(_record);
+    editorHeader = TextEditingController(text: widget.initial.header);
+    editorBody = TextEditingController(text: widget.initial.body);
+    editorFooter = TextEditingController(text: widget.initial.footer);
+    for (final c in [editorHeader, editorBody, editorFooter]) {
+      c.addListener(editorRecord);
     }
   }
 
   @override
   void dispose() {
-    _header.dispose();
-    _body.dispose();
-    _footer.dispose();
+    editorHeader.dispose();
+    editorBody.dispose();
+    editorFooter.dispose();
     super.dispose();
   }
 
   /// #966 — the band last edited, where the guide inserts; the header
   /// until one is touched.
-  TextEditingController? _focusedBand;
+  @override
+  TextEditingController? editorFocusedBand;
 
   /// What `{{ text.<key> }}` resolves to in the language being edited:
   /// the default language's texts, the overlay's non-empty ones on top.
-  Map<String, String> get _currentTexts => {
-        ..._textsFor(''),
-        if (_lang.isNotEmpty)
-          for (final e in _textsFor(_lang).entries)
+  @override
+  Map<String, String> get editorCurrentTexts => {
+        ...editorTextsFor(''),
+        if (editorLang.isNotEmpty)
+          for (final e in editorTextsFor(editorLang).entries)
             if (e.value.isNotEmpty) e.key: e.value,
       };
 
-  String? get _layoutOfDoc {
-    final draft = _layoutDrafts[_doc];
+  @override
+  String? get editorLayoutOfDoc {
+    final draft = editorLayoutDrafts[editorDoc];
     if (draft != null) return draft.isEmpty ? null : draft;
-    return widget.initial.layoutFor(_doc);
+    return widget.initial.layoutFor(editorDoc);
   }
 
-  ReportBands get _currentBands => ReportBands(
-        header: _header.text.trim(),
-        body: _body.text.trim(),
-        footer: _footer.text.trim(),
+  @override
+  ReportBands get editorCurrentBands => ReportBands(
+        header: editorHeader.text.trim(),
+        body: editorBody.text.trim(),
+        footer: editorFooter.text.trim(),
       );
 
-  ReportEditHistory get _history => _histories.putIfAbsent(
-        reportDraftKey(_lang, _doc),
-        () => ReportEditHistory(_storedBands(_doc)),
+  @override
+  ReportEditHistory get editorHistory => _histories.putIfAbsent(
+        reportDraftKey(editorLang, editorDoc),
+        () => ReportEditHistory(editorStoredBands(editorDoc)),
       );
 
   /// The reminder levels this workspace has configured; 0 when dunning
   /// is off, and then the reminder kinds simply do not exist.
-  int get _reminderLevels =>
+  @override
+  int get editorReminderLevels =>
       ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning)
           ? (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
               .levels
           : 0;
 
   /// Lets the section extensions rebuild (setState is protected).
-  void _update(VoidCallback fn) => setState(fn);
+  @override
+  void editorUpdate(VoidCallback fn) => setState(fn);
 
   @override
   Widget build(BuildContext context) {
@@ -261,33 +265,33 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         // meaning, the line markup one sign per row, three ready-made
         // pieces, everything inserted at the caret. Collapsed until
         // asked for; the designer carries the fields in its own picker.
-        if (!_visual)
+        if (!editorVisual)
           ReportMarkupGuide(
-            textKeys: _currentTexts.keys.toList(),
-            onInsert: _insertMarkup,
+            textKeys: editorCurrentTexts.keys.toList(),
+            onInsert: editorInsertMarkup,
           ),
         const SizedBox(height: AppSpacing.sm),
         // #496 — one template per LANGUAGE: the default, plus an
         // overlay per language for readers in that language.
         ReportTemplateLanguageChips(
-          selected: _lang,
-          overridden: _overridden,
-          canClear: _currentBands.hasBands,
-          onSelect: _switchLang,
-          onClear: () => _apply(ReportBands.empty),
+          selected: editorLang,
+          overridden: editorOverridden,
+          canClear: editorCurrentBands.hasBands,
+          onSelect: editorSwitchLang,
+          onClear: () => editorApply(ReportBands.empty),
         ),
         const SizedBox(height: AppSpacing.xs),
         // #472: one report per DOCUMENT — the invoice, and every
         // reminder level of the dunning rules.
         ReportTemplateDocChips(
-          docs: _docs(l10n),
-          selected: _doc,
-          onSelect: _switchDoc,
+          docs: editorDocs(l10n),
+          selected: editorDoc,
+          onSelect: editorSwitchDoc,
         ),
         const SizedBox(height: AppSpacing.sm),
         // #488 — markup or WYSIWYG, same underlying bands.
         _modeButton(l10n),
-        _editorArea(l10n, sideBySide: wide),
+        editorEditorArea(l10n, sideBySide: wide),
         const SizedBox(height: AppSpacing.md),
         ..._actionsAndPanels(l10n),
       ],
@@ -309,10 +313,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             label: Text(l10n.reportEditorVisual),
           ),
         ],
-        selected: {_visual},
-        onSelectionChanged: (selection) => _update(() {
-          _visual = selection.first;
-          _bumpEpoch();
+        selected: {editorVisual},
+        onSelectionChanged: (selection) => editorUpdate(() {
+          editorVisual = selection.first;
+          editorBumpEpoch();
         }),
       );
 
@@ -326,37 +330,37 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       // #474: pick a ready-made report, see it INSTANTLY, then
       // download or share the PDF — or save the bands.
       ReportTemplateActions(
-        doc: _doc,
-        busy: _busy,
+        doc: editorDoc,
+        busy: editorBusy,
         showSave: !widget.asPage,
         onPreset: (preset) async {
-          if (!await _confirmReplace() || !mounted) return;
-          _apply(preset.bands);
+          if (!await editorConfirmReplace() || !mounted) return;
+          editorApply(preset.bands);
         },
-        onInsertImage: _insertImage,
-        onQuickPreview: _quickPreview,
-        onPdf: (download) => _pdf(download: download),
+        onInsertImage: editorInsertImage,
+        onQuickPreview: editorQuickPreview,
+        onPdf: (download) => editorPdf(download: download),
         onReset: () async {
-          if (!await _confirmReplace() || !mounted) return;
-          _apply(defaultBandsForDoc(
-              _doc, _lang.isEmpty ? l10n : l10nForLanguage(_lang)));
+          if (!await editorConfirmReplace() || !mounted) return;
+          editorApply(defaultBandsForDoc(
+              editorDoc, editorLang.isEmpty ? l10n : l10nForLanguage(editorLang)));
         },
-        onSave: _save,
+        onSave: editorSave,
         // #864 — the design exchange, when the workspace has it.
-        onExportDesign: designExchange ? _exportDesign : null,
-        onImportDesign: designExchange ? _importDesign : null,
+        onExportDesign: designExchange ? editorExportDesign : null,
+        onImportDesign: designExchange ? editorImportDesign : null,
       ),
       // #875 — last in the column on purpose: the panel adds height
       // below every existing control, and moves none of them.
       if (features.contains(WorkspaceFeature.reportLayouts)) ...[
         const SizedBox(height: AppSpacing.sm),
         ReportLayoutPanel(
-          hasLayout: _layoutOfDoc != null,
-          busy: _busy,
-          onExport: _exportLayout,
-          onImport: _importLayout,
-          onRemove: () => _update(() => _layoutDrafts[_doc] = ''),
-          onPreview: _previewLayout,
+          hasLayout: editorLayoutOfDoc != null,
+          busy: editorBusy,
+          onExport: editorExportLayout,
+          onImport: editorImportLayout,
+          onRemove: () => editorUpdate(() => editorLayoutDrafts[editorDoc] = ''),
+          onPreview: editorPreviewLayout,
         ),
       ],
       // #880 — the owner's texts, after the layout panel for the same
@@ -364,11 +368,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       if (features.contains(WorkspaceFeature.reportTexts)) ...[
         const SizedBox(height: AppSpacing.sm),
         ReportTextsPanel(
-          key: ValueKey('report-texts-$_lang'),
-          language: _lang,
-          texts: _textsFor(_lang),
-          inherited: _lang.isEmpty ? const {} : _textsFor(''),
-          onChanged: _setTexts,
+          key: ValueKey('report-texts-$editorLang'),
+          language: editorLang,
+          texts: editorTextsFor(editorLang),
+          inherited: editorLang.isEmpty ? const {} : editorTextsFor(''),
+          onChanged: editorSetTexts,
         ),
       ],
     ];
@@ -379,7 +383,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     // #822 — the page: a toolbar with undo / redo / save, the same
     // content underneath, and a guard on the way out.
     return PopScope(
-      canPop: !_dirty,
+      canPop: !editorDirty,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
         final leave = await confirmReportDiscard(context);
@@ -399,16 +403,16 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               anchor: HelpAnchor.reportsEditor,
             ),
             ReportHistoryControls(
-              canUndo: _history.canUndo && !_busy,
-              canRedo: _history.canRedo && !_busy,
-              onUndo: _undo,
-              onRedo: _redo,
+              canUndo: editorHistory.canUndo && !editorBusy,
+              canRedo: editorHistory.canRedo && !editorBusy,
+              onUndo: editorUndo,
+              onRedo: editorRedo,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
               child: FilledButton(
                 key: const ValueKey('invoice-template-save'),
-                onPressed: _busy ? null : _save,
+                onPressed: editorBusy ? null : editorSave,
                 child: Text(l10n.commonSave),
               ),
             ),

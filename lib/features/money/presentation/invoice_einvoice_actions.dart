@@ -1,81 +1,156 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'invoice_actions.dart';
+//
+// #2494 — the e-invoice side of the invoice actions: the gateway send and the
+// export sheet with its Factur-X and UBL files. Split out of
+// invoice_actions.dart (was invoice_actions_part1/2); same behaviour.
+import 'dart:async';
+import 'dart:convert' show utf8;
+import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-Future<void> remindInvoice(
+import '../../../core/files/file_names.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/share/file_sharer.dart';
+import '../../../core/time/clock.dart';
+import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import '../domain/channel_einvoice_xml.dart';
+import '../domain/e_invoice_routing.dart';
+import '../domain/einvoice_channel_check.dart';
+import '../domain/einvoice_format.dart';
+import '../domain/einvoice_gateway.dart';
+import '../domain/einvoice_input.dart';
+import '../domain/einvoice_mandates.dart';
+import '../domain/einvoice_validation.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_line_text.dart';
+import '../domain/invoice_ubl.dart';
+import '../domain/invoice_ubl_check.dart';
+import '../providers/money_providers.dart';
+import 'e_invoice_identity.dart';
+import 'invoice_documents.dart';
+import 'invoice_pdf_actions.dart';
+import 'report_strings_l10n.dart';
+import 'widgets/e_invoice_sheet.dart';
+import 'widgets/einvoice_environment_picker.dart';
+
+/// SENDS the invoice: builds the document in the syntax the channel
+/// wants (#2358 — XML for a network, Factur-X for a person) and posts it
+/// to the workspace's platform through the edge function, which holds the
+/// credential and records the attempt (0073). The document that leaves is
+/// built by the same builder as the download — no second truth.
+Future<void> sendEInvoice(
   BuildContext context,
   WidgetRef ref,
-  Invoice invoice,
-) async {
+  Invoice invoice, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required String iban,
+  required String workspaceId,
+  String environment = 'prod',
+  String destination = 'government',
+  String provider = 'generic',
+}) async {
   final l10n = context.l10n;
-  final currency = moneyFormat(invoice.currency);
-  // #1913 — the message states what is still owed, never the total of a
-  // half-paid invoice; the server records the same remainder.
-  final owed = invoiceRemainingCents(
-    invoice,
-    ref.read(invoiceMatchesProvider).value?[invoice.id],
+  EInvoiceSubmission? result;
+  final format = eInvoiceFormatFor(
+    provider: provider,
+    destination: destination,
+    buyerEndpointScheme: buyer.endpointScheme,
   );
-  final message =
-      l10n.invoiceReminderMessage(
-        invoice.number,
-        currency.formatMinor(owed),
-      );
-  // #472: the level of THIS send — one past what was already sent,
-  // capped at the configured maximum (extra sends reuse the last
-  // letter).
-  final rules = ref.read(dunningRulesProvider).value ?? DunningRules.defaults;
-  final sent =
-      ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
-  final level = (sent + 1).clamp(1, rules.levels);
-  SendReminderOutcome? outcome;
   if (!await runGuarded(
     context,
     domain: 'money',
-    message: 'invoice reminder failed',
+    message: 'e-invoice submission failed',
     errorText:
         l10n.workspaceGenericError,
     action: () async {
-      // PDF first — it captures its context-derived values before any
-      // await (use_build_context_synchronously).
-      final pdf = await buildReminderPdfFile(
-        context,
-        ref,
-        invoice,
-        level: level,
-      );
-      // The ORDER is the decision, so it lives in the command (#1532):
-      // the letter goes out, and the level is recorded only if it did.
-      outcome = await sendReminder(
-        repository: ref.read(invoiceCommandsProvider),
-        share: ref.read(fileSharerProvider),
-        invoiceId: invoice.id,
-        level: level,
-        bytes: Uint8List.fromList(pdf.bytes),
-        fileName: pdf.fileName,
-        message: message,
-      );
+      final ({List<int> bytes, String fileName}) file;
+      if (format == EInvoiceFormat.facturX) {
+        file = await buildFacturXFile(
+          context,
+          ref,
+          invoice,
+          seller: seller,
+          buyer: buyer,
+          iban: iban,
+        );
+      } else {
+        // #2358 — the network's own syntax, from the inputs the
+        // download uses.
+        final words = reportStringsOf(l10n);
+        final association = ref.read(sellerIsAssociationProvider);
+        final xml = buildChannelEInvoiceXml(format, EInvoiceInput(
+          invoice: invoice, seller: seller, buyer: buyer, iban: iban,
+          lineText: (line) => invoiceLineText(words, line,
+              association: association, period: invoice.period),
+          dueDate: invoiceDueAt(ref, invoice),
+          paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
+              memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
+              '',
+        ));
+        file = (
+          bytes: utf8.encode(xml),
+          fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
+        );
+      }
+      if (file.fileName.isEmpty) return;
+      result = await ref
+          .read(eInvoiceTransmissionsProvider)
+          .sendEInvoice(
+            workspaceId: workspaceId,
+            invoiceId: invoice.id,
+            fileName: file.fileName,
+            mimeType: format.mimeType,
+            bytes: file.bytes,
+            environment: environment,
+            destination: destination,
+            format: format.name,
+            receiverScheme: buyer.endpointScheme,
+            receiverId: buyer.endpointId,
+          );
     },
   )) {
     return;
   }
-  // Nothing left the device and nothing was recorded. "Reminder
-  // recorded." would be false, and an error would be false too.
-  if (outcome is ReminderNotSent) {
-    if (!context.mounted) return;
-    AppSnack.info(
-        context,
-        l10n.invoiceReminderNotSent);
+  ref.invalidate(invoiceTransmissionsProvider);
+  if (!context.mounted) return;
+  final submission = result;
+  if (submission == null) return;
+  if (submission.accepted) {
+    AppSnack.success(
+      context,
+      environment != 'prod'
+          ? (l10n.invoiceSendAcceptedTest(environment.toUpperCase()))
+          : destination == 'customer'
+          ? (l10n.invoiceSendCustomerAccepted)
+          : (l10n.invoiceSendAccepted),
+    );
     return;
   }
-  ref.invalidate(invoiceRemindersProvider);
-  if (!context.mounted) return;
-  AppSnack.success(context, l10n.invoiceReminded);
+  // The platform's own words beat a generic failure: they are what the
+  // owner has to act on.
+  AppSnack.error(
+    context,
+    submission.detail.isEmpty
+        ? (l10n.invoiceSendRejected)
+        : '${l10n.invoiceSendRejected} '
+              '${submission.detail}',
+  );
 }
+
 
 /// EN 16931 e-invoice (0066/0069): the sheet first — WHERE the file has to
 /// go in this country, and whether it would be ACCEPTED at all — then the
 /// UBL 2.1 XML to Downloads or the share sheet.
-Future<void> _exportEInvoice(
+Future<void> exportEInvoice(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -123,6 +198,7 @@ Future<void> _exportEInvoice(
   await run.ublXml(share: export == EInvoiceExport.share);
 }
 
+
 /// One invoice on its way out as an e-invoice: the parties it names (its
 /// own snapshot), the LIVE seller identity, and the workspace's IBAN.
 typedef _EInvoiceSubject = ({
@@ -148,6 +224,7 @@ typedef _EInvoiceSubject = ({
   );
 }
 
+
 /// AWAITS the probe: a cached `.value` is null on the first open, which
 /// would hide the Send button exactly when it is most wanted. A failed
 /// probe reads as "not configured".
@@ -164,6 +241,7 @@ Future<EInvoiceGatewayConfig> _probeEInvoiceGateway(WidgetRef ref) async {
     return EInvoiceGatewayConfig.notConfigured;
   }
 }
+
 
 /// The steps of one e-invoice export, over the invoice it sends and the
 /// context and ref the export started from.
@@ -336,98 +414,4 @@ class _EInvoiceExportRun {
       },
     );
   }
-}
-
-/// Matches an open invoice to its payment (0067) — the only way an invoice
-/// closes and archives. Over/under payments resolve in the dialog; the
-/// server re-validates and files the invoice_payment event (pending when a
-/// validation rule exists).
-Future<void> matchInvoiceToPayment(
-  BuildContext context,
-  WidgetRef ref,
-  Invoice invoice,
-) async {
-  final l10n = context.l10n;
-  final currency = moneyFormat(invoice.currency);
-  // 0068 — the candidates: the member's registered payments (incl. settled
-  // online payments) not yet consumed by another match.
-  final invoiceQueries = ref.read(invoiceQueriesProvider);
-  final ledger = await ref
-      .read(memberAccountQueriesProvider)
-      .fetchLedger(invoice.memberId);
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
-  // #506 — the junction knows EVERY consumed payment (an aggregate
-  // match only remembers its last one).
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  final consumed = {
-    for (final match in matches.values) ?match.paymentLedgerId,
-    if (workspace != null) ...await invoiceQueries.fetchConsumedPaymentIds(workspace.id),
-  };
-  // A standing PARTIAL match shifts the target: further payments are
-  // measured against what is STILL DUE.
-  final existing = matches[invoice.id];
-  final dueCents =
-      existing != null &&
-          !existing.pending &&
-          existing.resolution == 'under_accepted' &&
-          existing.writeoffAt == null
-      ? invoice.totalCents - existing.paidCents
-      : invoice.totalCents;
-  // #512 — a credit BAKED into an issued invoice (negative line at
-  // derivation) was spent there; the server refuses it too.
-  final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
-  bool baked(LedgerEntry entry) => memberInvoices.any(
-    (i) =>
-        i.memberId == invoice.memberId &&
-        !i.isVoided &&
-        i.period == entry.period &&
-        i.issuedAt.isAfter(entry.createdAt),
-  );
-  final payments = [
-    for (final entry in ledger)
-      if (entry.kind == LedgerKind.credit &&
-          // #512 — account credits (avoir excess) settle too: the
-          // imputation of a credit note on any outstanding invoice.
-          (entry.category == LedgerCategory.payment ||
-              entry.category == LedgerCategory.adjustment) &&
-          !consumed.contains(entry.id) &&
-          !baked(entry))
-        entry,
-    // Newest PAYMENT first — by the day the money moved (0070), not by
-    // the day it happened to be typed in.
-  ]..sort((a, b) => b.on.compareTo(a.on));
-  if (!context.mounted) return;
-  final choice = await showDialog<MatchChoice>(
-    context: context,
-    builder: (context) => MatchInvoiceDialog(
-      dueCents: dueCents,
-      currency: currency,
-      payments: payments,
-    ),
-  );
-  if (choice == null || !context.mounted) return;
-  if (!await runGuarded(
-    context,
-    domain: 'money',
-    message: 'invoice match failed',
-    errorText:
-        l10n.workspaceGenericError,
-    action: () => ref
-        .read(invoiceCommandsProvider)
-        .matchInvoice(
-          invoiceId: invoice.id,
-          paymentLedgerId: choice.paymentLedgerId,
-          resolution: choice.resolution,
-          note: choice.note,
-        ),
-  )) {
-    return;
-  }
-  ref
-    ..invalidate(invoiceMatchesProvider)
-    ..invalidate(myAccountProvider)
-    ..invalidate(invoicesProvider);
-  invalidateBookingData(ref);
-  if (!context.mounted) return;
-  AppSnack.success(context, l10n.invoiceMatched);
 }

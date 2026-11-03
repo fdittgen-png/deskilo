@@ -1,61 +1,36 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/settings/directory_windows.dart';
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../core/vat/vat_treatment.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../money/presentation/widgets/consumption_sheet.dart';
-import '../../../money/presentation/widgets/member_billing_tiles.dart';
-import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../../money/presentation/widgets/payment_terms_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../profile/domain/personal_info.dart';
-import '../../../profile/presentation/courtesy_words.dart';
-import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../workspace/domain/booking_policies.dart';
-import '../../../workspace/domain/invite_uri.dart';
 import '../../../workspace/domain/member.dart';
-import '../../../workspace/domain/overage_policy.dart';
-import '../../../workspace/domain/site.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/presentation/member_admin_actions.dart';
-import '../../../workspace/presentation/member_customer_capacity.dart';
-import '../../../workspace/presentation/member_einvoice_address_tile.dart';
-import '../../../workspace/presentation/member_labels.dart';
-import '../../../workspace/presentation/member_vat_treatment.dart';
-import '../../../workspace/presentation/widgets/invite_sheet.dart';
 import '../../../workspace/presentation/widgets/member_roles_card.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../domain/member_page_sections.dart';
 import '../../providers/directory_providers.dart';
-import '../last_seen_label.dart';
+import '../widgets/member_activity_tiles.dart';
+import '../widgets/member_admin_tiles.dart';
 import '../widgets/member_contact_card.dart';
+import '../widgets/member_header_cards.dart';
 import '../widgets/member_money_card.dart';
+import '../widgets/member_page_context.dart';
 
-part '../widgets/member_page_cards.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -96,18 +71,9 @@ class _MemberPageBody extends ConsumerWidget {
   final Member member;
   final String name;
 
-  /// "Wed 2 · 08:00 · A1" — the directory's house style for a booking.
-  static String bookingLabel(AppFormat format, Reservation reservation, String seatName) {
-    final local = reservation.startsAt.toLocal();
-    final day =
-        '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
-    final when = '$day · ${format.time(reservation.startsAt)}';
-    return seatName.isEmpty ? when : '$when · $seatName';
-  }
-
   /// What the cards decide on, gathered once: who looks, what they may
   /// do, and which features are on.
-  (_PageCtx, Set<MemberPageSection>) _facts(BuildContext context, WidgetRef ref,
+  (MemberPageContext, Set<MemberPageSection>) _facts(BuildContext context, WidgetRef ref,
       {required Member? me, required bool isSelf, required Uri? whatsappProfileUri}) {
     final l10n = context.l10n;
     final features = ref.watch(enabledFeaturesSyncProvider);
@@ -151,7 +117,7 @@ class _MemberPageBody extends ConsumerWidget {
       MemberPageSection.negotiation,
     );
 
-    final c = _PageCtx(
+    final c = MemberPageContext(
       context: context,
       ref: ref,
       member: member,
@@ -254,13 +220,13 @@ class _MemberPageBody extends ConsumerWidget {
     final (c, sections) = _facts(context, ref,
         me: me, isSelf: isSelf, whatsappProfileUri: profile?.whatsappUri);
     final canMessage = c.canMessage;
-    final quickActions = _quickActions(c);
+    final quickActions = memberQuickActions(c);
 
     // ---- the admin groups: every row carries its CURRENT value.
-    final membership = _membershipTiles(c);
-    final booking = _bookingTiles(c);
-    final billing = _billingTiles(c);
-    final access = _accessTiles(c);
+    final membership = memberMembershipTiles(c);
+    final booking = memberBookingTiles(c);
+    final billing = memberBillingTiles(c);
+    final access = memberAccessTiles(c);
     final groups = <(String, List<Widget>)>[
       (l10n.memberPageGroupMembership, membership),
       (l10n.memberPageGroupBooking, booking),
@@ -289,7 +255,7 @@ class _MemberPageBody extends ConsumerWidget {
             'profile',
             l10n.uxProfileSection,
             [
-              _HeaderCard(
+              MemberHeaderCard(
                 member: member,
                 name: name,
                 isSelf: isSelf,
@@ -299,7 +265,7 @@ class _MemberPageBody extends ConsumerWidget {
                 now: now,
               ),
               const SizedBox(height: AppSpacing.md),
-              _NowCard(
+              MemberNowCard(
                 info: info,
                 upcoming: upcoming,
                 targets: targets,

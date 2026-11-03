@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_document_editor/deskilo_document_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../domain/invoice_pdf_template.dart';
-import '../../domain/invoice_report.dart';
-import '../../providers/money_providers.dart';
-import 'report_field_picker.dart';
-import 'report_image_notice.dart';
 import 'report_page_style.dart';
+import 'report_visual_editor_actions.dart';
 import 'report_visual_line.dart';
 
 export 'report_visual_line.dart' show ReportLineKind, ReportVisualLine;
 
-part 'report_visual_editor_part1.dart';
 
 
 /// The DESIGN band editor (#498) — a real WYSIWYG surface in the
@@ -61,15 +56,19 @@ class ReportVisualEditor extends ConsumerStatefulWidget {
       ReportVisualEditorState();
 }
 
-class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
-  late List<ReportVisualLine> _lines;
-  int? _editing;
-  final _editController = TextEditingController();
+class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
+    with ReportVisualEditorActions {
+  @override
+  late List<ReportVisualLine> visualLines;
+  @override
+  int? visualEditing;
+  @override
+  final visualEditController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _lines = widget.controller.text.isEmpty
+    visualLines = widget.controller.text.isEmpty
         ? []
         : widget.controller.text
             .split('\n')
@@ -79,17 +78,18 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
 
   @override
   void dispose() {
-    _editController.dispose();
+    visualEditController.dispose();
     super.dispose();
   }
 
   // #2386 — the operations; each body is in a part file.
-  bool get hasSelection => _hasSelectionImpl;
-  void insertLine(ReportVisualLine line) => _insertLineImpl(line);
+  bool get hasSelection => visualHasSelectionImpl;
+  void insertLine(ReportVisualLine line) => visualInsertLineImpl(line);
   @override Widget build(BuildContext context) => _buildImpl(context);
 
   /// Lets the section extensions rebuild (setState is protected).
-  void _update(VoidCallback fn) => setState(fn);
+  @override
+  void visualUpdate(VoidCallback fn) => setState(fn);
 
   /// The active element: the in-place editor + its toolbar. Designer
   /// CHROME on the paper — deliberately styled as tooling, so the
@@ -97,7 +97,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   Widget _editor(int index) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final line = _lines[index];
+    final line = visualLines[index];
     return Container(
       decoration: BoxDecoration(
         color: ReportPage.backdrop.withValues(alpha: .6),
@@ -109,14 +109,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (line.kind == ReportLineKind.image)
-            _imageControls(index, line)
+            visualImageControls(index, line)
           else if (line.hasContent)
             TextField(
               key: ValueKey('${widget.bandKey}-field-$index'),
-              controller: _editController,
+              controller: visualEditController,
               autofocus: true,
               maxLines: null,
-              onChanged: (_) => _commitEditing(),
+              onChanged: (_) => visualCommitEditing(),
               // #822 — edited in the element's OWN typography.
               style: reportLineEditStyle(line.kind),
               decoration: const InputDecoration(
@@ -129,10 +129,10 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           // A Wrap, not a Row: inside a column the toolbar is narrower
           // than its buttons, and a clipped Done button is no button.
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
-            _kindMenu(
+            visualKindMenu(
               key: ValueKey('${widget.bandKey}-type-$index'),
               tooltip: reportLineName(line.kind, l10n),
-              onSelected: (kind) => _mutate(() => line.kind = kind),
+              onSelected: (kind) => visualMutate(() => line.kind = kind),
               child: Icon(reportLineIcon(line.kind),
                   size: 20, color: theme.colorScheme.primary),
             ),
@@ -141,20 +141,20 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               key: ValueKey('${widget.bandKey}-up-$index'),
               icon: const Icon(Icons.arrow_upward, size: 16),
               visualDensity: VisualDensity.compact,
-              onPressed: () => _move(index, -1),
+              onPressed: () => visualMove(index, -1),
             ),
             IconButton(
               tooltip: l10n.a11yMoveDown,
               key: ValueKey('${widget.bandKey}-down-$index'),
               icon: const Icon(Icons.arrow_downward, size: 16),
               visualDensity: VisualDensity.compact,
-              onPressed: () => _move(index, 1),
+              onPressed: () => visualMove(index, 1),
             ),
             // #822 — insert a TYPED element below.
-            _kindMenu(
+            visualKindMenu(
               key: ValueKey('${widget.bandKey}-insert-$index'),
               tooltip: l10n.reportDesignerInsert,
-              onSelected: (kind) => _insertBelow(index, kind),
+              onSelected: (kind) => visualInsertBelow(index, kind),
               child: const Padding(
                 padding: EdgeInsets.all(6),
                 child: Icon(Icons.add, size: 16),
@@ -166,13 +166,13 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                 icon: const Icon(Icons.data_object, size: 16),
                 tooltip: l10n.reportDesignerFields,
                 visualDensity: VisualDensity.compact,
-                onPressed: _pickField,
+                onPressed: visualPickField,
               ),
             if (widget.bandChoices.isNotEmpty)
               PopupMenuButton<String>(
                 key: ValueKey('${widget.bandKey}-moveto-$index'),
                 tooltip: l10n.reportDesignerMoveTo,
-                onSelected: (band) => _sendTo(index, band),
+                onSelected: (band) => visualSendTo(index, band),
                 itemBuilder: (context) => [
                   for (final entry in widget.bandChoices.entries)
                     PopupMenuItem(
@@ -192,14 +192,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               key: ValueKey('${widget.bandKey}-delete-$index'),
               icon: const Icon(Icons.delete_outline, size: 16),
               visualDensity: VisualDensity.compact,
-              onPressed: () => _delete(index),
+              onPressed: () => visualDelete(index),
             ),
             IconButton(
               tooltip: l10n.a11yFinishEditing,
               key: ValueKey('${widget.bandKey}-done-$index'),
               icon: const Icon(Icons.check, size: 16),
               visualDensity: VisualDensity.compact,
-              onPressed: _deselect,
+              onPressed: visualDeselect,
             ),
           ]),
         ],
@@ -216,7 +216,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     return DragTarget<int>(
       key: ValueKey('${widget.bandKey}-drop-$index'),
       onWillAcceptWithDetails: (d) => d.data != index,
-      onAcceptWithDetails: (d) => _moveBefore(d.data, index),
+      onAcceptWithDetails: (d) => visualMoveBefore(d.data, index),
       builder: (context, candidates, _) => DecoratedBox(
         decoration: candidates.isEmpty
             ? const BoxDecoration()
@@ -235,7 +235,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                 width: ReportPage.width - ReportPage.margins.horizontal,
                 color: ReportPage.paper,
                 padding: const EdgeInsets.all(2),
-                child: _styledContent(_lines[index]),
+                child: visualStyledContent(visualLines[index]),
               ),
             ),
           ),
@@ -254,16 +254,16 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   }
 
   Widget _lineWidget(int index) {
-    if (index == _editing) return _editor(index);
-    final line = _lines[index];
+    if (index == visualEditing) return _editor(index);
+    final line = visualLines[index];
     return _draggable(
       index,
       InkWell(
         key: ValueKey('${widget.bandKey}-line-$index'),
-        onTap: () => _select(index),
+        onTap: () => visualSelect(index),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 1),
-          child: _styledContent(line),
+          child: visualStyledContent(line),
         ),
       ),
     );
@@ -272,10 +272,10 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   /// A tappable dashed group boundary (the `:::` / `|||` markers) —
   /// designer chrome, never printed.
   Widget _boundary(int index, {required bool split}) {
-    if (index == _editing) return _editor(index);
+    if (index == visualEditing) return _editor(index);
     return InkWell(
       key: ValueKey('${widget.bandKey}-line-$index'),
-      onTap: () => _select(index),
+      onTap: () => visualSelect(index),
       child: Container(
         height: 10,
         alignment: Alignment.center,
@@ -299,7 +299,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
 
   Widget _buildImpl(BuildContext context) {
     final l10n = context.l10n;
-    final segments = _segments();
+    final segments = visualSegments();
     // #548 — the band renders DIRECTLY on the page the designer
     // provides: no paper of its own, no theme colors. The strip above
     // it is the banded-designer idiom (DevExpress/Crystal): a labeled
@@ -323,9 +323,9 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         ),
         // #498 — the data-field palette: tap to insert at the cursor
         // of the active element (the designer idiom).
-        if (_editing != null &&
-            _lines[_editing!].hasContent &&
-            _lines[_editing!].kind != ReportLineKind.image)
+        if (visualEditing != null &&
+            visualLines[visualEditing!].hasContent &&
+            visualLines[visualEditing!].kind != ReportLineKind.image)
           SizedBox(
             height: 34,
             child: EdgeFadeScroll.around(
@@ -343,14 +343,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                       label: Text(field,
                           style: const TextStyle(
                               fontFamily: 'monospace', fontSize: 10)),
-                      onPressed: () => _insertToken('{{ $field }}'),
+                      onPressed: () => visualInsertToken('{{ $field }}'),
                     ),
                   ),
               ],
             ),
             ),
           ),
-        if (_lines.isEmpty)
+        if (visualLines.isEmpty)
           Text(
             l10n.reportDesignEmpty,
             style:
@@ -395,13 +395,13 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           alignment: Alignment.centerLeft,
           // #822 — the band's own insert palette: a TYPED element at
           // the end, not always a text line to retype.
-          child: _kindMenu(
+          child: visualKindMenu(
             key: ValueKey('${widget.bandKey}-add'),
             tooltip: l10n.reportDesignerInsert,
-            onSelected: (kind) => _mutate(() {
-              _adopt(_edit.insertBelow(
-                  _lines.length - 1, ReportVisualLine(kind, '')));
-              _editController.text = '';
+            onSelected: (kind) => visualMutate(() {
+              visualAdopt(visualEdit.insertBelow(
+                  visualLines.length - 1, ReportVisualLine(kind, '')));
+              visualEditController.text = '';
             }),
             child: TextButton.icon(
               icon: const Icon(Icons.add, size: 18),
@@ -433,7 +433,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       key: before == null
           ? null
           : ValueKey('${widget.bandKey}-line-$before'),
-      onTap: before == null ? null : () => _select(before),
+      onTap: before == null ? null : () => visualSelect(before),
       child: Container(
         width: 16,
         constraints: const BoxConstraints(minHeight: 24),
