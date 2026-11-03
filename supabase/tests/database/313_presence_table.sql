@@ -2,7 +2,8 @@
 --
 -- 0616 (#3123) — the presence heartbeat writes public.presence, which is
 -- not published, and leaves the published profiles row alone; the
--- projections still answer last_seen_at.
+-- projections still answer last_seen_at. 0664 (#3141) dropped the column
+-- profiles.last_seen_at, the contract step.
 --
 -- Real JWT claims and `set local role authenticated` for the heartbeat:
 -- touch_last_seen reads auth.uid(). All rows are seeded first.
@@ -26,8 +27,8 @@ $seed$;
 
 select pg_temp.seed();
 
-select has_column('public', 'profiles', 'last_seen_at',
-  'profiles keeps the column, unwritten, for apps that still read it');
+select hasnt_column('public', 'profiles', 'last_seen_at',
+  'profiles no longer has the column (0664): the heartbeat lives in presence');
 select is((select count(*)::int from pg_publication_tables
             where pubname = 'supabase_realtime' and tablename = 'presence'), 0,
   'presence is not published');
