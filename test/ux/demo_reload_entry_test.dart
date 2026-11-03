@@ -282,6 +282,40 @@ void main() {
     expect(find.byType(DemoWorkspace), findsNothing);
   });
 
+  testWidgets('an account change while the feature read is pending enters '
+      'nothing', (tester) async {
+    tester.binding.platformDispatcher.defaultRouteNameTestValue = '/features';
+    addTearDown(
+      tester.binding.platformDispatcher.clearDefaultRouteNameTestValue,
+    );
+    final features = Completer<Set<WorkspaceFeature>>();
+    final auth = FakeAuthRepository(userId: 'user-1');
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(auth: auth),
+          enabledFeaturesProvider.overrideWith((ref) => features.future),
+          demoReloadMarkerProvider.overrideWithValue(DemoReloadMarker(_Tab())),
+        ],
+        child: const DeskiloRoot(),
+      ),
+    );
+    await _settle(tester);
+    final outer = ProviderScope.containerOf(
+      tester.element(find.byType(DeskiloRoot)),
+    );
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('demo-entry-start')));
+    await tester.pump();
+    // Another account signs in while the Demo flag is still being read; the
+    // flag then resolves ON: the consent given by the first account is void.
+    auth.signInAs('user-2');
+    features.complete(WorkspaceFeature.values.toSet());
+    await _settle(tester);
+    expect(outer.read(demoEntryProvider), isFalse);
+    expect(find.byType(DemoWorkspace), findsNothing);
+  });
+
   testWidgets('a stale marker uses only the current account on a new visit', (
     tester,
   ) async {

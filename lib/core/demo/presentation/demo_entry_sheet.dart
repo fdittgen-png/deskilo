@@ -126,12 +126,14 @@ Future<bool> _showDemoEntrySheet(
   );
   if (!(start ?? false) || !context.mounted) return false;
   if (ref.read(demoEntryProvider)) return false;
-  if (await _identityOrNull(visit) != before) return false;
-  if (!context.mounted) return false;
   // #3235 — a signed-in person's workspace may have changed while the sheet
   // was open: the Demo flag switched off or the kiosk locked. Read both again,
   // resolved; the public Demo of a visitor who is not signed in is not asked.
+  // The identity is read after them, last before the visit begins, so an
+  // account or workspace that changed during those reads enters nothing.
   if (before != null && !await _signedInMayStillEnter(ref)) return false;
+  if (!context.mounted) return false;
+  if (await _identityOrNull(visit) != before) return false;
   if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {

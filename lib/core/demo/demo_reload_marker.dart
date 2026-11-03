@@ -8,8 +8,11 @@ enum DemoReloadMarkerState { absent, armed, invalid, unavailable }
 /// available to the existing callback and route guards.
 ///
 /// Only a marker that was actually read counts: a tab whose storage cannot
-/// be read starts normally — `arm` fails there, so no Demo visit can have
-/// left one behind. An invitation continuation keeps its destination.
+/// be read starts normally — `arm` fails there, so no Demo visit can start in
+/// it. Known limit: storage that becomes unreadable AFTER a successful `arm`
+/// (a browser policy changed during the visit) also reads as no marker, and
+/// that reload starts at the requested live screen. An invitation
+/// continuation keeps its destination.
 bool needsDemoReloadEntry(DemoReloadMarkerState state, Uri route) {
   if (state == DemoReloadMarkerState.absent ||
       state == DemoReloadMarkerState.unavailable) {
