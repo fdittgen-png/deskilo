@@ -46,15 +46,15 @@ class MemberManageTile extends StatelessWidget {
 }
 
 List<Widget> memberMembershipTiles(MemberPageContext c) => <Widget>[
-    ...memberJoinTiles(c),
-    ...memberManagedTiles(c),
-    ...memberStandingTiles(c),
-    ...memberCoOwnerTiles(c),
-    ...memberKioskTiles(c),
+    ..._memberJoinTiles(c),
+    ..._memberManagedTiles(c),
+    ..._memberStandingTiles(c),
+    ..._memberCoOwnerTiles(c),
+    ..._memberKioskTiles(c),
   ];
 
 /// A pending join request: the administrator approves or rejects it.
-List<Widget> memberJoinTiles(MemberPageContext c) => <Widget>[
+List<Widget> _memberJoinTiles(MemberPageContext c) => <Widget>[
     if (c.pending && !c.isSelf && c.canAdmin) ...[
       MemberManageTile(
         tileKey: const ValueKey('member-page-approve'),
@@ -75,7 +75,7 @@ List<Widget> memberJoinTiles(MemberPageContext c) => <Widget>[
 
 /// #887 — the admin runs a managed member's identity and hands the
 /// profile over with a bound invitation.
-List<Widget> memberManagedTiles(MemberPageContext c) {
+List<Widget> _memberManagedTiles(MemberPageContext c) {
   // Watched whether or not the tiles show, as the group always did.
   final workspace = c.ref.watch(currentWorkspaceProvider).value;
   final context = c.context;
@@ -122,14 +122,14 @@ List<Widget> memberManagedTiles(MemberPageContext c) {
       tileKey: const ValueKey('member-page-revoke-handover'),
       icon: Icons.link_off_outlined,
       title: l10n.managedProfileRevoke,
-      onTap: () => revokeMemberHandover(context, ref, member),
+      onTap: () => _revokeMemberHandover(context, ref, member),
     ),
   ];
 }
 
 /// The owner pauses or reactivates the member and, without role
 /// assignment, makes them an administrator or a member again.
-List<Widget> memberStandingTiles(MemberPageContext c) {
+List<Widget> _memberStandingTiles(MemberPageContext c) {
   final paused = c.member.status == MemberStatus.paused;
   return <Widget>[
     if (c.isOwner && c.member.status != MemberStatus.exited)
@@ -163,7 +163,7 @@ List<Widget> memberStandingTiles(MemberPageContext c) {
 }
 
 /// The owner names or activates a co-owner.
-List<Widget> memberCoOwnerTiles(MemberPageContext c) {
+List<Widget> _memberCoOwnerTiles(MemberPageContext c) {
   if (!(c.isOwner && c.coOwnerOn && c.active)) return <Widget>[];
   return <Widget>[
     if (!c.member.isOwner && !c.member.isKiosk && !c.isSelf)
@@ -194,7 +194,7 @@ List<Widget> memberCoOwnerTiles(MemberPageContext c) {
 
 /// The member as a kiosk: an operator makes or unmakes one, and a kiosk
 /// reverts itself.
-List<Widget> memberKioskTiles(MemberPageContext c) => <Widget>[
+List<Widget> _memberKioskTiles(MemberPageContext c) => <Widget>[
     if (c.perms.contains(WorkspacePermission.operateKiosk) &&
         !c.member.isOwner &&
         c.active &&
@@ -235,7 +235,7 @@ List<Widget> memberAccessTiles(MemberPageContext c) {
   ];
 }
 
-Future<void> revokeMemberHandover(
+Future<void> _revokeMemberHandover(
   BuildContext context,
   WidgetRef ref,
   Member member,

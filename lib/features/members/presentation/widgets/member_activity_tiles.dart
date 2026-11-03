@@ -21,7 +21,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import 'member_admin_tiles.dart';
 import 'member_page_context.dart';
 
-List<Widget> memberMoneyTiles(
+List<Widget> _memberMoneyTiles(
   Member m,
   Set<WorkspaceFeature> f,
   Set<WorkspacePermission> p,
@@ -147,7 +147,7 @@ List<Widget> memberBookingTiles(MemberPageContext c) {
             : '${member.maxSimultaneousReservations}',
         onTap: () => pickMemberSimultaneousLimit(context, ref, member),
       ),
-      ...memberCustomerTiles(c),
+      ..._memberCustomerTiles(c),
       if (levelOn)
         SwitchListTile(
           key: const ValueKey('member-page-level'),
@@ -171,7 +171,7 @@ List<Widget> memberBookingTiles(MemberPageContext c) {
 
 /// Who the member is as a customer: VAT treatment, business or consumer,
 /// e-invoice address and the site their documents carry.
-List<Widget> memberCustomerTiles(MemberPageContext c) {
+List<Widget> _memberCustomerTiles(MemberPageContext c) {
   final invoicer = c.perms.contains(WorkspacePermission.issueInvoices) &&
       c.features.contains(WorkspaceFeature.invoicing);
   return <Widget>[
@@ -232,7 +232,7 @@ List<Widget> memberBillingTiles(MemberPageContext c) {
   final isOwner = c.isOwner;
   final negotiationVisible = c.negotiationVisible;
   return <Widget>[
-    ...memberMoneyTiles(member, features, perms),
+    ..._memberMoneyTiles(member, features, perms),
     if (isOwner && !member.isKiosk)
       MemberManageTile(
         tileKey: const ValueKey('member-page-subscription'),

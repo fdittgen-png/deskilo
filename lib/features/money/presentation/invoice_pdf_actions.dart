@@ -33,7 +33,7 @@ import 'widgets/report_preview.dart';
 ///
 /// Returns the invoices to append, empty for "this one alone", and null
 /// when the question was dismissed — nothing should be exported then.
-Future<List<Invoice>?> askRegroupedAnnexes(
+Future<List<Invoice>?> _askRegroupedAnnexes(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
@@ -101,7 +101,7 @@ Future<void> downloadInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = context.l10n;
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,
@@ -146,7 +146,7 @@ Future<void> quickViewInvoice(
   bool proforma = false,
 }) async {
   final l10n = context.l10n;
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(
@@ -214,7 +214,7 @@ Future<void> shareInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = context.l10n;
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,

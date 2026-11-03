@@ -225,7 +225,7 @@ class MemberNowCard extends StatelessWidget {
       UpcomingReservation(:final reservation) => (
           Icons.event_outlined,
           theme.colorScheme.onSurfaceVariant,
-          l10n.memberPageNext(memberBookingLabel(appFormatOf(context),
+          l10n.memberPageNext(_memberBookingLabel(appFormatOf(context),
                   reservation, reservation.spaceNameFrom(targets))),
         ),
       null => (
@@ -278,7 +278,7 @@ class MemberNowCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
-                        memberBookingLabel(appFormatOf(context),
+                        _memberBookingLabel(appFormatOf(context),
                             r, r.spaceNameFrom(targets)),
                         style: theme.textTheme.bodyMedium,
                       ),
@@ -325,7 +325,7 @@ class MemberChip extends StatelessWidget {
 }
 
 /// "Wed 2 · 08:00 · A1" — the directory's house style for a booking.
-String memberBookingLabel(
+String _memberBookingLabel(
   AppFormat format,
   Reservation reservation,
   String seatName,
