@@ -72,6 +72,8 @@ InvoiceLine _decodeLine(JsonReader line) => InvoiceLine(
         key: 'amount_cents',
         context: line.context,
       ),
-      // 0072 — optional: absent on every line the server emits today.
-      vatPercent: line.numOrNull('vat_percent')?.toDouble() ?? 0,
+      // 0182 — invoice_lines_for emits the rate on every line. An absent or
+      // non-numeric one is a malformed preview, never 0 %: the displayed VAT
+      // is computed from it (#1917, #2585).
+      vatPercent: line.number('vat_percent'),
     );
