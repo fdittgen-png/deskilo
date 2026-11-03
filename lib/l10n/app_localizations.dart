@@ -34158,11 +34158,17 @@ abstract class AppLocalizations {
   /// **'This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.'**
   String get refusalBankMatchClosedPeriod;
 
-  /// #2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match.
+  /// #2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing.
   ///
   /// In en, this message translates to:
-  /// **'The payments matched to this invoice do not add up to its match (one may still await its validation), so it cannot be undone here. Nothing was changed.'**
+  /// **'The payments of this invoice cannot be restated without guessing (one may still await its validation), so this one cannot be undone here. Nothing was changed.'**
   String get refusalBankMatchSeveralPayments;
+
+  /// #2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.'**
+  String get refusalBankMatchUndoLaterFirst;
 
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///

@@ -24397,9 +24397,13 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "The payments matched to this invoice do not add up to its match (one may still await its validation), so it cannot be undone here. Nothing was changed.",
+  "refusalBankMatchSeveralPayments": "The payments of this invoice cannot be restated without guessing (one may still await its validation), so this one cannot be undone here. Nothing was changed.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
+  },
+  "refusalBankMatchUndoLaterFirst": "This is the invoice's first payment: undo its later payments first. Nothing was changed.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {

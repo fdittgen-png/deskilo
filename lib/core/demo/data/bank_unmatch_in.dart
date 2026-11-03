@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2380 (0650, 0657) -- the Demo's undoing of a bank match of money in: the
+// #2380 (0650, 0657-0660) -- the Demo's undoing of a bank match of money in: the
 // same refusals, in the same order, as `unmatch_bank_line_in_v1`, and the
 // same effect when none applies. The payment's part of the match goes (the
 // whole match when it was the last payment), the payment credit stays, the
@@ -80,6 +80,36 @@ void demoRecordMatchPayment(
   ];
 }
 
+/// The payment undone and the payments that remain (oldest first), or the
+/// refusal the server would answer: DKB05 when the rows do not add up to
+/// the match, DKB07 when the first payment would go before a later one.
+({InvoiceMatch row, List<InvoiceMatch> rest}) _paymentRows(
+  FakeMoneyRepository money,
+  String invoiceId,
+  InvoiceMatch match,
+  String paymentId,
+) {
+  // A match seeded without its payment rows is its one payment.
+  final rows = money.invoiceMatchPaymentsStore[invoiceId] ?? [match];
+  final row = rows.where((r) => r.paymentLedgerId == paymentId).firstOrNull;
+  if (row == null ||
+      rows.fold<int>(0, (sum, r) => sum + r.paidCents) != match.paidCents) {
+    throw _refusal(
+      'DKB05',
+      'the payments of this invoice do not add up to its match',
+    );
+  }
+  final rest = [
+    for (final r in rows)
+      if (!identical(r, row)) r,
+  ];
+  // 0660 — the first payment goes last.
+  if (identical(row, rows.first) && rest.isNotEmpty) {
+    throw _refusal('DKB07', 'undo the later payments of this invoice first');
+  }
+  return (row: row, rest: rest);
+}
+
 /// The match [line] holds, or the refusal the server would answer.
 DemoUnmatchTarget demoUnmatchTarget({
   required FakeMoneyRepository money,
@@ -119,20 +149,7 @@ DemoUnmatchTarget demoUnmatchTarget({
       'this match did more than link a payment: it cannot be undone here',
     );
   }
-  // A match seeded without its payment rows is its one payment.
-  final rows = money.invoiceMatchPaymentsStore[invoiceId] ?? [match];
-  final row = rows.where((r) => r.paymentLedgerId == paymentId).firstOrNull;
-  if (row == null ||
-      rows.fold<int>(0, (sum, r) => sum + r.paidCents) != match.paidCents) {
-    throw _refusal(
-      'DKB05',
-      'the payments of this invoice do not add up to its match',
-    );
-  }
-  final rest = [
-    for (final r in rows)
-      if (!identical(r, row)) r,
-  ];
+  final (:row, :rest) = _paymentRows(money, invoiceId, match, paymentId);
   bool closed(DateTime at) =>
       closedThrough != null &&
       !DateTime(at.year, at.month, at.day).isAfter(closedThrough);

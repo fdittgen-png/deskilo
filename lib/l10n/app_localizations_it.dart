@@ -20554,7 +20554,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'I pagamenti abbinati a questa fattura non corrispondono all\'importo dell\'abbinamento (forse uno attende ancora la convalida): non può essere annullato qui. Nulla è stato modificato.';
+      'I pagamenti di questa fattura non possono essere ricalcolati senza supposizioni (forse uno attende ancora la convalida): questo non può essere annullato qui. Nulla è stato modificato.';
+
+  @override
+  String get refusalBankMatchUndoLaterFirst =>
+      'È il primo pagamento della fattura: annulla prima i pagamenti successivi. Nulla è stato modificato.';
 
   @override
   String get refusalChangedMeanwhile =>

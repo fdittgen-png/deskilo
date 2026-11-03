@@ -1,20 +1,20 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 (0657-0659) -- one payment of an invoice that has several is undone.
+-- #2380 (0657-0660) -- one payment of an invoice that has several is undone.
 -- I3 (200.00) is part-paid by L3 (100.00, 'first part') and L10 (50.00,
--- 'second part'): one aggregate match of 150.00 and two payment rows.
--- Undoing L3, the older one: its payment row goes, the match is 50.00 with
--- L10's link and note and stays a part payment; L3 keeps its credit and reads
--- recorded, no ledger row moves, one record and one reversal event are
--- written, and the answer names the 50.00 that remain. L3 then matches I3
--- again with the same credit. Undoing L10, now the latest: the match is
--- restated from L3 (its link, date and note). Undoing L3 again, the last
--- payment: the match goes, I3 is open. A match whose amount its payments do
--- not explain is refused (DKB05). A match that would be restated on a
+-- 'second part'): one aggregate match of 150.00 and two payment rows. The
+-- first payment goes last (DKB07 while L10 remains). Undoing L10: its row
+-- goes, the match is 100.00 with L3's link and note and stays a part
+-- payment; L10 keeps its credit and reads recorded, no ledger row moves, one
+-- record and one reversal event are written, and the answer names the 100.00
+-- that remain. L10 matches again with the same credit and is undone again.
+-- Undoing L3, now alone: the match goes, I3 is open. A match whose amount
+-- its payments do not explain is refused (DKB05). A match that would be restated on a
 -- payment booked inside a closed period is refused (DKB06) and nothing
--- changes; the booking dates of validated payments are pgTAP 344's.
+-- changes; two payments that share their submission time are refused
+-- (DKB05); the booking dates of validated payments are pgTAP 344's.
 begin;
-select plan(18);
+select plan(20);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -167,38 +167,42 @@ select is((select paid_cents || '/' || resolution || '/' || payment_ledger_id fr
             where invoice_id = pg_temp.v('i3')::uuid), '15000/under_accepted/' || current_setting('um.c10'),
           'positive control: I3 is part-paid by two payments, the aggregate names the latest');
 
--- The older payment.
-select set_config('um.r3', pg_temp.undo('owner', pg_temp.v('l3'), 'not this invoice',
-                                        '00000000-0000-4000-8000-0000065700e1')::text, false);
-select is(current_setting('um.r3')::jsonb ->> 'status', 'recorded', 'L3 is undone and reads recorded');
-select is((current_setting('um.r3')::jsonb ->> 'remaining_cents')::int, 5000, 'the answer names the 50.00 that remain');
+-- The first payment goes last (0660): undoing it while L10 remains is refused.
+select is(pg_temp.undo('owner', pg_temp.v('l3'), 'not this invoice', '00000000-0000-4000-8000-0000065700e0') ->> 'refused',
+          'DKB07', 'the first payment is not undone while a later one remains');
+
+-- The latest payment.
+select set_config('um.r10', pg_temp.undo('owner', pg_temp.v('l10'), 'not this invoice',
+                                         '00000000-0000-4000-8000-0000065700e1')::text, false);
+select is(current_setting('um.r10')::jsonb ->> 'status', 'recorded', 'L10 is undone and reads recorded');
+select is((current_setting('um.r10')::jsonb ->> 'remaining_cents')::int, 10000, 'the answer names the 100.00 that remain');
 select is((select paid_cents || '/' || resolution || '/' || payment_ledger_id || '/' || note from public.invoice_matches
-            where invoice_id = pg_temp.v('i3')::uuid), '5000/under_accepted/' || current_setting('um.c10') || '/second part',
-          'the match is what L10 makes it: 50.00, its link and its note, still a part payment');
+            where invoice_id = pg_temp.v('i3')::uuid), '10000/under_accepted/' || current_setting('um.c3') || '/first part',
+          'the match is what L3 makes it: 100.00, its link and its note, still a part payment');
 select is((select string_agg(payment_ledger_id::text, ',') from public.invoice_match_payments
-            where invoice_id = pg_temp.v('i3')::uuid), current_setting('um.c10'), 'only L10''s payment row remains');
+            where invoice_id = pg_temp.v('i3')::uuid), current_setting('um.c3'), 'only L3''s payment row remains');
 select is((select coalesce(invoice_id::text, '-') || '/' || payment_ledger_id from public.bank_statement_lines
-            where id = pg_temp.v('l3')::uuid), '-/' || current_setting('um.c3'), 'L3 names no invoice and keeps its credit');
+            where id = pg_temp.v('l10')::uuid), '-/' || current_setting('um.c10'), 'L10 names no invoice and keeps its credit');
 select is((select count(*)::text from public.ledger_entries where workspace_id = pg_temp.v('ws')::uuid),
           current_setting('um.ledger_before'), 'no ledger row was added or removed');
 select is((select amount_cents || '/' || resolution || '/' || reason from public.bank_line_unmatches
-            where line_id = pg_temp.v('l3')::uuid), '10000/under_accepted/not this invoice',
+            where line_id = pg_temp.v('l10')::uuid), '5000/under_accepted/not this invoice',
           'one record keeps the payment undone and why');
 select is((select count(*)::int from public.events where type = 'invoice_payment_reversed'
-            and payload ->> 'line_id' = pg_temp.v('l3')), 1, 'one reversal event is written');
+            and payload ->> 'line_id' = pg_temp.v('l10')), 1, 'one reversal event is written');
 
--- L3 again, then the latest payment.
-select is(pg_temp.match('l3', 'i3', 'under_accepted', 'first part again') ->> 'status', 'matched',
-          'L3 matches I3 again');
+-- L10 again, with the same credit, and undone again.
+select is(pg_temp.match('l10', 'i3', 'under_accepted', 'second part again') ->> 'status', 'matched',
+          'L10 matches I3 again');
 select is((select paid_cents || '/' || payment_ledger_id from public.invoice_matches where invoice_id = pg_temp.v('i3')::uuid),
-          '15000/' || current_setting('um.c3'), 'with the same credit: 150.00 again, L3 the latest');
+          '15000/' || current_setting('um.c10'), 'with the same credit: 150.00 again, L10 the latest');
 select is(pg_temp.undo('owner', pg_temp.v('l10'), 'duplicate', '00000000-0000-4000-8000-0000065700e2') ->> 'status',
-          'recorded', 'undoing L10, the other payment');
-select is((select paid_cents || '/' || resolution || '/' || payment_ledger_id || '/' || note from public.invoice_matches
-            where invoice_id = pg_temp.v('i3')::uuid), '10000/under_accepted/' || current_setting('um.c3') || '/first part again',
-          'the match is restated from L3: 100.00, its link and note');
+          'recorded', 'undoing L10 again');
+select is((select paid_cents || '/' || payment_ledger_id || '/' || note from public.invoice_matches
+            where invoice_id = pg_temp.v('i3')::uuid), '10000/' || current_setting('um.c3') || '/first part',
+          'the match is restated from L3 again');
 
--- The last payment: the match goes.
+-- The first payment, now alone: the match goes.
 select is(pg_temp.undo('owner', pg_temp.v('l3'), 'wrong client', '00000000-0000-4000-8000-0000065700e3') ->> 'remaining_cents',
           '0', 'undoing the last payment leaves nothing');
 select is((select count(*)::int from public.invoice_matches where invoice_id = pg_temp.v('i3')::uuid)
@@ -225,6 +229,13 @@ select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8
           'DKB06', 'the match would be restated on a payment booked inside a closed period: refused');
 select is((select paid_cents from public.invoice_matches where invoice_id = pg_temp.v('i3')::uuid), 15000,
           'and nothing was undone');
+
+-- Two payments submitted in one transaction before 0660 share their time:
+-- which was first cannot be told, so nothing is restated (DKB05).
+update public.invoice_match_payments set matched_at = now() - interval '40 days'
+ where invoice_id = pg_temp.v('i3')::uuid;
+select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8000-0000065700e6') ->> 'refused',
+          'DKB05', 'two payments that share their submission time are not told apart: refused');
 
 select * from finish();
 rollback;

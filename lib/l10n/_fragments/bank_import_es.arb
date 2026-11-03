@@ -108,13 +108,17 @@
   "@refusalBankMatchBeyondLink": {
     "description": "#2380 Refusal DKB04: the match did more than link a payment."
   },
-  "refusalBankMatchSeveralPayments": "Los pagos conciliados con esta factura no suman el importe de la conciliación (quizá uno espera aún su validación), así que no se puede deshacer aquí. No se cambió nada.",
+  "refusalBankMatchSeveralPayments": "Los pagos de esta factura no se pueden recalcular sin suponer (quizá uno espera aún su validación), así que este no se puede deshacer aquí. No se cambió nada.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
   },
   "refusalBankMatchClosedPeriod": "Este pago tiene fecha dentro de un periodo contable cerrado, por lo que su conciliación no se puede deshacer. No se cambió nada.",
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchUndoLaterFirst": "Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "bankUnmatchReasonRequired": "Indique por qué se deshace la conciliación.",
   "@bankUnmatchReasonRequired": {

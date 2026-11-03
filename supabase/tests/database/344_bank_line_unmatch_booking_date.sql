@@ -1,13 +1,14 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 (0659) -- the booking dates of a validated part payment, through the
+-- #2380 (0659, 0660) -- the booking dates of a validated part payment, through the
 -- real decision path (respond_to_event). With a rule for payments, L3 pays
--- the first part of I3 (200.00) and L10 the second; each is submitted 40 days
--- ago (the submission time is moved back, the decision itself is real, by a
+-- the first part of I3 (200.00) and L10 the second; they were submitted 41 and 40 days
+-- ago (the submission times are moved back, the decision itself is real, by a
 -- second admin, today). 0101 books the FIRST payment at its submission and the
 -- ADDITIONAL one at its confirmation. The 40-days-ago period is then closed.
 -- Undoing L10 would restate the match from L3, booked in that closed period:
--- refused (DKB06). Undoing L3, booked in that closed period: refused (DKB06).
+-- refused (DKB06). Undoing L3, the first payment, while L10 remains: refused
+-- (DKB07, 0660).
 -- Nothing changes.
 begin;
 select plan(5);
@@ -157,13 +158,13 @@ insert into public.validation_policies (workspace_id, event_type) values (pg_tem
 update public.members set is_admin = true
  where workspace_id = pg_temp.v('ws')::uuid and user_id = pg_temp.v('biller')::uuid;
 
--- The first part: submitted 40 days ago, confirmed today.
+-- The first part: submitted 41 days ago, confirmed today.
 select pg_temp.match('l3', 'i3', 'under_accepted', 'first part');
-update public.invoice_match_payments set matched_at = now() - interval '40 days' where invoice_id = pg_temp.v('i3')::uuid;
-update public.invoice_matches set matched_at = now() - interval '40 days' where invoice_id = pg_temp.v('i3')::uuid;
+update public.invoice_match_payments set matched_at = now() - interval '41 days' where invoice_id = pg_temp.v('i3')::uuid;
+update public.invoice_matches set matched_at = now() - interval '41 days' where invoice_id = pg_temp.v('i3')::uuid;
 select pg_temp.as_json('biller', format($s$select jsonb_build_object('r', public.respond_to_event(%L, true)::text)$s$,
   (select event_id from public.invoice_match_payments where invoice_id = pg_temp.v('i3')::uuid)));
-select ok((select status = 'confirmed' and matched_at::date = current_date - 40 from public.invoice_matches
+select ok((select status = 'confirmed' and matched_at::date = current_date - 41 from public.invoice_matches
             where invoice_id = pg_temp.v('i3')::uuid),
           'positive control: the confirmed first payment keeps its submission date');
 
@@ -184,7 +185,7 @@ values (pg_temp.v('ws')::uuid, current_date - 45, current_date - 35, 'owner');
 select is(pg_temp.undo('owner', pg_temp.v('l10'), 'wrong', '00000000-0000-4000-8000-0000065900e1') ->> 'refused',
           'DKB06', 'undoing the additional payment would rebook the match on the first, inside the closed period: refused');
 select is(pg_temp.undo('owner', pg_temp.v('l3'), 'wrong', '00000000-0000-4000-8000-0000065900e2') ->> 'refused',
-          'DKB06', 'the first payment is booked inside the closed period, whenever it was confirmed: refused');
+          'DKB07', 'the first payment is not undone while the additional one remains (0660)');
 select is((select paid_cents from public.invoice_matches where invoice_id = pg_temp.v('i3')::uuid), 15000,
           'nothing was undone');
 

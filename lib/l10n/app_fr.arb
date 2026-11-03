@@ -13453,9 +13453,13 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Les paiements rapprochés de cette facture ne correspondent pas au montant du rapprochement (l'un attend peut-être encore sa validation) : il ne peut pas être annulé ici. Rien n'a été modifié.",
+  "refusalBankMatchSeveralPayments": "Les paiements de cette facture ne peuvent pas être recalculés sans supposition (l'un attend peut-être encore sa validation) : celui-ci ne peut pas être annulé ici. Rien n'a été modifié.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
+  },
+  "refusalBankMatchUndoLaterFirst": "C'est le premier paiement de la facture : annulez d'abord les paiements suivants. Rien n'a été modifié.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
   "refusalMoneyLocaleLocked": "La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré.",

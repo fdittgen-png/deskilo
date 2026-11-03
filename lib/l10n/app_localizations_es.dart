@@ -20541,7 +20541,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'Los pagos conciliados con esta factura no suman el importe de la conciliación (quizá uno espera aún su validación), así que no se puede deshacer aquí. No se cambió nada.';
+      'Los pagos de esta factura no se pueden recalcular sin suponer (quizá uno espera aún su validación), así que este no se puede deshacer aquí. No se cambió nada.';
+
+  @override
+  String get refusalBankMatchUndoLaterFirst =>
+      'Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.';
 
   @override
   String get refusalChangedMeanwhile =>

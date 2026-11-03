@@ -108,13 +108,17 @@
   "@refusalBankMatchBeyondLink": {
     "description": "#2380 Refusal DKB04: the match did more than link a payment."
   },
-  "refusalBankMatchSeveralPayments": "Die dieser Rechnung zugeordneten Zahlungen ergeben nicht den Betrag der Zuordnung (eine wartet vielleicht noch auf ihre Freigabe); sie kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.",
+  "refusalBankMatchSeveralPayments": "Die Zahlungen dieser Rechnung lassen sich nicht ohne Vermutung neu zuordnen (eine wartet vielleicht noch auf ihre Freigabe); diese kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 (0657) Refusal DKB05: the payments of the invoice do not add up to its match."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
   },
   "refusalBankMatchClosedPeriod": "Diese Zahlung liegt in einem abgeschlossenen Buchungszeitraum; ihre Zuordnung kann nicht rückgängig gemacht werden. Nichts wurde geändert.",
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchUndoLaterFirst": "Dies ist die erste Zahlung der Rechnung: Machen Sie zuerst die späteren Zahlungen rückgängig. Nichts wurde geändert.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "bankUnmatchReasonRequired": "Geben Sie an, warum die Zuordnung rückgängig gemacht wird.",
   "@bankUnmatchReasonRequired": {

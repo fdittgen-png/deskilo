@@ -230,7 +230,7 @@ void main() {
     // A match whose amount its payments do not explain is not restated.
     money.invoiceMatchesStore['id-I3'] = money.invoiceMatchesStore['id-I3']!
         .copyWith(paidCents: 15001);
-    await refused(3, 'DKB05', KnownRefusal.bankMatchSeveralPayments, 'do not add up');
+    await refused(3, 'DKB05', KnownRefusal.bankMatchSeveralPayments, 'without guessing');
     await refused(7, 'DKB01', KnownRefusal.bankLineDecided);
     await refused(8, 'DKB02', KnownRefusal.bankLineRefused);
 
@@ -239,36 +239,44 @@ void main() {
     expect(money.invoiceMatchesStore.containsKey('id-I4'), isTrue, reason: 'the match is still there');
   });
 
-  test('one of two payments is undone alone: the match is what the other '
-      'makes it, then the last one opens the invoice', () async {
+  test('the later of two payments is undone alone: the match is what the '
+      'first makes it; the first goes last', () async {
     final ledgerBefore = money.ledger.length;
     final first = money.invoiceMatchPaymentsStore['id-I3']!.first.paymentLedgerId;
     final second = money.invoiceMatchesStore['id-I3']!.paymentLedgerId;
     expect(money.invoiceMatchesStore['id-I3']!.paidCents, 15000);
 
+    final third = (await line(3)).id;
+    expect(await _code(() => bank.unmatchIn(third, reason: 'x', requestId: 's0')),
+        'DKB07', reason: 'the first payment is undone last');
     expect(
-      await commands.unmatchIn(await line(3), reason: 'not this invoice', requestId: 's1'),
+      knownRefusalText(englishL10n, const PostgrestException(message: '', code: 'DKB07')),
+      contains('later payments first'),
+    );
+
+    expect(
+      await commands.unmatchIn(await line(4), reason: 'not this invoice', requestId: 's1'),
       BankLineStatus.recorded,
     );
     final rest = money.invoiceMatchesStore['id-I3']!;
-    expect(rest.paidCents, 5000, reason: 'only the second payment remains');
+    expect(rest.paidCents, 10000, reason: 'only the first payment remains');
     expect(rest.resolution, 'under_accepted', reason: 'still a part payment');
-    expect(rest.paymentLedgerId, second);
-    expect(rest.note, 'second part', reason: 'the remaining payment\'s note');
+    expect(rest.paymentLedgerId, first);
+    expect(rest.note, 'first part', reason: 'the remaining payment\'s note');
     expect(
       money.invoiceMatchPaymentsStore['id-I3']!.map((r) => r.paymentLedgerId),
-      [second],
+      [first],
     );
-    expect((await line(3)).status, BankLineStatus.recorded);
+    expect((await line(4)).status, BankLineStatus.recorded);
     expect(money.ledger.length, ledgerBefore, reason: 'no ledger row moves');
     final reversed = events.events
         .where((e) => e.type == EventType.invoicePaymentReversed)
         .single;
-    expect(reversed.payload['payment_ledger_id'], first);
-    expect(reversed.payload['amount_cents'], 10000);
+    expect(reversed.payload['payment_ledger_id'], second);
+    expect(reversed.payload['amount_cents'], 5000);
 
     expect(
-      await commands.unmatchIn(await line(4), reason: 'wrong client', requestId: 's2'),
+      await commands.unmatchIn(await line(3), reason: 'wrong client', requestId: 's2'),
       BankLineStatus.recorded,
     );
     expect(money.invoiceMatchesStore.containsKey('id-I3'), isFalse,
