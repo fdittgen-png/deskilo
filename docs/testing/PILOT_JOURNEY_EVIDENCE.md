@@ -88,8 +88,19 @@ and the pilot operator's review of COWORKONTI development remain outstanding.
 
 ## Candidate re-run — 3 November 2026 (#1974)
 
-Candidate: master `351af01a6` (schema 664 on master and on the dev project) plus
-`test/features/workspace/pilot_profile_test.dart`. Roles, not people.
+Roles, not people. **Not one tree:** the results below ran on different trees, and
+each row says which. This branch is based on master `351af01a6` (plus the new pilot
+profile test and helper); master later moved to `a6c9aa7d8` (#3276: the strict
+preview decoder and the pgTAP pins for #1917). Schema 664 is the latest migration on
+both, and the dev project is at 664.
+
+- The pgTAP bundles ran against the dev project's schema 664 (the same on both trees).
+- The Dart run (207 tests), the lint suite (699) and the lint and workspace run
+  (2,582) ran on this branch (`351af01a6` plus its changes). They do NOT include the
+  strict preview decoder.
+- The preview decoder's test ran in #3276, on `a6c9aa7d8` (the money and ux folders,
+  2,808 passed; CI green).
+- The restore rehearsal ran on `a6c9aa7d8`.
 
 Database, as rolled-back real-pgTAP bundles on the dev project (each ends in
 PGTAP_PASS; nothing persists): `161_pilot_journey` 14, `160_pilot_reconciliation`
