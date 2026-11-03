@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Invariant (#1974, amendment 2026-10-14): the existing-community pilot's
-// feature profile is pinned whole, as explicit values. The five excluded
-// features are OFF with everything that needs them; supplyClassification
-// and configurableSettings, which the pilot needs, are explicitly ON. An
-// absent key is NOT on since #2566 (a platform flag nobody chose is off), so
-// a profile that leaves one out loses it: the profile must say it.
+// feature profile, as explicit values, and the exact set of features it
+// resolves to (a reviewed golden list). The five excluded features are OFF with
+// everything that needs them; the features the pilot fixtures and the
+// amendment name are explicitly ON. An absent key is NOT on since #2566 (a
+// platform flag nobody chose is off), so a profile that leaves one out loses
+// it. The golden list is maintainer-derived from the current manifest; an
+// operator-reviewed inventory of the real workspace is #1285, where the
+// feature profile was deliberately left unchanged.
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -98,6 +101,21 @@ void main() {
         expect(named, contains(m[1]), reason: '$file enables ${m[1]}');
       }
     }
+  });
+
+  test('the exact effective set is the reviewed golden list: a core default '
+      'or an unlisted platform feature cannot change it unnoticed', () {
+    final names = [for (final f in _effective(pilotProfile())) f.name]..sort();
+    final golden = File('test/helpers/pilot_effective_features.txt');
+    if (Platform.environment['PILOT_GOLDEN_WRITE'] == '1') {
+      golden.writeAsStringSync('${names.join('\n')}\n');
+    }
+    expect(
+      names,
+      golden.readAsLinesSync().where((l) => l.isNotEmpty).toList(),
+      reason: 'the effective pilot feature set changed: review the diff, then '
+          'rerun with PILOT_GOLDEN_WRITE=1 to record it',
+    );
   });
 
   test('the profile never switches a default-on core feature off', () {

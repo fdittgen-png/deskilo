@@ -111,19 +111,22 @@ test/features/workspace/pilot_profile_test.dart
 
 | Amendment item (2026-10-14) | Status | Evidence | What is not claimed |
 |---|---|---|---|
-| The effective pilot profile pinned as explicit values | PASS (pinned) | NEW `test/helpers/pilot_profile.dart` + `pilot_profile_test.dart`: the five excluded features explicitly OFF with every dependent; ON with their requirement chain: `invoicing` and `expenseRepartition` (the flags the pilot fixtures 160 and 164 enable; the test reads those files and fails if a flag they enable is not named), `supplyClassification` and `configurableSettings` (named by the amendment); a stored profile that leaves a required key out loses it (#2566: an absent platform flag is off); the old default-on platform flags merged under the explicit profile change nothing the profile states; the profile never switches a default-on core feature off | The set is what the pilot fixtures and the amendment name; it is not an operator-reviewed inventory of the real workspace (that is #1285, where the feature profile was deliberately left unchanged). A feature the journey needs and no fixture names would be added by a reviewed change. |
+| The effective pilot profile | PARTIAL: pinned as a golden list, not operator-reviewed | `test/helpers/pilot_profile.dart`, `pilot_profile_test.dart` and the golden `test/helpers/pilot_effective_features.txt` (52 features): the five excluded features explicitly OFF with every dependent; ON with their requirement chain: `invoicing` and `expenseRepartition` (the flags the pilot fixtures 160 and 164 enable; the test reads those files and fails if one is not named), `supplyClassification` and `configurableSettings` (named by the amendment); the exact effective set must equal the golden list, so a core default or an unlisted platform feature cannot change it unnoticed; a stored profile that leaves a required key out loses it (#2566: an absent platform flag is off) | The golden list is maintainer-derived from the current manifest, not an operator-reviewed inventory of the real workspace (#1285, where the feature profile was deliberately left unchanged); a feature the journey needs and no fixture names would be added by a reviewed change |
 | Refund action (#2570) | PASS for the invoice lines and the ledger (fixed, not excluded) | `191_credit_note_refund_not_reinvoiced.sql` asserts the refund and adjustment lines of `invoice_lines_for` and the ledger/VAT; the spare-credit and bill-section assertions are in a separate Dart regression that was NOT in this run | `accountingBook` off is not what removes refunds; the refund is a supported command whose re-invoicing defect is fixed |
-| Preview/result fields (#2585), invoices of zero category | PASS on this candidate | `169_invoice_zero_category_series.sql` (29 assertions, rolled back on dev, this candidate); a preview line without its VAT rate is refused by the decoder (#1917) | |
+| Preview/result fields (#2585), invoices of zero category | PASS on this candidate (database); decoder: run in #3276 | `169_invoice_zero_category_series.sql` (29 assertions, rolled back on dev, this candidate). The preview decoder now refuses a line without its VAT rate (#1917): its test ran in #3276 (the money and ux folders, 2,808 passed, CI green at `a6c9aa7d8`), not in the runs listed above | |
 | Small-server-cap traversal (#2587) | NOT RUN on this candidate | `scripts/snapshot_concurrency_check.sh` needs a local stack; no run was made today | #2586 (a denied image versus an optional absence) has no test that I found |
 | Statement equals handoff | PARTIAL | `160` asserts the statement, `invoice_lines_for` and the issued invoice all total 4700. `accountant_handoff_flow_test` uses its own fake invoices and compares the archive's CSV to them; it asserts no 4700 | the two ends are not checked on one fixture: NOT RUN |
 
-Not re-run on this candidate, and why: the restore rehearsal
-(`scripts/restore_check.sh --application`, last report 9 October on schema 394:
-it creates two disposable official local stacks and the machine was kept for other
-work), the two-account browser journey (reload, reconnect; last PASS 9 October on
-`83402914f`/`54c889506`), and the services/functions Deno tests. Still BLOCKED or
-NOT RUN, because they need a person or a device: the operator's privacy, rights,
-contact and security review, and a physical screen-reader run of the pilot journey.
-On 3 November the owner ran TalkBack on an Android 16 phone over the BI page, the
-export and the Sales, Purchases and Cash screens (PASS, recorded on #2577 and
-#2581); that is not the pilot journey.
+Run after the Dart and database runs, on 3 November, with the owner (the pilot
+operator) present:
+
+| Item | Status | Evidence | What is not claimed |
+|---|---|---|---|
+| Restore rehearsal (database and objects) | PASS (disposable local) on master `a6c9aa7d8`, schema 664 | `scripts/restore_check.sh --application`: source and target stacks, 38 database assertions (`12`, `20`, `22`, `23`, `28`), registered users, the native export, the existing-database drill, database backup and restore, storage restore, the target's native auth and reads, and storage damage detected; status `ready`, 100 s; report [3 November](evidence/pilot-recovery-2026-11-03.json) | hosted restore and email delivery are not exercised (the report says so); the report has no candidate-SHA field, so the SHA is recorded here |
+| Screen reader on the pilot journey | PASS (one device) | The owner ran TalkBack on a Samsung Galaxy S23 Ultra, Android 16: open the plan, book a seat, the refused conflict, check in and out, cancel, My finances. All six steps OK. The app version was not recorded. | iPhone and VoiceOver; other Android versions |
+| Two clients: live update, conflicting booking refused, reload, reconnect | PASS with one account | The owner ran two Edge windows (one InPrivate) both signed in with the same Google account | an owner and a separate ordinary member (a role change seen live, a member refused) was NOT RUN; it is covered by `second_client_refresh_test`, `realtime_sync_test`, pgTAP 10, 11, 12, 157 and 161. A run by the maintainer with two frames of one session booked a past period and proved nothing. |
+| Privacy, rights, contact and security responsibility review | RECORDED | The operator's answers are on #1974 (2026-11-03): responsibility, data held, rights requests, owner/admin access, incident contact | the product does not yet implement the Personal Data Admin role, the birthday field, the workspace choice on rights requests or the incident-contact setting: #3278 |
+
+Not re-run on this candidate: `scripts/snapshot_concurrency_check.sh` (#2587) and
+the services/functions Deno tests; the two-account browser journey with a
+separate member (above).
