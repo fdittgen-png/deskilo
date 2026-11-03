@@ -5,7 +5,7 @@
 -- taken, so a refused invoice leaves no row and no gap. A consumer is not
 -- asked for a postal address; a stated business capacity is.
 begin;
-select plan(24);
+select plan(25);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001917'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -98,14 +98,19 @@ select throws_ok($$select public.create_invoice('00000000-0000-4000-8000-0000001
 select is((select count(*)::int from public.invoices where workspace_id = '00000000-0000-4000-8000-0000001917b1'),
   0, 'and leaves no invoice behind');
 
--- #1917: a rate with no percent or no tax category cannot exist, so a missing
--- classification is never read as 0 %, as category O (exempt) or as anything else.
+-- #1917: the rate table refuses an explicit NULL percent or category and an
+-- omitted percent, so a rate row never carries a missing rate that could be
+-- read as 0 %. An omitted category is the documented default S (0072): a rate
+-- row says its percent itself.
 select throws_ok($$insert into public.vat_rates(workspace_id,label,percent)
     values ('00000000-0000-4000-8000-0000001917b1','No percent',null)$$,
-  '23502', null, 'a rate without a percent is refused by the table, never read as 0 %');
+  '23502', null, 'an explicit NULL percent is refused by the table, never read as 0 %');
 select throws_ok($$insert into public.vat_rates(workspace_id,label,percent,category)
     values ('00000000-0000-4000-8000-0000001917b1','No category',20,null)$$,
-  '23502', null, 'a rate without a tax category is refused by the table, never read as exempt');
+  '23502', null, 'an explicit NULL tax category is refused by the table');
+select throws_ok($$insert into public.vat_rates(workspace_id,label)
+    values ('00000000-0000-4000-8000-0000001917b1','Percent omitted')$$,
+  '23502', null, 'a rate with no percent at all is refused: nothing defaults to 0 %');
 
 select * from finish();
 rollback;
