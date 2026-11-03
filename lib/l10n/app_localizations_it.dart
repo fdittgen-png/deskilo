@@ -4298,6 +4298,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è più membro di questo spazio — chieda un invito a un amministratore.';
 
   @override
+  String get bookingNotAllowedError =>
+      'Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.';
+
+  @override
   String get bookingOnePlace =>
       'Ha già una prenotazione in quel periodo — un posto alla volta.';
 

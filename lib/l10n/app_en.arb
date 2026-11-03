@@ -5389,6 +5389,10 @@
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
   },
+  "bookingNotAllowedError": "You may not make reservations in this space. Ask an owner to let members book.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "You already have a booking in that period — one place at a time.",
   "@bookingOnePlace": {
     "description": "Refusal when the member already holds an overlapping active reservation (#412)"

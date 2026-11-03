@@ -133,18 +133,27 @@ String bookingErrorText(
       message.contains('reserved as a whole')) {
     return l10n.levelConflict;
   }
-  // #1030 — membership refusals. create_reservation raises 'not an
-  // active member' for a paused member and 'not a member of this
-  // workspace' for one who was removed; both used to render as "the
-  // seat may have just been taken", which blames a race the member
-  // cannot win and hides the one thing an administrator can fix.
+  return _membershipText(l10n, message) ?? fallback;
+}
+
+/// #1030 — membership refusals. create_reservation raises 'not an
+/// active member' for a paused member and 'not a member of this
+/// workspace' for one who was removed; both used to render as "the
+/// seat may have just been taken", which blames a race the member
+/// cannot win and hides the one thing an administrator can fix.
+/// #3269 (0661) — and 'not allowed to make reservations' for a member who
+/// does not hold the right to book at all.
+String? _membershipText(AppLocalizations l10n, String message) {
   if (message.contains(MembershipPausedError.serverSubstring)) {
     return l10n.bookingMembershipPaused;
   }
   if (message.contains(NotAMemberError.serverSubstring)) {
     return l10n.bookingNotAMember;
   }
-  return fallback;
+  if (message.contains('not allowed to make reservations')) {
+    return l10n.bookingNotAllowedError;
+  }
+  return null;
 }
 
 /// The number the server put in its message ('... of 90 days').

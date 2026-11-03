@@ -140,6 +140,13 @@ update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb
     || '{"mcpAccess": true, "invoicing": true, "moneyTab": true, "placeFeedback": true, "levelBooking": true, "adminInvoicing": true}',
   booking_rules = booking_rules || '{"open_weekdays":[1,2,3,4,5,6,7],"granularity":"half_day","work_start_minutes":480,"half_boundary_minutes":720,"work_end_minutes":1080}'
  where id in (current_setting('t.a')::uuid, current_setting('t.t')::uuid);
+-- #3269: a member books only with the right; the owner grants it, as the setup step says.
+update public.workspaces set role_permissions = coalesce(role_permissions, '{}'::jsonb) || jsonb_build_object(
+    'member', coalesce(role_permissions->'member', '[]'::jsonb) || '["makeReservations"]'::jsonb,
+    'admin', coalesce(role_permissions->'admin',
+      '["manageMembers","manageDocuments","manageServices","approveExpenses","viewFinances","viewNegotiations","manageNegotiations","manageSites","manageReservations","operateKiosk","exportData","viewPersonalData","deployToDev","accessProd"]'::jsonb)
+      || '["makeReservations"]'::jsonb)
+ where id in (current_setting('t.a')::uuid, current_setting('t.t')::uuid);
 insert into public.members (workspace_id, user_id, status, is_admin, subscription_pct)
 select current_setting('t.' || w)::uuid, pg_temp.u(p), 'active', adm, 100
   from (values ('a', 'm1', false), ('a', 'm2', false), ('a', 'ad', true),

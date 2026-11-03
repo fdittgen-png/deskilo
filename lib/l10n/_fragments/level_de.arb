@@ -12,6 +12,10 @@
   "levelSupplementLabel": "Etagen-Reservierungen",
   "levelNotAllowed": "Sie dürfen keinen ganzen Tisch, kein Büro und keine ganze Etage reservieren.",
   "levelConflict": "Die Etage hat Reservierungen in diesem Zeitraum.",
+  "bookingNotAllowedError": "Sie dürfen in diesem Bereich keine Buchungen vornehmen. Bitten Sie eine Inhaberin oder einen Inhaber, Mitgliedern das Buchen zu erlauben.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
   "bookingCheckedInElsewhere": "Sie sind woanders eingecheckt — checken Sie dort zuerst aus.",
   "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — der Inhaber aktiviert dafür „Als Ganzes buchbar“ im Editor.",

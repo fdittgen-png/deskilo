@@ -278,6 +278,8 @@ select is(
 update public.workspaces
    set booking_rules = booking_rules || '{"allow_past_bookings": true}'::jsonb
  where id = pg_temp.ws();
+-- #3269: a member books only with the right; the owner grants it.
+select public.set_role_permission(pg_temp.ws(), 'member', 'makeReservations', true);
 
 create or replace function pg_temp.book_ten_then_one_more()
 returns table (made int, refusal text)
