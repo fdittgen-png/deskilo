@@ -56,9 +56,32 @@ class _CityPlan {
           _office(site, floor, room, levelId);
         }
         if (site == 0 && floor == 0) _parking(levelId);
-        if (floor == 0) _utilities(site, levelId);
+        if (floor == 0) {
+          _utilities(site, levelId);
+          _meetingRoom(site, levelId);
+        }
       }
     }
+  }
+
+  void _meetingRoom(int site, String levelId) {
+    final id = '$prefix-meeting-$site';
+    plan.offices.add(Office(
+      id: id, workspaceId: workspaceId, levelId: levelId,
+      name: 'Meeting room', color: 4, bookableAsWhole: false,
+      rect: const GridRect(x: 0, y: 64, w: 18, h: 12),
+    ));
+    plan.desks.add(Desk(
+      id: '$id-table', workspaceId: workspaceId, officeId: id,
+      name: 'Conference table',
+      rect: const GridRect(x: 2, y: 66, w: 12, h: 4),
+    ));
+    plan.seats.add(Seat(
+      id: '$id-resource', workspaceId: workspaceId, deskId: '$id-table',
+      name: 'Meeting room', x: 2, y: 66, orientation: SeatOrientation.n,
+      chair: '', amenities: const [], resourceKind: ResourceKind.room,
+      capacity: 8, slotMinutes: 60,
+    ));
   }
 
   void _office(int site, int floor, int room, String levelId) {
@@ -168,7 +191,11 @@ class _CityPlan {
           chair: '',
           amenities: const [],
           resourceKind: ResourceKind.parking,
-          parkingKind: ParkingKind.standard,
+          parkingKind: switch (bay) {
+            1 => ParkingKind.ev,
+            2 => ParkingKind.accessible,
+            _ => ParkingKind.standard,
+          },
           slotMinutes: hourly ? 60 : null,
         ),
       );
@@ -212,6 +239,7 @@ typedef CityBookingSpec = ({
   DateTime now,
   int years,
   List<String> members,
+  Set<String> partTimeMembers,
   String timeZone,
   List<({String siteId, String memberId, DateTime month})> siteRentals,
 });
@@ -227,6 +255,7 @@ void seedCityBookings(
     :now,
     :years,
     :members,
+    :partTimeMembers,
     :timeZone,
     :siteRentals,
   ) = spec;
@@ -257,6 +286,9 @@ void seedCityBookings(
     day = day.add(const Duration(days: 1))
   ) {
     if (day.weekday >= DateTime.saturday) continue;
+    // Part-time members visit on the first three weekdays. There are enough
+    // full-time members to keep the desks busy on the other days.
+    final availableMembers = _availableMembers(members, partTimeMembers, day);
     final ordinal = day.difference(start).inDays;
     for (final (index, seat) in plan.seats.indexed) {
       if (seat.resourceKind != ResourceKind.seat) continue;
@@ -278,7 +310,7 @@ void seedCityBookings(
           id: '$prefix-book-$ordinal-$index',
           workspaceId: workspaceId,
           seatId: seat.id,
-          memberId: members[(ordinal + index) % members.length],
+          memberId: availableMembers[(ordinal + index) % availableMembers.length],
           startsAt: begins,
           endsAt: ends,
           status: past
@@ -315,7 +347,29 @@ void seedCityBookings(
       );
     }
   }
+  _seedMeetingBookings(bookings, plan, spec, localNow);
 }
+
+void _seedMeetingBookings(FakeReservationRepository bookings,
+    FakeFloorPlanRepository plan, CityBookingSpec spec, tz.TZDateTime localNow) {
+  final zone = localNow.location;
+  for (final (index, room) in plan.seats
+      .where((seat) => seat.resourceKind == ResourceKind.room).indexed) {
+    final begins = tz.TZDateTime(zone, localNow.year, localNow.month,
+        localNow.day + index + 1, 17).toUtc();
+    bookings.reservations.add(Reservation(
+      id: '${spec.prefix}-meeting-booking-$index', workspaceId: spec.workspaceId,
+      seatId: room.id, memberId: spec.members.first, startsAt: begins,
+      endsAt: begins.add(const Duration(hours: 1)),
+      status: ReservationStatus.reserved,
+    ));
+  }
+}
+
+List<String> _availableMembers(List<String> members, Set<String> partTime, DateTime day) =>
+    day.weekday <= DateTime.wednesday
+        ? members
+        : members.where((member) => !partTime.contains(member)).toList();
 
 bool _siteRented(
   List<({String siteId, String memberId, DateTime month})> rentals,

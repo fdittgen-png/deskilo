@@ -15,7 +15,8 @@ DemoPurchasing cityPurchasing(
   required List<String> siteIds,
 }) {
   final suppliers = FakeSupplierRepository();
-  final purchases = FakePurchaseRepository(actor: actor);
+  final purchases = FakePurchaseRepository(
+    actor: actor, functionalCurrency: tenant ? 'USD' : 'GBP');
   final prefix = tenant ? 'ny' : 'uk';
   final country = tenant ? 'US' : 'GB';
   final vending = Supplier(
@@ -53,6 +54,7 @@ DemoPurchasing cityPurchasing(
     drinks: drinks,
     amazon: amazon,
   ));
+  _pendingBill(now, prefix, tenant ? 'USD' : 'GBP', stock, purchases);
   return DemoPurchasing(
     suppliers: suppliers,
     inbox: FakeEInvoiceInboxRepository(),
@@ -73,6 +75,7 @@ typedef _Bill = ({
   String currency,
   String title,
   List<PurchaseLine> lines,
+  bool paid,
 });
 
 void _landlordBills(
@@ -100,6 +103,7 @@ void _landlordBills(
       month: month,
       currency: 'USD',
       title: 'Rent and service fees',
+      paid: true,
       lines: const [
         PurchaseLine(
           lineNo: 1,
@@ -162,6 +166,8 @@ void _siteBills(
           month: month,
           currency: currency,
           title: title,
+          paid: !(kind == 'stock' && index == 0 &&
+              month == DateTime(now.year, now.month - 1)),
           lines: [
             PurchaseLine(
               lineNo: 1,
@@ -182,7 +188,7 @@ void _siteBills(
 }
 
 void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
-  final (:id, :supplier, :month, :currency, :title, :lines) = bill;
+  final (:id, :supplier, :month, :currency, :title, :lines, :paid) = bill;
   final cents = lines.fold<int>(0, (sum, line) => sum + line.grossCents);
   final summary = PurchaseSummary(
     id: id,
@@ -205,9 +211,10 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
     amountCents: cents,
     currency: currency,
     appliedCents: 0,
-    paidCents: cents,
-    remainingCents: 0,
+    paidCents: paid ? cents : 0,
+    remainingCents: paid ? 0 : cents,
     allocations: [
+      if (paid)
       SettlementAllocation(
         id: '$id-payment',
         isReversal: false,
@@ -230,4 +237,19 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
       ),
     )
     ..payables.add(PayableRow(obligation: obligation, purchase: summary));
+}
+
+void _pendingBill(DateTime now, String prefix, String currency,
+    Supplier supplier, FakePurchaseRepository purchases) {
+  purchases.add(PurchaseDetail(
+    summary: PurchaseSummary(
+      id: '$prefix-bill-pending', supplierId: supplier.id,
+      kind: PurchaseKind.bill, state: PurchaseState.pending,
+      category: 'Refreshments', reference: '$prefix-pending-supplies',
+      currency: currency, grossCents: 6400, receivedOn: now,
+    ),
+    revision: 1, sources: const [], supplierName: supplier.name,
+    supplierNumber: supplier.number,
+    lines: const [PurchaseLine(lineNo: 1, description: 'Snacks and drinks', grossCents: 6400)],
+  ));
 }

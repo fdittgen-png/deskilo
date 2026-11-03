@@ -14,6 +14,7 @@ import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,10 +47,18 @@ void main() {
     expect((d.periodStart, d.periodEnd), (quarter.start, quarter.end));
     expect(d.isPrepared, isTrue);
     expect(d.currency, 'GBP');
-    // 20 % on three invoices: the box figures follow from the invoices.
+    // Independently add the frozen invoice lines for the full quarter.
+    final lines = f.london.money.invoices
+        .where((i) => !i.issuedAt.isBefore(quarter.start) &&
+            !i.issuedAt.isAfter(quarter.end))
+        .expand((i) => i.lines).toList();
+    final net = lines.fold<int>(0, (sum, line) => sum +
+        (line.amountCents / (1 + line.vatPercent / 100)).round());
+    final gross = lines.fold<int>(0, (sum, line) => sum + line.amountCents);
     final cents = mtdBoxCents(d);
-    expect(cents['vatDueSales'], (125000 + 96050 + 133399) * 20 ~/ 100 + _roundingOf(125000, 96050, 133399));
-    expect(cents['totalValueSalesExVAT'], ((125000 + 96050 + 133399 + 33300) ~/ 100) * 100);
+    expect(lines.length, greaterThan(100));
+    expect(cents['vatDueSales'], gross - net);
+    expect(cents['totalValueSalesExVAT'], (net ~/ 100) * 100);
     expect(cents['vatDueAcquisitions'], 0);
   });
 
@@ -260,11 +269,6 @@ void main() {
   });
 }
 
-/// The rounding of three 20 % lines: each invoice's VAT is rounded alone.
-int _roundingOf(int a, int b, int c) =>
-    ((a * 20 / 100).round() + (b * 20 / 100).round() + (c * 20 / 100).round()) -
-    ((a + b + c) * 20 ~/ 100);
-
 void _unknownSpace() {
   test('a space the Demo does not know fails closed: no space repository is guessed', () async {
     final f = DemoFixture.build();
@@ -278,5 +282,6 @@ void _unknownSpace() {
     addTearDown(container.dispose);
     await container.read(currentWorkspaceProvider.future);
     expect(() => container.read(moneyRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    expect(() => container.read(kpiRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
   });
 }

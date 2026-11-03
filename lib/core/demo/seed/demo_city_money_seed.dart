@@ -18,7 +18,6 @@ typedef CityMoneySpec = ({
   String currency,
   DateTime now,
   int years,
-  DateTime? excludeQuarterFrom,
   List<Reservation> hourlyBookings,
   double vatPercent,
   List<({String siteId, String memberId, DateTime month})> siteRentals,
@@ -51,7 +50,6 @@ class _CityMoney {
     final workspaceId = spec.workspaceId, prefix = spec.prefix;
     final now = spec.now;
     final years = spec.years;
-    final excludeQuarterFrom = spec.excludeQuarterFrom;
     final hourlyBookings = spec.hourlyBookings;
     money.services
       ..clear()
@@ -77,14 +75,6 @@ class _CityMoney {
     final stop = DateTime(now.year, now.month);
     var month = DateTime(now.year - years, now.month);
     while (month.isBefore(stop)) {
-      if (excludeQuarterFrom != null &&
-          !month.isBefore(excludeQuarterFrom) &&
-          month.isBefore(
-            DateTime(excludeQuarterFrom.year, excludeQuarterFrom.month + 3),
-          )) {
-        month = DateTime(month.year, month.month + 1);
-        continue;
-      }
       for (final (index, member) in members.indexed) {
         _member(month, index, member, hours);
       }
@@ -133,7 +123,17 @@ class _CityMoney {
         )
         .toList();
     final amount = charge + supplies + usage + rentals.length * 500000;
-    final issued = DateTime(month.year, month.month);
+    // Snapshots must add the VAT rounded for each printed line, just as
+    // the return engine does, rather than rounding the invoice as one line.
+    final net = <int>[
+      charge,
+      if (bookedHours > 0) usage,
+      for (final _ in rentals) 500000,
+      for (final (_, quantity, unit) in sales)
+        if (quantity > 0) quantity * unit,
+    ].fold<int>(0, (sum, gross) => sum + vatSplit(gross, vatPercent).netCents);
+    // The month has finished before its actual usage can be invoiced.
+    final issued = DateTime(month.year, month.month + 1, 0);
     final paid = issued.add(const Duration(days: 5));
     final paymentId = '$id-payment';
     money.invoices.add(
@@ -181,14 +181,16 @@ class _CityMoney {
                   percent: vatPercent,
                   category: 'S',
                   grossCents: amount,
-                  netCents: (amount / (1 + vatPercent / 100)).round(),
-                  vatCents: amount - (amount / (1 + vatPercent / 100)).round(),
+                  netCents: net,
+                  vatCents: amount - net,
                 ),
               ]
             : const [],
         currency: currency,
         memberName: workspace.memberNames[member.id] ?? 'Demo member',
-        memberAddress: '',
+        memberAddress: currency == 'GBP'
+            ? 'Example Street, London'
+            : 'Example Avenue, New York',
         workspaceName: name,
         workspaceAddress: workspace.workspaces
             .firstWhere((w) => w.id == workspaceId)
@@ -262,6 +264,14 @@ class _CityMoney {
         ),
       );
     }
+    // A future transfer cannot settle an invoice in the current Demo.
+    final overdueMonth = DateTime(spec.now.year, spec.now.month - 2);
+    final overdue = memberId == 'member-2' &&
+        period == yearMonth(overdueMonth.year, overdueMonth.month);
+    if (overdue) {
+      money.invoiceReminders[id] = [issued.add(const Duration(days: 20))];
+    }
+    if (paid.isAfter(spec.now) || overdue) return;
     money.ledger.add(
       LedgerEntry(
         id: paymentId,

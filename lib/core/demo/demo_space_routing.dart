@@ -46,6 +46,7 @@ import 'data/plan_resource_repository.dart';
 import 'data/series_previewer.dart';
 import 'demo_fixture.dart';
 import 'demo_london_space.dart';
+import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
@@ -134,16 +135,13 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     workspaces: london.workspaces,
   );
   final newYorkPayments = DemoRecordedPaymentsRepository(money: newYork.money, workspaces: newYork.workspaces);
-  final newYorkBank = FakeBankStatementRepository(money: newYork.money, today: home.seededAt);
+  final newYorkBank = seedCityBankStatement(newYork.money, home.seededAt, 'ny', 'USD');
   final homeBank = seedDemoBankStatements(home.money, home.seededAt);
   final secondBank = FakeBankStatementRepository(
     money: second.money,
     today: home.seededAt,
   );
-  final londonBank = FakeBankStatementRepository(
-    money: london.money,
-    today: home.seededAt,
-  );
+  final londonBank = seedCityBankStatement(london.money, home.seededAt, 'uk', 'GBP');
   return [
     workspaceRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.workspaces, second.workspaces, london.workspaces, newYork.workspaces),

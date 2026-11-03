@@ -125,7 +125,6 @@ import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
-import 'data/kpi_repositories.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import 'data/mcp_onboarding_repository.dart';
@@ -334,13 +333,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // and the app's opener reads the server: none here.
       eventSourceOpenersProvider.overrideWithValue(const {}),
       // #1918 — capacity over the demo's own plan and bookings.
-      kpiRepositoryProvider.overrideWithValue(
-        DemoCapacityKpiRepository(
-          plan: fixture.floorPlan,
-          reservations: fixture.reservations,
-          now: fixture.seededAt,
-        ),
-      ),
+      kpiRepositoryProvider.overrideWith((ref) => demoCapacityKpi(ref, fixture)),
       ..._serverOnlyOverrides(),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),

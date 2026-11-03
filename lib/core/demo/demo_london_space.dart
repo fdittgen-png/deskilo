@@ -25,6 +25,8 @@ import 'data/workspace_roles_repository.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_money_seed.dart';
 import 'seed/demo_city_plan_seed.dart';
+import 'seed/demo_city_usage_seed.dart';
+import 'seed/demo_city_workflow_seed.dart';
 import 'seed/demo_london_seed.dart';
 
 class DemoLondonData {
@@ -84,10 +86,16 @@ class DemoLondonData {
         for (final m in [space.myMember, ...space.otherMembers])
           if (m.id != 'uk-member-82') m.id,
       ],
+      partTimeMembers: {
+        for (final m in [space.myMember, ...space.otherMembers])
+          if (m.subscriptionPct < 100) m.id,
+      },
       siteRentals: siteRentals,
     ));
-    final events = FakeEventRepository(actor: actor);
+    final events = FakeEventRepository(actor: actor, workspaceId: demoLondonSpaceId);
+    seedCityDecisions(events, 'uk', now);
     final money = FakeMoneyRepository(events: events);
+    seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
     seedLondonMoney(money, now);
     // The return of the closed quarter, prepared by the engine every space
     // uses; its figures are the invoices', not a number typed here.
@@ -100,7 +108,6 @@ class DemoLondonData {
       now: now,
       years: 3,
       hourlyBookings: const [],
-      excludeQuarterFrom: quarter.start,
       vatPercent: 20,
       siteRentals: siteRentals,
     ));
@@ -112,6 +119,7 @@ class DemoLondonData {
         periodEnd: quarter.end,
       ),
     );
+    seedCityUsage(money, reservations.reservations);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(
       calendar,
@@ -119,7 +127,7 @@ class DemoLondonData {
       money: money,
       events: events,
     );
-    return DemoLondonData._(
+    final city = DemoLondonData._(
       workspaces: space,
       floorPlan: plan,
       reservations: reservations,
@@ -134,6 +142,13 @@ class DemoLondonData {
         initiallyUnconfirmed: money.vatDeclarations.single.id,
       ),
     );
+    seedCityPeopleWorkflows((
+      space: space, fields: city.fields, roles: city.roles,
+      credits: city.credits, workspaceId: demoLondonSpaceId, prefix: 'uk', now: now,
+    ));
+    city.accessories.seedSmallCatalog(workspaceId: demoLondonSpaceId);
+    seedCityCharger(city.chargingStations, 'uk');
+    return city;
   }
 
   final FakeWorkspaceRepository workspaces;

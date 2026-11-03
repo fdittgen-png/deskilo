@@ -30,7 +30,22 @@ import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
+import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_valuation_seed.dart';
+
+DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
+  final id = ref.watch(currentWorkspaceProvider).value?.id;
+  final (plan, reservations) = switch (id) {
+    demoSecondSpaceId => (fixture.secondSpace.floorPlan, fixture.secondSpace.reservations),
+    demoLondonSpaceId => (fixture.london.floorPlan, fixture.london.reservations),
+    demoNewYorkSpaceId => (fixture.newYork.floorPlan, fixture.newYork.reservations),
+    null || '' || demoFirstSpaceId => (fixture.floorPlan, fixture.reservations),
+    _ => throw StateError('unknown demo space: $id'),
+  };
+  return DemoCapacityKpiRepository(
+    plan: plan, reservations: reservations, now: fixture.seededAt,
+  );
+}
 
 List<Override> demoCityCommerceOverrides(
   DemoFixture fixture,

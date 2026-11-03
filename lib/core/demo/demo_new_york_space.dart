@@ -19,6 +19,8 @@ import 'data/workspace_roles_repository.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_money_seed.dart';
 import 'seed/demo_city_plan_seed.dart';
+import 'seed/demo_city_usage_seed.dart';
+import 'seed/demo_city_workflow_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 
 class DemoNewYorkData {
@@ -75,9 +77,12 @@ class DemoNewYorkData {
       members: [
         for (final m in [space.myMember, ...space.otherMembers]) m.id,
       ],
+      partTimeMembers: const {},
     ));
-    final events = FakeEventRepository(actor: actor);
+    final events = FakeEventRepository(actor: actor, workspaceId: demoNewYorkSpaceId);
+    seedCityDecisions(events, 'ny', now);
     final money = FakeMoneyRepository(events: events);
+    seedCityExpenses(money, demoNewYorkSpaceId, 'ny', now);
     seedCityMoney(money, space, (
       workspaceId: demoNewYorkSpaceId,
       prefix: 'ny',
@@ -85,11 +90,11 @@ class DemoNewYorkData {
       currency: 'USD',
       now: now,
       years: 4,
-      excludeQuarterFrom: null,
       vatPercent: 0,
       siteRentals: const [],
       hourlyBookings: reservations.reservations,
     ));
+    seedCityUsage(money, reservations.reservations);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(
       calendar,
@@ -97,7 +102,7 @@ class DemoNewYorkData {
       money: money,
       events: events,
     );
-    return DemoNewYorkData._(
+    final city = DemoNewYorkData._(
       workspaces: space,
       floorPlan: plan,
       reservations: reservations,
@@ -105,6 +110,13 @@ class DemoNewYorkData {
       calendar: calendar,
       money: money,
     );
+    seedCityPeopleWorkflows((
+      space: space, fields: city.fields, roles: city.roles,
+      credits: city.credits, workspaceId: demoNewYorkSpaceId, prefix: 'ny', now: now,
+    ));
+    city.accessories.seedSmallCatalog(workspaceId: demoNewYorkSpaceId);
+    seedCityCharger(city.chargingStations, 'ny');
+    return city;
   }
 
   final FakeWorkspaceRepository workspaces;

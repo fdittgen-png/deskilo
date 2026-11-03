@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/providers/supplier_balance_provider.dart'
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import 'data/company_lookup_repository.dart';
@@ -15,6 +16,19 @@ import 'data/supplier_balance_repository.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+
+String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
+  null || '' || 'ws-1' => 'ws-1',
+  demoLondonSpaceId => demoLondonSpaceId,
+  demoNewYorkSpaceId => demoNewYorkSpaceId,
+  _ => '__unavailable__',
+};
+
+String _approvalCurrency(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
+  demoLondonSpaceId => 'GBP',
+  demoNewYorkSpaceId => 'USD',
+  _ => 'EUR',
+};
 
 /// Keep the supplier and purchase readers inside the same Demo fixture.
 List<Override> demoPurchasingOverrides(
@@ -50,6 +64,8 @@ List<Override> demoPurchasingOverrides(
         demoNewYorkSpaceId => (newYork ?? purchasing).purchases,
         _ => purchasing.purchases,
       },
+      allowedWorkspaceId: _approvalSpace(ref),
+      spaceCurrency: _approvalCurrency(ref),
       thresholdUnits: (workspaceId) async {
         final settings = await ref
             .read(settingsRepositoryProvider)

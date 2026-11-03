@@ -46,6 +46,7 @@ import 'demo_persona.dart';
 import 'demo_second_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
+import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
@@ -195,23 +196,21 @@ class DemoFixture {
     final secondSpace = DemoSecondSpaceData.build(home: workspaces, actor: () => actor.memberId, now: today)
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
       ..kioskName = demoCast[1].name;
     final problems = [
-      ...validateDemoFixture(
-        workspaces: workspaces,
-        plan: floorPlan,
-        reservations: reservations,
-        money: money,
-      ),
+      ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
+        reservations: reservations, money: money),
       ...validateDemoFixture(
         workspaces: secondSpace.workspaces,
         plan: secondSpace.floorPlan,
         reservations: secondSpace.reservations,
         money: secondSpace.money,
       ),
+      ..._validateCityFixtures(london, newYork),
     ];
     if (problems.isNotEmpty) {
       // Fails closed, and says what is wrong: a session that points at a
@@ -233,12 +232,7 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: demoProfiles()
-        ..profiles.addAll([
-          for (final p in demoSecondCast)
-            if (p.userId.startsWith('user-de-'))
-              Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
-        ]),
+      profiles: _profilesForSpaces(london, newYork),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -259,7 +253,7 @@ class DemoFixture {
       holds: holds,
       secondSpace: secondSpace,
       london: london,
-      newYork: DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces),
+      newYork: newYork,
     );
   }
 
@@ -347,3 +341,19 @@ class DemoFixture {
     auth.signInAs(persona.userId);
   }
 }
+
+List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) => [
+  ...validateDemoFixture(workspaces: london.workspaces, plan: london.floorPlan,
+      reservations: london.reservations, money: london.money),
+  ...validateDemoFixture(workspaces: ny.workspaces, plan: ny.floorPlan,
+      reservations: ny.reservations, money: ny.money),
+];
+
+FakeProfileRepository _profilesForSpaces(DemoLondonData london, DemoNewYorkData ny) =>
+    demoProfiles()..profiles.addAll([
+      for (final p in demoSecondCast)
+        if (p.userId.startsWith('user-de-'))
+          Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
+      ...demoCityProfiles(london.workspaces, 'uk'),
+      ...demoCityProfiles(ny.workspaces, 'ny'),
+    ]);

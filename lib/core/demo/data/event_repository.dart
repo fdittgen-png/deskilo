@@ -14,9 +14,10 @@ class FakeEventRepository implements EventRepository {
   /// of held in a field. Demo passes its fixture's active member, so a
   /// decision taken as Chiara is recorded as Chiara's; the suite's own
   /// tests keep assigning [respondingMemberId].
-  FakeEventRepository({this._actor});
+  FakeEventRepository({this._actor, this.workspaceId = 'ws-1'});
 
   final String Function()? _actor;
+  final String workspaceId;
 
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
@@ -120,7 +121,7 @@ class FakeEventRepository implements EventRepository {
   }) async {
     final event = WorkspaceEvent(
       id: 'writeoff-${_nextEventId++}',
-      workspaceId: 'ws-1',
+      workspaceId: workspaceId,
       type: EventType.invoiceWriteoff,
       action: EventAction.submitted,
       actorMemberId: respondingMemberId,
@@ -154,7 +155,7 @@ class FakeEventRepository implements EventRepository {
     }
     final event = WorkspaceEvent(
       id: 'ev-terms-${events.length + 1}',
-      workspaceId: 'ws-1',
+      workspaceId: workspaceId,
       type: EventType.paymentTermsChange,
       action: EventAction.submitted,
       actorMemberId: 'member-1',
@@ -190,7 +191,7 @@ class FakeEventRepository implements EventRepository {
     }
     final event = WorkspaceEvent(
       id: 'resdel-${_nextEventId++}',
-      workspaceId: 'ws-1',
+      workspaceId: workspaceId,
       type: EventType.reservationDelete,
       action: EventAction.submitted,
       actorMemberId: respondingMemberId,

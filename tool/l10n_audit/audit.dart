@@ -128,6 +128,11 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
     reason: 'Demo records: an English supplier invoice title as the '
         'fictional business stores it, not an application label',
   ),
+  'lib/core/demo/seed/demo_city_workflow_seed.dart': (
+    allowed: 5,
+    reason: 'Demo records: fictional expense, badge and document titles stored by '
+        'the English-speaking spaces, not application interface labels',
+  ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,
     reason: 'cloud region names as the provider spells them — a place '
