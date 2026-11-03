@@ -2,7 +2,7 @@
 -- #1917: feature-off issuing and requests refuse under the authenticated
 -- role; readiness explains it, while whole-month charges and history survive.
 begin;
-select plan(14);
+select plan(15);
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   uo uuid := '00000000-0000-4000-8000-000000191701';
@@ -61,6 +61,8 @@ select public.set_feature_flags(current_setting('deskilo.pilot.ws')::uuid,'{"inv
 select throws_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
  current_setting('deskilo.pilot.m')::uuid,'2026-10')$$,
  'DKI01','invoice_essentials_missing','twin: disabled parent also refuses whole-month issuing');
+select is((select count(*)::int from public.invoices where member_id=current_setting('deskilo.pilot.m')::uuid),2,
+ 'the refused issuances created no local invoice: only the historical one and the permitted whole month exist');
 select is((select md5(to_jsonb(i)::text) from public.invoices i
  where member_id=current_setting('deskilo.pilot.m')::uuid and period='2026-08'),
  current_setting('deskilo.pilot.before'),'historical invoice content remains identical');

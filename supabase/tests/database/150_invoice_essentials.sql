@@ -5,7 +5,7 @@
 -- taken, so a refused invoice leaves no row and no gap. A consumer is not
 -- asked for a postal address; a stated business capacity is.
 begin;
-select plan(22);
+select plan(24);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001917'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -97,6 +97,15 @@ select throws_ok($$select public.create_invoice('00000000-0000-4000-8000-0000001
   'DKI01', 'invoice_essentials_missing', 'create_invoice refuses before taking a number');
 select is((select count(*)::int from public.invoices where workspace_id = '00000000-0000-4000-8000-0000001917b1'),
   0, 'and leaves no invoice behind');
+
+-- #1917: a rate with no percent or no tax category cannot exist, so a missing
+-- classification is never read as 0 %, as category O (exempt) or as anything else.
+select throws_ok($$insert into public.vat_rates(workspace_id,label,percent)
+    values ('00000000-0000-4000-8000-0000001917b1','No percent',null)$$,
+  '23502', null, 'a rate without a percent is refused by the table, never read as 0 %');
+select throws_ok($$insert into public.vat_rates(workspace_id,label,percent,category)
+    values ('00000000-0000-4000-8000-0000001917b1','No category',20,null)$$,
+  '23502', null, 'a rate without a tax category is refused by the table, never read as exempt');
 
 select * from finish();
 rollback;
