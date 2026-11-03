@@ -85,3 +85,44 @@ and the pilot operator's review of COWORKONTI development remain outstanding.
 * The local restore and named browser journey passed. Final release and operator
   review remain open; their missing evidence must be supplied before the
   pilot is called ready.
+
+## Candidate re-run — 3 November 2026 (#1974)
+
+Candidate: master `351af01a6` (schema 664 on master and on the dev project) plus
+`test/features/workspace/pilot_profile_test.dart`. Roles, not people.
+
+Database, as rolled-back real-pgTAP bundles on the dev project (each ends in
+PGTAP_PASS; nothing persists): `161_pilot_journey` 14, `160_pilot_reconciliation`
+19, `163_unreviewed_invoice_treatment` 11, `164_invoice_feature_guards` 14,
+`191_credit_note_refund_not_reinvoiced` 7, `14_feature_gates` 16 — all PASS.
+
+Dart, one run (exit 0, `All tests passed!`, 207 tests), through the guarded runner:
+
+```
+test/a11y test/ux/demo_journeys_test.dart
+test/features/reservations/second_client_refresh_test.dart
+test/features/reservations/check_in_presence_test.dart
+test/features/money/accountant_handoff_flow_test.dart
+test/core/cache test/core/realtime_sync_test.dart test/lint/sign_out_test.dart
+test/app/route_access_test.dart
+test/features/workspace/pilot_exclusions_test.dart
+test/features/workspace/pilot_profile_test.dart
+```
+
+| Amendment item (2026-10-14) | Status | Evidence | What is not claimed |
+|---|---|---|---|
+| The WHOLE effective pilot profile, not only the OFF keys | PASS (pinned) | NEW `pilot_profile_test.dart`: the five excluded features explicitly OFF with every dependent; `supplyClassification` and `configurableSettings` explicitly ON with their requirement chain; a stored profile that leaves a required key out loses it (#2566: an absent platform flag is off), and the old default-on platform flags merged under the explicit profile change nothing the profile states; the profile never switches a default-on core feature off | The operator's reviewed diff of a real workspace is #1285. The profile's ON list is the two features the amendment names; any further feature the pilot needs is added by a reviewed change to this test. |
+| Refund action (#2570) | PASS (fixed, not excluded) | `191_credit_note_refund_not_reinvoiced.sql`: a refunded credit note leaves no adjustment, spare credit or bill section in the next month | `accountingBook` off is not what removes refunds; the refund is a supported command whose re-invoicing defect is fixed and pinned. |
+| Preview/result fields (#2585), small-server-cap traversal (#2587), invoices of zero category (#2585) | PASS (existing) | `169_invoice_zero_category_series.sql`, `scripts/snapshot_concurrency_check.sh`; a preview line without its VAT rate is now refused by the decoder (#1917) | #2586 (a denied image versus an optional absence) has no test that I found |
+| Statement equals handoff | PASS by chain on the same figures | `160` asserts the statement, `invoice_lines_for` and the issued invoice all total 4700; `accountant_handoff_flow_test` parses the archive and asserts each invoice once with gross equal to the issued gross | no single test runs both ends on one fixture |
+
+Not re-run on this candidate, and why: the restore rehearsal
+(`scripts/restore_check.sh --application`, last report 9 October on schema 394:
+it creates two disposable official local stacks and the machine was kept for other
+work), the two-account browser journey (reload, reconnect; last PASS 9 October on
+`83402914f`/`54c889506`), and the services/functions Deno tests. Still BLOCKED or
+NOT RUN, because they need a person or a device: the operator's privacy, rights,
+contact and security review, and a physical screen-reader run of the pilot journey.
+On 3 November the owner ran TalkBack on an Android 16 phone over the BI page, the
+export and the Sales, Purchases and Cash screens (PASS, recorded on #2577 and
+#2581); that is not the pilot journey.
