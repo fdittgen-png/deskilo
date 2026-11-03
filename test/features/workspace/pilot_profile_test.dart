@@ -6,25 +6,12 @@
 // and configurableSettings, which the pilot needs, are explicitly ON. An
 // absent key is NOT on since #2566 (a platform flag nobody chose is off), so
 // a profile that leaves one out loses it: the profile must say it.
+import 'dart:io';
+
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'pilot_exclusions_test.dart' show dependentsOf, pilotExcluded;
-
-/// What the pilot needs on, beside the core. Each brings its requirement chain.
-const pilotRequiredOn = <WorkspaceFeature>{
-  WorkspaceFeature.supplyClassification,
-  WorkspaceFeature.configurableSettings,
-};
-
-/// The profile as stored: every excluded feature explicitly off, every
-/// required one explicitly on with what it needs.
-Map<String, bool> pilotProfile() => {
-      for (final f in pilotExcluded) f.dbKey: false,
-      for (final f in pilotRequiredOn)
-        for (final e in featureFlagsToggleDelta(feature: f, value: true).entries)
-          e.key.dbKey: e.value,
-    };
+import '../../helpers/pilot_profile.dart';
 
 Set<WorkspaceFeature> _effective(Map<String, dynamic> flags) =>
     effectiveFeatures(resolveEnabledFeatures(flags));
@@ -62,6 +49,10 @@ void main() {
   test('a legacy profile that leaves a required key out loses it (#2566): '
       'absent is off, so the pilot profile must state it', () {
     for (final f in pilotRequiredOn) {
+      final entry = featureManifest[f]!;
+      // A default-on core feature stays on whatever is stored; only a flag
+      // nobody chose that resolves OFF can be lost this way.
+      if (entry.tier == FeatureTier.core && entry.defaultOn) continue;
       final legacy = {...pilotProfile()}..remove(f.dbKey);
       expect(_effective(legacy).contains(f), isFalse,
           reason: '${f.name} left out of the stored profile');
@@ -88,6 +79,24 @@ void main() {
               requirementChain(excluded).any((r) => !_effective(changed).contains(r)),
           isTrue,
           reason: '${excluded.name} on is either effective or held by its own parent');
+    }
+  });
+
+  test('the flags the pilot fixtures enable are all in the required set', () {
+    // 160 and 164 are the pilot's database journey; the features they switch
+    // on are what the journey needs, so the profile must name every one.
+    final named = {for (final f in pilotRequiredOn) f.dbKey};
+    for (final file in const [
+      'supabase/tests/database/160_pilot_reconciliation.sql',
+      'supabase/tests/database/164_invoice_feature_guards.sql',
+    ]) {
+      final sql = File(file).readAsStringSync();
+      final flags = RegExp(r'\{("[A-Za-z]+":true(?:,"[A-Za-z]+":true)*)\}')
+          .firstMatch(sql);
+      expect(flags, isNotNull, reason: '$file has no feature_flags literal');
+      for (final m in RegExp(r'"([A-Za-z]+)":true').allMatches(flags![1]!)) {
+        expect(named, contains(m[1]), reason: '$file enables ${m[1]}');
+      }
     }
   });
 
