@@ -3,8 +3,12 @@
 -- backup: the heartbeat lives in public.presence since 0616; this file first
 -- copies any value profiles.last_seen_at still holds into it (keeping the
 -- later of the two), so the drop loses no heartbeat. The column held nothing
--- else (no policy, view, index, constraint or function body reads it: a drop
--- without CASCADE would refuse otherwise).
+-- else. Nothing server-side reads it: the drop runs without CASCADE, so it
+-- refuses if a policy, view, index or constraint depends on it; function
+-- bodies are NOT tracked as dependencies, so they were searched instead (every
+-- public function body on the dev project, for profiles.last_seen_at and p.last_seen_at:
+-- no hit; the two projections read presence) and the Edge functions and scripts
+-- were read at source.
 --
 -- #3141 (the contract step of #3123): no supported app reads
 -- profiles.last_seen_at any more, so the column goes. The projections answer
