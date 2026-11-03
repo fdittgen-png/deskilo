@@ -107,8 +107,10 @@ declare
   v_told integer;
 begin
   v_me := public.my_active_member(p_workspace_id);
-  if not (public.is_owner_of(p_workspace_id)
-          or public.has_permission(p_workspace_id, 'managePrivacy')) then
+  -- The right itself decides: an owner holds every permission, and a co-owner
+  -- holds it only when the workspace's co-owner list does (an explicit list
+  -- without managePrivacy is respected here as everywhere).
+  if not public.has_permission(p_workspace_id, 'managePrivacy') then
     raise exception 'not allowed to record a privacy incident' using errcode = '42501';
   end if;
   if p_kind is null or p_kind not in ('data_breach', 'wrong_invoice', 'other') then

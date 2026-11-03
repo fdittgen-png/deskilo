@@ -11,7 +11,7 @@
 --     holder of managePrivacy (owner, co-owner, the role's member) and none to an
 --     admin or a plain member; the type is read by managePrivacy only.
 begin;
-select plan(22);
+select plan(26);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -141,9 +141,16 @@ select is((select count(*)::int from public.events
 -- Who can READ it: events_select also admits the actor or subject and any member
 -- under a wildcard validation policy; the restrictive policy narrows the type to
 -- the holders of the right now.
+-- A wildcard validation policy open to every member: the member may validate
+-- ANY event type (0144 lets such a member read those events), and still reads
+-- no incident.
+insert into public.validation_policies (workspace_id, event_type, validator_scope)
+values (pg_temp.ws(), null, 'members');
 select pg_temp.act_as(pg_temp.u('c2'));
+select ok(public.may_validate_event_type(pg_temp.ws(), 'privacy_incident'),
+  'the plain member satisfies may_validate_event_type for the incident under the wildcard members policy');
 select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
-  'a plain member reads no incident event');
+  'and still reads no incident event: the restrictive policy beats the validator rule');
 reset role;
 select pg_temp.act_as(pg_temp.u('c4'));
 select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
@@ -161,6 +168,20 @@ select pg_temp.act_as(pg_temp.u('c5'));
 select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
   'a former holder, still the subject of the events, reads none');
 reset role;
+
+-- A co-owner whose workspace has an EXPLICIT list without managePrivacy does not
+-- hold the right: they cannot record an incident, are not told, and read none.
+update public.workspaces
+   set role_permissions = '{"co_owner": ["viewPersonalData"]}'::jsonb
+ where id = pg_temp.ws();
+select pg_temp.act_as(pg_temp.u('c3'));
+select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
+  'such a co-owner reads no incident event');
+reset role;
+select is(pg_temp.incident_as('c3', 'other', 'tried'), '42501',
+  'cannot record one');
+select is(pg_temp.incident_as('c1', 'other', 'owner again'), '1',
+  'the owner records one, and only the owner is told: the role holder lost the role and the co-owner has no right');
 
 select * from finish();
 rollback;

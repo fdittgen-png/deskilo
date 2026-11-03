@@ -5,7 +5,8 @@
 -- restated function keeps its grants (authenticated reads the registry).
 --
 -- Also (reviewer finding on 0666): the privacy_incident event is readable only by
--- an owner or a holder of managePrivacy. events_select also admits the actor or the
+-- who holds managePrivacy (an owner always does; a co-owner only when the
+-- workspace's co-owner list gives it). events_select also admits the actor or the
 -- subject of an event and any member under a wildcard validation policy, and a
 -- former holder would keep reading; a RESTRICTIVE select policy narrows the type to
 -- the people who hold the right now.
@@ -443,7 +444,6 @@ drop policy if exists privacy_incident_holders_only on public.events;
 create policy privacy_incident_holders_only on public.events
   as restrictive for select to authenticated
   using (type <> 'privacy_incident'
-         or public.is_owner_of(workspace_id)
          or public.has_permission(workspace_id, 'managePrivacy'));
 
 revoke execute on function public.template_field_registry() from public, anon;
