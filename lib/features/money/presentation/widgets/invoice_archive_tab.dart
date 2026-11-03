@@ -84,22 +84,24 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     await showInvoiceDetailSheet(
       context,
       ref: ref,
-      invoice: invoice,
-      match: match,
-      settledByNumber: settledByNumberOf(
-          invoice, ref.read(invoicesProvider).value ?? const []),
-      canIssue: widget.canIssue,
-      isEu: widget.isEu,
-      reminder: reminder,
-      replacedByNumber: replacedByNumber,
-      showMemberName: widget.showMemberNames,
-      transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
-      journey: readInvoiceJourney(
-        ref,
-        invoice,
+      view: InvoiceDetailView(
+        invoice: invoice,
         match: match,
+        settledByNumber: settledByNumberOf(
+            invoice, ref.read(invoicesProvider).value ?? const []),
+        canIssue: widget.canIssue,
+        isEu: widget.isEu,
         reminder: reminder,
         replacedByNumber: replacedByNumber,
+        showMemberName: widget.showMemberNames,
+        transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
+        journey: readInvoiceJourney(
+          ref,
+          invoice,
+          match: match,
+          reminder: reminder,
+          replacedByNumber: replacedByNumber,
+        ),
       ),
     );
   }

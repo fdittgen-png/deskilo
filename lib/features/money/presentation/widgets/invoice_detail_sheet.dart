@@ -8,6 +8,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/invoice_detail_facts.dart';
 import '../../domain/einvoice_gateway.dart';
@@ -39,6 +40,47 @@ enum InvoiceAction {
   dunningHold,
 }
 
+/// What the invoice sheet shows (#2494): the invoice and the facts around it
+/// that the opening surface knows. One value instead of ten parameters, so a
+/// surface that has less context leaves the optional ones out.
+class InvoiceDetailView {
+  const InvoiceDetailView({
+    required this.invoice,
+    required this.match,
+    required this.canIssue,
+    required this.isEu,
+    this.reminder,
+    this.replacedByNumber = '',
+    this.showMemberName = false,
+    this.transmission,
+    this.journey,
+    this.settledByNumber = '',
+  });
+
+  final Invoice invoice;
+  final InvoiceMatch? match;
+  final bool canIssue;
+  final bool isEu;
+  final ({int count, DateTime last})? reminder;
+  final String replacedByNumber;
+  final bool showMemberName;
+
+  /// The last attempt at posting this invoice to the platform (0073).
+  final InvoiceTransmission? transmission;
+
+  /// #812 — where the invoice stands and whose move it is; null while
+  /// the process view is off.
+  final InvoiceJourney? journey;
+
+  /// #831 — the settlement a regrouped source went into.
+  final String settledByNumber;
+}
+
+/// Whether the signed-in member may issue invoices here: the right the sheet
+/// takes as `canIssue` when the opening surface has no list-wide answer.
+bool mayIssueInvoices(WidgetRef ref) =>
+    ref.read(myPermissionsProvider).contains(WorkspacePermission.issueInvoices);
+
 /// READ an invoice, in the app (UX gap 0068: the archive could only hand
 /// out files — seeing what was invoiced meant downloading a PDF first).
 ///
@@ -61,35 +103,15 @@ enum InvoiceAction {
 Future<void> showInvoiceDetailSheet(
   BuildContext context, {
   required WidgetRef ref,
-  required Invoice invoice,
-  required InvoiceMatch? match,
-  required bool canIssue,
-  required bool isEu,
-  ({int count, DateTime last})? reminder,
-  String replacedByNumber = '',
-  bool showMemberName = false,
-  InvoiceTransmission? transmission,
-  InvoiceJourney? journey,
-  // #831 — the settlement a regrouped source went into.
-  String settledByNumber = '',
+  required InvoiceDetailView view,
 }) async {
+  final invoice = view.invoice;
   final action = await showAppSheet<InvoiceAction>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,
-      builder: (context) => _InvoiceDetailBody(
-        settledByNumber: settledByNumber,
-        invoice: invoice,
-        match: match,
-        canIssue: canIssue,
-        isEu: isEu,
-        reminder: reminder,
-        replacedByNumber: replacedByNumber,
-        showMemberName: showMemberName,
-        transmission: transmission,
-        journey: journey,
-      ),
+      builder: (context) => _InvoiceDetailBody(view: view),
   );
   if (action == null || !context.mounted) return;
   // The country comes from the workspace rather than from a parameter,
@@ -110,35 +132,20 @@ Future<void> showInvoiceDetailSheet(
 /// "participation" — the very word #870 exists to keep off the
 /// document. A parameter nobody remembers is not a setting.
 class _InvoiceDetailBody extends ConsumerWidget {
-  const _InvoiceDetailBody({
-    this.settledByNumber = '',
-    required this.invoice,
-    required this.match,
-    required this.canIssue,
-    required this.isEu,
-    required this.reminder,
-    required this.replacedByNumber,
-    required this.showMemberName,
-    required this.transmission,
-    required this.journey,
-  });
+  const _InvoiceDetailBody({required this.view});
 
-  final String settledByNumber;
+  final InvoiceDetailView view;
 
-  final Invoice invoice;
-  final InvoiceMatch? match;
-  final bool canIssue;
-  final bool isEu;
-  final ({int count, DateTime last})? reminder;
-  final String replacedByNumber;
-  final bool showMemberName;
-
-  /// The last attempt at posting this invoice to the platform (0073).
-  final InvoiceTransmission? transmission;
-
-  /// #812 — where the invoice stands and whose move it is; null while
-  /// the process view is off.
-  final InvoiceJourney? journey;
+  String get settledByNumber => view.settledByNumber;
+  Invoice get invoice => view.invoice;
+  InvoiceMatch? get match => view.match;
+  bool get canIssue => view.canIssue;
+  bool get isEu => view.isEu;
+  ({int count, DateTime last})? get reminder => view.reminder;
+  String get replacedByNumber => view.replacedByNumber;
+  bool get showMemberName => view.showMemberName;
+  InvoiceTransmission? get transmission => view.transmission;
+  InvoiceJourney? get journey => view.journey;
 
   /// Every permitted action; the one the journey expects comes first.
   List<Widget> _actions(

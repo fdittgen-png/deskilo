@@ -1,150 +1,170 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'report_visual_editor.dart';
+//
+// #2494 — what the visual report editor does with its lines: select, move,
+// insert, delete, tokens and the styled rendering of one line. Split out of
+// report_visual_editor.dart (was a part file with an extension on the state);
+// the state keeps the lines, the selection and the edit controller and says
+// so here as abstract members.
+import 'package:deskilo_document_editor/deskilo_document_editor.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// #2386 — part 1 of ReportVisualEditorState, split out of report_visual_editor.dart so no
-// file holds the whole class.
-extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
+import '../../../../core/l10n/context_l10n.dart';
+import '../../domain/invoice_report.dart';
+import '../../providers/money_providers.dart';
+import 'report_field_picker.dart';
+import 'report_image_notice.dart';
+import 'report_page_style.dart';
+import 'report_visual_editor.dart' show ReportVisualEditor;
+import 'report_visual_line.dart';
+
+mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
+  abstract List<ReportVisualLine> visualLines;
+  abstract int? visualEditing;
+  TextEditingController get visualEditController;
+  void visualUpdate(VoidCallback fn);
+
 
   /// #822 — whether an element is selected here (the host inserts an
   /// image after the selection of the band that has one).
-  bool get _hasSelectionImpl => _editing != null;
+  bool get visualHasSelectionImpl => visualEditing != null;
 
   /// #822 — inserts [line] after the selection, or at the end.
-  void _insertLineImpl(ReportVisualLine line) {
-    _mutate(() {
-      _adopt(_edit.insertAfterSelection(line));
-      _editController.text = line.content;
+  void visualInsertLineImpl(ReportVisualLine line) {
+    visualMutate(() {
+      visualAdopt(visualEdit.insertAfterSelection(line));
+      visualEditController.text = line.content;
     });
   }
 
   /// The elements and the selection as the package's value.
-  ElementEdit<ReportVisualLine> get _edit =>
-      ElementEdit(_lines, selected: _editing);
+  ElementEdit<ReportVisualLine> get visualEdit =>
+      ElementEdit(visualLines, selected: visualEditing);
 
   /// Takes the package's result as this editor's lines and selection.
-  void _adopt(ElementEdit<ReportVisualLine> next) {
-    _lines = List.of(next.items);
-    _editing = next.selected;
+  void visualAdopt(ElementEdit<ReportVisualLine> next) {
+    visualLines = List.of(next.items);
+    visualEditing = next.selected;
   }
 
-  void _sync() {
+  void visualSync() {
     widget.controller.text =
-        _lines.map((line) => line.serialize()).join('\n');
+        visualLines.map((line) => line.serialize()).join('\n');
   }
 
-  void _commitEditing() {
-    final editing = _editing;
+  void visualCommitEditing() {
+    final editing = visualEditing;
     if (editing == null) return;
-    _lines[editing].content = _editController.text;
-    _sync();
+    visualLines[editing].content = visualEditController.text;
+    visualSync();
   }
 
-  void _select(int index) {
-    _update(() {
-      _commitEditing();
-      _editing = index;
-      _editController.text = _lines[index].content;
+  void visualSelect(int index) {
+    visualUpdate(() {
+      visualCommitEditing();
+      visualEditing = index;
+      visualEditController.text = visualLines[index].content;
     });
   }
 
-  void _deselect() {
-    _update(() {
-      _commitEditing();
-      _editing = null;
+  void visualDeselect() {
+    visualUpdate(() {
+      visualCommitEditing();
+      visualEditing = null;
     });
   }
 
-  void _mutate(void Function() change) {
-    _update(() {
-      _commitEditing();
+  void visualMutate(void Function() change) {
+    visualUpdate(() {
+      visualCommitEditing();
       change();
     });
-    _sync();
+    visualSync();
   }
 
-  void _move(int index, int delta) {
-    final next = _edit.moveBy(index, delta);
-    if (identical(next, _edit)) return;
-    _mutate(() {
-      _adopt(next);
-      _editController.text = _lines[next.selected!].content;
+  void visualMove(int index, int delta) {
+    final next = visualEdit.moveBy(index, delta);
+    if (identical(next, visualEdit)) return;
+    visualMutate(() {
+      visualAdopt(next);
+      visualEditController.text = visualLines[next.selected!].content;
     });
   }
 
   /// #822 — a drag: the element at [from] lands BEFORE the element at
   /// [before] (the drop target).
-  void _moveBefore(int from, int before) {
-    final next = _edit.moveBefore(from, before);
-    if (identical(next, _edit)) return;
-    _mutate(() {
-      _adopt(next);
-      _editController.text = _lines[next.selected!].content;
+  void visualMoveBefore(int from, int before) {
+    final next = visualEdit.moveBefore(from, before);
+    if (identical(next, visualEdit)) return;
+    visualMutate(() {
+      visualAdopt(next);
+      visualEditController.text = visualLines[next.selected!].content;
     });
   }
 
-  void _insertBelow(int index, ReportLineKind kind) {
-    _mutate(() {
-      _adopt(_edit.insertBelow(index, ReportVisualLine(kind, '')));
-      _editController.text = '';
+  void visualInsertBelow(int index, ReportLineKind kind) {
+    visualMutate(() {
+      visualAdopt(visualEdit.insertBelow(index, ReportVisualLine(kind, '')));
+      visualEditController.text = '';
     });
   }
 
-  void _delete(int index) {
-    _mutate(() => _adopt(_edit.remove(index)));
+  void visualDelete(int index) {
+    visualMutate(() => visualAdopt(visualEdit.remove(index)));
   }
 
-  void _sendTo(int index, String band) {
-    final line = _lines[index];
-    _mutate(() => _adopt(_edit.remove(index)));
+  void visualSendTo(int index, String band) {
+    final line = visualLines[index];
+    visualMutate(() => visualAdopt(visualEdit.remove(index)));
     widget.onMoveToBand?.call(line, band);
   }
 
   /// Inserts [token] at the cursor of the active editor.
-  void _insertToken(String token) {
-    final selection = _editController.selection;
+  void visualInsertToken(String token) {
+    final selection = visualEditController.selection;
     final inserted = insertTokenAt(
-      _editController.text,
+      visualEditController.text,
       token,
       caret: selection.isValid ? selection.start : null,
     );
-    _editController.text = inserted.text;
-    _editController.selection =
+    visualEditController.text = inserted.text;
+    visualEditController.selection =
         TextSelection.collapsed(offset: inserted.caret);
-    _commitEditing();
-    _update(() {});
+    visualCommitEditing();
+    visualUpdate(() {});
   }
 
-  Future<void> _pickField() async {
+  Future<void> visualPickField() async {
     final markup =
         await showReportFieldPicker(context, textKeys: widget.textKeys);
     if (markup == null || !mounted) return;
-    _insertToken(markup);
+    visualInsertToken(markup);
   }
 
   /// Groups the flat line list into render segments; a `:::` fence
   /// opens a column group, `|||` starts the next column.
-  List<ReportSegment> _segments() {
+  List<ReportSegment> visualSegments() {
     final segments = <ReportSegment>[];
     var i = 0;
-    while (i < _lines.length) {
-      if (_lines[i].kind == ReportLineKind.columnsFence) {
+    while (i < visualLines.length) {
+      if (visualLines[i].kind == ReportLineKind.columnsFence) {
         final open = i;
         final columns = <List<int>>[[]];
         var j = i + 1;
         int? close;
-        for (; j < _lines.length; j++) {
-          if (_lines[j].kind == ReportLineKind.columnsFence) {
+        for (; j < visualLines.length; j++) {
+          if (visualLines[j].kind == ReportLineKind.columnsFence) {
             close = j;
             break;
           }
-          if (_lines[j].kind == ReportLineKind.columnsSplit) {
+          if (visualLines[j].kind == ReportLineKind.columnsSplit) {
             columns.add([]);
           } else {
             columns.last.add(j);
           }
         }
         segments.add(ReportGroupSegment(open, columns, close));
-        i = close == null ? _lines.length : close + 1;
+        i = close == null ? visualLines.length : close + 1;
       } else {
         segments.add(ReportLineSegment(i));
         i++;
@@ -157,7 +177,7 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
   /// designer idiom for data fields. The token chrome is the ONLY
   /// deviation from print (#548): the surrounding text keeps the
   /// document's exact style, so the line's metrics stay honest.
-  InlineSpan _tokenized(String text, TextStyle style) {
+  InlineSpan visualTokenized(String text, TextStyle style) {
     final spans = <InlineSpan>[];
     final pattern = RegExp(r'\{\{.*?\}\}|\{%.*?%\}');
     var last = 0;
@@ -182,23 +202,23 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
 
   /// One line, styled EXACTLY as `invoice_pdf.dart` prints its block
   /// (#548) — sizes, paddings, alignment and colors from [ReportPage].
-  Widget _styledContent(ReportVisualLine line) {
+  Widget visualStyledContent(ReportVisualLine line) {
     switch (line.kind) {
       case ReportLineKind.title:
         return Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Text.rich(_tokenized(line.content, ReportPage.heading)),
+          child: Text.rich(visualTokenized(line.content, ReportPage.heading)),
         );
       case ReportLineKind.section:
         return Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 3),
-          child: Text.rich(_tokenized(
+          child: Text.rich(visualTokenized(
               line.content.toUpperCase(), ReportPage.subheading)),
         );
       case ReportLineKind.text:
-        return Text.rich(_tokenized(line.content, ReportPage.body));
+        return Text.rich(visualTokenized(line.content, ReportPage.body));
       case ReportLineKind.small:
-        return Text.rich(_tokenized(line.content, ReportPage.small));
+        return Text.rich(visualTokenized(line.content, ReportPage.small));
       case ReportLineKind.row:
       case ReportLineKind.boldRow:
         final style =
@@ -212,11 +232,11 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
               for (var c = 0; c < cells.length; c++)
                 if (c == 0) Expanded(
                         child:
-                            Text.rich(_tokenized(cells[c].trim(), style))) else Flexible(
+                            Text.rich(visualTokenized(cells[c].trim(), style))) else Flexible(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12),
                           child: Text.rich(
-                              _tokenized(cells[c].trim(), style),
+                              visualTokenized(cells[c].trim(), style),
                               textAlign: TextAlign.right),
                         ),
                       ),
@@ -295,14 +315,14 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
 
   /// #822 — the image element's own controls: size and alignment,
   /// written back as `name|size|align`.
-  Widget _imageControls(int index, ReportVisualLine line) {
+  Widget visualImageControls(int index, ReportVisualLine line) {
     final l10n = context.l10n;
     final image = line.image;
     void set({ReportImageSize? size, ReportImageAlign? align}) {
       final next = ReportImage(image.name,
           size: size ?? image.size, align: align ?? image.align);
-      _editController.text = next.markup;
-      _mutate(() => line.content = next.markup);
+      visualEditController.text = next.markup;
+      visualMutate(() => line.content = next.markup);
     }
 
     return Wrap(
@@ -359,7 +379,7 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
   }
 
   /// A menu of element kinds — the insert palette (#822).
-  Widget _kindMenu({
+  Widget visualKindMenu({
     required Key key,
     required Widget child,
     required ValueChanged<ReportLineKind> onSelected,

@@ -419,13 +419,15 @@ class _InvoiceRegisterScreenState
     await showInvoiceDetailSheet(
       context,
       ref: ref,
-      invoice: invoice,
-      match: match,
-      canIssue: canIssue,
-      isEu: isEuCountry(countryCode),
-      reminder: reminder,
-      showMemberName: showMemberName,
-      transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
+      view: InvoiceDetailView(
+        invoice: invoice,
+        match: match,
+        canIssue: canIssue,
+        isEu: isEuCountry(countryCode),
+        reminder: reminder,
+        showMemberName: showMemberName,
+        transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
+      ),
     );
   }
 }

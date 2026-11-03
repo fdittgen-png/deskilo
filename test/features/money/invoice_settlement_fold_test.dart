@@ -182,11 +182,13 @@ void main() {
               onPressed: () => showInvoiceDetailSheet(
                 context,
                 ref: ref,
-                invoice: source,
-                match: null,
-                canIssue: true,
-                isEu: true,
-                settledByNumber: 'INV-2026-9999',
+                view: InvoiceDetailView(
+                  invoice: source,
+                  match: null,
+                  canIssue: true,
+                  isEu: true,
+                  settledByNumber: 'INV-2026-9999',
+                ),
               ),
               child: const Text('open'),
             ),

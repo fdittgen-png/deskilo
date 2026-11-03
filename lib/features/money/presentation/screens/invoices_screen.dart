@@ -129,21 +129,23 @@ class InvoicesScreen extends ConsumerWidget {
     await showInvoiceDetailSheet(
       context,
       ref: ref,
-      invoice: entry.invoice,
-      match: entry.pendingMatch,
-      settledByNumber: settledByNumberOf(
-          entry.invoice, ref.read(invoicesProvider).value ?? const []),
-      canIssue: true,
-      isEu: facts.isEu,
-      reminder: reminders[entry.invoice.id],
-      showMemberName: facts.showMemberNames,
-      transmission:
-          ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
-      journey: readInvoiceJourney(
-        ref,
-        entry.invoice,
+      view: InvoiceDetailView(
+        invoice: entry.invoice,
         match: entry.pendingMatch,
+        settledByNumber: settledByNumberOf(
+            entry.invoice, ref.read(invoicesProvider).value ?? const []),
+        canIssue: true,
+        isEu: facts.isEu,
         reminder: reminders[entry.invoice.id],
+        showMemberName: facts.showMemberNames,
+        transmission:
+            ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
+        journey: readInvoiceJourney(
+          ref,
+          entry.invoice,
+          match: entry.pendingMatch,
+          reminder: reminders[entry.invoice.id],
+        ),
       ),
     );
   }

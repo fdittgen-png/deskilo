@@ -100,8 +100,11 @@ void main() {
   });
 
   test('the editor no longer keeps its own list of kinds', () {
-    final editor = readLibrary(File( // #2386 — with its parts
-        'lib/features/money/presentation/widgets/invoice_template_sheet.dart'));
+    // #2494 — the sheet and the mixin that holds its actions (once a part).
+    final editor = [
+      'lib/features/money/presentation/widgets/invoice_template_sheet.dart',
+      'lib/features/money/presentation/widgets/invoice_template_editor_actions.dart',
+    ].map((path) => readLibrary(File(path))).join('\n');
     // The five hand-maintained switches this registry replaced.
     expect(editor, isNot(contains('_extraDocs')),
         reason: 'the extras constant is back');
