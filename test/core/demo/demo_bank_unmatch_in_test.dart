@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2380 (0650) -- the Demo journey of undoing a bank match of money in.
+// #2380 (0650, 0657) -- the Demo journey of undoing a bank match of money in.
 //
 // The Pézenas owner opens Money > Cash > Bank statements, confirms the two payments
 // that carry their invoice's reference, undoes one of them with a reason
 // through the real dialog, and then matches the same movement again through
 // the real Match action. Read back from the Demo's own repositories: the
 // invoice reads open again, the payment credit stays and is the SAME one when
-// the movement is matched again, the ledger never gains or loses a row, the
+// the movement is matched again, the payment that completed a part-paid
+// invoice is undone alone and leaves it part-paid, the ledger never gains or loses a row, the
 // timeline gets one applied invoice_payment_reversed event and no payment
 // event, and an undoing refused by the books (a closed period) says so in
 // words and changes nothing. Everything runs inside the Demo's own container
@@ -114,7 +115,9 @@ void main() {
         reason: 'the SAME payment credit');
     expect(money.ledger.length, ledgerBefore, reason: 'and no second credit');
 
-    // The part-paid invoice has another payment: refused, in words.
+    // The payment that completed a part-paid invoice is undone alone: the
+    // invoice is part-paid again by what it had before (0657).
+    final partialBefore = money.invoiceMatchesStore[partial.invoiceId]!.paidCents;
     _clearSnackBars(tester);
     await tester.tap(find.byKey(ValueKey('bank-line-tile-${partial.id}')));
     await _settle(tester);
@@ -124,9 +127,14 @@ void main() {
     );
     await tester.tap(find.byKey(const ValueKey('bank-undo-confirm')));
     await _settle(tester);
-    expect(find.textContaining('Other payments are matched'), findsOneWidget);
-    expect(money.invoiceMatchesStore.containsKey(partial.invoiceId), isTrue,
-        reason: 'refused: nothing changed');
+    final left = money.invoiceMatchesStore[partial.invoiceId]!;
+    expect(left.paidCents, partialBefore - partial.amountCents,
+        reason: 'the earlier part payment stays');
+    expect(left.resolution, 'under_accepted', reason: 'part-paid again');
+    expect(
+      (await bank.fetchLines(statement.id)).singleWhere((l) => l.id == partial.id).status,
+      BankLineStatus.recorded,
+    );
 
     // The books are closed over the payment matched again: refused, in words.
     bank.booksClosedThrough = DateTime(2999);
@@ -142,6 +150,7 @@ void main() {
     expect(find.textContaining('closed period'), findsOneWidget);
     expect(money.invoiceMatchesStore.containsKey(invoiceId), isTrue,
         reason: 'refused: nothing changed');
-    expect(bank.unmatches, hasLength(1), reason: 'only the first undoing is on record');
+    expect(bank.unmatches, hasLength(2),
+        reason: 'the two undoings, and not the refused one, are on record');
   });
 }

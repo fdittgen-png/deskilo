@@ -13453,9 +13453,13 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.",
+  "refusalBankMatchSeveralPayments": "Die Zahlungen dieser Rechnung lassen sich nicht ohne Vermutung neu zuordnen (eine wartet vielleicht noch auf ihre Freigabe); diese kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
+  },
+  "refusalBankMatchUndoLaterFirst": "Dies ist die erste Zahlung der Rechnung: Machen Sie zuerst die späteren Zahlungen rückgängig. Nichts wurde geändert.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
   "refusalMoneyLocaleLocked": "Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.",

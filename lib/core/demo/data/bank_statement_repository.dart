@@ -314,12 +314,14 @@ class FakeBankStatementRepository implements BankStatementRepository {
       );
       return id;
     });
+    final before = money.invoiceMatchesStore[invoiceId];
     await money.matchInvoice(
       invoiceId: invoiceId,
       paymentLedgerId: payment,
       resolution: resolution,
       note: note,
     );
+    demoRecordMatchPayment(money, invoiceId, before);
     final pending = money.invoiceMatchesStore[invoiceId]?.pending ?? false;
     return _set(
       lineId,
@@ -420,7 +422,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
     }
     final target = demoUnmatchTarget(money: money, line: _line(lineId),
         paymentId: _payments[lineId], closedThrough: booksClosedThrough);
-    demoApplyUnmatch(money, target, actingMemberId(), today);
+    demoApplyUnmatch(money, target, actingMemberId(), today, reason: why);
     unmatches[requestId] = (lineId: lineId, invoiceId: target.invoice.id,
         paymentId: target.payment.id, reason: why);
     return _set(lineId, BankLineStatus.recorded, clearInvoice: true);

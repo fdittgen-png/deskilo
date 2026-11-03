@@ -55,13 +55,18 @@ enum KnownRefusal {
   /// (a credit note, a settlement, a write-off): not undone here.
   bankMatchBeyondLink,
 
-  /// #2380 (DKB05) — the invoice has other payments matched: this one is
-  /// not undone alone.
+  /// #2380 (DKB05) — the invoice's payments cannot be restated without
+  /// guessing (0657, 0660): they do not add up to the match (one may await
+  /// its validation), or two share their submission time.
   bankMatchSeveralPayments,
 
   /// #2380 (DKB06) — the payment is dated inside a closed period of the
   /// books: its match is not undone.
   bankMatchClosedPeriod,
+
+  /// #2380 (DKB07, 0660) — the invoice's first payment is undone last: the
+  /// later payments go first.
+  bankMatchUndoLaterFirst,
 
   /// #2571 (DKE01) — a destructive step over records still under retention:
   /// the server deleted nothing.
@@ -115,6 +120,7 @@ const Map<String, KnownRefusal> _bankRefusals = {
   'DKB04': KnownRefusal.bankMatchBeyondLink,
   'DKB05': KnownRefusal.bankMatchSeveralPayments,
   'DKB06': KnownRefusal.bankMatchClosedPeriod,
+  'DKB07': KnownRefusal.bankMatchUndoLaterFirst,
 };
 
 /// Which family [error] belongs to, or null when it is none of them.
@@ -168,6 +174,7 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.bankMatchSeveralPayments =>
         l10n.refusalBankMatchSeveralPayments,
       KnownRefusal.bankMatchClosedPeriod => l10n.refusalBankMatchClosedPeriod,
+      KnownRefusal.bankMatchUndoLaterFirst => l10n.refusalBankMatchUndoLaterFirst,
       KnownRefusal.retentionKept =>
         l10n.retentionResetRefused(l10n.retentionKeptReview),
       null => null,

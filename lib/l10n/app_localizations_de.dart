@@ -20581,7 +20581,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'Dieser Rechnung sind weitere Zahlungen zugeordnet; diese kann nicht allein rückgängig gemacht werden. Nichts wurde geändert.';
+      'Die Zahlungen dieser Rechnung lassen sich nicht ohne Vermutung neu zuordnen (eine wartet vielleicht noch auf ihre Freigabe); diese kann hier nicht rückgängig gemacht werden. Nichts wurde geändert.';
+
+  @override
+  String get refusalBankMatchUndoLaterFirst =>
+      'Dies ist die erste Zahlung der Rechnung: Machen Sie zuerst die späteren Zahlungen rückgängig. Nichts wurde geändert.';
 
   @override
   String get refusalChangedMeanwhile =>

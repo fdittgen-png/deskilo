@@ -20384,7 +20384,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.';
+      'The payments of this invoice cannot be restated without guessing (one may still await its validation), so this one cannot be undone here. Nothing was changed.';
+
+  @override
+  String get refusalBankMatchUndoLaterFirst =>
+      'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.';
 
   @override
   String get refusalChangedMeanwhile =>

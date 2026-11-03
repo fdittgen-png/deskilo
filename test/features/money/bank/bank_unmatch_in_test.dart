@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2380 (0650) -- a confirmed match of money in is undone once, with a
-// reason, over the in-memory store that keeps the server's rules.
+// #2380 (0650, 0657) -- a confirmed match of money in is undone once, with
+// a reason, over the in-memory store that keeps the server's rules. One of
+// several payments of a part-paid invoice is undone alone: the match is what
+// the remaining payments make it.
 //
 // Undone: the invoice reads open again, the movement keeps its payment and
 // reads recorded, no ledger row is added or removed, one record keeps why,
@@ -11,8 +13,9 @@
 //
 // Refused, called on the repository itself (the screen hiding a button is
 // not the protection), each with the code the server answers and the sentence
-// the person reads: a credit note minted and a settlement (DKB04), another
-// payment on the invoice (DKB05), a payment inside a closed period (DKB06),
+// the person reads: a credit note minted and a settlement (DKB04), payments
+// that do not add up to their match (DKB05), a payment inside a closed
+// period (DKB06),
 // a match still awaiting its validation and a movement that settles nothing
 // (DKB01), money out (DKB02), a request id used for another line and no
 // reason (22023).
@@ -224,14 +227,60 @@ void main() {
 
     await refused(2, 'DKB04', KnownRefusal.bankMatchBeyondLink, 'credit note');
     await refused(6, 'DKB04', KnownRefusal.bankMatchBeyondLink, 'settlement');
-    await refused(3, 'DKB05', KnownRefusal.bankMatchSeveralPayments, 'Other payments');
-    await refused(4, 'DKB05', KnownRefusal.bankMatchSeveralPayments);
+    // A match whose amount its payments do not explain is not restated.
+    money.invoiceMatchesStore['id-I3'] = money.invoiceMatchesStore['id-I3']!
+        .copyWith(paidCents: 15001);
+    await refused(3, 'DKB05', KnownRefusal.bankMatchSeveralPayments, 'without guessing');
     await refused(7, 'DKB01', KnownRefusal.bankLineDecided);
     await refused(8, 'DKB02', KnownRefusal.bankLineRefused);
 
     bank.booksClosedThrough = DateTime.utc(2999);
     await refused(5, 'DKB06', KnownRefusal.bankMatchClosedPeriod, 'closed period');
     expect(money.invoiceMatchesStore.containsKey('id-I4'), isTrue, reason: 'the match is still there');
+  });
+
+  test('the later of two payments is undone alone: the match is what the '
+      'first makes it; the first goes last', () async {
+    final ledgerBefore = money.ledger.length;
+    final first = money.invoiceMatchPaymentsStore['id-I3']!.first.paymentLedgerId;
+    final second = money.invoiceMatchesStore['id-I3']!.paymentLedgerId;
+    expect(money.invoiceMatchesStore['id-I3']!.paidCents, 15000);
+
+    final third = (await line(3)).id;
+    expect(await _code(() => bank.unmatchIn(third, reason: 'x', requestId: 's0')),
+        'DKB07', reason: 'the first payment is undone last');
+    expect(
+      knownRefusalText(englishL10n, const PostgrestException(message: '', code: 'DKB07')),
+      contains('later payments first'),
+    );
+
+    expect(
+      await commands.unmatchIn(await line(4), reason: 'not this invoice', requestId: 's1'),
+      BankLineStatus.recorded,
+    );
+    final rest = money.invoiceMatchesStore['id-I3']!;
+    expect(rest.paidCents, 10000, reason: 'only the first payment remains');
+    expect(rest.resolution, 'under_accepted', reason: 'still a part payment');
+    expect(rest.paymentLedgerId, first);
+    expect(rest.note, 'first part', reason: 'the remaining payment\'s note');
+    expect(
+      money.invoiceMatchPaymentsStore['id-I3']!.map((r) => r.paymentLedgerId),
+      [first],
+    );
+    expect((await line(4)).status, BankLineStatus.recorded);
+    expect(money.ledger.length, ledgerBefore, reason: 'no ledger row moves');
+    final reversed = events.events
+        .where((e) => e.type == EventType.invoicePaymentReversed)
+        .single;
+    expect(reversed.payload['payment_ledger_id'], second);
+    expect(reversed.payload['amount_cents'], 5000);
+
+    expect(
+      await commands.unmatchIn(await line(3), reason: 'wrong client', requestId: 's2'),
+      BankLineStatus.recorded,
+    );
+    expect(money.invoiceMatchesStore.containsKey('id-I3'), isFalse,
+        reason: 'the last payment undone: the invoice reads open');
   });
 
   test('a match still awaiting its validation is rejected there, not undone '
