@@ -28,14 +28,19 @@
 --
 -- Compatibility: nobody who could book yesterday loses it silently. Before
 -- the checks, every role whose active members already hold a reservation
--- while lacking the right gains it in the workspace's matrix: 'member' (an
--- absent member list becomes just makeReservations), 'admin' (an absent
--- admin list is first written out as the admin defaults of
--- member_has_permission, so nothing else an admin holds changes). Owners and
--- co-owners are not touched. Custom roles are read through
--- member_has_permission as well: a custom-role holder who books today and
--- lacks the right on the base matrix is covered the same way, by the role of
--- their membership. Idempotent: a second run finds nobody lacking the right.
+-- while lacking the right gains it in the workspace's matrix, read the way the
+-- permission functions read each role: 'member' (an absent list becomes just
+-- makeReservations); 'admin' (an absent list is first written out as the
+-- defaults has_permission_raw grants, 16 entries that contain
+-- member_has_permission's 14, so nothing else an admin holds changes through
+-- either function); an active co-owner only where the workspace has an
+-- explicit 'co_owner' list (otherwise they hold the whole catalogue). Owners
+-- are not touched. Custom roles are read through member_has_permission as
+-- well: a custom-role holder who books today and lacks the right on the base
+-- matrix is covered the same way, by the role of their membership. The grant
+-- is per role, as the old behaviour was. Idempotent: a second run finds
+-- nobody lacking the right. The lists only gain; nothing is removed or
+-- reordered, so no earlier choice of an owner is changed.
 --
 -- Refusal: 'not allowed to make reservations' (42501). The client words it
 -- (bookingErrorText) in the five languages.
@@ -55,21 +60,32 @@ $f$;
 revoke execute on function pg_temp.anchor_replace(text, text, text) from public, anon, authenticated;
 
 -- ── nobody loses booking silently ─────────────────────────────────────────
+-- Each role is read the way the permission functions read it:
+--   * an ACTIVE co-owner holds everything unless the workspace has an explicit
+--     'co_owner' list (so only a workspace with that list is touched);
+--   * an admin (not a co-owner) is read by 'admin' list, or, with none, by the
+--     defaults. The defaults are two lists: member_has_permission's 14 and
+--     has_permission_raw's 16 (which also grants paymentTermsEdit and
+--     viewAnalytics and is the one the RPC guards ask). The 16 contain the 14,
+--     so writing the 16 out loses nothing through either function;
+--   * anyone else is read by the 'member' list (an absent list holds nothing).
 do $backfill$
 declare
   r record;
-  -- member_has_permission's admin defaults, while a workspace has no 'admin' list.
+  -- has_permission_raw's admin defaults, while a workspace has no 'admin' list.
   v_admin_default jsonb := to_jsonb(array[
     'manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances',
-    'viewNegotiations','manageNegotiations','manageSites','manageReservations','operateKiosk',
-    'exportData','viewPersonalData','deployToDev','accessProd']);
+    'viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageReservations',
+    'operateKiosk','exportData','viewPersonalData','deployToDev','accessProd','viewAnalytics']);
 begin
   for r in
-    select distinct m.workspace_id, case when m.is_admin then 'admin' else 'member' end as role_key
+    select distinct m.workspace_id,
+           case when m.co_owner = 'active' then 'co_owner'
+                when m.is_admin then 'admin'
+                else 'member' end as role_key
       from public.members m
      where m.status = 'active'
        and not m.is_owner
-       and m.co_owner <> 'active'
        and exists (select 1 from public.reservations x where x.member_id = m.id)
        and not public.member_has_permission(m.id, 'makeReservations')
   loop
