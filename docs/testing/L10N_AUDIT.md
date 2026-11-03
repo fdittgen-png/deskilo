@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-35 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+40 literal(s) in 9 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -14,6 +14,11 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:138` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:147` | title | Coworking · $period | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:150` | label | Workspace membership | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:156` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:164` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_purchase_seed.dart:102` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:212` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:215` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
@@ -53,5 +58,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_second_space_seed.dart`** (2) — demo records: the German space's document titles as it stores them
 - **`lib/core/demo/seed/demo_network_seed.dart`** (2) — demo records: the page titles of a saved report as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
+- **`lib/core/demo/seed/demo_city_money_seed.dart`** (4) — Demo records: English invoice descriptions as the London and New York businesses would store them, not application labels
+- **`lib/core/demo/seed/demo_city_purchase_seed.dart`** (1) — Demo records: an English supplier invoice title as the fictional business stores it, not an application label
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.
