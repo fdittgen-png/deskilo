@@ -31,6 +31,7 @@ import '../../theme/app_spacing.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
 import '../demo_persona.dart';
+import '../demo_reload_marker_provider.dart';
 import '../demo_scope.dart';
 import '../demo_session.dart';
 
@@ -59,8 +60,12 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
     if (_key == session.scopeKey && existing != null) return existing;
     existing?.dispose();
     _key = session.scopeKey;
-    final container = _container =
-        ProviderContainer(overrides: demoOverrides(session.fixture));
+    final container = _container = ProviderContainer(overrides: [
+      ...demoOverrides(session.fixture),
+      // Only the outer router handles a tab reload; the Demo router must not
+      // reinterpret its own entry marker as a cold-start request.
+      demoReloadMarkerProvider.overrideWithValue(null),
+    ]);
     // #2872 — a link the visitor arrived with applies after this frame:
     // no provider changes while the tree builds.
     if (ref.read(pendingDemoLinkProvider) != null) {
@@ -97,6 +102,7 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
   /// them. The live tree below is remounted by the entry flag.
   void _leave() {
     final visit = ref.read(demoVisitProvider.notifier);
+    ref.read(demoReloadMarkerProvider)?.clear();
     ref.read(demoEntryProvider.notifier).leave();
     ref.invalidate(demoSessionControllerProvider);
     unawaited(visit.finish());

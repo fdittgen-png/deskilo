@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:flutter/widgets.dart' show WidgetsBinding;
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../core/backend/schema_version.dart';
+import '../core/demo/demo_reload_marker.dart';
+import '../core/demo/demo_reload_marker_provider.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/kiosk/providers/kiosk_mode.dart';
 import '../features/profile/providers/profile_providers.dart';
@@ -75,10 +78,19 @@ GoRouter router(Ref ref) {
   // Back return to it and it can be shared.
   GoRouter.optionURLReflectsImperativeAPIs = true;
   final env = RouteEnv(ref);
+  final marker = ref.read(demoReloadMarkerProvider);
+  final platformUri = Uri.tryParse(
+    WidgetsBinding.instance.platformDispatcher.defaultRouteName,
+  ) ?? Uri();
+  final route = platformUri.fragment.startsWith('/')
+      ? Uri.tryParse(platformUri.fragment) ?? platformUri
+      : platformUri;
+  final recoverDemo = marker != null && needsDemoReloadEntry(marker.read(), route);
   router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
     // is what opens on start, after sign-in and after onboarding.
-    initialLocation: '/reserve',
+    initialLocation: recoverDemo ? '/demo' : '/reserve',
+    overridePlatformDefaultLocation: recoverDemo,
     // #2142 — tells a live task recording that a window opened or
     // closed; does nothing while none is live.
     observers: [RecorderWindowObserver()],

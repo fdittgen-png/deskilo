@@ -7,6 +7,7 @@
 // fixture's. These tests hold that to the two promises the entry makes —
 // that no account is needed, and that leaving forgets what happened.
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/demo_entry.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
@@ -14,6 +15,7 @@ import 'package:deskilo/core/demo/presentation/demo_entry_sheet.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
+import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +38,9 @@ void main() {
   testWidgets('the offer explains the space before anybody walks into it', (
     tester,
   ) async {
-    final container = ProviderContainer();
+    final container = ProviderContainer(overrides: [
+      authRepositoryProvider.overrideWithValue(FakeAuthRepository()),
+    ]);
     addTearDown(container.dispose);
 
     await tester.pumpWidget(
