@@ -29,6 +29,9 @@ String biDimensionName(AppLocalizations l10n, String dimension) =>
       _ => dimension,
     };
 
+/// The width below which the view switch shows icons only (see _viewSwitch).
+const double _viewSwitchLabelledWidth = 420;
+
 class BiToolbar extends StatelessWidget {
   const BiToolbar({
     super.key,
@@ -163,29 +166,37 @@ class BiToolbar extends StatelessWidget {
         onChanged(query.copyWith(cards: standard ? const [] : chosen));
   }
 
+  /// Three labelled segments need about 420 dp; on a phone the labels broke
+  /// inside a word ("Graphiqu" / "e"). Below that width each segment keeps
+  /// its icon and says its name as the tooltip, which a screen reader reads.
   Widget _viewSwitch(AppLocalizations l10n) {
-    return SegmentedButton<BiView>(
-  key: const ValueKey('bi-view'),
-  segments: [
-    ButtonSegment(
-      value: BiView.dashboard,
-      icon: const Icon(Icons.space_dashboard_outlined),
-      label: Text(l10n.biViewDashboard),
-    ),
-    ButtonSegment(
-      value: BiView.table,
-      icon: const Icon(Icons.table_rows_outlined),
-      label: Text(l10n.biViewTable),
-    ),
-    ButtonSegment(
-      value: BiView.chart,
-      icon: const Icon(Icons.bar_chart),
-      label: Text(l10n.biViewChart),
-    ),
-  ],
-  selected: {query.view},
-  onSelectionChanged: (v) => onChanged(query.copyWith(view: v.first)),
-);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxWidth < _viewSwitchLabelledWidth;
+        ButtonSegment<BiView> segment(BiView v, IconData icon, String name) =>
+            ButtonSegment(
+              value: v,
+              icon: Icon(icon),
+              label: compact ? null : Text(name),
+              tooltip: compact ? name : null,
+            );
+        return SegmentedButton<BiView>(
+          key: const ValueKey('bi-view'),
+          showSelectedIcon: !compact,
+          segments: [
+            segment(
+              BiView.dashboard,
+              Icons.space_dashboard_outlined,
+              l10n.biViewDashboard,
+            ),
+            segment(BiView.table, Icons.table_rows_outlined, l10n.biViewTable),
+            segment(BiView.chart, Icons.bar_chart, l10n.biViewChart),
+          ],
+          selected: {query.view},
+          onSelectionChanged: (v) => onChanged(query.copyWith(view: v.first)),
+        );
+      },
+    );
   }
 
   @override

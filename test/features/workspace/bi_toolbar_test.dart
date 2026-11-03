@@ -250,6 +250,37 @@ void main() {
     expect(_text(tester, 'bi-period-label'), '2026');
   });
 
+  testWidgets('the view switch keeps its labels where they fit and its icons '
+      'with their names on a phone, even with twice the text (#2581)', (
+    tester,
+  ) async {
+    await _pump(tester);
+    await _open(tester, '/bi');
+    final labelled = find.descendant(
+      of: find.byKey(const ValueKey('bi-view')),
+      matching: find.text('Chart'),
+    );
+    expect(labelled, findsOneWidget);
+
+    tester.view.physicalSize = const Size(360, 2600);
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    // No label to break inside a word; the name is the tooltip.
+    expect(labelled, findsNothing);
+    for (final name in ['Dashboard', 'Table', 'Chart']) {
+      expect(find.byTooltip(name), findsOneWidget);
+    }
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(find.byTooltip('Chart'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(_uri(tester).queryParameters['view'], 'chart');
+  });
+
   testWidgets('whoever may read the figure may open the bookings behind '
       'it (#2578): no settings right is asked for', (tester) async {
     await _pump(tester, permissions: {WorkspacePermission.viewAnalytics});
