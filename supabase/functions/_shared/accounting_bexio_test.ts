@@ -109,7 +109,13 @@ function bexio() {
     const create = path.match(/^2\.0\/(kb_invoice|kb_credit_voucher)$/);
     if (method === "POST" && create) {
       const net = body.positions as { unit_price: string; tax_id: number }[];
-      const rate: Record<number, number> = { 16: 0.081, 17: 0.026 };
+      // 26 and 27: the second company's own ids for the same two rates.
+      const rate: Record<number, number> = {
+        16: 0.081,
+        17: 0.026,
+        26: 0.081,
+        27: 0.026,
+      };
       const total = net.reduce(
         (s, p) =>
           s + Math.round(Number(p.unit_price) * 100 * (1 + rate[p.tax_id])),
@@ -344,10 +350,11 @@ Deno.test("a receipt is a payment on its invoice, found by its number", async ()
 
 // #2377 — two issuers (two workspaces, two bexio companies, two
 // connections) whose local identifiers coincide: the same document id and
-// number, the same member key, the same map keys. Each delivery is its
-// connection's own: one store keeps them apart by connection, each company
-// receives its document once, on its own contact, tax and account ids, and
-// neither issuer's acknowledgement stands for the other's.
+// number, the same member key, the same map keys. Through the delivery kit
+// (`deliver`, with this file's store keyed by connection like the kit's own
+// test; record_accounting_delivery itself is not executed here) each
+// company receives its document once, on its own contact, tax and account
+// ids, and neither issuer's acknowledgement stands for the other's.
 Deno.test("separate issuers sharing local ids deliver independently, each on its own maps", async () => {
   const issuers = [
     {
@@ -362,8 +369,8 @@ Deno.test("separate issuers sharing local ids deliver independently, each on its
       connection: "c-issuer-b",
       company: bexio(),
       contact: "902",
-      tax81: "16",
-      tax26: "17",
+      tax81: "26",
+      tax26: "27",
       acc: ["320", "321"],
     },
   ];
@@ -424,11 +431,19 @@ Deno.test("separate issuers sharing local ids deliver independently, each on its
       Number(i.contact),
       `${i.connection}'s own contact`,
     );
-    const positions = held[0].positions as { account_id: number }[];
+    const positions = held[0].positions as {
+      account_id: number;
+      tax_id: number;
+    }[];
     assertEquals(
       positions.map((p) => p.account_id),
       i.acc.map(Number),
       `${i.connection}'s own accounts`,
+    );
+    assertEquals(
+      positions.map((p) => p.tax_id),
+      [Number(i.tax81), Number(i.tax26)],
+      `${i.connection}'s own tax ids`,
     );
   }
 
