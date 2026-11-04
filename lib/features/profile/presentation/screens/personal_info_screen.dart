@@ -11,6 +11,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../workspace/domain/workspace_field.dart';
@@ -19,6 +20,7 @@ import '../../../workspace/providers/workspace_fields_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/personal_info.dart';
 import '../../providers/profile_providers.dart';
+import '../widgets/birthday_field.dart';
 import '../widgets/personal_info_form.dart';
 
 class PersonalInfoScreen extends ConsumerStatefulWidget {
@@ -31,6 +33,10 @@ class PersonalInfoScreen extends ConsumerStatefulWidget {
 class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
   bool _saving = false;
   WorkspaceFieldsController? _fields;
+
+  /// #3278 — the birthday being edited; null until the profile has loaded.
+  DateTime? _birthday;
+  bool _birthdayLoaded = false;
 
   @override
   void dispose() {
@@ -56,6 +62,22 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
     setState(() => _saving = false);
     if (!ok) return;
     ref.invalidate(myProfileProvider);
+
+    // #3278 — the birthday saves through its own call, reported on its own.
+    final before = ref.read(myProfileProvider).value?.birthday;
+    if (_birthdayLoaded && _birthday != before) {
+      final birthdaySaved = await runGuarded(
+        context,
+        domain: 'profile',
+        message: 'birthday update failed',
+        errorText: l10n.personalBirthdaySaveFailed,
+        action: () =>
+            ref.read(profileRepositoryProvider).updateBirthday(_birthday),
+      );
+      if (!mounted) return;
+      if (!birthdaySaved) return;
+      ref.invalidate(myProfileProvider);
+    }
 
     // #1288 — the workspace's own questions save through their own call.
     // TWO server writes, so the second is reported on its own: a Save
@@ -131,7 +153,12 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
             l10n.workspaceGenericError,
           ),
         ),
-        data: (p) => SingleChildScrollView(
+        data: (p) {
+          if (!_birthdayLoaded) {
+            _birthday = p?.birthday;
+            _birthdayLoaded = true;
+          }
+          return SingleChildScrollView(
           padding: AppSpacing.gutterAll,
           child: Center(
             child: ConstrainedBox(
@@ -141,11 +168,24 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
                 workspaceCountry: workspaceCountry,
                 saving: _saving,
                 onSave: _save,
-                extraSection: _questions(),
+                extraSection: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BirthdayField(
+                      key: const ValueKey('personal-info-birthday-field'),
+                      value: _birthday,
+                      today: ref.read(clockProvider).now(),
+                      enabled: !_saving,
+                      onChanged: (d) => setState(() => _birthday = d),
+                    ),
+                    ?_questions(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        );
+        },
       ),
     );
   }

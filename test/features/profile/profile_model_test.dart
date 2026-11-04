@@ -21,6 +21,8 @@ void main() {
         'country_code': 'FR',
         'vat_id': 'FR12812345678',
         'last_seen_at': '2026-07-11T09:30:00.000Z',
+        // 0668 (#3278) — a date column, a calendar day with no time.
+        'birthday': '1990-04-12',
         'avatar_path': 'user-1/avatar',
         'privacy_accepted_version': '2026-08-30',
         'privacy_accepted_at': '2026-08-30T10:00:00.000Z',
@@ -36,6 +38,7 @@ void main() {
       expect(profile.countryCode, 'FR');
       expect(profile.vatId, 'FR12812345678');
       expect(profile.lastSeenAt, DateTime.utc(2026, 7, 11, 9, 30));
+      expect(profile.birthday, DateTime(1990, 4, 12));
       expect(profile.hasAvatar, isTrue);
       expect(profile.avatarPath, 'user-1/avatar');
       // #886 — the identity columns ride along, blank when absent.
@@ -58,8 +61,25 @@ void main() {
         expect(profile.hasStatus, isFalse);
         expect(profile.lastSeenAt, isNull);
         expect(profile.toDb()['last_seen_at'], isNull);
+        expect(profile.birthday, isNull, reason: 'pre-0668 rows carry none');
+        expect(profile.toDb()['birthday'], isNull);
       },
     );
+
+    test('a birthday is kept, cleared and checked against the table\'s bounds',
+        () {
+      final p = const Profile(id: 'u').withBirthday(DateTime(1985, 2, 3));
+      expect(p.birthday, DateTime(1985, 2, 3));
+      expect(p.copyWith(displayName: 'X').birthday, DateTime(1985, 2, 3),
+          reason: 'every other copy keeps the birthday');
+      expect(p.withBirthday(null).birthday, isNull);
+      expect(birthdayWire(DateTime(1985, 2, 3)), '1985-02-03');
+      final today = DateTime(2026, 11, 3);
+      expect(birthdayPlausible(DateTime(1900), today), isTrue);
+      expect(birthdayPlausible(DateTime(1899, 12, 31), today), isFalse);
+      expect(birthdayPlausible(today, today), isTrue);
+      expect(birthdayPlausible(DateTime(2026, 11, 4), today), isFalse);
+    });
 
     test('whatsappUri is the wa.me link without the +, null when unshared', () {
       const shared = Profile(id: 'u', whatsapp: '+33612345678');

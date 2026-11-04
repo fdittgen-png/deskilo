@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0670 (#3294 step 1) -- the customer figures of the analytics page, on the
+-- 0671 (#3294 step 1) -- the customer figures of the analytics page, on the
 -- KPI contract (#1918), from the invoices, their maturities, matches,
 -- reminders and holds:
 --

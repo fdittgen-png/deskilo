@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/system_columns.dart';
 import '../../../core/i18n/format_prefs.dart';
+import '../../../core/time/date_text.dart';
 import 'personal_info.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
@@ -27,6 +28,7 @@ class Profile implements SystemStamped {
     this.countryCode = '',
     this.vatId = '',
     this.lastSeenAt,
+    this.birthday,
     this.avatarPath,
     this.preferredLocale = '',
     this.formatPrefs = FormatPrefs.defaults,
@@ -71,6 +73,11 @@ class Profile implements SystemStamped {
 
   /// Last foreground heartbeat (UTC); null until the first beat.
   final DateTime? lastSeenAt;
+
+  /// #3278 (0668) — the calendar day of the person's birthday, a date with no
+  /// time. Read only by the person, `viewPersonalData` and `managePrivacy`
+  /// holders of a shared space (never by an invoicing clerk).
+  final DateTime? birthday;
 
   /// Storage path of the member's photo in the private `avatars` bucket
   /// (`<user_id>/avatar`, 0038); null = no photo, the initial avatar shows.
@@ -139,6 +146,7 @@ class Profile implements SystemStamped {
     lastSeenAt: db['last_seen_at'] == null
         ? null
         : DateTime.parse(db['last_seen_at'] as String).toUtc(),
+    birthday: _dateOrNull(db['birthday']),
     avatarPath: db['avatar_path'] as String?,
     preferredLocale: db['preferred_locale'] as String? ?? '',
     privacyAcceptedVersion: db['privacy_accepted_version'] as String?,
@@ -159,6 +167,7 @@ class Profile implements SystemStamped {
     'country_code': countryCode,
     'vat_id': vatId,
     'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
+    'birthday': birthday == null ? null : birthdayWire(birthday!),
     'avatar_path': avatarPath,
     'privacy_accepted_version': privacyAcceptedVersion,
     'privacy_accepted_at': privacyAcceptedAt?.toUtc().toIso8601String(),
@@ -188,6 +197,7 @@ class Profile implements SystemStamped {
     countryCode: countryCode ?? this.countryCode,
     vatId: vatId ?? this.vatId,
     lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+    birthday: birthday,
     avatarPath: avatarPath ?? this.avatarPath,
     // copyWith used to DROP these two: a status edit reset the
     // document language. Carried now (#711).
@@ -198,7 +208,47 @@ class Profile implements SystemStamped {
     privacyAcceptedAt: privacyAcceptedAt ?? this.privacyAcceptedAt,
     identity: identity ?? this.identity,
   );
+
+  /// #3278 — the same profile with its birthday set, or cleared with null.
+  /// A method of its own (not a copyWith parameter) because null is a value
+  /// here, and every other copy keeps the birthday it has.
+  Profile withBirthday(DateTime? day) => Profile(
+    system: system,
+    id: id,
+    personId: personId,
+    displayName: displayName,
+    whatsapp: whatsapp,
+    statusText: statusText,
+    address: address,
+    countryCode: countryCode,
+    vatId: vatId,
+    lastSeenAt: lastSeenAt,
+    birthday: day,
+    avatarPath: avatarPath,
+    preferredLocale: preferredLocale,
+    formatPrefs: formatPrefs,
+    privacyAcceptedVersion: privacyAcceptedVersion,
+    privacyAcceptedAt: privacyAcceptedAt,
+    identity: identity,
+  );
 }
+
+/// #3278 — a `date` column as a calendar day (local midnight), or null.
+DateTime? _dateOrNull(Object? raw) {
+  if (raw is! String || raw.length < 10) return null;
+  final d = DateTime.tryParse(raw.substring(0, 10));
+  return d == null ? null : DateTime(d.year, d.month, d.day);
+}
+
+/// #3278 — a birthday as the `date` column writes it: `YYYY-MM-DD`.
+String birthdayWire(DateTime day) => isoDay(day);
+
+/// #3278 — a birthday the table accepts: not before 1900, not in the future.
+bool birthdayPlausible(DateTime day, DateTime today) =>
+    !day.isBefore(DateTime(1900)) &&
+    !DateTime(day.year, day.month, day.day).isAfter(
+      DateTime(today.year, today.month, today.day),
+    );
 
 /// Normalizes user input to the stored wire shape (#223): keep digits
 /// only, fold the `00` international dialing prefix into `+`, prepend

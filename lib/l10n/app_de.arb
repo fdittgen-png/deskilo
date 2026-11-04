@@ -11838,6 +11838,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Geburtstag",
+  "personalBirthdayClear": "Geburtstag entfernen",
+  "personalBirthdayHelp": "Nur Sie, Personen mit Einsicht in die persönlichen Daten der Mitglieder und die Datenschutzverantwortlichen des Arbeitsbereichs können es lesen. Wer nur Rechnungen stellt, kann es nicht.",
+  "personalBirthdayInvalid": "Ein Geburtstag kann nicht in der Zukunft oder vor 1900 liegen.",
+  "personalBirthdayPick": "Datum wählen",
+  "personalBirthdaySaveFailed": "Ihre Angaben wurden gespeichert, der Geburtstag jedoch nicht.",
   "personalInfoCity": "Ort",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -12204,6 +12210,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "Der Server hat abgelehnt: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Warum aufbewahrt",
+  "privacyAdminComplete": "Abschließen",
+  "privacyAdminDetails": "Details (optional)",
+  "privacyAdminEmpty": "Noch keine Rechteanfrage.",
+  "privacyAdminExtend": "Frist verlängern",
+  "privacyAdminExtendReason": "Grund der Verlängerung (mindestens 10 Zeichen)",
+  "privacyAdminIncidentIntro": "Die Personen, die in diesem Arbeitsbereich persönliche Daten betreuen, werden sofort informiert. Beschreiben Sie, was geschah; fügen Sie hier keine persönlichen Daten ein.",
+  "privacyAdminIncidentNote": "Was geschah (optional, höchstens 1000 Zeichen)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Erfasst. Niemand hat dieses Recht, daher wurde niemand informiert.} =1{Erfasst. 1 Person wurde informiert.} other{Erfasst. {count} Personen wurden informiert.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Erfassen und informieren",
+  "privacyAdminIncidentTitle": "Datenschutzvorfall erfassen",
+  "privacyAdminIntro": "Die Anfragen der Mitglieder zu ihren persönlichen Daten und die Vorfälle, die Sie erfassen. Jede Anfrage wird innerhalb eines Kalendermonats beantwortet.",
+  "privacyAdminKind": "Art der Anfrage",
+  "privacyAdminLoadFailed": "Die Anfragen konnten nicht gelesen werden.",
+  "privacyAdminMember": "Mitglied",
+  "privacyAdminOpenTile": "Persönliche Daten und Rechteanfragen",
+  "privacyAdminOutcomeKind": "Was mit den Daten geschah",
+  "privacyAdminPeriod": "Wie lange",
+  "privacyAdminReceivedOn": "Eingegangen am {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Anfrage erfassen",
+  "privacyAdminRefusalReason": "Grund der Ablehnung (mindestens 10 Zeichen)",
+  "privacyAdminRefuse": "Ablehnen",
+  "privacyAdminSave": "Speichern",
+  "privacyAdminStore": "Wo (ein Speicher oder eine Liste)",
+  "privacyAdminTitle": "Persönliche Daten und Rechteanfragen",
   "privacyErase": "Diesen Bereich verlassen und meine Daten löschen",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -12264,6 +12317,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "Eine Datenpanne",
+  "privacyIncidentOther": "Ein anderer Vorfall",
+  "privacyIncidentWrongInvoice": "Eine falsche Rechnung",
   "privacyIntro": "Ihre Daten werden nie verfolgt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen; wo sie gespeichert sind, steht in den Datenschutzhinweisen dieser Installation. Das sind Ihre Rechte nach der DSGVO — jedes ist eine Schaltfläche.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -12327,6 +12383,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Berichtigt",
+  "privacyOutcomeFailed": "Nicht durchführbar",
+  "privacyOutcomePendingExternal": "Anderswo noch offen",
+  "privacyOutcomeRemoved": "Gelöscht",
+  "privacyOutcomeRestricted": "Eingeschränkt",
+  "privacyOutcomeRetained": "Aufbewahrt (mit Begründung)",
   "privacyPolicy": "Datenschutzerklärung",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"

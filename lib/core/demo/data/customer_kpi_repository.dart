@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3294 — `kpi_customer_quality` over a demo space's own invoices, matches,
-// reminders and holds, by the server's rules (0670): a payment is dated by
+// reminders and holds, by the server's rules (0671): a payment is dated by
 // the day it was reported paid (the bank's value date, else the ledger's),
 // never by the match; amounts in the space's currency, another currency
 // leaving them unknown; names only for a reader of personal data.

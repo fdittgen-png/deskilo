@@ -192,6 +192,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/setup/step/:id', RouteClass.workspace),
   RouteRule('/settings/number-sequences', RouteClass.workspace),
   RouteRule('/members/managed', RouteClass.workspace),
+  RouteRule('/members/privacy', RouteClass.workspace),
   RouteRule('/payment-methods', RouteClass.workspace),
   RouteRule('/legal-identity', RouteClass.workspace),
   RouteRule('/deployment', RouteClass.workspace),

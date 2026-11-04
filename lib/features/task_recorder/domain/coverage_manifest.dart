@@ -431,6 +431,7 @@ const List<RouteCoverage> routeCoverage = [
     owner: '#1884',
   ),
   RouteCoverage('/members/managed', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/privacy', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/payment-methods',
     CoverageStatus.excluded,

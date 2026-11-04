@@ -29,6 +29,7 @@ String _workspaceExportProblem(
   WorkspaceExportFailure.hostUnavailable => l10n.meDataWorkspaceHostUnavailable,
   WorkspaceExportFailure.disabled => l10n.meDataWorkspaceDisabled,
   WorkspaceExportFailure.forbidden => l10n.meDataWorkspaceForbidden,
+  WorkspaceExportFailure.selfServiceOff => l10n.privacySelfServiceOff,
   WorkspaceExportFailure.malformed => l10n.meDataWorkspaceMalformed,
   WorkspaceExportFailure.failed => l10n.meDataWorkspaceFailed,
 };

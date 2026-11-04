@@ -3,7 +3,7 @@
 // #3294 — the customer side of the figures, on the KPI contract (#1918):
 // how customers pay against their due dates, how much dunning that takes,
 // what was credited or written off, and how concentrated the sales are.
-// The SERVER computes them (`kpi_customer_quality`, 0670) from the
+// The SERVER computes them (`kpi_customer_quality`, 0671) from the
 // invoices, their maturities, matches, reminders and holds; this layer
 // names what it returns.
 //

@@ -18128,6 +18128,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permWorkspaceSettings => 'Edit workspace settings';
 
   @override
+  String get personalBirthday => 'Birthday';
+
+  @override
+  String get personalBirthdayClear => 'Remove the birthday';
+
+  @override
+  String get personalBirthdayHelp =>
+      'Only you, people allowed to see members\' personal data and the workspace\'s privacy admin can read it. Someone who only issues invoices cannot.';
+
+  @override
+  String get personalBirthdayInvalid =>
+      'A birthday cannot be in the future or before 1900.';
+
+  @override
+  String get personalBirthdayPick => 'Choose a date';
+
+  @override
+  String get personalBirthdaySaveFailed =>
+      'Your details were saved, but the birthday could not be.';
+
+  @override
   String get personalInfoCity => 'City';
 
   @override
@@ -18855,6 +18876,102 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String privacyAdminActionFailed(String reason) {
+    return 'The server refused: $reason';
+  }
+
+  @override
+  String get privacyAdminBasis => 'Why it is kept';
+
+  @override
+  String get privacyAdminComplete => 'Complete';
+
+  @override
+  String get privacyAdminDetails => 'Details (optional)';
+
+  @override
+  String get privacyAdminEmpty => 'No rights request yet.';
+
+  @override
+  String get privacyAdminExtend => 'Extend the deadline';
+
+  @override
+  String get privacyAdminExtendReason =>
+      'Reason for the extension (at least 10 characters)';
+
+  @override
+  String get privacyAdminIncidentIntro =>
+      'The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.';
+
+  @override
+  String get privacyAdminIncidentNote =>
+      'What happened (optional, 1000 characters at most)';
+
+  @override
+  String privacyAdminIncidentRecorded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Recorded. $count people were told.',
+      one: 'Recorded. 1 person was told.',
+      zero: 'Recorded. Nobody holds the privacy right, so nobody was told.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get privacyAdminIncidentSend => 'Record and tell them';
+
+  @override
+  String get privacyAdminIncidentTitle => 'Record a privacy incident';
+
+  @override
+  String get privacyAdminIntro =>
+      'The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.';
+
+  @override
+  String get privacyAdminKind => 'Kind of request';
+
+  @override
+  String get privacyAdminLoadFailed => 'The requests could not be read.';
+
+  @override
+  String get privacyAdminMember => 'Member';
+
+  @override
+  String get privacyAdminOpenTile => 'Personal data and rights requests';
+
+  @override
+  String get privacyAdminOutcomeKind => 'What happened to the data';
+
+  @override
+  String get privacyAdminPeriod => 'For how long';
+
+  @override
+  String privacyAdminReceivedOn(String date) {
+    return 'Received on $date';
+  }
+
+  @override
+  String get privacyAdminRecord => 'Record a request';
+
+  @override
+  String get privacyAdminRefusalReason =>
+      'Reason for the refusal (at least 10 characters)';
+
+  @override
+  String get privacyAdminRefuse => 'Refuse';
+
+  @override
+  String get privacyAdminSave => 'Save';
+
+  @override
+  String get privacyAdminStore => 'Where (a store or a list)';
+
+  @override
+  String get privacyAdminTitle => 'Personal data and rights requests';
+
+  @override
   String get privacyErase => 'Leave this workspace and erase my data';
 
   @override
@@ -18901,6 +19018,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyExportShareText => 'My DesKilo data export';
 
   @override
+  String get privacyIncidentDataBreach => 'A data breach';
+
+  @override
+  String get privacyIncidentOther => 'Another incident';
+
+  @override
+  String get privacyIncidentWrongInvoice => 'A wrong invoice';
+
+  @override
   String get privacyIntro =>
       'Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation\'s privacy notice. These are your rights under the GDPR — each one is a button.';
 
@@ -18940,6 +19066,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String privacyNoticeTransfer(String mechanism) {
     return 'Transfer safeguard: $mechanism';
   }
+
+  @override
+  String get privacyOutcomeCorrected => 'Corrected';
+
+  @override
+  String get privacyOutcomeFailed => 'Could not be done';
+
+  @override
+  String get privacyOutcomePendingExternal => 'Still open elsewhere';
+
+  @override
+  String get privacyOutcomeRemoved => 'Removed';
+
+  @override
+  String get privacyOutcomeRestricted => 'Restricted';
+
+  @override
+  String get privacyOutcomeRetained => 'Kept (with a reason)';
 
   @override
   String get privacyPolicy => 'Privacy policy';

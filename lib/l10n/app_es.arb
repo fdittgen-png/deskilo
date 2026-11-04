@@ -11838,6 +11838,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Fecha de nacimiento",
+  "personalBirthdayClear": "Quitar la fecha de nacimiento",
+  "personalBirthdayHelp": "Solo usted, las personas autorizadas a ver los datos personales de los miembros y el administrador de datos personales del espacio pueden leerla. Quien solo emite facturas, no.",
+  "personalBirthdayInvalid": "Una fecha de nacimiento no puede estar en el futuro ni antes de 1900.",
+  "personalBirthdayPick": "Elegir una fecha",
+  "personalBirthdaySaveFailed": "Sus datos se guardaron, pero la fecha de nacimiento no.",
   "personalInfoCity": "Ciudad",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -12204,6 +12210,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "El servidor lo rechazó: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Por qué se conservan",
+  "privacyAdminComplete": "Completar",
+  "privacyAdminDetails": "Detalles (opcional)",
+  "privacyAdminEmpty": "Todavía no hay solicitudes.",
+  "privacyAdminExtend": "Prorrogar el plazo",
+  "privacyAdminExtendReason": "Motivo de la prórroga (al menos 10 caracteres)",
+  "privacyAdminIncidentIntro": "Las personas que gestionan los datos personales de este espacio reciben el aviso de inmediato. Diga lo ocurrido; no pegue datos personales aquí.",
+  "privacyAdminIncidentNote": "Qué ocurrió (opcional, 1000 caracteres como máximo)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrado. Nadie tiene ese derecho, así que nadie fue avisado.} =1{Registrado. Se avisó a 1 persona.} other{Registrado. Se avisó a {count} personas.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Registrar y avisar",
+  "privacyAdminIncidentTitle": "Registrar un incidente de datos",
+  "privacyAdminIntro": "Las solicitudes de los miembros sobre sus datos personales y los incidentes que usted registra. Cada solicitud se responde en un mes natural.",
+  "privacyAdminKind": "Tipo de solicitud",
+  "privacyAdminLoadFailed": "No se pudieron leer las solicitudes.",
+  "privacyAdminMember": "Miembro",
+  "privacyAdminOpenTile": "Datos personales y solicitudes de derechos",
+  "privacyAdminOutcomeKind": "Qué pasó con los datos",
+  "privacyAdminPeriod": "Durante cuánto tiempo",
+  "privacyAdminReceivedOn": "Recibida el {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Registrar una solicitud",
+  "privacyAdminRefusalReason": "Motivo del rechazo (al menos 10 caracteres)",
+  "privacyAdminRefuse": "Rechazar",
+  "privacyAdminSave": "Guardar",
+  "privacyAdminStore": "Dónde (un almacén o una lista)",
+  "privacyAdminTitle": "Datos personales y solicitudes de derechos",
   "privacyErase": "Abandonar este espacio y borrar mis datos",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -12264,6 +12317,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "Una filtración de datos",
+  "privacyIncidentOther": "Otro incidente",
+  "privacyIncidentWrongInvoice": "Una factura errónea",
   "privacyIntro": "Sus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son sus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -12327,6 +12383,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Rectificados",
+  "privacyOutcomeFailed": "No se pudo hacer",
+  "privacyOutcomePendingExternal": "Aún abiertos en otro lugar",
+  "privacyOutcomeRemoved": "Eliminados",
+  "privacyOutcomeRestricted": "Restringidos",
+  "privacyOutcomeRetained": "Conservados (con un motivo)",
   "privacyPolicy": "Política de privacidad",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"

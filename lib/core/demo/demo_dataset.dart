@@ -22,6 +22,7 @@ import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
 import '../time/date_text.dart';
 import 'data/event_repository.dart';
+import 'data/fixture_clock.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
@@ -30,6 +31,7 @@ import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_rights_seed.dart';
 import 'seed/demo_setup_seed.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
@@ -240,8 +242,9 @@ void _seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
 /// profile sheet, the directory and an invoice's recipient block render
 /// a whole person in Demo — the condition under which "shoot in Demo"
 /// can replace redacting a real workspace band by band.
-FakeProfileRepository demoProfiles({DemoPerson? me}) {
+FakeProfileRepository demoProfiles({DemoPerson? me, DateTime? today}) {
   final visitor = me ?? demoCast.first;
+  final rights = demoRightsRequests(today ?? kTestNow);
   return FakeProfileRepository(
     myUserId: visitor.userId,
     profiles: [
@@ -254,7 +257,7 @@ FakeProfileRepository demoProfiles({DemoPerson? me}) {
           countryCode: 'FR',
         ),
     ],
-  );
+  )..rightsRequests.addAll(rights);
 }
 
 /// Seeds bookings around [now]: one finished yesterday, one happening

@@ -122,7 +122,7 @@ select is(public.preview_my_member_profile('space_mate'),(select v from seen whe
 select is(public.preview_my_member_profile('personal_data'),(select v from seen where k = 'clerk'),'the personal-data preview is exactly what the billing clerk receives');
 select throws_ok($$select public.preview_my_member_profile('operational')$$,'P0001','unknown audience','a preview audience outside the list is refused');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833aa","role":"authenticated"}',true);
-select is(public.member_profiles(null,array['00000000-0000-4000-8000-0000001833aa'::uuid])->0->'purposes','["community", "operational"]'::jsonb,'an account in no space reads its own projection');
+select is(public.member_profiles(null,array['00000000-0000-4000-8000-0000001833aa'::uuid])->0->'purposes','["community", "operational", "birthday"]'::jsonb,'an account in no space reads its own projection (the birthday group included, #3278)');
 select ok(not (public.preview_my_member_profile('space_mate') ? 'operational'),'and previews it without any membership');
 
 -- ── the badge PIN hash is not on the profile row any more ───────────

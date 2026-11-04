@@ -88,6 +88,46 @@ abstract class ProfileRepository {
   /// #1915 — what erasing my membership of [workspaceId] would do.
   Future<ErasurePreview> previewMyErasure(String workspaceId);
 
+  /// #3278 (0668) — my own birthday; null clears it. Read only by me, by
+  /// `viewPersonalData` and `managePrivacy` holders of a space I share.
+  Future<void> updateBirthday(DateTime? birthday);
+
+  /// #3278 (0327) — the requests addressed to [workspaceId]'s controller,
+  /// newest first. Refused by the server for anyone who is not its rights
+  /// controller (an owner, `viewPersonalData` or `managePrivacy`).
+  Future<List<RightsRequest>> fetchWorkspaceRightsRequests(String workspaceId);
+
+  /// #3278 — the controller records a request received elsewhere.
+  Future<RightsRequest> recordRightsRequest({
+    required String workspaceId,
+    required String memberId,
+    required String kind,
+    required String details,
+    required DateTime receivedAt,
+  });
+
+  /// #3278 — extends the answer date once, with a reason.
+  Future<RightsRequest> extendRightsRequest({
+    required String requestId,
+    required String reason,
+  });
+
+  /// #3278 — closes a request: completed with an [outcome] manifest, or
+  /// refused with a [refusalReason] of at least ten characters.
+  Future<RightsRequest> completeRightsRequest({
+    required String requestId,
+    Map<String, Object?> outcome = const {},
+    String? refusalReason,
+  });
+
+  /// #3278 (0666) — records a privacy incident; returns how many holders
+  /// of `managePrivacy` it told.
+  Future<int> recordPrivacyIncident({
+    required String workspaceId,
+    required String kind,
+    required String note,
+  });
+
   /// #1914 — acknowledges the CURRENT notice of a space I belong to.
   Future<void> acknowledgeWorkspaceNotice(String workspaceId, String version);
 

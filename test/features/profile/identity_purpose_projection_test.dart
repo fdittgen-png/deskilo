@@ -169,6 +169,51 @@ void main() {
     expect(f.calls, isEmpty);
   });
 
+  test('the birthday arrives only in its own group, never in the operational '
+      'one a billing clerk reads (#3278)', () async {
+    // The server (0668) sends the 'birthday' group to the person, to
+    // viewPersonalData holders and to managePrivacy holders only.
+    final reader = _fixture([
+      {
+        ..._operationalRow,
+        'purposes': ['community', 'operational', 'birthday'],
+        'birthday': {'birthday': '1990-04-12'},
+      },
+    ]);
+    addTearDown(reader.client.dispose);
+    final privileged = (await SupabaseProfileRepository(
+      reader.client,
+    ).fetchProfiles('ws-1', ['user-2'])).single;
+    expect(privileged.birthday, DateTime(1990, 4, 12));
+
+    final clerk = _fixture([
+      {
+        ..._operationalRow,
+        // A birthday misplaced inside the operational group is never read.
+        'operational': {
+          ...(_operationalRow['operational'] as Map<String, Object?>),
+          'birthday': '1990-04-12',
+        },
+      },
+    ]);
+    addTearDown(clerk.client.dispose);
+    final plain = (await SupabaseProfileRepository(
+      clerk.client,
+    ).fetchProfiles('ws-1', ['user-2'])).single;
+    expect(plain.birthday, isNull);
+    expect(plain.fullName, 'Ada PEER', reason: 'the operational group is intact');
+  });
+
+  test('a birthday group without its purpose grants nothing (#3278)', () {
+    final p = profileFromProjection({
+      'id': 'user-2',
+      'purposes': ['community', 'operational'],
+      'community': {'display_name': 'Peer Person'},
+      'birthday': {'birthday': '1990-04-12'},
+    });
+    expect(p.birthday, isNull);
+  });
+
   group('profileFromProjection', () {
     test('reads a field only from the group its purpose names', () {
       final profile = profileFromProjection({

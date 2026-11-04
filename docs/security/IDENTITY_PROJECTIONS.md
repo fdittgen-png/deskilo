@@ -13,7 +13,8 @@ not listed here is projected to nobody.
 |---|---|---|
 | **community** | a current (active/paused) member of W, when S is a current member of W | group `community` |
 | **operational** | the same, AND the reader holds `viewPersonalData` or `issueInvoices` in W | group `operational` |
-| **self** | S themselves, with or without any membership | both groups |
+| **birthday** (#3278, 0668) | S themselves, or a reader holding `viewPersonalData` or `managePrivacy` in W (never `issueInvoices` alone), for a subject who is a current member of W | group `birthday` |
+| **self** | S themselves, with or without any membership | every group (`community`, `operational`, `birthday`) |
 | **account** (#1823) | anyone, per S's own audience choice — outside spaces | `visible_account` / `preview_my_account` (0315) |
 | **private auth** | nobody; only definer functions | own table |
 
@@ -32,6 +33,7 @@ and are read by nobody but themselves.
 | `status_text`, `last_seen_at` | community | directory presence (`last_seen_at` read from the unpublished `presence` table since #3123) |
 | `courtesy`, `first_name`, `last_name`, `company`, `street`, `postal_code`, `city`, `country_code`, `phone`, `email`, `vat_id`, `legal_id` | operational | `PersonalInfo` — what invoices and letters print |
 | `address` | operational | legacy free-text postal block |
+| `birthday` | birthday | a date (not before 1900, not in the future); a billing clerk reads the address but not the birthday; exported to its subject (`export_my_data`), cleared with the rest of the identity by the erasure of the last membership |
 | `preferred_locale` | operational | the language documents to S are printed in |
 | `format_locale`, `clock`, `time_zone_mode`, `default_workspace_id`, `privacy_accepted_*` | self only | read by `fetchMyProfile` |
 | `pin_hash`, `pin_set_at` | private auth | moved to `account_badge_pins` (0319); the columns are held empty |
