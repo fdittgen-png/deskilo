@@ -13,6 +13,7 @@ import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
@@ -274,6 +275,98 @@ void main() {
         isNotEmpty,
       );
     });
+  });
+
+  group('conversations deliver to their participants only', () {
+    const direct = 'demo-conv-bruno', studio = 'demo-conv-studio';
+
+    Future<bool> reads(DemoFixture f, String conversation, String body) async =>
+        (await f.workspaces.fetchConversationMessages(conversation))
+            .any((n) => n.body == body);
+
+    test(
+      'a reply in a direct thread goes to the other person, both ways',
+      () async {
+        final fixture = _as(DemoPersona.member);
+        await fixture.workspaces.sendConversationMessage(
+          direct,
+          'See you at 9',
+        );
+        expect(fixture.workspaces.memberNotes.last.toMemberId, _ada);
+        fixture.becomePersona(DemoPersona.owner);
+        expect(await reads(fixture, direct, 'See you at 9'), isTrue);
+
+        await fixture.workspaces.sendConversationMessage(direct, 'Perfect');
+        expect(fixture.workspaces.memberNotes.last.toMemberId, _bruno);
+        fixture.becomePersona(DemoPersona.member);
+        expect(await reads(fixture, direct, 'Perfect'), isTrue);
+      },
+    );
+
+    test('a third person cannot write into a direct thread', () async {
+      final fixture = _as(DemoPersona.admin);
+      await expectLater(
+        fixture.workspaces.sendConversationMessage(direct, 'Hello?'),
+        throwsA(_refused('not a participant')),
+      );
+      expect(
+        fixture.workspaces.memberNotes.where((n) => n.body == 'Hello?'),
+        isEmpty,
+      );
+    });
+
+    test('a group message reaches every current member of the group, '
+        'ordinary members included', () async {
+      final fixture = _as(DemoPersona.admin);
+      await fixture.workspaces.sendConversationMessage(studio, 'Screen is up');
+      expect(fixture.workspaces.memberNotes.last.conversationId, studio);
+      fixture.becomePersona(DemoPersona.member);
+      expect(await reads(fixture, studio, 'Screen is up'), isTrue);
+      expect(
+        (await fixture.workspaces.fetchMyNotes('ws-1'))
+            .any((n) => n.body == 'Screen is up'),
+        isTrue,
+      );
+    });
+
+    test('a member removed from a group no longer lists it, sends into it '
+        'or reads what is written after', () async {
+      final fixture = _as(DemoPersona.owner);
+      await fixture.workspaces.removeParticipant(studio, _bruno);
+      await fixture.workspaces.sendConversationMessage(studio, 'After Bruno');
+      fixture.becomePersona(DemoPersona.member);
+      expect(
+        (await fixture.workspaces.fetchConversations('ws-1')).map((c) => c.id),
+        isNot(contains(studio)),
+      );
+      expect(await reads(fixture, studio, 'After Bruno'), isFalse);
+      expect(
+        await reads(fixture, studio, 'Perfect, I will set up the screen.'),
+        isTrue,
+        reason: 'what was written while he was a member stays his to read',
+      );
+      await expectLater(
+        fixture.workspaces.sendConversationMessage(studio, 'Still here?'),
+        throwsA(_refused('not a participant')),
+      );
+    });
+  });
+
+  test('Leipzig\'s requests are read by its members only: after a switch to '
+      'a persona with no membership there, the routed feed is empty', () async {
+    final fixture = _as(DemoPersona.owner);
+    final container = await _scope(fixture);
+    container
+        .read(activeWorkspaceIdProvider.notifier)
+        .activate(demoSecondSpaceId);
+    await container.read(currentWorkspaceProvider.future);
+    final routed = container.read(eventRepositoryProvider);
+    expect(routed, same(fixture.secondSpace.events));
+    expect(await routed.fetchEvents(demoSecondSpaceId), isNotEmpty);
+
+    fixture.becomePersona(DemoPersona.admin);
+    expect(await routed.fetchEvents(demoSecondSpaceId), isEmpty);
+    expect(await routed.fetchEvent('de-quota-ada'), isNull);
   });
 
   group('roles', () {

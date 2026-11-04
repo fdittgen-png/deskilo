@@ -61,8 +61,25 @@ class FakeEventRepository implements EventRepository {
     String workspaceId, {
     int limit = 100,
   }) async {
-    return events.where((e) => e.workspaceId == workspaceId).toList()
+    return events
+        .where((e) => e.workspaceId == workspaceId && _mayRead(e))
+        .toList()
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  }
+
+  /// #3293 — events_select (0144): an administrator or owner of the
+  /// space, the event's actor or subject, or a validator its rule names.
+  /// Somebody who is not a member of the space reads none of it.
+  bool _mayRead(WorkspaceEvent e) {
+    if (decider == null) return true;
+    final me = decider!();
+    if (me == null || me.status != MemberStatus.active) return false;
+    if (me.isAdmin || me.isOwner) return true;
+    if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
+    final policy = policyFor(e.type.dbName, policies);
+    return policy.validatorScope == 'members' ||
+        (policy.validatorScope == 'listed' &&
+            policy.eligibleAdminIds.contains(me.id));
   }
 
   @override
@@ -122,7 +139,7 @@ class FakeEventRepository implements EventRepository {
 
   @override
   Future<WorkspaceEvent?> fetchEvent(String eventId) async =>
-      events.where((e) => e.id == eventId).firstOrNull;
+      events.where((e) => e.id == eventId && _mayRead(e)).firstOrNull;
 
   @override
   Future<Map<String, List<EventDecision>>> fetchDecisions(

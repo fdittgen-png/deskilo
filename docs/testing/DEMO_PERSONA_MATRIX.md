@@ -36,16 +36,18 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 | assign a custom role | allowed, never to herself | allowed, never to herself ✓ | — | — | (`assign_workspace_role`) |
 | edit a role's permissions | per `manageRoles` in the space being edited ✓ | per `manageRoles` in that space | refused ✓ | — | (`set_role_permission(s)`) |
 | send a messenger message | signed with her name | signed with her name | signed with his name ✓ | — | |
-| send a member note or a conversation message | from her | from her | from him ✓ | — | |
+| send a member note | from her | from her | from him ✓ | — | |
+| send a conversation message | from her, to the other person of a direct thread ✓ | from her | from him, to the other person ✓ | — | only a current participant: a third person, or a member removed from the group, is refused ✓ (`send_conversation_message`, 0313) |
 
 ## Visibility
 
 | what | who reads it |
 |---|---|
-| a direct conversation and its messages | its two people only: Chiara neither lists nor reads Ada and Bruno's thread ✓; Bruno sees it with Ada as the other person ✓ (`my_conversations`, `can_read_member_note`) |
-| a group conversation | its roster |
+| a direct conversation and its messages | its two people only: Chiara neither lists nor reads Ada and Bruno's thread ✓; Bruno sees it with Ada as the other person ✓; each reads the other's reply ✓ (`my_conversations`, `can_read_member_note`) |
+| a group conversation | its current roster: an ordinary member reads another member's message ✓; a removed member no longer lists the group, nor reads what is written after, and keeps what was written while they were in it ✓ |
 | the admin broadcast (a note to nobody in particular) | the owner and the administrators |
 | Leipzig's requests | Leipzig's feed, not the main space's ✓ |
+| a space's requests and decisions | its administrators and owner, the event's actor or subject, and the validators its rule names (`events_select`, 0144); a persona with no membership of the space reads none, also through the routed repository after a persona switch ✓ |
 | Leipzig itself | its members: a persona without a Leipzig membership does not see the space |
 
 ## Reset and isolation
@@ -58,8 +60,10 @@ reaches a server (`test/core/demo/demo_scope_test.dart`).
 
 - Unread counts and read receipts are the fake's per-session approximations,
   not per-person server state.
-- A group conversation the suite seeds without a roster stays readable to
-  every persona.
+- A conversation the suite seeds with neither a roster nor a message stays
+  readable to every persona; every Demo conversation has a roster.
+- The restrictive `privacy_incident` read rule (0667, `managePrivacy` only)
+  is not modelled: the Demo seeds no privacy incident.
 - Approval chains beyond one quorum step (sequential rules) follow the stored
   policy rows; the Demo seeds single-step rules.
 - Deployment history is the twin pair's, recorded under the acting persona's

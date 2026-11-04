@@ -124,48 +124,12 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
   }) async =>
       [
         for (final c in conversations)
-          if (includeArchived || !c.isArchived) ?_asSeenByMe(c),
+          if (includeArchived || !c.isArchived) ?asSeenByMe(c),
       ]..sort((a, b) {
           // Pinned first, then newest — my_conversations v3 (0146).
           if (a.isPinned != b.isPinned) return a.isPinned ? -1 : 1;
           return b.lastAt.compareTo(a.lastAt);
         });
-
-  /// #3293 — [c] as my_conversations answers the signed-in member, or
-  /// null when they are not in it: a direct thread is its two people's
-  /// (read off its messages; one with none yet is its opener's), and the
-  /// other person is whoever is not me; a group is its roster's (one the
-  /// fake was given no roster for stays listed, as the suite seeds them).
-  Conversation? _asSeenByMe(Conversation c) {
-    final me = myMember.id;
-    if (c.isGroup) {
-      final roster = participants[c.id];
-      return roster == null || roster.any((p) => p.memberId == me) ? c : null;
-    }
-    final people = {
-      for (final n in conversationMessages[c.id] ?? const <MemberNote>[]) ...[
-        n.fromMemberId,
-        ?n.toMemberId,
-      ],
-    };
-    if (people.isEmpty) return c;
-    if (!people.contains(me)) return null;
-    if (c.otherMemberId != me) return c;
-    // The opener's row names me as the other person: I see the opener.
-    return Conversation(
-      id: c.id,
-      kind: c.kind,
-      lastAt: c.lastAt,
-      otherMemberId: people.firstWhere((id) => id != me, orElse: () => me),
-      lastBody: c.lastBody,
-      lastFromMemberId: c.lastFromMemberId,
-      unread: c.lastFromMemberId == me ? 0 : c.unread,
-      participantCount: c.participantCount,
-      pinnedAt: c.pinnedAt,
-      muted: c.muted,
-      archivedAt: c.archivedAt,
-    );
-  }
 
   Future<void> _setConversationPrefsImpl(
     String conversationId, {
@@ -226,9 +190,14 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     required String otherMemberId,
   }) async {
     // Idempotent like the RPC: the same pair must not yield two threads.
-    final existing = conversations
-        .where((c) => !c.isGroup && c.otherMemberId == otherMemberId)
-        .firstOrNull;
+    final me = myMember.id;
+    final existing = conversations.where((c) {
+      if (c.isGroup) return false;
+      final people = currentPeople(c.id);
+      return people == null
+          ? c.otherMemberId == otherMemberId
+          : people.containsAll({me, otherMemberId});
+    }).firstOrNull;
     if (existing != null) return existing.id;
     final created = Conversation(
       id: 'conv-direct-$otherMemberId',
@@ -237,6 +206,11 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
       lastAt: DateTime.utc(2026, 8, 27),
     );
     conversations.add(created);
+    // #3293 — a direct thread has its two participants, as on the server.
+    participants[created.id] = [
+      ConversationParticipant(memberId: me, isAdmin: false),
+      ConversationParticipant(memberId: otherMemberId, isAdmin: false),
+    ];
     // #702 / migration 0130 — the thread INHERITS the pair's existing
     // notes. On the server those notes were written before conversations
     // existed and the backfill stamps them into this one; a fake that
@@ -323,6 +297,16 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     String conversationId,
     String body,
   ) async {
+    // #3293 — as send_conversation_message: only a current participant
+    // sends, and a direct message goes to the OTHER person.
+    final me = myMember.id;
+    final people = currentPeople(conversationId);
+    if (people != null && !people.contains(me)) {
+      throw const PostgrestException(
+        message: 'not a participant of this conversation',
+        code: '42501',
+      );
+    }
     sentMessages.add((conversationId: conversationId, body: body));
     // #702 — a conversation message IS a member note, as it is on the
     // server: `send_conversation_message` inserts into `member_notes`
@@ -337,10 +321,14 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
       id: 'msg-${sentMessages.length}',
       // #3293 — signed by whoever sends it, in their space.
       workspaceId: myMember.workspaceId,
-      fromMemberId: myMember.id,
-      toMemberId: direct?.otherMemberId,
+      fromMemberId: me,
+      toMemberId: direct == null
+          ? null
+          : people?.firstWhere((id) => id != me, orElse: () => me) ??
+              direct.otherMemberId,
       body: body,
       createdAt: DateTime.utc(2026, 8, 27, 12, sentMessages.length),
+      conversationId: conversationId,
     );
     memberNotes.add(note);
     conversationMessages.putIfAbsent(conversationId, () => []).add(note);
@@ -354,7 +342,7 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     // #3293 — only what the signed-in member may read.
     final all = [
       for (final n in conversationMessages[conversationId] ?? const <MemberNote>[])
-        if (_mayReadNote(n)) n,
+        if (mayReadNote(n)) n,
     ];
     final older = before == null
         ? all
@@ -425,23 +413,8 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
   /// was never given stays readable, as the suite's tests seed them).
   Future<List<MemberNote>> _fetchMyNotesImpl(String workspaceId) async => [
         for (final n in memberNotes.reversed)
-          if (_mayReadNote(n)) n,
+          if (mayReadNote(n)) n,
       ];
-
-  bool _mayReadNote(MemberNote n) {
-    final me = myMember.id;
-    if (n.fromMemberId == me || n.toMemberId == me) return true;
-    final conversation = n.conversationId;
-    if (conversation != null) {
-      // A direct thread is its two people's, answered above.
-      if (conversations.any((c) => c.id == conversation && !c.isGroup)) {
-        return false;
-      }
-      final roster = participants[conversation];
-      return roster == null || roster.any((p) => p.memberId == me && p.leftAt == null);
-    }
-    return n.toMemberId == null && (myMember.isAdmin || myMember.isOwner);
-  }
 
   Future<void> _deleteMemberNoteImpl(String noteId) async {
     deletedNotes.add(noteId);
