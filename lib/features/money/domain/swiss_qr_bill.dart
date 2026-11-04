@@ -154,7 +154,7 @@ String? qrrReferenceOf(String number) {
 /// snapshot (`legal_snapshot.qrr`, 0676) when it holds a valid one, else the
 /// reference derived from its number (invoices issued before 0676).
 String? invoiceQrrOf(String number, Map<String, Object?>? legalSnapshot) =>
-    frozenQrrOf(legalSnapshot) ?? qrrReferenceOf(number);
+    _frozenQrrOf(legalSnapshot) ?? qrrReferenceOf(number);
 
 bool isValidQrr(String reference) =>
     RegExp(r'^\d{27}$').hasMatch(reference) &&
@@ -187,12 +187,12 @@ String paymentReferenceFor({
   Map<String, Object?>? legalSnapshot,
 }) {
   if (creditNote || account.trim().isEmpty) return '';
-  if (isQrIban(account)) return frozenQrrOf(legalSnapshot) ?? '';
+  if (isQrIban(account)) return _frozenQrrOf(legalSnapshot) ?? '';
   return scorReferenceOf(invoiceNumber) ?? '';
 }
 
 /// The QRR frozen at issue in [legalSnapshot], when it holds a valid one.
-String? frozenQrrOf(Map<String, Object?>? legalSnapshot) =>
+String? _frozenQrrOf(Map<String, Object?>? legalSnapshot) =>
     switch (legalSnapshot?['qrr']) {
       final String q when isValidQrr(q) => q,
       _ => null,
@@ -205,7 +205,7 @@ bool qrIbanWithoutReference({
   required bool creditNote,
   Map<String, Object?>? legalSnapshot,
 }) =>
-    !creditNote && isQrIban(account) && frozenQrrOf(legalSnapshot) == null;
+    !creditNote && isQrIban(account) && _frozenQrrOf(legalSnapshot) == null;
 
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
