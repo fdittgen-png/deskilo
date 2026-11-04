@@ -6,7 +6,7 @@
 -- reader reads the deliveries and records none; a request id replays; a
 -- draft bill of the same supplier names the order.
 begin;
-select plan(17);
+select plan(18);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000033072'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -73,6 +73,9 @@ select ok(pg_temp.err('a1', pg_temp.receive(current_setting('t.o')::jsonb, '[{"l
   'a line never receives more than was ordered');
 select ok(pg_temp.err('a1', pg_temp.receive(current_setting('t.o')::jsonb, '[{"line_no":1,"quantity":0}]')) like '%above zero%',
   'a line is received in a quantity above zero');
+select ok(pg_temp.err('a1', pg_temp.receive(jsonb_build_object('id', current_setting('t.o')::jsonb ->> 'id', 'revision', 0),
+    '[{"line_no":1,"quantity":1}]')) like '40001%',
+  'a delivery against a stale revision is refused');
 select set_config('t.req', gen_random_uuid()::text, true);
 select set_config('t.o', pg_temp.as_user('a1', pg_temp.receive(current_setting('t.o')::jsonb, '[{"line_no":1,"quantity":60}]',
   current_date - 3, current_setting('t.req')::uuid))::text, true);

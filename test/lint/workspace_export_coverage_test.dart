@@ -221,6 +221,10 @@ const Map<String, String> _notExported = {
   'purchase_order_counters':
       '#3307 — the last number each year of the purchase order series; its '
           'state, not a record, and the orders carry their numbers',
+  'purchase_order_mail_settings':
+      '#3307 — the sender of the order mail and whether a key is stored; '
+          'configuration set again in the settings, the key itself stays in '
+          'the secret store',
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',
