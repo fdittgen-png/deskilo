@@ -29,8 +29,25 @@ import 'vat_regime.dart';
 /// Element ORDER is the whole game in CII: every group is an XSD sequence,
 /// and a document out of order is rejected before a single business rule is
 /// read. The order below follows the norm's own mapping table.
-String buildInvoiceCii(EInvoiceInput input) =>
-    _CiiWriter(input).write();
+String buildInvoiceCii(EInvoiceInput input) {
+  _refuseQrIbanWithoutReference(input);
+  return _CiiWriter(input).write();
+}
+
+/// #2380 — a QR-IBAN account with no frozen QR reference cannot be stated:
+/// the account refuses a payment without one, and the derived one is
+/// ambiguous. The readiness check refuses it before export
+/// (EInvoiceGap.qrIbanWithoutReference); a direct call fails loudly.
+void _refuseQrIbanWithoutReference(EInvoiceInput input) {
+  if (qrIbanWithoutReference(
+    account: input.iban,
+    creditNote: input.invoice.totalCents < 0,
+    legalSnapshot: input.invoice.legalSnapshot,
+  )) {
+    throw ArgumentError('a QR-IBAN payment needs the QR reference frozen at issue');
+  }
+}
+
 
 /// The CII document, one method per section of it.
 class _CiiWriter {
@@ -271,6 +288,7 @@ class _CiiWriter {
           account: input.iban,
           invoiceNumber: invoice.number,
           creditNote: invoice.totalCents < 0,
+          legalSnapshot: invoice.legalSnapshot,
         );
         if (reference.isNotEmpty) ram('PaymentReference', reference);
       }

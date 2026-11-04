@@ -60,7 +60,22 @@ String buildInvoiceUbl(
     throw ArgumentError(
         'a credit note that nets payments has no EN 16931 credit-note form');
   }
+  _refuseQrIbanWithoutReference(input);
   return writer.write();
+}
+
+/// #2380 — a QR-IBAN account with no frozen QR reference cannot be stated:
+/// the account refuses a payment without one, and the derived one is
+/// ambiguous. The readiness check refuses it before export
+/// (EInvoiceGap.qrIbanWithoutReference); a direct call fails loudly.
+void _refuseQrIbanWithoutReference(EInvoiceInput input) {
+  if (qrIbanWithoutReference(
+    account: input.iban,
+    creditNote: input.invoice.totalCents < 0,
+    legalSnapshot: input.invoice.legalSnapshot,
+  )) {
+    throw ArgumentError('a QR-IBAN payment needs the QR reference frozen at issue');
+  }
 }
 
 /// The UBL document, one method per section of it.
@@ -254,6 +269,7 @@ class _UblWriter {
           account: iban,
           invoiceNumber: invoice.number,
           creditNote: invoice.totalCents < 0,
+          legalSnapshot: invoice.legalSnapshot,
         );
         if (reference.isNotEmpty) cbc('PaymentID', reference);
         builder.element('cac:PayeeFinancialAccount', nest: () {

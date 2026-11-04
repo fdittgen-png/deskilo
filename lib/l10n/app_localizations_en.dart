@@ -12339,6 +12339,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.';
 
   @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.';
+
+  @override
   String get invoiceGapMissingBuyerCountry =>
       'The customer\'s country is missing.';
 

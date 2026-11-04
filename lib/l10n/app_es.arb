@@ -8246,6 +8246,7 @@
     "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
   },
   "invoiceGapCreditNoteWithPayments": "Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.",
+  "invoiceGapQrIbanWithoutReference": "Esta factura se paga en un QR-IBAN, que exige la referencia QR fijada al emitirla, y esta se emitió antes de que existieran esas referencias. Emita una factura de sustitución o indique el IBAN ordinario como cuenta de pago.",
   "invoiceGapMissingBuyerCountry": "Falta el país del cliente.",
   "invoiceGapMissingBuyerVatId": "Falta el NIF-IVA del cliente — una factura con inversión del sujeto pasivo debe indicarlo.",
   "@invoiceGapMissingBuyerVatId": {
