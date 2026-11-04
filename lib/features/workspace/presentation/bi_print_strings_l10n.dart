@@ -109,6 +109,7 @@ String _basis(AppLocalizations l10n, KpiDateBasis b) => switch (b) {
   KpiDateBasis.paymentReportedPaid => l10n.biBasisPaymentReportedPaid,
   KpiDateBasis.documentDate => l10n.biBasisDocumentDate,
   KpiDateBasis.occurrenceDue => l10n.biBasisOccurrenceDue,
+  KpiDateBasis.invoiceDue => l10n.biBasisInvoiceDue,
   KpiDateBasis.bookValuePeriod => l10n.biBasisBookValuePeriod,
   KpiDateBasis.periodEnd => l10n.biBasisPeriodEnd,
   KpiDateBasis.currentState => l10n.biBasisCurrentState,

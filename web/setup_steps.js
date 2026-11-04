@@ -91,6 +91,8 @@ const STEPS=[
   const row=k=>{const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
    const note=!availableHere(k)?T('featuresUnavailableIn',{desc:d,country:countryName(S.country),list:AVAILABLE_IN[k].map(c=>c==='@eu'?T('featuresAvailabilityEu'):countryName(c)).join(T('listSep'))}):(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(waitsFor(k)))}):d);
    const c=checkbox(name,note,S.features[k],v=>applyFeature(k,v),(parent?'child':''));
+   // #3300 — a switch the country does not offer is not offered for activation; a stored ON can be turned off.
+   if(!availableHere(k)&&!S.features[k])c.querySelector('input').disabled=true;
    const fh=helpIcon(null,k);if(fh)c.querySelector('span').insertBefore(fh,c.querySelector('span div'));return c};
   // #1330 — one card per business process, the same switches underneath;
   // a switch no process lists yet (a reserved flag) is offered last.

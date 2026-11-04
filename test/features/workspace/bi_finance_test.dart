@@ -323,7 +323,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('bi-cards-ok')));
     await tester.pumpAndSettle();
-    expect(_query(tester)['cards'], 'finance.collected');
+    // #3294 — the customer cards follow the two finance ones.
+    expect(_query(tester)['cards']!.split(',').first, 'finance.collected');
+    expect(_query(tester)['cards'], isNot(contains('finance.invoiced')));
     expect(
       find.byKey(const ValueKey('bi-module-finance.invoiced')),
       findsNothing,

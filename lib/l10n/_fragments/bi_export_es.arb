@@ -335,5 +335,6 @@
   "biPrintFigures": "Cifras",
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
-  }
+  },
+  "biBasisInvoiceDue": "fecha de vencimiento de la factura"
 }

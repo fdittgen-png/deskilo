@@ -3,7 +3,7 @@
 -- another one, the stored switch is kept, and every other feature answers as
 -- before. Real roles. The EU list is the eu_member rows of the tax reference.
 begin;
-select plan(15);
+select plan(16);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -35,11 +35,12 @@ select pg_temp.act_as(pg_temp.u(1));
 select set_config('t.fr', public.create_workspace('Feature FR', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
 select set_config('t.gb', public.create_workspace('Feature GB', 'GB', 'GBP', 'Europe/London', 'dev', false, null)::text, true);
 select set_config('t.de', public.create_workspace('Feature DE', 'DE', 'EUR', 'Europe/Berlin', 'dev', false, null)::text, true);
+select set_config('t.us', public.create_workspace('Feature US', 'US', 'USD', 'America/New_York', 'dev', false, null)::text, true);
 reset role;
 -- every feature stored ON, so only the country can make a difference
 update public.workspaces
    set feature_flags = (select jsonb_object_agg(k, true) from jsonb_object_keys(public.feature_registry()) k)
- where id in (current_setting('t.fr')::uuid, current_setting('t.gb')::uuid, current_setting('t.de')::uuid);
+ where id in (current_setting('t.fr')::uuid, current_setting('t.gb')::uuid, current_setting('t.de')::uuid, current_setting('t.us')::uuid);
 
 select is(public.feature_registry() -> 'recapitulativeStatement' -> 'countries', '["@eu"]'::jsonb, 'the registry says: the EU');
 select ok(public.feature_available_in('FR', 'recapitulativeStatement'), 'France is in the Union');
@@ -62,6 +63,8 @@ select ok(not pg_temp.on(current_setting('t.fr'), 'mtdSubmission') and not pg_te
   'a French and a German space stored ON do not');
 select is((select feature_flags ->> 'mtdSubmission' from public.workspaces where id = current_setting('t.fr')::uuid), 'true',
   'and the French stored switch is untouched');
+select ok(not pg_temp.on(current_setting('t.us'), 'mtdSubmission') and pg_temp.on(current_setting('t.us'), 'vatDeclarations'),
+  'a US space with MTD and its ancestors stored ON does not have it');
 
 select * from finish();
 rollback;

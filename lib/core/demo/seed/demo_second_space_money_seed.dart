@@ -10,6 +10,7 @@ import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
+import '../../../features/money/domain/vat_rate.dart';
 import '../../time/date_text.dart';
 import '../data/event_repository.dart';
 import '../data/money_repository.dart';
@@ -102,6 +103,11 @@ Invoice _invoice(
     title: _period(issued),
     lines: lines,
     totalCents: total,
+    // #3294 — the breakdown the server freezes on every invoice (0072).
+    vatTotals: vatTotalsOf(
+      [for (final l in lines) (amountCents: l.amountCents, vatPercent: l.vatPercent)],
+      zeroCategory: 'O',
+    ),
     currency: 'EUR',
     memberName: _nameOf(member),
     memberAddress: '',
