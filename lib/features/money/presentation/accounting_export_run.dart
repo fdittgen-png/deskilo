@@ -55,6 +55,7 @@ import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
 import 'accounting_export_sage.dart';
 import 'accounting_export_swiss.dart';
+import 'accounting_export_xero.dart';
 import 'bank_reconciliation_archive.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
@@ -203,10 +204,9 @@ class AccountingExportRun {
     switch (format.id) {
       case 'fec':
         await _fec();
-      case 'datev':
-        await datevExport();
-      case 'sage50':
-        await sageExport();
+      case 'datev': await datevExport();
+      case 'sage50': await sageExport();
+      case 'xero_invoice_csv': await xeroInvoiceFileExport();
       case 'ch_kmu':
         await swissJournalExport(SwissJournalLayout.kmu, stem: 'mwst buchungen');
       case 'banana_transactions':

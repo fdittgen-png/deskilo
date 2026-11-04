@@ -12385,6 +12385,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (importazione fatture di vendita)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Emetti questa fattura fuori dall’app';
 
@@ -30923,4 +30927,54 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Spazio importato.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Codice del conto ricavi';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importa queste fatture come bozze: le approvi in Xero. Il conto ricavi e le aliquote sono quelli della Sua organizzazione: ne copi i nomi da Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Esportazione Xero';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.',
+      one: 'Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder =>
+      'Ordine delle date della Sua organizzazione';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Prima il giorno (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Prima il mese (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Inserisci il codice del conto ricavi.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Indica l’aliquota Xero per $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Aliquota Xero per $rate';
+  }
 }
