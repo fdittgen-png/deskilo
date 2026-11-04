@@ -151,8 +151,8 @@ String? qrrReferenceOf(String number) {
 }
 
 /// #2380 — the QRR of an invoice: the one frozen at issue in its legal
-/// snapshot (`legal_snapshot.qrr`, 0672) when it holds a valid one, else the
-/// reference derived from its number (invoices issued before 0672).
+/// snapshot (`legal_snapshot.qrr`, 0676) when it holds a valid one, else the
+/// reference derived from its number (invoices issued before 0676).
 String? invoiceQrrOf(String number, Map<String, Object?>? legalSnapshot) {
   if (legalSnapshot?['qrr'] case final String frozen when isValidQrr(frozen)) {
     return frozen;

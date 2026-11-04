@@ -50,7 +50,7 @@ class OpenInvoice {
   final String id;
   final String number;
 
-  /// #2380 — the QRR frozen at issue (0672); null on an older invoice.
+  /// #2380 — the QRR frozen at issue (0676); null on an older invoice.
   final String? frozenQrr;
   final String memberName;
   final String currency;
@@ -111,7 +111,7 @@ class _OpenIndex {
     for (final i in open) {
       (byCurrency[i.currency] ??= []).add(i);
       // #2380 — the reference the invoice printed: the one frozen at issue,
-      // or, for an invoice older than 0672, the one derived from its number.
+      // or, for an invoice older than 0676, the one derived from its number.
       if (i.frozenQrr ?? qrrReferenceOf(i.number) case final r?) {
         (byQr[r] ??= []).add(i);
       }
