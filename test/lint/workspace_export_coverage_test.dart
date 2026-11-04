@@ -443,6 +443,11 @@ const Map<String, Set<String>> _notExportedColumns = {
     // preference, exported by export_my_personal_data_v1, never a fact of
     // the workspace; another installation's id must not travel as data.
     'default_workspace_network_id',
+    // The person's birthday (#3278, 0668): read only by the person and by
+    // viewPersonalData / managePrivacy holders, never by an invoicing clerk;
+    // a workbook is handed on to people with neither right. It goes to its
+    // subject in export_my_data.
+    'birthday',
   },
   'workspaces': {
     // The birth record `installation id:local id` (#2561): stamped by the

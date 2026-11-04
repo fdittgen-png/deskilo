@@ -13,6 +13,8 @@ none: it is read as reassurance.
 | what it protects | file |
 |---|---|
 | The Activity analysis invoiced and collected figures come from the demo's own invoices and matches, with the server's predicates: void and settlement invoices left out, credit notes apart, collected by the month of the match (#2339) | `test/core/demo/demo_finance_kpi_test.dart` |
+| The personal data admin's screen in the Demo: a request recorded, extended, completed or refused, a refusal by the server shown in its own words with the sheet left open and then accepted (recovery), a privacy incident that says how many were told, and the screen offered only to someone who may decide requests (#3278). Simulated Demo behaviour; the server's rules are pgTAP 349, 350 and 351. | `test/features/profile/privacy_admin_screen_test.dart` |
+| The birthday on the personal information form: who can read it, a day chosen on the bounded calendar, saved with the rest, removed, and the rest saved when only the birthday fails (#3278) | `test/features/profile/birthday_form_test.dart` |
 | Demo entry, the explanation before consent, leaving — and that a whole visit leaves the device's own preferences byte-for-byte as it found them (#1564) | `test/core/demo/demo_entry_test.dart` |
 | Isolation: the overrides are complete — every repository, every outward edge, the schema probe, the push pair and every per-device preference (#1564) | `test/core/demo/demo_scope_test.dart` |
 | Isolation reaches the providers screens actually read | `test/core/demo/demo_scope_reach_test.dart` |

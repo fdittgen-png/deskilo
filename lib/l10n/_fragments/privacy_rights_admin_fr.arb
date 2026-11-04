@@ -1,0 +1,65 @@
+{
+  "@@locale": "fr",
+  "personalBirthday": "Date de naissance",
+  "personalBirthdayHelp": "Seuls vous, les personnes autorisées à voir les données personnelles des membres et l'administrateur des données personnelles de l'espace peuvent la lire. Une personne qui ne fait que facturer ne le peut pas.",
+  "personalBirthdayPick": "Choisir une date",
+  "personalBirthdayClear": "Effacer la date de naissance",
+  "personalBirthdayInvalid": "Une date de naissance ne peut pas être dans le futur ni avant 1900.",
+  "personalBirthdaySaveFailed": "Vos informations sont enregistrées, mais pas la date de naissance.",
+  "privacyAdminTitle": "Données personnelles et demandes de droits",
+  "privacyAdminIntro": "Les demandes des membres sur leurs données personnelles, et les incidents que vous enregistrez. Chaque demande reçoit une réponse sous un mois civil.",
+  "privacyAdminEmpty": "Aucune demande pour le moment.",
+  "privacyAdminRecord": "Enregistrer une demande",
+  "privacyAdminMember": "Membre",
+  "privacyAdminKind": "Type de demande",
+  "privacyAdminDetails": "Détails (facultatif)",
+  "privacyAdminReceivedOn": "Reçue le {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminExtend": "Prolonger le délai",
+  "privacyAdminExtendReason": "Motif de la prolongation (10 caractères au moins)",
+  "privacyAdminComplete": "Clore",
+  "privacyAdminRefuse": "Refuser",
+  "privacyAdminOutcomeKind": "Ce qu'il est advenu des données",
+  "privacyOutcomeRemoved": "Supprimées",
+  "privacyOutcomeCorrected": "Rectifiées",
+  "privacyOutcomeRestricted": "Limitées",
+  "privacyOutcomeRetained": "Conservées (avec un motif)",
+  "privacyOutcomePendingExternal": "Encore ouvertes ailleurs",
+  "privacyOutcomeFailed": "Non réalisées",
+  "privacyAdminStore": "Où (un stockage ou une liste)",
+  "privacyAdminBasis": "Pourquoi elles sont conservées",
+  "privacyAdminPeriod": "Pendant combien de temps",
+  "privacyAdminRefusalReason": "Motif du refus (10 caractères au moins)",
+  "privacyAdminSave": "Enregistrer",
+  "privacyAdminActionFailed": "Le serveur a refusé : {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminIncidentTitle": "Enregistrer un incident de données",
+  "privacyAdminIncidentIntro": "Les personnes qui gèrent les données personnelles de cet espace sont prévenues aussitôt. Dites ce qui s'est passé ; ne collez pas de données personnelles ici.",
+  "privacyIncidentDataBreach": "Une fuite de données",
+  "privacyIncidentWrongInvoice": "Une facture erronée",
+  "privacyIncidentOther": "Un autre incident",
+  "privacyAdminIncidentNote": "Ce qui s'est passé (facultatif, 1000 caractères au plus)",
+  "privacyAdminIncidentSend": "Enregistrer et prévenir",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} =1{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminOpenTile": "Données personnelles et demandes de droits",
+  "privacyAdminLoadFailed": "Les demandes n'ont pas pu être lues."
+}

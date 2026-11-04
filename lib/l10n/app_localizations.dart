@@ -30054,6 +30054,42 @@ abstract class AppLocalizations {
   /// **'Edit workspace settings'**
   String get permWorkspaceSettings;
 
+  /// No description provided for @personalBirthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get personalBirthday;
+
+  /// No description provided for @personalBirthdayClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the birthday'**
+  String get personalBirthdayClear;
+
+  /// No description provided for @personalBirthdayHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only you, people allowed to see members\' personal data and the workspace\'s privacy admin can read it. Someone who only issues invoices cannot.'**
+  String get personalBirthdayHelp;
+
+  /// No description provided for @personalBirthdayInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'A birthday cannot be in the future or before 1900.'**
+  String get personalBirthdayInvalid;
+
+  /// No description provided for @personalBirthdayPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get personalBirthdayPick;
+
+  /// No description provided for @personalBirthdaySaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details were saved, but the birthday could not be.'**
+  String get personalBirthdaySaveFailed;
+
   /// #886 personal-information form / feature: personalInfoCity
   ///
   /// In en, this message translates to:
@@ -31266,6 +31302,162 @@ abstract class AppLocalizations {
   /// **'incl. VAT {rate}'**
   String priceVatIncluded(String rate);
 
+  /// No description provided for @privacyAdminActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused: {reason}'**
+  String privacyAdminActionFailed(String reason);
+
+  /// No description provided for @privacyAdminBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is kept'**
+  String get privacyAdminBasis;
+
+  /// No description provided for @privacyAdminComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get privacyAdminComplete;
+
+  /// No description provided for @privacyAdminDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get privacyAdminDetails;
+
+  /// No description provided for @privacyAdminEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No rights request yet.'**
+  String get privacyAdminEmpty;
+
+  /// No description provided for @privacyAdminExtend.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend the deadline'**
+  String get privacyAdminExtend;
+
+  /// No description provided for @privacyAdminExtendReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the extension (at least 10 characters)'**
+  String get privacyAdminExtendReason;
+
+  /// No description provided for @privacyAdminIncidentIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.'**
+  String get privacyAdminIncidentIntro;
+
+  /// No description provided for @privacyAdminIncidentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened (optional, 1000 characters at most)'**
+  String get privacyAdminIncidentNote;
+
+  /// No description provided for @privacyAdminIncidentRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}'**
+  String privacyAdminIncidentRecorded(int count);
+
+  /// No description provided for @privacyAdminIncidentSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Record and tell them'**
+  String get privacyAdminIncidentSend;
+
+  /// No description provided for @privacyAdminIncidentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a privacy incident'**
+  String get privacyAdminIncidentTitle;
+
+  /// No description provided for @privacyAdminIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.'**
+  String get privacyAdminIntro;
+
+  /// No description provided for @privacyAdminKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of request'**
+  String get privacyAdminKind;
+
+  /// No description provided for @privacyAdminLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The requests could not be read.'**
+  String get privacyAdminLoadFailed;
+
+  /// No description provided for @privacyAdminMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get privacyAdminMember;
+
+  /// No description provided for @privacyAdminOpenTile.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal data and rights requests'**
+  String get privacyAdminOpenTile;
+
+  /// No description provided for @privacyAdminOutcomeKind.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened to the data'**
+  String get privacyAdminOutcomeKind;
+
+  /// No description provided for @privacyAdminPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'For how long'**
+  String get privacyAdminPeriod;
+
+  /// No description provided for @privacyAdminReceivedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Received on {date}'**
+  String privacyAdminReceivedOn(String date);
+
+  /// No description provided for @privacyAdminRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a request'**
+  String get privacyAdminRecord;
+
+  /// No description provided for @privacyAdminRefusalReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the refusal (at least 10 characters)'**
+  String get privacyAdminRefusalReason;
+
+  /// No description provided for @privacyAdminRefuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Refuse'**
+  String get privacyAdminRefuse;
+
+  /// No description provided for @privacyAdminSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get privacyAdminSave;
+
+  /// No description provided for @privacyAdminStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Where (a store or a list)'**
+  String get privacyAdminStore;
+
+  /// No description provided for @privacyAdminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal data and rights requests'**
+  String get privacyAdminTitle;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
@@ -31338,6 +31530,24 @@ abstract class AppLocalizations {
   /// **'My DesKilo data export'**
   String get privacyExportShareText;
 
+  /// No description provided for @privacyIncidentDataBreach.
+  ///
+  /// In en, this message translates to:
+  /// **'A data breach'**
+  String get privacyIncidentDataBreach;
+
+  /// No description provided for @privacyIncidentOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Another incident'**
+  String get privacyIncidentOther;
+
+  /// No description provided for @privacyIncidentWrongInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'A wrong invoice'**
+  String get privacyIncidentWrongInvoice;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
@@ -31397,6 +31607,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfer safeguard: {mechanism}'**
   String privacyNoticeTransfer(String mechanism);
+
+  /// No description provided for @privacyOutcomeCorrected.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get privacyOutcomeCorrected;
+
+  /// No description provided for @privacyOutcomeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be done'**
+  String get privacyOutcomeFailed;
+
+  /// No description provided for @privacyOutcomePendingExternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Still open elsewhere'**
+  String get privacyOutcomePendingExternal;
+
+  /// No description provided for @privacyOutcomeRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get privacyOutcomeRemoved;
+
+  /// No description provided for @privacyOutcomeRestricted.
+  ///
+  /// In en, this message translates to:
+  /// **'Restricted'**
+  String get privacyOutcomeRestricted;
+
+  /// No description provided for @privacyOutcomeRetained.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept (with a reason)'**
+  String get privacyOutcomeRetained;
 
   /// #719 - privacy & data
   ///

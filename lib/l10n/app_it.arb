@@ -11794,6 +11794,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Data di nascita",
+  "personalBirthdayClear": "Rimuovi la data di nascita",
+  "personalBirthdayHelp": "Possono leggerla solo lei, le persone autorizzate a vedere i dati personali dei membri e l'amministratore dei dati personali dello spazio. Chi si limita a emettere fatture no.",
+  "personalBirthdayInvalid": "Una data di nascita non può essere nel futuro né prima del 1900.",
+  "personalBirthdayPick": "Scegli una data",
+  "personalBirthdaySaveFailed": "Le sue informazioni sono state salvate, ma non la data di nascita.",
   "personalInfoCity": "Città",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -12160,6 +12166,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "Il server ha rifiutato: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Perché sono conservati",
+  "privacyAdminComplete": "Completa",
+  "privacyAdminDetails": "Dettagli (facoltativo)",
+  "privacyAdminEmpty": "Nessuna richiesta per ora.",
+  "privacyAdminExtend": "Prolunga il termine",
+  "privacyAdminExtendReason": "Motivo della proroga (almeno 10 caratteri)",
+  "privacyAdminIncidentIntro": "Le persone che gestiscono i dati personali di questo spazio vengono avvisate subito. Descriva cosa è successo; non incolli qui dati personali.",
+  "privacyAdminIncidentNote": "Cosa è successo (facoltativo, massimo 1000 caratteri)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrato. Nessuno ha questo diritto, quindi nessuno è stato avvisato.} =1{Registrato. È stata avvisata 1 persona.} other{Registrato. Sono state avvisate {count} persone.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Registra e avvisa",
+  "privacyAdminIncidentTitle": "Registra un incidente sui dati",
+  "privacyAdminIntro": "Le richieste dei membri sui loro dati personali e gli incidenti che registra. Ogni richiesta riceve risposta entro un mese di calendario.",
+  "privacyAdminKind": "Tipo di richiesta",
+  "privacyAdminLoadFailed": "Impossibile leggere le richieste.",
+  "privacyAdminMember": "Membro",
+  "privacyAdminOpenTile": "Dati personali e richieste di diritti",
+  "privacyAdminOutcomeKind": "Cosa è successo ai dati",
+  "privacyAdminPeriod": "Per quanto tempo",
+  "privacyAdminReceivedOn": "Ricevuta il {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Registra una richiesta",
+  "privacyAdminRefusalReason": "Motivo del rifiuto (almeno 10 caratteri)",
+  "privacyAdminRefuse": "Rifiuta",
+  "privacyAdminSave": "Salva",
+  "privacyAdminStore": "Dove (un archivio o un elenco)",
+  "privacyAdminTitle": "Dati personali e richieste di diritti",
   "privacyErase": "Lasciare questo spazio e cancellare i miei dati",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -12220,6 +12273,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "Una violazione dei dati",
+  "privacyIncidentOther": "Un altro incidente",
+  "privacyIncidentWrongInvoice": "Una fattura errata",
   "privacyIntro": "I suoi dati non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto; dove sono ospitati è indicato nell'informativa privacy di questa installazione. Questi sono i suoi diritti secondo il GDPR — ognuno è un pulsante.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -12283,6 +12339,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Rettificati",
+  "privacyOutcomeFailed": "Non eseguibili",
+  "privacyOutcomePendingExternal": "Ancora aperti altrove",
+  "privacyOutcomeRemoved": "Rimossi",
+  "privacyOutcomeRestricted": "Limitati",
+  "privacyOutcomeRetained": "Conservati (con un motivo)",
   "privacyPolicy": "Informativa sulla privacy",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"

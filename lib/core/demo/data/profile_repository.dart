@@ -143,6 +143,148 @@ class FakeProfileRepository implements ProfileRepository {
     return request;
   }
 
+  /// #3278 — what the privacy admin's actions did, for assertions.
+  final privacyIncidents = <({String kind, String note})>[];
+
+  /// #3278 — how many holders of `managePrivacy` an incident tells in the fake.
+  int privacyHolders = 1;
+
+  @override
+  Future<void> updateBirthday(DateTime? birthday) async {
+    if (failing) throw StateError('birthday write failed');
+    final mine = _mine;
+    if (mine == null) throw StateError('not signed in');
+    if (birthday != null && !birthdayPlausible(birthday, kTestNow)) {
+      throw StateError('a birthday is not before 1900 or in the future');
+    }
+    _replaceMine(mine.withBirthday(birthday));
+  }
+
+  @override
+  Future<List<RightsRequest>> fetchWorkspaceRightsRequests(
+    String workspaceId,
+  ) async => [
+    for (final r in rightsRequests)
+      if (r.workspaceId == workspaceId) r,
+  ];
+
+  void _replaceRequest(String id, RightsRequest Function(RightsRequest) f) {
+    final i = rightsRequests.indexWhere((r) => r.id == id);
+    if (i < 0) throw StateError('no such rights request');
+    rightsRequests[i] = f(rightsRequests[i]);
+  }
+
+  RightsRequest _request(String id) =>
+      rightsRequests.firstWhere((r) => r.id == id);
+
+  @override
+  Future<RightsRequest> recordRightsRequest({
+    required String workspaceId,
+    required String memberId,
+    required String kind,
+    required String details,
+    required DateTime receivedAt,
+  }) async {
+    if (failing) throw StateError('only the space\'s controller records a rights request');
+    if (!rightsRequestKinds.contains(kind)) throw StateError('unknown kind');
+    final request = RightsRequest(
+      id: 'rr-${rightsRequests.length + 1}',
+      workspaceId: workspaceId,
+      memberId: memberId,
+      kind: kind,
+      details: details.trim(),
+      status: 'received',
+      receivedAt: receivedAt,
+      dueOn: DateTime(receivedAt.year, receivedAt.month + 1, receivedAt.day),
+    );
+    rightsRequests.insert(0, request);
+    return request;
+  }
+
+  @override
+  Future<RightsRequest> extendRightsRequest({
+    required String requestId,
+    required String reason,
+  }) async {
+    if (failing) throw StateError('only the space\'s controller decides a rights request');
+    final before = _request(requestId);
+    if (before.status != 'received') {
+      throw StateError('a rights request is extended once, while it is open');
+    }
+    if (reason.trim().length < 10) {
+      throw StateError('an extension states its reason');
+    }
+    _replaceRequest(
+      requestId,
+      (r) => RightsRequest(
+        id: r.id,
+        workspaceId: r.workspaceId,
+        memberId: r.memberId,
+        kind: r.kind,
+        status: 'extended',
+        receivedAt: r.receivedAt,
+        dueOn: r.dueOn,
+        details: r.details,
+        extendedDueOn: DateTime(r.dueOn.year, r.dueOn.month + 2, r.dueOn.day),
+        extensionReason: reason.trim(),
+      ),
+    );
+    return _request(requestId);
+  }
+
+  @override
+  Future<RightsRequest> completeRightsRequest({
+    required String requestId,
+    Map<String, Object?> outcome = const {},
+    String? refusalReason,
+  }) async {
+    if (failing) throw StateError('only the space\'s controller decides a rights request');
+    final before = _request(requestId);
+    if (before.status == 'completed' || before.status == 'refused') {
+      throw StateError('a closed rights request stays closed');
+    }
+    if (refusalReason != null) {
+      if (refusalReason.trim().length < 10) {
+        throw StateError('a refusal states its reason');
+      }
+    } else if (outcome.isEmpty) {
+      throw StateError('an outcome names each store as removed, corrected, restricted, retained (with basis and period), pending_external or failed');
+    }
+    _replaceRequest(
+      requestId,
+      (r) => RightsRequest(
+        id: r.id,
+        workspaceId: r.workspaceId,
+        memberId: r.memberId,
+        kind: r.kind,
+        status: refusalReason == null ? 'completed' : 'refused',
+        receivedAt: r.receivedAt,
+        dueOn: r.dueOn,
+        details: r.details,
+        extendedDueOn: r.extendedDueOn,
+        extensionReason: r.extensionReason,
+        refusalReason: refusalReason?.trim(),
+        outcome: outcome,
+      ),
+    );
+    return _request(requestId);
+  }
+
+  @override
+  Future<int> recordPrivacyIncident({
+    required String workspaceId,
+    required String kind,
+    required String note,
+  }) async {
+    if (failing) throw StateError('not allowed to record a privacy incident');
+    if (!privacyIncidentKinds.contains(kind)) throw StateError('unknown incident kind');
+    if (note.length > 1000) {
+      throw StateError('the note is limited to 1000 characters');
+    }
+    privacyIncidents.add((kind: kind, note: note.trim()));
+    return privacyHolders;
+  }
+
   @override
   Future<List<RightsRequest>> fetchMyRightsRequests() async =>
       List.of(rightsRequests);

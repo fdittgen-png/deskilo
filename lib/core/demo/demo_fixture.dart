@@ -232,7 +232,7 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: _profilesForSpaces(london, newYork),
+      profiles: _profilesForSpaces(london, newYork, today),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -349,8 +349,9 @@ List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) =>
       reservations: ny.reservations, money: ny.money),
 ];
 
-FakeProfileRepository _profilesForSpaces(DemoLondonData london, DemoNewYorkData ny) =>
-    demoProfiles()..profiles.addAll([
+FakeProfileRepository _profilesForSpaces(
+        DemoLondonData london, DemoNewYorkData ny, DateTime today) =>
+    demoProfiles(today: today)..profiles.addAll([
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
           Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),

@@ -15,6 +15,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/fake_calendar_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
@@ -247,6 +248,33 @@ void main() {
         find.text('Your data has been erased.'),
         findsNothing,
         reason: 'never a claim that every copy everywhere is gone',
+      );
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('a workspace that handles data requests itself tells the member '
+        'to file a rights request, and erases nothing (#3278)', (tester) async {
+      final fakes = await _pump(tester, owner: false);
+      fakes.calendar.eraseFailure = const PostgrestException(
+        message: 'privacy_self_service_off: file a rights request instead',
+        code: '42501',
+      );
+      await openMyPrivacy(tester);
+      final erase = find.byKey(const ValueKey('privacy-erase'));
+      await tester.ensureVisible(erase);
+      await tester.tap(erase);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('privacy-erase-phrase')),
+        'ERASE',
+      );
+      await tester.tap(find.byKey(const ValueKey('privacy-erase-confirm')));
+      await tester.pump();
+      expect(fakes.calendar.erased, isFalse);
+      expect(
+        find.textContaining('File a rights request'),
+        findsOneWidget,
+        reason: 'the member reads what to do, not "you may not"',
       );
       await tester.pumpAndSettle();
     });

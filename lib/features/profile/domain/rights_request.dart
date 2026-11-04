@@ -8,6 +8,9 @@ import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/vat/retention_assessment.dart';
 
+/// #3278 (0666) — the incidents a privacy admin can record.
+const privacyIncidentKinds = ['data_breach', 'wrong_invoice', 'other'];
+
 /// The kinds of request the server accepts.
 const rightsRequestKinds = [
   'access',
@@ -26,6 +29,7 @@ class RightsRequest implements SystemStamped {
     this.system = SystemColumns.none,
     required this.id,
     this.workspaceId,
+    this.memberId,
     required this.kind,
     required this.status,
     required this.receivedAt,
@@ -49,6 +53,7 @@ class RightsRequest implements SystemStamped {
       system: SystemColumns.fromRow(json),
       id: r.string('id'),
       workspaceId: r.stringOrNull('workspace_id'),
+      memberId: r.stringOrNull('member_id'),
       kind: r.string('kind'),
       status: r.stringOr('status', 'received'),
       receivedAt: r.dateTime('received_at').toLocal(),
@@ -70,6 +75,9 @@ class RightsRequest implements SystemStamped {
   /// The space whose controller the request is addressed to; null on a
   /// row that does not name one.
   final String? workspaceId;
+
+  /// #3278 — the member the request is about, when the row names one.
+  final String? memberId;
   final String kind;
 
   /// `received`, `extended`, `completed` or `refused`.
