@@ -31,9 +31,8 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         .eq('workspace_id', workspaceId)
         .order('name');
     String level(Map<String, Object?> r) {
-      final desk = JsonReader.orEmpty(r['desks']);
-      final office = JsonReader.orEmpty(desk.json['offices']);
-      return JsonReader.orEmpty(office.json['levels']).stringOr('name');
+      final desk = JsonReader.orEmpty(r).objectOrAbsent('desks');
+      return desk.objectOrAbsent('offices').objectOrAbsent('levels').stringOr('name');
     }
 
     return [
