@@ -21,6 +21,10 @@ class FakeEventRepository implements EventRepository {
 
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
+
+  /// #3291 — what the space's other stores do once an event is decided,
+  /// the effects respond_to_event applies (0101); none for the suite.
+  Future<void> Function(WorkspaceEvent decided, {required bool accepted})? onDecided;
   final policies = <ValidationPolicy>[];
 
   String _responding = 'member-1';
@@ -76,6 +80,7 @@ class FakeEventRepository implements EventRepository {
         status: EventStatus.rejected,
         decidedAt: kTestNow,
       );
+      await onDecided?.call(events[i], accepted: false);
       return;
     }
     final required = policyFor(event.type.dbName, policies).requiredCount;
@@ -86,6 +91,7 @@ class FakeEventRepository implements EventRepository {
         status: EventStatus.confirmed,
         decidedAt: kTestNow,
       );
+      await onDecided?.call(events[i], accepted: true);
     }
   }
 

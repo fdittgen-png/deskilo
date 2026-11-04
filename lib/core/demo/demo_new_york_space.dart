@@ -9,6 +9,7 @@ import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/city_floor_plan_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
@@ -101,7 +102,9 @@ class DemoNewYorkData {
       reservations: reservations,
       money: money,
       events: events,
+      currency: 'USD',
     );
+    wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
     final city = DemoNewYorkData._(
       workspaces: space,
       floorPlan: plan,

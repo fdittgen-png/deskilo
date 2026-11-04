@@ -14,6 +14,7 @@ import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
@@ -61,6 +62,7 @@ class DemoSecondSpaceData {
       money: money,
       events: events,
     );
+    wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
     return DemoSecondSpaceData._(
       workspaces: space,
       floorPlan: plan,

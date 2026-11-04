@@ -21,6 +21,7 @@ import 'data/book_profile_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/deployment_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
@@ -182,6 +183,8 @@ class DemoFixture {
     seedDemoVatDeclarations(money, today);
     seedDemoCalendar(calendar,
         reservations: reservations, money: money, events: events);
+    wireDecisionEffects(events,
+        reservations: reservations, workspaces: workspaces, money: money, now: () => today);
     // #2327 — the processes that reach beyond the space: its twin, the
     // directory, guest visits, message requests, saved analyses.
     final deployments = FakeDeploymentRepository(
