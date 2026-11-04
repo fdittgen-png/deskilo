@@ -8,6 +8,7 @@ import '../../../core/time/date_text.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
@@ -263,6 +264,16 @@ class _CiiWriter {
   /// Currency, payment means, tax groups, period, terms, totals.
   void settlement() {
     builder.element('ram:ApplicableHeaderTradeSettlement', nest: () {
+      // BT-83 — the reference the payer quotes with the transfer; it comes
+      // before the currency in the schema's order.
+      if (input.iban.isNotEmpty) {
+        final reference = paymentReferenceFor(
+          account: input.iban,
+          invoiceNumber: invoice.number,
+          creditNote: invoice.totalCents < 0,
+        );
+        if (reference.isNotEmpty) ram('PaymentReference', reference);
+      }
       ram('InvoiceCurrencyCode', invoice.currency);
       paymentMeans();
       // One group per rate — CII's equivalent of the UBL subtotals.
