@@ -1157,6 +1157,7 @@ constraint privacy_notices.privacy_notices_status_check CHECK ((status = ANY (AR
 constraint privacy_notices.privacy_notices_version_check CHECK ((version ~ '^[0-9A-Za-z._-]{1,40}$'::text))
 constraint privacy_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint profiles.profiles_address_check CHECK ((char_length(address) <= 400))
+constraint profiles.profiles_birthday_plausible CHECK (((birthday IS NULL) OR ((birthday >= '1900-01-01'::date) AND (birthday <= CURRENT_DATE))))
 constraint profiles.profiles_city_check CHECK ((char_length(city) <= 120))
 constraint profiles.profiles_clock_check CHECK ((clock = ANY (ARRAY['auto'::text, '24h'::text, '12h'::text])))
 constraint profiles.profiles_company_check CHECK ((char_length(company) <= 160))
@@ -2171,7 +2172,7 @@ routine public.ensure_personal_data_admin_role(p_workspace_id uuid) -> uuid | fu
 routine public.ensure_system_columns(p_table text) -> void | function | invoker | volatile | exec:service_role | body:b82cfcf514ba
 routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integer | function | definer | volatile | exec:service_role | body:b8c745441adc
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
-routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ba3e980f9ed1
+routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:a06f80884d53
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:827b3e815644
@@ -2513,8 +2514,8 @@ routine public.member_notes_announce_guard() -> trigger | function | definer | v
 routine public.member_notes_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:890b2c3ae02a
 routine public.member_notes_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7c2de38ad227
 routine public.member_price_negotiation(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:748e36d6fe4e
-routine public.member_profile_projection(p_subject uuid, p_purposes text[]) -> jsonb | function | definer | stable | exec:service_role | body:6e715833efc2
-routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60df0798b726
+routine public.member_profile_projection(p_subject uuid, p_purposes text[]) -> jsonb | function | definer | stable | exec:service_role | body:4399e3e716fa
+routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:24260809251a
 routine public.member_profiles(p_workspace_id uuid, p_user_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1c4517a0ed4a
 routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:a4cbb2f39da5
 routine public.member_rows_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:ce0cc1f9212d
@@ -2666,8 +2667,8 @@ routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> 
 routine public.preview_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | stable | exec:authenticated,service_role | body:e360ad9d105a
 routine public.preview_invoice(p_workspace_id uuid, p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3087814d455f
 routine public.preview_my_account(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6f6e88906558
-routine public.preview_my_erasure(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db6bb449a970
-routine public.preview_my_member_profile(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a93755c4c74e
+routine public.preview_my_erasure(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c9b4a4caffe1
+routine public.preview_my_member_profile(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ea5341df9a78
 routine public.preview_series(p_workspace_id uuid, p_seat_id uuid, p_first_start timestamp with time zone, p_first_end timestamp with time zone, p_pattern text, p_until timestamp with time zone, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:7fd3ab9e7e9a
 routine public.preview_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b115c43eb789
 routine public.privacy_notice_manifest_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:a749c88d5751
