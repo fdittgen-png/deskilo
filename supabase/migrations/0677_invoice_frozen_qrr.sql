@@ -65,6 +65,13 @@ begin
   elsif new.legal_snapshot ? 'qrr' then
     new.legal_snapshot := new.legal_snapshot - 'qrr';
   end if;
+  -- The snapshot's fingerprint (0349: SHA-256 of the snapshot without it)
+  -- must cover the reference too: restated over the final snapshot.
+  if new.legal_snapshot ? 'fingerprint' then
+    new.legal_snapshot := (new.legal_snapshot - 'fingerprint')
+      || jsonb_build_object('fingerprint', encode(extensions.digest(
+           convert_to((new.legal_snapshot - 'fingerprint')::text, 'UTF8'), 'sha256'), 'hex'));
+  end if;
   return new;
 end;
 $fn$;

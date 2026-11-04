@@ -2292,7 +2292,7 @@ routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_p
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:20005fb63ed0
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
-routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:a8430b5377ef
+routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
 routine public.invoices_immutable() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:a675f0d72a42
 routine public.invoices_reimbursement_guard() -> trigger | function | definer | volatile | exec:service_role | body:5d0879fd3190

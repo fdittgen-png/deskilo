@@ -9,7 +9,7 @@
 -- never changed afterwards. A credit note gets none; an invoice issued
 -- before the trigger existed keeps none and is matched by its derived one.
 begin;
-select plan(9);
+select plan(10);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -113,6 +113,12 @@ select throws_ok(
 
 select ok(pg_temp.qrr('legacy') is null,
   'an invoice issued before 0677 keeps no frozen reference (matched by its derived one)');
+
+-- 0349's fingerprint covers the snapshot the QRR joined (pgTAP 132's rule).
+select is((select legal_snapshot ->> 'fingerprint' from public.invoices where id = current_setting('deskilo.test.a')::uuid),
+  (select encode(extensions.digest(convert_to((legal_snapshot - 'fingerprint')::text, 'UTF8'), 'sha256'), 'hex')
+     from public.invoices where id = current_setting('deskilo.test.a')::uuid),
+  'the fingerprint covers the snapshot with its frozen reference');
 
 select * from finish();
 rollback;
