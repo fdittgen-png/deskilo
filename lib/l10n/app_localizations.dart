@@ -3889,6 +3889,12 @@ abstract class AppLocalizations {
   /// **'due date'**
   String get biBasisOccurrenceDue;
 
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'supplier payable due date'**
+  String get biBasisPayableDue;
+
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
@@ -4533,6 +4539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'by due date'**
   String get biEditorBasisOccurrenceDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'by supplier payable due date'**
+  String get biEditorBasisPayableDue;
 
   /// #2580 BI report editor
   ///
@@ -6303,6 +6315,172 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This analysis could not be computed.'**
   String get biUnavailable;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} categories'**
+  String biVendorCategoryBasis(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by category'**
+  String get biVendorCategoryTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get biVendorCohortHeld;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid late'**
+  String get biVendorCohortLate;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} bills, {amount}'**
+  String biVendorCohortLine(String cohort, String count, String amount);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on time'**
+  String get biVendorCohortOnTime;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get biVendorCohortOpen;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get biVendorCohortPartial;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Settled without a payment'**
+  String get biVendorCohortUndated;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get biVendorCohortUnknownDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Credit notes subtracted: {amount} ({count})'**
+  String biVendorCredited(String amount, String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
+  String biVendorDelay(String median, String p90, String weighted);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} bills; median {median} days, 90th percentile {p90}'**
+  String biVendorLagBasis(String documents, String median, String p90);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.'**
+  String get biVendorLagDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days for a bill to arrive'**
+  String get biVendorLagTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bills carry no supplier date or no received date and are left out'**
+  String biVendorLagUndated(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get biVendorNoCategory;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the period to measure'**
+  String get biVendorNothingToMeasure;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {settled} settled bills paid by their due date'**
+  String biVendorPunctualityBasis(String onTime, String settled);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.'**
+  String get biVendorPunctualityDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {onTime} on time, {late} late, of {due} due'**
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paying suppliers on time'**
+  String get biVendorPunctualityTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}'**
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.'**
+  String get biVendorSpendDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by supplier'**
+  String get biVendorSpendTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Without a supplier (members’ receipts): {amount}'**
+  String biVendorUnassigned(String amount);
 
   /// #2578 saved-view cards saved for another metric version
   ///

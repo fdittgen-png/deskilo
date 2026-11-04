@@ -413,7 +413,62 @@ const biModules = <BiModule>[
     },
     drill: _customerInvoices,
   ),
+  // #3294 step 2 — what the space buys and from whom, how punctually it
+  // pays its suppliers and how late their bills reach it (0673); each
+  // drills to the suppliers or the purchase documents behind it.
+  BiModule(
+    id: 'vendors.spend',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorSuppliers,
+  ),
+  BiModule(
+    id: 'vendors.category_spend',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorPurchases,
+  ),
+  BiModule(
+    id: 'vendors.payment_punctuality',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorPurchases,
+  ),
+  BiModule(
+    id: 'vendors.billing_lag',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorSuppliers,
+  ),
 ];
+
+/// #3294 step 2 — the suppliers behind a vendor figure.
+const _vendorSuppliers = BiDrill(
+  route: '/money/suppliers',
+  permission: WorkspacePermission.viewFinances,
+);
+
+/// #3294 step 2 — the purchase documents behind a vendor figure.
+const _vendorPurchases = BiDrill(
+  route: '/money/purchases',
+  permission: WorkspacePermission.viewFinances,
+);
 
 /// #3294 — the invoices behind a customer figure, for its months.
 const _customerInvoices = BiDrill(

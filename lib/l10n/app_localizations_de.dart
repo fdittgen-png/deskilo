@@ -2334,6 +2334,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biBasisOccurrenceDue => 'Fälligkeitsdatum';
 
   @override
+  String get biBasisPayableDue => 'Fälligkeitsdatum der Lieferantenschuld';
+
+  @override
   String get biBasisPaymentMatchedAt => 'Datum der Zuordnung der Zahlung';
 
   @override
@@ -2730,6 +2733,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'nach Fälligkeit';
+
+  @override
+  String get biEditorBasisPayableDue => 'nach Fälligkeit der Lieferantenschuld';
 
   @override
   String get biEditorBasisPaymentMatched => 'nach zugeordneter Zahlung';
@@ -3768,6 +3774,117 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Diese Analyse konnte nicht berechnet werden.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count Kategorien';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Ausgaben nach Kategorie';
+
+  @override
+  String get biVendorCohortHeld => 'Zurückgestellt';
+
+  @override
+  String get biVendorCohortLate => 'Verspätet bezahlt';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count Rechnungen, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Pünktlich bezahlt';
+
+  @override
+  String get biVendorCohortOpen => 'Unbezahlt';
+
+  @override
+  String get biVendorCohortPartial => 'Teilweise bezahlt';
+
+  @override
+  String get biVendorCohortUndated => 'Ohne Zahlung beglichen';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Ohne Fälligkeit';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Abgezogene Gutschriften: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Tage von der Fälligkeit bis zur Zahlung: Median $median, 90. Perzentil $p90, nach Betrag gewichtet $weighted (negativ: früher)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents Rechnungen; Median $median Tage, 90. Perzentil $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Die genehmigten Lieferantenrechnungen mit Datum im Zeitraum: die Tage vom Datum auf der Rechnung bis zu ihrem Eingang im Space, im Durchschnitt; die Tabelle zeigt jeden Lieferanten.';
+
+  @override
+  String get biVendorLagTitle => 'Tage bis zum Eingang einer Rechnung';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count Rechnungen ohne Lieferantendatum oder Eingangsdatum bleiben außen vor';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Ohne Kategorie';
+
+  @override
+  String get biVendorNothingToMeasure => 'Im Zeitraum gibt es nichts zu messen';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime von $settled beglichenen Rechnungen bis zur Fälligkeit bezahlt';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Was der Space seinen Lieferanten schuldet und im Zeitraum fällig wird, jeweils in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn die Zahlung eines trägt, sonst das erfasste Zahlungsdatum.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime pünktlich, $late verspätet, von $due fälligen';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Pünktliche Zahlung an Lieferanten';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents Belege von $suppliers Lieferanten; die $top größten: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Die genehmigten Einkaufsbelege mit Datum im Zeitraum: was sie den Space kosten, netto plus die nicht abziehbare Steuer. Eine Gutschrift wird abgezogen. Belege in einer anderen Währung werden nicht umgerechnet.';
+
+  @override
+  String get biVendorSpendTitle => 'Ausgaben nach Lieferant';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Ohne Lieferant (Belege von Mitgliedern): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {

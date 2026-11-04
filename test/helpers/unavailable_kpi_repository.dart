@@ -5,6 +5,7 @@
 // inventing a figure.
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 
 class UnavailableKpiRepository implements KpiRepository {
   const UnavailableKpiRepository();
@@ -24,6 +25,18 @@ class UnavailableCustomerKpiRepository implements CustomerKpiRepository {
 
   @override
   Future<CustomerQualityKpi> quality(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+}
+
+/// #3294 step 2 — no server to read the vendor figures from.
+class UnavailableVendorKpiRepository implements VendorKpiRepository {
+  const UnavailableVendorKpiRepository();
+
+  @override
+  Future<VendorQualityKpi> quality(
     String workspaceId, {
     required String fromMonth,
     required String toMonth,

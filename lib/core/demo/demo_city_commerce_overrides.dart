@@ -12,10 +12,12 @@ import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
+import '../../features/workspace/domain/kpi_vendors.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/customer_kpi_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/providers/vendor_kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/asset_valuation_repository.dart';
 import 'data/book_profile_repository.dart';
@@ -26,6 +28,7 @@ import 'data/lease_commitment_repository.dart';
 import 'data/money_repository.dart';
 import 'data/premises_lease_repository.dart';
 import 'data/room_rental_repository.dart';
+import 'data/vendor_kpi_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
 import 'demo_purchasing_overrides.dart';
@@ -246,6 +249,24 @@ List<Override> _kpiOverrides(
     ),
     purchaseKpiRepositoryProvider.overrideWith(
       (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3),
+    ),
+    // #3294 step 2 — the vendor figures over each space's own purchases, in
+    // its own currency.
+    vendorKpiRepositoryProvider.overrideWith(
+      (ref) => choose<VendorKpiRepository>(
+        ref,
+        DemoVendorKpiRepository(purchases: home.purchases, now: now),
+        DemoVendorKpiRepository(
+          purchases: london.purchases,
+          now: now,
+          currency: 'GBP',
+        ),
+        DemoVendorKpiRepository(
+          purchases: newYork.purchases,
+          now: now,
+          currency: 'USD',
+        ),
+      ),
     ),
     costKpiRepositoryProvider.overrideWith(
       (ref) => choose<CostKpiRepository>(

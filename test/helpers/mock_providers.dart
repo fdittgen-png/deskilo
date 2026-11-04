@@ -125,6 +125,7 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_fields_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_host.dart';
@@ -137,6 +138,7 @@ import 'package:deskilo/features/workspace/providers/instance_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
+import 'package:deskilo/features/workspace/providers/vendor_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_fields_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_files_providers.dart';
@@ -250,6 +252,7 @@ List<Override> standardTestOverrides({
   BiViewRepository? biViews,
   FinanceKpiRepository? financeKpis,
   CustomerKpiRepository? customerKpis,
+  VendorKpiRepository? vendorKpis,
   AccessoryRepository? accessories,
   PlaceFeedbackRepository? placeFeedback,
   ReservationRepository? reservations,
@@ -417,6 +420,9 @@ List<Override> standardTestOverrides({
     // #3294 — nor to read the customer figures from.
     customerKpiRepositoryProvider.overrideWithValue(
         customerKpis ?? const UnavailableCustomerKpiRepository()),
+    // #3294 step 2 — nor the vendor figures.
+    vendorKpiRepositoryProvider.overrideWithValue(
+        vendorKpis ?? const UnavailableVendorKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),

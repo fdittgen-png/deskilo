@@ -28,6 +28,7 @@ import 'bi_overview_views.dart';
 import 'bi_purchase_views.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
+import 'bi_vendor_views.dart';
 import 'capacity_evidence.dart';
 import 'capacity_kpi_card.dart';
 
@@ -199,6 +200,7 @@ final biModuleViews = <String, BiModuleView>{
   ...purchaseModuleViews,
   ...overviewModuleViews,
   ...customerModuleViews,
+  ...vendorModuleViews,
 };
 
 /// The change, worded: "+3.2 pp" for a ratio; for an amount the

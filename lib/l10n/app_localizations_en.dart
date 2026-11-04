@@ -2315,6 +2315,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biBasisOccurrenceDue => 'due date';
 
   @override
+  String get biBasisPayableDue => 'supplier payable due date';
+
+  @override
   String get biBasisPaymentMatchedAt => 'date the payment was matched';
 
   @override
@@ -2709,6 +2712,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'by due date';
+
+  @override
+  String get biEditorBasisPayableDue => 'by supplier payable due date';
 
   @override
   String get biEditorBasisPaymentMatched => 'by payment matched';
@@ -3739,6 +3745,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biUnavailable => 'This analysis could not be computed.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categories';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Spend by category';
+
+  @override
+  String get biVendorCohortHeld => 'On hold';
+
+  @override
+  String get biVendorCohortLate => 'Paid late';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count bills, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Paid on time';
+
+  @override
+  String get biVendorCohortOpen => 'Unpaid';
+
+  @override
+  String get biVendorCohortPartial => 'Partly paid';
+
+  @override
+  String get biVendorCohortUndated => 'Settled without a payment';
+
+  @override
+  String get biVendorCohortUnknownDue => 'No due date';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Credit notes subtracted: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Days from the due date to the payment: median $median, 90th percentile $p90, weighted by amount $weighted (negative: early)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents bills; median $median days, 90th percentile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.';
+
+  @override
+  String get biVendorLagTitle => 'Days for a bill to arrive';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count bills carry no supplier date or no received date and are left out';
+  }
+
+  @override
+  String get biVendorNoCategory => 'No category';
+
+  @override
+  String get biVendorNothingToMeasure => 'Nothing in the period to measure';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime of $settled settled bills paid by their due date';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime on time, $late late, of $due due';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Paying suppliers on time';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documents from $suppliers suppliers; the $top largest: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.';
+
+  @override
+  String get biVendorSpendTitle => 'Spend by supplier';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Without a supplier (members’ receipts): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {

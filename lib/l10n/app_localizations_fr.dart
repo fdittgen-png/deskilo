@@ -2336,6 +2336,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biBasisOccurrenceDue => 'date d’échéance';
 
   @override
+  String get biBasisPayableDue => 'date d’échéance de la dette fournisseur';
+
+  @override
   String get biBasisPaymentMatchedAt => 'date du rapprochement du paiement';
 
   @override
@@ -2732,6 +2735,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'selon l’échéance';
+
+  @override
+  String get biEditorBasisPayableDue => 'par échéance de la dette fournisseur';
 
   @override
   String get biEditorBasisPaymentMatched => 'selon le paiement rapproché';
@@ -3769,6 +3775,118 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Cette analyse n’a pas pu être calculée.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count catégories';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Dépenses par catégorie';
+
+  @override
+  String get biVendorCohortHeld => 'En attente';
+
+  @override
+  String get biVendorCohortLate => 'Payées en retard';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort : $count factures, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Payées à l’échéance';
+
+  @override
+  String get biVendorCohortOpen => 'Impayées';
+
+  @override
+  String get biVendorCohortPartial => 'Payées en partie';
+
+  @override
+  String get biVendorCohortUndated => 'Soldées sans paiement';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Sans échéance';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Avoirs déduits : $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Jours de l’échéance au paiement : médiane $median, 90e centile $p90, pondéré par montant $weighted (négatif : en avance)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents factures ; médiane $median jours, 90e centile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Les factures fournisseurs approuvées datées de la période : les jours entre la date portée par le fournisseur et l’arrivée à l’espace, en moyenne ; le tableau détaille chaque fournisseur.';
+
+  @override
+  String get biVendorLagTitle => 'Délai de réception des factures';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count factures sans date du fournisseur ou de réception sont laissées de côté';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Sans catégorie';
+
+  @override
+  String get biVendorNothingToMeasure => 'Rien à mesurer sur la période';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime factures sur $settled réglées payées à l’échéance';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Ce que l’espace doit à ses fournisseurs, arrivant à échéance dans la période, chaque dette dans un seul groupe. Une facture réglée est à l’heure quand son dernier paiement a été déclaré payé au plus tard à l’échéance : la date de valeur de la banque quand le paiement en porte une, sinon la date de paiement enregistrée.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name : $onTime à l’échéance, $late en retard, sur $due échues';
+  }
+
+  @override
+  String get biVendorPunctualityTitle =>
+      'Paiement des fournisseurs à l’échéance';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents pièces de $suppliers fournisseurs ; les $top plus importants : $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Les pièces d’achat approuvées datées de la période : ce qu’elles coûtent à l’espace, le HT plus la taxe non récupérable. Un avoir se déduit. Les pièces dans une autre devise ne sont pas converties.';
+
+  @override
+  String get biVendorSpendTitle => 'Dépenses par fournisseur';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Sans fournisseur (justificatifs de membres) : $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {

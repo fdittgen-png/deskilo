@@ -2334,6 +2334,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biBasisOccurrenceDue => 'fecha de vencimiento';
 
   @override
+  String get biBasisPayableDue =>
+      'fecha de vencimiento de la deuda con el proveedor';
+
+  @override
   String get biBasisPaymentMatchedAt => 'fecha en que se concilió el pago';
 
   @override
@@ -2730,6 +2734,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'según el vencimiento';
+
+  @override
+  String get biEditorBasisPayableDue =>
+      'por vencimiento de la deuda con el proveedor';
 
   @override
   String get biEditorBasisPaymentMatched => 'según el pago conciliado';
@@ -3763,6 +3771,117 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biUnavailable => 'No se pudo calcular este análisis.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categorías';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Gasto por categoría';
+
+  @override
+  String get biVendorCohortHeld => 'En espera';
+
+  @override
+  String get biVendorCohortLate => 'Pagadas con retraso';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count facturas, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Pagadas a tiempo';
+
+  @override
+  String get biVendorCohortOpen => 'Sin pagar';
+
+  @override
+  String get biVendorCohortPartial => 'Pagadas en parte';
+
+  @override
+  String get biVendorCohortUndated => 'Saldadas sin pago';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Sin vencimiento';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Abonos restados: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Días desde el vencimiento hasta el pago: mediana $median, percentil 90 $p90, ponderado por importe $weighted (negativo: antes)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents facturas; mediana $median días, percentil 90 $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Las facturas de proveedor aprobadas con fecha en el periodo: los días desde la fecha que puso el proveedor hasta su llegada al espacio, de media; la tabla detalla cada proveedor.';
+
+  @override
+  String get biVendorLagTitle => 'Días hasta recibir una factura';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count facturas sin fecha del proveedor o de recepción quedan fuera';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Sin categoría';
+
+  @override
+  String get biVendorNothingToMeasure => 'Nada que medir en el periodo';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime de $settled facturas saldadas pagadas a su vencimiento';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Lo que el espacio debe a sus proveedores con vencimiento en el periodo, cada deuda en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado a más tardar en su vencimiento: la fecha valor del banco cuando el pago la lleva, si no la fecha de pago registrada.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime a tiempo, $late con retraso, de $due vencidas';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Pago puntual a proveedores';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documentos de $suppliers proveedores; los $top mayores: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Los documentos de compra aprobados con fecha en el periodo: lo que cuestan al espacio, la base más el impuesto no recuperable. Un abono se resta. Los documentos en otra moneda no se convierten.';
+
+  @override
+  String get biVendorSpendTitle => 'Gasto por proveedor';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Sin proveedor (recibos de miembros): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {

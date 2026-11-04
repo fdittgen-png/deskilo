@@ -112,7 +112,7 @@ void _landlordBills(
         ),
         PurchaseLine(lineNo: 2, description: 'Service fees', grossCents: 80000),
       ],
-    ));
+    ), now);
   }
 }
 
@@ -181,15 +181,22 @@ void _siteBills(
                   : 'expense',
             ),
           ],
-        ));
+        ), now);
       }
     }
   }
 }
 
-void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
+void _recordBill(FakePurchaseRepository purchases, _Bill bill, DateTime now) {
   final (:id, :supplier, :month, :currency, :title, :lines, :paid) = bill;
   final cents = lines.fold<int>(0, (sum, line) => sum + line.grossCents);
+  // #3294 step 2 — a bill reaches the space a few days after the date the
+  // supplier put on it, falls due a month later and is mostly paid before
+  // then; one in four is paid after its due date (never after today).
+  final seed = id.codeUnits.fold<int>(0, (sum, c) => sum + c);
+  final received = month.add(Duration(days: seed % 6));
+  final due = month.add(const Duration(days: 30));
+  final paidOn = month.add(Duration(days: seed % 4 == 0 ? 34 : 25));
   final summary = PurchaseSummary(
     id: id,
     supplierId: supplier.id,
@@ -200,7 +207,7 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
     currency: currency,
     grossCents: cents,
     originalDate: month,
-    receivedOn: month,
+    receivedOn: received,
   );
   final obligation = PurchaseObligation(
     id: '$id-payable',
@@ -210,6 +217,7 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
     creditorName: supplier.name,
     amountCents: cents,
     currency: currency,
+    dueOn: due,
     appliedCents: 0,
     paidCents: paid ? cents : 0,
     remainingCents: paid ? 0 : cents,
@@ -221,7 +229,7 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
         amountCents: cents,
         method: 'bank_transfer',
         reference: 'Demo payment',
-        paidOn: month.add(const Duration(days: 5)),
+        paidOn: paidOn.isAfter(now) ? now : paidOn,
       ),
     ],
   );
@@ -234,6 +242,7 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill) {
         supplierName: supplier.name,
         supplierNumber: supplier.number,
         lines: lines,
+        dueOn: due,
       ),
     )
     ..payables.add(PayableRow(obligation: obligation, purchase: summary));
