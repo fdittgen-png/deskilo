@@ -1097,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "date d’échéance de la dette fournisseur",
   "biBasisPaymentMatchedAt": "date du rapprochement du paiement",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1346,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "par échéance de la dette fournisseur",
   "biEditorBasisPaymentMatched": "selon le paiement rapproché",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -2095,6 +2097,19 @@
   "biGroupNone": "Sans regroupement",
   "biIncompatible": "Le serveur définit désormais cet indicateur autrement que ne le connaît cette version de l'application : mettez l'application à jour pour le voir.",
   "biInvalidAddress": "Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.",
+  "biItemMethodAverage": "coût moyen",
+  "biItemMethodLast": "dernier achat",
+  "biItemPricesBasis": "{lines} lignes d’achat de {items} articles",
+  "biItemPricesDefinition": "Les lignes d’achat approuvées qui nomment un article, datées de la période : ce qu’elles coûtent (HT plus la taxe non récupérable). Le tableau donne le prix unitaire de chaque article par fournisseur. Les avoirs sont laissés de côté.",
+  "biItemPricesTitle": "Prix des articles par fournisseur",
+  "biItemProductBasis": "Vendu {revenue} HT, coût {cost} ({method})",
+  "biItemProductDefinition": "Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.",
+  "biItemProductTitle": "Marge par produit",
+  "biItemUncosted": "{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge",
+  "biItemUnresolved": "{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part",
+  "biItemVendorBasis": "{count} fournisseurs",
+  "biItemVendorDefinition": "Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.",
+  "biItemVendorTitle": "Prix des fournisseurs comparés",
   "biKindCurrent": "Maintenant",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2536,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Suppléments",
+  "biSalesKindAdjustment": "Ajustements",
+  "biSalesKindBasis": "{gross} TTC, {lines} lignes sur {invoices} factures",
+  "biSalesKindDefinition": "Ce que les factures de la période ont vendu, hors TVA, par nature de ligne. Les paiements et remboursements portés sur une facture ne sont pas des ventes ; un avoir se déduit. Le mois est celui de la facture.",
+  "biSalesKindDesk": "Bureaux",
+  "biSalesKindLevel": "Niveaux",
+  "biSalesKindOffice": "Salles",
+  "biSalesKindOther": "Autre",
+  "biSalesKindOverage": "Demi-journées supplémentaires",
+  "biSalesKindPackage": "Forfaits",
+  "biSalesKindService": "Services",
+  "biSalesKindSubscription": "Abonnements",
+  "biSalesKindTitle": "Ventes par nature",
+  "biSalesNetUnknown": "{count} lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT",
+  "biSalesNoDescription": "Sans libellé",
+  "biSalesRoomBasis": "{charges} facturés pour {uses} réservations, les salles coûtent {cost} ({rooms} salles)",
+  "biSalesRoomDefinition": "Pour chaque salle louée par l’espace : ce que ses réservations ont rapporté, hors taxe, moins le coût propre de la salle (son loyer échu dans la période, ou son coût par usage multiplié par les usages). Aucun autre coût n’est imputé à la salle : c’est une marge, pas un bénéfice.",
+  "biSalesRoomLine": "{room} : facturé {charges}, coût {cost}, {uses} réservations",
+  "biSalesRoomTitle": "Marge des salles louées",
+  "biSalesRoomsOff": "L’espace ne loue aucune salle : activez les salles louées pour voir leur marge",
+  "biSalesServiceBasis": "{count} services et forfaits",
+  "biSalesServiceDefinition": "Les lignes de services et de forfaits des factures de la période, hors TVA, par le libellé sous lequel elles ont été vendues.",
+  "biSalesServiceTitle": "Ventes par service",
   "biSeatCentre": "du temps total des places",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2584,6 +2622,32 @@
   },
   "biTotal": "Total",
   "biUnavailable": "Cette analyse n’a pas pu être calculée.",
+  "biVendorCategoryBasis": "{count} catégories",
+  "biVendorCategoryTitle": "Dépenses par catégorie",
+  "biVendorCohortHeld": "En attente",
+  "biVendorCohortLate": "Payées en retard",
+  "biVendorCohortLine": "{cohort} : {count} factures, {amount}",
+  "biVendorCohortOnTime": "Payées à l’échéance",
+  "biVendorCohortOpen": "Impayées",
+  "biVendorCohortPartial": "Payées en partie",
+  "biVendorCohortUndated": "Soldées sans paiement",
+  "biVendorCohortUnknownDue": "Sans échéance",
+  "biVendorCredited": "Avoirs déduits : {amount} ({count})",
+  "biVendorDelay": "Jours de l’échéance au paiement : médiane {median}, 90e centile {p90}, pondéré par montant {weighted} (négatif : en avance)",
+  "biVendorLagBasis": "{documents} factures ; médiane {median} jours, 90e centile {p90}",
+  "biVendorLagDefinition": "Les factures fournisseurs approuvées datées de la période : les jours entre la date portée par le fournisseur et l’arrivée à l’espace, en moyenne ; le tableau détaille chaque fournisseur.",
+  "biVendorLagTitle": "Délai de réception des factures",
+  "biVendorLagUndated": "{count} factures sans date du fournisseur ou de réception sont laissées de côté",
+  "biVendorNoCategory": "Sans catégorie",
+  "biVendorNothingToMeasure": "Rien à mesurer sur la période",
+  "biVendorPunctualityBasis": "{onTime} factures sur {settled} réglées payées à l’échéance",
+  "biVendorPunctualityDefinition": "Ce que l’espace doit à ses fournisseurs, arrivant à échéance dans la période, chaque dette dans un seul groupe. Une facture réglée est à l’heure quand son dernier paiement a été déclaré payé au plus tard à l’échéance : la date de valeur de la banque quand le paiement en porte une, sinon la date de paiement enregistrée.",
+  "biVendorPunctualityLine": "{name} : {onTime} à l’échéance, {late} en retard, sur {due} échues",
+  "biVendorPunctualityTitle": "Paiement des fournisseurs à l’échéance",
+  "biVendorSpendBasis": "{documents} pièces de {suppliers} fournisseurs ; les {top} plus importants : {topCost}",
+  "biVendorSpendDefinition": "Les pièces d’achat approuvées datées de la période : ce qu’elles coûtent à l’espace, le HT plus la taxe non récupérable. Un avoir se déduit. Les pièces dans une autre devise ne sont pas converties.",
+  "biVendorSpendTitle": "Dépenses par fournisseur",
+  "biVendorUnassigned": "Sans fournisseur (justificatifs de membres) : {amount}",
   "biViewCardsIncompatible": "{count} analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.",
   "biViewChart": "Graphique",
   "biViewClearMyDefault": "Ne plus ouvrir ma vue par défaut",
@@ -8221,6 +8285,7 @@
   "invoiceExportGobd": "Accès aux données GoBD (Z3)",
   "invoiceExportJournals": "Journaux et journal centralisateur (PDF, depuis la comptabilité)",
   "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportSafTAt": "SAF-T AT (Autriche)",
   "invoiceExportSafTFull": "SAF-T avec le grand livre (XML, international)",
   "invoiceExportSafTNo": "SAF-T Financial (Norvège)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -8233,6 +8298,7 @@
   },
   "invoiceExportSwissKmu": "Journal des écritures suisse (CSV, comptes PME, codes TVA)",
   "invoiceExportTrialBalance": "Balance générale et auxiliaire (PDF, depuis la comptabilité)",
+  "invoiceExportXeroInvoiceCsv": "Xero (import de factures de vente)",
   "invoiceExternalIssuingTitle": "Émettez cette facture hors de l’application",
   "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
   "invoiceFacturXExplain": "Un seul fichier : la facture qu'un humain lit, avec le XML lisible par machine à l'intérieur. C'est ce qu'attendent la plupart des plateformes.",
@@ -8264,6 +8330,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Cette facture se paie sur un QR-IBAN, qui exige la référence QR figée à l'émission ; or elle a été émise avant ces références. Émettez une facture de remplacement, ou indiquez l'IBAN ordinaire comme compte de paiement.",
   "invoiceGapVatNotSupported": "L'espace facture la TVA mais cette facture ne porte aucun taux — ajoutez vos taux de TVA, puis émettez-la à nouveau.",
   "invoiceHeldNote": "Relances suspendues : {reason}",
   "@invoiceHeldNote": {
@@ -12907,6 +12974,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Article acheté",
   "purchasesKindBill": "Facture fournisseur",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12943,6 +13011,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Aucun article",
   "purchasesNoSupplier": "Aucun fournisseur choisi",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13101,6 +13170,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantité",
   "purchasesReference": "Numéro de facture",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13247,6 +13317,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Unité (p. ex. carton, rame)",
   "pushAllowAction": "Autoriser",
   "pushCancelledBody": "Une réservation a été retirée par un admin.",
   "pushCancelledTitle": "Réservation retirée",
@@ -15525,6 +15596,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{le champ {subject} de la personne de contact} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}",
+  "saftIndustryCodeHelper": "Le code de branche sous lequel l'administration fiscale autrichienne connaît l'entreprise.",
+  "saftIndustryCodeLabel": "Code de branche (Branchenkennzahl)",
   "saftLedgerIntro": "Avec les numéros de comptes, le fichier porte des écritures en partie double que votre comptable peut importer au lieu de les saisir. Elles couvrent vos ventes et les règlements correspondants — pas l’ensemble de votre comptabilité.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15533,6 +15606,18 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "La disposition de la loi autrichienne sur l'impôt sur le revenu que suit la comptabilité, telle que l'en-tête du SAF-T AT l'indique.",
+  "saftProfitBasisLabel": "Méthode de détermination du bénéfice",
+  "saftSmallBusinessHelper": "Si l'entreprise est une petite entreprise au sens du § 6 (1) Z 27 UStG, comme l'indique l'en-tête du SAF-T AT.",
+  "saftSmallBusinessLabel": "Petite entreprise (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessNo": "Non",
+  "saftSmallBusinessYes": "Oui",
+  "saftStandardAccountsIntro": "Confirmez le compte du plan comptable standard autrichien (Einheitskontenrahmen) sous lequel chaque compte du livre est écrit. Une suggestion vient du rôle du compte ; vérifiez-la : tous les comptes d'un rôle ne relèvent pas du même compte standard.",
+  "saftStandardAccountsNoSuggestion": "Aucune suggestion : saisissez le compte standard.",
+  "saftStandardAccountsSuggested": "Suggéré : {suggestion}. Confirmez-le ou modifiez-le.",
+  "saftStandardAccountsTitle": "Comptes du plan standard",
+  "saftTaxNumberHelper": "Le numéro que l'administration fiscale autrichienne attribue à l'entreprise, pas son numéro au registre du commerce.",
+  "saftTaxNumberLabel": "Numéro fiscal (Steuernummer)",
   "saftWithPostings": "Avec les écritures",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
@@ -15909,6 +15994,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minutes pendant lesquelles l'application doit être restée hors de vue (en arrière-plan, onglet masqué, borne en veille) avant de relire tout ce qu'elle affiche à son retour. Changer de fenêtre ne relit jamais ; une connexion en direct perdue relit toujours.",
   "settingHintPrivacyMemberSelfService": "true : un membre peut exporter et effacer ses données depuis l’application. false : il dépose une demande de droits, traitée par l’administrateur des données personnelles. Les propriétaires et l’administrateur des données personnelles ne sont jamais bloqués, et le dépôt d’une demande reste toujours ouvert.",
+  "settingHintPurchaseItemCostMethod": "average : tous les achats approuvés de l’article jusqu’à la fin de la période, pondérés par leurs unités. last : le dernier achat daté d’ici là. Aucune pièce n’est modifiée, seulement les marges.",
   "settingHintPurchasePaymentChecker": "Un paiement d'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu'il règle. 0 désactive la règle.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16092,6 +16178,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Relire après une absence",
   "settingLabelPrivacyMemberSelfService": "Les membres exportent et effacent eux-mêmes leurs données",
+  "settingLabelPurchaseItemCostMethod": "Comment le coût unitaire d’un article est lu dans les marges",
   "settingLabelPurchasePaymentChecker": "Paiements enregistrés par une seconde personne à partir de (unités monétaires)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -20387,5 +20474,16 @@
   "workspaceXmlImportPreviewWarning": "Le plan actuel sera supprimé et remplacé, et les paramètres de l'espace seront écrasés. Cette action est irréversible.",
   "workspaceXmlImportReservationsError": "Cet espace a déjà des réservations, son plan des locaux ne peut donc pas être remplacé. L'import n'est possible qu'avant la première réservation.",
   "workspaceXmlImportSubtitle": "Restaurer les paramètres et le plan des locaux depuis un fichier exporté. Remplace le plan actuel.",
-  "workspaceXmlImportSuccess": "Espace importé."
+  "workspaceXmlImportSuccess": "Espace importé.",
+  "xeroInvoiceAccountCode": "Code du compte de ventes",
+  "xeroInvoiceAccountsIntro": "Xero importe ces factures en brouillon : validez-les dans Xero. Le compte de ventes et les taux de taxe sont ceux de votre organisation : reprenez leurs noms dans Xero.",
+  "xeroInvoiceAccountsTitle": "Export Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} other{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.}}",
+  "xeroInvoiceDateOrder": "Ordre des dates de votre organisation",
+  "xeroInvoiceDayFirst": "Jour d’abord (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.",
+  "xeroInvoiceMonthFirst": "Mois d’abord (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Saisissez le code du compte de ventes.",
+  "xeroInvoiceRefusedTaxType": "Indiquez le taux de taxe Xero pour {rate}.",
+  "xeroInvoiceTaxType": "Taux de taxe Xero pour {rate}"
 }

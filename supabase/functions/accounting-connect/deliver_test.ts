@@ -195,7 +195,11 @@ function world(opts: {
   oauthExpiresAt?: string;
   refresh?: () => Response;
   /** The invoices table as the caller reads it; null refuses the read. */
-  invoices?: { id: string; replaces_number: string }[] | null;
+  invoices?: { id: string; replaces_number?: string; vat_totals?: unknown }[] | null;
+  /** The target's API, when it is not Pennylane (#2371: a played QuickBooks). */
+  fetcher?: typeof fetch;
+  /** The remote company the connection reaches. */
+  tenant?: string;
   /** Another run holds every delivery: the log answers in_flight to a
    * prepare that names a window (what the function's budget gives it). */
   otherRunSending?: boolean;
@@ -276,7 +280,7 @@ function world(opts: {
             target_id: opts.target ?? "pennylane_api",
             auth_kind: opts.oauthExpiresAt ? "oauth2" : "token",
             status: opts.status ?? "connected",
-            remote_tenant_id: "",
+            remote_tenant_id: opts.tenant ?? "",
             revoked: false,
             token_expires_at: opts.oauthExpiresAt ?? null,
             secrets: { access_token: "PL-secret", refresh_token: "RT-secret" },
@@ -345,7 +349,7 @@ function world(opts: {
           (init?.headers as Record<string, string>)?.authorization ?? ""
         }`,
       );
-      return pl.fetcher(input, init);
+      return (opts.fetcher ?? pl.fetcher)(input, init);
     }) as typeof fetch,
     now: () => new Date("2026-04-02T10:00:00Z"),
   };
@@ -620,4 +624,122 @@ Deno.test("a period without a credit note reads no invoice", async () => {
   const w = world();
   assertEquals((await run(w)).status, 200);
   assert(!w.calls.some((c) => c.fn.startsWith("invoices.")));
+});
+
+/** #2371 — a QuickBooks Canada company that books a sale's tax as its
+ * code says: one tax line at 20 % on the line's net. */
+function quickbooks() {
+  const st = { posts: 0 };
+  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+    const url = new URL(String(input));
+    if (url.pathname.includes("/companyinfo/")) return Response.json({ CompanyInfo: { Country: "CA" } });
+    if (url.pathname.endsWith("/preferences")) {
+      return Response.json({ Preferences: { SalesFormsPrefs: { CustomTxnNumbers: true } } });
+    }
+    if (url.pathname.endsWith("/query")) {
+      const entity = /from (\w+)/.exec(url.searchParams.get("query") ?? "")![1];
+      // The code the sale's rate group is mapped to, and its one rate.
+      const rows: Record<string, unknown[]> = {
+        TaxCode: [{ Id: "TC-20", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "T20" } }] } }],
+        TaxRate: [{ Id: "T20", RateValue: 20 }],
+      };
+      return Response.json({ QueryResponse: { [entity]: rows[entity] ?? [] } });
+    }
+    if (init?.method === "POST") {
+      st.posts++;
+      const body = JSON.parse(String(init.body)) as Record<string, unknown>;
+      if (url.pathname.endsWith("/customer")) return Response.json({ Customer: { ...body, Id: "C-1" } });
+      const net = (body.Line as Record<string, unknown>[]).reduce((n, l) => n + Number(l.Amount), 0);
+      const tax = Number((body.TxnTaxDetail as Record<string, unknown>).TotalTax);
+      return Response.json({
+        Invoice: {
+          ...body,
+          Id: "Q-1",
+          SyncToken: "0",
+          TotalAmt: net + tax,
+          TxnTaxDetail: {
+            TotalTax: tax,
+            TaxLine: [{
+              Amount: Math.round(net * 20) / 100,
+              DetailType: "TaxLineDetail",
+              TaxLineDetail: { TaxRateRef: { value: "T20" }, TaxPercent: 20, NetAmountTaxable: net },
+            }],
+          },
+        },
+      });
+    }
+    return new Response("not found", { status: 404 });
+  }) as typeof fetch;
+  return { st, fetcher };
+}
+
+const qboMaps = [
+  { kind: "item", key: "revenue:standard", remote_id: "IT-1", remote_code: "" },
+  { kind: "item", key: "vat_output:standard", remote_id: "TC-20", remote_code: "" },
+];
+
+Deno.test("#2371 a QuickBooks delivery reads each sale's frozen tax as the caller and checks the booked split with it", async () => {
+  const qb = quickbooks();
+  const w = world({
+    target: "quickbooks_online_ca",
+    maps: qboMaps as typeof allMaps,
+    postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+    invoices: [{ id: INV, vat_totals: [{ percent: 20, category: "S", net_cents: 10000, vat_cents: 2000, gross_cents: 12000 }] }],
+    fetcher: qb.fetcher,
+    tenant: "9130350000000001",
+  });
+  const res = await run(w);
+  assertEquals(res.status, 200, JSON.stringify(await res.clone().json()));
+  const read = w.calls.find((c) => c.fn === "invoices.id, vat_totals")!;
+  assertEquals([read.as, read.args], ["caller", { id: [INV] }]);
+  assertEquals([...w.log.rows.values()].map((r) => r.status), ["acknowledged"]);
+});
+
+Deno.test("#2371 a sale whose frozen tax cannot be read delivers nothing to QuickBooks", async () => {
+  for (const invoices of [null, []]) {
+    const qb = quickbooks();
+    const w = world({
+      target: "quickbooks_online_ca",
+      maps: qboMaps as typeof allMaps,
+      postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+      invoices,
+      fetcher: qb.fetcher,
+      tenant: "9130350000000001",
+    });
+    assertEquals((await run(w)).status, 403);
+    assertEquals(qb.st.posts, 0);
+  }
+});
+
+
+Deno.test("#2371 through the runner: a taxed sale whose invoice froze an empty breakdown is a conflict, one with none is refused", async () => {
+  // vat_totals [] on a sale that carries 20.00 of tax: the evidence does not
+  // prove a zero-tax document, so the split stays unverified.
+  const qb = quickbooks();
+  const empty = world({
+    target: "quickbooks_online_ca",
+    maps: qboMaps as typeof allMaps,
+    postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+    invoices: [{ id: INV, vat_totals: [] }],
+    fetcher: qb.fetcher,
+    tenant: "9130350000000001",
+  });
+  assertEquals((await run(empty)).status, 200);
+  const [row] = [...empty.log.rows.values()];
+  assertEquals(row.status, "conflict");
+  assert(row.error.includes("the frozen breakdown does not explain the tax of standard"), row.error);
+
+  // An invoice row without its breakdown at all is missing evidence: the
+  // run fails closed before anything is sent.
+  const none = quickbooks();
+  const absent = world({
+    target: "quickbooks_online_ca",
+    maps: qboMaps as typeof allMaps,
+    postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+    invoices: [{ id: INV }],
+    fetcher: none.fetcher,
+    tenant: "9130350000000001",
+  });
+  assertEquals((await run(absent)).status, 403);
+  assertEquals(none.st.posts, 0);
 });

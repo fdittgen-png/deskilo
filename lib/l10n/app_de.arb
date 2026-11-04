@@ -1097,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "Fälligkeitsdatum der Lieferantenschuld",
   "biBasisPaymentMatchedAt": "Datum der Zuordnung der Zahlung",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1346,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "nach Fälligkeit der Lieferantenschuld",
   "biEditorBasisPaymentMatched": "nach zugeordneter Zahlung",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -2095,6 +2097,19 @@
   "biGroupNone": "Keine Gruppierung",
   "biIncompatible": "Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.",
   "biInvalidAddress": "Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.",
+  "biItemMethodAverage": "Durchschnittskosten",
+  "biItemMethodLast": "letzter Einkauf",
+  "biItemPricesBasis": "{lines} Einkaufspositionen von {items} Artikeln",
+  "biItemPricesDefinition": "Die genehmigten Einkaufspositionen mit Artikel und Datum im Zeitraum: was sie kosten (netto plus nicht abziehbare Steuer). Die Tabelle zeigt den Stückpreis jedes Artikels je Lieferant. Gutschriften bleiben außen vor.",
+  "biItemPricesTitle": "Artikelpreise nach Lieferant",
+  "biItemProductBasis": "Netto für {revenue} verkauft, Kosten {cost} ({method})",
+  "biItemProductDefinition": "Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.",
+  "biItemProductTitle": "Marge nach Produkt",
+  "biItemUncosted": "{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus",
+  "biItemUnresolved": "{count} Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor",
+  "biItemVendorBasis": "{count} Lieferanten",
+  "biItemVendorDefinition": "Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.",
+  "biItemVendorTitle": "Lieferantenpreise im Vergleich",
   "biKindCurrent": "Jetzt",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2536,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Zuschläge",
+  "biSalesKindAdjustment": "Korrekturen",
+  "biSalesKindBasis": "{gross} inkl. MwSt., {lines} Positionen auf {invoices} Rechnungen",
+  "biSalesKindDefinition": "Was die Rechnungen des Zeitraums verkauft haben, netto, nach Art der Position. Zahlungen und Erstattungen auf einer Rechnung sind kein Umsatz; eine Gutschrift wird abgezogen. Maßgeblich ist der Monat der Rechnung.",
+  "biSalesKindDesk": "Tische",
+  "biSalesKindLevel": "Etagen",
+  "biSalesKindOffice": "Räume",
+  "biSalesKindOther": "Sonstiges",
+  "biSalesKindOverage": "Zusätzliche Halbtage",
+  "biSalesKindPackage": "Pakete",
+  "biSalesKindService": "Leistungen",
+  "biSalesKindSubscription": "Abonnements",
+  "biSalesKindTitle": "Umsatz nach Art",
+  "biSalesNetUnknown": "{count} Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus",
+  "biSalesNoDescription": "Ohne Bezeichnung",
+  "biSalesRoomBasis": "{charges} für {uses} Buchungen berechnet, die Räume kosten {cost} ({rooms} Räume)",
+  "biSalesRoomDefinition": "Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.",
+  "biSalesRoomLine": "{room}: berechnet {charges}, Kosten {cost}, {uses} Buchungen",
+  "biSalesRoomTitle": "Marge der angemieteten Räume",
+  "biSalesRoomsOff": "Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen",
+  "biSalesServiceBasis": "{count} Leistungen und Pakete",
+  "biSalesServiceDefinition": "Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.",
+  "biSalesServiceTitle": "Umsatz nach Leistung",
   "biSeatCentre": "der gesamten Platzzeit",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2584,6 +2622,32 @@
   },
   "biTotal": "Gesamt",
   "biUnavailable": "Diese Analyse konnte nicht berechnet werden.",
+  "biVendorCategoryBasis": "{count} Kategorien",
+  "biVendorCategoryTitle": "Ausgaben nach Kategorie",
+  "biVendorCohortHeld": "Zurückgestellt",
+  "biVendorCohortLate": "Verspätet bezahlt",
+  "biVendorCohortLine": "{cohort}: {count} Rechnungen, {amount}",
+  "biVendorCohortOnTime": "Pünktlich bezahlt",
+  "biVendorCohortOpen": "Unbezahlt",
+  "biVendorCohortPartial": "Teilweise bezahlt",
+  "biVendorCohortUndated": "Ohne Zahlung beglichen",
+  "biVendorCohortUnknownDue": "Ohne Fälligkeit",
+  "biVendorCredited": "Abgezogene Gutschriften: {amount} ({count})",
+  "biVendorDelay": "Tage von der Fälligkeit bis zur Zahlung: Median {median}, 90. Perzentil {p90}, nach Betrag gewichtet {weighted} (negativ: früher)",
+  "biVendorLagBasis": "{documents} Rechnungen; Median {median} Tage, 90. Perzentil {p90}",
+  "biVendorLagDefinition": "Die genehmigten Lieferantenrechnungen mit Datum im Zeitraum: die Tage vom Datum auf der Rechnung bis zu ihrem Eingang im Space, im Durchschnitt; die Tabelle zeigt jeden Lieferanten.",
+  "biVendorLagTitle": "Tage bis zum Eingang einer Rechnung",
+  "biVendorLagUndated": "{count} Rechnungen ohne Lieferantendatum oder Eingangsdatum bleiben außen vor",
+  "biVendorNoCategory": "Ohne Kategorie",
+  "biVendorNothingToMeasure": "Im Zeitraum gibt es nichts zu messen",
+  "biVendorPunctualityBasis": "{onTime} von {settled} beglichenen Rechnungen bis zur Fälligkeit bezahlt",
+  "biVendorPunctualityDefinition": "Was der Space seinen Lieferanten schuldet und im Zeitraum fällig wird, jeweils in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn die Zahlung eines trägt, sonst das erfasste Zahlungsdatum.",
+  "biVendorPunctualityLine": "{name}: {onTime} pünktlich, {late} verspätet, von {due} fälligen",
+  "biVendorPunctualityTitle": "Pünktliche Zahlung an Lieferanten",
+  "biVendorSpendBasis": "{documents} Belege von {suppliers} Lieferanten; die {top} größten: {topCost}",
+  "biVendorSpendDefinition": "Die genehmigten Einkaufsbelege mit Datum im Zeitraum: was sie den Space kosten, netto plus die nicht abziehbare Steuer. Eine Gutschrift wird abgezogen. Belege in einer anderen Währung werden nicht umgerechnet.",
+  "biVendorSpendTitle": "Ausgaben nach Lieferant",
+  "biVendorUnassigned": "Ohne Lieferant (Belege von Mitgliedern): {amount}",
   "biViewCardsIncompatible": "{count} Analysen dieser Ansicht wurden gespeichert, als ihre Kennzahl etwas anderes bedeutete, und werden weggelassen statt mit anderer Bedeutung gezeigt.",
   "biViewChart": "Diagramm",
   "biViewClearMyDefault": "Meine Standardansicht nicht mehr öffnen",
@@ -8221,6 +8285,7 @@
   "invoiceExportGobd": "GoBD-Datenüberlassung (Z3)",
   "invoiceExportJournals": "Journale mit Sammeljournal (PDF, aus der Buchführung)",
   "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportSafTAt": "SAF-T AT (Österreich)",
   "invoiceExportSafTFull": "SAF-T mit Hauptbuch (XML, international)",
   "invoiceExportSafTNo": "SAF-T Financial (Norwegen)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -8233,6 +8298,7 @@
   },
   "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
   "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
+  "invoiceExportXeroInvoiceCsv": "Xero (Import von Ausgangsrechnungen)",
   "invoiceExternalIssuingTitle": "Diese Rechnung außerhalb der App ausstellen",
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
@@ -8264,6 +8330,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an.",
   "invoiceGapVatNotSupported": "Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.",
   "invoiceHeldNote": "Mahnungen angehalten: {reason}",
   "@invoiceHeldNote": {
@@ -12907,6 +12974,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Gekaufter Artikel",
   "purchasesKindBill": "Lieferantenrechnung",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12943,6 +13011,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Kein Artikel",
   "purchasesNoSupplier": "Kein Lieferant gewählt",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13101,6 +13170,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Menge",
   "purchasesReference": "Rechnungsnummer",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13247,6 +13317,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Einheit (z. B. Karton, Ries)",
   "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
@@ -15525,6 +15596,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{kein Standardkonto für {subject}} standardTaxCode{kein Standard-Steuercode für {subject}} taxRate{kein Steuersatz für {subject}} company{das Feld {subject} des Unternehmens fehlt} contact{das Feld {subject} der Ansprechperson} party{{subject} fehlt bei einem Kunden oder Lieferanten} tooLong{{subject} ist länger, als die Datei erlaubt} other{{subject}}}",
+  "saftIndustryCodeHelper": "Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.",
+  "saftIndustryCodeLabel": "Branchenkennzahl",
   "saftLedgerIntro": "Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15533,6 +15606,18 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.",
+  "saftProfitBasisLabel": "Art der Gewinnermittlung",
+  "saftSmallBusinessHelper": "Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.",
+  "saftSmallBusinessLabel": "Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)",
+  "saftSmallBusinessNo": "Nein",
+  "saftSmallBusinessYes": "Ja",
+  "saftStandardAccountsIntro": "Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.",
+  "saftStandardAccountsNoSuggestion": "Kein Vorschlag: Geben Sie das Standardkonto ein.",
+  "saftStandardAccountsSuggested": "Vorgeschlagen: {suggestion}. Bestätigen oder ändern Sie es.",
+  "saftStandardAccountsTitle": "Konten des Einheitskontenrahmens",
+  "saftTaxNumberHelper": "Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.",
+  "saftTaxNumberLabel": "Steuernummer",
   "saftWithPostings": "Mit Buchungen",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
@@ -15909,6 +15994,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.",
   "settingHintPrivacyMemberSelfService": "true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.",
+  "settingHintPurchaseItemCostMethod": "average: jeder genehmigte Kauf des Artikels bis zum Ende des Zeitraums, nach Stückzahl gewichtet. last: der letzte Kauf bis dahin. Es ändert keinen Beleg, nur die Margen.",
   "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16092,6 +16178,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
   "settingLabelPrivacyMemberSelfService": "Mitglieder exportieren und löschen ihre Daten selbst",
+  "settingLabelPurchaseItemCostMethod": "Wie die Stückkosten eines Artikels in den Margen gelesen werden",
   "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -20387,5 +20474,16 @@
   "workspaceXmlImportPreviewWarning": "Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.",
   "workspaceXmlImportReservationsError": "Dieser Workspace hat bereits Reservierungen, daher kann sein Raumplan nicht ersetzt werden. Ein Import ist nur vor der ersten Buchung möglich.",
   "workspaceXmlImportSubtitle": "Einstellungen und Raumplan aus einer exportierten Datei wiederherstellen. Ersetzt den aktuellen Raumplan.",
-  "workspaceXmlImportSuccess": "Workspace importiert."
+  "workspaceXmlImportSuccess": "Workspace importiert.",
+  "xeroInvoiceAccountCode": "Code des Erlöskontos",
+  "xeroInvoiceAccountsIntro": "Xero importiert diese Rechnungen als Entwürfe: Geben Sie sie in Xero frei. Erlöskonto und Steuersätze sind die Ihrer Organisation; übernehmen Sie deren Namen aus Xero.",
+  "xeroInvoiceAccountsTitle": "Xero-Export",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.} other{{count} Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.}}",
+  "xeroInvoiceDateOrder": "Datumsreihenfolge Ihrer Organisation",
+  "xeroInvoiceDayFirst": "Tag zuerst (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Wählen Sie beim Import in Xero „Tax exclusive“ (netto) für die Beträge: Die Datei enthält je Steuersatz den Nettobetrag und die auf der Rechnung erfasste Steuer.",
+  "xeroInvoiceMonthFirst": "Monat zuerst (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Geben Sie den Code des Erlöskontos ein.",
+  "xeroInvoiceRefusedTaxType": "Nennen Sie den Xero-Steuersatz für {rate}.",
+  "xeroInvoiceTaxType": "Xero-Steuersatz für {rate}"
 }

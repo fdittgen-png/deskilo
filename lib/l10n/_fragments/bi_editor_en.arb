@@ -668,5 +668,9 @@
   "biEditorBasisInvoiceDue": "by invoice due date",
   "@biEditorBasisInvoiceDue": {
     "description": "#3294 customer analytics"
+  },
+  "biEditorBasisPayableDue": "by supplier payable due date",
+  "@biEditorBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   }
 }

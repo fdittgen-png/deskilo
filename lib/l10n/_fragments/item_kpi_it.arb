@@ -1,0 +1,21 @@
+{
+  "purchasesItem": "Articolo acquistato",
+  "purchasesNoItem": "Nessun articolo",
+  "purchasesQuantity": "Quantità",
+  "purchasesUnit": "Unità (es. scatola, risma)",
+  "settingLabelPurchaseItemCostMethod": "Come si legge il costo unitario di un articolo nei margini",
+  "settingHintPurchaseItemCostMethod": "average: tutti gli acquisti approvati dell’articolo fino alla fine del periodo, ponderati per unità. last: l’ultimo acquisto datato entro allora. Non cambia alcun documento, solo i margini.",
+  "biItemPricesTitle": "Prezzi degli articoli per fornitore",
+  "biItemPricesBasis": "{lines} righe d’acquisto di {items} articoli",
+  "biItemPricesDefinition": "Le righe d’acquisto approvate che indicano un articolo, datate nel periodo: quanto costano (imponibile più l’imposta non recuperabile). La tabella riporta il prezzo unitario di ogni articolo per fornitore. Le note di credito sono escluse.",
+  "biItemProductTitle": "Margine per prodotto",
+  "biItemProductBasis": "Venduto a {revenue} netto, costo {cost} ({method})",
+  "biItemProductDefinition": "Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.",
+  "biItemUncosted": "{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine",
+  "biItemMethodAverage": "costo medio",
+  "biItemMethodLast": "ultimo acquisto",
+  "biItemVendorTitle": "Prezzi dei fornitori a confronto",
+  "biItemVendorBasis": "{count} fornitori",
+  "biItemVendorDefinition": "Per ogni fornitore: quanto gli articoli acquistati da lui nel periodo sono costati oltre il prezzo unitario più basso pagato nel periodo per lo stesso articolo, da qualunque fornitore. Nessun margine per fornitore: nessuna vendita registra quale acquisto ha consumato.",
+  "biItemUnresolved": "{count} righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori"
+}

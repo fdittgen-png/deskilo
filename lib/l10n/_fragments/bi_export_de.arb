@@ -336,5 +336,6 @@
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
   },
-  "biBasisInvoiceDue": "Fälligkeitsdatum der Rechnung"
+  "biBasisInvoiceDue": "Fälligkeitsdatum der Rechnung",
+  "biBasisPayableDue": "Fälligkeitsdatum der Lieferantenschuld"
 }

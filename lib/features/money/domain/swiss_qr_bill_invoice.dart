@@ -51,5 +51,6 @@ SwissQrBill? swissQrBillOf(
     currency: invoice.currency,
     invoiceNumber: invoice.number,
     additionalInfo: invoice.number,
+    frozenQrr: invoiceQrrOf(invoice.number, invoice.legalSnapshot),
   );
 }
