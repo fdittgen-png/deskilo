@@ -208,7 +208,7 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
-    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, actor: () => actor.memberId, now: today)
+    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
       ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
@@ -354,7 +354,7 @@ class DemoFixture {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
     // #3293 — a self-assignment is refused for whoever the persona is.
-    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles]) {
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, twin.roles]) {
       r.callerMemberId = persona.memberId;
     }
     secondSpace.viewAs(persona.memberId, workspaces);

@@ -17,6 +17,7 @@ import 'data/credit_repository.dart';
 import 'data/decision_effects.dart';
 import 'data/einvoice_inbox_repository.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -45,6 +46,7 @@ class DemoTwinData {
   factory DemoTwinData.build({
     required FakeWorkspaceRepository home,
     required FakeFloorPlanRepository productionPlan,
+    required FakeWorkspaceRoles productionRoles,
     required String Function() actor,
     required DateTime now,
   }) {
@@ -61,12 +63,19 @@ class DemoTwinData {
     plan.seats.addAll([for (final s in productionPlan.seats) if (s.workspaceId == 'ws-1') s.copyWith(workspaceId: ws)]);
     plan.levelSites.addAll(productionPlan.levelSites);
     final reservations = RightsCheckedReservationRepository(actor: actor);
-    final events = FakeEventRepository(actor: actor, workspaceId: ws);
+    // #3293 — the twin's requests are stamped on the session clock and
+    // decided and read only as its own rules and rights allow.
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: ws,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     final money = FakeMoneyRepository(events: events);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(calendar, reservations: reservations, money: money, events: events);
     wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
-    return DemoTwinData._(
+    final data = DemoTwinData._(
       workspaces: space,
       floorPlan: plan,
       reservations: reservations,
@@ -79,6 +88,14 @@ class DemoTwinData {
         purchases: FakePurchaseRepository.demo(actor: actor),
       ),
     );
+    // The roles are configuration, copied once with the rest of it; the
+    // effective rights are then the twin's own.
+    data.roles.roles.addAll(productionRoles.roles);
+    for (final e in productionRoles.assignments.entries) {
+      data.roles.assignments[e.key] = [...e.value];
+    }
+    events.viewerPermissions = demoViewerPermissions(space, data.roles, ws, actor);
+    return data;
   }
 
   final FakeWorkspaceRepository workspaces;

@@ -1,8 +1,8 @@
 {
-  "recordedSha": "73cee83f2b50c470f6884e542cf04d4b98012030",
+  "recordedSha": "d010e0a4008a083fb6f73d4c54c89280dd20486c",
   "recordedDate": "2026-11-04",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2389,"functions":13638,"cyclomatic>=9":1376,"cyclomatic>=25":77,"cognitive>=15":525,"cognitive>=30":69,"length>=150":47,"parameters>=5":616,"parameters>=7":149,"partOfFiles":17},
+  "totals": {"files":2389,"functions":13638,"cyclomatic>=9":1376,"cyclomatic>=25":77,"cognitive>=15":525,"cognitive>=30":69,"length>=150":47,"parameters>=5":617,"parameters>=7":149,"partOfFiles":17},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -937,7 +937,7 @@
     {"p":"lib/core/demo/demo_second_space.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":5,"len":45,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_session.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_space_routing.dart","loc":254,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":6,"cyc":9,"len":159,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/core/demo/demo_twin_space.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":13,"cyc":10,"len":40,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/demo_twin_space.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":14,"cyc":11,"len":56,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_workspace_context.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":39,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_workspace_exports.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":8,"len":33,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/presentation/demo_entry_screen.dart","loc":110,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":5,"cyc":5,"len":61,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

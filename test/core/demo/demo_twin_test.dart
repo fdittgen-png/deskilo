@@ -124,6 +124,51 @@ void main() {
     expect(fixture.floorPlan.seats, hasLength(prodSeats), reason: 'a plan edit in the twin is not production\'s');
   });
 
+  test('in the twin a request is stamped on the session clock and decided '
+      'only as its rules allow; another member\'s request is not read', () async {
+    fixture.becomePersona(DemoPersona.member);
+    await enter(demoTwinSpaceId);
+    final events = container.read(eventRepositoryProvider);
+    expect(events, same(fixture.twin.events));
+    final id = await events.requestQuotaExtension(demoTwinSpaceId, period: '2026-05', halfDays: 2);
+    final filed = (await events.fetchEvent(id))!;
+    expect(filed.createdAt, fixture.seededAt, reason: 'the session clock, not the suite\'s');
+    expect(filed.actorMemberId, DemoPersona.member.memberId);
+    await expectLater(events.respond(id, accept: true), throwsA(anything),
+        reason: 'nobody approves their own request (respond_to_event)');
+
+    fixture.becomePersona(DemoPersona.owner);
+    final own = await events.requestQuotaExtension(demoTwinSpaceId, period: '2026-05', halfDays: 1);
+    await events.respond(id, accept: true);
+    expect((await events.fetchEvent(id))?.status.name, 'confirmed', reason: 'the owner decides it');
+
+    fixture.becomePersona(DemoPersona.member);
+    final seen = await events.fetchEvents(demoTwinSpaceId);
+    expect(seen.map((e) => e.id), contains(id), reason: 'his own request');
+    expect(seen.map((e) => e.id), isNot(contains(own)), reason: 'the owner\'s request is not his to read');
+  });
+
+  test('a request, its decision and the charge it posts stay in the twin', () async {
+    final prodEvents = fixture.events.events.length;
+    final prodLedger = fixture.money.ledger.length;
+    // Bruno records what he took; the owner, not he, validates it.
+    fixture.becomePersona(DemoPersona.member);
+    await enter(demoTwinSpaceId);
+    final service = fixture.twin.money.services.firstWhere((s) => s.active);
+    await container.read(memberAccountCommandsProvider).recordServiceCharge(
+          workspaceId: demoTwinSpaceId, subjectMemberId: 'member-2', serviceId: service.id, quantity: 2);
+    final events = container.read(eventRepositoryProvider);
+    final request = fixture.twin.events.events.single;
+    expect(request.workspaceId, demoTwinSpaceId);
+    fixture.becomePersona(DemoPersona.owner);
+    await events.respond(request.id, accept: true);
+    final charge = fixture.twin.money.ledger.where((l) => l.memberId == 'member-2' && l.amountCents == service.priceCents * 2);
+    expect(charge, hasLength(1), reason: 'the confirmed charge is posted in the twin');
+    expect(fixture.events.events, hasLength(prodEvents), reason: 'production has no new request');
+    expect(fixture.events.events.where((e) => e.id == request.id), isEmpty);
+    expect(fixture.money.ledger, hasLength(prodLedger), reason: 'production\'s account is unchanged');
+  });
+
   test('the pair\'s deployment journal and the twin\'s setup guide are '
       'readable from the twin', () async {
     await enter(demoTwinSpaceId);
