@@ -14,8 +14,11 @@ import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_main_books_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/time/date_text.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/premises_lease.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -286,6 +289,45 @@ void main() {
         final paid = money.invoices.firstWhere(
             (i) => money.invoiceMatchesStore[i.id]?.resolution == 'exact');
         await expectLater(money.voidInvoice(paid.id), throwsStateError);
+      });
+
+      test('Pézenas issues an invoice on the Demo\'s day, numbered by its '
+          'series in that year, as the numbering preview announced', () async {
+        final money = DemoFixture.build(now: now).money;
+        final period = yearMonth(now.year, now.month);
+        Future<Invoice> issue() async {
+          for (final member in ['member-1', 'member-2', 'member-3', 'member-4']) {
+            try {
+              final id = await money.createInvoice(
+                workspaceId: 'ws-1',
+                memberId: member,
+                period: period,
+              );
+              return money.invoices.singleWhere((i) => i.id == id);
+            } on StateError {
+              continue;
+            }
+          }
+          throw StateError('no member to invoice for $period');
+        }
+
+        final preview = await money.previewDocumentNumber('ws-1', 'invoice');
+        final first = await issue();
+        expect(first.issuedAt, now);
+        expect(first.number, 'INV-${now.year}-0001');
+        expect(first.number, preview);
+        // A configured series: its prefix and counter, the Demo's year.
+        await money.setNumberSequence(
+          'ws-1',
+          NumberSequence.defaultsFor('invoice').copyWith(prefix: 'F-'),
+          raiseNextValueTo: 42,
+        );
+        final announced = await money.previewDocumentNumber('ws-1', 'invoice');
+        expect(announced, 'F-${now.year}-0042');
+        final second = await issue();
+        expect(second.number, announced);
+        expect(await money.previewDocumentNumber('ws-1', 'invoice'),
+            'F-${now.year}-0043');
       });
 
       test('Pézenas books: every posting of the last twelve months balances, and '

@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 
 import '../money_repository.dart';
 
@@ -71,11 +72,16 @@ class DemoInvoiceCommands implements InvoiceCommands {
       }
       replacesNumber = _m.invoices[i].number;
     }
+    // #3292 — numbered by the space's invoice series and dated by its clock,
+    // as the numbering preview reads them: a configured series counts on.
+    final series = _m.numberSequences['invoice'] ??
+        NumberSequence.defaultsFor('invoice');
+    final counter = series.stored ? series.nextValue : _m.nextInvoiceNumber;
     final invoice = Invoice(
       id: 'inv-${_m.nextInvoiceNumber}',
       workspaceId: workspaceId,
       memberId: memberId,
-      number: 'INV-2026-${_m.nextInvoiceNumber.toString().padLeft(4, '0')}',
+      number: series.format(counter, _m.clock()),
       issuedAt: _m.clock(),
       period: period,
       title: period,
@@ -110,6 +116,9 @@ class DemoInvoiceCommands implements InvoiceCommands {
       attendance: detailed ? List.of(_m.attendanceSeed) : const [],
     );
     _m.nextInvoiceNumber++;
+    if (series.stored) {
+      _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
+    }
     _m.invoices.insert(0, invoice);
     return invoice.id;
   }
