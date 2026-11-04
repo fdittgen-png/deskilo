@@ -93,6 +93,37 @@ void main() {
     );
   });
 
+  test('the AEAT documentation examples of a chained alta and an anulación '
+      'reproduce their published huellas', () {
+    // The second alta of the AEAT's example chain, on the first one's huella.
+    expect(
+      verifactuHuella(
+        issuerNif: '89890001K',
+        number: '12345679/G34',
+        issueDate: '01-01-2024',
+        type: 'F1',
+        taxTotal: '12.35',
+        grandTotal: '123.45',
+        previousHuella:
+            '3C464DAF61ACB827C65FDA19F352A4E3BDC2C640E9E9FC4CC058073F38F12F60',
+        generatedAt: '2024-01-01T19:20:35+01:00',
+      ),
+      'F7B94CFD8924EDFF273501B01EE5153E4CE8F259766F88CF6ACB8935802A2B97',
+    );
+    // Its anulación, on the second alta's huella.
+    expect(
+      verifactuCancellationHuella(
+        issuerNif: '89890001K',
+        number: '12345679/G34',
+        issueDate: '01-01-2024',
+        previousHuella:
+            'F7B94CFD8924EDFF273501B01EE5153E4CE8F259766F88CF6ACB8935802A2B97',
+        generatedAt: '2024-01-01T19:20:40+01:00',
+      ),
+      '177547C0D57AC74748561D054A9CEC14B4C4EA23D1BEFD6F2E69E3A388F90C68',
+    );
+  });
+
   test('a record hashes exactly the AEAT concatenation of its own fields', () {
     final r = _chain().first;
     final literal =
