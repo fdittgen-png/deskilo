@@ -23,6 +23,8 @@
 --     F1, F2 without a buyer tax id, R1 for a rectification; a credit
 --     note's amounts negative. A second call for the same record answers
 --     the one already kept; an anulación needs the alta and comes once;
+--   * they are read by whoever the role matrix lets issue invoices or view
+--     the finances, and kept only by an invoice issuer;
 --   * the records are append-only: the AEAT submission (owner-blocked on
 --     the seller's qualified certificate) will only ever move the
 --     submission columns.
@@ -188,8 +190,9 @@ begin
   end if;
   select * into v_inv from public.invoices where id = p_invoice_id;
   if v_inv.id is null then raise exception 'unknown invoice'; end if;
-  if not (public.is_admin_of(v_inv.workspace_id)
-          or public.has_permission(v_inv.workspace_id, 'issueInvoices')) then
+  -- The role matrix decides (#1321): an owner who takes invoicing away from
+  -- the admins takes this away too.
+  if not public.has_permission(v_inv.workspace_id, 'issueInvoices') then
     raise exception 'you may not keep this invoice''s records';
   end if;
   v_seller := coalesce(v_inv.parties -> 'seller', '{}'::jsonb);
@@ -270,7 +273,7 @@ grant select on public.verifactu_records to authenticated;
 drop policy if exists verifactu_records_select on public.verifactu_records;
 create policy verifactu_records_select on public.verifactu_records
   for select to authenticated
-  using (public.is_admin_of(workspace_id) or public.has_permission(workspace_id, 'issueInvoices'));
+  using (workspace_id in (select public.workspaces_permitting(array['issueInvoices', 'viewFinances'])));
 drop policy if exists mcp_delegated_deny on public.verifactu_records;
 create policy mcp_delegated_deny on public.verifactu_records as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
