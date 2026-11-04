@@ -96,6 +96,7 @@ class FeatureCapabilityList extends StatelessWidget {
 
   Widget _tile(AppLocalizations l10n, FeatureManifestEntry entry) {
     final requires = entry.requires;
+    final available = featureAvailableIn(entry.availableIn, country);
     return FeatureTile(
       key: ValueKey('feature-tile-${entry.feature.name}'),
       entry: entry,
@@ -114,10 +115,14 @@ class FeatureCapabilityList extends StatelessWidget {
       alsoEnables: alsoEnabledWith(raw: raw, feature: entry.feature)
           .map((f) => featureName(l10n, f))
           .toList(),
-      onChanged: (value) => onChanged(entry.feature, value: value),
-      unavailableNote: featureAvailableIn(entry.availableIn, country)
-          ? null
-          : featureAvailableNote(l10n, entry.availableIn!),
+      // #3300 — a feature the space's country does not offer is never
+      // offered for activation; a stored ON keeps its value and can be
+      // turned off.
+      onChanged: available || raw.contains(entry.feature)
+          ? (value) => onChanged(entry.feature, value: value)
+          : null,
+      unavailableNote:
+          available ? null : featureAvailableNote(l10n, entry.availableIn!),
     );
   }
 }
