@@ -8231,6 +8231,7 @@
   },
   "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)",
   "invoiceExportTrialBalance": "Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)",
+  "invoiceExportXeroInvoiceCsv": "Xero (importazione fatture di vendita)",
   "invoiceExternalIssuingTitle": "Emetti questa fattura fuori dall’app",
   "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
   "invoiceFacturXExplain": "Un unico file: la fattura che legge una persona, con l'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.",
@@ -20319,5 +20320,16 @@
   "workspaceXmlImportPreviewWarning": "La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L'operazione non può essere annullata.",
   "workspaceXmlImportReservationsError": "Questo spazio ha già delle prenotazioni, quindi la planimetria non può essere sostituita. L'importazione è possibile solo prima della prima prenotazione.",
   "workspaceXmlImportSubtitle": "Ripristina impostazioni e planimetria da un file esportato. Sostituisce la planimetria attuale.",
-  "workspaceXmlImportSuccess": "Spazio importato."
+  "workspaceXmlImportSuccess": "Spazio importato.",
+  "xeroInvoiceAccountCode": "Codice del conto ricavi",
+  "xeroInvoiceAccountsIntro": "Xero importa queste fatture come bozze: le approvi in Xero. Il conto ricavi e le aliquote sono quelli della Sua organizzazione: ne copi i nomi da Xero.",
+  "xeroInvoiceAccountsTitle": "Esportazione Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.} other{{count} note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.}}",
+  "xeroInvoiceDateOrder": "Ordine delle date della Sua organizzazione",
+  "xeroInvoiceDayFirst": "Prima il giorno (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.",
+  "xeroInvoiceMonthFirst": "Prima il mese (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Inserisci il codice del conto ricavi.",
+  "xeroInvoiceRefusedTaxType": "Indica l’aliquota Xero per {rate}.",
+  "xeroInvoiceTaxType": "Aliquota Xero per {rate}"
 }
