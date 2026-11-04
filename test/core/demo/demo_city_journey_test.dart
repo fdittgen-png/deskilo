@@ -172,8 +172,19 @@ void main() {
           'bank_transfer',
         );
       }
-      GoRouter.of(tester.element(find.byType(Scaffold).first))
-          .go('/money/purchases/approvals');
+      // The workspace issues invoices here; the personal action opens all
+      // of this person's finances, without silently filtering to this space.
+      final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
+        ..go('/invoices');
+      await _waitFor(tester, find.byKey(const ValueKey('invoice-stage-issue')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('invoice-stage-issue')), findsOneWidget);
+      expect(find.byKey(const ValueKey('invoicing-personal-action')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('invoicing-personal-action')));
+      await _waitFor(tester, find.byKey(const ValueKey('finances-tabs')));
+      expect(find.byKey(const ValueKey('finances-tabs')), findsOneWidget);
+      expect(router.routeInformationProvider.value.uri.queryParameters, isNot(contains('workspace')));
+      router.go('/money/purchases/approvals');
       final prefix = name == 'london' ? 'uk' : 'ny';
       final approval = find.byKey(ValueKey('approval-$prefix-bill-pending'));
       await _waitFor(tester, approval);

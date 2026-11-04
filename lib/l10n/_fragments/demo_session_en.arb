@@ -93,6 +93,8 @@
       }
     }
   },
+  "demoSetupCardOpenSpace": "Switch to {space}",
+  "@demoSetupCardOpenSpace": {"description": "Switch between Demo workspaces without claiming their setup state.", "placeholders": {"space": {"type": "String"}}},
   "demoSetupCardOpenComplete": "See a space fully set up: {space}",
   "@demoSetupCardOpenComplete": {
     "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",

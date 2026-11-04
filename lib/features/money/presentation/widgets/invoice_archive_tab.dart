@@ -209,10 +209,9 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
               : b.issuedAt.compareTo(a.issuedAt),
       });
 
-    return Column(children: [
-      _filterBar(context, l10n, memberOptions, periodOptions, visible.length),
-      Expanded(
-        child: visible.isEmpty
+    return _ArchiveLayout(
+      filters: _filterBar(context, l10n, memberOptions, periodOptions, visible.length),
+      child: visible.isEmpty
             ? EmptyState(
                 icon: _filtering
                     ? Icons.filter_alt_off_outlined
@@ -262,8 +261,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   );
                 },
               ),
-      ),
-    ]);
+    );
   }
 
   Widget _filterBar(
@@ -365,7 +363,10 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
           // How much of the archive is on screen, and one tap back to all
           // of it. Issuers can pull the cancelled correction trail back
           // in (#452 — hidden by default).
-          Row(children: [
+          Wrap(
+            spacing: AppSpacing.sm,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
             if (widget.canIssue)
               Padding(
                 padding: const EdgeInsets.only(right: AppSpacing.xs),
@@ -379,14 +380,12 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                       setState(() => _hideVoided = !show),
                 ),
               ),
-            Expanded(
-              child: Text(
-                l10n.invoiceCountShown(shown),
-                key: const ValueKey('invoice-count'),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-              ),
+            Text(
+              l10n.invoiceCountShown(shown),
+              key: const ValueKey('invoice-count'),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
             ),
             if (_filtering)
               TextButton(
@@ -460,4 +459,25 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       ),
     );
   }
+}
+
+/// Gives filters a bounded scroll area so the results remain reachable.
+class _ArchiveLayout extends StatelessWidget {
+  const _ArchiveLayout({required this.filters, required this.child});
+  final Widget filters;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) => Column(children: [
+      ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: constraints.maxHeight * .45),
+        child: SingleChildScrollView(
+          key: const ValueKey('invoice-archive-filters-scroll'),
+          child: filters,
+        ),
+      ),
+      Expanded(child: child),
+    ]),
+  );
 }

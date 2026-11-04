@@ -46,7 +46,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
 | 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
 | 40 | 19 | 55 | 2 | `lib/features/money/domain/vat_forms.dart#fillVatForm` |
-| 40 | 38 | 143 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
+| 40 | 38 | 141 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 | 39 | 24 | 144 | 1 | `lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build` |
 | 38 | 26 | 123 | 2 | `lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build` |
 | 38 | 23 | 199 | 1 | `lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#_RefPickerSheetState.build` |
