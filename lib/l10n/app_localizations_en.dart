@@ -12560,6 +12560,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Trial balance, general and auxiliary (PDF, from the book)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv => 'Xero (sales invoice import)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Issue this invoice outside the app';
 
@@ -30910,4 +30913,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Workspace imported.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Sales account code';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Xero export';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count credit notes are not in this file: Xero imports credit notes with their own template.',
+      one: 'One credit note is not in this file: Xero imports credit notes with their own template.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Date order in your organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Day first (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Month first (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount => 'Enter the sales account code.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Name the Xero tax rate for $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Xero tax rate for $rate';
+  }
 }

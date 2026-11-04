@@ -12648,6 +12648,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (importación de facturas de venta)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Emita esta factura fuera de la aplicación';
 
@@ -31176,4 +31180,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Espacio importado.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Código de la cuenta de ventas';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importa estas facturas como borradores: apruébelas en Xero. La cuenta de ventas y los tipos impositivos son los de su organización: copie sus nombres de Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Exportación Xero';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count facturas rectificativas no están en este archivo: Xero importa las rectificativas con su propia plantilla.',
+      one: 'Una factura rectificativa no está en este archivo: Xero importa las rectificativas con su propia plantilla.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Orden de las fechas de su organización';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Primero el día (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Al importar en Xero, elija «Tax exclusive» (sin impuestos) para los importes: el archivo contiene el neto de cada tipo y el IVA registrado en la factura.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Primero el mes (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Indique el código de la cuenta de ventas.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Indique el tipo impositivo de Xero para $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Tipo impositivo de Xero para $rate';
+  }
 }

@@ -8295,6 +8295,7 @@
   },
   "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
   "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
+  "invoiceExportXeroInvoiceCsv": "Xero (Import von Ausgangsrechnungen)",
   "invoiceExternalIssuingTitle": "Diese Rechnung außerhalb der App ausstellen",
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
@@ -20389,5 +20390,16 @@
   "workspaceXmlImportPreviewWarning": "Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.",
   "workspaceXmlImportReservationsError": "Dieser Workspace hat bereits Reservierungen, daher kann sein Raumplan nicht ersetzt werden. Ein Import ist nur vor der ersten Buchung möglich.",
   "workspaceXmlImportSubtitle": "Einstellungen und Raumplan aus einer exportierten Datei wiederherstellen. Ersetzt den aktuellen Raumplan.",
-  "workspaceXmlImportSuccess": "Workspace importiert."
+  "workspaceXmlImportSuccess": "Workspace importiert.",
+  "xeroInvoiceAccountCode": "Code des Erlöskontos",
+  "xeroInvoiceAccountsIntro": "Xero importiert diese Rechnungen als Entwürfe: Geben Sie sie in Xero frei. Erlöskonto und Steuersätze sind die Ihrer Organisation; übernehmen Sie deren Namen aus Xero.",
+  "xeroInvoiceAccountsTitle": "Xero-Export",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.} other{{count} Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.}}",
+  "xeroInvoiceDateOrder": "Datumsreihenfolge Ihrer Organisation",
+  "xeroInvoiceDayFirst": "Tag zuerst (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Wählen Sie beim Import in Xero „Tax exclusive“ (netto) für die Beträge: Die Datei enthält je Steuersatz den Nettobetrag und die auf der Rechnung erfasste Steuer.",
+  "xeroInvoiceMonthFirst": "Monat zuerst (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Geben Sie den Code des Erlöskontos ein.",
+  "xeroInvoiceRefusedTaxType": "Nennen Sie den Xero-Steuersatz für {rate}.",
+  "xeroInvoiceTaxType": "Xero-Steuersatz für {rate}"
 }

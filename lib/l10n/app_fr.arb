@@ -8295,6 +8295,7 @@
   },
   "invoiceExportSwissKmu": "Journal des écritures suisse (CSV, comptes PME, codes TVA)",
   "invoiceExportTrialBalance": "Balance générale et auxiliaire (PDF, depuis la comptabilité)",
+  "invoiceExportXeroInvoiceCsv": "Xero (import de factures de vente)",
   "invoiceExternalIssuingTitle": "Émettez cette facture hors de l’application",
   "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
   "invoiceFacturXExplain": "Un seul fichier : la facture qu'un humain lit, avec le XML lisible par machine à l'intérieur. C'est ce qu'attendent la plupart des plateformes.",
@@ -20389,5 +20390,16 @@
   "workspaceXmlImportPreviewWarning": "Le plan actuel sera supprimé et remplacé, et les paramètres de l'espace seront écrasés. Cette action est irréversible.",
   "workspaceXmlImportReservationsError": "Cet espace a déjà des réservations, son plan des locaux ne peut donc pas être remplacé. L'import n'est possible qu'avant la première réservation.",
   "workspaceXmlImportSubtitle": "Restaurer les paramètres et le plan des locaux depuis un fichier exporté. Remplace le plan actuel.",
-  "workspaceXmlImportSuccess": "Espace importé."
+  "workspaceXmlImportSuccess": "Espace importé.",
+  "xeroInvoiceAccountCode": "Code du compte de ventes",
+  "xeroInvoiceAccountsIntro": "Xero importe ces factures en brouillon : validez-les dans Xero. Le compte de ventes et les taux de taxe sont ceux de votre organisation : reprenez leurs noms dans Xero.",
+  "xeroInvoiceAccountsTitle": "Export Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} other{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.}}",
+  "xeroInvoiceDateOrder": "Ordre des dates de votre organisation",
+  "xeroInvoiceDayFirst": "Jour d’abord (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.",
+  "xeroInvoiceMonthFirst": "Mois d’abord (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Saisissez le code du compte de ventes.",
+  "xeroInvoiceRefusedTaxType": "Indiquez le taux de taxe Xero pour {rate}.",
+  "xeroInvoiceTaxType": "Taux de taxe Xero pour {rate}"
 }
