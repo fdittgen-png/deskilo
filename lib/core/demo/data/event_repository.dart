@@ -37,6 +37,9 @@ class FakeEventRepository implements EventRepository {
   final String Function()? _actor;
   final String workspaceId;
   final DateTime Function() _clock;
+
+  /// The space's clock, for the commands that file an event (#3304).
+  DateTime now() => _clock();
   Member? Function()? decider;
 
   /// The signed-in member's effective permissions in this space, which

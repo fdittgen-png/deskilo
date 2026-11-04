@@ -8,6 +8,7 @@
 // never the fake's own bookkeeping. The matrix these rows pin is
 // docs/testing/evidence/demo-audit-3291-workflows.md.
 import 'package:deskilo/core/calendar/calendar_item.dart';
+import 'package:deskilo/core/demo/data/money/demo_member_account_commands.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
@@ -198,6 +199,16 @@ void main() {
               l.category == LedgerCategory.payment && l.amountCents == 4200)
           .toList();
       expect(credit, hasLength(1), reason: 'the confirmed payment is credited once');
+    });
+
+    test('a payment recorded at a 2027 Demo clock is filed and paid in 2027', () async {
+      final f = DemoFixture.build(now: DateTime(2027, 1, 1, 10));
+      final id = await DemoMemberAccountCommands(f.money).recordPayment(
+            workspaceId: 'ws-1', memberId: 'member-2', amountCents: 4200);
+      final filed = f.money.eventRepository!.events.singleWhere((e) => e.id == id);
+      expect(filed.createdAt, DateTime(2027, 1, 1, 10));
+      expect(filed.payload['paid_on'], '2027-01-01');
+      expect(filed.payload['period'], '2027-01');
     });
 
     test('an approved reservation deletion cancels the booking', () async {

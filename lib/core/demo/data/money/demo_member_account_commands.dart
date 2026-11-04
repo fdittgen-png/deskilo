@@ -38,7 +38,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
     // event; the account is credited only once it is confirmed.
     final events = _m.eventRepository;
     if (events != null) {
-      final now = kTestNow;
+      final now = events.now();
       events.events.add(
         WorkspaceEvent(
           id: id,
@@ -89,7 +89,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
     // service_charge event — the ledger charge appears on confirmation.
     final events = _m.eventRepository;
     if (events != null) {
-      final now = kTestNow;
+      final now = events.now();
       events.events.add(
         WorkspaceEvent(
           id: 'evt-service-${_m.recordedServiceCharges.length}',
