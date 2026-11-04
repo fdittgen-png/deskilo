@@ -404,11 +404,22 @@ async function taxLineDifferences(
   // Every way to give each entry its own group whose code fits it: entries
   // with the same net and tax but another structure (15 % against 5 % +
   // 10 %) are told apart by their codes, whatever their order.
+  // The search stops at the first assignment that would expect other
+  // figures than the first one: swapping two identical entries is the same
+  // split, moving a different one is not. Rate groups per invoice are few.
   const assignments: number[][] = [];
+  let firstExpected: Map<string, { amount: number; base: number }> | null = null;
+  let ambiguous = false;
   const walk = (i: number, taken: Set<number>, chosen: number[]) => {
-    if (assignments.length > 1) return;
+    if (ambiguous) return;
     if (i === entries.length) {
-      assignments.push([...chosen]);
+      const found = expectedOf(chosen);
+      if (firstExpected === null) {
+        firstExpected = found;
+        assignments.push([...chosen]);
+      } else if (!same(firstExpected, found)) {
+        ambiguous = true;
+      }
       return;
     }
     taxed.forEach((g, gi) => {
@@ -421,7 +432,6 @@ async function taxLineDifferences(
       }
     });
   };
-  walk(0, new Set(), []);
   const expectedOf = (assignment: number[]) => {
     const out = new Map<string, { amount: number; base: number }>();
     assignment.forEach((gi, i) => {
@@ -435,6 +445,7 @@ async function taxLineDifferences(
   };
   const same = (x: Map<string, { amount: number; base: number }>, y: Map<string, { amount: number; base: number }>) =>
     x.size === y.size && [...x].every(([k, v]) => y.get(k)?.amount === v.amount && y.get(k)?.base === v.base);
+  walk(0, new Set(), []);
   // Why no assignment exists, in the terms a bookkeeper can act on.
   const diagnose = () => {
     for (const entry of entries) {
@@ -463,7 +474,7 @@ async function taxLineDifferences(
   if (entries.length !== taxed.length || assignments.length === 0) {
     diagnose();
     if (!differences.length) unverified("no mapped tax code fits the frozen breakdown of every rate group");
-  } else if (assignments.length > 1 && !same(expectedOf(assignments[0]), expectedOf(assignments[1]))) {
+  } else if (ambiguous) {
     unverified("the frozen breakdown fits the rate groups' codes in more than one way");
   } else {
     expected = expectedOf(assignments[0]);

@@ -615,3 +615,46 @@ Deno.test("#2371 two rate groups with the same net and tax but other structures 
   assertEquals((await run(q2, new Log(), [flipped], "quickbooks_online_ca", twinMaps)).statuses, ["acknowledged"]);
 });
 
+
+Deno.test("#2371 three groups and entries C, A, A: a third assignment that moves C to other rates makes the split ambiguous", async () => {
+  // Three groups of 100.00 / 15.00. x is mapped to code K1 (5 % + 10 %), y
+  // and z to code K2 (5 % + 10 %, other rates). The frozen entries: C splits
+  // 5.00 + 10.00, the two As 4.99 + 10.01. C on x and the As on y and z, in
+  // either order, expect the same figures; C on y expects others (K1 would
+  // book 4.99 + 10.01, K2 5.00 + 10.00 + 4.99 + 10.01): which one the
+  // invoice meant cannot be told, so nothing is assumed.
+  const rates = { A5: 5, A10: 10, B5: 5, B10: 10 };
+  const code = (id: string, five: string, ten: string) => ({
+    Id: id,
+    SalesTaxRateList: {
+      TaxRateDetail: [{ TaxRateRef: { value: five }, TaxOrder: 0 }, { TaxRateRef: { value: ten }, TaxOrder: 1 }],
+    },
+  });
+  const q = realm({ rates, codes: [code("K1", "A5", "A10"), code("K2", "B5", "B10")] });
+  const split = (five: number, ten: number) => ({
+    percent: 15,
+    netCents: 10000,
+    taxCents: 1500,
+    components: [{ percent: 5, baseCents: 10000, taxCents: five }, { percent: 10, baseCents: 10000, taxCents: ten }],
+  });
+  const three: Posting = {
+    ...year[0],
+    documentNumber: "F-2026-0017",
+    lines: [
+      line("customers", null, 34500, 0),
+      ...["x", "y", "z"].flatMap((g) => [line("revenue", g, 0, 10000), line("vat_output", g, 0, 1500)]),
+    ],
+    taxBreakdown: [split(500, 1000), split(499, 1001), split(499, 1001)],
+  };
+  const threeMaps = [
+    ...maps,
+    ...["x", "y", "z"].flatMap((g) => [
+      { kind: "item" as const, key: `revenue:${g}`, remoteId: `IT-${g}`, remoteCode: "" },
+      { kind: "item" as const, key: `vat_output:${g}`, remoteId: g === "x" ? "K1" : "K2", remoteCode: "" },
+    ]),
+  ];
+  const log = new Log();
+  assertEquals((await run(q, log, [three], "quickbooks_online_ca", threeMaps)).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("the frozen breakdown fits the rate groups' codes in more than one way"), row.error);
+});
