@@ -146,6 +146,7 @@ import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_twin_seed.dart';
 
 /// The main space's purchase side, seeded once for the session: its
 /// providers and the setup guide's evidence read the same repositories.
@@ -211,6 +212,15 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         reservations: fixture.newYork.reservations,
         money: fixture.newYork.money,
         events: fixture.newYork.events,
+      ),
+      // #3302 — the twin's guide reads its own (copied) plan and its own,
+      // empty activity: what a development side holds before a rehearsal.
+      demoTwinSpaceId: DemoSetupSources(
+        space: fixture.twin.workspaces,
+        plan: fixture.twin.floorPlan,
+        reservations: fixture.twin.reservations,
+        money: fixture.twin.money,
+        events: fixture.twin.events,
       ),
     },
     acknowledged: {'ws-1': demoMainSpaceMarkedDone},

@@ -12,7 +12,10 @@ import '../demo_clock.dart';
 
 /// The pair both sides share, and the development side's id.
 const _demoPairId = 'demo-pair';
-const _demoTwinId = 'ws-1-dev';
+const _demoTwinId = demoTwinSpaceId;
+
+/// #3302 — the development side of the main space's pair.
+const demoTwinSpaceId = 'ws-1-dev';
 
 void seedDemoTwin(
   FakeWorkspaceRepository workspaces,
