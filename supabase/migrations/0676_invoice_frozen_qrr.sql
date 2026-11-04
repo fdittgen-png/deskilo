@@ -50,7 +50,7 @@ begin
 end;
 $fn$;
 
-revoke execute on function public.qrr_check_digit(text) from public, anon;
+revoke execute on function public.qrr_check_digit(text) from public, anon, authenticated;
 
 create or replace function public.invoice_qrr_freeze()
 returns trigger
