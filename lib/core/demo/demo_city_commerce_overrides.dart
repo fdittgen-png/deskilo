@@ -21,7 +21,9 @@ import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/sales_kpi_providers.dart';
 import '../../features/workspace/providers/vendor_kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'data/accounting_connection_repository.dart';
 import 'data/asset_valuation_repository.dart';
+import 'data/book_period_repository.dart';
 import 'data/book_profile_repository.dart';
 import 'data/customer_kpi_repository.dart';
 import 'data/demo_cost_kpi_repository.dart';
@@ -46,6 +48,7 @@ import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_twin_seed.dart';
 import 'seed/demo_valuation_seed.dart';
 
 DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
@@ -54,6 +57,7 @@ DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
     demoSecondSpaceId => (fixture.secondSpace.floorPlan, fixture.secondSpace.reservations),
     demoLondonSpaceId => (fixture.london.floorPlan, fixture.london.reservations),
     demoNewYorkSpaceId => (fixture.newYork.floorPlan, fixture.newYork.reservations),
+    demoTwinSpaceId => (fixture.twin.floorPlan, fixture.twin.reservations),
     null || '' || demoFirstSpaceId => (fixture.floorPlan, fixture.reservations),
     _ => throw StateError('unknown demo space: $id'),
   };
@@ -140,10 +144,12 @@ List<Override> demoCityCommerceOverrides(
   final homeRooms = seedDemoRooms(fixture.seededAt);
   final homeValuations = seedDemoValuations(fixture.seededAt);
   final homeCommitments = seedDemoCommitments(fixture.seededAt);
-  T choose<T>(Ref ref, T home, T london, T ny) =>
+  final twin = _twinStores(fixture);
+  T choose<T>(Ref ref, T home, T london, T ny, T devTwin) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => london,
         demoNewYorkSpaceId => ny,
+        demoTwinSpaceId => devTwin,
         _ => home,
       };
   return [
@@ -153,81 +159,50 @@ List<Override> demoCityCommerceOverrides(
         purchasing.inbox,
         londonPurchasing.inbox,
         nyPurchasing.inbox,
+        fixture.twin.purchasing.inbox,
       ),
     ),
     ...demoPurchasingOverrides(
       purchasing,
       london: londonPurchasing,
       newYork: nyPurchasing,
+      twin: fixture.twin.purchasing,
     ),
     bookProfileRepositoryProvider.overrideWith(
-      (ref) => choose(ref, mainBooks, londonBooks, nyBooks),
+      (ref) => choose(ref, mainBooks, londonBooks, nyBooks, twin.books),
     ),
     retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
     premisesLeaseRepositoryProvider.overrideWith(
-      (ref) => choose(ref, mainLease, londonLease, nyLease),
+      (ref) => choose(ref, mainLease, londonLease, nyLease, twin.lease),
     ),
     workspaceAssetRepositoryProvider.overrideWith(
-      (ref) => choose(ref, mainAssets, londonAssets, nyAssets),
+      (ref) => choose(ref, mainAssets, londonAssets, nyAssets, twin.assets),
     ),
     // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
     bookPeriodRepositoryProvider.overrideWith(
       (ref) =>
-          choose(ref, bookPeriods, londonAccounting.books, nyAccounting.books),
+          choose(ref, bookPeriods, londonAccounting.books, nyAccounting.books, twin.periods),
     ),
     accountingConnectionRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeAccounting, londonAccounting, nyAccounting),
+      (ref) => choose(ref, homeAccounting, londonAccounting, nyAccounting, twin.accounting),
     ),
     // #2568 — the rooms the demo space rents.
     roomRentalRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeRooms, londonRooms, nyRooms),
+      (ref) => choose(ref, homeRooms, londonRooms, nyRooms, twin.rooms),
     ),
-    // #3294 step 3 — the sales figures of each of the four spaces, from its
-    // own invoices and the rooms it rents; Leipzig rents none.
-    salesKpiRepositoryProvider.overrideWith((ref) {
-      DemoSalesKpiRepository sales(
-        FakeMoneyRepository money,
-        FakeRoomRentalRepository rooms,
-        FakeReservationRepository bookings,
-        String currency,
-      ) => DemoSalesKpiRepository(
-        invoices: () => money.invoices,
-        rooms: rooms,
-        bookings: () => bookings.reservations,
-        roomsEnabled: () => ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.externalRooms),
-        now: fixture.seededAt,
-        currency: currency,
-      );
-      return switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoSecondSpaceId => sales(
-          fixture.secondSpace.money,
-          FakeRoomRentalRepository(),
-          fixture.secondSpace.reservations,
-          'EUR',
-        ),
-        demoLondonSpaceId => sales(
-          fixture.london.money,
-          londonRooms,
-          fixture.london.reservations,
-          'GBP',
-        ),
-        demoNewYorkSpaceId => sales(
-          fixture.newYork.money,
-          nyRooms,
-          fixture.newYork.reservations,
-          'USD',
-        ),
-        _ => sales(fixture.money, homeRooms, fixture.reservations, 'EUR'),
-      };
-    }),
+    // #3294 step 3 — the sales figures, from each space's invoices and rooms.
+    _salesOverride(fixture, (
+      home: homeRooms,
+      london: londonRooms,
+      ny: nyRooms,
+      twin: twin.rooms,
+    )),
     // #2576 — the accountant's valuations of the demo space's equipment.
     assetValuationRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeValuations, londonValuations, nyValuations),
+      (ref) => choose(ref, homeValuations, londonValuations, nyValuations, twin.valuations),
     ),
     leaseCommitmentRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments),
+      (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments, twin.commitments),
     ),
     ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing),
   ];
@@ -246,6 +221,7 @@ List<Override> _kpiOverrides(
     DemoPurchaseKpiRepository(purchases: home.purchases, now: now),
     DemoPurchaseKpiRepository(purchases: london.purchases, now: now, currency: 'GBP'),
     DemoPurchaseKpiRepository(purchases: newYork.purchases, now: now, currency: 'USD'),
+    DemoPurchaseKpiRepository(purchases: fixture.twin.purchasing.purchases, now: now),
   );
   final cost = (
     DemoCostKpiRepository(
@@ -277,10 +253,11 @@ List<Override> _kpiOverrides(
     dunningEnabled: () =>
         ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning),
   );
-  T choose<T>(Ref ref, T home, T london, T ny) =>
+  T choose<T>(Ref ref, T home, T london, T ny, T devTwin) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => london,
         demoNewYorkSpaceId => ny,
+        demoTwinSpaceId => devTwin,
         _ => home,
       };
   return [
@@ -289,11 +266,12 @@ List<Override> _kpiOverrides(
         demoSecondSpaceId => customers(ref, fixture.secondSpace.money, 'EUR'),
         demoLondonSpaceId => customers(ref, fixture.london.money, 'GBP'),
         demoNewYorkSpaceId => customers(ref, fixture.newYork.money, 'USD'),
+        demoTwinSpaceId => customers(ref, fixture.twin.money, 'EUR'),
         _ => customers(ref, fixture.money, 'EUR'),
       },
     ),
     purchaseKpiRepositoryProvider.overrideWith(
-      (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3),
+      (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3, purchase.$4),
     ),
     // #3294 step 4 — the item figures over each space's own purchases and
     // the sales of its catalogue items, in its own currency.
@@ -317,6 +295,12 @@ List<Override> _kpiOverrides(
           purchases: home.purchases,
           invoices: () => fixture.secondSpace.money.invoices,
           services: () => fixture.secondSpace.money.services,
+          now: now,
+        ),
+        demoTwinSpaceId => DemoItemKpiRepository(
+          purchases: fixture.twin.purchasing.purchases,
+          invoices: () => fixture.twin.money.invoices,
+          services: () => fixture.twin.money.services,
           now: now,
         ),
         _ => DemoItemKpiRepository(
@@ -343,6 +327,11 @@ List<Override> _kpiOverrides(
           now: now,
           currency: 'USD',
         ),
+        // #3302 — the twin's own (empty) purchases.
+        DemoVendorKpiRepository(
+          purchases: fixture.twin.purchasing.purchases,
+          now: now,
+        ),
       ),
     ),
     costKpiRepositoryProvider.overrideWith(
@@ -351,7 +340,90 @@ List<Override> _kpiOverrides(
         const UnavailableCostKpiRepository(),
         cost.$1,
         cost.$2,
+        const UnavailableCostKpiRepository(),
       ),
     ),
   ];
+}
+
+/// #3294 step 3 — the sales figures of each space, from its own invoices
+/// and the rooms it rents; Leipzig rents none.
+Override _salesOverride(
+  DemoFixture fixture,
+  ({
+    FakeRoomRentalRepository home,
+    FakeRoomRentalRepository london,
+    FakeRoomRentalRepository ny,
+    FakeRoomRentalRepository twin,
+  })
+  rooms,
+) => salesKpiRepositoryProvider.overrideWith((ref) {
+      DemoSalesKpiRepository sales(
+        FakeMoneyRepository money,
+        FakeRoomRentalRepository rooms,
+        FakeReservationRepository bookings,
+        String currency,
+      ) => DemoSalesKpiRepository(
+        invoices: () => money.invoices,
+        rooms: rooms,
+        bookings: () => bookings.reservations,
+        roomsEnabled: () => ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.externalRooms),
+        now: fixture.seededAt,
+        currency: currency,
+      );
+      return switch (ref.watch(currentWorkspaceProvider).value?.id) {
+        demoSecondSpaceId => sales(
+          fixture.secondSpace.money,
+          FakeRoomRentalRepository(),
+          fixture.secondSpace.reservations,
+          'EUR',
+        ),
+        demoLondonSpaceId => sales(
+          fixture.london.money,
+          rooms.london,
+          fixture.london.reservations,
+          'GBP',
+        ),
+        demoNewYorkSpaceId => sales(
+          fixture.newYork.money,
+          rooms.ny,
+          fixture.newYork.reservations,
+          'USD',
+        ),
+        demoTwinSpaceId => sales(
+          fixture.twin.money,
+          rooms.twin,
+          fixture.twin.reservations,
+          'EUR',
+        ),
+        _ => sales(fixture.money, rooms.home, fixture.reservations, 'EUR'),
+      };
+    });
+
+/// #3302 — the twin's books, lease, assets and rentals are its own, and
+/// empty: nothing of production answers for the development side.
+({
+  FakeBookProfileRepository books,
+  FakePremisesLeaseRepository lease,
+  FakeWorkspaceAssetRepository assets,
+  FakeBookPeriodRepository periods,
+  FakeAccountingConnectionRepository accounting,
+  FakeRoomRentalRepository rooms,
+  FakeAssetValuationRepository valuations,
+  FakeLeaseCommitmentRepository commitments,
+})
+_twinStores(DemoFixture fixture) {
+  final twinBookPeriods = FakeBookPeriodRepository(today: fixture.seededAt);
+  return (
+    books: FakeBookProfileRepository(money: fixture.twin.money, purchases: fixture.twin.purchasing.purchases),
+    lease: FakePremisesLeaseRepository(),
+    assets: FakeWorkspaceAssetRepository(),
+    periods: twinBookPeriods,
+    accounting: FakeAccountingConnectionRepository(books: twinBookPeriods, today: fixture.seededAt),
+    rooms: FakeRoomRentalRepository(),
+    valuations: FakeAssetValuationRepository(),
+    commitments: FakeLeaseCommitmentRepository(),
+  );
 }

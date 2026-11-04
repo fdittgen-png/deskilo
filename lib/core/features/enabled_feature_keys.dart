@@ -29,6 +29,9 @@ const String accountingBookKey = 'accountingBook';
 /// exchange rate recorded on it.
 const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';
 
+/// #3294 — the purchase figures; with them a bill names the item it bought.
+const String purchaseAnalyticsKey = 'purchaseAnalytics';
+
 /// The accounting systems the books go to, and the transfers that carried
 /// them.
 const String accountingConnectorsKey = 'accountingConnectors';

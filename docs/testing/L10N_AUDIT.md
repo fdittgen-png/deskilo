@@ -10,10 +10,10 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
-| `lib/core/demo/seed/demo_calendar_seed.dart:41` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_calendar_seed.dart:138` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:154` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_money_seed.dart:147` | title | Coworking · $period | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_money_seed.dart:150` | label | Workspace membership | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_money_seed.dart:156` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
@@ -32,8 +32,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:227` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:243` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:316` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:332` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:317` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:333` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:152` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:160` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |

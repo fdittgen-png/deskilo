@@ -10,6 +10,7 @@
 // Pure Dart.
 library;
 
+import 'bi_modules_purchasing.dart';
 import 'bi_query.dart';
 import 'kpi_contract.dart';
 import 'workspace_feature.dart';
@@ -413,130 +414,11 @@ const biModules = <BiModule>[
     },
     drill: _customerInvoices,
   ),
-  // #3294 step 2 — what the space buys and from whom, how punctually it
-  // pays its suppliers and how late their bills reach it (0673); each
-  // drills to the suppliers or the purchase documents behind it.
-  BiModule(
-    id: 'vendors.spend',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorSuppliers,
-  ),
-  BiModule(
-    id: 'vendors.category_spend',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorPurchases,
-  ),
-  BiModule(
-    id: 'vendors.payment_punctuality',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorPurchases,
-  ),
-  BiModule(
-    id: 'vendors.billing_lag',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorSuppliers,
-  ),
-  // #3294 step 3 — what the space sells, by kind of line and by service,
-  // and the margin each room it rents leaves (0674); each drills to the
-  // invoices of its months.
-  BiModule(
-    id: 'sales.revenue_by_kind',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.workspaceStatus,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _customerInvoices,
-  ),
-  BiModule(
-    id: 'sales.revenue_by_service',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.workspaceStatus,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _customerInvoices,
-  ),
-  BiModule(
-    id: 'sales.room_margin',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.workspaceStatus,
-    alsoRequires: {WorkspaceFeature.externalRooms},
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _customerInvoices,
-  ),
-  // #3294 step 4 — what an item costs from each supplier, the margin each
-  // product leaves and the margin each supplier's prices leave (0675).
-  BiModule(
-    id: 'items.unit_prices',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorPurchases,
-  ),
-  BiModule(
-    id: 'items.product_margin',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _customerInvoices,
-  ),
-  BiModule(
-    id: 'items.vendor_margin',
-    area: BiArea.finance,
-    feature: WorkspaceFeature.purchaseAnalytics,
-    permissions: {
-      WorkspacePermission.viewAnalytics,
-      WorkspacePermission.viewFinances,
-    },
-    drill: _vendorSuppliers,
-  ),
+  // #3294 steps 2-4 — the vendor, sales and item figures (bi_modules_purchasing.dart).
+  ...purchasingBiModules,
 ];
 
-/// #3294 step 2 — the suppliers behind a vendor figure.
-const _vendorSuppliers = BiDrill(
-  route: '/money/suppliers',
-  permission: WorkspacePermission.viewFinances,
-);
-
-/// #3294 step 2 — the purchase documents behind a vendor figure.
-const _vendorPurchases = BiDrill(
-  route: '/money/purchases',
-  permission: WorkspacePermission.viewFinances,
-);
-
-/// #3294 — the invoices behind a customer or sales figure, for its months.
+/// #3294 — the invoices behind a customer figure, for its months.
 const _customerInvoices = BiDrill(
   route: '/invoice-register',
   permission: WorkspacePermission.viewFinances,

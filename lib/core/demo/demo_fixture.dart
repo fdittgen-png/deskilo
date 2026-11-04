@@ -21,9 +21,11 @@ import 'data/book_profile_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/deployment_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
@@ -44,6 +46,7 @@ import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
+import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
@@ -112,6 +115,7 @@ class DemoFixture {
     required this.secondSpace,
     required this.london,
     required this.newYork,
+    required this.twin,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -130,7 +134,11 @@ class DemoFixture {
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
     final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId);
-    final events = FakeEventRepository(actor: () => actor.memberId);
+    final events = FakeEventRepository(
+      actor: () => actor.memberId,
+      clock: () => today,
+      decider: () => workspaces.memberOf(actor.memberId),
+    );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
@@ -150,6 +158,7 @@ class DemoFixture {
     final roles = FakeWorkspaceRoles();
     seedDemoFields(fields);
     seedDemoRoles(roles);
+    events.viewerPermissions = demoViewerPermissions(workspaces, roles, 'ws-1', () => actor.memberId);
     final accessories = FakeAccessoryRepository();
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
@@ -182,6 +191,8 @@ class DemoFixture {
     seedDemoVatDeclarations(money, today);
     seedDemoCalendar(calendar,
         reservations: reservations, money: money, events: events);
+    wireDecisionEffects(events,
+        reservations: reservations, workspaces: workspaces, money: money, now: () => today);
     // #2327 — the processes that reach beyond the space: its twin, the
     // directory, guest visits, message requests, saved analyses.
     final deployments = FakeDeploymentRepository(
@@ -197,9 +208,12 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
+      ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
+      ..kioskMemberId = demoCast[1].memberId // #3293: their own booking is no conflict
       ..kioskName = demoCast[1].name;
     final problems = [
       ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
@@ -237,7 +251,11 @@ class DemoFixture {
       directory: directory,
       guests: demoGuestVisits(today),
       messenger: withDemoGroup(
-        demoMessenger(today, actingMember: () => actor.memberId),
+        demoMessenger(
+          today,
+          actingMember: () => actor.memberId,
+          actingName: () => workspaces.memberNames[actor.memberId] ?? '',
+        ),
         today,
       ),
       biViews: demoBiViews(),
@@ -254,6 +272,7 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
+      twin: twin,
     );
   }
 
@@ -311,6 +330,9 @@ class DemoFixture {
   final DemoLondonData london;
   final DemoNewYorkData newYork;
 
+  /// #3302 — the main space's development twin, with stores of its own.
+  final DemoTwinData twin;
+
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
 
@@ -331,9 +353,14 @@ class DemoFixture {
   void becomePersona(DemoPersona persona) {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
+    // #3293 — a self-assignment is refused for whoever the persona is.
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, twin.roles]) {
+      r.callerMemberId = persona.memberId;
+    }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);
+    twin.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).

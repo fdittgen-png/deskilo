@@ -14,12 +14,11 @@ import 'demo_inbox_pages.dart';
 /// notice in the source and a `forwarded` event on it; a locked message
 /// refuses; a capture leaves a notice. #2556: [DemoInboxPages] pages it.
 class FakeMessengerRepository with DemoInboxPages implements MessengerRepository {
-  FakeMessengerRepository({DateTime? now, this.me = 'Me'})
-    : now = now ?? DateTime.utc(2026, 7, 15, 9);
+  FakeMessengerRepository({DateTime? now, String me = 'Me', String Function()? actingName})
+    : now = now ?? DateTime.utc(2026, 7, 15, 9), _me = actingName ?? (() => me);
   final DateTime now;
-
-  /// The name the fake signs the actor's notices with.
-  final String me;
+  final String Function() _me;
+  String get me => _me(); // #3293: messages are signed with the persona's name
 
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
@@ -42,7 +41,7 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
     groups[id] = AccountGroupInfo(
         id: id, title: title, memberCount: users.length + 1, iAmAdmin: true);
     groupRoster[id] = [
-      const GroupMember(userId: 'me', name: 'Me', isAdmin: true),
+      GroupMember(userId: 'me', name: me, isAdmin: true),
       for (final u in users) GroupMember(userId: u, name: u),
     ];
     groupLog.add('create:$title');

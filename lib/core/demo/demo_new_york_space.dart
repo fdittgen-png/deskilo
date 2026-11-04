@@ -9,7 +9,9 @@ import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/city_floor_plan_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -79,7 +81,12 @@ class DemoNewYorkData {
       ],
       partTimeMembers: const {},
     ));
-    final events = FakeEventRepository(actor: actor, workspaceId: demoNewYorkSpaceId);
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoNewYorkSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedCityDecisions(events, 'ny', now);
     final money = FakeMoneyRepository(events: events);
     seedCityExpenses(money, demoNewYorkSpaceId, 'ny', now);
@@ -101,7 +108,9 @@ class DemoNewYorkData {
       reservations: reservations,
       money: money,
       events: events,
+      currency: 'USD',
     );
+    wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
     final city = DemoNewYorkData._(
       workspaces: space,
       floorPlan: plan,
@@ -116,6 +125,7 @@ class DemoNewYorkData {
     ));
     city.accessories.seedSmallCatalog(workspaceId: demoNewYorkSpaceId);
     seedCityCharger(city.chargingStations, 'ny');
+    events.viewerPermissions = demoViewerPermissions(space, city.roles, demoNewYorkSpaceId, actor);
     return city;
   }
 

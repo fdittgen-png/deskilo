@@ -290,6 +290,10 @@ void seedDemoConversations(FakeWorkspaceRepository workspaces, DateTime now) {
   workspaces.conversationMessages
     ..['demo-conv-bruno'] = direct
     ..['demo-conv-studio'] = group;
+  workspaces.participants['demo-conv-bruno'] = const [
+    ConversationParticipant(memberId: 'member-1', isAdmin: false),
+    ConversationParticipant(memberId: 'member-2', isAdmin: false),
+  ];
   workspaces.participants['demo-conv-studio'] = const [
     ConversationParticipant(memberId: 'member-1', isAdmin: true),
     ConversationParticipant(memberId: 'member-2', isAdmin: false),

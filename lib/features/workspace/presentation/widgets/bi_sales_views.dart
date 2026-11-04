@@ -19,7 +19,7 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
 ];
 
 /// The name of a kind of invoice line.
-String? salesKindName(String kind, AppLocalizations l10n) => switch (kind) {
+String? _salesKindName(String kind, AppLocalizations l10n) => switch (kind) {
   'subscription' => l10n.biSalesKindSubscription,
   'overage' => l10n.biSalesKindOverage,
   'accessories' => l10n.biSalesKindAccessories,
@@ -49,7 +49,7 @@ final salesModuleViews = <String, BiModuleView>{
           },
     notes: (m, l10n, locale) => _notes(m, l10n),
     details: (m, l10n, locale) => [l10n.biSalesKindDefinition],
-    rowLabel: (row, l10n, locale) => salesKindName(row.key, l10n),
+    rowLabel: (row, l10n, locale) => _salesKindName(row.key, l10n),
   ),
   'sales.revenue_by_service': BiModuleView(
     title: (l10n) => l10n.biSalesServiceTitle,

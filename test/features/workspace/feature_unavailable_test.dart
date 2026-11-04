@@ -43,4 +43,43 @@ void main() {
     await tester.pumpWidget(_list(null));
     expect(find.textContaining('Available in'), findsNothing);
   });
+
+  // #3300 — a switch the country does not offer is not offered for
+  // activation; a stored ON keeps its value and can still be turned off.
+  Widget mtd(String country, {required bool storedOn}) => MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: Scaffold(
+      body: FeatureCapabilityList(
+        rows: [featureManifest[WorkspaceFeature.mtdSubmission]!],
+        raw: {
+          WorkspaceFeature.vatDeclarations,
+          if (storedOn) WorkspaceFeature.mtdSubmission,
+        },
+        country: country,
+        showHint: false,
+        onChanged: (_, {required value}) {},
+      ),
+    ),
+  );
+  SwitchListTile mtdTile(WidgetTester tester) => tester.widget<SwitchListTile>(
+    find.byKey(const ValueKey('feature-mtdSubmission')),
+  );
+
+  for (final country in ['FR', 'DE', 'US']) {
+    testWidgets('MTD submission cannot be switched on in $country', (tester) async {
+      await tester.pumpWidget(mtd(country, storedOn: false));
+      expect(mtdTile(tester).onChanged, isNull);
+      expect(find.textContaining('Available in'), findsOneWidget);
+      await tester.pumpWidget(mtd(country, storedOn: true));
+      expect(mtdTile(tester).value, isTrue, reason: 'the stored value is kept');
+      expect(mtdTile(tester).onChanged, isNotNull, reason: 'and can be turned off');
+    });
+  }
+
+  testWidgets('in the United Kingdom MTD submission is offered', (tester) async {
+    await tester.pumpWidget(mtd('GB', storedOn: false));
+    expect(mtdTile(tester).onChanged, isNotNull);
+    expect(find.textContaining('Available in'), findsNothing);
+  });
 }

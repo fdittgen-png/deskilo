@@ -14,8 +14,10 @@ import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/city_floor_plan_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/demo_hmrc_repository.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -92,7 +94,12 @@ class DemoLondonData {
       },
       siteRentals: siteRentals,
     ));
-    final events = FakeEventRepository(actor: actor, workspaceId: demoLondonSpaceId);
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoLondonSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedCityDecisions(events, 'uk', now);
     final money = FakeMoneyRepository(events: events);
     seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
@@ -126,7 +133,9 @@ class DemoLondonData {
       reservations: reservations,
       money: money,
       events: events,
+      currency: 'GBP',
     );
+    wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
     final city = DemoLondonData._(
       workspaces: space,
       floorPlan: plan,
@@ -148,6 +157,7 @@ class DemoLondonData {
     ));
     city.accessories.seedSmallCatalog(workspaceId: demoLondonSpaceId);
     seedCityCharger(city.chargingStations, 'uk');
+    events.viewerPermissions = demoViewerPermissions(space, city.roles, demoLondonSpaceId, actor);
     return city;
   }
 

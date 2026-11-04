@@ -174,18 +174,9 @@ void _siteBills(
               description: title,
               grossCents: cents,
               costSiteId: siteId,
-              // #3294 step 4 — the restocks name the catalogue item they
-              // buy (the city catalogue's snacks and bottled water).
-              serviceId: switch (kind) {
-                'stock' => '$prefix-service-3',
-                'drinks' => '$prefix-service-2',
-                _ => null,
-              },
-              quantity: switch (kind) {
-                'stock' => 50,
-                'drinks' => 40,
-                _ => 1,
-              },
+              // #3294 step 4 — the restocks name the catalogue item they buy.
+              serviceId: _restock(prefix, kind)?.item,
+              quantity: _restock(prefix, kind)?.quantity ?? 1,
               recognitionKind: kind == 'equipment'
                   ? 'asset'
                   : kind == 'stock'
@@ -274,3 +265,13 @@ void _pendingBill(DateTime now, String prefix, String currency,
     lines: const [PurchaseLine(lineNo: 1, description: 'Snacks and drinks', grossCents: 6400)],
   ));
 }
+
+/// #3294 step 4 — what a restock bill of [kind] buys from the city
+/// catalogue (its snacks and bottled water), and how many; null for a bill
+/// that buys no catalogue item.
+({String item, double quantity})? _restock(String prefix, String kind) =>
+    switch (kind) {
+      'stock' => (item: '$prefix-service-3', quantity: 50),
+      'drinks' => (item: '$prefix-service-2', quantity: 40),
+      _ => null,
+    };

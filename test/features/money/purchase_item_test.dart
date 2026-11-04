@@ -5,14 +5,13 @@
 // without a quantity above zero, sent to the server with the line, and
 // absent while the figures are off.
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
+import 'package:deskilo/core/features/enabled_feature_keys.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,9 +32,9 @@ Widget _app(FakePurchaseRepository repo, {required bool figures}) => _scope([
   memberLabelsProvider.overrideWithValue({}),
   spaceCurrencyProvider.overrideWithValue('EUR'),
   servicesProvider.overrideWith((ref) async => const [_coffee]),
-  enabledFeaturesSyncProvider.overrideWithValue({
-    if (figures) WorkspaceFeature.purchaseAnalytics,
-  }),
+  enabledFeatureKeysProvider.overrideWithValue({
+        if (figures) purchaseAnalyticsKey,
+      }),
 ]);
 
 Widget _scope(List<Override> overrides) => ProviderScope(
