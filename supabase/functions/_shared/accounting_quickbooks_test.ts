@@ -84,6 +84,7 @@ function realm(opts: {
   rates?: Record<string, number>;
   oneTaxLine?: boolean;
   book?: (code: string, net: number) => { id: string; amount: number }[];
+  codes?: Row[];
   noPercent?: boolean;
 } = {}) {
   const rates = opts.rates ?? QC_RATES;
@@ -102,6 +103,7 @@ function realm(opts: {
         },
       },
       { Id: "TC-GST", Name: "GST", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "GST" }, TaxOrder: 0 }] } },
+      ...(opts.codes ?? []),
     ],
     TaxRate: Object.entries(rates).map(([id, value]) => ({ Id: id, RateValue: value })),
   };
@@ -560,5 +562,56 @@ Deno.test("#2371 the frozen breakdown is read from vat_totals: entries with thei
   assertEquals(taxBreakdownOf(null), null);
   assertEquals(taxBreakdownOf(undefined), null);
   assertEquals(taxBreakdownOf([{ percent: 5 }]), null);
+});
+
+Deno.test("#2371 two rate groups with the same net and tax but other structures are told apart by their codes, in any order", async () => {
+  // Both groups: 100.00 net, 15.00 tax. "single" is mapped to a 15 % code,
+  // "split" to a code of 5 % + 10 %; the frozen entries come split first.
+  const rates = { R15: 15, R5: 5, R10: 10 };
+  const q = realm({
+    rates,
+    codes: [
+      { Id: "TC-15", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "R15" }, TaxOrder: 0 }] } },
+      {
+        Id: "TC-5-10",
+        SalesTaxRateList: {
+          TaxRateDetail: [{ TaxRateRef: { value: "R5" }, TaxOrder: 0 }, { TaxRateRef: { value: "R10" }, TaxOrder: 1 }],
+        },
+      },
+    ],
+  });
+  const twins: Posting = {
+    ...year[0],
+    documentNumber: "F-2026-0015",
+    lines: [
+      line("customers", null, 23000, 0),
+      line("revenue", "single", 0, 10000),
+      line("revenue", "split", 0, 10000),
+      line("vat_output", "single", 0, 1500),
+      line("vat_output", "split", 0, 1500),
+    ],
+    taxBreakdown: [
+      {
+        percent: 15,
+        netCents: 10000,
+        taxCents: 1500,
+        components: [{ percent: 5, baseCents: 10000, taxCents: 500 }, { percent: 10, baseCents: 10000, taxCents: 1000 }],
+      },
+      single(15, 10000, 1500),
+    ],
+  };
+  const twinMaps = [
+    ...maps,
+    { kind: "item" as const, key: "revenue:single", remoteId: "IT-4", remoteCode: "" },
+    { kind: "item" as const, key: "revenue:split", remoteId: "IT-5", remoteCode: "" },
+    { kind: "item" as const, key: "vat_output:single", remoteId: "TC-15", remoteCode: "" },
+    { kind: "item" as const, key: "vat_output:split", remoteId: "TC-5-10", remoteCode: "" },
+  ];
+  const log = new Log();
+  assertEquals((await run(q, log, [twins], "quickbooks_online_ca", twinMaps)).statuses, ["acknowledged"]);
+  // And the same, the entries in the other order.
+  const q2 = realm({ rates, codes: (q.held.TaxCode as Row[]).filter((c) => String(c.Id).startsWith("TC-1") || String(c.Id).startsWith("TC-5")) });
+  const flipped = { ...twins, documentNumber: "F-2026-0016", taxBreakdown: [...twins.taxBreakdown!].reverse() };
+  assertEquals((await run(q2, new Log(), [flipped], "quickbooks_online_ca", twinMaps)).statuses, ["acknowledged"]);
 });
 

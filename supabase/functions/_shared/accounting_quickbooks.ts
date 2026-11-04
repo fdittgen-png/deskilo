@@ -56,6 +56,7 @@ import {
   type PostingLine,
   type PostingParty,
   roleKey,
+  type TaxEntry,
 } from "./accounting_postings.ts";
 import { exponentOf, toMajor, toMinor } from "./money.ts";
 
@@ -351,29 +352,22 @@ async function taxLineDifferences(
   if (!p.taxBreakdown) return ["the tax split is unverified: the document's frozen breakdown was not read"];
   const differences: string[] = [];
   const unverified = (why: string) => differences.push(`the tax split is unverified: ${why}`);
-  const expected = new Map<string, { amount: number; base: number }>();
-  const ratesOf = new Map<string, { id: string; percent: string | null }[]>();
   const values = new Map<string, string | null>();
   const taxed = [...taxedGroups(p)].map((group) => ({
     group,
+    name: group ?? "the base rate",
+    code: mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: group })),
     net: revenueLines(p).filter((l) => l.qualifier === group).reduce((s, l) => s + amountOf(l), 0),
     tax: p.lines
       .filter((l) => (l.role === ROLE.vatOutput || l.role === ROLE.vatPending) && l.qualifier === group)
       .reduce((s, l) => s + amountOf(l), 0),
-    claimed: false,
+    rates: [] as { id: string; percent: string | null }[],
   }));
-  for (const entry of p.taxBreakdown.filter((e) => e.taxCents !== 0)) {
-    const groups = taxed.filter((g) => !g.claimed && g.net === entry.netCents && g.tax === entry.taxCents);
-    if (groups.length === 0) {
-      unverified(`no rate group of the document carries ${toMajor(entry.taxCents, p.currency)} at ${entry.percent} %`);
-      continue;
-    }
-    const g = groups[0];
-    g.claimed = true;
-    const name = g.group ?? "the base rate";
-    const code = mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: g.group }));
-    if (!ratesOf.has(code)) {
-      const codes = await query(fetchImpl, cfg, "TaxCode", `Id = ${quoted(code)}`);
+  // Every taxed group's mapped code, with its rates and their values.
+  const ratesOf = new Map<string, { id: string; percent: string | null }[]>();
+  for (const g of taxed) {
+    if (!ratesOf.has(g.code)) {
+      const codes = await query(fetchImpl, cfg, "TaxCode", `Id = ${quoted(g.code)}`);
       if (typeof codes === "string") return codes;
       const list = (codes[0]?.SalesTaxRateList as Record<string, unknown> | undefined)?.TaxRateDetail;
       const rates: { id: string; percent: string | null }[] = [];
@@ -387,26 +381,92 @@ async function taxLineDifferences(
         }
         rates.push({ id, percent: values.get(id) ?? null });
       }
-      ratesOf.set(code, rates);
+      ratesOf.set(g.code, rates);
     }
-    const rates = ratesOf.get(code)!;
-    for (const c of entry.components) {
-      const candidates = rates.filter((r) => r.percent === percentKey(c.percent));
-      if (candidates.length !== 1) {
-        unverified(
-          candidates.length === 0
-            ? `the tax code ${code} of ${name} has no rate at ${c.percent} %`
-            : `the tax code ${code} of ${name} has several rates at ${c.percent} %`,
-        );
-        continue;
-      }
-      const id = candidates[0].id;
-      const was = expected.get(id) ?? { amount: 0, base: 0 };
-      expected.set(id, { amount: was.amount + c.taxCents, base: was.base + c.baseCents });
-    }
+    g.rates = ratesOf.get(g.code)!;
   }
-  for (const g of taxed.filter((g) => !g.claimed)) {
-    unverified(`the frozen breakdown does not explain the tax of ${g.group ?? "the base rate"}`);
+  // How [entry] lands on [g]'s code: one distinct rate per component, the
+  // code's rates all used; null when it does not fit.
+  const fit = (entry: TaxEntry, g: (typeof taxed)[number]): string[] | null => {
+    if (g.net !== entry.netCents || g.tax !== entry.taxCents) return null;
+    if (entry.components.length !== g.rates.length) return null;
+    const used = new Set<string>();
+    const ids: string[] = [];
+    for (const c of entry.components) {
+      const candidates = g.rates.filter((r) => r.percent === percentKey(c.percent) && !used.has(r.id));
+      if (candidates.length !== 1) return null;
+      used.add(candidates[0].id);
+      ids.push(candidates[0].id);
+    }
+    return ids;
+  };
+  const entries = p.taxBreakdown.filter((e) => e.taxCents !== 0);
+  // Every way to give each entry its own group whose code fits it: entries
+  // with the same net and tax but another structure (15 % against 5 % +
+  // 10 %) are told apart by their codes, whatever their order.
+  const assignments: number[][] = [];
+  const walk = (i: number, taken: Set<number>, chosen: number[]) => {
+    if (assignments.length > 1) return;
+    if (i === entries.length) {
+      assignments.push([...chosen]);
+      return;
+    }
+    taxed.forEach((g, gi) => {
+      if (!taken.has(gi) && fit(entries[i], g)) {
+        taken.add(gi);
+        chosen.push(gi);
+        walk(i + 1, taken, chosen);
+        chosen.pop();
+        taken.delete(gi);
+      }
+    });
+  };
+  walk(0, new Set(), []);
+  const expectedOf = (assignment: number[]) => {
+    const out = new Map<string, { amount: number; base: number }>();
+    assignment.forEach((gi, i) => {
+      const ids = fit(entries[i], taxed[gi])!;
+      entries[i].components.forEach((c, k) => {
+        const was = out.get(ids[k]) ?? { amount: 0, base: 0 };
+        out.set(ids[k], { amount: was.amount + c.taxCents, base: was.base + c.baseCents });
+      });
+    });
+    return out;
+  };
+  const same = (x: Map<string, { amount: number; base: number }>, y: Map<string, { amount: number; base: number }>) =>
+    x.size === y.size && [...x].every(([k, v]) => y.get(k)?.amount === v.amount && y.get(k)?.base === v.base);
+  // Why no assignment exists, in the terms a bookkeeper can act on.
+  const diagnose = () => {
+    for (const entry of entries) {
+      const carriers = taxed.filter((g) => g.net === entry.netCents && g.tax === entry.taxCents);
+      if (carriers.length === 0) {
+        unverified(`no rate group of the document carries ${toMajor(entry.taxCents, p.currency)} at ${entry.percent} %`);
+      } else if (!carriers.some((g) => fit(entry, g))) {
+        const g = carriers[0];
+        const missing = entry.components.find((c) => !g.rates.some((r) => r.percent === percentKey(c.percent)));
+        unverified(
+          missing
+            ? `the tax code ${g.code} of ${g.name} has no rate at ${missing.percent} %`
+            : `the tax code ${g.code} of ${g.name} does not have the rates of the frozen ${entry.percent} %`,
+        );
+      }
+    }
+    for (const g of taxed) {
+      if (!entries.some((entry) => fit(entry, g))) {
+        if (!entries.some((entry) => g.net === entry.netCents && g.tax === entry.taxCents)) {
+          unverified(`the frozen breakdown does not explain the tax of ${g.name}`);
+        }
+      }
+    }
+  };
+  let expected = new Map<string, { amount: number; base: number }>();
+  if (entries.length !== taxed.length || assignments.length === 0) {
+    diagnose();
+    if (!differences.length) unverified("no mapped tax code fits the frozen breakdown of every rate group");
+  } else if (assignments.length > 1 && !same(expectedOf(assignments[0]), expectedOf(assignments[1]))) {
+    unverified("the frozen breakdown fits the rate groups' codes in more than one way");
+  } else {
+    expected = expectedOf(assignments[0]);
   }
   const booked = new Map<string, { amount: number; base: number }>();
   const detail = row.TxnTaxDetail as Record<string, unknown> | undefined;
