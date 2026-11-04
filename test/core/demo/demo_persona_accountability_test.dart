@@ -516,6 +516,94 @@ void main() {
       expect(await brunoReads(), isFalse, reason: 'customRoles is off');
     });
 
+    test(
+      'a privacy incident is read with managePrivacy held now, and by '
+      'nobody else: not its former holder, a validator or its actor',
+      () async {
+        final fixture = _as(DemoPersona.owner);
+        WorkspaceEvent incident(String id, String actor) => WorkspaceEvent(
+          id: id,
+          workspaceId: 'ws-1',
+          type: EventType.privacyIncident,
+          action: EventAction.created,
+          actorMemberId: actor,
+          subjectMemberId: actor,
+          payload: const {'kind': 'lost_device', 'note': 'demo'},
+          status: EventStatus.applied,
+          createdAt: fixture.seededAt,
+        );
+        fixture.events.events.addAll([
+          incident('demo-incident-bruno', _bruno),
+          incident('demo-incident-chiara', _chiara),
+        ]);
+        // Every member validates incidents under this rule: still no read.
+        fixture.events.policies.add(
+          const ValidationPolicy(
+            workspaceId: 'ws-1',
+            eventType: 'privacy_incident',
+            requiredCount: 1,
+            adminsMayValidate: true,
+            eligibleAdminIds: [],
+            ownerRequired: false,
+            validatorScope: 'members',
+          ),
+        );
+        Future<Set<String>> incidents() async => {
+          for (final e in await fixture.events.fetchEvents('ws-1'))
+            if (e.type == EventType.privacyIncident) e.id,
+        };
+        expect(await incidents(), {
+          'demo-incident-bruno',
+          'demo-incident-chiara',
+        }, reason: 'the owner holds managePrivacy');
+
+        fixture.roles.roles.add(
+          const WorkspaceRole(
+            id: 'demo-role-privacy',
+            key: 'privacy_holder',
+            names: {'en': 'Privacy'},
+            permissions: {WorkspacePermission.managePrivacy},
+          ),
+        );
+        await fixture.roles.assignRole(
+          memberId: _bruno,
+          roleId: 'demo-role-privacy',
+          assign: true,
+        );
+        fixture.becomePersona(DemoPersona.member);
+        expect(
+          await incidents(),
+          contains('demo-incident-bruno'),
+          reason: 'a current holder through a custom role',
+        );
+
+        fixture.becomePersona(DemoPersona.owner);
+        await fixture.roles.assignRole(
+          memberId: _bruno,
+          roleId: 'demo-role-privacy',
+          assign: false,
+        );
+        fixture.becomePersona(DemoPersona.member);
+        expect(
+          await incidents(),
+          isEmpty,
+          reason: 'a former holder, though actor, subject and validator',
+        );
+        expect(await fixture.events.fetchEvent('demo-incident-bruno'), isNull);
+
+        fixture.becomePersona(DemoPersona.admin);
+        expect(
+          await incidents(),
+          isEmpty,
+          reason: 'an administrator without the right, its own actor',
+        );
+        expect(
+          await fixture.events.fetchDecisions('ws-1', ['demo-incident-chiara']),
+          isEmpty,
+        );
+      },
+    );
+
     test('a decision of a Leipzig request is read by Leipzig\'s members '
         'only, and only in Leipzig', () async {
       final fixture = _as(DemoPersona.owner);

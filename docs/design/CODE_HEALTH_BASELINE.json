@@ -1,5 +1,5 @@
 {
-  "recordedSha": "1eb38d78eac267ffdc2d9f85cf7ed2dd9d8fe948",
+  "recordedSha": "a3cc67b9878d548798f2a99f4b5c782aceac40f6",
   "recordedDate": "2026-11-04",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2381,"functions":13588,"cyclomatic>=9":1363,"cyclomatic>=25":75,"cognitive>=15":520,"cognitive>=30":69,"length>=150":47,"parameters>=5":611,"parameters>=7":149,"partOfFiles":17},
@@ -840,7 +840,7 @@
     {"p":"lib/core/demo/data/deployment_repository.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":6,"len":19,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/device_prefs.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/einvoice_inbox_repository.dart","loc":51,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":2,"len":20,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/data/event_repository.dart","loc":259,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":10,"cyc":11,"len":54,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/data/event_repository.dart","loc":263,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":10,"cyc":12,"len":54,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/event_visibility.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":17,"len":41,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/finance_kpi_repository.dart","loc":171,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":26,"cyc":25,"len":74,"params":5,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/core/demo/data/fixture_clock.dart","loc":4,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

@@ -76,14 +76,21 @@ class FakeEventRepository implements EventRepository {
 
   /// #3293 — events_select (0216): a type the member's permissions read
   /// in this space ([eventTypeViewPermissions]), their own event as its
-  /// actor or subject, or a validator its rule names. Somebody who is not
-  /// an active member of the space reads none of it.
+  /// actor or subject, or a validator its rule names; a privacy incident
+  /// only with managePrivacy held now (0667). Somebody who is not an
+  /// active member of the space reads none of it.
   bool _mayRead(WorkspaceEvent e) {
     if (decider == null) return true;
     final me = decider!();
     if (me == null || me.status != MemberStatus.active) return false;
-    if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
     final held = viewerPermissions?.call() ?? const {};
+    // 0667 — RESTRICTIVE: a privacy incident is read with managePrivacy
+    // held now, whoever recorded it or is asked to validate it.
+    if (e.type == EventType.privacyIncident &&
+        !held.contains(WorkspacePermission.managePrivacy)) {
+      return false;
+    }
+    if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
     if (eventTypeViewPermissions(e.type.dbName).any(held.contains)) return true;
     final policy = policyFor(e.type.dbName, policies);
     return policy.validatorScope == 'members' ||
