@@ -53,9 +53,33 @@ class Log implements DeliveryStore {
 
 type Row = Record<string, unknown>;
 
-/** A QuickBooks company keeping what it is sent. */
-function realm(opts: { country?: string; customNumbers?: boolean; taxDelta?: number } = {}) {
-  const held: Record<string, Row[]> = { Invoice: [], CreditMemo: [], Payment: [], JournalEntry: [], Customer: [] };
+/** The Quebec code: GST 5 % and QST 9.975 %, two rates (#2371). */
+const QC_RATES: Record<string, number> = { GST: 5, QST: 9.975 };
+
+/** A QuickBooks company keeping what it is sent. It books a sale's tax as
+ * QuickBooks does: one `TaxLine` per rate of each line's code, on the
+ * line's net; [rates] misconfigures them, [oneTaxLine] collapses a code's
+ * rates into one line. */
+function realm(opts: {
+  country?: string;
+  customNumbers?: boolean;
+  taxDelta?: number;
+  rates?: Record<string, number>;
+  oneTaxLine?: boolean;
+} = {}) {
+  const rates = opts.rates ?? QC_RATES;
+  const held: Record<string, Row[]> = {
+    Invoice: [],
+    CreditMemo: [],
+    Payment: [],
+    JournalEntry: [],
+    Customer: [],
+    TaxCode: [{
+      Id: "TC-QC",
+      Name: "GST/QST QC",
+      SalesTaxRateList: { TaxRateDetail: Object.keys(QC_RATES).map((r) => ({ TaxRateRef: { value: r } })) },
+    }],
+  };
   const urls: string[] = [];
   const st = { posts: 0, loseNextAnswer: false };
   let next = 100;
@@ -79,7 +103,34 @@ function realm(opts: { country?: string; customNumbers?: boolean; taxDelta?: num
       if (entity === "Invoice" || entity === "CreditMemo") {
         const lines = (body.Line as Row[]).reduce((s, l) => s + Number(l.Amount), 0);
         const tax = Number((body.TxnTaxDetail as Row).TotalTax) + (opts.taxDelta ?? 0);
-        row.TxnTaxDetail = { ...(body.TxnTaxDetail as Row), TotalTax: tax };
+        // The tax lines of each code, on the net its lines carry.
+        const nets = new Map<string, number>();
+        for (const l of body.Line as Row[]) {
+          const code = String(((l.SalesItemLineDetail as Row).TaxCodeRef as Row).value);
+          nets.set(code, (nets.get(code) ?? 0) + Number(l.Amount));
+        }
+        const taxLines: Row[] = [];
+        for (const [code, net] of nets) {
+          const c = held.TaxCode.find((t) => t.Id === code);
+          if (!c) continue;
+          const ids = ((c.SalesTaxRateList as Row).TaxRateDetail as Row[]).map((d) => String((d.TaxRateRef as Row).value));
+          const split = ids.map((id) => ({ id, amount: Math.round(net * (rates[id] ?? 0)) / 100 }));
+          const booked = opts.oneTaxLine
+            ? [{ id: ids[0], amount: Math.round(split.reduce((x, t) => x + t.amount, 0) * 100) / 100 }]
+            : split;
+          for (const t of booked) {
+            taxLines.push({
+              Amount: t.amount,
+              DetailType: "TaxLineDetail",
+              TaxLineDetail: { TaxRateRef: { value: t.id }, PercentBased: true, NetAmountTaxable: net },
+            });
+          }
+        }
+        row.TxnTaxDetail = {
+          ...(body.TxnTaxDetail as Row),
+          TotalTax: tax,
+          ...(taxLines.length > 0 ? { TaxLine: taxLines } : {}),
+        };
         row.TotalAmt = Math.round((lines + tax) * 100) / 100;
       }
       held[entity].push(row);
@@ -123,10 +174,11 @@ const year: Posting[] = [
     line("vat_output", "standard", 0, 1498),
   ]),
   posting("receipt", INV, "F-2026-0001", "2026-02-10", [line("bank", null, 10000, 0), line("customers", null, 0, 10000)]),
+  // 20.00 at 14.975 %: 2.995, half up 3.00 = GST 1.00 + QST 2.00 (#2371).
   posting("credit_note", CRN, "A-2026-0001", "2026-02-14", [
-    line("customers", null, 0, 2299),
+    line("customers", null, 0, 2300),
     line("revenue", "standard", 2000, 0),
-    line("vat_output", "standard", 299, 0),
+    line("vat_output", "standard", 300, 0),
   ]),
   posting("write_off", INV, "F-2026-0001", "2026-03-31", [line("write_off", null, 1498, 0), line("customers", null, 0, 1498)]),
 ];
@@ -318,3 +370,35 @@ Deno.test("a customer is found again by the member number kept in its notes", as
   assertEquals((q.held.Invoice[0].CustomerRef as Record<string, string>).value, "C-9");
   assertEquals(q.held.Customer.length, 1);
 });
+
+Deno.test("#2371 a GST+QST code books two tax lines, one per rate, on the group's net, together the document's tax", async () => {
+  const q = realm();
+  assertEquals((await run(q, new Log(), [year[0]])).statuses, ["acknowledged"]);
+  const lines = ((q.held.Invoice[0].TxnTaxDetail as Row).TaxLine as Row[]).map((t) => [
+    ((t.TaxLineDetail as Row).TaxRateRef as Row).value,
+    t.Amount,
+    (t.TaxLineDetail as Row).NetAmountTaxable,
+  ]);
+  // 100.00 at 5 % and at 9.975 %: 5.00 + 9.98 = 14.98, the document's tax.
+  assertEquals(lines, [["GST", 5, 100], ["QST", 9.98, 100]]);
+});
+
+Deno.test("#2371 a realm that splits the document's tax with another QST rate is a conflict, though its total tax agrees", async () => {
+  // QuickBooks keeps the TotalTax sent (14.98) but books QST at 9.5 %:
+  // 5.00 + 9.50 = 14.50 on the code.
+  const q = realm({ rates: { GST: 5, QST: 9.5 } });
+  const log = new Log();
+  assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks tax 14.50 for standard, the document 14.98"), row.error);
+  assertEquals((q.held.Invoice[0].TxnTaxDetail as Row).TotalTax, 14.98);
+});
+
+Deno.test("#2371 a GST+QST code read back with one tax line is a conflict", async () => {
+  const q = realm({ oneTaxLine: true });
+  const log = new Log();
+  assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks booked 1 tax lines for standard, its code has 2 rates"), row.error);
+});
+

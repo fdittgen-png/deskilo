@@ -278,8 +278,15 @@ export async function checkRealm(fetchImpl: typeof fetch, cfg: Cfg, countries: s
   return sales?.CustomTxnNumbers === true ? null : CUSTOM_NUMBERS_OFF;
 }
 
-/** What the readback of [row] says of [p], [ours] when it carries [key]. */
-function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expected?: { total: number; tax?: number }): RemoteDocument {
+/** What the readback of [row] says of [p], [ours] when it carries [key];
+ * [taxLines] are the differences of its tax lines (taxLineDifferences). */
+function remoteOf(
+  row: Record<string, unknown>,
+  p: Posting,
+  key: string,
+  expected?: { total: number; tax?: number },
+  taxLines: string[] = [],
+): RemoteDocument {
   const ours = row.PrivateNote === `${NOTE_PREFIX}${key}`;
   const sync = String(row.SyncToken ?? "");
   const differences: string[] = [];
@@ -296,6 +303,7 @@ function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expecte
       }
     }
   }
+  differences.push(...taxLines);
   return {
     id: String(row.Id ?? ""),
     number: String(row.DocNumber ?? row.PaymentRefNum ?? ""),
@@ -304,6 +312,82 @@ function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expecte
     matches: differences.length === 0,
     difference: differences.length > 0 ? differences.join("; ") : undefined,
   };
+}
+
+/** #2371 — what the tax lines QuickBooks booked for a sale [row] say of
+ * [p], in a CA or GB realm (a US invoice carries one override code). A
+ * combined code (`GST/QST QC`) is one rate group of the posting but books
+ * one `TaxLine` per rate (GST, QST): the posting carries one tax line per
+ * rate group, not per component. So each taxed group's code is read back
+ * with its rates, and its booked `TaxLine`s must be one per rate, each on
+ * the group's net, together the group's tax to the cent. A tax line no
+ * mapped code explains is a difference too. A string when the realm could
+ * not be asked.
+ *
+ * spec: TaxCode.SalesTaxRateList.TaxRateDetail[].TaxRateRef and
+ * TxnTaxDetail.TaxLine[] {Amount, TaxLineDetail {TaxRateRef,
+ * NetAmountTaxable}} — Accounting API v3 reference, not verified against a
+ * live realm. */
+async function taxLineDifferences(
+  fetchImpl: typeof fetch,
+  cfg: Cfg,
+  p: Posting,
+  maps: AccountingMap[],
+  row: Record<string, unknown>,
+): Promise<string[] | string> {
+  const detail = row.TxnTaxDetail as Record<string, unknown> | undefined;
+  const booked = (Array.isArray(detail?.TaxLine) ? detail!.TaxLine as Record<string, unknown>[] : [])
+    .map((t) => {
+      const d = (t.TaxLineDetail ?? {}) as Record<string, unknown>;
+      return {
+        rate: String((d.TaxRateRef as Record<string, unknown> | undefined)?.value ?? ""),
+        amount: toMinor(String(t.Amount ?? 0), p.currency) ?? 0,
+        base: toMinor(String(d.NetAmountTaxable ?? 0), p.currency) ?? 0,
+      };
+    });
+  const differences: string[] = [];
+  const explained = new Set<number>();
+  for (const group of taxedGroups(p)) {
+    const code = mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: group }));
+    const codes = await query(fetchImpl, cfg, "TaxCode", `Id = ${quoted(code)}`);
+    if (typeof codes === "string") return codes;
+    const list = (codes[0]?.SalesTaxRateList as Record<string, unknown> | undefined)?.TaxRateDetail;
+    const rates = new Set(
+      (Array.isArray(list) ? list as Record<string, unknown>[] : [])
+        .map((r) => String((r.TaxRateRef as Record<string, unknown> | undefined)?.value ?? "")),
+    );
+    const name = group ?? "the base rate";
+    if (rates.size === 0) {
+      differences.push(`QuickBooks has no rates for the tax code ${code} of ${name}`);
+      continue;
+    }
+    const net = revenueLines(p).filter((l) => l.qualifier === group).reduce((s, l) => s + amountOf(l), 0);
+    const tax = p.lines
+      .filter((l) => (l.role === ROLE.vatOutput || l.role === ROLE.vatPending) && l.qualifier === group)
+      .reduce((s, l) => s + amountOf(l), 0);
+    const mine = booked.map((t, i) => ({ ...t, i })).filter((t) => rates.has(t.rate));
+    mine.forEach((t) => explained.add(t.i));
+    if (mine.length !== rates.size) {
+      differences.push(`QuickBooks booked ${mine.length} tax lines for ${name}, its code has ${rates.size} rates`);
+    }
+    for (const t of mine) {
+      if (t.base !== net) {
+        differences.push(
+          `QuickBooks taxed ${toMajor(t.base, p.currency)} at rate ${t.rate} for ${name}, the document ${toMajor(net, p.currency)}`,
+        );
+      }
+    }
+    const sum = mine.reduce((s, t) => s + t.amount, 0);
+    if (sum !== tax) {
+      differences.push(`QuickBooks tax ${toMajor(sum, p.currency)} for ${name}, the document ${toMajor(tax, p.currency)}`);
+    }
+  }
+  booked.forEach((t, i) => {
+    if (!explained.has(i) && t.amount !== 0) {
+      differences.push(`QuickBooks booked tax ${toMajor(t.amount, p.currency)} at rate ${t.rate} that no mapped code explains`);
+    }
+  });
+  return differences;
 }
 
 /** What a sales document's total and tax must read in QuickBooks. */
@@ -423,6 +507,11 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
         : entity === "Payment"
         ? { total: p.lines.filter((l) => l.debitCents > 0).reduce((s, l) => s + l.debitCents, 0) }
         : undefined;
+      // #2371 — a CA or GB sale is read back per tax line too.
+      const saleTaxLines = async (r: Record<string, unknown>): Promise<string[] | string> =>
+        (entity === "Invoice" || entity === "CreditMemo") && country !== "US"
+          ? await taxLineDifferences(f, cfg, p, maps, r)
+          : [];
       return {
         async readback(key) {
           const rows = await query(f, cfg, entity, `${byNumber} = ${quoted(p.documentNumber)}`);
@@ -433,7 +522,13 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
           const relevant = entity === "Invoice" || entity === "CreditMemo"
             ? rows
             : rows.filter((r) => r.PrivateNote === `${NOTE_PREFIX}${key}`);
-          return relevant.map((r) => remoteOf(r, p, key, expected));
+          const out: RemoteDocument[] = [];
+          for (const r of relevant) {
+            const lines = await saleTaxLines(r);
+            if (typeof lines === "string") return lines;
+            out.push(remoteOf(r, p, key, expected, lines));
+          }
+          return out;
         },
         async create(key) {
           if (exponentOf(p.currency) === null) return refused(`the currency ${p.currency} is not stated`);
@@ -496,7 +591,11 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
           if (!sent.ok) return failure(sent);
           const row = sent.body[entity] as Record<string, unknown> | undefined;
           if (!row?.Id) return { ok: false, unknown: true, detail: `QuickBooks answered no ${entity}` };
-          return { ok: true, remote: remoteOf(row, p, key, expected) };
+          const lines = await saleTaxLines(row);
+          return {
+            ok: true,
+            remote: remoteOf(row, p, key, expected, typeof lines === "string" ? [lines] : lines),
+          };
         },
       };
     },
