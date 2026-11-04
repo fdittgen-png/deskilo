@@ -11,7 +11,7 @@
 -- but for their submission state, and only an issuer of the space may keep
 -- them, for a Spanish seller.
 begin;
-select plan(16);
+select plan(17);
 
 select is(
   public.verifactu_huella_alta('89890001K', '12345678/G33', '01-01-2024', 'F1', '12.35', '123.45',
@@ -174,6 +174,16 @@ select throws_ok(
   format($$select public.record_verifactu_v1(%L)$$, current_setting('deskilo.test.fr')),
   'Verifactu records are kept for a Spanish seller only',
   'a seller outside Spain keeps no Verifactu record');
+
+-- The space's own admin, through a delegated (MCP) session: the claims carry
+-- the OAuth client, as the MCP tests mark them.
+select set_config('request.jwt.claims',
+  json_build_object('sub', current_setting('deskilo.test.u'), 'role', 'authenticated',
+                    'client_id', 'claude-test')::text, false);
+select throws_ok(
+  format($$select public.record_verifactu_v1(%L)$$, current_setting('deskilo.test.inv2')),
+  '42501', null,
+  'a delegated session keeps no record, though its user may');
 
 select set_config('request.jwt.claims',
   json_build_object('sub', current_setting('deskilo.test.stranger'), 'role', 'authenticated')::text, false);

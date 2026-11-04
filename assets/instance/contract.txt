@@ -2767,7 +2767,7 @@ routine public.record_screen_capture(p_kind text, p_context_id uuid) -> void | f
 routine public.record_service_charge(p_workspace_id uuid, p_subject_member_id uuid, p_service_id uuid, p_quantity integer, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9cecdcbb548f
 routine public.record_setup_step_timing(p_workspace_id uuid, p_step text, p_opened_at timestamp with time zone, p_seconds integer) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:99c5898c9c6f
 routine public.record_supplier_payment_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ee6af111ea44
-routine public.record_verifactu_v1(p_invoice_id uuid, p_kind text) -> verifactu_records | function | definer | volatile | exec:authenticated,service_role | body:0851198dbf7b
+routine public.record_verifactu_v1(p_invoice_id uuid, p_kind text) -> verifactu_records | function | definer | volatile | exec:authenticated,service_role | body:3d7dfe27efb6
 routine public.record_vies_check(p_member_id uuid, p_vat_id text, p_status text, p_consultation text, p_detail text) -> jsonb | function | definer | volatile | exec:service_role | body:5dedd386e324
 routine public.record_workspace_application_decision() -> trigger | function | definer | volatile | exec:service_role | body:9c3fe56cd597
 routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row_count integer) -> workspace_recovery_evidence | function | definer | volatile | exec:authenticated,service_role | body:32f4d263514d

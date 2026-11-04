@@ -178,6 +178,11 @@ declare
   v_huella text;
   v_row public.verifactu_records;
 begin
+  -- A signed-in person in a native session only: a delegated (MCP) session
+  -- keeps no fiscal record, whatever right its user holds.
+  if auth.uid() is null or public.mcp_is_delegated() then
+    raise exception using errcode = '42501', message = 'keeping a Verifactu record is not available';
+  end if;
   if p_kind not in ('alta', 'anulacion') then
     raise exception 'a Verifactu record is an alta or an anulacion';
   end if;
