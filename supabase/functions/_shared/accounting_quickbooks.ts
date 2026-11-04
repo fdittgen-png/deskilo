@@ -494,7 +494,14 @@ async function taxLineDifferences(
       }
     }
   };
-  if (entryClasses.length > 0) walk(0, entryClasses[0].count, 0, []);
+  if (entryClasses.length > 0) {
+    walk(0, entryClasses[0].count, 0, []);
+  } else if (taxed.length === 0) {
+    // A sale without tax (zero-rated, exempt): nothing to place, nothing
+    // expected; any tax QuickBooks books is still unexplained below.
+    first = [];
+    firstExpected = new Map();
+  }
   // Why no assignment exists, in the terms a bookkeeper can act on.
   const diagnose = () => {
     for (const entry of entries) {

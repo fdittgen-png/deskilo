@@ -697,3 +697,31 @@ Deno.test("#2371 past its step limit the matching stops and the split stays unve
     setAssignmentStepsForTest(was);
   }
 });
+
+/** A zero-rated sale: 100.00 net, no tax, frozen as one 0 % entry, its rate
+ * group mapped to a zero-rated code. */
+const zeroSale: Posting = {
+  ...year[0],
+  documentNumber: "F-2026-0019",
+  lines: [line("customers", null, 10000, 0), line("revenue", "zero", 0, 10000)],
+  taxBreakdown: [single(0, 10000, 0)],
+};
+const zeroMaps = [
+  ...maps,
+  { kind: "item" as const, key: "revenue:zero", remoteId: "IT-0", remoteCode: "" },
+  { kind: "item" as const, key: "vat_output:zero", remoteId: "TC-Z", remoteCode: "" },
+];
+const zeroCode = { Id: "TC-Z", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "Z0" }, TaxOrder: 0 }] } };
+
+Deno.test("#2371 a zero-rated sale reconciles: no tax frozen, none booked", async () => {
+  const q = realm({ rates: { ...QC_RATES, Z0: 0 }, codes: [zeroCode] });
+  assertEquals((await run(q, new Log(), [zeroSale], "quickbooks_online_ca", zeroMaps)).statuses, ["acknowledged"]);
+});
+
+Deno.test("#2371 a zero-rated sale on which QuickBooks books tax is a conflict, though its total tax is the override", async () => {
+  const q = realm({ rates: { ...QC_RATES, Z0: 0 }, codes: [zeroCode], book: () => [{ id: "Z0", amount: 5 }] });
+  const log = new Log();
+  assertEquals((await run(q, log, [zeroSale], "quickbooks_online_ca", zeroMaps)).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks booked tax 5.00 at rate Z0, which no mapped code of the document names"), row.error);
+});
