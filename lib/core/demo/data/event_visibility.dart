@@ -8,6 +8,24 @@
 // nobody else's payment there either.
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 
+import 'workspace_repository.dart';
+import 'workspace_roles_repository.dart';
+
+/// The acting member's effective permissions in the space [workspaceId]:
+/// the matrix of their role and, while customRoles is on, what the space's
+/// own roles grant them (has_permission_raw, 0247).
+Set<WorkspacePermission> Function() demoViewerPermissions(
+  FakeWorkspaceRepository space,
+  FakeWorkspaceRoles roles,
+  String workspaceId,
+  String Function() actor,
+) =>
+    () => effectivePermissions(
+      space.memberOf(actor()),
+      space.workspaces.where((w) => w.id == workspaceId).firstOrNull,
+      custom: roles.grantedTo(actor()),
+    );
+
 /// The permissions any one of which reads an event of [type] (a db name).
 Set<WorkspacePermission> eventTypeViewPermissions(String type) {
   final names = switch (type) {

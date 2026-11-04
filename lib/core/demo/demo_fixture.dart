@@ -15,7 +15,6 @@
 //     see what the product looks like in use, not a development strip.
 import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/bi_saved_view.dart';
-import '../../features/workspace/domain/workspace_permission.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/book_profile_repository.dart';
@@ -25,6 +24,7 @@ import 'data/credit_repository.dart';
 import 'data/deployment_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
@@ -135,10 +135,6 @@ class DemoFixture {
       actor: () => actor.memberId,
       clock: () => today,
       decider: () => workspaces.memberOf(actor.memberId),
-      viewerPermissions: () => effectivePermissions(
-        workspaces.memberOf(actor.memberId),
-        workspaces.workspaces.where((w) => w.id == 'ws-1').firstOrNull,
-      ),
     );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
@@ -159,6 +155,7 @@ class DemoFixture {
     final roles = FakeWorkspaceRoles();
     seedDemoFields(fields);
     seedDemoRoles(roles);
+    events.viewerPermissions = demoViewerPermissions(workspaces, roles, 'ws-1', () => actor.memberId);
     final accessories = FakeAccessoryRepository();
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).

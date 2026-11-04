@@ -47,7 +47,7 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 | a group conversation | its current roster: an ordinary member reads another member's message ✓; a removed member no longer lists the group, nor reads what is written after, and keeps what was written while they were in it ✓ |
 | the admin broadcast (a note to nobody in particular) | the owner and the administrators |
 | Leipzig's requests | Leipzig's feed, not the main space's ✓ |
-| a space's requests and decisions | whoever holds, in that space, a permission that reads the event's type (`event_type_view_permissions`, 0650/0666, as `events_select` reads it through `event_types_in_view`, 0216/0613): an administrator whose matrix explicitly lacks `viewFinances` and `issueInvoices` (and without the legacy `adminInvoicing` grant) reads nobody else's payment events nor their decisions, yet still reads what `manageMembers` reads ✓; the event's actor or subject; the validators its rule names. A decision is read only with its event, in the event's own space ✓. A persona with no membership of the space reads none, also through the routed repository after a persona switch ✓ |
+| a space's requests and decisions | whoever holds, in that space, a permission that reads the event's type (`event_type_view_permissions`, 0650/0666, as `events_select` reads it through `event_types_in_view`, 0216/0613): an administrator whose matrix explicitly lacks `viewFinances` and `issueInvoices` (and without the legacy `adminInvoicing` grant) reads nobody else's payment events nor their decisions, yet still reads what `manageMembers` reads ✓. A permission given by one of the space's own active roles counts the same way while `customRoles` is on, as `has_permission_raw` adds it (0247): a plain member assigned a role holding `viewFinances` reads another member's payment, loses it when the role is revoked, and loses it when `customRoles` is switched off ✓; the event's actor or subject; the validators its rule names. A decision is read only with its event, in the event's own space ✓. A persona with no membership of the space reads none, also through the routed repository after a persona switch ✓ |
 | Leipzig itself | its members: a persona without a Leipzig membership does not see the space |
 
 ## Reset and isolation
@@ -65,8 +65,6 @@ reaches a server (`test/core/demo/demo_scope_test.dart`).
 - A privacy incident is read through `managePrivacy` like any other type;
   0667's restrictive policy (that right only, not even as actor or subject)
   is not modelled: the Demo seeds no privacy incident.
-- Custom-role grants are not added to the permissions the Demo's event feed
-  reads: the matrix of the four built-in roles decides it.
 - Approval chains beyond one quorum step (sequential rules) follow the stored
   policy rows; the Demo seeds single-step rules.
 - Deployment history is the twin pair's, recorded under the acting persona's

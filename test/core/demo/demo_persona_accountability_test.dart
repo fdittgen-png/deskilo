@@ -22,6 +22,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -444,6 +445,75 @@ void main() {
         isNotEmpty,
         reason: 'what manageMembers reads stays readable',
       );
+    });
+
+    test('a permission given by an enabled custom role reads like the '
+        'matrix\'s: granted, revoked, and gone with customRoles off', () async {
+      final fixture = _as(DemoPersona.owner);
+      // Elise's payment, recorded by Ada: nothing of it is Bruno's.
+      fixture.events.events.add(
+        WorkspaceEvent(
+          id: 'demo-payment-elise',
+          workspaceId: 'ws-1',
+          type: EventType.invoicePayment,
+          action: EventAction.created,
+          actorMemberId: _ada,
+          subjectMemberId: 'member-5',
+          payload: const {'paid_cents': 4800},
+          status: EventStatus.pending,
+          createdAt: fixture.seededAt,
+        ),
+      );
+      const others = ['demo-payment-elise'];
+      Future<bool> brunoReads() async =>
+          (await fixture.events.fetchEvents('ws-1'))
+              .any((e) => others.contains(e.id));
+
+      fixture.roles.roles.add(
+        const WorkspaceRole(
+          id: 'demo-role-finance-reader',
+          key: 'finance_reader',
+          names: {'en': 'Finance reader'},
+          permissions: {WorkspacePermission.viewFinances},
+        ),
+      );
+      fixture.becomePersona(DemoPersona.member);
+      expect(await brunoReads(), isFalse, reason: 'a plain member');
+
+      fixture.becomePersona(DemoPersona.owner);
+      await fixture.roles.assignRole(
+        memberId: _bruno,
+        roleId: 'demo-role-finance-reader',
+        assign: true,
+      );
+      fixture.becomePersona(DemoPersona.member);
+      expect(await brunoReads(), isTrue, reason: 'granted by the role');
+
+      fixture.becomePersona(DemoPersona.owner);
+      await fixture.roles.assignRole(
+        memberId: _bruno,
+        roleId: 'demo-role-finance-reader',
+        assign: false,
+      );
+      fixture.becomePersona(DemoPersona.member);
+      expect(await brunoReads(), isFalse, reason: 'revoked');
+
+      fixture.becomePersona(DemoPersona.owner);
+      await fixture.roles.assignRole(
+        memberId: _bruno,
+        roleId: 'demo-role-finance-reader',
+        assign: true,
+      );
+      final i = fixture.workspaces.workspaces.indexWhere((w) => w.id == 'ws-1');
+      final ws = fixture.workspaces.workspaces[i];
+      fixture.workspaces.workspaces[i] = ws.copyWith(
+        featureFlags: {
+          ...ws.featureFlags,
+          WorkspaceFeature.customRoles.name: false,
+        },
+      );
+      fixture.becomePersona(DemoPersona.member);
+      expect(await brunoReads(), isFalse, reason: 'customRoles is off');
     });
 
     test('a decision of a Leipzig request is read by Leipzig\'s members '
