@@ -28,6 +28,7 @@ import 'data/premises_lease_repository.dart';
 import 'data/room_rental_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_books_seed.dart';
@@ -148,6 +149,13 @@ List<Override> demoCityCommerceOverrides(
       ),
     ),
     ...demoPurchasingOverrides(
+      purchasing,
+      london: londonPurchasing,
+      newYork: nyPurchasing,
+    ),
+    // #3307 — the orders to their suppliers.
+    ...demoPurchaseOrderOverrides(
+      fixture,
       purchasing,
       london: londonPurchasing,
       newYork: nyPurchasing,
