@@ -8283,6 +8283,7 @@
   "invoiceExportGobd": "Acceso a datos GoBD (Z3)",
   "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)",
   "invoiceExportSafT": "SAF-T (XML, internacional)",
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
   "invoiceExportSafTFull": "SAF-T con el libro mayor (XML, internacional)",
   "invoiceExportSafTNo": "SAF-T Financial (Noruega)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -15527,6 +15528,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{ninguna cuenta estándar para {subject}} standardTaxCode{ningún código de IVA estándar para {subject}} taxRate{ningún tipo de IVA para {subject}} company{falta el campo {subject} de la empresa} contact{el campo {subject} de la persona de contacto} party{falta {subject} en un cliente o proveedor} tooLong{{subject} supera la longitud que admite el archivo} other{{subject}}}",
+  "saftIndustryCodeHelper": "El código de sector con el que la administración tributaria austriaca conoce a la empresa.",
+  "saftIndustryCodeLabel": "Código de sector (Branchenkennzahl)",
   "saftLedgerIntro": "Con números de cuenta, el archivo lleva asientos por partida doble que su asesor puede importar en lugar de teclear. Cubren sus ventas y los cobros correspondientes — no toda su contabilidad.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15535,6 +15538,18 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "La disposición de la ley austriaca del impuesto sobre la renta que siguen los libros, tal como la indica la cabecera del SAF-T AT.",
+  "saftProfitBasisLabel": "Forma de determinar el beneficio",
+  "saftSmallBusinessHelper": "Si la empresa es una pequeña empresa según el § 6 (1) Z 27 UStG, tal como lo indica la cabecera del SAF-T AT.",
+  "saftSmallBusinessLabel": "Pequeña empresa (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessNo": "No",
+  "saftSmallBusinessYes": "Sí",
+  "saftStandardAccountsIntro": "Confirme la cuenta del plan contable estándar austriaco (Einheitskontenrahmen) bajo la que se escribe cada cuenta del libro. La sugerencia viene del papel de la cuenta; revísela: no todas las cuentas de un papel corresponden a la misma cuenta estándar.",
+  "saftStandardAccountsNoSuggestion": "Sin sugerencia: introduzca la cuenta estándar.",
+  "saftStandardAccountsSuggested": "Sugerida: {suggestion}. Confírmela o cámbiela.",
+  "saftStandardAccountsTitle": "Cuentas del plan estándar",
+  "saftTaxNumberHelper": "El número que la administración tributaria austriaca asigna a la empresa, no su número del registro mercantil.",
+  "saftTaxNumberLabel": "Número fiscal (Steuernummer)",
   "saftWithPostings": "Con asientos",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"

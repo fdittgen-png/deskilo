@@ -1,9 +1,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 (0676) — the QR reference is frozen at issue and collision-free.
+-- #2380 (0677) — the QR reference is frozen at issue and collision-free.
 --
 -- `F-2026-0402` and `U-2026-04-02` share the reference the client derives
--- from a number's digits. Inserted after 0676, each is given its own QRR in
+-- from a number's digits. Inserted after 0677, each is given its own QRR in
 -- `legal_snapshot.qrr`: 27 digits, a valid recursive modulus-10 check digit,
 -- apart from every derived reference (leading 1), never chosen by the caller,
 -- never changed afterwards. A credit note gets none; an invoice issued
@@ -49,7 +49,7 @@ begin
   values (ws, m, m, 'AV-2026-0001', 'April', '[]'::jsonb, -1000, 'CHF', 'Member',
           'QRR', 'Member', 'sig',
           '{"qrr": "100000000000000000000000017"}'::jsonb) returning id into credit;
-  -- An invoice issued before 0676: the trigger did not exist yet.
+  -- An invoice issued before 0677: the trigger did not exist yet.
   alter table public.invoices disable trigger invoice_qrr_freeze;
   insert into public.invoices (workspace_id, member_id, issuer_member_id, number,
                                title, lines, total_cents, currency, member_name,
@@ -112,7 +112,7 @@ select throws_ok(
   'an issued invoice''s reference never changes');
 
 select ok(pg_temp.qrr('legacy') is null,
-  'an invoice issued before 0676 keeps no frozen reference (matched by its derived one)');
+  'an invoice issued before 0677 keeps no frozen reference (matched by its derived one)');
 
 select * from finish();
 rollback;

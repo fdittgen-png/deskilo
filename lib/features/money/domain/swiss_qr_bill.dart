@@ -151,8 +151,8 @@ String? qrrReferenceOf(String number) {
 }
 
 /// #2380 — the QRR of an invoice: the one frozen at issue in its legal
-/// snapshot (`legal_snapshot.qrr`, 0676) when it holds a valid one, else the
-/// reference derived from its number (invoices issued before 0676).
+/// snapshot (`legal_snapshot.qrr`, 0677) when it holds a valid one, else the
+/// reference derived from its number (invoices issued before 0677).
 String? invoiceQrrOf(String number, Map<String, Object?>? legalSnapshot) =>
     _frozenQrrOf(legalSnapshot) ?? qrrReferenceOf(number);
 
@@ -174,7 +174,7 @@ String? scorReferenceOf(String text) {
 /// #2380 — BT-83, the remittance reference an e-invoice states for a
 /// payment to [account] (its BT-84). For a QR-IBAN, the only reference such
 /// an account accepts is a QRR, and only the one frozen at issue
-/// (`legal_snapshot.qrr`, 0676) is published: the one derived from the
+/// (`legal_snapshot.qrr`, 0677) is published: the one derived from the
 /// number's digits is ambiguous (`F-2026-0402` and `U-2026-04-02` share it),
 /// so without a frozen one the reference is '' and the export is refused
 /// (`EInvoiceGap.qrIbanWithoutReference`). For an ordinary IBAN, the

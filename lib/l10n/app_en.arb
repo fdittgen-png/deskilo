@@ -15090,6 +15090,10 @@
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
   },
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "@invoiceExportSafTAt": {
+    "description": "#2379 the Austrian SAF-T AT 1.01 export (Bundesministerium für Finanzen)"
+  },
   "invoiceExportSafTFull": "SAF-T with the general ledger (XML, international)",
   "@invoiceExportSafTFull": {
     "description": "Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger"
@@ -15202,7 +15206,7 @@
   },
   "invoiceGapQrIbanWithoutReference": "This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.",
   "@invoiceGapQrIbanWithoutReference": {
-    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0676)."
+    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0677)."
   },
   "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {
@@ -27417,6 +27421,14 @@
       }
     }
   },
+  "saftIndustryCodeHelper": "The industry code the Austrian tax office knows the company under.",
+  "@saftIndustryCodeHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftIndustryCodeLabel": "Industry code (Branchenkennzahl)",
+  "@saftIndustryCodeLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
   "saftLedgerIntro": "With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -27424,6 +27436,59 @@
   "saftLedgerTitle": "Include postings?",
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
+  },
+  "saftProfitBasisHelper": "The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.",
+  "@saftProfitBasisHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftProfitBasisLabel": "How the profit is determined",
+  "@saftProfitBasisLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessHelper": "Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.",
+  "@saftSmallBusinessHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessLabel": "Small business (§ 6 (1) Z 27 UStG)",
+  "@saftSmallBusinessLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessNo": "No",
+  "@saftSmallBusinessNo": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessYes": "Yes",
+  "@saftSmallBusinessYes": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftStandardAccountsIntro": "Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account's role; check it: not every account of a role belongs on the same standard account.",
+  "@saftStandardAccountsIntro": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsNoSuggestion": "No suggestion: enter the standard account.",
+  "@saftStandardAccountsNoSuggestion": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsSuggested": "Suggested: {suggestion}. Confirm or change it.",
+  "@saftStandardAccountsSuggested": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export",
+    "placeholders": {
+      "suggestion": {
+        "type": "String"
+      }
+    }
+  },
+  "saftStandardAccountsTitle": "Standard chart accounts",
+  "@saftStandardAccountsTitle": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftTaxNumberHelper": "The number the Austrian tax office gives the company, not its company register number.",
+  "@saftTaxNumberHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftTaxNumberLabel": "Tax number (Steuernummer)",
+  "@saftTaxNumberLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
   "saftWithPostings": "With postings",
   "@saftWithPostings": {

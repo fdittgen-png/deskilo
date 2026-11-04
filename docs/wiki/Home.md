@@ -98,6 +98,6 @@ Instance health, backup, restore, upgrades and recovery for whoever runs a serve
 
 <div align="center">
 
-AGPL-3.0-or-later © 2026 Florian DITTGEN — free for associations, collectives and individuals; a company that modifies it publishes its changes or buys a [commercial licence](https://github.com/fdittgen-png/deskilo/blob/master/COMMERCIAL-LICENCE.md) (ADR 0031). Sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
+Project-owned wiki and documentation: AGPL-3.0-or-later under the [documentation license](https://github.com/fdittgen-png/deskilo/blob/master/DOCUMENTATION-LICENSE.md), subject to third-party notices. AGPL-3.0-or-later © 2026 Florian DITTGEN — free for associations, collectives and individuals; a company that modifies it publishes its changes or buys a [commercial licence](https://github.com/fdittgen-png/deskilo/blob/master/COMMERCIAL-LICENCE.md) (ADR 0031). Sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 </div>

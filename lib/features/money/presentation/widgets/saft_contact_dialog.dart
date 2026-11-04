@@ -4,21 +4,42 @@
 // (Company/Contact, mandatory in every profile; Luxembourg also requires a
 // telephone). Asked at export, like DATEV's adviser numbers: it is a fact of
 // this file, written into it and nowhere else.
+//
+// #2379 — Austria's header also states how the profit is determined
+// (TaxAccountingBasis: one of the provisions of the EStG 1988) and the
+// industry code (TaxEntity, Branchenkennzahl): facts of the company the app
+// does not hold, asked here for that file.
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/saf_t_financial.dart';
 
-/// The contact, or null when the person backed out.
-Future<SafTContact?> showSafTContactDialog(BuildContext context) =>
-    showDialog<SafTContact>(
+/// The provisions of the Austrian EStG 1988 a book's profit follows.
+const _austrianProfitBases = ['§ 4 Abs. 1 EStG', '§ 4 Abs. 3 EStG', '§ 5 EStG'];
+
+/// What the person states for the file: the contact, and for Austria the
+/// profit basis and the industry code (empty elsewhere).
+typedef SafTHeaderAnswers = ({
+  SafTContact contact,
+  String profitBasis,
+  String industryCode,
+  String taxNumber,
+  bool? smallBusiness,
+});
+
+/// The answers, or null when the person backed out. [austria] also asks
+/// Austria's two header facts.
+Future<SafTHeaderAnswers?> showSafTContactDialog(BuildContext context, {bool austria = false}) =>
+    showDialog<SafTHeaderAnswers>(
       context: context,
-      builder: (context) => const _SafTContactDialog(),
+      builder: (context) => _SafTContactDialog(austria: austria),
     );
 
 class _SafTContactDialog extends StatefulWidget {
-  const _SafTContactDialog();
+  const _SafTContactDialog({required this.austria});
+
+  final bool austria;
 
   @override
   State<_SafTContactDialog> createState() => _SafTContactDialogState();
@@ -26,6 +47,8 @@ class _SafTContactDialog extends StatefulWidget {
 
 class _SafTContactDialogState extends State<_SafTContactDialog> {
   final _fields = FormControllers();
+  String _profitBasis = '';
+  bool? _smallBusiness;
 
   @override
   void dispose() {
@@ -72,6 +95,51 @@ class _SafTContactDialogState extends State<_SafTContactDialog> {
                 keyboardType: TextInputType.phone,
                 autofillHints: const [AutofillHints.telephoneNumber],
               ),
+              if (widget.austria) ...[
+                const FormGap(),
+                DropdownButtonFormField<String>(
+                  key: const ValueKey('saft-profit-basis'),
+                  decoration: InputDecoration(
+                    labelText: l10n.saftProfitBasisLabel,
+                    helperText: l10n.saftProfitBasisHelper,
+                    helperMaxLines: 3,
+                  ),
+                  items: [
+                    for (final b in _austrianProfitBases)
+                      DropdownMenuItem(value: b, child: Text(b)),
+                  ],
+                  onChanged: (b) => setState(() => _profitBasis = b ?? ''),
+                ),
+                const FormGap(),
+                AppTextField(
+                  key: const ValueKey('saft-industry-code'),
+                  controller: _fields['industry'],
+                  label: l10n.saftIndustryCodeLabel,
+                  helper: l10n.saftIndustryCodeHelper,
+                  keyboardType: TextInputType.number,
+                ),
+                const FormGap(),
+                AppTextField(
+                  key: const ValueKey('saft-tax-number'),
+                  controller: _fields['taxNumber'],
+                  label: l10n.saftTaxNumberLabel,
+                  helper: l10n.saftTaxNumberHelper,
+                ),
+                const FormGap(),
+                DropdownButtonFormField<bool>(
+                  key: const ValueKey('saft-small-business'),
+                  decoration: InputDecoration(
+                    labelText: l10n.saftSmallBusinessLabel,
+                    helperText: l10n.saftSmallBusinessHelper,
+                    helperMaxLines: 3,
+                  ),
+                  items: [
+                    DropdownMenuItem(value: true, child: Text(l10n.saftSmallBusinessYes)),
+                    DropdownMenuItem(value: false, child: Text(l10n.saftSmallBusinessNo)),
+                  ],
+                  onChanged: (v) => setState(() => _smallBusiness = v),
+                ),
+              ],
             ],
           ),
         ),
@@ -84,13 +152,17 @@ class _SafTContactDialogState extends State<_SafTContactDialog> {
         ),
         FilledButton(
           key: const ValueKey('saft-contact-confirm'),
-          onPressed: () => Navigator.of(context).pop(
-            SafTContact(
+          onPressed: () => Navigator.of(context).pop((
+            contact: SafTContact(
               firstName: _fields.text('first'),
               lastName: _fields.text('last'),
               phone: _fields.text('phone'),
             ),
-          ),
+            profitBasis: _profitBasis,
+            industryCode: _fields.text('industry'),
+            taxNumber: _fields.text('taxNumber'),
+            smallBusiness: _smallBusiness,
+          )),
           child: Text(l10n.commonOk),
         ),
       ],

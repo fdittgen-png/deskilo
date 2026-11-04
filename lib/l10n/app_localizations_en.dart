@@ -12539,6 +12539,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T with the general ledger (XML, international)';
 
@@ -22868,11 +22871,61 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'The industry code the Austrian tax office knows the company under.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Industry code (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.';
 
   @override
   String get saftLedgerTitle => 'Include postings?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.';
+
+  @override
+  String get saftProfitBasisLabel => 'How the profit is determined';
+
+  @override
+  String get saftSmallBusinessHelper =>
+      'Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Small business (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Yes';
+
+  @override
+  String get saftStandardAccountsIntro =>
+      'Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account\'s role; check it: not every account of a role belongs on the same standard account.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'No suggestion: enter the standard account.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggested: $suggestion. Confirm or change it.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Standard chart accounts';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'The number the Austrian tax office gives the company, not its company register number.';
+
+  @override
+  String get saftTaxNumberLabel => 'Tax number (Steuernummer)';
 
   @override
   String get saftWithPostings => 'With postings';

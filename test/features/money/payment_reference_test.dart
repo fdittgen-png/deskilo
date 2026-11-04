@@ -3,7 +3,7 @@
 // Invariant (#2380): an e-invoice states BT-83, the reference the payer quotes
 // with the transfer, for the account it names (BT-84): the ISO 11649 creditor
 // reference for an ordinary IBAN; for a Swiss QR-IBAN only the QRR frozen at
-// issue (0676), never the one derived from the number's digits, and without a
+// issue (0677), never the one derived from the number's digits, and without a
 // frozen one the export is refused; none for a credit note — in UBL as `cac:PaymentMeans/cbc:PaymentID` before the
 // payee account, in CII as `ram:PaymentReference` before the invoice currency.
 // The expected references are stated by hand from the standards.
@@ -22,7 +22,7 @@ const _iban = 'FR76 3000 6000 0112 3456 7890 189';
 // A QR-IBAN of the Swiss implementation guidelines' examples (IID 31999).
 const _qrIban = 'CH44 3199 9123 0008 8901 2';
 
-// Two QRRs as 0676 freezes them (1, a sequence value, the check digit),
+// Two QRRs as 0677 freezes them (1, a sequence value, the check digit),
 // checked by hand with the recursive modulus 10.
 const _frozenF = '100000000000000000000000416';
 const _frozenU = '100000000000000000000000424';

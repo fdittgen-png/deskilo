@@ -222,7 +222,7 @@ void main() {
     expect(openInvoices([voided], const {}), isEmpty);
   });
 
-  group('#2380 — the QR reference frozen at issue (0676)', () {
+  group('#2380 — the QR reference frozen at issue (0677)', () {
     // Two numbers whose digits are the same: they derive one reference.
     const fFrozen = '100000000000000000000000416';
     const uFrozen = '100000000000000000000000424';

@@ -78,4 +78,4 @@ create trigger invoice_qrr_freeze
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(676);
+select public.set_deskilo_schema_version(677);
