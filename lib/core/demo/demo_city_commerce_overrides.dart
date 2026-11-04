@@ -12,13 +12,18 @@ import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/providers/customer_kpi_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/asset_valuation_repository.dart';
 import 'data/book_profile_repository.dart';
+import 'data/customer_kpi_repository.dart';
 import 'data/demo_cost_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/lease_commitment_repository.dart';
+import 'data/money_repository.dart';
 import 'data/premises_lease_repository.dart';
 import 'data/room_rental_repository.dart';
 import 'data/workspace_asset_repository.dart';
@@ -208,6 +213,22 @@ List<Override> _kpiOverrides(
       currency: 'USD',
     ),
   );
+  // #3294 — the customer figures of each of the four spaces, from its own
+  // money, under the reader's rights as the server would decide them.
+  DemoCustomerKpiRepository customers(
+    Ref ref,
+    FakeMoneyRepository money,
+    String currency,
+  ) => DemoCustomerKpiRepository(
+    money: money,
+    now: now,
+    currency: currency,
+    namesVisible: () => ref
+        .read(myPermissionsProvider)
+        .contains(WorkspacePermission.viewPersonalData),
+    dunningEnabled: () =>
+        ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning),
+  );
   T choose<T>(Ref ref, T home, T london, T ny) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => london,
@@ -215,6 +236,14 @@ List<Override> _kpiOverrides(
         _ => home,
       };
   return [
+    customerKpiRepositoryProvider.overrideWith(
+      (ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
+        demoSecondSpaceId => customers(ref, fixture.secondSpace.money, 'EUR'),
+        demoLondonSpaceId => customers(ref, fixture.london.money, 'GBP'),
+        demoNewYorkSpaceId => customers(ref, fixture.newYork.money, 'USD'),
+        _ => customers(ref, fixture.money, 'EUR'),
+      },
+    ),
     purchaseKpiRepositoryProvider.overrideWith(
       (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3),
     ),

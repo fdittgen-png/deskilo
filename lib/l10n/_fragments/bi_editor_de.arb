@@ -664,5 +664,6 @@
   "biEditorDrillHint": "Leser können öffnen, woraus sich diese Zahl ergibt, eingeschränkt wie dieses Element.",
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
-  }
+  },
+  "biEditorBasisInvoiceDue": "nach Fälligkeit der Rechnung"
 }
