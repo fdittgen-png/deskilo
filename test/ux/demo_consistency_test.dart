@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../helpers/demo_owed.dart';
 import '../helpers/screens/demo_journeys.dart' show pumpDemo;
 
 Future<void> _go(WidgetTester tester, String route) async {
@@ -82,10 +83,37 @@ void main() {
       _shows('Nothing to pay — you are up to date.'),
       overview.outstanding.isEmpty,
     );
-    // The amount to pay is one figure per currency, never one total.
-    for (final e in overview.owedByCurrency.entries) {
-      expect(find.text(moneyFormat(e.key).formatMinor(e.value)), findsWidgets,
-          reason: 'the ${e.key} amount to pay');
+  });
+
+  testWidgets('Me shows one amount to pay per currency: euros, pounds and '
+      'dollars apart, on Me › Finances and on the Me home glance', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.member);
+    final owed = demoOwedFromTheSpaces(journey.fixture);
+    expect(owed.keys.toSet(), {'EUR', 'GBP', 'USD'});
+
+    await _go(tester, '/account-activity');
+    final summary = find.byKey(const ValueKey('finances-summary'));
+    for (final e in owed.entries) {
+      expect(
+        find.descendant(
+          of: summary,
+          matching: find.text(moneyFormat(e.key).formatMinor(e.value)),
+        ),
+        findsOneWidget,
+        reason: 'the ${e.key} amount to pay, in the summary',
+      );
+    }
+
+    await _go(tester, '/me');
+    for (final currency in owed.keys) {
+      expect(
+        find.byKey(ValueKey('me-home-finance-glance-amount-$currency'),
+            skipOffstage: false),
+        findsOneWidget,
+        reason: 'the $currency amount on the Me home glance',
+      );
     }
   });
 
