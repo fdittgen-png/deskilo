@@ -47,10 +47,23 @@ void main() {
     final gb = effectiveFeatures(raw, country: 'GB');
     expect(raw, contains(WorkspaceFeature.recapitulativeStatement));
     expect(gb, equals(effectiveFeatures(raw)..remove(WorkspaceFeature.recapitulativeStatement)));
-    expect(effectiveFeatures(raw, country: 'FR'), equals(effectiveFeatures(raw)));
+    expect(effectiveFeatures(raw, country: 'FR'),
+        equals(effectiveFeatures(raw)..remove(WorkspaceFeature.mtdSubmission)));
   });
 
-  test('the generated registry carries the list for the gated feature only', () {
+  // #3300 — HMRC's MTD VAT API serves UK VAT registrations only.
+  test('MTD submission is on in the United Kingdom only', () {
+    final raw = _allOn();
+    expect(effectiveFeatures(raw, country: 'GB'), contains(WorkspaceFeature.mtdSubmission));
+    for (final c in ['FR', 'DE', 'US']) {
+      expect(effectiveFeatures(raw, country: c), isNot(contains(WorkspaceFeature.mtdSubmission)), reason: c);
+    }
+    expect(raw, contains(WorkspaceFeature.mtdSubmission), reason: 'the stored switch is kept');
+    expect(featureRegistryJson(),
+        contains('"mtdSubmission": {"parent": "vatDeclarations", "default": false, "core": false, "countries": ["GB"]}'));
+  });
+
+  test('the generated registry carries a list for the gated features only', () {
     final json = featureRegistryJson();
     expect(json, contains('"recapitulativeStatement": {"parent": "vatDeclarations", "default": true, "core": false, "countries": ["@eu"]}'));
     expect('"countries"'.allMatches(json), hasLength(featureManifest.values.where((e) => e.availableIn != null).length));

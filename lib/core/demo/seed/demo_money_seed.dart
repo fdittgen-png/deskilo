@@ -36,9 +36,13 @@ void seedDemoMoneyStory(
     money.invoices[i] = money.invoices[i].copyWith(
       dueOn: lastMonth.add(const Duration(days: 10)),
     );
-    money.invoiceReminders['demo-invoice-bruno'] = [
-      lastMonth.add(const Duration(days: 12)),
-    ];
+    // #3292 — reminded two days after it fell due, and only once that day has
+    // come: a Demo opened in the first days of a month has the bill not yet
+    // due and no reminder dated in its future.
+    final reminded = lastMonth.add(const Duration(days: 12));
+    if (!reminded.isAfter(now)) {
+      money.invoiceReminders['demo-invoice-bruno'] = [reminded];
+    }
     // Half of it arrived by transfer yesterday and waits to be matched.
     final yesterday = now.subtract(const Duration(days: 1));
     money.ledger.add(

@@ -61,7 +61,7 @@ class DemoSecondSpaceData {
       decider: () => space.memberOf(actor()),
     );
     seedLeipzigRequests(events, now);
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events, clock: () => now);
     seedLeipzigMoney(money, now);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(

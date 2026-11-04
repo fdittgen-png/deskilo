@@ -412,5 +412,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,
     defaultOn: false,
+    // #3300 — HMRC's MTD VAT API serves UK VAT registrations only.
+    availableIn: {'GB'},
   ),
 };
