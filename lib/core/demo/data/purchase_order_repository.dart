@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3307 — the Demo's purchase orders, in memory, by the server's rules
-// (0674): numbered per year, only a draft is edited, a request id replays
+// (0681): numbered per year, only a draft is edited, a request id replays
 // its answer, a stale revision and an unknown supplier are refused, a
 // received or cancelled order is final. Nothing leaves the device: an
-// e-mail is simulated (0676's rules — the mail configured, a draft naming
+// e-mail is simulated (0683's rules — the mail configured, a draft naming
 // its recipient, one attempt that may have left, the same attempt id
 // replayed) and recorded as accepted, the order sent by e-mail. A delivery
-// follows 0677: only a sent or partly received order at its revision, no
+// follows 0684: only a sent or partly received order at its revision, no
 // line beyond what was ordered, never dated after today.
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 

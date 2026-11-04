@@ -3,7 +3,7 @@
 -- (the template field registry and the builtin template's row are restated;
 -- no workspace's stored flags move)
 --
--- 0673 (#3307) -- purchaseOrders in the two other generated registries a flag
+-- 0680 (#3307) -- purchaseOrders in the two other generated registries a flag
 -- belongs to: the template field registry
 -- (dart run tool/build_template_field_registry_sql.dart) and the builtin
 -- workspace template, which writes every flag explicitly
@@ -919,4 +919,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(673);
+select public.set_deskilo_schema_version(680);

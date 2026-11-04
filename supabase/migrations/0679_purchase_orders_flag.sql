@@ -3,7 +3,7 @@
 -- (the server's copies of the feature manifest and the setup level catalogue
 -- learn one flag; no row moves)
 --
--- 0672 (#3307) -- purchaseOrders, the flag of the supplier purchase orders:
+-- 0679 (#3307) -- purchaseOrders, the flag of the supplier purchase orders:
 -- platform tier, OFF, under purchases, offered with the purchasing level of
 -- the setup guide. A server gate calls
 -- public.feature_effective(ws, 'purchaseOrders'); the orders themselves are
@@ -182,4 +182,4 @@ returns jsonb language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.setup_level_catalogue() from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(672);
+select public.set_deskilo_schema_version(679);

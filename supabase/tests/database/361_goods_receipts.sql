@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3307 / 0677: goods receipts and the bill that charges the order. An
+-- #3307 / 0684: goods receipts and the bill that charges the order. An
 -- order of 100 capsules and 12 rolls is sent; 60 capsules arrive (partly
 -- received), then 40 capsules and 12 rolls (received). Nothing arrives
 -- beyond what was ordered, nor in the future, nor for a draft; a finance

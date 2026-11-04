@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0677 (#3307, PR C) -- what arrived of a purchase order, and the bill that
+-- 0684 (#3307, PR C) -- what arrived of a purchase order, and the bill that
 -- charges it.
 --
 --   * `purchase_order_receipts`: one delivery of an order, on the day it
@@ -19,7 +19,7 @@
 --     and not cancelled, of the bill's supplier when the bill names one; a
 --     null order unlinks it. The bill's own lines stay what the supplier
 --     wrote.
---   * the data export carries the receipts and the order sendings (0676).
+--   * the data export carries the receipts and the order sendings (0683).
 
 create table public.purchase_order_receipts (
   id uuid primary key default gen_random_uuid(),
@@ -167,7 +167,7 @@ revoke execute on function public.link_purchase_to_order_v1(uuid, uuid, uuid) fr
 grant execute on function public.link_purchase_to_order_v1(uuid, uuid, uuid) to authenticated;
 
 -- The workspace data export carries the deliveries and the sending attempts
--- of the orders (restated whole from 0675 with the three tables added; the
+-- of the orders (restated whole from 0682 with the three tables added; the
 -- order mail settings are configuration, their key stays in the secret
 -- store).
 create or replace function public.export_workspace_records(p_workspace_id uuid)
@@ -227,4 +227,4 @@ grant execute on function public.export_workspace_records(uuid) to authenticated
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(677);
+select public.set_deskilo_schema_version(684);

@@ -4,7 +4,7 @@
 // against what was ordered, and, for a buyer, "record a delivery" on a sent
 // or partly received order — the day it arrived (today by default, never
 // later), how much of each line (what is left by default) and a note. The
-// server records it and moves the order (0677).
+// server records it and moves the order (0684).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

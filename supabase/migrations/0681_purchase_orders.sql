@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0674 (#3307, PR A) -- the space's purchase orders to its suppliers.
+-- 0681 (#3307, PR A) -- the space's purchase orders to its suppliers.
 --
 --   * `purchase_orders`: one order to one supplier of the space, numbered by
 --     its own series (`year` and `number`, counted per space and year by
@@ -389,4 +389,4 @@ grant execute on function public.cancel_purchase_order_v1(uuid, uuid, int, text,
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(674);
+select public.set_deskilo_schema_version(681);

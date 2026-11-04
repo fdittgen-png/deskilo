@@ -2,7 +2,7 @@
 //
 // #3307 — goods receipts: a delivery is checked before it is recorded (a
 // sent order, something brought, never more than what is left, never after
-// today); the Demo records it by pgTAP 358's rules (partly received, then
+// today); the Demo records it by pgTAP 361's rules (partly received, then
 // received; a stale revision, a draft and a replay); a buyer records one on
 // the order's card, a finance reader only reads what arrived; the server's
 // answer and the deliveries parse.
@@ -150,7 +150,7 @@ void main() {
     });
   });
 
-  group('the Demo records by pgTAP 358', () {
+  group('the Demo records by pgTAP 361', () {
     test('partly received, then received; what arrived counts', () async {
       final (repo, _) = await _orders();
       var o = await repo.recordReceipt(

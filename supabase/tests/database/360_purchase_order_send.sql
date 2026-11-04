@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3307 / 0676: e-mailing a purchase order. The billing manager stores the
+-- #3307 / 0683: e-mailing a purchase order. The billing manager stores the
 -- space's sender and its API key (Vault; never read back by a client); a
 -- send attempt is opened by the buyer, its outcome recorded by the service
 -- role; a pending or unconfirmed attempt blocks a second one; a person

@@ -3,7 +3,7 @@
 // #3307 — what arrived of a purchase order: one delivery, on its day, with
 // how much of each line it brought. The server records it, keeps every
 // line within what was ordered and moves the order to partly received or
-// received (`record_purchase_order_receipt_v1`, 0677); this layer reads the
+// received (`record_purchase_order_receipt_v1`, 0684); this layer reads the
 // deliveries and checks one before it is recorded.
 //
 // Pure Dart: no Flutter, no l10n.

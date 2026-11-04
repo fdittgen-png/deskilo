@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0676 (#3307, PR B) -- a purchase order e-mailed to its supplier through
+-- 0683 (#3307, PR B) -- a purchase order e-mailed to its supplier through
 -- the space's own Resend sender.
 --
 --   * `purchase_order_mail_settings`: per space, the sender address and name
@@ -272,4 +272,4 @@ grant execute on function public.resolve_purchase_order_send_v1(uuid, uuid, bool
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(676);
+select public.set_deskilo_schema_version(683);

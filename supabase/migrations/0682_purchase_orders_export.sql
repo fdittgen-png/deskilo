@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0675 (#3307) -- the workspace data export carries the purchase orders and
+-- 0682 (#3307) -- the workspace data export carries the purchase orders and
 -- their lines (restated whole from 0540 with the two tables added; the
 -- order counters are the series' technical state and stay out).
 
@@ -59,4 +59,4 @@ $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(675);
+select public.set_deskilo_schema_version(682);

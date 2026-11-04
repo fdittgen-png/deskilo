@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3307 — the purchase orders over Supabase: read by RLS (managePurchases
-// or viewFinances), written only through the RPCs of 0674, 0676 and 0677.
+// or viewFinances), written only through the RPCs of 0681, 0683 and 0684.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/date_text.dart';

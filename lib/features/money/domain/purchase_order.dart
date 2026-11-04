@@ -3,7 +3,7 @@
 // #3307 — the space's purchase orders to its suppliers: a document of its
 // own, separate from the bill that arrives later. The server numbers it,
 // holds its state and decides who may write it
-// (`save_purchase_order_v1`, 0674); this layer reads it and checks a draft
+// (`save_purchase_order_v1`, 0681); this layer reads it and checks a draft
 // before it is sent.
 //
 // Pure Dart: no Flutter, no l10n.
@@ -99,7 +99,7 @@ class PurchaseOrder {
     this.createdAt,
   });
 
-  /// Reads `purchase_order_json` (0674) and a table row with its lines and
+  /// Reads `purchase_order_json` (0681) and a table row with its lines and
   /// supplier embedded.
   factory PurchaseOrder.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'purchase order');
@@ -280,7 +280,7 @@ enum PurchaseOrderSendState {
       values.firstWhere((s) => s.wire == wire, orElse: () => pending);
 }
 
-/// One e-mail attempt of an order (`purchase_order_sends`, 0676).
+/// One e-mail attempt of an order (`purchase_order_sends`, 0683).
 class PurchaseOrderSend {
   const PurchaseOrderSend({
     required this.id,

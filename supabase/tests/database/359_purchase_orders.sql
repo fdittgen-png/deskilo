@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3307 / 0672-0674: the space's purchase orders. A buyer (managePurchases)
+-- #3307 / 0679-0681: the space's purchase orders. A buyer (managePurchases)
 -- drafts, edits, prints and cancels; a finance reader (viewFinances) reads;
 -- a plain member reads and writes nothing; the series counts per space and
 -- year; a sent order and its lines are frozen; a request id replays.
