@@ -19,6 +19,12 @@
 #                   git.erst.dk standard-filformater, SAF-T/XSD/
 #   saft_ro         ANAF, Romanian SAF-T (D406) 2.4.9
 #                   static.anaf.ro, Informatii_R/saf_t.htm
+#   saft_at         Bundesministerium für Finanzen, SAF-T AT 1.01 (the OECD
+#                   1.0 tree, namespace urn:OECD:StandardAuditFile-Taxation:AT_1.01)
+#                   bmf.gv.at/themen/steuern/fristen-verfahren/bundesabgabenordnung/
+#                   standard-audit-file-tax.html, SAF-T_AT_1.01.xsd; downloaded
+#                   2026-11-04, the page's only schema version (decree
+#                   BMF-010102/0002-IV/2/2009)
 #   saft_oecd_full  the same FAIA 2.01 full schema: Luxembourg's publication
 #                   of the OECD 2.0 tree in the OECD namespace. The OECD's own
 #                   XSD is not published apart from its guidance, so this is
@@ -49,10 +55,12 @@ NO=saft_no/Norwegian_SAF-T_Financial_Schema_v_1.30.xsd
 LU=faia_lu/FAIA_v_2.01_full.xsd
 DK=saft_dk/Danish_SAF-T_Financial_Schema_v_2_1.xsd
 RO=saft_ro/Ro_SAFT_Schema_v249_2025.xsd
+AT=saft_at/SAF-T_AT_1.01.xsd
 check "$NO" 5362d6778872b4ed2524e09b083e634ae950a4f1d9f1b95076b4c9e4df6a0650
 check "$LU" 957273b819739dd015950475a36642b6a0348c54d59f74e53787a97c887a96c5
 check "$DK" 01cd75f7bf10f1cdab00b48ea2579e97647d7d01fa00862f76edd5d0a6ad8ec3
 check "$RO" 80ad7eaaf2aafd656a6e3c0e69e3a8fcdb23262640287ebba6383ff3014dccc2
+check "$AT" 105e52e52c83863c76eb8777a6efd3b65de34ea02f6b217110b16c1fd579b236
 
 status=0
 # validate <sample> <schema>
