@@ -3871,6 +3871,12 @@ abstract class AppLocalizations {
   /// **'date of the document'**
   String get biBasisDocumentDate;
 
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'invoice due date'**
+  String get biBasisInvoiceDue;
+
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
@@ -4177,6 +4183,190 @@ abstract class AppLocalizations {
   /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
   String get biCurrentBasis;
 
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get biCustomerCohortHeld;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid late'**
+  String get biCustomerCohortLate;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} invoices, {amount}'**
+  String biCustomerCohortLine(String cohort, String count, String amount);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on time'**
+  String get biCustomerCohortOnTime;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get biCustomerCohortOpen;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get biCustomerCohortPartial;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Settled without a payment date'**
+  String get biCustomerCohortUndated;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get biCustomerCohortUnknownDue;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Written off'**
+  String get biCustomerCohortWrittenOff;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The largest {top} of {customers} customers: {topNet} of {net} invoiced net'**
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  );
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.'**
+  String get biCustomerConcentrationDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'They owe {topOpen} of the {open} owed today.'**
+  String biCustomerConcentrationOpen(String topOpen, String open);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Customer concentration'**
+  String get biCustomerConcentrationTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{credited} in {notes} credit notes, {writtenOff} written off on {offs} invoices'**
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  );
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'By the invoice’s month, net of VAT: the credit notes, and what was written off of an invoice (its total less what was paid), in proportion to its net.'**
+  String get biCustomerCreditDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Credits and write-offs'**
+  String get biCustomerCreditTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
+  String biCustomerDelay(String median, String p90, String weighted);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{reminders} reminders on {reminded} of {due} invoices falling due'**
+  String biCustomerDunningBasis(String reminders, String reminded, String due);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The reminders sent for the invoices falling due in the period, by level.'**
+  String get biCustomerDunningDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String biCustomerDunningLevel(String level);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Dunning is switched off for this space: no reminders are counted.'**
+  String get biCustomerDunningOff;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Dunning load'**
+  String get biCustomerDunningTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Names are shown only to those who may read personal data; the others read ranks.'**
+  String get biCustomerNamesHidden;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to share out in this period, so no share is shown.'**
+  String get biCustomerNothingToShare;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {reminded} reminded invoices were paid after their first reminder: a sequence in time, not proof that the reminder caused the payment.'**
+  String biCustomerPaidAfterReminder(String paid, String reminded);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {settled} settled invoices paid by their due date'**
+  String biCustomerPaymentBasis(String onTime, String settled);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The invoices falling due in the period, each in one group. A settled invoice is on time when its last payment was reported paid on or before its due date: the bank’s value date when a reconciled line explains the payment, the recorded payment date otherwise, never the day it was matched. Amounts are what the invoices owe, VAT included.'**
+  String get biCustomerPaymentDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Payment punctuality'**
+  String get biCustomerPaymentTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Customer {rank}'**
+  String biCustomerRank(String rank);
+
   /// No description provided for @biDataNotApplicable.
   ///
   /// In en, this message translates to:
@@ -4308,6 +4498,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'by document date'**
   String get biEditorBasisDocumentDate;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'by invoice due date'**
+  String get biEditorBasisInvoiceDue;
 
   /// #2580 BI report editor
   ///

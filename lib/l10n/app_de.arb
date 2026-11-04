@@ -1088,6 +1088,7 @@
   "@biBasisDocumentDate": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisInvoiceDue": "Fälligkeitsdatum der Rechnung",
   "biBasisInvoiceMonth": "Monat der Rechnung",
   "@biBasisInvoiceMonth": {
     "description": "#2581 analytical report print layout and exports"
@@ -1242,6 +1243,35 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.",
+  "biCustomerCohortHeld": "Zurückgestellt",
+  "biCustomerCohortLate": "Verspätet bezahlt",
+  "biCustomerCohortLine": "{cohort}: {count} Rechnungen, {amount}",
+  "biCustomerCohortOnTime": "Pünktlich bezahlt",
+  "biCustomerCohortOpen": "Unbezahlt",
+  "biCustomerCohortPartial": "Teilweise bezahlt",
+  "biCustomerCohortUndated": "Ohne Zahlungsdatum beglichen",
+  "biCustomerCohortUnknownDue": "Ohne Fälligkeit",
+  "biCustomerCohortWrittenOff": "Ausgebucht",
+  "biCustomerConcentrationBasis": "Die {top} größten von {customers} Kunden: {topNet} von {net} netto berechnet",
+  "biCustomerConcentrationDefinition": "Der Anteil des im Zeitraum netto Berechneten (abzüglich Gutschriften), den die größten Kunden ausmachen, und ihr Anteil an dem, was heute offen ist.",
+  "biCustomerConcentrationOpen": "Sie schulden {topOpen} der heute offenen {open}.",
+  "biCustomerConcentrationTitle": "Kundenkonzentration",
+  "biCustomerCreditBasis": "{credited} in {notes} Gutschriften, {writtenOff} ausgebucht auf {offs} Rechnungen",
+  "biCustomerCreditDefinition": "Nach dem Monat der Rechnung, netto: die Gutschriften und was von einer Rechnung ausgebucht wurde (ihr Betrag abzüglich des Bezahlten), anteilig zu ihrem Nettobetrag.",
+  "biCustomerCreditTitle": "Gutschriften und Ausbuchungen",
+  "biCustomerDelay": "Tage von der Fälligkeit bis zur Zahlung: Median {median}, 90. Perzentil {p90}, nach Betrag gewichtet {weighted} (negativ: früher)",
+  "biCustomerDunningBasis": "{reminders} Mahnungen zu {reminded} von {due} fälligen Rechnungen",
+  "biCustomerDunningDefinition": "Die Mahnungen zu den im Zeitraum fälligen Rechnungen, nach Stufe.",
+  "biCustomerDunningLevel": "Stufe {level}",
+  "biCustomerDunningOff": "Mahnungen sind für diesen Space ausgeschaltet: Es werden keine gezählt.",
+  "biCustomerDunningTitle": "Mahnaufwand",
+  "biCustomerNamesHidden": "Namen sieht nur, wer personenbezogene Daten lesen darf; alle anderen sehen Ränge.",
+  "biCustomerNothingToShare": "In diesem Zeitraum gibt es nichts aufzuteilen, daher wird kein Anteil gezeigt.",
+  "biCustomerPaidAfterReminder": "{paid} von {reminded} gemahnten Rechnungen wurden nach der ersten Mahnung bezahlt: eine zeitliche Abfolge, kein Beweis, dass die Mahnung die Zahlung bewirkt hat.",
+  "biCustomerPaymentBasis": "{onTime} von {settled} beglichenen Rechnungen bis zur Fälligkeit bezahlt",
+  "biCustomerPaymentDefinition": "Die Rechnungen, die im Zeitraum fällig werden, jede in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn eine abgeglichene Zeile die Zahlung erklärt, sonst das erfasste Zahlungsdatum, nie der Tag der Zuordnung. Beträge sind das, was die Rechnungen schulden, einschließlich MwSt.",
+  "biCustomerPaymentTitle": "Zahlungspünktlichkeit",
+  "biCustomerRank": "Kunde {rank}",
   "biDataNotApplicable": "Keine passende Kapazität",
   "biDataNotRecorded": "Nicht erfasst",
   "biDataPartial": "Unvollständige Daten",
@@ -1305,6 +1335,7 @@
   "@biEditorBasisDocumentDate": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisInvoiceDue": "nach Fälligkeit der Rechnung",
   "biEditorBasisInvoiceMonth": "nach Rechnungsmonat",
   "@biEditorBasisInvoiceMonth": {
     "description": "#2580 BI report editor"

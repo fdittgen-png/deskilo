@@ -2325,6 +2325,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biBasisDocumentDate => 'Datum des Belegs';
 
   @override
+  String get biBasisInvoiceDue => 'Fälligkeitsdatum der Rechnung';
+
+  @override
   String get biBasisInvoiceMonth => 'Monat der Rechnung';
 
   @override
@@ -2511,6 +2514,130 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.';
 
   @override
+  String get biCustomerCohortHeld => 'Zurückgestellt';
+
+  @override
+  String get biCustomerCohortLate => 'Verspätet bezahlt';
+
+  @override
+  String biCustomerCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count Rechnungen, $amount';
+  }
+
+  @override
+  String get biCustomerCohortOnTime => 'Pünktlich bezahlt';
+
+  @override
+  String get biCustomerCohortOpen => 'Unbezahlt';
+
+  @override
+  String get biCustomerCohortPartial => 'Teilweise bezahlt';
+
+  @override
+  String get biCustomerCohortUndated => 'Ohne Zahlungsdatum beglichen';
+
+  @override
+  String get biCustomerCohortUnknownDue => 'Ohne Fälligkeit';
+
+  @override
+  String get biCustomerCohortWrittenOff => 'Ausgebucht';
+
+  @override
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  ) {
+    return 'Die $top größten von $customers Kunden: $topNet von $net netto berechnet';
+  }
+
+  @override
+  String get biCustomerConcentrationDefinition =>
+      'Der Anteil des im Zeitraum netto Berechneten (abzüglich Gutschriften), den die größten Kunden ausmachen, und ihr Anteil an dem, was heute offen ist.';
+
+  @override
+  String biCustomerConcentrationOpen(String topOpen, String open) {
+    return 'Sie schulden $topOpen der heute offenen $open.';
+  }
+
+  @override
+  String get biCustomerConcentrationTitle => 'Kundenkonzentration';
+
+  @override
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  ) {
+    return '$credited in $notes Gutschriften, $writtenOff ausgebucht auf $offs Rechnungen';
+  }
+
+  @override
+  String get biCustomerCreditDefinition =>
+      'Nach dem Monat der Rechnung, netto: die Gutschriften und was von einer Rechnung ausgebucht wurde (ihr Betrag abzüglich des Bezahlten), anteilig zu ihrem Nettobetrag.';
+
+  @override
+  String get biCustomerCreditTitle => 'Gutschriften und Ausbuchungen';
+
+  @override
+  String biCustomerDelay(String median, String p90, String weighted) {
+    return 'Tage von der Fälligkeit bis zur Zahlung: Median $median, 90. Perzentil $p90, nach Betrag gewichtet $weighted (negativ: früher)';
+  }
+
+  @override
+  String biCustomerDunningBasis(String reminders, String reminded, String due) {
+    return '$reminders Mahnungen zu $reminded von $due fälligen Rechnungen';
+  }
+
+  @override
+  String get biCustomerDunningDefinition =>
+      'Die Mahnungen zu den im Zeitraum fälligen Rechnungen, nach Stufe.';
+
+  @override
+  String biCustomerDunningLevel(String level) {
+    return 'Stufe $level';
+  }
+
+  @override
+  String get biCustomerDunningOff =>
+      'Mahnungen sind für diesen Space ausgeschaltet: Es werden keine gezählt.';
+
+  @override
+  String get biCustomerDunningTitle => 'Mahnaufwand';
+
+  @override
+  String get biCustomerNamesHidden =>
+      'Namen sieht nur, wer personenbezogene Daten lesen darf; alle anderen sehen Ränge.';
+
+  @override
+  String get biCustomerNothingToShare =>
+      'In diesem Zeitraum gibt es nichts aufzuteilen, daher wird kein Anteil gezeigt.';
+
+  @override
+  String biCustomerPaidAfterReminder(String paid, String reminded) {
+    return '$paid von $reminded gemahnten Rechnungen wurden nach der ersten Mahnung bezahlt: eine zeitliche Abfolge, kein Beweis, dass die Mahnung die Zahlung bewirkt hat.';
+  }
+
+  @override
+  String biCustomerPaymentBasis(String onTime, String settled) {
+    return '$onTime von $settled beglichenen Rechnungen bis zur Fälligkeit bezahlt';
+  }
+
+  @override
+  String get biCustomerPaymentDefinition =>
+      'Die Rechnungen, die im Zeitraum fällig werden, jede in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn eine abgeglichene Zeile die Zahlung erklärt, sonst das erfasste Zahlungsdatum, nie der Tag der Zuordnung. Beträge sind das, was die Rechnungen schulden, einschließlich MwSt.';
+
+  @override
+  String get biCustomerPaymentTitle => 'Zahlungspünktlichkeit';
+
+  @override
+  String biCustomerRank(String rank) {
+    return 'Kunde $rank';
+  }
+
+  @override
   String get biDataNotApplicable => 'Keine passende Kapazität';
 
   @override
@@ -2580,6 +2707,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biEditorBasisDocumentDate => 'nach Belegdatum';
+
+  @override
+  String get biEditorBasisInvoiceDue => 'nach Fälligkeit der Rechnung';
 
   @override
   String get biEditorBasisInvoiceMonth => 'nach Rechnungsmonat';

@@ -22,6 +22,7 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'bi_customer_views.dart';
 import 'bi_dashboard.dart';
 import 'bi_overview_views.dart';
 import 'bi_purchase_views.dart';
@@ -39,6 +40,7 @@ class BiModuleView {
     required this.notes,
     required this.details,
     this.action,
+    this.rowLabel,
   });
 
   final String Function(AppLocalizations l10n) title;
@@ -68,6 +70,11 @@ class BiModuleView {
 
   /// #2582 — what the card offers beyond reading it (the allocation rules).
   final Widget Function(BuildContext context)? action;
+
+  /// #3294 — the name of one of the module's own rows (a cohort, a level,
+  /// a customer's rank); null leaves the row's label.
+  final String? Function(BiRow row, AppLocalizations l10n, String locale)?
+  rowLabel;
 }
 
 // The BI table's column renderers: locale-aware (NumberFormat,
@@ -172,6 +179,7 @@ final biModuleViews = <String, BiModuleView>{
   ),
   ...purchaseModuleViews,
   ...overviewModuleViews,
+  ...customerModuleViews,
 };
 
 /// The change, worded: "+3.2 pp" for a ratio; for an amount the
@@ -403,6 +411,10 @@ class _Result extends ConsumerWidget {
           groupHeader: query.groupBy == null
               ? null
               : biDimensionName(l10n, query.groupBy!),
+          labelOf: switch (view.rowLabel) {
+            final label? => (row) => label(row, l10n, locale),
+            null => null,
+          },
         ),
         ExpansionTile(
           key: const ValueKey('bi-explain'),

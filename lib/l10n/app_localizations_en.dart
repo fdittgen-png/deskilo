@@ -2306,6 +2306,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biBasisDocumentDate => 'date of the document';
 
   @override
+  String get biBasisInvoiceDue => 'invoice due date';
+
+  @override
   String get biBasisInvoiceMonth => 'month of the invoice';
 
   @override
@@ -2491,6 +2494,130 @@ class AppLocalizationsEn extends AppLocalizations {
       'The whole period is included. Comparison with a completed period is not like-for-like.';
 
   @override
+  String get biCustomerCohortHeld => 'On hold';
+
+  @override
+  String get biCustomerCohortLate => 'Paid late';
+
+  @override
+  String biCustomerCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count invoices, $amount';
+  }
+
+  @override
+  String get biCustomerCohortOnTime => 'Paid on time';
+
+  @override
+  String get biCustomerCohortOpen => 'Unpaid';
+
+  @override
+  String get biCustomerCohortPartial => 'Partly paid';
+
+  @override
+  String get biCustomerCohortUndated => 'Settled without a payment date';
+
+  @override
+  String get biCustomerCohortUnknownDue => 'No due date';
+
+  @override
+  String get biCustomerCohortWrittenOff => 'Written off';
+
+  @override
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  ) {
+    return 'The largest $top of $customers customers: $topNet of $net invoiced net';
+  }
+
+  @override
+  String get biCustomerConcentrationDefinition =>
+      'The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.';
+
+  @override
+  String biCustomerConcentrationOpen(String topOpen, String open) {
+    return 'They owe $topOpen of the $open owed today.';
+  }
+
+  @override
+  String get biCustomerConcentrationTitle => 'Customer concentration';
+
+  @override
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  ) {
+    return '$credited in $notes credit notes, $writtenOff written off on $offs invoices';
+  }
+
+  @override
+  String get biCustomerCreditDefinition =>
+      'By the invoice’s month, net of VAT: the credit notes, and what was written off of an invoice (its total less what was paid), in proportion to its net.';
+
+  @override
+  String get biCustomerCreditTitle => 'Credits and write-offs';
+
+  @override
+  String biCustomerDelay(String median, String p90, String weighted) {
+    return 'Days from the due date to the payment: median $median, 90th percentile $p90, weighted by amount $weighted (negative: early)';
+  }
+
+  @override
+  String biCustomerDunningBasis(String reminders, String reminded, String due) {
+    return '$reminders reminders on $reminded of $due invoices falling due';
+  }
+
+  @override
+  String get biCustomerDunningDefinition =>
+      'The reminders sent for the invoices falling due in the period, by level.';
+
+  @override
+  String biCustomerDunningLevel(String level) {
+    return 'Level $level';
+  }
+
+  @override
+  String get biCustomerDunningOff =>
+      'Dunning is switched off for this space: no reminders are counted.';
+
+  @override
+  String get biCustomerDunningTitle => 'Dunning load';
+
+  @override
+  String get biCustomerNamesHidden =>
+      'Names are shown only to those who may read personal data; the others read ranks.';
+
+  @override
+  String get biCustomerNothingToShare =>
+      'Nothing to share out in this period, so no share is shown.';
+
+  @override
+  String biCustomerPaidAfterReminder(String paid, String reminded) {
+    return '$paid of $reminded reminded invoices were paid after their first reminder: a sequence in time, not proof that the reminder caused the payment.';
+  }
+
+  @override
+  String biCustomerPaymentBasis(String onTime, String settled) {
+    return '$onTime of $settled settled invoices paid by their due date';
+  }
+
+  @override
+  String get biCustomerPaymentDefinition =>
+      'The invoices falling due in the period, each in one group. A settled invoice is on time when its last payment was reported paid on or before its due date: the bank’s value date when a reconciled line explains the payment, the recorded payment date otherwise, never the day it was matched. Amounts are what the invoices owe, VAT included.';
+
+  @override
+  String get biCustomerPaymentTitle => 'Payment punctuality';
+
+  @override
+  String biCustomerRank(String rank) {
+    return 'Customer $rank';
+  }
+
+  @override
   String get biDataNotApplicable => 'No applicable capacity';
 
   @override
@@ -2559,6 +2686,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorBasisDocumentDate => 'by document date';
+
+  @override
+  String get biEditorBasisInvoiceDue => 'by invoice due date';
 
   @override
   String get biEditorBasisInvoiceMonth => 'by invoice month';

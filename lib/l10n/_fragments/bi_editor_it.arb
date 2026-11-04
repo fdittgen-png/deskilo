@@ -664,5 +664,6 @@
   "biEditorDrillHint": "I lettori possono aprire ciò che compone questa cifra, ristretto come questo elemento visivo.",
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
-  }
+  },
+  "biEditorBasisInvoiceDue": "secondo la scadenza della fattura"
 }

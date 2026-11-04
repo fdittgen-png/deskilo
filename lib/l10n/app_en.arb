@@ -2749,6 +2749,10 @@
   "@biBasisDocumentDate": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisInvoiceDue": "invoice due date",
+  "@biBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
+  },
   "biBasisInvoiceMonth": "month of the invoice",
   "@biBasisInvoiceMonth": {
     "description": "#2581 analytical report print layout and exports"
@@ -3005,6 +3009,217 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "The whole period is included. Comparison with a completed period is not like-for-like.",
+  "biCustomerCohortHeld": "On hold",
+  "@biCustomerCohortHeld": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortLate": "Paid late",
+  "@biCustomerCohortLate": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortLine": "{cohort}: {count} invoices, {amount}",
+  "@biCustomerCohortLine": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerCohortOnTime": "Paid on time",
+  "@biCustomerCohortOnTime": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortOpen": "Unpaid",
+  "@biCustomerCohortOpen": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortPartial": "Partly paid",
+  "@biCustomerCohortPartial": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortUndated": "Settled without a payment date",
+  "@biCustomerCohortUndated": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortUnknownDue": "No due date",
+  "@biCustomerCohortUnknownDue": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortWrittenOff": "Written off",
+  "@biCustomerCohortWrittenOff": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerConcentrationBasis": "The largest {top} of {customers} customers: {topNet} of {net} invoiced net",
+  "@biCustomerConcentrationBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "top": {
+        "type": "String"
+      },
+      "customers": {
+        "type": "String"
+      },
+      "topNet": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerConcentrationDefinition": "The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.",
+  "@biCustomerConcentrationDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerConcentrationOpen": "They owe {topOpen} of the {open} owed today.",
+  "@biCustomerConcentrationOpen": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "topOpen": {
+        "type": "String"
+      },
+      "open": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerConcentrationTitle": "Customer concentration",
+  "@biCustomerConcentrationTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCreditBasis": "{credited} in {notes} credit notes, {writtenOff} written off on {offs} invoices",
+  "@biCustomerCreditBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "credited": {
+        "type": "String"
+      },
+      "notes": {
+        "type": "String"
+      },
+      "writtenOff": {
+        "type": "String"
+      },
+      "offs": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerCreditDefinition": "By the invoice’s month, net of VAT: the credit notes, and what was written off of an invoice (its total less what was paid), in proportion to its net.",
+  "@biCustomerCreditDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCreditTitle": "Credits and write-offs",
+  "@biCustomerCreditTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
+  "@biCustomerDelay": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      },
+      "weighted": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningBasis": "{reminders} reminders on {reminded} of {due} invoices falling due",
+  "@biCustomerDunningBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "reminders": {
+        "type": "String"
+      },
+      "reminded": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningDefinition": "The reminders sent for the invoices falling due in the period, by level.",
+  "@biCustomerDunningDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDunningLevel": "Level {level}",
+  "@biCustomerDunningLevel": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningOff": "Dunning is switched off for this space: no reminders are counted.",
+  "@biCustomerDunningOff": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDunningTitle": "Dunning load",
+  "@biCustomerDunningTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNamesHidden": "Names are shown only to those who may read personal data; the others read ranks.",
+  "@biCustomerNamesHidden": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNothingToShare": "Nothing to share out in this period, so no share is shown.",
+  "@biCustomerNothingToShare": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerPaidAfterReminder": "{paid} of {reminded} reminded invoices were paid after their first reminder: a sequence in time, not proof that the reminder caused the payment.",
+  "@biCustomerPaidAfterReminder": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "reminded": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerPaymentBasis": "{onTime} of {settled} settled invoices paid by their due date",
+  "@biCustomerPaymentBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "settled": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerPaymentDefinition": "The invoices falling due in the period, each in one group. A settled invoice is on time when its last payment was reported paid on or before its due date: the bank’s value date when a reconciled line explains the payment, the recorded payment date otherwise, never the day it was matched. Amounts are what the invoices owe, VAT included.",
+  "@biCustomerPaymentDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerPaymentTitle": "Payment punctuality",
+  "@biCustomerPaymentTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerRank": "Customer {rank}",
+  "@biCustomerRank": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  },
   "biDataNotApplicable": "No applicable capacity",
   "biDataNotRecorded": "Not recorded",
   "biDataPartial": "Partial data",
@@ -3082,6 +3297,10 @@
   "biEditorBasisDocumentDate": "by document date",
   "@biEditorBasisDocumentDate": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorBasisInvoiceDue": "by invoice due date",
+  "@biEditorBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
   },
   "biEditorBasisInvoiceMonth": "by invoice month",
   "@biEditorBasisInvoiceMonth": {
