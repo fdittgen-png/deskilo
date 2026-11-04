@@ -20,7 +20,7 @@ import {
   type RemoteDocument,
 } from "./accounting_delivery.ts";
 import { type Posting, type PostingParty, postingSha256, taxBreakdownOf } from "./accounting_postings.ts";
-import { CUSTOM_NUMBERS_OFF, MINOR_VERSION, quickbooksOnline } from "./accounting_quickbooks.ts";
+import { CUSTOM_NUMBERS_OFF, MINOR_VERSION, quickbooksOnline, setAssignmentStepsForTest } from "./accounting_quickbooks.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
 class Log implements DeliveryStore {
@@ -657,4 +657,43 @@ Deno.test("#2371 three groups and entries C, A, A: a third assignment that moves
   assertEquals((await run(q, log, [three], "quickbooks_online_ca", threeMaps)).statuses, ["conflict"]);
   const [row] = log.rows.values();
   assert(row.error.includes("the frozen breakdown fits the rate groups' codes in more than one way"), row.error);
+});
+
+Deno.test("#2371 twelve equivalent groups and entries are matched as one class, at once", async () => {
+  // 12 groups of 10.00 at 5 % on one code: 12! orders, one assignment.
+  const groups = Array.from({ length: 12 }, (_, i) => `g${i}`);
+  const q = realm({ rates: { ...QC_RATES } });
+  const many: Posting = {
+    ...year[0],
+    documentNumber: "F-2026-0018",
+    lines: [
+      line("customers", null, 12600, 0),
+      ...groups.flatMap((g) => [line("revenue", g, 0, 1000), line("vat_output", g, 0, 50)]),
+    ],
+    taxBreakdown: groups.map(() => single(5, 1000, 50)),
+  };
+  const manyMaps = [
+    ...maps,
+    ...groups.flatMap((g) => [
+      { kind: "item" as const, key: `revenue:${g}`, remoteId: `IT-${g}`, remoteCode: "" },
+      { kind: "item" as const, key: `vat_output:${g}`, remoteId: "TC-GST", remoteCode: "" },
+    ]),
+  ];
+  const started = performance.now();
+  assertEquals((await run(q, new Log(), [many], "quickbooks_online_ca", manyMaps)).statuses, ["acknowledged"]);
+  assert(performance.now() - started < 1000, "matched without walking the 12! orders");
+});
+
+Deno.test("#2371 past its step limit the matching stops and the split stays unverified", async () => {
+  const was = setAssignmentStepsForTest(1);
+  try {
+    const log = new Log();
+    assertEquals((await run(realm(), log, [year[0]])).statuses, ["conflict"]);
+    assert(
+      [...log.rows.values()][0].error.includes("too many ways onto the rate groups' codes to be verified"),
+      [...log.rows.values()][0].error,
+    );
+  } finally {
+    setAssignmentStepsForTest(was);
+  }
 });

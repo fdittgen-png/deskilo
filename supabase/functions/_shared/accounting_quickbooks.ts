@@ -315,6 +315,18 @@ function remoteOf(
   };
 }
 
+/** #2371 — the most steps the readback spends matching a sale's frozen
+ * breakdown to its rate groups' codes; past it, the split stays unverified.
+ * Exported for the test of that path. */
+export let ASSIGNMENT_STEPS = 10_000;
+
+/** Sets [ASSIGNMENT_STEPS] for a test, answering the previous value. */
+export function setAssignmentStepsForTest(steps: number): number {
+  const was = ASSIGNMENT_STEPS;
+  ASSIGNMENT_STEPS = steps;
+  return was;
+}
+
 /** The key a percentage is compared under: 9.975 and 9.9750 alike. */
 const percentKey = (p: number): string => Number(p).toFixed(6);
 
@@ -403,49 +415,86 @@ async function taxLineDifferences(
   const entries = p.taxBreakdown.filter((e) => e.taxCents !== 0);
   // Every way to give each entry its own group whose code fits it: entries
   // with the same net and tax but another structure (15 % against 5 % +
-  // 10 %) are told apart by their codes, whatever their order.
-  // The search stops at the first assignment that would expect other
-  // figures than the first one: swapping two identical entries is the same
-  // split, moving a different one is not. Rate groups per invoice are few.
-  const assignments: number[][] = [];
+  // 10 %) are told apart by their codes, whatever their order. Identical
+  // entries (the same components) and identical groups (the same net, tax
+  // and mapped code, so the same rates) are classes: an assignment is how
+  // many of each entry class go to each group class, so swapping two equal
+  // entries is never searched twice. The search keeps the first
+  // assignment's expected figures and stops at one that expects others
+  // (ambiguous); past [ASSIGNMENT_STEPS] steps it stops and the split stays
+  // unverified, never assumed.
+  const classOf = <T>(items: T[], key: (x: T) => string) => {
+    const out = new Map<string, { rep: T; count: number }>();
+    for (const x of items) {
+      const k = key(x);
+      const was = out.get(k);
+      if (was) was.count++;
+      else out.set(k, { rep: x, count: 1 });
+    }
+    return [...out.values()];
+  };
+  const entryClasses = classOf(entries, (e) =>
+    JSON.stringify([e.netCents, e.taxCents, e.components.map((c) => [percentKey(c.percent), c.baseCents, c.taxCents])])
+  );
+  const groupClasses = classOf(taxed, (g) => JSON.stringify([g.net, g.tax, g.code]));
+  // [count] entries of class [ei] onto group class [gi].
+  type Placement = { ei: number; gi: number; count: number };
+  const expectedOf = (placements: Placement[]) => {
+    const out = new Map<string, { amount: number; base: number }>();
+    for (const { ei, gi, count } of placements) {
+      const e = entryClasses[ei].rep;
+      const ids = fit(e, groupClasses[gi].rep)!;
+      e.components.forEach((c, k) => {
+        const was = out.get(ids[k]) ?? { amount: 0, base: 0 };
+        out.set(ids[k], { amount: was.amount + c.taxCents * count, base: was.base + c.baseCents * count });
+      });
+    }
+    return out;
+  };
+  const same = (x: Map<string, { amount: number; base: number }>, y: Map<string, { amount: number; base: number }>) =>
+    x.size === y.size && [...x].every(([k, v]) => y.get(k)?.amount === v.amount && y.get(k)?.base === v.base);
+  let first: Placement[] | null = null;
   let firstExpected: Map<string, { amount: number; base: number }> | null = null;
   let ambiguous = false;
-  const walk = (i: number, taken: Set<number>, chosen: number[]) => {
-    if (ambiguous) return;
-    if (i === entries.length) {
-      const found = expectedOf(chosen);
+  let steps = 0;
+  let exhausted = false;
+  const room = groupClasses.map((g) => g.count);
+  const fits = entryClasses.map((e) => groupClasses.map((g) => fit(e.rep, g.rep) !== null));
+  // Places entry class [ei] (with [left] of it still to place) from group
+  // class [from] on.
+  const walk = (ei: number, left: number, from: number, placed: Placement[]) => {
+    if (ambiguous || exhausted) return;
+    if (++steps > ASSIGNMENT_STEPS) {
+      exhausted = true;
+      return;
+    }
+    if (ei === entryClasses.length) {
+      const found = expectedOf(placed);
       if (firstExpected === null) {
         firstExpected = found;
-        assignments.push([...chosen]);
+        first = [...placed];
       } else if (!same(firstExpected, found)) {
         ambiguous = true;
       }
       return;
     }
-    taxed.forEach((g, gi) => {
-      if (!taken.has(gi) && fit(entries[i], g)) {
-        taken.add(gi);
-        chosen.push(gi);
-        walk(i + 1, taken, chosen);
-        chosen.pop();
-        taken.delete(gi);
+    if (left === 0) {
+      walk(ei + 1, ei + 1 < entryClasses.length ? entryClasses[ei + 1].count : 0, 0, placed);
+      return;
+    }
+    for (let gi = from; gi < groupClasses.length; gi++) {
+      if (!fits[ei][gi] || room[gi] === 0) continue;
+      for (let n = Math.min(left, room[gi]); n >= 1; n--) {
+        room[gi] -= n;
+        placed.push({ ei, gi, count: n });
+        walk(ei, left - n, gi + 1, placed);
+        placed.pop();
+        room[gi] += n;
+        if (ambiguous || exhausted) return;
       }
-    });
+    }
   };
-  const expectedOf = (assignment: number[]) => {
-    const out = new Map<string, { amount: number; base: number }>();
-    assignment.forEach((gi, i) => {
-      const ids = fit(entries[i], taxed[gi])!;
-      entries[i].components.forEach((c, k) => {
-        const was = out.get(ids[k]) ?? { amount: 0, base: 0 };
-        out.set(ids[k], { amount: was.amount + c.taxCents, base: was.base + c.baseCents });
-      });
-    });
-    return out;
-  };
-  const same = (x: Map<string, { amount: number; base: number }>, y: Map<string, { amount: number; base: number }>) =>
-    x.size === y.size && [...x].every(([k, v]) => y.get(k)?.amount === v.amount && y.get(k)?.base === v.base);
-  walk(0, new Set(), []);
+  if (entryClasses.length > 0) walk(0, entryClasses[0].count, 0, []);
   // Why no assignment exists, in the terms a bookkeeper can act on.
   const diagnose = () => {
     for (const entry of entries) {
@@ -471,13 +520,15 @@ async function taxLineDifferences(
     }
   };
   let expected = new Map<string, { amount: number; base: number }>();
-  if (entries.length !== taxed.length || assignments.length === 0) {
+  if (exhausted) {
+    unverified("the frozen breakdown has too many ways onto the rate groups' codes to be verified");
+  } else if (entries.length !== taxed.length || first === null) {
     diagnose();
     if (!differences.length) unverified("no mapped tax code fits the frozen breakdown of every rate group");
   } else if (ambiguous) {
     unverified("the frozen breakdown fits the rate groups' codes in more than one way");
   } else {
-    expected = expectedOf(assignments[0]);
+    expected = expectedOf(first);
   }
   const booked = new Map<string, { amount: number; base: number }>();
   const detail = row.TxnTaxDetail as Record<string, unknown> | undefined;
