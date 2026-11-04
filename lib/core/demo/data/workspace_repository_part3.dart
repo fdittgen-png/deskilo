@@ -124,12 +124,48 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
   }) async =>
       [
         for (final c in conversations)
-          if (includeArchived || !c.isArchived) c,
+          if (includeArchived || !c.isArchived) ?_asSeenByMe(c),
       ]..sort((a, b) {
           // Pinned first, then newest — my_conversations v3 (0146).
           if (a.isPinned != b.isPinned) return a.isPinned ? -1 : 1;
           return b.lastAt.compareTo(a.lastAt);
         });
+
+  /// #3293 — [c] as my_conversations answers the signed-in member, or
+  /// null when they are not in it: a direct thread is its two people's
+  /// (read off its messages; one with none yet is its opener's), and the
+  /// other person is whoever is not me; a group is its roster's (one the
+  /// fake was given no roster for stays listed, as the suite seeds them).
+  Conversation? _asSeenByMe(Conversation c) {
+    final me = myMember.id;
+    if (c.isGroup) {
+      final roster = participants[c.id];
+      return roster == null || roster.any((p) => p.memberId == me) ? c : null;
+    }
+    final people = {
+      for (final n in conversationMessages[c.id] ?? const <MemberNote>[]) ...[
+        n.fromMemberId,
+        ?n.toMemberId,
+      ],
+    };
+    if (people.isEmpty) return c;
+    if (!people.contains(me)) return null;
+    if (c.otherMemberId != me) return c;
+    // The opener's row names me as the other person: I see the opener.
+    return Conversation(
+      id: c.id,
+      kind: c.kind,
+      lastAt: c.lastAt,
+      otherMemberId: people.firstWhere((id) => id != me, orElse: () => me),
+      lastBody: c.lastBody,
+      lastFromMemberId: c.lastFromMemberId,
+      unread: c.lastFromMemberId == me ? 0 : c.unread,
+      participantCount: c.participantCount,
+      pinnedAt: c.pinnedAt,
+      muted: c.muted,
+      archivedAt: c.archivedAt,
+    );
+  }
 
   Future<void> _setConversationPrefsImpl(
     String conversationId, {
@@ -232,7 +268,8 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
       participantCount: memberIds.length + 1,
     ));
     participants[nextGroupId] = [
-      const ConversationParticipant(memberId: 'member-1', isAdmin: true),
+      // #3293 — the creator is the signed-in member.
+      ConversationParticipant(memberId: myMember.id, isAdmin: true),
       for (final id in memberIds)
         ConversationParticipant(memberId: id, isAdmin: false),
     ];
@@ -298,8 +335,9 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
         .firstOrNull;
     final note = MemberNote(
       id: 'msg-${sentMessages.length}',
-      workspaceId: 'workspace-1',
-      fromMemberId: 'member-1',
+      // #3293 — signed by whoever sends it, in their space.
+      workspaceId: myMember.workspaceId,
+      fromMemberId: myMember.id,
       toMemberId: direct?.otherMemberId,
       body: body,
       createdAt: DateTime.utc(2026, 8, 27, 12, sentMessages.length),
@@ -313,7 +351,11 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     int limit = 200,
     DateTime? before,
   }) async {
-    final all = conversationMessages[conversationId] ?? const <MemberNote>[];
+    // #3293 — only what the signed-in member may read.
+    final all = [
+      for (final n in conversationMessages[conversationId] ?? const <MemberNote>[])
+        if (_mayReadNote(n)) n,
+    ];
     final older = before == null
         ? all
         : [for (final n in all) if (n.createdAt.isBefore(before)) n];
@@ -331,7 +373,7 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     // drift every time the reader glances at the thread.
     for (var i = 0; i < memberNotes.length; i++) {
       final n = memberNotes[i];
-      if (n.toMemberId == 'member-1' && n.readAt == null) {
+      if (n.toMemberId == myMember.id && n.readAt == null) {
         memberNotes[i] = MemberNote(
           id: n.id,
           workspaceId: n.workspaceId,
@@ -369,15 +411,37 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     memberNotes.add(MemberNote(
       id: 'note-${memberNotes.length + 1}',
       workspaceId: workspaceId,
-      fromMemberId: 'member-1',
+      fromMemberId: myMember.id, // #3293
       toMemberId: toMemberId,
       body: body,
       createdAt: DateTime.utc(2026, 8, 4, 12, memberNotes.length),
     ));
   }
 
-  Future<List<MemberNote>> _fetchMyNotesImpl(String workspaceId) async =>
-      memberNotes.reversed.toList();
+  /// #3293 — the notes the signed-in member may read, as
+  /// can_read_member_note answers: what they sent or were sent, the admin
+  /// broadcast for an administrator or owner, and a conversation's
+  /// messages for its participants (a conversation whose roster the fake
+  /// was never given stays readable, as the suite's tests seed them).
+  Future<List<MemberNote>> _fetchMyNotesImpl(String workspaceId) async => [
+        for (final n in memberNotes.reversed)
+          if (_mayReadNote(n)) n,
+      ];
+
+  bool _mayReadNote(MemberNote n) {
+    final me = myMember.id;
+    if (n.fromMemberId == me || n.toMemberId == me) return true;
+    final conversation = n.conversationId;
+    if (conversation != null) {
+      // A direct thread is its two people's, answered above.
+      if (conversations.any((c) => c.id == conversation && !c.isGroup)) {
+        return false;
+      }
+      final roster = participants[conversation];
+      return roster == null || roster.any((p) => p.memberId == me && p.leftAt == null);
+    }
+    return n.toMemberId == null && (myMember.isAdmin || myMember.isOwner);
+  }
 
   Future<void> _deleteMemberNoteImpl(String noteId) async {
     deletedNotes.add(noteId);
@@ -393,13 +457,13 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
   /// Whether the WhatsApp mirror channel is configured (0106 probe) —
   /// defaults true so the settings switch shows no warning in tests
   /// that don't care.
-  /// Read receipts (0105): notes addressed to me ('member-1', the
+  /// Read receipts (0105): notes addressed to me ([myMember], the
   /// fake's signed-in member) get their read stamp.
   Future<void> _markMyNotesReadImpl(String workspaceId,
       {String? fromMemberId}) async {
     for (var i = 0; i < memberNotes.length; i++) {
       final n = memberNotes[i];
-      if (n.toMemberId == 'member-1' &&
+      if (n.toMemberId == myMember.id &&
           n.readAt == null &&
           (fromMemberId == null || n.fromMemberId == fromMemberId)) {
         memberNotes[i] = MemberNote(

@@ -79,7 +79,12 @@ class DemoNewYorkData {
       ],
       partTimeMembers: const {},
     ));
-    final events = FakeEventRepository(actor: actor, workspaceId: demoNewYorkSpaceId);
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoNewYorkSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedCityDecisions(events, 'ny', now);
     final money = FakeMoneyRepository(events: events);
     seedCityExpenses(money, demoNewYorkSpaceId, 'ny', now);

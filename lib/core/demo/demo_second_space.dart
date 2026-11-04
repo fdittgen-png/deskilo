@@ -50,7 +50,14 @@ class DemoSecondSpaceData {
     seedLeipzigPlan(plan);
     final reservations = RightsCheckedReservationRepository(actor: actor);
     seedLeipzigBookings(reservations, now);
-    final events = FakeEventRepository(actor: actor);
+    // #3293 — Leipzig's requests are Leipzig's, stamped on its clock and
+    // decided only by whom its rules name.
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoSecondSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedLeipzigRequests(events, now);
     final money = FakeMoneyRepository(events: events);
     seedLeipzigMoney(money, now);

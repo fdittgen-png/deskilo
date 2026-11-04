@@ -130,7 +130,11 @@ class DemoFixture {
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
     final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId);
-    final events = FakeEventRepository(actor: () => actor.memberId);
+    final events = FakeEventRepository(
+      actor: () => actor.memberId,
+      clock: () => today,
+      decider: () => workspaces.memberOf(actor.memberId),
+    );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
@@ -200,6 +204,7 @@ class DemoFixture {
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
+      ..kioskMemberId = demoCast[1].memberId // #3293: their own booking is no conflict
       ..kioskName = demoCast[1].name;
     final problems = [
       ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
@@ -237,7 +242,11 @@ class DemoFixture {
       directory: directory,
       guests: demoGuestVisits(today),
       messenger: withDemoGroup(
-        demoMessenger(today, actingMember: () => actor.memberId),
+        demoMessenger(
+          today,
+          actingMember: () => actor.memberId,
+          actingName: () => workspaces.memberNames[actor.memberId] ?? '',
+        ),
         today,
       ),
       biViews: demoBiViews(),
@@ -331,6 +340,10 @@ class DemoFixture {
   void becomePersona(DemoPersona persona) {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
+    // #3293 — a self-assignment is refused for whoever the persona is.
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles]) {
+      r.callerMemberId = persona.memberId;
+    }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);

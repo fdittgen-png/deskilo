@@ -92,7 +92,12 @@ class DemoLondonData {
       },
       siteRentals: siteRentals,
     ));
-    final events = FakeEventRepository(actor: actor, workspaceId: demoLondonSpaceId);
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoLondonSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedCityDecisions(events, 'uk', now);
     final money = FakeMoneyRepository(events: events);
     seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
