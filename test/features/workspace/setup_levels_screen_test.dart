@@ -32,11 +32,14 @@ Future<FakeWorkspaceRepository> _pump(WidgetTester tester) async {
 
 SetupLevelChange _planFor(FakeWorkspaceRepository repo, SetupLevelVector v) {
   final stored = resolveEnabledFeatures(repo.workspaces.first.featureFlags);
-  final current = currentSetupLevels(stored);
+  // #3300 — the screen plans for the space's country.
+  final country = repo.workspaces.first.countryCode;
+  final current = currentSetupLevels(stored, country: country);
   return planSetupLevels(
     stored: stored,
     current: current,
     chosen: {...current, ...v},
+    country: country,
   );
 }
 

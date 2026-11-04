@@ -27,8 +27,11 @@ import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
 import 'bi_cost_allocation_reader.dart';
 import 'bi_customer_reader.dart';
+import 'bi_item_reader.dart';
 import 'bi_overview_reader.dart';
 import 'bi_purchase_reader.dart';
+import 'bi_sales_reader.dart';
+import 'bi_vendor_reader.dart';
 import 'bi_view_actions.dart';
 import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
@@ -123,6 +126,34 @@ Future<BiResult> biModuleResult(
     'customers.dunning_load' ||
     'customers.credit_and_writeoff' ||
     'customers.concentration' => biCustomerResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'items.unit_prices' ||
+    'items.product_margin' ||
+    'items.vendor_margin' => biItemResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'sales.revenue_by_kind' ||
+    'sales.revenue_by_service' ||
+    'sales.room_margin' => biSalesResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'vendors.spend' ||
+    'vendors.category_spend' ||
+    'vendors.payment_punctuality' ||
+    'vendors.billing_lag' => biVendorResult(
       ref,
       workspaceId,
       moduleId,

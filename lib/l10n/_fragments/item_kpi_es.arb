@@ -1,0 +1,21 @@
+{
+  "purchasesItem": "Artículo comprado",
+  "purchasesNoItem": "Ningún artículo",
+  "purchasesQuantity": "Cantidad",
+  "purchasesUnit": "Unidad (p. ej. caja, resma)",
+  "settingLabelPurchaseItemCostMethod": "Cómo se lee el coste unitario de un artículo en los márgenes",
+  "settingHintPurchaseItemCostMethod": "average: todas las compras aprobadas del artículo hasta el final del periodo, ponderadas por sus unidades. last: la última compra fechada hasta entonces. No cambia ningún documento, solo los márgenes.",
+  "biItemPricesTitle": "Precios de artículos por proveedor",
+  "biItemPricesBasis": "{lines} líneas de compra de {items} artículos",
+  "biItemPricesDefinition": "Las líneas de compra aprobadas que nombran un artículo, con fecha en el periodo: lo que cuestan (base más el impuesto no recuperable). La tabla da el precio unitario de cada artículo por proveedor. Los abonos quedan fuera.",
+  "biItemProductTitle": "Margen por producto",
+  "biItemProductBasis": "Vendido por {revenue} sin IVA, coste {cost} ({method})",
+  "biItemProductDefinition": "Cada artículo que consumieron los miembros en el periodo: su ingreso neto menos las unidades vendidas al coste unitario, según el método de coste del espacio. Un margen, no un beneficio: no se imputa ningún otro coste.",
+  "biItemUncosted": "{count} productos vendidos nunca se compraron: no tienen coste y quedan fuera del coste y del margen",
+  "biItemMethodAverage": "coste medio",
+  "biItemMethodLast": "última compra",
+  "biItemVendorTitle": "Precios de proveedores comparados",
+  "biItemVendorBasis": "{count} proveedores",
+  "biItemVendorDefinition": "Para cada proveedor: lo que los artículos comprados en el periodo costaron por encima del precio unitario más bajo pagado en el periodo por el mismo artículo, a cualquier proveedor. No se da margen por proveedor: ninguna venta registra qué compra consumió.",
+  "biItemUnresolved": "{count} líneas de compra nombran un suministro solo por su texto: no se asocian a ningún artículo y quedan fuera"
+}

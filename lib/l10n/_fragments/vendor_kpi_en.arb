@@ -1,0 +1,198 @@
+{
+  "biVendorSpendTitle": "Spend by supplier",
+  "@biVendorSpendTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorSpendBasis": "{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}",
+  "@biVendorSpendBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "suppliers": {
+        "type": "String"
+      },
+      "top": {
+        "type": "String"
+      },
+      "topCost": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorSpendDefinition": "The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.",
+  "@biVendorSpendDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCredited": "Credit notes subtracted: {amount} ({count})",
+  "@biVendorCredited": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorUnassigned": "Without a supplier (members’ receipts): {amount}",
+  "@biVendorUnassigned": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCategoryTitle": "Spend by category",
+  "@biVendorCategoryTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCategoryBasis": "{count} categories",
+  "@biVendorCategoryBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorNoCategory": "No category",
+  "@biVendorNoCategory": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityTitle": "Paying suppliers on time",
+  "@biVendorPunctualityTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityBasis": "{onTime} of {settled} settled bills paid by their due date",
+  "@biVendorPunctualityBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "settled": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorPunctualityDefinition": "What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.",
+  "@biVendorPunctualityDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
+  "@biVendorDelay": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      },
+      "weighted": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCohortLine": "{cohort}: {count} bills, {amount}",
+  "@biVendorCohortLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCohortOnTime": "Paid on time",
+  "@biVendorCohortOnTime": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortLate": "Paid late",
+  "@biVendorCohortLate": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUndated": "Settled without a payment",
+  "@biVendorCohortUndated": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortPartial": "Partly paid",
+  "@biVendorCohortPartial": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortOpen": "Unpaid",
+  "@biVendorCohortOpen": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortHeld": "On hold",
+  "@biVendorCohortHeld": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUnknownDue": "No due date",
+  "@biVendorCohortUnknownDue": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityLine": "{name}: {onTime} on time, {late} late, of {due} due",
+  "@biVendorPunctualityLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "onTime": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagTitle": "Days for a bill to arrive",
+  "@biVendorLagTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorLagBasis": "{documents} bills; median {median} days, 90th percentile {p90}",
+  "@biVendorLagBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagUndated": "{count} bills carry no supplier date or no received date and are left out",
+  "@biVendorLagUndated": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagDefinition": "The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.",
+  "@biVendorLagDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorNothingToMeasure": "Nothing in the period to measure",
+  "@biVendorNothingToMeasure": {
+    "description": "#3294 step 2 vendor analytics"
+  }
+}

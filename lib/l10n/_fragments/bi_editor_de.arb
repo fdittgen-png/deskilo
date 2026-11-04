@@ -665,5 +665,6 @@
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
   },
-  "biEditorBasisInvoiceDue": "nach Fälligkeit der Rechnung"
+  "biEditorBasisInvoiceDue": "nach Fälligkeit der Rechnung",
+  "biEditorBasisPayableDue": "nach Fälligkeit der Lieferantenschuld"
 }

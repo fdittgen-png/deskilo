@@ -1097,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "fecha de vencimiento de la deuda con el proveedor",
   "biBasisPaymentMatchedAt": "fecha en que se concilió el pago",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1346,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "por vencimiento de la deuda con el proveedor",
   "biEditorBasisPaymentMatched": "según el pago conciliado",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -2095,6 +2097,19 @@
   "biGroupNone": "Sin agrupar",
   "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
   "biInvalidAddress": "Esta dirección pide un análisis que no existe; no se ha leído nada.",
+  "biItemMethodAverage": "coste medio",
+  "biItemMethodLast": "última compra",
+  "biItemPricesBasis": "{lines} líneas de compra de {items} artículos",
+  "biItemPricesDefinition": "Las líneas de compra aprobadas que nombran un artículo, con fecha en el periodo: lo que cuestan (base más el impuesto no recuperable). La tabla da el precio unitario de cada artículo por proveedor. Los abonos quedan fuera.",
+  "biItemPricesTitle": "Precios de artículos por proveedor",
+  "biItemProductBasis": "Vendido por {revenue} sin IVA, coste {cost} ({method})",
+  "biItemProductDefinition": "Cada artículo que consumieron los miembros en el periodo: su ingreso neto menos las unidades vendidas al coste unitario, según el método de coste del espacio. Un margen, no un beneficio: no se imputa ningún otro coste.",
+  "biItemProductTitle": "Margen por producto",
+  "biItemUncosted": "{count} productos vendidos nunca se compraron: no tienen coste y quedan fuera del coste y del margen",
+  "biItemUnresolved": "{count} líneas de compra nombran un suministro solo por su texto: no se asocian a ningún artículo y quedan fuera",
+  "biItemVendorBasis": "{count} proveedores",
+  "biItemVendorDefinition": "Para cada proveedor: lo que los artículos comprados en el periodo costaron por encima del precio unitario más bajo pagado en el periodo por el mismo artículo, a cualquier proveedor. No se da margen por proveedor: ninguna venta registra qué compra consumió.",
+  "biItemVendorTitle": "Precios de proveedores comparados",
   "biKindCurrent": "Ahora",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2536,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Suplementos",
+  "biSalesKindAdjustment": "Ajustes",
+  "biSalesKindBasis": "{gross} con IVA, {lines} líneas en {invoices} facturas",
+  "biSalesKindDefinition": "Lo que vendieron las facturas del periodo, sin IVA, por tipo de línea. Los pagos y reembolsos de una factura no son ventas; un abono se resta. El mes es el de la factura.",
+  "biSalesKindDesk": "Mesas",
+  "biSalesKindLevel": "Plantas",
+  "biSalesKindOffice": "Salas",
+  "biSalesKindOther": "Otros",
+  "biSalesKindOverage": "Medias jornadas extra",
+  "biSalesKindPackage": "Paquetes",
+  "biSalesKindService": "Servicios",
+  "biSalesKindSubscription": "Suscripciones",
+  "biSalesKindTitle": "Ventas por tipo",
+  "biSalesNetUnknown": "{count} líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto",
+  "biSalesNoDescription": "Sin descripción",
+  "biSalesRoomBasis": "{charges} cobrados por {uses} reservas, las salas cuestan {cost} ({rooms} salas)",
+  "biSalesRoomDefinition": "Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.",
+  "biSalesRoomLine": "{room}: cobrado {charges}, coste {cost}, {uses} reservas",
+  "biSalesRoomTitle": "Margen de las salas alquiladas",
+  "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen",
+  "biSalesServiceBasis": "{count} servicios y paquetes",
+  "biSalesServiceDefinition": "Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.",
+  "biSalesServiceTitle": "Ventas por servicio",
   "biSeatCentre": "del tiempo total de puestos",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2584,6 +2622,32 @@
   },
   "biTotal": "Total",
   "biUnavailable": "No se pudo calcular este análisis.",
+  "biVendorCategoryBasis": "{count} categorías",
+  "biVendorCategoryTitle": "Gasto por categoría",
+  "biVendorCohortHeld": "En espera",
+  "biVendorCohortLate": "Pagadas con retraso",
+  "biVendorCohortLine": "{cohort}: {count} facturas, {amount}",
+  "biVendorCohortOnTime": "Pagadas a tiempo",
+  "biVendorCohortOpen": "Sin pagar",
+  "biVendorCohortPartial": "Pagadas en parte",
+  "biVendorCohortUndated": "Saldadas sin pago",
+  "biVendorCohortUnknownDue": "Sin vencimiento",
+  "biVendorCredited": "Abonos restados: {amount} ({count})",
+  "biVendorDelay": "Días desde el vencimiento hasta el pago: mediana {median}, percentil 90 {p90}, ponderado por importe {weighted} (negativo: antes)",
+  "biVendorLagBasis": "{documents} facturas; mediana {median} días, percentil 90 {p90}",
+  "biVendorLagDefinition": "Las facturas de proveedor aprobadas con fecha en el periodo: los días desde la fecha que puso el proveedor hasta su llegada al espacio, de media; la tabla detalla cada proveedor.",
+  "biVendorLagTitle": "Días hasta recibir una factura",
+  "biVendorLagUndated": "{count} facturas sin fecha del proveedor o de recepción quedan fuera",
+  "biVendorNoCategory": "Sin categoría",
+  "biVendorNothingToMeasure": "Nada que medir en el periodo",
+  "biVendorPunctualityBasis": "{onTime} de {settled} facturas saldadas pagadas a su vencimiento",
+  "biVendorPunctualityDefinition": "Lo que el espacio debe a sus proveedores con vencimiento en el periodo, cada deuda en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado a más tardar en su vencimiento: la fecha valor del banco cuando el pago la lleva, si no la fecha de pago registrada.",
+  "biVendorPunctualityLine": "{name}: {onTime} a tiempo, {late} con retraso, de {due} vencidas",
+  "biVendorPunctualityTitle": "Pago puntual a proveedores",
+  "biVendorSpendBasis": "{documents} documentos de {suppliers} proveedores; los {top} mayores: {topCost}",
+  "biVendorSpendDefinition": "Los documentos de compra aprobados con fecha en el periodo: lo que cuestan al espacio, la base más el impuesto no recuperable. Un abono se resta. Los documentos en otra moneda no se convierten.",
+  "biVendorSpendTitle": "Gasto por proveedor",
+  "biVendorUnassigned": "Sin proveedor (recibos de miembros): {amount}",
   "biViewCardsIncompatible": "{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.",
   "biViewChart": "Gráfico",
   "biViewClearMyDefault": "Dejar de abrir mi vista por defecto",
@@ -8231,6 +8295,7 @@
   },
   "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
+  "invoiceExportXeroInvoiceCsv": "Xero (importación de facturas de venta)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
   "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
@@ -12841,6 +12906,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Artículo comprado",
   "purchasesKindBill": "Factura de proveedor",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12877,6 +12943,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Ningún artículo",
   "purchasesNoSupplier": "Ningún proveedor elegido",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13035,6 +13102,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Cantidad",
   "purchasesReference": "Número de factura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13181,6 +13249,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Unidad (p. ej. caja, resma)",
   "pushAllowAction": "Permitir",
   "pushCancelledBody": "Un admin eliminó una reserva.",
   "pushCancelledTitle": "Reserva eliminada",
@@ -15841,6 +15910,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.",
   "settingHintPrivacyMemberSelfService": "true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.",
+  "settingHintPurchaseItemCostMethod": "average: todas las compras aprobadas del artículo hasta el final del periodo, ponderadas por sus unidades. last: la última compra fechada hasta entonces. No cambia ningún documento, solo los márgenes.",
   "settingHintPurchasePaymentChecker": "Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16024,6 +16094,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Releer tras una ausencia",
   "settingLabelPrivacyMemberSelfService": "Los miembros exportan y borran ellos mismos sus datos",
+  "settingLabelPurchaseItemCostMethod": "Cómo se lee el coste unitario de un artículo en los márgenes",
   "settingLabelPurchasePaymentChecker": "Pagos que registra una segunda persona desde (unidades monetarias)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -20319,5 +20390,16 @@
   "workspaceXmlImportPreviewWarning": "El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.",
   "workspaceXmlImportReservationsError": "Este espacio ya tiene reservas, por lo que su plano no se puede sustituir. Solo se puede importar antes de la primera reserva.",
   "workspaceXmlImportSubtitle": "Restaurar los ajustes y el plano desde un archivo exportado. Sustituye el plano actual.",
-  "workspaceXmlImportSuccess": "Espacio importado."
+  "workspaceXmlImportSuccess": "Espacio importado.",
+  "xeroInvoiceAccountCode": "Código de la cuenta de ventas",
+  "xeroInvoiceAccountsIntro": "Xero importa estas facturas como borradores: apruébelas en Xero. La cuenta de ventas y los tipos impositivos son los de su organización: copie sus nombres de Xero.",
+  "xeroInvoiceAccountsTitle": "Exportación Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una factura rectificativa no está en este archivo: Xero importa las rectificativas con su propia plantilla.} other{{count} facturas rectificativas no están en este archivo: Xero importa las rectificativas con su propia plantilla.}}",
+  "xeroInvoiceDateOrder": "Orden de las fechas de su organización",
+  "xeroInvoiceDayFirst": "Primero el día (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Al importar en Xero, elija «Tax exclusive» (sin impuestos) para los importes: el archivo contiene el neto de cada tipo y el IVA registrado en la factura.",
+  "xeroInvoiceMonthFirst": "Primero el mes (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Indique el código de la cuenta de ventas.",
+  "xeroInvoiceRefusedTaxType": "Indique el tipo impositivo de Xero para {rate}.",
+  "xeroInvoiceTaxType": "Tipo impositivo de Xero para {rate}"
 }

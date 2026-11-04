@@ -2334,6 +2334,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biBasisOccurrenceDue => 'Fälligkeitsdatum';
 
   @override
+  String get biBasisPayableDue => 'Fälligkeitsdatum der Lieferantenschuld';
+
+  @override
   String get biBasisPaymentMatchedAt => 'Datum der Zuordnung der Zahlung';
 
   @override
@@ -2730,6 +2733,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'nach Fälligkeit';
+
+  @override
+  String get biEditorBasisPayableDue => 'nach Fälligkeit der Lieferantenschuld';
 
   @override
   String get biEditorBasisPaymentMatched => 'nach zugeordneter Zahlung';
@@ -3363,6 +3369,58 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.';
 
   @override
+  String get biItemMethodAverage => 'Durchschnittskosten';
+
+  @override
+  String get biItemMethodLast => 'letzter Einkauf';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines Einkaufspositionen von $items Artikeln';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Die genehmigten Einkaufspositionen mit Artikel und Datum im Zeitraum: was sie kosten (netto plus nicht abziehbare Steuer). Die Tabelle zeigt den Stückpreis jedes Artikels je Lieferant. Gutschriften bleiben außen vor.';
+
+  @override
+  String get biItemPricesTitle => 'Artikelpreise nach Lieferant';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Netto für $revenue verkauft, Kosten $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.';
+
+  @override
+  String get biItemProductTitle => 'Marge nach Produkt';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count Lieferanten';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.';
+
+  @override
+  String get biItemVendorTitle => 'Lieferantenpreise im Vergleich';
+
+  @override
   String get biKindCurrent => 'Jetzt';
 
   @override
@@ -3717,6 +3775,99 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biRunningLabel => 'laufend';
 
   @override
+  String get biSalesKindAccessories => 'Zuschläge';
+
+  @override
+  String get biSalesKindAdjustment => 'Korrekturen';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross inkl. MwSt., $lines Positionen auf $invoices Rechnungen';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Was die Rechnungen des Zeitraums verkauft haben, netto, nach Art der Position. Zahlungen und Erstattungen auf einer Rechnung sind kein Umsatz; eine Gutschrift wird abgezogen. Maßgeblich ist der Monat der Rechnung.';
+
+  @override
+  String get biSalesKindDesk => 'Tische';
+
+  @override
+  String get biSalesKindLevel => 'Etagen';
+
+  @override
+  String get biSalesKindOffice => 'Räume';
+
+  @override
+  String get biSalesKindOther => 'Sonstiges';
+
+  @override
+  String get biSalesKindOverage => 'Zusätzliche Halbtage';
+
+  @override
+  String get biSalesKindPackage => 'Pakete';
+
+  @override
+  String get biSalesKindService => 'Leistungen';
+
+  @override
+  String get biSalesKindSubscription => 'Abonnements';
+
+  @override
+  String get biSalesKindTitle => 'Umsatz nach Art';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus';
+  }
+
+  @override
+  String get biSalesNoDescription => 'Ohne Bezeichnung';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges für $uses Buchungen berechnet, die Räume kosten $cost ($rooms Räume)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: berechnet $charges, Kosten $cost, $uses Buchungen';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Marge der angemieteten Räume';
+
+  @override
+  String get biSalesRoomsOff =>
+      'Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count Leistungen und Pakete';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.';
+
+  @override
+  String get biSalesServiceTitle => 'Umsatz nach Leistung';
+
+  @override
   String get biSeatCentre => 'der gesamten Platzzeit';
 
   @override
@@ -3768,6 +3919,117 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Diese Analyse konnte nicht berechnet werden.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count Kategorien';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Ausgaben nach Kategorie';
+
+  @override
+  String get biVendorCohortHeld => 'Zurückgestellt';
+
+  @override
+  String get biVendorCohortLate => 'Verspätet bezahlt';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count Rechnungen, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Pünktlich bezahlt';
+
+  @override
+  String get biVendorCohortOpen => 'Unbezahlt';
+
+  @override
+  String get biVendorCohortPartial => 'Teilweise bezahlt';
+
+  @override
+  String get biVendorCohortUndated => 'Ohne Zahlung beglichen';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Ohne Fälligkeit';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Abgezogene Gutschriften: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Tage von der Fälligkeit bis zur Zahlung: Median $median, 90. Perzentil $p90, nach Betrag gewichtet $weighted (negativ: früher)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents Rechnungen; Median $median Tage, 90. Perzentil $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Die genehmigten Lieferantenrechnungen mit Datum im Zeitraum: die Tage vom Datum auf der Rechnung bis zu ihrem Eingang im Space, im Durchschnitt; die Tabelle zeigt jeden Lieferanten.';
+
+  @override
+  String get biVendorLagTitle => 'Tage bis zum Eingang einer Rechnung';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count Rechnungen ohne Lieferantendatum oder Eingangsdatum bleiben außen vor';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Ohne Kategorie';
+
+  @override
+  String get biVendorNothingToMeasure => 'Im Zeitraum gibt es nichts zu messen';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime von $settled beglichenen Rechnungen bis zur Fälligkeit bezahlt';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Was der Space seinen Lieferanten schuldet und im Zeitraum fällig wird, jeweils in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn die Zahlung eines trägt, sonst das erfasste Zahlungsdatum.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime pünktlich, $late verspätet, von $due fälligen';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Pünktliche Zahlung an Lieferanten';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents Belege von $suppliers Lieferanten; die $top größten: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Die genehmigten Einkaufsbelege mit Datum im Zeitraum: was sie den Space kosten, netto plus die nicht abziehbare Steuer. Eine Gutschrift wird abgezogen. Belege in einer anderen Währung werden nicht umgerechnet.';
+
+  @override
+  String get biVendorSpendTitle => 'Ausgaben nach Lieferant';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Ohne Lieferant (Belege von Mitgliedern): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -12405,6 +12667,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (Import von Ausgangsrechnungen)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Diese Rechnung außerhalb der App ausstellen';
 
@@ -20042,6 +20308,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesInvoiceDate => 'Rechnungsdatum';
 
   @override
+  String get purchasesItem => 'Gekaufter Artikel';
+
+  @override
   String get purchasesKindBill => 'Lieferantenrechnung';
 
   @override
@@ -20068,6 +20337,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Andere';
+
+  @override
+  String get purchasesNoItem => 'Kein Artikel';
 
   @override
   String get purchasesNoSupplier => 'Kein Lieferant gewählt';
@@ -20186,6 +20458,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesPurposeStock => 'Handelsware zum Weiterverkauf';
 
   @override
+  String get purchasesQuantity => 'Menge';
+
+  @override
   String get purchasesReference => 'Rechnungsnummer';
 
   @override
@@ -20296,6 +20571,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Gesamt';
+
+  @override
+  String get purchasesUnit => 'Einheit (z. B. Karton, Ries)';
 
   @override
   String get pushAllowAction => 'Erlauben';
@@ -23490,6 +23768,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: jeder genehmigte Kauf des Artikels bis zum Ende des Zeitraums, nach Stückzahl gewichtet. last: der letzte Kauf bis dahin. Es ändert keinen Beleg, nur die Margen.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
 
@@ -23750,6 +24032,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Mitglieder exportieren und löschen ihre Daten selbst';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Wie die Stückkosten eines Artikels in den Margen gelesen werden';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
@@ -30963,4 +31249,53 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Workspace importiert.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Code des Erlöskontos';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importiert diese Rechnungen als Entwürfe: Geben Sie sie in Xero frei. Erlöskonto und Steuersätze sind die Ihrer Organisation; übernehmen Sie deren Namen aus Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Xero-Export';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.',
+      one: 'Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Datumsreihenfolge Ihrer Organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Tag zuerst (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Wählen Sie beim Import in Xero „Tax exclusive“ (netto) für die Beträge: Die Datei enthält je Steuersatz den Nettobetrag und die auf der Rechnung erfasste Steuer.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Monat zuerst (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Geben Sie den Code des Erlöskontos ein.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Nennen Sie den Xero-Steuersatz für $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Xero-Steuersatz für $rate';
+  }
 }

@@ -14,6 +14,7 @@ import '../../domain/supplier.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
 import 'purchase_exchange_rate.dart';
+import 'purchase_item_fields.dart';
 import 'purchase_labels.dart';
 import 'purchase_place_field.dart';
 
@@ -43,6 +44,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   final _gross = TextEditingController();
   final _tax = TextEditingController();
   String? _supplierId;
+  PurchaseItemEntry _item = (itemId: null, quantity: '', unit: '');
   var _purpose = 'unresolved';
   PurchasePlace? _place;
   PurchaseCurrencyChoice _money = (currency: null, rate: null);
@@ -70,6 +72,19 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
     // Another currency than the space's is captured with its rate.
     if (_money.currency != null && _money.rate == null) return null;
+    // #3294 — an item is bought in a quantity above zero.
+    PurchaseItem? item;
+    if (_item.itemId case final id?) {
+      final quantity = double.tryParse(
+        _item.quantity.trim().replaceAll(',', '.'),
+      );
+      if (quantity == null || quantity <= 0) return null;
+      item = PurchaseItem(
+        serviceId: id,
+        quantity: quantity,
+        unit: _item.unit.trim(),
+      );
+    }
     return PurchaseBillDraft(
       grossCents: gross,
       supplierId: _supplierId,
@@ -82,6 +97,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       place: _place,
       currency: _money.currency,
       exchangeRate: _money.rate,
+      item: item,
     );
   }
 
@@ -124,7 +140,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.place == b.place &&
       a.currency == b.currency &&
       a.exchangeRate == b.exchangeRate &&
-      a.dueOn == b.dueOn;
+      a.dueOn == b.dueOn &&
+      a.item == b.item;
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
     context: context,
@@ -198,6 +215,11 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               controller: _description,
               label: l10n.purchasesDescription,
               maxLength: 500,
+            ),
+            // #3294 — the item the line bought, with the purchase figures on.
+            PurchaseItemFields(
+              // recorder-key-exempt: a data callback; the fields are keyed.
+              onChanged: (entry) => _item = entry,
             ),
             // A bill in another currency, with its rate (when switched on).
             PurchaseCurrencyFields(

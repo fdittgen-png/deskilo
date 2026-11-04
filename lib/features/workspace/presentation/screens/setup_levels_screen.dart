@@ -93,7 +93,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final journey = ref.watch(setupJourneyProvider(workspace.id));
     if (journey case AsyncLoading(hasValue: false)) return const LoadingView();
     final stored = resolveEnabledFeatures(workspace.featureFlags);
-    final current = currentSetupLevels(stored);
+    final country = workspace.countryCode;
+    final current = currentSetupLevels(stored, country: country);
     final saved = _restoreOnce(journey, current, workspace.id);
     final recommended = recommendSetupLevels(_answers);
     final vector = {
@@ -104,6 +105,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       stored: stored,
       current: current,
       chosen: vector,
+      country: country,
     );
     final gaps = setupVectorGaps(vector);
     final nothingToApply = _nothingToApply(change, saved, vector);

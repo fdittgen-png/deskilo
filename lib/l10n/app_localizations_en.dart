@@ -2315,6 +2315,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biBasisOccurrenceDue => 'due date';
 
   @override
+  String get biBasisPayableDue => 'supplier payable due date';
+
+  @override
   String get biBasisPaymentMatchedAt => 'date the payment was matched';
 
   @override
@@ -2709,6 +2712,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'by due date';
+
+  @override
+  String get biEditorBasisPayableDue => 'by supplier payable due date';
 
   @override
   String get biEditorBasisPaymentMatched => 'by payment matched';
@@ -3337,6 +3343,58 @@ class AppLocalizationsEn extends AppLocalizations {
       'This address asks for an analysis that does not exist; nothing was read.';
 
   @override
+  String get biItemMethodAverage => 'average cost';
+
+  @override
+  String get biItemMethodLast => 'last purchase';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines purchase lines of $items items';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.';
+
+  @override
+  String get biItemPricesTitle => 'Item prices by supplier';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Sold for $revenue net, cost $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.';
+
+  @override
+  String get biItemProductTitle => 'Margin by product';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count products sold were never bought: they have no cost and are left out of the cost and margin';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count purchase lines name a supply only by its text: they are not matched to an item and are left out';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count suppliers';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.';
+
+  @override
+  String get biItemVendorTitle => 'Supplier prices compared';
+
+  @override
   String get biKindCurrent => 'Now';
 
   @override
@@ -3688,6 +3746,99 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biRunningLabel => 'running';
 
   @override
+  String get biSalesKindAccessories => 'Supplements';
+
+  @override
+  String get biSalesKindAdjustment => 'Adjustments';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross with VAT, $lines lines on $invoices invoices';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.';
+
+  @override
+  String get biSalesKindDesk => 'Desks';
+
+  @override
+  String get biSalesKindLevel => 'Levels';
+
+  @override
+  String get biSalesKindOffice => 'Rooms';
+
+  @override
+  String get biSalesKindOther => 'Other';
+
+  @override
+  String get biSalesKindOverage => 'Extra half-days';
+
+  @override
+  String get biSalesKindPackage => 'Packages';
+
+  @override
+  String get biSalesKindService => 'Services';
+
+  @override
+  String get biSalesKindSubscription => 'Subscriptions';
+
+  @override
+  String get biSalesKindTitle => 'Sales by kind';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count sales lines carry no readable VAT rate: their net is unknown and left out of the net';
+  }
+
+  @override
+  String get biSalesNoDescription => 'No description';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return 'Charged $charges for $uses bookings, the rooms cost $cost ($rooms rooms)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: charged $charges, cost $cost, $uses bookings';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Margin of the rented rooms';
+
+  @override
+  String get biSalesRoomsOff =>
+      'The space rents no rooms: switch on rented rooms to see their margin';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count services and packages';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.';
+
+  @override
+  String get biSalesServiceTitle => 'Sales by service';
+
+  @override
   String get biSeatCentre => 'of all seat time';
 
   @override
@@ -3739,6 +3890,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biUnavailable => 'This analysis could not be computed.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categories';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Spend by category';
+
+  @override
+  String get biVendorCohortHeld => 'On hold';
+
+  @override
+  String get biVendorCohortLate => 'Paid late';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count bills, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Paid on time';
+
+  @override
+  String get biVendorCohortOpen => 'Unpaid';
+
+  @override
+  String get biVendorCohortPartial => 'Partly paid';
+
+  @override
+  String get biVendorCohortUndated => 'Settled without a payment';
+
+  @override
+  String get biVendorCohortUnknownDue => 'No due date';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Credit notes subtracted: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Days from the due date to the payment: median $median, 90th percentile $p90, weighted by amount $weighted (negative: early)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents bills; median $median days, 90th percentile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.';
+
+  @override
+  String get biVendorLagTitle => 'Days for a bill to arrive';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count bills carry no supplier date or no received date and are left out';
+  }
+
+  @override
+  String get biVendorNoCategory => 'No category';
+
+  @override
+  String get biVendorNothingToMeasure => 'Nothing in the period to measure';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime of $settled settled bills paid by their due date';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime on time, $late late, of $due due';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Paying suppliers on time';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documents from $suppliers suppliers; the $top largest: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.';
+
+  @override
+  String get biVendorSpendTitle => 'Spend by supplier';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Without a supplier (members’ receipts): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -12298,6 +12560,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Trial balance, general and auxiliary (PDF, from the book)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv => 'Xero (sales invoice import)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Issue this invoice outside the app';
 
@@ -19853,6 +20118,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesInvoiceDate => 'Invoice date';
 
   @override
+  String get purchasesItem => 'Item bought';
+
+  @override
   String get purchasesKindBill => 'Supplier bill';
 
   @override
@@ -19879,6 +20147,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Other';
+
+  @override
+  String get purchasesNoItem => 'No item';
 
   @override
   String get purchasesNoSupplier => 'No supplier chosen';
@@ -19997,6 +20268,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesPurposeStock => 'Goods for resale';
 
   @override
+  String get purchasesQuantity => 'Quantity';
+
+  @override
   String get purchasesReference => 'Invoice number';
 
   @override
@@ -20106,6 +20380,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unit (e.g. box, ream)';
 
   @override
   String get pushAllowAction => 'Allow';
@@ -23263,6 +23540,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
 
@@ -23512,6 +23793,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Members export and erase their own data directly';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'How an item\'s unit cost is read in the margins';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
@@ -30628,4 +30913,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Workspace imported.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Sales account code';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Xero export';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count credit notes are not in this file: Xero imports credit notes with their own template.',
+      one: 'One credit note is not in this file: Xero imports credit notes with their own template.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Date order in your organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Day first (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Month first (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount => 'Enter the sales account code.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Name the Xero tax rate for $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Xero tax rate for $rate';
+  }
 }

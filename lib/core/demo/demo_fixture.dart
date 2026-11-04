@@ -29,6 +29,7 @@ import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
+import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
 import 'data/notification_service.dart';
 import 'data/plan_resource_repository.dart';
@@ -141,7 +142,7 @@ class DemoFixture {
     );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events, clock: () => today);
     // #2571 — legal holds; books under retention refuse a reset.
     final holds = seedDemoRetentionHolds(workspaces.workspaces.first.id, today);
     workspaces.booksKept = (id) => demoBooksKept(
@@ -173,6 +174,10 @@ class DemoFixture {
     seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
     seedDemoAnnex(floorPlan, reservations, today); // #2568
     seedDemoMoney(money, today);
+    // #3305 — each member reads their own statement.
+    money.accountQueries.statementSource =
+        demoStatementSource(workspaces, reservations, 'ws-1',
+            actor: () => actor.memberId, credits: credits);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoYearOfResources(reservations, workspaces, today);
