@@ -665,5 +665,6 @@
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
   },
-  "biEditorBasisInvoiceDue": "selon l’échéance de la facture"
+  "biEditorBasisInvoiceDue": "selon l’échéance de la facture",
+  "biEditorBasisPayableDue": "par échéance de la dette fournisseur"
 }

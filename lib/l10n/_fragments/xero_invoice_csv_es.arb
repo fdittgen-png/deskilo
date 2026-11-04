@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "invoiceExportXeroInvoiceCsv": "Xero (importación de facturas de venta)",
+  "xeroInvoiceAccountsTitle": "Exportación Xero",
+  "xeroInvoiceAccountsIntro": "Xero importa estas facturas como borradores: apruébelas en Xero. La cuenta de ventas y los tipos impositivos son los de su organización: copie sus nombres de Xero.",
+  "xeroInvoiceAccountCode": "Código de la cuenta de ventas",
+  "xeroInvoiceTaxType": "Tipo impositivo de Xero para {rate}",
+  "xeroInvoiceDateOrder": "Orden de las fechas de su organización",
+  "xeroInvoiceDayFirst": "Primero el día (31/12/2026)",
+  "xeroInvoiceMonthFirst": "Primero el mes (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Indique el código de la cuenta de ventas.",
+  "xeroInvoiceRefusedTaxType": "Indique el tipo impositivo de Xero para {rate}.",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una factura rectificativa no está en este archivo: Xero importa las rectificativas con su propia plantilla.} other{{count} facturas rectificativas no están en este archivo: Xero importa las rectificativas con su propia plantilla.}}",
+  "xeroInvoiceImportTaxExclusive": "Al importar en Xero, elija «Tax exclusive» (sin impuestos) para los importes: el archivo contiene el neto de cada tipo y el IVA registrado en la factura."
+}

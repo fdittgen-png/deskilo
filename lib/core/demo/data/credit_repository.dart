@@ -7,6 +7,10 @@ class FakeCreditRepository implements CreditRepository {
   final balances = <String, int>{};
   final sales = <({String memberId, String productId})>[];
 
+  /// #3305 — the half-days credits covered, per reservation, as the server
+  /// keeps them (`member_credit_uses`, 0237): a released one no longer counts.
+  final uses = <({String reservationId, int halfDays, DateTime? releasedAt})>[];
+
   @override
   Future<List<CreditProduct>> fetchCreditProducts(String workspaceId) async =>
       List.of(products);

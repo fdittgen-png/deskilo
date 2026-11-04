@@ -35,7 +35,7 @@ select ok((select bool_and(public.tax_reference_valid('account_map', value)
           'every row is a valid saf_t row whose role is its key');
 select is((select count(*)::int from public.tax_reference
             where domain = 'account_map' and key like 'saf\_t/%' and country not in ('NO', 'LU', 'RO', 'AT')), 0,
-          'only Norway, Luxembourg, Romania (0626) and Austria (0690) carry SAF-T standard codes');
+          'only Norway, Luxembourg, Romania (0626) and Austria (0676) carry SAF-T standard codes');
 select is((select count(*)::int from public.tax_reference
             where domain = 'account_map' and key like 'saf\_t/%' and confirmed), 0,
           'the codes stay unconfirmed until an accountant has checked them');
@@ -43,6 +43,6 @@ select is((select count(*)::int from public.tax_reference
 select is((select string_agg(key || '=' || (value ->> 'account'), ',' order by key) from public.tax_reference
             where domain = 'account_map' and country = 'AT' and key in ('saf_t/customers', 'saf_t/revenue:standard', 'saf_t/revenue:reduced')),
           'saf_t/customers=2000,saf_t/revenue:reduced=4010,saf_t/revenue:standard=4000',
-          'Austria maps receivables and revenue by rate onto the BMF''s Einheitskontenrahmen (0690)');
+          'Austria maps receivables and revenue by rate onto the BMF''s Einheitskontenrahmen (0676)');
 select * from finish();
 rollback;

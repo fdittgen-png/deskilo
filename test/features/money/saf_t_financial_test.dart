@@ -570,7 +570,7 @@ void main() {
       );
     });
 
-    // 0690 — the reviewed rows the app ships, from the BMF's EKR für SAF-T.
+    // 0676 — the reviewed rows the app ships, from the BMF's EKR für SAF-T.
     test('with the shipped AT rows a standard-rate book is written, every account on the BMF list', () {
       final ekr = {
         for (final line in File('test/fixtures/saft/saft_at/EKR_fuer_SAF-T.csv')

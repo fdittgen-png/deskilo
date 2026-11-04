@@ -112,4 +112,29 @@ void seedDemoAnnex(
       status: ReservationStatus.reserved,
     ),
   );
+  // #3294 step 3 — the Studio's earlier months this year: a morning and a
+  // whole day each month, so its margin has charges to set against the
+  // rent.
+  for (var month = 1; month < day.month; month++) {
+    reservations.reservations.addAll([
+      Reservation(
+        id: 'demo-annex-studio-$month-a',
+        workspaceId: ws,
+        officeId: 'demo-room-studio',
+        memberId: 'member-2',
+        startsAt: demoAt(day.year, month, 10, 9),
+        endsAt: demoAt(day.year, month, 10, 13),
+        status: ReservationStatus.completed,
+      ),
+      Reservation(
+        id: 'demo-annex-studio-$month-b',
+        workspaceId: ws,
+        officeId: 'demo-room-studio',
+        memberId: 'member-3',
+        startsAt: demoAt(day.year, month, 20, 9),
+        endsAt: demoAt(day.year, month, 20, 17),
+        status: ReservationStatus.completed,
+      ),
+    ]);
+  }
 }

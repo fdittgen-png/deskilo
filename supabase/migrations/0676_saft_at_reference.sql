@@ -38,4 +38,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(690);
+select public.set_deskilo_schema_version(676);

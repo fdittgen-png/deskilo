@@ -152,6 +152,7 @@ class _FormatTile extends StatelessWidget {
         'fec' ||
         'datev' ||
         'sage50' ||
+        'xero_invoice_csv' ||
         'ch_kmu' ||
         'banana_transactions' => Icons.table_chart_outlined,
         'saft' ||
@@ -189,6 +190,7 @@ String accountingFormatName(AppLocalizations l10n, String id) => switch (id) {
   'saft_oecd_full' => l10n.invoiceExportSafTFull,
   'datev' => l10n.invoiceExportDatev,
   'sage50' => l10n.invoiceExportSage,
+  'xero_invoice_csv' => l10n.invoiceExportXeroInvoiceCsv,
   'ch_kmu' => l10n.invoiceExportSwissKmu,
   'banana_transactions' => l10n.invoiceExportBanana,
   'accountant_csv' =>
