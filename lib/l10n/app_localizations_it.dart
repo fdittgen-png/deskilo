@@ -12628,6 +12628,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, internazionale)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T con il libro mastro (XML, internazionale)';
 
@@ -23062,11 +23065,61 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'Il codice di settore con cui l\'amministrazione finanziaria austriaca conosce l\'impresa.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Codice di settore (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
 
   @override
   String get saftLedgerTitle => 'Includere le scritture?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'La disposizione della legge austriaca sull\'imposta sul reddito seguita dalla contabilità, come la indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftProfitBasisLabel => 'Modalità di determinazione dell\'utile';
+
+  @override
+  String get saftSmallBusinessHelper =>
+      'Se l\'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Piccola impresa (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Sì';
+
+  @override
+  String get saftStandardAccountsIntro =>
+      'Confermi il conto del piano dei conti standard austriaco (Einheitskontenrahmen) sotto cui è scritto ogni conto del libro. Il suggerimento viene dal ruolo del conto; lo verifichi: non tutti i conti di un ruolo appartengono allo stesso conto standard.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'Nessun suggerimento: inserisca il conto standard.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggerito: $suggestion. Lo confermi o lo modifichi.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Conti del piano standard';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'Il numero che l\'amministrazione finanziaria austriaca assegna all\'impresa, non il numero del registro delle imprese.';
+
+  @override
+  String get saftTaxNumberLabel => 'Numero fiscale (Steuernummer)';
 
   @override
   String get saftWithPostings => 'Con le scritture';

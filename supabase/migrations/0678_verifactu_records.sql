@@ -280,4 +280,4 @@ create policy mcp_delegated_deny on public.verifactu_records as restrictive for 
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(677);
+select public.set_deskilo_schema_version(678);

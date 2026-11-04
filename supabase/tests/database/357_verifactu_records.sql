@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2358 (0677) — the Verifactu records are chained by their huella.
+-- #2358 (0678) — the Verifactu records are chained by their huella.
 --
 -- The huella functions reproduce the three examples the AEAT publishes in
 -- "Detalle de las especificaciones técnicas para generación de la huella"
