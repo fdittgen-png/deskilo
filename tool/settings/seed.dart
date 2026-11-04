@@ -1257,6 +1257,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Whether a member exports and erases their own data directly from the app. Off: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.',
     ),
   ),
+  (
+    since: 'item_margin_kpis',
+    row: (
+      key: 'purchase.item_cost_method',
+      type: 'enum',
+      defaultValue: 'average',
+      min: null,
+      max: null,
+      unit: '',
+      group: 'billing',
+      scopes: ['workspace'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: ['average', 'last'],
+      source: 'kpi_item_margins (#3294)',
+      note: 'What one unit of an item costs when the analytics set its sales against its purchases: average weighs every approved purchase of the item up to the end of the period; last takes the latest purchase dated by then. It changes no document, only how the margin figures are read.',
+    ),
+  ),
 
   (
     since: 'directory_endpoints',

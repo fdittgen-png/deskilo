@@ -2334,6 +2334,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biBasisOccurrenceDue => 'fecha de vencimiento';
 
   @override
+  String get biBasisPayableDue =>
+      'fecha de vencimiento de la deuda con el proveedor';
+
+  @override
   String get biBasisPaymentMatchedAt => 'fecha en que se concilió el pago';
 
   @override
@@ -2730,6 +2734,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'según el vencimiento';
+
+  @override
+  String get biEditorBasisPayableDue =>
+      'por vencimiento de la deuda con el proveedor';
 
   @override
   String get biEditorBasisPaymentMatched => 'según el pago conciliado';
@@ -3361,6 +3369,58 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta dirección pide un análisis que no existe; no se ha leído nada.';
 
   @override
+  String get biItemMethodAverage => 'coste medio';
+
+  @override
+  String get biItemMethodLast => 'última compra';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines líneas de compra de $items artículos';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Las líneas de compra aprobadas que nombran un artículo, con fecha en el periodo: lo que cuestan (base más el impuesto no recuperable). La tabla da el precio unitario de cada artículo por proveedor. Los abonos quedan fuera.';
+
+  @override
+  String get biItemPricesTitle => 'Precios de artículos por proveedor';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Vendido por $revenue sin IVA, coste $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Cada artículo que consumieron los miembros en el periodo: su ingreso neto menos las unidades vendidas al coste unitario, según el método de coste del espacio. Un margen, no un beneficio: no se imputa ningún otro coste.';
+
+  @override
+  String get biItemProductTitle => 'Margen por producto';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count productos vendidos nunca se compraron: no tienen coste y quedan fuera del coste y del margen';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count líneas de compra nombran un suministro solo por su texto: no se asocian a ningún artículo y quedan fuera';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count proveedores';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Para cada proveedor: lo que los artículos comprados en el periodo costaron por encima del precio unitario más bajo pagado en el periodo por el mismo artículo, a cualquier proveedor. No se da margen por proveedor: ninguna venta registra qué compra consumió.';
+
+  @override
+  String get biItemVendorTitle => 'Precios de proveedores comparados';
+
+  @override
   String get biKindCurrent => 'Ahora';
 
   @override
@@ -3712,6 +3772,99 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biRunningLabel => 'en curso';
 
   @override
+  String get biSalesKindAccessories => 'Suplementos';
+
+  @override
+  String get biSalesKindAdjustment => 'Ajustes';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross con IVA, $lines líneas en $invoices facturas';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Lo que vendieron las facturas del periodo, sin IVA, por tipo de línea. Los pagos y reembolsos de una factura no son ventas; un abono se resta. El mes es el de la factura.';
+
+  @override
+  String get biSalesKindDesk => 'Mesas';
+
+  @override
+  String get biSalesKindLevel => 'Plantas';
+
+  @override
+  String get biSalesKindOffice => 'Salas';
+
+  @override
+  String get biSalesKindOther => 'Otros';
+
+  @override
+  String get biSalesKindOverage => 'Medias jornadas extra';
+
+  @override
+  String get biSalesKindPackage => 'Paquetes';
+
+  @override
+  String get biSalesKindService => 'Servicios';
+
+  @override
+  String get biSalesKindSubscription => 'Suscripciones';
+
+  @override
+  String get biSalesKindTitle => 'Ventas por tipo';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto';
+  }
+
+  @override
+  String get biSalesNoDescription => 'Sin descripción';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges cobrados por $uses reservas, las salas cuestan $cost ($rooms salas)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: cobrado $charges, coste $cost, $uses reservas';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Margen de las salas alquiladas';
+
+  @override
+  String get biSalesRoomsOff =>
+      'El espacio no alquila salas: active las salas alquiladas para ver su margen';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count servicios y paquetes';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.';
+
+  @override
+  String get biSalesServiceTitle => 'Ventas por servicio';
+
+  @override
   String get biSeatCentre => 'del tiempo total de puestos';
 
   @override
@@ -3763,6 +3916,117 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biUnavailable => 'No se pudo calcular este análisis.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categorías';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Gasto por categoría';
+
+  @override
+  String get biVendorCohortHeld => 'En espera';
+
+  @override
+  String get biVendorCohortLate => 'Pagadas con retraso';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count facturas, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Pagadas a tiempo';
+
+  @override
+  String get biVendorCohortOpen => 'Sin pagar';
+
+  @override
+  String get biVendorCohortPartial => 'Pagadas en parte';
+
+  @override
+  String get biVendorCohortUndated => 'Saldadas sin pago';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Sin vencimiento';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Abonos restados: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Días desde el vencimiento hasta el pago: mediana $median, percentil 90 $p90, ponderado por importe $weighted (negativo: antes)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents facturas; mediana $median días, percentil 90 $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Las facturas de proveedor aprobadas con fecha en el periodo: los días desde la fecha que puso el proveedor hasta su llegada al espacio, de media; la tabla detalla cada proveedor.';
+
+  @override
+  String get biVendorLagTitle => 'Días hasta recibir una factura';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count facturas sin fecha del proveedor o de recepción quedan fuera';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Sin categoría';
+
+  @override
+  String get biVendorNothingToMeasure => 'Nada que medir en el periodo';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime de $settled facturas saldadas pagadas a su vencimiento';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Lo que el espacio debe a sus proveedores con vencimiento en el periodo, cada deuda en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado a más tardar en su vencimiento: la fecha valor del banco cuando el pago la lleva, si no la fecha de pago registrada.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime a tiempo, $late con retraso, de $due vencidas';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Pago puntual a proveedores';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documentos de $suppliers proveedores; los $top mayores: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Los documentos de compra aprobados con fecha en el periodo: lo que cuestan al espacio, la base más el impuesto no recuperable. Un abono se resta. Los documentos en otra moneda no se convierten.';
+
+  @override
+  String get biVendorSpendTitle => 'Gasto por proveedor';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Sin proveedor (recibos de miembros): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -20001,6 +20265,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesInvoiceDate => 'Fecha de la factura';
 
   @override
+  String get purchasesItem => 'Artículo comprado';
+
+  @override
   String get purchasesKindBill => 'Factura de proveedor';
 
   @override
@@ -20027,6 +20294,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Otro';
+
+  @override
+  String get purchasesNoItem => 'Ningún artículo';
 
   @override
   String get purchasesNoSupplier => 'Ningún proveedor elegido';
@@ -20145,6 +20415,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesPurposeStock => 'Mercancías para reventa';
 
   @override
+  String get purchasesQuantity => 'Cantidad';
+
+  @override
   String get purchasesReference => 'Número de factura';
 
   @override
@@ -20254,6 +20527,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unidad (p. ej. caja, resma)';
 
   @override
   String get pushAllowAction => 'Permitir';
@@ -23450,6 +23726,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: todas las compras aprobadas del artículo hasta el final del periodo, ponderadas por sus unidades. last: la última compra fechada hasta entonces. No cambia ningún documento, solo los márgenes.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.';
 
@@ -23721,6 +24001,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Los miembros exportan y borran ellos mismos sus datos';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Cómo se lee el coste unitario de un artículo en los márgenes';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
