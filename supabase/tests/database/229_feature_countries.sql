@@ -3,7 +3,7 @@
 -- another one, the stored switch is kept, and every other feature answers as
 -- before. Real roles. The EU list is the eu_member rows of the tax reference.
 begin;
-select plan(11);
+select plan(15);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -54,6 +54,14 @@ select ok(not pg_temp.on(current_setting('t.gb'), 'recapitulativeStatement'), 'a
 select ok(pg_temp.on(current_setting('t.gb'), 'vatDeclarations'), 'while its other features answer as they always did');
 select is((select feature_flags ->> 'recapitulativeStatement' from public.workspaces where id = current_setting('t.gb')::uuid), 'true',
   'and the stored switch is untouched');
+
+-- #3300 / 0671: MTD submission is HMRC's, the United Kingdom only
+select is(public.feature_registry() -> 'mtdSubmission' -> 'countries', '["GB"]'::jsonb, 'the registry says: the United Kingdom');
+select ok(pg_temp.on(current_setting('t.gb'), 'mtdSubmission'), 'a British space stored ON has MTD submission');
+select ok(not pg_temp.on(current_setting('t.fr'), 'mtdSubmission') and not pg_temp.on(current_setting('t.de'), 'mtdSubmission'),
+  'a French and a German space stored ON do not');
+select is((select feature_flags ->> 'mtdSubmission' from public.workspaces where id = current_setting('t.fr')::uuid), 'true',
+  'and the French stored switch is untouched');
 
 select * from finish();
 rollback;
