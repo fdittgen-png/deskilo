@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/features/money/domain/document_numbering.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 
@@ -27,7 +26,7 @@ class DemoDocumentNumbering implements DocumentNumbering {
   ) async {
     final s =
         _m.numberSequences[journal] ?? NumberSequence.defaultsFor(journal);
-    return s.format(s.nextValue, kTestNow);
+    return s.format(s.nextValue, _m.clock());
   }
 
   @override

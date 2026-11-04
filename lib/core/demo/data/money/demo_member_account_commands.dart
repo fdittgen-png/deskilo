@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/member_account_commands.dart';
@@ -63,7 +62,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
     // service_charge event — the ledger charge appears on confirmation.
     final events = _m.eventRepository;
     if (events != null) {
-      final now = kTestNow;
+      final now = _m.clock();
       events.events.add(
         WorkspaceEvent(
           id: 'evt-service-${_m.recordedServiceCharges.length}',
@@ -131,7 +130,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
         actualMinutes: record.actualMinutes,
         basis: UsageBasis.corrected,
         correctedFromMinutes: record.countedMinutes,
-        correctedAt: kTestNow,
+        correctedAt: _m.clock(),
         spaceLabel: record.spaceLabel,
       );
     }

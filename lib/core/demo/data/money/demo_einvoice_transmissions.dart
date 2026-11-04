@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
 
@@ -60,7 +59,7 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
       format: format,
       invoiceId: invoiceId,
       status: _m.einvoiceOutcome,
-      sentAt: kTestNow,
+      sentAt: _m.clock(),
       externalId: 'platform-${_m.sentEInvoices.length}',
       environment: environment,
       destination: destination,

@@ -88,18 +88,38 @@ void main() {
           }
         });
 
-        test('${s.name}: a payment is matched to an invoice of the space and '
-            'never exceeds what the invoice asks, a refund aside', () {
+        test('${s.name}: a payment is matched to an invoice of the space, '
+            'never for more than it asks; a refund pays a credit note back in '
+            'full; each is the ledger entry it names, for the same member', () {
           final byId = {for (final i in s.money.invoices) i.id: i};
+          final ledger = {for (final l in s.money.ledger) l.id: l};
+          var linked = 0;
           for (final e in s.money.invoiceMatchesStore.entries) {
             final invoice = byId[e.key];
             expect(invoice, isNotNull, reason: 'match ${e.key} has no invoice');
-            if (e.value.resolution == 'refunded') continue;
-            expect(e.value.paidCents, lessThanOrEqualTo(invoice!.totalCents.abs()),
-                reason: '${invoice.number} paid ${e.value.paidCents}');
-            expect(e.value.paidCents, greaterThanOrEqualTo(0),
-                reason: invoice.number);
+            final m = e.value;
+            if (m.resolution == 'refunded') {
+              expect(invoice!.totalCents, lessThan(0),
+                  reason: '${invoice.number}: only a credit note is refunded');
+              expect(m.paidCents, -invoice.totalCents, reason: invoice.number);
+            } else {
+              expect(m.paidCents, inInclusiveRange(0, invoice!.totalCents),
+                  reason: '${invoice.number} paid ${m.paidCents}');
+              if (m.resolution == 'exact') {
+                expect(m.paidCents, invoice.totalCents, reason: invoice.number);
+              }
+            }
+            if (m.paymentLedgerId case final id?) {
+              linked++;
+              final entry = ledger[id];
+              expect(entry, isNotNull, reason: '${invoice.number}: no ledger $id');
+              expect(entry!.memberId, invoice.memberId, reason: invoice.number);
+              expect(entry.amountCents, m.paidCents, reason: invoice.number);
+              expect(entry.kind, LedgerKind.credit, reason: invoice.number);
+              expect(entry.category, LedgerCategory.payment, reason: invoice.number);
+            }
           }
+          expect(linked, greaterThan(0), reason: 'payments behind the matches');
         });
 
         test('${s.name}: a reminder is sent after the due day and before the '
@@ -173,6 +193,43 @@ void main() {
           }
         });
 
+        test('${s.name}: each member reads their own ledger, and what they '
+            'owe is what their invoices ask less what was paid, written off '
+            'or credited', () async {
+          final credited = {
+            for (final i in s.money.invoices)
+              if (i.totalCents < 0) ?i.replacesInvoiceId,
+          };
+          var owing = 0;
+          for (final member in members) {
+            final ledger = await s.money.fetchLedger(member);
+            expect(ledger.map((l) => l.id).toSet(), {
+              for (final l in s.money.ledger)
+                if (l.memberId == member) l.id,
+            }, reason: '$member reads exactly their own entries');
+            var expected = 0;
+            for (final i in s.money.invoices) {
+              if (i.memberId != member || i.isVoided || i.totalCents <= 0) continue;
+              if (credited.contains(i.id)) continue;
+              final m = s.money.invoiceMatchesStore[i.id];
+              final paid = m == null || m.pending ? 0 : m.paidCents;
+              final closed = m != null &&
+                  !m.pending &&
+                  (m.resolution == 'exact' || m.writeoffAt != null);
+              if (!closed) expected += i.totalCents - paid;
+            }
+            final account = await s.money.fetchMemberAccount(member);
+            expect(account.openTotalCents, expected, reason: member);
+            expect(
+              account.openInvoices.fold(0, (int n, o) => n + o.remainingCents),
+              account.openTotalCents,
+              reason: member,
+            );
+            owing += expected;
+          }
+          expect(owing, greaterThan(0), reason: 'arrears to show');
+        });
+
         test('${s.name}: the VAT returns are in the past and in the space\'s '
             'currency; a line\'s net and VAT are its gross', () {
           for (final d in s.money.vatDeclarations) {
@@ -191,6 +248,45 @@ void main() {
           }
         });
       }
+
+      test('Pézenas holds a credit note refunded in full: its refund is the '
+          'member\'s ledger entry, and it leaves nothing due back', () async {
+        final money = fixture.money;
+        final notes = money.invoices.where((i) => i.totalCents < 0).toList();
+        expect(notes, isNotEmpty, reason: 'a credit note');
+        final refunded = notes
+            .where((i) => money.invoiceMatchesStore[i.id]?.resolution == 'refunded')
+            .toList();
+        expect(refunded, isNotEmpty, reason: 'a refund');
+        for (final note in refunded) {
+          final refunds = money.ledger.where((l) =>
+              l.memberId == note.memberId &&
+              l.kind == LedgerKind.charge &&
+              l.category == LedgerCategory.refund &&
+              l.amountCents == -note.totalCents);
+          expect(refunds, hasLength(1), reason: '${note.number}: its refund');
+          final account = await money.fetchMemberAccount(note.memberId);
+          expect(account.refundsDueCents, 0, reason: note.number);
+        }
+      });
+
+      test('Pézenas voids an unpaid invoice on the Demo\'s day: it leaves the '
+          'member\'s debt by its amount, and a paid one cannot be voided', () async {
+        final money = DemoFixture.build(now: now).money;
+        final unpaid = money.invoices.firstWhere((i) =>
+            !i.isVoided &&
+            i.totalCents > 0 &&
+            !money.invoiceMatchesStore.containsKey(i.id));
+        final before = await money.fetchMemberAccount(unpaid.memberId);
+        await money.voidInvoice(unpaid.id);
+        final voided = money.invoices.singleWhere((i) => i.id == unpaid.id);
+        expect(voided.voidedAt, now);
+        final after = await money.fetchMemberAccount(unpaid.memberId);
+        expect(after.openTotalCents, before.openTotalCents - unpaid.totalCents);
+        final paid = money.invoices.firstWhere(
+            (i) => money.invoiceMatchesStore[i.id]?.resolution == 'exact');
+        await expectLater(money.voidInvoice(paid.id), throwsStateError);
+      });
 
       test('Pézenas books: every posting of the last twelve months balances, and '
           'every issued sale of the period is posted', () async {

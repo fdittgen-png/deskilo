@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_repository.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
@@ -43,7 +42,7 @@ class DemoExpenses implements ExpenseRepository {
             amountCents: share.amountCents.abs(),
             description: title,
             period: period,
-            createdAt: kTestNow,
+            createdAt: _m.clock(),
           ),
         );
       }
@@ -58,8 +57,8 @@ class DemoExpenses implements ExpenseRepository {
         period: period,
         shares: shares,
         status: pending ? 'pending' : 'confirmed',
-        createdAt: kTestNow,
-        appliedAt: pending ? null : kTestNow,
+        createdAt: _m.clock(),
+        appliedAt: pending ? null : _m.clock(),
       ),
     );
     return id;
