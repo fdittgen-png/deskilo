@@ -56,6 +56,7 @@ import {
   type PostingLine,
   type PostingParty,
   roleKey,
+  type TaxEntry,
 } from "./accounting_postings.ts";
 import { exponentOf, toMajor, toMinor } from "./money.ts";
 
@@ -278,8 +279,15 @@ export async function checkRealm(fetchImpl: typeof fetch, cfg: Cfg, countries: s
   return sales?.CustomTxnNumbers === true ? null : CUSTOM_NUMBERS_OFF;
 }
 
-/** What the readback of [row] says of [p], [ours] when it carries [key]. */
-function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expected?: { total: number; tax?: number }): RemoteDocument {
+/** What the readback of [row] says of [p], [ours] when it carries [key];
+ * [taxLines] are the differences of its tax lines (taxLineDifferences). */
+function remoteOf(
+  row: Record<string, unknown>,
+  p: Posting,
+  key: string,
+  expected?: { total: number; tax?: number },
+  taxLines: string[] = [],
+): RemoteDocument {
   const ours = row.PrivateNote === `${NOTE_PREFIX}${key}`;
   const sync = String(row.SyncToken ?? "");
   const differences: string[] = [];
@@ -296,6 +304,7 @@ function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expecte
       }
     }
   }
+  differences.push(...taxLines);
   return {
     id: String(row.Id ?? ""),
     number: String(row.DocNumber ?? row.PaymentRefNum ?? ""),
@@ -304,6 +313,262 @@ function remoteOf(row: Record<string, unknown>, p: Posting, key: string, expecte
     matches: differences.length === 0,
     difference: differences.length > 0 ? differences.join("; ") : undefined,
   };
+}
+
+/** #2371 — the most steps the readback spends matching a sale's frozen
+ * breakdown to its rate groups' codes; past it, the split stays unverified.
+ * Exported for the test of that path. */
+export let ASSIGNMENT_STEPS = 10_000;
+
+/** Sets [ASSIGNMENT_STEPS] for a test, answering the previous value. */
+export function setAssignmentStepsForTest(steps: number): number {
+  const was = ASSIGNMENT_STEPS;
+  ASSIGNMENT_STEPS = steps;
+  return was;
+}
+
+/** The key a percentage is compared under: 9.975 and 9.9750 alike. */
+const percentKey = (p: number): string => Number(p).toFixed(6);
+
+/** #2371 — what the tax lines QuickBooks booked for a sale [row] say of
+ * [p], in a CA or GB realm (a US invoice carries one override code). A
+ * combined code (`GST/QST QC`) is one rate group of the posting but books
+ * one `TaxLine` per rate (GST, QST), so the posting's one tax line per rate
+ * group says nothing of the split. The split is the document's own: its
+ * breakdown as frozen at issue (`taxBreakdown`, `invoices.vat_totals`),
+ * never recomputed from the realm's rates.
+ *
+ * Each frozen entry is the tax of one rate group: it is found by its net
+ * and tax among the posting's groups, and each of its components must be
+ * exactly one rate of the code that group is mapped to — the rate of its
+ * percentage — so a rate of another code, another authority, is never
+ * taken for it, whatever its figures. The expected tax and base are summed
+ * per rate (two codes may share GST) and compared with what QuickBooks
+ * booked per `TaxRateRef`; a booked rate no component claims is a
+ * difference. A breakdown that was not read, an entry no group explains, a
+ * taxed group no entry explains, a component its code has no (or several)
+ * rates for: the split is unverified — reported, never assumed. A string
+ * when the realm could not be asked.
+ *
+ * spec: TaxCode.SalesTaxRateList.TaxRateDetail[].TaxRateRef, TaxRate.RateValue
+ * and TxnTaxDetail.TaxLine[] {Amount, TaxLineDetail {TaxRateRef,
+ * NetAmountTaxable}} — Accounting API v3 reference, not verified against a
+ * live realm. */
+async function taxLineDifferences(
+  fetchImpl: typeof fetch,
+  cfg: Cfg,
+  p: Posting,
+  maps: AccountingMap[],
+  row: Record<string, unknown>,
+): Promise<string[] | string> {
+  if (!p.taxBreakdown) return ["the tax split is unverified: the document's frozen breakdown was not read"];
+  const differences: string[] = [];
+  const unverified = (why: string) => differences.push(`the tax split is unverified: ${why}`);
+  const values = new Map<string, string | null>();
+  const taxed = [...taxedGroups(p)].map((group) => ({
+    group,
+    name: group ?? "the base rate",
+    code: mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: group })),
+    net: revenueLines(p).filter((l) => l.qualifier === group).reduce((s, l) => s + amountOf(l), 0),
+    tax: p.lines
+      .filter((l) => (l.role === ROLE.vatOutput || l.role === ROLE.vatPending) && l.qualifier === group)
+      .reduce((s, l) => s + amountOf(l), 0),
+    rates: [] as { id: string; percent: string | null }[],
+  }));
+  // Every taxed group's mapped code, with its rates and their values.
+  const ratesOf = new Map<string, { id: string; percent: string | null }[]>();
+  for (const g of taxed) {
+    if (!ratesOf.has(g.code)) {
+      const codes = await query(fetchImpl, cfg, "TaxCode", `Id = ${quoted(g.code)}`);
+      if (typeof codes === "string") return codes;
+      const list = (codes[0]?.SalesTaxRateList as Record<string, unknown> | undefined)?.TaxRateDetail;
+      const rates: { id: string; percent: string | null }[] = [];
+      for (const r of Array.isArray(list) ? list as Record<string, unknown>[] : []) {
+        const id = String((r.TaxRateRef as Record<string, unknown> | undefined)?.value ?? "");
+        if (!values.has(id)) {
+          const found = await query(fetchImpl, cfg, "TaxRate", `Id = ${quoted(id)}`);
+          if (typeof found === "string") return found;
+          const v = found[0]?.RateValue;
+          values.set(id, typeof v === "number" || typeof v === "string" ? percentKey(Number(v)) : null);
+        }
+        rates.push({ id, percent: values.get(id) ?? null });
+      }
+      ratesOf.set(g.code, rates);
+    }
+    g.rates = ratesOf.get(g.code)!;
+  }
+  // How [entry] lands on [g]'s code: one distinct rate per component, the
+  // code's rates all used; null when it does not fit.
+  const fit = (entry: TaxEntry, g: (typeof taxed)[number]): string[] | null => {
+    if (g.net !== entry.netCents || g.tax !== entry.taxCents) return null;
+    if (entry.components.length !== g.rates.length) return null;
+    const used = new Set<string>();
+    const ids: string[] = [];
+    for (const c of entry.components) {
+      const candidates = g.rates.filter((r) => r.percent === percentKey(c.percent) && !used.has(r.id));
+      if (candidates.length !== 1) return null;
+      used.add(candidates[0].id);
+      ids.push(candidates[0].id);
+    }
+    return ids;
+  };
+  const entries = p.taxBreakdown.filter((e) => e.taxCents !== 0);
+  // Every way to give each entry its own group whose code fits it: entries
+  // with the same net and tax but another structure (15 % against 5 % +
+  // 10 %) are told apart by their codes, whatever their order. Identical
+  // entries (the same components) and identical groups (the same net, tax
+  // and mapped code, so the same rates) are classes: an assignment is how
+  // many of each entry class go to each group class, so swapping two equal
+  // entries is never searched twice. The search keeps the first
+  // assignment's expected figures and stops at one that expects others
+  // (ambiguous); past [ASSIGNMENT_STEPS] steps it stops and the split stays
+  // unverified, never assumed.
+  const classOf = <T>(items: T[], key: (x: T) => string) => {
+    const out = new Map<string, { rep: T; count: number }>();
+    for (const x of items) {
+      const k = key(x);
+      const was = out.get(k);
+      if (was) was.count++;
+      else out.set(k, { rep: x, count: 1 });
+    }
+    return [...out.values()];
+  };
+  const entryClasses = classOf(entries, (e) =>
+    JSON.stringify([e.netCents, e.taxCents, e.components.map((c) => [percentKey(c.percent), c.baseCents, c.taxCents])])
+  );
+  const groupClasses = classOf(taxed, (g) => JSON.stringify([g.net, g.tax, g.code]));
+  // [count] entries of class [ei] onto group class [gi].
+  type Placement = { ei: number; gi: number; count: number };
+  const expectedOf = (placements: Placement[]) => {
+    const out = new Map<string, { amount: number; base: number }>();
+    for (const { ei, gi, count } of placements) {
+      const e = entryClasses[ei].rep;
+      const ids = fit(e, groupClasses[gi].rep)!;
+      e.components.forEach((c, k) => {
+        const was = out.get(ids[k]) ?? { amount: 0, base: 0 };
+        out.set(ids[k], { amount: was.amount + c.taxCents * count, base: was.base + c.baseCents * count });
+      });
+    }
+    return out;
+  };
+  const same = (x: Map<string, { amount: number; base: number }>, y: Map<string, { amount: number; base: number }>) =>
+    x.size === y.size && [...x].every(([k, v]) => y.get(k)?.amount === v.amount && y.get(k)?.base === v.base);
+  let first: Placement[] | null = null;
+  let firstExpected: Map<string, { amount: number; base: number }> | null = null;
+  let ambiguous = false;
+  let steps = 0;
+  let exhausted = false;
+  const room = groupClasses.map((g) => g.count);
+  const fits = entryClasses.map((e) => groupClasses.map((g) => fit(e.rep, g.rep) !== null));
+  // Places entry class [ei] (with [left] of it still to place) from group
+  // class [from] on.
+  const walk = (ei: number, left: number, from: number, placed: Placement[]) => {
+    if (ambiguous || exhausted) return;
+    if (++steps > ASSIGNMENT_STEPS) {
+      exhausted = true;
+      return;
+    }
+    if (ei === entryClasses.length) {
+      const found = expectedOf(placed);
+      if (firstExpected === null) {
+        firstExpected = found;
+        first = [...placed];
+      } else if (!same(firstExpected, found)) {
+        ambiguous = true;
+      }
+      return;
+    }
+    if (left === 0) {
+      walk(ei + 1, ei + 1 < entryClasses.length ? entryClasses[ei + 1].count : 0, 0, placed);
+      return;
+    }
+    for (let gi = from; gi < groupClasses.length; gi++) {
+      if (!fits[ei][gi] || room[gi] === 0) continue;
+      for (let n = Math.min(left, room[gi]); n >= 1; n--) {
+        room[gi] -= n;
+        placed.push({ ei, gi, count: n });
+        walk(ei, left - n, gi + 1, placed);
+        placed.pop();
+        room[gi] += n;
+        if (ambiguous || exhausted) return;
+      }
+    }
+  };
+  if (entryClasses.length > 0) {
+    walk(0, entryClasses[0].count, 0, []);
+  } else if (taxed.length === 0) {
+    // A sale without tax (zero-rated, exempt): nothing to place, nothing
+    // expected; any tax QuickBooks books is still unexplained below.
+    first = [];
+    firstExpected = new Map();
+  }
+  // Why no assignment exists, in the terms a bookkeeper can act on.
+  const diagnose = () => {
+    for (const entry of entries) {
+      const carriers = taxed.filter((g) => g.net === entry.netCents && g.tax === entry.taxCents);
+      if (carriers.length === 0) {
+        unverified(`no rate group of the document carries ${toMajor(entry.taxCents, p.currency)} at ${entry.percent} %`);
+      } else if (!carriers.some((g) => fit(entry, g))) {
+        const g = carriers[0];
+        const missing = entry.components.find((c) => !g.rates.some((r) => r.percent === percentKey(c.percent)));
+        unverified(
+          missing
+            ? `the tax code ${g.code} of ${g.name} has no rate at ${missing.percent} %`
+            : `the tax code ${g.code} of ${g.name} does not have the rates of the frozen ${entry.percent} %`,
+        );
+      }
+    }
+    for (const g of taxed) {
+      if (!entries.some((entry) => fit(entry, g))) {
+        if (!entries.some((entry) => g.net === entry.netCents && g.tax === entry.taxCents)) {
+          unverified(`the frozen breakdown does not explain the tax of ${g.name}`);
+        }
+      }
+    }
+  };
+  let expected = new Map<string, { amount: number; base: number }>();
+  if (exhausted) {
+    unverified("the frozen breakdown has too many ways onto the rate groups' codes to be verified");
+  } else if (entries.length !== taxed.length || first === null) {
+    diagnose();
+    if (!differences.length) unverified("no mapped tax code fits the frozen breakdown of every rate group");
+  } else if (ambiguous) {
+    unverified("the frozen breakdown fits the rate groups' codes in more than one way");
+  } else {
+    expected = expectedOf(first);
+  }
+  const booked = new Map<string, { amount: number; base: number }>();
+  const detail = row.TxnTaxDetail as Record<string, unknown> | undefined;
+  for (const t of Array.isArray(detail?.TaxLine) ? detail!.TaxLine as Record<string, unknown>[] : []) {
+    const d = (t.TaxLineDetail ?? {}) as Record<string, unknown>;
+    const amount = Math.abs(toMinor(String(t.Amount ?? 0), p.currency) ?? 0);
+    if (amount === 0) continue;
+    const id = String((d.TaxRateRef as Record<string, unknown> | undefined)?.value ?? "");
+    const was = booked.get(id) ?? { amount: 0, base: 0 };
+    booked.set(id, {
+      amount: was.amount + amount,
+      base: was.base + Math.abs(toMinor(String(d.NetAmountTaxable ?? 0), p.currency) ?? 0),
+    });
+  }
+  for (const [id, want] of expected) {
+    const got = booked.get(id);
+    if (!got) {
+      differences.push(`QuickBooks booked no tax at rate ${id}, the document ${toMajor(want.amount, p.currency)}`);
+      continue;
+    }
+    if (got.amount !== want.amount) {
+      differences.push(`QuickBooks tax ${toMajor(got.amount, p.currency)} at rate ${id}, the document ${toMajor(want.amount, p.currency)}`);
+    }
+    if (got.base !== want.base) {
+      differences.push(`QuickBooks taxed ${toMajor(got.base, p.currency)} at rate ${id}, the document ${toMajor(want.base, p.currency)}`);
+    }
+  }
+  for (const [id, got] of booked) {
+    if (!expected.has(id)) {
+      differences.push(`QuickBooks booked tax ${toMajor(got.amount, p.currency)} at rate ${id}, which no mapped code of the document names`);
+    }
+  }
+  return differences;
 }
 
 /** What a sales document's total and tax must read in QuickBooks. */
@@ -394,6 +659,8 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
   };
   const f = ctx.fetch;
   return {
+    // #2371 — a CA or GB sale's tax lines are checked against the frozen split.
+    needsFrozenTax: country !== "US",
     prepare: () =>
       country ? checkRealm(f, cfg, countries) : Promise.resolve(`no QuickBooks realm for ${ctx.targetId}`),
     needs(p): MapNeed[] {
@@ -423,6 +690,11 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
         : entity === "Payment"
         ? { total: p.lines.filter((l) => l.debitCents > 0).reduce((s, l) => s + l.debitCents, 0) }
         : undefined;
+      // #2371 — a CA or GB sale is read back per tax line too.
+      const saleTaxLines = async (r: Record<string, unknown>): Promise<string[] | string> =>
+        (entity === "Invoice" || entity === "CreditMemo") && country !== "US"
+          ? await taxLineDifferences(f, cfg, p, maps, r)
+          : [];
       return {
         async readback(key) {
           const rows = await query(f, cfg, entity, `${byNumber} = ${quoted(p.documentNumber)}`);
@@ -433,7 +705,13 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
           const relevant = entity === "Invoice" || entity === "CreditMemo"
             ? rows
             : rows.filter((r) => r.PrivateNote === `${NOTE_PREFIX}${key}`);
-          return relevant.map((r) => remoteOf(r, p, key, expected));
+          const out: RemoteDocument[] = [];
+          for (const r of relevant) {
+            const lines = await saleTaxLines(r);
+            if (typeof lines === "string") return lines;
+            out.push(remoteOf(r, p, key, expected, lines));
+          }
+          return out;
         },
         async create(key) {
           if (exponentOf(p.currency) === null) return refused(`the currency ${p.currency} is not stated`);
@@ -496,7 +774,11 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
           if (!sent.ok) return failure(sent);
           const row = sent.body[entity] as Record<string, unknown> | undefined;
           if (!row?.Id) return { ok: false, unknown: true, detail: `QuickBooks answered no ${entity}` };
-          return { ok: true, remote: remoteOf(row, p, key, expected) };
+          const lines = await saleTaxLines(row);
+          return {
+            ok: true,
+            remote: remoteOf(row, p, key, expected, typeof lines === "string" ? [lines] : lines),
+          };
         },
       };
     },
