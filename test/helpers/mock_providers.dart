@@ -125,6 +125,7 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_items.dart';
 import 'package:deskilo/features/workspace/domain/kpi_sales.dart';
 import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
@@ -136,6 +137,7 @@ import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/features/workspace/providers/customer_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
+import 'package:deskilo/features/workspace/providers/item_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/features/workspace/providers/sales_kpi_providers.dart';
@@ -256,6 +258,7 @@ List<Override> standardTestOverrides({
   CustomerKpiRepository? customerKpis,
   VendorKpiRepository? vendorKpis,
   SalesKpiRepository? salesKpis,
+  ItemKpiRepository? itemKpis,
   AccessoryRepository? accessories,
   PlaceFeedbackRepository? placeFeedback,
   ReservationRepository? reservations,
@@ -429,6 +432,9 @@ List<Override> standardTestOverrides({
     // #3294 step 3 — nor the sales figures.
     salesKpiRepositoryProvider.overrideWithValue(
         salesKpis ?? const UnavailableSalesKpiRepository()),
+    // #3294 step 4 — nor the item figures.
+    itemKpiRepositoryProvider.overrideWithValue(
+        itemKpis ?? const UnavailableItemKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),

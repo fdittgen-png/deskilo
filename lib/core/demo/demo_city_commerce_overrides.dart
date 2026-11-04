@@ -16,6 +16,7 @@ import '../../features/workspace/domain/kpi_vendors.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/customer_kpi_providers.dart';
+import '../../features/workspace/providers/item_kpi_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/sales_kpi_providers.dart';
 import '../../features/workspace/providers/vendor_kpi_providers.dart';
@@ -24,6 +25,7 @@ import 'data/asset_valuation_repository.dart';
 import 'data/book_profile_repository.dart';
 import 'data/customer_kpi_repository.dart';
 import 'data/demo_cost_kpi_repository.dart';
+import 'data/item_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/money_repository.dart';
@@ -292,6 +294,38 @@ List<Override> _kpiOverrides(
     ),
     purchaseKpiRepositoryProvider.overrideWith(
       (ref) => choose(ref, purchase.$1, purchase.$2, purchase.$3),
+    ),
+    // #3294 step 4 — the item figures over each space's own purchases and
+    // the sales of its catalogue items, in its own currency.
+    itemKpiRepositoryProvider.overrideWith(
+      (ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
+        demoLondonSpaceId => DemoItemKpiRepository(
+          purchases: london.purchases,
+          invoices: () => fixture.london.money.invoices,
+          services: () => fixture.london.money.services,
+          now: now,
+          currency: 'GBP',
+        ),
+        demoNewYorkSpaceId => DemoItemKpiRepository(
+          purchases: newYork.purchases,
+          invoices: () => fixture.newYork.money.invoices,
+          services: () => fixture.newYork.money.services,
+          now: now,
+          currency: 'USD',
+        ),
+        demoSecondSpaceId => DemoItemKpiRepository(
+          purchases: home.purchases,
+          invoices: () => fixture.secondSpace.money.invoices,
+          services: () => fixture.secondSpace.money.services,
+          now: now,
+        ),
+        _ => DemoItemKpiRepository(
+          purchases: home.purchases,
+          invoices: () => fixture.money.invoices,
+          services: () => fixture.money.services,
+          now: now,
+        ),
+      },
     ),
     // #3294 step 2 — the vendor figures over each space's own purchases, in
     // its own currency.

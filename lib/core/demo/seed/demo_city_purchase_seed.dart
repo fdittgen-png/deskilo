@@ -174,6 +174,18 @@ void _siteBills(
               description: title,
               grossCents: cents,
               costSiteId: siteId,
+              // #3294 step 4 — the restocks name the catalogue item they
+              // buy (the city catalogue's snacks and bottled water).
+              serviceId: switch (kind) {
+                'stock' => '$prefix-service-3',
+                'drinks' => '$prefix-service-2',
+                _ => null,
+              },
+              quantity: switch (kind) {
+                'stock' => 50,
+                'drinks' => 40,
+                _ => 1,
+              },
               recognitionKind: kind == 'equipment'
                   ? 'asset'
                   : kind == 'stock'

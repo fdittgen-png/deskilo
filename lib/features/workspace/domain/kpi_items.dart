@@ -38,7 +38,11 @@ const _unitPricesKpi = KpiDefinition(
   aggregation: KpiAggregation.sum,
   permissions: ['viewAnalytics', 'viewFinances'],
   disclosure: KpiDisclosure.financial,
-  prerequisites: ['purchases', 'items on purchase lines', 'the workspace currency'],
+  prerequisites: [
+    'purchases',
+    'items on purchase lines',
+    'the workspace currency',
+  ],
   minCohort: null,
 );
 
@@ -58,7 +62,11 @@ const _productMarginKpi = KpiDefinition(
   aggregation: KpiAggregation.sum,
   permissions: ['viewAnalytics', 'viewFinances'],
   disclosure: KpiDisclosure.financial,
-  prerequisites: ['services', 'items on purchase lines', 'the workspace currency'],
+  prerequisites: [
+    'services',
+    'items on purchase lines',
+    'the workspace currency',
+  ],
   minCohort: null,
 );
 
@@ -78,7 +86,11 @@ const _vendorMarginKpi = KpiDefinition(
   aggregation: KpiAggregation.sum,
   permissions: ['viewAnalytics', 'viewFinances'],
   disclosure: KpiDisclosure.financial,
-  prerequisites: ['purchases', 'items on purchase lines', 'the workspace currency'],
+  prerequisites: [
+    'purchases',
+    'items on purchase lines',
+    'the workspace currency',
+  ],
   minCohort: null,
 );
 
