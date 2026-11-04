@@ -8301,6 +8301,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'purchase_obligations': 'Amounts to pay',
       'purchase_orders': 'Purchase orders',
       'purchase_order_lines': 'Purchase order lines',
+      'purchase_order_sends': 'Purchase order sendings',
+      'purchase_order_receipts': 'Goods receipts',
+      'purchase_order_receipt_lines': 'Goods receipt lines',
       'outgoing_payments': 'Outgoing payments',
       'expense_schedules': 'Scheduled expenses',
       'expense_occurrences': 'Expense dates',
@@ -19614,6 +19617,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseApprovalsTitle => 'Supplier bills to approve';
 
   @override
+  String purchaseBillForOrder(String reference) {
+    return 'Purchase order $reference';
+  }
+
+  @override
+  String get purchaseBillNoOrder => 'No order';
+
+  @override
+  String get purchaseBillOrder => 'Purchase order';
+
+  @override
+  String get purchaseBillOrderHint =>
+      'The order this bill charges: its amounts are taken and stay editable';
+
+  @override
   String get purchaseEntryAdd => 'Add purchase / expense';
 
   @override
@@ -19696,6 +19714,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  ) {
+    return '$description: $received of $ordered received';
+  }
+
+  @override
   String get purchaseOrderMailInvalid =>
       'A sender address, a name without < > or quotes, and on the first save the API key';
 
@@ -19754,6 +19781,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseOrderQuantity => 'Quantity';
+
+  @override
+  String get purchaseOrderReceive => 'Record a delivery';
+
+  @override
+  String purchaseOrderReceiveLine(String description, String left) {
+    return '$description ($left to come)';
+  }
+
+  @override
+  String get purchaseOrderReceiveNote => 'Note (optional)';
+
+  @override
+  String get purchaseOrderReceiveNothing =>
+      'Enter what arrived of at least one line';
+
+  @override
+  String purchaseOrderReceiveTitle(String reference) {
+    return 'Delivery of $reference';
+  }
+
+  @override
+  String get purchaseOrderReceiveTooMany =>
+      'More than what is left of this line';
+
+  @override
+  String get purchaseOrderReceivedOn => 'Arrived on';
 
   @override
   String get purchaseOrderRefused =>

@@ -6,10 +6,14 @@
 // received or cancelled order is final. Nothing leaves the device: an
 // e-mail is simulated (0676's rules — the mail configured, a draft naming
 // its recipient, one attempt that may have left, the same attempt id
-// replayed) and recorded as accepted, the order sent by e-mail.
+// replayed) and recorded as accepted, the order sent by e-mail. A delivery
+// follows 0677: only a sent or partly received order at its revision, no
+// line beyond what was ordered, never dated after today.
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../core/time/date_text.dart';
 import '../../../features/money/domain/purchase_order.dart';
+import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/money/domain/supplier.dart';
 
@@ -29,6 +33,10 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
 
   final List<PurchaseOrder> orders = [];
   final List<PurchaseOrderSend> sends = [];
+  final List<PurchaseOrderReceipt> receipts = [];
+
+  /// The order each draft bill names (#3307), by the bill's id.
+  final Map<String, String> billOrders = {};
 
   /// How the Demo space e-mails its orders; null until configured. The
   /// Demo keeps no key: it only knows one was given.
@@ -51,6 +59,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     String? sentVia,
     DateTime? cancelledAt,
     String? cancelReason,
+    List<PurchaseOrderLine>? lines,
   }) => PurchaseOrder(
     id: o.id,
     reference: o.reference,
@@ -59,7 +68,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     state: state ?? o.state,
     currency: o.currency,
     revision: o.revision + 1,
-    lines: o.lines,
+    lines: lines ?? o.lines,
     expectedOn: o.expectedOn,
     note: o.note,
     recipientEmail: o.recipientEmail,
@@ -305,5 +314,89 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       );
     }
     return resolved;
+  }
+
+  @override
+  Future<List<PurchaseOrderReceipt>> fetchReceipts(String workspaceId) async =>
+      [...receipts]..sort((a, b) => b.receivedOn.compareTo(a.receivedOn));
+
+  @override
+  Future<PurchaseOrder> recordReceipt(
+    String workspaceId,
+    String requestId,
+    PurchaseOrderReceiptDraft draft,
+  ) async {
+    if (_requests[requestId] case final done?) return done;
+    final i = _index(draft.order.id);
+    if (i < 0) throw _refused('unknown purchase order');
+    final o = orders[i];
+    final problems = PurchaseOrderReceiptDraft(
+      order: o,
+      receivedOn: draft.receivedOn,
+      quantities: draft.quantities,
+      note: draft.note,
+    ).problemsOn(now());
+    if (problems.contains(PurchaseOrderReceiptProblem.notReceivable)) {
+      throw _refused('only a sent order receives its goods');
+    }
+    if (o.revision != draft.order.revision) {
+      throw _refused('stale revision', '40001');
+    }
+    if (problems.isNotEmpty) throw _refused('invalid delivery');
+    final lines = [
+      for (final l in o.lines)
+        PurchaseOrderLine(
+          lineNo: l.lineNo,
+          serviceId: l.serviceId,
+          description: l.description,
+          quantity: l.quantity,
+          unit: l.unit,
+          unitPriceCents: l.unitPriceCents,
+          vatRatePercent: l.vatRatePercent,
+          receivedQuantity:
+              l.receivedQuantity +
+              (draft.quantities[l.lineNo] ?? 0).clamp(0, l.remaining),
+        ),
+    ];
+    receipts.add(
+      PurchaseOrderReceipt(
+        id: 'demo-receipt-${receipts.length + 1}',
+        orderId: o.id,
+        receivedOn: DateTime.parse(isoDay(draft.receivedOn)),
+        note: draft.note.trim(),
+        lines: {
+          for (final e in draft.toLines())
+            e['line_no']! as int: e['quantity']! as double,
+        },
+      ),
+    );
+    final complete = lines.every((l) => l.receivedQuantity >= l.quantity);
+    return _requests[requestId] = orders[i] = _with(
+      o,
+      lines: lines,
+      state: complete
+          ? PurchaseOrderState.received
+          : PurchaseOrderState.partlyReceived,
+    );
+  }
+
+  @override
+  Future<void> linkBill(
+    String workspaceId,
+    String purchaseId,
+    String? orderId,
+  ) async {
+    if (orderId == null) {
+      billOrders.remove(purchaseId);
+      return;
+    }
+    final i = _index(orderId);
+    if (i < 0) throw _refused('unknown purchase order');
+    final state = orders[i].state;
+    if (state == PurchaseOrderState.draft ||
+        state == PurchaseOrderState.cancelled) {
+      throw _refused('a bill charges an order that was sent');
+    }
+    billOrders[purchaseId] = orderId;
   }
 }

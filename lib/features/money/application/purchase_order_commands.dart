@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3307 — what a buyer asks of the purchase orders: save a draft, mark a
-// printed one sent, cancel one with its reason. The server decides; the
-// list is read again after each.
+// printed one sent, cancel one with its reason, record a delivery, name
+// the order a supplier bill charges. The server decides; the list is read
+// again after each.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/purchase_order.dart';
+import '../domain/purchase_order_receipt.dart';
 import '../providers/purchase_order_providers.dart';
 
 class PurchaseOrderCommands {
@@ -83,6 +85,26 @@ class PurchaseOrderCommands {
     _ref.invalidate(purchaseOrderMailSettingsProvider(workspaceId));
     return saved;
   }
+
+  /// Records a delivery; the orders and the deliveries are read again.
+  Future<PurchaseOrder> recordReceipt(
+    String workspaceId,
+    String requestId,
+    PurchaseOrderReceiptDraft draft,
+  ) async {
+    final order = await _repo.recordReceipt(workspaceId, requestId, draft);
+    _ref
+      ..invalidate(purchaseOrdersProvider(workspaceId))
+      ..invalidate(purchaseOrderReceiptsProvider(workspaceId));
+    return order;
+  }
+
+  /// Names [orderId] as the order the draft bill [purchaseId] charges.
+  Future<void> linkBill(
+    String workspaceId,
+    String purchaseId,
+    String? orderId,
+  ) => _repo.linkBill(workspaceId, purchaseId, orderId);
 
   Future<PurchaseOrder> _refreshed(
     String workspaceId,

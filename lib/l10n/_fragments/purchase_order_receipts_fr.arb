@@ -1,0 +1,14 @@
+{
+  "purchaseOrderLineReceived": "{description} : {received} reçus sur {ordered}",
+  "purchaseOrderReceive": "Enregistrer une réception",
+  "purchaseOrderReceiveTitle": "Réception de {reference}",
+  "purchaseOrderReceiveTooMany": "Plus que ce qui reste à recevoir de cette ligne",
+  "purchaseOrderReceiveNothing": "Indiquez ce qui est arrivé d’au moins une ligne",
+  "purchaseOrderReceivedOn": "Arrivé le",
+  "purchaseOrderReceiveLine": "{description} ({left} à venir)",
+  "purchaseOrderReceiveNote": "Note (facultative)",
+  "purchaseBillOrder": "Bon de commande",
+  "purchaseBillOrderHint": "La commande que cette facture règle : ses montants sont repris et restent modifiables",
+  "purchaseBillNoOrder": "Aucune commande",
+  "purchaseBillForOrder": "Bon de commande {reference}"
+}

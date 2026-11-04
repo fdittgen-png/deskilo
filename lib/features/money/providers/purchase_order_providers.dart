@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/supabase_purchase_order_repository.dart';
 import '../domain/purchase_order.dart';
+import '../domain/purchase_order_receipt.dart';
 import 'credit_providers.dart';
 
 final purchaseOrderRepositoryProvider = Provider<PurchaseOrderRepository>(
@@ -32,4 +33,11 @@ final purchaseOrderMailSettingsProvider = FutureProvider.autoDispose
       (ref, workspaceId) => ref
           .watch(purchaseOrderRepositoryProvider)
           .fetchMailSettings(workspaceId),
+    );
+
+/// #3307 — the space's deliveries, the latest first.
+final purchaseOrderReceiptsProvider = FutureProvider.autoDispose
+    .family<List<PurchaseOrderReceipt>, String>(
+      (ref, workspaceId) =>
+          ref.watch(purchaseOrderRepositoryProvider).fetchReceipts(workspaceId),
     );

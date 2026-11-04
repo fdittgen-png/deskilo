@@ -9,10 +9,13 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase.dart';
+import '../../domain/purchase_order.dart';
 import '../../domain/supplier.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import 'purchase_bill_order_field.dart';
 import 'purchase_exchange_rate.dart';
 import 'purchase_labels.dart';
 import 'purchase_place_field.dart';
@@ -43,6 +46,9 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   final _gross = TextEditingController();
   final _tax = TextEditingController();
   String? _supplierId;
+
+  /// #3307 — the order the bill charges, when one is picked.
+  String? _orderId;
   var _purpose = 'unresolved';
   PurchasePlace? _place;
   PurchaseCurrencyChoice _money = (currency: null, rate: null);
@@ -105,13 +111,31 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       message: 'purchase draft save failed',
       errorText: context.l10n.purchasesRefused,
       action: () async {
-        await ref
+        final id = await ref
             .read(purchaseCommandProvider)
             .saveBill(widget.workspaceId, _requestId, draft);
+        if (id != null && _orderId != null) {
+          await ref
+              .read(purchaseOrderCommandsProvider)
+              .linkBill(widget.workspaceId, id, _orderId);
+        }
       },
     );
     if (ok && mounted) navigator.pop(true);
   }
+
+  /// #3307 — takes the picked order's supplier and amounts; the bill's own
+  /// figures stay editable, as the supplier wrote them.
+  void _takeOrder(PurchaseOrder? order) => setState(() {
+    _orderId = order?.id;
+    if (order == null) return;
+    _supplierId = order.supplierId;
+    _gross.text = centsToMajor(order.totalCents);
+    _tax.text = centsToMajor(order.vatCents);
+    if (_description.text.trim().isEmpty) {
+      _description.text = context.l10n.purchaseBillForOrder(order.reference);
+    }
+  });
 
   static bool _same(PurchaseBillDraft a, PurchaseBillDraft b) =>
       a.grossCents == b.grossCents &&
@@ -151,21 +175,31 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownButtonFormField<String?>(
-              key: const ValueKey('purchase-supplier'),
-              initialValue: _supplierId,
-              decoration: InputDecoration(labelText: l10n.purchasesSupplier),
-              items: [
-                DropdownMenuItem<String?>(
-                  child: Text(l10n.purchasesNoSupplier),
-                ),
-                for (final s in suppliers)
+            // An order picked below sets the supplier: rebuilt with it.
+            KeyedSubtree(
+              key: ValueKey('purchase-supplier-of-${_supplierId ?? ''}'),
+              child: DropdownButtonFormField<String?>(
+                key: const ValueKey('purchase-supplier'),
+                initialValue: _supplierId,
+                decoration: InputDecoration(labelText: l10n.purchasesSupplier),
+                items: [
                   DropdownMenuItem<String?>(
-                    value: s.id,
-                    child: Text('${s.number} · ${s.name}'),
+                    child: Text(l10n.purchasesNoSupplier),
                   ),
-              ],
-              onChanged: (v) => setState(() => _supplierId = v),
+                  for (final s in suppliers)
+                    DropdownMenuItem<String?>(
+                      value: s.id,
+                      child: Text('${s.number} · ${s.name}'),
+                    ),
+                ],
+                onChanged: (v) => setState(() => _supplierId = v),
+              ),
+            ),
+            PurchaseBillOrderField(
+              workspaceId: widget.workspaceId,
+              supplierId: _supplierId,
+              orderId: _orderId,
+              onChanged: _takeOrder,
             ),
             // #2576 — what it is for, in plain words; no tax class or useful
             // life is asked of whoever submits.

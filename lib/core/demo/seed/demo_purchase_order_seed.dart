@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3307 — each purchasing space's orders to its suppliers: one received
-// last month, one sent and awaited, one draft being prepared, and one
-// cancelled, so the list, the print, the edit and the cancellation can all
-// be tried. Sending stays in the Demo: nothing is e-mailed.
+// last month in two deliveries, one partly received, one sent and awaited,
+// one draft being prepared, and one cancelled, so the list, the print, the
+// edit, a delivery and the cancellation can all be tried. Sending stays in
+// the Demo: nothing is e-mailed.
 import '../../../features/money/domain/purchase_order.dart';
+import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../data/purchase_order_repository.dart';
 
 void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
@@ -31,6 +33,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
     required int supplier,
     DateTime? expected,
     DateTime? sent,
+    Map<int, double> received = const {},
   }) {
     final s = suppliers[supplier % suppliers.length];
     return PurchaseOrder(
@@ -59,7 +62,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
           unit: 'unit',
           unitPriceCents: 90,
           vatRatePercent: 20,
-          receivedQuantity: state == PurchaseOrderState.received ? 40 : 0,
+          receivedQuantity: received[1] ?? 0,
         ),
         PurchaseOrderLine(
           lineNo: 2,
@@ -68,7 +71,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
           unit: 'roll',
           unitPriceCents: 150,
           vatRatePercent: 20,
-          receivedQuantity: state == PurchaseOrderState.received ? 12 : 0,
+          receivedQuantity: received[2] ?? 0,
         ),
       ],
     );
@@ -84,6 +87,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
       supplier: 0,
       expected: lastMonth.add(const Duration(days: 7)),
       sent: lastMonth,
+      received: {1: 40, 2: 12},
     ),
     order(
       2,
@@ -106,5 +110,32 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
       supplier: 0,
       expected: thisMonth.add(const Duration(days: 14)),
     ),
+    order(
+      5,
+      PurchaseOrderState.partlyReceived,
+      lastMonth.add(const Duration(days: 15)),
+      supplier: 0,
+      expected: lastMonth.add(const Duration(days: 20)),
+      sent: lastMonth.add(const Duration(days: 15)),
+      received: {1: 20},
+    ),
+  ]);
+  // What arrived: the first order in two deliveries, the fifth in one.
+  PurchaseOrderReceipt receipt(
+    int n,
+    int order,
+    int days,
+    Map<int, double> lines,
+  ) => PurchaseOrderReceipt(
+    id: 'demo-receipt-$n',
+    orderId: 'demo-order-${lastMonth.year}-$order',
+    receivedOn: lastMonth.add(Duration(days: days)),
+    lines: lines,
+    note: n == 1 ? 'Towels short by six' : '',
+  );
+  orders.receipts.addAll([
+    receipt(1, 1, 6, {1: 40, 2: 6}),
+    receipt(2, 1, 9, {2: 6}),
+    receipt(3, 5, 22, {1: 20}),
   ]);
 }

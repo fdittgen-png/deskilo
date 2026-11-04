@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3307 — the purchase orders over Supabase: read by RLS (managePurchases
-// or viewFinances), written only through the RPCs of 0674.
+// or viewFinances), written only through the RPCs of 0674, 0676 and 0677.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/date_text.dart';
 import '../domain/purchase_order.dart';
+import '../domain/purchase_order_receipt.dart';
 
 class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
   SupabasePurchaseOrderRepository(this._client);
@@ -157,4 +159,54 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
       },
     ),
   );
+
+  @override
+  Future<List<PurchaseOrderReceipt>> fetchReceipts(String workspaceId) async {
+    final rows = await _client
+        .from('purchase_order_receipts')
+        .select(
+          'id, order_id, received_on, note, '
+          'purchase_order_receipt_lines(quantity, purchase_order_lines(line_no))',
+        )
+        .eq('workspace_id', workspaceId)
+        .order('received_on', ascending: false)
+        .order('created_datetime', ascending: false);
+    return [for (final row in rows) PurchaseOrderReceipt.fromJson(row)];
+  }
+
+  @override
+  Future<PurchaseOrder> recordReceipt(
+    String workspaceId,
+    String requestId,
+    PurchaseOrderReceiptDraft draft,
+  ) async => _order(
+    await _client.rpc<Object?>(
+      'record_purchase_order_receipt_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_order_id': draft.order.id,
+        'p_revision': draft.order.revision,
+        'p_received_on': isoDay(draft.receivedOn),
+        'p_lines': draft.toLines(),
+        'p_note': draft.note.trim(),
+        'p_request_id': requestId,
+      },
+    ),
+  );
+
+  @override
+  Future<void> linkBill(
+    String workspaceId,
+    String purchaseId,
+    String? orderId,
+  ) async {
+    await _client.rpc<Object?>(
+      'link_purchase_to_order_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_purchase_id': purchaseId,
+        'p_order_id': orderId,
+      },
+    );
+  }
 }

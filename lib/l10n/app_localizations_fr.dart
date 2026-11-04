@@ -8373,6 +8373,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'purchase_obligations': 'Montants à payer',
       'purchase_orders': 'Bons de commande',
       'purchase_order_lines': 'Lignes de commande',
+      'purchase_order_sends': 'Envois de commandes',
+      'purchase_order_receipts': 'Réceptions',
+      'purchase_order_receipt_lines': 'Lignes de réception',
       'outgoing_payments': 'Paiements sortants',
       'expense_schedules': 'Dépenses planifiées',
       'expense_occurrences': 'Échéances de dépenses',
@@ -19815,6 +19818,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchaseApprovalsTitle => 'Factures fournisseurs à approuver';
 
   @override
+  String purchaseBillForOrder(String reference) {
+    return 'Bon de commande $reference';
+  }
+
+  @override
+  String get purchaseBillNoOrder => 'Aucune commande';
+
+  @override
+  String get purchaseBillOrder => 'Bon de commande';
+
+  @override
+  String get purchaseBillOrderHint =>
+      'La commande que cette facture règle : ses montants sont repris et restent modifiables';
+
+  @override
   String get purchaseEntryAdd => 'Ajouter un achat / une dépense';
 
   @override
@@ -19897,6 +19915,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  ) {
+    return '$description : $received reçus sur $ordered';
+  }
+
+  @override
   String get purchaseOrderMailInvalid =>
       'Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API';
 
@@ -19955,6 +19982,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchaseOrderQuantity => 'Quantité';
+
+  @override
+  String get purchaseOrderReceive => 'Enregistrer une réception';
+
+  @override
+  String purchaseOrderReceiveLine(String description, String left) {
+    return '$description ($left à venir)';
+  }
+
+  @override
+  String get purchaseOrderReceiveNote => 'Note (facultative)';
+
+  @override
+  String get purchaseOrderReceiveNothing =>
+      'Indiquez ce qui est arrivé d’au moins une ligne';
+
+  @override
+  String purchaseOrderReceiveTitle(String reference) {
+    return 'Réception de $reference';
+  }
+
+  @override
+  String get purchaseOrderReceiveTooMany =>
+      'Plus que ce qui reste à recevoir de cette ligne';
+
+  @override
+  String get purchaseOrderReceivedOn => 'Arrivé le';
 
   @override
   String get purchaseOrderRefused =>

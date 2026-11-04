@@ -36,3 +36,6 @@ const String accountingConnectorsKey = 'accountingConnectors';
 /// #2377 — the book periods and the export log: with the accounting
 /// systems, what makes the server log a file handed out.
 const String accountingPeriodsKey = 'accountingPeriods';
+
+/// #3307 — the purchase orders to the suppliers.
+const String purchaseOrdersKey = 'purchaseOrders';

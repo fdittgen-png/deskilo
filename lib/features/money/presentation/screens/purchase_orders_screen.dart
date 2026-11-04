@@ -2,7 +2,8 @@
 //
 // #3307 — the space's purchase orders (`/money/purchase-orders`): the list,
 // the latest first, each with its supplier, state and total; a buyer
-// (managePurchases) drafts, edits, prints, marks sent and cancels; a
+// (managePurchases) drafts, edits, prints, marks sent, records what
+// arrived and cancels; a
 // finance reader reads and prints. The server decides every write.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
 import '../purchase_order_print.dart';
 import '../widgets/purchase_order_mail_sheet.dart';
+import '../widgets/purchase_order_receipt_actions.dart';
 import '../widgets/purchase_order_send_actions.dart';
 import '../widgets/purchase_order_sheet.dart';
 import 'money_view_data.dart';
@@ -274,6 +276,11 @@ class _OrderTile extends ConsumerWidget {
               workspaceId: workspaceId,
               canWrite: canWrite,
               letterhead: letterhead,
+            ),
+            PurchaseOrderReceiptActions(
+              order: order,
+              workspaceId: workspaceId,
+              canWrite: canWrite,
             ),
           ],
         ),

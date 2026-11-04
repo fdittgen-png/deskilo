@@ -13787,7 +13787,7 @@ abstract class AppLocalizations {
   /// #2861 workspace export: exportSheetName
   ///
   /// In en, this message translates to:
-  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
+  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
   String exportSheetName(String key);
 
   /// #669 - accounting export formats
@@ -32739,6 +32739,30 @@ abstract class AppLocalizations {
   /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
 
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order {reference}'**
+  String purchaseBillForOrder(String reference);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'No order'**
+  String get purchaseBillNoOrder;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get purchaseBillOrder;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'The order this bill charges: its amounts are taken and stay editable'**
+  String get purchaseBillOrderHint;
+
   /// #2577 the guided purchase / expense entry
   ///
   /// In en, this message translates to:
@@ -32889,6 +32913,16 @@ abstract class AppLocalizations {
   /// **'Line {n}'**
   String purchaseOrderLine(String n);
 
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'{description}: {received} of {ordered} received'**
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  );
+
   /// #3307 purchase order e-mail
   ///
   /// In en, this message translates to:
@@ -32996,6 +33030,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quantity'**
   String get purchaseOrderQuantity;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Record a delivery'**
+  String get purchaseOrderReceive;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'{description} ({left} to come)'**
+  String purchaseOrderReceiveLine(String description, String left);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get purchaseOrderReceiveNote;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Enter what arrived of at least one line'**
+  String get purchaseOrderReceiveNothing;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery of {reference}'**
+  String purchaseOrderReceiveTitle(String reference);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'More than what is left of this line'**
+  String get purchaseOrderReceiveTooMany;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived on'**
+  String get purchaseOrderReceivedOn;
 
   /// #3307 purchase orders
   ///

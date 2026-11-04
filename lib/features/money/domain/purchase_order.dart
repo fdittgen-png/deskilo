@@ -11,6 +11,7 @@ library;
 
 import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
+import 'purchase_order_receipt.dart';
 
 /// Where an order stands. Only a draft is edited; received and cancelled
 /// are final.
@@ -432,4 +433,18 @@ abstract interface class PurchaseOrderRepository {
     String attemptId, {
     required bool delivered,
   });
+
+  /// The space's deliveries, the latest first.
+  Future<List<PurchaseOrderReceipt>> fetchReceipts(String workspaceId);
+
+  /// Records a delivery; the same [requestId] replays its answer.
+  Future<PurchaseOrder> recordReceipt(
+    String workspaceId,
+    String requestId,
+    PurchaseOrderReceiptDraft draft,
+  );
+
+  /// Names [orderId] as the order a draft supplier bill charges; null
+  /// unlinks it.
+  Future<void> linkBill(String workspaceId, String purchaseId, String? orderId);
 }
