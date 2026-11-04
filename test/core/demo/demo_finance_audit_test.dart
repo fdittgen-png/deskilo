@@ -316,6 +316,11 @@ void main() {
         expect(first.issuedAt, now);
         expect(first.number, 'INV-${now.year}-0001');
         expect(first.number, preview);
+        // Before any configuration the preview counts on with the issuing.
+        final next = await money.previewDocumentNumber('ws-1', 'invoice');
+        expect(next, 'INV-${now.year}-0002');
+        final again = await issue();
+        expect(again.number, next);
         // A configured series: its prefix and counter, the Demo's year.
         await money.setNumberSequence(
           'ws-1',

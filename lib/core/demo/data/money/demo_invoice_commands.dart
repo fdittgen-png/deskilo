@@ -7,9 +7,9 @@ import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 
 import '../money_repository.dart';
+import 'demo_document_numbering.dart';
 
 /// #2591 — what a person does to an invoice, in the demo: answered from one
 /// space's in-memory money store ([FakeMoneyRepository]); every other port of
@@ -73,10 +73,9 @@ class DemoInvoiceCommands implements InvoiceCommands {
       replacesNumber = _m.invoices[i].number;
     }
     // #3292 — numbered by the space's invoice series and dated by its clock,
-    // as the numbering preview reads them: a configured series counts on.
-    final series = _m.numberSequences['invoice'] ??
-        NumberSequence.defaultsFor('invoice');
-    final counter = series.stored ? series.nextValue : _m.nextInvoiceNumber;
+    // exactly as the numbering preview reads them.
+    final series = demoSeriesOf(_m, 'invoice');
+    final counter = series.nextValue;
     final invoice = Invoice(
       id: 'inv-${_m.nextInvoiceNumber}',
       workspaceId: workspaceId,
@@ -116,6 +115,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       attendance: detailed ? List.of(_m.attendanceSeed) : const [],
     );
     _m.nextInvoiceNumber++;
+    // A configured series counts on; the default one reads the counter.
     if (series.stored) {
       _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
     }
