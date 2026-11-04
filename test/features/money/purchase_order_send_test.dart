@@ -211,6 +211,9 @@ void main() {
   testWidgets(
     'the screen asks a person whether an unconfirmed e-mail arrived',
     (tester) async {
+      tester.view.physicalSize = const Size(1200, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
       final (repo, suppliers, order) = await _withOrder();
       repo.mail = const PurchaseOrderMailSettings(
         senderEmail: 'a@b.co',
@@ -251,8 +254,9 @@ void main() {
           servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
         ]),
       );
-      await tester.pump();
-      await tester.pump(const Duration(seconds: 1));
+      for (var i = 0; i < 4; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
       expect(
         find.byKey(const ValueKey('purchase-order-mail-settings')),
         findsOneWidget,
