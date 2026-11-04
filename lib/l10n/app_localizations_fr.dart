@@ -7670,6 +7670,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String eventPrivacyIncident(String kind, String note) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'data_breach': 'une fuite de données',
+      'wrong_invoice': 'une facture erronée',
+      'other': 'un autre incident',
+    });
+    return 'Un incident de confidentialité a été enregistré : $_temp0. $note';
+  }
+
+  @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
     return '$actor demande $halfDays demi-journées supplémentaires pour $period';
   }
@@ -7808,6 +7818,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypePriceNegotiation => 'Négociation tarifaire';
+
+  @override
+  String get eventTypePrivacyIncident => 'Incident de confidentialité';
 
   @override
   String get eventTypeQuota => 'Demi-journées supplémentaires';
@@ -18090,6 +18103,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
+  String get permManagePrivacy =>
+      'Gérer les données personnelles et les demandes de droits';
+
+  @override
   String get permManagePurchases => 'Saisir les factures fournisseur';
 
   @override
@@ -18983,6 +19000,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Facultatif. Activé, l\'adresse de cet appareil et chaque notification passent par le service de notifications ; désactivé, l\'application fonctionne et rien n\'est envoyé à cet appareil.';
+
+  @override
+  String get privacySelfServiceOff =>
+      'Cet espace traite lui-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.';
 
   @override
   String get privacySpaceNotice => 'La notice de confidentialité de cet espace';
@@ -23180,6 +23201,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Minutes pendant lesquelles l\'application doit être restée hors de vue (en arrière-plan, onglet masqué, borne en veille) avant de relire tout ce qu\'elle affiche à son retour. Changer de fenêtre ne relit jamais ; une connexion en direct perdue relit toujours.';
 
   @override
+  String get settingHintPrivacyMemberSelfService =>
+      'true : un membre peut exporter et effacer ses données depuis l’application. false : il dépose une demande de droits, traitée par l’administrateur des données personnelles. Les propriétaires et l’administrateur des données personnelles ne sont jamais bloqués, et le dépôt d’une demande reste toujours ouvert.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un paiement d\'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu\'il règle. 0 désactive la règle.';
 
@@ -23445,6 +23470,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelPresenceResyncAfterAwayMinutes =>
       'Relire après une absence';
+
+  @override
+  String get settingLabelPrivacyMemberSelfService =>
+      'Les membres exportent et effacent eux-mêmes leurs données';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

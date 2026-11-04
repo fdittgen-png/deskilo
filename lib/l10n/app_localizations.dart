@@ -12947,6 +12947,12 @@ abstract class AppLocalizations {
   /// **'{actor} proposes a deal for {member}: {terms}'**
   String eventPriceNegotiationLine(String actor, String member, String terms);
 
+  /// No description provided for @eventPrivacyIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}'**
+  String eventPrivacyIncident(String kind, String note);
+
   /// Feed line of a quota-extension request event
   ///
   /// In en, this message translates to:
@@ -13168,6 +13174,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price negotiation'**
   String get eventTypePriceNegotiation;
+
+  /// No description provided for @eventTypePrivacyIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy incident'**
+  String get eventTypePrivacyIncident;
 
   /// Event-type label for quota-extension requests (0031): feed filter chip + validation policy card
   ///
@@ -29922,6 +29934,12 @@ abstract class AppLocalizations {
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
+  /// No description provided for @permManagePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Handle personal data and rights requests'**
+  String get permManagePrivacy;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -31403,6 +31421,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
   String get privacyPushOnDeviceHint;
+
+  /// No description provided for @privacySelfServiceOff.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace handles data requests itself. File a rights request and the personal data admin will answer it.'**
+  String get privacySelfServiceOff;
 
   /// #1914 privacy notice: privacySpaceNotice
   ///
@@ -38550,6 +38574,12 @@ abstract class AppLocalizations {
   /// **'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.'**
   String get settingHintPresenceResyncAfterAwayMinutes;
 
+  /// No description provided for @settingHintPrivacyMemberSelfService.
+  ///
+  /// In en, this message translates to:
+  /// **'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.'**
+  String get settingHintPrivacyMemberSelfService;
+
   /// #2574 maker-checker settings
   ///
   /// In en, this message translates to:
@@ -38975,6 +39005,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Re-read after being away'**
   String get settingLabelPresenceResyncAfterAwayMinutes;
+
+  /// No description provided for @settingLabelPrivacyMemberSelfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Members export and erase their own data directly'**
+  String get settingLabelPrivacyMemberSelfService;
 
   /// #2574 maker-checker settings
   ///

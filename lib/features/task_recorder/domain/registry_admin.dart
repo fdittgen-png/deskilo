@@ -53,6 +53,7 @@ const Set<String> workspacePermissionKeys = {
   'managePurchases',
   'recordOutgoingPayments',
   'manageLease',
+  'managePrivacy',
 };
 
 /// The event types a validation rule can be for (EventType.dbName, the
@@ -88,6 +89,7 @@ const Set<String> validationRuleKeys = {
   'lease_change',
   'commitment_variance',
   'badge_security_alert',
+  'privacy_incident',
   'payment_instructions_change',
 };
 

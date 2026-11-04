@@ -733,7 +733,8 @@ window.SETUP_REGISTRY={
   "viewDocuments",
   "managePurchases",
   "recordOutgoingPayments",
-  "manageLease"
+  "manageLease",
+  "managePrivacy"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -770,7 +771,8 @@ window.SETUP_REGISTRY={
    "viewDocuments",
    "managePurchases",
    "recordOutgoingPayments",
-   "manageLease"
+   "manageLease",
+   "managePrivacy"
   ],
   "admin": [
    "manageMembers",

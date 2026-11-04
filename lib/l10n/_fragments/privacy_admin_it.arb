@@ -1,0 +1,18 @@
+{
+  "permManagePrivacy": "Gestire i dati personali e le richieste di diritti",
+  "eventTypePrivacyIncident": "Incidente sulla privacy",
+  "eventPrivacyIncident": "È stato registrato un incidente sulla privacy: {kind, select, data_breach{una violazione dei dati} wrong_invoice{una fattura errata} other{un altro incidente}}. {note}",
+  "settingLabelPrivacyMemberSelfService": "I membri esportano e cancellano da soli i propri dati",
+  "settingHintPrivacyMemberSelfService": "true: un membro può esportare e cancellare i propri dati dall’app. false: presenta una richiesta di diritti, gestita dall’amministratore dei dati personali. I proprietari e l’amministratore dei dati personali non sono mai bloccati, e presentare una richiesta resta sempre possibile.",
+  "privacySelfServiceOff": "Questo spazio gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  }
+}

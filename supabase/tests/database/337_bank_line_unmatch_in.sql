@@ -327,6 +327,7 @@ select ok((select bool_and(public.event_type_view_permissions(c.t) = string_to_a
                ('commitment_variance', 'managePurchases,viewFinances'),
                ('badge_security_alert', 'workspaceSettings'),
                ('payment_instructions_change', 'manageIntegrations'),
+               ('privacy_incident', 'managePrivacy'),
                ('a_type_nobody_knows', 'manageConfiguration')) c(t, want)),
           'the restated event_type_view_permissions answers every branch as before');
 select throws_ok(format($t$insert into public.validation_policies (workspace_id, event_type) values (%L, 'invoice_payment_reversed')$t$,

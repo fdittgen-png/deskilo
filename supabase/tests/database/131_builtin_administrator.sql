@@ -133,9 +133,8 @@ select public.workspace_roles_import(pg_temp.ws(), '[]'::jsonb, 'mirror');
 select is(
   (select string_agg(key || '=' || active, ',' order by key)
      from public.workspace_roles where workspace_id = pg_temp.ws()),
-  'admin=true,lecteur=false',
-  'an import in mirror mode puts aside the roles it does not carry, never '
-  'the Administrator');
+  'admin=true,lecteur=false,personal_data_admin=true',
+  'an import in mirror mode puts aside the roles it does not carry, never the Administrator and not the seeded Personal Data Admin (#3278)');
 
 select throws_matching(
   format($$ select public.set_workspace_role(%L, 'admin', array['exportData']) $$, pg_temp.ws()),

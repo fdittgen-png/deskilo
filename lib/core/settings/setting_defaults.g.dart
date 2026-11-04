@@ -116,6 +116,8 @@ abstract final class SettingDefaults {
   static const int presenceOnlineWindowMinutes = 5;
   /// `presence.resync_after_away_minutes`
   static const int presenceResyncAfterAwayMinutes = 2;
+  /// `privacy.member_self_service`
+  static const bool privacyMemberSelfService = true;
   /// `purchase.payment_checker_from_units`
   static const int purchasePaymentCheckerFromUnits = 0;
   /// `purchase.single_approval_below_units`

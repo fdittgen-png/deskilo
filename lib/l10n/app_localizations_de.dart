@@ -7667,6 +7667,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventPrivacyIncident(String kind, String note) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'data_breach': 'eine Datenpanne',
+      'wrong_invoice': 'eine falsche Rechnung',
+      'other': 'ein anderer Vorfall',
+    });
+    return 'Ein Datenschutzvorfall wurde erfasst: $_temp0. $note';
+  }
+
+  @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
     return '$actor beantragt $halfDays zusätzliche halbe Tage für $period';
   }
@@ -7802,6 +7812,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypePriceNegotiation => 'Preisverhandlung';
+
+  @override
+  String get eventTypePrivacyIncident => 'Datenschutzvorfall';
 
   @override
   String get eventTypeQuota => 'Zusätzliche halbe Tage';
@@ -18070,6 +18083,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permManageNegotiations => 'Geschäftsvereinbarungen verwalten';
 
   @override
+  String get permManagePrivacy =>
+      'Personenbezogene Daten und Betroffenenanfragen bearbeiten';
+
+  @override
   String get permManagePurchases => 'Lieferantenrechnungen erfassen';
 
   @override
@@ -18964,6 +18981,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Optional. Ein: Die Adresse dieses Geräts und jede Benachrichtigung gehen an den Push-Dienst; aus: Die App funktioniert weiter und an dieses Gerät wird nichts gesendet.';
+
+  @override
+  String get privacySelfServiceOff =>
+      'Dieser Bereich bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.';
 
   @override
   String get privacySpaceNotice => 'Die Datenschutzhinweise dieses Bereichs';
@@ -23158,6 +23179,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.';
 
   @override
+  String get settingHintPrivacyMemberSelfService =>
+      'true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
 
@@ -23414,6 +23439,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPresenceResyncAfterAwayMinutes =>
       'Nach Abwesenheit neu laden';
+
+  @override
+  String get settingLabelPrivacyMemberSelfService =>
+      'Mitglieder exportieren und löschen ihre Daten selbst';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

@@ -336,7 +336,8 @@ select is(
   -- one the template brought.
   (select string_agg(r.key, ',' order by r.sort_order)
      from public.workspace_roles r where r.workspace_id = pg_temp.ws()
-      and not r.builtin),
+      -- #3278 — nor is the Personal Data Admin every workspace is seeded with.
+      and not r.builtin and r.key <> 'personal_data_admin'),
   'tresorier,secretaire,referent_salle',
   'the template brings the three roles a French association elects, in '
   'the order the bureau is usually listed');
