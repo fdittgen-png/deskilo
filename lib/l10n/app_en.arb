@@ -28890,6 +28890,64 @@
   "@setupBasicsSaveFailed": {
     "description": "#2870 setup steps: setupBasicsSaveFailed"
   },
+  "setupChoicesAdvanced": "Adjust each area",
+  "@setupChoicesAdvanced": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesBookings": "People and bookings",
+  "@setupChoicesBookings": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesDetails": "Inspect all changes",
+  "@setupChoicesDetails": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesManual": "Your choice is kept when you answer other questions.",
+  "@setupChoicesManual": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesMoney": "Money and administration",
+  "@setupChoicesMoney": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesNeedsDecision": "Your previous choice is kept. Resolve “not sure yet” before applying.",
+  "@setupChoicesNeedsDecision": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesOperations": "Day-to-day operation",
+  "@setupChoicesOperations": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesQuestionUnknown": "Not sure yet: {question}",
+  "@setupChoicesQuestionUnknown": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "question": {
+        "type": "String"
+      }
+    }
+  },
+  "setupChoicesReset": "Use suggested levels",
+  "@setupChoicesReset": {
+    "description": "Restore recommended process levels instead of manual overrides."
+  },
+  "setupChoicesSaving": "Saving…",
+  "@setupChoicesSaving": {
+    "description": "Visible while applying setup choices and saving the journey."
+  },
+  "setupChoicesSummary": "Settings that will change: {count}",
+  "@setupChoicesSummary": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupChoicesUnsaved": "Preview only — nothing has been applied.",
+  "@setupChoicesUnsaved": {
+    "description": "Workspace configuration guidance and status."
+  },
   "setupDraftChanged": "Changed by someone else while you were editing.",
   "@setupDraftChanged": {
     "description": "#2869 setup drafts: another configurer changed the setup step's draft meanwhile"
@@ -29254,6 +29312,10 @@
   "setupGrowVatUsualTitle": "Your country's usual rates",
   "@setupGrowVatUsualTitle": {
     "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
+  },
+  "setupGuidanceTitle": "Guidance and checks",
+  "@setupGuidanceTitle": {
+    "description": "Workspace configuration guidance and status."
   },
   "setupGuideAddIt": "Add it",
   "@setupGuideAddIt": {
@@ -29631,7 +29693,7 @@
       }
     }
   },
-  "setupLevelsIntro": "Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.",
+  "setupLevelsIntro": "Tell us how your workspace works. Review what will change before applying your choices.",
   "@setupLevelsIntro": {
     "description": "#2868 setup levels: setupLevelsIntro"
   },
@@ -29796,6 +29858,19 @@
   "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
   "@setupNewMembersSaveFailed": {
     "description": "#2871 setup run steps: setupNewMembersSaveFailed"
+  },
+  "setupNextIndependent": "You can do this while the earlier milestone is waiting.",
+  "@setupNextIndependent": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupNextNamed": "Next: {step}",
+  "@setupNextNamed": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
   },
   "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
   "@setupNotificationsAudience": {
@@ -29979,6 +30054,39 @@
   "setupOnlineTestUnverified": "These keys do not show whether they are test or live keys. Check them in the provider's dashboard.",
   "@setupOnlineTestUnverified": {
     "description": "#2871 setup run steps: setupOnlineTestUnverified"
+  },
+  "setupOutcomeProgress": "Progress by outcome",
+  "@setupOutcomeProgress": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewChoose": "Choose what your workspace needs to see its setup plan.",
+  "@setupOverviewChoose": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewReady": "Your chosen goal is configured. You can review or change it here at any time.",
+  "@setupOverviewReady": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewRemaining": "Required tasks remaining: {count}",
+  "@setupOverviewRemaining": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupOverviewTitle": "Workspace status",
+  "@setupOverviewTitle": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewUnchecked": "Some checks are unavailable. Refresh the status before considering setup complete.",
+  "@setupOverviewUnchecked": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewWaiting": "This milestone is waiting. The tasks below explain who can unblock it.",
+  "@setupOverviewWaiting": {
+    "description": "Workspace configuration guidance and status."
   },
   "setupPaymentsPreviewEmpty": "Members see no payment instructions until you fill one in.",
   "@setupPaymentsPreviewEmpty": {
@@ -30281,6 +30389,10 @@
         "type": "String"
       }
     }
+  },
+  "setupTaskSaved": "Status is based on saved settings. Opening a task does not complete it.",
+  "@setupTaskSaved": {
+    "description": "Workspace configuration guidance and status."
   },
   "shellBarHiddenAnnounce": "Navigation bar hidden",
   "@shellBarHiddenAnnounce": {

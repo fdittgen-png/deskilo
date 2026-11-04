@@ -96,6 +96,8 @@ Vous voulez une vue d’ensemble avant de choisir quoi que ce soit. DesKilo regr
 
 **Public:** Propriétaire · Copropriétaire · Administrateur·rice
 
+Le guide de mise en place reste accessible dans le menu de l’espace après la configuration. Son récapitulatif indique l’espace, l’objectif choisi et le nombre de tâches obligatoires restantes. Ouvrez le détail des résultats pour voir chaque jalon. L’action conseillée mène à une tâche réalisable maintenant ; les tâches en attente d’une autre étape ou de l’opérateur le précisent. Une vérification indisponible ne signifie pas que la tâche est terminée. La progression dépend des réglages enregistrés : ouvrir une tâche ne la termine pas. Chaque tâche garde l’espace, l’objectif et son état visibles, et nomme la destination suivante.
+
 Vous voulez connaître le chemin le plus court vers un espace que l’on peut réserver. L’application tient une liste de préparation, **Mise en place de cet espace**, et, sur l’écran Réserver, dit aux propriétaires ce qui manque : *Avant que quiconque puisse réserver ici*.
 
 *Ce qui doit exister avant la première réservation*
@@ -584,6 +586,8 @@ Chaque ligne de **Interrupteurs** porte un badge de maturité, qui dit jusqu’o
 ### Trois points de départ
 
 **Public:** Propriétaire · Copropriétaire
+
+Pour choisir ce que fait l’espace, répondez aux questions regroupées autour des réservations, de l’argent et du fonctionnement quotidien. Les commandes de vérification et d’application restent visibles pendant le défilement. Vérifiez le nombre de réglages qui changeraient et leurs effets concrets avant d’appliquer ; répondre ne modifie pas l’espace. Les niveaux détaillés et les démarrages rapides se trouvent dans la section avancée. Un niveau choisi volontairement est conservé lorsque vous répondez à d’autres questions ; l’action des niveaux conseillés rétablit les recommandations. « Je ne sais pas encore » conserve la réponse précédente et empêche l’application tant que vous ne l’avez pas précisée. Le questionnaire hors ligne suit la même règle et bloque l’export si une réponse reste incertaine.
 
 Vous ne voulez pas décider cent choses. Voici trois points de départ réalistes ; chacun liste exactement ce qui est activé. Choisissez le plus proche, puis ajustez.
 
