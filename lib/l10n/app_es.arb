@@ -1088,6 +1088,7 @@
   "@biBasisDocumentDate": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisInvoiceDue": "fecha de vencimiento de la factura",
   "biBasisInvoiceMonth": "mes de la factura",
   "@biBasisInvoiceMonth": {
     "description": "#2581 analytical report print layout and exports"
@@ -1242,6 +1243,37 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "Se incluye el periodo completo. La comparación con un periodo terminado no tiene una base equivalente.",
+  "biCustomerCohortHeld": "En suspenso",
+  "biCustomerCohortLate": "Pagadas con retraso",
+  "biCustomerCohortLine": "{cohort}: {count} facturas, {amount}",
+  "biCustomerCohortOnTime": "Pagadas a tiempo",
+  "biCustomerCohortOpen": "Impagadas",
+  "biCustomerCohortPartial": "Pagadas en parte",
+  "biCustomerCohortUndated": "Saldadas sin fecha de pago",
+  "biCustomerCohortUnknownDue": "Sin vencimiento",
+  "biCustomerCohortWrittenOff": "Dadas de baja",
+  "biCustomerConcentrationBasis": "Los {top} mayores de {customers} clientes: {topNet} de {net} facturados sin IVA",
+  "biCustomerConcentrationDefinition": "La parte de lo facturado sin IVA en el periodo (abonos deducidos) que suponen los mayores clientes, y su parte de lo que deben hoy.",
+  "biCustomerConcentrationOpen": "Los {top} mayores de {debtors} deudores deben {topOpen} de los {open} adeudados hoy, sea cual sea la fecha de la factura.",
+  "biCustomerConcentrationTitle": "Concentración de clientes",
+  "biCustomerCreditBasis": "{credited} en {notes} abonos, {writtenOff} dados de baja en {offs} facturas",
+  "biCustomerCreditDefinition": "Por mes de la factura, sin IVA: los abonos y lo dado de baja de una factura (su total menos lo pagado), en proporción a su base imponible.",
+  "biCustomerCreditTitle": "Abonos y bajas",
+  "biCustomerDebtorLine": "{name}: {amount} adeudados",
+  "biCustomerDelay": "Días entre el vencimiento y el pago: mediana {median}, percentil 90 {p90}, ponderado por importe {weighted} (negativo: antes)",
+  "biCustomerDunningBasis": "{reminders} recordatorios en {reminded} de {due} facturas que vencen",
+  "biCustomerDunningDefinition": "Los recordatorios enviados por las facturas que vencen en el periodo, por nivel.",
+  "biCustomerDunningLevel": "Nivel {level}",
+  "biCustomerDunningOff": "Los recordatorios están desactivados en este espacio: no se cuenta ninguno.",
+  "biCustomerDunningTitle": "Carga de recordatorios",
+  "biCustomerNamesHidden": "Los nombres solo se muestran a quien puede leer datos personales; los demás ven posiciones.",
+  "biCustomerNetNotProven": "Algunas facturas no tienen desglose de IVA, así que su base no está probada: quedan fuera de las cifras netas.",
+  "biCustomerNothingToShare": "No hay nada que repartir en este periodo, así que no se muestra ninguna parte.",
+  "biCustomerPaidAfterReminder": "{paid} de {reminded} facturas recordadas se pagaron tras su primer recordatorio: una sucesión en el tiempo, no la prueba de que el recordatorio causara el pago.",
+  "biCustomerPaymentBasis": "{onTime} de {settled} facturas saldadas pagadas en su vencimiento",
+  "biCustomerPaymentDefinition": "Las facturas que vencen en el periodo, cada una en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado en su vencimiento o antes: la fecha valor del banco cuando una línea conciliada explica el pago, si no la fecha de pago registrada, nunca el día de la conciliación. Los importes son lo que deben las facturas, IVA incluido.",
+  "biCustomerPaymentTitle": "Puntualidad de los pagos",
+  "biCustomerRank": "Cliente {rank}",
   "biDataNotApplicable": "Sin capacidad aplicable",
   "biDataNotRecorded": "No registrado",
   "biDataPartial": "Datos parciales",
@@ -1305,6 +1337,7 @@
   "@biEditorBasisDocumentDate": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisInvoiceDue": "según el vencimiento de la factura",
   "biEditorBasisInvoiceMonth": "según el mes de factura",
   "@biEditorBasisInvoiceMonth": {
     "description": "#2580 BI report editor"

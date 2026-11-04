@@ -42,6 +42,7 @@ import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../time/date_text.dart';
+import 'conversation_visibility.dart';
 import 'fixture_clock.dart';
 
 part 'workspace_repository_part1.dart';
@@ -51,8 +52,7 @@ part 'workspace_repository_part4.dart';
 
 /// In-memory [WorkspaceRepository] for tests.
 class FakeWorkspaceRepository implements WorkspaceRepository {
-  FakeWorkspaceRepository({List<Workspace>? workspaces})
-      : workspaces = workspaces ?? [];
+  FakeWorkspaceRepository({List<Workspace>? workspaces}) : workspaces = workspaces ?? [];
 
   /// One seeded workspace; [featureFlags] seeds its feature overrides
   /// (#146) over the platform features that ship on (#2566).

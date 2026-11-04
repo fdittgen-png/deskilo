@@ -10,6 +10,7 @@
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
@@ -188,6 +189,9 @@ void main() {
       expect(filed?.status, EventStatus.pending);
       expect(fixture.money.ledger.where((l) => l.amountCents == 4200 && l.memberId == 'member-2'), isEmpty,
           reason: 'recorded is not paid: no credit before the decision');
+      // Ada recorded it; another person decides (#434, no self-approval):
+      // the subject of an admin-initiated event confirms it (rule (a)).
+      fixture.becomePersona(DemoPersona.member);
       await events.respond(id, accept: true);
       final credit = fixture.money.ledger
           .where((l) => l.memberId == 'member-2' && l.kind == LedgerKind.credit &&

@@ -25,6 +25,7 @@ import 'data/decision_effects.dart';
 import 'data/deployment_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
@@ -131,7 +132,11 @@ class DemoFixture {
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
     final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId);
-    final events = FakeEventRepository(actor: () => actor.memberId);
+    final events = FakeEventRepository(
+      actor: () => actor.memberId,
+      clock: () => today,
+      decider: () => workspaces.memberOf(actor.memberId),
+    );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
@@ -151,6 +156,7 @@ class DemoFixture {
     final roles = FakeWorkspaceRoles();
     seedDemoFields(fields);
     seedDemoRoles(roles);
+    events.viewerPermissions = demoViewerPermissions(workspaces, roles, 'ws-1', () => actor.memberId);
     final accessories = FakeAccessoryRepository();
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
@@ -203,6 +209,7 @@ class DemoFixture {
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
+      ..kioskMemberId = demoCast[1].memberId // #3293: their own booking is no conflict
       ..kioskName = demoCast[1].name;
     final problems = [
       ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
@@ -240,7 +247,11 @@ class DemoFixture {
       directory: directory,
       guests: demoGuestVisits(today),
       messenger: withDemoGroup(
-        demoMessenger(today, actingMember: () => actor.memberId),
+        demoMessenger(
+          today,
+          actingMember: () => actor.memberId,
+          actingName: () => workspaces.memberNames[actor.memberId] ?? '',
+        ),
         today,
       ),
       biViews: demoBiViews(),
@@ -334,6 +345,10 @@ class DemoFixture {
   void becomePersona(DemoPersona persona) {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
+    // #3293 — a self-assignment is refused for whoever the persona is.
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles]) {
+      r.callerMemberId = persona.memberId;
+    }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);

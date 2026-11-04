@@ -3,7 +3,16 @@ part of 'workspace_repository.dart';
 
 // #2386 — part 2 of FakeWorkspaceRepository, split out of workspace_repository.dart so no
 // file holds the whole class.
+/// #3293 — who a decision or a booking in this space is checked against.
+extension FakeWorkspaceMembership on FakeWorkspaceRepository {
+  /// [id]'s membership of this space, or null when they hold none.
+  Member? memberOf(String id) => [myMember, ...otherMembers].where((m) => m.id == id).firstOrNull;
+}
+
 extension _FakeWorkspaceRepositoryPart2 on FakeWorkspaceRepository {
+  Workspace? _target(String workspaceId) =>
+      workspaces.where((w) => w.id == workspaceId).firstOrNull;
+
 
   Future<void> _setMemberReservationLimitImpl(String memberId, int? limit) async {
     if (myMember.id == memberId) {
@@ -241,7 +250,9 @@ extension _FakeWorkspaceRepositoryPart2 on FakeWorkspaceRepository {
     List<String> permissions,
   ) async {
     // #513 — mirrors set_role_permissions: caller must hold manageRoles.
-    if (!effectivePermissions(myMember, workspaces.firstOrNull)
+    // #3293: in the workspace being edited — the Demo's spaces share one
+    // list, whose first row is the main space.
+    if (!effectivePermissions(myMember, _target(workspaceId))
         .contains(WorkspacePermission.manageRoles)) {
       throw StateError('only role managers may edit permissions');
     }
@@ -262,7 +273,7 @@ extension _FakeWorkspaceRepositoryPart2 on FakeWorkspaceRepository {
     String permission, {
     required bool enabled,
   }) async {
-    if (!effectivePermissions(myMember, workspaces.firstOrNull)
+    if (!effectivePermissions(myMember, _target(workspaceId))
         .contains(WorkspacePermission.manageRoles)) {
       throw StateError('only role managers may edit permissions');
     }

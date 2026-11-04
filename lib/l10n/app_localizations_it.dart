@@ -2322,6 +2322,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biBasisDocumentDate => 'data del documento';
 
   @override
+  String get biBasisInvoiceDue => 'data di scadenza della fattura';
+
+  @override
   String get biBasisInvoiceMonth => 'mese della fattura';
 
   @override
@@ -2507,6 +2510,144 @@ class AppLocalizationsIt extends AppLocalizations {
       'È incluso l’intero periodo. Il confronto con un periodo concluso non ha una base equivalente.';
 
   @override
+  String get biCustomerCohortHeld => 'Sospese';
+
+  @override
+  String get biCustomerCohortLate => 'Pagate in ritardo';
+
+  @override
+  String biCustomerCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count fatture, $amount';
+  }
+
+  @override
+  String get biCustomerCohortOnTime => 'Pagate puntualmente';
+
+  @override
+  String get biCustomerCohortOpen => 'Non pagate';
+
+  @override
+  String get biCustomerCohortPartial => 'Pagate in parte';
+
+  @override
+  String get biCustomerCohortUndated => 'Saldate senza data di pagamento';
+
+  @override
+  String get biCustomerCohortUnknownDue => 'Senza scadenza';
+
+  @override
+  String get biCustomerCohortWrittenOff => 'Stralciate';
+
+  @override
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  ) {
+    return 'I $top maggiori di $customers clienti: $topNet su $net fatturati al netto';
+  }
+
+  @override
+  String get biCustomerConcentrationDefinition =>
+      'La quota del fatturato netto nel periodo (note di credito dedotte) che rappresentano i clienti maggiori, e la quota di ciò che devono oggi.';
+
+  @override
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'I $top maggiori di $debtors debitori devono $topOpen dei $open dovuti oggi, qualunque sia la data di fatturazione.';
+  }
+
+  @override
+  String get biCustomerConcentrationTitle => 'Concentrazione dei clienti';
+
+  @override
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  ) {
+    return '$credited in $notes note di credito, $writtenOff stralciati su $offs fatture';
+  }
+
+  @override
+  String get biCustomerCreditDefinition =>
+      'Per mese della fattura, al netto dell’IVA: le note di credito e quanto stralciato da una fattura (il totale meno quanto pagato), in proporzione al suo imponibile.';
+
+  @override
+  String get biCustomerCreditTitle => 'Note di credito e stralci';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name: $amount dovuti';
+  }
+
+  @override
+  String biCustomerDelay(String median, String p90, String weighted) {
+    return 'Giorni dalla scadenza al pagamento: mediana $median, 90° percentile $p90, ponderato per importo $weighted (negativo: in anticipo)';
+  }
+
+  @override
+  String biCustomerDunningBasis(String reminders, String reminded, String due) {
+    return '$reminders solleciti su $reminded di $due fatture in scadenza';
+  }
+
+  @override
+  String get biCustomerDunningDefinition =>
+      'I solleciti inviati per le fatture in scadenza nel periodo, per livello.';
+
+  @override
+  String biCustomerDunningLevel(String level) {
+    return 'Livello $level';
+  }
+
+  @override
+  String get biCustomerDunningOff =>
+      'I solleciti sono disattivati per questo spazio: non ne viene contato nessuno.';
+
+  @override
+  String get biCustomerDunningTitle => 'Carico dei solleciti';
+
+  @override
+  String get biCustomerNamesHidden =>
+      'I nomi sono visibili solo a chi può leggere i dati personali; gli altri vedono le posizioni.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Alcune fatture non hanno il dettaglio IVA, quindi il loro imponibile non è provato: restano fuori dalle cifre nette.';
+
+  @override
+  String get biCustomerNothingToShare =>
+      'Niente da ripartire in questo periodo, quindi nessuna quota è mostrata.';
+
+  @override
+  String biCustomerPaidAfterReminder(String paid, String reminded) {
+    return '$paid di $reminded fatture sollecitate sono state pagate dopo il primo sollecito: una successione nel tempo, non la prova che il sollecito abbia causato il pagamento.';
+  }
+
+  @override
+  String biCustomerPaymentBasis(String onTime, String settled) {
+    return '$onTime di $settled fatture saldate pagate entro la scadenza';
+  }
+
+  @override
+  String get biCustomerPaymentDefinition =>
+      'Le fatture in scadenza nel periodo, ciascuna in un solo gruppo. Una fattura saldata è puntuale quando il suo ultimo pagamento risulta pagato entro la scadenza: la data valuta della banca quando una riga riconciliata spiega il pagamento, altrimenti la data di pagamento registrata, mai il giorno dell’abbinamento. Gli importi sono ciò che le fatture devono, IVA inclusa.';
+
+  @override
+  String get biCustomerPaymentTitle => 'Puntualità dei pagamenti';
+
+  @override
+  String biCustomerRank(String rank) {
+    return 'Cliente $rank';
+  }
+
+  @override
   String get biDataNotApplicable => 'Nessuna capacità applicabile';
 
   @override
@@ -2575,6 +2716,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorBasisDocumentDate => 'secondo la data del documento';
+
+  @override
+  String get biEditorBasisInvoiceDue => 'secondo la scadenza della fattura';
 
   @override
   String get biEditorBasisInvoiceMonth => 'secondo il mese della fattura';

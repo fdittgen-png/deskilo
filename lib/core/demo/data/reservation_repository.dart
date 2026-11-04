@@ -514,6 +514,7 @@ class FakeReservationRepository implements ReservationRepository {
   /// #616 — what kioskIdentify resolves to; tests flip these to
   /// exercise the receipt's photo path.
   String kioskUserId = 'user-1', kioskName = 'Flo';
+  String? kioskMemberId; // #3293: the badge's member; their own booking is no conflict
   bool kioskHasAvatar = false;
 
   @override
@@ -550,7 +551,7 @@ class FakeReservationRepository implements ReservationRepository {
       _enforceBookingRules(startsAt, endsAt, walkUp: action == 'check_in');
       final blocked = reservations.any((r) =>
           r.isActive &&
-          r.memberId != myMemberId &&
+          r.memberId != (kioskMemberId ?? myMemberId) &&
           ((seatId != null && r.seatId == seatId) ||
               (levelId != null && r.levelId == levelId)) &&
           r.startsAt.isBefore(endsAt) &&

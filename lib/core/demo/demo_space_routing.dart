@@ -30,6 +30,7 @@ import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/workspace_fields_providers.dart';
@@ -44,6 +45,7 @@ import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/series_previewer.dart';
+import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_fixture.dart';
 import 'demo_london_space.dart';
 import 'seed/demo_city_bank_seed.dart';
@@ -97,6 +99,10 @@ DemoMyReservationsRepository _myReservations(DemoFixture fixture) =>
 
 DemoFinanceKpiRepository _cityKpi(DemoFixture fixture, FakeMoneyRepository money) =>
     DemoFinanceKpiRepository(money: money, workspaces: fixture.workspaces, now: fixture.seededAt);
+
+/// Whether [me] is an active administrator or owner of the space.
+bool _administers(Member? me) =>
+    me != null && me.status == MemberStatus.active && (me.isAdmin || me.isOwner);
 
 /// The per-space overrides of a Demo scope over [fixture].
 List<Override> demoSpaceOverrides(DemoFixture fixture) {
@@ -161,7 +167,14 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         // #3269 -- as on the server, a booking needs makeReservations.
         ..mayBook = (() => ref
             .read(myPermissionsProvider)
-            .contains(WorkspacePermission.makeReservations)),
+            .contains(WorkspacePermission.makeReservations))
+        // #3293 -- another member's booking is an administrator's act.
+        ..mayActForOthers = (() => _administers(ref.read(myMemberProvider).value))
+        ..isActiveMember = ((id) =>
+            pick(ref, home.workspaces, second.workspaces, london.workspaces, newYork.workspaces)
+                .memberOf(id)
+                ?.status ==
+            MemberStatus.active),
     ),
     // #2553 — the visitor's own bookings of both spaces, one installation.
     myReservationsRepositoryProvider.overrideWithValue(myReservations),
