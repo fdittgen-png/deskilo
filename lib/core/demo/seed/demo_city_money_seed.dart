@@ -185,7 +185,16 @@ class _CityMoney {
                   vatCents: amount - net,
                 ),
               ]
-            : const [],
+            // #3294 — a sales-tax-free invoice freezes its zero rate too.
+            : [
+                InvoiceVatTotal(
+                  percent: 0,
+                  category: 'O',
+                  grossCents: amount,
+                  netCents: amount,
+                  vatCents: 0,
+                ),
+              ],
         currency: currency,
         memberName: workspace.memberNames[member.id] ?? 'Demo member',
         memberAddress: currency == 'GBP'

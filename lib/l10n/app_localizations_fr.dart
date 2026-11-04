@@ -2327,6 +2327,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biBasisDocumentDate => 'date du document';
 
   @override
+  String get biBasisInvoiceDue => 'date d’échéance de la facture';
+
+  @override
   String get biBasisInvoiceMonth => 'mois de la facture';
 
   @override
@@ -2513,6 +2516,144 @@ class AppLocalizationsFr extends AppLocalizations {
       'La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.';
 
   @override
+  String get biCustomerCohortHeld => 'Suspendues';
+
+  @override
+  String get biCustomerCohortLate => 'Payées en retard';
+
+  @override
+  String biCustomerCohortLine(String cohort, String count, String amount) {
+    return '$cohort : $count factures, $amount';
+  }
+
+  @override
+  String get biCustomerCohortOnTime => 'Payées à l’heure';
+
+  @override
+  String get biCustomerCohortOpen => 'Impayées';
+
+  @override
+  String get biCustomerCohortPartial => 'Payées en partie';
+
+  @override
+  String get biCustomerCohortUndated => 'Réglées sans date de paiement';
+
+  @override
+  String get biCustomerCohortUnknownDue => 'Sans échéance';
+
+  @override
+  String get biCustomerCohortWrittenOff => 'Passées en perte';
+
+  @override
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  ) {
+    return 'Les $top plus grands des $customers clients : $topNet sur $net facturés hors taxes';
+  }
+
+  @override
+  String get biCustomerConcentrationDefinition =>
+      'La part du montant facturé hors taxes dans la période (avoirs déduits) que représentent les plus grands clients, et la part de ce qu’ils doivent aujourd’hui.';
+
+  @override
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'Les $top plus grands des $debtors débiteurs doivent $topOpen des $open dus aujourd’hui, quelle que soit la date de facturation.';
+  }
+
+  @override
+  String get biCustomerConcentrationTitle => 'Concentration des clients';
+
+  @override
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  ) {
+    return '$credited en $notes avoirs, $writtenOff passés en perte sur $offs factures';
+  }
+
+  @override
+  String get biCustomerCreditDefinition =>
+      'Par mois de la facture, hors TVA : les avoirs, et ce qui a été passé en perte sur une facture (son total moins ce qui a été payé), au prorata de son montant hors taxes.';
+
+  @override
+  String get biCustomerCreditTitle => 'Avoirs et pertes';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name : $amount dus';
+  }
+
+  @override
+  String biCustomerDelay(String median, String p90, String weighted) {
+    return 'Jours entre l’échéance et le paiement : médiane $median, 90e centile $p90, pondéré par le montant $weighted (négatif : en avance)';
+  }
+
+  @override
+  String biCustomerDunningBasis(String reminders, String reminded, String due) {
+    return '$reminders relances sur $reminded des $due factures arrivant à échéance';
+  }
+
+  @override
+  String get biCustomerDunningDefinition =>
+      'Les relances envoyées pour les factures arrivant à échéance dans la période, par niveau.';
+
+  @override
+  String biCustomerDunningLevel(String level) {
+    return 'Niveau $level';
+  }
+
+  @override
+  String get biCustomerDunningOff =>
+      'Les relances sont désactivées pour cet espace : aucune relance n’est comptée.';
+
+  @override
+  String get biCustomerDunningTitle => 'Charge de relance';
+
+  @override
+  String get biCustomerNamesHidden =>
+      'Les noms ne s’affichent que pour qui peut lire les données personnelles ; les autres lisent des rangs.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Certaines factures n’ont pas de ventilation de TVA : leur montant hors taxes n’est pas prouvé, elles sont laissées hors des chiffres nets.';
+
+  @override
+  String get biCustomerNothingToShare =>
+      'Rien à répartir dans cette période : aucune part n’est affichée.';
+
+  @override
+  String biCustomerPaidAfterReminder(String paid, String reminded) {
+    return '$paid des $reminded factures relancées ont été payées après leur première relance : une succession dans le temps, pas la preuve que la relance a causé le paiement.';
+  }
+
+  @override
+  String biCustomerPaymentBasis(String onTime, String settled) {
+    return '$onTime des $settled factures réglées payées à l’échéance';
+  }
+
+  @override
+  String get biCustomerPaymentDefinition =>
+      'Les factures arrivant à échéance dans la période, chacune dans un seul groupe. Une facture réglée est à l’heure lorsque son dernier paiement a été déclaré payé au plus tard à son échéance : la date de valeur bancaire lorsqu’une ligne rapprochée explique le paiement, sinon la date de paiement enregistrée, jamais le jour du lettrage. Les montants sont ce que doivent les factures, TVA comprise.';
+
+  @override
+  String get biCustomerPaymentTitle => 'Ponctualité des paiements';
+
+  @override
+  String biCustomerRank(String rank) {
+    return 'Client $rank';
+  }
+
+  @override
   String get biDataNotApplicable => 'Aucune capacité applicable';
 
   @override
@@ -2582,6 +2723,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biEditorBasisDocumentDate => 'selon la date du document';
+
+  @override
+  String get biEditorBasisInvoiceDue => 'selon l’échéance de la facture';
 
   @override
   String get biEditorBasisInvoiceMonth => 'selon le mois de facture';

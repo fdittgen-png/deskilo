@@ -36,8 +36,9 @@ const demoLondonSiteId = 'uk-site-camden';
 @visibleForTesting
 const demoLondonVrn = '999904143';
 
-/// The features of the London space: a new space's, plus VAT returns and the
-/// MTD submission. Accounting connectors stay off: MTD does not need them.
+/// The features of the London space: the main space's (every feature but
+/// those [demoFeaturesLeftOff] names), plus the MTD submission it exists to
+/// show. The EC Sales List stays off by country: the UK is outside the EU.
 final Map<String, Object?> _featureFlags = {
   ...demoFeatureFlags,
   WorkspaceFeature.mtdSubmission.dbKey: true,
@@ -209,7 +210,15 @@ void seedLondonMoney(FakeMoneyRepository money, DateTime now) {
     );
   }
 
+  // #3290 — the UK's rates the space's invoices are charged at: standard,
+  // reduced and zero. A VAT-registered space without them read "VAT: to
+  // configure" in its setup guide while its invoices carried 20 %.
   money
+    ..vatRates = const [
+      VatRate(id: 'uk-vat-20', label: 'Standard', percent: 20, isDefault: true),
+      VatRate(id: 'uk-vat-5', label: 'Reduced', percent: 5, groupKey: 'reduced'),
+      VatRate(id: 'uk-vat-0', label: 'Zero rate', percent: 0, category: 'Z', groupKey: 'zero'),
+    ]
     ..invoices.clear()
     ..invoices.addAll([
       invoice('uk-inv-001', 'member-2', 'Bruno Kessler', 0, 125000, 20),

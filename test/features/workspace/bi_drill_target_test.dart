@@ -71,7 +71,8 @@ void main() {
       );
     });
 
-    test('the finance modules and the capacity figure carry a period', () {
+    test('the finance and customer modules and the capacity figure carry '
+        'a period', () {
       final carrying = {
         for (final m in biModules)
           if (m.drill?.carriesPeriod ?? false) m.id,
@@ -80,6 +81,11 @@ void main() {
         'finance.invoiced',
         'finance.collected',
         'capacity.seat_utilisation',
+        // #3294 — the invoices behind a customer figure, for its months.
+        'customers.payment_behaviour',
+        'customers.dunning_load',
+        'customers.credit_and_writeoff',
+        'customers.concentration',
       });
     });
   });

@@ -26,6 +26,7 @@ import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
 import 'bi_cost_allocation_reader.dart';
+import 'bi_customer_reader.dart';
 import 'bi_overview_reader.dart';
 import 'bi_purchase_reader.dart';
 import 'bi_view_actions.dart';
@@ -112,6 +113,16 @@ Future<BiResult> biModuleResult(
     'people.active_memberships_current' ||
     'sales.overdue_receivables' ||
     'operations.pending_actions_current' => biOverviewResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'customers.payment_behaviour' ||
+    'customers.dunning_load' ||
+    'customers.credit_and_writeoff' ||
+    'customers.concentration' => biCustomerResult(
       ref,
       workspaceId,
       moduleId,
