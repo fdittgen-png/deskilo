@@ -5,6 +5,7 @@
 // and one purchase line nobody has registered yet.
 import '../../../features/money/domain/workspace_asset.dart';
 import '../data/workspace_asset_repository.dart';
+import 'demo_purchase_history_seed.dart';
 
 FakeWorkspaceAssetRepository seedDemoAssets(DateTime now) =>
     FakeWorkspaceAssetRepository(
@@ -21,7 +22,7 @@ FakeWorkspaceAssetRepository seedDemoAssets(DateTime now) =>
           decision: AssetDecision.capitalise,
           decisionBasis: 'Lasting equipment: used for years, above the space policy',
           state: AssetState.inUse,
-          availableForUseOn: DateTime(now.year, 3),
+          availableForUseOn: demoEquipmentInUseOn(now),
           purchaseId: 'demo-purchase-machine',
           lineNo: 1,
         ),
