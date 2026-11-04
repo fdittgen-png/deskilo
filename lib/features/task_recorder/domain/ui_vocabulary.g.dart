@@ -3801,6 +3801,7 @@ const List<String> uiKeyPatterns = [
   'de-payment-{}',
   'decor-kind-{}',
   'delegate-{}',
+  'demo-allocation-{}',
   'demo-asset-{}',
   'demo-bank-{}',
   'demo-bill-rent-{}',

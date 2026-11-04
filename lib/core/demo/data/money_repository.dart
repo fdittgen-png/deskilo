@@ -157,8 +157,9 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   bool usagePolicyConfigured = false;
   String usageMemberId = 'member-1';
   int nextUsageNumber = 1;
-
-  FakeMoneyRepository({FakeEventRepository? events}) : eventRepository = events;
+  FakeMoneyRepository({FakeEventRepository? events, DateTime Function()? clock})
+      : eventRepository = events, clock = clock ?? (() => kTestNow);
+  final DateTime Function() clock; // #3292: the Demo's now, for filed returns.
 
   /// When wired, [recordServiceCharge] also files the pending
   /// service_charge event the real RPC creates (#134), so tests can drive
