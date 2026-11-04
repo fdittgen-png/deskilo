@@ -19,6 +19,7 @@ import 'data/einvoice_inbox_repository.dart';
 import 'data/event_repository.dart';
 import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
+import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/purchase_repository.dart';
@@ -95,6 +96,9 @@ class DemoTwinData {
       data.roles.assignments[e.key] = [...e.value];
     }
     events.viewerPermissions = demoViewerPermissions(space, data.roles, ws, actor);
+    // #3305 — each member reads their own statement, as member_statement.
+    data.money.accountQueries.statementSource =
+        demoStatementSource(data.workspaces, data.reservations, ws, actor: actor, credits: data.credits);
     return data;
   }
 
