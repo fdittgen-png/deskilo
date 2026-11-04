@@ -9339,6 +9339,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Indicateurs d\'achats (analyses)';
 
   @override
+  String get featurePurchaseOrdersDesc =>
+      'Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Commander auprès des fournisseurs';
+
+  @override
   String get featurePurchasesDesc =>
       'Un seul document pour ce que l\'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts.';
 

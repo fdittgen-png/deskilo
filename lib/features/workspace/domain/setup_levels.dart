@@ -237,6 +237,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.assetRegister,
         WorkspaceFeature.purchaseAnalytics,
         WorkspaceFeature.foreignCurrencyPurchases,
+        WorkspaceFeature.purchaseOrders,
       },
     ),
   ],

@@ -1222,6 +1222,12 @@
       "capabilities": []
     },
     {
+      "key": "purchaseOrders",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "multiSite",
       "maturity": "beta",
       "lifecycle": "active",

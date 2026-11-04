@@ -11166,6 +11166,14 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.",
+  "@featurePurchaseOrdersDesc": {
+    "description": "#3307 feature description"
+  },
+  "featurePurchaseOrdersTitle": "Order from suppliers",
+  "@featurePurchaseOrdersTitle": {
+    "description": "#3307 feature title"
+  },
   "featurePurchasesDesc": "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"

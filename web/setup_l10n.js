@@ -1361,6 +1361,10 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Submit UK VAT returns to HMRC",
     "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only."
+   ],
+   "purchaseOrders": [
+    "Order from suppliers",
+    "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only."
    ]
   },
   "process": {
@@ -3054,6 +3058,10 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Déposer la TVA britannique auprès de HMRC",
     "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
+   ],
+   "purchaseOrders": [
+    "Commander auprès des fournisseurs",
+    "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent."
    ]
   },
   "process": {
@@ -4747,6 +4755,10 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Britische USt-Erklärung an HMRC senden",
     "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
+   ],
+   "purchaseOrders": [
+    "Bei Lieferanten bestellen",
+    "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen."
    ]
   },
   "process": {
@@ -6440,6 +6452,10 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Presentar el IVA británico a HMRC",
     "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
+   ],
+   "purchaseOrders": [
+    "Pedir a los proveedores",
+    "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas."
    ]
   },
   "process": {
@@ -8133,6 +8149,10 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Inviare l'IVA britannica a HMRC",
     "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
+   ],
+   "purchaseOrders": [
+    "Ordinare ai fornitori",
+    "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture."
    ]
   },
   "process": {

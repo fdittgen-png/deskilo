@@ -15254,6 +15254,18 @@ abstract class AppLocalizations {
   /// **'Purchase figures (analytics)'**
   String get featurePurchaseAnalyticsTitle;
 
+  /// #3307 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.'**
+  String get featurePurchaseOrdersDesc;
+
+  /// #3307 feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Order from suppliers'**
+  String get featurePurchaseOrdersTitle;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:

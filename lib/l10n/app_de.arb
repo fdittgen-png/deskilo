@@ -6560,6 +6560,8 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen.",
+  "featurePurchaseOrdersTitle": "Bei Lieferanten bestellen",
   "featurePurchasesDesc": "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"

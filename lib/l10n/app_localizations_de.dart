@@ -9324,6 +9324,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featurePurchaseAnalyticsTitle => 'Einkaufskennzahlen (Analysen)';
 
   @override
+  String get featurePurchaseOrdersDesc =>
+      'Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Bei Lieferanten bestellen';
+
+  @override
   String get featurePurchasesDesc =>
       'Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.';
 

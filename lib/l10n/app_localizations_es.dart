@@ -9316,6 +9316,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Indicadores de compras (análisis)';
 
   @override
+  String get featurePurchaseOrdersDesc =>
+      'Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Pedir a los proveedores';
+
+  @override
   String get featurePurchasesDesc =>
       'Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.';
 

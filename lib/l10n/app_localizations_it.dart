@@ -9313,6 +9313,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Indicatori degli acquisti (analisi)';
 
   @override
+  String get featurePurchaseOrdersDesc =>
+      'Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Ordinare ai fornitori';
+
+  @override
   String get featurePurchasesDesc =>
       'Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.';
 

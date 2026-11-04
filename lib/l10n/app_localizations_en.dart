@@ -9251,6 +9251,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePurchaseAnalyticsTitle => 'Purchase figures (analytics)';
 
   @override
+  String get featurePurchaseOrdersDesc =>
+      'Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Order from suppliers';
+
+  @override
   String get featurePurchasesDesc =>
       'One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.';
 
