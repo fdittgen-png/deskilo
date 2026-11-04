@@ -335,6 +335,31 @@ void main() {
             'F-${now.year}-0043');
       });
 
+      test('a series that already numbered further counts on from its own '
+          'value, twice running, before any configuration', () async {
+        final money = DemoFixture.build(now: now).money;
+        money.numberSequences['invoice'] =
+            NumberSequence.defaultsFor('invoice').copyWith(nextValue: 57);
+        final period = yearMonth(now.year, now.month);
+        final numbers = <String>[];
+        for (final member in ['member-1', 'member-2', 'member-3', 'member-4']) {
+          if (numbers.length == 2) break;
+          final preview = await money.previewDocumentNumber('ws-1', 'invoice');
+          try {
+            final id = await money.createInvoice(
+                workspaceId: 'ws-1', memberId: member, period: period);
+            final issued = money.invoices.singleWhere((i) => i.id == id);
+            expect(issued.number, preview);
+            numbers.add(issued.number);
+          } on StateError {
+            continue;
+          }
+        }
+        expect(numbers, ['INV-${now.year}-0057', 'INV-${now.year}-0058']);
+        expect(await money.previewDocumentNumber('ws-1', 'invoice'),
+            'INV-${now.year}-0059');
+      });
+
       test('Pézenas books: every posting of the last twelve months balances, and '
           'every issued sale of the period is posted', () async {
         final purchasing = seedDemoPurchasing(

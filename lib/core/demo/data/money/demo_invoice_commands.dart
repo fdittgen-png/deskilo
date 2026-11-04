@@ -114,7 +114,10 @@ class DemoInvoiceCommands implements InvoiceCommands {
           : const [],
       attendance: detailed ? List.of(_m.attendanceSeed) : const [],
     );
-    _m.nextInvoiceNumber++;
+    // The counter moves past the number just issued (a series that already
+    // numbered further sets it), so no number is ever issued twice.
+    _m.nextInvoiceNumber =
+        (counter > _m.nextInvoiceNumber ? counter : _m.nextInvoiceNumber) + 1;
     // A configured series counts on; the default one reads the counter.
     if (series.stored) {
       _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
