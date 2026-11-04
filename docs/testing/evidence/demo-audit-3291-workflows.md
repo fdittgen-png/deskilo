@@ -28,11 +28,13 @@ New York `ws-4` (US, USD), the development twin `ws-1-dev`.
 | Reset after mutations | London, Pézenas | owner | a London booking, an approved join | reset the session | every space back to the canonical dataset | as expected | `reset after mutations …`; `demo_session_test` |
 | Catalogue per space | all spaces | — | the effective features (`effectiveFeatures` of each space's flags and country) | every subprocess of `workspaceProcesses` | an effective capability, or a stated reason | Leipzig: 5 steps off, reasoned; others all on | `every subprocess …` |
 | Every step has a scenario | Pézenas | per scenario | seeded | — | each capability has a Demo scenario or is left off with a reason | as expected | `demo_scenarios_test` |
-| Development twin | `ws-1-dev` | owner | listed in the visitor's spaces, entered from Me | enter it | a development workspace of its own | **every routed provider in error ("unknown demo space")** | follow-up **#3302** |
+| Development twin | `ws-1-dev` | owner, member | listed in the visitor's spaces, entered from Me | enter it; book in it; read its journal and guide | a development workspace of its own (0185, ADR 0019): production's plan copied once, every production member also its member, its own bookings, requests and money; the pair's journal from both sides | **every routed provider in error ("unknown demo space")** → its own stores, production unchanged (#3302) | `demo_twin_test` |
 | Twin: deployments | Pézenas | owner | three deployments, one rolled back | read the board and journal | both readable from production | as expected | `demo_scenarios_test` (deployments, environmentPairs) |
 
 ## Exclusions and reasons
 
+- **The twin's activity** starts empty: a development side holds what is tried there, not production's history; its
+  deployment preview counts stay sample content (#3290's matrix).
 - **Leipzig** `billingPayments/collection`, `billingPayments/expenses`, `billingPayments/tax`,
   `documentsInformation/reportDesign`, `reservationsUsage/attendance`: Leipzig carries exactly a new workspace's
   defaults (`defaultFeatureFlagsForNewWorkspace`, pinned by `demo_second_space_test`), so the Demo shows a fresh,
