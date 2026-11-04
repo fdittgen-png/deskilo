@@ -24,6 +24,7 @@ import 'book_chart.dart';
 import 'fiscal_year.dart';
 import 'invoice.dart';
 import 'posting.dart';
+import 'saf_t_financial_at.dart';
 import 'saf_t_financial_ro.dart';
 import 'saf_t_financial_xml.dart';
 import 'supplier.dart';
@@ -101,6 +102,22 @@ enum SafTFinancialProfile {
     // ANAF's tax type of VAT (nomenclature TAX-IMP).
     taxType: '300',
     taxDescription: 'TVA',
+  ),
+
+  /// #2379 — the BMF's SAF-T AT 1.01 (BAO §§ 131, 132, decree
+  /// BMF-010102/0002-IV/2/2009): the OECD 1.0 tree in its own namespace,
+  /// every account on the Austrian standard chart (österreichischer
+  /// Einheitskontenrahmen), written by saf_t_financial_at.dart.
+  austria(
+    formatId: 'saft_at',
+    country: 'AT',
+    namespace: 'urn:OECD:StandardAuditFile-Taxation:AT_1.01',
+    version: '1.01',
+    // Not a fixed value in Austria: the profit determination the request
+    // states (SafTFinancialRequest.profitBasis).
+    accountingBasis: '',
+    taxType: 'USt',
+    taxDescription: 'Umsatzsteuer',
   );
 
   const SafTFinancialProfile({
@@ -142,6 +159,9 @@ enum SafTFinancialProfile {
 
   /// #2379 — Romania's D406 departs from the OECD tree in its own writer.
   bool get romaniaShape => this == SafTFinancialProfile.romania;
+
+  /// #2379 — Austria's file is the OECD 1.0 tree, in its own writer.
+  bool get austriaShape => this == SafTFinancialProfile.austria;
 
   /// Whether the company's header names its bank account (Denmark,
   /// Romania).
@@ -268,6 +288,9 @@ class SafTFinancialRequest {
     required this.createdAt,
     required this.reference,
     this.companyIban = '',
+    this.profitBasis = '',
+    this.industryCode = '',
+    this.smallBusiness = false,
   });
 
   final SafTFinancialProfile profile;
@@ -302,6 +325,15 @@ class SafTFinancialRequest {
   /// #2379 — the company's IBAN, which Denmark's and Romania's headers
   /// require.
   final String companyIban;
+
+  /// #2379 — Austria: how the profit is determined (`TaxAccountingBasis`:
+  /// § 4 (1), § 4 (3) or § 5 EStG …) and the industry code
+  /// (`TaxEntity`, Branchenkennzahl), which its header requires; and
+  /// whether the company is a small business exempt under § 6 (1) Z 27
+  /// UStG (`Kleinunternehmer_AT`).
+  final String profitBasis;
+  final String industryCode;
+  final bool smallBusiness;
 }
 
 /// What a missing fact is about.
@@ -366,5 +398,7 @@ final class SafTFinancialRefused extends SafTFinancialResult {
 SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) =>
     (request.profile.romaniaShape
             ? SafTRomaniaXml(request)
+            : request.profile.austriaShape
+            ? SafTAustriaXml(request)
             : SafTFinancialXml(request))
         .write();

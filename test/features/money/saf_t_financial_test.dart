@@ -164,6 +164,21 @@ final _maps = <TaxReferenceRow>[
     ('write_off', '654', 'Activ'),
   ])
     _row('RO', 'saf_t/$role', {'account': code, 'label': function}),
+  // #2379 — Austria: a TEST mapping onto accounts of the österreichischer
+  // Einheitskontenrahmen (EKR), not the reviewed reference rows (those come
+  // from the BMF's EKR für SAF-T list).
+  for (final (role, code, label) in const [
+    ('customers', '2000', 'Lieferforderungen Inland'),
+    ('bank', '2800', 'Guthaben bei Kreditinstituten'),
+    ('suppliers', '3300', 'Lieferverbindlichkeiten Inland'),
+    ('revenue', '4000', 'Umsatzerlöse'),
+    ('vat_output', '3500', 'Umsatzsteuer'),
+    ('vat_input', '2500', 'Vorsteuer'),
+    ('vat_pending', '3500', 'Umsatzsteuer'),
+    ('expenses', '7200', 'Sonstiger Aufwand'),
+    ('write_off', '7800', 'Forderungsverluste'),
+  ])
+    _row('AT', 'saf_t/$role', {'account': code, 'label': label}),
   for (final (key, code) in const [
     ('saf_t/tax:output:21', '310344'),
     ('saf_t/tax:output:11', '310351'),
@@ -183,14 +198,16 @@ TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) => TaxReferenceSet([
 
 InvoiceParty _company(String country) => InvoiceParty(
   name: 'Cowork',
-  street: 'Storgata 1',
+  street: country == 'AT' ? 'Mariahilfer Straße 1' : 'Storgata 1',
   city: switch (country) {
+    'AT' => 'Wien',
     'NO' => 'Oslo',
     'DK' => 'København Ø',
     'RO' => 'București',
     _ => 'Luxembourg',
   },
   postalCode: switch (country) {
+    'AT' => '1060',
     'NO' => '0155',
     'DK' => '2100',
     'RO' => '010011',
@@ -198,11 +215,13 @@ InvoiceParty _company(String country) => InvoiceParty(
   },
   country: country,
   legalId: switch (country) {
+    'AT' => '12 345/6789',
     'DK' => '10150817',
     'RO' => '14399840',
     _ => '999999999',
   },
   vatId: switch (country) {
+    'AT' => 'ATU12345678',
     'NO' => 'NO999999999MVA',
     'DK' => 'DK10150817',
     'RO' => 'RO14399840',
@@ -228,6 +247,8 @@ SafTFinancialRequest _request(
   // #2379 — Denmark has one VAT rate: its sample is the standard-rate part
   // of the seeded year, as a Danish book would hold it.
   bool standardRateOnly = false,
+  String profitBasis = '§ 5 EStG',
+  String industryCode = '6820',
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
@@ -245,9 +266,9 @@ SafTFinancialRequest _request(
   partyDetails:
       partyDetails ??
       {
-        safTPartyKey('member', _memberNumber): const SafTParty(
+        safTPartyKey('member', _memberNumber): SafTParty(
           name: 'Ana',
-          street: '1 rue de la Gare',
+          street: country == 'AT' ? 'Bahnhofstraße 1' : '1 rue de la Gare',
           city: 'Esch-sur-Alzette',
           postalCode: 'L-4002',
           country: 'LU',
@@ -255,7 +276,11 @@ SafTFinancialRequest _request(
         safTPartyKey('supplier', '17'): SafTParty(
           name: 'Nettoyage Pézenas',
           // Denmark's address starts with its street.
-          street: country == 'DK' ? '2 quai du Port' : '',
+          street: switch (country) {
+            'DK' => '2 quai du Port',
+            'AT' => 'Hafenstraße 2',
+            _ => '',
+          },
           city: 'Pézenas',
           postalCode: '34120',
           country: 'FR',
@@ -272,6 +297,8 @@ SafTFinancialRequest _request(
   softwareVersion: '1.0.3',
   createdAt: DateTime(2027, 3, 5),
   reference: reference ?? _reference(),
+  profitBasis: profitBasis,
+  industryCode: industryCode,
 );
 
 XmlDocument _file(SafTFinancialRequest request) =>
@@ -454,6 +481,93 @@ void main() {
       }
     });
   }
+
+  // #2379 — Austria's SAF-T AT 1.01: the OECD 1.0 tree of its own writer.
+  group('saft_at', () {
+    const profile = SafTFinancialProfile.austria;
+    SafTFinancialRequest at({String profitBasis = '§ 5 EStG', String industryCode = '6820'}) =>
+        _request(profile, country: 'AT', profitBasis: profitBasis, industryCode: industryCode);
+    final doc = _file(at());
+    final root = doc.rootElement;
+
+    test('declares the BMF namespace, version 1.01 and the header the schema requires', () {
+      expect(root.namespaceUri, 'urn:OECD:StandardAuditFile-Taxation:AT_1.01');
+      final h = root.findElements('Header').single;
+      expect(h.childElements.map((e) => e.name.local).take(11), [
+        'TaxID', 'CompanyName', 'CompanyAddress', 'ContactInformation', 'TaxAccountingBasis',
+        'TaxEntity', 'FiscalYear', 'StartDate', 'EndDate', 'Kleinunternehmer_AT', 'CurrencyCode',
+      ]);
+      expect(_textOf(h, 'AuditFileVersion'), '1.01');
+      expect(_textOf(h, 'TaxAccountingBasis'), '§ 5 EStG');
+      expect(_textOf(h, 'TaxEntity'), '6820');
+      final address = h.findElements('CompanyAddress').single;
+      expect(_textOf(address, 'BuildingNumber'), '1');
+      expect(_textOf(address, 'StreetName'), 'Mariahilfer Straße');
+    });
+
+    test('every account names its standard chart account and its opening balance', () {
+      final accounts = root.findAllElements('GeneralLedger').toList();
+      expect(accounts, isNotEmpty);
+      for (final a in accounts) {
+        expect(_textOf(a, 'AccountID_oeEKR'), isNotEmpty);
+        expect(
+          a.findElements('OpeningDebitBalance').length + a.findElements('OpeningCreditBalance').length,
+          1,
+        );
+      }
+    });
+
+    test('the ledger balances and its lines carry plain amounts', () {
+      final ledger = root.findAllElements('GeneralLedgerEntries').single;
+      final lines = ledger.findAllElements('Line').toList();
+      expect(lines, isNotEmpty);
+      var debit = 0;
+      var credit = 0;
+      for (final l in lines) {
+        expect(_textOf(l, 'PostingText'), isNotEmpty);
+        if (l.findElements('DebitAmount').isNotEmpty) {
+          debit += _text(l, 'DebitAmount');
+        } else {
+          credit += _text(l, 'CreditAmount');
+        }
+      }
+      expect(debit, credit);
+      expect(_text(ledger, 'TotalDebit'), debit);
+      expect(_text(ledger, 'TotalCredit'), credit);
+    });
+
+    test('a missing fact is refused, named', () {
+      expect(_gaps(at(profitBasis: '', industryCode: '')), containsAll(const [
+        SafTGap(SafTGapKind.company, 'TaxAccountingBasis'),
+        SafTGap(SafTGapKind.company, 'TaxEntity'),
+      ]));
+      expect(
+        _gaps(_request(profile, country: 'AT', reference: _reference(maps: const []))),
+        contains(isA<SafTGap>().having((g) => g.kind, 'kind', SafTGapKind.standardAccount)),
+      );
+      expect(
+        _gaps(_request(profile, country: 'AT', company: _company('AT').copyWith(street: 'Mariahilfer Straße'))),
+        contains(const SafTGap(SafTGapKind.company, 'BuildingNumber')),
+      );
+    });
+
+    test('the same book gives the same bytes, pinned by a golden', () {
+      String xml() => switch (buildSafTFinancial(at())) {
+        SafTFinancialFile(:final xml) => xml,
+        SafTFinancialRefused(:final gaps) => fail('refused: $gaps'),
+      };
+      final golden = File('test/features/money/goldens/saft_at.xml');
+      if (Platform.environment['UPDATE_SAFT_GOLDENS'] == '1') golden.writeAsStringSync(xml());
+      expect(xml(), golden.readAsStringSync());
+    });
+
+    if (samples != null) {
+      test('writes its sample', () {
+        Directory(samples).createSync(recursive: true);
+        File('$samples/${profile.formatId}.xml').writeAsStringSync(doc.toXmlString());
+      });
+    }
+  });
 
   test('Norway maps each account to its grouping code and each tax to its '
       'standard code', () {

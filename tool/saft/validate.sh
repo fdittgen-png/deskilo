@@ -81,5 +81,6 @@ validate saft_no "$NO"
 validate faia_lu "$LU"
 validate saft_dk "$DK"
 validate saft_ro "$RO"
+validate saft_at "$AT"
 validate saft_oecd_full "$LU"
 exit $status
