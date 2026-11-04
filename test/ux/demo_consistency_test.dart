@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../helpers/demo_owed.dart';
 import '../helpers/screens/demo_journeys.dart' show pumpDemo;
 
 Future<void> _go(WidgetTester tester, String route) async {
@@ -58,11 +60,14 @@ void main() {
       isNotEmpty,
       reason: 'the member has invoices on the workspace Money page',
     );
-    // Me spans every space the person is in: the main one and Leipzig.
+    // Me spans every space the person is in: the main one and Leipzig
+    // (euros), London (pounds) and New York (dollars).
     final mine =
         [
           ...journey.fixture.money.invoices,
           ...journey.fixture.secondSpace.money.invoices,
+          ...journey.fixture.london.money.invoices,
+          ...journey.fixture.newYork.money.invoices,
         ].where(
           (i) =>
               i.memberId == journey.fixture.actor.memberId &&
@@ -78,6 +83,38 @@ void main() {
       _shows('Nothing to pay — you are up to date.'),
       overview.outstanding.isEmpty,
     );
+  });
+
+  testWidgets('Me shows one amount to pay per currency: euros, pounds and '
+      'dollars apart, on Me › Finances and on the Me home glance', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.member);
+    final owed = demoOwedFromTheSpaces(journey.fixture);
+    expect(owed.keys.toSet(), {'EUR', 'GBP', 'USD'});
+
+    await _go(tester, '/account-activity');
+    final summary = find.byKey(const ValueKey('finances-summary'));
+    for (final e in owed.entries) {
+      expect(
+        find.descendant(
+          of: summary,
+          matching: find.text(moneyFormat(e.key).formatMinor(e.value)),
+        ),
+        findsOneWidget,
+        reason: 'the ${e.key} amount to pay, in the summary',
+      );
+    }
+
+    await _go(tester, '/me');
+    for (final currency in owed.keys) {
+      expect(
+        find.byKey(ValueKey('me-home-finance-glance-amount-$currency'),
+            skipOffstage: false),
+        findsOneWidget,
+        reason: 'the $currency amount on the Me home glance',
+      );
+    }
   });
 
   testWidgets('Workspace status reads the demo\'s own invoices', (

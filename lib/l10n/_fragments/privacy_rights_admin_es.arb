@@ -1,0 +1,65 @@
+{
+  "@@locale": "es",
+  "personalBirthday": "Fecha de nacimiento",
+  "personalBirthdayHelp": "Solo usted, las personas autorizadas a ver los datos personales de los miembros y el administrador de datos personales del espacio pueden leerla. Quien solo emite facturas, no.",
+  "personalBirthdayPick": "Elegir una fecha",
+  "personalBirthdayClear": "Quitar la fecha de nacimiento",
+  "personalBirthdayInvalid": "Una fecha de nacimiento no puede estar en el futuro ni antes de 1900.",
+  "personalBirthdaySaveFailed": "Sus datos se guardaron, pero la fecha de nacimiento no.",
+  "privacyAdminTitle": "Datos personales y solicitudes de derechos",
+  "privacyAdminIntro": "Las solicitudes de los miembros sobre sus datos personales y los incidentes que usted registra. Cada solicitud se responde en un mes natural.",
+  "privacyAdminEmpty": "Todavía no hay solicitudes.",
+  "privacyAdminRecord": "Registrar una solicitud",
+  "privacyAdminMember": "Miembro",
+  "privacyAdminKind": "Tipo de solicitud",
+  "privacyAdminDetails": "Detalles (opcional)",
+  "privacyAdminReceivedOn": "Recibida el {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminExtend": "Prorrogar el plazo",
+  "privacyAdminExtendReason": "Motivo de la prórroga (al menos 10 caracteres)",
+  "privacyAdminComplete": "Completar",
+  "privacyAdminRefuse": "Rechazar",
+  "privacyAdminOutcomeKind": "Qué pasó con los datos",
+  "privacyOutcomeRemoved": "Eliminados",
+  "privacyOutcomeCorrected": "Rectificados",
+  "privacyOutcomeRestricted": "Restringidos",
+  "privacyOutcomeRetained": "Conservados (con un motivo)",
+  "privacyOutcomePendingExternal": "Aún abiertos en otro lugar",
+  "privacyOutcomeFailed": "No se pudo hacer",
+  "privacyAdminStore": "Dónde (un almacén o una lista)",
+  "privacyAdminBasis": "Por qué se conservan",
+  "privacyAdminPeriod": "Durante cuánto tiempo",
+  "privacyAdminRefusalReason": "Motivo del rechazo (al menos 10 caracteres)",
+  "privacyAdminSave": "Guardar",
+  "privacyAdminActionFailed": "El servidor lo rechazó: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminIncidentTitle": "Registrar un incidente de datos",
+  "privacyAdminIncidentIntro": "Las personas que gestionan los datos personales de este espacio reciben el aviso de inmediato. Diga lo ocurrido; no pegue datos personales aquí.",
+  "privacyIncidentDataBreach": "Una filtración de datos",
+  "privacyIncidentWrongInvoice": "Una factura errónea",
+  "privacyIncidentOther": "Otro incidente",
+  "privacyAdminIncidentNote": "Qué ocurrió (opcional, 1000 caracteres como máximo)",
+  "privacyAdminIncidentSend": "Registrar y avisar",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrado. Nadie tiene ese derecho, así que nadie fue avisado.} =1{Registrado. Se avisó a 1 persona.} other{Registrado. Se avisó a {count} personas.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminOpenTile": "Datos personales y solicitudes de derechos",
+  "privacyAdminLoadFailed": "No se pudieron leer las solicitudes."
+}

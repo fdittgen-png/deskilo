@@ -8,6 +8,8 @@ import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
@@ -100,12 +102,14 @@ void main() {
     },
   );
 
-  test("Me › Finances spans both spaces: Ada's open bill is in Leipzig", () {
+  test("Me › Finances spans every space: Ada's open bill is in Leipzig", () {
     final fixture = DemoFixture.build();
     final overview = demoFinanceOverview(fixture);
     expect(overview.invoices.map((i) => i.workspaceId).toSet(), {
       'ws-1',
       demoSecondSpaceId,
+      demoLondonSpaceId,
+      demoNewYorkSpaceId,
     });
     expect(
       overview.outstanding.map((i) => i.workspaceName),

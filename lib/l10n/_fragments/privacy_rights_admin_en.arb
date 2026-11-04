@@ -1,0 +1,65 @@
+{
+  "@@locale": "en",
+  "personalBirthday": "Birthday",
+  "personalBirthdayHelp": "Only you, people allowed to see members' personal data and the workspace's privacy admin can read it. Someone who only issues invoices cannot.",
+  "personalBirthdayPick": "Choose a date",
+  "personalBirthdayClear": "Remove the birthday",
+  "personalBirthdayInvalid": "A birthday cannot be in the future or before 1900.",
+  "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
+  "privacyAdminTitle": "Personal data and rights requests",
+  "privacyAdminIntro": "The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.",
+  "privacyAdminEmpty": "No rights request yet.",
+  "privacyAdminRecord": "Record a request",
+  "privacyAdminMember": "Member",
+  "privacyAdminKind": "Kind of request",
+  "privacyAdminDetails": "Details (optional)",
+  "privacyAdminReceivedOn": "Received on {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminExtend": "Extend the deadline",
+  "privacyAdminExtendReason": "Reason for the extension (at least 10 characters)",
+  "privacyAdminComplete": "Complete",
+  "privacyAdminRefuse": "Refuse",
+  "privacyAdminOutcomeKind": "What happened to the data",
+  "privacyOutcomeRemoved": "Removed",
+  "privacyOutcomeCorrected": "Corrected",
+  "privacyOutcomeRestricted": "Restricted",
+  "privacyOutcomeRetained": "Kept (with a reason)",
+  "privacyOutcomePendingExternal": "Still open elsewhere",
+  "privacyOutcomeFailed": "Could not be done",
+  "privacyAdminStore": "Where (a store or a list)",
+  "privacyAdminBasis": "Why it is kept",
+  "privacyAdminPeriod": "For how long",
+  "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
+  "privacyAdminSave": "Save",
+  "privacyAdminActionFailed": "The server refused: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminIncidentTitle": "Record a privacy incident",
+  "privacyAdminIncidentIntro": "The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.",
+  "privacyIncidentDataBreach": "A data breach",
+  "privacyIncidentWrongInvoice": "A wrong invoice",
+  "privacyIncidentOther": "Another incident",
+  "privacyAdminIncidentNote": "What happened (optional, 1000 characters at most)",
+  "privacyAdminIncidentSend": "Record and tell them",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminOpenTile": "Personal data and rights requests",
+  "privacyAdminLoadFailed": "The requests could not be read."
+}

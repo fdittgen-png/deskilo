@@ -307,6 +307,15 @@ An expense is waiting and you decide whether the workspace pays it.
 
 **See also:** [Finance alerts](help:user.money.alerts)
 
+<!-- anchor: user.money.suppliers.balance -->
+### Supplier balances
+
+**Audience:** Administrator · Owner
+
+Open **Purchases** and then **Suppliers**. Each supplier's outstanding balance is separate from its annual purchase-document spend, and amounts in different currencies are shown separately. An amount on hold is part of the outstanding balance but is not currently payable.
+
+Choose **View supplier payables** to see that supplier's bills and their remaining amounts. Use **Load more** when offered. If the balance or list is unavailable, retry rather than treating it as zero. The workspace needs Purchases enabled and you need permission to view finances or manage purchases.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

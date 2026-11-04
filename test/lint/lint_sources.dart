@@ -61,6 +61,42 @@ List<File> _filesWithExtension(String root, String extension,
 /// walk is always this file's (#2604).
 Directory directoryAt(String path) => Directory(path);
 
+/// An owned temporary root, created only by [createTemporaryFixture].
+final class TemporaryFixture {
+  TemporaryFixture._(this.directory) : _root = directory.resolveSymbolicLinksSync();
+  final Directory directory;
+  final String _root;
+}
+
+TemporaryFixture createTemporaryFixture(String prefix) {
+  if (!RegExp(r'^[a-zA-Z0-9_-]+$').hasMatch(prefix)) {
+    throw ArgumentError.value(prefix, 'prefix');
+  }
+  return TemporaryFixture._(Directory.systemTemp.createTempSync(prefix));
+}
+
+/// A direct child of a root created by this API. Arbitrary directories,
+/// nested names and symlink children are refused.
+Directory temporaryFixtureDirectory(Object fixture, String name) {
+  if (fixture is! TemporaryFixture) {
+    throw ArgumentError.value(fixture, 'fixture', 'not an owned fixture');
+  }
+  if (name.isEmpty || name == '.' || name == '..' ||
+      name.contains('/') || name.contains('\\')) {
+    throw ArgumentError.value(name, 'name');
+  }
+  final root = fixture.directory.resolveSymbolicLinksSync();
+  if (root != fixture._root || FileSystemEntity.typeSync(
+          fixture.directory.path, followLinks: false) != FileSystemEntityType.directory) {
+    throw ArgumentError.value(fixture, 'fixture', 'root was replaced');
+  }
+  final path = '$root/$name';
+  if (FileSystemEntity.typeSync(path, followLinks: false) == FileSystemEntityType.link) {
+    throw ArgumentError.value(name, 'name', 'symlink child');
+  }
+  return Directory(path);
+}
+
 /// The names of the directories directly under [root], sorted (#2604).
 List<String> directoryNames(String root) => [
       for (final d in Directory(root).listSync().whereType<Directory>())

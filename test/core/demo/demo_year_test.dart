@@ -75,7 +75,15 @@ void main() {
           isFalse,
           reason: 'unpaid and reminded',
         );
-        expect(money.invoiceReminders['demo-usage-bruno'], isNotEmpty);
+        // Reminded two days after it fell due (the 28th of last month plus
+        // twelve days), and only once that day has come (#3292): never a
+        // reminder dated after the Demo's now.
+        final reminded = DateTime(now.year, now.month - 1, 28)
+            .add(const Duration(days: 12));
+        expect(
+          money.invoiceReminders['demo-usage-bruno'],
+          reminded.isAfter(now) ? isNull : [reminded],
+        );
         expect(matches['demo-credit-ada']?.resolution, 'refunded');
       });
 
@@ -163,7 +171,11 @@ void main() {
       'ws-1',
       kind: CreditorKind.supplier,
     )).map((c) => c.obligation).toList();
-    expect(suppliersOwed, hasLength(3));
+    expect(
+      suppliersOwed.where((o) => o.creditorId == 'demo-supplier-cleaning')
+          .map((o) => o.remainingCents),
+      containsAll([0, 4400]),
+    );
     expect(
       suppliersOwed.map((o) => o.remainingCents),
       containsAll([0, 4400, 4790]),

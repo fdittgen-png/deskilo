@@ -33,8 +33,9 @@ begin
   tz := case when extract(hour from now() at time zone 'Europe/Paris') >= 22
              then 'America/Los_Angeles' else 'Europe/Paris' end;
   perform set_config('deskilo.queue.tz', tz, false);
-  insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
-  values ('Queue', 'FR', 'EUR', tz, u_mine) returning id into ws;
+  -- #3269: a member books only with the right; the fixture's owner grants it.
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, role_permissions)
+  values ('Queue', 'FR', 'EUR', tz, u_mine, '{"member": ["makeReservations"]}'::jsonb) returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_mine, true, true) returning id into m;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)

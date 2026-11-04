@@ -44,7 +44,9 @@ language sql immutable as $q$
     ('get_setup_journey',
      'renders updated_by_name through profile_full_name; the match is the journey row''s own v.updated_at, not the profile''s'),
     ('get_setup_step_draft',
-     'renders updated_by_name through profile_full_name; the match is the draft row''s own v.updated_at, not the profile''s');
+     'renders updated_by_name through profile_full_name; the match is the draft row''s own v.updated_at, not the profile''s'),
+    ('export_my_data',
+     'returns the subject''s own profile row to the subject; access is decided by the active membership and the workspace''s privacy.member_self_service setting (it raises 42501 when the setting is off), never by a profile column');
 $q$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 

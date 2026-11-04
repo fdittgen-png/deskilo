@@ -12,6 +12,10 @@
   "levelSupplementLabel": "Réservations de niveau",
   "levelNotAllowed": "Vous n'êtes pas autorisé à réserver une table, un bureau ou un niveau entier.",
   "levelConflict": "Le niveau a des réservations sur cette période.",
+  "bookingNotAllowedError": "Vous ne pouvez pas réserver dans cet espace. Demandez à un propriétaire d'autoriser les membres à réserver.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Vous avez déjà une réservation sur cette période — une place à la fois.",
   "bookingCheckedInElsewhere": "Vous êtes pointé ailleurs — partez d'abord là-bas.",
   "spaceNotWholeBookable": "Cet espace n'est pas configuré pour la réservation entière — le propriétaire active « Réservable en entier » dessus dans l'éditeur.",

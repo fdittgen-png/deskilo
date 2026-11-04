@@ -4,16 +4,21 @@
   "@navPurchasesGroup": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "Por aprobar",
+  "purchaseApprovalsTitle": "Facturas de proveedores por aprobar",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsEmpty": "Nada espera su aprobación.",
+  "purchaseApprovalsEmpty": "Ninguna factura de proveedor espera su aprobación.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "No se pudieron leer los documentos por aprobar.",
+  "purchaseApprovalsRefused": "No se pudieron leer las facturas de proveedores por aprobar.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
-  }
+  },
+  "purchaseApprovalVisibleReceipts": "Comprobantes pendientes de miembros que puede consultar",
+  "purchaseApprovalReceiptsUnavailable": "No se pudieron cargar los comprobantes pendientes.",
+  "purchaseApprovalEvidenceUnavailable": "Los justificantes no están disponibles en esta vista. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.",
+  "purchaseApprovalFxSame": "La factura está en la moneda del espacio.",
+  "purchaseApprovalFxUnavailable": "El tipo de cambio no está disponible en esta vista."
 }

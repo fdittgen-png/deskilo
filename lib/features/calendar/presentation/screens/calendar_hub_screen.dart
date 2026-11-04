@@ -241,12 +241,12 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         await showInvoiceDetailSheet(
           context,
           ref: ref,
-          invoice: invoice,
-          match: matches[invoice.id],
-          canIssue: ref
-              .read(myPermissionsProvider)
-              .contains(WorkspacePermission.issueInvoices),
-          isEu: isEuCountry(country),
+          view: InvoiceDetailView(
+            invoice: invoice,
+            match: matches[invoice.id],
+            canIssue: mayIssueInvoices(ref),
+            isEu: isEuCountry(country),
+          ),
         );
       case null:
         break;

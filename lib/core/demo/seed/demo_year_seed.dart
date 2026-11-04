@@ -292,9 +292,11 @@ void _seedUsageInvoices(FakeMoneyRepository money, DateTime now) {
     twoAgo.add(const Duration(days: 3)),
     'exact',
   );
-  money.invoiceReminders['demo-usage-bruno'] = [
-    lastMonth.add(const Duration(days: 12)),
-  ];
+  // #3292 — never a reminder dated after the Demo's now.
+  final reminded = lastMonth.add(const Duration(days: 12));
+  if (!reminded.isAfter(now)) {
+    money.invoiceReminders['demo-usage-bruno'] = [reminded];
+  }
 }
 
 /// The credit note of two months ago was refunded by bank transfer.

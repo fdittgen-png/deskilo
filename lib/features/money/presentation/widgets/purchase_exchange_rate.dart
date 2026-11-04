@@ -18,6 +18,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
+import '../../domain/purchase_approval_reads.dart';
 import '../../providers/credit_providers.dart';
 import '../../providers/purchase_providers.dart';
 
@@ -374,6 +375,32 @@ class _RateDialogState extends ConsumerState<_RateDialog> {
           child: Text(l10n.purchasesSave),
         ),
       ],
+    );
+  }
+}
+
+/// The recorded rate for one eligible approval, without a write affordance.
+class ApprovalExchangeRateTile extends StatelessWidget {
+  const ApprovalExchangeRateTile({required this.fx, super.key});
+  final PurchaseApprovalFx fx;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return ListTile(
+      key: const ValueKey('purchase-approval-fx'),
+      contentPadding: EdgeInsets.zero,
+      title: Text(l10n.purchasesFxTitle),
+      subtitle: Text(switch (fx.status) {
+        PurchaseApprovalFxStatus.unavailable => l10n.purchaseApprovalFxUnavailable,
+        PurchaseApprovalFxStatus.sameCurrency => l10n.purchaseApprovalFxSame,
+        PurchaseApprovalFxStatus.missing => l10n.purchasesFxMissing,
+        PurchaseApprovalFxStatus.recorded => l10n.purchasesFxRecorded(
+          fx.currency!, fx.rate!, fx.functionalCurrency!,
+          MaterialLocalizations.of(context).formatMediumDate(fx.rateDate!),
+          _sourceLabel(l10n, fx.source!),
+        ),
+      }),
     );
   }
 }

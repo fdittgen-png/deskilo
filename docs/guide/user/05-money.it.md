@@ -307,6 +307,15 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 
 **Vedi anche:** [Avvisi finanziari](help:user.money.alerts)
 
+<!-- anchor: user.money.suppliers.balance -->
+### Saldi dei fornitori
+
+**Destinatari:** Amministratore · Proprietario
+
+Apra **Acquisti** e poi **Fornitori**. Il saldo da pagare a ciascun fornitore è distinto dalla spesa annuale dei documenti di acquisto; le valute sono mostrate separatamente. Un importo in sospeso fa parte del saldo, ma non è attualmente pagabile.
+
+Scelga **Vedi debiti verso il fornitore** per consultare le sue fatture e gli importi residui. Usi **Carica altro** quando disponibile. Se il saldo o l'elenco non sono disponibili, riprovi invece di considerarli zero. Acquisti deve essere attivo e serve il permesso di vedere le finanze o gestire gli acquisti.
+
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi
 

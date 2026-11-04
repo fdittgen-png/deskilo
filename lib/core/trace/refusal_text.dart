@@ -55,17 +55,26 @@ enum KnownRefusal {
   /// (a credit note, a settlement, a write-off): not undone here.
   bankMatchBeyondLink,
 
-  /// #2380 (DKB05) — the invoice has other payments matched: this one is
-  /// not undone alone.
+  /// #2380 (DKB05) — the invoice's payments cannot be restated without
+  /// guessing (0657, 0660): they do not add up to the match (one may await
+  /// its validation), or two share their submission time.
   bankMatchSeveralPayments,
 
   /// #2380 (DKB06) — the payment is dated inside a closed period of the
   /// books: its match is not undone.
   bankMatchClosedPeriod,
 
+  /// #2380 (DKB07, 0660) — the invoice's first payment is undone last: the
+  /// later payments go first.
+  bankMatchUndoLaterFirst,
+
   /// #2571 (DKE01) — a destructive step over records still under retention:
   /// the server deleted nothing.
   retentionKept,
+
+  /// #3278 (0666) — the workspace handles data requests itself: the member's
+  /// own export and erasure are off and a rights request is filed instead.
+  privacySelfServiceOff,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -92,6 +101,13 @@ const List<String> sessionRefusalSubstrings = [
   'jwt expired',
 ];
 
+/// #3278 — the refusal of a member's own export or erasure when the workspace
+/// turned direct access off (it carries errcode 42501, so it is read first).
+@visibleForTesting
+const List<String> privacySelfServiceOffSubstrings = [
+  'privacy_self_service_off',
+];
+
 /// Substrings that mean somebody else already acted.
 @visibleForTesting
 const List<String> alreadyDecidedSubstrings = [
@@ -115,10 +131,17 @@ const Map<String, KnownRefusal> _bankRefusals = {
   'DKB04': KnownRefusal.bankMatchBeyondLink,
   'DKB05': KnownRefusal.bankMatchSeveralPayments,
   'DKB06': KnownRefusal.bankMatchClosedPeriod,
+  'DKB07': KnownRefusal.bankMatchUndoLaterFirst,
 };
 
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
+  // #3278 — a 42501 that carries its own words: read before the generic one.
+  final said = serverErrorMessage(error)?.toLowerCase();
+  if (said != null &&
+      privacySelfServiceOffSubstrings.any(said.contains)) {
+    return KnownRefusal.privacySelfServiceOff;
+  }
   // 42501 is Postgres's own insufficient_privilege — an RLS refusal or a
   // revoked grant, which never carries one of our sentences.
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
@@ -168,7 +191,9 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.bankMatchSeveralPayments =>
         l10n.refusalBankMatchSeveralPayments,
       KnownRefusal.bankMatchClosedPeriod => l10n.refusalBankMatchClosedPeriod,
+      KnownRefusal.bankMatchUndoLaterFirst => l10n.refusalBankMatchUndoLaterFirst,
       KnownRefusal.retentionKept =>
         l10n.retentionResetRefused(l10n.retentionKeptReview),
+      KnownRefusal.privacySelfServiceOff => l10n.privacySelfServiceOff,
       null => null,
     };

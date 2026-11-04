@@ -56,6 +56,22 @@ abstract final class InstanceAuthConfig {
   static const String redirectAllowList =
       'deskilo://**,https://fdittgen-png.github.io/deskilo/**';
 
+  /// The deployment base is the authority for a web-created instance.
+  /// Never include transient flow parameters or fragments in saved config.
+  static Map<String, Object?> patchForWebBase(Uri callback) {
+    if ((callback.scheme != 'https' && callback.scheme != 'http') ||
+        callback.host.isEmpty ||
+        callback.userInfo.isNotEmpty ||
+        RegExp(r'[\*\[\]{}\\,]').hasMatch(callback.host + callback.path) ||
+        RegExp(r'%(?:2a|2c|5b|5c|5d|7b|7d)', caseSensitive: false).hasMatch(callback.path)) {
+      throw ArgumentError('Invalid web base URL; configure a valid HTTP(S) deployment URL.');
+    }
+    final path = callback.path.isEmpty ? '/' : callback.path;
+    final site = '${callback.origin}$path';
+    final redirects = path.endsWith('/') ? '$site**' : '$site,$site/**';
+    return {...patch, 'site_url': site, 'uri_allow_list': 'deskilo://**,$redirects'};
+  }
+
   static Map<String, Object?> get patch => {
         'mailer_autoconfirm': false,
         'site_url': siteUrl,
@@ -339,9 +355,9 @@ on conflict (version) do nothing;
     onProgress?.call((done: total, total: total, current: ''));
   }
 
-  Future<void> configureAuth(String ref) async {
+  Future<void> configureAuth(String ref, {Map<String, Object?>? authPatch}) async {
     try {
-      await api.patchAuthConfig(ref, InstanceAuthConfig.patch);
+      await api.patchAuthConfig(ref, authPatch ?? InstanceAuthConfig.patch);
     } on ManagementApiException catch (e, st) {
       // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
       Error.throwWithStackTrace(InstanceStepFailure('auth', e.message), st);

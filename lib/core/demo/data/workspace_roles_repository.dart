@@ -5,11 +5,23 @@
 // It refuses what 0247 refuses, because a fake that accepts a built-in
 // key or a self-assignment lets a screen ship a Save the server rejects,
 // with every screen test green.
+import '../../../features/workspace/domain/workspace_permission.dart';
 import '../../../features/workspace/domain/workspace_role.dart';
 import '../../../features/workspace/domain/workspace_roles_repository.dart';
 
 class FakeWorkspaceRoles implements WorkspaceRolesRepository {
   final roles = <WorkspaceRole>[];
+
+  /// #3293 — what the space's own active roles grant [memberId], as
+  /// has_permission_raw adds them (whether they count is the customRoles
+  /// switch, which effectivePermissions reads).
+  Set<WorkspacePermission> grantedTo(String memberId) => {
+        for (final role in roles)
+          if (role.active &&
+              !role.builtin &&
+              (assignments[role.id] ?? const []).contains(memberId))
+            ...role.permissions,
+      };
 
   /// role id → member ids.
   final assignments = <String, List<String>>{};

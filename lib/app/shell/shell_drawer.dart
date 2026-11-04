@@ -17,15 +17,19 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
-import '../../features/money/providers/purchase_providers.dart';
+import '../../features/money/domain/purchase_approval_reads.dart';
+import '../../features/money/presentation/widgets/purchases_sheet.dart';
+import '../../features/money/providers/purchase_approval_provider.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
-import '../../features/workspace/presentation/widgets/setup_resume_banner.dart' show setupGuideOpenFor;
+import '../../features/workspace/presentation/widgets/setup_resume_banner.dart'
+    show setupGuideOpenFor;
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'purchase_approval_badge.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_drawer_tiles.dart';
@@ -41,7 +45,8 @@ NavigationStyle navigationDefault(Ref ref) {
   final everydayOnly = inSpace
       ? holdsOnlyEverydayPermissions(ref.watch(myPermissionsProvider))
       : !(ref.watch(myMembershipsProvider).value ?? const []).any(
-          (m) => m.isOwner || m.isAdmin || m.coOwner == CoOwnerStatus.active);
+          (m) => m.isOwner || m.isAdmin || m.coOwner == CoOwnerStatus.active,
+        );
   return defaultNavigationStyle(
     isPhone: ref.watch(deviceIsPhoneProvider),
     everydayOnly: everydayOnly,
@@ -50,7 +55,7 @@ NavigationStyle navigationDefault(Ref ref) {
 
 /// #3070 — the documents waiting for the signed-in person's decision; read
 /// only for who may decide, so nobody else loads the list for a badge.
-int _waitingApprovals(
+AsyncValue<PurchaseApprovalPage>? _waitingApprovals(
   WidgetRef ref,
   String? workspaceId,
   Set<WorkspaceFeature> features,
@@ -59,9 +64,44 @@ int _waitingApprovals(
   if (workspaceId == null ||
       !features.contains(WorkspaceFeature.purchases) ||
       !permissions.contains(WorkspacePermission.approveExpenses)) {
-    return 0;
+    return null;
   }
-  return ref.watch(pendingApprovalsProvider(workspaceId)).value?.length ?? 0;
+  return ref.watch(
+    purchaseApprovalPageProvider((workspaceId: workspaceId, after: null)),
+  );
+}
+
+void _goFromDrawer(
+  BuildContext context,
+  String route, {
+  required bool permanent,
+  required bool push,
+}) {
+  if (!permanent) Navigator.of(context).pop();
+  if (push) {
+    unawaited(context.push(route));
+  } else {
+    context.go(route);
+  }
+}
+
+void _openToPay(
+  BuildContext context,
+  String workspaceId,
+  Set<WorkspacePermission> permissions, {
+  required bool permanent,
+}) {
+  final navigator = Navigator.of(context);
+  if (!permanent) navigator.pop();
+  unawaited(showPurchasesSheet(
+    navigator.context,
+    workspaceId,
+    canCapture: permissions.contains(WorkspacePermission.managePurchases),
+    canPay: permissions.contains(WorkspacePermission.recordOutgoingPayments),
+    canDecide: permissions.contains(WorkspacePermission.approveExpenses),
+    canOffset: permissions.contains(WorkspacePermission.issueInvoices),
+    toPay: true,
+  ));
 }
 
 /// Whether the shell navigates through the drawer — the web build
@@ -110,14 +150,8 @@ class ShellDrawer extends ConsumerWidget {
       permissions: ref.watch(myPermissionsProvider),
     );
 
-    void go(String route, {bool push = true}) {
-      if (!permanent) Navigator.of(context).pop();
-      if (push) {
-        unawaited(context.push(route));
-      } else {
-        context.go(route);
-      }
-    }
+    void go(String route, {bool push = true}) =>
+        _goFromDrawer(context, route, permanent: permanent, push: push);
 
     final entries = DrawerEntries(
       context: context,
@@ -131,9 +165,15 @@ class ShellDrawer extends ConsumerWidget {
       onBranch: onBranch,
       go: go,
       setupOpen: setupGuideOpenFor(ref, workspace?.id),
+      openToPay: workspace == null
+          ? null
+          : () => _openToPay(context, workspace.id, perms, permanent: permanent),
     );
     final navigation = entries.navigation();
-    final administration = [...entries.setupGuide(), ...entries.administration()];
+    final administration = [
+      ...entries.setupGuide(),
+      ...entries.administration(),
+    ];
     final member = ref.watch(myMemberProvider).value;
     final sections = reportingSections(
       features: features,
@@ -142,68 +182,52 @@ class ShellDrawer extends ConsumerWidget {
       actsAsOwner: member?.actsAsOwner ?? false,
     );
     final section = GoRouterState.of(context).uri.queryParameters['section'];
-    bool onSection(String id) => path == '/reports' &&
+    bool onSection(String id) =>
+        path == '/reports' &&
         (section ?? sections.where((s) => s != 'analytics').firstOrNull) == id;
-    final reporting = entries.reporting(sections: sections, onSection: onSection);
+    final reporting = entries.reporting(
+      sections: sections,
+      onSection: onSection,
+    );
     final account = entries.account();
 
     // Every badge opens the content it counts (#1306 S3): the events
     // entry while the bell is on, the Calendar entry when the calendar
     // carries the decisions instead.
+    final approvals = _waitingApprovals(ref, workspace?.id, features, perms);
     final badges = <String, int>{
       'drawer-events': attention.total,
       'drawer-tab-${ShellBranch.money}': attention.money,
       if (decisionSignalOnCalendar(features))
         'drawer-tab-${ShellBranch.calendar}': pendingEvents,
-      'drawer-purchase-approvals': _waitingApprovals(
-        ref,
-        workspace?.id,
-        features,
-        perms,
-      ),
     };
     int badgeOf(DrawerEntry e) => badges[e.key] ?? 0;
-    Widget tile(DrawerEntry e) =>
-        DrawerTile(entry: e, path: path, badge: badgeOf(e));
+    Widget tile(DrawerEntry e) => DrawerTile(
+      entry: e,
+      path: path,
+      badge: badgeOf(e),
+      trailing: e.key == 'drawer-purchase-approvals' && approvals != null
+          ? PurchaseApprovalBadge(value: approvals)
+          : null,
+    );
     Widget group(String id, String title, IconData icon, Set<String> keys,
-            {List<DrawerEntry>? from, List<Widget> after = const []}) =>
-        DrawerGroup(
-          id: id,
-          title: title,
-          icon: icon,
-          entries: [
-            for (final e in from ?? administration)
-              if (keys.contains(e.key)) e,
-          ],
-          path: path,
-          tile: tile,
-          after: after,
-        );
+        {List<DrawerEntry>? from, List<Widget> after = const []}) => DrawerGroup(
+      id: id, title: title, icon: icon,
+      entries: [for (final e in from ?? administration) if (keys.contains(e.key)) e],
+      path: path, tile: tile, after: after,
+    );
 
     final content = SafeArea(
         child: ListTileTheme(
-          data: ListTileThemeData(titleTextStyle: theme.textTheme.labelLarge
-              ?.copyWith(color: theme.colorScheme.onSurface)),
+        data: ListTileThemeData(
+          titleTextStyle: theme.textTheme.labelLarge?.copyWith(
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
           child: ListView(
           padding: AppSpacing.smH,
           children: [
-            Padding(
-              padding: AppSpacing.lgAll,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    workspace?.name ?? 'DesKilo',
-                    key: const ValueKey('drawer-workspace-name'),
-                    style: theme.textTheme.titleLarge,
-                  ),
-                  // #1289 — the space's own mark, beneath the product's
-                  // name, and nothing at all when it has none.
-                  const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
-                ],
-              ),
-            ),
+            _drawerHeading(workspace?.name ?? 'DesKilo', theme),
             ListTile(
               key: const ValueKey('drawer-back-to-me'),
               leading: const PersonalAvatar(),
@@ -215,32 +239,53 @@ class ShellDrawer extends ConsumerWidget {
             for (final e in navigation) tile(e),
             if (reporting.isNotEmpty) ...[
               const Divider(),
-              group('reporting', labels.uxNavReporting, Icons.analytics_outlined, {
-                for (final e in reporting) e.key,
-              }, from: reporting),
+              group(
+                'reporting',
+                labels.uxNavReporting,
+                Icons.analytics_outlined,
+                {for (final e in reporting) e.key},
+                from: reporting,
+              ),
             ],
             if (administration.isNotEmpty) const Divider(),
             // Each group hides itself when empty. A financial permission
             // must not depend on having an unrelated administration door.
             group('people', labels.uxNavPeople, Icons.group_outlined, {
-              'drawer-members', 'drawer-roles', 'drawer-nfc-config',
+              'drawer-members',
+              'drawer-roles',
+              'drawer-nfc-config',
             }),
             ..._financeGroups(group, tile, entries, administration),
             group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
-              'drawer-setup-guide', 'drawer-workspace-settings', 'drawer-availability',
-              'drawer-features', 'drawer-editor',
+              'drawer-setup-guide',
+              'drawer-workspace-settings',
+              'drawer-availability',
+              'drawer-features',
+              'drawer-editor',
             }),
             const Divider(),
             for (final e in account) tile(e),
           ],
         ),
-      ));
+      ),
+    );
     return permanent
-        ? Material(key: const ValueKey('shell-sidebar'),
-            color: theme.colorScheme.surfaceContainerLow, child: content)
+        ? Material(
+            key: const ValueKey('shell-sidebar'),
+            color: theme.colorScheme.surfaceContainerLow,
+            child: content,
+          )
         : Drawer(key: const ValueKey('shell-drawer'), child: content);
   }
 }
+
+Widget _drawerHeading(String name, ThemeData theme) => Padding(
+  padding: AppSpacing.lgAll,
+  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+    Text(name, key: const ValueKey('drawer-workspace-name'), style: theme.textTheme.titleLarge),
+    const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
+  ]),
+);
 
 typedef _GroupBuilder = Widget Function(
   String id,
@@ -267,22 +312,38 @@ List<Widget> _financeGroups(
   final all = [...money, ...administration];
   return [
     group('sales', labels.uxNavSales, Icons.sell_outlined, {
-      'drawer-sales', 'drawer-invoices', 'drawer-services',
-      'drawer-accessories', 'drawer-billing', 'drawer-payment-methods',
+      'drawer-sales',
+      'drawer-invoices',
+      'drawer-services',
+      'drawer-accessories',
+      'drawer-billing',
+      'drawer-payment-methods',
       'drawer-payment-config',
     }, from: all),
     group('purchases', labels.navPurchasesGroup, Icons.shopping_cart_outlined, {
-      'drawer-purchases', 'drawer-suppliers', 'drawer-purchase-approvals',
+      'drawer-purchases',
+      'drawer-suppliers',
+      'drawer-purchase-approvals',
+      'drawer-purchases-to-pay',
     }, from: all),
-    group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
-      'drawer-cash',
-    }, from: all, after: [
+    group(
+      'finance',
+      labels.uxNavFinance,
+      Icons.receipt_long_outlined,
+      {'drawer-cash'},
+      from: all,
+      after: [
       // Built only with a door inside: an empty sub-group would keep the
       // Finance header for a member with no finance entry at all.
       if (accounting.isNotEmpty)
-        group('accounting', labels.hubAccountingTitle, Icons.menu_book_outlined, {
-          for (final e in accounting) e.key,
-        }, from: accounting),
-    ]),
+          group(
+            'accounting',
+            labels.hubAccountingTitle,
+            Icons.menu_book_outlined,
+            {for (final e in accounting) e.key},
+            from: accounting,
+          ),
+      ],
+    ),
   ];
 }

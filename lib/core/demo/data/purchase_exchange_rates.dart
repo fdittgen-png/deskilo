@@ -7,6 +7,7 @@ import '../../../features/money/domain/purchase.dart';
 mixin DemoPurchaseExchangeRates implements PurchaseRepository {
   /// The demo space's currency, which the books are kept in.
   static const spaceCurrency = 'EUR';
+  String get functionalCurrency => spaceCurrency;
 
   /// The rate sources the demonstration offers (the server reads them from
   /// its reference list).
@@ -35,7 +36,7 @@ mixin DemoPurchaseExchangeRates implements PurchaseRepository {
     PurchaseSummary s,
     ExchangeRateEntry entry,
   ) {
-    if (s.currency.isEmpty || s.currency == spaceCurrency) {
+    if (s.currency.isEmpty || s.currency == functionalCurrency) {
       throw StateError('the purchase is in the currency of the space');
     }
     if (!sources.contains(entry.source)) {
@@ -48,7 +49,7 @@ mixin DemoPurchaseExchangeRates implements PurchaseRepository {
     return exchangeRates[s.id] = DocumentExchangeRate(
       documentId: s.id,
       currency: s.currency,
-      functionalCurrency: spaceCurrency,
+      functionalCurrency: functionalCurrency,
       entry: entry,
       revision: (held?.revision ?? 0) + 1,
     );

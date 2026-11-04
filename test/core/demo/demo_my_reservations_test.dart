@@ -8,6 +8,8 @@ import 'package:deskilo/core/demo/data/my_reservations_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_space_routing.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
@@ -37,7 +39,7 @@ void main() {
           return byStart != 0 ? byStart : a.id.compareTo(b.id);
         });
 
-  test('the scope answers the acting member\'s bookings of both spaces, nobody else\'s', () async {
+  test('the scope answers the acting member\'s bookings of all spaces, nobody else\'s', () async {
     final fixture = DemoFixture.build();
     final container = ProviderContainer(overrides: demoOverrides(fixture));
     addTearDown(container.dispose);
@@ -49,13 +51,16 @@ void main() {
       ...fixture.reservations.reservations.where((r) => r.memberId == fixture.activeMemberId),
       ...fixture.secondSpace.reservations.reservations
           .where((r) => r.memberId == fixture.secondSpace.reservations.myMemberId),
+      ...fixture.london.reservations.reservations,
+      ...fixture.newYork.reservations.reservations,
     ], fixture.activeMemberId, query);
     expect(page.items, isNotEmpty, reason: 'the demo persona has bookings');
     expect(page.items.map((i) => i.id).toList(), expected.take(50).map((r) => r.id).toList(),
         reason: 'exactly the acting member\'s rows, in start order, one page of the registry\'s size');
     expect(page.hasMore, expected.length > 50);
-    expect(expected.map((r) => r.workspaceId).toSet(), contains(demoSecondSpaceId),
-        reason: 'the second space of the one installation is read too');
+    expect(expected.map((r) => r.workspaceId).toSet(),
+        containsAll([demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId]),
+        reason: 'all four spaces of the one installation are read');
     expect(page.items.every((i) => i.placeLabel.isNotEmpty), isTrue,
         reason: 'the plan names every booked place');
   });
@@ -110,7 +115,7 @@ void main() {
     final sources = await container.read(myReservationsSourcesProvider.future);
     expect(sources.map((s) => s.installationId), [kDemoInstallationId],
         reason: 'both spaces live on the one fictional installation');
-    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId]));
+    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId]));
 
     final page = await container
         .read(myReservationsRepositoryProvider)

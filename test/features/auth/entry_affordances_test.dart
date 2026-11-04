@@ -9,9 +9,11 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/entry_intent.dart';
 import 'package:deskilo/app/entry_intents.dart';
+import 'package:deskilo/core/app_info.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/demo_entry.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,14 +45,23 @@ Future<GoRouter> pump(
   Size size = const Size(360, 640),
   double textScale = 1,
   bool reducedMotion = false,
+  double keyboardInset = 0,
+  double safeBottom = 0,
+  String? appVersion,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
+  tester.view.viewInsets = FakeViewPadding(bottom: keyboardInset);
+  tester.view.viewPadding = FakeViewPadding(bottom: safeBottom);
+  tester.view.padding = FakeViewPadding(
+    bottom: safeBottom > keyboardInset ? safeBottom - keyboardInset : 0,
+  );
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(auth: FakeAuthRepository()),
+        if (appVersion != null) appVersionProvider.overrideWith((ref) async => appVersion),
         localeStoreProvider
             .overrideWithValue(InMemoryLocaleStore()..languageCode = locale),
       ],
@@ -58,6 +69,11 @@ Future<GoRouter> pump(
         data: MediaQueryData(
           textScaler: TextScaler.linear(textScale),
           disableAnimations: reducedMotion,
+          viewInsets: EdgeInsets.only(bottom: keyboardInset),
+          viewPadding: EdgeInsets.only(bottom: safeBottom),
+          padding: EdgeInsets.only(
+            bottom: safeBottom > keyboardInset ? safeBottom - keyboardInset : 0,
+          ),
         ),
         child: const DeskiloApp(),
       ),
@@ -70,6 +86,75 @@ Future<GoRouter> pump(
 }
 
 void main() {
+  for (final locale in joinLabel.keys) {
+    testWidgets('$locale: build footer is localized and at the bottom', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await pump(tester, locale: locale, size: const Size(400, 1200), appVersion: '1.2.3+42');
+      final footer = find.byKey(const ValueKey('auth-build-version'));
+      expect(footer, findsOneWidget);
+      final label = switch (locale) {
+        'it' => 'Versione 1.2.3+42',
+        'es' => 'Versión 1.2.3+42',
+        _ => 'Version 1.2.3+42',
+      };
+      expect(find.descendant(of: footer, matching: find.text(label)), findsOneWidget);
+      expect(find.bySemanticsLabel(label), findsOneWidget);
+      expect(tester.getBottomLeft(footer).dy, closeTo(1176, 1));
+      semantics.dispose();
+    });
+  }
+
+  testWidgets('footer respects device bottom safe area', (tester) async {
+    await pump(tester, size: const Size(400, 1200), safeBottom: 60,
+        appVersion: '1.2.3+42');
+    final screen = tester.element(find.byType(AuthScreen));
+    expect(tester.view.viewPadding.bottom, 60);
+    // The root SystemInsetsGuard consumes the inset before the auth screen.
+    expect(MediaQuery.paddingOf(screen).bottom, 0);
+    expect(tester.getSize(find.byType(Scaffold).first).height, 1140);
+    final footer = find.byKey(const ValueKey('auth-build-version'));
+    expect(tester.getBottomLeft(footer).dy, lessThanOrEqualTo(1116));
+  });
+
+  testWidgets('unavailable metadata does not invent a build', (tester) async {
+    await pump(tester, appVersion: '');
+    expect(find.byKey(const ValueKey('auth-build-version')), findsNothing);
+    expect(find.byKey(const ValueKey('demo-entry')), findsOneWidget);
+  });
+
+  testWidgets('small keyboard viewport keeps version and Demo reachable', (tester) async {
+    await pump(tester, keyboardInset: 260,
+        textScale: 2, reducedMotion: true, appVersion: '1.2.3');
+    final screen = tester.element(find.byType(AuthScreen));
+    expect(MediaQuery.viewInsetsOf(screen).bottom, 260);
+    expect(tester.getSize(find.byType(Scaffold).first).height, 640);
+    final scroll = find.descendant(
+      of: find.byType(AuthScreen), matching: find.byType(SingleChildScrollView),
+    ).first;
+    expect(tester.getSize(scroll).height, 380);
+    final footer = find.byKey(const ValueKey('auth-build-version'));
+    await tester.ensureVisible(footer);
+    expect(tester.getBottomLeft(footer).dy, lessThanOrEqualTo(380));
+    expect(find.descendant(of: footer, matching: find.text('Version 1.2.3')), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const ValueKey('demo-entry')));
+    expect(find.byKey(const ValueKey('demo-entry')).hitTestable(), findsOneWidget);
+  });
+
+  testWidgets('build footer keeps the actual Demo entry reachable', (tester) async {
+    await pump(tester, size: const Size(400, 900), appVersion: '1.2.3+42');
+    expect(find.byKey(const ValueKey('auth-build-version')), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const ValueKey('demo-entry')));
+    await tester.tap(find.byKey(const ValueKey('demo-entry')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    expect(container.read(demoEntryProvider), isFalse);
+    await tester.tap(find.byKey(const Key('demo-entry-start')));
+    // The state changes on consent; one frame observes it without waiting on
+    // unrelated animations in the Demo shell.
+    await tester.pump();
+    expect(container.read(demoEntryProvider), isTrue);
+  });
+
   for (final locale in joinLabel.keys) {
     testWidgets('$locale: join keeps the errand and opens account creation; '
         'the server link opens the chooser', (tester) async {

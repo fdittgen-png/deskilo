@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/demo_visit.dart';
+import '../../../features/auth/providers/auth_providers.dart';
+import '../../../features/kiosk/providers/kiosk_mode.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
@@ -17,6 +19,7 @@ import '../../theme/app_spacing.dart';
 import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
+import '../demo_reload_marker_provider.dart';
 import '../demo_session.dart';
 
 /// The button that offers the demonstration space.
@@ -124,7 +127,7 @@ Future<bool> _showDemoEntrySheet(
   );
   if (!(start ?? false) || !context.mounted) return false;
   if (ref.read(demoEntryProvider)) return false;
-  if (await _identityOrNull(visit) != before) return false;
+  if (!await _Consent.holds(context, ref, visit, before)) return false;
   if (!context.mounted) return false;
   if (before != null &&
       !visit.begin(DemoOrigin(identity: before, route: route))) {
@@ -146,10 +149,60 @@ Future<bool> _showDemoEntrySheet(
     );
     return false;
   }
+  // #3235 — a later reload of this tab must reopen the Demo entry, never the
+  // live screen behind it. If the tab cannot hold that hint, the visit fails
+  // closed instead of starting unprotected.
+  final marker = ref.read(demoReloadMarkerProvider);
+  if (marker != null && !marker.arm()) {
+    visit.cancel();
+    if (context.mounted) {
+      ScaffoldMessenger.maybeOf(context)
+          ?.showSnackBar(SnackBar(content: Text(l10n.demoEntryFailed)));
+    }
+    return false;
+  }
   beforeEnter?.call();
   if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
   ref.read(demoEntryProvider.notifier).enter();
   return true;
+}
+
+/// #3235 — the checks that must still pass after consent.
+abstract final class _Consent {
+  /// #3235 — after consent: a signed-in person's workspace may have changed
+  /// while the sheet was open (the Demo flag switched off, the kiosk locked),
+  /// so both are read again, resolved; the public Demo of a visitor who is not
+  /// signed in is not asked. The identity is read after them, last before the
+  /// visit begins, and the account and workspace standing then must still be
+  /// the ones consented (the identity read itself awaits).
+  static Future<bool> holds(
+    BuildContext context,
+    WidgetRef ref,
+    DemoVisit visit,
+    DemoIdentity? before,
+  ) async {
+    if (before != null && !await _signedInMayStillEnter(ref)) return false;
+    if (!context.mounted) return false;
+    if (await _identityOrNull(visit) != before) return false;
+    if (!context.mounted || before == null) return true;
+    return ref.read(authStateProvider).value == before.userId &&
+        ref.read(activeWorkspaceIdProvider).value == before.workspaceId;
+  }
+
+  /// Whether the signed-in workspace still allows a Demo visit: the Demo flag
+  /// on, and no locked kiosk. Unresolved or failing reads refuse.
+  static Future<bool> _signedInMayStillEnter(WidgetRef ref) async {
+    try {
+      final features = await ref.read(enabledFeaturesProvider.future);
+      final member = await ref.read(myMemberProvider.future);
+      if (!features.contains(WorkspaceFeature.demoMode)) return false;
+      return member?.isKiosk != true ||
+          !features.contains(WorkspaceFeature.kioskMode) ||
+          ref.read(kioskModeProvider) == KioskModeDecision.rejected;
+    } on Object {
+      return false;
+    }
+  }
 }
 
 /// Who is signed in; null when nobody is, or the session cannot be read —

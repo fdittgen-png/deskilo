@@ -335,5 +335,13 @@
   "biPrintFigures": "Figures",
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
+  },
+  "biBasisInvoiceDue": "invoice due date",
+  "@biBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
+  },
+  "biBasisPayableDue": "supplier payable due date",
+  "@biBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   }
 }

@@ -59,6 +59,7 @@ signed-out on  /me/spaces/manage -> /auth
 signed-out on  /member/:memberId -> /auth
 signed-out on  /members -> /auth
 signed-out on  /members/managed -> /auth
+signed-out on  /members/privacy -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
@@ -112,6 +113,7 @@ signed-out on  /setup/launch -> /auth
 signed-out on  /setup/levels -> /auth
 signed-out on  /setup/step/:id -> /auth
 signed-out on  /space/:kind/:id -> /auth
+signed-out on  /suppliers -> /auth
 signed-out on  /task-recorder -> /auth
 signed-out on  /task-recorder/guide -> /auth
 signed-out on  /task-recorder/recording -> /auth
@@ -187,6 +189,7 @@ signed-out off /me/spaces/manage -> /auth
 signed-out off /member/:memberId -> /auth
 signed-out off /members -> /auth
 signed-out off /members/managed -> /auth
+signed-out off /members/privacy -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
@@ -240,6 +243,7 @@ signed-out off /setup/launch -> /auth
 signed-out off /setup/levels -> /auth
 signed-out off /setup/step/:id -> /auth
 signed-out off /space/:kind/:id -> /auth
+signed-out off /suppliers -> /auth
 signed-out off /task-recorder -> /auth
 signed-out off /task-recorder/guide -> /auth
 signed-out off /task-recorder/recording -> /auth
@@ -315,6 +319,7 @@ no-space on  /me/spaces/manage -> /profiles
 no-space on  /member/:memberId -> /me
 no-space on  /members -> /me
 no-space on  /members/managed -> /me
+no-space on  /members/privacy -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
@@ -368,6 +373,7 @@ no-space on  /setup/launch -> /me
 no-space on  /setup/levels -> /me
 no-space on  /setup/step/:id -> /me
 no-space on  /space/:kind/:id -> /me
+no-space on  /suppliers -> /me
 no-space on  /task-recorder -> (open)
 no-space on  /task-recorder/guide -> /task-recorder
 no-space on  /task-recorder/recording -> /task-recorder
@@ -443,6 +449,7 @@ no-space off /me/spaces/manage -> /profiles
 no-space off /member/:memberId -> /me
 no-space off /members -> /me
 no-space off /members/managed -> /me
+no-space off /members/privacy -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
@@ -496,6 +503,7 @@ no-space off /setup/launch -> /me
 no-space off /setup/levels -> /me
 no-space off /setup/step/:id -> /me
 no-space off /space/:kind/:id -> /me
+no-space off /suppliers -> /me
 no-space off /task-recorder -> (open)
 no-space off /task-recorder/guide -> /task-recorder
 no-space off /task-recorder/recording -> /task-recorder
@@ -571,6 +579,7 @@ member on  /me/spaces/manage -> /profiles
 member on  /member/:memberId -> (open)
 member on  /members -> /calendar
 member on  /members/managed -> /calendar
+member on  /members/privacy -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
@@ -624,6 +633,7 @@ member on  /setup/launch -> /calendar
 member on  /setup/levels -> /calendar
 member on  /setup/step/:id -> /calendar
 member on  /space/:kind/:id -> (open)
+member on  /suppliers -> /calendar
 member on  /task-recorder -> (open)
 member on  /task-recorder/guide -> /task-recorder
 member on  /task-recorder/recording -> /task-recorder
@@ -699,6 +709,7 @@ member off /me/spaces/manage -> /profiles
 member off /member/:memberId -> /messages
 member off /members -> /messages
 member off /members/managed -> /messages
+member off /members/privacy -> /messages
 member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
@@ -752,6 +763,7 @@ member off /setup/launch -> /messages
 member off /setup/levels -> /messages
 member off /setup/step/:id -> /messages
 member off /space/:kind/:id -> /messages
+member off /suppliers -> /messages
 member off /task-recorder -> (open)
 member off /task-recorder/guide -> /task-recorder
 member off /task-recorder/recording -> /task-recorder
@@ -827,6 +839,7 @@ admin on  /me/spaces/manage -> /profiles
 admin on  /member/:memberId -> (open)
 admin on  /members -> (open)
 admin on  /members/managed -> (open)
+admin on  /members/privacy -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
@@ -880,6 +893,7 @@ admin on  /setup/launch -> /calendar
 admin on  /setup/levels -> /calendar
 admin on  /setup/step/:id -> /calendar
 admin on  /space/:kind/:id -> (open)
+admin on  /suppliers -> /money/suppliers
 admin on  /task-recorder -> (open)
 admin on  /task-recorder/guide -> /task-recorder
 admin on  /task-recorder/recording -> /task-recorder
@@ -955,6 +969,7 @@ admin off /me/spaces/manage -> /profiles
 admin off /member/:memberId -> /messages
 admin off /members -> (open)
 admin off /members/managed -> /members
+admin off /members/privacy -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
@@ -1008,6 +1023,7 @@ admin off /setup/launch -> /messages
 admin off /setup/levels -> /messages
 admin off /setup/step/:id -> /messages
 admin off /space/:kind/:id -> /messages
+admin off /suppliers -> /messages
 admin off /task-recorder -> (open)
 admin off /task-recorder/guide -> /task-recorder
 admin off /task-recorder/recording -> /task-recorder
@@ -1083,6 +1099,7 @@ owner on  /me/spaces/manage -> /profiles
 owner on  /member/:memberId -> (open)
 owner on  /members -> (open)
 owner on  /members/managed -> (open)
+owner on  /members/privacy -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
@@ -1136,6 +1153,7 @@ owner on  /setup/launch -> (open)
 owner on  /setup/levels -> (open)
 owner on  /setup/step/:id -> (open)
 owner on  /space/:kind/:id -> (open)
+owner on  /suppliers -> /money/suppliers
 owner on  /task-recorder -> (open)
 owner on  /task-recorder/guide -> /task-recorder
 owner on  /task-recorder/recording -> /task-recorder
@@ -1211,6 +1229,7 @@ owner off /me/spaces/manage -> /profiles
 owner off /member/:memberId -> /messages
 owner off /members -> (open)
 owner off /members/managed -> /members
+owner off /members/privacy -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages
@@ -1264,6 +1283,7 @@ owner off /setup/launch -> /workspace-settings
 owner off /setup/levels -> /workspace-settings
 owner off /setup/step/:id -> /workspace-settings
 owner off /space/:kind/:id -> /messages
+owner off /suppliers -> /messages
 owner off /task-recorder -> (open)
 owner off /task-recorder/guide -> /task-recorder
 owner off /task-recorder/recording -> /task-recorder

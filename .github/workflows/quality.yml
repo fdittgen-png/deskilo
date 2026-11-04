@@ -193,6 +193,16 @@ jobs:
           echo "$code" > shard/tests-exit.txt
           exit "$code"
 
+      # The selected file also runs in the VM shard; this separate, required
+      # browser execution proves the real deployment-base/startup behavior.
+      - name: Browser startup regression
+        id: browser_startup
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          flutter test --platform chrome --file-reporter json:shard/browser-startup.jsonl test/browser/deployment_base_web_test.dart
+          dart run tool/quality_browser_evidence.dart shard/browser-startup.jsonl
+
       - name: Shard envelope
         id: envelope
         if: always()
@@ -218,6 +228,7 @@ jobs:
             shard/envelope.json
             shard/tests.jsonl
             shard/lcov.info
+            shard/browser-startup.jsonl
 
       # The job is red when its tests are, and when its envelope could not
       # be written; the aggregate additionally refuses a shard whose
@@ -227,6 +238,7 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Tests=${{ steps.tests.outcome }}" \
+            "Browser startup=${{ steps.browser_startup.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
   # #2600 — the features, in shards of similar cost. The split is a
@@ -1034,6 +1046,15 @@ jobs:
           DB_URL: ${{ steps.migrations.outputs.db-url }}
         run: bash scripts/feature_flags_race.sh "$DB_URL"
 
+      # #3070 — verify the decision and a concurrent revocation serialize.
+      - name: Purchase decision and revocation
+        id: purchase_decision_race
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/purchase_decision_race.sh "$DB_URL"
+
       # #1450 — the SQL tests inject a caller and `deno check` reads types;
       # neither shows how an Edge function composes its clients. This runs
       # the real payment handler with real signed-in users against the
@@ -1314,6 +1335,7 @@ jobs:
             "Effective contract=${{ steps.contract.outcome }}" \
             "Two sessions, one seat=${{ steps.race.outcome }}" \
             "Two owners, one decision=${{ steps.flags.outcome }}" \
+            "Purchase decision and revocation=${{ steps.purchase_decision_race.outcome }}" \
             "Restore drill=${{ steps.restore.outcome }}" \
             "Two sessions, one MCP intent=${{ steps.mcp_races.outcome }}" \
             "A member can start a payment=${{ steps.payments.outcome }}" \

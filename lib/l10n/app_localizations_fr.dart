@@ -2018,6 +2018,96 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankOutTitle => 'Le paiement enregistré comme effectué';
 
   @override
+  String get bankReconAccount => 'Compte';
+
+  @override
+  String get bankReconArithmeticDifference =>
+      'Écart arithmétique du fichier (mouvements comptabilisés pris en charge)';
+
+  @override
+  String get bankReconBookingDate =>
+      'Date comptable enregistrée (par défaut, date de valeur)';
+
+  @override
+  String get bankReconBooksUnavailable =>
+      'Écart avec les livres indisponible : solde comptable initial lié au compte et écritures complètes manquants.';
+
+  @override
+  String get bankReconClearingUnavailable =>
+      'Compte de compensation indisponible : solde initial et données complètes de règlement manquants.';
+
+  @override
+  String get bankReconClosing => 'Solde final indiqué par la banque';
+
+  @override
+  String get bankReconCoverage =>
+      'Couverture partielle : la période déclarée par la banque et la couverture complète du compte ne sont pas établies.';
+
+  @override
+  String get bankReconCsvMappingUnavailable =>
+      'Correspondance des colonnes CSV non conservée';
+
+  @override
+  String get bankReconFileArithmeticScope =>
+      'Le calcul du fichier compare ses soldes aux mouvements comptabilisés pris en charge et acceptés par l’analyseur d’import ; ce n’est pas un rapprochement avec les comptes.';
+
+  @override
+  String get bankReconFormatUnavailable =>
+      'Format ou limites de source ne permettant pas de vérifier le calcul';
+
+  @override
+  String get bankReconIdentityAmbiguous =>
+      'Identifiant de mouvement source manquant ou dupliqué';
+
+  @override
+  String get bankReconNotIncluded =>
+      'Les rapports de rapprochement bancaire ne sont pas disponibles pour cet export.';
+
+  @override
+  String get bankReconObservedDates => 'Dates des mouvements enregistrés';
+
+  @override
+  String get bankReconOpening => 'Solde initial indiqué par la banque';
+
+  @override
+  String get bankReconOriginalUnavailable =>
+      'Source originale indisponible ou inaccessible';
+
+  @override
+  String get bankReconReadUnavailable =>
+      'Source originale indisponible ou inaccessible ; absence et refus ne peuvent être distingués';
+
+  @override
+  String get bankReconRequestedPeriod => 'Période demandée';
+
+  @override
+  String get bankReconSeparateReads =>
+      'Les relevés, mouvements et sources sont lus séparément ; ce n’est pas un instantané figé.';
+
+  @override
+  String get bankReconSourceNotRetained =>
+      'Source originale non conservée ou empreinte indisponible';
+
+  @override
+  String get bankReconSourceUnassociated =>
+      'Certains mouvements de la source ne sont pas associés à une ligne conservée vérifiée ; leur statut est indisponible.';
+
+  @override
+  String get bankReconSourceVerificationFailed =>
+      'Empreinte, analyse, statut ou montants des mouvements, compte, devise ou soldes de la source non vérifiables.';
+
+  @override
+  String get bankReconTitle => 'Rapport de rapprochement bancaire';
+
+  @override
+  String get bankReconUnmappedCount =>
+      'Mouvements source sans association vérifiée à une ligne conservée';
+
+  @override
+  String get bankReconValueDate =>
+      'Date de valeur enregistrée (par défaut, date comptable)';
+
+  @override
   String bankRefusedAtLine(String reason, int line) {
     return '$reason (ligne $line)';
   }
@@ -2237,10 +2327,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biBasisDocumentDate => 'date du document';
 
   @override
+  String get biBasisInvoiceDue => 'date d’échéance de la facture';
+
+  @override
   String get biBasisInvoiceMonth => 'mois de la facture';
 
   @override
   String get biBasisOccurrenceDue => 'date d’échéance';
+
+  @override
+  String get biBasisPayableDue => 'date d’échéance de la dette fournisseur';
 
   @override
   String get biBasisPaymentMatchedAt => 'date du rapprochement du paiement';
@@ -2423,6 +2519,144 @@ class AppLocalizationsFr extends AppLocalizations {
       'La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.';
 
   @override
+  String get biCustomerCohortHeld => 'Suspendues';
+
+  @override
+  String get biCustomerCohortLate => 'Payées en retard';
+
+  @override
+  String biCustomerCohortLine(String cohort, String count, String amount) {
+    return '$cohort : $count factures, $amount';
+  }
+
+  @override
+  String get biCustomerCohortOnTime => 'Payées à l’heure';
+
+  @override
+  String get biCustomerCohortOpen => 'Impayées';
+
+  @override
+  String get biCustomerCohortPartial => 'Payées en partie';
+
+  @override
+  String get biCustomerCohortUndated => 'Réglées sans date de paiement';
+
+  @override
+  String get biCustomerCohortUnknownDue => 'Sans échéance';
+
+  @override
+  String get biCustomerCohortWrittenOff => 'Passées en perte';
+
+  @override
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  ) {
+    return 'Les $top plus grands des $customers clients : $topNet sur $net facturés hors taxes';
+  }
+
+  @override
+  String get biCustomerConcentrationDefinition =>
+      'La part du montant facturé hors taxes dans la période (avoirs déduits) que représentent les plus grands clients, et la part de ce qu’ils doivent aujourd’hui.';
+
+  @override
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'Les $top plus grands des $debtors débiteurs doivent $topOpen des $open dus aujourd’hui, quelle que soit la date de facturation.';
+  }
+
+  @override
+  String get biCustomerConcentrationTitle => 'Concentration des clients';
+
+  @override
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  ) {
+    return '$credited en $notes avoirs, $writtenOff passés en perte sur $offs factures';
+  }
+
+  @override
+  String get biCustomerCreditDefinition =>
+      'Par mois de la facture, hors TVA : les avoirs, et ce qui a été passé en perte sur une facture (son total moins ce qui a été payé), au prorata de son montant hors taxes.';
+
+  @override
+  String get biCustomerCreditTitle => 'Avoirs et pertes';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name : $amount dus';
+  }
+
+  @override
+  String biCustomerDelay(String median, String p90, String weighted) {
+    return 'Jours entre l’échéance et le paiement : médiane $median, 90e centile $p90, pondéré par le montant $weighted (négatif : en avance)';
+  }
+
+  @override
+  String biCustomerDunningBasis(String reminders, String reminded, String due) {
+    return '$reminders relances sur $reminded des $due factures arrivant à échéance';
+  }
+
+  @override
+  String get biCustomerDunningDefinition =>
+      'Les relances envoyées pour les factures arrivant à échéance dans la période, par niveau.';
+
+  @override
+  String biCustomerDunningLevel(String level) {
+    return 'Niveau $level';
+  }
+
+  @override
+  String get biCustomerDunningOff =>
+      'Les relances sont désactivées pour cet espace : aucune relance n’est comptée.';
+
+  @override
+  String get biCustomerDunningTitle => 'Charge de relance';
+
+  @override
+  String get biCustomerNamesHidden =>
+      'Les noms ne s’affichent que pour qui peut lire les données personnelles ; les autres lisent des rangs.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Certaines factures n’ont pas de ventilation de TVA : leur montant hors taxes n’est pas prouvé, elles sont laissées hors des chiffres nets.';
+
+  @override
+  String get biCustomerNothingToShare =>
+      'Rien à répartir dans cette période : aucune part n’est affichée.';
+
+  @override
+  String biCustomerPaidAfterReminder(String paid, String reminded) {
+    return '$paid des $reminded factures relancées ont été payées après leur première relance : une succession dans le temps, pas la preuve que la relance a causé le paiement.';
+  }
+
+  @override
+  String biCustomerPaymentBasis(String onTime, String settled) {
+    return '$onTime des $settled factures réglées payées à l’échéance';
+  }
+
+  @override
+  String get biCustomerPaymentDefinition =>
+      'Les factures arrivant à échéance dans la période, chacune dans un seul groupe. Une facture réglée est à l’heure lorsque son dernier paiement a été déclaré payé au plus tard à son échéance : la date de valeur bancaire lorsqu’une ligne rapprochée explique le paiement, sinon la date de paiement enregistrée, jamais le jour du lettrage. Les montants sont ce que doivent les factures, TVA comprise.';
+
+  @override
+  String get biCustomerPaymentTitle => 'Ponctualité des paiements';
+
+  @override
+  String biCustomerRank(String rank) {
+    return 'Client $rank';
+  }
+
+  @override
   String get biDataNotApplicable => 'Aucune capacité applicable';
 
   @override
@@ -2494,10 +2728,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biEditorBasisDocumentDate => 'selon la date du document';
 
   @override
+  String get biEditorBasisInvoiceDue => 'selon l’échéance de la facture';
+
+  @override
   String get biEditorBasisInvoiceMonth => 'selon le mois de facture';
 
   @override
   String get biEditorBasisOccurrenceDue => 'selon l’échéance';
+
+  @override
+  String get biEditorBasisPayableDue => 'par échéance de la dette fournisseur';
 
   @override
   String get biEditorBasisPaymentMatched => 'selon le paiement rapproché';
@@ -3130,6 +3370,58 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.';
 
   @override
+  String get biItemMethodAverage => 'coût moyen';
+
+  @override
+  String get biItemMethodLast => 'dernier achat';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines lignes d’achat de $items articles';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Les lignes d’achat approuvées qui nomment un article, datées de la période : ce qu’elles coûtent (HT plus la taxe non récupérable). Le tableau donne le prix unitaire de chaque article par fournisseur. Les avoirs sont laissés de côté.';
+
+  @override
+  String get biItemPricesTitle => 'Prix des articles par fournisseur';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Vendu $revenue HT, coût $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.';
+
+  @override
+  String get biItemProductTitle => 'Marge par produit';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count fournisseurs';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.';
+
+  @override
+  String get biItemVendorTitle => 'Prix des fournisseurs comparés';
+
+  @override
   String get biKindCurrent => 'Maintenant';
 
   @override
@@ -3484,6 +3776,99 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biRunningLabel => 'en cours';
 
   @override
+  String get biSalesKindAccessories => 'Suppléments';
+
+  @override
+  String get biSalesKindAdjustment => 'Ajustements';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross TTC, $lines lignes sur $invoices factures';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Ce que les factures de la période ont vendu, hors TVA, par nature de ligne. Les paiements et remboursements portés sur une facture ne sont pas des ventes ; un avoir se déduit. Le mois est celui de la facture.';
+
+  @override
+  String get biSalesKindDesk => 'Bureaux';
+
+  @override
+  String get biSalesKindLevel => 'Niveaux';
+
+  @override
+  String get biSalesKindOffice => 'Salles';
+
+  @override
+  String get biSalesKindOther => 'Autre';
+
+  @override
+  String get biSalesKindOverage => 'Demi-journées supplémentaires';
+
+  @override
+  String get biSalesKindPackage => 'Forfaits';
+
+  @override
+  String get biSalesKindService => 'Services';
+
+  @override
+  String get biSalesKindSubscription => 'Abonnements';
+
+  @override
+  String get biSalesKindTitle => 'Ventes par nature';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT';
+  }
+
+  @override
+  String get biSalesNoDescription => 'Sans libellé';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges facturés pour $uses réservations, les salles coûtent $cost ($rooms salles)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Pour chaque salle louée par l’espace : ce que ses réservations ont rapporté, hors taxe, moins le coût propre de la salle (son loyer échu dans la période, ou son coût par usage multiplié par les usages). Aucun autre coût n’est imputé à la salle : c’est une marge, pas un bénéfice.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room : facturé $charges, coût $cost, $uses réservations';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Marge des salles louées';
+
+  @override
+  String get biSalesRoomsOff =>
+      'L’espace ne loue aucune salle : activez les salles louées pour voir leur marge';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count services et forfaits';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Les lignes de services et de forfaits des factures de la période, hors TVA, par le libellé sous lequel elles ont été vendues.';
+
+  @override
+  String get biSalesServiceTitle => 'Ventes par service';
+
+  @override
   String get biSeatCentre => 'du temps total des places';
 
   @override
@@ -3535,6 +3920,118 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Cette analyse n’a pas pu être calculée.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count catégories';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Dépenses par catégorie';
+
+  @override
+  String get biVendorCohortHeld => 'En attente';
+
+  @override
+  String get biVendorCohortLate => 'Payées en retard';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort : $count factures, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Payées à l’échéance';
+
+  @override
+  String get biVendorCohortOpen => 'Impayées';
+
+  @override
+  String get biVendorCohortPartial => 'Payées en partie';
+
+  @override
+  String get biVendorCohortUndated => 'Soldées sans paiement';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Sans échéance';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Avoirs déduits : $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Jours de l’échéance au paiement : médiane $median, 90e centile $p90, pondéré par montant $weighted (négatif : en avance)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents factures ; médiane $median jours, 90e centile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Les factures fournisseurs approuvées datées de la période : les jours entre la date portée par le fournisseur et l’arrivée à l’espace, en moyenne ; le tableau détaille chaque fournisseur.';
+
+  @override
+  String get biVendorLagTitle => 'Délai de réception des factures';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count factures sans date du fournisseur ou de réception sont laissées de côté';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Sans catégorie';
+
+  @override
+  String get biVendorNothingToMeasure => 'Rien à mesurer sur la période';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime factures sur $settled réglées payées à l’échéance';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Ce que l’espace doit à ses fournisseurs, arrivant à échéance dans la période, chaque dette dans un seul groupe. Une facture réglée est à l’heure quand son dernier paiement a été déclaré payé au plus tard à l’échéance : la date de valeur de la banque quand le paiement en porte une, sinon la date de paiement enregistrée.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name : $onTime à l’échéance, $late en retard, sur $due échues';
+  }
+
+  @override
+  String get biVendorPunctualityTitle =>
+      'Paiement des fournisseurs à l’échéance';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents pièces de $suppliers fournisseurs ; les $top plus importants : $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'Les pièces d’achat approuvées datées de la période : ce qu’elles coûtent à l’espace, le HT plus la taxe non récupérable. Un avoir se déduit. Les pièces dans une autre devise ne sont pas converties.';
+
+  @override
+  String get biVendorSpendTitle => 'Dépenses par fournisseur';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Sans fournisseur (justificatifs de membres) : $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -4214,6 +4711,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bookingNotAMember =>
       'Vous n\'êtes plus membre de cet espace — demandez une invitation à un administrateur.';
+
+  @override
+  String get bookingNotAllowedError =>
+      'Vous ne pouvez pas réserver dans cet espace. Demandez à un propriétaire d\'autoriser les membres à réserver.';
 
   @override
   String get bookingOnePlace =>
@@ -5923,6 +6424,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String demoSetupCardOpenSpace(String space) {
+    return 'Passer à $space';
+  }
+
+  @override
   String get demoSetupCardTitle => 'Comment fonctionne la démo';
 
   @override
@@ -7576,6 +8082,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String eventPrivacyIncident(String kind, String note) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'data_breach': 'une fuite de données',
+      'wrong_invoice': 'une facture erronée',
+      'other': 'un autre incident',
+    });
+    return 'Un incident de confidentialité a été enregistré : $_temp0. $note';
+  }
+
+  @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
     return '$actor demande $halfDays demi-journées supplémentaires pour $period';
   }
@@ -7714,6 +8230,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypePriceNegotiation => 'Négociation tarifaire';
+
+  @override
+  String get eventTypePrivacyIncident => 'Incident de confidentialité';
 
   @override
   String get eventTypeQuota => 'Demi-journées supplémentaires';
@@ -12161,6 +12680,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Balance générale et auxiliaire (PDF, depuis la comptabilité)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (import de factures de vente)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Émettez cette facture hors de l’application';
 
@@ -13239,6 +13762,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get journeyStageStripLabel =>
       'Le processus de facturation : émettre, encaisser, confirmer, clore';
+
+  @override
+  String get journeyStateCancelled => 'Annulé';
+
+  @override
+  String get journeyStateCurrent => 'Étape actuelle';
+
+  @override
+  String get journeyStateDone => 'Terminé';
+
+  @override
+  String get journeyStateUpcoming => 'À venir';
 
   @override
   String get journeyStepClosed => 'Close';
@@ -17996,6 +18531,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
+  String get permManagePrivacy =>
+      'Gérer les données personnelles et les demandes de droits';
+
+  @override
   String get permManagePurchases => 'Saisir les factures fournisseur';
 
   @override
@@ -18054,6 +18593,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get permWorkspaceSettings => 'Modifier les réglages de l\'espace';
+
+  @override
+  String get personalBirthday => 'Date de naissance';
+
+  @override
+  String get personalBirthdayClear => 'Effacer la date de naissance';
+
+  @override
+  String get personalBirthdayHelp =>
+      'Seuls vous, les personnes autorisées à voir les données personnelles des membres et l\'administrateur des données personnelles de l\'espace peuvent la lire. Une personne qui ne fait que facturer ne le peut pas.';
+
+  @override
+  String get personalBirthdayInvalid =>
+      'Une date de naissance ne peut pas être dans le futur ni avant 1900.';
+
+  @override
+  String get personalBirthdayPick => 'Choisir une date';
+
+  @override
+  String get personalBirthdaySaveFailed =>
+      'Vos informations sont enregistrées, mais pas la date de naissance.';
 
   @override
   String get personalInfoCity => 'Ville';
@@ -18790,6 +19350,103 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String privacyAdminActionFailed(String reason) {
+    return 'Le serveur a refusé : $reason';
+  }
+
+  @override
+  String get privacyAdminBasis => 'Pourquoi elles sont conservées';
+
+  @override
+  String get privacyAdminComplete => 'Clore';
+
+  @override
+  String get privacyAdminDetails => 'Détails (facultatif)';
+
+  @override
+  String get privacyAdminEmpty => 'Aucune demande pour le moment.';
+
+  @override
+  String get privacyAdminExtend => 'Prolonger le délai';
+
+  @override
+  String get privacyAdminExtendReason =>
+      'Motif de la prolongation (10 caractères au moins)';
+
+  @override
+  String get privacyAdminIncidentIntro =>
+      'Les personnes qui gèrent les données personnelles de cet espace sont prévenues aussitôt. Dites ce qui s\'est passé ; ne collez pas de données personnelles ici.';
+
+  @override
+  String get privacyAdminIncidentNote =>
+      'Ce qui s\'est passé (facultatif, 1000 caractères au plus)';
+
+  @override
+  String privacyAdminIncidentRecorded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enregistré. $count personnes ont été prévenues.',
+      one: 'Enregistré. 1 personne a été prévenue.',
+      zero: 'Enregistré. Personne ne détient ce droit : personne n\'a été prévenu.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get privacyAdminIncidentSend => 'Enregistrer et prévenir';
+
+  @override
+  String get privacyAdminIncidentTitle => 'Enregistrer un incident de données';
+
+  @override
+  String get privacyAdminIntro =>
+      'Les demandes des membres sur leurs données personnelles, et les incidents que vous enregistrez. Chaque demande reçoit une réponse sous un mois civil.';
+
+  @override
+  String get privacyAdminKind => 'Type de demande';
+
+  @override
+  String get privacyAdminLoadFailed => 'Les demandes n\'ont pas pu être lues.';
+
+  @override
+  String get privacyAdminMember => 'Membre';
+
+  @override
+  String get privacyAdminOpenTile =>
+      'Données personnelles et demandes de droits';
+
+  @override
+  String get privacyAdminOutcomeKind => 'Ce qu\'il est advenu des données';
+
+  @override
+  String get privacyAdminPeriod => 'Pendant combien de temps';
+
+  @override
+  String privacyAdminReceivedOn(String date) {
+    return 'Reçue le $date';
+  }
+
+  @override
+  String get privacyAdminRecord => 'Enregistrer une demande';
+
+  @override
+  String get privacyAdminRefusalReason =>
+      'Motif du refus (10 caractères au moins)';
+
+  @override
+  String get privacyAdminRefuse => 'Refuser';
+
+  @override
+  String get privacyAdminSave => 'Enregistrer';
+
+  @override
+  String get privacyAdminStore => 'Où (un stockage ou une liste)';
+
+  @override
+  String get privacyAdminTitle => 'Données personnelles et demandes de droits';
+
+  @override
   String get privacyErase => 'Quitter cet espace et effacer mes données';
 
   @override
@@ -18836,6 +19493,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyExportShareText => 'Mon export de données DesKilo';
 
   @override
+  String get privacyIncidentDataBreach => 'Une fuite de données';
+
+  @override
+  String get privacyIncidentOther => 'Un autre incident';
+
+  @override
+  String get privacyIncidentWrongInvoice => 'Une facture erronée';
+
+  @override
   String get privacyIntro =>
       'Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.';
 
@@ -18877,6 +19543,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get privacyOutcomeCorrected => 'Rectifiées';
+
+  @override
+  String get privacyOutcomeFailed => 'Non réalisées';
+
+  @override
+  String get privacyOutcomePendingExternal => 'Encore ouvertes ailleurs';
+
+  @override
+  String get privacyOutcomeRemoved => 'Supprimées';
+
+  @override
+  String get privacyOutcomeRestricted => 'Limitées';
+
+  @override
+  String get privacyOutcomeRetained => 'Conservées (avec un motif)';
+
+  @override
   String get privacyPolicy => 'Politique de confidentialité';
 
   @override
@@ -18889,6 +19573,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Facultatif. Activé, l\'adresse de cet appareil et chaque notification passent par le service de notifications ; désactivé, l\'application fonctionne et rien n\'est envoyé à cet appareil.';
+
+  @override
+  String get privacySelfServiceOff =>
+      'Cet espace traite lui-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.';
 
   @override
   String get privacySpaceNotice => 'La notice de confidentialité de cet espace';
@@ -19354,14 +20042,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicProfileTitle => 'Profil public';
 
   @override
-  String get purchaseApprovalsEmpty => 'Rien n’attend votre approbation.';
+  String get purchaseApprovalEvidenceUnavailable =>
+      'Les justificatifs ne sont pas disponibles dans cette vue. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat.';
+
+  @override
+  String get purchaseApprovalFxSame =>
+      'La facture est dans la devise de l’espace.';
+
+  @override
+  String get purchaseApprovalFxUnavailable =>
+      'Le taux de change est indisponible dans cette vue.';
+
+  @override
+  String get purchaseApprovalReceiptsUnavailable =>
+      'Impossible de charger les justificatifs en attente.';
+
+  @override
+  String get purchaseApprovalVisibleReceipts =>
+      'Justificatifs de membres en attente que vous pouvez consulter';
+
+  @override
+  String get purchaseApprovalsEmpty =>
+      'Aucune facture fournisseur n’attend votre approbation.';
 
   @override
   String get purchaseApprovalsRefused =>
-      'Les documents à approuver n’ont pas pu être lus.';
+      'Les factures fournisseurs à approuver n’ont pas pu être lues.';
 
   @override
-  String get purchaseApprovalsTitle => 'À approuver';
+  String get purchaseApprovalsTitle => 'Factures fournisseurs à approuver';
 
   @override
   String get purchaseEntryAdd => 'Ajouter un achat / une dépense';
@@ -19613,6 +20322,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesInvoiceDate => 'Date de la facture';
 
   @override
+  String get purchasesItem => 'Article acheté';
+
+  @override
   String get purchasesKindBill => 'Facture fournisseur';
 
   @override
@@ -19639,6 +20351,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Autre';
+
+  @override
+  String get purchasesNoItem => 'Aucun article';
 
   @override
   String get purchasesNoSupplier => 'Aucun fournisseur choisi';
@@ -19757,6 +20472,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesPurposeStock => 'Marchandises à revendre';
 
   @override
+  String get purchasesQuantity => 'Quantité';
+
+  @override
   String get purchasesReference => 'Numéro de facture';
 
   @override
@@ -19867,6 +20585,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unité (p. ex. carton, rame)';
 
   @override
   String get pushAllowAction => 'Autoriser';
@@ -20485,7 +21206,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get refusalBankMatchSeveralPayments =>
-      'D\'autres paiements sont rapprochés de cette facture : celui-ci ne peut pas être annulé seul. Rien n\'a été modifié.';
+      'Les paiements de cette facture ne peuvent pas être recalculés sans supposition (l\'un attend peut-être encore sa validation) : celui-ci ne peut pas être annulé ici. Rien n\'a été modifié.';
+
+  @override
+  String get refusalBankMatchUndoLaterFirst =>
+      'C\'est le premier paiement de la facture : annulez d\'abord les paiements suivants. Rien n\'a été modifié.';
 
   @override
   String get refusalChangedMeanwhile =>
@@ -23061,6 +23786,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Minutes pendant lesquelles l\'application doit être restée hors de vue (en arrière-plan, onglet masqué, borne en veille) avant de relire tout ce qu\'elle affiche à son retour. Changer de fenêtre ne relit jamais ; une connexion en direct perdue relit toujours.';
 
   @override
+  String get settingHintPrivacyMemberSelfService =>
+      'true : un membre peut exporter et effacer ses données depuis l’application. false : il dépose une demande de droits, traitée par l’administrateur des données personnelles. Les propriétaires et l’administrateur des données personnelles ne sont jamais bloqués, et le dépôt d’une demande reste toujours ouvert.';
+
+  @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average : tous les achats approuvés de l’article jusqu’à la fin de la période, pondérés par leurs unités. last : le dernier achat daté d’ici là. Aucune pièce n’est modifiée, seulement les marges.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un paiement d\'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu\'il règle. 0 désactive la règle.';
 
@@ -23326,6 +24059,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelPresenceResyncAfterAwayMinutes =>
       'Relire après une absence';
+
+  @override
+  String get settingLabelPrivacyMemberSelfService =>
+      'Les membres exportent et effacent eux-mêmes leurs données';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Comment le coût unitaire d’un article est lu dans les marges';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
@@ -25666,6 +26407,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliersArchivedTag => 'archivé';
 
   @override
+  String get suppliersBalanceUnavailable => 'Solde indisponible';
+
+  @override
   String get suppliersBank => 'Coordonnées bancaires';
 
   @override
@@ -25741,8 +26485,27 @@ class AppLocalizationsFr extends AppLocalizations {
       'Identifiant fiscal (n° de TVA avec préfixe pays)';
 
   @override
+  String suppliersHeld(String amount) {
+    return 'En attente : $amount';
+  }
+
+  @override
   String get suppliersIntro =>
       'Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.';
+
+  @override
+  String get suppliersLoadMore => 'Charger plus';
+
+  @override
+  String get suppliersNoOutstanding => 'Aucun solde dû';
+
+  @override
+  String suppliersOutstanding(String amount) {
+    return 'Solde dû : $amount';
+  }
+
+  @override
+  String get suppliersPayablesUnavailable => 'Dettes indisponibles';
 
   @override
   String get suppliersRefused =>
@@ -25802,6 +26565,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get suppliersTitle => 'Fournisseurs';
+
+  @override
+  String get suppliersViewPayables => 'Voir les dettes fournisseur';
 
   @override
   String get supplyClassGeneral =>
@@ -30504,4 +31270,53 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Espace importé.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Code du compte de ventes';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importe ces factures en brouillon : validez-les dans Xero. Le compte de ventes et les taux de taxe sont ceux de votre organisation : reprenez leurs noms dans Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Export Xero';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
+      one: 'Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Ordre des dates de votre organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Jour d’abord (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Mois d’abord (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Saisissez le code du compte de ventes.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Indiquez le taux de taxe Xero pour $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Taux de taxe Xero pour $rate';
+  }
 }

@@ -1,0 +1,99 @@
+{
+  "@@locale": "it",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
+  },
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
+  },
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
+  },
+  "bankReconAccount": "Conto",
+  "bankReconArithmeticDifference": "Differenza aritmetica del file (movimenti contabilizzati supportati)",
+  "bankReconBookingDate": "Data contabile registrata (può usare la data valuta)",
+  "bankReconBooksUnavailable": "Differenza con i libri non disponibile: mancano il saldo contabile iniziale del conto e le registrazioni complete.",
+  "bankReconClearingUnavailable": "Saldo di compensazione non disponibile: mancano saldo iniziale e dati completi di regolamento.",
+  "bankReconClosing": "Saldo finale indicato dalla banca",
+  "bankReconCoverage": "Copertura parziale: il periodo dichiarato dalla banca e la copertura completa del conto non sono accertati.",
+  "bankReconCsvMappingUnavailable": "Mappatura delle colonne CSV non conservata",
+  "bankReconFileArithmeticScope": "Il calcolo del file confronta i suoi saldi con i movimenti contabilizzati supportati e accettati dall’analizzatore di importazione; non è una riconciliazione con la contabilità.",
+  "bankReconFormatUnavailable": "Formato o limiti della fonte non consentono di verificare il calcolo",
+  "bankReconIdentityAmbiguous": "Identità del movimento della fonte mancante o duplicata",
+  "bankReconNotIncluded": "I rapporti di riconciliazione bancaria non sono disponibili per questa esportazione.",
+  "bankReconObservedDates": "Date dei movimenti registrati",
+  "bankReconOpening": "Saldo iniziale indicato dalla banca",
+  "bankReconOriginalUnavailable": "Fonte originale non disponibile o inaccessibile",
+  "bankReconReadUnavailable": "Fonte originale non disponibile o inaccessibile; assenza e rifiuto non sono distinguibili",
+  "bankReconRequestedPeriod": "Periodo richiesto",
+  "bankReconSeparateReads": "Estratti, movimenti e fonte sono letti separatamente; non costituiscono una fotografia fissa.",
+  "bankReconSourceNotRetained": "Fonte originale non conservata o impronta non disponibile",
+  "bankReconSourceUnassociated": "Alcuni movimenti della fonte non hanno un’associazione verificata a una riga conservata; il loro stato non è disponibile.",
+  "bankReconSourceVerificationFailed": "Impronta, analisi, stato o importi dei movimenti, conto, valuta o saldi della fonte non verificabili.",
+  "bankReconTitle": "Rapporto di riconciliazione bancaria",
+  "bankReconUnmappedCount": "Movimenti della fonte senza associazione verificata a una riga conservata",
+  "bankReconValueDate": "Data valuta registrata (può usare la data contabile)"
+}

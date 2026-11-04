@@ -14,8 +14,15 @@ void main() {
     Object? label = 'Plan',
     Object? quantity = 1,
     Object? amount = 1500,
+    Object? percent = 20,
   }) =>
-      {'kind': kind, 'label': label, 'quantity': quantity, 'amount_cents': amount};
+      {
+        'kind': kind,
+        'label': label,
+        'quantity': quantity,
+        'amount_cents': amount,
+        'vat_percent': percent,
+      };
 
   test('a present empty list and a total of 0 are valid', () {
     final p = decodeInvoicePreview({'lines': <Object?>[], 'total_cents': 0});
@@ -115,14 +122,18 @@ void main() {
     expect(() => decode(line(amount: null)), shape);
     expect(() => decode(line(amount: '1500')), shape);
     expect(() => decode(line(label: 9)), shape);
+    // 0182 (#1917): the rate is on every line the server emits; none is 0 %.
+    expect(() => decode({...line()}..remove('vat_percent')), shape);
+    expect(() => decode(line(percent: null)), shape);
+    expect(() => decode(line(percent: '20')), shape);
     expect(() => decodeInvoicePreview({'lines': ['x'], 'total_cents': 0}), shape);
   });
 
-  test('an unlabelled line keeps an empty label; vat_percent is optional', () {
+  test('an unlabelled line keeps an empty label; an explicit 0 % stays 0 %', () {
     final p = decodeInvoicePreview({
       'lines': [
-        line(label: null),
-        {...line(), 'vat_percent': 20},
+        line(label: null, percent: 0),
+        line(),
       ],
       'total_cents': 3000,
     });

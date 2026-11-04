@@ -9,19 +9,7 @@
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const pilotExcluded = <WorkspaceFeature>{
-  WorkspaceFeature.onlinePayments,
-  WorkspaceFeature.mcpAccess,
-  WorkspaceFeature.accountingBook,
-  WorkspaceFeature.guestParticipation,
-  WorkspaceFeature.publicListings,
-};
-
-/// Every feature whose requirement chain passes through [feature].
-Set<WorkspaceFeature> dependentsOf(WorkspaceFeature feature) => {
-      for (final f in WorkspaceFeature.values)
-        if (requirementChain(f).contains(feature)) f,
-    };
+import '../../helpers/pilot_profile.dart';
 
 void main() {
   test('a workspace nobody configured has none of the excluded features', () {

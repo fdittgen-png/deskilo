@@ -6,6 +6,7 @@
 // way to its resume banner.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/local_setup_views.dart';
@@ -102,6 +103,49 @@ Future<List<String>> _pump(
 }
 
 void main() {
+  testWidgets('workspace load failure offers a retry and opens the guide', (
+    tester,
+  ) async {
+    var reads = 0;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(
+            localSetup: FakeLocalSetupRepository(status: _status()),
+          ),
+          currentWorkspaceProvider.overrideWith((ref) async {
+            if (reads++ == 0) throw StateError('offline');
+            return const Workspace(
+              id: 'ws-1',
+              name: 'Test',
+              countryCode: 'FR',
+              currencyCode: 'EUR',
+              timezone: 'Europe/Paris',
+              inviteCode: 'TEST',
+            );
+          }),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: SetupGuideScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('setup-guide-workspace-unavailable')),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Refresh'));
+    await tester.pumpAndSettle();
+    expect(reads, 2);
+    expect(
+      find.byKey(const ValueKey('setup-guide-next-places')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('the next action comes first and opens where it is done', (
     tester,
   ) async {

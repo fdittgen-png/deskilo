@@ -8,6 +8,7 @@ import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/realtime/resume_resync.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +34,14 @@ void main() {
         expect(viaResync, contains(provider),
             reason: 'a resync would miss $provider (reached via $table)');
       }
+    }
+  });
+
+  test('membership and workspace refresh invalidate approval count and detail', () {
+    for (final table in ['members', 'workspaces']) {
+      final providers = invalidationFor(table).providers;
+      expect(providers, contains(purchaseApprovalPageProvider));
+      expect(providers, contains(purchaseApprovalDetailProvider));
     }
   });
 

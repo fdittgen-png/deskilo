@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/app_info.dart';
 import '../../../../core/demo/presentation/welcome_link_button.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/federation_handoff_controller.dart';
 import '../../domain/social_provider.dart';
@@ -154,6 +156,27 @@ class AuthSecondaryLinks extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// Installed version and build, omitted when metadata is unavailable.
+class AuthBuildVersion extends ConsumerWidget {
+  const AuthBuildVersion({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(appVersionProvider);
+    final version = state.isLoading || state.hasError ? null : state.value;
+    if (version == null || version.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      key: const ValueKey('auth-build-version'),
+      padding: const EdgeInsets.only(top: AppSpacing.lg),
+      child: Text(context.l10n.aboutVersion(version),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          )),
     );
   }
 }

@@ -291,6 +291,10 @@ String _noticeOrFallbackLine(
     (event.payload['failures'] as num?)?.toInt() ?? 0,
     (event.payload['window_minutes'] as num?)?.toInt() ?? 0,
   ),
+  EventType.privacyIncident => l10n.eventPrivacyIncident(
+    '${event.payload['kind'] ?? ''}',
+    '${event.payload['note'] ?? ''}',
+  ),
   EventType.paymentInstructionsChange => l10n.eventPaymentInstructionsChange(
     actor,
     [

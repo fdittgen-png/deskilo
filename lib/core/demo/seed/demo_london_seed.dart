@@ -24,10 +24,11 @@ import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
+import 'demo_city_people_seed.dart';
+import 'demo_flags.dart';
 
 const demoLondonSpaceId = 'ws-3';
 const _spaceName = 'Camden Yard Cowork';
-@visibleForTesting
 const demoLondonSiteId = 'uk-site-camden';
 
 /// A synthetic UK VAT registration (nine digits; the last two are HMRC's check
@@ -35,15 +36,12 @@ const demoLondonSiteId = 'uk-site-camden';
 @visibleForTesting
 const demoLondonVrn = '999904143';
 
-/// The features of the London space: a new space's, plus VAT returns and the
-/// MTD submission. Accounting connectors stay off: MTD does not need them.
-final Map<String, bool> _featureFlags = {
-  ...defaultFeatureFlagsForNewWorkspace(),
-  'moneyTab': true,
-  'invoicing': true,
-  'vatManagement': true,
-  'vatDeclarations': true,
-  'mtdSubmission': true,
+/// The features of the London space: the main space's (every feature but
+/// those [demoFeaturesLeftOff] names), plus the MTD submission it exists to
+/// show. The EC Sales List stays off by country: the UK is outside the EU.
+final Map<String, Object?> _featureFlags = {
+  ...demoFeatureFlags,
+  WorkspaceFeature.mtdSubmission.dbKey: true,
 };
 
 Workspace demoLondonSpace() => Workspace(
@@ -93,8 +91,12 @@ void seedLondonPeople(FakeWorkspaceRepository space) {
   ];
   space
     ..myMember = rows.first
-    ..memberNames = {for (final p in [ada, bruno, chiara]) p.memberId: p.name}
-    ..memberEmails = {for (final p in [ada, bruno, chiara]) p.memberId: p.email}
+    ..memberNames = {
+      for (final p in [ada, bruno, chiara]) p.memberId: p.name,
+    }
+    ..memberEmails = {
+      for (final p in [ada, bruno, chiara]) p.memberId: p.email,
+    }
     ..otherMembers.addAll(rows.skip(1))
     ..sites.add(
       const Site(
@@ -108,6 +110,46 @@ void seedLondonPeople(FakeWorkspaceRepository space) {
         isDefault: true,
       ),
     );
+  for (var i = 0; i < 82; i++) {
+    final id = 'uk-member-${i + 1}';
+    space.otherMembers.add(
+      Member(
+        id: id,
+        workspaceId: demoLondonSpaceId,
+        userId: 'uk-user-${i + 1}',
+        isAdmin: false,
+        isOwner: false,
+        status: MemberStatus.active,
+        subscriptionPct: i < 19 ? 50 : 100,
+        homeSiteId: [
+          demoLondonSiteId,
+          'uk-site-islington',
+          'uk-site-hackney',
+        ][i % 3],
+      ),
+    );
+    space.memberNames[id] = demoCityPersonName(i);
+    space.memberEmails[id] = 'london.member${i + 1}@example.test';
+  }
+  space.memberNames['uk-member-82'] = 'Northstar Studio Ltd (Demo)';
+  space.sites.addAll(const [
+    Site(
+      id: 'uk-site-islington',
+      workspaceId: demoLondonSpaceId,
+      name: 'Islington Studio',
+      city: 'London',
+      countryCode: 'GB',
+      sortOrder: 1,
+    ),
+    Site(
+      id: 'uk-site-hackney',
+      workspaceId: demoLondonSpaceId,
+      name: 'Hackney Studio',
+      city: 'London',
+      countryCode: 'GB',
+      sortOrder: 2,
+    ),
+  ]);
 }
 
 /// The last full calendar quarter before [now]: the quarter whose return is
@@ -141,7 +183,13 @@ void seedLondonMoney(FakeMoneyRepository money, DateTime now) {
       issuedAt: DateTime(quarter.start.year, quarter.start.month + month, 10),
       period: period,
       title: period,
-      lines: [InvoiceLine(label: period, amountCents: netCents + vat, vatPercent: percent)],
+      lines: [
+        InvoiceLine(
+          label: period,
+          amountCents: netCents + vat,
+          vatPercent: percent,
+        ),
+      ],
       totalCents: netCents + vat,
       currency: 'GBP',
       memberName: name,
@@ -162,7 +210,15 @@ void seedLondonMoney(FakeMoneyRepository money, DateTime now) {
     );
   }
 
+  // #3290 — the UK's rates the space's invoices are charged at: standard,
+  // reduced and zero. A VAT-registered space without them read "VAT: to
+  // configure" in its setup guide while its invoices carried 20 %.
   money
+    ..vatRates = const [
+      VatRate(id: 'uk-vat-20', label: 'Standard', percent: 20, isDefault: true),
+      VatRate(id: 'uk-vat-5', label: 'Reduced', percent: 5, groupKey: 'reduced'),
+      VatRate(id: 'uk-vat-0', label: 'Zero rate', percent: 0, category: 'Z', groupKey: 'zero'),
+    ]
     ..invoices.clear()
     ..invoices.addAll([
       invoice('uk-inv-001', 'member-2', 'Bruno Kessler', 0, 125000, 20),

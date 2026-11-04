@@ -3385,6 +3385,150 @@ abstract class AppLocalizations {
   /// **'The payment recorded as made'**
   String get bankOutTitle;
 
+  /// #2380 partial bank reconciliation report: bankReconAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get bankReconAccount;
+
+  /// #2380 statement-file arithmetic limitation: bankReconArithmeticDifference.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement file arithmetic difference (supported booked movements)'**
+  String get bankReconArithmeticDifference;
+
+  /// #2380 partial bank reconciliation report: bankReconBookingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored booking date (may default to value date)'**
+  String get bankReconBookingDate;
+
+  /// #2380 partial bank reconciliation report: bankReconBooksUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.'**
+  String get bankReconBooksUnavailable;
+
+  /// #2380 partial bank reconciliation report: bankReconClearingUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider clearing unavailable: clearing opening and complete settlement facts are missing.'**
+  String get bankReconClearingUnavailable;
+
+  /// #2380 partial bank reconciliation report: bankReconClosing.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing balance stated by bank'**
+  String get bankReconClosing;
+
+  /// #2380 partial bank reconciliation report: bankReconCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial coverage: the bank-reported period and complete account coverage are not established.'**
+  String get bankReconCoverage;
+
+  /// #2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV column mapping was not retained'**
+  String get bankReconCsvMappingUnavailable;
+
+  /// #2380 scope of statement-file arithmetic, mandatory in customized output.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement-file arithmetic compares the file balances with supported booked movements accepted by the import parser; it is not reconciliation with the books.'**
+  String get bankReconFileArithmeticScope;
+
+  /// #2380 statement-file arithmetic limitation: bankReconFormatUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'File format or source limits cannot verify statement arithmetic'**
+  String get bankReconFormatUnavailable;
+
+  /// #2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous.
+  ///
+  /// In en, this message translates to:
+  /// **'Source movement identity missing or duplicated'**
+  String get bankReconIdentityAmbiguous;
+
+  /// #2380 partial bank reconciliation report: bankReconNotIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reconciliation reports are unavailable for this export.'**
+  String get bankReconNotIncluded;
+
+  /// #2380 partial bank reconciliation report: bankReconObservedDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored movement dates'**
+  String get bankReconObservedDates;
+
+  /// #2380 partial bank reconciliation report: bankReconOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance stated by bank'**
+  String get bankReconOpening;
+
+  /// #2380 partial bank reconciliation report: bankReconOriginalUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source unavailable or inaccessible'**
+  String get bankReconOriginalUnavailable;
+
+  /// #2380 statement-file arithmetic limitation: bankReconReadUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source unavailable or inaccessible; absence cannot be distinguished from denial'**
+  String get bankReconReadUnavailable;
+
+  /// #2380 partial bank reconciliation report: bankReconRequestedPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested period'**
+  String get bankReconRequestedPeriod;
+
+  /// #2380 partial bank reconciliation report: bankReconSeparateReads.
+  ///
+  /// In en, this message translates to:
+  /// **'Statements, movements and source are separate reads; this is not a frozen snapshot.'**
+  String get bankReconSeparateReads;
+
+  /// #2380 statement-file arithmetic limitation: bankReconSourceNotRetained.
+  ///
+  /// In en, this message translates to:
+  /// **'Original source not retained or digest unavailable'**
+  String get bankReconSourceNotRetained;
+
+  /// #2380 partial bank reconciliation report: bankReconSourceUnassociated.
+  ///
+  /// In en, this message translates to:
+  /// **'Some source movements have no verified retained-line association; their status is unavailable.'**
+  String get bankReconSourceUnassociated;
+
+  /// #2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Source hash, parsing, entry status or amounts, account, currency or balances could not be verified.'**
+  String get bankReconSourceVerificationFailed;
+
+  /// #2380 partial bank reconciliation report: bankReconTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reconciliation report'**
+  String get bankReconTitle;
+
+  /// #2380 statement-file arithmetic limitation: bankReconUnmappedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Source movements without verified retained-row association'**
+  String get bankReconUnmappedCount;
+
+  /// #2380 partial bank reconciliation report: bankReconValueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored value date (may default to booking date)'**
+  String get bankReconValueDate;
+
   /// #2380 Refusal: the reason and the line it was found at.
   ///
   /// In en, this message translates to:
@@ -3727,6 +3871,12 @@ abstract class AppLocalizations {
   /// **'date of the document'**
   String get biBasisDocumentDate;
 
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'invoice due date'**
+  String get biBasisInvoiceDue;
+
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
@@ -3738,6 +3888,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'due date'**
   String get biBasisOccurrenceDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'supplier payable due date'**
+  String get biBasisPayableDue;
 
   /// #2581 analytical report print layout and exports
   ///
@@ -4033,6 +4189,207 @@ abstract class AppLocalizations {
   /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
   String get biCurrentBasis;
 
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get biCustomerCohortHeld;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid late'**
+  String get biCustomerCohortLate;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} invoices, {amount}'**
+  String biCustomerCohortLine(String cohort, String count, String amount);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on time'**
+  String get biCustomerCohortOnTime;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get biCustomerCohortOpen;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get biCustomerCohortPartial;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Settled without a payment date'**
+  String get biCustomerCohortUndated;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get biCustomerCohortUnknownDue;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Written off'**
+  String get biCustomerCohortWrittenOff;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The largest {top} of {customers} customers: {topNet} of {net} invoiced net'**
+  String biCustomerConcentrationBasis(
+    String top,
+    String customers,
+    String topNet,
+    String net,
+  );
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.'**
+  String get biCustomerConcentrationDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The {top} largest of {debtors} debtors owe {topOpen} of the {open} owed today, whenever they were invoiced.'**
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  );
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Customer concentration'**
+  String get biCustomerConcentrationTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{credited} in {notes} credit notes, {writtenOff} written off on {offs} invoices'**
+  String biCustomerCreditBasis(
+    String credited,
+    String notes,
+    String writtenOff,
+    String offs,
+  );
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'By the invoice’s month, net of VAT: the credit notes, and what was written off of an invoice (its total less what was paid), in proportion to its net.'**
+  String get biCustomerCreditDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Credits and write-offs'**
+  String get biCustomerCreditTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {amount} owed'**
+  String biCustomerDebtorLine(String name, String amount);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
+  String biCustomerDelay(String median, String p90, String weighted);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{reminders} reminders on {reminded} of {due} invoices falling due'**
+  String biCustomerDunningBasis(String reminders, String reminded, String due);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The reminders sent for the invoices falling due in the period, by level.'**
+  String get biCustomerDunningDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String biCustomerDunningLevel(String level);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Dunning is switched off for this space: no reminders are counted.'**
+  String get biCustomerDunningOff;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Dunning load'**
+  String get biCustomerDunningTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Names are shown only to those who may read personal data; the others read ranks.'**
+  String get biCustomerNamesHidden;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.'**
+  String get biCustomerNetNotProven;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to share out in this period, so no share is shown.'**
+  String get biCustomerNothingToShare;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {reminded} reminded invoices were paid after their first reminder: a sequence in time, not proof that the reminder caused the payment.'**
+  String biCustomerPaidAfterReminder(String paid, String reminded);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {settled} settled invoices paid by their due date'**
+  String biCustomerPaymentBasis(String onTime, String settled);
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The invoices falling due in the period, each in one group. A settled invoice is on time when its last payment was reported paid on or before its due date: the bank’s value date when a reconciled line explains the payment, the recorded payment date otherwise, never the day it was matched. Amounts are what the invoices owe, VAT included.'**
+  String get biCustomerPaymentDefinition;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Payment punctuality'**
+  String get biCustomerPaymentTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Customer {rank}'**
+  String biCustomerRank(String rank);
+
   /// No description provided for @biDataNotApplicable.
   ///
   /// In en, this message translates to:
@@ -4165,6 +4522,12 @@ abstract class AppLocalizations {
   /// **'by document date'**
   String get biEditorBasisDocumentDate;
 
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'by invoice due date'**
+  String get biEditorBasisInvoiceDue;
+
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
@@ -4176,6 +4539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'by due date'**
   String get biEditorBasisOccurrenceDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'by supplier payable due date'**
+  String get biEditorBasisPayableDue;
 
   /// #2580 BI report editor
   ///
@@ -5245,6 +5614,84 @@ abstract class AppLocalizations {
   /// **'This address asks for an analysis that does not exist; nothing was read.'**
   String get biInvalidAddress;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average cost'**
+  String get biItemMethodAverage;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'last purchase'**
+  String get biItemMethodLast;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{lines} purchase lines of {items} items'**
+  String biItemPricesBasis(String lines, String items);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.'**
+  String get biItemPricesDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item prices by supplier'**
+  String get biItemPricesTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Sold for {revenue} net, cost {cost} ({method})'**
+  String biItemProductBasis(String revenue, String cost, String method);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.'**
+  String get biItemProductDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Margin by product'**
+  String get biItemProductTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} products sold were never bought: they have no cost and are left out of the cost and margin'**
+  String biItemUncosted(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} purchase lines name a supply only by its text: they are not matched to an item and are left out'**
+  String biItemUnresolved(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} suppliers'**
+  String biItemVendorBasis(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.'**
+  String get biItemVendorDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier prices compared'**
+  String get biItemVendorTitle;
+
   /// Business analytics dashboard: biKindCurrent
   ///
   /// In en, this message translates to:
@@ -5851,6 +6298,149 @@ abstract class AppLocalizations {
   /// **'running'**
   String get biRunningLabel;
 
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements'**
+  String get biSalesKindAccessories;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments'**
+  String get biSalesKindAdjustment;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{gross} with VAT, {lines} lines on {invoices} invoices'**
+  String biSalesKindBasis(String gross, String lines, String invoices);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.'**
+  String get biSalesKindDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Desks'**
+  String get biSalesKindDesk;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get biSalesKindLevel;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get biSalesKindOffice;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get biSalesKindOther;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get biSalesKindOverage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get biSalesKindPackage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get biSalesKindService;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get biSalesKindSubscription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by kind'**
+  String get biSalesKindTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net'**
+  String biSalesNetUnknown(String count);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No description'**
+  String get biSalesNoDescription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)'**
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  );
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.'**
+  String get biSalesRoomDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{room}: charged {charges}, cost {cost}, {uses} bookings'**
+  String biSalesRoomLine(String room, String charges, String cost, String uses);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Margin of the rented rooms'**
+  String get biSalesRoomTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The space rents no rooms: switch on rented rooms to see their margin'**
+  String get biSalesRoomsOff;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} services and packages'**
+  String biSalesServiceBasis(String count);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.'**
+  String get biSalesServiceDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by service'**
+  String get biSalesServiceTitle;
+
   /// Business analytics dashboard: biSeatCentre
   ///
   /// In en, this message translates to:
@@ -5946,6 +6536,172 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This analysis could not be computed.'**
   String get biUnavailable;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} categories'**
+  String biVendorCategoryBasis(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by category'**
+  String get biVendorCategoryTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get biVendorCohortHeld;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid late'**
+  String get biVendorCohortLate;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} bills, {amount}'**
+  String biVendorCohortLine(String cohort, String count, String amount);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on time'**
+  String get biVendorCohortOnTime;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get biVendorCohortOpen;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get biVendorCohortPartial;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Settled without a payment'**
+  String get biVendorCohortUndated;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get biVendorCohortUnknownDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Credit notes subtracted: {amount} ({count})'**
+  String biVendorCredited(String amount, String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
+  String biVendorDelay(String median, String p90, String weighted);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} bills; median {median} days, 90th percentile {p90}'**
+  String biVendorLagBasis(String documents, String median, String p90);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.'**
+  String get biVendorLagDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days for a bill to arrive'**
+  String get biVendorLagTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bills carry no supplier date or no received date and are left out'**
+  String biVendorLagUndated(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get biVendorNoCategory;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the period to measure'**
+  String get biVendorNothingToMeasure;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {settled} settled bills paid by their due date'**
+  String biVendorPunctualityBasis(String onTime, String settled);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.'**
+  String get biVendorPunctualityDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {onTime} on time, {late} late, of {due} due'**
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paying suppliers on time'**
+  String get biVendorPunctualityTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}'**
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.'**
+  String get biVendorSpendDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by supplier'**
+  String get biVendorSpendTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Without a supplier (members’ receipts): {amount}'**
+  String biVendorUnassigned(String amount);
 
   /// #2578 saved-view cards saved for another metric version
   ///
@@ -7128,6 +7884,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are no longer a member of this space — ask an administrator for an invitation.'**
   String get bookingNotAMember;
+
+  /// Refusal when the member does not hold makeReservations (#3269)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not make reservations in this space. Ask an owner to let members book.'**
+  String get bookingNotAllowedError;
 
   /// Refusal when the member already holds an overlapping active reservation (#412)
   ///
@@ -9973,6 +10735,12 @@ abstract class AppLocalizations {
   /// **'See a space half way: {space}'**
   String demoSetupCardOpenHalfDone(String space);
 
+  /// Switch between Demo workspaces without claiming their setup state.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {space}'**
+  String demoSetupCardOpenSpace(String space);
+
   /// #2872 the setup guide in the demo: demoSetupCardTitle
   ///
   /// In en, this message translates to:
@@ -12797,6 +13565,12 @@ abstract class AppLocalizations {
   /// **'{actor} proposes a deal for {member}: {terms}'**
   String eventPriceNegotiationLine(String actor, String member, String terms);
 
+  /// No description provided for @eventPrivacyIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}'**
+  String eventPrivacyIncident(String kind, String note);
+
   /// Feed line of a quota-extension request event
   ///
   /// In en, this message translates to:
@@ -13018,6 +13792,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price negotiation'**
   String get eventTypePriceNegotiation;
+
+  /// No description provided for @eventTypePrivacyIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy incident'**
+  String get eventTypePrivacyIncident;
 
   /// Event-type label for quota-extension requests (0031): feed filter chip + validation policy card
   ///
@@ -19937,6 +20717,12 @@ abstract class AppLocalizations {
   /// **'Trial balance, general and auxiliary (PDF, from the book)'**
   String get invoiceExportTrialBalance;
 
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero (sales invoice import)'**
+  String get invoiceExportXeroInvoiceCsv;
+
   /// No description provided for @invoiceExternalIssuingTitle.
   ///
   /// In en, this message translates to:
@@ -21706,6 +22492,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The invoicing process: issue, collect, confirm, close'**
   String get journeyStageStripLabel;
+
+  /// No description provided for @journeyStateCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get journeyStateCancelled;
+
+  /// No description provided for @journeyStateCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current step'**
+  String get journeyStateCurrent;
+
+  /// No description provided for @journeyStateDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get journeyStateDone;
+
+  /// No description provided for @journeyStateUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get journeyStateUpcoming;
 
   /// No description provided for @journeyStepClosed.
   ///
@@ -29772,6 +30582,12 @@ abstract class AppLocalizations {
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
+  /// No description provided for @permManagePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Handle personal data and rights requests'**
+  String get permManagePrivacy;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -29885,6 +30701,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit workspace settings'**
   String get permWorkspaceSettings;
+
+  /// No description provided for @personalBirthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get personalBirthday;
+
+  /// No description provided for @personalBirthdayClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the birthday'**
+  String get personalBirthdayClear;
+
+  /// No description provided for @personalBirthdayHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only you, people allowed to see members\' personal data and the workspace\'s privacy admin can read it. Someone who only issues invoices cannot.'**
+  String get personalBirthdayHelp;
+
+  /// No description provided for @personalBirthdayInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'A birthday cannot be in the future or before 1900.'**
+  String get personalBirthdayInvalid;
+
+  /// No description provided for @personalBirthdayPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get personalBirthdayPick;
+
+  /// No description provided for @personalBirthdaySaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details were saved, but the birthday could not be.'**
+  String get personalBirthdaySaveFailed;
 
   /// #886 personal-information form / feature: personalInfoCity
   ///
@@ -31098,6 +31950,162 @@ abstract class AppLocalizations {
   /// **'incl. VAT {rate}'**
   String priceVatIncluded(String rate);
 
+  /// No description provided for @privacyAdminActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused: {reason}'**
+  String privacyAdminActionFailed(String reason);
+
+  /// No description provided for @privacyAdminBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is kept'**
+  String get privacyAdminBasis;
+
+  /// No description provided for @privacyAdminComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get privacyAdminComplete;
+
+  /// No description provided for @privacyAdminDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get privacyAdminDetails;
+
+  /// No description provided for @privacyAdminEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No rights request yet.'**
+  String get privacyAdminEmpty;
+
+  /// No description provided for @privacyAdminExtend.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend the deadline'**
+  String get privacyAdminExtend;
+
+  /// No description provided for @privacyAdminExtendReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the extension (at least 10 characters)'**
+  String get privacyAdminExtendReason;
+
+  /// No description provided for @privacyAdminIncidentIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.'**
+  String get privacyAdminIncidentIntro;
+
+  /// No description provided for @privacyAdminIncidentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened (optional, 1000 characters at most)'**
+  String get privacyAdminIncidentNote;
+
+  /// No description provided for @privacyAdminIncidentRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}'**
+  String privacyAdminIncidentRecorded(int count);
+
+  /// No description provided for @privacyAdminIncidentSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Record and tell them'**
+  String get privacyAdminIncidentSend;
+
+  /// No description provided for @privacyAdminIncidentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a privacy incident'**
+  String get privacyAdminIncidentTitle;
+
+  /// No description provided for @privacyAdminIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.'**
+  String get privacyAdminIntro;
+
+  /// No description provided for @privacyAdminKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of request'**
+  String get privacyAdminKind;
+
+  /// No description provided for @privacyAdminLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The requests could not be read.'**
+  String get privacyAdminLoadFailed;
+
+  /// No description provided for @privacyAdminMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get privacyAdminMember;
+
+  /// No description provided for @privacyAdminOpenTile.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal data and rights requests'**
+  String get privacyAdminOpenTile;
+
+  /// No description provided for @privacyAdminOutcomeKind.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened to the data'**
+  String get privacyAdminOutcomeKind;
+
+  /// No description provided for @privacyAdminPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'For how long'**
+  String get privacyAdminPeriod;
+
+  /// No description provided for @privacyAdminReceivedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Received on {date}'**
+  String privacyAdminReceivedOn(String date);
+
+  /// No description provided for @privacyAdminRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a request'**
+  String get privacyAdminRecord;
+
+  /// No description provided for @privacyAdminRefusalReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the refusal (at least 10 characters)'**
+  String get privacyAdminRefusalReason;
+
+  /// No description provided for @privacyAdminRefuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Refuse'**
+  String get privacyAdminRefuse;
+
+  /// No description provided for @privacyAdminSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get privacyAdminSave;
+
+  /// No description provided for @privacyAdminStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Where (a store or a list)'**
+  String get privacyAdminStore;
+
+  /// No description provided for @privacyAdminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal data and rights requests'**
+  String get privacyAdminTitle;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
@@ -31170,6 +32178,24 @@ abstract class AppLocalizations {
   /// **'My DesKilo data export'**
   String get privacyExportShareText;
 
+  /// No description provided for @privacyIncidentDataBreach.
+  ///
+  /// In en, this message translates to:
+  /// **'A data breach'**
+  String get privacyIncidentDataBreach;
+
+  /// No description provided for @privacyIncidentOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Another incident'**
+  String get privacyIncidentOther;
+
+  /// No description provided for @privacyIncidentWrongInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'A wrong invoice'**
+  String get privacyIncidentWrongInvoice;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
@@ -31230,6 +32256,42 @@ abstract class AppLocalizations {
   /// **'Transfer safeguard: {mechanism}'**
   String privacyNoticeTransfer(String mechanism);
 
+  /// No description provided for @privacyOutcomeCorrected.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get privacyOutcomeCorrected;
+
+  /// No description provided for @privacyOutcomeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be done'**
+  String get privacyOutcomeFailed;
+
+  /// No description provided for @privacyOutcomePendingExternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Still open elsewhere'**
+  String get privacyOutcomePendingExternal;
+
+  /// No description provided for @privacyOutcomeRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get privacyOutcomeRemoved;
+
+  /// No description provided for @privacyOutcomeRestricted.
+  ///
+  /// In en, this message translates to:
+  /// **'Restricted'**
+  String get privacyOutcomeRestricted;
+
+  /// No description provided for @privacyOutcomeRetained.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept (with a reason)'**
+  String get privacyOutcomeRetained;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:
@@ -31253,6 +32315,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
   String get privacyPushOnDeviceHint;
+
+  /// No description provided for @privacySelfServiceOff.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace handles data requests itself. File a rights request and the personal data admin will answer it.'**
+  String get privacySelfServiceOff;
 
   /// #1914 privacy notice: privacySpaceNotice
   ///
@@ -32016,22 +33084,52 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// No description provided for @purchaseApprovalEvidenceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.'**
+  String get purchaseApprovalEvidenceUnavailable;
+
+  /// No description provided for @purchaseApprovalFxSame.
+  ///
+  /// In en, this message translates to:
+  /// **'The bill is in the workspace currency.'**
+  String get purchaseApprovalFxSame;
+
+  /// No description provided for @purchaseApprovalFxUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate is unavailable in this approval view.'**
+  String get purchaseApprovalFxUnavailable;
+
+  /// No description provided for @purchaseApprovalReceiptsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending receipts could not be loaded.'**
+  String get purchaseApprovalReceiptsUnavailable;
+
+  /// No description provided for @purchaseApprovalVisibleReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending member receipts you can view'**
+  String get purchaseApprovalVisibleReceipts;
+
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'Nothing waits for your approval.'**
+  /// **'No supplier bills await your approval.'**
   String get purchaseApprovalsEmpty;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'The documents waiting for approval could not be read.'**
+  /// **'The supplier bills awaiting approval could not be read.'**
   String get purchaseApprovalsRefused;
 
   /// #3070 purchases and suppliers navigation group and approvals queue
   ///
   /// In en, this message translates to:
-  /// **'To approve'**
+  /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
 
   /// #2577 the guided purchase / expense entry
@@ -32454,6 +33552,12 @@ abstract class AppLocalizations {
   /// **'Invoice date'**
   String get purchasesInvoiceDate;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item bought'**
+  String get purchasesItem;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -32507,6 +33611,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get purchasesMethodOther;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'No item'**
+  String get purchasesNoItem;
 
   /// #2573 purchases
   ///
@@ -32718,6 +33828,12 @@ abstract class AppLocalizations {
   /// **'Goods for resale'**
   String get purchasesPurposeStock;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get purchasesQuantity;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -32921,6 +34037,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get purchasesTotal;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (e.g. box, ream)'**
+  String get purchasesUnit;
 
   /// #2559 Settings button: the deliberate action that raises the system notification prompt
   ///
@@ -33984,11 +35106,17 @@ abstract class AppLocalizations {
   /// **'This payment is dated inside a closed period of the books, so its match cannot be undone. Nothing was changed.'**
   String get refusalBankMatchClosedPeriod;
 
-  /// #2380 Refusal DKB05: other payments are matched to the invoice.
+  /// #2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing.
   ///
   /// In en, this message translates to:
-  /// **'Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.'**
+  /// **'The payments of this invoice cannot be restated without guessing (one may still await its validation), so this one cannot be undone here. Nothing was changed.'**
   String get refusalBankMatchSeveralPayments;
+
+  /// #2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the invoice\'s first payment: undo its later payments first. Nothing was changed.'**
+  String get refusalBankMatchUndoLaterFirst;
 
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///
@@ -38364,6 +39492,18 @@ abstract class AppLocalizations {
   /// **'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.'**
   String get settingHintPresenceResyncAfterAwayMinutes;
 
+  /// No description provided for @settingHintPrivacyMemberSelfService.
+  ///
+  /// In en, this message translates to:
+  /// **'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.'**
+  String get settingHintPrivacyMemberSelfService;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.'**
+  String get settingHintPurchaseItemCostMethod;
+
   /// #2574 maker-checker settings
   ///
   /// In en, this message translates to:
@@ -38789,6 +39929,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Re-read after being away'**
   String get settingLabelPresenceResyncAfterAwayMinutes;
+
+  /// No description provided for @settingLabelPrivacyMemberSelfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Members export and erase their own data directly'**
+  String get settingLabelPrivacyMemberSelfService;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'How an item\'s unit cost is read in the margins'**
+  String get settingLabelPurchaseItemCostMethod;
 
   /// #2574 maker-checker settings
   ///
@@ -42053,6 +43205,12 @@ abstract class AppLocalizations {
   /// **'archived'**
   String get suppliersArchivedTag;
 
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Balance unavailable'**
+  String get suppliersBalanceUnavailable;
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -42191,11 +43349,41 @@ abstract class AppLocalizations {
   /// **'Tax identifier (VAT number with country prefix)'**
   String get suppliersFieldTaxId;
 
+  /// #3070 portion of the supplier balance on hold
+  ///
+  /// In en, this message translates to:
+  /// **'On hold: {amount}'**
+  String suppliersHeld(String amount);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
   /// **'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.'**
   String get suppliersIntro;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get suppliersLoadMore;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'No outstanding balance'**
+  String get suppliersNoOutstanding;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding: {amount}'**
+  String suppliersOutstanding(String amount);
+
+  /// #3070 supplier payable read error
+  ///
+  /// In en, this message translates to:
+  /// **'Payables unavailable'**
+  String get suppliersPayablesUnavailable;
 
   /// #2567 suppliers
   ///
@@ -42292,6 +43480,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Suppliers'**
   String get suppliersTitle;
+
+  /// #3070 supplier outstanding balance
+  ///
+  /// In en, this message translates to:
+  /// **'View supplier payables'**
+  String get suppliersViewPayables;
 
   /// #2354 place of supply: supplyClassGeneral
   ///
@@ -50275,6 +51469,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace imported.'**
   String get workspaceXmlImportSuccess;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Sales account code'**
+  String get xeroInvoiceAccountCode;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.'**
+  String get xeroInvoiceAccountsIntro;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero export'**
+  String get xeroInvoiceAccountsTitle;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}'**
+  String xeroInvoiceCreditNotesLeftOut(int count);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Date order in your organisation'**
+  String get xeroInvoiceDateOrder;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Day first (31/12/2026)'**
+  String get xeroInvoiceDayFirst;
+
+  /// #2372 - the instruction for the Xero import screen
+  ///
+  /// In en, this message translates to:
+  /// **'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.'**
+  String get xeroInvoiceImportTaxExclusive;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Month first (12/31/2026)'**
+  String get xeroInvoiceMonthFirst;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the sales account code.'**
+  String get xeroInvoiceRefusedAccount;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Name the Xero tax rate for {rate}.'**
+  String xeroInvoiceRefusedTaxType(String rate);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero tax rate for {rate}'**
+  String xeroInvoiceTaxType(String rate);
 }
 
 class _AppLocalizationsDelegate

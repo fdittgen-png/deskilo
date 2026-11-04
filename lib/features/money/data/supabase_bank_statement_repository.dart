@@ -56,7 +56,9 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
     required List<int> bytes,
   }) async {
     try {
-      await _client.storage.from(_originals).uploadBinary(
+      await _client.storage
+          .from(_originals)
+          .uploadBinary(
             '$workspaceId/$sourceSha256',
             Uint8List.fromList(bytes),
             fileOptions: const FileOptions(
@@ -73,8 +75,21 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
   }
 
   @override
-  Future<Uint8List> fetchOriginal(String workspaceId, String sourceSha256) =>
-      _client.storage.from(_originals).download('$workspaceId/$sourceSha256');
+  Future<Uint8List> fetchOriginal(
+    String workspaceId,
+    String sourceSha256,
+  ) async {
+    try {
+      return await _client.storage
+          .from(_originals)
+          .download('$workspaceId/$sourceSha256');
+    } on StorageException catch (e, st) {
+      if (e.statusCode == '404') {
+        Error.throwWithStackTrace(const BankOriginalUnavailable(), st);
+      }
+      rethrow;
+    }
+  }
 
   @override
   Future<BankImportResult> importStatement(

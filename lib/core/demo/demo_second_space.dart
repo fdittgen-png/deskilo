@@ -11,13 +11,16 @@
 // change made to the Leipzig row is the change Me › Home lists.
 import '../../features/workspace/domain/workspace.dart';
 import 'data/accessory_repository.dart';
+import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/decision_effects.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
+import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
-import 'data/reservation_repository.dart';
 import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
@@ -48,12 +51,23 @@ class DemoSecondSpaceData {
     seedLeipzigSpaceLife(space, now);
     final plan = FakeFloorPlanRepository();
     seedLeipzigPlan(plan);
-    final reservations = FakeReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor);
     seedLeipzigBookings(reservations, now);
-    final events = FakeEventRepository(actor: actor);
+    // #3293 — Leipzig's requests are Leipzig's, stamped on its clock and
+    // decided only by whom its rules name.
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoSecondSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedLeipzigRequests(events, now);
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events, clock: () => now);
     seedLeipzigMoney(money, now);
+    // #3305 — each member reads their own statement.
+    money.accountQueries.statementSource =
+        demoStatementSource(space, reservations, demoSecondSpaceId,
+            actor: actor);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(
       calendar,
@@ -61,7 +75,8 @@ class DemoSecondSpaceData {
       money: money,
       events: events,
     );
-    return DemoSecondSpaceData._(
+    wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);
+    final data = DemoSecondSpaceData._(
       workspaces: space,
       floorPlan: plan,
       reservations: reservations,
@@ -69,11 +84,13 @@ class DemoSecondSpaceData {
       calendar: calendar,
       money: money,
     );
+    events.viewerPermissions = demoViewerPermissions(space, data.roles, demoSecondSpaceId, actor);
+    return data;
   }
 
   final FakeWorkspaceRepository workspaces;
   final FakeFloorPlanRepository floorPlan;
-  final FakeReservationRepository reservations;
+  final RightsCheckedReservationRepository reservations;
   final FakeEventRepository events;
   final FakeCalendarRepository calendar;
   final FakeMoneyRepository money;

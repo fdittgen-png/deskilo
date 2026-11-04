@@ -132,7 +132,13 @@ enum WorkspacePermission {
   /// #2569 — record the premises lease the space holds as tenant: its terms,
   /// their history and its termination. Not an admin default; reading the
   /// finances stays viewFinances.
-  manageLease;
+  manageLease,
+
+  /// #3278 — handle the members' personal data: decide their rights requests
+  /// (access, correction, deletion) and be told of a privacy incident. The
+  /// founding owner and every owner hold it; a co-owner by default. Not an
+  /// admin default: the "Personal Data Admin" role (or the matrix) gives it.
+  managePrivacy;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

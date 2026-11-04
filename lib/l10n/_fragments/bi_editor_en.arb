@@ -664,5 +664,13 @@
   "biEditorDrillHint": "Readers can open what makes this figure, narrowed like this visual.",
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
+  },
+  "biEditorBasisInvoiceDue": "by invoice due date",
+  "@biEditorBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
+  },
+  "biEditorBasisPayableDue": "by supplier payable due date",
+  "@biEditorBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   }
 }

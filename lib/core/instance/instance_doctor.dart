@@ -17,6 +17,7 @@
 // Every signal needed was already in the project — the auth config and
 // four rows of `auth.users`. This is the thing that reads them.
 
+import 'instance_auth_check.dart';
 import 'instance_builder.dart';
 import 'instance_security_checks.dart';
 import 'management_api.dart';
@@ -52,7 +53,9 @@ class DoctorFinding {
 
 /// Reads a live project and says whether people can actually sign in.
 class InstanceDoctor {
-  const InstanceDoctor(this.api);
+  const InstanceDoctor(this.api, {this.expectedAuth});
+
+  final Map<String, Object?>? expectedAuth;
 
   final SupabaseManagement api;
 
@@ -78,7 +81,7 @@ class InstanceDoctor {
   }) async =>
       [
         ...await _probe('Auth configuration',
-            () async => checkAuthConfig(await api.authConfig(ref))),
+            () async => checkAuthConfig(await api.authConfig(ref), expectedAuth: expectedAuth)),
         ...await _probe('Sign-ups',
             () async => checkSignups(await api.query(ref, signupHealthSql))),
         ...await _probe(
@@ -209,56 +212,9 @@ select
   /// A redirect the allow-list does not carry is refused, and Supabase
   /// then quietly substitutes the Site URL — so a wrong Site URL is not
   /// cosmetic even once the client asks for the right thing.
-  static List<DoctorFinding> checkAuthConfig(Map<String, Object?> config) {
-    final findings = <DoctorFinding>[];
-    final siteUrl = '${config['site_url'] ?? ''}';
-    final allowList = '${config['uri_allow_list'] ?? ''}';
-    final autoconfirm = config['mailer_autoconfirm'] == true;
-
-    if (siteUrl != InstanceAuthConfig.siteUrl) {
-      findings.add(DoctorFinding(
-        siteUrl.contains('localhost') ? DoctorLevel.alarm : DoctorLevel.warn,
-        'Site URL is not the app',
-        'is  "$siteUrl"\n        want "${InstanceAuthConfig.siteUrl}"\n'
-            '        Every mail GoTrue sends carries this link. A localhost '
-            'here is a link nobody can open.\n'
-            '        Fix: dart run tool/instance.dart auth --ref <ref>',
-      ));
-    } else {
-      findings.add(const DoctorFinding(
-          DoctorLevel.ok, 'Site URL', 'matches InstanceAuthConfig'));
-    }
-
-    final missing = [
-      for (final entry in InstanceAuthConfig.redirectAllowList.split(','))
-        if (!allowList.contains(entry.trim())) entry.trim(),
-    ];
-    findings
-      ..add(missing.isEmpty
-        ? const DoctorFinding(
-            DoctorLevel.ok, 'Redirect allow-list', 'carries every callback')
-        : DoctorFinding(
-            DoctorLevel.alarm,
-            'Redirect allow-list is missing a callback',
-            'missing: ${missing.join(', ')}\n'
-                '        A redirect that is not listed is refused, and the '
-                'Site URL is substituted instead.\n'
-                '        Fix: dart run tool/instance.dart auth --ref <ref>',
-          ))
-
-    // Not a fault either way — but it decides whether anybody has to click
-    // anything, so it must be visible when it changes.
-      ..add(DoctorFinding(
-      DoctorLevel.ok,
-      'Confirmation e-mail',
-      autoconfirm
-          ? 'mailer_autoconfirm is ON — accounts confirm themselves and no '
-              'mail is sent'
-          : 'mailer_autoconfirm is OFF — every new account must click a '
-              'link, so the Site URL above has to be right',
-    ));
-    return findings;
-  }
+  static List<DoctorFinding> checkAuthConfig(Map<String, Object?> config,
+          {Map<String, Object?>? expectedAuth}) =>
+      checkInstanceAuthConfig(config, expectedAuth: expectedAuth);
 
   /// Can people actually complete a sign-up?
   static List<DoctorFinding> checkSignups(List<Map<String, Object?>> rows) {

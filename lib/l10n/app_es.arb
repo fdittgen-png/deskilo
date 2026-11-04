@@ -872,6 +872,102 @@
   "bankMatchTitle": "Conciliar {amount}",
   "bankOutNone": "No hay ningún pago de este importe registrado como realizado.",
   "bankOutTitle": "El pago registrado como realizado",
+  "bankReconAccount": "Cuenta",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "bankReconArithmeticDifference": "Diferencia aritmética del archivo (movimientos contabilizados admitidos)",
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
+  },
+  "bankReconBookingDate": "Fecha contable guardada (puede usar la fecha valor)",
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "bankReconBooksUnavailable": "Diferencia con libros no disponible: faltan el saldo inicial contable de la cuenta y los asientos completos.",
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "bankReconClearingUnavailable": "Saldo de compensación no disponible: faltan el saldo inicial y los datos completos de liquidación.",
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "bankReconClosing": "Saldo final indicado por el banco",
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "bankReconCoverage": "Cobertura parcial: no se ha establecido el periodo declarado por el banco ni la cobertura completa de la cuenta.",
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "bankReconCsvMappingUnavailable": "No se conservó la correspondencia de columnas CSV",
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "bankReconFileArithmeticScope": "El cálculo del archivo compara sus saldos con movimientos contabilizados admitidos y aceptados por el analizador de importación; no es una conciliación con los libros.",
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "bankReconFormatUnavailable": "El formato o los límites de la fuente no permiten verificar el cálculo",
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "bankReconIdentityAmbiguous": "Identidad del movimiento de la fuente ausente o duplicada",
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
+  "bankReconNotIncluded": "Los informes de conciliación bancaria no están disponibles para esta exportación.",
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "bankReconObservedDates": "Fechas de movimientos registrados",
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "bankReconOpening": "Saldo inicial indicado por el banco",
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "bankReconOriginalUnavailable": "Fuente original no disponible o inaccesible",
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "bankReconReadUnavailable": "Fuente original no disponible o inaccesible; no se distingue ausencia de denegación",
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
+  "bankReconRequestedPeriod": "Periodo solicitado",
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "bankReconSeparateReads": "Extractos, movimientos y fuente se leen por separado; no forman una instantánea fija.",
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "bankReconSourceNotRetained": "Fuente original no conservada o huella no disponible",
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
+  "bankReconSourceUnassociated": "Algunos movimientos de la fuente no tienen una asociación verificada con una línea conservada; su estado no está disponible.",
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "bankReconSourceVerificationFailed": "No se pudo verificar la huella, el análisis, el estado o los importes de los movimientos, la cuenta, la moneda o los saldos de la fuente.",
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
+  "bankReconTitle": "Informe de conciliación bancaria",
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconUnmappedCount": "Movimientos de la fuente sin asociación verificada a una línea conservada",
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
+  },
+  "bankReconValueDate": "Fecha valor guardada (puede usar la fecha contable)",
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
+  },
   "bankRefusedAtLine": "{reason} (línea {line})",
   "bankRefusedBadAmount": "Un importe del archivo no es válido. No se ha importado nada.",
   "bankRefusedBadCurrency": "El archivo contiene una moneda desconocida o varias monedas en una misma cuenta. No se ha importado nada.",
@@ -992,6 +1088,7 @@
   "@biBasisDocumentDate": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisInvoiceDue": "fecha de vencimiento de la factura",
   "biBasisInvoiceMonth": "mes de la factura",
   "@biBasisInvoiceMonth": {
     "description": "#2581 analytical report print layout and exports"
@@ -1000,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "fecha de vencimiento de la deuda con el proveedor",
   "biBasisPaymentMatchedAt": "fecha en que se concilió el pago",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1146,6 +1244,37 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "Se incluye el periodo completo. La comparación con un periodo terminado no tiene una base equivalente.",
+  "biCustomerCohortHeld": "En suspenso",
+  "biCustomerCohortLate": "Pagadas con retraso",
+  "biCustomerCohortLine": "{cohort}: {count} facturas, {amount}",
+  "biCustomerCohortOnTime": "Pagadas a tiempo",
+  "biCustomerCohortOpen": "Impagadas",
+  "biCustomerCohortPartial": "Pagadas en parte",
+  "biCustomerCohortUndated": "Saldadas sin fecha de pago",
+  "biCustomerCohortUnknownDue": "Sin vencimiento",
+  "biCustomerCohortWrittenOff": "Dadas de baja",
+  "biCustomerConcentrationBasis": "Los {top} mayores de {customers} clientes: {topNet} de {net} facturados sin IVA",
+  "biCustomerConcentrationDefinition": "La parte de lo facturado sin IVA en el periodo (abonos deducidos) que suponen los mayores clientes, y su parte de lo que deben hoy.",
+  "biCustomerConcentrationOpen": "Los {top} mayores de {debtors} deudores deben {topOpen} de los {open} adeudados hoy, sea cual sea la fecha de la factura.",
+  "biCustomerConcentrationTitle": "Concentración de clientes",
+  "biCustomerCreditBasis": "{credited} en {notes} abonos, {writtenOff} dados de baja en {offs} facturas",
+  "biCustomerCreditDefinition": "Por mes de la factura, sin IVA: los abonos y lo dado de baja de una factura (su total menos lo pagado), en proporción a su base imponible.",
+  "biCustomerCreditTitle": "Abonos y bajas",
+  "biCustomerDebtorLine": "{name}: {amount} adeudados",
+  "biCustomerDelay": "Días entre el vencimiento y el pago: mediana {median}, percentil 90 {p90}, ponderado por importe {weighted} (negativo: antes)",
+  "biCustomerDunningBasis": "{reminders} recordatorios en {reminded} de {due} facturas que vencen",
+  "biCustomerDunningDefinition": "Los recordatorios enviados por las facturas que vencen en el periodo, por nivel.",
+  "biCustomerDunningLevel": "Nivel {level}",
+  "biCustomerDunningOff": "Los recordatorios están desactivados en este espacio: no se cuenta ninguno.",
+  "biCustomerDunningTitle": "Carga de recordatorios",
+  "biCustomerNamesHidden": "Los nombres solo se muestran a quien puede leer datos personales; los demás ven posiciones.",
+  "biCustomerNetNotProven": "Algunas facturas no tienen desglose de IVA, así que su base no está probada: quedan fuera de las cifras netas.",
+  "biCustomerNothingToShare": "No hay nada que repartir en este periodo, así que no se muestra ninguna parte.",
+  "biCustomerPaidAfterReminder": "{paid} de {reminded} facturas recordadas se pagaron tras su primer recordatorio: una sucesión en el tiempo, no la prueba de que el recordatorio causara el pago.",
+  "biCustomerPaymentBasis": "{onTime} de {settled} facturas saldadas pagadas en su vencimiento",
+  "biCustomerPaymentDefinition": "Las facturas que vencen en el periodo, cada una en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado en su vencimiento o antes: la fecha valor del banco cuando una línea conciliada explica el pago, si no la fecha de pago registrada, nunca el día de la conciliación. Los importes son lo que deben las facturas, IVA incluido.",
+  "biCustomerPaymentTitle": "Puntualidad de los pagos",
+  "biCustomerRank": "Cliente {rank}",
   "biDataNotApplicable": "Sin capacidad aplicable",
   "biDataNotRecorded": "No registrado",
   "biDataPartial": "Datos parciales",
@@ -1209,6 +1338,7 @@
   "@biEditorBasisDocumentDate": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisInvoiceDue": "según el vencimiento de la factura",
   "biEditorBasisInvoiceMonth": "según el mes de factura",
   "@biEditorBasisInvoiceMonth": {
     "description": "#2580 BI report editor"
@@ -1217,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "por vencimiento de la deuda con el proveedor",
   "biEditorBasisPaymentMatched": "según el pago conciliado",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -1966,6 +2097,19 @@
   "biGroupNone": "Sin agrupar",
   "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
   "biInvalidAddress": "Esta dirección pide un análisis que no existe; no se ha leído nada.",
+  "biItemMethodAverage": "coste medio",
+  "biItemMethodLast": "última compra",
+  "biItemPricesBasis": "{lines} líneas de compra de {items} artículos",
+  "biItemPricesDefinition": "Las líneas de compra aprobadas que nombran un artículo, con fecha en el periodo: lo que cuestan (base más el impuesto no recuperable). La tabla da el precio unitario de cada artículo por proveedor. Los abonos quedan fuera.",
+  "biItemPricesTitle": "Precios de artículos por proveedor",
+  "biItemProductBasis": "Vendido por {revenue} sin IVA, coste {cost} ({method})",
+  "biItemProductDefinition": "Cada artículo que consumieron los miembros en el periodo: su ingreso neto menos las unidades vendidas al coste unitario, según el método de coste del espacio. Un margen, no un beneficio: no se imputa ningún otro coste.",
+  "biItemProductTitle": "Margen por producto",
+  "biItemUncosted": "{count} productos vendidos nunca se compraron: no tienen coste y quedan fuera del coste y del margen",
+  "biItemUnresolved": "{count} líneas de compra nombran un suministro solo por su texto: no se asocian a ningún artículo y quedan fuera",
+  "biItemVendorBasis": "{count} proveedores",
+  "biItemVendorDefinition": "Para cada proveedor: lo que los artículos comprados en el periodo costaron por encima del precio unitario más bajo pagado en el periodo por el mismo artículo, a cualquier proveedor. No se da margen por proveedor: ninguna venta registra qué compra consumió.",
+  "biItemVendorTitle": "Precios de proveedores comparados",
   "biKindCurrent": "Ahora",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2407,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Suplementos",
+  "biSalesKindAdjustment": "Ajustes",
+  "biSalesKindBasis": "{gross} con IVA, {lines} líneas en {invoices} facturas",
+  "biSalesKindDefinition": "Lo que vendieron las facturas del periodo, sin IVA, por tipo de línea. Los pagos y reembolsos de una factura no son ventas; un abono se resta. El mes es el de la factura.",
+  "biSalesKindDesk": "Mesas",
+  "biSalesKindLevel": "Plantas",
+  "biSalesKindOffice": "Salas",
+  "biSalesKindOther": "Otros",
+  "biSalesKindOverage": "Medias jornadas extra",
+  "biSalesKindPackage": "Paquetes",
+  "biSalesKindService": "Servicios",
+  "biSalesKindSubscription": "Suscripciones",
+  "biSalesKindTitle": "Ventas por tipo",
+  "biSalesNetUnknown": "{count} líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto",
+  "biSalesNoDescription": "Sin descripción",
+  "biSalesRoomBasis": "{charges} cobrados por {uses} reservas, las salas cuestan {cost} ({rooms} salas)",
+  "biSalesRoomDefinition": "Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.",
+  "biSalesRoomLine": "{room}: cobrado {charges}, coste {cost}, {uses} reservas",
+  "biSalesRoomTitle": "Margen de las salas alquiladas",
+  "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen",
+  "biSalesServiceBasis": "{count} servicios y paquetes",
+  "biSalesServiceDefinition": "Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.",
+  "biSalesServiceTitle": "Ventas por servicio",
   "biSeatCentre": "del tiempo total de puestos",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2455,6 +2622,32 @@
   },
   "biTotal": "Total",
   "biUnavailable": "No se pudo calcular este análisis.",
+  "biVendorCategoryBasis": "{count} categorías",
+  "biVendorCategoryTitle": "Gasto por categoría",
+  "biVendorCohortHeld": "En espera",
+  "biVendorCohortLate": "Pagadas con retraso",
+  "biVendorCohortLine": "{cohort}: {count} facturas, {amount}",
+  "biVendorCohortOnTime": "Pagadas a tiempo",
+  "biVendorCohortOpen": "Sin pagar",
+  "biVendorCohortPartial": "Pagadas en parte",
+  "biVendorCohortUndated": "Saldadas sin pago",
+  "biVendorCohortUnknownDue": "Sin vencimiento",
+  "biVendorCredited": "Abonos restados: {amount} ({count})",
+  "biVendorDelay": "Días desde el vencimiento hasta el pago: mediana {median}, percentil 90 {p90}, ponderado por importe {weighted} (negativo: antes)",
+  "biVendorLagBasis": "{documents} facturas; mediana {median} días, percentil 90 {p90}",
+  "biVendorLagDefinition": "Las facturas de proveedor aprobadas con fecha en el periodo: los días desde la fecha que puso el proveedor hasta su llegada al espacio, de media; la tabla detalla cada proveedor.",
+  "biVendorLagTitle": "Días hasta recibir una factura",
+  "biVendorLagUndated": "{count} facturas sin fecha del proveedor o de recepción quedan fuera",
+  "biVendorNoCategory": "Sin categoría",
+  "biVendorNothingToMeasure": "Nada que medir en el periodo",
+  "biVendorPunctualityBasis": "{onTime} de {settled} facturas saldadas pagadas a su vencimiento",
+  "biVendorPunctualityDefinition": "Lo que el espacio debe a sus proveedores con vencimiento en el periodo, cada deuda en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado a más tardar en su vencimiento: la fecha valor del banco cuando el pago la lleva, si no la fecha de pago registrada.",
+  "biVendorPunctualityLine": "{name}: {onTime} a tiempo, {late} con retraso, de {due} vencidas",
+  "biVendorPunctualityTitle": "Pago puntual a proveedores",
+  "biVendorSpendBasis": "{documents} documentos de {suppliers} proveedores; los {top} mayores: {topCost}",
+  "biVendorSpendDefinition": "Los documentos de compra aprobados con fecha en el periodo: lo que cuestan al espacio, la base más el impuesto no recuperable. Un abono se resta. Los documentos en otra moneda no se convierten.",
+  "biVendorSpendTitle": "Gasto por proveedor",
+  "biVendorUnassigned": "Sin proveedor (recibos de miembros): {amount}",
   "biViewCardsIncompatible": "{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.",
   "biViewChart": "Gráfico",
   "biViewClearMyDefault": "Dejar de abrir mi vista por defecto",
@@ -2877,6 +3070,10 @@
   "bookingMoreOptions": "Más opciones",
   "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador.",
+  "bookingNotAllowedError": "No puede hacer reservas en este espacio. Pida a un propietario que permita reservar a los miembros.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Ya tiene una reserva en ese periodo — un sitio a la vez.",
   "bookingOpenDetails": "Detalles",
   "bookingOutsideHoursError": "Las reservas deben permanecer dentro del horario laboral.",
@@ -4154,6 +4351,15 @@
   "demoSetupCardOpenHalfDone": "Ver un espacio a mitad de camino: {space}",
   "@demoSetupCardOpenHalfDone": {
     "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenSpace": "Cambiar a {space}",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
     "placeholders": {
       "space": {
         "type": "String"
@@ -5615,6 +5821,17 @@
   },
   "eventPriceNegotiationItems": "{count} artículos",
   "eventPriceNegotiationLine": "{actor} propone condiciones para {member}: {terms}",
+  "eventPrivacyIncident": "Se registró un incidente de privacidad: {kind, select, data_breach{una filtración de datos} wrong_invoice{una factura errónea} other{otro incidente}}. {note}",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
@@ -5724,6 +5941,7 @@
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
   },
   "eventTypePriceNegotiation": "Negociación de precios",
+  "eventTypePrivacyIncident": "Incidente de privacidad",
   "eventTypeQuota": "Medias jornadas extra",
   "eventTypeRefund": "Reembolso",
   "@eventTypeRefund": {
@@ -8077,6 +8295,7 @@
   },
   "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
+  "invoiceExportXeroInvoiceCsv": "Xero (importación de facturas de venta)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
   "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
@@ -8983,6 +9202,10 @@
   "journeyStageConfirm": "Por confirmar",
   "journeyStageIssue": "Por emitir",
   "journeyStageStripLabel": "El proceso de facturación: emitir, cobrar, confirmar, cerrar",
+  "journeyStateCancelled": "Cancelado",
+  "journeyStateCurrent": "Paso actual",
+  "journeyStateDone": "Completado",
+  "journeyStateUpcoming": "Pendiente",
   "journeyStepClosed": "Cerrada",
   "journeyStepConfirmation": "Confirmación",
   "journeyStepIssued": "Emitida",
@@ -11608,6 +11831,7 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Gestionar los acuerdos comerciales",
+  "permManagePrivacy": "Gestionar los datos personales y las solicitudes de derechos",
   "permManagePurchases": "Registrar facturas de proveedor",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -11681,6 +11905,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Fecha de nacimiento",
+  "personalBirthdayClear": "Quitar la fecha de nacimiento",
+  "personalBirthdayHelp": "Solo usted, las personas autorizadas a ver los datos personales de los miembros y el administrador de datos personales del espacio pueden leerla. Quien solo emite facturas, no.",
+  "personalBirthdayInvalid": "Una fecha de nacimiento no puede estar en el futuro ni antes de 1900.",
+  "personalBirthdayPick": "Elegir una fecha",
+  "personalBirthdaySaveFailed": "Sus datos se guardaron, pero la fecha de nacimiento no.",
   "personalInfoCity": "Ciudad",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -12047,6 +12277,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "El servidor lo rechazó: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Por qué se conservan",
+  "privacyAdminComplete": "Completar",
+  "privacyAdminDetails": "Detalles (opcional)",
+  "privacyAdminEmpty": "Todavía no hay solicitudes.",
+  "privacyAdminExtend": "Prorrogar el plazo",
+  "privacyAdminExtendReason": "Motivo de la prórroga (al menos 10 caracteres)",
+  "privacyAdminIncidentIntro": "Las personas que gestionan los datos personales de este espacio reciben el aviso de inmediato. Diga lo ocurrido; no pegue datos personales aquí.",
+  "privacyAdminIncidentNote": "Qué ocurrió (opcional, 1000 caracteres como máximo)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrado. Nadie tiene ese derecho, así que nadie fue avisado.} =1{Registrado. Se avisó a 1 persona.} other{Registrado. Se avisó a {count} personas.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Registrar y avisar",
+  "privacyAdminIncidentTitle": "Registrar un incidente de datos",
+  "privacyAdminIntro": "Las solicitudes de los miembros sobre sus datos personales y los incidentes que usted registra. Cada solicitud se responde en un mes natural.",
+  "privacyAdminKind": "Tipo de solicitud",
+  "privacyAdminLoadFailed": "No se pudieron leer las solicitudes.",
+  "privacyAdminMember": "Miembro",
+  "privacyAdminOpenTile": "Datos personales y solicitudes de derechos",
+  "privacyAdminOutcomeKind": "Qué pasó con los datos",
+  "privacyAdminPeriod": "Durante cuánto tiempo",
+  "privacyAdminReceivedOn": "Recibida el {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Registrar una solicitud",
+  "privacyAdminRefusalReason": "Motivo del rechazo (al menos 10 caracteres)",
+  "privacyAdminRefuse": "Rechazar",
+  "privacyAdminSave": "Guardar",
+  "privacyAdminStore": "Dónde (un almacén o una lista)",
+  "privacyAdminTitle": "Datos personales y solicitudes de derechos",
   "privacyErase": "Abandonar este espacio y borrar mis datos",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -12107,6 +12384,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "Una filtración de datos",
+  "privacyIncidentOther": "Otro incidente",
+  "privacyIncidentWrongInvoice": "Una factura errónea",
   "privacyIntro": "Sus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son sus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -12170,6 +12450,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Rectificados",
+  "privacyOutcomeFailed": "No se pudo hacer",
+  "privacyOutcomePendingExternal": "Aún abiertos en otro lugar",
+  "privacyOutcomeRemoved": "Eliminados",
+  "privacyOutcomeRestricted": "Restringidos",
+  "privacyOutcomeRetained": "Conservados (con un motivo)",
   "privacyPolicy": "Política de privacidad",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -12186,6 +12472,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacySelfServiceOff": "Este espacio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "privacySpaceNotice": "El aviso de privacidad de este espacio",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -12430,15 +12717,20 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus espacios siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfileTitle": "Perfil público",
-  "purchaseApprovalsEmpty": "Nada espera su aprobación.",
+  "purchaseApprovalEvidenceUnavailable": "Los justificantes no están disponibles en esta vista. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.",
+  "purchaseApprovalFxSame": "La factura está en la moneda del espacio.",
+  "purchaseApprovalFxUnavailable": "El tipo de cambio no está disponible en esta vista.",
+  "purchaseApprovalReceiptsUnavailable": "No se pudieron cargar los comprobantes pendientes.",
+  "purchaseApprovalVisibleReceipts": "Comprobantes pendientes de miembros que puede consultar",
+  "purchaseApprovalsEmpty": "Ninguna factura de proveedor espera su aprobación.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsRefused": "No se pudieron leer los documentos por aprobar.",
+  "purchaseApprovalsRefused": "No se pudieron leer las facturas de proveedores por aprobar.",
   "@purchaseApprovalsRefused": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
-  "purchaseApprovalsTitle": "Por aprobar",
+  "purchaseApprovalsTitle": "Facturas de proveedores por aprobar",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
@@ -12614,6 +12906,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Artículo comprado",
   "purchasesKindBill": "Factura de proveedor",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12650,6 +12943,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Ningún artículo",
   "purchasesNoSupplier": "Ningún proveedor elegido",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -12808,6 +13102,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Cantidad",
   "purchasesReference": "Número de factura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -12954,6 +13249,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Unidad (p. ej. caja, resma)",
   "pushAllowAction": "Permitir",
   "pushCancelledBody": "Un admin eliminó una reserva.",
   "pushCancelledTitle": "Reserva eliminada",
@@ -13352,9 +13648,13 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Hay otros pagos conciliados con esta factura, así que este no se puede deshacer por separado. No se cambió nada.",
+  "refusalBankMatchSeveralPayments": "Los pagos de esta factura no se pueden recalcular sin suponer (quizá uno espera aún su validación), así que este no se puede deshacer aquí. No se cambió nada.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
+  },
+  "refusalBankMatchUndoLaterFirst": "Es el primer pago de la factura: deshaga primero los pagos posteriores. No se cambió nada.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
   "refusalMoneyLocaleLocked": "La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.",
@@ -15609,6 +15909,8 @@
     "description": "#2486 settings: Setting hint."
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.",
+  "settingHintPrivacyMemberSelfService": "true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.",
+  "settingHintPurchaseItemCostMethod": "average: todas las compras aprobadas del artículo hasta el final del periodo, ponderadas por sus unidades. last: la última compra fechada hasta entonces. No cambia ningún documento, solo los márgenes.",
   "settingHintPurchasePaymentChecker": "Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15791,6 +16093,8 @@
     "description": "#2486 settings: Setting label."
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Releer tras una ausencia",
+  "settingLabelPrivacyMemberSelfService": "Los miembros exportan y borran ellos mismos sus datos",
+  "settingLabelPurchaseItemCostMethod": "Cómo se lee el coste unitario de un artículo en los márgenes",
   "settingLabelPurchasePaymentChecker": "Pagos que registra una segunda persona desde (unidades monetarias)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16969,6 +17273,10 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
+  "suppliersBalanceUnavailable": "Saldo no disponible",
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBank": "Datos bancarios",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -17074,9 +17382,39 @@
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
   },
+  "suppliersHeld": "En espera: {amount}",
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersIntro": "Los beneficiarios de sus compras. Un proveedor se reconoce por un identificador fiscal verificado, nunca solo por su nombre.",
   "@suppliersIntro": {
     "description": "#2567 suppliers"
+  },
+  "suppliersLoadMore": "Cargar más",
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersNoOutstanding": "Sin saldo pendiente",
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
+  "suppliersOutstanding": "Pendiente: {amount}",
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersPayablesUnavailable": "Pagos pendientes no disponibles",
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
   },
   "suppliersRefused": "No se pudo guardar el proveedor. Quizá el número o el identificador fiscal ya se usa, o no gestiona proveedores.",
   "@suppliersRefused": {
@@ -17158,6 +17496,10 @@
   "suppliersTitle": "Proveedores",
   "@suppliersTitle": {
     "description": "#2567 suppliers"
+  },
+  "suppliersViewPayables": "Ver pagos pendientes del proveedor",
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Servicio general (no vinculado a los locales)",
   "supplyClassHelper": "Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.",
@@ -20048,5 +20390,16 @@
   "workspaceXmlImportPreviewWarning": "El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.",
   "workspaceXmlImportReservationsError": "Este espacio ya tiene reservas, por lo que su plano no se puede sustituir. Solo se puede importar antes de la primera reserva.",
   "workspaceXmlImportSubtitle": "Restaurar los ajustes y el plano desde un archivo exportado. Sustituye el plano actual.",
-  "workspaceXmlImportSuccess": "Espacio importado."
+  "workspaceXmlImportSuccess": "Espacio importado.",
+  "xeroInvoiceAccountCode": "Código de la cuenta de ventas",
+  "xeroInvoiceAccountsIntro": "Xero importa estas facturas como borradores: apruébelas en Xero. La cuenta de ventas y los tipos impositivos son los de su organización: copie sus nombres de Xero.",
+  "xeroInvoiceAccountsTitle": "Exportación Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una factura rectificativa no está en este archivo: Xero importa las rectificativas con su propia plantilla.} other{{count} facturas rectificativas no están en este archivo: Xero importa las rectificativas con su propia plantilla.}}",
+  "xeroInvoiceDateOrder": "Orden de las fechas de su organización",
+  "xeroInvoiceDayFirst": "Primero el día (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Al importar en Xero, elija «Tax exclusive» (sin impuestos) para los importes: el archivo contiene el neto de cada tipo y el IVA registrado en la factura.",
+  "xeroInvoiceMonthFirst": "Primero el mes (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Indique el código de la cuenta de ventas.",
+  "xeroInvoiceRefusedTaxType": "Indique el tipo impositivo de Xero para {rate}.",
+  "xeroInvoiceTaxType": "Tipo impositivo de Xero para {rate}"
 }

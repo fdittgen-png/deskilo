@@ -63,6 +63,7 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
   })
   source, {
   required String pageLabel,
+  List<String> mandatoryNotices = const [],
   String watermark = '',
 }) async {
   final (:report, :title, :layoutXml, :data, :images) = source;
@@ -80,13 +81,29 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
       // #917 — a report from a rehearsal space says so, like its
       // invoices do.
       watermark: watermark,
+      additionalBody: [
+        for (final notice in mandatoryNotices)
+          pw.Padding(
+            padding: const pw.EdgeInsets.only(top: 8),
+            child: pw.Text(notice),
+          ),
+      ],
     );
     if (bytes != null) {
       return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');
     }
   }
   final bytes = await buildBandedLetterPdf(
-    report: report,
+    report: InvoiceReport(
+      header: report.header,
+      body: [
+        ...report.body,
+        for (final notice in mandatoryNotices) ReportText(notice),
+      ],
+      footer: report.footer,
+      continuation: report.continuation,
+      numberFirstPage: report.numberFirstPage,
+    ),
     reportImages: await resolveReportImages(
       ref,
       report,

@@ -33,9 +33,11 @@ Future<void> openFocusedInvoice(
   await showInvoiceDetailSheet(
     context,
     ref: ref,
-    invoice: invoice,
-    match: matches[invoice.id],
-    canIssue: false,
-    isEu: isEuCountry(countryCode),
+    view: InvoiceDetailView(
+      invoice: invoice,
+      match: matches[invoice.id],
+      canIssue: false,
+      isEu: isEuCountry(countryCode),
+    ),
   );
 }

@@ -55,6 +55,8 @@ import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
 import 'accounting_export_sage.dart';
 import 'accounting_export_swiss.dart';
+import 'accounting_export_xero.dart';
+import 'bank_reconciliation_archive.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -202,10 +204,9 @@ class AccountingExportRun {
     switch (format.id) {
       case 'fec':
         await _fec();
-      case 'datev':
-        await datevExport();
-      case 'sage50':
-        await sageExport();
+      case 'datev': await datevExport();
+      case 'sage50': await sageExport();
+      case 'xero_invoice_csv': await xeroInvoiceFileExport();
       case 'ch_kmu':
         await swissJournalExport(SwissJournalLayout.kmu, stem: 'mwst buchungen');
       case 'banana_transactions':
@@ -403,8 +404,7 @@ class AccountingExportRun {
           );
           return;
         }
-        // One archive: the CSV and the report that counts it travel
-        // together, or not at all.
+        // The CSV and its report travel together.
         final stem = safeFileSlug('accounting ${workspace.name} $label');
         final bytes = accountantHandoffArchive(
           csv: csv,
@@ -434,16 +434,16 @@ class AccountingExportRun {
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
-        // The PDFs stay sequential: each needs the context and the
-        // fonts, and a year of them is a memory question, not a
-        // latency one.
+        // PDF generation stays sequential to limit memory.
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
         // #2377 — a Swiss archive's procedures, or null: refused, said.
         final procedures = await archiveProcedures();
         if (procedures == null) return;
-        final files = {...await vatAccountFiles(), ...procedures};
+        final vatFiles = await vatAccountFiles();
+        if (!context.mounted) return;
+        final files = {...vatFiles, ...procedures, ...await BankReconciliationArchive(context, ref).build(workspaceId: workspace.id, year: year)};
         // #2377 — every file already handed out for the year, with who and when.
         final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         if (!context.mounted) return;

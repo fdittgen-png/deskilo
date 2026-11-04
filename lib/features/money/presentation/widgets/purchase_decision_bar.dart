@@ -9,6 +9,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/purchase.dart';
+import '../../providers/purchase_approval_provider.dart';
 import '../../providers/purchase_providers.dart';
 
 /// What can be done to a supplier bill from its detail: send a captured
@@ -20,6 +21,8 @@ class PurchaseDecisionBar extends ConsumerWidget {
     required this.detail,
     required this.canCapture,
     required this.canDecide,
+    this.canReject = true,
+    this.closeOnDecision = false,
     super.key,
   });
 
@@ -27,9 +30,13 @@ class PurchaseDecisionBar extends ConsumerWidget {
   final PurchaseDetail detail;
   final bool canCapture;
   final bool canDecide;
+  final bool canReject;
+  final bool closeOnDecision;
 
   void _refresh(WidgetRef ref) {
     ref
+      ..invalidate(purchaseApprovalPageProvider)
+      ..invalidate(purchaseApprovalDetailProvider)
       ..invalidate(purchaseDetailProvider)
       ..invalidate(purchasesProvider(workspaceId))
       ..invalidate(payablesProvider(workspaceId));
@@ -79,25 +86,39 @@ class PurchaseDecisionBar extends ConsumerWidget {
     final reason = approve ? '' : await _askReason(context);
     if (!approve && (reason == null || reason.trim().isEmpty)) return;
     if (!context.mounted) return;
+    final reads = closeOnDecision
+        ? ref.read(purchaseApprovalReadsProvider)
+        : null;
+    final commands = ref.read(purchaseCommandProvider);
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'bill decision failed',
       errorText: context.l10n.purchasesDecisionRefused,
       action: () async {
-        await ref
-            .read(purchaseCommandProvider)
-            .decide(
-              workspaceId,
-              detail,
-              approve: approve,
-              reason: reason ?? '',
-              requestId: newRequestId(),
-            );
+        if (reads != null) {
+          final current = await reads.detail(workspaceId, detail.summary.id);
+          if (!context.mounted ||
+              current.detail.revision != detail.revision ||
+              (approve ? !current.canApprove : !current.canReject)) {
+            throw StateError('purchase approval changed');
+          }
+        }
+        await commands.decide(
+          workspaceId,
+          detail,
+          approve: approve,
+          reason: reason ?? '',
+          requestId: newRequestId(),
+        );
       },
     );
+    if (!context.mounted) return;
     _refresh(ref);
-    if (ok && context.mounted) {
+    if (ok && closeOnDecision) {
+      Navigator.of(context).pop();
+    }
+    if (ok && !closeOnDecision) {
       final l10n = context.l10n;
       AppSnack.success(
         context,
@@ -169,11 +190,12 @@ class PurchaseDecisionBar extends ConsumerWidget {
               onPressed: () => _decide(context, ref, approve: true),
               child: Text(l10n.purchasesApproveAction),
             ),
-            OutlinedButton(
-              key: const ValueKey('purchase-reject'),
-              onPressed: () => _decide(context, ref, approve: false),
-              child: Text(l10n.purchasesRejectAction),
-            ),
+            if (canReject)
+              OutlinedButton(
+                key: const ValueKey('purchase-reject'),
+                onPressed: () => _decide(context, ref, approve: false),
+                child: Text(l10n.purchasesRejectAction),
+              ),
           ],
         ],
       ),

@@ -26,7 +26,9 @@ import '../../domain/bank/bank_records.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../../providers/money_providers.dart';
 import '../bank_labels.dart';
+import '../bank_reconciliation_words.dart';
 import 'bank_line_dialogs.dart';
+import 'bank_reconciliation_button.dart';
 
 /// The share of the screen's height the work list sheet takes: room for a
 /// long list that scrolls within it.
@@ -188,6 +190,13 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
                 ),
                 const SheetCloseButton(key: ValueKey('sheet-close')),
               ],
+            ),
+            BankReconciliationButton(
+              workspaceId: widget.workspaceId,
+              statementId: widget.statement.id,
+              title: l10n.bankReconTitle,
+              errorText: l10n.bankStatementsLoadFailed,
+              words: bankReconciliationWordsOf(l10n),
             ),
             Expanded(
               child: work.when(
