@@ -4,10 +4,12 @@
 // space's own purchase lines naming an item and its sales, by the server's
 // rules (0675): a line costs its net plus the tax that cannot be recovered,
 // one unit's cost is the average of every purchase of the item up to the
-// period's end (the Demo keeps the default method), a supplier's margin is
-// the item's sale price of the months minus its unit price, times the units
-// bought. The Demo's consumptions are its invoice lines named after a
-// catalogue item: it files no consumption events of its own.
+// period's end (the Demo keeps the default method), a supplier is compared
+// by what its units cost above the lowest unit price paid for the item (no
+// supplier margin: no sale names the purchase it consumed). A Demo purchase
+// line names its item by id or not at all, so none is unresolved. The
+// Demo's consumptions are its invoice lines named after a catalogue item:
+// it files no consumption events of its own.
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/service_item.dart';
@@ -61,8 +63,16 @@ class DemoItemKpiRepository implements ItemKpiRepository {
     final unitCost = _unitCosts(lines);
     final pairs = _pairs(lines);
     final products = _products(sold, unitCost);
-    final vendors = _vendors(pairs, sold);
+    final vendors = _vendors(pairs);
     final costed = products.where((p) => p.cogs != null);
+    // None costed: the cost and margin are unknown, never 0.
+    int? costedMoney(int Function(int s, ({int net, int? cogs}) p) add) =>
+        products.isNotEmpty && costed.isEmpty
+        ? null
+        : money(
+            costed.fold<int>(0, (s, p) => add(s, (net: p.net, cogs: p.cogs))),
+          );
+    final uncosted = products.length - costed.length;
     final partial = toMonth.compareTo(_month(now)) >= 0;
     return ItemMarginsKpi(
       fromMonth: fromMonth,
@@ -71,6 +81,8 @@ class DemoItemKpiRepository implements ItemKpiRepository {
       costMethod: 'average',
       itemCount: {for (final k in pairs.keys) k.$1}.length,
       itemLines: lines.where((l) => l.inRange).length,
+      unresolvedLines: 0,
+      ambiguousLines: 0,
       purchaseCostMinor: money(pairs.values.fold<int>(0, (s, p) => s + p.cost)),
       prices: [
         for (final e in pairs.entries.take(_rows))
@@ -85,12 +97,11 @@ class DemoItemKpiRepository implements ItemKpiRepository {
           ),
       ],
       productCount: products.length,
-      uncosted: products.where((p) => p.cogs == null).length,
+      uncosted: uncosted,
       revenueMinor: money(products.fold<int>(0, (s, p) => s + p.net)),
-      salesCostMinor: money(costed.fold<int>(0, (s, p) => s + p.cogs!)),
-      productMarginMinor: money(
-        costed.fold<int>(0, (s, p) => s + p.net - p.cogs!),
-      ),
+      costedRevenueMinor: costedMoney((s, p) => s + p.net),
+      salesCostMinor: costedMoney((s, p) => s + p.cogs!),
+      productMarginMinor: costedMoney((s, p) => s + p.net - p.cogs!),
       products: [
         for (final p in products.take(_rows))
           (
@@ -107,25 +118,31 @@ class DemoItemKpiRepository implements ItemKpiRepository {
           ),
       ],
       supplierCount: vendors.length,
-      vendorMarginMinor: money(
-        vendors.fold<int>(0, (s, v) => s + v.margin.round()),
+      vendorPremiumMinor: money(
+        vendors.fold<int>(0, (s, v) => s + v.premium.round()),
       ),
       vendors: [
         for (final v in vendors)
           (
             supplierId: v.id,
             supplier: v.name,
+            items: v.items,
+            comparedItems: v.compared,
             units: v.units,
-            unsoldUnits: v.unsold,
             costMinor: money(v.cost),
-            marginMinor: money(v.margin),
+            premiumMinor: money(v.premium),
           ),
       ],
       quality: {
         if (mixed) KpiQuality.unavailable,
-        if (partial) KpiQuality.partial,
+        if (partial || uncosted > 0) KpiQuality.partial,
       },
-      reasons: [if (mixed) 'currency_mix', if (partial) 'period_not_over'],
+      reasons: [
+        if (mixed) 'currency_mix',
+        'no_consumption_link',
+        if (uncosted > 0) 'uncosted_items',
+        if (partial) 'period_not_over',
+      ],
       computedAt: now,
     );
   }
@@ -237,48 +254,50 @@ class DemoItemKpiRepository implements ItemKpiRepository {
         return c != 0 ? c : a.item.compareTo(b.item);
       });
 
-  /// What each supplier's prices leave against the items' sale prices, the
-  /// largest margin first.
+  /// Each supplier against the lowest unit price paid for the same item in
+  /// the months: what its units cost above it, the largest first.
   static List<_VendorSum> _vendors(
     Map<(String, String?), ({double units, int cost, String supplier})> pairs,
-    Map<String, ({double units, int net})> sold,
   ) {
+    final bought = [
+      for (final e in pairs.entries)
+        if (e.key.$2 case final supplier?)
+          (item: e.key.$1, supplier: supplier, p: e.value),
+    ];
+    final lowest = <String, double>{};
+    final offers = <String, int>{};
+    for (final b in bought) {
+      final unit = b.p.cost / b.p.units;
+      final was = lowest[b.item];
+      lowest[b.item] = was == null || unit < was ? unit : was;
+      offers[b.item] = (offers[b.item] ?? 0) + 1;
+    }
     final by = <String, _VendorSum>{};
-    for (final e in pairs.entries) {
-      final supplier = e.key.$2;
-      if (supplier == null) continue;
-      final s = sold[e.key.$1];
-      final saleUnit = s == null || s.units == 0 ? null : s.net / s.units;
+    for (final b in bought) {
       final was =
-          by[supplier] ??
+          by[b.supplier] ??
           (
-            id: supplier,
-            name: e.value.supplier,
-            units: 0,
-            unsold: 0,
+            id: b.supplier,
+            name: b.p.supplier,
+            items: 0,
+            compared: 0,
+            units: 0.0,
             cost: 0,
-            margin: 0,
+            premium: 0.0,
           );
-      by[supplier] = saleUnit == null
-          ? (
-              id: supplier,
-              name: was.name,
-              units: was.units,
-              unsold: was.unsold + e.value.units,
-              cost: was.cost,
-              margin: was.margin,
-            )
-          : (
-              id: supplier,
-              name: was.name,
-              units: was.units + e.value.units,
-              unsold: was.unsold,
-              cost: was.cost + e.value.cost,
-              margin: was.margin + saleUnit * e.value.units - e.value.cost,
-            );
+      by[b.supplier] = (
+        id: b.supplier,
+        name: was.name,
+        items: was.items + 1,
+        compared: was.compared + (offers[b.item]! > 1 ? 1 : 0),
+        units: was.units + b.p.units,
+        cost: was.cost + b.p.cost,
+        premium:
+            was.premium + (b.p.cost / b.p.units - lowest[b.item]!) * b.p.units,
+      );
     }
     return by.values.toList()..sort((a, b) {
-      final c = b.margin.compareTo(a.margin);
+      final c = b.premium.compareTo(a.premium);
       return c != 0 ? c : a.name.compareTo(b.name);
     });
   }
@@ -295,12 +314,14 @@ typedef _ItemLine = ({
   int cost,
 });
 
-/// One supplier's units, cost and margin against the items' sale prices.
+/// One supplier's items, units, cost and what they cost above the lowest
+/// offers.
 typedef _VendorSum = ({
   String id,
   String name,
+  int items,
+  int compared,
   double units,
-  double unsold,
   int cost,
-  double margin,
+  double premium,
 });

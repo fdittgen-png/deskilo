@@ -3,7 +3,7 @@
 --
 -- 0675 (#3294 step 4) -- items on purchase lines, and the figures they make
 -- possible: what an item costs from each supplier, the margin each product
--- leaves when it is sold, and the margin each supplier's price leaves.
+-- leaves when it is sold, and how each supplier's prices compare.
 --
 --   * `purchase_lines.service_id`: the catalogue item a line bought (a
 --     service of the space, the consumables of #731 included), with its
@@ -11,7 +11,10 @@
 --     the line writer already. A line without an item is as before. Lines of
 --     a submitted document stay frozen: the item is captured on the draft.
 --     A member's receipt that restocked a supply (#731) names its item in its
---     `supply` record; the figures read that too.
+--     `supply` record by its id; the figures read that too. A supply named
+--     only by its text is never matched to an item by name: it is counted
+--     apart (`unresolved_lines`, or `ambiguous_lines` when several items
+--     carry that name).
 --   * `purchase.item_cost_method` (a workspace setting, default `average`):
 --     what one unit costs when a sale is set against the purchases --
 --     `average` weighs every approved purchase of the item dated up to the
@@ -23,10 +26,16 @@
 --       items.product_margin each item sold in the months (confirmed
 --           consumptions, by their billing month): units, net revenue, the
 --           unit cost by the method, the cost of those sales and the margin
---           left; an item never bought has no cost and is counted apart;
---       items.vendor_margin  for each supplier, the margin its unit price
---           leaves against the item's sale price of the months, times the
---           units bought from it in the months.
+--           left; an item never bought has no cost and is counted apart
+--           (`uncosted`): the cost and margin are those of the costed items
+--           (`partial`, `uncosted_items`), unknown when none is costed;
+--       items.vendor_margin  how each supplier's prices compare: what the
+--           items bought from it in the months cost above the lowest unit
+--           price paid for the same item in the months (`premium_minor`).
+--           A realised margin by supplier would need to know which purchase
+--           a sale consumed; nothing records that, so `margin_minor` stays
+--           unknown (`no_consumption_link`) instead of setting every unit
+--           bought against the sale price.
 --     Credit notes do not set a unit cost. A margin, never a profit: no other
 --     cost is allocated here.
 --   * `purchase_detail_v1` returns the item of each line.
@@ -63,6 +72,7 @@ revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
 
 alter table public.purchase_lines
   add column if not exists service_id uuid references public.services(id) on delete set null;
+alter table public.purchase_lines drop constraint if exists purchase_lines_item_quantity;
 alter table public.purchase_lines
   add constraint purchase_lines_item_quantity check (service_id is null or quantity > 0);
 create index if not exists purchase_lines_service on public.purchase_lines (service_id)
@@ -173,6 +183,8 @@ declare
   v_def text;
 begin
   select pg_get_functiondef('public.purchase_detail_v1(uuid,uuid)'::regprocedure) into v_def;
+  -- Already naming the item (a re-run): nothing to patch.
+  if position($a$'service_id', l.service_id$a$ in v_def) > 0 then return; end if;
   v_def := pg_temp.anchor_replace(v_def,
     $a$'unit', l.unit, 'gross_cents', l.gross_cents,$a$,
     $a$'unit', l.unit, 'service_id', l.service_id, 'gross_cents', l.gross_cents,$a$);
@@ -214,6 +226,7 @@ declare
   v_method text; v_mixed boolean;
   v_lines jsonb; v_sales jsonb; v_cost jsonb;
   v_prices jsonb; v_products jsonb; v_vendors jsonb;
+  v_unresolved int; v_ambiguous int;
   v_quality text[] := '{}'; v_reasons text[] := '{}';
 begin
   if auth.uid() is null or public.mcp_is_delegated()
@@ -255,11 +268,12 @@ begin
            coalesce(l.service_id,
              (select s.id from public.services s
                where s.workspace_id = p_workspace_id
-                 and s.id::text = l.supply ->> 'service_id'),
-             (select s.id from public.services s
-               where s.workspace_id = p_workspace_id
-                 and lower(btrim(s.name)) = lower(btrim(l.supply ->> 'name'))
-               order by s.created_at, s.id limit 1)) as item,
+                 and s.id::text = l.supply ->> 'service_id')) as item,
+           -- How many items carry the name of a supply that names no item:
+           -- never a match, only counted.
+           (select count(*) from public.services s
+             where s.workspace_id = p_workspace_id
+               and lower(btrim(s.name)) = lower(btrim(l.supply ->> 'name'))) as namesakes,
            case when l.service_id is null and (l.supply ->> 'quantity') ~ '^[0-9]+(\.[0-9]+)?$'
                 then (l.supply ->> 'quantity')::numeric else l.quantity end as qty,
            case when l.net_cents is null then l.gross_cents
@@ -275,9 +289,11 @@ begin
   select coalesce(jsonb_agg(jsonb_build_object(
            'item', r.item, 'supplier_id', r.supplier_id, 'currency', r.currency,
            'dated', r.dated, 'created', r.created_datetime, 'qty', r.qty, 'cost', r.cost,
-           'in_range', r.dated >= v_start)), '[]'::jsonb)
-    into v_lines
-    from raw r where r.item is not null and r.qty > 0;
+           'in_range', r.dated >= v_start)) filter (where r.item is not null and r.qty > 0), '[]'::jsonb),
+         count(*) filter (where r.item is null and r.dated >= v_start and r.namesakes <= 1),
+         count(*) filter (where r.item is null and r.dated >= v_start and r.namesakes > 1)
+    into v_lines, v_unresolved, v_ambiguous
+    from raw r;
 
   -- What each item sold in the months: the confirmed consumptions, by their
   -- billing month, net of VAT.
@@ -323,6 +339,8 @@ begin
   select jsonb_build_object(
            'items', (select count(distinct item) from pairs),
            'lines', (select count(*) from lines where in_range),
+           'unresolved_lines', v_unresolved,
+           'ambiguous_lines', v_ambiguous,
            'cost_minor', case when v_mixed then null else (select coalesce(sum(cost), 0) from pairs)::text end,
            'rows', coalesce((select jsonb_agg(jsonb_build_object(
                      'item_id', p.item, 'item', s.name, 'supplier_id', p.supplier_id,
@@ -351,9 +369,13 @@ begin
            'items', count(*),
            'uncosted', count(*) filter (where unit_cost is null),
            'revenue_minor', case when v_mixed then null else coalesce(sum(net), 0)::text end,
-           'cost_minor', case when v_mixed then null
+           -- The cost and margin of the costed items only, with their
+           -- revenue beside them; none costed: unknown, never 0.
+           'costed_revenue_minor', case when v_mixed or (count(*) > 0 and count(cogs) = 0) then null
+                                        else coalesce(sum(net) filter (where cogs is not null), 0)::text end,
+           'cost_minor', case when v_mixed or (count(*) > 0 and count(cogs) = 0) then null
                               else coalesce(sum(cogs) filter (where cogs is not null), 0)::text end,
-           'margin_minor', case when v_mixed then null
+           'margin_minor', case when v_mixed or (count(*) > 0 and count(cogs) = 0) then null
                                 else coalesce(sum(net - cogs) filter (where cogs is not null), 0)::text end,
            'rows', coalesce(jsonb_agg(jsonb_build_object(
                      'item_id', r.item, 'item', sv.name, 'units', r.units,
@@ -367,41 +389,56 @@ begin
     into v_products
     from rows r join public.services sv on sv.id = r.item;
 
+  -- Each supplier against the lowest unit price paid for the same item in
+  -- the months: what its units cost above that price.
   with lines as (
     select * from jsonb_to_recordset(v_lines) x(
       item uuid, supplier_id uuid, currency text, dated date, created timestamptz,
       qty numeric, cost bigint, in_range boolean)
-  ), sales as (
-    select * from jsonb_to_recordset(v_sales) x(item uuid, units numeric, net bigint)
   ), bought as (
     select l.supplier_id, l.item, sum(l.qty) as units, sum(l.cost) as cost,
-           max(s.net::numeric / nullif(s.units, 0)) as sale_unit
-      from lines l left join sales s on s.item = l.item
+           sum(l.cost) / sum(l.qty) as unit_price
+      from lines l
      where l.in_range and l.supplier_id is not null
      group by 1, 2
+  ), priced as (
+    select b.*, min(b.unit_price) over (partition by b.item) as lowest,
+           count(*) over (partition by b.item) as offers
+      from bought b
   ), per_supplier as (
-    select b.supplier_id,
-           sum(b.units) filter (where b.sale_unit is not null) as units,
-           sum(b.units) filter (where b.sale_unit is null) as unsold_units,
-           coalesce(sum(b.cost) filter (where b.sale_unit is not null), 0) as cost,
-           round(coalesce(sum(b.sale_unit * b.units - b.cost) filter (where b.sale_unit is not null), 0))::bigint as margin
-      from bought b group by 1
+    select p.supplier_id, count(*) as items,
+           count(*) filter (where p.offers > 1) as compared,
+           sum(p.units) as units, sum(p.cost) as cost,
+           round(sum((p.unit_price - p.lowest) * p.units))::bigint as premium
+      from priced p group by 1
   )
   select jsonb_build_object(
            'suppliers', count(*),
-           'margin_minor', case when v_mixed then null else coalesce(sum(margin), 0)::text end,
+           'margin_minor', null,
+           'premium_minor', case when v_mixed then null else coalesce(sum(premium), 0)::text end,
            'rows', coalesce(jsonb_agg(jsonb_build_object(
                      'supplier_id', p.supplier_id, 'supplier', sp.name,
-                     'units', coalesce(p.units, 0), 'unsold_units', coalesce(p.unsold_units, 0),
+                     'items', p.items, 'compared_items', p.compared, 'units', p.units,
                      'cost_minor', case when v_mixed then null else p.cost::text end,
-                     'margin_minor', case when v_mixed then null else p.margin::text end)
-                   order by p.margin desc, sp.name, p.supplier_id), '[]'::jsonb))
+                     'premium_minor', case when v_mixed then null else p.premium::text end)
+                   order by p.premium desc, sp.name, p.supplier_id), '[]'::jsonb))
     into v_vendors
     from per_supplier p join public.suppliers sp on sp.id = p.supplier_id;
 
   if v_mixed then
     v_quality := v_quality || 'unavailable'::text;
     v_reasons := v_reasons || 'currency_mix'::text;
+  end if;
+  -- The supplier margin is never known (see above); the products' margin
+  -- leaves the uncosted items out.
+  v_reasons := v_reasons || 'no_consumption_link'::text;
+  if (v_products ->> 'uncosted')::int > 0 then
+    v_quality := v_quality || 'partial'::text;
+    v_reasons := v_reasons || 'uncosted_items'::text;
+  end if;
+  if v_unresolved + v_ambiguous > 0 then
+    v_quality := v_quality || 'partial'::text;
+    v_reasons := v_reasons || 'unresolved_items'::text;
   end if;
   if p_to >= v_now_month then
     v_quality := v_quality || 'partial'::text;
@@ -416,7 +453,7 @@ begin
     'unit_prices', v_prices,
     'products', v_products,
     'vendors', v_vendors,
-    'quality', to_jsonb(v_quality),
+    'quality', to_jsonb(array(select distinct q from unnest(v_quality) q order by q)),
     'reasons', to_jsonb(v_reasons),
     'computed_at', now());
 end

@@ -2105,10 +2105,11 @@
   "biItemProductBasis": "Venduto a {revenue} netto, costo {cost} ({method})",
   "biItemProductDefinition": "Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.",
   "biItemProductTitle": "Margine per prodotto",
-  "biItemUncosted": "{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori dal margine",
+  "biItemUncosted": "{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine",
+  "biItemUnresolved": "{count} righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori",
   "biItemVendorBasis": "{count} fornitori",
-  "biItemVendorDefinition": "Per ogni fornitore: gli articoli acquistati da lui nel periodo, al prezzo pagato dai membri nel periodo meno il suo prezzo unitario. Gli articoli non venduti nel periodo sono contati a parte.",
-  "biItemVendorTitle": "Margine per fornitore",
+  "biItemVendorDefinition": "Per ogni fornitore: quanto gli articoli acquistati da lui nel periodo sono costati oltre il prezzo unitario più basso pagato nel periodo per lo stesso articolo, da qualunque fornitore. Nessun margine per fornitore: nessuna vendita registra quale acquisto ha consumato.",
+  "biItemVendorTitle": "Prezzi dei fornitori a confronto",
   "biKindCurrent": "Ora",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2563,6 +2564,7 @@
   "biSalesKindService": "Servizi",
   "biSalesKindSubscription": "Abbonamenti",
   "biSalesKindTitle": "Vendite per tipo",
+  "biSalesNetUnknown": "{count} righe di vendita non hanno un’aliquota IVA leggibile: il loro netto è ignoto e resta fuori dal netto",
   "biSalesNoDescription": "Senza descrizione",
   "biSalesRoomBasis": "{charges} addebitati per {uses} prenotazioni, le sale costano {cost} ({rooms} sale)",
   "biSalesRoomDefinition": "Per ogni sala presa in affitto dallo spazio: quanto è stato addebitato per le sue prenotazioni, al netto, meno il costo proprio della sala (il canone in scadenza nel periodo, o il costo per uso per gli usi). Nessun altro costo viene imputato alla sala: è un margine, non un utile.",

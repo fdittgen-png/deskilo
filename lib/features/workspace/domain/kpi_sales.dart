@@ -146,6 +146,7 @@ class SalesQualityKpi {
     required this.currency,
     required this.invoices,
     required this.lines,
+    required this.netUnknownLines,
     required this.netMinor,
     required this.grossMinor,
     required this.kinds,
@@ -164,6 +165,10 @@ class SalesQualityKpi {
   final String currency;
   final int invoices;
   final int lines;
+
+  /// Lines without a net or a readable VAT rate: their net is unknown and
+  /// left out of every net (`net_unknown`); an explicit 0 % is a rate.
+  final int netUnknownLines;
   final int? netMinor;
   final int? grossMinor;
 
@@ -270,6 +275,7 @@ SalesQualityKpi salesQualityFromJson(Map<String, Object?> json) {
     currency: currency,
     invoices: _count(revenue, 'invoices'),
     lines: _count(revenue, 'lines'),
+    netUnknownLines: _count(revenue, 'net_unknown_lines'),
     netMinor: netMinor,
     grossMinor: grossMinor,
     kinds: kinds,

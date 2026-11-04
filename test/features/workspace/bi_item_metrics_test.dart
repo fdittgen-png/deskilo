@@ -36,6 +36,8 @@ Map<String, Object?> _row({bool mixed = false, Object? margin = '9320'}) {
     'unit_prices': {
       'items': 2,
       'lines': 3,
+      'unresolved_lines': 0,
+      'ambiguous_lines': 0,
       'cost_minor': a('9000'),
       'rows': [
         {
@@ -72,6 +74,7 @@ Map<String, Object?> _row({bool mixed = false, Object? margin = '9320'}) {
       'items': 3,
       'uncosted': 1,
       'revenue_minor': a('13600'),
+      'costed_revenue_minor': a('13000'),
       'cost_minor': a('3680'),
       'margin_minor': mixed ? null : margin,
       'rows': [
@@ -106,28 +109,35 @@ Map<String, Object?> _row({bool mixed = false, Object? margin = '9320'}) {
     },
     'vendors': {
       'suppliers': 2,
-      'margin_minor': a('22000'),
+      'margin_minor': null,
+      'premium_minor': a('500'),
       'rows': [
-        {
-          'supplier_id': 'f1',
-          'supplier': 'Alpha',
-          'units': 100,
-          'unsold_units': 0,
-          'cost_minor': a('3000'),
-          'margin_minor': a('13667'),
-        },
         {
           'supplier_id': 'f2',
           'supplier': 'Beta',
+          'items': 2,
+          'compared_items': 1,
           'units': 60,
-          'unsold_units': 0,
           'cost_minor': a('6000'),
-          'margin_minor': a('8333'),
+          'premium_minor': a('500'),
+        },
+        {
+          'supplier_id': 'f1',
+          'supplier': 'Alpha',
+          'items': 1,
+          'compared_items': 1,
+          'units': 100,
+          'cost_minor': a('3000'),
+          'premium_minor': a('0'),
         },
       ],
     },
-    'quality': [if (mixed) 'unavailable'],
-    'reasons': [if (mixed) 'currency_mix'],
+    'quality': ['partial', if (mixed) 'unavailable'],
+    'reasons': [
+      if (mixed) 'currency_mix',
+      'no_consumption_link',
+      'uncosted_items',
+    ],
     'computed_at': '2026-11-04T12:00:00Z',
   };
 }
@@ -235,10 +245,12 @@ void main() {
         isNull,
         reason: 'never bought: no cost',
       );
-      expect(k.vendors.map((v) => (v.supplier, v.marginMinor)), [
-        ('Alpha', 13667),
-        ('Beta', 8333),
+      expect(k.vendors.map((v) => (v.supplier, v.premiumMinor)), [
+        ('Beta', 500),
+        ('Alpha', 0),
       ]);
+      expect(k.costedRevenueMinor, 13000, reason: 'Snacks are not costed');
+      expect(k.reasons, contains('no_consumption_link'));
     });
 
     test('an amount that cannot travel exactly is unknown, never 0', () {
@@ -277,7 +289,7 @@ void main() {
       expect(products.last.current.unknown, isTrue);
       expect(
         itemRows(k, 'items.vendor_margin').map((r) => r.current.numerator),
-        [13667, 8333],
+        [500, 0],
       );
     });
   });
@@ -328,14 +340,42 @@ void main() {
     expect(k.prices, server.prices);
     expect(k.products, server.products);
     expect(k.vendors, server.vendors);
+    expect(k.reasons, server.reasons);
+    expect(k.quality, server.quality);
     expect(
       (
         k.purchaseCostMinor,
         k.productMarginMinor,
-        k.vendorMarginMinor,
+        k.costedRevenueMinor,
+        k.vendorPremiumMinor,
         k.uncosted,
       ),
-      (9000, 9320, 22000, 1),
+      (9000, 9320, 13000, 500, 1),
     );
+  });
+
+  test('the Demo: every product sold uncosted leaves cost and margin '
+      'unknown, never 0', () async {
+    final k = await DemoItemKpiRepository(
+      purchases: FakePurchaseRepository(),
+      invoices: () => [
+        _invoice([_sale('Snacks', 3, 600, 0)]),
+      ],
+      services: () => const [
+        ServiceItem(
+          id: 'd3',
+          workspaceId: 'ws-1',
+          name: 'Snacks',
+          priceCents: 200,
+          active: true,
+        ),
+      ],
+      now: DateTime(2026, 11, 4),
+    ).quality('ws', fromMonth: '2025-03', toMonth: '2025-03');
+    expect(
+      (k.uncosted, k.revenueMinor, k.salesCostMinor, k.productMarginMinor),
+      (1, 600, null, null),
+    );
+    expect(itemMeasure(k, 'items.product_margin').unknown, isTrue);
   });
 }

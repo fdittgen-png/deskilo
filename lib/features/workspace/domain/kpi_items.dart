@@ -2,7 +2,7 @@
 //
 // #3294 step 4 — the item side of the figures, on the KPI contract
 // (#1918): what an item costs from each supplier, the margin each product
-// leaves when it is sold, and the margin each supplier's price leaves. The
+// leaves when it is sold, and how each supplier's prices compare. The
 // SERVER computes them (`kpi_item_margins`, 0675) from the purchase lines
 // that name an item and the confirmed consumptions; this layer names what
 // it returns.
@@ -12,7 +12,13 @@
 //   * one unit's cost follows the workspace's method
 //     (`purchase.item_cost_method`): the average of every purchase up to
 //     the period's end, or the last one dated by then;
-//   * a product's revenue is its consumptions' net, by billing month;
+//   * a product's revenue is its consumptions' net, by billing month; an
+//     item never bought has no cost: the cost and margin are those of the
+//     costed items (`uncosted_items`), unknown when none is;
+//   * a line names its item by id only, never by a name it carries;
+//   * no supplier margin: nothing records which purchase a sale consumed
+//     (`no_consumption_link`), so a supplier is compared by its prices —
+//     what its units cost above the lowest unit price paid for the item;
 //   * amounts are minor units of the workspace currency (a unit price
 //     rounded to the minor unit); another currency in scope leaves them
 //     unknown (`currency_mix`), never summed.
@@ -75,13 +81,13 @@ const _vendorMarginKpi = KpiDefinition(
   version: 1,
   unit: 'currency_minor',
   timeBasis:
-      'the items bought in whole months [from, to], by supplier: the '
-      'item\'s sale price of the months minus the supplier\'s unit price, '
-      'times the units bought',
+      'the items bought in whole months [from, to], by supplier: what its '
+      'units cost above the lowest unit price paid for the same item in the '
+      'months; no margin, as no sale names the purchase it consumed',
   dateBasis: KpiDateBasis.documentDate,
   coverage: KpiCoverage.currentRecords,
   dimensions: [],
-  numerator: 'margin_minor',
+  numerator: 'premium_minor',
   denominator: '',
   aggregation: KpiAggregation.sum,
   permissions: ['viewAnalytics', 'viewFinances'],
@@ -125,14 +131,16 @@ typedef ProductMargin = ({
   int? marginMinor,
 });
 
-/// What one supplier's prices leave against the items' sale prices.
-typedef VendorMargin = ({
+/// How one supplier's prices compare: what its units cost above the lowest
+/// unit price paid for the same items ([comparedItems] had another offer).
+typedef VendorPrice = ({
   String supplierId,
   String supplier,
+  int items,
+  int comparedItems,
   double units,
-  double unsoldUnits,
   int? costMinor,
-  int? marginMinor,
+  int? premiumMinor,
 });
 
 /// What `kpi_item_margins` returned for the whole months
@@ -145,16 +153,19 @@ class ItemMarginsKpi {
     required this.costMethod,
     required this.itemCount,
     required this.itemLines,
+    required this.unresolvedLines,
+    required this.ambiguousLines,
     required this.purchaseCostMinor,
     required this.prices,
     required this.productCount,
     required this.uncosted,
     required this.revenueMinor,
+    required this.costedRevenueMinor,
     required this.salesCostMinor,
     required this.productMarginMinor,
     required this.products,
     required this.supplierCount,
-    required this.vendorMarginMinor,
+    required this.vendorPremiumMinor,
     required this.vendors,
     required this.quality,
     required this.reasons,
@@ -170,6 +181,11 @@ class ItemMarginsKpi {
 
   final int itemCount;
   final int itemLines;
+
+  /// Lines of the months naming a supply only by its text: no item, or
+  /// several items of that name ([ambiguousLines]). Never matched by name.
+  final int unresolvedLines;
+  final int ambiguousLines;
   final int? purchaseCostMinor;
   final List<ItemPrice> prices;
 
@@ -178,13 +194,17 @@ class ItemMarginsKpi {
   /// Products sold but never bought: no cost, no margin.
   final int uncosted;
   final int? revenueMinor;
+
+  /// The revenue of the costed products, which [salesCostMinor] and
+  /// [productMarginMinor] cover; all three null when none is costed.
+  final int? costedRevenueMinor;
   final int? salesCostMinor;
   final int? productMarginMinor;
   final List<ProductMargin> products;
 
   final int supplierCount;
-  final int? vendorMarginMinor;
-  final List<VendorMargin> vendors;
+  final int? vendorPremiumMinor;
+  final List<VendorPrice> vendors;
 
   final Set<KpiQuality> quality;
   final List<String> reasons;
@@ -247,17 +267,19 @@ ItemMarginsKpi itemMarginsFromJson(Map<String, Object?> json) {
     (row) => (
       supplierId: row.string('supplier_id'),
       supplier: row.stringOr('supplier'),
+      items: _count(row, 'items'),
+      comparedItems: _count(row, 'compared_items'),
       units: row.doubleOrNull('units') ?? 0,
-      unsoldUnits: row.doubleOrNull('unsold_units') ?? 0,
       costMinor: minor(row, 'cost_minor'),
-      marginMinor: minor(row, 'margin_minor'),
+      premiumMinor: minor(row, 'premium_minor'),
     ),
   );
   final purchaseCost = minor(prices, 'cost_minor');
   final revenue = minor(products, 'revenue_minor');
+  final costedRevenue = minor(products, 'costed_revenue_minor');
   final salesCost = minor(products, 'cost_minor');
   final productMargin = minor(products, 'margin_minor');
-  final vendorMargin = minor(vendors, 'margin_minor');
+  final vendorPremium = minor(vendors, 'premium_minor');
   final currency = r.stringOr('currency');
   return ItemMarginsKpi(
     fromMonth: r.stringOr('from'),
@@ -266,16 +288,19 @@ ItemMarginsKpi itemMarginsFromJson(Map<String, Object?> json) {
     costMethod: r.stringOr('cost_method', 'average'),
     itemCount: _count(prices, 'items'),
     itemLines: _count(prices, 'lines'),
+    unresolvedLines: _count(prices, 'unresolved_lines'),
+    ambiguousLines: _count(prices, 'ambiguous_lines'),
     purchaseCostMinor: purchaseCost,
     prices: priceRows,
     productCount: _count(products, 'items'),
     uncosted: _count(products, 'uncosted'),
     revenueMinor: revenue,
+    costedRevenueMinor: costedRevenue,
     salesCostMinor: salesCost,
     productMarginMinor: productMargin,
     products: productRows,
     supplierCount: _count(vendors, 'suppliers'),
-    vendorMarginMinor: vendorMargin,
+    vendorPremiumMinor: vendorPremium,
     vendors: vendorRows,
     quality: {
       for (final q in r.strings('quality'))

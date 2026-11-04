@@ -5665,8 +5665,14 @@ abstract class AppLocalizations {
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count} products sold were never bought: they have no cost and are left out of the margin'**
+  /// **'{count} products sold were never bought: they have no cost and are left out of the cost and margin'**
   String biItemUncosted(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} purchase lines name a supply only by its text: they are not matched to an item and are left out'**
+  String biItemUnresolved(String count);
 
   /// #3294 step 4 items on purchase lines
   ///
@@ -5677,13 +5683,13 @@ abstract class AppLocalizations {
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'For each supplier: the items bought from it in the period, at the price the members paid for them in the period minus the supplier’s unit price. Items not sold in the period are counted apart.'**
+  /// **'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.'**
   String get biItemVendorDefinition;
 
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'Margin by supplier'**
+  /// **'Supplier prices compared'**
   String get biItemVendorTitle;
 
   /// Business analytics dashboard: biKindCurrent
@@ -6369,6 +6375,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sales by kind'**
   String get biSalesKindTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net'**
+  String biSalesNetUnknown(String count);
 
   /// #3294 step 3 sales analytics
   ///

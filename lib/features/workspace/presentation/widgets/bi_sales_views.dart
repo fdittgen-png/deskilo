@@ -16,6 +16,8 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
   if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
   if (m.reasons.contains('external_rooms_off')) l10n.biSalesRoomsOff,
+  if (_kpi(m) case final k? when k.netUnknownLines > 0)
+    l10n.biSalesNetUnknown('${k.netUnknownLines}'),
 ];
 
 /// The name of a kind of invoice line.

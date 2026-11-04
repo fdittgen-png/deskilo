@@ -11,10 +11,11 @@
   "biItemProductTitle": "Marge nach Produkt",
   "biItemProductBasis": "Netto für {revenue} verkauft, Kosten {cost} ({method})",
   "biItemProductDefinition": "Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.",
-  "biItemUncosted": "{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus der Marge heraus",
+  "biItemUncosted": "{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus",
   "biItemMethodAverage": "Durchschnittskosten",
   "biItemMethodLast": "letzter Einkauf",
-  "biItemVendorTitle": "Marge nach Lieferant",
+  "biItemVendorTitle": "Lieferantenpreise im Vergleich",
   "biItemVendorBasis": "{count} Lieferanten",
-  "biItemVendorDefinition": "Für jeden Lieferanten: die im Zeitraum bei ihm gekauften Artikel, zum Preis, den die Mitglieder im Zeitraum dafür gezahlt haben, abzüglich seines Stückpreises. Im Zeitraum nicht verkaufte Artikel werden getrennt gezählt."
+  "biItemVendorDefinition": "Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.",
+  "biItemUnresolved": "{count} Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor"
 }

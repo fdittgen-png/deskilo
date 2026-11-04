@@ -49,7 +49,7 @@ void main() {
       expect(snacks.unitCostMinor, isNotNull);
       expect(snacks.marginMinor, snacks.revenueMinor! - snacks.costMinor!);
       expect(k.vendors, isNotEmpty);
-      expect(k.vendorMarginMinor, isNotNull);
+      expect(k.vendorPremiumMinor, isNotNull);
     });
   }
 }

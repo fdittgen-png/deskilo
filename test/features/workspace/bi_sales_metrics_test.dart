@@ -32,6 +32,7 @@ Map<String, Object?> _row({
   bool mixed = false,
   bool rooms = true,
   Object? net = '23500',
+  int netUnknown = 0,
 }) {
   String? a(String v) => mixed ? null : v;
   return {
@@ -41,6 +42,7 @@ Map<String, Object?> _row({
     'revenue': {
       'invoices': 4,
       'lines': mixed ? 8 : 7,
+      'net_unknown_lines': netUnknown,
       'net_minor': mixed ? null : net,
       'gross_minor': a('28100'),
       'kinds': [
@@ -276,6 +278,17 @@ void main() {
       expect(k.netMinor, isNull);
       expect(k.reasons, contains('amount_not_exact'));
       expect(salesMeasure(k, 'sales.revenue_by_kind').unknown, isTrue);
+    });
+
+    test('a line without a readable VAT rate is counted and said, its net '
+        'never the gross', () {
+      final k = salesQualityFromJson(_row(netUnknown: 2));
+      expect(k.netUnknownLines, 2);
+      final m = salesMeasure(k, 'sales.revenue_by_kind');
+      expect(
+        biModuleViews['sales.revenue_by_kind']!.notes(m, l10n, 'en'),
+        contains(l10n.biSalesNetUnknown('2')),
+      );
     });
 
     test('a currency mix leaves every amount unknown', () {

@@ -19,7 +19,7 @@
 -- while the counts stay; without externalRooms the rooms are null with
 -- their reason; without the status flag nothing is read.
 begin;
-select plan(17);
+select plan(19);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000032943'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -177,6 +177,24 @@ select set_config('t.norooms', pg_temp.kpi('a1')::text, true);
 select is(current_setting('t.norooms')::jsonb -> 'rooms', 'null'::jsonb, 'without externalRooms there is no room margin');
 select ok(current_setting('t.norooms')::jsonb -> 'reasons' ? 'external_rooms_off', '... and the answer says why');
 select is(current_setting('t.norooms')::jsonb -> 'revenue' ->> 'net_minor', '23500', '... while the revenue stays');
+
+-- A rate of 0 is a rate; a line without a readable one has no known net.
+reset role;
+select pg_temp.inv('f2', 'c2', jsonb_build_array(pg_temp.line('service', 500, 'Exempt', 0),
+  jsonb_build_object('kind', 'service', 'label', 'Bare', 'quantity', 1, 'amount_cents', 1200),
+  jsonb_build_object('kind', 'service', 'label', 'Odd', 'quantity', 1, 'amount_cents', 300, 'vat_percent', 'n/a')),
+  '2025-02', 'EUR', null, 'usage');
+select pg_temp.inv('f3', 'c2', jsonb_build_array(
+  jsonb_build_object('kind', 'service', 'label', 'Bare', 'quantity', 1, 'amount_cents', 800)), '2025-01', 'EUR', null, 'usage');
+set local role authenticated;
+select is((select jsonb_build_array(k -> 'revenue' ->> 'net_minor', k -> 'revenue' ->> 'gross_minor',
+                                    k -> 'revenue' ->> 'net_unknown_lines', k -> 'quality', k -> 'reasons' ? 'net_unknown')
+             from pg_temp.kpi('a1', '2025-02', '2025-02') k),
+  jsonb_build_array('500', '2000', '2', '["partial"]'::jsonb, true),
+  'an explicit 0 % is net; a missing or unreadable rate leaves its net unknown, counted and said, never gross as net');
+select is((select jsonb_build_array(k -> 'revenue' -> 'net_minor', k -> 'services' -> 'net_minor', k -> 'revenue' ->> 'gross_minor')
+             from pg_temp.kpi('a1', '2025-01', '2025-01') k),
+  jsonb_build_array(null, null, '800'), 'no line with a known net: the net is unknown, not 0');
 
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"externalRooms": true}' where id = pg_temp.u('b1');

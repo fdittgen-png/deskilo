@@ -130,5 +130,14 @@
   "biSalesRoomsOff": "The space rents no rooms: switch on rented rooms to see their margin",
   "@biSalesRoomsOff": {
     "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesNetUnknown": "{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net",
+  "@biSalesNetUnknown": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

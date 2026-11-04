@@ -17,7 +17,7 @@
 -- supplier against the sale prices (coffee 1.666..., paper 6.00): Alpha
 -- 166.67 - 30.00 = 136.67, Beta 83.33 - 20.00 + 60.00 - 40.00 = 83.33.
 begin;
-select plan(17);
+select plan(21);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000032944'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -76,7 +76,8 @@ begin
 end;
 $$;
 -- A confirmed consumption of an item, billed in March.
-create function pg_temp.sold(p_item text, p_units int, p_cents int, p_vat numeric) returns void language plpgsql as $$
+create function pg_temp.sold(p_item text, p_units int, p_cents int, p_vat numeric,
+                             p_period text default '2025-03') returns void language plpgsql as $$
 declare v_e uuid;
 begin
   insert into public.events (workspace_id, type, action, actor_member_id, subject_member_id, payload, status,
@@ -87,7 +88,7 @@ begin
   returning id into v_e;
   insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period,
                                      event_id, vat_percent)
-  values (pg_temp.u('b1'), pg_temp.u('c2'), 'charge', 'service', p_cents, 'item', '2025-03', v_e, p_vat);
+  values (pg_temp.u('b1'), pg_temp.u('c2'), 'charge', 'service', p_cents, 'item', p_period, v_e, p_vat);
 end;
 $$;
 create function pg_temp.kpi(p_user text, p_from text default '2025-03', p_to text default '2025-03')
@@ -158,16 +159,23 @@ select is(current_setting('t.avg')::jsonb -> 'products' -> 'rows',
                        'unit_cost_minor', null, 'cost_minor', null, 'margin_minor', null)),
   'each product sold: net revenue, the average unit cost (February weighs in), the margin; one never bought has none');
 select is((current_setting('t.avg')::jsonb -> 'products' ->> 'margin_minor', current_setting('t.avg')::jsonb -> 'products' ->> 'uncosted',
-           current_setting('t.avg')::jsonb -> 'products' ->> 'revenue_minor'),
-  ('9320'::text, '1'::text, '13600'::text), 'the margin over the costed products, the uncosted one counted apart');
+           current_setting('t.avg')::jsonb -> 'products' ->> 'revenue_minor',
+           current_setting('t.avg')::jsonb -> 'products' ->> 'costed_revenue_minor'),
+  ('9320'::text, '1'::text, '13600'::text, '13000'::text),
+  'mixed: the margin over the costed products beside their own revenue, the uncosted one counted apart');
 select is(current_setting('t.avg')::jsonb -> 'vendors' -> 'rows',
   jsonb_build_array(
-    jsonb_build_object('supplier_id', pg_temp.u('f1'), 'supplier', 'Alpha', 'units', 100, 'unsold_units', 0,
-                       'cost_minor', '3000', 'margin_minor', '13667'),
-    jsonb_build_object('supplier_id', pg_temp.u('f2'), 'supplier', 'Beta', 'units', 60, 'unsold_units', 0,
-                       'cost_minor', '6000', 'margin_minor', '8333')),
-  'the margin each supplier''s price leaves against the sale prices of March');
-select is(current_setting('t.avg')::jsonb -> 'quality', '[]'::jsonb, 'a past month in one currency is whole');
+    jsonb_build_object('supplier_id', pg_temp.u('f2'), 'supplier', 'Beta', 'items', 2, 'compared_items', 1, 'units', 60,
+                       'cost_minor', '6000', 'premium_minor', '500'),
+    jsonb_build_object('supplier_id', pg_temp.u('f1'), 'supplier', 'Alpha', 'items', 1, 'compared_items', 1, 'units', 100,
+                       'cost_minor', '3000', 'premium_minor', '0')),
+  'two suppliers of coffee: Beta''s 50 capsules cost 10 above Alpha''s lowest price; paper has no second offer');
+select ok(current_setting('t.avg')::jsonb -> 'vendors' -> 'margin_minor' = 'null'::jsonb
+          and current_setting('t.avg')::jsonb -> 'reasons' ? 'no_consumption_link',
+  '150 capsules bought against 60 sold: no supplier margin is made up from units nothing consumed');
+select is((current_setting('t.avg')::jsonb -> 'quality', current_setting('t.avg')::jsonb -> 'reasons'),
+  ('["partial"]'::jsonb, '["no_consumption_link", "uncosted_items"]'::jsonb),
+  'a past month in one currency is partial only by its uncosted product');
 
 reset role;
 insert into public.setting_values (scope, workspace_id, key, value) values
@@ -178,6 +186,36 @@ select is((current_setting('t.last')::jsonb ->> 'cost_method',
            current_setting('t.last')::jsonb -> 'products' -> 'rows' -> 0 ->> 'unit_cost_minor',
            current_setting('t.last')::jsonb -> 'products' ->> 'margin_minor'),
   ('last'::text, '40'::text, '8600'::text), 'with the last purchase, coffee costs what Beta charged on 12 March');
+
+-- A supply named only by its text is never matched by name: one name with a
+-- single namesake stays unresolved, one shared by two items is ambiguous.
+reset role;
+insert into public.services (id, workspace_id, name, price_cents, active, stock) values
+ (pg_temp.u('d4'), pg_temp.u('b1'), 'Toner', 900, true, null),
+ (pg_temp.u('d5'), pg_temp.u('b1'), 'toner ', 950, true, null);
+insert into public.purchase_documents (id, workspace_id, kind, state, currency, supplier_id, submitter_member_id,
+                                       payer_kind, original_date, received_on)
+values (pg_temp.u('e8'), pg_temp.u('b1'), 'bill', 'draft', 'EUR', pg_temp.u('f1'), pg_temp.u('c1'),
+        'unpaid', '2025-03-09', '2025-03-09');
+insert into public.purchase_lines (workspace_id, purchase_id, line_no, description, gross_cents, net_cents, tax_cents,
+                                   quantity, supply)
+values (pg_temp.u('b1'), pg_temp.u('e8'), 1, 'toner', 1800, 1800, 0, 1, '{"name": "Toner", "quantity": "2"}'),
+       (pg_temp.u('b1'), pg_temp.u('e8'), 2, 'capsules', 100, 100, 0, 1, '{"name": "Coffee capsules", "quantity": "10"}');
+update public.purchase_documents set state = 'approved', decided_by_member_id = pg_temp.u('c3'), decided_at = now()
+ where id = pg_temp.u('e8');
+select pg_temp.sold('d3', 3, 600, 0, '2025-05');
+set local role authenticated;
+select set_config('t.names', pg_temp.kpi('a1')::text, true);
+select is((current_setting('t.names')::jsonb -> 'unit_prices' ->> 'unresolved_lines',
+           current_setting('t.names')::jsonb -> 'unit_prices' ->> 'ambiguous_lines',
+           current_setting('t.names')::jsonb -> 'reasons' ? 'unresolved_items'),
+  ('1'::text, '1'::text, true), 'supplies named only by text are counted apart: one unresolved, one ambiguous');
+select is(current_setting('t.names')::jsonb -> 'unit_prices' -> 'rows', current_setting('t.avg')::jsonb -> 'unit_prices' -> 'rows',
+  '... and no unit price takes them in by their name');
+select is((select jsonb_build_array(k -> 'products' ->> 'uncosted', k -> 'products' ->> 'revenue_minor',
+                                    k -> 'products' -> 'cost_minor', k -> 'products' -> 'margin_minor')
+             from pg_temp.kpi('a1', '2025-05', '2025-05') k),
+  jsonb_build_array('1', '600', null, null), 'every product sold uncosted: the cost and the margin are unknown, never 0');
 
 select ok(pg_temp.err('a2', format('select public.kpi_item_margins(%L, %L, %L)', pg_temp.u('b1'), '2025-03', '2025-03'))
   like '%not allowed%', 'a plain member reads no item figure');

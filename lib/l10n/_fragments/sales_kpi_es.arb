@@ -20,5 +20,6 @@
   "biSalesRoomBasis": "{charges} cobrados por {uses} reservas, las salas cuestan {cost} ({rooms} salas)",
   "biSalesRoomDefinition": "Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.",
   "biSalesRoomLine": "{room}: cobrado {charges}, coste {cost}, {uses} reservas",
-  "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen"
+  "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen",
+  "biSalesNetUnknown": "{count} líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto"
 }

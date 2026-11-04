@@ -3400,7 +3400,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String biItemUncosted(String count) {
-    return '$count verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus der Marge heraus';
+    return '$count verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor';
   }
 
   @override
@@ -3410,10 +3415,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biItemVendorDefinition =>
-      'Für jeden Lieferanten: die im Zeitraum bei ihm gekauften Artikel, zum Preis, den die Mitglieder im Zeitraum dafür gezahlt haben, abzüglich seines Stückpreises. Im Zeitraum nicht verkaufte Artikel werden getrennt gezählt.';
+      'Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.';
 
   @override
-  String get biItemVendorTitle => 'Marge nach Lieferant';
+  String get biItemVendorTitle => 'Lieferantenpreise im Vergleich';
 
   @override
   String get biKindCurrent => 'Jetzt';
@@ -3810,6 +3815,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biSalesKindTitle => 'Umsatz nach Art';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus';
+  }
 
   @override
   String get biSalesNoDescription => 'Ohne Bezeichnung';

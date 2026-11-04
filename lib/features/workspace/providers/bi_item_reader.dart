@@ -16,7 +16,7 @@ import 'item_kpi_providers.dart';
 /// The figure [moduleId] shows of [k]; null is unknown, never 0.
 int? _figure(ItemMarginsKpi k, String moduleId) => switch (moduleId) {
   'items.product_margin' => k.productMarginMinor,
-  'items.vendor_margin' => k.vendorMarginMinor,
+  'items.vendor_margin' => k.vendorPremiumMinor,
   _ => k.purchaseCostMinor,
 };
 
@@ -49,8 +49,8 @@ BiMeasure _row(ItemMarginsKpi k, int? amount) => BiMeasure(
 );
 
 /// The table's rows of [moduleId]: an item from a supplier at its unit
-/// price, a product with its margin, or a supplier with the margin its
-/// prices leave. Each carries its own names.
+/// price, a product with its margin, or a supplier with what its prices
+/// cost above the lowest offers. Each carries its own names.
 @visibleForTesting
 List<BiRow> itemRows(ItemMarginsKpi k, String moduleId) => switch (moduleId) {
   'items.product_margin' => [
@@ -66,7 +66,7 @@ List<BiRow> itemRows(ItemMarginsKpi k, String moduleId) => switch (moduleId) {
       BiRow(
         key: 'supplier-${v.supplierId}',
         label: v.supplier,
-        current: _row(k, v.marginMinor),
+        current: _row(k, v.premiumMinor),
       ),
   ],
   _ => [

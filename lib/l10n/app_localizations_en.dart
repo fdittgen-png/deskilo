@@ -3374,7 +3374,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String biItemUncosted(String count) {
-    return '$count products sold were never bought: they have no cost and are left out of the margin';
+    return '$count products sold were never bought: they have no cost and are left out of the cost and margin';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count purchase lines name a supply only by its text: they are not matched to an item and are left out';
   }
 
   @override
@@ -3384,10 +3389,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biItemVendorDefinition =>
-      'For each supplier: the items bought from it in the period, at the price the members paid for them in the period minus the supplier’s unit price. Items not sold in the period are counted apart.';
+      'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.';
 
   @override
-  String get biItemVendorTitle => 'Margin by supplier';
+  String get biItemVendorTitle => 'Supplier prices compared';
 
   @override
   String get biKindCurrent => 'Now';
@@ -3781,6 +3786,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biSalesKindTitle => 'Sales by kind';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count sales lines carry no readable VAT rate: their net is unknown and left out of the net';
+  }
 
   @override
   String get biSalesNoDescription => 'No description';

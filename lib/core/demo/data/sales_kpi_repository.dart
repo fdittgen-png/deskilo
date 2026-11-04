@@ -104,6 +104,9 @@ class DemoSalesKpiRepository implements SalesKpiRepository {
       currency: currency,
       invoices: {for (final x in lines) x.invoice}.length,
       lines: lines.length,
+      // A Demo invoice line always carries its rate (0 % included), so no
+      // net is unknown here.
+      netUnknownLines: 0,
       netMinor: money(sales.net),
       grossMinor: money(sales.gross),
       kinds: sales.kinds(money),

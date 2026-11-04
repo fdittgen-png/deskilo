@@ -3400,7 +3400,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String biItemUncosted(String count) {
-    return '$count productos vendidos nunca se compraron: no tienen coste y quedan fuera del margen';
+    return '$count productos vendidos nunca se compraron: no tienen coste y quedan fuera del coste y del margen';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count líneas de compra nombran un suministro solo por su texto: no se asocian a ningún artículo y quedan fuera';
   }
 
   @override
@@ -3410,10 +3415,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biItemVendorDefinition =>
-      'Para cada proveedor: los artículos comprados en el periodo, al precio que pagaron los miembros en el periodo menos su precio unitario. Los artículos no vendidos en el periodo se cuentan aparte.';
+      'Para cada proveedor: lo que los artículos comprados en el periodo costaron por encima del precio unitario más bajo pagado en el periodo por el mismo artículo, a cualquier proveedor. No se da margen por proveedor: ninguna venta registra qué compra consumió.';
 
   @override
-  String get biItemVendorTitle => 'Margen por proveedor';
+  String get biItemVendorTitle => 'Precios de proveedores comparados';
 
   @override
   String get biKindCurrent => 'Ahora';
@@ -3807,6 +3812,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biSalesKindTitle => 'Ventas por tipo';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto';
+  }
 
   @override
   String get biSalesNoDescription => 'Sin descripción';

@@ -3401,7 +3401,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String biItemUncosted(String count) {
-    return '$count produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors de la marge';
+    return '$count produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part';
   }
 
   @override
@@ -3411,10 +3416,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biItemVendorDefinition =>
-      'Pour chaque fournisseur : les articles achetés chez lui sur la période, au prix payé par les membres sur la période moins son prix unitaire. Les articles non vendus sur la période sont comptés à part.';
+      'Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.';
 
   @override
-  String get biItemVendorTitle => 'Marge par fournisseur';
+  String get biItemVendorTitle => 'Prix des fournisseurs comparés';
 
   @override
   String get biKindCurrent => 'Maintenant';
@@ -3811,6 +3816,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biSalesKindTitle => 'Ventes par nature';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT';
+  }
 
   @override
   String get biSalesNoDescription => 'Sans libellé';

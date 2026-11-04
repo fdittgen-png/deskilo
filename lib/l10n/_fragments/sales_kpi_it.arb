@@ -20,5 +20,6 @@
   "biSalesRoomBasis": "{charges} addebitati per {uses} prenotazioni, le sale costano {cost} ({rooms} sale)",
   "biSalesRoomDefinition": "Per ogni sala presa in affitto dallo spazio: quanto è stato addebitato per le sue prenotazioni, al netto, meno il costo proprio della sala (il canone in scadenza nel periodo, o il costo per uso per gli usi). Nessun altro costo viene imputato alla sala: è un margine, non un utile.",
   "biSalesRoomLine": "{room}: addebitato {charges}, costo {cost}, {uses} prenotazioni",
-  "biSalesRoomsOff": "Lo spazio non affitta sale: attiva le sale prese in affitto per vederne il margine"
+  "biSalesRoomsOff": "Lo spazio non affitta sale: attiva le sale prese in affitto per vederne il margine",
+  "biSalesNetUnknown": "{count} righe di vendita non hanno un’aliquota IVA leggibile: il loro netto è ignoto e resta fuori dal netto"
 }

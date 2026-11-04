@@ -2105,10 +2105,11 @@
   "biItemProductBasis": "Vendu {revenue} HT, coût {cost} ({method})",
   "biItemProductDefinition": "Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.",
   "biItemProductTitle": "Marge par produit",
-  "biItemUncosted": "{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors de la marge",
+  "biItemUncosted": "{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge",
+  "biItemUnresolved": "{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part",
   "biItemVendorBasis": "{count} fournisseurs",
-  "biItemVendorDefinition": "Pour chaque fournisseur : les articles achetés chez lui sur la période, au prix payé par les membres sur la période moins son prix unitaire. Les articles non vendus sur la période sont comptés à part.",
-  "biItemVendorTitle": "Marge par fournisseur",
+  "biItemVendorDefinition": "Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.",
+  "biItemVendorTitle": "Prix des fournisseurs comparés",
   "biKindCurrent": "Maintenant",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2563,6 +2564,7 @@
   "biSalesKindService": "Services",
   "biSalesKindSubscription": "Abonnements",
   "biSalesKindTitle": "Ventes par nature",
+  "biSalesNetUnknown": "{count} lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT",
   "biSalesNoDescription": "Sans libellé",
   "biSalesRoomBasis": "{charges} facturés pour {uses} réservations, les salles coûtent {cost} ({rooms} salles)",
   "biSalesRoomDefinition": "Pour chaque salle louée par l’espace : ce que ses réservations ont rapporté, hors taxe, moins le coût propre de la salle (son loyer échu dans la période, ou son coût par usage multiplié par les usages). Aucun autre coût n’est imputé à la salle : c’est une marge, pas un bénéfice.",

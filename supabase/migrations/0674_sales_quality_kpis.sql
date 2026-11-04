@@ -9,7 +9,10 @@
 --       kind of line (subscriptions, extra half-days, accessories, levels,
 --       offices, desks, services, packages, adjustments): net of VAT (a
 --       line's own net when it carries one, a sales-tax line; else its gross
---       split at its rate, vat_split_net), the gross beside it, and by
+--       split at its own rate, vat_split_net; an explicit 0 is a rate, a
+--       line without a readable one has no known net: counted in
+--       `net_unknown_lines`, left out of the net sums, `net_unknown`), the
+--       gross beside it, and by
 --       month. Credits on an invoice (a payment, an expense reimbursement, a
 --       settled invoice carried over) are not sales and stay out; a credit
 --       note subtracts;
@@ -95,9 +98,12 @@ begin
            'kind', coalesce(nullif(l ->> 'kind', ''), 'other'),
            'label', btrim(coalesce(l ->> 'label', '')),
            'gross', (l ->> 'amount_cents')::bigint,
+           -- A line without its net is split by its own rate; an explicit 0
+           -- is a rate, a missing or unreadable one leaves the net unknown.
            'net', coalesce((l ->> 'net_cents')::bigint,
-                           public.vat_split_net((l ->> 'amount_cents')::bigint,
-                                                coalesce((l ->> 'vat_percent')::numeric, 0))))), '[]'::jsonb)
+                           case when (l ->> 'vat_percent') ~ '^[0-9]+(\.[0-9]+)?$'
+                                then public.vat_split_net((l ->> 'amount_cents')::bigint,
+                                                          (l ->> 'vat_percent')::numeric) end))), '[]'::jsonb)
     into v_lines
     from public.invoices i
     cross join lateral jsonb_array_elements(case when jsonb_typeof(i.lines) = 'array'
@@ -129,7 +135,10 @@ begin
   select jsonb_build_object(
            'invoices', (select count(distinct invoice_id) from lines),
            'lines', (select count(*) from lines),
+           'net_unknown_lines', (select count(*) from lines where net is null),
            'net_minor', case when v_mixed then null
+                             when exists (select 1 from lines)
+                                  and not exists (select 1 from lines where net is not null) then null
                              else (select coalesce(sum(net), 0) from lines)::text end,
            'gross_minor', case when v_mixed then null
                                else (select coalesce(sum(gross), 0) from lines)::text end,
@@ -137,7 +146,7 @@ begin
                       'kind', k.kind, 'lines', k.n,
                       'net_minor', case when v_mixed then null else k.net::text end,
                       'gross_minor', case when v_mixed then null else k.gross::text end)
-                    order by k.net desc, k.kind) from kinds k), '[]'::jsonb),
+                    order by k.net desc nulls last, k.kind) from kinds k), '[]'::jsonb),
            'months', coalesce((select jsonb_agg(jsonb_build_object(
                        'month', m.period,
                        'net_minor', case when v_mixed then null else m.net::text end,
@@ -150,12 +159,13 @@ begin
       invoice_id uuid, period text, currency text, kind text, label text, gross bigint, net bigint)
   ), services as (
     select l.label, l.kind, count(*) as n, sum(l.net) as net, sum(l.gross) as gross,
-           row_number() over (order by sum(l.net) desc, l.label, l.kind) as rank
+           row_number() over (order by sum(l.net) desc nulls last, l.label, l.kind) as rank
       from lines l where l.kind in ('service', 'package') group by 1, 2
   )
   select jsonb_build_object(
            'services', count(*),
-           'net_minor', case when v_mixed then null else coalesce(sum(net), 0)::text end,
+           'net_minor', case when v_mixed or (count(*) > 0 and count(net) = 0) then null
+                             else coalesce(sum(net), 0)::text end,
            'rows', coalesce(jsonb_agg(jsonb_build_object(
                      'rank', rank, 'name', label, 'kind', kind, 'lines', n,
                      'net_minor', case when v_mixed then null else net::text end,
@@ -215,6 +225,10 @@ begin
   if p_to >= v_now_month then
     v_quality := v_quality || 'partial'::text;
     v_reasons := v_reasons || 'period_not_over'::text;
+  end if;
+  if exists (select 1 from jsonb_array_elements(v_lines) e where e -> 'net' = 'null'::jsonb) then
+    v_quality := v_quality || 'partial'::text;
+    v_reasons := v_reasons || 'net_unknown'::text;
   end if;
   if not v_rooms_on then
     v_reasons := v_reasons || 'external_rooms_off'::text;
