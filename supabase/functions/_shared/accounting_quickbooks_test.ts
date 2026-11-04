@@ -19,7 +19,7 @@ import {
   type DeliveryStore,
   type RemoteDocument,
 } from "./accounting_delivery.ts";
-import { type Posting, type PostingParty, postingSha256 } from "./accounting_postings.ts";
+import { type Posting, type PostingParty, postingSha256, taxComponentsOf } from "./accounting_postings.ts";
 import { CUSTOM_NUMBERS_OFF, MINOR_VERSION, quickbooksOnline } from "./accounting_quickbooks.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on. */
@@ -68,6 +68,7 @@ function realm(opts: {
   rates?: Record<string, number>;
   oneTaxLine?: boolean;
   book?: (code: string, net: number) => { id: string; amount: number }[];
+  noPercent?: boolean;
 } = {}) {
   const rates = opts.rates ?? QC_RATES;
   const held: Record<string, Row[]> = {
@@ -132,7 +133,12 @@ function realm(opts: {
             taxLines.push({
               Amount: t.amount,
               DetailType: "TaxLineDetail",
-              TaxLineDetail: { TaxRateRef: { value: t.id }, PercentBased: true, NetAmountTaxable: net },
+              TaxLineDetail: {
+                TaxRateRef: { value: t.id },
+                PercentBased: true,
+                ...(opts.noPercent ? {} : { TaxPercent: rates[t.id] }),
+                NetAmountTaxable: net,
+              },
             });
           }
         }
@@ -178,18 +184,25 @@ const posting = (kind: string, id: string, number: string, date: string, lines: 
 /** A Quebec year: an invoice (GST+QST in one code), its payment, a credit
  * note and a written-off rest. */
 const year: Posting[] = [
-  posting("invoice", INV, "F-2026-0001", "2026-01-31", [
-    line("customers", null, 11498, 0),
-    line("revenue", "standard", 0, 10000),
-    line("vat_output", "standard", 0, 1498),
-  ]),
+  {
+    ...posting("invoice", INV, "F-2026-0001", "2026-01-31", [
+      line("customers", null, 11498, 0),
+      line("revenue", "standard", 0, 10000),
+      line("vat_output", "standard", 0, 1498),
+    ]),
+    // As frozen at issue (0423): GST 5 % on 100.00, QST 9.975 % the rest.
+    taxComponents: [{ percent: 5, baseCents: 10000, taxCents: 500 }, { percent: 9.975, baseCents: 10000, taxCents: 998 }],
+  },
   posting("receipt", INV, "F-2026-0001", "2026-02-10", [line("bank", null, 10000, 0), line("customers", null, 0, 10000)]),
   // 20.00 at 14.975 %: 2.995, half up 3.00 = GST 1.00 + QST 2.00 (#2371).
-  posting("credit_note", CRN, "A-2026-0001", "2026-02-14", [
-    line("customers", null, 0, 2300),
-    line("revenue", "standard", 2000, 0),
-    line("vat_output", "standard", 300, 0),
-  ]),
+  {
+    ...posting("credit_note", CRN, "A-2026-0001", "2026-02-14", [
+      line("customers", null, 0, 2300),
+      line("revenue", "standard", 2000, 0),
+      line("vat_output", "standard", 300, 0),
+    ]),
+    taxComponents: [{ percent: 5, baseCents: 2000, taxCents: 100 }, { percent: 9.975, baseCents: 2000, taxCents: 200 }],
+  },
   posting("write_off", INV, "F-2026-0001", "2026-03-31", [line("write_off", null, 1498, 0), line("customers", null, 0, 1498)]),
 ];
 
@@ -400,7 +413,7 @@ Deno.test("#2371 a realm that splits the document's tax with another QST rate is
   const log = new Log();
   assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks tax 9.50 at rate QST, the document 9.98"), row.error);
+  assert(row.error.includes("QuickBooks booked tax 9.50 at 9.5 %, which the document does not carry"), row.error);
   assertEquals((q.held.Invoice[0].TxnTaxDetail as Row).TotalTax, 14.98);
 });
 
@@ -409,7 +422,7 @@ Deno.test("#2371 a GST+QST code read back with one tax line is a conflict", asyn
   const log = new Log();
   assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks booked no tax at rate QST, the document 9.98"), row.error);
+  assert(row.error.includes("QuickBooks booked no tax at 9.975 %, the document 9.98"), row.error);
 });
 
 Deno.test("#2371 a split that keeps the code's total but not its components is a conflict", async () => {
@@ -418,8 +431,8 @@ Deno.test("#2371 a split that keeps the code's total but not its components is a
   const log = new Log();
   assertEquals((await run(wrong, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks tax 4.00 at rate GST, the document 5.00"), row.error);
-  assert(row.error.includes("QuickBooks tax 10.98 at rate QST, the document 9.98"), row.error);
+  assert(row.error.includes("QuickBooks tax 4.00 at 5 %, the document 5.00"), row.error);
+  assert(row.error.includes("QuickBooks tax 10.98 at 9.975 %, the document 9.98"), row.error);
 });
 
 Deno.test("#2371 two GST lines and no QST for a two-rate code is a conflict, though the total agrees", async () => {
@@ -427,7 +440,7 @@ Deno.test("#2371 two GST lines and no QST for a two-rate code is a conflict, tho
   const log = new Log();
   assertEquals((await run(twice, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks booked no tax at rate QST, the document 9.98"), row.error);
+  assert(row.error.includes("QuickBooks booked no tax at 9.975 %, the document 9.98"), row.error);
 });
 
 Deno.test("#2371 a mixed invoice, GST alone and GST with QST, reconciles: the shared GST is compared summed", async () => {
@@ -442,6 +455,11 @@ Deno.test("#2371 a mixed invoice, GST alone and GST with QST, reconciles: the sh
       line("vat_output", "standard", 0, 1498),
       line("vat_output", "gst", 0, 250),
     ],
+    taxComponents: [
+      { percent: 5, baseCents: 10000, taxCents: 500 },
+      { percent: 9.975, baseCents: 10000, taxCents: 998 },
+      { percent: 5, baseCents: 5000, taxCents: 250 },
+    ],
   };
   const withGst = [
     ...maps,
@@ -455,3 +473,69 @@ Deno.test("#2371 a mixed invoice, GST alone and GST with QST, reconciles: the sh
   assertEquals(gst.map((t) => t.Amount), [5, 2.5]);
 });
 
+Deno.test("#2371 a realm whose rates are misconfigured at 4 % and 10.98 % is a conflict, though it books the same total", async () => {
+  // 100.00 at 4 % and 10.98 %: 4.00 + 10.98 = 14.98, the document's total,
+  // but not its frozen split (GST 5 % 5.00, QST 9.975 % 9.98).
+  const q = realm({ rates: { GST: 4, QST: 10.98 } });
+  const log = new Log();
+  assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks booked no tax at 5 %, the document 5.00"), row.error);
+  assert(row.error.includes("QuickBooks booked tax 10.98 at 10.98 %, which the document does not carry"), row.error);
+  assertEquals((q.held.Invoice[0].TxnTaxDetail as Row).TotalTax, 14.98);
+});
+
+Deno.test("#2371 a sole rate is checked too: a single-rate code booked at another rate is a conflict", async () => {
+  const q = realm({ rates: { GST: 6, QST: 9.975 } });
+  const gstOnly: Posting = {
+    ...year[0],
+    documentNumber: "F-2026-0011",
+    lines: [line("customers", null, 5250, 0), line("revenue", "gst", 0, 5000), line("vat_output", "gst", 0, 250)],
+    taxComponents: [{ percent: 5, baseCents: 5000, taxCents: 250 }],
+  };
+  const withGst = [
+    ...maps,
+    { kind: "item" as const, key: "revenue:gst", remoteId: "IT-3", remoteCode: "" },
+    { kind: "item" as const, key: "vat_output:gst", remoteId: "TC-GST", remoteCode: "" },
+  ];
+  const log = new Log();
+  assertEquals((await run(q, log, [gstOnly], "quickbooks_online_ca", withGst)).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks booked no tax at 5 %, the document 2.50"), row.error);
+});
+
+Deno.test("#2371 a tax line without its percentage, or a sale without its frozen breakdown, leaves the split unverified", async () => {
+  const silent = realm({ noPercent: true });
+  const log = new Log();
+  assertEquals((await run(silent, log, [year[0]])).statuses, ["conflict"]);
+  assert([...log.rows.values()][0].error.includes("the tax split is unverified: QuickBooks states no percentage"));
+  const unread = realm();
+  const log2 = new Log();
+  const { taxComponents: _, ...bare } = year[0];
+  assertEquals((await run(unread, log2, [bare])).statuses, ["conflict"]);
+  assert([...log2.rows.values()][0].error.includes("the tax split is unverified: the document's frozen breakdown was not read"));
+});
+
+
+Deno.test("#2371 the frozen breakdown is read from vat_totals: components where it has them, the entry itself otherwise", () => {
+  assertEquals(
+    taxComponentsOf([
+      {
+        percent: 14.975, net_cents: 10000, vat_cents: 1498, gross_cents: 11498,
+        components: [
+          { scheme: "GST", authority: "CA", percent: 5, base_cents: 10000, tax_cents: 500 },
+          { scheme: "QST", authority: "QC", percent: 9.975, base_cents: 10000, tax_cents: 998 },
+        ],
+      },
+      { percent: 20, net_cents: -2000, vat_cents: -400, gross_cents: -2400 },
+    ]),
+    [
+      { percent: 5, baseCents: 10000, taxCents: 500 },
+      { percent: 9.975, baseCents: 10000, taxCents: 998 },
+      { percent: 20, baseCents: 2000, taxCents: 400 },
+    ],
+  );
+  assertEquals(taxComponentsOf([]), []);
+  assertEquals(taxComponentsOf([{ percent: 5 }]), null);
+  assertEquals(taxComponentsOf("not a list"), null);
+});
