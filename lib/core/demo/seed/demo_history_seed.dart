@@ -256,8 +256,10 @@ void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
         matchedAt: paidOn,
         byName: 'Ada Lindqvist',
       );
-      if (late) {
-        money.invoiceReminders[id] = [issued.add(const Duration(days: 12))];
+      final reminded = issued.add(const Duration(days: 12));
+      // #3292 — never a reminder dated after the Demo's now.
+      if (late && !reminded.isAfter(now)) {
+        money.invoiceReminders[id] = [reminded];
       }
     }
   }

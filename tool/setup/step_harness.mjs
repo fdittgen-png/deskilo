@@ -207,7 +207,7 @@ if (process.argv.includes('--recommend-all')) {
   const P = globalThis.window.__setup;
   const questions = globalThis.window.SETUP_LEVELS.questions;
   const ticked = () => Object.entries(P.S.features).filter(([, v]) => v).map(([k]) => k).sort();
-  const out = { initial: ticked(), combos: [] };
+  const out = { country: P.S.country, initial: ticked(), combos: [] };
   // Answering touches only the switches and the journey: putting those two
   // back is a fresh page, without drawing it 4096 times.
   const fresh = JSON.stringify({ features: P.S.features, journey: P.S.journey });

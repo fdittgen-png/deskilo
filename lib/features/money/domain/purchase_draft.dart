@@ -47,6 +47,7 @@ class PurchaseLineDraft {
     this.recoverableTaxCents,
     this.recognitionKind = 'unresolved',
     this.place,
+    this.item,
   });
 
   /// A line of [grossCents] taxed at [percent], of which [deductiblePct]
@@ -97,6 +98,10 @@ class PurchaseLineDraft {
   final String recognitionKind;
   final PurchasePlace? place;
 
+  /// #3294 — the catalogue item the line bought, with its quantity and
+  /// unit; null buys no item.
+  final PurchaseItem? item;
+
   Map<String, Object?> toJson() => {
     'description': description,
     'gross_cents': grossCents,
@@ -108,6 +113,7 @@ class PurchaseLineDraft {
     'tax_rate_percent': ?taxRatePercent,
     'recoverable_tax_cents': ?recoverableTaxCents,
     ...?place?.toJson(),
+    ...?item?.toJson(),
   };
 
   /// The line as the server stores it at [lineNo] (the demonstration).
@@ -124,7 +130,40 @@ class PurchaseLineDraft {
     resourceKind: place?.isSite == false ? place!.kind : null,
     resourceId: place?.isSite == false ? place!.id : null,
     placeName: place?.name ?? '',
+    serviceId: item?.serviceId,
+    quantity: item?.quantity ?? 1,
+    unit: item?.unit ?? '',
   );
+}
+
+/// #3294 — what a purchase line bought: a catalogue item of the space, how
+/// many of it (above zero) and in what unit.
+class PurchaseItem {
+  const PurchaseItem({
+    required this.serviceId,
+    required this.quantity,
+    this.unit = '',
+  });
+
+  final String serviceId;
+  final double quantity;
+  final String unit;
+
+  Map<String, Object?> toJson() => {
+    'service_id': serviceId,
+    'quantity': quantity,
+    'unit': unit,
+  };
+
+  @override
+  bool operator ==(Object other) =>
+      other is PurchaseItem &&
+      other.serviceId == serviceId &&
+      other.quantity == quantity &&
+      other.unit == unit;
+
+  @override
+  int get hashCode => Object.hash(serviceId, quantity, unit);
 }
 
 /// A draft `save_purchase_draft_v1` takes.
@@ -161,6 +200,7 @@ class PurchaseBillDraft implements PurchaseDraft {
     this.place,
     this.currency,
     this.exchangeRate,
+    this.item,
   });
 
   @override
@@ -194,6 +234,9 @@ class PurchaseBillDraft implements PurchaseDraft {
   /// The rate recorded with a bill in another currency.
   final ExchangeRateEntry? exchangeRate;
 
+  /// #3294 — the catalogue item the bill's line bought; null buys none.
+  final PurchaseItem? item;
+
   @override
   PurchaseKind get kind => PurchaseKind.bill;
 
@@ -208,6 +251,7 @@ class PurchaseBillDraft implements PurchaseDraft {
       taxCents: taxCents,
       recognitionKind: recognitionKind,
       place: place,
+      item: item,
     ),
   ];
 

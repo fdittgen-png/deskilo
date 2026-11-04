@@ -3889,6 +3889,12 @@ abstract class AppLocalizations {
   /// **'due date'**
   String get biBasisOccurrenceDue;
 
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'supplier payable due date'**
+  String get biBasisPayableDue;
+
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
@@ -4533,6 +4539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'by due date'**
   String get biEditorBasisOccurrenceDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'by supplier payable due date'**
+  String get biEditorBasisPayableDue;
 
   /// #2580 BI report editor
   ///
@@ -5602,6 +5614,84 @@ abstract class AppLocalizations {
   /// **'This address asks for an analysis that does not exist; nothing was read.'**
   String get biInvalidAddress;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average cost'**
+  String get biItemMethodAverage;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'last purchase'**
+  String get biItemMethodLast;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{lines} purchase lines of {items} items'**
+  String biItemPricesBasis(String lines, String items);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.'**
+  String get biItemPricesDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item prices by supplier'**
+  String get biItemPricesTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Sold for {revenue} net, cost {cost} ({method})'**
+  String biItemProductBasis(String revenue, String cost, String method);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.'**
+  String get biItemProductDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Margin by product'**
+  String get biItemProductTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} products sold were never bought: they have no cost and are left out of the cost and margin'**
+  String biItemUncosted(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} purchase lines name a supply only by its text: they are not matched to an item and are left out'**
+  String biItemUnresolved(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} suppliers'**
+  String biItemVendorBasis(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.'**
+  String get biItemVendorDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier prices compared'**
+  String get biItemVendorTitle;
+
   /// Business analytics dashboard: biKindCurrent
   ///
   /// In en, this message translates to:
@@ -6208,6 +6298,149 @@ abstract class AppLocalizations {
   /// **'running'**
   String get biRunningLabel;
 
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements'**
+  String get biSalesKindAccessories;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments'**
+  String get biSalesKindAdjustment;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{gross} with VAT, {lines} lines on {invoices} invoices'**
+  String biSalesKindBasis(String gross, String lines, String invoices);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.'**
+  String get biSalesKindDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Desks'**
+  String get biSalesKindDesk;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get biSalesKindLevel;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get biSalesKindOffice;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get biSalesKindOther;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get biSalesKindOverage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get biSalesKindPackage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get biSalesKindService;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get biSalesKindSubscription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by kind'**
+  String get biSalesKindTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net'**
+  String biSalesNetUnknown(String count);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No description'**
+  String get biSalesNoDescription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)'**
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  );
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.'**
+  String get biSalesRoomDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{room}: charged {charges}, cost {cost}, {uses} bookings'**
+  String biSalesRoomLine(String room, String charges, String cost, String uses);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Margin of the rented rooms'**
+  String get biSalesRoomTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The space rents no rooms: switch on rented rooms to see their margin'**
+  String get biSalesRoomsOff;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} services and packages'**
+  String biSalesServiceBasis(String count);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.'**
+  String get biSalesServiceDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by service'**
+  String get biSalesServiceTitle;
+
   /// Business analytics dashboard: biSeatCentre
   ///
   /// In en, this message translates to:
@@ -6303,6 +6536,172 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This analysis could not be computed.'**
   String get biUnavailable;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} categories'**
+  String biVendorCategoryBasis(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by category'**
+  String get biVendorCategoryTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get biVendorCohortHeld;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid late'**
+  String get biVendorCohortLate;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} bills, {amount}'**
+  String biVendorCohortLine(String cohort, String count, String amount);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on time'**
+  String get biVendorCohortOnTime;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get biVendorCohortOpen;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get biVendorCohortPartial;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Settled without a payment'**
+  String get biVendorCohortUndated;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get biVendorCohortUnknownDue;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Credit notes subtracted: {amount} ({count})'**
+  String biVendorCredited(String amount, String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
+  String biVendorDelay(String median, String p90, String weighted);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} bills; median {median} days, 90th percentile {p90}'**
+  String biVendorLagBasis(String documents, String median, String p90);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.'**
+  String get biVendorLagDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days for a bill to arrive'**
+  String get biVendorLagTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bills carry no supplier date or no received date and are left out'**
+  String biVendorLagUndated(String count);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get biVendorNoCategory;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the period to measure'**
+  String get biVendorNothingToMeasure;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {settled} settled bills paid by their due date'**
+  String biVendorPunctualityBasis(String onTime, String settled);
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.'**
+  String get biVendorPunctualityDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {onTime} on time, {late} late, of {due} due'**
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paying suppliers on time'**
+  String get biVendorPunctualityTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}'**
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  );
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.'**
+  String get biVendorSpendDefinition;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Spend by supplier'**
+  String get biVendorSpendTitle;
+
+  /// #3294 step 2 vendor analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Without a supplier (members’ receipts): {amount}'**
+  String biVendorUnassigned(String amount);
 
   /// #2578 saved-view cards saved for another metric version
   ///
@@ -20318,6 +20717,12 @@ abstract class AppLocalizations {
   /// **'Trial balance, general and auxiliary (PDF, from the book)'**
   String get invoiceExportTrialBalance;
 
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero (sales invoice import)'**
+  String get invoiceExportXeroInvoiceCsv;
+
   /// No description provided for @invoiceExternalIssuingTitle.
   ///
   /// In en, this message translates to:
@@ -33153,6 +33558,12 @@ abstract class AppLocalizations {
   /// **'Invoice date'**
   String get purchasesInvoiceDate;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item bought'**
+  String get purchasesItem;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -33206,6 +33617,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get purchasesMethodOther;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'No item'**
+  String get purchasesNoItem;
 
   /// #2573 purchases
   ///
@@ -33417,6 +33834,12 @@ abstract class AppLocalizations {
   /// **'Goods for resale'**
   String get purchasesPurposeStock;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get purchasesQuantity;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -33620,6 +34043,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get purchasesTotal;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (e.g. box, ream)'**
+  String get purchasesUnit;
 
   /// #2559 Settings button: the deliberate action that raises the system notification prompt
   ///
@@ -39075,6 +39504,12 @@ abstract class AppLocalizations {
   /// **'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.'**
   String get settingHintPrivacyMemberSelfService;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.'**
+  String get settingHintPurchaseItemCostMethod;
+
   /// #2574 maker-checker settings
   ///
   /// In en, this message translates to:
@@ -39506,6 +39941,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members export and erase their own data directly'**
   String get settingLabelPrivacyMemberSelfService;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'How an item\'s unit cost is read in the margins'**
+  String get settingLabelPurchaseItemCostMethod;
 
   /// #2574 maker-checker settings
   ///
@@ -51034,6 +51475,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace imported.'**
   String get workspaceXmlImportSuccess;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Sales account code'**
+  String get xeroInvoiceAccountCode;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.'**
+  String get xeroInvoiceAccountsIntro;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero export'**
+  String get xeroInvoiceAccountsTitle;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}'**
+  String xeroInvoiceCreditNotesLeftOut(int count);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Date order in your organisation'**
+  String get xeroInvoiceDateOrder;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Day first (31/12/2026)'**
+  String get xeroInvoiceDayFirst;
+
+  /// #2372 - the instruction for the Xero import screen
+  ///
+  /// In en, this message translates to:
+  /// **'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.'**
+  String get xeroInvoiceImportTaxExclusive;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Month first (12/31/2026)'**
+  String get xeroInvoiceMonthFirst;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the sales account code.'**
+  String get xeroInvoiceRefusedAccount;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Name the Xero tax rate for {rate}.'**
+  String xeroInvoiceRefusedTaxType(String rate);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero tax rate for {rate}'**
+  String xeroInvoiceTaxType(String rate);
 }
 
 class _AppLocalizationsDelegate

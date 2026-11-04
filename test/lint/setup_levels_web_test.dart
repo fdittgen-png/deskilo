@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -29,6 +30,7 @@ void main() {
     expect(r.exitCode, 0, reason: '${r.stderr}');
     final out = jsonDecode('${r.stdout}') as Map<String, dynamic>;
     final initial = (out['initial'] as List).cast<String>().toSet();
+    final country = out['country'] as String?;
     final combos = out['combos'] as List;
     expect(combos, hasLength(1 << setupQuestions.length));
     final wrong = <String>[];
@@ -43,10 +45,14 @@ void main() {
         for (final MapEntry(:key, :value) in recommended.entries)
           key: value.level,
       };
+      // #3300 — a level leaves a feature the page's country does not offer
+      // as it is (setup_level_change.dart's `_offered`).
       final delta = setupFeatureDelta(vector);
+      bool offered(WorkspaceFeature f) =>
+          featureAvailableIn(featureManifest[f]?.availableIn, country);
       final on = {...initial}
-        ..removeAll(delta.off.map((f) => f.name))
-        ..addAll(delta.on.map((f) => f.name));
+        ..removeAll(delta.off.where(offered).map((f) => f.name))
+        ..addAll(delta.on.where(offered).map((f) => f.name));
       final same =
           jsonEncode(combo['recommended']) ==
               jsonEncode({

@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/domain/commercial_terms_repository.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
@@ -196,7 +195,7 @@ class DemoCommercialTerms implements CommercialTermsRepository {
                 overageFeeCents: overageFeeCents,
                 discountPercent: discountPercent,
                 note: note,
-                validFrom: validFrom ?? kTestNow,
+                validFrom: validFrom ?? _m.clock(),
                 status: 'pending',
                 subscriptionPct: subscriptionPct,
                 items: items,

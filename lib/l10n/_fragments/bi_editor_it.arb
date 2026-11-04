@@ -665,5 +665,6 @@
   "@biEditorDrillHint": {
     "description": "#2580 BI report editor: what the source switch does"
   },
-  "biEditorBasisInvoiceDue": "secondo la scadenza della fattura"
+  "biEditorBasisInvoiceDue": "secondo la scadenza della fattura",
+  "biEditorBasisPayableDue": "per scadenza del debito verso il fornitore"
 }

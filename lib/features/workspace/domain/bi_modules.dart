@@ -10,6 +10,7 @@
 // Pure Dart.
 library;
 
+import 'bi_modules_purchasing.dart';
 import 'bi_query.dart';
 import 'kpi_contract.dart';
 import 'workspace_feature.dart';
@@ -413,6 +414,8 @@ const biModules = <BiModule>[
     },
     drill: _customerInvoices,
   ),
+  // #3294 steps 2-4 — the vendor, sales and item figures (bi_modules_purchasing.dart).
+  ...purchasingBiModules,
 ];
 
 /// #3294 — the invoices behind a customer figure, for its months.
