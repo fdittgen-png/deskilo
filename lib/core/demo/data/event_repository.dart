@@ -4,7 +4,11 @@ import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import 'event_visibility.dart';
 import 'fixture_clock.dart';
 
 /// In-memory [EventRepository] mimicking respond_to_event semantics
@@ -14,10 +18,30 @@ class FakeEventRepository implements EventRepository {
   /// of held in a field. Demo passes its fixture's active member, so a
   /// decision taken as Chiara is recorded as Chiara's; the suite's own
   /// tests keep assigning [respondingMemberId].
-  FakeEventRepository({this._actor, this.workspaceId = 'ws-1'});
+  ///
+  /// [workspaceId] is the space whose requests this repository files
+  /// (#3293: Leipzig's used to file them under the main space's id, so a
+  /// write-off asked in Leipzig never reached Leipzig's feed). [clock] is
+  /// the instant a request or a decision is stamped with, the session's
+  /// own in the Demo. [decider] is the signed-in member as the space
+  /// knows them: when set, [respond] refuses a decision the server's
+  /// respond_to_event refuses ([WorkspaceEvent.isDecidedBy]).
+  FakeEventRepository({
+    this._actor,
+    this.workspaceId = 'ws-1',
+    DateTime Function()? clock,
+    this.decider,
+    this.viewerPermissions,
+  }) : _clock = clock ?? (() => kTestNow);
 
   final String Function()? _actor;
   final String workspaceId;
+  final DateTime Function() _clock;
+  Member? Function()? decider;
+
+  /// The signed-in member's effective permissions in this space, which
+  /// decide which other members' events they read (#3293).
+  Set<WorkspacePermission> Function()? viewerPermissions;
 
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
@@ -44,8 +68,34 @@ class FakeEventRepository implements EventRepository {
     String workspaceId, {
     int limit = 100,
   }) async {
-    return events.where((e) => e.workspaceId == workspaceId).toList()
+    return events
+        .where((e) => e.workspaceId == workspaceId && _mayRead(e))
+        .toList()
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  }
+
+  /// #3293 — events_select (0216): a type the member's permissions read
+  /// in this space ([eventTypeViewPermissions]), their own event as its
+  /// actor or subject, or a validator its rule names; a privacy incident
+  /// only with managePrivacy held now (0667). Somebody who is not an
+  /// active member of the space reads none of it.
+  bool _mayRead(WorkspaceEvent e) {
+    if (decider == null) return true;
+    final me = decider!();
+    if (me == null || me.status != MemberStatus.active) return false;
+    final held = viewerPermissions?.call() ?? const {};
+    // 0667 — RESTRICTIVE: a privacy incident is read with managePrivacy
+    // held now, whoever recorded it or is asked to validate it.
+    if (e.type == EventType.privacyIncident &&
+        !held.contains(WorkspacePermission.managePrivacy)) {
+      return false;
+    }
+    if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
+    if (eventTypeViewPermissions(e.type.dbName).any(held.contains)) return true;
+    final policy = policyFor(e.type.dbName, policies);
+    return policy.validatorScope == 'members' ||
+        (policy.validatorScope == 'listed' &&
+            policy.eligibleAdminIds.contains(me.id));
   }
 
   @override
@@ -61,6 +111,20 @@ class FakeEventRepository implements EventRepository {
     )) {
       throw StateError('you already decided this event');
     }
+    final me = decider?.call();
+    if (decider != null &&
+        (me == null ||
+            !event.isDecidedBy(
+              me,
+              policy: policyFor(event.type.dbName, policies),
+            ))) {
+      // #3293 — as respond_to_event: the actor, a member outside the
+      // rule's scope and a former member never decide.
+      throw const PostgrestException(
+        message: 'not allowed to decide this event',
+        code: '42501',
+      );
+    }
     decisions.add(
       EventDecision(
         id: 'dec-${_nextDecisionId++}',
@@ -68,13 +132,13 @@ class FakeEventRepository implements EventRepository {
         memberId: respondingMemberId,
         accept: accept,
         decidedBySystem: false,
-        decidedAt: kTestNow,
+        decidedAt: _clock(),
       ),
     );
     if (!accept) {
       events[i] = event.copyWith(
         status: EventStatus.rejected,
-        decidedAt: kTestNow,
+        decidedAt: _clock(),
       );
       return;
     }
@@ -84,23 +148,30 @@ class FakeEventRepository implements EventRepository {
     if (accepts >= required) {
       events[i] = event.copyWith(
         status: EventStatus.confirmed,
-        decidedAt: kTestNow,
+        decidedAt: _clock(),
       );
     }
   }
 
   @override
   Future<WorkspaceEvent?> fetchEvent(String eventId) async =>
-      events.where((e) => e.id == eventId).firstOrNull;
+      events.where((e) => e.id == eventId && _mayRead(e)).firstOrNull;
 
   @override
   Future<Map<String, List<EventDecision>>> fetchDecisions(
     String workspaceId,
     List<String> eventIds,
   ) async {
+    // #3293 — the decisions of the events the caller reads in this space.
+    final readable = {
+      for (final e in events)
+        if (e.workspaceId == workspaceId && eventIds.contains(e.id) && _mayRead(e))
+          e.id,
+    };
     final grouped = <String, List<EventDecision>>{};
     for (final decision in decisions) {
       if (!eventIds.contains(decision.eventId)) continue;
+      if (decider != null && !readable.contains(decision.eventId)) continue;
       grouped.putIfAbsent(decision.eventId, () => []).add(decision);
     }
     return grouped;
@@ -128,7 +199,7 @@ class FakeEventRepository implements EventRepository {
       subjectMemberId: respondingMemberId,
       payload: {'invoice_id': invoiceId, 'reason': reason},
       status: EventStatus.pending,
-      createdAt: kTestNow,
+      createdAt: _clock(),
     );
     events.add(event);
     return event.id;
@@ -158,7 +229,7 @@ class FakeEventRepository implements EventRepository {
       workspaceId: workspaceId,
       type: EventType.paymentTermsChange,
       action: EventAction.submitted,
-      actorMemberId: 'member-1',
+      actorMemberId: respondingMemberId,
       subjectMemberId: memberId,
       payload: {
         'member_id': memberId,
@@ -167,7 +238,7 @@ class FakeEventRepository implements EventRepository {
         'reason': reason,
       },
       status: EventStatus.pending,
-      createdAt: kTestNow,
+      createdAt: _clock(),
     );
     events.add(event);
     return event.id;
@@ -198,12 +269,12 @@ class FakeEventRepository implements EventRepository {
       subjectMemberId: respondingMemberId,
       payload: {
         'reservation_id': reservationId,
-        'starts_at': kTestNow.toIso8601String(),
+        'starts_at': _clock().toIso8601String(),
         'was_checked_in': true,
         'reason': reason,
       },
       status: EventStatus.pending,
-      createdAt: kTestNow,
+      createdAt: _clock(),
     );
     events.add(event);
     return event.id;
@@ -226,7 +297,7 @@ class FakeEventRepository implements EventRepository {
       subjectMemberId: respondingMemberId,
       payload: {'period': period, 'half_days': halfDays},
       status: EventStatus.pending,
-      createdAt: kTestNow,
+      createdAt: _clock(),
     );
     events.add(event);
     return event.id;

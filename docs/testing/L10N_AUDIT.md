@@ -32,8 +32,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:227` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:243` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:316` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:332` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:317` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:333` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:152` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:160` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |

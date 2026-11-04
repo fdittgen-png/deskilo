@@ -15,6 +15,7 @@ import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
 import 'data/event_repository.dart';
+import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -50,7 +51,14 @@ class DemoSecondSpaceData {
     seedLeipzigPlan(plan);
     final reservations = RightsCheckedReservationRepository(actor: actor);
     seedLeipzigBookings(reservations, now);
-    final events = FakeEventRepository(actor: actor);
+    // #3293 — Leipzig's requests are Leipzig's, stamped on its clock and
+    // decided only by whom its rules name.
+    final events = FakeEventRepository(
+      actor: actor,
+      workspaceId: demoSecondSpaceId,
+      clock: () => now,
+      decider: () => space.memberOf(actor()),
+    );
     seedLeipzigRequests(events, now);
     final money = FakeMoneyRepository(events: events);
     seedLeipzigMoney(money, now);
@@ -61,7 +69,7 @@ class DemoSecondSpaceData {
       money: money,
       events: events,
     );
-    return DemoSecondSpaceData._(
+    final data = DemoSecondSpaceData._(
       workspaces: space,
       floorPlan: plan,
       reservations: reservations,
@@ -69,6 +77,8 @@ class DemoSecondSpaceData {
       calendar: calendar,
       money: money,
     );
+    events.viewerPermissions = demoViewerPermissions(space, data.roles, demoSecondSpaceId, actor);
+    return data;
   }
 
   final FakeWorkspaceRepository workspaces;
