@@ -97,7 +97,8 @@ class DemoExpenses implements ExpenseRepository {
     final schedule = ExpenseSchedule(
       id: 'schedule-${_m.expenseSchedules.length + 1}',
       workspaceId: workspaceId,
-      memberId: 'member-1',
+      // #3293 — the member who set it up, as the session acts.
+      memberId: _m.eventRepository?.respondingMemberId ?? 'member-1',
       title: title,
       description: description,
       amountCents: amountCents,

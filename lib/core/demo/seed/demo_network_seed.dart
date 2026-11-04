@@ -173,6 +173,7 @@ FakeGuestParticipationRepository demoGuestVisits(DateTime now) {
 FakeMessengerRepository demoMessenger(
   DateTime now, {
   String Function()? actingMember,
+  String Function()? actingName,
 }) {
   final yesterday = demoDateOf(now).subtract(const Duration(days: 1));
   final asked = demoAt(yesterday.year, yesterday.month, yesterday.day, 18);
@@ -184,7 +185,7 @@ FakeMessengerRepository demoMessenger(
     DemoPersona.owner.memberId,
     DemoPersona.admin.memberId,
   };
-  return FakeMessengerRepository(now: now)
+  return FakeMessengerRepository(now: now, actingName: actingName)
     ..requests.add(
       const MessageRequest(
         conversationId: 'demo-request-dov',

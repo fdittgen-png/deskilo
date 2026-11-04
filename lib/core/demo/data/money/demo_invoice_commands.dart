@@ -369,7 +369,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
           workspaceId: invoice.workspaceId,
           type: EventType.invoicePayment,
           action: EventAction.created,
-          actorMemberId: 'member-1',
+          // #3293 — whoever recorded the match, not the first member.
+          actorMemberId: eventRepository.respondingMemberId,
           subjectMemberId: invoice.memberId,
           payload: {
             'invoice_id': invoiceId,
