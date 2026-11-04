@@ -29,7 +29,14 @@ class SupabaseProfileRepository implements ProfileRepository {
         .eq('id', userId)
         .maybeSingle();
     if (row == null) return null;
-    return Profile.fromDb(row);
+    // #3278 (0669) — the birthday lives in its own table, readable by fewer
+    // people than the profile row; my own row is merged into my profile.
+    final birthday = await _client
+        .from('profile_birthdays')
+        .select('birthday')
+        .eq('user_id', userId)
+        .maybeSingle();
+    return Profile.fromDb({...row, 'birthday': birthday?['birthday']});
   }
 
   @override
@@ -98,6 +105,110 @@ class SupabaseProfileRepository implements ProfileRepository {
         .from('profiles')
         .update(info.normalized().toDb())
         .eq('id', userId);
+  }
+
+  @override
+  Future<void> updateBirthday(DateTime? birthday) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    // #3278 (0669) — its own table: profile_birthdays RLS restricts writes
+    // to self, and the check refuses a date before 1900 or in the future.
+    // Clearing it removes the row.
+    if (birthday == null) {
+      await _client.from('profile_birthdays').delete().eq('user_id', userId);
+      return;
+    }
+    await _client.from('profile_birthdays').upsert({
+      'user_id': userId,
+      'birthday': birthdayWire(birthday),
+    });
+  }
+
+  @override
+  Future<List<RightsRequest>> fetchWorkspaceRightsRequests(
+    String workspaceId,
+  ) async {
+    // rights_requests_select (0327) lets the space's rights controller read
+    // every request addressed to it, and a person only their own.
+    final rows = await _client
+        .from('rights_requests')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('received_at', ascending: false);
+    return [
+      for (final row in rows as List)
+        RightsRequest.fromJson(
+          Map<String, Object?>.from(row as Map),
+          context: 'rights_requests',
+        ),
+    ];
+  }
+
+  @override
+  Future<RightsRequest> recordRightsRequest({
+    required String workspaceId,
+    required String memberId,
+    required String kind,
+    required String details,
+    required DateTime receivedAt,
+  }) async {
+    final row = await _client.rpc<Object?>('record_rights_request', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_kind': kind,
+      'p_details': details,
+      'p_received_at': receivedAt.toUtc().toIso8601String(),
+    });
+    return RightsRequest.fromJson(
+      Map<String, Object?>.from(row as Map),
+      context: 'record_rights_request',
+    );
+  }
+
+  @override
+  Future<RightsRequest> extendRightsRequest({
+    required String requestId,
+    required String reason,
+  }) async {
+    final row = await _client.rpc<Object?>('extend_rights_request',
+        params: {'p_request_id': requestId, 'p_reason': reason});
+    return RightsRequest.fromJson(
+      Map<String, Object?>.from(row as Map),
+      context: 'extend_rights_request',
+    );
+  }
+
+  @override
+  Future<RightsRequest> completeRightsRequest({
+    required String requestId,
+    Map<String, Object?> outcome = const {},
+    String? refusalReason,
+  }) async {
+    final row = await _client.rpc<Object?>('complete_rights_request', params: {
+      'p_request_id': requestId,
+      'p_outcome': outcome,
+      'p_refusal_reason': refusalReason,
+    });
+    return RightsRequest.fromJson(
+      Map<String, Object?>.from(row as Map),
+      context: 'complete_rights_request',
+    );
+  }
+
+  @override
+  Future<int> recordPrivacyIncident({
+    required String workspaceId,
+    required String kind,
+    required String note,
+  }) async {
+    final told = await _client.rpc<Object?>('record_privacy_incident', params: {
+      'p_workspace_id': workspaceId,
+      'p_kind': kind,
+      'p_note': note,
+    });
+    return (told as num?)?.toInt() ?? 0;
   }
 
   @override

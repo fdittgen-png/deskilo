@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -23,35 +24,6 @@ import '../../application/rights_requests.dart';
 import '../../domain/rights_request.dart';
 import '../../providers/profile_providers.dart';
 import 'erasure_preview_view.dart';
-
-String _rightsKindLabel(AppLocalizations l10n, String kind) => switch (kind) {
-  'access' => l10n.rightsKindAccess,
-  'portability' =>
-    l10n.rightsKindPortability,
-  'rectification' => l10n.rightsKindRectification,
-  'restriction' =>
-    l10n.rightsKindRestriction,
-  'objection' => l10n.rightsKindObjection,
-  _ => l10n.rightsKindErasure,
-};
-
-String _rightsStatusLabel(
-  AppLocalizations l10n,
-  RightsRequest request,
-  DateFormat date,
-) => switch (request.status) {
-  'extended' =>
-    l10n.rightsStatusExtended(
-          date.format(request.answerBy),
-          request.extensionReason ?? '',
-        ),
-  'completed' =>
-    l10n.rightsStatusCompleted,
-  'refused' =>
-    l10n.rightsStatusRefused(request.refusalReason ?? ''),
-  _ =>
-    l10n.rightsStatusReceived(date.format(request.dueOn)),
-};
 
 /// The lines under a request: whom it went to, where it stands, and for an
 /// answered one what was kept (with its period), still open elsewhere, or
@@ -78,7 +50,15 @@ String _rightsRequestLines(
       l10n.rightsRequestTarget(space)
     else
       l10n.rightsRequestTargetUnknown,
-    _rightsStatusLabel(l10n, request, date),
+    rightsStatusLabel(
+      l10n,
+      status: request.status,
+      dueOn: request.dueOn,
+      answerBy: request.answerBy,
+      date: date,
+      extensionReason: request.extensionReason,
+      refusalReason: request.refusalReason,
+    ),
     if (kept.isNotEmpty) l10n.rightsOutcomeKept(stores(kept, period: true)),
     if (pending.isNotEmpty) l10n.rightsOutcomePending(stores(pending)),
     if (failed.isNotEmpty) l10n.rightsOutcomeFailed(stores(failed)),
@@ -158,7 +138,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
               ListTile(
                 key: ValueKey('rights-request-${r.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(_rightsKindLabel(l10n, r.kind)),
+                title: Text(rightsKindLabel(l10n, r.kind)),
                 subtitle: Text(
                   _rightsRequestLines(l10n, r, date, spaceNames),
                 ),
@@ -261,7 +241,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
                       key: ValueKey('rights-kind-$kind'),
                       contentPadding: EdgeInsets.zero,
                       value: kind,
-                      title: Text(_rightsKindLabel(l10n, kind)),
+                      title: Text(rightsKindLabel(l10n, kind)),
                     ),
                 ],
               ),

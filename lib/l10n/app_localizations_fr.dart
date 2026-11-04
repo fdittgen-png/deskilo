@@ -18184,6 +18184,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permWorkspaceSettings => 'Modifier les réglages de l\'espace';
 
   @override
+  String get personalBirthday => 'Date de naissance';
+
+  @override
+  String get personalBirthdayClear => 'Effacer la date de naissance';
+
+  @override
+  String get personalBirthdayHelp =>
+      'Seuls vous, les personnes autorisées à voir les données personnelles des membres et l\'administrateur des données personnelles de l\'espace peuvent la lire. Une personne qui ne fait que facturer ne le peut pas.';
+
+  @override
+  String get personalBirthdayInvalid =>
+      'Une date de naissance ne peut pas être dans le futur ni avant 1900.';
+
+  @override
+  String get personalBirthdayPick => 'Choisir une date';
+
+  @override
+  String get personalBirthdaySaveFailed =>
+      'Vos informations sont enregistrées, mais pas la date de naissance.';
+
+  @override
   String get personalInfoCity => 'Ville';
 
   @override
@@ -18918,6 +18939,103 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String privacyAdminActionFailed(String reason) {
+    return 'Le serveur a refusé : $reason';
+  }
+
+  @override
+  String get privacyAdminBasis => 'Pourquoi elles sont conservées';
+
+  @override
+  String get privacyAdminComplete => 'Clore';
+
+  @override
+  String get privacyAdminDetails => 'Détails (facultatif)';
+
+  @override
+  String get privacyAdminEmpty => 'Aucune demande pour le moment.';
+
+  @override
+  String get privacyAdminExtend => 'Prolonger le délai';
+
+  @override
+  String get privacyAdminExtendReason =>
+      'Motif de la prolongation (10 caractères au moins)';
+
+  @override
+  String get privacyAdminIncidentIntro =>
+      'Les personnes qui gèrent les données personnelles de cet espace sont prévenues aussitôt. Dites ce qui s\'est passé ; ne collez pas de données personnelles ici.';
+
+  @override
+  String get privacyAdminIncidentNote =>
+      'Ce qui s\'est passé (facultatif, 1000 caractères au plus)';
+
+  @override
+  String privacyAdminIncidentRecorded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enregistré. $count personnes ont été prévenues.',
+      one: 'Enregistré. 1 personne a été prévenue.',
+      zero: 'Enregistré. Personne ne détient ce droit : personne n\'a été prévenu.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get privacyAdminIncidentSend => 'Enregistrer et prévenir';
+
+  @override
+  String get privacyAdminIncidentTitle => 'Enregistrer un incident de données';
+
+  @override
+  String get privacyAdminIntro =>
+      'Les demandes des membres sur leurs données personnelles, et les incidents que vous enregistrez. Chaque demande reçoit une réponse sous un mois civil.';
+
+  @override
+  String get privacyAdminKind => 'Type de demande';
+
+  @override
+  String get privacyAdminLoadFailed => 'Les demandes n\'ont pas pu être lues.';
+
+  @override
+  String get privacyAdminMember => 'Membre';
+
+  @override
+  String get privacyAdminOpenTile =>
+      'Données personnelles et demandes de droits';
+
+  @override
+  String get privacyAdminOutcomeKind => 'Ce qu\'il est advenu des données';
+
+  @override
+  String get privacyAdminPeriod => 'Pendant combien de temps';
+
+  @override
+  String privacyAdminReceivedOn(String date) {
+    return 'Reçue le $date';
+  }
+
+  @override
+  String get privacyAdminRecord => 'Enregistrer une demande';
+
+  @override
+  String get privacyAdminRefusalReason =>
+      'Motif du refus (10 caractères au moins)';
+
+  @override
+  String get privacyAdminRefuse => 'Refuser';
+
+  @override
+  String get privacyAdminSave => 'Enregistrer';
+
+  @override
+  String get privacyAdminStore => 'Où (un stockage ou une liste)';
+
+  @override
+  String get privacyAdminTitle => 'Données personnelles et demandes de droits';
+
+  @override
   String get privacyErase => 'Quitter cet espace et effacer mes données';
 
   @override
@@ -18964,6 +19082,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyExportShareText => 'Mon export de données DesKilo';
 
   @override
+  String get privacyIncidentDataBreach => 'Une fuite de données';
+
+  @override
+  String get privacyIncidentOther => 'Un autre incident';
+
+  @override
+  String get privacyIncidentWrongInvoice => 'Une facture erronée';
+
+  @override
   String get privacyIntro =>
       'Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.';
 
@@ -19003,6 +19130,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String privacyNoticeTransfer(String mechanism) {
     return 'Garantie de transfert : $mechanism';
   }
+
+  @override
+  String get privacyOutcomeCorrected => 'Rectifiées';
+
+  @override
+  String get privacyOutcomeFailed => 'Non réalisées';
+
+  @override
+  String get privacyOutcomePendingExternal => 'Encore ouvertes ailleurs';
+
+  @override
+  String get privacyOutcomeRemoved => 'Supprimées';
+
+  @override
+  String get privacyOutcomeRestricted => 'Limitées';
+
+  @override
+  String get privacyOutcomeRetained => 'Conservées (avec un motif)';
 
   @override
   String get privacyPolicy => 'Politique de confidentialité';

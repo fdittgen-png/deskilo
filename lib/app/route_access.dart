@@ -69,6 +69,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/roles-of-this-space': {_P.manageRoles},
   '/members': {_P.manageMembers},
   '/members/managed': {_P.manageMembers},
+  '/members/privacy': {_P.managePrivacy, _P.viewPersonalData},
   '/validation': {_P.manageValidation},
   '/invoicing/wizard': {_P.issueInvoices},
   '/money/repartition-wizard': {_P.issueInvoices, _P.manageBilling},
