@@ -2324,8 +2324,9 @@ routine public.kpi_overview_scope(p_workspace_id uuid, p_kpi text, p_from text, 
 routine public.kpi_pending_actions_current(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:38946721e4ea
 routine public.kpi_purchases_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64d46e663c59
 routine public.kpi_readable(p_workspace_id uuid, p_kpi text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f8729471516e
-routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b04cea34f0f2
+routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4d1a241988aa
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
+routine public.kpi_sales_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:447b82fb5828
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:85c9b4d24741
 routine public.kpi_vendor_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:665b4c02a99c
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97
