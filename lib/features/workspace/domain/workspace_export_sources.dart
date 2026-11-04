@@ -304,6 +304,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('purchase_documents'),
   ExportSource.everyColumn('purchase_lines'),
   ExportSource.everyColumn('purchase_obligations'),
+  // #3307 — the orders to the suppliers.
+  ExportSource.everyColumn('purchase_orders'),
+  ExportSource.everyColumn('purchase_order_lines'),
   ExportSource.everyColumn('outgoing_payments'),
   ExportSource.everyColumn('expense_schedules'),
   ExportSource.everyColumn('expense_occurrences'),

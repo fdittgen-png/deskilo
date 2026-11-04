@@ -125,8 +125,10 @@ void main() {
           PurchaseOrderProblem.noSupplier,
           PurchaseOrderProblem.noLines,
         });
-        expect(isOrderEmail('a@b.co'), isTrue);
-        expect(isOrderEmail('a b@c.d'), isFalse);
+      expect(
+        _draft(email: 'a b@c.d').problems,
+        {PurchaseOrderProblem.recipientEmail},
+      );
       },
     );
 
@@ -222,9 +224,11 @@ void main() {
       final data = purchaseOrderReportData(
         o,
         supplier: _alpha,
-        money: (minor) => '€${(minor / 100).toStringAsFixed(2)}',
-        date: (d) => '${d.day}/${d.month}/${d.year}',
-        quantity: (q) => q.toStringAsFixed(0),
+        format: (
+          money: (minor) => '€${(minor / 100).toStringAsFixed(2)}',
+          date: (d) => '${d.day}/${d.month}/${d.year}',
+          quantity: (q) => q.toStringAsFixed(0),
+        ),
         issued: DateTime(2026, 11, 4),
         issuedBy: 'Atelier',
         letterhead: const {'workspace': 'Atelier'},

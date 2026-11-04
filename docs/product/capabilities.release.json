@@ -1222,12 +1222,6 @@
       "capabilities": []
     },
     {
-      "key": "purchaseOrders",
-      "maturity": "beta",
-      "lifecycle": "active",
-      "capabilities": []
-    },
-    {
       "key": "multiSite",
       "maturity": "beta",
       "lifecycle": "active",
@@ -1354,6 +1348,12 @@
     },
     {
       "key": "purchaseAnalytics",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "purchaseOrders",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

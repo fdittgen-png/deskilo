@@ -94,10 +94,9 @@ enum WorkspaceFeature {
   letterStandard,
   priceNegotiations,
 
-  /// #767 — recurring scheduled expenses (internet, phone, electricity):
-  /// the schedule is validated once, each due occurrence is presented to
-  /// the member — matching amount lands settled, a deviation explains
-  /// itself and passes the expense validation.
+  /// #767 — recurring scheduled expenses (internet, phone, electricity): the schedule is validated
+  /// once, each due occurrence is presented to the member — matching amount lands settled, a
+  /// deviation explains itself and passes the expense validation.
   scheduledExpenses,
 
   /// #793 — the avatar monogram identifies ONE member: the initials of

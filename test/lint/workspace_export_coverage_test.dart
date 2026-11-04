@@ -218,6 +218,9 @@ const Map<String, String> _notExported = {
       '#3031 — the rate recorded with a purchase in another currency; it names '
           'purchase documents of this server, and the posted exports carry it '
           'beside each converted line',
+  'purchase_order_counters':
+      '#3307 — the last number each year of the purchase order series; its '
+          'state, not a record, and the orders carry their numbers',
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',

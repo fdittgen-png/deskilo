@@ -13,7 +13,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
@@ -22,16 +24,15 @@ import '../widgets/purchase_order_sheet.dart';
 import 'money_view_data.dart';
 
 /// The words of an order's [state].
-String purchaseOrderStateLabel(
-  AppLocalizations l10n,
-  PurchaseOrderState state,
-) => switch (state) {
-  PurchaseOrderState.draft => l10n.purchaseOrderStateDraft,
-  PurchaseOrderState.sent => l10n.purchaseOrderStateSent,
-  PurchaseOrderState.partlyReceived => l10n.purchaseOrderStatePartlyReceived,
-  PurchaseOrderState.received => l10n.purchaseOrderStateReceived,
-  PurchaseOrderState.cancelled => l10n.purchaseOrderStateCancelled,
-};
+String _stateLabel(AppLocalizations l10n, PurchaseOrderState state) =>
+    switch (state) {
+      PurchaseOrderState.draft => l10n.purchaseOrderStateDraft,
+      PurchaseOrderState.sent => l10n.purchaseOrderStateSent,
+      PurchaseOrderState.partlyReceived =>
+        l10n.purchaseOrderStatePartlyReceived,
+      PurchaseOrderState.received => l10n.purchaseOrderStateReceived,
+      PurchaseOrderState.cancelled => l10n.purchaseOrderStateCancelled,
+    };
 
 class PurchaseOrdersScreen extends ConsumerWidget {
   const PurchaseOrdersScreen({super.key});
@@ -51,11 +52,10 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               key: const ValueKey('purchase-order-new'),
-              onPressed: () => showPurchaseOrderSheet(
+              onPressed: () => PurchaseOrderSheet(
                 context,
                 ref,
-                workspaceId: workspace.id,
-              ),
+              ).open(workspaceId: workspace.id),
               icon: const Icon(Icons.add),
               label: Text(l10n.purchaseOrderNew),
             ),
@@ -69,13 +69,14 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           ),
         ),
         AsyncValue(:final value?) => ListView(
-          padding: const EdgeInsets.only(bottom: 96),
+          padding: const EdgeInsets.only(bottom: kFabSafeBottom),
           children: [
             for (final o in value)
               _OrderTile(
                 order: o,
                 workspaceId: workspace!.id,
                 canWrite: canWrite,
+                letterhead: (name: workspace.name, address: workspace.address),
               ),
           ],
         ),
@@ -83,7 +84,7 @@ class PurchaseOrdersScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Text(l10n.purchaseOrderRefused, semanticsLabel: '$error'),
         ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }
@@ -94,11 +95,15 @@ class _OrderTile extends ConsumerWidget {
     required this.order,
     required this.workspaceId,
     required this.canWrite,
+    required this.letterhead,
   });
 
   final PurchaseOrder order;
   final String workspaceId;
   final bool canWrite;
+
+  /// The space's name and address, printed at the top of the order.
+  final ({String name, String address}) letterhead;
 
   Future<void> _cancel(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
@@ -122,15 +127,13 @@ class _OrderTile extends ConsumerWidget {
             errorText: l10n.purchaseOrderRefused,
             action: () async {
               await ref
-                  .read(purchaseOrderRepositoryProvider)
+                  .read(purchaseOrderCommandsProvider)
                   .cancel(
                     workspaceId,
-                    order.id,
-                    order.revision,
+                    order,
                     reason.values['reason']!,
                     requestId,
                   );
-              ref.invalidate(purchaseOrdersProvider(workspaceId));
             },
           );
           return ok ? null : l10n.purchaseOrderRefused;
@@ -158,9 +161,8 @@ class _OrderTile extends ConsumerWidget {
       errorText: l10n.purchaseOrderRefused,
       action: () async {
         await ref
-            .read(purchaseOrderRepositoryProvider)
-            .markSent(workspaceId, order.id, order.revision, requestId);
-        ref.invalidate(purchaseOrdersProvider(workspaceId));
+            .read(purchaseOrderCommandsProvider)
+            .markSent(workspaceId, order, requestId);
       },
     );
   }
@@ -195,7 +197,7 @@ class _OrderTile extends ConsumerWidget {
                 ),
                 Chip(
                   key: ValueKey('purchase-order-state-${order.reference}'),
-                  label: Text(purchaseOrderStateLabel(l10n, order.state)),
+                  label: Text(_stateLabel(l10n, order.state)),
                 ),
               ],
             ),
@@ -211,11 +213,10 @@ class _OrderTile extends ConsumerWidget {
               children: [
                 OutlinedButton.icon(
                   key: ValueKey('purchase-order-print-${order.reference}'),
-                  onPressed: () => printPurchaseOrder(
-                    context,
-                    ref,
+                  onPressed: () => PurchaseOrderPrint(context, ref).show(
                     workspaceId: workspaceId,
                     order: order,
+                    letterhead: letterhead,
                   ),
                   icon: const Icon(Icons.print_outlined),
                   label: Text(l10n.purchaseOrderPrint),
@@ -223,12 +224,10 @@ class _OrderTile extends ConsumerWidget {
                 if (canWrite && draft) ...[
                   OutlinedButton.icon(
                     key: ValueKey('purchase-order-edit-${order.reference}'),
-                    onPressed: () => showPurchaseOrderSheet(
+                    onPressed: () => PurchaseOrderSheet(
                       context,
                       ref,
-                      workspaceId: workspaceId,
-                      order: order,
-                    ),
+                    ).open(workspaceId: workspaceId, order: order),
                     icon: const Icon(Icons.edit_outlined),
                     label: Text(l10n.purchaseOrderEdit),
                   ),

@@ -604,14 +604,12 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations l10n) {
 ReportBands defaultBandsForDoc(String docId, AppLocalizations l10n) {
   final kind = reportKindById(docId, reminderLevels: kMaxReminderLevels);
   if (kind == null) return ReportBands.empty;
-  return professionalReportBands(
-    kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
+  return professionalReportBands(kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
 }
 
 ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
     switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
-      ReportRootSlot() || ReportProformaSlot() =>
-        defaultInvoiceTemplate(l10n).invoiceBands,
+      ReportRootSlot() || ReportProformaSlot() => defaultInvoiceTemplate(l10n).invoiceBands,
       ReportStatementSlot() => _defaultStatementBands(l10n),
       ReportDocSlot(key: 'agreement') => _defaultAgreementBands(l10n),
       ReportDocSlot(key: 'payments') => _defaultPaymentsBands(l10n),

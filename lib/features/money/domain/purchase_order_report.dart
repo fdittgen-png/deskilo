@@ -8,24 +8,30 @@ library;
 import 'purchase_order.dart';
 import 'supplier.dart';
 
+/// How the document writes an amount (minor units of the order's
+/// currency), a day and a quantity, in the reader's locale.
+typedef PurchaseOrderFormats = ({
+  String Function(int minor) money,
+  String Function(DateTime day) date,
+  String Function(double quantity) quantity,
+});
+
 /// The data of [order] to [supplier] for the `purchase_order` kind, under
 /// [letterhead] (the space's name, address and legal mentions).
 Map<String, Object?> purchaseOrderReportData(
   PurchaseOrder order, {
   required Supplier? supplier,
-  required String Function(int minor) money,
-  required String Function(DateTime day) date,
-  required String Function(double quantity) quantity,
+  required PurchaseOrderFormats format,
   required DateTime issued,
   required String issuedBy,
   Map<String, Object?> letterhead = const {},
 }) => {
   ...letterhead,
   'number': order.reference,
-  'issued': date(order.sentAt ?? issued),
+  'issued': format.date(order.sentAt ?? issued),
   'issued_by': issuedBy,
   'expected_on': switch (order.expectedOn) {
-    final d? => date(d),
+    final d? => format.date(d),
     null => '',
   },
   'client_name': supplier?.name ?? order.supplierName,
@@ -42,14 +48,14 @@ Map<String, Object?> purchaseOrderReportData(
         'label': l.unit.isEmpty
             ? l.description
             : '${l.description} (${l.unit})',
-        'qty': quantity(l.quantity),
-        'unit_price': money(l.unitPriceCents),
-        'amount': money(l.netCents),
+        'qty': format.quantity(l.quantity),
+        'unit_price': format.money(l.unitPriceCents),
+        'amount': format.money(l.netCents),
       },
   ],
-  'net_total': money(order.netCents),
-  'vat_total': money(order.vatCents),
+  'net_total': format.money(order.netCents),
+  'vat_total': format.money(order.vatCents),
   'has_vat': order.vatCents != 0,
-  'total': money(order.totalCents),
+  'total': format.money(order.totalCents),
   'note': order.note,
 };

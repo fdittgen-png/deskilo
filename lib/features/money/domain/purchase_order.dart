@@ -10,6 +10,7 @@
 library;
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/time/date_text.dart';
 
 /// Where an order stands. Only a draft is edited; received and cancelled
 /// are final.
@@ -158,11 +159,11 @@ class PurchaseOrder {
 
   /// A draft whose recipient is an address it can be e-mailed to.
   bool get emailable =>
-      state == PurchaseOrderState.draft && isOrderEmail(recipientEmail);
+      state == PurchaseOrderState.draft && _isOrderEmail(recipientEmail);
 }
 
 /// An address an order may be e-mailed to: one address, no line breaks.
-bool isOrderEmail(String value) {
+bool _isOrderEmail(String value) {
   final v = value.trim();
   return v.length <= 254 &&
       !value.contains(RegExp(r'[\r\n]')) &&
@@ -243,7 +244,7 @@ class PurchaseOrderDraft {
       if (l.vatRatePercent case final r? when r < 0 || r >= 100)
         PurchaseOrderProblem.lineVatRate,
     },
-    if (recipientEmail.trim().isNotEmpty && !isOrderEmail(recipientEmail))
+    if (recipientEmail.trim().isNotEmpty && !_isOrderEmail(recipientEmail))
       PurchaseOrderProblem.recipientEmail,
   };
 
@@ -251,10 +252,7 @@ class PurchaseOrderDraft {
     'order_id': ?orderId,
     'supplier_id': supplierId,
     'expected_on': switch (expectedOn) {
-      final d? =>
-        '${d.year.toString().padLeft(4, '0')}-'
-            '${d.month.toString().padLeft(2, '0')}-'
-            '${d.day.toString().padLeft(2, '0')}',
+      final d? => isoDay(d),
       null => null,
     },
     'note': note.trim(),

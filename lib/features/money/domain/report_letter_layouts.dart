@@ -96,17 +96,7 @@ String defaultLetterLayoutXml(String kindId, LetterStrings s,
     ReportReminderSlot(:final level) => level,
     _ => 0,
   };
-  final title = _esc(switch (kindId) {
-    'invoice' => s.invoice,
-    'proforma' => s.proforma,
-    'statement' => s.statement,
-    'agreement' => s.agreement,
-    'payments' => s.payments,
-    'usage' => s.usage,
-    'status' => s.status,
-    'purchase_order' => s.purchaseOrder,
-    _ => '${s.reminder} $level',
-  });
+  final title = _esc(_letterTitle(kindId, s, level));
   final issuedOn = _esc(s.issuedOn);
   final dueOn = _esc(s.dueOn);
   final sites = _esc(s.sites);
@@ -223,23 +213,7 @@ $simpleLines
     </table>''',
     // #3307 — the order the space sends its supplier, at the supplier's
     // address in the window.
-    'purchase_order' => '''
-    <text style="heading">$title {{ number }}</text>
-    <text style="small">$issuedOn {{ issued }}</text>
-    {% if expected_on != "" %}<text style="small">${_esc(s.expectedOn)} {{ expected_on }}</text>{% endif %}
-    <spacer size="4mm"/>
-$linesTable
-    <rule/>
-    <table>
-      <col w="70%"/><col w="30%" align="right"/>
-      <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
-      {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
-      <row bold="true"><cell>$colTotal</cell><cell>{{ total }}</cell></row>
-    </table>
-    {% if note != "" %}<spacer size="4mm"/><text>{{ note }}</text>{% endif %}
-    <spacer size="6mm"/>
-    <text>$regards</text>
-    <text>{{ issued_by }}</text>''',
+    'purchase_order' => _purchaseOrderBody(s, title, linesTable),
     'status' => '''
     <text style="heading">$title — {{ status_from }} → {{ status_to }}</text>
     <text style="small">{{ workspace }} · {{ issued }}</text>
@@ -327,3 +301,38 @@ $body
 </report-layout>
 ''';
 }
+
+/// The title of the letter [kindId] (a reminder names its [level]).
+String _letterTitle(String kindId, LetterStrings s, int level) =>
+    switch (kindId) {
+      'invoice' => s.invoice,
+      'proforma' => s.proforma,
+      'statement' => s.statement,
+      'agreement' => s.agreement,
+      'payments' => s.payments,
+      'usage' => s.usage,
+      'status' => s.status,
+      'purchase_order' => s.purchaseOrder,
+      _ => '${s.reminder} $level',
+    };
+
+/// #3307 — the body of the purchase order: its number and dates, the
+/// lines, the totals, the note and the regards.
+String _purchaseOrderBody(LetterStrings s, String title, String linesTable) =>
+    '''
+    <text style="heading">$title {{ number }}</text>
+    <text style="small">${_esc(s.issuedOn)} {{ issued }}</text>
+    {% if expected_on != "" %}<text style="small">${_esc(s.expectedOn)} {{ expected_on }}</text>{% endif %}
+    <spacer size="4mm"/>
+$linesTable
+    <rule/>
+    <table>
+      <col w="70%"/><col w="30%" align="right"/>
+      <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
+      {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
+      <row bold="true"><cell>${_esc(s.total)}</cell><cell>{{ total }}</cell></row>
+    </table>
+    {% if note != "" %}<spacer size="4mm"/><text>{{ note }}</text>{% endif %}
+    <spacer size="6mm"/>
+    <text>${_esc(s.regards)}</text>
+    <text>{{ issued_by }}</text>''';

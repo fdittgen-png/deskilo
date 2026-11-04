@@ -17,58 +17,60 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase_order.dart';
 import '../../domain/service_item.dart';
 import '../../domain/supplier.dart';
 import '../../providers/money_providers.dart';
-import '../../providers/purchase_order_providers.dart';
 import '../../providers/supplier_providers.dart';
 
-/// Opens the form for a new order, or for the draft [order]. True once the
-/// server has it.
-Future<bool> showPurchaseOrderSheet(
-  BuildContext context,
-  WidgetRef ref, {
-  required String workspaceId,
-  PurchaseOrder? order,
-}) async {
-  final l10n = context.l10n;
-  final suppliers = [
-    for (final s in await ref.read(suppliersProvider(workspaceId).future))
-      if (s.isActive) s,
-  ];
-  final items = await ref.read(servicesProvider.future);
-  if (!context.mounted) return false;
-  final form = _OrderForm(order, items);
-  return showAppFormSheet(
-    context,
-    AppFormSheet(
-      title: order == null ? l10n.purchaseOrderNew : l10n.purchaseOrderEdit,
-      submitLabel: l10n.purchaseOrderSave,
-      submitKey: const ValueKey('purchase-order-save'),
-      onDispose: form.fields.dispose,
-      validate: () => form.errors(l10n),
-      onSubmit: () async {
-        final draft = form.draft();
-        final requestId = form.requestFor(draft);
-        final ok = await runGuarded(
-          context,
-          domain: 'money',
-          message: 'purchase order save failed',
-          errorText: l10n.purchaseOrderRefused,
-          action: () async {
-            await ref
-                .read(purchaseOrderRepositoryProvider)
-                .save(workspaceId, requestId, draft);
-            ref.invalidate(purchaseOrdersProvider(workspaceId));
-          },
-        );
-        return ok ? null : l10n.purchaseOrderRefused;
-      },
-      builder: (context, refresh) =>
-          form.build(context, ref, l10n, suppliers, refresh),
-    ),
-  );
+/// The purchase order form, opened from the orders screen.
+class PurchaseOrderSheet {
+  const PurchaseOrderSheet(this.context, this.ref);
+
+  final BuildContext context;
+  final WidgetRef ref;
+
+  /// Opens the form for a new order, or for the draft [order]. True once
+  /// the server has it.
+  Future<bool> open({required String workspaceId, PurchaseOrder? order}) async {
+    final l10n = context.l10n;
+    final suppliers = [
+      for (final s in await ref.read(suppliersProvider(workspaceId).future))
+        if (s.isActive) s,
+    ];
+    final items = await ref.read(servicesProvider.future);
+    if (!context.mounted) return false;
+    final form = _OrderForm(order, items);
+    return showAppFormSheet(
+      context,
+      AppFormSheet(
+        title: order == null ? l10n.purchaseOrderNew : l10n.purchaseOrderEdit,
+        submitLabel: l10n.purchaseOrderSave,
+        submitKey: const ValueKey('purchase-order-save'),
+        onDispose: form.fields.dispose,
+        validate: () => form.errors(l10n),
+        onSubmit: () async {
+          final draft = form.draft();
+          final requestId = form.requestFor(draft);
+          final ok = await runGuarded(
+            context,
+            domain: 'money',
+            message: 'purchase order save failed',
+            errorText: l10n.purchaseOrderRefused,
+            action: () async {
+              await ref
+                  .read(purchaseOrderCommandsProvider)
+                  .save(workspaceId, requestId, draft);
+            },
+          );
+          return ok ? null : l10n.purchaseOrderRefused;
+        },
+        builder: (context, refresh) =>
+            form.build(context, ref, l10n, suppliers, refresh),
+      ),
+    );
+  }
 }
 
 /// The form's state: its controllers, the chosen supplier, date and items,
@@ -103,6 +105,10 @@ class _OrderForm {
   DateTime? expectedOn;
   int lines;
   final List<String?> itemIds;
+
+  /// The last check's problems, for the fields that are not text fields
+  /// (the supplier picker reads its own here).
+  FieldErrors shown = const {};
 
   PurchaseOrderDraft? _attempted;
   String _requestId = newRequestId();
@@ -170,6 +176,7 @@ class _OrderForm {
         out['vat-$i'] = l10n.purchaseOrderBadVatRate;
       }
     }
+    shown = out;
     return out;
   }
 
@@ -186,7 +193,10 @@ class _OrderForm {
         key: const ValueKey('purchase-order-supplier'),
         initialValue: supplierId,
         isExpanded: true,
-        decoration: InputDecoration(labelText: l10n.purchaseOrderSupplier),
+        decoration: InputDecoration(
+          labelText: l10n.purchaseOrderSupplier,
+          errorText: supplierId == null ? shown['supplier'] : null,
+        ),
         items: [
           for (final s in suppliers)
             DropdownMenuItem<String?>(
