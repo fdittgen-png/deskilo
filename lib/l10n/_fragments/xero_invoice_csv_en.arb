@@ -1,0 +1,66 @@
+{
+  "@@locale": "en",
+  "invoiceExportXeroInvoiceCsv": "Xero (sales invoice import)",
+  "@invoiceExportXeroInvoiceCsv": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsTitle": "Xero export",
+  "@xeroInvoiceAccountsTitle": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsIntro": "Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.",
+  "@xeroInvoiceAccountsIntro": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountCode": "Sales account code",
+  "@xeroInvoiceAccountCode": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceTaxType": "Xero tax rate for {rate}",
+  "@xeroInvoiceTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "xeroInvoiceDateOrder": "Date order in your organisation",
+  "@xeroInvoiceDateOrder": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceDayFirst": "Day first (31/12/2026)",
+  "@xeroInvoiceDayFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceMonthFirst": "Month first (12/31/2026)",
+  "@xeroInvoiceMonthFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedAccount": "Enter the sales account code.",
+  "@xeroInvoiceRefusedAccount": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedTaxType": "Name the Xero tax rate for {rate}.",
+  "@xeroInvoiceRefusedTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
+  "@xeroInvoiceCreditNotesLeftOut": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "xeroInvoiceImportTaxExclusive": "In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.",
+  "@xeroInvoiceImportTaxExclusive": {
+    "description": "#2372 - the instruction for the Xero import screen"
+  }
+}
