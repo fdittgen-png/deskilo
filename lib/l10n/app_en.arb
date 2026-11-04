@@ -21638,6 +21638,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Birthday",
+  "personalBirthdayClear": "Remove the birthday",
+  "personalBirthdayHelp": "Only you, people allowed to see members' personal data and the workspace's privacy admin can read it. Someone who only issues invoices cannot.",
+  "personalBirthdayInvalid": "A birthday cannot be in the future or before 1900.",
+  "personalBirthdayPick": "Choose a date",
+  "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
   "personalInfoCity": "City",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -22344,6 +22350,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "The server refused: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Why it is kept",
+  "privacyAdminComplete": "Complete",
+  "privacyAdminDetails": "Details (optional)",
+  "privacyAdminEmpty": "No rights request yet.",
+  "privacyAdminExtend": "Extend the deadline",
+  "privacyAdminExtendReason": "Reason for the extension (at least 10 characters)",
+  "privacyAdminIncidentIntro": "The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.",
+  "privacyAdminIncidentNote": "What happened (optional, 1000 characters at most)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Record and tell them",
+  "privacyAdminIncidentTitle": "Record a privacy incident",
+  "privacyAdminIntro": "The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.",
+  "privacyAdminKind": "Kind of request",
+  "privacyAdminLoadFailed": "The requests could not be read.",
+  "privacyAdminMember": "Member",
+  "privacyAdminOpenTile": "Personal data and rights requests",
+  "privacyAdminOutcomeKind": "What happened to the data",
+  "privacyAdminPeriod": "For how long",
+  "privacyAdminReceivedOn": "Received on {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Record a request",
+  "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
+  "privacyAdminRefuse": "Refuse",
+  "privacyAdminSave": "Save",
+  "privacyAdminStore": "Where (a store or a list)",
+  "privacyAdminTitle": "Personal data and rights requests",
   "privacyErase": "Leave this workspace and erase my data",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -22407,6 +22460,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "A data breach",
+  "privacyIncidentOther": "Another incident",
+  "privacyIncidentWrongInvoice": "A wrong invoice",
   "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -22470,6 +22526,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Corrected",
+  "privacyOutcomeFailed": "Could not be done",
+  "privacyOutcomePendingExternal": "Still open elsewhere",
+  "privacyOutcomeRemoved": "Removed",
+  "privacyOutcomeRestricted": "Restricted",
+  "privacyOutcomeRetained": "Kept (with a reason)",
   "privacyPolicy": "Privacy policy",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"

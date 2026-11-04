@@ -221,6 +221,12 @@ void main() {
             PostgrestException(message: message, code: code),
           );
       expect(of('42501'), WorkspaceExportFailure.forbidden);
+      // #3278 — a workspace that turned direct access off says so: typed apart
+      // from a plain refusal, so the card can tell the member what to do.
+      expect(
+        of('42501', 'privacy_self_service_off: file a rights request instead'),
+        WorkspaceExportFailure.selfServiceOff,
+      );
       expect(
         of('P0001', 'not a member of this workspace'),
         WorkspaceExportFailure.forbidden,
@@ -354,6 +360,30 @@ void main() {
       );
       expect(_key('me-data-workspace-retry-${_id(_sourceA)}'), findsNothing);
       expect(_key('me-data-workspace-retry-${_id(_sourceB)}'), findsNothing);
+      expect(saver.files, isEmpty);
+    });
+
+    testWidgets('a workspace that handles data requests itself tells the member '
+        'to file a rights request, with no pointless retry (#3278)', (
+      tester,
+    ) async {
+      final exports = FakeWorkspaceExportRepository(
+        document: _document,
+        failures: {
+          _wsA: const WorkspaceExportRefused(
+            WorkspaceExportFailure.selfServiceOff,
+          ),
+        },
+      );
+      final saver = _Saver();
+      await _open(tester, exports: exports, saver: saver);
+      await _tap(tester, 'me-data-workspace-export-${_id(_sourceA)}');
+      expect(
+        find.textContaining('File a rights request'),
+        findsOneWidget,
+        reason: 'the member is told what to do, not that they are forbidden',
+      );
+      expect(_key('me-data-workspace-retry-${_id(_sourceA)}'), findsNothing);
       expect(saver.files, isEmpty);
     });
 

@@ -24,6 +24,9 @@ class FakeCalendarRepository implements CalendarRepository {
   final List<DataAccessEntry> log = [];
   Map<String, dynamic> export = const {};
   bool erased = false;
+
+  /// #3278 — what the server answers an erasure with, for refusal tests.
+  Exception? eraseFailure;
   Exception? failure;
 
   @override
@@ -59,6 +62,7 @@ class FakeCalendarRepository implements CalendarRepository {
 
   @override
   Future<void> eraseMyMembership(String workspaceId) async {
+    if (eraseFailure != null) throw eraseFailure!;
     erased = true;
   }
 }

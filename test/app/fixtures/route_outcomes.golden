@@ -59,6 +59,7 @@ signed-out on  /me/spaces/manage -> /auth
 signed-out on  /member/:memberId -> /auth
 signed-out on  /members -> /auth
 signed-out on  /members/managed -> /auth
+signed-out on  /members/privacy -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
@@ -188,6 +189,7 @@ signed-out off /me/spaces/manage -> /auth
 signed-out off /member/:memberId -> /auth
 signed-out off /members -> /auth
 signed-out off /members/managed -> /auth
+signed-out off /members/privacy -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
@@ -317,6 +319,7 @@ no-space on  /me/spaces/manage -> /profiles
 no-space on  /member/:memberId -> /me
 no-space on  /members -> /me
 no-space on  /members/managed -> /me
+no-space on  /members/privacy -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
@@ -446,6 +449,7 @@ no-space off /me/spaces/manage -> /profiles
 no-space off /member/:memberId -> /me
 no-space off /members -> /me
 no-space off /members/managed -> /me
+no-space off /members/privacy -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
@@ -575,6 +579,7 @@ member on  /me/spaces/manage -> /profiles
 member on  /member/:memberId -> (open)
 member on  /members -> /calendar
 member on  /members/managed -> /calendar
+member on  /members/privacy -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
@@ -704,6 +709,7 @@ member off /me/spaces/manage -> /profiles
 member off /member/:memberId -> /messages
 member off /members -> /messages
 member off /members/managed -> /messages
+member off /members/privacy -> /messages
 member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
@@ -833,6 +839,7 @@ admin on  /me/spaces/manage -> /profiles
 admin on  /member/:memberId -> (open)
 admin on  /members -> (open)
 admin on  /members/managed -> (open)
+admin on  /members/privacy -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
@@ -962,6 +969,7 @@ admin off /me/spaces/manage -> /profiles
 admin off /member/:memberId -> /messages
 admin off /members -> (open)
 admin off /members/managed -> /members
+admin off /members/privacy -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
@@ -1091,6 +1099,7 @@ owner on  /me/spaces/manage -> /profiles
 owner on  /member/:memberId -> (open)
 owner on  /members -> (open)
 owner on  /members/managed -> (open)
+owner on  /members/privacy -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
@@ -1220,6 +1229,7 @@ owner off /me/spaces/manage -> /profiles
 owner off /member/:memberId -> /messages
 owner off /members -> (open)
 owner off /members/managed -> /members
+owner off /members/privacy -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages

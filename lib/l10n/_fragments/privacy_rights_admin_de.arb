@@ -1,0 +1,65 @@
+{
+  "@@locale": "de",
+  "personalBirthday": "Geburtstag",
+  "personalBirthdayHelp": "Nur Sie, Personen mit Einsicht in die persönlichen Daten der Mitglieder und die Datenschutzverantwortlichen des Arbeitsbereichs können es lesen. Wer nur Rechnungen stellt, kann es nicht.",
+  "personalBirthdayPick": "Datum wählen",
+  "personalBirthdayClear": "Geburtstag entfernen",
+  "personalBirthdayInvalid": "Ein Geburtstag kann nicht in der Zukunft oder vor 1900 liegen.",
+  "personalBirthdaySaveFailed": "Ihre Angaben wurden gespeichert, der Geburtstag jedoch nicht.",
+  "privacyAdminTitle": "Persönliche Daten und Rechteanfragen",
+  "privacyAdminIntro": "Die Anfragen der Mitglieder zu ihren persönlichen Daten und die Vorfälle, die Sie erfassen. Jede Anfrage wird innerhalb eines Kalendermonats beantwortet.",
+  "privacyAdminEmpty": "Noch keine Rechteanfrage.",
+  "privacyAdminRecord": "Anfrage erfassen",
+  "privacyAdminMember": "Mitglied",
+  "privacyAdminKind": "Art der Anfrage",
+  "privacyAdminDetails": "Details (optional)",
+  "privacyAdminReceivedOn": "Eingegangen am {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminExtend": "Frist verlängern",
+  "privacyAdminExtendReason": "Grund der Verlängerung (mindestens 10 Zeichen)",
+  "privacyAdminComplete": "Abschließen",
+  "privacyAdminRefuse": "Ablehnen",
+  "privacyAdminOutcomeKind": "Was mit den Daten geschah",
+  "privacyOutcomeRemoved": "Gelöscht",
+  "privacyOutcomeCorrected": "Berichtigt",
+  "privacyOutcomeRestricted": "Eingeschränkt",
+  "privacyOutcomeRetained": "Aufbewahrt (mit Begründung)",
+  "privacyOutcomePendingExternal": "Anderswo noch offen",
+  "privacyOutcomeFailed": "Nicht durchführbar",
+  "privacyAdminStore": "Wo (ein Speicher oder eine Liste)",
+  "privacyAdminBasis": "Warum aufbewahrt",
+  "privacyAdminPeriod": "Wie lange",
+  "privacyAdminRefusalReason": "Grund der Ablehnung (mindestens 10 Zeichen)",
+  "privacyAdminSave": "Speichern",
+  "privacyAdminActionFailed": "Der Server hat abgelehnt: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminIncidentTitle": "Datenschutzvorfall erfassen",
+  "privacyAdminIncidentIntro": "Die Personen, die in diesem Arbeitsbereich persönliche Daten betreuen, werden sofort informiert. Beschreiben Sie, was geschah; fügen Sie hier keine persönlichen Daten ein.",
+  "privacyIncidentDataBreach": "Eine Datenpanne",
+  "privacyIncidentWrongInvoice": "Eine falsche Rechnung",
+  "privacyIncidentOther": "Ein anderer Vorfall",
+  "privacyAdminIncidentNote": "Was geschah (optional, höchstens 1000 Zeichen)",
+  "privacyAdminIncidentSend": "Erfassen und informieren",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Erfasst. Niemand hat dieses Recht, daher wurde niemand informiert.} =1{Erfasst. 1 Person wurde informiert.} other{Erfasst. {count} Personen wurden informiert.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminOpenTile": "Persönliche Daten und Rechteanfragen",
+  "privacyAdminLoadFailed": "Die Anfragen konnten nicht gelesen werden."
+}
