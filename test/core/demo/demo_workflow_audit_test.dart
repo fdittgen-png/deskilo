@@ -8,16 +8,20 @@
 // never the fake's own bookkeeping. The matrix these rows pin is
 // docs/testing/evidence/demo-audit-3291-workflows.md.
 import 'package:deskilo/core/calendar/calendar_item.dart';
+import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/realtime/invalidation_map.dart';
+import 'package:deskilo/core/realtime/realtime_wiring.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/providers/money_queries_providers.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
@@ -67,15 +71,8 @@ void main() {
       };
 
   /// A free morning a week ahead for [seat], so no seeded booking holds it.
-  ({DateTime start, DateTime end}) freeMorning(String space, String seat) {
-    for (var d = 7; d < 60; d++) {
-      final w = HalfDayWindows.morning(fixture.seededAt.add(Duration(days: d)));
-      final taken = storeOf(space).any((r) =>
-          r.seatId == seat && r.isActive && r.startsAt.isBefore(w.end) && w.start.isBefore(r.endsAt));
-      if (!taken) return (start: w.start, end: w.end);
-    }
-    throw StateError('no free morning for $seat');
-  }
+  ({DateTime start, DateTime end}) freeMorning(String space, String seat) =>
+      _freeDay(fixture, storeOf(space), seat);
 
   bool isBooking(CalendarItem i, String id) => i.link is ReservationLink && (i.link! as ReservationLink).id == id;
 
@@ -129,6 +126,49 @@ void main() {
     }
   });
 
+  test('the open calendar shows a booking once the app\'s mutation path '
+      'invalidates it, as invalidateBookingData does after every booking', () async {
+    await enter('ws-1');
+    final scope = container;
+    final seat = seatOf('ws-1');
+    final w = freeMorning('ws-1', seat);
+    final query = CalendarQuery(from: w.start.subtract(const Duration(days: 1)), to: w.end.add(const Duration(days: 1)));
+    scope.listen(calendarItemsProvider(query), (_, _) {});
+    final before = await scope.read(calendarItemsProvider(query).future);
+
+    final id = await scope
+        .read(reservationRepositoryProvider)
+        .create(workspaceId: 'ws-1', seatId: seat, startsAt: w.start, endsAt: w.end);
+    expect(before.items.where((i) => isBooking(i, id)), isEmpty);
+    // What the booking sheet runs after a booking (invalidateBookingData):
+    // the providers the realtime map names for the tables it wrote.
+    for (final table in bookingMutationTables) {
+      for (final provider in scope.read(invalidationLookupProvider)(table).providers) {
+        scope.invalidate(provider);
+      }
+    }
+    final after = await scope.read(calendarItemsProvider(query).future);
+    expect(after.items.where((i) => isBooking(i, id)), hasLength(1),
+        reason: 'the refetch reads the session\'s bookings, not the seed');
+  });
+
+  test('the journey\'s slot is free at any Demo clock', () async {
+    for (final now in [demoSeedNow, demoSeedNow.add(const Duration(days: 47, hours: 5))]) {
+      final f = DemoFixture.build(now: now);
+      for (final (rows, repo, seat, space) in [
+        (f.reservations.reservations, f.reservations, f.floorPlan.seats.first.id, 'ws-1'),
+        (f.secondSpace.reservations.reservations, f.secondSpace.reservations, f.secondSpace.floorPlan.seats.first.id, demoSecondSpaceId),
+        (f.london.reservations.reservations, f.london.reservations, f.london.floorPlan.seats.first.id, demoLondonSpaceId),
+        (f.newYork.reservations.reservations, f.newYork.reservations, f.newYork.floorPlan.seats.first.id, demoNewYorkSpaceId),
+      ]) {
+        final w = _freeDay(f, rows, seat);
+        final id = await repo.create(workspaceId: space, seatId: seat, startsAt: w.start, endsAt: w.end);
+        final later = HalfDayWindows.afternoon(w.start);
+        await repo.updateTimes(id, startsAt: later.start, endsAt: later.end);
+      }
+    }
+  });
+
   group('decisions apply what respond_to_event applies (0101)', () {
     Future<WorkspaceEvent> decide(String space, String eventId, {required bool accept}) async {
       await enter(space);
@@ -136,6 +176,25 @@ void main() {
       await events.respond(eventId, accept: accept);
       return (await events.fetchEvent(eventId))!;
     }
+
+    test('a recorded payment files a pending request; its confirmation '
+        'credits the member\'s account (record_payment 0070, 0101)', () async {
+      await enter('ws-1');
+      final id = await container.read(memberAccountCommandsProvider).recordPayment(
+            workspaceId: 'ws-1', memberId: 'member-2', amountCents: 4200, note: 'June rent');
+      final events = container.read(eventRepositoryProvider);
+      final filed = await events.fetchEvent(id);
+      expect(filed?.type, EventType.payment);
+      expect(filed?.status, EventStatus.pending);
+      expect(fixture.money.ledger.where((l) => l.amountCents == 4200 && l.memberId == 'member-2'), isEmpty,
+          reason: 'recorded is not paid: no credit before the decision');
+      await events.respond(id, accept: true);
+      final credit = fixture.money.ledger
+          .where((l) => l.memberId == 'member-2' && l.kind == LedgerKind.credit &&
+              l.category == LedgerCategory.payment && l.amountCents == 4200)
+          .toList();
+      expect(credit, hasLength(1), reason: 'the confirmed payment is credited once');
+    });
 
     test('an approved reservation deletion cancels the booking', () async {
       final e = await decide('ws-1', 'demo-delete-request', accept: true);
@@ -273,3 +332,20 @@ const _offOnPurpose = <String, String>{
   'ws-2/documentsInformation/reportDesign': _leipzigNew,
   'ws-2/reservationsUsage/attendance': _leipzigNew,
 };
+
+/// A morning, a week or more ahead, whose morning AND afternoon neither
+/// [seat] nor the acting persona holds in [rows] (the one-place rule,
+/// `enforce_one_place`), so the book-then-move journey never meets a
+/// seeded booking whatever day the Demo believes it is.
+({DateTime start, DateTime end}) _freeDay(DemoFixture fixture, List<Reservation> rows, String seat) {
+  bool clash(Reservation r, HalfDayWindow w) =>
+      r.isActive && r.startsAt.isBefore(w.end) && w.start.isBefore(r.endsAt) &&
+      (r.seatId == seat || r.memberId == fixture.activeMemberId);
+  for (var d = 7; d < 120; d++) {
+    final day = fixture.seededAt.add(Duration(days: d));
+    final halves = [HalfDayWindows.morning(day), HalfDayWindows.afternoon(day)];
+    if (rows.any((r) => halves.any((w) => clash(r, w)))) continue;
+    return (start: halves.first.start, end: halves.first.end);
+  }
+  throw StateError('no free day for $seat');
+}

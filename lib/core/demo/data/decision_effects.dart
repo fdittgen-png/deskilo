@@ -40,7 +40,8 @@ void wireDecisionEffects(
     if (m != null && m.status == MemberStatus.pending) await workspaces.updateMemberStatus(m.id, to);
   }
 
-  void ledger(WorkspaceEvent e, LedgerKind kind, LedgerCategory category, int cents, String text) {
+  void ledger(WorkspaceEvent e, LedgerKind kind, LedgerCategory category, int cents, String text,
+      {DateTime? occurredOn}) {
     final at = now();
     money.ledger.add(LedgerEntry(
       id: 'decided-${e.id}-${next++}',
@@ -51,6 +52,7 @@ void wireDecisionEffects(
       description: text,
       period: e.payload['period'] as String? ?? yearMonth(at.year, at.month),
       createdAt: at,
+      occurredOn: occurredOn,
     ));
   }
 
@@ -69,6 +71,11 @@ void wireDecisionEffects(
       case EventType.reservationDelete:
         cancel(e.payload['reservation_id'] as String? ?? e.reservationId,
             const {ReservationStatus.reserved, ReservationStatus.checkedIn, ReservationStatus.completed});
+      case EventType.payment:
+        // A confirmed payment is a credit dated the day the money moved.
+        ledger(e, LedgerKind.credit, LedgerCategory.payment, intOf(e.payload['amount_cents']),
+            e.payload['note'] as String? ?? '',
+            occurredOn: DateTime.tryParse(e.payload['paid_on'] as String? ?? ''));
       case EventType.expense:
         final supply = e.payload['supply'];
         ledger(e, LedgerKind.credit, LedgerCategory.expense, intOf(e.payload['amount_cents']),

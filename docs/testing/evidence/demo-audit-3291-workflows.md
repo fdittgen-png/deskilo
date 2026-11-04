@@ -14,8 +14,10 @@ New York `ws-4` (US, USD), the development twin `ws-1-dev`.
 | Subprocess | Space | Persona | Initial state | Action | Expected | Observed (before → after) | Evidence |
 |---|---|---|---|---|---|---|---|
 | Reservations: book | all four | owner | a free seat a week ahead | book a morning | stored by that space only; on the day's plan; in the calendar at once | plan ✓; **calendar did not show it** (seeded once at build) → shown | `reservations: …` ×4 |
+| Calendar after a booking, as the screen reads it | Pézenas | owner | `calendarItemsProvider` watched | book, then the app's own mutation path (`invalidateBookingData`: the providers the realtime map names for `reservations`, `events`, `ledger_entries`) | the refetched range holds the booking | **the refetch answered the seed** → holds it | `the open calendar shows a booking …` |
 | Reservations: move | all four | owner | the booking above | move to the afternoon | plan and calendar at the new time | **calendar kept the old time** → follows the move | same |
 | Reservations: cancel | all four | owner | the moved booking | cancel | status cancelled on plan and calendar | **calendar still read it reserved** → cancelled | same |
+| Payment journey | Pézenas | owner | Bruno's account | record a payment, then confirm it | a pending `payment` request (record_payment, 0070), no credit before the decision; one payment credit dated the day paid after it (0101) | **the returned event id named no event; nothing was credited** → filed, then credited | `a recorded payment files …` |
 | Decisions: reservation deletion | Pézenas | owner | Bruno's pending request on `demo-past` | approve | request confirmed; the booking cancelled | **booking stayed active** → cancelled | `an approved reservation deletion …` |
 | Decisions: join | Pézenas | owner | Dov (`member-4`) pending | approve / refuse | member active / exited | **member stayed pending** → active / exited | `an approved join …` |
 | Decisions: room request | Pézenas | owner | Bruno's room held for a validator | refuse | request rejected; the room freed | **room stayed booked** → cancelled | `a refused room request …` |
@@ -37,6 +39,9 @@ New York `ws-4` (US, USD), the development twin `ws-1-dev`.
   basic space beside the full one.
 - **Quota extensions and negotiated prices**: the decision is recorded and the request confirmed; the Demo has no
   quota-extension or negotiated-price store and no screen reads one, so the server's insert has nothing to land in.
+- **No Demo realtime**: the Demo's change feed never emits (`FakeRealtimeSync`), so a screen refreshes after the
+  session's own mutation path invalidates it (as above), not because another device changed a row; the Demo has one
+  session, so no second device exists to change one.
 - **Backend-only enforcement** (RLS, triggers' refusals) is not re-proved in memory (ADR 0028, the issue's non-goal).
 - **Kiosk, check-in/out, book-for-others, cancel-for-others** gates and attribution: #3293 (PR #3297) fixed and pinned
   them; not duplicated.
@@ -47,6 +52,8 @@ New York `ws-4` (US, USD), the development twin `ws-1-dev`.
 
 - `lib/core/demo/data/decision_effects.dart` (new) and the `onDecided` hook of `FakeEventRepository`, wired in every
   space: a decided request now changes what `respond_to_event` changes.
+- `DemoMemberAccountCommands.recordPayment` files the pending `payment` request record_payment files, and its
+  confirmation credits the member (`decision_effects.dart`).
 - `FakeCalendarRepository.beforeRead` and `seedDemoCalendar`: the calendar rebuilds from the space's live stores on
   each read (as `calendar_items` reads the tables), and states amounts in the space's currency; a checked-in booking
   is no longer listed twice.
