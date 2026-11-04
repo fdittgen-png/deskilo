@@ -19798,6 +19798,125 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseNeedsReview => 'Por revisar';
 
   @override
+  String get purchaseOrderAddLine => 'Añadir una línea';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'Una dirección de correo, o déjelo vacío para imprimir';
+
+  @override
+  String get purchaseOrderBadVatRate => 'Un tipo de IVA de 0 a 99';
+
+  @override
+  String get purchaseOrderCancel => 'Anular el pedido';
+
+  @override
+  String get purchaseOrderCancelReason => '¿Por qué se anula?';
+
+  @override
+  String get purchaseOrderDescription => 'Qué se pide';
+
+  @override
+  String get purchaseOrderEdit => 'Editar el pedido';
+
+  @override
+  String get purchaseOrderEmail => 'Dirección de correo para enviarlo';
+
+  @override
+  String get purchaseOrderExpected => 'Entrega prevista';
+
+  @override
+  String get purchaseOrderFreeText => 'Texto libre';
+
+  @override
+  String get purchaseOrderItem => 'Artículo del catálogo';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Línea $n';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Marcar como enviado';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Indique qué se pide o elija un artículo';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'Un precio unitario, 0 o más';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'Una cantidad mayor que cero';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Elija el proveedor';
+
+  @override
+  String get purchaseOrderNew => 'Nuevo pedido';
+
+  @override
+  String get purchaseOrderNote => 'Nota para el proveedor';
+
+  @override
+  String get purchaseOrderPickDate => 'Elegir la fecha de entrega prevista';
+
+  @override
+  String get purchaseOrderPrint => 'Imprimir';
+
+  @override
+  String get purchaseOrderQuantity => 'Cantidad';
+
+  @override
+  String get purchaseOrderRefused =>
+      'El pedido no se modificó. Revise los datos e inténtelo de nuevo.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Quitar la línea';
+
+  @override
+  String get purchaseOrderSave => 'Guardar el borrador';
+
+  @override
+  String get purchaseOrderStateCancelled => 'Anulado';
+
+  @override
+  String get purchaseOrderStateDraft => 'Borrador';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Recibido en parte';
+
+  @override
+  String get purchaseOrderStateReceived => 'Recibido';
+
+  @override
+  String get purchaseOrderStateSent => 'Enviado';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Proveedor';
+
+  @override
+  String get purchaseOrderUnit => 'Unidad (p. ej. caja)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Precio unitario sin IVA';
+
+  @override
+  String get purchaseOrderVatRate => 'Tipo de IVA (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'Aún no hay pedidos. Un pedido nuevo empieza como borrador que puede editar, imprimir y enviar.';
+
+  @override
+  String get purchaseOrdersTitle => 'Pedidos de compra';
+
+  @override
   String get purchaseQualified => 'Contabilidad cualificada';
 
   @override
@@ -21368,6 +21487,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportDocPayments => 'Informe de pagos';
 
   @override
+  String get reportDocPurchaseOrder => 'Pedido de compra';
+
+  @override
   String get reportDocSpaceCodes => 'Tarjetas QR de espacios';
 
   @override
@@ -21397,6 +21519,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visual';
+
+  @override
+  String get reportExpectedDelivery => 'Entrega prevista';
 
   @override
   String get reportFieldGroupBank => 'Datos bancarios';

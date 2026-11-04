@@ -19655,6 +19655,125 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseNeedsReview => 'Needs review';
 
   @override
+  String get purchaseOrderAddLine => 'Add a line';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'One e-mail address, or leave it empty to print';
+
+  @override
+  String get purchaseOrderBadVatRate => 'A VAT rate from 0 to 99';
+
+  @override
+  String get purchaseOrderCancel => 'Cancel the order';
+
+  @override
+  String get purchaseOrderCancelReason => 'Why is it cancelled?';
+
+  @override
+  String get purchaseOrderDescription => 'What is ordered';
+
+  @override
+  String get purchaseOrderEdit => 'Edit the order';
+
+  @override
+  String get purchaseOrderEmail => 'E-mail address to send it to';
+
+  @override
+  String get purchaseOrderExpected => 'Expected delivery';
+
+  @override
+  String get purchaseOrderFreeText => 'Free text';
+
+  @override
+  String get purchaseOrderItem => 'Catalogue item';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Line $n';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Mark as sent';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Say what is ordered, or choose an item';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'A unit price, 0 or more';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'A quantity above zero';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Choose the supplier';
+
+  @override
+  String get purchaseOrderNew => 'New order';
+
+  @override
+  String get purchaseOrderNote => 'Note to the supplier';
+
+  @override
+  String get purchaseOrderPickDate => 'Pick the expected delivery date';
+
+  @override
+  String get purchaseOrderPrint => 'Print';
+
+  @override
+  String get purchaseOrderQuantity => 'Quantity';
+
+  @override
+  String get purchaseOrderRefused =>
+      'The order was not changed. Check the entries and try again.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Remove the line';
+
+  @override
+  String get purchaseOrderSave => 'Save the draft';
+
+  @override
+  String get purchaseOrderStateCancelled => 'Cancelled';
+
+  @override
+  String get purchaseOrderStateDraft => 'Draft';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Partly received';
+
+  @override
+  String get purchaseOrderStateReceived => 'Received';
+
+  @override
+  String get purchaseOrderStateSent => 'Sent';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Supplier';
+
+  @override
+  String get purchaseOrderUnit => 'Unit (e.g. box)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Unit price before VAT';
+
+  @override
+  String get purchaseOrderVatRate => 'VAT rate (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'No purchase order yet. A new order starts as a draft you can edit, print and send.';
+
+  @override
+  String get purchaseOrdersTitle => 'Purchase orders';
+
+  @override
   String get purchaseQualified => 'Accounting qualified';
 
   @override
@@ -21208,6 +21327,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportDocPayments => 'Payments report';
 
   @override
+  String get reportDocPurchaseOrder => 'Purchase order';
+
+  @override
   String get reportDocSpaceCodes => 'Space QR cards';
 
   @override
@@ -21237,6 +21359,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visual';
+
+  @override
+  String get reportExpectedDelivery => 'Expected delivery';
 
   @override
   String get reportFieldGroupBank => 'Bank details';

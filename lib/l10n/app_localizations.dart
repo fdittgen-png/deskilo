@@ -32817,6 +32817,228 @@ abstract class AppLocalizations {
   /// **'Needs review'**
   String get purchaseNeedsReview;
 
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get purchaseOrderAddLine;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'One e-mail address, or leave it empty to print'**
+  String get purchaseOrderBadEmail;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A VAT rate from 0 to 99'**
+  String get purchaseOrderBadVatRate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the order'**
+  String get purchaseOrderCancel;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it cancelled?'**
+  String get purchaseOrderCancelReason;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'What is ordered'**
+  String get purchaseOrderDescription;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the order'**
+  String get purchaseOrderEdit;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail address to send it to'**
+  String get purchaseOrderEmail;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery'**
+  String get purchaseOrderExpected;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Free text'**
+  String get purchaseOrderFreeText;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue item'**
+  String get purchaseOrderItem;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Line {n}'**
+  String purchaseOrderLine(String n);
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as sent'**
+  String get purchaseOrderMarkSent;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Say what is ordered, or choose an item'**
+  String get purchaseOrderNeedsDescription;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A unit price, 0 or more'**
+  String get purchaseOrderNeedsPrice;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A quantity above zero'**
+  String get purchaseOrderNeedsQuantity;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the supplier'**
+  String get purchaseOrderNeedsSupplier;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'New order'**
+  String get purchaseOrderNew;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Note to the supplier'**
+  String get purchaseOrderNote;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the expected delivery date'**
+  String get purchaseOrderPickDate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get purchaseOrderPrint;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get purchaseOrderQuantity;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'The order was not changed. Check the entries and try again.'**
+  String get purchaseOrderRefused;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the line'**
+  String get purchaseOrderRemoveLine;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Save the draft'**
+  String get purchaseOrderSave;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get purchaseOrderStateCancelled;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get purchaseOrderStateDraft;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Partly received'**
+  String get purchaseOrderStatePartlyReceived;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get purchaseOrderStateReceived;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get purchaseOrderStateSent;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} · {total}'**
+  String purchaseOrderSummary(String supplier, String total);
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get purchaseOrderSupplier;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (e.g. box)'**
+  String get purchaseOrderUnit;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price before VAT'**
+  String get purchaseOrderUnitPrice;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate (%)'**
+  String get purchaseOrderVatRate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase order yet. A new order starts as a draft you can edit, print and send.'**
+  String get purchaseOrdersEmpty;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase orders'**
+  String get purchaseOrdersTitle;
+
   /// #2577 the three status chips of a purchase document
   ///
   /// In en, this message translates to:
@@ -35553,6 +35775,12 @@ abstract class AppLocalizations {
   /// **'Payments report'**
   String get reportDocPayments;
 
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get reportDocPurchaseOrder;
+
   /// No description provided for @reportDocSpaceCodes.
   ///
   /// In en, this message translates to:
@@ -35612,6 +35840,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visual'**
   String get reportEditorVisual;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery'**
+  String get reportExpectedDelivery;
 
   /// #966 report guide: reportFieldGroupBank
   ///

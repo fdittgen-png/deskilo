@@ -19843,6 +19843,125 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseNeedsReview => 'Zu prüfen';
 
   @override
+  String get purchaseOrderAddLine => 'Position hinzufügen';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'Eine E-Mail-Adresse, oder leer lassen zum Drucken';
+
+  @override
+  String get purchaseOrderBadVatRate => 'Ein USt-Satz von 0 bis 99';
+
+  @override
+  String get purchaseOrderCancel => 'Bestellung stornieren';
+
+  @override
+  String get purchaseOrderCancelReason => 'Warum wird storniert?';
+
+  @override
+  String get purchaseOrderDescription => 'Was bestellt wird';
+
+  @override
+  String get purchaseOrderEdit => 'Bestellung bearbeiten';
+
+  @override
+  String get purchaseOrderEmail => 'E-Mail-Adresse für den Versand';
+
+  @override
+  String get purchaseOrderExpected => 'Erwartete Lieferung';
+
+  @override
+  String get purchaseOrderFreeText => 'Freier Text';
+
+  @override
+  String get purchaseOrderItem => 'Katalogartikel';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Position $n';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Als gesendet markieren';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Geben Sie an, was bestellt wird, oder wählen Sie einen Artikel';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'Ein Stückpreis, 0 oder mehr';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'Eine Menge über null';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Wählen Sie den Lieferanten';
+
+  @override
+  String get purchaseOrderNew => 'Neue Bestellung';
+
+  @override
+  String get purchaseOrderNote => 'Hinweis an den Lieferanten';
+
+  @override
+  String get purchaseOrderPickDate => 'Erwartetes Lieferdatum wählen';
+
+  @override
+  String get purchaseOrderPrint => 'Drucken';
+
+  @override
+  String get purchaseOrderQuantity => 'Menge';
+
+  @override
+  String get purchaseOrderRefused =>
+      'Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Position entfernen';
+
+  @override
+  String get purchaseOrderSave => 'Entwurf speichern';
+
+  @override
+  String get purchaseOrderStateCancelled => 'Storniert';
+
+  @override
+  String get purchaseOrderStateDraft => 'Entwurf';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Teilweise erhalten';
+
+  @override
+  String get purchaseOrderStateReceived => 'Erhalten';
+
+  @override
+  String get purchaseOrderStateSent => 'Gesendet';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Lieferant';
+
+  @override
+  String get purchaseOrderUnit => 'Einheit (z. B. Karton)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Stückpreis netto';
+
+  @override
+  String get purchaseOrderVatRate => 'USt-Satz (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'Noch keine Bestellung. Eine neue Bestellung beginnt als Entwurf, den Sie bearbeiten, drucken und senden können.';
+
+  @override
+  String get purchaseOrdersTitle => 'Bestellungen';
+
+  @override
   String get purchaseQualified => 'Buchhaltung qualifiziert';
 
   @override
@@ -21413,6 +21532,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportDocPayments => 'Zahlungsbericht';
 
   @override
+  String get reportDocPurchaseOrder => 'Bestellung';
+
+  @override
   String get reportDocSpaceCodes => 'QR-Karten der Plätze';
 
   @override
@@ -21442,6 +21564,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visuell';
+
+  @override
+  String get reportExpectedDelivery => 'Erwartete Lieferung';
 
   @override
   String get reportFieldGroupBank => 'Bankverbindung';

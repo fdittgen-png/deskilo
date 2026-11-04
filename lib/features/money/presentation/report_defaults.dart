@@ -15,6 +15,7 @@ import 'professional_report_bands.dart';
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
 import 'report_defaults_books.dart';
+import 'report_defaults_purchase_order.dart';
 import 'vat_declaration_report_defaults.dart';
 
 export 'report_defaults_batch.dart';
@@ -617,6 +618,7 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
       ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
       ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
       ReportDocSlot(key: 'status') => _defaultStatusBands(l10n),
+      ReportDocSlot(key: 'purchase_order') => purchaseOrderBands(l10n),
       ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n.biPdfTitle),
       ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n.workspaceConfigPdfTitle),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
