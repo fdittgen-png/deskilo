@@ -20681,6 +20681,12 @@ abstract class AppLocalizations {
   /// **'SAF-T (XML, international)'**
   String get invoiceExportSafT;
 
+  /// #2379 the Austrian SAF-T AT 1.01 export (Bundesministerium für Finanzen)
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T AT (Austria)'**
+  String get invoiceExportSafTAt;
+
   /// Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger
   ///
   /// In en, this message translates to:
@@ -38418,6 +38424,18 @@ abstract class AppLocalizations {
   /// **'{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company\'s {subject} is missing} contact{the contact person\'s {subject}} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}'**
   String saftGap(String kind, String subject);
 
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'The industry code the Austrian tax office knows the company under.'**
+  String get saftIndustryCodeHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Industry code (Branchenkennzahl)'**
+  String get saftIndustryCodeLabel;
+
   /// #669 - SAF-T derived postings
   ///
   /// In en, this message translates to:
@@ -38429,6 +38447,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Include postings?'**
   String get saftLedgerTitle;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.'**
+  String get saftProfitBasisHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'How the profit is determined'**
+  String get saftProfitBasisLabel;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.'**
+  String get saftSmallBusinessHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Small business (§ 6 (1) Z 27 UStG)'**
+  String get saftSmallBusinessLabel;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get saftSmallBusinessNo;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get saftSmallBusinessYes;
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account\'s role; check it: not every account of a role belongs on the same standard account.'**
+  String get saftStandardAccountsIntro;
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestion: enter the standard account.'**
+  String get saftStandardAccountsNoSuggestion;
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested: {suggestion}. Confirm or change it.'**
+  String saftStandardAccountsSuggested(String suggestion);
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Standard chart accounts'**
+  String get saftStandardAccountsTitle;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'The number the Austrian tax office gives the company, not its company register number.'**
+  String get saftTaxNumberHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get saftTaxNumberLabel;
 
   /// #669 - SAF-T derived postings
   ///

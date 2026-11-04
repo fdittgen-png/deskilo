@@ -10,5 +10,20 @@
   "saftContactTitle": "Ansprechperson für diese Datei",
   "saftContactIntro": "Die Datei der Behörde nennt eine Ansprechperson, die luxemburgische auch eine Telefonnummer. Sie wird nur in diese Datei geschrieben.",
   "taxRefSafTKeys": "SAF-T Financial (Format saf_t): Der Schlüssel saf_t/<Rolle> ordnet die Konten einer Buchungsrolle ihrem Standardcode zu, eingetragen als Konto (Norwegen: der GroupingCode, mit seiner GroupingCategory als Bezeichnung; Luxemburg: die StandardAccountID); der Schlüssel saf_t/tax:<output|input>:<Gruppe> nennt den Standard-Steuercode einer Satzgruppe als Steuercode (Norwegen).",
-  "journalOpeningRefused": "Die Eröffnungssalden ({from} bis {to}) konnten nicht gebucht werden: {reason}"
+  "journalOpeningRefused": "Die Eröffnungssalden ({from} bis {to}) konnten nicht gebucht werden: {reason}",
+  "invoiceExportSafTAt": "SAF-T AT (Österreich)",
+  "saftProfitBasisLabel": "Art der Gewinnermittlung",
+  "saftProfitBasisHelper": "Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.",
+  "saftIndustryCodeLabel": "Branchenkennzahl",
+  "saftIndustryCodeHelper": "Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.",
+  "saftTaxNumberLabel": "Steuernummer",
+  "saftTaxNumberHelper": "Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.",
+  "saftSmallBusinessLabel": "Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)",
+  "saftSmallBusinessYes": "Ja",
+  "saftSmallBusinessNo": "Nein",
+  "saftSmallBusinessHelper": "Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.",
+  "saftStandardAccountsTitle": "Konten des Einheitskontenrahmens",
+  "saftStandardAccountsIntro": "Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.",
+  "saftStandardAccountsSuggested": "Vorgeschlagen: {suggestion}. Bestätigen oder ändern Sie es.",
+  "saftStandardAccountsNoSuggestion": "Kein Vorschlag: Geben Sie das Standardkonto ein."
 }

@@ -10,5 +10,20 @@
   "saftContactTitle": "Contatto per questo file",
   "saftContactIntro": "Il file dell’amministrazione indica una persona di contatto, e quello del Lussemburgo anche un telefono. Viene scritta solo in questo file.",
   "taxRefSafTKeys": "SAF-T Financial (formato saf_t): la chiave saf_t/<ruolo> associa i conti di un ruolo contabile al loro codice standard, inserito come conto (Norvegia: il GroupingCode, con la sua GroupingCategory come etichetta; Lussemburgo: lo StandardAccountID); la chiave saf_t/tax:<output|input>:<gruppo> indica il codice IVA standard di un gruppo di aliquote come codice d’imposta (Norvegia).",
-  "journalOpeningRefused": "I saldi di apertura (dal {from} al {to}) non sono stati contabilizzati: {reason}"
+  "journalOpeningRefused": "I saldi di apertura (dal {from} al {to}) non sono stati contabilizzati: {reason}",
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "saftProfitBasisLabel": "Modalità di determinazione dell'utile",
+  "saftProfitBasisHelper": "La disposizione della legge austriaca sull'imposta sul reddito seguita dalla contabilità, come la indica l'intestazione del SAF-T AT.",
+  "saftIndustryCodeLabel": "Codice di settore (Branchenkennzahl)",
+  "saftIndustryCodeHelper": "Il codice di settore con cui l'amministrazione finanziaria austriaca conosce l'impresa.",
+  "saftTaxNumberLabel": "Numero fiscale (Steuernummer)",
+  "saftTaxNumberHelper": "Il numero che l'amministrazione finanziaria austriaca assegna all'impresa, non il numero del registro delle imprese.",
+  "saftSmallBusinessLabel": "Piccola impresa (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessYes": "Sì",
+  "saftSmallBusinessNo": "No",
+  "saftSmallBusinessHelper": "Se l'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l'intestazione del SAF-T AT.",
+  "saftStandardAccountsTitle": "Conti del piano standard",
+  "saftStandardAccountsIntro": "Confermi il conto del piano dei conti standard austriaco (Einheitskontenrahmen) sotto cui è scritto ogni conto del libro. Il suggerimento viene dal ruolo del conto; lo verifichi: non tutti i conti di un ruolo appartengono allo stesso conto standard.",
+  "saftStandardAccountsSuggested": "Suggerito: {suggestion}. Lo confermi o lo modifichi.",
+  "saftStandardAccountsNoSuggestion": "Nessun suggerimento: inserisca il conto standard."
 }
