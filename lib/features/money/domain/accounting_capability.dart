@@ -221,6 +221,7 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'sage50',
     state: QualificationState.implemented,
   ),
+  'xero_invoice_csv': AccountingCapability(formatId: 'xero_invoice_csv', state: QualificationState.implemented),
   'ch_kmu': AccountingCapability(
     formatId: 'ch_kmu',
     state: QualificationState.implemented,

@@ -12405,6 +12405,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (Import von Ausgangsrechnungen)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Diese Rechnung außerhalb der App ausstellen';
 
@@ -30963,4 +30967,49 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Workspace importiert.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Code des Erlöskontos';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importiert diese Rechnungen als Entwürfe: Geben Sie sie in Xero frei. Erlöskonto und Steuersätze sind die Ihrer Organisation; übernehmen Sie deren Namen aus Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Xero-Export';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.',
+      one: 'Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Datumsreihenfolge Ihrer Organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Tag zuerst (31/12/2026)';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Monat zuerst (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Geben Sie den Code des Erlöskontos ein.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Nennen Sie den Xero-Steuersatz für $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Xero-Steuersatz für $rate';
+  }
 }

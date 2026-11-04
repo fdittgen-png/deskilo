@@ -1,0 +1,14 @@
+{
+  "@@locale": "it",
+  "invoiceExportXeroInvoiceCsv": "Xero (importazione fatture di vendita)",
+  "xeroInvoiceAccountsTitle": "Esportazione Xero",
+  "xeroInvoiceAccountsIntro": "Xero importa queste fatture come bozze: le approvi in Xero. Il conto ricavi e le aliquote sono quelli della Sua organizzazione: ne copi i nomi da Xero.",
+  "xeroInvoiceAccountCode": "Codice del conto ricavi",
+  "xeroInvoiceTaxType": "Aliquota Xero per {rate}",
+  "xeroInvoiceDateOrder": "Ordine delle date della Sua organizzazione",
+  "xeroInvoiceDayFirst": "Prima il giorno (31/12/2026)",
+  "xeroInvoiceMonthFirst": "Prima il mese (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Inserisci il codice del conto ricavi.",
+  "xeroInvoiceRefusedTaxType": "Indica l’aliquota Xero per {rate}.",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.} other{{count} note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.}}"
+}

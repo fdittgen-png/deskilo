@@ -20318,6 +20318,12 @@ abstract class AppLocalizations {
   /// **'Trial balance, general and auxiliary (PDF, from the book)'**
   String get invoiceExportTrialBalance;
 
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero (sales invoice import)'**
+  String get invoiceExportXeroInvoiceCsv;
+
   /// No description provided for @invoiceExternalIssuingTitle.
   ///
   /// In en, this message translates to:
@@ -51028,6 +51034,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace imported.'**
   String get workspaceXmlImportSuccess;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Sales account code'**
+  String get xeroInvoiceAccountCode;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.'**
+  String get xeroInvoiceAccountsIntro;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero export'**
+  String get xeroInvoiceAccountsTitle;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}'**
+  String xeroInvoiceCreditNotesLeftOut(int count);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Date order in your organisation'**
+  String get xeroInvoiceDateOrder;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Day first (31/12/2026)'**
+  String get xeroInvoiceDayFirst;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Month first (12/31/2026)'**
+  String get xeroInvoiceMonthFirst;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the sales account code.'**
+  String get xeroInvoiceRefusedAccount;
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Name the Xero tax rate for {rate}.'**
+  String xeroInvoiceRefusedTaxType(String rate);
+
+  /// #2372 - the Xero sales-invoice CSV export
+  ///
+  /// In en, this message translates to:
+  /// **'Xero tax rate for {rate}'**
+  String xeroInvoiceTaxType(String rate);
 }
 
 class _AppLocalizationsDelegate

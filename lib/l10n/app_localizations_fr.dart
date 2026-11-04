@@ -12417,6 +12417,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Balance générale et auxiliaire (PDF, depuis la comptabilité)';
 
   @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (import de factures de vente)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Émettez cette facture hors de l’application';
 
@@ -30983,4 +30987,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Espace importé.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Code du compte de ventes';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importe ces factures en brouillon : validez-les dans Xero. Le compte de ventes et les taux de taxe sont ceux de votre organisation : reprenez leurs noms dans Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Export Xero';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
+      one: 'Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Ordre des dates de votre organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Jour d’abord (31/12/2026)';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Mois d’abord (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Saisissez le code du compte de ventes.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Indiquez le taux de taxe Xero pour $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Taux de taxe Xero pour $rate';
+  }
 }

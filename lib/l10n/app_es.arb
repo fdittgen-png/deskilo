@@ -8231,6 +8231,7 @@
   },
   "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
+  "invoiceExportXeroInvoiceCsv": "Xero (importación de facturas de venta)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
   "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
@@ -20319,5 +20320,15 @@
   "workspaceXmlImportPreviewWarning": "El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.",
   "workspaceXmlImportReservationsError": "Este espacio ya tiene reservas, por lo que su plano no se puede sustituir. Solo se puede importar antes de la primera reserva.",
   "workspaceXmlImportSubtitle": "Restaurar los ajustes y el plano desde un archivo exportado. Sustituye el plano actual.",
-  "workspaceXmlImportSuccess": "Espacio importado."
+  "workspaceXmlImportSuccess": "Espacio importado.",
+  "xeroInvoiceAccountCode": "Código de la cuenta de ventas",
+  "xeroInvoiceAccountsIntro": "Xero importa estas facturas como borradores: apruébelas en Xero. La cuenta de ventas y los tipos impositivos son los de su organización: copie sus nombres de Xero.",
+  "xeroInvoiceAccountsTitle": "Exportación Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una factura rectificativa no está en este archivo: Xero importa las rectificativas con su propia plantilla.} other{{count} facturas rectificativas no están en este archivo: Xero importa las rectificativas con su propia plantilla.}}",
+  "xeroInvoiceDateOrder": "Orden de las fechas de su organización",
+  "xeroInvoiceDayFirst": "Primero el día (31/12/2026)",
+  "xeroInvoiceMonthFirst": "Primero el mes (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Indique el código de la cuenta de ventas.",
+  "xeroInvoiceRefusedTaxType": "Indique el tipo impositivo de Xero para {rate}.",
+  "xeroInvoiceTaxType": "Tipo impositivo de Xero para {rate}"
 }
