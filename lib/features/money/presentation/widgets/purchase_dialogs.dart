@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
@@ -126,16 +127,18 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
 
   /// #3307 — takes the picked order's supplier and amounts; the bill's own
   /// figures stay editable, as the supplier wrote them.
-  void _takeOrder(PurchaseOrder? order) => setState(() {
+  void _takeOrder(PurchaseOrder? order) {
     _orderId = order?.id;
     if (order == null) return;
-    _supplierId = order.supplierId;
     _gross.text = centsToMajor(order.totalCents);
     _tax.text = centsToMajor(order.vatCents);
     if (_description.text.trim().isEmpty) {
       _description.text = context.l10n.purchaseBillForOrder(order.reference);
     }
-  });
+    _pickSupplier(order.supplierId);
+  }
+
+  void _pickSupplier(String? id) => setState(() => _supplierId = id);
 
   static bool _same(PurchaseBillDraft a, PurchaseBillDraft b) =>
       a.grossCents == b.grossCents &&
@@ -158,6 +161,28 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     helpText: context.l10n.purchasesPickDate,
   );
 
+  // An order picked below sets the supplier: rebuilt with it.
+  Widget _supplierField(AppLocalizations l10n, List<Supplier> suppliers) =>
+    KeyedSubtree(
+      key: ValueKey('purchase-supplier-of-${_supplierId ?? ''}'),
+      child: DropdownButtonFormField<String?>(
+        key: const ValueKey('purchase-supplier'),
+        initialValue: _supplierId,
+        decoration: InputDecoration(labelText: l10n.purchasesSupplier),
+        items: [
+          DropdownMenuItem<String?>(
+            child: Text(l10n.purchasesNoSupplier),
+          ),
+          for (final s in suppliers)
+            DropdownMenuItem<String?>(
+              value: s.id,
+              child: Text('${s.number} · ${s.name}'),
+            ),
+        ],
+        onChanged: _pickSupplier,
+      ),
+    );
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -175,30 +200,12 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // An order picked below sets the supplier: rebuilt with it.
-            KeyedSubtree(
-              key: ValueKey('purchase-supplier-of-${_supplierId ?? ''}'),
-              child: DropdownButtonFormField<String?>(
-                key: const ValueKey('purchase-supplier'),
-                initialValue: _supplierId,
-                decoration: InputDecoration(labelText: l10n.purchasesSupplier),
-                items: [
-                  DropdownMenuItem<String?>(
-                    child: Text(l10n.purchasesNoSupplier),
-                  ),
-                  for (final s in suppliers)
-                    DropdownMenuItem<String?>(
-                      value: s.id,
-                      child: Text('${s.number} · ${s.name}'),
-                    ),
-                ],
-                onChanged: (v) => setState(() => _supplierId = v),
-              ),
-            ),
+            _supplierField(l10n, suppliers),
             PurchaseBillOrderField(
               workspaceId: widget.workspaceId,
               supplierId: _supplierId,
               orderId: _orderId,
+              // recorder-key-exempt: a data callback; the dropdown is keyed.
               onChanged: _takeOrder,
             ),
             // #2576 — what it is for, in plain words; no tax class or useful

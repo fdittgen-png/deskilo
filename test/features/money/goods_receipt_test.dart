@@ -7,16 +7,20 @@
 // the order's card, a finance reader only reads what arrived; the server's
 // answer and the deliveries parse.
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
+import 'package:deskilo/core/features/enabled_feature_keys.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
+import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -25,6 +29,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
@@ -73,30 +78,32 @@ Future<(FakePurchaseOrderRepository, FakeSupplierRepository)> _orders({
   return (repo, suppliers);
 }
 
+Widget _scope(List<Override> overrides, Widget home) => ProviderScope(
+  overrides: overrides,
+  child: MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: Scaffold(body: home),
+  ),
+);
+
 Widget _app(
   FakePurchaseOrderRepository repo,
   FakeSupplierRepository s,
   Set<WorkspacePermission> rights,
-) => ProviderScope(
-  overrides: [
-    currentWorkspaceProvider.overrideWith((ref) async => _workspace),
-    myMemberProvider.overrideWith((ref) async => null),
-    myPermissionsProvider.overrideWithValue(rights),
-    enabledFeaturesSyncProvider.overrideWithValue({
-      WorkspaceFeature.purchases,
-      WorkspaceFeature.purchaseOrders,
-    }),
-    supplierRepositoryProvider.overrideWithValue(s),
-    purchaseOrderRepositoryProvider.overrideWithValue(repo),
-    servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
-    clockProvider.overrideWithValue(FixedClock(_today)),
-  ],
-  child: const MaterialApp(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: PurchaseOrdersScreen(),
-  ),
-);
+) => _scope([
+  currentWorkspaceProvider.overrideWith((ref) async => _workspace),
+  myMemberProvider.overrideWith((ref) async => null),
+  myPermissionsProvider.overrideWithValue(rights),
+  enabledFeaturesSyncProvider.overrideWithValue({
+    WorkspaceFeature.purchases,
+    WorkspaceFeature.purchaseOrders,
+  }),
+  supplierRepositoryProvider.overrideWithValue(s),
+  purchaseOrderRepositoryProvider.overrideWithValue(repo),
+  servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+  clockProvider.overrideWithValue(FixedClock(_today)),
+], const PurchaseOrdersScreen());
 
 PurchaseOrderReceiptDraft _delivery(
   PurchaseOrder order,
@@ -254,10 +261,8 @@ void main() {
         },
       ],
     });
-    expect(
-      (r.receivedOn, r.lines, r.note),
-      (DateTime(2026, 11), {2: 6.0}, 'short'),
-    );
+    expect((r.receivedOn, r.note), (DateTime(2026, 11), 'short'));
+    expect(r.lines, {2: 6.0});
   });
 
   group('the order card', () {
@@ -322,5 +327,58 @@ void main() {
         findsNothing,
       );
     });
+  });
+
+  testWidgets('the bill dialog picks a sent order, takes its amounts and '
+      'names it on the bill', (tester) async {
+    tester.view.physicalSize = const Size(1200, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final (orders, suppliers) = await _orders();
+    final bills = FakePurchaseRepository();
+    await tester.pumpWidget(
+      _scope(
+        [
+          purchaseRepositoryProvider.overrideWithValue(bills),
+          supplierRepositoryProvider.overrideWithValue(suppliers),
+          purchaseOrderRepositoryProvider.overrideWithValue(orders),
+          enabledFeatureKeysProvider.overrideWithValue({purchaseOrdersKey}),
+        ],
+        const SingleChildScrollView(
+          child: PurchasesView(workspaceId: 'ws', canCapture: true),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchase-add-bill')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchase-order-link')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('2026-0001').last);
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<EditableText>(
+            find.descendant(
+              of: find.byKey(const ValueKey('purchase-gross')),
+              matching: find.byType(EditableText),
+            ),
+          )
+          .controller
+          .text,
+      '43',
+    );
+    // The order's supplier is taken with it.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('purchase-supplier')),
+        matching: find.textContaining('Alpha'),
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('purchase-save')));
+    await tester.pumpAndSettle();
+    final bill = (await bills.fetchPurchases('ws')).single;
+    expect(orders.billOrders, {bill.id: orders.orders.single.id});
   });
 }

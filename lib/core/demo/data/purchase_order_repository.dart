@@ -55,8 +55,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   PurchaseOrder _with(
     PurchaseOrder o, {
     PurchaseOrderState? state,
-    DateTime? sentAt,
-    String? sentVia,
+    ({DateTime at, String via})? sent,
     DateTime? cancelledAt,
     String? cancelReason,
     List<PurchaseOrderLine>? lines,
@@ -72,8 +71,8 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     expectedOn: o.expectedOn,
     note: o.note,
     recipientEmail: o.recipientEmail,
-    sentAt: sentAt ?? o.sentAt,
-    sentVia: sentVia ?? o.sentVia,
+    sentAt: sent?.at ?? o.sentAt,
+    sentVia: sent?.via ?? o.sentVia,
     cancelledAt: cancelledAt ?? o.cancelledAt,
     cancelReason: cancelReason ?? o.cancelReason,
     createdAt: o.createdAt,
@@ -175,8 +174,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     return _requests[requestId] = orders[i] = _with(
       o,
       state: PurchaseOrderState.sent,
-      sentAt: now(),
-      sentVia: 'print',
+      sent: (at: now(), via: 'print'),
     );
   }
 
@@ -276,8 +274,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     orders[i] = _with(
       o,
       state: PurchaseOrderState.sent,
-      sentAt: now(),
-      sentVia: 'email',
+      sent: (at: now(), via: 'email'),
     );
     return send;
   }
@@ -309,8 +306,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       orders[o] = _with(
         orders[o],
         state: PurchaseOrderState.sent,
-        sentAt: now(),
-        sentVia: 'email',
+        sent: (at: now(), via: 'email'),
       );
     }
     return resolved;
