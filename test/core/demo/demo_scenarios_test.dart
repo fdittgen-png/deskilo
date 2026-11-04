@@ -223,6 +223,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         now: () => w.now,
         maySell: () => true,
         mayPrice: () => true,
+        floorPlanSeats: () => london.floorPlan.seats,
         offers: const [
           GuestPassOffer(id: 'p', name: 'Day pass', unit: GuestPassUnit.day, priceCents: 2500),
         ],

@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/domain/guest_pass.dart';
 import '../../features/money/providers/guest_pass_providers.dart';
+import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/guest_pass_repository.dart';
@@ -41,7 +42,7 @@ List<Override> demoGuestPassOverrides(DemoFixture fixture) {
   FakeGuestPassRepository space(
     String id,
     String currency,
-    ({FakeReservationRepository reservations, FakeWorkspaceRepository workspaces, FakeMoneyRepository money}) stores,
+    ({FakeReservationRepository reservations, FakeWorkspaceRepository workspaces, FakeMoneyRepository money, List<Seat> Function() seats}) stores,
     List<GuestPassOffer> offers,
   ) =>
       FakeGuestPassRepository(
@@ -53,19 +54,20 @@ List<Override> demoGuestPassOverrides(DemoFixture fixture) {
         now: () => fixture.seededAt,
         maySell: () => rights.has(WorkspacePermission.issueInvoices),
         mayPrice: () => rights.has(WorkspacePermission.manageServices),
+        floorPlanSeats: stores.seats,
         offers: offers,
       );
   final home = space(demoFirstSpaceId, 'EUR',
-      (reservations: fixture.reservations, workspaces: fixture.workspaces, money: fixture.money), _pezenasPasses);
+      (reservations: fixture.reservations, workspaces: fixture.workspaces, money: fixture.money, seats: () => fixture.floorPlan.seats), _pezenasPasses);
   final leipzig = space(demoSecondSpaceId, 'EUR',
       (reservations: fixture.secondSpace.reservations, workspaces: fixture.secondSpace.workspaces,
-       money: fixture.secondSpace.money), const []);
+       money: fixture.secondSpace.money, seats: () => fixture.secondSpace.floorPlan.seats), const []);
   final london = space(demoLondonSpaceId, 'GBP',
       (reservations: fixture.london.reservations, workspaces: fixture.london.workspaces,
-       money: fixture.london.money), _londonPasses);
+       money: fixture.london.money, seats: () => fixture.london.floorPlan.seats), _londonPasses);
   final newYork = space(demoNewYorkSpaceId, 'USD',
       (reservations: fixture.newYork.reservations, workspaces: fixture.newYork.workspaces,
-       money: fixture.newYork.money), _newYorkPasses);
+       money: fixture.newYork.money, seats: () => fixture.newYork.floorPlan.seats), _newYorkPasses);
   return [
     guestPassRepositoryProvider.overrideWith((ref) {
       rights.held = () => ref.read(myPermissionsProvider).toSet();

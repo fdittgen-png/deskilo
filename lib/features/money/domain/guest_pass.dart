@@ -152,9 +152,16 @@ class GuestPassSale {
   final bool replayed;
 }
 
+/// A place a pass can book, named the way the desk reads it.
+typedef GuestPassPlace = ({String seatId, String label});
+
 /// The space's passes and their sale.
 abstract interface class GuestPassRepository {
   Future<List<GuestPassOffer>> offers(String workspaceId);
+
+  /// Every seat of the space, level by level: the places a pass can book.
+  /// The server checks the place is free and the window open.
+  Future<List<GuestPassPlace>> places(String workspaceId);
 
   /// Creates ([id] null) or changes a pass; returns its id.
   Future<String> saveOffer(

@@ -32,6 +32,9 @@ class _Passes implements GuestPassRepository {
       ];
 
   @override
+  Future<List<GuestPassPlace>> places(String workspaceId) async => const [(seatId: 'seat-1', label: 'Ground · A1')];
+
+  @override
   Future<String> saveOffer(String workspaceId,
           {String? id,
           required String name,
@@ -67,7 +70,6 @@ Future<void> _pump(WidgetTester tester, _Passes passes, Set<WorkspacePermission>
         myMemberProvider.overrideWith((ref) async => null),
         myPermissionsProvider.overrideWithValue(held),
         guestPassRepositoryProvider.overrideWithValue(passes),
-        guestPassPlacesProvider.overrideWith((ref) async => const [(seatId: 'seat-1', label: 'Ground · A1')]),
       ],
       child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -12,7 +12,6 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/guest_pass.dart';
 import '../../domain/payment_method.dart';
-import '../../providers/guest_pass_providers.dart';
 import '../payment_method_labels.dart';
 
 /// The sentence for a draft's first problem.

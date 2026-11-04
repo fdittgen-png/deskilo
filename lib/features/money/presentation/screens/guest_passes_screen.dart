@@ -120,7 +120,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     GuestPassDraft draft,
     MoneyFormat currency,
   ) {
-    final places = ref.watch(guestPassPlacesProvider).value ?? const [];
+    final places = ref.watch(guestPassPlacesProvider(workspace.id)).value ?? const [];
     return PersonalInfoForm(
       key: ValueKey('guest-pass-form-$_requestId'),
       managed: true,

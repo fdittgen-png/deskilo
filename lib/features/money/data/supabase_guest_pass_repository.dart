@@ -23,6 +23,29 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
   }
 
   @override
+  Future<List<GuestPassPlace>> places(String workspaceId) async {
+    final rows = await _client
+        .from('seats')
+        .select('id, name, desks(offices(levels(name)))')
+        .eq('workspace_id', workspaceId)
+        .order('name');
+    String level(Map<String, dynamic> r) {
+      final desk = r['desks'] as Map<String, dynamic>?;
+      final office = desk?['offices'] as Map<String, dynamic>?;
+      final lvl = office?['levels'] as Map<String, dynamic>?;
+      return lvl?['name'] as String? ?? '';
+    }
+
+    return [
+      for (final r in rows)
+        (
+          seatId: r['id'] as String,
+          label: [level(r), r['name'] as String? ?? ''].where((s) => s.isNotEmpty).join(' · '),
+        ),
+    ];
+  }
+
+  @override
   Future<String> saveOffer(
     String workspaceId, {
     String? id,

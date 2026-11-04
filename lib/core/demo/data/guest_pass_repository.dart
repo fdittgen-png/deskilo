@@ -12,6 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../features/money/domain/guest_pass.dart';
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
+import '../../../features/plan/domain/seat.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../time/date_text.dart';
 import 'money/demo_member_account_commands.dart';
@@ -29,6 +30,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
     required this.now,
     required this.maySell,
     required this.mayPrice,
+    required this.floorPlanSeats,
     List<GuestPassOffer> offers = const [],
   }) : offerList = [...offers];
 
@@ -40,6 +42,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
   final DateTime Function() now;
   final bool Function() maySell;
   final bool Function() mayPrice;
+  final List<Seat> Function() floorPlanSeats;
   final List<GuestPassOffer> offerList;
   final Map<String, GuestPassSale> sales = {};
   int _next = 1;
@@ -47,6 +50,11 @@ class FakeGuestPassRepository implements GuestPassRepository {
   @override
   Future<List<GuestPassOffer>> offers(String workspaceId) async =>
       [...offerList]..sort((a, b) => a.name.compareTo(b.name));
+
+  @override
+  Future<List<GuestPassPlace>> places(String workspaceId) async => [
+    for (final s in floorPlanSeats()) (seatId: s.id, label: s.name),
+  ];
 
   @override
   Future<String> saveOffer(

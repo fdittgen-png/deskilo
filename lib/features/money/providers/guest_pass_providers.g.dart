@@ -143,14 +143,12 @@ final class GuestPassOffersFamily extends $Family
   String toString() => r'guestPassOffersProvider';
 }
 
-/// Every seat of the active space, level by level (#3308): the places a
-/// pass can book. The server checks the place is free and the window open.
+/// The places a pass can book in [workspaceId].
 
 @ProviderFor(guestPassPlaces)
-final guestPassPlacesProvider = GuestPassPlacesProvider._();
+final guestPassPlacesProvider = GuestPassPlacesFamily._();
 
-/// Every seat of the active space, level by level (#3308): the places a
-/// pass can book. The server checks the place is free and the window open.
+/// The places a pass can book in [workspaceId].
 
 final class GuestPassPlacesProvider
     extends
@@ -162,21 +160,27 @@ final class GuestPassPlacesProvider
     with
         $FutureModifier<List<GuestPassPlace>>,
         $FutureProvider<List<GuestPassPlace>> {
-  /// Every seat of the active space, level by level (#3308): the places a
-  /// pass can book. The server checks the place is free and the window open.
-  GuestPassPlacesProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'guestPassPlacesProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  /// The places a pass can book in [workspaceId].
+  GuestPassPlacesProvider._({
+    required GuestPassPlacesFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'guestPassPlacesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$guestPassPlacesHash();
+
+  @override
+  String toString() {
+    return r'guestPassPlacesProvider'
+        ''
+        '($argument)';
+  }
 
   @$internal
   @override
@@ -186,8 +190,41 @@ final class GuestPassPlacesProvider
 
   @override
   FutureOr<List<GuestPassPlace>> create(Ref ref) {
-    return guestPassPlaces(ref);
+    final argument = this.argument as String;
+    return guestPassPlaces(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GuestPassPlacesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
   }
 }
 
-String _$guestPassPlacesHash() => r'7f82190870ed947e830720060238df2ac4801e90';
+String _$guestPassPlacesHash() => r'0c485a76655bf983e1e8f727cf33e49c20150c8b';
+
+/// The places a pass can book in [workspaceId].
+
+final class GuestPassPlacesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<GuestPassPlace>>, String> {
+  GuestPassPlacesFamily._()
+    : super(
+        retry: null,
+        name: r'guestPassPlacesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The places a pass can book in [workspaceId].
+
+  GuestPassPlacesProvider call(String workspaceId) =>
+      GuestPassPlacesProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'guestPassPlacesProvider';
+}
