@@ -661,6 +661,27 @@ void main() {
       expect(oeEkrOf(doc, '2400'), '3300', reason: 'the domestic confirmation of the same account');
     });
 
+    test('a blank confirmed account is no confirmation: refused, the account named', () {
+      for (final blank in ['', '   ']) {
+        final request = _request(profile, country: 'AT', confirmedStandards: {
+          ..._atConfirmed,
+          '2400': AccountMapValue(format: 'saf_t', role: 'suppliers', account: blank),
+        });
+        expect(_gaps(request), contains(const SafTGap(SafTGapKind.standardAccount, '2400 Leverandørgjeld')),
+            reason: 'blank "$blank"');
+      }
+      // A confirmed number with spaces around it is written trimmed.
+      final padded = _file(_request(profile, country: 'AT', confirmedStandards: {
+        ..._atConfirmed,
+        '2400': const AccountMapValue(format: 'saf_t', role: 'suppliers', account: ' 3370 '),
+      }));
+      expect(
+        _textOf(padded.findAllElements('GeneralLedger').singleWhere((a) => _textOf(a, 'AccountID') == '2400'),
+            'AccountID_oeEKR'),
+        '3370',
+      );
+    });
+
     test('a sole proprietor without a Firmenbuch number is written, under its Steuernummer', () {
       final sole = _file(_request(profile, country: 'AT', company: _company('AT').copyWith(legalId: '')));
       final h = sole.findAllElements('Header').single;
