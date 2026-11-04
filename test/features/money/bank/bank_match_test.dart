@@ -221,4 +221,79 @@ void main() {
     final voided = _invoice('V-1').copyWith(voidedAt: DateTime.utc(2026, 10, 3));
     expect(openInvoices([voided], const {}), isEmpty);
   });
+
+  group('#2380 — the QR reference frozen at issue (0672)', () {
+    // Two numbers whose digits are the same: they derive one reference.
+    const fFrozen = '100000000000000000000000416';
+    const uFrozen = '100000000000000000000000424';
+    final f = _invoice('F-2026-0402').copyWith(
+      legalSnapshot: const {'qrr': fFrozen},
+    );
+    final u = _invoice('U-2026-04-02').copyWith(
+      legalSnapshot: const {'qrr': uFrozen},
+    );
+    final legacy = _invoice('F-2025-0007');
+
+    test('the hand-built frozen references are valid QRRs', () {
+      expect(isValidQrr(fFrozen), isTrue);
+      expect(isValidQrr(uFrozen), isTrue);
+      expect(qrrReferenceOf('F-2026-0402'), qrrReferenceOf('U-2026-04-02'));
+    });
+
+    test('an invoice reads its frozen reference; an older one, its number\'s',
+        () {
+      expect(invoiceQrrOf(f.number, f.legalSnapshot), fFrozen);
+      expect(invoiceQrrOf(legacy.number, legacy.legalSnapshot),
+          qrrReferenceOf('F-2025-0007'));
+      // A snapshot that holds no valid reference is not trusted.
+      expect(invoiceQrrOf('F-1', const {'qrr': '123'}), qrrReferenceOf('F-1'));
+    });
+
+    test('each frozen reference names its own invoice, confirmable at once; '
+        'the shared derived one no longer names either', () {
+      final open = openInvoices([f, u, legacy], const {});
+      final toF = _line(reference: fFrozen);
+      expect(suggestMatches(toF, open, windowDays: 60).first.invoice.number,
+          'F-2026-0402');
+      expect(referenceMatchOf(toF, open, windowDays: 60)?.invoice.number,
+          'F-2026-0402');
+      final toU = _line(reference: uFrozen);
+      expect(referenceMatchOf(toU, open, windowDays: 60)?.invoice.number,
+          'U-2026-04-02');
+      final derived = _line(reference: qrrReferenceOf('F-2026-0402')!);
+      expect(
+        suggestMatches(derived, open, windowDays: 60)
+            .where((x) => x.basis == BankMatchBasis.qrReference),
+        isEmpty,
+      );
+    });
+
+    test('an older invoice is still matched by the reference it printed', () {
+      final open = openInvoices([f, u, legacy], const {});
+      final line = _line(reference: qrrReferenceOf('F-2025-0007')!);
+      final match = referenceMatchOf(line, open, windowDays: 60);
+      expect(match?.invoice.number, 'F-2025-0007');
+      expect(match?.basis, BankMatchBasis.qrReference);
+    });
+
+    test('the QR-bill prints the frozen reference', () {
+      final bill = SwissQrBill.forInvoice(
+        iban: '',
+        qrIban: 'CH44 3199 9123 0008 8901 2',
+        creditor: SwissQrAddress.fromLines(
+          name: 'Space',
+          streetLine: 'Rue 1',
+          postalCode: '1000',
+          city: 'Lausanne',
+        ),
+        debtor: null,
+        totalCents: 12000,
+        currency: 'CHF',
+        invoiceNumber: 'F-2026-0402',
+        frozenQrr: fFrozen,
+      );
+      expect(bill?.referenceType, 'QRR');
+      expect(bill?.reference, fFrozen);
+    });
+  });
 }
