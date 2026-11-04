@@ -44,8 +44,12 @@ void main() {
   tearDown(() => container.dispose());
 
   Future<void> enter(String space) async {
+    await container.read(currentWorkspaceProvider.future);
     container.read(activeWorkspaceIdProvider.notifier).activate(space);
     expect((await container.read(currentWorkspaceProvider.future))?.id, space);
+    // The booking right is read from the member and the space, as on screen.
+    container.listen(myPermissionsProvider, (_, _) {});
+    await container.read(myMemberProvider.future);
   }
 
   List<Reservation> storeOf(String space) => switch (space) {
@@ -72,6 +76,8 @@ void main() {
     }
     throw StateError('no free morning for $seat');
   }
+
+  bool isBooking(CalendarItem i, String id) => i.link is ReservationLink && (i.link! as ReservationLink).id == id;
 
   Future<List<CalendarItem>> calendarAround(String space, DateTime at) async {
     final page = await container.read(calendarRepositoryProvider).fetchItems(
@@ -104,19 +110,19 @@ void main() {
         }
         final window = await repo.fetchWindow(space, from: w.start, to: w.end);
         expect(window.map((r) => r.id), contains(id), reason: 'the plan of the day shows it');
-        expect((await calendarAround(space, w.start)).map((i) => i.link), contains(ReservationLink(id)),
+        expect((await calendarAround(space, w.start)).where((i) => isBooking(i, id)), hasLength(1),
             reason: 'calendar_items reads the reservations table live: a booking made '
                 'in the session is in the calendar the same moment it is on the plan');
 
         final later = HalfDayWindows.afternoon(w.start);
         await repo.updateTimes(id, startsAt: later.start, endsAt: later.end);
         expect((await repo.fetchById(id))?.startsAt, later.start, reason: 'moved');
-        final moved = (await calendarAround(space, later.start)).where((i) => i.link == ReservationLink(id));
+        final moved = (await calendarAround(space, later.start)).where((i) => isBooking(i, id));
         expect(moved.map((i) => i.at), [later.start], reason: 'the calendar follows the move');
 
         await repo.cancel(id);
         expect((await repo.fetchById(id))?.status, ReservationStatus.cancelled);
-        final cancelled = (await calendarAround(space, later.start)).where((i) => i.link == ReservationLink(id));
+        final cancelled = (await calendarAround(space, later.start)).where((i) => isBooking(i, id));
         expect(cancelled.map((i) => i.status), [ReservationStatus.cancelled.name],
             reason: 'the calendar shows the cancellation, not the booking as it was');
       });
@@ -185,6 +191,23 @@ void main() {
     }
   });
 
+  test('each city\'s calendar states its amounts in the space\'s own '
+      'currency', () async {
+    for (final (space, currency) in [(demoLondonSpaceId, 'GBP'), (demoNewYorkSpaceId, 'USD')]) {
+      await enter(space);
+      final page = await container.read(calendarRepositoryProvider).fetchItems(
+            space,
+            CalendarQuery(
+              from: fixture.seededAt.subtract(const Duration(days: 400)),
+              to: fixture.seededAt.add(const Duration(days: 400)),
+            ),
+          );
+      final stated = {for (final i in page.items) if (i.currency != null) i.currency};
+      expect(stated, isNotEmpty, reason: '$space has amounts in its calendar');
+      expect(stated, {currency}, reason: '$space never states an amount in another currency');
+    }
+  });
+
   test('switching spaces: each space reads its own plan, bookings and '
       'requests, and returns to them unchanged', () async {
     final before = <String, int>{};
@@ -206,7 +229,10 @@ void main() {
     final controller = session.read(demoSessionControllerProvider.notifier);
     final f = session.read(demoSessionControllerProvider).fixture;
     final seat = f.london.floorPlan.seats.first.id;
-    final w = HalfDayWindows.morning(f.seededAt.add(const Duration(days: 20)));
+    final w = [
+      for (var d = 7; d < 60; d++) HalfDayWindows.morning(f.seededAt.add(Duration(days: d))),
+    ].firstWhere((w) => !f.london.reservations.reservations.any((r) =>
+        r.seatId == seat && r.isActive && r.startsAt.isBefore(w.end) && w.start.isBefore(r.endsAt)));
     final id = await f.london.reservations
         .create(workspaceId: demoLondonSpaceId, seatId: seat, startsAt: w.start, endsAt: w.end);
     await f.events.respond('demo-join-request', accept: true);
@@ -218,18 +244,32 @@ void main() {
 
   test('every subprocess of the catalogue is either effective in a space '
       'or off there for a stated reason', () {
+    final gaps = <String>[];
+    final reasoned = <String>{};
     for (final ws in fixture.workspaces.workspaces) {
       final effective = effectiveFeatures(resolveEnabledFeatures(ws.featureFlags), country: ws.countryCode);
       for (final process in workspaceProcesses) {
         for (final step in process.subprocesses) {
-          final on = step.capabilities.where(effective.contains);
-          expect(on.isNotEmpty || _offOnPurpose.containsKey('${ws.id}/${process.key}/${step.key}'), isTrue,
-              reason: '${ws.id}: ${process.key}/${step.key} has no effective capability and no reason');
+          final key = '${ws.id}/${process.key}/${step.key}';
+          if (step.capabilities.any(effective.contains)) continue;
+          _offOnPurpose.containsKey(key) ? reasoned.add(key) : gaps.add(key);
         }
       }
     }
+    expect(gaps, isEmpty, reason: 'each needs a scenario or a stated reason in _offOnPurpose');
+    expect(_offOnPurpose.keys.toSet().difference(reasoned), isEmpty,
+        reason: 'a reason for a subprocess that is in fact on is stale');
   });
 }
 
 /// Subprocesses a space keeps entirely off, and why (the matrix's exclusions).
-const _offOnPurpose = <String, String>{};
+const _leipzigNew = 'Leipzig carries exactly what a new workspace starts with '
+    '(defaultFeatureFlagsForNewWorkspace, pinned by demo_second_space_test): the '
+    'space shows the Demo a fresh, basic space, so these steps are off there by design.';
+const _offOnPurpose = <String, String>{
+  'ws-2/billingPayments/collection': _leipzigNew,
+  'ws-2/billingPayments/expenses': _leipzigNew,
+  'ws-2/billingPayments/tax': _leipzigNew,
+  'ws-2/documentsInformation/reportDesign': _leipzigNew,
+  'ws-2/reservationsUsage/attendance': _leipzigNew,
+};
