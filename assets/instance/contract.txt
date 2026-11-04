@@ -1248,6 +1248,7 @@ constraint purchase_lines.purchase_lines_check3 CHECK (((recoverable_tax_cents I
 constraint purchase_lines.purchase_lines_cost_site_fkey FOREIGN KEY (workspace_id, cost_site_id) REFERENCES sites(workspace_id, id)
 constraint purchase_lines.purchase_lines_description_check CHECK ((char_length(description) <= 500))
 constraint purchase_lines.purchase_lines_gross_cents_check CHECK ((gross_cents >= 0))
+constraint purchase_lines.purchase_lines_item_quantity CHECK (((service_id IS NULL) OR (quantity > (0)::numeric)))
 constraint purchase_lines.purchase_lines_line_no_check CHECK ((line_no >= 1))
 constraint purchase_lines.purchase_lines_net_cents_check CHECK (((net_cents IS NULL) OR (net_cents >= 0)))
 constraint purchase_lines.purchase_lines_nonrecoverable_tax_cents_check CHECK (((nonrecoverable_tax_cents IS NULL) OR (nonrecoverable_tax_cents >= 0)))
@@ -1258,6 +1259,7 @@ constraint purchase_lines.purchase_lines_recognition_kind_check CHECK ((recognit
 constraint purchase_lines.purchase_lines_recoverable_tax_cents_check CHECK (((recoverable_tax_cents IS NULL) OR (recoverable_tax_cents >= 0)))
 constraint purchase_lines.purchase_lines_resource_kind_check CHECK (((resource_kind IS NULL) OR (resource_kind = ANY (ARRAY['level'::text, 'office'::text, 'desk'::text, 'seat'::text]))))
 constraint purchase_lines.purchase_lines_resource_pair CHECK (((resource_kind IS NULL) = (resource_id IS NULL)))
+constraint purchase_lines.purchase_lines_service_id_fkey FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE SET NULL
 constraint purchase_lines.purchase_lines_tax_cents_check CHECK (((tax_cents IS NULL) OR (tax_cents >= 0)))
 constraint purchase_lines.purchase_lines_tax_rate_percent_check CHECK (((tax_rate_percent IS NULL) OR ((tax_rate_percent >= (0)::numeric) AND (tax_rate_percent <= (100)::numeric))))
 constraint purchase_lines.purchase_lines_unit_check CHECK ((char_length(unit) <= 20))
@@ -2317,6 +2319,7 @@ routine public.kpi_costs_summary(p_workspace_id uuid, p_from text, p_to text) ->
 routine public.kpi_customer_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a844d189774d
 routine public.kpi_finance_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12fbe5b2f263
 routine public.kpi_invoice_net(p_vat_totals jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:c48dbdb9b8d1
+routine public.kpi_item_margins(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64ad023def23
 routine public.kpi_memberships_current(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8e6d85175a02
 routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
 routine public.kpi_overdue_receivables(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1330cd289cdd
@@ -2324,9 +2327,11 @@ routine public.kpi_overview_scope(p_workspace_id uuid, p_kpi text, p_from text, 
 routine public.kpi_pending_actions_current(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:38946721e4ea
 routine public.kpi_purchases_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64d46e663c59
 routine public.kpi_readable(p_workspace_id uuid, p_kpi text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f8729471516e
-routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9627553f0fc4
+routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:79fc657dc4a7
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
+routine public.kpi_sales_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:cf59f375be67
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:85c9b4d24741
+routine public.kpi_vendor_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:665b4c02a99c
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97
 routine public.lease_apply_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:b19ccb1abbac
 routine public.lease_change_apply() -> trigger | function | definer | volatile | exec:service_role | body:052842acae0d
@@ -2708,7 +2713,7 @@ routine public.purchase_bridge_expense(p_event events) -> uuid | function | defi
 routine public.purchase_commitment_matches_guard() -> trigger | function | invoker | volatile | exec:service_role | body:b34b8aa95a2b
 routine public.purchase_commitment_page_v1(p_workspace_id uuid, p_lease_id uuid, p_before date, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f2758f32b3f4
 routine public.purchase_credit_paid(p_credit_id uuid) -> bigint | function | definer | stable | exec:service_role | body:a4613107ec97
-routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:38a877e212e3
+routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:676419126755
 routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:ec4ccc997aab
 routine public.purchase_exchange_rate_write(p_workspace_id uuid, p_purchase_id uuid, p_member_id uuid, p_rate jsonb) -> document_exchange_rates | function | definer | volatile | exec:service_role | body:8c9331e67a32
 routine public.purchase_expense_event_bridge() -> trigger | function | definer | volatile | exec:service_role | body:09e3276249cb
@@ -2728,7 +2733,7 @@ routine public.purchase_request_begin(p_workspace_id uuid, p_request_id uuid, p_
 routine public.purchase_request_end(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text, p_result jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d966beee0b55
 routine public.purchase_resource_site(p_workspace_id uuid, p_kind text, p_id uuid) -> TABLE(found boolean, site_id uuid) | function | definer | stable | exec:service_role | body:da2892f9638b
 routine public.purchase_state_of_event(p_status text) -> text | function | invoker | immutable | exec:service_role | body:d221debfbdf6
-routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:e87b9e97c015
+routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:5efec05cf1f6
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b

@@ -339,5 +339,9 @@
   "biBasisInvoiceDue": "invoice due date",
   "@biBasisInvoiceDue": {
     "description": "#3294 customer analytics"
+  },
+  "biBasisPayableDue": "supplier payable due date",
+  "@biBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   }
 }
