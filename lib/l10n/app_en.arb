@@ -15160,10 +15160,6 @@
   "@invoiceGapCreditNoteWithPayments": {
     "description": "#1919 — e-invoice export refused: a credit note that also nets payments has no EN 16931 credit-note form"
   },
-  "invoiceGapQrIbanWithoutReference": "This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.",
-  "@invoiceGapQrIbanWithoutReference": {
-    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0676)."
-  },
   "invoiceGapMissingBuyerCountry": "The customer's country is missing.",
   "@invoiceGapMissingBuyerCountry": {
     "description": "Gap: BR-11 — buyer country"
@@ -15203,6 +15199,10 @@
   "invoiceGapPublicSectorRefs": "Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.",
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoiceGapQrIbanWithoutReference": "This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.",
+  "@invoiceGapQrIbanWithoutReference": {
+    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0676)."
   },
   "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {

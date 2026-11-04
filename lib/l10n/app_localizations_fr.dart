@@ -12726,10 +12726,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet avoir compense aussi des paiements, ce qu\'un avoir EN 16931 ne peut pas exprimer. Émettez l\'avoir sur un document distinct.';
 
   @override
-  String get invoiceGapQrIbanWithoutReference =>
-      'Cette facture se paie sur un QR-IBAN, qui exige la référence QR figée à l\'émission ; or elle a été émise avant ces références. Émettez une facture de remplacement, ou indiquez l\'IBAN ordinaire comme compte de paiement.';
-
-  @override
   String get invoiceGapMissingBuyerCountry => 'Le pays du client manque.';
 
   @override
@@ -12766,6 +12762,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceGapPublicSectorRefs =>
       'Destinée à une plateforme publique sans numéro d\'engagement ni code service — Chorus Pro refuse la plupart des dépôts sans l\'un des deux.';
+
+  @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'Cette facture se paie sur un QR-IBAN, qui exige la référence QR figée à l\'émission ; or elle a été émise avant ces références. Émettez une facture de remplacement, ou indiquez l\'IBAN ordinaire comme compte de paiement.';
 
   @override
   String get invoiceGapVatNotSupported =>

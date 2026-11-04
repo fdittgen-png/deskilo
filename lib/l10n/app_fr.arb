@@ -8311,7 +8311,6 @@
     "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
   },
   "invoiceGapCreditNoteWithPayments": "Cet avoir compense aussi des paiements, ce qu'un avoir EN 16931 ne peut pas exprimer. Émettez l'avoir sur un document distinct.",
-  "invoiceGapQrIbanWithoutReference": "Cette facture se paie sur un QR-IBAN, qui exige la référence QR figée à l'émission ; or elle a été émise avant ces références. Émettez une facture de remplacement, ou indiquez l'IBAN ordinaire comme compte de paiement.",
   "invoiceGapMissingBuyerCountry": "Le pays du client manque.",
   "invoiceGapMissingBuyerVatId": "Le numéro de TVA du client manque — une facture en autoliquidation doit le porter.",
   "@invoiceGapMissingBuyerVatId": {
@@ -8328,6 +8327,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Cette facture se paie sur un QR-IBAN, qui exige la référence QR figée à l'émission ; or elle a été émise avant ces références. Émettez une facture de remplacement, ou indiquez l'IBAN ordinaire comme compte de paiement.",
   "invoiceGapVatNotSupported": "L'espace facture la TVA mais cette facture ne porte aucun taux — ajoutez vos taux de TVA, puis émettez-la à nouveau.",
   "invoiceHeldNote": "Relances suspendues : {reason}",
   "@invoiceHeldNote": {

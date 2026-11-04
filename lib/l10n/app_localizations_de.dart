@@ -12713,10 +12713,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Gutschrift verrechnet auch Zahlungen, was eine EN-16931-Gutschrift nicht ausdrücken kann. Stellen Sie die Gutschrift als eigenes Dokument aus.';
 
   @override
-  String get invoiceGapQrIbanWithoutReference =>
-      'Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an.';
-
-  @override
   String get invoiceGapMissingBuyerCountry => 'Das Land des Kunden fehlt.';
 
   @override
@@ -12752,6 +12748,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceGapPublicSectorRefs =>
       'Für eine öffentliche Plattform bestimmt, ohne Auftragsnummer und ohne Dienststellencode — Chorus Pro lehnt die meisten Einreichungen ohne eines von beiden ab.';
+
+  @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an.';
 
   @override
   String get invoiceGapVatNotSupported =>

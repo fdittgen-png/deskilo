@@ -12694,10 +12694,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta factura rectificativa también compensa pagos, algo que una nota de crédito EN 16931 no puede expresar. Emita el abono en un documento propio.';
 
   @override
-  String get invoiceGapQrIbanWithoutReference =>
-      'Esta factura se paga en un QR-IBAN, que exige la referencia QR fijada al emitirla, y esta se emitió antes de que existieran esas referencias. Emita una factura de sustitución o indique el IBAN ordinario como cuenta de pago.';
-
-  @override
   String get invoiceGapMissingBuyerCountry => 'Falta el país del cliente.';
 
   @override
@@ -12734,6 +12730,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoiceGapPublicSectorRefs =>
       'Destinada a una plataforma pública sin número de compromiso ni código de servicio — Chorus Pro rechaza la mayoría de los depósitos sin uno de los dos.';
+
+  @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'Esta factura se paga en un QR-IBAN, que exige la referencia QR fijada al emitirla, y esta se emitió antes de que existieran esas referencias. Emita una factura de sustitución o indique el IBAN ordinario como cuenta de pago.';
 
   @override
   String get invoiceGapVatNotSupported =>
