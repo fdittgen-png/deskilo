@@ -13,6 +13,8 @@ import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
+import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -594,6 +596,30 @@ void main() {
       expect(find.byKey(const ValueKey('invoice-move-line')), findsNothing);
       expect(find.byKey(ValueKey('invoice-match-$id')), findsOneWidget);
     });
+  });
+
+  testWidgets('journey semantics use localized step states', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('fr'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: SizedBox(
+            width: 250,
+            child: InvoiceJourneyBar(journey: _journey(_invoice())),
+          ),
+        ),
+      ),
+    );
+    expect(find.bySemanticsLabel(RegExp('Étape actuelle')), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(RegExp('Upcoming|todo|current')),
+      findsNothing,
+    );
+    expect(tester.takeException(), isNull);
+    handle.dispose();
   });
 
   test('MoneyFace stays a four-face enum the deep link resolves', () {

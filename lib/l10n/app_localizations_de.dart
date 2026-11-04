@@ -6016,6 +6016,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String demoSetupCardOpenSpace(String space) {
+    return 'Zu $space wechseln';
+  }
+
+  @override
   String get demoSetupCardTitle => 'So funktioniert die Demo';
 
   @override
@@ -13332,6 +13337,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get journeyStageStripLabel =>
       'Der Fakturierungsprozess: ausstellen, einziehen, bestätigen, abschließen';
+
+  @override
+  String get journeyStateCancelled => 'Storniert';
+
+  @override
+  String get journeyStateCurrent => 'Aktueller Schritt';
+
+  @override
+  String get journeyStateDone => 'Abgeschlossen';
+
+  @override
+  String get journeyStateUpcoming => 'Ausstehend';
 
   @override
   String get journeyStepClosed => 'Abgeschlossen';

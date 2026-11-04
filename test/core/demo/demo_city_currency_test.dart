@@ -4,6 +4,7 @@
 // purchase and cost figures. Never the euro of the older spaces.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,11 @@ void main() {
     test('$name is in $currency everywhere', () async {
       final workspace = space.workspaces.firstWhere((w) => w.id == (name == 'London' ? 'ws-3' : 'ws-4'));
       expect(workspace.currencyCode, currency);
+      final features = resolveEnabledFeatures(workspace.featureFlags);
+      expect(features, isNot(contains(WorkspaceFeature.recordingPrivacy)));
+      expect(features, isNot(contains(WorkspaceFeature.mcpAccess)));
+      expect(features, isNot(contains(WorkspaceFeature.webMcp)));
+      expect(features.contains(WorkspaceFeature.mtdSubmission), name == 'London');
       final money = name == 'London' ? fixture.london.money : fixture.newYork.money;
       expect(money.invoices, isNotEmpty);
       expect({for (final i in money.invoices) i.currency}, {currency});

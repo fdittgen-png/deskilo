@@ -4260,6 +4260,15 @@
       }
     }
   },
+  "demoSetupCardOpenSpace": "Cambiar a {space}",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
   "demoSetupCardTitle": "Cómo funciona la demo",
   "@demoSetupCardTitle": {
     "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
@@ -9095,6 +9104,10 @@
   "journeyStageConfirm": "Por confirmar",
   "journeyStageIssue": "Por emitir",
   "journeyStageStripLabel": "El proceso de facturación: emitir, cobrar, confirmar, cerrar",
+  "journeyStateCancelled": "Cancelado",
+  "journeyStateCurrent": "Paso actual",
+  "journeyStateDone": "Completado",
+  "journeyStateUpcoming": "Pendiente",
   "journeyStepClosed": "Cerrada",
   "journeyStepConfirmation": "Confirmación",
   "journeyStepIssued": "Emitida",

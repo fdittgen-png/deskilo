@@ -3,8 +3,8 @@
 // The setup guide, inside the demo, first says what the demo is: nothing
 // leaves the device, it can be reset at any time, which space and which
 // persona the visitor is looking through — and the other space one tap
-// away, Pézenas with every step done or Leipzig half way. Outside the demo
-// it is nothing.
+// away. The guide below reports actual setup status for the current space.
+// Outside the demo it is nothing.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,9 +50,6 @@ class DemoSetupCard extends ConsumerWidget {
                 DemoControls.personaLabel(l10n, env.persona),
               ),
             ),
-            Text(
-              halfWay ? l10n.demoSetupCardHalfDone : l10n.demoSetupCardComplete,
-            ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
               spacing: AppSpacing.sm,
@@ -64,11 +61,7 @@ class DemoSetupCard extends ConsumerWidget {
                     onPressed: () => ref
                         .read(activeWorkspaceIdProvider.notifier)
                         .select(other.id),
-                    child: Text(
-                      halfWay
-                          ? l10n.demoSetupCardOpenComplete(other.name)
-                          : l10n.demoSetupCardOpenHalfDone(other.name),
-                    ),
+                    child: Text(l10n.demoSetupCardOpenSpace(other.name)),
                   ),
                 TextButton.icon(
                   key: const ValueKey('demo-setup-reset'),

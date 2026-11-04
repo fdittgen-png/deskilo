@@ -35,6 +35,7 @@ import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
 import '../widgets/host_payment_pages.dart';
+import '../widgets/invoice_process_sheet.dart';
 import '../widgets/my_finances_parts.dart';
 import '../widgets/own_finance_export_menu.dart';
 import '../widgets/personal_payment_provider.dart';
@@ -69,7 +70,8 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.financesTitle),
-          actions: [if (overview.hasValue) OwnFinanceExportMenu(overview: all)], // #2557 C3
+          actions: [const InvoiceProcessHelpButton(),
+            if (overview.hasValue) OwnFinanceExportMenu(overview: all)], // #2557 C3
           bottom: AppTabBar.bottom(
             context,
             barKey: const ValueKey('finances-tabs'),

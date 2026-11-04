@@ -50,14 +50,14 @@ void main() {
     expect(_cardText(tester), contains('reset the demo'));
     expect(_cardText(tester), contains(demoSpaceName));
     expect(_cardText(tester), contains('The owner'));
-    expect(_cardText(tester), contains('every step'));
+    expect(_cardText(tester), isNot(contains('every step')));
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('demo-setup-switch')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, demoSecondSpaceId);
     expect(_cardText(tester), contains(demoSecondSpaceName));
-    expect(_cardText(tester), contains('half way'));
+    expect(_cardText(tester), isNot(contains('half way')));
     expect(
       find.byKey(const ValueKey('setup-guide-next-pricing')),
       findsOneWidget,
@@ -68,6 +68,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, 'ws-1');
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
+
+    for (final (id, name) in [
+      ('ws-3', 'Camden Yard Cowork'),
+      ('ws-4', 'Hudson Cooperative Workspaces'),
+    ]) {
+      await demo.read(activeWorkspaceIdProvider.notifier).select(id);
+      await tester.pumpAndSettle();
+      expect(_cardText(tester), contains(name));
+      expect(_cardText(tester), isNot(contains('every step')));
+      expect(_cardText(tester), isNot(contains('half way')));
+    }
 
     final before = outer.read(demoSessionControllerProvider).scopeKey;
     await tester.tap(find.byKey(const ValueKey('demo-setup-reset')));
