@@ -101,6 +101,8 @@ class MoneyViewData {
 
   Statement? get statement => statementAsync.value;
 
+  /// #3308 — passes sold at the desk to guests.
+  bool get guestPassesOn => _on(WorkspaceFeature.guestPasses);
   bool _on(WorkspaceFeature f) => features.contains(f);
 
   // The feature gates the Money tab reads; callers ask the question, not the

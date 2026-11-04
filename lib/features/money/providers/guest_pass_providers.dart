@@ -3,9 +3,15 @@
 // #3308 — the space's guest passes and their sale.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../application/guest_pass_commands.dart';
 import '../data/supabase_guest_pass_repository.dart';
 import '../domain/guest_pass.dart';
 import 'credit_providers.dart';
+
+// The workspace context the guest passes screen reads, through one door.
+export '../../workspace/domain/workspace.dart' show Workspace;
+export '../../workspace/providers/workspace_providers.dart'
+    show currentWorkspaceProvider, myPermissionsProvider;
 
 part 'guest_pass_providers.g.dart';
 
@@ -22,3 +28,8 @@ Future<List<GuestPassOffer>> guestPassOffers(Ref ref, String workspaceId) =>
 @riverpod
 Future<List<GuestPassPlace>> guestPassPlaces(Ref ref, String workspaceId) =>
     ref.watch(guestPassRepositoryProvider).places(workspaceId);
+
+/// What the guest passes screen does.
+@riverpod
+GuestPassCommands guestPassCommands(Ref ref) =>
+    GuestPassCommands(ref.watch(guestPassRepositoryProvider));

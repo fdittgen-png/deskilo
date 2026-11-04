@@ -20,8 +20,6 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
 import '../../../profile/presentation/widgets/personal_info_form.dart';
-import '../../../workspace/domain/workspace.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/guest_pass.dart';
 import '../../providers/guest_pass_providers.dart';
 import '../widgets/guest_pass_sale_section.dart';
@@ -165,7 +163,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
       message: 'guest pass sale failed',
       errorText: l10n.guestPassSaleFailed,
       action: () async {
-        sale = await ref.read(guestPassRepositoryProvider).sell(
+        sale = await ref.read(guestPassCommandsProvider).sell(
               workspace.id,
               draft: draft,
               guest: guest.toDb(),
@@ -223,7 +221,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
             domain: 'money',
             message: 'guest pass save failed',
             errorText: l10n.guestPassSaveFailed,
-            action: () => ref.read(guestPassRepositoryProvider).saveOffer(
+            action: () => ref.read(guestPassCommandsProvider).saveOffer(
                   workspace.id,
                   id: offer?.id,
                   name: fields['name'].text.trim(),

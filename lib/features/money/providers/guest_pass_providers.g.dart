@@ -228,3 +228,55 @@ final class GuestPassPlacesFamily extends $Family
   @override
   String toString() => r'guestPassPlacesProvider';
 }
+
+/// What the guest passes screen does.
+
+@ProviderFor(guestPassCommands)
+final guestPassCommandsProvider = GuestPassCommandsProvider._();
+
+/// What the guest passes screen does.
+
+final class GuestPassCommandsProvider
+    extends
+        $FunctionalProvider<
+          GuestPassCommands,
+          GuestPassCommands,
+          GuestPassCommands
+        >
+    with $Provider<GuestPassCommands> {
+  /// What the guest passes screen does.
+  GuestPassCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'guestPassCommandsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$guestPassCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<GuestPassCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  GuestPassCommands create(Ref ref) {
+    return guestPassCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GuestPassCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GuestPassCommands>(value),
+    );
+  }
+}
+
+String _$guestPassCommandsHash() => r'd00214fc786f9a9c087d1e2f9248588c8b13d106';

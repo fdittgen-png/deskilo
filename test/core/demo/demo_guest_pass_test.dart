@@ -15,6 +15,8 @@ import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +42,12 @@ void main() {
     await container.read(myMemberProvider.future);
     return container.read(guestPassRepositoryProvider);
   }
+
+  /// A seat with no booking that day (the seeded month is busy).
+  String freeSeat(List<Seat> seats, List<Reservation> bookings, DateTime day) => seats
+      .map((s) => s.id)
+      .firstWhere((id) => !bookings.any((r) =>
+          r.seatId == id && r.startsAt.year == day.year && r.startsAt.month == day.month && r.startsAt.day == day.day));
 
   DateTime aDay(int ahead) {
     final d = fixture.seededAt.add(Duration(days: ahead));
@@ -110,7 +118,7 @@ void main() {
     final offer = (await passes.offers(demoNewYorkSpaceId)).single;
     final sale = await passes.sell(
       demoNewYorkSpaceId,
-      draft: GuestPassDraft(offer: offer, seatId: fixture.newYork.floorPlan.seats.first.id, day: aDay(21), startMinutes: 600, endMinutes: 750),
+      draft: GuestPassDraft(offer: offer, seatId: freeSeat(fixture.newYork.floorPlan.seats, fixture.newYork.reservations.reservations, aDay(21)), day: aDay(21), startMinutes: 600, endMinutes: 750),
       guest: const {'first_name': 'Hal', 'last_name': 'Hourly'},
       requestId: 'r-ny',
     );

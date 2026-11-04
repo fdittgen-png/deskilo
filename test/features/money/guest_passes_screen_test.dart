@@ -6,7 +6,6 @@
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/presentation/screens/guest_passes_screen.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';

@@ -10,7 +10,6 @@ import '../../features/money/domain/guest_pass.dart';
 import '../../features/money/providers/guest_pass_providers.dart';
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/guest_pass_repository.dart';
 import 'data/money_repository.dart';
 import 'data/reservation_repository.dart';
