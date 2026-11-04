@@ -38,6 +38,56 @@ export interface Posting {
   valueDate?: string;
   /** The reference the bank gave that line; absent when it has none. */
   bankReference?: string;
+  /** #2371 — a sale's tax as it was frozen at issue (`invoices.vat_totals`,
+   * one entry per rate with its components where it has them, 0423),
+   * handed over by the delivery when the target asks
+   * (`PostingAdapter.needsFrozenTax`); absent when not read. Not part of the
+   * digest: it restates the issued document. */
+  taxBreakdown?: TaxEntry[];
+}
+
+/** One tax of a sale as frozen at issue: a component of a combined rate
+ * (GST, QST). Magnitudes, in minor units. */
+export interface TaxComponent {
+  percent: number;
+  baseCents: number;
+  taxCents: number;
+}
+
+/** One entry of a sale's frozen breakdown: a rate, its net and tax, and its
+ * components (the entry itself when it has none). Magnitudes. */
+export interface TaxEntry {
+  percent: number;
+  netCents: number;
+  taxCents: number;
+  components: TaxComponent[];
+}
+
+/** The frozen breakdown of an invoice's `vat_totals`; null when it is
+ * absent or not that shape — never taken for a sale without tax. An empty
+ * list is what the invoice froze: no tax. */
+export function taxBreakdownOf(vatTotals: unknown): TaxEntry[] | null {
+  if (!Array.isArray(vatTotals)) return null;
+  const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
+  const out: TaxEntry[] = [];
+  for (const raw of vatTotals) {
+    if (typeof raw !== "object" || raw === null) return null;
+    const e = raw as Record<string, unknown>;
+    const [percent, net, tax] = [num(e.percent), num(e.net_cents), num(e.vat_cents)];
+    if (percent === null || net === null || tax === null) return null;
+    const components: TaxComponent[] = [];
+    if (Array.isArray(e.components) && e.components.length > 0) {
+      for (const c of e.components as Record<string, unknown>[]) {
+        const [cp, cb, ct] = [num(c.percent), num(c.base_cents), num(c.tax_cents)];
+        if (cp === null || cb === null || ct === null) return null;
+        components.push({ percent: cp, baseCents: Math.abs(cb), taxCents: Math.abs(ct) });
+      }
+    } else {
+      components.push({ percent, baseCents: Math.abs(net), taxCents: Math.abs(tax) });
+    }
+    out.push({ percent, netCents: Math.abs(net), taxCents: Math.abs(tax), components });
+  }
+  return out;
 }
 
 /** The third party of a posted document (`posting_parties`). */
@@ -156,6 +206,9 @@ export interface PostingAdapter {
   /** A target whose redirect names no company: the one company the
    * sign-in authorised, read with the new token, or why there is not one. */
   signedInTenant?(): Promise<{ tenant: string } | { refused: string }>;
+  /** #2371 — whether its readback checks a sale's tax against the frozen
+   * breakdown: the delivery then reads it and sets `taxBreakdown`. */
+  needsFrozenTax?: boolean;
 }
 
 /** The remote id or code a mapping of [kind] [key] names, '' when none. */
