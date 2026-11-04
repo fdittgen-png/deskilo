@@ -7,6 +7,7 @@
 // is written there and `tool/saft/validate.sh` reads each against its
 // published schema (test/fixtures/saft/); without it the suite stays offline
 // and proves what the files say.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference.dart';
@@ -548,6 +549,41 @@ void main() {
       expect(
         _gaps(_request(profile, country: 'AT', company: _company('AT').copyWith(street: 'Mariahilfer Straße'))),
         contains(const SafTGap(SafTGapKind.company, 'BuildingNumber')),
+      );
+    });
+
+    // 0690 — the reviewed rows the app ships, from the BMF's EKR für SAF-T.
+    test('with the shipped AT rows a standard-rate book is written, every account on the BMF list', () {
+      final ekr = {
+        for (final line in File('test/fixtures/saft/saft_at/EKR_fuer_SAF-T.csv')
+            .readAsStringSync(encoding: latin1)
+            .split('\r\n')
+            .skip(1))
+          if (line.contains(';')) line.split(';').first,
+      };
+      bool writesOff(Posting p) => p.lines.any((l) => l.role == BookRole.writeOff);
+      final base = _request(profile, country: 'AT', standardRateOnly: true,
+          reference: TaxReferenceSet(ActiveTaxReference.current.rows));
+      final book = SafTFinancialRequest(
+        profile: profile, period: base.period,
+        postings: [for (final p in base.postings) if (!writesOff(p)) p],
+        opening: [for (final p in base.opening) if (!writesOff(p)) p],
+        accountNames: base.accountNames, accountTypes: base.accountTypes, parties: base.parties,
+        partyDetails: base.partyDetails, company: base.company, contact: base.contact,
+        currency: base.currency, softwareVersion: base.softwareVersion, createdAt: base.createdAt,
+        reference: base.reference, profitBasis: '§ 5 EStG', industryCode: '6820',
+      );
+      final file = _file(book);
+      final codes = file.findAllElements('AccountID_oeEKR').map((e) => e.innerText).toSet();
+      expect(codes, isNotEmpty);
+      expect(ekr.containsAll(codes), isTrue, reason: 'every standard account is on the BMF list: $codes');
+      expect(codes, containsAll(['2000', '2800', '4000', '3500']));
+    });
+
+    test('with the shipped AT rows a write-off is refused, named: the BMF list has no account for it', () {
+      expect(
+        _gaps(_request(profile, country: 'AT', reference: TaxReferenceSet(ActiveTaxReference.current.rows))),
+        contains(const SafTGap(SafTGapKind.standardAccount, '7830 Tap på fordringer')),
       );
     });
 

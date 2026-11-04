@@ -24,7 +24,10 @@
 #                   bmf.gv.at/themen/steuern/fristen-verfahren/bundesabgabenordnung/
 #                   standard-audit-file-tax.html, SAF-T_AT_1.01.xsd; downloaded
 #                   2026-11-04, the page's only schema version (decree
-#                   BMF-010102/0002-IV/2/2009)
+#                   BMF-010102/0002-IV/2/2009). Beside it EKR_fuer_SAF-T.csv,
+#                   the BMF's Kontenrahmen for SAF-T (same page, downloaded
+#                   2026-11-04, ISO-8859-1, CRLF): the source of the AT
+#                   account_map rows; pinned here, never read by xmllint.
 #   saft_oecd_full  the same FAIA 2.01 full schema: Luxembourg's publication
 #                   of the OECD 2.0 tree in the OECD namespace. The OECD's own
 #                   XSD is not published apart from its guidance, so this is
@@ -61,6 +64,7 @@ check "$LU" 957273b819739dd015950475a36642b6a0348c54d59f74e53787a97c887a96c5
 check "$DK" 01cd75f7bf10f1cdab00b48ea2579e97647d7d01fa00862f76edd5d0a6ad8ec3
 check "$RO" 80ad7eaaf2aafd656a6e3c0e69e3a8fcdb23262640287ebba6383ff3014dccc2
 check "$AT" 105e52e52c83863c76eb8777a6efd3b65de34ea02f6b217110b16c1fd579b236
+check saft_at/EKR_fuer_SAF-T.csv 7c05810f2a85cb6e545874140f03b5945811000c07e8a8191188781298a90d10
 
 status=0
 # validate <sample> <schema>
