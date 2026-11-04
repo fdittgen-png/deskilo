@@ -33,6 +33,8 @@ void main() {
       );
       addTearDown(container.dispose);
       await container.read(currentWorkspaceProvider.future);
+      // The rooms follow the space's loaded features, as on the page.
+      await container.read(enabledFeaturesProvider.future);
       final to = _month(fixture.seededAt);
       final from = _month(DateTime.utc(fixture.seededAt.year));
       final k = await container
