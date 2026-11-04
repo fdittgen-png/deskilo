@@ -8,7 +8,7 @@
 -- by the erasure of the last membership, whose preview says so; the table
 -- refuses an implausible one.
 begin;
-select plan(27);
+select plan(28);
 
 -- a1 owner · a2 subject (only member of this space besides the others) · a3 peer
 -- a4 billing clerk (co-owner holding only issueInvoices) · a5 admin holding
@@ -108,6 +108,7 @@ select is(public.preview_my_member_profile('privacy_admin') -> 'birthday' ->> 'b
 
 -- ── export and erasure ──────────────────────────────────────────────
 select ok(public.export_my_data('00000000-0000-4000-8000-0000003278b1')::text like '%1990-04-12%', 'the subject export carries the birthday');
+select is(public.export_my_personal_data_v1() -> 'profile' ->> 'birthday', '1990-04-12', 'the account export (Me, no workspace needed) carries the birthday');
 select ok(public.preview_my_erasure('00000000-0000-4000-8000-0000003278b1')::text ilike '%birthday%', 'the erasure preview names the birthday');
 select lives_ok($$select public.erase_my_membership('00000000-0000-4000-8000-0000003278b1')$$, 'the last membership is erased');
 reset role;
