@@ -606,6 +606,10 @@ window.SETUP_REGISTRY={
   [
    "mtdSubmission",
    false
+  ],
+  [
+   "guestPasses",
+   false
   ]
  ],
  "requires": {
@@ -692,7 +696,8 @@ window.SETUP_REGISTRY={
   "foreignCurrencyPurchases": "purchases",
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
-  "mtdSubmission": "vatDeclarations"
+  "mtdSubmission": "vatDeclarations",
+  "guestPasses": "invoicing"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1092,7 +1097,8 @@ window.SETUP_PROCESSES=[
      "memberPage",
      "memberOrigin",
      "memberEnvironments",
-     "guestParticipation"
+     "guestParticipation",
+     "guestPasses"
     ]
    },
    {

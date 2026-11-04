@@ -262,5 +262,7 @@
   "featurePlanDecorTitle": "Disegnare la sala sulla pianta",
   "featurePlanDecorDesc": "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano.",
   "featureMtdSubmissionTitle": "Inviare l'IVA britannica a HMRC",
-  "featureMtdSubmissionDesc": "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
+  "featureMtdSubmissionDesc": "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte.",
+  "featureGuestPassesTitle": "Pass ospite all'accoglienza",
+  "featureGuestPassesDesc": "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
 }

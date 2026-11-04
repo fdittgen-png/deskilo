@@ -14486,6 +14486,18 @@ abstract class AppLocalizations {
   /// **'Guest visits'**
   String get featureGuestParticipationTitle;
 
+  /// #3308 the guest pass flag
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.'**
+  String get featureGuestPassesDesc;
+
+  /// #3308 the guest pass flag
+  ///
+  /// In en, this message translates to:
+  /// **'Guest passes at the desk'**
+  String get featureGuestPassesTitle;
+
   /// Subtitle note: the feature is on but its parent is off (#800)
   ///
   /// In en, this message translates to:

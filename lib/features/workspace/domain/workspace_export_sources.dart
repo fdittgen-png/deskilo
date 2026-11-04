@@ -295,6 +295,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('member_credit_uses'),
   ExportSource.everyColumn('price_negotiations'),
   ExportSource.everyColumn('quota_extensions'),
+  // #3308 — the passes the space sells and the passes it sold.
+  ExportSource.everyColumn('guest_pass_offers'),
+  ExportSource.everyColumn('guest_passes'),
   ExportSource.everyColumn('usage_records'),
   ExportSource.everyColumn('invoice_matches'),
   ExportSource.everyColumn('invoice_reminders'),

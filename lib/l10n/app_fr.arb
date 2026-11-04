@@ -6270,6 +6270,8 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
+  "featureGuestPassesDesc": "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent.",
+  "featureGuestPassesTitle": "Pass invités à l'accueil",
   "featureHeldBack": "En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.",
   "featureHolidayImportDesc": "Un propriétaire importe les jours fériés du pays, et d'une région, depuis une source de données ouvertes, désélectionne les jours où l'espace reste ouvert et importe les autres comme jours de fermeture. Les mois déjà facturés sont ignorés et nommés.",
   "@featureHolidayImportDesc": {

@@ -6270,6 +6270,8 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
+  "featureGuestPassesDesc": "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben.",
+  "featureGuestPassesTitle": "Gästepässe am Empfang",
   "featureHeldBack": "Wartet auf die Funktion darüber — schalten Sie sie ein, dann wirkt auch diese wieder.",
   "featureHolidayImportDesc": "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt.",
   "@featureHolidayImportDesc": {

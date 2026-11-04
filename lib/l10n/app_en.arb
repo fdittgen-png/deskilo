@@ -10727,6 +10727,14 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
+  "featureGuestPassesDesc": "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.",
+  "@featureGuestPassesDesc": {
+    "description": "#3308 the guest pass flag"
+  },
+  "featureGuestPassesTitle": "Guest passes at the desk",
+  "@featureGuestPassesTitle": {
+    "description": "#3308 the guest pass flag"
+  },
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",
   "@featureHeldBack": {
     "description": "Subtitle note: the feature is on but its parent is off (#800)"

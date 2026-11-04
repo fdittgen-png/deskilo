@@ -585,5 +585,13 @@
   },
   "@featureMtdSubmissionDesc": {
     "description": "#2470 the HMRC MTD VAT submission flag"
+  },
+  "featureGuestPassesTitle": "Guest passes at the desk",
+  "featureGuestPassesDesc": "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.",
+  "@featureGuestPassesTitle": {
+    "description": "#3308 the guest pass flag"
+  },
+  "@featureGuestPassesDesc": {
+    "description": "#3308 the guest pass flag"
   }
 }

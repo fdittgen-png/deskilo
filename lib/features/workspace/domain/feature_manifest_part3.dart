@@ -413,4 +413,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.vatDeclarations,
     defaultOn: false,
   ),
+  // #3308 — a pass sold at the desk to a guest who is not a member: its
+  // booking, its charge and its invoice. Asked for, under invoicing.
+  WorkspaceFeature.guestPasses: FeatureManifestEntry(
+    feature: WorkspaceFeature.guestPasses,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+    defaultOn: false,
+  ),
 };

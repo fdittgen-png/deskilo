@@ -396,15 +396,14 @@ enum WorkspaceFeature {
   /// #2631 — a meeting room on the plan, booked in its own slot; a parking of standard, EV and accessible slots, booked per day (both default OFF).
   meetingRooms,
   parking,
-  /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
-  /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
+  /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
   /// register (under purchases); #2568 rented rooms (under levelBooking). OFF.
   webMcp,
   purchases,
   premisesLease,
   assetRegister,
   externalRooms,
-  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869 guide, #2862 data report, #3031 bills in another currency, #2370 accounting systems, #2380 bank statements, #2470 HMRC VAT submission under vatDeclarations (OFF).
+  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869 guide, #2862 data report, #3031 bills in another currency, #2370 accounting systems, #2380 bank statements, #2470 HMRC VAT submission under vatDeclarations, #3308 guest passes under invoicing (OFF).
   accountingPeriods,
   biReportDesigner,
   purchaseAnalytics,
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   accountingConnectors,
   bankImport,
   planDecor,
-  mtdSubmission;
+  mtdSubmission,
+  guestPasses;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

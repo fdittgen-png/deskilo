@@ -8877,6 +8877,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureGuestParticipationTitle => 'Visites d\'invités';
 
   @override
+  String get featureGuestPassesDesc =>
+      'Vendre un pass journée ou à l\'heure à un invité qui n\'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n\'est vendu ; les pass déjà vendus et leurs factures restent.';
+
+  @override
+  String get featureGuestPassesTitle => 'Pass invités à l\'accueil';
+
+  @override
   String get featureHeldBack =>
       'En attente de la fonction au-dessus — activez-la et celle-ci fonctionne de nouveau.';
 

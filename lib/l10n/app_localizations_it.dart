@@ -8854,6 +8854,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureGuestParticipationTitle => 'Visite degli ospiti';
 
   @override
+  String get featureGuestPassesDesc =>
+      'Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano.';
+
+  @override
+  String get featureGuestPassesTitle => 'Pass ospite all\'accoglienza';
+
+  @override
   String get featureHeldBack =>
       'In attesa della funzione qui sopra: la attivi e anche questa torna a funzionare.';
 

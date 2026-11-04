@@ -8864,6 +8864,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureGuestParticipationTitle => 'Gastbesuche';
 
   @override
+  String get featureGuestPassesDesc =>
+      'Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben.';
+
+  @override
+  String get featureGuestPassesTitle => 'Gästepässe am Empfang';
+
+  @override
   String get featureHeldBack =>
       'Wartet auf die Funktion darüber — schalten Sie sie ein, dann wirkt auch diese wieder.';
 
