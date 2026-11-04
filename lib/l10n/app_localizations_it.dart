@@ -10418,6 +10418,112 @@ class AppLocalizationsIt extends AppLocalizations {
   String get groupRenameTitle => 'Nome del gruppo';
 
   @override
+  String get guestPassActive => 'In vendita';
+
+  @override
+  String get guestPassAdd => 'Aggiungere un pass';
+
+  @override
+  String get guestPassChoose => 'Pass';
+
+  @override
+  String get guestPassDay => 'Primo giorno';
+
+  @override
+  String get guestPassDays => 'Giorni';
+
+  @override
+  String get guestPassEdit => 'Modificare il pass';
+
+  @override
+  String get guestPassFrom => 'Dalle';
+
+  @override
+  String get guestPassName => 'Nome';
+
+  @override
+  String get guestPassNameRequired => 'Inserisca un nome.';
+
+  @override
+  String get guestPassPaid => 'Pagato all\'accoglienza';
+
+  @override
+  String guestPassPerDay(String price) {
+    return '$price al giorno';
+  }
+
+  @override
+  String guestPassPerHour(String price) {
+    return '$price all\'ora';
+  }
+
+  @override
+  String get guestPassPrice => 'Prezzo per unità';
+
+  @override
+  String get guestPassPriceInvalid => 'Inserisca un prezzo.';
+
+  @override
+  String get guestPassProblemDays => 'Un pass dura da 1 a 31 giorni.';
+
+  @override
+  String get guestPassProblemEndBeforeStart => 'La fine è prima dell\'inizio.';
+
+  @override
+  String get guestPassProblemHourlyOneDay =>
+      'Un pass orario vale per un solo giorno.';
+
+  @override
+  String get guestPassProblemNoOffer => 'Scelga un pass.';
+
+  @override
+  String get guestPassProblemNoSeat => 'Scelga un posto.';
+
+  @override
+  String get guestPassSaleFailed =>
+      'Non è stato possibile vendere il pass. Il posto potrebbe essere occupato o la fascia fuori dagli orari di apertura.';
+
+  @override
+  String get guestPassSaleIntro =>
+      'Il nome e i recapiti dell\'ospite sono stampati sulla fattura. L\'ospite non diventa membro.';
+
+  @override
+  String get guestPassSeat => 'Posto';
+
+  @override
+  String get guestPassSell => 'Vendere un pass';
+
+  @override
+  String guestPassSold(String total, String name) {
+    return 'Pass venduto: $total, fatturato a $name.';
+  }
+
+  @override
+  String get guestPassTo => 'Alle';
+
+  @override
+  String guestPassTotal(String units, String price, String total) {
+    return '$units × $price = $total';
+  }
+
+  @override
+  String get guestPassUnitDay => 'Al giorno';
+
+  @override
+  String get guestPassUnitHour => 'All\'ora';
+
+  @override
+  String get guestPassesEmpty =>
+      'Ancora nessun pass. Aggiunga i pass che lo spazio vende.';
+
+  @override
+  String get guestPassesIntro =>
+      'Pass venduti all\'accoglienza a ospiti che non sono membri: il posto viene prenotato per loro, il pass viene loro fatturato e il denaro incassato è registrato come pagamento.';
+
+  @override
+  String get guestPassesTitle => 'Pass ospite';
+
+  @override
   String get guideActionConfirmBooking =>
       'confermi la prenotazione e attenda la risposta';
 
@@ -16266,6 +16372,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberOriginFounder => 'Ha fondato questo spazio';
+
+  @override
+  String get memberOriginGuest =>
+      'Ha acquistato un pass ospite all\'accoglienza';
 
   @override
   String get memberOriginHeading => 'Come è iniziata questa adesione';

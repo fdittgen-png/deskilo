@@ -513,5 +513,9 @@
   "groupNeedsPeople": "Add at least one person.",
   "@groupNeedsPeople": {
     "description": "messenger: creating a group of people"
+  },
+  "memberOriginGuest": "Bought a guest pass at the desk",
+  "@memberOriginGuest": {
+    "description": "#3308 a customer record made by a guest pass sale"
   }
 }

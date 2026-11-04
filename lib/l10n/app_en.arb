@@ -12490,6 +12490,159 @@
   "@groupRenameTitle": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "guestPassActive": "On sale",
+  "@guestPassActive": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassAdd": "Add a pass",
+  "@guestPassAdd": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassChoose": "Pass",
+  "@guestPassChoose": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassDay": "First day",
+  "@guestPassDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassDays": "Days",
+  "@guestPassDays": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassEdit": "Edit the pass",
+  "@guestPassEdit": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassFrom": "From",
+  "@guestPassFrom": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassName": "Name",
+  "@guestPassName": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassNameRequired": "Enter a name.",
+  "@guestPassNameRequired": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPaid": "Paid at the desk",
+  "@guestPassPaid": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPerDay": "{price} per day",
+  "@guestPassPerDay": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassPerHour": "{price} per hour",
+  "@guestPassPerHour": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassPrice": "Price per unit",
+  "@guestPassPrice": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPriceInvalid": "Enter a price.",
+  "@guestPassPriceInvalid": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemDays": "A pass lasts 1 to 31 days.",
+  "@guestPassProblemDays": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemEndBeforeStart": "The end is before the start.",
+  "@guestPassProblemEndBeforeStart": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemHourlyOneDay": "An hourly pass is for one day.",
+  "@guestPassProblemHourlyOneDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemNoOffer": "Choose a pass.",
+  "@guestPassProblemNoOffer": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemNoSeat": "Choose a place.",
+  "@guestPassProblemNoSeat": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaleFailed": "The pass could not be sold. The place may be taken, or the window outside the opening hours.",
+  "@guestPassSaleFailed": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaleIntro": "The guest's name and contact are printed on the invoice. The guest does not become a member.",
+  "@guestPassSaleIntro": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSeat": "Place",
+  "@guestPassSeat": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSell": "Sell a pass",
+  "@guestPassSell": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSold": "Pass sold: {total}, invoiced to {name}.",
+  "@guestPassSold": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassTo": "To",
+  "@guestPassTo": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassTotal": "{units} × {price} = {total}",
+  "@guestPassTotal": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "units": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassUnitDay": "Per day",
+  "@guestPassUnitDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassUnitHour": "Per hour",
+  "@guestPassUnitHour": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesEmpty": "No pass yet. Add the passes the space sells.",
+  "@guestPassesEmpty": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesIntro": "Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.",
+  "@guestPassesIntro": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesTitle": "Guest passes",
+  "@guestPassesTitle": {
+    "description": "#3308 guest passes sold at the desk"
+  },
   "guideActionConfirmBooking": "confirm the booking and wait for the answer",
   "@guideActionConfirmBooking": {
     "description": "#1867 live guide host"
@@ -19412,6 +19565,10 @@
   },
   "memberOriginDelegated": "Profile created by an admin",
   "memberOriginFounder": "Founded this space",
+  "memberOriginGuest": "Bought a guest pass at the desk",
+  "@memberOriginGuest": {
+    "description": "#3308 a customer record made by a guest pass sale"
+  },
   "memberOriginHeading": "How this membership began",
   "memberOriginInvited": "Joined by invitation",
   "memberOveragePolicyLabel": "When days run out",

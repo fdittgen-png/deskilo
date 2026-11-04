@@ -433,5 +433,6 @@
   "groupNeedsPeople": "Añada al menos una persona.",
   "@groupNeedsPeople": {
     "description": "messenger: creating a group of people"
-  }
+  },
+  "memberOriginGuest": "Compró un pase de invitado en recepción"
 }

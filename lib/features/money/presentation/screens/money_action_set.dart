@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_connection.dart'
     show accountingTransferReaders;
@@ -253,6 +254,11 @@ class MoneyActionSet {
             l10n.servicesTitle, '/services'),
       door('sales-hub-invoices', Icons.receipt_long_outlined,
           l10n.invoicesManage, '/invoices'),
+      // #3308 — passes sold at the desk, for who sells or prices them.
+      if (data.features.contains(WorkspaceFeature.guestPasses) &&
+          (held.contains('issueInvoices') || held.contains('manageServices')))
+        door('sales-hub-guest-passes', Icons.confirmation_number_outlined,
+            l10n.guestPassesTitle, '/money/guest-passes'),
       door('sales-hub-register', Icons.table_rows_outlined,
           l10n.invoiceRegisterTitle, '/invoice-register'),
       if (held.contains('manageBilling'))

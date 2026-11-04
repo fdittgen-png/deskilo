@@ -137,6 +137,7 @@ import 'data/workbook_origin_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
+import 'demo_guest_pass_overrides.dart';
 import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_lease_seed.dart';
@@ -293,6 +294,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       ...demoSpaceOverrides(fixture),
+      ...demoGuestPassOverrides(fixture), // #3308
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354

@@ -373,6 +373,7 @@ const List<RouteCoverage> routeCoverage = [
     owner: '#1884',
   ),
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/guest-passes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/payments', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/sales', CoverageStatus.planned, owner: '#1884'),
