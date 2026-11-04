@@ -58,14 +58,16 @@ const QC_RATES: Record<string, number> = { GST: 5, QST: 9.975 };
 
 /** A QuickBooks company keeping what it is sent. It books a sale's tax as
  * QuickBooks does: one `TaxLine` per rate of each line's code, on the
- * line's net; [rates] misconfigures them, [oneTaxLine] collapses a code's
- * rates into one line. */
+ * line's net, each rate rounded on its own; [rates] are the realm's rate
+ * values, [oneTaxLine] collapses a code's rates into one line, [book]
+ * replaces what a code books. */
 function realm(opts: {
   country?: string;
   customNumbers?: boolean;
   taxDelta?: number;
   rates?: Record<string, number>;
   oneTaxLine?: boolean;
+  book?: (code: string, net: number) => { id: string; amount: number }[];
 } = {}) {
   const rates = opts.rates ?? QC_RATES;
   const held: Record<string, Row[]> = {
@@ -74,11 +76,17 @@ function realm(opts: {
     Payment: [],
     JournalEntry: [],
     Customer: [],
-    TaxCode: [{
-      Id: "TC-QC",
-      Name: "GST/QST QC",
-      SalesTaxRateList: { TaxRateDetail: Object.keys(QC_RATES).map((r) => ({ TaxRateRef: { value: r } })) },
-    }],
+    TaxCode: [
+      {
+        Id: "TC-QC",
+        Name: "GST/QST QC",
+        SalesTaxRateList: {
+          TaxRateDetail: Object.keys(QC_RATES).map((r, i) => ({ TaxRateRef: { value: r }, TaxOrder: i })),
+        },
+      },
+      { Id: "TC-GST", Name: "GST", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "GST" }, TaxOrder: 0 }] } },
+    ],
+    TaxRate: Object.entries(rates).map(([id, value]) => ({ Id: id, RateValue: value })),
   };
   const urls: string[] = [];
   const st = { posts: 0, loseNextAnswer: false };
@@ -114,7 +122,9 @@ function realm(opts: {
           const c = held.TaxCode.find((t) => t.Id === code);
           if (!c) continue;
           const ids = ((c.SalesTaxRateList as Row).TaxRateDetail as Row[]).map((d) => String((d.TaxRateRef as Row).value));
-          const split = ids.map((id) => ({ id, amount: Math.round(net * (rates[id] ?? 0)) / 100 }));
+          const split = opts.book
+            ? opts.book(code, net)
+            : ids.map((id) => ({ id, amount: Math.round(net * (rates[id] ?? 0)) / 100 }));
           const booked = opts.oneTaxLine
             ? [{ id: ids[0], amount: Math.round(split.reduce((x, t) => x + t.amount, 0) * 100) / 100 }]
             : split;
@@ -390,7 +400,7 @@ Deno.test("#2371 a realm that splits the document's tax with another QST rate is
   const log = new Log();
   assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks tax 14.50 for standard, the document 14.98"), row.error);
+  assert(row.error.includes("QuickBooks tax 9.50 at rate QST, the document 9.98"), row.error);
   assertEquals((q.held.Invoice[0].TxnTaxDetail as Row).TotalTax, 14.98);
 });
 
@@ -399,6 +409,49 @@ Deno.test("#2371 a GST+QST code read back with one tax line is a conflict", asyn
   const log = new Log();
   assertEquals((await run(q, log, [year[0]])).statuses, ["conflict"]);
   const [row] = log.rows.values();
-  assert(row.error.includes("QuickBooks booked 1 tax lines for standard, its code has 2 rates"), row.error);
+  assert(row.error.includes("QuickBooks booked no tax at rate QST, the document 9.98"), row.error);
+});
+
+Deno.test("#2371 a split that keeps the code's total but not its components is a conflict", async () => {
+  // GST 4.00 + QST 10.98 = 14.98: the total agrees, the components do not.
+  const wrong = realm({ book: () => [{ id: "GST", amount: 4 }, { id: "QST", amount: 10.98 }] });
+  const log = new Log();
+  assertEquals((await run(wrong, log, [year[0]])).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks tax 4.00 at rate GST, the document 5.00"), row.error);
+  assert(row.error.includes("QuickBooks tax 10.98 at rate QST, the document 9.98"), row.error);
+});
+
+Deno.test("#2371 two GST lines and no QST for a two-rate code is a conflict, though the total agrees", async () => {
+  const twice = realm({ book: () => [{ id: "GST", amount: 7.49 }, { id: "GST", amount: 7.49 }] });
+  const log = new Log();
+  assertEquals((await run(twice, log, [year[0]])).statuses, ["conflict"]);
+  const [row] = log.rows.values();
+  assert(row.error.includes("QuickBooks booked no tax at rate QST, the document 9.98"), row.error);
+});
+
+Deno.test("#2371 a mixed invoice, GST alone and GST with QST, reconciles: the shared GST is compared summed", async () => {
+  const q = realm();
+  const mixed: Posting = {
+    ...year[0],
+    documentNumber: "F-2026-0009",
+    lines: [
+      line("customers", null, 17748, 0),
+      line("revenue", "standard", 0, 10000),
+      line("revenue", "gst", 0, 5000),
+      line("vat_output", "standard", 0, 1498),
+      line("vat_output", "gst", 0, 250),
+    ],
+  };
+  const withGst = [
+    ...maps,
+    { kind: "item" as const, key: "revenue:gst", remoteId: "IT-3", remoteCode: "" },
+    { kind: "item" as const, key: "vat_output:gst", remoteId: "TC-GST", remoteCode: "" },
+  ];
+  assertEquals((await run(q, new Log(), [mixed], "quickbooks_online_ca", withGst)).statuses, ["acknowledged"]);
+  const gst = ((q.held.Invoice[0].TxnTaxDetail as Row).TaxLine as Row[])
+    .filter((t) => ((t.TaxLineDetail as Row).TaxRateRef as Row).value === "GST");
+  // GST on both codes: 5.00 on 100.00 and 2.50 on 50.00.
+  assertEquals(gst.map((t) => t.Amount), [5, 2.5]);
 });
 

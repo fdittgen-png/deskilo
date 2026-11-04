@@ -314,20 +314,39 @@ function remoteOf(
   };
 }
 
+/** [netMinor] × [rate] % rounded half away from zero, exactly: the rate is
+ * read as the decimal it is written as (`9.975`), never as a float. */
+function shareOf(netMinor: number, rate: string): number | null {
+  const m = /^(\d+)(?:\.(\d+))?$/.exec(rate.trim());
+  if (!m) return null;
+  const decimals = m[2] ?? "";
+  const units = BigInt(m[1] + decimals);
+  const scale = 100n * 10n ** BigInt(decimals.length);
+  const product = BigInt(Math.abs(netMinor)) * units;
+  const share = Number((product * 2n + scale) / (scale * 2n));
+  return netMinor < 0 ? -share : share;
+}
+
 /** #2371 — what the tax lines QuickBooks booked for a sale [row] say of
  * [p], in a CA or GB realm (a US invoice carries one override code). A
  * combined code (`GST/QST QC`) is one rate group of the posting but books
  * one `TaxLine` per rate (GST, QST): the posting carries one tax line per
  * rate group, not per component. So each taxed group's code is read back
- * with its rates, and its booked `TaxLine`s must be one per rate, each on
- * the group's net, together the group's tax to the cent. A tax line no
- * mapped code explains is a difference too. A string when the realm could
- * not be asked.
+ * with its rates in their order and each rate with its value, and the
+ * group's tax is split as DesKilo froze it (`vatComponentsOf`): every rate
+ * but the last rounded half up on the group's net, the last taking the
+ * rest. Two codes may share a rate (GST alone and GST with QST on one
+ * invoice), so what QuickBooks booked is compared per rate, summed over the
+ * groups: each expected rate present, its amount and its taxed base equal
+ * to the sum of the groups' components and nets; a rate no mapped code
+ * names is a difference too. A rate whose value cannot be read leaves the
+ * split unverified, which is reported, never assumed. A string when the
+ * realm could not be asked.
  *
- * spec: TaxCode.SalesTaxRateList.TaxRateDetail[].TaxRateRef and
- * TxnTaxDetail.TaxLine[] {Amount, TaxLineDetail {TaxRateRef,
- * NetAmountTaxable}} — Accounting API v3 reference, not verified against a
- * live realm. */
+ * spec: TaxCode.SalesTaxRateList.TaxRateDetail[] {TaxRateRef, TaxOrder},
+ * TaxRate.RateValue and TxnTaxDetail.TaxLine[] {Amount, TaxLineDetail
+ * {TaxRateRef, NetAmountTaxable}} — Accounting API v3 reference, not
+ * verified against a live realm. */
 async function taxLineDifferences(
   fetchImpl: typeof fetch,
   cfg: Cfg,
@@ -336,57 +355,81 @@ async function taxLineDifferences(
   row: Record<string, unknown>,
 ): Promise<string[] | string> {
   const detail = row.TxnTaxDetail as Record<string, unknown> | undefined;
-  const booked = (Array.isArray(detail?.TaxLine) ? detail!.TaxLine as Record<string, unknown>[] : [])
-    .map((t) => {
-      const d = (t.TaxLineDetail ?? {}) as Record<string, unknown>;
-      return {
-        rate: String((d.TaxRateRef as Record<string, unknown> | undefined)?.value ?? ""),
-        amount: toMinor(String(t.Amount ?? 0), p.currency) ?? 0,
-        base: toMinor(String(d.NetAmountTaxable ?? 0), p.currency) ?? 0,
-      };
+  const booked = new Map<string, { amount: number; base: number }>();
+  for (const t of Array.isArray(detail?.TaxLine) ? detail!.TaxLine as Record<string, unknown>[] : []) {
+    const d = (t.TaxLineDetail ?? {}) as Record<string, unknown>;
+    const rate = String((d.TaxRateRef as Record<string, unknown> | undefined)?.value ?? "");
+    const was = booked.get(rate) ?? { amount: 0, base: 0 };
+    booked.set(rate, {
+      amount: was.amount + (toMinor(String(t.Amount ?? 0), p.currency) ?? 0),
+      base: was.base + (toMinor(String(d.NetAmountTaxable ?? 0), p.currency) ?? 0),
     });
+  }
   const differences: string[] = [];
-  const explained = new Set<number>();
+  const expected = new Map<string, { amount: number; base: number }>();
+  const values = new Map<string, string | null>();
   for (const group of taxedGroups(p)) {
+    const name = group ?? "the base rate";
     const code = mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: group }));
     const codes = await query(fetchImpl, cfg, "TaxCode", `Id = ${quoted(code)}`);
     if (typeof codes === "string") return codes;
     const list = (codes[0]?.SalesTaxRateList as Record<string, unknown> | undefined)?.TaxRateDetail;
-    const rates = new Set(
-      (Array.isArray(list) ? list as Record<string, unknown>[] : [])
-        .map((r) => String((r.TaxRateRef as Record<string, unknown> | undefined)?.value ?? "")),
-    );
-    const name = group ?? "the base rate";
-    if (rates.size === 0) {
-      differences.push(`QuickBooks has no rates for the tax code ${code} of ${name}`);
+    const rates = (Array.isArray(list) ? list as Record<string, unknown>[] : [])
+      .map((r, i) => ({
+        id: String((r.TaxRateRef as Record<string, unknown> | undefined)?.value ?? ""),
+        order: Number(r.TaxOrder ?? i),
+      }))
+      .sort((x, y) => x.order - y.order)
+      .map((r) => r.id);
+    if (rates.length === 0 || new Set(rates).size !== rates.length) {
+      differences.push(`QuickBooks states no usable rates for the tax code ${code} of ${name}`);
       continue;
     }
     const net = revenueLines(p).filter((l) => l.qualifier === group).reduce((s, l) => s + amountOf(l), 0);
     const tax = p.lines
       .filter((l) => (l.role === ROLE.vatOutput || l.role === ROLE.vatPending) && l.qualifier === group)
       .reduce((s, l) => s + amountOf(l), 0);
-    const mine = booked.map((t, i) => ({ ...t, i })).filter((t) => rates.has(t.rate));
-    mine.forEach((t) => explained.add(t.i));
-    if (mine.length !== rates.size) {
-      differences.push(`QuickBooks booked ${mine.length} tax lines for ${name}, its code has ${rates.size} rates`);
-    }
-    for (const t of mine) {
-      if (t.base !== net) {
-        differences.push(
-          `QuickBooks taxed ${toMajor(t.base, p.currency)} at rate ${t.rate} for ${name}, the document ${toMajor(net, p.currency)}`,
-        );
+    let left = tax;
+    for (const [i, id] of rates.entries()) {
+      if (!values.has(id)) {
+        const found = await query(fetchImpl, cfg, "TaxRate", `Id = ${quoted(id)}`);
+        if (typeof found === "string") return found;
+        const v = found[0]?.RateValue;
+        values.set(id, typeof v === "number" || typeof v === "string" ? String(v) : null);
       }
-    }
-    const sum = mine.reduce((s, t) => s + t.amount, 0);
-    if (sum !== tax) {
-      differences.push(`QuickBooks tax ${toMajor(sum, p.currency)} for ${name}, the document ${toMajor(tax, p.currency)}`);
+      const value = values.get(id) ?? null;
+      const share = i === rates.length - 1 ? left : value === null ? null : shareOf(net, value);
+      if (share === null) {
+        differences.push(`the split of ${name} is unverified: QuickBooks states no value for rate ${id}`);
+        break;
+      }
+      left -= share;
+      const was = expected.get(id) ?? { amount: 0, base: 0 };
+      expected.set(id, { amount: was.amount + share, base: was.base + net });
     }
   }
-  booked.forEach((t, i) => {
-    if (!explained.has(i) && t.amount !== 0) {
-      differences.push(`QuickBooks booked tax ${toMajor(t.amount, p.currency)} at rate ${t.rate} that no mapped code explains`);
+  for (const [id, want] of expected) {
+    const got = booked.get(id);
+    if (!got) {
+      differences.push(`QuickBooks booked no tax at rate ${id}, the document ${toMajor(want.amount, p.currency)}`);
+      continue;
     }
-  });
+    if (got.amount !== want.amount) {
+      differences.push(
+        `QuickBooks tax ${toMajor(got.amount, p.currency)} at rate ${id}, the document ${toMajor(want.amount, p.currency)}`,
+      );
+    }
+    if (got.base !== want.base) {
+      differences.push(
+        `QuickBooks taxed ${toMajor(got.base, p.currency)} at rate ${id}, the document ${toMajor(want.base, p.currency)}`,
+      );
+    }
+  }
+  for (const [id, got] of booked) {
+    if (!expected.has(id) && got.amount !== 0) {
+      differences.push(`QuickBooks booked tax ${toMajor(got.amount, p.currency)} at rate ${id} that no mapped code explains`);
+    }
+  }
   return differences;
 }
 
