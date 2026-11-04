@@ -20861,6 +20861,12 @@ abstract class AppLocalizations {
   /// **'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.'**
   String get invoiceGapPublicSectorRefs;
 
+  /// #2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0677).
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.'**
+  String get invoiceGapQrIbanWithoutReference;
+
   /// Gap: the workspace charges VAT, which the app cannot break down
   ///
   /// In en, this message translates to:

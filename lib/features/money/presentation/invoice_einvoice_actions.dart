@@ -266,6 +266,7 @@ class _EInvoiceExportRun {
       // #922 — the sheet's default leg is the government platform; the
       // public-sector references are asked for there, as a warning.
       destination: 'government',
+      iban: s.iban,
     );
     // The same judgement against the LIVE identity: if that one passes, the
     // owner is not missing anything — the document is simply older than the
@@ -277,6 +278,7 @@ class _EInvoiceExportRun {
           invoice: s.invoice,
           seller: s.liveSeller,
           buyer: s.buyer,
+          iban: s.iban,
         ).ready;
     // #2358 — what the configured channel receives, what it still needs,
     // and which official validator that format passes.

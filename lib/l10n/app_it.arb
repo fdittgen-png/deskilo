@@ -8328,6 +8328,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Questa fattura si paga su un QR-IBAN, che richiede il riferimento QR fissato all'emissione, e questa è stata emessa prima che tali riferimenti esistessero. Emetta una fattura sostitutiva o indichi l'IBAN ordinario come conto di pagamento.",
   "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.",
   "invoiceHeldNote": "Solleciti sospesi: {reason}",
   "@invoiceHeldNote": {

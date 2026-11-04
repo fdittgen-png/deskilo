@@ -12736,6 +12736,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Destinata a una piattaforma pubblica senza numero di impegno né codice servizio — Chorus Pro rifiuta la maggior parte dei depositi senza uno dei due.';
 
   @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'Questa fattura si paga su un QR-IBAN, che richiede il riferimento QR fissato all\'emissione, e questa è stata emessa prima che tali riferimenti esistessero. Emetta una fattura sostitutiva o indichi l\'IBAN ordinario come conto di pagamento.';
+
+  @override
   String get invoiceGapVatNotSupported =>
       'Lo spazio applica l\'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.';
 
