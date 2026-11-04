@@ -53,6 +53,7 @@ none: it is read as reassurance.
 | The bar: where it mounts, 360 dp, reduced motion, the persona ring | `test/core/demo/demo_bar_mount_test.dart` |
 | The bar and the Reset control, driven | `test/core/demo/demo_workspace_test.dart` |
 | The demo's pages agree with each other and settle — documents, finances, analytics, status, plan, clock, colour — and every process has something to show: the public directory, guest visits, saved analyses, a message request, the kiosk tablet (a fourth persona) and the development twin with its deployment journal (#2327) | `test/ux/demo_consistency_test.dart` |
+| Each space's features, setup guide and values agree with the manifest, its country and its records: a step applies exactly when its feature is effective there; a VAT-registered space holds the rates its invoices charge; a space not subject to VAT has no VAT step; the twin carries its production's configuration; a feature switched off stays in its space across a persona switch and a reset restores it (#3290, inventory `docs/testing/evidence/demo-audit-3290-features.md`) | `test/core/demo/demo_feature_audit_test.dart` |
 | The journeys, end to end on the real screens — mounted as `DeskiloRoot` with `demoEntry` entered, so they run on the production Demo composition and its own overrides | `test/ux/demo_journeys_test.dart` |
 | The retired blur cannot come back | `test/lint/no_render_tree_blur_test.dart` |
 

@@ -16,13 +16,18 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 
 /// The status of a demo space whose features are [flags], whose [ready]
 /// steps hold their evidence, and whose [acknowledged] steps the owner set
-/// aside or marked done.
+/// aside or marked done. [country] is the space's: a feature its country
+/// does not offer is not effective there (`feature_available_in`, 0486).
 SetupStatus demoSetupStatus(
   Map<String, Object?> flags, {
   required Set<String> ready,
   Set<String> acknowledged = const {},
+  String? country,
 }) {
-  final effective = effectiveFeatures(resolveEnabledFeatures(flags));
+  final effective = effectiveFeatures(
+    resolveEnabledFeatures(flags),
+    country: country,
+  );
   bool applies(SetupStep s) =>
       s.feature == null || effective.contains(s.feature);
   bool done(SetupStep s) => s.evidence == 'manual'

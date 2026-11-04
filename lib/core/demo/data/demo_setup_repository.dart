@@ -108,6 +108,7 @@ class DemoSetupRepository extends FakeLocalSetupRepository {
     if (row == null || sources == null) return const SetupStatus();
     return demoSetupStatus(
       row.featureFlags,
+      country: row.countryCode,
       ready: await _demoSetupEvidence(row, sources),
       acknowledged: {...?_acknowledged[workspaceId]},
     );

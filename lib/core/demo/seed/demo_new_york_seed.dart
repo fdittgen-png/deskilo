@@ -3,6 +3,7 @@
 import '../../../features/workspace/domain/member.dart';
 import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
+import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
@@ -20,7 +21,13 @@ Workspace demoNewYorkSpace() => Workspace(
   inviteCode: 'HUDSONDEMO',
   environment: 'prod',
   rolePermissions: everydayMatrix(),
-  featureFlags: {...demoFeatureFlags},
+  // #3290 — a US space is not subject to VAT: the VAT family is off (its
+  // descendants follow by the chain), so the setup guide asks for no VAT
+  // rates, returns or e-invoicing VAT. US sales tax stays on.
+  featureFlags: {
+    ...demoFeatureFlags,
+    WorkspaceFeature.vatManagement.dbKey: false,
+  },
   address: '100 Example Avenue\nNew York, NY 10001',
   street: '100 Example Avenue',
   city: 'New York',
