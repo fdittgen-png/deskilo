@@ -6,7 +6,6 @@
 // computed.
 import 'package:intl/intl.dart';
 
-import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_result.dart';
 import '../../domain/kpi_customers.dart';
@@ -14,18 +13,8 @@ import 'bi_module_section.dart';
 
 CustomerQualityKpi? _kpi(BiMeasure m) => m.detail as CustomerQualityKpi?;
 
-String _percent(num? v, String locale, String? currency) => v == null
-    ? '—'
-    : NumberFormat.decimalPercentPattern(
-        locale: locale,
-        decimalDigits: 1,
-      ).format(v);
-
 String _count(num? v, String locale, String? currency) =>
     v == null ? '—' : NumberFormat.decimalPattern(locale).format(v);
-
-String _money(int? minor, CustomerQualityKpi k, String locale) =>
-    biMoneyCell(minor, locale, k.currency);
 
 /// What every customer card says about its period and its amounts.
 List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
@@ -36,12 +25,7 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('nothing_to_share')) l10n.biCustomerNothingToShare,
 ];
 
-String _computed(CustomerQualityKpi k, AppLocalizations l10n, String locale) =>
-    l10n.biFinanceComputed(
-      DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
-    );
-
-String cohortName(PaymentCohort c, AppLocalizations l10n) => switch (c) {
+String _cohortName(PaymentCohort c, AppLocalizations l10n) => switch (c) {
   PaymentCohort.onTime => l10n.biCustomerCohortOnTime,
   PaymentCohort.late => l10n.biCustomerCohortLate,
   PaymentCohort.undated => l10n.biCustomerCohortUndated,
@@ -54,7 +38,7 @@ String cohortName(PaymentCohort c, AppLocalizations l10n) => switch (c) {
 
 /// The name of a customer row: the name when the server sent it, its rank
 /// otherwise.
-String customerRowName(BiRow row, BiMeasure m, AppLocalizations l10n) {
+String _customerRowName(BiRow row, BiMeasure m, AppLocalizations l10n) {
   final rank = int.tryParse(row.key.replaceFirst('rank-', ''));
   final named = _kpi(m)?.customers.where((c) => c.rank == rank).firstOrNull;
   return named?.name ?? l10n.biCustomerRank('${rank ?? row.key}');
@@ -64,7 +48,7 @@ String customerRowName(BiRow row, BiMeasure m, AppLocalizations l10n) {
 final customerModuleViews = <String, BiModuleView>{
   'customers.payment_behaviour': BiModuleView(
     title: (l10n) => l10n.biCustomerPaymentTitle,
-    value: _percent,
+    value: biPercentCell,
     basis: (m, l10n, locale) => switch (_kpi(m)) {
       final k? => l10n.biCustomerPaymentBasis(
         '${k.onTimeCount}',
@@ -88,18 +72,17 @@ final customerModuleViews = <String, BiModuleView>{
         for (final c in PaymentCohort.values)
           if (k.cohorts[c] case final f? when f.count > 0)
             l10n.biCustomerCohortLine(
-              cohortName(c, l10n),
+              _cohortName(c, l10n),
               '${f.count}',
-              _money(f.minor, k, locale),
+              biMoneyCell(f.minor, locale, k.currency),
             ),
-        _computed(k, l10n, locale),
       ],
       null => const [],
     },
     rowLabel: (row, l10n, locale) => switch (PaymentCohort.values
         .where((c) => c.wire == row.key)
         .firstOrNull) {
-      final c? => cohortName(c, l10n),
+      final c? => _cohortName(c, l10n),
       null => null,
     },
   ),
@@ -123,7 +106,6 @@ final customerModuleViews = <String, BiModuleView>{
             '${d.paidAfterReminder}',
             '${d.remindedInvoices}',
           ),
-        _computed(k, l10n, locale),
       ],
       null => const [],
     },
@@ -135,21 +117,15 @@ final customerModuleViews = <String, BiModuleView>{
     value: biMoneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_kpi(m)) {
       final k? => l10n.biCustomerCreditBasis(
-        _money(k.creditedMinor, k, locale),
+        biMoneyCell(k.creditedMinor, locale, k.currency),
         '${k.creditNotes}',
-        _money(k.writtenOffMinor, k, locale),
+        biMoneyCell(k.writtenOffMinor, locale, k.currency),
         '${k.writeOffs}',
       ),
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
-      final k? => [
-        l10n.biCustomerCreditDefinition,
-        _computed(k, l10n, locale),
-      ],
-      null => const [],
-    },
+    details: (m, l10n, locale) => [l10n.biCustomerCreditDefinition],
     rowLabel: (row, l10n, locale) => switch (DateTime.tryParse(
       '${row.key}-01',
     )) {
@@ -159,13 +135,13 @@ final customerModuleViews = <String, BiModuleView>{
   ),
   'customers.concentration': BiModuleView(
     title: (l10n) => l10n.biCustomerConcentrationTitle,
-    value: _percent,
+    value: biPercentCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_kpi(m)) {
       final k? => l10n.biCustomerConcentrationBasis(
         '${k.topCount}',
         '${k.customerCount}',
-        _money(k.topNetMinor, k, locale),
-        _money(k.netMinor, k, locale),
+        biMoneyCell(k.topNetMinor, locale, k.currency),
+        biMoneyCell(k.netMinor, locale, k.currency),
       ),
       null => '',
     },
@@ -179,13 +155,12 @@ final customerModuleViews = <String, BiModuleView>{
         l10n.biCustomerConcentrationDefinition,
         if (!m.unknown)
           l10n.biCustomerConcentrationOpen(
-            _money(k.topOpenMinor, k, locale),
-            _money(k.openMinor, k, locale),
+            biMoneyCell(k.topOpenMinor, locale, k.currency),
+            biMoneyCell(k.openMinor, locale, k.currency),
           ),
-        _computed(k, l10n, locale),
       ],
       null => const [],
     },
-    rowLabel: (row, l10n, locale) => customerRowName(row, row.current, l10n),
+    rowLabel: (row, l10n, locale) => _customerRowName(row, row.current, l10n),
   ),
 };

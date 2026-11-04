@@ -371,7 +371,7 @@ const biModules = <BiModule>[
   ),
   // #3294 — the customers: how they pay against their due dates, the
   // dunning that takes, what was credited or written off, and how
-  // concentrated the sales are (0669); each drills to the invoices.
+  // concentrated the sales are (0670); each drills to the invoices.
   BiModule(
     id: 'customers.payment_behaviour',
     area: BiArea.finance,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3294 — the customer figures of the analytics page, read from
-// `kpi_customer_quality` (0669): one read per workspace and months, shared
+// `kpi_customer_quality` (0670): one read per workspace and months, shared
 // by the four cards, turned into the page's measure and its table rows.
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3294 / 0669: the customer figures, each proven from a hand-built March
+-- #3294 / 0670: the customer figures, each proven from a hand-built March
 -- 2025 (Paris, EUR). Invoices falling due in March:
 --   i1 c2 12.00 due 10th, paid (ledger date) the 8th, matched 30 April -> on time, -2 days
 --   i8 c3  9.00 due 1st,  paid the 11th after a reminder of the 5th      -> late, +10 days

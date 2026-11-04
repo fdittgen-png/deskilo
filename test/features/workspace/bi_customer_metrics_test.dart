@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3294 — the customer figures: read from `kpi_customer_quality` (0669),
+// #3294 — the customer figures: read from `kpi_customer_quality` (0670),
 // exact to the minor unit, a missing amount never 0; payment punctuality
 // dated by the reported payment, never by the match; the counts surviving
 // a currency mix that leaves every amount unknown; the dunning load only
@@ -356,7 +356,7 @@ void main() {
       ]) {
         final k = customerQualityFromJson(_row(names: names));
         final row = customerRows(k, 'customers.concentration').first;
-        expect(view.rowLabel!(row, l10n, 'en'), expected);
+        expect(view.rowLabel(row, l10n, 'en'), expected);
       }
       final hidden = customerQualityFromJson(_row(names: false));
       expect(

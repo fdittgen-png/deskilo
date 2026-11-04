@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3294 — the customer figures over Supabase (`kpi_customer_quality`, 0669).
+// #3294 — the customer figures over Supabase (`kpi_customer_quality`, 0670).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/kpi_contract.dart';

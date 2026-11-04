@@ -40,7 +40,7 @@ class BiModuleView {
     required this.notes,
     required this.details,
     this.action,
-    this.rowLabel,
+    this.rowLabel = _ownLabel,
   });
 
   final String Function(AppLocalizations l10n) title;
@@ -73,13 +73,32 @@ class BiModuleView {
 
   /// #3294 — the name of one of the module's own rows (a cohort, a level,
   /// a customer's rank); null leaves the row's label.
-  final String? Function(BiRow row, AppLocalizations l10n, String locale)?
+  final String? Function(BiRow row, AppLocalizations l10n, String locale)
   rowLabel;
+
+  static String? _ownLabel(BiRow row, AppLocalizations l10n, String locale) =>
+      null;
+
+  /// [rows], each named by [rowLabel] where it names it.
+  List<BiRow> labelled(
+    List<BiRow> rows,
+    AppLocalizations l10n,
+    String locale,
+  ) => [
+    for (final row in rows)
+      BiRow(
+        key: row.key,
+        label: rowLabel(row, l10n, locale) ?? row.label,
+        current: row.current,
+        compared: row.compared,
+      ),
+  ];
 }
 
 // The BI table's column renderers: locale-aware (NumberFormat,
 // MoneyFormat), not the plain file formatters of lib/core (#2385).
-String _percentCell(num? v, String locale, String? currency) => v == null
+/// A share as a percentage with one decimal; a dash when it is undefined.
+String biPercentCell(num? v, String locale, String? currency) => v == null
     ? '—'
     : NumberFormat.decimalPercentPattern(
         locale: locale,
@@ -138,7 +157,7 @@ List<String> _financeDetails(
 final biModuleViews = <String, BiModuleView>{
   'capacity.seat_utilisation': BiModuleView(
     title: (l10n) => l10n.capacityKpiTitle,
-    value: _percentCell,
+    value: biPercentCell,
     basis: (m, l10n, locale) => switch (_seat(m)) {
       final k? => capacityKpiRatioLine(k, l10n, locale),
       null => '',
@@ -401,7 +420,7 @@ class _Result extends ConsumerWidget {
         const SizedBox(height: AppSpacing.sm),
         if (query.view != BiView.dashboard)
         BiRows(
-          rows: [...result.groups, total],
+          rows: [...view.labelled(result.groups, l10n, locale), total],
           view: query.view,
           aggregation: agg,
           format: (v) => view.value(v, locale, result.currency),
@@ -411,10 +430,6 @@ class _Result extends ConsumerWidget {
           groupHeader: query.groupBy == null
               ? null
               : biDimensionName(l10n, query.groupBy!),
-          labelOf: switch (view.rowLabel) {
-            final label? => (row) => label(row, l10n, locale),
-            null => null,
-          },
         ),
         ExpansionTile(
           key: const ValueKey('bi-explain'),

@@ -481,11 +481,10 @@ class KpiIncompatible extends KpiUnavailable {
   const KpiIncompatible() : super('incompatible_metric');
 }
 
-/// #1921 — the server's copy of the catalogue: per KPI its version, what
-/// it discloses and the permissions it needs, and the unit, the
-/// aggregation, the date basis and the coverage every batched answer
-/// echoes. `kpi_registry()` in the latest migration must hold exactly this
-/// (kpi_registry_sql_test).
+/// #1921 — the server's copy of the catalogue: per KPI its version, what it
+/// discloses and the permissions it needs, and the unit, the aggregation,
+/// the date basis and the coverage every batched answer echoes; the latest
+/// migration's `kpi_registry()` holds exactly this (kpi_registry_sql_test).
 String kpiRegistryJson() => jsonEncode({
   for (final k in kpiCatalogue)
     k.id: {

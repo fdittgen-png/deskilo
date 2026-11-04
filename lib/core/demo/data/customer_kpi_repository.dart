@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3294 — `kpi_customer_quality` over a demo space's own invoices, matches,
-// reminders and holds, by the server's rules (0669): a payment is dated by
+// reminders and holds, by the server's rules (0670): a payment is dated by
 // the day it was reported paid (the bank's value date, else the ledger's),
 // never by the match; amounts in the space's currency, another currency
 // leaving them unknown; names only for a reader of personal data.
@@ -12,6 +12,22 @@ import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
 
 import '../../time/date_text.dart';
 import 'money_repository.dart';
+
+/// An invoice falling due in the months, in its cohort.
+typedef _Due = ({Invoice invoice, PaymentCohort cohort, DateTime? paidOn});
+
+/// Credit notes and written-off remainders by the invoice's month.
+typedef _Credit = ({
+  Map<String, int> credited,
+  Map<String, int> written,
+  int notes,
+  int offs,
+});
+
+typedef _Ranked = ({String id, int net, String name});
+
+/// The resolutions that settle an invoice whatever was paid (0331).
+const _settling = {'exact', 'over_forced', 'over_credit_note', 'refunded'};
 
 class DemoCustomerKpiRepository implements CustomerKpiRepository {
   DemoCustomerKpiRepository({
@@ -53,6 +69,17 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       ? i.totalCents
       : i.vatTotals.fold(0, (s, t) => s + t.netCents);
 
+  static int _sum(Iterable<int> values) => values.fold(0, (s, v) => s + v);
+
+  static bool _completed(_Due d) =>
+      d.cohort == PaymentCohort.onTime || d.cohort == PaymentCohort.late;
+
+  InvoiceMatch? _confirmed(Invoice i) =>
+      switch (money.invoiceMatchesStore[i.id]) {
+        final m? when !m.pending => m,
+        _ => null,
+      };
+
   /// The day the invoice's last payment was reported paid; null when no
   /// recorded payment explains it.
   DateTime? _paidOn(Invoice i) {
@@ -62,16 +89,49 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
         ?money.invoiceMatchesStore[i.id],
     ];
     DateTime? last;
-    for (final p in payments) {
-      if (p.pending) continue;
+    for (final p in payments.where((p) => !p.pending)) {
       final ledger = money.ledger
           .where((e) => e.id == p.paymentLedgerId)
           .firstOrNull;
       final day = p.valueDate ?? ledger?.on;
-      if (day == null) continue;
-      if (last == null || _day(day).isAfter(last)) last = _day(day);
+      if (day != null && (last == null || _day(day).isAfter(last))) {
+        last = _day(day);
+      }
     }
     return last;
+  }
+
+  /// What [i] still owes now, by the dunning rules (0331).
+  int _open(Invoice i, Map<String, int> credits) {
+    final m = _confirmed(i);
+    if (i.settledByInvoiceId != null ||
+        m?.writeoffAt != null ||
+        _settling.contains(m?.resolution)) {
+      return 0;
+    }
+    final left = i.totalCents - (m?.paidCents ?? 0) - (credits[i.id] ?? 0);
+    return left > 0 ? left : 0;
+  }
+
+  PaymentCohort _cohortOf(Invoice i, int credited, DateTime? paidOn) {
+    final m = _confirmed(i);
+    final paid = m?.paidCents ?? 0;
+    final settled =
+        i.settledByInvoiceId != null ||
+        credited >= i.totalCents ||
+        (m != null &&
+            (_settling.contains(m.resolution) ||
+                paid + credited >= i.totalCents));
+    if (i.dueOn == null) return PaymentCohort.unknownDue;
+    if (m?.writeoffAt != null) return PaymentCohort.writtenOff;
+    if (settled) {
+      if (paidOn == null) return PaymentCohort.undated;
+      return paidOn.isAfter(_day(i.dueOn!))
+          ? PaymentCohort.late
+          : PaymentCohort.onTime;
+    }
+    if (money.dunningHolds.containsKey(i.id)) return PaymentCohort.held;
+    return paid > 0 ? PaymentCohort.partial : PaymentCohort.open;
   }
 
   @override
@@ -89,11 +149,56 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       int.parse(toMonth.substring(5)) + 1,
     ).subtract(const Duration(days: 1));
     bool inMonths(Invoice i) =>
-        _month(i).compareTo(fromMonth) >= 0 && _month(i).compareTo(toMonth) <= 0;
+        _month(i).compareTo(fromMonth) >= 0 &&
+        _month(i).compareTo(toMonth) <= 0;
     final standing = [
       for (final i in money.invoices)
         if (i.voidedAt == null && i.kind != InvoiceKind.settlement) i,
     ];
+    final credits = _creditsOf(standing);
+    bool dueInMonths(Invoice i) => i.dueOn == null
+        ? inMonths(i)
+        : !_day(i.dueOn!).isBefore(start) && !_day(i.dueOn!).isAfter(cut);
+    final due = <_Due>[
+      for (final i in standing)
+        if (i.totalCents > 0 && dueInMonths(i))
+          (
+            invoice: i,
+            cohort: _cohortOf(i, credits[i.id] ?? 0, _paidOn(i)),
+            paidOn: _paidOn(i),
+          ),
+    ];
+    final issuedByCut = [
+      for (final i in standing)
+        if (i.totalCents > 0 && !_day(i.issuedAt).isAfter(cut)) i,
+    ];
+    final inScope = standing.where(inMonths).toList();
+    final mixed = _mixed(inScope, due, issuedByCut, credits);
+    final partial = toMonth.compareTo(yearMonth(now.year, now.month)) >= 0;
+    final dunning = dunningEnabled() ? _dunning(due) : null;
+    return _figures(
+      period: (from: fromMonth, to: toMonth),
+      due: due,
+      credit: _credit(inScope),
+      customers: (ranked: _ranked(inScope), owed: _owedBy(issuedByCut, credits)),
+      state: (
+        mixed: mixed,
+        dunning: dunning,
+        quality: {
+          if (mixed) KpiQuality.unavailable,
+          if (partial) KpiQuality.partial,
+        },
+        reasons: [
+          if (mixed) 'currency_mix',
+          if (partial) 'period_not_over',
+          if (dunning == null) 'dunning_off',
+        ],
+      ),
+    );
+  }
+
+  /// What the credit notes give back to each invoice they replace.
+  static Map<String, int> _creditsOf(List<Invoice> standing) {
     final credits = <String, int>{};
     for (final c in standing) {
       if (c.totalCents < 0 && c.replacesInvoiceId != null) {
@@ -101,210 +206,184 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
             (credits[c.replacesInvoiceId!] ?? 0) - c.totalCents;
       }
     }
+    return credits;
+  }
 
-    // The invoices falling due in the months, each in one cohort.
-    final due = <({Invoice invoice, PaymentCohort cohort, DateTime? paidOn})>[];
-    for (final i in standing) {
-      if (i.totalCents <= 0) continue;
-      final dueOn = i.dueOn == null ? null : _day(i.dueOn!);
-      final inScope = dueOn == null
-          ? inMonths(i)
-          : !dueOn.isBefore(start) && !dueOn.isAfter(cut);
-      if (!inScope) continue;
-      final m = money.invoiceMatchesStore[i.id];
-      final confirmed = m != null && !m.pending;
-      final paid = confirmed ? m.paidCents : 0;
-      final credited = credits[i.id] ?? 0;
-      final writtenOff = confirmed && m.writeoffAt != null;
-      final settled =
-          i.settledByInvoiceId != null ||
-          credited >= i.totalCents ||
-          (confirmed &&
-              (const {
-                    'exact',
-                    'over_forced',
-                    'over_credit_note',
-                    'refunded',
-                  }.contains(m.resolution) ||
-                  paid + credited >= i.totalCents));
-      final paidOn = _paidOn(i);
-      final cohort = dueOn == null
-          ? PaymentCohort.unknownDue
-          : writtenOff
-          ? PaymentCohort.writtenOff
-          : settled && paidOn == null
-          ? PaymentCohort.undated
-          : settled && !paidOn!.isAfter(dueOn)
-          ? PaymentCohort.onTime
-          : settled
-          ? PaymentCohort.late
-          : money.dunningHolds.containsKey(i.id)
-          ? PaymentCohort.held
-          : confirmed && paid > 0
-          ? PaymentCohort.partial
-          : PaymentCohort.open;
-      due.add((invoice: i, cohort: cohort, paidOn: paidOn));
+  /// Every invoice of the months, the ones due in them and what is owed
+  /// now, in one currency — or not.
+  bool _mixed(
+    List<Invoice> inScope,
+    List<_Due> due,
+    List<Invoice> issuedByCut,
+    Map<String, int> credits,
+  ) {
+    bool foreign(Invoice i) => i.currency.toUpperCase() != currency;
+    return inScope.any(foreign) ||
+        due.any((d) => foreign(d.invoice)) ||
+        issuedByCut.any((i) => foreign(i) && _open(i, credits) > 0);
+  }
+
+  /// What each customer owes now on its invoices issued by the cut-off.
+  Map<String, int> _owedBy(List<Invoice> issued, Map<String, int> credits) {
+    final owed = <String, int>{};
+    for (final i in issued) {
+      owed[i.memberId] = (owed[i.memberId] ?? 0) + _open(i, credits);
     }
+    return owed;
+  }
 
-    final mixed =
-        standing.any((i) => inMonths(i) && i.currency.toUpperCase() != currency) ||
-        due.any((d) => d.invoice.currency.toUpperCase() != currency) ||
-        standing.any(
-          (i) =>
-              i.totalCents > 0 &&
-              i.currency.toUpperCase() != currency &&
-              !_day(i.issuedAt).isAfter(cut) &&
-              _open(i, credits) > 0,
-        );
-    int? amount(int v) => mixed ? null : v;
-
-    final cohorts = {
-      for (final c in PaymentCohort.values)
-        c: (
-          count: due.where((d) => d.cohort == c).length,
-          minor: amount(
-            due
-                .where((d) => d.cohort == c)
-                .fold(0, (s, d) => s + d.invoice.totalCents),
-          ),
-        ),
-    };
-    final settledDays = [
-      for (final d in due)
-        if (d.cohort == PaymentCohort.onTime || d.cohort == PaymentCohort.late)
-          (
-            days: _daysBetween(d.invoice.dueOn!, d.paidOn!),
-            total: d.invoice.totalCents,
-          ),
-    ];
-    final sortedDays = [for (final s in settledDays) s.days]..sort();
-    int? percentile(double p) => sortedDays.isEmpty
-        ? null
-        : sortedDays[((p * sortedDays.length).ceil() - 1).clamp(
-            0,
-            sortedDays.length - 1,
-          )];
-    final weightTotal = settledDays.fold(0, (s, d) => s + d.total);
-    final weighted = mixed || weightTotal == 0
-        ? null
-        : (settledDays.fold(0, (s, d) => s + d.days * d.total) /
-                      weightTotal *
-                      10)
-                  .round() /
-              10;
-
-    DunningLoad? dunning;
-    if (dunningEnabled()) {
-      final byLevel = <int, int>{};
-      var reminded = 0, reminders = 0, paidAfter = 0;
-      for (final d in due) {
-        final sent = money.invoiceReminders[d.invoice.id] ?? const [];
-        if (sent.isEmpty) continue;
-        reminded++;
-        reminders += sent.length;
-        for (var n = 1; n <= sent.length; n++) {
-          byLevel[n] = (byLevel[n] ?? 0) + 1;
-        }
-        final first = sent.map(_day).reduce((a, b) => a.isBefore(b) ? a : b);
-        if ((d.cohort == PaymentCohort.onTime ||
-                d.cohort == PaymentCohort.late) &&
-            d.paidOn!.isAfter(first)) {
-          paidAfter++;
-        }
+  DunningLoad _dunning(List<_Due> due) {
+    final byLevel = <int, int>{};
+    var reminded = 0, reminders = 0, paidAfter = 0;
+    for (final d in due) {
+      final sent = money.invoiceReminders[d.invoice.id] ?? const <DateTime>[];
+      if (sent.isEmpty) continue;
+      reminded++;
+      reminders += sent.length;
+      for (var n = 1; n <= sent.length; n++) {
+        byLevel[n] = (byLevel[n] ?? 0) + 1;
       }
-      dunning = DunningLoad(
-        dueInvoices: due.where((d) => d.invoice.dueOn != null).length,
-        remindedInvoices: reminded,
-        reminders: reminders,
-        byLevel: byLevel,
-        paidAfterReminder: paidAfter,
-      );
+      final first = sent.map(_day).reduce((a, b) => a.isBefore(b) ? a : b);
+      if (_completed(d) && d.paidOn!.isAfter(first)) paidAfter++;
     }
+    return DunningLoad(
+      dueInvoices: due.where((d) => d.invoice.dueOn != null).length,
+      remindedInvoices: reminded,
+      reminders: reminders,
+      byLevel: byLevel,
+      paidAfterReminder: paidAfter,
+    );
+  }
 
-    // Credit notes and written-off remainders, by the invoice's month, net.
+  /// The credit notes and the written-off remainders, net: a remainder in
+  /// proportion to its invoice's net.
+  _Credit _credit(List<Invoice> inScope) {
     final credited = <String, int>{}, written = <String, int>{};
     var notes = 0, offs = 0;
-    for (final i in standing.where(inMonths)) {
+    for (final i in inScope) {
       final month = _month(i);
+      final m = _confirmed(i);
       if (i.totalCents < 0) {
         notes++;
         credited[month] = (credited[month] ?? 0) - _net(i);
-        continue;
-      }
-      final m = money.invoiceMatchesStore[i.id];
-      if (i.totalCents == 0 || m == null || m.pending || m.writeoffAt == null) {
-        continue;
-      }
-      offs++;
-      if (m.paidCents < i.totalCents) {
-        written[month] =
-            (written[month] ?? 0) +
-            ((i.totalCents - m.paidCents) * _net(i) / i.totalCents).round();
+      } else if (i.totalCents > 0 && m?.writeoffAt != null) {
+        offs++;
+        if (m!.paidCents < i.totalCents) {
+          written[month] =
+              (written[month] ?? 0) +
+              ((i.totalCents - m.paidCents) * _net(i) / i.totalCents).round();
+        }
       }
     }
-    final months = {...credited.keys, ...written.keys}.toList()..sort();
+    return (credited: credited, written: written, notes: notes, offs: offs);
+  }
 
-    // Net invoiced per customer, and what each owes now.
+  /// The customers by net invoiced in the months, the largest first; a
+  /// customer's name is the one of its latest invoice.
+  List<_Ranked> _ranked(List<Invoice> inScope) {
+    final net = <String, int>{};
+    final latest = <String, Invoice>{};
+    for (final i in inScope) {
+      net[i.memberId] = (net[i.memberId] ?? 0) + _net(i);
+      if (!(latest[i.memberId]?.issuedAt.isAfter(i.issuedAt) ?? false)) {
+        latest[i.memberId] = i;
+      }
+    }
+    return [
+      for (final e in net.entries)
+        if (e.value > 0)
+          (id: e.key, net: e.value, name: latest[e.key]!.memberName),
+    ]..sort(
+      (a, b) => b.net != a.net ? b.net.compareTo(a.net) : a.id.compareTo(b.id),
+    );
+  }
+
+  /// The delays of the settled invoices, sorted, and their weighted mean.
+  ({int? median, int? p90, double? weighted}) _delays(
+    List<_Due> due,
+    bool mixed,
+  ) {
+    final settled = [
+      for (final d in due.where(_completed))
+        (
+          days: _daysBetween(d.invoice.dueOn!, d.paidOn!),
+          total: d.invoice.totalCents,
+        ),
+    ];
+    final days = [for (final s in settled) s.days]..sort();
+    // percentile_disc: the first value whose cumulative share reaches p.
+    int? percentile(double p) => days.isEmpty
+        ? null
+        : days[((p * days.length).ceil() - 1).clamp(0, days.length - 1)];
+    final weight = _sum(settled.map((s) => s.total));
+    final weighted = _sum(settled.map((s) => s.days * s.total)) / weight;
+    return (
+      median: percentile(0.5),
+      p90: percentile(0.9),
+      weighted: mixed || weight == 0 ? null : (weighted * 10).round() / 10,
+    );
+  }
+
+  CustomerQualityKpi _figures({
+    required ({String from, String to}) period,
+    required List<_Due> due,
+    required _Credit credit,
+    required ({List<_Ranked> ranked, Map<String, int> owed}) customers,
+    required ({
+      bool mixed,
+      DunningLoad? dunning,
+      Set<KpiQuality> quality,
+      List<String> reasons,
+    })
+    state,
+  }) {
+    final mixed = state.mixed;
+    final (:ranked, :owed) = customers;
+    int? amount(int v) => mixed ? null : v;
+    final delays = _delays(due, mixed);
     final names = namesVisible();
-    final byMember = <String, ({int net, String name, DateTime issued})>{};
-    for (final i in standing.where(inMonths)) {
-      final prior = byMember[i.memberId];
-      byMember[i.memberId] = (
-        net: (prior?.net ?? 0) + _net(i),
-        name: prior == null || i.issuedAt.isAfter(prior.issued)
-            ? i.memberName
-            : prior.name,
-        issued: prior == null || i.issuedAt.isAfter(prior.issued)
-            ? i.issuedAt
-            : prior.issued,
-      );
-    }
-    final owed = <String, int>{};
-    for (final i in standing) {
-      if (i.totalCents <= 0 || _day(i.issuedAt).isAfter(cut)) continue;
-      owed[i.memberId] = (owed[i.memberId] ?? 0) + _open(i, credits);
-    }
-    final ranked =
-        [
-          for (final e in byMember.entries)
-            if (e.value.net > 0)
-              (id: e.key, net: e.value.net, name: e.value.name),
-        ]..sort(
-          (a, b) => b.net != a.net ? b.net.compareTo(a.net) : a.id.compareTo(b.id),
-        );
-    final net = ranked.fold(0, (s, r) => s + r.net);
-    final open = ranked.fold(0, (s, r) => s + (owed[r.id] ?? 0));
     final top = ranked.take(_top);
-
-    final partial = toMonth.compareTo(yearMonth(now.year, now.month)) >= 0;
+    final months = {...credit.credited.keys, ...credit.written.keys}.toList()
+      ..sort();
     return CustomerQualityKpi(
-      fromMonth: fromMonth,
-      toMonth: toMonth,
+      fromMonth: period.from,
+      toMonth: period.to,
       currency: currency,
       namesVisible: names,
-      cohorts: cohorts,
-      medianDays: percentile(0.5),
-      p90Days: percentile(0.9),
-      weightedDays: weighted,
-      dunning: dunning,
-      creditNotes: notes,
-      creditedMinor: amount(credited.values.fold(0, (s, v) => s + v)),
-      writeOffs: offs,
-      writtenOffMinor: amount(written.values.fold(0, (s, v) => s + v)),
+      cohorts: {
+        for (final c in PaymentCohort.values)
+          c: (
+            count: due.where((d) => d.cohort == c).length,
+            minor: amount(
+              _sum([
+                for (final d in due)
+                  if (d.cohort == c) d.invoice.totalCents,
+              ]),
+            ),
+          ),
+      },
+      medianDays: delays.median,
+      p90Days: delays.p90,
+      weightedDays: delays.weighted,
+      dunning: state.dunning,
+      creditNotes: credit.notes,
+      creditedMinor: amount(_sum(credit.credited.values)),
+      writeOffs: credit.offs,
+      writtenOffMinor: amount(_sum(credit.written.values)),
       creditMonths: [
         for (final m in months)
           (
             month: m,
-            creditedMinor: amount(credited[m] ?? 0),
-            writtenOffMinor: amount(written[m] ?? 0),
+            creditedMinor: amount(credit.credited[m] ?? 0),
+            writtenOffMinor: amount(credit.written[m] ?? 0),
           ),
       ],
       topCount: _top,
       customerCount: ranked.length,
-      netMinor: amount(net),
-      topNetMinor: amount(top.fold(0, (s, r) => s + r.net)),
-      openMinor: amount(open),
-      topOpenMinor: amount(top.fold(0, (s, r) => s + (owed[r.id] ?? 0))),
+      netMinor: amount(_sum(ranked.map((r) => r.net))),
+      topNetMinor: amount(_sum(top.map((r) => r.net))),
+      openMinor: amount(_sum(ranked.map((r) => owed[r.id] ?? 0))),
+      topOpenMinor: amount(_sum(top.map((r) => owed[r.id] ?? 0))),
       customers: [
         for (final (n, r) in ranked.take(_rows).indexed)
           CustomerShare(
@@ -314,36 +393,9 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
             openMinor: amount(owed[r.id] ?? 0),
           ),
       ],
-      quality: {
-        if (mixed) KpiQuality.unavailable,
-        if (partial) KpiQuality.partial,
-      },
-      reasons: [
-        if (mixed) 'currency_mix',
-        if (partial) 'period_not_over',
-        if (!dunningEnabled()) 'dunning_off',
-      ],
+      quality: state.quality,
+      reasons: state.reasons,
       computedAt: now,
     );
-  }
-
-  /// What [i] still owes now, by the dunning rules (0331).
-  int _open(Invoice i, Map<String, int> credits) {
-    final m = money.invoiceMatchesStore[i.id];
-    final confirmed = m != null && !m.pending;
-    if (i.settledByInvoiceId != null || (confirmed && m.writeoffAt != null)) {
-      return 0;
-    }
-    if (confirmed &&
-        const {
-          'exact',
-          'over_forced',
-          'over_credit_note',
-          'refunded',
-        }.contains(m.resolution)) {
-      return 0;
-    }
-    final left = i.totalCents - (confirmed ? m.paidCents : 0) - (credits[i.id] ?? 0);
-    return left > 0 ? left : 0;
   }
 }

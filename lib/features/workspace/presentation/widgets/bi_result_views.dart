@@ -14,15 +14,11 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import 'capacity_evidence.dart';
 
-String _biRowLabel(
-  BiRow row,
-  AppLocalizations l10n,
-  String? Function(BiRow row)? labelOf,
-) => row.isTotal
+String _biRowLabel(BiRow row, AppLocalizations l10n) => row.isTotal
     ? l10n.biTotal
     : row.isRemainder
     ? l10n.biRemainder
-    : labelOf?.call(row) ?? row.label ?? row.key;
+    : row.label ?? row.key;
 
 class BiRows extends StatelessWidget {
   const BiRows({
@@ -34,7 +30,6 @@ class BiRows extends StatelessWidget {
     required this.change,
     this.comparedLabel,
     this.groupHeader,
-    this.labelOf,
   });
 
   /// The groups, then the total, in display order.
@@ -49,10 +44,6 @@ class BiRows extends StatelessWidget {
 
   /// The grouping's name, or null when not grouped.
   final String? groupHeader;
-
-  /// #3294 — a row's name in the reader's language, when the module names
-  /// its rows itself (null: the row's own label).
-  final String? Function(BiRow row)? labelOf;
 
   @override
   Widget build(BuildContext context) =>
@@ -88,7 +79,7 @@ class BiRows extends StatelessWidget {
           for (final row in rows)
             TableRow(
               children: [
-                cell([_biRowLabel(row, l10n, labelOf),
+                cell([_biRowLabel(row, l10n),
                   biQualityLabel(row.current.quality, l10n)]
                   .where((s) => s.isNotEmpty).join(' · '),
                   style: row.isTotal ? bold : null),
@@ -136,7 +127,7 @@ class BiRows extends StatelessWidget {
           Semantics(
             container: true,
             label: [
-              _biRowLabel(row, l10n, labelOf),
+              _biRowLabel(row, l10n),
               biQualityLabel(row.current.quality, l10n),
               format(row.current.value(aggregation)),
               if (comparedLabel != null) ...[
@@ -152,7 +143,7 @@ class BiRows extends StatelessWidget {
                 children: [
                   // Text first: the value never depends on colour alone.
                   Text(
-                    '${_biRowLabel(row, l10n, labelOf)}: '
+                    '${_biRowLabel(row, l10n)}: '
                     '${format(row.current.value(aggregation))}'
                     '${comparedLabel == null ? '' : ' · $comparedLabel '
                               '${format(row.compared?.value(aggregation))} '

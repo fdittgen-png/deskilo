@@ -164,6 +164,7 @@ import 'in_memory_fakes.dart';
 import 'memory_recorder_log_backend.dart';
 import 'test_clock.dart';
 import 'test_workspace_context.dart';
+import 'unavailable_kpi_repository.dart';
 
 export 'package:deskilo/core/demo/data/auth_repository.dart';
 export 'package:deskilo/core/demo/data/guest_participation_repository.dart';
