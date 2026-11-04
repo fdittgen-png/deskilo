@@ -268,8 +268,10 @@ class _CityMoney {
     final overdueMonth = DateTime(spec.now.year, spec.now.month - 2);
     final overdue = memberId == 'member-2' &&
         period == yearMonth(overdueMonth.year, overdueMonth.month);
-    if (overdue) {
-      money.invoiceReminders[id] = [issued.add(const Duration(days: 20))];
+    final reminded = issued.add(const Duration(days: 20));
+    // #3292 — never a reminder dated after the Demo's now.
+    if (overdue && !reminded.isAfter(spec.now)) {
+      money.invoiceReminders[id] = [reminded];
     }
     if (paid.isAfter(spec.now) || overdue) return;
     money.ledger.add(
