@@ -122,8 +122,8 @@ class GuestPassSaleSection extends StatelessWidget {
             final picked = await showDatePicker(
               context: context,
               initialDate: draft.day,
-              firstDate: draft.day.subtract(const Duration(days: 1)),
-              lastDate: draft.day.add(const Duration(days: 366)),
+              firstDate: DateTime(draft.day.year, draft.day.month, draft.day.day - 1),
+              lastDate: DateTime(draft.day.year + 1, draft.day.month, draft.day.day),
             );
             if (picked != null) onChanged(_with(day: picked));
           },

@@ -64,6 +64,7 @@ signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
 signed-out on  /money/cash -> /auth
+signed-out on  /money/guest-passes -> /auth
 signed-out on  /money/payments -> /auth
 signed-out on  /money/purchases -> /auth
 signed-out on  /money/purchases/approvals -> /auth
@@ -194,6 +195,7 @@ signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
 signed-out off /money/cash -> /auth
+signed-out off /money/guest-passes -> /auth
 signed-out off /money/payments -> /auth
 signed-out off /money/purchases -> /auth
 signed-out off /money/purchases/approvals -> /auth
@@ -324,6 +326,7 @@ no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
 no-space on  /money/cash -> /me
+no-space on  /money/guest-passes -> /me
 no-space on  /money/payments -> /me
 no-space on  /money/purchases -> /me
 no-space on  /money/purchases/approvals -> /me
@@ -454,6 +457,7 @@ no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
 no-space off /money/cash -> /me
+no-space off /money/guest-passes -> /me
 no-space off /money/payments -> /me
 no-space off /money/purchases -> /me
 no-space off /money/purchases/approvals -> /me
@@ -584,6 +588,7 @@ member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
 member on  /money/cash -> /calendar
+member on  /money/guest-passes -> /calendar
 member on  /money/payments -> /calendar
 member on  /money/purchases -> /money
 member on  /money/purchases/approvals -> /calendar
@@ -714,6 +719,7 @@ member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
 member off /money/cash -> /messages
+member off /money/guest-passes -> /messages
 member off /money/payments -> /messages
 member off /money/purchases -> /messages
 member off /money/purchases/approvals -> /messages
@@ -844,6 +850,7 @@ admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
 admin on  /money/cash -> (open)
+admin on  /money/guest-passes -> /money
 admin on  /money/payments -> (open)
 admin on  /money/purchases -> /money
 admin on  /money/purchases/approvals -> /money
@@ -974,6 +981,7 @@ admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
 admin off /money/cash -> /messages
+admin off /money/guest-passes -> /messages
 admin off /money/payments -> /messages
 admin off /money/purchases -> /messages
 admin off /money/purchases/approvals -> /messages
@@ -1104,6 +1112,7 @@ owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
 owner on  /money/cash -> (open)
+owner on  /money/guest-passes -> /money
 owner on  /money/payments -> (open)
 owner on  /money/purchases -> /money
 owner on  /money/purchases/approvals -> /money
@@ -1234,6 +1243,7 @@ owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages
 owner off /money/cash -> /messages
+owner off /money/guest-passes -> /messages
 owner off /money/payments -> /messages
 owner off /money/purchases -> /messages
 owner off /money/purchases/approvals -> /messages

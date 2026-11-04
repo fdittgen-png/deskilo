@@ -134,15 +134,13 @@ class FakeGuestPassRepository implements GuestPassRepository {
     );
     final bookings = <String>[];
     for (var d = 0; d < draft.days; d++) {
-      final day = draft.day.add(Duration(days: d));
+      final day = draft.day;
       await reservations.createFor(
         workspaceId: workspaceId,
         subjectMemberId: memberId,
         seatId: draft.seatId,
-        startsAt: DateTime(day.year, day.month, day.day)
-            .add(Duration(minutes: draft.startMinutes)),
-        endsAt: DateTime(day.year, day.month, day.day)
-            .add(Duration(minutes: draft.endMinutes)),
+        startsAt: DateTime(day.year, day.month, day.day + d, 0, draft.startMinutes),
+        endsAt: DateTime(day.year, day.month, day.day + d, 0, draft.endMinutes),
       );
       bookings.add(reservations.reservations.last.id);
     }

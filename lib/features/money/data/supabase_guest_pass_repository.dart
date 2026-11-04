@@ -16,7 +16,7 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
   Future<List<GuestPassOffer>> offers(String workspaceId) async {
     final rows = await _client
         .from('guest_pass_offers')
-        .select('id, name, unit, price_cents, vat_rate_id, active')
+        .select()
         .eq('workspace_id', workspaceId)
         .order('name');
     return [for (final r in rows) GuestPassOffer.fromJson(r)];

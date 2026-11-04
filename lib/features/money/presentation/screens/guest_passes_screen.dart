@@ -13,6 +13,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -37,7 +38,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
   bool _saving = false;
 
   GuestPassDraft _fresh(List<GuestPassOffer> offers) {
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     return GuestPassDraft(
       offer: offers.where((o) => o.active).firstOrNull,
       seatId: null,
@@ -82,6 +83,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
             subtitle: Text(_price(l10n, o, currency)),
             trailing: held.contains('manageServices')
                 ? IconButton(
+                    key: ValueKey('guest-pass-edit-${o.id}'),
                     tooltip: l10n.guestPassEdit,
                     icon: const Icon(Icons.edit_outlined),
                     onPressed: () => _editOffer(workspace, currency, o),
@@ -127,6 +129,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
       saving: _saving,
       intro: l10n.guestPassSaleIntro,
       extraSection: GuestPassSaleSection(
+        key: const ValueKey('guest-pass-section'),
         draft: draft,
         offers: offers,
         places: places,

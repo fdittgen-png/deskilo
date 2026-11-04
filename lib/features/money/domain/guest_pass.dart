@@ -5,6 +5,8 @@
 // The server prices the pass and books, charges and invoices it
 // (sell_guest_pass, 0672); these rules only keep a draft from being sent
 // that the server would refuse for a reason the form can name.
+import '../../../core/data/json_reader.dart';
+import '../../../core/data/system_columns.dart';
 
 /// What a pass is counted in.
 enum GuestPassUnit {
@@ -22,7 +24,7 @@ enum GuestPassUnit {
 const guestPassMaxDays = 31;
 
 /// One pass of the space's list.
-class GuestPassOffer {
+class GuestPassOffer implements SystemStamped {
   const GuestPassOffer({
     required this.id,
     required this.name,
@@ -30,16 +32,25 @@ class GuestPassOffer {
     required this.priceCents,
     this.vatRateId,
     this.active = true,
+    this.system = SystemColumns.none,
   });
 
-  factory GuestPassOffer.fromJson(Map<String, dynamic> json) => GuestPassOffer(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    unit: GuestPassUnit.fromWire(json['unit'] as String?) ?? GuestPassUnit.day,
-    priceCents: (json['price_cents'] as num).toInt(),
-    vatRateId: json['vat_rate_id'] as String?,
-    active: json['active'] as bool? ?? true,
-  );
+  factory GuestPassOffer.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'guest_pass_offers');
+    return GuestPassOffer(
+      system: SystemColumns.fromRow(json),
+      id: r.string('id'),
+      name: r.string('name'),
+      unit: GuestPassUnit.fromWire(r.stringOrNull('unit')) ?? GuestPassUnit.day,
+      priceCents: r.integer('price_cents'),
+      vatRateId: r.stringOrNull('vat_rate_id'),
+      active: r.boolOr('active', fallback: true),
+    );
+  }
+
+  /// #992 — the server's stamp on this row.
+  @override
+  final SystemColumns system;
 
   final String id;
   final String name;
@@ -81,10 +92,9 @@ class GuestPassDraft {
   final bool paid;
   final String method;
 
-  DateTime get startsAt => DateTime(day.year, day.month, day.day)
-      .add(Duration(minutes: startMinutes));
-  DateTime get endsAt =>
-      DateTime(day.year, day.month, day.day).add(Duration(minutes: endMinutes));
+  DateTime get startsAt =>
+      DateTime(day.year, day.month, day.day, 0, startMinutes);
+  DateTime get endsAt => DateTime(day.year, day.month, day.day, 0, endMinutes);
 }
 
 /// Why a draft cannot be sold.
@@ -125,18 +135,19 @@ class GuestPassSale {
     this.replayed = false,
   });
 
-  factory GuestPassSale.fromJson(Map<String, dynamic> json) => GuestPassSale(
-    passId: json['pass_id'] as String,
-    memberId: json['member_id'] as String,
-    reservationIds: [
-      for (final r in json['reservation_ids'] as List? ?? const []) r as String,
-    ],
-    units: (json['units'] as num).toInt(),
-    amountCents: (json['amount_cents'] as num).toInt(),
-    invoiceId: json['invoice_id'] as String?,
-    paymentEventId: json['payment_event_id'] as String?,
-    replayed: json['replayed'] as bool? ?? false,
-  );
+  factory GuestPassSale.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'sell_guest_pass');
+    return GuestPassSale(
+      passId: r.string('pass_id'),
+      memberId: r.string('member_id'),
+      reservationIds: r.strings('reservation_ids'),
+      units: r.integer('units'),
+      amountCents: r.integer('amount_cents'),
+      invoiceId: r.stringOrNull('invoice_id'),
+      paymentEventId: r.stringOrNull('payment_event_id'),
+      replayed: r.boolOr('replayed', fallback: false),
+    );
+  }
 
   final String passId;
 

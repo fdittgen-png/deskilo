@@ -1586,7 +1586,8 @@ window.SETUP_LEVELS={
       "reportDesigner",
       "invoicingWizard",
       "settlementFold",
-      "carnets"
+      "carnets",
+      "guestPasses"
      ],
      "needs": {}
     }

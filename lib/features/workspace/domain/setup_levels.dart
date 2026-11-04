@@ -150,6 +150,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
     SetupLevel(
       'invoices',
       features: {
+        // #3308 — selling passes at the desk needs the invoices it issues.
+        WorkspaceFeature.guestPasses,
         WorkspaceFeature.invoicing,
         WorkspaceFeature.workspaceStatus,
         WorkspaceFeature.usageReport,
