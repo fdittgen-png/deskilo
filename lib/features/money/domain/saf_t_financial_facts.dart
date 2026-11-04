@@ -152,7 +152,10 @@ class SafTFinancialFacts {
 
   late final Map<String, AccountMapValue?> standards = {
     if (profile.country.isNotEmpty)
-      for (final a in accounts) a: standardOf(a),
+      for (final a in accounts)
+        // #2379 — Austria writes only what the person confirmed per
+        // account; the role's row is the dialog's suggestion.
+        a: profile.austriaShape ? r.confirmedStandards[a] : standardOf(a),
   };
 
   /// The tax codes of the year's tax lines, numbered in a stable order;
@@ -355,7 +358,9 @@ class SafTFinancialFacts {
 
   void check() {
     final company = r.company;
-    if (company.legalId.trim().isEmpty) {
+    // #2379 — Austria's company-register number (CompanyID) is optional:
+    // a sole proprietor has none; its required number is the Steuernummer.
+    if (!profile.austriaShape && company.legalId.trim().isEmpty) {
       gap(SafTGapKind.company, 'RegistrationNumber');
     }
     if (company.name.trim().isEmpty) gap(SafTGapKind.company, 'Name');
@@ -456,4 +461,16 @@ class SafTFinancialFacts {
       day.month -
       r.period.from.month +
       1;
+}
+
+/// #2379 — what the person confirms before an Austrian file: each book
+/// account of [r] with the standard account its role's reference row
+/// suggests (null where the reference has none or the role's lines disagree).
+List<({String code, String name, AccountMapValue? suggestion})> safTStandardSuggestions(
+  SafTFinancialRequest r,
+) {
+  final f = SafTFinancialFacts(r);
+  return [
+    for (final a in f.accounts) (code: a, name: f.accountName(a), suggestion: f.standardOf(a)),
+  ];
 }

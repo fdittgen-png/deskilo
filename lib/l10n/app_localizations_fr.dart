@@ -23146,6 +23146,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get saftSmallBusinessYes => 'Oui';
 
   @override
+  String get saftStandardAccountsIntro =>
+      'Confirmez le compte du plan comptable standard autrichien (Einheitskontenrahmen) sous lequel chaque compte du livre est écrit. Une suggestion vient du rôle du compte ; vérifiez-la : tous les comptes d\'un rôle ne relèvent pas du même compte standard.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'Aucune suggestion : saisissez le compte standard.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggéré : $suggestion. Confirmez-le ou modifiez-le.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Comptes du plan standard';
+
+  @override
   String get saftTaxNumberHelper =>
       'Le numéro que l\'administration fiscale autrichienne attribue à l\'entreprise, pas son numéro au registre du commerce.';
 

@@ -27457,6 +27457,27 @@
   "@saftSmallBusinessYes": {
     "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
+  "saftStandardAccountsIntro": "Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account's role; check it: not every account of a role belongs on the same standard account.",
+  "@saftStandardAccountsIntro": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsNoSuggestion": "No suggestion: enter the standard account.",
+  "@saftStandardAccountsNoSuggestion": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsSuggested": "Suggested: {suggestion}. Confirm or change it.",
+  "@saftStandardAccountsSuggested": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export",
+    "placeholders": {
+      "suggestion": {
+        "type": "String"
+      }
+    }
+  },
+  "saftStandardAccountsTitle": "Standard chart accounts",
+  "@saftStandardAccountsTitle": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
   "saftTaxNumberHelper": "The number the Austrian tax office gives the company, not its company register number.",
   "@saftTaxNumberHelper": {
     "description": "#2379 the Austrian SAF-T AT header facts asked at export"

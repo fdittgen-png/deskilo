@@ -23126,6 +23126,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get saftSmallBusinessYes => 'Ja';
 
   @override
+  String get saftStandardAccountsIntro =>
+      'Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'Kein Vorschlag: Geben Sie das Standardkonto ein.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Vorgeschlagen: $suggestion. Bestätigen oder ändern Sie es.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Konten des Einheitskontenrahmens';
+
+  @override
   String get saftTaxNumberHelper =>
       'Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.';
 

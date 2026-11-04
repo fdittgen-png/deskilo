@@ -21,5 +21,9 @@
   "saftSmallBusinessLabel": "Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)",
   "saftSmallBusinessYes": "Ja",
   "saftSmallBusinessNo": "Nein",
-  "saftSmallBusinessHelper": "Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt."
+  "saftSmallBusinessHelper": "Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.",
+  "saftStandardAccountsTitle": "Konten des Einheitskontenrahmens",
+  "saftStandardAccountsIntro": "Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.",
+  "saftStandardAccountsSuggested": "Vorgeschlagen: {suggestion}. Bestätigen oder ändern Sie es.",
+  "saftStandardAccountsNoSuggestion": "Kein Vorschlag: Geben Sie das Standardkonto ein."
 }

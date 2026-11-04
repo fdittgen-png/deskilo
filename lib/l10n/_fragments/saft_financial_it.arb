@@ -21,5 +21,9 @@
   "saftSmallBusinessLabel": "Piccola impresa (§ 6 (1) Z 27 UStG)",
   "saftSmallBusinessYes": "Sì",
   "saftSmallBusinessNo": "No",
-  "saftSmallBusinessHelper": "Se l'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l'intestazione del SAF-T AT."
+  "saftSmallBusinessHelper": "Se l'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l'intestazione del SAF-T AT.",
+  "saftStandardAccountsTitle": "Conti del piano standard",
+  "saftStandardAccountsIntro": "Confermi il conto del piano dei conti standard austriaco (Einheitskontenrahmen) sotto cui è scritto ogni conto del libro. Il suggerimento viene dal ruolo del conto; lo verifichi: non tutti i conti di un ruolo appartengono allo stesso conto standard.",
+  "saftStandardAccountsSuggested": "Suggerito: {suggestion}. Lo confermi o lo modifichi.",
+  "saftStandardAccountsNoSuggestion": "Nessun suggerimento: inserisca il conto standard."
 }

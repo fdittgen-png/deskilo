@@ -83,16 +83,16 @@
       <AccountID>6300</AccountID>
       <AccountDescription>Leie lokale</AccountDescription>
       <AccountType>Expense</AccountType>
-      <AccountID_oeEKR>7200</AccountID_oeEKR>
-      <AccountDescription_oeEKR>Sonstiger Aufwand</AccountDescription_oeEKR>
+      <AccountID_oeEKR>7400</AccountID_oeEKR>
+      <AccountDescription_oeEKR>Mietaufwand 20 %</AccountDescription_oeEKR>
       <OpeningDebitBalance>100.00</OpeningDebitBalance>
     </GeneralLedger>
     <GeneralLedger>
       <AccountID>7830</AccountID>
       <AccountDescription>Tap på fordringer</AccountDescription>
       <AccountType>Expense</AccountType>
-      <AccountID_oeEKR>7800</AccountID_oeEKR>
-      <AccountDescription_oeEKR>Forderungsverluste</AccountDescription_oeEKR>
+      <AccountID_oeEKR>7804</AccountID_oeEKR>
+      <AccountDescription_oeEKR>Abschreibung von Forderungen 20 %</AccountDescription_oeEKR>
       <OpeningDebitBalance>0.00</OpeningDebitBalance>
     </GeneralLedger>
     <Customer>

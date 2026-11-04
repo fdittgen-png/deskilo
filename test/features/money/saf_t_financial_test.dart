@@ -19,6 +19,7 @@ import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/saf_t_financial.dart';
+import 'package:deskilo/features/money/domain/saf_t_financial_facts.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -189,6 +190,20 @@ final _maps = <TaxReferenceRow>[
     _row('RO', key, {'tax_code': code}),
 ];
 
+/// #2379 — the standard accounts a person confirmed for the fixture's book
+/// accounts (Austria writes only these; the role rows are suggestions).
+const _atConfirmed = {
+  '1500': AccountMapValue(format: 'saf_t', role: 'customers', account: '2000', label: 'Lieferforderungen Inland'),
+  '1920': AccountMapValue(format: 'saf_t', role: 'bank', account: '2800', label: 'Guthaben bei Kreditinstituten'),
+  '2400': AccountMapValue(format: 'saf_t', role: 'suppliers', account: '3300', label: 'Lieferverbindlichkeiten Inland'),
+  '3000': AccountMapValue(format: 'saf_t', role: 'revenue', account: '4000', label: 'Umsatzerlöse'),
+  '2700': AccountMapValue(format: 'saf_t', role: 'vat_output', account: '3500', label: 'Umsatzsteuer'),
+  '2710': AccountMapValue(format: 'saf_t', role: 'vat_input', account: '2500', label: 'Vorsteuer'),
+  '2705': AccountMapValue(format: 'saf_t', role: 'vat_pending', account: '3510', label: 'Noch nicht geschuldete USt'),
+  '6300': AccountMapValue(format: 'saf_t', role: 'expenses', account: '7400', label: 'Mietaufwand 20 %'),
+  '7830': AccountMapValue(format: 'saf_t', role: 'write_off', account: '7804', label: 'Abschreibung von Forderungen 20 %'),
+};
+
 /// The bundled reference without its own `saf_t/` rows, so each test
 /// states the map it means; [maps] (the fixture by default) on top.
 TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) => TaxReferenceSet([
@@ -253,6 +268,7 @@ SafTFinancialRequest _request(
   String industryCode = '6820',
   String taxNumber = '12 345/6789',
   bool? smallBusiness = false,
+  Map<String, AccountMapValue>? confirmedStandards,
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
@@ -305,6 +321,7 @@ SafTFinancialRequest _request(
   industryCode: industryCode,
   taxNumber: taxNumber,
   smallBusiness: smallBusiness,
+  confirmedStandards: confirmedStandards ?? (country == 'AT' ? _atConfirmed : const {}),
 );
 
 XmlDocument _file(SafTFinancialRequest request) =>
@@ -560,9 +577,11 @@ void main() {
         SafTGap(SafTGapKind.company, 'TaxRegistrationNumber'),
         SafTGap(SafTGapKind.company, 'Kleinunternehmer_AT'),
       ]));
+      // A role row is only a suggestion: an account nobody confirmed is
+      // refused even where the reference has a row for its role.
       expect(
-        _gaps(_request(profile, country: 'AT', reference: _reference(maps: const []))),
-        contains(isA<SafTGap>().having((g) => g.kind, 'kind', SafTGapKind.standardAccount)),
+        _gaps(_request(profile, country: 'AT', confirmedStandards: {..._atConfirmed}..remove('2400'))),
+        contains(const SafTGap(SafTGapKind.standardAccount, '2400 Leverandørgjeld')),
       );
       expect(
         _gaps(_request(profile, country: 'AT', company: _company('AT').copyWith(street: 'Mariahilfer Straße'))),
@@ -592,18 +611,61 @@ void main() {
         reference: base.reference, profitBasis: '§ 5 EStG', industryCode: '6820',
         taxNumber: '12 345/6789', smallBusiness: false,
       );
-      final file = _file(book);
+      // The person keeps every suggestion of the shipped rows.
+      final unconfirmed = safTStandardSuggestions(book);
+      final confirmed = SafTFinancialRequest(
+        profile: profile, period: book.period, postings: book.postings, opening: book.opening,
+        accountNames: book.accountNames, accountTypes: book.accountTypes, parties: book.parties,
+        partyDetails: book.partyDetails, company: book.company, contact: book.contact,
+        currency: book.currency, softwareVersion: book.softwareVersion, createdAt: book.createdAt,
+        reference: book.reference, profitBasis: book.profitBasis, industryCode: book.industryCode,
+        taxNumber: book.taxNumber, smallBusiness: book.smallBusiness,
+        confirmedStandards: {for (final u in unconfirmed) u.code: ?u.suggestion},
+      );
+      expect(_gaps(book), isNotEmpty, reason: 'nothing is written from the rows alone');
+      final file = _file(confirmed);
       final codes = file.findAllElements('AccountID_oeEKR').map((e) => e.innerText).toSet();
       expect(codes, isNotEmpty);
       expect(ekr.containsAll(codes), isTrue, reason: 'every standard account is on the BMF list: $codes');
       expect(codes, containsAll(['2000', '2800', '4000', '3500']));
     });
 
-    test('with the shipped AT rows a write-off is refused, named: the BMF list has no account for it', () {
-      expect(
-        _gaps(_request(profile, country: 'AT', reference: TaxReferenceSet(ActiveTaxReference.current.rows))),
-        contains(const SafTGap(SafTGapKind.standardAccount, '7830 Tap på fordringer')),
+    test('with the shipped AT rows a write-off has no suggestion, so it is refused until the person enters one', () {
+      final request = _request(profile, country: 'AT', reference: TaxReferenceSet(ActiveTaxReference.current.rows));
+      final suggestions = {for (final s in safTStandardSuggestions(request)) s.code: s.suggestion};
+      expect(suggestions['7830'], isNull, reason: 'the BMF list has no rate-free write-off account');
+      final keptSuggestions = _request(profile, country: 'AT',
+          reference: TaxReferenceSet(ActiveTaxReference.current.rows),
+          confirmedStandards: {for (final e in suggestions.entries) e.key: ?e.value});
+      expect(_gaps(keptSuggestions), contains(const SafTGap(SafTGapKind.standardAccount, '7830 Tap på fordringer')));
+    });
+
+    test('what the person confirmed is written, not the role row it departs from', () {
+      String oeEkrOf(XmlDocument d, String account) => _textOf(
+        d.findAllElements('GeneralLedger').singleWhere((a) => _textOf(a, 'AccountID') == account),
+        'AccountID_oeEKR',
       );
+      // Suggested from the roles: payables 3300 (domestic), expenses 7200.
+      final suggested = {
+        for (final s in safTStandardSuggestions(at())) s.code: s.suggestion?.account,
+      };
+      expect(suggested['2400'], '3300');
+      expect(suggested['6300'], '7200');
+      // A space whose suppliers are abroad and whose expense is its rent:
+      final foreign = _file(_request(profile, country: 'AT', confirmedStandards: {
+        ..._atConfirmed,
+        '2400': const AccountMapValue(format: 'saf_t', role: 'suppliers', account: '3370', label: 'Lieferverbindlichkeiten sonstiges Ausland'),
+      }));
+      expect(oeEkrOf(foreign, '2400'), '3370');
+      expect(oeEkrOf(foreign, '6300'), '7400');
+      expect(oeEkrOf(doc, '2400'), '3300', reason: 'the domestic confirmation of the same account');
+    });
+
+    test('a sole proprietor without a Firmenbuch number is written, under its Steuernummer', () {
+      final sole = _file(_request(profile, country: 'AT', company: _company('AT').copyWith(legalId: '')));
+      final h = sole.findAllElements('Header').single;
+      expect(h.findElements('CompanyID'), isEmpty);
+      expect(_textOf(h.findElements('TaxID').single, 'TaxRegistrationNumber'), '12 345/6789');
     });
 
     test('the same book gives the same bytes, pinned by a golden', () {

@@ -22901,6 +22901,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saftSmallBusinessYes => 'Yes';
 
   @override
+  String get saftStandardAccountsIntro =>
+      'Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account\'s role; check it: not every account of a role belongs on the same standard account.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'No suggestion: enter the standard account.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggested: $suggestion. Confirm or change it.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Standard chart accounts';
+
+  @override
   String get saftTaxNumberHelper =>
       'The number the Austrian tax office gives the company, not its company register number.';
 

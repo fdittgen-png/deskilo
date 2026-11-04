@@ -38484,6 +38484,30 @@ abstract class AppLocalizations {
   /// **'Yes'**
   String get saftSmallBusinessYes;
 
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account\'s role; check it: not every account of a role belongs on the same standard account.'**
+  String get saftStandardAccountsIntro;
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestion: enter the standard account.'**
+  String get saftStandardAccountsNoSuggestion;
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested: {suggestion}. Confirm or change it.'**
+  String saftStandardAccountsSuggested(String suggestion);
+
+  /// #2379 the Austrian standard chart accounts confirmed at export
+  ///
+  /// In en, this message translates to:
+  /// **'Standard chart accounts'**
+  String get saftStandardAccountsTitle;
+
   /// #2379 the Austrian SAF-T AT header facts asked at export
   ///
   /// In en, this message translates to:

@@ -292,6 +292,7 @@ class SafTFinancialRequest {
     this.industryCode = '',
     this.taxNumber = '',
     this.smallBusiness,
+    this.confirmedStandards = const {},
   });
 
   final SafTFinancialProfile profile;
@@ -339,6 +340,13 @@ class SafTFinancialRequest {
   final String industryCode;
   final String taxNumber;
   final bool? smallBusiness;
+
+  /// #2379 — Austria: the standard chart account the person confirmed for
+  /// each book account, by its code. The reference rows of a role are only
+  /// a suggestion (one role's accounts need not all sit on one standard
+  /// account: a foreign supplier is not 3300, nor every expense 5700); an
+  /// account nobody confirmed refuses the file, named.
+  final Map<String, AccountMapValue> confirmedStandards;
 }
 
 /// What a missing fact is about.

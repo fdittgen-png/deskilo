@@ -59,7 +59,8 @@ const _saftAtFormat = AccountingFormat(
   id: 'saft_at',
   claim: FormatClaim.exchange,
   extension: 'xml',
-  needsLegalId: true,
+  // needsLegalId stays off: the Steuernummer is asked at export, and a
+  // sole proprietor has no company-register number.
 );
 
 /// The OECD 2.0 tree with the ledger, no national restriction: what an
