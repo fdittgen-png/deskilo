@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 
 import '../money_repository.dart';
+import 'demo_member_statement.dart';
 
 /// #2591 — a member's account, statement, ledger and usage reads, in the demo:
 /// answered from one space's in-memory money store ([FakeMoneyRepository]);
@@ -16,9 +17,16 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
 
   final FakeMoneyRepository _m;
 
+  /// #3305 — set by the Demo: the statement is then each member's own, as the
+  /// server computes it; unset, a test's canned [FakeMoneyRepository.statement].
+  DemoStatementSource? statementSource;
+
   @override
   Future<Statement> fetchStatement(String memberId, String period) async {
     _m.fetchedPeriods.add(period);
+    if (statementSource case final source?) {
+      return demoMemberStatement(_m, source, memberId, period);
+    }
     // #512 — months fully before the membership owe NOTHING.
     if (_m.memberJoinedPeriod != null &&
         period.compareTo(_m.memberJoinedPeriod!) < 0) {
