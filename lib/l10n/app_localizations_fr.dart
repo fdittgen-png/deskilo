@@ -31017,6 +31017,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get xeroInvoiceDayFirst => 'Jour d’abord (31/12/2026)';
 
   @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.';
+
+  @override
   String get xeroInvoiceMonthFirst => 'Mois d’abord (12/31/2026)';
 
   @override

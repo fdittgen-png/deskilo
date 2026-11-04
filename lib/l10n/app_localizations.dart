@@ -51071,6 +51071,12 @@ abstract class AppLocalizations {
   /// **'Day first (31/12/2026)'**
   String get xeroInvoiceDayFirst;
 
+  /// #2372 - the instruction for the Xero import screen
+  ///
+  /// In en, this message translates to:
+  /// **'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.'**
+  String get xeroInvoiceImportTaxExclusive;
+
   /// #2372 - the Xero sales-invoice CSV export
   ///
   /// In en, this message translates to:

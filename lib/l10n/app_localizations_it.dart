@@ -30958,6 +30958,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get xeroInvoiceDayFirst => 'Prima il giorno (31/12/2026)';
 
   @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.';
+
+  @override
   String get xeroInvoiceMonthFirst => 'Prima il mese (12/31/2026)';
 
   @override

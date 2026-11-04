@@ -20327,6 +20327,7 @@
   "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} other{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.}}",
   "xeroInvoiceDateOrder": "Ordre des dates de votre organisation",
   "xeroInvoiceDayFirst": "Jour d’abord (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.",
   "xeroInvoiceMonthFirst": "Mois d’abord (12/31/2026)",
   "xeroInvoiceRefusedAccount": "Saisissez le code du compte de ventes.",
   "xeroInvoiceRefusedTaxType": "Indiquez le taux de taxe Xero pour {rate}.",

@@ -20327,6 +20327,7 @@
   "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.} other{{count} note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.}}",
   "xeroInvoiceDateOrder": "Ordine delle date della Sua organizzazione",
   "xeroInvoiceDayFirst": "Prima il giorno (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.",
   "xeroInvoiceMonthFirst": "Prima il mese (12/31/2026)",
   "xeroInvoiceRefusedAccount": "Inserisci il codice del conto ricavi.",
   "xeroInvoiceRefusedTaxType": "Indica l’aliquota Xero per {rate}.",

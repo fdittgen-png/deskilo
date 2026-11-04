@@ -29,6 +29,12 @@ Future<XeroInvoiceSettings?> showXeroInvoiceDialog(
         content: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(l10n.xeroInvoiceAccountsIntro, style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              l10n.xeroInvoiceImportTaxExclusive,
+              key: const ValueKey('xero-import-tax-exclusive'),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             const SizedBox(height: AppSpacing.md),
             AppTextField(
               fieldKey: 'xero-account-code',

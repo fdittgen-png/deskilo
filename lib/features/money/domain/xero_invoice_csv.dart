@@ -2,7 +2,8 @@
 //
 // #2372 — Xero's sales-invoice import template, written from the documents:
 // the template's own header in its own order, one row per VAT rate of an
-// invoice under its one legal number, tax-exclusive amounts, at most 500
+// invoice under its one legal number, the rate's net and the VAT the
+// invoice recorded for it (TaxAmount), at most 500
 // rows per file, dates in the organisation's order. Xero imports the file
 // as draft invoices, which the export says. Credit notes have a template
 // of their own in Xero and are not written here; the export names them.
@@ -16,9 +17,10 @@ import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 
-/// The columns of Xero's sales-invoice import template, in its order. Xero
-/// maps on these names (the leading `*` marks a required column), so they
-/// are not free-form.
+/// The columns of Xero's sales-invoice import template as Xero documents
+/// them, in their order (Import customer invoices). Xero asks that the
+/// columns are not changed, and maps on these names (the leading `*` marks
+/// a required column), so they are not free-form.
 @visibleForTesting
 const List<String> xeroInvoiceColumns = [
   '*ContactName',
@@ -35,6 +37,7 @@ const List<String> xeroInvoiceColumns = [
   'Reference',
   '*InvoiceDate',
   '*DueDate',
+  'Total',
   'InventoryItemCode',
   '*Description',
   '*Quantity',
@@ -42,6 +45,7 @@ const List<String> xeroInvoiceColumns = [
   'Discount',
   '*AccountCode',
   '*TaxType',
+  'TaxAmount',
   'TrackingName1',
   'TrackingOption1',
   'TrackingName2',
@@ -197,15 +201,21 @@ String _row(Invoice invoice, InvoiceVatTotal total, XeroInvoiceSettings settings
     _cell(invoice.number),
     _cell(invoice.period ?? ''),
     _date(invoice.issuedAt, settings.dateOrder),
-    _date(invoice.dueOn ?? invoice.issuedAt, settings.dateOrder),
+    // No due date recorded: left blank, Xero applies the contact's terms.
+    if (invoice.dueOn case final due?) _date(due, settings.dateOrder) else '',
+    // Total: Xero computes it from the lines.
+    '',
     '',
     _cell('${invoice.title} (${percentText(total.percent)} %)'),
     '1',
-    // Tax-exclusive: Xero adds the tax of the rate it is given.
+    // The rate's net: the file is tax-exclusive (chosen at Xero's import).
     minorToText(total.netCents, invoice.currency),
     '',
     _cell(settings.accountCode.trim()),
     _cell(taxType),
+    // The VAT the invoice recorded for the rate, so Xero does not round it
+    // again from the aggregated net.
+    minorToText(total.vatCents, invoice.currency),
     '',
     '',
     '',

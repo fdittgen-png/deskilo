@@ -2,7 +2,7 @@
 //
 // #2372 — Xero's sales-invoice import file: the template's header in its own
 // order, the two-rate invoice as two rows under one number (pinned by the
-// golden), tax-exclusive amounts, 500 rows per file, the organisation's date
+// golden), each rate's net with its recorded VAT, 500 rows per file, the organisation's date
 // order, and the refusals. Rewrite the golden with
 // --dart-define=WRITE_GOLDEN=true after a deliberate change.
 import 'dart:io';
@@ -27,6 +27,7 @@ Invoice _invoice(
   int? total,
   DateTime? voidedAt,
   InvoiceKind kind = InvoiceKind.full,
+  bool due = true,
 }) {
   final gross = total ?? totals.fold<int>(0, (s, t) => s + t.grossCents);
   return Invoice(
@@ -35,7 +36,7 @@ Invoice _invoice(
     memberId: 'member-$id',
     number: 'INV-$id',
     issuedAt: DateTime(2026, 3, 4),
-    dueOn: DateTime(2026, 4, 3),
+    dueOn: due ? DateTime(2026, 4, 3) : null,
     period: '2026-03',
     title: 'Desk and coffee',
     lines: [InvoiceLine(label: 'Desk', amountCents: gross)],
@@ -63,7 +64,7 @@ List<List<String>> _rows(String file) =>
     file.trimRight().split('\r\n').skip(1).map((l) => l.split(',')).toList();
 
 void main() {
-  test('the file opens with Xero\'s own header, and the two-rate invoice is '
+  test('the file opens with Xero\'s documented header, and the two-rate invoice is '
       'two rows under one number, tax-exclusive (golden)', () {
     final export = xeroInvoiceExport(invoices: [_invoice('1')], settings: _settings, zeroCategory: 'Z');
     expect(export.blockers, isEmpty);
@@ -74,6 +75,8 @@ void main() {
     expect(file.split('\r\n').first, xeroInvoiceColumns.join(','));
     expect(xeroInvoiceColumns.first, '*ContactName');
     expect(xeroInvoiceColumns.last, 'BrandingTheme');
+    expect(xeroInvoiceColumns.indexOf('Total'), xeroInvoiceColumns.indexOf('*DueDate') + 1);
+    expect(xeroInvoiceColumns.indexOf('TaxAmount'), xeroInvoiceColumns.indexOf('*TaxType') + 1);
     final rows = _rows(file);
     final number = xeroInvoiceColumns.indexOf('*InvoiceNumber');
     final unit = xeroInvoiceColumns.indexOf('*UnitAmount');
@@ -81,6 +84,8 @@ void main() {
     expect(rows.map((r) => r[number]).toSet(), {'"INV-1"'}, reason: 'one invoice, one number');
     expect(rows.map((r) => r[unit]), ['100.00', '20.00'], reason: 'the nets, Xero adds the tax');
     expect(rows.map((r) => r[tax]), ['"20% (VAT on Income)"', '"5% (VAT on Income)"']);
+    expect(rows.map((r) => r[xeroInvoiceColumns.indexOf('TaxAmount')]), ['20.00', '1.00'],
+        reason: 'the VAT the invoice recorded per rate');
     expect(rows.every((r) => r.length == xeroInvoiceColumns.length), isTrue);
   });
 
@@ -159,5 +164,27 @@ void main() {
       expect(formatsFor(country).map((f) => f.id), contains('xero_invoice_csv'), reason: country);
     }
     expect(formatsFor('CH').map((f) => f.id), isNot(contains('xero_invoice_csv')));
+  });
+
+  test('the recorded VAT travels per row, so Xero does not round it again '
+      'from the aggregated net', () {
+    // Three 0.03 lines at 20 %, each recorded with 0.01 of VAT: 0.09 net
+    // and 0.03 VAT, where 20 % of 0.09 would round to 0.02.
+    const tiny = InvoiceVatTotal(percent: 20, category: 'S', grossCents: 12, netCents: 9, vatCents: 3);
+    final row = _rows(xeroInvoiceExport(
+      invoices: [_invoice('1', totals: const [tiny])],
+      settings: _settings,
+      zeroCategory: 'Z',
+    ).files.single).single;
+    expect(row[xeroInvoiceColumns.indexOf('*UnitAmount')], '0.09');
+    expect(row[xeroInvoiceColumns.indexOf('TaxAmount')], '0.03');
+  });
+
+  test('an invoice without a due date leaves the column blank; Xero applies '
+      'the contact\'s terms', () {
+    final row = _rows(xeroInvoiceExport(invoices: [_invoice('1', due: false)], settings: _settings, zeroCategory: 'Z')
+        .files.single).first;
+    expect(row[xeroInvoiceColumns.indexOf('*DueDate')], '');
+    expect(row[xeroInvoiceColumns.indexOf('*InvoiceDate')], '04/03/2026');
   });
 }

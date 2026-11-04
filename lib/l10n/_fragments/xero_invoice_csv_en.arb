@@ -58,5 +58,9 @@
         "type": "int"
       }
     }
+  },
+  "xeroInvoiceImportTaxExclusive": "In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.",
+  "@xeroInvoiceImportTaxExclusive": {
+    "description": "#2372 - the instruction for the Xero import screen"
   }
 }
