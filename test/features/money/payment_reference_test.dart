@@ -34,6 +34,7 @@ Invoice _invoice({String number = 'INV-2026-0001', int cents = 12000}) =>
           kind: cents < 0 ? 'credit' : 'subscription',
           label: cents < 0 ? 'Avoir' : '50',
           amountCents: cents,
+          vatPercent: cents < 0 ? 20 : 0,
         ),
       ],
       replacesNumber: cents < 0 ? 'INV-2026-0001' : '',
