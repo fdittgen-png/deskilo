@@ -14,12 +14,11 @@ class FakePurchaseRepository
         DemoPurchaseExchangeRates,
         DemoPurchaseMakerTracking
     implements PurchaseRepository {
-  FakePurchaseRepository({String Function()? actor})
-    : actor = actor ?? _defaultActor;
-
+  FakePurchaseRepository({String Function()? actor, this.functionalCurrency = 'EUR'}) : actor = actor ?? _defaultActor;
   static String _defaultActor() => 'member-1';
   @override
   final String Function() actor;
+  @override final String functionalCurrency;
   /// The demo space: two approved claims of the demo members, one untouched
   /// and one part-paid, so the To-pay tab, a payment and a reversal can all
   /// be tried exactly as in production.
@@ -93,6 +92,7 @@ class FakePurchaseRepository
   );
 
   final List<PurchaseDetail> _documents = [];
+  List<PurchaseDetail> get documents => List.unmodifiable(_documents);
   /// A document the demo space already holds (a bill captured, a receipt
   /// awaiting approval or refused).
   void add(PurchaseDetail document) {
@@ -305,7 +305,7 @@ class FakePurchaseRepository
         reference: x.reference,
         currency: x.currency,
         grossCents: x.grossCents,
-        receivedOn: x.receivedOn,
+        receivedOn: x.receivedOn, originalDate: x.originalDate, supplierId: x.supplierId,
         legacy: x.legacy,
       ),
       revision: d.revision,
@@ -368,7 +368,7 @@ class FakePurchaseRepository
             id: 'demo-payable-$purchaseId',
             purchaseId: purchaseId,
             creditorKind: CreditorKind.supplier,
-            creditorId: 'supplier-of-$purchaseId',
+            creditorId: d.summary.supplierId ?? 'supplier-of-$purchaseId',
             creditorName: d.supplierName,
             amountCents: d.grossCents,
             currency: d.summary.currency,

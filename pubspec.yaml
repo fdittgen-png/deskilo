@@ -157,6 +157,7 @@ flutter:
   generate: true
   assets:
     - assets/badges/
+    - assets/demo/
     # Roboto (Apache-2.0, copied from the Flutter SDK) embedded into the
     # bill PDF: base-14 PDF fonts cannot encode '€'/'−' (#133).
     - assets/fonts/

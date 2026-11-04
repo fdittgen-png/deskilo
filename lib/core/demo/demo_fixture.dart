@@ -40,11 +40,13 @@ import 'data/workspace_roles_repository.dart';
 import 'demo_clock.dart';
 import 'demo_dataset.dart';
 import 'demo_london_space.dart';
+import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
+import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
@@ -109,6 +111,7 @@ class DemoFixture {
     required this.seededAt,
     required this.secondSpace,
     required this.london,
+    required this.newYork,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -193,23 +196,21 @@ class DemoFixture {
     final secondSpace = DemoSecondSpaceData.build(home: workspaces, actor: () => actor.memberId, now: today)
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
       ..kioskName = demoCast[1].name;
     final problems = [
-      ...validateDemoFixture(
-        workspaces: workspaces,
-        plan: floorPlan,
-        reservations: reservations,
-        money: money,
-      ),
+      ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
+        reservations: reservations, money: money),
       ...validateDemoFixture(
         workspaces: secondSpace.workspaces,
         plan: secondSpace.floorPlan,
         reservations: secondSpace.reservations,
         money: secondSpace.money,
       ),
+      ..._validateCityFixtures(london, newYork),
     ];
     if (problems.isNotEmpty) {
       // Fails closed, and says what is wrong: a session that points at a
@@ -231,12 +232,7 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: demoProfiles()
-        ..profiles.addAll([
-          for (final p in demoSecondCast)
-            if (p.userId.startsWith('user-de-'))
-              Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
-        ]),
+      profiles: _profilesForSpaces(london, newYork),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -257,6 +253,7 @@ class DemoFixture {
       holds: holds,
       secondSpace: secondSpace,
       london: london,
+      newYork: newYork,
     );
   }
 
@@ -312,6 +309,7 @@ class DemoFixture {
   /// The second space (Leipzig), with repositories of its own.
   final DemoSecondSpaceData secondSpace;
   final DemoLondonData london;
+  final DemoNewYorkData newYork;
 
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
@@ -335,6 +333,7 @@ class DemoFixture {
     actor.memberId = persona.memberId;
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
+    newYork.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).
@@ -342,3 +341,19 @@ class DemoFixture {
     auth.signInAs(persona.userId);
   }
 }
+
+List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) => [
+  ...validateDemoFixture(workspaces: london.workspaces, plan: london.floorPlan,
+      reservations: london.reservations, money: london.money),
+  ...validateDemoFixture(workspaces: ny.workspaces, plan: ny.floorPlan,
+      reservations: ny.reservations, money: ny.money),
+];
+
+FakeProfileRepository _profilesForSpaces(DemoLondonData london, DemoNewYorkData ny) =>
+    demoProfiles()..profiles.addAll([
+      for (final p in demoSecondCast)
+        if (p.userId.startsWith('user-de-'))
+          Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
+      ...demoCityProfiles(london.workspaces, 'uk'),
+      ...demoCityProfiles(ny.workspaces, 'ny'),
+    ]);

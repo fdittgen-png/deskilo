@@ -19,6 +19,7 @@ import '../../vat/retention.dart';
 import '../../vat/tax_reference_active.dart';
 import 'money_repository.dart';
 import 'purchase_exchange_rates.dart';
+import 'purchase_repository.dart';
 
 /// #1869 — book profiles in memory, with the server's revision rule:
 /// a save names the revision it read (0 for a new version).
@@ -173,6 +174,11 @@ class FakeBookProfileRepository implements BookProfileRepository {
     );
     bool inPeriod(DateTime day) => !day.isBefore(from) && !day.isAfter(to);
     final p = purchases;
+    // The space's own currency: dollars in New York, pounds in London.
+    final functionalCurrency =
+        p is FakePurchaseRepository
+        ? p.functionalCurrency
+        : DemoPurchaseExchangeRates.spaceCurrency;
     final details = p == null
         ? const <PurchaseDetail>[]
         : [
@@ -192,7 +198,7 @@ class FakeBookProfileRepository implements BookProfileRepository {
         book: book,
         groupOf: (percent) =>
             ActiveTaxReference.current.groupOfRate(country, percent, 'S'),
-        functional: DemoPurchaseExchangeRates.spaceCurrency,
+        functional: functionalCurrency,
         rates: rates,
       ))
         if (inPeriod(x.date)) x,
@@ -220,7 +226,7 @@ class FakeBookProfileRepository implements BookProfileRepository {
               inPeriod(e.decidedAt!) &&
               e.payload['vat'] is Map &&
               (e.payload['vat'] as Map)['acquisition'] == true)
-            _acquisition(e),
+            _acquisition(e, functionalCurrency),
       ],
       book: book,
       groupOf: (percent) => ActiveTaxReference.current
@@ -367,7 +373,7 @@ String? demoBooksKept(
 
 /// An expense bought abroad as the return reads it: its amount is the base,
 /// the tax owed and the deductible share split as `vat_acquisition_split`.
-VatAcquisition _acquisition(WorkspaceEvent e) {
+VatAcquisition _acquisition(WorkspaceEvent e, String currency) {
   final vat = (e.payload['vat'] as Map).cast<String, Object?>();
   final percent = (vat['percent'] as num? ?? 0).toDouble();
   final split = vatAcquisitionSplit(
@@ -380,7 +386,7 @@ VatAcquisition _acquisition(WorkspaceEvent e) {
     expenseId: e.id,
     day: DateTime(day.year, day.month, day.day),
     percent: percent,
-    currency: DemoPurchaseExchangeRates.spaceCurrency,
+    currency: currency,
     taxOwedCents: split.taxCents,
     deductibleCents: split.deductibleCents,
   );

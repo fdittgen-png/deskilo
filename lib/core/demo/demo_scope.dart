@@ -39,7 +39,6 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
-import 'package:deskilo/core/demo/demo_purchasing_overrides.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
@@ -50,14 +49,6 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
-import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
-import 'package:deskilo/features/money/providers/asset_providers.dart';
-import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
-import 'package:deskilo/features/money/providers/book_period_providers.dart';
-import 'package:deskilo/features/money/providers/book_profile_providers.dart';
-import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
-import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
-import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
@@ -86,7 +77,6 @@ import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
-import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/domain/sample_data.dart';
 import '../../features/workspace/domain/workspace_host.dart';
 import '../../features/workspace/providers/bi_providers.dart';
@@ -134,7 +124,6 @@ import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
-import 'data/kpi_repositories.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import 'data/mcp_onboarding_repository.dart';
@@ -146,17 +135,17 @@ import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
 import 'data/workspace_asset_repository.dart';
+import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
-import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_lease_seed.dart';
+import 'seed/demo_london_seed.dart';
+import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_reachable_seed.dart';
-import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_setup_seed.dart';
-import 'seed/demo_valuation_seed.dart';
 
 /// The main space's purchase side, seeded once for the session: its
 /// providers and the setup guide's evidence read the same repositories.
@@ -212,6 +201,20 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         money: second.money,
         events: second.events,
       ),
+      demoLondonSpaceId: DemoSetupSources(
+        space: fixture.london.workspaces,
+        plan: fixture.london.floorPlan,
+        reservations: fixture.london.reservations,
+        money: fixture.london.money,
+        events: fixture.london.events,
+      ),
+      demoNewYorkSpaceId: DemoSetupSources(
+        space: fixture.newYork.workspaces,
+        plan: fixture.newYork.floorPlan,
+        reservations: fixture.newYork.reservations,
+        money: fixture.newYork.money,
+        events: fixture.newYork.events,
+      ),
     },
     acknowledged: {'ws-1': demoMainSpaceMarkedDone},
   );
@@ -219,43 +222,12 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
-List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
-  final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt, actor: fixture.actor.memberId);
-  return [
-    eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
-    ...demoPurchasingOverrides(purchasing),
-    bookProfileRepositoryProvider.overrideWithValue(main.books), retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
-    premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
-    workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
-    // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
-    bookPeriodRepositoryProvider.overrideWithValue(bookPeriods),
-    accountingConnectionRepositoryProvider.overrideWithValue(seedDemoAccountingConnections(bookPeriods, fixture.seededAt)),
-    // #2568 — the rooms the demo space rents.
-    roomRentalRepositoryProvider.overrideWithValue(
-      seedDemoRooms(fixture.seededAt),
-    ),
-    // #2576 — the accountant's valuations of the demo space's equipment.
-    assetValuationRepositoryProvider.overrideWithValue(
-      seedDemoValuations(fixture.seededAt),
-    ),
-    leaseCommitmentRepositoryProvider.overrideWithValue(
-      seedDemoCommitments(fixture.seededAt),
-    ),
-    // #2582 — the purchase figures over these documents.
-    purchaseKpiRepositoryProvider.overrideWithValue(
-      DemoPurchaseKpiRepository(
-        purchases: purchasing.purchases,
-        now: fixture.seededAt,
-      ),
-    ),
-  ];
-}
 
 /// What only a server can answer: Demo offers nothing in its place.
 List<Override> _serverOnlyOverrides() => [
   // #2582 — the purchase figures are _purchasingOverrides'; the cost
-  // figures need the server's ledger of every source.
-  costKpiRepositoryProvider.overrideWithValue(const UnavailableCostKpiRepository()),
+  // figures of the cities are demo_city_commerce_overrides', and the older
+  // spaces' need the server's ledger of every source.
   costAllocationRepositoryProvider.overrideWithValue(const UnavailableCostAllocationRepository()),
   // #2583 — the overview's own figures need the server.
   overviewKpiRepositoryProvider.overrideWithValue(
@@ -325,7 +297,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      ..._purchasingOverrides(fixture, main), // #2358, #2567, #2573
+      ...demoCityCommerceOverrides(fixture, main.purchasing, main.books, main.lease, main.assets), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]), ...demoNoBackendOverrides(), // #3235
@@ -360,13 +332,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // and the app's opener reads the server: none here.
       eventSourceOpenersProvider.overrideWithValue(const {}),
       // #1918 — capacity over the demo's own plan and bookings.
-      kpiRepositoryProvider.overrideWithValue(
-        DemoCapacityKpiRepository(
-          plan: fixture.floorPlan,
-          reservations: fixture.reservations,
-          now: fixture.seededAt,
-        ),
-      ),
+      kpiRepositoryProvider.overrideWith((ref) => demoCapacityKpi(ref, fixture)),
       ..._serverOnlyOverrides(),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
