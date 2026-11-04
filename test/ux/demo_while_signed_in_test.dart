@@ -319,7 +319,18 @@ void main() {
     expect(find.byType(SetupLevelsScreen), findsOneWidget);
     final flagsBefore = Map.of(live.workspace.workspaces.first.featureFlags);
 
+    // #3282 — the quick starts and the level of each process are in the
+    // advanced choices, disclosed on demand.
+    Future<void> openAdvanced() async {
+      if (find.byKey(ValueKey('setup-preset-${SetupPreset.values.last.name}')).evaluate().isEmpty) {
+        await tester.ensureVisible(find.byKey(const ValueKey('setup-choices-advanced')));
+        await tester.tap(find.byKey(const ValueKey('setup-choices-advanced')));
+        await _settle(tester);
+      }
+    }
+
     // Choices, not applied: a quick start, then one answer on top.
+    await openAdvanced();
     await tester.tap(
       find.byKey(ValueKey('setup-preset-${SetupPreset.values.last.name}')),
     );
@@ -357,6 +368,7 @@ void main() {
     await _settle(tester);
     expect(live.location, '/setup/levels');
     expect(find.byType(SetupLevelsScreen), findsOneWidget);
+    await openAdvanced();
     expect(choices(), chosen, reason: 'the choices came back as they were');
     expect(live.workspace.workspaces.first.featureFlags, flagsBefore,
         reason: 'the visit applied nothing');
