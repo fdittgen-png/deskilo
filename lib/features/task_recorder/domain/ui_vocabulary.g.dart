@@ -7627,6 +7627,7 @@ const Set<String> uiLabelKeys = {
   'guestPassProblemNoSeat',
   'guestPassSaleFailed',
   'guestPassSaleIntro',
+  'guestPassSaveFailed',
   'guestPassSeat',
   'guestPassSell',
   'guestPassTo',

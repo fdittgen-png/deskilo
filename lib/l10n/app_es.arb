@@ -7344,6 +7344,7 @@
   "guestPassProblemNoSeat": "Elija un puesto.",
   "guestPassSaleFailed": "No se pudo vender el pase. Puede que el puesto esté ocupado o que el horario quede fuera del horario de apertura.",
   "guestPassSaleIntro": "El nombre y los datos de contacto del invitado figuran en la factura. El invitado no se convierte en miembro.",
+  "guestPassSaveFailed": "No se pudo guardar el pase.",
   "guestPassSeat": "Puesto",
   "guestPassSell": "Vender un pase",
   "guestPassSold": "Pase vendido: {total}, facturado a {name}.",

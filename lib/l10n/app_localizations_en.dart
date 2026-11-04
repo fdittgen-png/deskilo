@@ -10417,6 +10417,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'The guest\'s name and contact are printed on the invoice. The guest does not become a member.';
 
   @override
+  String get guestPassSaveFailed => 'The pass could not be saved.';
+
+  @override
   String get guestPassSeat => 'Place';
 
   @override

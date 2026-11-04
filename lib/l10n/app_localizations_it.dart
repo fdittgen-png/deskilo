@@ -10488,6 +10488,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il nome e i recapiti dell\'ospite sono stampati sulla fattura. L\'ospite non diventa membro.';
 
   @override
+  String get guestPassSaveFailed => 'Non è stato possibile salvare il pass.';
+
+  @override
   String get guestPassSeat => 'Posto';
 
   @override

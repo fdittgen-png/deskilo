@@ -152,5 +152,9 @@
   "guestPassPriceInvalid": "Enter a price.",
   "@guestPassPriceInvalid": {
     "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaveFailed": "The pass could not be saved.",
+  "@guestPassSaveFailed": {
+    "description": "#3308 guest passes sold at the desk"
   }
 }

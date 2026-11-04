@@ -30,5 +30,6 @@
   "guestPassProblemDays": "Un pase dura de 1 a 31 días.",
   "guestPassProblemHourlyOneDay": "Un pase por horas es para un solo día.",
   "guestPassNameRequired": "Introduzca un nombre.",
-  "guestPassPriceInvalid": "Introduzca un precio."
+  "guestPassPriceInvalid": "Introduzca un precio.",
+  "guestPassSaveFailed": "No se pudo guardar el pase."
 }

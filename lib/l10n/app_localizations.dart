@@ -17201,6 +17201,12 @@ abstract class AppLocalizations {
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
+  /// **'The pass could not be saved.'**
+  String get guestPassSaveFailed;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
   /// **'Place'**
   String get guestPassSeat;
 

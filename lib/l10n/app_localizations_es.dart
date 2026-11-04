@@ -10491,6 +10491,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'El nombre y los datos de contacto del invitado figuran en la factura. El invitado no se convierte en miembro.';
 
   @override
+  String get guestPassSaveFailed => 'No se pudo guardar el pase.';
+
+  @override
   String get guestPassSeat => 'Puesto';
 
   @override

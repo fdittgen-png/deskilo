@@ -2054,6 +2054,7 @@ Map<String, _Getter> _part6() => {
   'gettingStartedMembershipUnknown': (l) => l.gettingStartedMembershipUnknown,
   'gobdProcedureImmutableBody': (l) => l.gobdProcedureImmutableBody,
   'groupPickPeople': (l) => l.groupPickPeople,
+  'guestPassSaveFailed': (l) => l.guestPassSaveFailed,
   'guideHostStatusPending': (l) => l.guideHostStatusPending,
   'handoffVoided': (l) => l.handoffVoided,
   'helpHintLearnMore': (l) => l.helpHintLearnMore,

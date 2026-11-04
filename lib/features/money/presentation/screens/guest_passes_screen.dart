@@ -222,7 +222,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
             context,
             domain: 'money',
             message: 'guest pass save failed',
-            errorText: l10n.workspaceGenericError,
+            errorText: l10n.guestPassSaveFailed,
             action: () => ref.read(guestPassRepositoryProvider).saveOffer(
                   workspace.id,
                   id: offer?.id,
@@ -233,7 +233,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
                   active: active,
                 ),
           );
-          if (!ok) return l10n.workspaceGenericError;
+          if (!ok) return l10n.guestPassSaveFailed;
           ref.invalidate(guestPassOffersProvider(workspace.id));
           return null;
         },

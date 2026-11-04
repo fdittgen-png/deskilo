@@ -10496,6 +10496,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Name und Kontakt des Gastes stehen auf der Rechnung. Der Gast wird kein Mitglied.';
 
   @override
+  String get guestPassSaveFailed => 'Der Pass konnte nicht gespeichert werden.';
+
+  @override
   String get guestPassSeat => 'Platz';
 
   @override
