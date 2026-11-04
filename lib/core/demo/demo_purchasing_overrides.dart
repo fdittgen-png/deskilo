@@ -16,9 +16,11 @@ import 'data/supplier_balance_repository.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+import 'seed/demo_twin_seed.dart';
 
 String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
   null || '' || 'ws-1' => 'ws-1',
+  demoTwinSpaceId => demoTwinSpaceId,
   demoLondonSpaceId => demoLondonSpaceId,
   demoNewYorkSpaceId => demoNewYorkSpaceId,
   _ => '__unavailable__',
@@ -35,11 +37,13 @@ List<Override> demoPurchasingOverrides(
   DemoPurchasing purchasing, {
   DemoPurchasing? london,
   DemoPurchasing? newYork,
+  DemoPurchasing? twin,
 }) => [
   supplierRepositoryProvider.overrideWith(
     (ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
       demoLondonSpaceId => (london ?? purchasing).suppliers,
       demoNewYorkSpaceId => (newYork ?? purchasing).suppliers,
+      demoTwinSpaceId => (twin ?? purchasing).suppliers,
       _ => purchasing.suppliers,
     },
   ),
@@ -50,6 +54,7 @@ List<Override> demoPurchasingOverrides(
     final current = switch (ref.watch(currentWorkspaceProvider).value?.id) {
       demoLondonSpaceId => london ?? purchasing,
       demoNewYorkSpaceId => newYork ?? purchasing,
+      demoTwinSpaceId => twin ?? purchasing,
       _ => purchasing,
     };
     final purchases = current.purchases
@@ -62,6 +67,7 @@ List<Override> demoPurchasingOverrides(
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => (london ?? purchasing).purchases,
         demoNewYorkSpaceId => (newYork ?? purchasing).purchases,
+        demoTwinSpaceId => (twin ?? purchasing).purchases,
         _ => purchasing.purchases,
       },
       allowedWorkspaceId: _approvalSpace(ref),
@@ -81,6 +87,7 @@ List<Override> demoPurchasingOverrides(
     final current = switch (id) {
       demoLondonSpaceId => london ?? purchasing,
       demoNewYorkSpaceId => newYork ?? purchasing,
+      demoTwinSpaceId => twin ?? purchasing,
       _ => purchasing,
     };
     return FakeSupplierBalanceRepository(
