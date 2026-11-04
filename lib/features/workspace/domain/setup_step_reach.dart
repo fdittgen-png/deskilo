@@ -64,7 +64,8 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.usageInvoices,
   },
   // The services screen: priced accessories and where a service is taxed.
-  'services': {_F.accessorySupplements, _F.supplyClassification},
+  // #3308 — the passes are what the space sells at the desk, beside its services.
+  'services': {_F.accessorySupplements, _F.supplyClassification, _F.guestPasses},
   'purchases': {
     _F.supplyExpenses,
     _F.expenseRepartition,

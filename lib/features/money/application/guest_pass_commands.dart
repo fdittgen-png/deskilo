@@ -31,7 +31,7 @@ class GuestPassCommands {
   Future<GuestPassSale> sell(
     String workspaceId, {
     required GuestPassDraft draft,
-    required Map<String, dynamic> guest,
+    required Map<String, Object?> guest,
     required String requestId,
   }) =>
       _passes.sell(workspaceId, draft: draft, guest: guest, requestId: requestId);

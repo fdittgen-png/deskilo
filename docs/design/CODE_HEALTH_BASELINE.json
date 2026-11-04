@@ -1,5 +1,5 @@
 {
-  "recordedSha": "64c212c851137c575f41d4d6f94cc31fab2987f4",
+  "recordedSha": "a6f4ac78ee4607a7f9f90d58e7a130fa4abc2ae4",
   "recordedDate": "2026-11-04",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2396,"functions":13676,"cyclomatic>=9":1380,"cyclomatic>=25":76,"cognitive>=15":525,"cognitive>=30":69,"length>=150":47,"parameters>=5":621,"parameters>=7":153,"partOfFiles":17},
@@ -1640,7 +1640,7 @@
     {"p":"lib/features/money/data/supabase_einvoice_inbox_repository.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":2,"len":16,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/supabase_einvoice_transmissions.dart","loc":195,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":8,"cyc":13,"len":42,"params":10,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/data/supabase_expense_repository.dart","loc":169,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":2,"len":28,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":2}},
-    {"p":"lib/features/money/data/supabase_guest_pass_repository.dart","loc":76,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":4,"len":22,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/money/data/supabase_guest_pass_repository.dart","loc":76,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":3,"len":21,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/data/supabase_hmrc_repository.dart","loc":122,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":19,"cyc":15,"len":45,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/supabase_invoice_action_commands.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":3,"len":20,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/supabase_invoice_commands.dart","loc":132,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":4,"len":47,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},

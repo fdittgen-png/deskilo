@@ -5,6 +5,7 @@
 // sell_guest_pass, 0672).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../domain/guest_pass.dart';
 
 class SupabaseGuestPassRepository implements GuestPassRepository {
@@ -29,11 +30,10 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         .select('id, name, desks(offices(levels(name)))')
         .eq('workspace_id', workspaceId)
         .order('name');
-    String level(Map<String, dynamic> r) {
-      final desk = r['desks'] as Map<String, dynamic>?;
-      final office = desk?['offices'] as Map<String, dynamic>?;
-      final lvl = office?['levels'] as Map<String, dynamic>?;
-      return lvl?['name'] as String? ?? '';
+    String level(Map<String, Object?> r) {
+      final desk = JsonReader.orEmpty(r['desks']);
+      final office = JsonReader.orEmpty(desk.json['offices']);
+      return JsonReader.orEmpty(office.json['levels']).stringOr('name');
     }
 
     return [
@@ -69,7 +69,7 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
   Future<GuestPassSale> sell(
     String workspaceId, {
     required GuestPassDraft draft,
-    required Map<String, dynamic> guest,
+    required Map<String, Object?> guest,
     required String requestId,
   }) async {
     final row = await _client.rpc<Object?>('sell_guest_pass', params: {
@@ -84,6 +84,6 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
       'p_method': draft.method,
       'p_days': draft.days,
     });
-    return GuestPassSale.fromJson(Map<String, dynamic>.from(row! as Map));
+    return GuestPassSale.fromJson(Map<String, Object?>.from(row! as Map));
   }
 }

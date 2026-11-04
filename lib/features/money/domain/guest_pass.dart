@@ -35,7 +35,7 @@ class GuestPassOffer implements SystemStamped {
     this.system = SystemColumns.none,
   });
 
-  factory GuestPassOffer.fromJson(Map<String, dynamic> json) {
+  factory GuestPassOffer.fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'guest_pass_offers');
     return GuestPassOffer(
       system: SystemColumns.fromRow(json),
@@ -135,7 +135,7 @@ class GuestPassSale {
     this.replayed = false,
   });
 
-  factory GuestPassSale.fromJson(Map<String, dynamic> json) {
+  factory GuestPassSale.fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'sell_guest_pass');
     return GuestPassSale(
       passId: r.string('pass_id'),
@@ -190,7 +190,7 @@ abstract interface class GuestPassRepository {
   Future<GuestPassSale> sell(
     String workspaceId, {
     required GuestPassDraft draft,
-    required Map<String, dynamic> guest,
+    required Map<String, Object?> guest,
     required String requestId,
   });
 }
