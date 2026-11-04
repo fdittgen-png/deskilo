@@ -13,7 +13,10 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_twin_seed.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
@@ -42,6 +45,28 @@ List<_Space> _spaces(DemoFixture f) => [
     money: f.secondSpace.money,
     workspaces: f.secondSpace.workspaces,
     reservations: f.secondSpace.reservations,
+  ),
+  // #3314 — the city spaces and the twin read their own statements too.
+  (
+    name: 'London',
+    workspaceId: demoLondonSpaceId,
+    money: f.london.money,
+    workspaces: f.london.workspaces,
+    reservations: f.london.reservations,
+  ),
+  (
+    name: 'New York',
+    workspaceId: demoNewYorkSpaceId,
+    money: f.newYork.money,
+    workspaces: f.newYork.workspaces,
+    reservations: f.newYork.reservations,
+  ),
+  (
+    name: 'the twin',
+    workspaceId: demoTwinSpaceId,
+    money: f.twin.money,
+    workspaces: f.twin.workspaces,
+    reservations: f.twin.reservations,
   ),
 ];
 
@@ -104,6 +129,19 @@ void main() {
           for (final e in s.money.ledger) e.period,
         };
 
+        test('${s.name}: a member reads their own statement, not another '
+            'member\'s; the owner reads both', () async {
+          final plain = members.where((m) => !m.isAdmin && !m.isOwner).toList();
+          expect(plain, isNotEmpty, reason: '${s.name} has a plain member');
+          final other = members.firstWhere((m) => m.id != plain.first.id);
+          final period = yearMonth(now.year, now.month);
+          fixture.actor.memberId = plain.first.id;
+          expect((await s.money.fetchStatement(plain.first.id, period)).period, period);
+          await expectLater(s.money.fetchStatement(other.id, period), throwsStateError);
+          asOwner();
+          expect((await s.money.fetchStatement(other.id, period)).period, period);
+        });
+
         test('${s.name}: each member\'s statement of each period is computed '
             'from their own percentage, reservations and ledger', () async {
           asOwner();
@@ -144,7 +182,10 @@ void main() {
                   reason: reason);
             }
           }
-          expect(withLedger, greaterThan(0), reason: 'statements with money');
+          // The twin space holds no ledger; every other space has money to show.
+          if (s.money.ledger.isNotEmpty) {
+            expect(withLedger, greaterThan(0), reason: 'statements with money');
+          }
         });
 
         test('${s.name}: two members read two statements; one member\'s new '
