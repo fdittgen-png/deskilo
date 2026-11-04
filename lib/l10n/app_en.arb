@@ -3078,10 +3078,16 @@
   "@biCustomerConcentrationDefinition": {
     "description": "#3294 customer analytics"
   },
-  "biCustomerConcentrationOpen": "They owe {topOpen} of the {open} owed today.",
+  "biCustomerConcentrationOpen": "The {top} largest of {debtors} debtors owe {topOpen} of the {open} owed today, whenever they were invoiced.",
   "@biCustomerConcentrationOpen": {
     "description": "#3294 customer analytics",
     "placeholders": {
+      "top": {
+        "type": "String"
+      },
+      "debtors": {
+        "type": "String"
+      },
       "topOpen": {
         "type": "String"
       },
@@ -3119,6 +3125,18 @@
   "biCustomerCreditTitle": "Credits and write-offs",
   "@biCustomerCreditTitle": {
     "description": "#3294 customer analytics"
+  },
+  "biCustomerDebtorLine": "{name}: {amount} owed",
+  "@biCustomerDebtorLine": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "biCustomerDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
   "@biCustomerDelay": {
@@ -3173,6 +3191,10 @@
   },
   "biCustomerNamesHidden": "Names are shown only to those who may read personal data; the others read ranks.",
   "@biCustomerNamesHidden": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNetNotProven": "Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.",
+  "@biCustomerNetNotProven": {
     "description": "#3294 customer analytics"
   },
   "biCustomerNothingToShare": "Nothing to share out in this period, so no share is shown.",

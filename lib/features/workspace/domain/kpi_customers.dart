@@ -142,20 +142,19 @@ enum PaymentCohort {
 /// is owed with its VAT). A null amount is unknown, never 0.
 typedef CohortFigure = ({int count, int? minor});
 
-/// One customer of the concentration, by rank. [name] is null unless the
-/// reader may read personal data: the server leaves it out.
+/// One customer of the concentration, by rank: by net invoiced in the
+/// months, or, among the debtors, by what it owes now. [name] is null
+/// unless the reader may read personal data: the server leaves it out.
 class CustomerShare {
   const CustomerShare({
     required this.rank,
     required this.name,
-    required this.netMinor,
-    required this.openMinor,
+    required this.minor,
   });
 
   final int rank;
   final String? name;
-  final int? netMinor;
-  final int? openMinor;
+  final int? minor;
 }
 
 /// One invoice month of the credits and write-offs.
@@ -175,6 +174,7 @@ class CustomerQualityKpi {
     required this.weightedDays,
     required this.dunning,
     required this.creditNotes,
+    required this.creditNetUnknown,
     required this.creditedMinor,
     required this.writeOffs,
     required this.writtenOffMinor,
@@ -183,9 +183,12 @@ class CustomerQualityKpi {
     required this.customerCount,
     required this.netMinor,
     required this.topNetMinor,
+    required this.netUnknown,
+    required this.debtorCount,
     required this.openMinor,
     required this.topOpenMinor,
     required this.customers,
+    required this.debtors,
     required this.quality,
     required this.reasons,
     required this.computedAt,
@@ -212,6 +215,9 @@ class CustomerQualityKpi {
   final DunningLoad? dunning;
 
   final int creditNotes;
+
+  /// Credit notes and write-offs whose net is not proven: left out.
+  final int creditNetUnknown;
   final int? creditedMinor;
   final int writeOffs;
   final int? writtenOffMinor;
@@ -223,12 +229,22 @@ class CustomerQualityKpi {
   final int? netMinor;
   final int? topNetMinor;
 
-  /// What the customers owe now, and the part the same largest owe.
+  /// Invoices of the months whose net is not proven (no VAT breakdown):
+  /// left out of the net figures.
+  final int netUnknown;
+
+  /// Another population: whoever owes now on what was issued by the end
+  /// of the months, whenever it was invoiced, and the part the [topCount]
+  /// largest debtors owe — not the largest customers by sales.
+  final int debtorCount;
   final int? openMinor;
   final int? topOpenMinor;
 
   /// The largest customers by net invoiced, the largest first.
   final List<CustomerShare> customers;
+
+  /// The largest debtors by what they owe now, the largest first.
+  final List<CustomerShare> debtors;
 
   final Set<KpiQuality> quality;
   final List<String> reasons;
@@ -301,15 +317,13 @@ CustomerQualityKpi customerQualityFromJson(Map<String, Object?> json) {
   final dunningRow = r.objectOrNull('dunning');
   final credit = _object(r, 'credit');
   final top = _object(r, 'concentration');
-  final customers = top.objects(
-    'rows',
-    (row) => CustomerShare(
-      rank: _count(row, 'rank'),
-      name: row.stringOrNull('name'),
-      netMinor: minor(row, 'net_minor'),
-      openMinor: minor(row, 'open_minor'),
-    ),
+  CustomerShare share(JsonReader row) => CustomerShare(
+    rank: _count(row, 'rank'),
+    name: row.stringOrNull('name'),
+    minor: minor(row, 'minor'),
   );
+  final customers = top.objects('rows', share);
+  final debtors = top.objects('debtor_rows', share);
   final creditMonths = credit.objects(
     'months',
     (row) => (
@@ -347,6 +361,7 @@ CustomerQualityKpi customerQualityFromJson(Map<String, Object?> json) {
             paidAfterReminder: _count(dunningRow, 'paid_after_reminder'),
           ),
     creditNotes: _count(credit, 'credit_notes'),
+    creditNetUnknown: _count(credit, 'net_unknown'),
     creditedMinor: creditedMinor,
     writeOffs: _count(credit, 'write_offs'),
     writtenOffMinor: writtenOffMinor,
@@ -355,9 +370,12 @@ CustomerQualityKpi customerQualityFromJson(Map<String, Object?> json) {
     customerCount: _count(top, 'customers'),
     netMinor: netMinor,
     topNetMinor: topNetMinor,
+    netUnknown: _count(top, 'net_unknown'),
+    debtorCount: _count(top, 'debtors'),
     openMinor: openMinor,
     topOpenMinor: topOpenMinor,
     customers: customers,
+    debtors: debtors,
     quality: {
       for (final q in r.strings('quality'))
         kpiQualityOf(q) ?? KpiQuality.unavailable,

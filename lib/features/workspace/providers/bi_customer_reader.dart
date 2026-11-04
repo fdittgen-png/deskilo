@@ -53,11 +53,18 @@ BiMeasure customerMeasure(
   final undefinedShare = f.denominator == 0;
   final dunningOff =
       moduleId == 'customers.dunning_load' && k.dunning == null;
+  // A net the server could not prove leaves this module's net partial.
+  final netLeftOut = switch (moduleId) {
+    'customers.credit_and_writeoff' => k.creditNetUnknown > 0,
+    'customers.concentration' => k.netUnknown > 0,
+    _ => false,
+  };
   final quality = {
     for (final q in k.quality)
       if (!countSurvives || q != KpiQuality.unavailable) q,
     if (f.numerator == null || (!count && !currencyCompatible) || undefinedShare)
       KpiQuality.unavailable,
+    if (netLeftOut) KpiQuality.partial,
   };
   final unknown = quality.contains(KpiQuality.unavailable);
   return BiMeasure(
@@ -68,7 +75,11 @@ BiMeasure customerMeasure(
       if (!unknown && f.numerator == 0) KpiQuality.knownZero,
     },
     reasons: [
-      ...k.reasons.where((r) => r != 'dunning_off' || dunningOff),
+      ...k.reasons.where(
+        (r) =>
+            (r != 'dunning_off' || dunningOff) &&
+            (r != 'net_not_proven' || netLeftOut),
+      ),
       if (!count && !currencyCompatible) 'currency_mix',
       if (undefinedShare) 'nothing_to_share',
     ],
@@ -129,7 +140,7 @@ List<BiRow> customerRows(CustomerQualityKpi k, String moduleId) {
           BiRow(
             key: 'rank-${c.rank}',
             label: null,
-            current: _row(k, c.netMinor, k.netMinor),
+            current: _row(k, c.minor, k.netMinor),
           ),
       ];
   }

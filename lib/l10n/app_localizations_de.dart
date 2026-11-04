@@ -2557,8 +2557,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Anteil des im Zeitraum netto Berechneten (abzüglich Gutschriften), den die größten Kunden ausmachen, und ihr Anteil an dem, was heute offen ist.';
 
   @override
-  String biCustomerConcentrationOpen(String topOpen, String open) {
-    return 'Sie schulden $topOpen der heute offenen $open.';
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'Die $top größten von $debtors Schuldnern schulden $topOpen der heute offenen $open, gleich wann berechnet wurde.';
   }
 
   @override
@@ -2580,6 +2585,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biCustomerCreditTitle => 'Gutschriften und Ausbuchungen';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name: $amount offen';
+  }
 
   @override
   String biCustomerDelay(String median, String p90, String weighted) {
@@ -2610,6 +2620,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biCustomerNamesHidden =>
       'Namen sieht nur, wer personenbezogene Daten lesen darf; alle anderen sehen Ränge.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Einige Rechnungen haben keine MwSt.-Aufschlüsselung, ihr Nettobetrag ist nicht belegt: Sie bleiben aus den Nettozahlen heraus.';
 
   @override
   String get biCustomerNothingToShare =>

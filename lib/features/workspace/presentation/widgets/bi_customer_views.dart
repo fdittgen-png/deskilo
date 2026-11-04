@@ -23,6 +23,7 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
   if (m.reasons.contains('dunning_off')) l10n.biCustomerDunningOff,
   if (m.reasons.contains('nothing_to_share')) l10n.biCustomerNothingToShare,
+  if (m.reasons.contains('net_not_proven')) l10n.biCustomerNetNotProven,
 ];
 
 String _cohortName(PaymentCohort c, AppLocalizations l10n) => switch (c) {
@@ -153,11 +154,19 @@ final customerModuleViews = <String, BiModuleView>{
     details: (m, l10n, locale) => switch (_kpi(m)) {
       final k? => [
         l10n.biCustomerConcentrationDefinition,
-        if (!m.unknown)
+        if (!m.unknown) ...[
           l10n.biCustomerConcentrationOpen(
+            '${k.topCount}',
+            '${k.debtorCount}',
             biMoneyCell(k.topOpenMinor, locale, k.currency),
             biMoneyCell(k.openMinor, locale, k.currency),
           ),
+          for (final d in k.debtors)
+            l10n.biCustomerDebtorLine(
+              d.name ?? l10n.biCustomerRank('${d.rank}'),
+              biMoneyCell(d.minor, locale, k.currency),
+            ),
+        ],
       ],
       null => const [],
     },

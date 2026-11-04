@@ -2559,8 +2559,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'La part du montant facturé hors taxes dans la période (avoirs déduits) que représentent les plus grands clients, et la part de ce qu’ils doivent aujourd’hui.';
 
   @override
-  String biCustomerConcentrationOpen(String topOpen, String open) {
-    return 'Ils doivent $topOpen des $open dus aujourd’hui.';
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'Les $top plus grands des $debtors débiteurs doivent $topOpen des $open dus aujourd’hui, quelle que soit la date de facturation.';
   }
 
   @override
@@ -2582,6 +2587,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biCustomerCreditTitle => 'Avoirs et pertes';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name : $amount dus';
+  }
 
   @override
   String biCustomerDelay(String median, String p90, String weighted) {
@@ -2612,6 +2622,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biCustomerNamesHidden =>
       'Les noms ne s’affichent que pour qui peut lire les données personnelles ; les autres lisent des rangs.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Certaines factures n’ont pas de ventilation de TVA : leur montant hors taxes n’est pas prouvé, elles sont laissées hors des chiffres nets.';
 
   @override
   String get biCustomerNothingToShare =>

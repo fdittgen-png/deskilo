@@ -18,8 +18,15 @@
 --   customers.credit_and_writeoff  by the invoice's month: the credit notes
 --       and the written-off remainders (total - paid), net of VAT (the
 --       remainder in proportion to its invoice's net);
---   customers.concentration        the share of the net invoiced, and of
---       what is owed now, that the five largest customers make.
+--   customers.concentration        the share of the net invoiced in the
+--       months that the five largest customers make, and apart, the share
+--       of what is owed now that the five largest debtors owe (whenever
+--       they were invoiced: two populations, two rankings).
+--
+-- A source a settlement regrouped (0148) follows the settlement's payment
+-- and hold: regrouping is not paying. Net is read from the frozen VAT
+-- breakdown only; an invoice without one is left out of the net figures,
+-- counted, and said (`net_not_proven`).
 --
 -- Who reads: kpi_readable() -- viewAnalytics AND viewFinances -- with
 -- `workspaceStatus` on, a signed-in person, not a delegated assistant. The
@@ -37,6 +44,17 @@ language sql immutable set search_path = public as $registry$
 $registry$;
 revoke execute on function public.kpi_registry() from public, anon;
 grant execute on function public.kpi_registry() to authenticated;
+
+-- The net of an invoice from its frozen VAT breakdown; null when it has
+-- none: a missing snapshot does not prove that gross equals net.
+create or replace function public.kpi_invoice_net(p_vat_totals jsonb)
+returns bigint
+language sql immutable set search_path = public as $fn$
+  select case when jsonb_typeof(p_vat_totals) = 'array' and jsonb_array_length(p_vat_totals) > 0
+              then (select sum((t ->> 'net_cents')::bigint) from jsonb_array_elements(p_vat_totals) t)
+         end;
+$fn$;
+revoke execute on function public.kpi_invoice_net(jsonb) from public, anon, authenticated;
 
 create or replace function public.kpi_customer_quality(
   p_workspace_id uuid,
@@ -87,22 +105,26 @@ begin
   v_dunning := public.feature_effective(p_workspace_id, 'dunning');
 
   -- The invoices falling due in the months, and the ones without a due
-  -- date issued in them; each lands in exactly one cohort.
+  -- date issued in them; each lands in exactly one cohort. A source a
+  -- settlement regrouped (0148) is owed through that settlement: it takes
+  -- the settlement's match, hold, credits and payment date (e), never
+  -- "paid" from being regrouped; the settlement itself is not counted
+  -- apart, so nothing is counted twice.
   with base as (
     select i.id, i.member_id, i.total_cents::bigint as total,
            upper(coalesce(i.currency, v_currency)) as currency,
-           i.settled_by_invoice_id, mt.due_on,
+           e.total_cents::bigint as e_total, mt.due_on,
            m.status as m_status, m.resolution, m.writeoff_at,
            coalesce(m.paid_cents, 0)::bigint as paid,
            (select coalesce(sum(-c.total_cents), 0)::bigint from public.invoices c
-             where c.replaces_invoice_id = i.id and c.total_cents < 0
-               and c.voided_at is null and c.currency = i.currency) as credits,
+             where c.replaces_invoice_id = e.id and c.total_cents < 0
+               and c.voided_at is null and c.currency = e.currency) as credits,
            exists (select 1 from public.invoice_dunning_holds h
-                    where h.invoice_id = i.id and h.released_at is null) as held,
+                    where h.invoice_id = e.id and h.released_at is null) as held,
            (select max(coalesce(bl.value_date, le.occurred_on,
                                 (le.created_at at time zone v_tz)::date))
               from (select p.payment_ledger_id from public.invoice_match_payments p
-                     where p.invoice_id = i.id
+                     where p.invoice_id = e.id
                     union
                     select m.payment_ledger_id where m.payment_ledger_id is not null) pay
               join public.ledger_entries le on le.id = pay.payment_ledger_id
@@ -111,8 +133,9 @@ begin
                  where l.workspace_id = p_workspace_id
                    and l.payment_ledger_id = pay.payment_ledger_id) bl on true) as pay_date
       from public.invoices i
+      join public.invoices e on e.id = coalesce(i.settled_by_invoice_id, i.id)
       left join public.invoice_maturities mt on mt.invoice_id = i.id
-      left join public.invoice_matches m on m.invoice_id = i.id
+      left join public.invoice_matches m on m.invoice_id = e.id
      where i.workspace_id = p_workspace_id and i.voided_at is null
        and i.kind <> 'settlement' and i.total_cents > 0
        and ((mt.due_on between v_start and v_cut)
@@ -120,11 +143,10 @@ begin
   ), classed as (
     select b.*,
            b.m_status = 'confirmed' and b.writeoff_at is not null as written_off,
-           b.settled_by_invoice_id is not null
-             or b.credits >= b.total
+           b.credits >= b.e_total
              or (b.m_status = 'confirmed'
                  and (b.resolution in ('exact', 'over_forced', 'over_credit_note', 'refunded')
-                      or b.paid + b.credits >= b.total)) as settled
+                      or b.paid + b.credits >= b.e_total)) as settled
       from base b
   )
   select coalesce(jsonb_agg(jsonb_build_object(
@@ -151,11 +173,12 @@ begin
      and i.kind <> 'settlement' and i.period between p_from and p_to;
   v_mixed := v_mixed or exists (
     select 1 from jsonb_array_elements(v_due) e where e ->> 'currency' <> v_currency);
-  -- ... and what is owed now, which the concentration reads.
+  -- ... and what is owed now, which the concentration reads (a
+  -- settlement is what is owed for its sources).
   v_mixed := v_mixed or exists (
     select 1 from public.invoices i
      where i.workspace_id = p_workspace_id and i.voided_at is null
-       and i.kind <> 'settlement' and i.total_cents > 0
+       and i.total_cents > 0
        and upper(coalesce(i.currency, v_currency)) <> v_currency
        and (i.issued_at at time zone v_tz)::date <= v_cut
        and (public.invoice_dunning_state_core(i.id, now()) ->> 'collectible_cents')::bigint > 0);
@@ -213,26 +236,30 @@ begin
   with docs as (
     select i.period,
            i.total_cents::bigint as total,
-           case when jsonb_typeof(i.vat_totals) = 'array' and jsonb_array_length(i.vat_totals) > 0
-                then (select sum((t ->> 'net_cents')::bigint) from jsonb_array_elements(i.vat_totals) t)
-                else i.total_cents::bigint end as net,
+           public.kpi_invoice_net(i.vat_totals) as net,
            m.status as m_status, m.writeoff_at, coalesce(m.paid_cents, 0)::bigint as paid
       from public.invoices i
       left join public.invoice_matches m on m.invoice_id = i.id
      where i.workspace_id = p_workspace_id and i.voided_at is null
        and i.kind <> 'settlement' and i.period between p_from and p_to
+  ), counted as (
+    select d.*,
+           d.total < 0 as is_note,
+           d.total > 0 and d.m_status = 'confirmed' and d.writeoff_at is not null as is_off
+      from docs d
   ), months as (
     select d.period,
-           count(*) filter (where d.total < 0) as notes,
-           coalesce(-sum(d.net) filter (where d.total < 0), 0) as credited,
-           count(*) filter (where d.total > 0 and d.m_status = 'confirmed'
-                              and d.writeoff_at is not null) as offs,
+           count(*) filter (where d.is_note) as notes,
+           coalesce(-sum(d.net) filter (where d.is_note), 0) as credited,
+           count(*) filter (where d.is_off) as offs,
            coalesce(sum(round((d.total - d.paid)::numeric * d.net / d.total)::bigint)
-                      filter (where d.total > 0 and d.m_status = 'confirmed'
-                                and d.writeoff_at is not null and d.paid < d.total), 0) as written
-      from docs d group by 1
+                      filter (where d.is_off and d.paid < d.total), 0) as written,
+           count(*) filter (where (d.is_note or (d.is_off and d.paid < d.total))
+                              and d.net is null) as unknown
+      from counted d group by 1
   )
   select jsonb_build_object(
+           'net_unknown', coalesce(sum(unknown), 0),
            'credit_notes', coalesce(sum(notes), 0),
            'credited_minor', case when v_mixed then null else coalesce(sum(credited), 0)::text end,
            'write_offs', coalesce(sum(offs), 0),
@@ -245,14 +272,15 @@ begin
     into v_credit
     from months;
 
-  -- Net invoiced per customer in the months (credit notes deducted), and
-  -- what each owes now on its issued invoices.
+  -- Two populations, ranked apart: the customers by what they were
+  -- invoiced net in the months (credit notes deducted; an invoice whose net
+  -- is not proven is left out and counted), and the debtors by what they
+  -- owe now on everything issued by the cut-off, whenever it was invoiced
+  -- (a settlement owes for its sources). The largest customers by sales are
+  -- not the largest debtors, so each share has its own top.
   with net as (
-    select i.member_id,
-           sum(case when jsonb_typeof(i.vat_totals) = 'array' and jsonb_array_length(i.vat_totals) > 0
-                    then (select sum((t ->> 'net_cents')::bigint) from jsonb_array_elements(i.vat_totals) t)
-                    else i.total_cents::bigint end) as net,
-           (array_agg(i.member_name order by i.issued_at desc))[1] as name
+    select i.member_id, sum(public.kpi_invoice_net(i.vat_totals)) as net,
+           count(*) filter (where public.kpi_invoice_net(i.vat_totals) is null) as unknown
       from public.invoices i
      where i.workspace_id = p_workspace_id and i.voided_at is null
        and i.kind <> 'settlement' and i.period between p_from and p_to
@@ -262,33 +290,55 @@ begin
       from public.invoices i
       cross join lateral public.invoice_dunning_state_core(i.id, now()) s(state)
      where i.workspace_id = p_workspace_id and i.voided_at is null
-       and i.kind <> 'settlement' and i.total_cents > 0
+       and i.total_cents > 0
        and (i.issued_at at time zone v_tz)::date <= v_cut
      group by 1
-  ), ranked as (
-    select n.member_id, n.net, n.name, coalesce(o.open, 0) as open,
-           row_number() over (order by n.net desc, n.member_id) as rank
-      from net n left join owed o on o.member_id = n.member_id
-     where n.net > 0
+  ), names as (
+    select distinct on (i.member_id) i.member_id, i.member_name as name
+      from public.invoices i
+     where i.workspace_id = p_workspace_id
+     order by i.member_id, i.issued_at desc
+  ), sales as (
+    select n.member_id, n.net, row_number() over (order by n.net desc, n.member_id) as rank
+      from net n where n.net > 0
+  ), debtors as (
+    select o.member_id, o.open, row_number() over (order by o.open desc, o.member_id) as rank
+      from owed o where o.open > 0
   )
   select jsonb_build_object(
            'top_count', c_top,
-           'customers', count(*),
-           'net_minor', case when v_mixed then null else coalesce(sum(net), 0)::text end,
+           'net_unknown', (select coalesce(sum(unknown), 0) from net),
+           'customers', (select count(*) from sales),
+           'net_minor', case when v_mixed then null
+                             else (select coalesce(sum(net), 0) from sales)::text end,
            'top_net_minor', case when v_mixed then null
-                                 else coalesce(sum(net) filter (where rank <= c_top), 0)::text end,
-           'open_minor', case when v_mixed then null else coalesce(sum(open), 0)::text end,
+                                 else (select coalesce(sum(net), 0) from sales
+                                        where rank <= c_top)::text end,
+           'debtors', (select count(*) from debtors),
+           'open_minor', case when v_mixed then null
+                              else (select coalesce(sum(open), 0) from debtors)::text end,
            'top_open_minor', case when v_mixed then null
-                                  else coalesce(sum(open) filter (where rank <= c_top), 0)::text end,
-           'rows', coalesce(jsonb_agg(jsonb_build_object(
-                     'rank', rank,
-                     'name', case when v_names then name end,
-                     'net_minor', case when v_mixed then null else net::text end,
-                     'open_minor', case when v_mixed then null else open::text end)
-                   order by rank) filter (where rank <= c_rows), '[]'::jsonb))
-    into v_top
-    from ranked;
+                                  else (select coalesce(sum(open), 0) from debtors
+                                         where rank <= c_top)::text end,
+           'rows', (select coalesce(jsonb_agg(jsonb_build_object(
+                      'rank', x.rank,
+                      'name', case when v_names then nm.name end,
+                      'minor', case when v_mixed then null else x.net::text end)
+                    order by x.rank), '[]'::jsonb)
+                      from sales x left join names nm on nm.member_id = x.member_id
+                     where x.rank <= c_rows),
+           'debtor_rows', (select coalesce(jsonb_agg(jsonb_build_object(
+                             'rank', x.rank,
+                             'name', case when v_names then nm.name end,
+                             'minor', case when v_mixed then null else x.open::text end)
+                           order by x.rank), '[]'::jsonb)
+                             from debtors x left join names nm on nm.member_id = x.member_id
+                            where x.rank <= c_rows))
+    into v_top;
 
+  if (v_credit ->> 'net_unknown')::int > 0 or (v_top ->> 'net_unknown')::int > 0 then
+    v_reasons := v_reasons || 'net_not_proven'::text;
+  end if;
   if v_mixed then
     v_quality := v_quality || 'unavailable'::text;
     v_reasons := v_reasons || 'currency_mix'::text;

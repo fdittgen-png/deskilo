@@ -22,8 +22,10 @@ typedef _Credit = ({
   Map<String, int> written,
   int notes,
   int offs,
+  int unknown,
 });
 
+/// A customer by its net sales, or a debtor by what it owes ([net]).
 typedef _Ranked = ({String id, int net, String name});
 
 /// The resolutions that settle an invoice whatever was paid (0331).
@@ -65,9 +67,11 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
   static String _month(Invoice i) =>
       i.period ?? yearMonth(i.issuedAt.year, i.issuedAt.month);
 
-  static int _net(Invoice i) => i.vatTotals.isEmpty
-      ? i.totalCents
-      : i.vatTotals.fold(0, (s, t) => s + t.netCents);
+  /// The net from the frozen VAT breakdown; null without one: a missing
+  /// breakdown does not prove that gross equals net.
+  static int? _net(Invoice i) => i.vatTotals.isEmpty
+      ? null
+      : i.vatTotals.fold<int>(0, (s, t) => s + t.netCents);
 
   static int _sum(Iterable<int> values) => values.fold(0, (s, v) => s + v);
 
@@ -101,7 +105,28 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     return last;
   }
 
-  /// What [i] still owes now, by the dunning rules (0331).
+  /// The invoice [i] is owed through: the settlement that regrouped it
+  /// (0148: regrouping is not paying), else itself.
+  Invoice _owedThrough(Invoice i) => switch (i.settledByInvoiceId) {
+    final id? =>
+      money.invoices.where((s) => s.id == id && s.voidedAt == null).firstOrNull ??
+          i,
+    null => i,
+  };
+
+  /// [i] in its cohort, by the state of what it is owed through.
+  _Due _dueOf(Invoice i, Map<String, int> credits) {
+    final e = _owedThrough(i);
+    final paidOn = _paidOn(e);
+    return (
+      invoice: i,
+      cohort: _cohortOf(i, e, credits[e.id] ?? 0, paidOn),
+      paidOn: paidOn,
+    );
+  }
+
+  /// What [i] still owes now, by the dunning rules (0331); a regrouped
+  /// source owes through its settlement, never twice.
   int _open(Invoice i, Map<String, int> credits) {
     final m = _confirmed(i);
     if (i.settledByInvoiceId != null ||
@@ -113,15 +138,19 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     return left > 0 ? left : 0;
   }
 
-  PaymentCohort _cohortOf(Invoice i, int credited, DateTime? paidOn) {
-    final m = _confirmed(i);
+  PaymentCohort _cohortOf(
+    Invoice i,
+    Invoice e,
+    int credited,
+    DateTime? paidOn,
+  ) {
+    final m = _confirmed(e);
     final paid = m?.paidCents ?? 0;
     final settled =
-        i.settledByInvoiceId != null ||
-        credited >= i.totalCents ||
+        credited >= e.totalCents ||
         (m != null &&
             (_settling.contains(m.resolution) ||
-                paid + credited >= i.totalCents));
+                paid + credited >= e.totalCents));
     if (i.dueOn == null) return PaymentCohort.unknownDue;
     if (m?.writeoffAt != null) return PaymentCohort.writtenOff;
     if (settled) {
@@ -130,7 +159,7 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
           ? PaymentCohort.late
           : PaymentCohort.onTime;
     }
-    if (money.dunningHolds.containsKey(i.id)) return PaymentCohort.held;
+    if (money.dunningHolds.containsKey(e.id)) return PaymentCohort.held;
     return paid > 0 ? PaymentCohort.partial : PaymentCohort.open;
   }
 
@@ -161,16 +190,15 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
         : !_day(i.dueOn!).isBefore(start) && !_day(i.dueOn!).isAfter(cut);
     final due = <_Due>[
       for (final i in standing)
-        if (i.totalCents > 0 && dueInMonths(i))
-          (
-            invoice: i,
-            cohort: _cohortOf(i, credits[i.id] ?? 0, _paidOn(i)),
-            paidOn: _paidOn(i),
-          ),
+        if (i.totalCents > 0 && dueInMonths(i)) _dueOf(i, credits),
     ];
+    // What is owed now: a settlement owes for its sources.
     final issuedByCut = [
-      for (final i in standing)
-        if (i.totalCents > 0 && !_day(i.issuedAt).isAfter(cut)) i,
+      for (final i in money.invoices)
+        if (i.voidedAt == null &&
+            i.totalCents > 0 &&
+            !_day(i.issuedAt).isAfter(cut))
+          i,
     ];
     final inScope = standing.where(inMonths).toList();
     final mixed = _mixed(inScope, due, issuedByCut, credits);
@@ -180,7 +208,11 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       period: (from: fromMonth, to: toMonth),
       due: due,
       credit: _credit(inScope),
-      customers: (ranked: _ranked(inScope), owed: _owedBy(issuedByCut, credits)),
+      customers: (
+        ranked: _ranked(inScope),
+        debtors: _debtors(_owedBy(issuedByCut, credits)),
+        unknown: inScope.where(_netLeftOut).length,
+      ),
       state: (
         mixed: mixed,
         dunning: dunning,
@@ -189,12 +221,35 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
           if (partial) KpiQuality.partial,
         },
         reasons: [
+          if (inScope.any(_netLeftOut)) 'net_not_proven',
           if (mixed) 'currency_mix',
           if (partial) 'period_not_over',
           if (dunning == null) 'dunning_off',
         ],
       ),
     );
+  }
+
+  /// An invoice whose net the figures need but cannot prove.
+  static bool _netLeftOut(Invoice i) => _net(i) == null;
+
+  /// The debtors by what they owe now, the largest first.
+  List<_Ranked> _debtors(Map<String, int> owed) =>
+      [
+        for (final e in owed.entries)
+          if (e.value > 0) (id: e.key, net: e.value, name: _nameOf(e.key)),
+      ]..sort(
+        (a, b) =>
+            b.net != a.net ? b.net.compareTo(a.net) : a.id.compareTo(b.id),
+      );
+
+  /// A member's name as its latest invoice froze it.
+  String _nameOf(String memberId) {
+    Invoice? latest;
+    for (final i in money.invoices.where((i) => i.memberId == memberId)) {
+      if (latest == null || i.issuedAt.isAfter(latest.issuedAt)) latest = i;
+    }
+    return latest?.memberName ?? '';
   }
 
   /// What the credit notes give back to each invoice they replace.
@@ -259,23 +314,34 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
   /// proportion to its invoice's net.
   _Credit _credit(List<Invoice> inScope) {
     final credited = <String, int>{}, written = <String, int>{};
-    var notes = 0, offs = 0;
+    var notes = 0, offs = 0, unknown = 0;
     for (final i in inScope) {
       final month = _month(i);
       final m = _confirmed(i);
+      final net = _net(i);
       if (i.totalCents < 0) {
         notes++;
-        credited[month] = (credited[month] ?? 0) - _net(i);
+        if (net == null) unknown++;
+        if (net != null) credited[month] = (credited[month] ?? 0) - net;
       } else if (i.totalCents > 0 && m?.writeoffAt != null) {
         offs++;
-        if (m!.paidCents < i.totalCents) {
-          written[month] =
-              (written[month] ?? 0) +
-              ((i.totalCents - m.paidCents) * _net(i) / i.totalCents).round();
+        if (m!.paidCents >= i.totalCents) continue;
+        if (net == null) {
+          unknown++;
+          continue;
         }
+        written[month] =
+            (written[month] ?? 0) +
+            ((i.totalCents - m.paidCents) * net / i.totalCents).round();
       }
     }
-    return (credited: credited, written: written, notes: notes, offs: offs);
+    return (
+      credited: credited,
+      written: written,
+      notes: notes,
+      offs: offs,
+      unknown: unknown,
+    );
   }
 
   /// The customers by net invoiced in the months, the largest first; a
@@ -284,7 +350,8 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     final net = <String, int>{};
     final latest = <String, Invoice>{};
     for (final i in inScope) {
-      net[i.memberId] = (net[i.memberId] ?? 0) + _net(i);
+      final n = _net(i);
+      if (n != null) net[i.memberId] = (net[i.memberId] ?? 0) + n;
       if (!(latest[i.memberId]?.issuedAt.isAfter(i.issuedAt) ?? false)) {
         latest[i.memberId] = i;
       }
@@ -328,7 +395,8 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     required ({String from, String to}) period,
     required List<_Due> due,
     required _Credit credit,
-    required ({List<_Ranked> ranked, Map<String, int> owed}) customers,
+    required ({List<_Ranked> ranked, List<_Ranked> debtors, int unknown})
+    customers,
     required ({
       bool mixed,
       DunningLoad? dunning,
@@ -338,8 +406,16 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     state,
   }) {
     final mixed = state.mixed;
-    final (:ranked, :owed) = customers;
+    final (:ranked, :debtors, :unknown) = customers;
     int? amount(int v) => mixed ? null : v;
+    List<CustomerShare> share(List<_Ranked> rows) => [
+      for (final (n, r) in rows.take(_rows).indexed)
+        CustomerShare(
+          rank: n + 1,
+          name: namesVisible() ? r.name : null,
+          minor: amount(r.net),
+        ),
+    ];
     final delays = _delays(due, mixed);
     final names = namesVisible();
     final top = ranked.take(_top);
@@ -367,6 +443,7 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       weightedDays: delays.weighted,
       dunning: state.dunning,
       creditNotes: credit.notes,
+      creditNetUnknown: credit.unknown,
       creditedMinor: amount(_sum(credit.credited.values)),
       writeOffs: credit.offs,
       writtenOffMinor: amount(_sum(credit.written.values)),
@@ -382,17 +459,12 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       customerCount: ranked.length,
       netMinor: amount(_sum(ranked.map((r) => r.net))),
       topNetMinor: amount(_sum(top.map((r) => r.net))),
-      openMinor: amount(_sum(ranked.map((r) => owed[r.id] ?? 0))),
-      topOpenMinor: amount(_sum(top.map((r) => owed[r.id] ?? 0))),
-      customers: [
-        for (final (n, r) in ranked.take(_rows).indexed)
-          CustomerShare(
-            rank: n + 1,
-            name: names ? r.name : null,
-            netMinor: amount(r.net),
-            openMinor: amount(owed[r.id] ?? 0),
-          ),
-      ],
+      netUnknown: unknown,
+      debtorCount: debtors.length,
+      openMinor: amount(_sum(debtors.map((r) => r.net))),
+      topOpenMinor: amount(_sum(debtors.take(_top).map((r) => r.net))),
+      customers: share(ranked),
+      debtors: share(debtors),
       quality: state.quality,
       reasons: state.reasons,
       computedAt: now,

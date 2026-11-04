@@ -177,10 +177,16 @@
       }
     }
   },
-  "biCustomerConcentrationOpen": "They owe {topOpen} of the {open} owed today.",
+  "biCustomerConcentrationOpen": "The {top} largest of {debtors} debtors owe {topOpen} of the {open} owed today, whenever they were invoiced.",
   "@biCustomerConcentrationOpen": {
     "description": "#3294 customer analytics",
     "placeholders": {
+      "top": {
+        "type": "String"
+      },
+      "debtors": {
+        "type": "String"
+      },
       "topOpen": {
         "type": "String"
       },
@@ -208,6 +214,22 @@
   },
   "biCustomerNothingToShare": "Nothing to share out in this period, so no share is shown.",
   "@biCustomerNothingToShare": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDebtorLine": "{name}: {amount} owed",
+  "biCustomerNetNotProven": "Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.",
+  "@biCustomerDebtorLine": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@biCustomerNetNotProven": {
     "description": "#3294 customer analytics"
   }
 }

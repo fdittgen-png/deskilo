@@ -9,6 +9,7 @@
 import 'package:deskilo/core/demo/data/customer_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -55,7 +56,7 @@ Map<String, Object?> _row({
         'late': {'count': 1, 'minor': a('900')},
         'undated': {'count': 0, 'minor': a('0')},
         'partial': {'count': 1, 'minor': a('1000')},
-        'open': {'count': 1, 'minor': a('500')},
+        'open': {'count': 3, 'minor': a('1500')},
         'held': {'count': 1, 'minor': a('300')},
         'written_off': {'count': 1, 'minor': a('800')},
         'unknown_due': {'count': 1, 'minor': a('400')},
@@ -66,7 +67,7 @@ Map<String, Object?> _row({
     },
     'dunning': dunning
         ? {
-            'due_invoices': 6,
+            'due_invoices': 8,
             'reminded_invoices': 3,
             'reminders': 4,
             'by_level': {'1': 3, '2': 1},
@@ -74,6 +75,7 @@ Map<String, Object?> _row({
           }
         : null,
     'credit': {
+      'net_unknown': 0,
       'credit_notes': 1,
       'credited_minor': mixed ? null : creditedMinor,
       'write_offs': 1,
@@ -88,27 +90,39 @@ Map<String, Object?> _row({
     },
     'concentration': {
       'top_count': 5,
-      'customers': 3,
-      'net_minor': a('4780'),
-      'top_net_minor': a('4780'),
-      'open_minor': a('1800'),
-      'top_open_minor': a('1800'),
+      'net_unknown': 1,
+      'customers': 4,
+      'net_minor': a('5780'),
+      'top_net_minor': a('5780'),
+      'debtors': 5,
+      'open_minor': a('4000'),
+      'top_open_minor': a('4000'),
       'rows': [
-        for (final (rank, name, net, open) in [
-          (1, 'Name c3', '2400', '1100'),
-          (2, 'Name c2', '1440', '400'),
-          (3, 'Name c4', '940', '300'),
+        for (final (rank, name, net) in [
+          (1, 'Name c3', '2400'),
+          (2, 'Name c2', '1440'),
+          (3, 'Name c5', '1000'),
+          (4, 'Name c4', '940'),
         ])
-          {
-            'rank': rank,
-            'name': names ? name : null,
-            'net_minor': a(net),
-            'open_minor': a(open),
-          },
+          {'rank': rank, 'name': names ? name : null, 'minor': a(net)},
+      ],
+      'debtor_rows': [
+        for (final (rank, name, open) in [
+          (1, 'Name c6', '1200'),
+          (2, 'Name c3', '1100'),
+          (3, 'Name c5', '1000'),
+          (4, 'Name c2', '400'),
+          (5, 'Name c4', '300'),
+        ])
+          {'rank': rank, 'name': names ? name : null, 'minor': a(open)},
       ],
     },
     'quality': [if (mixed) 'unavailable'],
-    'reasons': [if (mixed) 'currency_mix', if (!dunning) 'dunning_off'],
+    'reasons': [
+      'net_not_proven',
+      if (mixed) 'currency_mix',
+      if (!dunning) 'dunning_off',
+    ],
     'computed_at': '2025-04-02T10:00:00Z',
   };
 }
@@ -136,16 +150,19 @@ Invoice _invoice(
   String member,
   int total, {
   DateTime? due,
-  List<InvoiceVatTotal> vat = const [],
+  List<InvoiceVatTotal>? vat,
   String? replaces,
   String currency = 'EUR',
+  String period = '2025-03',
+  InvoiceKind kind = InvoiceKind.full,
+  String? settledBy,
 }) => Invoice(
   id: id,
   workspaceId: 'ws-1',
   memberId: member,
   number: 'K-$id',
-  issuedAt: DateTime(2025, 3),
-  period: '2025-03',
+  issuedAt: DateTime.parse('$period-01'),
+  period: kind == InvoiceKind.settlement ? null : period,
   title: 'T',
   lines: const [],
   totalCents: total,
@@ -156,20 +173,28 @@ Invoice _invoice(
   workspaceAddress: '',
   issuerName: 'Owner',
   signature: 's',
-  vatTotals: vat,
+  // Without [vat], a frozen breakdown proving it zero-rated (net = gross).
+  vatTotals: vat ?? [_vat(total, total, percent: 0, category: 'Z')],
   replacesInvoiceId: replaces,
   dueOn: due,
+  kind: kind,
+  settledByInvoiceId: settledBy,
 );
 
-InvoiceVatTotal _vat(int gross, int net) => InvoiceVatTotal(
-  percent: 25,
-  category: 'S',
+InvoiceVatTotal _vat(
+  int gross,
+  int net, {
+  double percent = 25,
+  String category = 'S',
+}) => InvoiceVatTotal(
+  percent: percent,
+  category: category,
   grossCents: gross,
   netCents: net,
   vatCents: gross - net,
 );
 
-FakeMoneyRepository _march() {
+FakeMoneyRepository _march({bool settlementPaid = false}) {
   final money = FakeMoneyRepository();
   void pay(String id, String member, int cents, String resolution,
       DateTime paidOn, DateTime matchedAt) {
@@ -204,6 +229,13 @@ FakeMoneyRepository _march() {
     _invoice('d6', 'c4', 800, due: DateTime(2025, 3, 5), vat: [_vat(800, 640)]),
     _invoice('d7', 'c2', 400),
     _invoice('e1', 'c2', -200, vat: [_vat(-200, -160)], replaces: 'd1'),
+    // c5's two March invoices regrouped into the settlement f1 (0148).
+    _invoice('a7', 'c5', 600, due: DateTime(2025, 3, 12), settledBy: 'f1'),
+    _invoice('a8', 'c5', 400, due: DateTime(2025, 3, 18), settledBy: 'f1'),
+    _invoice('f1', 'c5', 1000, kind: InvoiceKind.settlement),
+    // A taxable invoice without its breakdown, and a January debtor.
+    _invoice('d9', 'c6', 500, due: DateTime(2025, 4, 10), vat: const []),
+    _invoice('a9', 'c6', 700, due: DateTime(2025, 1, 31), period: '2025-01'),
   ]);
   pay('d1', 'c2', 1200, 'exact', DateTime(2025, 3, 8), DateTime(2025, 4, 30));
   pay('d8', 'c3', 900, 'exact', DateTime(2025, 3, 11), DateTime(2025, 3, 12));
@@ -221,6 +253,9 @@ FakeMoneyRepository _march() {
   ];
   money.invoiceReminders['d5'] = [DateTime(2025, 3, 21, 9)];
   money.dunningHolds['d5'] = 'dispute';
+  if (settlementPaid) {
+    pay('f1', 'c5', 1000, 'exact', DateTime(2025, 3, 25), DateTime(2025, 3, 26));
+  }
   return money;
 }
 
@@ -278,6 +313,14 @@ void main() {
       expect(k.dunning!.byLevel, {1: 3, 2: 1});
       expect(k.creditedAndWrittenOffMinor, 640);
       expect(k.customers.first.name, 'Name c3');
+      expect(k.debtors.first.name, 'Name c6');
+      // A net not proven makes the net figures partial, and only those.
+      final share = customerMeasure(k, 'customers.concentration');
+      expect(share.quality, contains(KpiQuality.partial));
+      expect(share.reasons, contains('net_not_proven'));
+      final punctual = customerMeasure(k, 'customers.payment_behaviour');
+      expect(punctual.quality, isNot(contains(KpiQuality.partial)));
+      expect(punctual.reasons, isNot(contains('net_not_proven')));
       expect(k.quality, isEmpty);
     });
 
@@ -295,7 +338,7 @@ void main() {
 
     test('a currency mix leaves the counts exact and every amount unknown', () {
       final k = customerQualityFromJson(_row(mixed: true));
-      expect(k.reasons, ['currency_mix']);
+      expect(k.reasons, contains('currency_mix'));
       final punctual = customerMeasure(k, 'customers.payment_behaviour');
       expect(punctual.unknown, isFalse);
       expect(punctual.value(KpiAggregation.ratioOfSums), 0.5);
@@ -333,7 +376,7 @@ void main() {
         reason: 'an empty cohort is not a row',
       );
       final share = customerRows(k, 'customers.payment_behaviour').first;
-      expect(share.current.value(KpiAggregation.ratioOfSums), 1 / 7);
+      expect(share.current.value(KpiAggregation.ratioOfSums), 1 / 9);
       expect(
         customerRows(k, 'customers.dunning_load').map((r) => r.current.numerator),
         [3, 1],
@@ -343,8 +386,8 @@ void main() {
         640,
       );
       final top = customerRows(k, 'customers.concentration');
-      expect(top.map((r) => r.key), ['rank-1', 'rank-2', 'rank-3']);
-      expect(top.first.current.value(KpiAggregation.ratioOfSums), 2400 / 4780);
+      expect(top.map((r) => r.key), ['rank-1', 'rank-2', 'rank-3', 'rank-4']);
+      expect(top.first.current.value(KpiAggregation.ratioOfSums), 2400 / 5780);
     });
 
     test('a row is named by the server, else by its rank', () {
@@ -380,41 +423,63 @@ void main() {
         'late': (count: 1, minor: 900),
         'undated': (count: 0, minor: 0),
         'partial': (count: 1, minor: 1000),
-        'open': (count: 1, minor: 500),
+        'open': (count: 3, minor: 1500),
         'held': (count: 1, minor: 300),
         'written_off': (count: 1, minor: 800),
         'unknown_due': (count: 1, minor: 400),
-      });
+      }, reason: 'a source of an unpaid settlement is open, not settled');
       expect(
         (k.medianDays, k.p90Days, k.weightedDays),
         (-2, 10, 3.1),
         reason: 'dated by the reported payment; matched 30 April would '
             'have made d1 51 days late',
       );
-      expect(k.dunning!.dueInvoices, 6);
+      expect(k.dunning!.dueInvoices, 8);
       expect(k.dunning!.reminders, 4);
       expect(k.dunning!.remindedInvoices, 3);
       expect(k.dunning!.byLevel, {1: 3, 2: 1});
       expect(k.dunning!.paidAfterReminder, 1);
       expect((k.creditedMinor, k.writtenOffMinor), (160, 480));
-      expect((k.netMinor, k.topNetMinor), (4780, 4780));
-      expect((k.openMinor, k.topOpenMinor), (1800, 1800));
+      expect((k.netMinor, k.topNetMinor, k.netUnknown), (5780, 5780, 1));
+      expect(k.reasons, contains('net_not_proven'));
       expect(
-        [for (final c in k.customers) (c.rank, c.name, c.netMinor, c.openMinor)],
+        [for (final c in k.customers) (c.rank, c.name, c.minor)],
         [
-          (1, 'Name c3', 2400, 1100),
-          (2, 'Name c2', 1440, 400),
-          (3, 'Name c4', 940, 300),
+          (1, 'Name c3', 2400),
+          (2, 'Name c2', 1440),
+          (3, 'Name c5', 1000),
+          (4, 'Name c4', 940),
         ],
       );
+      expect((k.openMinor, k.topOpenMinor, k.debtorCount), (4000, 4000, 5));
+      expect(
+        [for (final d in k.debtors) (d.rank, d.name, d.minor)],
+        [
+          (1, 'Name c6', 1200),
+          (2, 'Name c3', 1100),
+          (3, 'Name c5', 1000),
+          (4, 'Name c2', 400),
+          (5, 'Name c4', 300),
+        ],
+        reason: 'the January debtor counts; debtors are another ranking',
+      );
       expect(k.quality, isEmpty);
+    });
+
+    test('a paid settlement makes its sources late by its payment date, '
+        'and nobody owes it', () async {
+      final k = await _demo(_march(settlementPaid: true));
+      expect(k.cohorts[PaymentCohort.late], (count: 3, minor: 1900));
+      expect((k.medianDays, k.p90Days, k.weightedDays), (7, 13, 5.5));
+      expect((k.openMinor, k.debtorCount), (3000, 4));
     });
 
     test('without personal data the customers are ranks', () async {
       final k = await _demo(_march(), names: false);
       expect(k.namesVisible, isFalse);
       expect(k.customers.map((c) => c.name), everyElement(isNull));
-      expect(k.customers.first.netMinor, 2400);
+      expect(k.customers.first.minor, 2400);
+      expect(k.debtors.map((c) => c.name), everyElement(isNull));
     });
 
     test('a dollar invoice leaves every amount unknown, never summed', () async {

@@ -4257,8 +4257,13 @@ abstract class AppLocalizations {
   /// #3294 customer analytics
   ///
   /// In en, this message translates to:
-  /// **'They owe {topOpen} of the {open} owed today.'**
-  String biCustomerConcentrationOpen(String topOpen, String open);
+  /// **'The {top} largest of {debtors} debtors owe {topOpen} of the {open} owed today, whenever they were invoiced.'**
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  );
 
   /// #3294 customer analytics
   ///
@@ -4288,6 +4293,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credits and write-offs'**
   String get biCustomerCreditTitle;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {amount} owed'**
+  String biCustomerDebtorLine(String name, String amount);
 
   /// #3294 customer analytics
   ///
@@ -4330,6 +4341,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Names are shown only to those who may read personal data; the others read ranks.'**
   String get biCustomerNamesHidden;
+
+  /// #3294 customer analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.'**
+  String get biCustomerNetNotProven;
 
   /// #3294 customer analytics
   ///

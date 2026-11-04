@@ -2537,8 +2537,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.';
 
   @override
-  String biCustomerConcentrationOpen(String topOpen, String open) {
-    return 'They owe $topOpen of the $open owed today.';
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'The $top largest of $debtors debtors owe $topOpen of the $open owed today, whenever they were invoiced.';
   }
 
   @override
@@ -2560,6 +2565,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biCustomerCreditTitle => 'Credits and write-offs';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name: $amount owed';
+  }
 
   @override
   String biCustomerDelay(String median, String p90, String weighted) {
@@ -2590,6 +2600,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biCustomerNamesHidden =>
       'Names are shown only to those who may read personal data; the others read ranks.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.';
 
   @override
   String get biCustomerNothingToShare =>

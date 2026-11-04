@@ -2553,8 +2553,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'La quota del fatturato netto nel periodo (note di credito dedotte) che rappresentano i clienti maggiori, e la quota di ciò che devono oggi.';
 
   @override
-  String biCustomerConcentrationOpen(String topOpen, String open) {
-    return 'Devono $topOpen dei $open dovuti oggi.';
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'I $top maggiori di $debtors debitori devono $topOpen dei $open dovuti oggi, qualunque sia la data di fatturazione.';
   }
 
   @override
@@ -2576,6 +2581,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biCustomerCreditTitle => 'Note di credito e stralci';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name: $amount dovuti';
+  }
 
   @override
   String biCustomerDelay(String median, String p90, String weighted) {
@@ -2606,6 +2616,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get biCustomerNamesHidden =>
       'I nomi sono visibili solo a chi può leggere i dati personali; gli altri vedono le posizioni.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Alcune fatture non hanno il dettaglio IVA, quindi il loro imponibile non è provato: restano fuori dalle cifre nette.';
 
   @override
   String get biCustomerNothingToShare =>

@@ -2557,8 +2557,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'La parte de lo facturado sin IVA en el periodo (abonos deducidos) que suponen los mayores clientes, y su parte de lo que deben hoy.';
 
   @override
-  String biCustomerConcentrationOpen(String topOpen, String open) {
-    return 'Deben $topOpen de los $open adeudados hoy.';
+  String biCustomerConcentrationOpen(
+    String top,
+    String debtors,
+    String topOpen,
+    String open,
+  ) {
+    return 'Los $top mayores de $debtors deudores deben $topOpen de los $open adeudados hoy, sea cual sea la fecha de la factura.';
   }
 
   @override
@@ -2580,6 +2585,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biCustomerCreditTitle => 'Abonos y bajas';
+
+  @override
+  String biCustomerDebtorLine(String name, String amount) {
+    return '$name: $amount adeudados';
+  }
 
   @override
   String biCustomerDelay(String median, String p90, String weighted) {
@@ -2610,6 +2620,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biCustomerNamesHidden =>
       'Los nombres solo se muestran a quien puede leer datos personales; los demás ven posiciones.';
+
+  @override
+  String get biCustomerNetNotProven =>
+      'Algunas facturas no tienen desglose de IVA, así que su base no está probada: quedan fuera de las cifras netas.';
 
   @override
   String get biCustomerNothingToShare =>

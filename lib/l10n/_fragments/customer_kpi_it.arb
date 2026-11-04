@@ -23,9 +23,11 @@
   "biCustomerCreditDefinition": "Per mese della fattura, al netto dell’IVA: le note di credito e quanto stralciato da una fattura (il totale meno quanto pagato), in proporzione al suo imponibile.",
   "biCustomerConcentrationTitle": "Concentrazione dei clienti",
   "biCustomerConcentrationBasis": "I {top} maggiori di {customers} clienti: {topNet} su {net} fatturati al netto",
-  "biCustomerConcentrationOpen": "Devono {topOpen} dei {open} dovuti oggi.",
+  "biCustomerConcentrationOpen": "I {top} maggiori di {debtors} debitori devono {topOpen} dei {open} dovuti oggi, qualunque sia la data di fatturazione.",
   "biCustomerConcentrationDefinition": "La quota del fatturato netto nel periodo (note di credito dedotte) che rappresentano i clienti maggiori, e la quota di ciò che devono oggi.",
   "biCustomerRank": "Cliente {rank}",
   "biCustomerNamesHidden": "I nomi sono visibili solo a chi può leggere i dati personali; gli altri vedono le posizioni.",
-  "biCustomerNothingToShare": "Niente da ripartire in questo periodo, quindi nessuna quota è mostrata."
+  "biCustomerNothingToShare": "Niente da ripartire in questo periodo, quindi nessuna quota è mostrata.",
+  "biCustomerDebtorLine": "{name}: {amount} dovuti",
+  "biCustomerNetNotProven": "Alcune fatture non hanno il dettaglio IVA, quindi il loro imponibile non è provato: restano fuori dalle cifre nette."
 }

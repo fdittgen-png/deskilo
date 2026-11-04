@@ -23,9 +23,11 @@
   "biCustomerCreditDefinition": "Por mes de la factura, sin IVA: los abonos y lo dado de baja de una factura (su total menos lo pagado), en proporción a su base imponible.",
   "biCustomerConcentrationTitle": "Concentración de clientes",
   "biCustomerConcentrationBasis": "Los {top} mayores de {customers} clientes: {topNet} de {net} facturados sin IVA",
-  "biCustomerConcentrationOpen": "Deben {topOpen} de los {open} adeudados hoy.",
+  "biCustomerConcentrationOpen": "Los {top} mayores de {debtors} deudores deben {topOpen} de los {open} adeudados hoy, sea cual sea la fecha de la factura.",
   "biCustomerConcentrationDefinition": "La parte de lo facturado sin IVA en el periodo (abonos deducidos) que suponen los mayores clientes, y su parte de lo que deben hoy.",
   "biCustomerRank": "Cliente {rank}",
   "biCustomerNamesHidden": "Los nombres solo se muestran a quien puede leer datos personales; los demás ven posiciones.",
-  "biCustomerNothingToShare": "No hay nada que repartir en este periodo, así que no se muestra ninguna parte."
+  "biCustomerNothingToShare": "No hay nada que repartir en este periodo, así que no se muestra ninguna parte.",
+  "biCustomerDebtorLine": "{name}: {amount} adeudados",
+  "biCustomerNetNotProven": "Algunas facturas no tienen desglose de IVA, así que su base no está probada: quedan fuera de las cifras netas."
 }

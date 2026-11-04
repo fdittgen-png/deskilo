@@ -23,9 +23,11 @@
   "biCustomerCreditDefinition": "Nach dem Monat der Rechnung, netto: die Gutschriften und was von einer Rechnung ausgebucht wurde (ihr Betrag abzüglich des Bezahlten), anteilig zu ihrem Nettobetrag.",
   "biCustomerConcentrationTitle": "Kundenkonzentration",
   "biCustomerConcentrationBasis": "Die {top} größten von {customers} Kunden: {topNet} von {net} netto berechnet",
-  "biCustomerConcentrationOpen": "Sie schulden {topOpen} der heute offenen {open}.",
+  "biCustomerConcentrationOpen": "Die {top} größten von {debtors} Schuldnern schulden {topOpen} der heute offenen {open}, gleich wann berechnet wurde.",
   "biCustomerConcentrationDefinition": "Der Anteil des im Zeitraum netto Berechneten (abzüglich Gutschriften), den die größten Kunden ausmachen, und ihr Anteil an dem, was heute offen ist.",
   "biCustomerRank": "Kunde {rank}",
   "biCustomerNamesHidden": "Namen sieht nur, wer personenbezogene Daten lesen darf; alle anderen sehen Ränge.",
-  "biCustomerNothingToShare": "In diesem Zeitraum gibt es nichts aufzuteilen, daher wird kein Anteil gezeigt."
+  "biCustomerNothingToShare": "In diesem Zeitraum gibt es nichts aufzuteilen, daher wird kein Anteil gezeigt.",
+  "biCustomerDebtorLine": "{name}: {amount} offen",
+  "biCustomerNetNotProven": "Einige Rechnungen haben keine MwSt.-Aufschlüsselung, ihr Nettobetrag ist nicht belegt: Sie bleiben aus den Nettozahlen heraus."
 }
