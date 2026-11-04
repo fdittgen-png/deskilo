@@ -98,6 +98,7 @@ class DemoItemKpiRepository implements ItemKpiRepository {
       ],
       productCount: products.length,
       uncosted: uncosted,
+      unresolvedCostLines: 0,
       revenueMinor: money(products.fold<int>(0, (s, p) => s + p.net)),
       costedRevenueMinor: costedMoney((s, p) => s + p.net),
       salesCostMinor: costedMoney((s, p) => s + p.cogs!),

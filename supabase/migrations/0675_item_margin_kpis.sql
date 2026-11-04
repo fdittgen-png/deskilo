@@ -14,7 +14,9 @@
 --     `supply` record by its id; the figures read that too. A supply named
 --     only by its text is never matched to an item by name: it is counted
 --     apart (`unresolved_lines`, or `ambiguous_lines` when several items
---     carry that name).
+--     carry that name, in the months; `unresolved_cost_lines` up to the
+--     period's end, which the unit costs read) and the figures are partial
+--     (`unresolved_items`).
 --   * `purchase.item_cost_method` (a workspace setting, default `average`):
 --     what one unit costs when a sale is set against the purchases --
 --     `average` weighs every approved purchase of the item dated up to the
@@ -226,7 +228,7 @@ declare
   v_method text; v_mixed boolean;
   v_lines jsonb; v_sales jsonb; v_cost jsonb;
   v_prices jsonb; v_products jsonb; v_vendors jsonb;
-  v_unresolved int; v_ambiguous int;
+  v_unresolved int; v_ambiguous int; v_cost_unresolved int;
   v_quality text[] := '{}'; v_reasons text[] := '{}';
 begin
   if auth.uid() is null or public.mcp_is_delegated()
@@ -291,8 +293,11 @@ begin
            'dated', r.dated, 'created', r.created_datetime, 'qty', r.qty, 'cost', r.cost,
            'in_range', r.dated >= v_start)) filter (where r.item is not null and r.qty > 0), '[]'::jsonb),
          count(*) filter (where r.item is null and r.dated >= v_start and r.namesakes <= 1),
-         count(*) filter (where r.item is null and r.dated >= v_start and r.namesakes > 1)
-    into v_lines, v_unresolved, v_ambiguous
+         count(*) filter (where r.item is null and r.dated >= v_start and r.namesakes > 1),
+         -- ... and every such line the unit costs read, up to the period's
+         -- end: an earlier purchase of an item left out moves its cost.
+         count(*) filter (where r.item is null)
+    into v_lines, v_unresolved, v_ambiguous, v_cost_unresolved
     from raw r;
 
   -- What each item sold in the months: the confirmed consumptions, by their
@@ -368,6 +373,7 @@ begin
            'method', v_method,
            'items', count(*),
            'uncosted', count(*) filter (where unit_cost is null),
+           'unresolved_cost_lines', v_cost_unresolved,
            'revenue_minor', case when v_mixed then null else coalesce(sum(net), 0)::text end,
            -- The cost and margin of the costed items only, with their
            -- revenue beside them; none costed: unknown, never 0.
@@ -436,7 +442,7 @@ begin
     v_quality := v_quality || 'partial'::text;
     v_reasons := v_reasons || 'uncosted_items'::text;
   end if;
-  if v_unresolved + v_ambiguous > 0 then
+  if v_unresolved + v_ambiguous + v_cost_unresolved > 0 then
     v_quality := v_quality || 'partial'::text;
     v_reasons := v_reasons || 'unresolved_items'::text;
   end if;

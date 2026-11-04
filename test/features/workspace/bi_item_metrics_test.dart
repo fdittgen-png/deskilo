@@ -73,6 +73,7 @@ Map<String, Object?> _row({bool mixed = false, Object? margin = '9320'}) {
       'method': 'average',
       'items': 3,
       'uncosted': 1,
+      'unresolved_cost_lines': 0,
       'revenue_minor': a('13600'),
       'costed_revenue_minor': a('13000'),
       'cost_minor': a('3680'),
@@ -251,6 +252,14 @@ void main() {
       ]);
       expect(k.costedRevenueMinor, 13000, reason: 'Snacks are not costed');
       expect(k.reasons, contains('no_consumption_link'));
+      final unresolved = itemMarginsFromJson({
+        ..._row(),
+        'products': {
+          ...(_row()['products']! as Map<String, Object?>),
+          'unresolved_cost_lines': 2,
+        },
+      });
+      expect(unresolved.unresolvedCostLines, 2);
     });
 
     test('an amount that cannot travel exactly is unknown, never 0', () {

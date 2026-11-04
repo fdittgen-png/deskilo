@@ -2319,7 +2319,7 @@ routine public.kpi_costs_summary(p_workspace_id uuid, p_from text, p_to text) ->
 routine public.kpi_customer_quality(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a844d189774d
 routine public.kpi_finance_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12fbe5b2f263
 routine public.kpi_invoice_net(p_vat_totals jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:c48dbdb9b8d1
-routine public.kpi_item_margins(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:372f78ea7666
+routine public.kpi_item_margins(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64ad023def23
 routine public.kpi_memberships_current(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8e6d85175a02
 routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
 routine public.kpi_overdue_receivables(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1330cd289cdd

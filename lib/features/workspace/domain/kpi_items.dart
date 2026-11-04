@@ -159,6 +159,7 @@ class ItemMarginsKpi {
     required this.prices,
     required this.productCount,
     required this.uncosted,
+    required this.unresolvedCostLines,
     required this.revenueMinor,
     required this.costedRevenueMinor,
     required this.salesCostMinor,
@@ -193,6 +194,10 @@ class ItemMarginsKpi {
 
   /// Products sold but never bought: no cost, no margin.
   final int uncosted;
+
+  /// Lines up to the period's end that name a supply only by its text: the
+  /// unit costs cannot read them, so the cost figures are partial.
+  final int unresolvedCostLines;
   final int? revenueMinor;
 
   /// The revenue of the costed products, which [salesCostMinor] and
@@ -294,6 +299,7 @@ ItemMarginsKpi itemMarginsFromJson(Map<String, Object?> json) {
     prices: priceRows,
     productCount: _count(products, 'items'),
     uncosted: _count(products, 'uncosted'),
+    unresolvedCostLines: _count(products, 'unresolved_cost_lines'),
     revenueMinor: revenue,
     costedRevenueMinor: costedRevenue,
     salesCostMinor: salesCost,

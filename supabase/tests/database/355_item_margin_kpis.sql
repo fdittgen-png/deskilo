@@ -17,7 +17,7 @@
 -- supplier against the sale prices (coffee 1.666..., paper 6.00): Alpha
 -- 166.67 - 30.00 = 136.67, Beta 83.33 - 20.00 + 60.00 - 40.00 = 83.33.
 begin;
-select plan(21);
+select plan(22);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000032944'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -186,6 +186,27 @@ select is((current_setting('t.last')::jsonb ->> 'cost_method',
            current_setting('t.last')::jsonb -> 'products' -> 'rows' -> 0 ->> 'unit_cost_minor',
            current_setting('t.last')::jsonb -> 'products' ->> 'margin_minor'),
   ('last'::text, '40'::text, '8600'::text), 'with the last purchase, coffee costs what Beta charged on 12 March');
+
+-- A February supply named only by its text, before the months: the unit
+-- cost of coffee reads February, so the cost figures are partial though no
+-- line of March is unresolved.
+reset role;
+insert into public.purchase_documents (id, workspace_id, kind, state, currency, supplier_id, submitter_member_id,
+                                       payer_kind, original_date, received_on)
+values (pg_temp.u('e7'), pg_temp.u('b1'), 'bill', 'draft', 'EUR', pg_temp.u('f1'), pg_temp.u('c1'),
+        'unpaid', '2025-02-20', '2025-02-20');
+insert into public.purchase_lines (workspace_id, purchase_id, line_no, description, gross_cents, net_cents, tax_cents,
+                                   quantity, supply)
+values (pg_temp.u('b1'), pg_temp.u('e7'), 1, 'capsules', 50, 50, 0, 1, '{"name": "Coffee capsules", "quantity": "5"}');
+update public.purchase_documents set state = 'approved', decided_by_member_id = pg_temp.u('c3'), decided_at = now()
+ where id = pg_temp.u('e7');
+set local role authenticated;
+select is((select jsonb_build_array(k -> 'unit_prices' ->> 'unresolved_lines', k -> 'products' ->> 'unresolved_cost_lines',
+                                    k -> 'reasons' ? 'unresolved_items', k -> 'quality' ? 'partial',
+                                    k -> 'products' -> 'rows' -> 0 ->> 'unit_cost_minor')
+             from pg_temp.kpi('a1') k),
+  jsonb_build_array('0', '1', true, true, '40'),
+  'an unresolved purchase before the months still makes the cost figures partial; the known prices stay');
 
 -- A supply named only by its text is never matched by name: one name with a
 -- single namesake stays unresolved, one shared by two items is ambiguous.

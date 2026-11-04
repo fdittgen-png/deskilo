@@ -16,8 +16,9 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('currency_mix')) l10n.biFinanceCurrencyMix,
   if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
   if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
-  if (_kpi(m) case final k? when k.unresolvedLines + k.ambiguousLines > 0)
-    l10n.biItemUnresolved('${k.unresolvedLines + k.ambiguousLines}'),
+  // Those up to the period's end include the months' own.
+  if (_kpi(m) case final k? when k.unresolvedCostLines > 0)
+    l10n.biItemUnresolved('${k.unresolvedCostLines}'),
 ];
 
 String _method(ItemMarginsKpi k, AppLocalizations l10n) =>
