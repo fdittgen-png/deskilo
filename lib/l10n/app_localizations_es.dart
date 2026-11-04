@@ -8355,6 +8355,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'purchase_documents': 'Documentos de compra',
       'purchase_lines': 'Líneas de compra',
       'purchase_obligations': 'Importes a pagar',
+      'purchase_orders': 'Pedidos de compra',
+      'purchase_order_lines': 'Líneas de pedido',
       'outgoing_payments': 'Pagos salientes',
       'expense_schedules': 'Gastos programados',
       'expense_occurrences': 'Vencimientos de gastos',
@@ -19837,6 +19839,35 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get purchaseOrderMailInvalid =>
+      'Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API';
+
+  @override
+  String get purchaseOrderMailKey => 'Clave de API de Resend';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.';
+
+  @override
+  String get purchaseOrderMailSave => 'Guardar';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Dirección del remitente (un dominio verificado en Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Nombre del remitente';
+
+  @override
+  String get purchaseOrderMailSettings => 'Envío por correo';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Hola:\n\nAdjuntamos nuestro pedido $reference.\n\nSaludos cordiales,\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Marcar como enviado';
 
   @override
@@ -19876,6 +19907,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchaseOrderSave => 'Guardar el borrador';
+
+  @override
+  String get purchaseOrderSendArrived => 'Llegó';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'Un correo a $recipient no tiene un resultado confirmado. ¿Llegó?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Enviar por correo';
+
+  @override
+  String get purchaseOrderSendLost => 'No llegó';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'El correo fue rechazado: $reason. El pedido sigue en borrador.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'No llegó ninguna respuesta confirmada. Compruebe con el proveedor antes de volver a enviar.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Enviado a $recipient';
+  }
 
   @override
   String get purchaseOrderStateCancelled => 'Anulado';

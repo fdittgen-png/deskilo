@@ -5995,7 +5995,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Informazioni sull'esportazione} workspace{Spazio} levels{Piani} desks{Scrivanie} seats{Posti} users{Membri} reservations{Prenotazioni} check_ins{Presenze} payments{Pagamenti} services{Servizi usati} service_catalog{Prezzi dei servizi} invoices{Fatture} offices{Sale} ledger{Conti dei membri} events{Richieste} decisions{Decisioni} invoice_lines{Righe di fattura} sites{Sedi} plans{Piani tariffari} fee_bands{Fasce tariffarie} packages{Pacchetti} credit_products{Tipi di carnet} vat_rates{Aliquote IVA} accessories{Accessori} seat_accessories{Accessori per posto} closure_days{Giorni di chiusura} validation_policies{Regole di approvazione} workspace_roles{Ruoli} workspace_role_members{Titolari dei ruoli} workspace_field_definitions{Domande} workspace_field_values{Risposte} number_sequences{Serie di numerazione} charging_stations{Colonnine di ricarica} plan_images{Immagini della pianta} setting_values{Impostazioni} member_credits{Carnet} member_credit_uses{Utilizzi dei carnet} price_negotiations{Trattative di prezzo} quota_extensions{Estensioni di quota} usage_records{Utilizzo} invoice_matches{Saldo delle fatture} invoice_reminders{Solleciti} invoice_dunning_holds{Solleciti sospesi} tax_exemption_certificates{Certificati di esenzione} suppliers{Fornitori} purchase_documents{Documenti d'acquisto} purchase_lines{Righe d'acquisto} purchase_obligations{Importi da pagare} outgoing_payments{Pagamenti in uscita} expense_schedules{Spese programmate} expense_occurrences{Scadenze di spesa} expense_repartitions{Costi condivisi} premises_leases{Contratti di locazione} lease_terms{Condizioni di locazione} lease_settlements{Conguagli di locazione} room_rentals{Affitti di sale} room_rental_fees{Tariffe di affitto} workspace_assets{Cespiti} asset_valuation_batches{Valutazioni dei cespiti} asset_valuation_rows{Righe di valutazione} book_profiles{Profili contabili} book_accounts{Piano dei conti} book_mappings{Mappatura dei conti} book_periods{Periodi contabili} vat_declarations{Dichiarazioni IVA} einvoice_inbox{Fatture elettroniche ricevute} guest_participations{Visite di ospiti} rights_requests{Richieste privacy} overview{Panoramica} features{Funzioni} other{{key}}}",
+  "exportSheetName": "{key, select, about{Informazioni sull'esportazione} workspace{Spazio} levels{Piani} desks{Scrivanie} seats{Posti} users{Membri} reservations{Prenotazioni} check_ins{Presenze} payments{Pagamenti} services{Servizi usati} service_catalog{Prezzi dei servizi} invoices{Fatture} offices{Sale} ledger{Conti dei membri} events{Richieste} decisions{Decisioni} invoice_lines{Righe di fattura} sites{Sedi} plans{Piani tariffari} fee_bands{Fasce tariffarie} packages{Pacchetti} credit_products{Tipi di carnet} vat_rates{Aliquote IVA} accessories{Accessori} seat_accessories{Accessori per posto} closure_days{Giorni di chiusura} validation_policies{Regole di approvazione} workspace_roles{Ruoli} workspace_role_members{Titolari dei ruoli} workspace_field_definitions{Domande} workspace_field_values{Risposte} number_sequences{Serie di numerazione} charging_stations{Colonnine di ricarica} plan_images{Immagini della pianta} setting_values{Impostazioni} member_credits{Carnet} member_credit_uses{Utilizzi dei carnet} price_negotiations{Trattative di prezzo} quota_extensions{Estensioni di quota} usage_records{Utilizzo} invoice_matches{Saldo delle fatture} invoice_reminders{Solleciti} invoice_dunning_holds{Solleciti sospesi} tax_exemption_certificates{Certificati di esenzione} suppliers{Fornitori} purchase_documents{Documenti d'acquisto} purchase_lines{Righe d'acquisto} purchase_obligations{Importi da pagare} purchase_orders{Ordini di acquisto} purchase_order_lines{Righe d'ordine} outgoing_payments{Pagamenti in uscita} expense_schedules{Spese programmate} expense_occurrences{Scadenze di spesa} expense_repartitions{Costi condivisi} premises_leases{Contratti di locazione} lease_terms{Condizioni di locazione} lease_settlements{Conguagli di locazione} room_rentals{Affitti di sale} room_rental_fees{Tariffe di affitto} workspace_assets{Cespiti} asset_valuation_batches{Valutazioni dei cespiti} asset_valuation_rows{Righe di valutazione} book_profiles{Profili contabili} book_accounts{Piano dei conti} book_mappings{Mappatura dei conti} book_periods{Periodi contabili} vat_declarations{Dichiarazioni IVA} einvoice_inbox{Fatture elettroniche ricevute} guest_participations{Visite di ospiti} rights_requests{Richieste privacy} overview{Panoramica} features{Funzioni} other{{key}}}",
   "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifichi con il suo commercialista se le è richiesto.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -12696,6 +12696,14 @@
   "purchaseOrderFreeText": "Testo libero",
   "purchaseOrderItem": "Articolo del catalogo",
   "purchaseOrderLine": "Riga {n}",
+  "purchaseOrderMailInvalid": "Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API",
+  "purchaseOrderMailKey": "Chiave API di Resend",
+  "purchaseOrderMailKeyKept": "Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.",
+  "purchaseOrderMailSave": "Salva",
+  "purchaseOrderMailSender": "Indirizzo del mittente (un dominio verificato su Resend)",
+  "purchaseOrderMailSenderName": "Nome del mittente",
+  "purchaseOrderMailSettings": "Invio per e-mail",
+  "purchaseOrderMailText": "Buongiorno,\n\nin allegato il nostro ordine {reference}.\n\nCordiali saluti,\n{space}",
   "purchaseOrderMarkSent": "Segna come inviato",
   "purchaseOrderNeedsDescription": "Indica cosa si ordina o scegli un articolo",
   "purchaseOrderNeedsPrice": "Un prezzo unitario, 0 o più",
@@ -12709,6 +12717,13 @@
   "purchaseOrderRefused": "L’ordine non è stato modificato. Controlla i dati e riprova.",
   "purchaseOrderRemoveLine": "Rimuovi la riga",
   "purchaseOrderSave": "Salva la bozza",
+  "purchaseOrderSendArrived": "È arrivata",
+  "purchaseOrderSendAwaits": "Un’e-mail a {recipient} non ha un esito confermato. È arrivata?",
+  "purchaseOrderSendEmail": "Invia per e-mail",
+  "purchaseOrderSendLost": "Non è arrivata",
+  "purchaseOrderSendRefused": "L’e-mail è stata rifiutata: {reason}. L’ordine resta una bozza.",
+  "purchaseOrderSendUnconfirmed": "Nessuna risposta confermata. Verifica con il fornitore prima di inviare di nuovo.",
+  "purchaseOrderSentTo": "Inviato a {recipient}",
   "purchaseOrderStateCancelled": "Annullato",
   "purchaseOrderStateDraft": "Bozza",
   "purchaseOrderStatePartlyReceived": "Ricevuto in parte",

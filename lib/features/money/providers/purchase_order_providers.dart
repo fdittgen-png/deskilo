@@ -18,3 +18,18 @@ final purchaseOrdersProvider = FutureProvider.autoDispose
       (ref, workspaceId) =>
           ref.watch(purchaseOrderRepositoryProvider).fetchOrders(workspaceId),
     );
+
+/// #3307 — the space's e-mail attempts, the latest first.
+final purchaseOrderSendsProvider = FutureProvider.autoDispose
+    .family<List<PurchaseOrderSend>, String>(
+      (ref, workspaceId) =>
+          ref.watch(purchaseOrderRepositoryProvider).fetchSends(workspaceId),
+    );
+
+/// #3307 — how the space e-mails its orders; null before it is configured.
+final purchaseOrderMailSettingsProvider = FutureProvider.autoDispose
+    .family<PurchaseOrderMailSettings?, String>(
+      (ref, workspaceId) => ref
+          .watch(purchaseOrderRepositoryProvider)
+          .fetchMailSettings(workspaceId),
+    );

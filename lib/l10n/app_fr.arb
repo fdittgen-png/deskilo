@@ -5995,7 +5995,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{À propos de cet export} workspace{Espace} levels{Niveaux} desks{Bureaux} seats{Places} users{Membres} reservations{Réservations} check_ins{Présences} payments{Paiements} services{Services consommés} service_catalog{Tarifs des services} invoices{Factures} offices{Salles} ledger{Comptes des membres} events{Demandes} decisions{Décisions} invoice_lines{Lignes de facture} sites{Sites} plans{Formules} fee_bands{Tranches tarifaires} packages{Forfaits} credit_products{Carnets proposés} vat_rates{Taux de TVA} accessories{Accessoires} seat_accessories{Accessoires des places} closure_days{Jours de fermeture} validation_policies{Règles de validation} workspace_roles{Rôles} workspace_role_members{Titulaires des rôles} workspace_field_definitions{Questions} workspace_field_values{Réponses} number_sequences{Numérotations} charging_stations{Bornes de recharge} plan_images{Images du plan} setting_values{Paramètres} member_credits{Carnets} member_credit_uses{Utilisations des carnets} price_negotiations{Négociations de prix} quota_extensions{Extensions de quota} usage_records{Utilisation} invoice_matches{Règlements des factures} invoice_reminders{Relances} invoice_dunning_holds{Relances suspendues} tax_exemption_certificates{Attestations d'exonération} suppliers{Fournisseurs} purchase_documents{Pièces d'achat} purchase_lines{Lignes d'achat} purchase_obligations{Montants à payer} outgoing_payments{Paiements sortants} expense_schedules{Dépenses planifiées} expense_occurrences{Échéances de dépenses} expense_repartitions{Frais partagés} premises_leases{Baux} lease_terms{Conditions du bail} lease_settlements{Régularisations du bail} room_rentals{Locations de salles} room_rental_fees{Tarifs des locations} workspace_assets{Immobilisations} asset_valuation_batches{Évaluations d'actifs} asset_valuation_rows{Lignes d'évaluation} book_profiles{Profils comptables} book_accounts{Plan comptable} book_mappings{Correspondances de comptes} book_periods{Périodes comptables} vat_declarations{Déclarations de TVA} einvoice_inbox{Factures électroniques reçues} guest_participations{Visites d'invités} rights_requests{Demandes RGPD} overview{Vue d'ensemble} features{Fonctions} other{{key}}}",
+  "exportSheetName": "{key, select, about{À propos de cet export} workspace{Espace} levels{Niveaux} desks{Bureaux} seats{Places} users{Membres} reservations{Réservations} check_ins{Présences} payments{Paiements} services{Services consommés} service_catalog{Tarifs des services} invoices{Factures} offices{Salles} ledger{Comptes des membres} events{Demandes} decisions{Décisions} invoice_lines{Lignes de facture} sites{Sites} plans{Formules} fee_bands{Tranches tarifaires} packages{Forfaits} credit_products{Carnets proposés} vat_rates{Taux de TVA} accessories{Accessoires} seat_accessories{Accessoires des places} closure_days{Jours de fermeture} validation_policies{Règles de validation} workspace_roles{Rôles} workspace_role_members{Titulaires des rôles} workspace_field_definitions{Questions} workspace_field_values{Réponses} number_sequences{Numérotations} charging_stations{Bornes de recharge} plan_images{Images du plan} setting_values{Paramètres} member_credits{Carnets} member_credit_uses{Utilisations des carnets} price_negotiations{Négociations de prix} quota_extensions{Extensions de quota} usage_records{Utilisation} invoice_matches{Règlements des factures} invoice_reminders{Relances} invoice_dunning_holds{Relances suspendues} tax_exemption_certificates{Attestations d'exonération} suppliers{Fournisseurs} purchase_documents{Pièces d'achat} purchase_lines{Lignes d'achat} purchase_obligations{Montants à payer} purchase_orders{Bons de commande} purchase_order_lines{Lignes de commande} outgoing_payments{Paiements sortants} expense_schedules{Dépenses planifiées} expense_occurrences{Échéances de dépenses} expense_repartitions{Frais partagés} premises_leases{Baux} lease_terms{Conditions du bail} lease_settlements{Régularisations du bail} room_rentals{Locations de salles} room_rental_fees{Tarifs des locations} workspace_assets{Immobilisations} asset_valuation_batches{Évaluations d'actifs} asset_valuation_rows{Lignes d'évaluation} book_profiles{Profils comptables} book_accounts{Plan comptable} book_mappings{Correspondances de comptes} book_periods{Périodes comptables} vat_declarations{Déclarations de TVA} einvoice_inbox{Factures électroniques reçues} guest_participations{Visites d'invités} rights_requests{Demandes RGPD} overview{Vue d'ensemble} features{Fonctions} other{{key}}}",
   "exportUncertifiedSoftware": "Conforme à la spécification publiée, mais DesKilo n’est pas un logiciel certifié dans ce pays — vérifiez avec votre comptable si cela vous est imposé.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -12696,6 +12696,14 @@
   "purchaseOrderFreeText": "Texte libre",
   "purchaseOrderItem": "Article du catalogue",
   "purchaseOrderLine": "Ligne {n}",
+  "purchaseOrderMailInvalid": "Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API",
+  "purchaseOrderMailKey": "Clé d’API Resend",
+  "purchaseOrderMailKeyKept": "Une clé est enregistrée. Laissez vide pour la garder ; elle n’est plus jamais affichée.",
+  "purchaseOrderMailSave": "Enregistrer",
+  "purchaseOrderMailSender": "Adresse d’expédition (un domaine vérifié chez Resend)",
+  "purchaseOrderMailSenderName": "Nom de l’expéditeur",
+  "purchaseOrderMailSettings": "Envoi par e-mail",
+  "purchaseOrderMailText": "Bonjour,\n\nVeuillez trouver ci-joint notre bon de commande {reference}.\n\nCordialement,\n{space}",
   "purchaseOrderMarkSent": "Marquer comme envoyée",
   "purchaseOrderNeedsDescription": "Indiquez ce qui est commandé ou choisissez un article",
   "purchaseOrderNeedsPrice": "Un prix unitaire, 0 ou plus",
@@ -12709,6 +12717,13 @@
   "purchaseOrderRefused": "La commande n’a pas été modifiée. Vérifiez les saisies et réessayez.",
   "purchaseOrderRemoveLine": "Retirer la ligne",
   "purchaseOrderSave": "Enregistrer le brouillon",
+  "purchaseOrderSendArrived": "Il est arrivé",
+  "purchaseOrderSendAwaits": "Un e-mail à {recipient} n’a pas de résultat confirmé. Est-il arrivé ?",
+  "purchaseOrderSendEmail": "Envoyer par e-mail",
+  "purchaseOrderSendLost": "Il n’est pas arrivé",
+  "purchaseOrderSendRefused": "L’e-mail a été refusé : {reason}. La commande reste en brouillon.",
+  "purchaseOrderSendUnconfirmed": "Aucune réponse confirmée. Vérifiez auprès du fournisseur avant de renvoyer.",
+  "purchaseOrderSentTo": "Envoyée à {recipient}",
   "purchaseOrderStateCancelled": "Annulée",
   "purchaseOrderStateDraft": "Brouillon",
   "purchaseOrderStatePartlyReceived": "Reçue en partie",

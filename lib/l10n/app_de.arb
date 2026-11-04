@@ -5995,7 +5995,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
+  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} purchase_orders{Bestellungen} purchase_order_lines{Bestellpositionen} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
   "exportUncertifiedSoftware": "Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -12696,6 +12696,14 @@
   "purchaseOrderFreeText": "Freier Text",
   "purchaseOrderItem": "Katalogartikel",
   "purchaseOrderLine": "Position {n}",
+  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel",
+  "purchaseOrderMailKey": "Resend-API-Schlüssel",
+  "purchaseOrderMailKeyKept": "Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.",
+  "purchaseOrderMailSave": "Speichern",
+  "purchaseOrderMailSender": "Absenderadresse (eine bei Resend verifizierte Domain)",
+  "purchaseOrderMailSenderName": "Absendername",
+  "purchaseOrderMailSettings": "E-Mail-Versand",
+  "purchaseOrderMailText": "Guten Tag,\n\nanbei finden Sie unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
   "purchaseOrderMarkSent": "Als gesendet markieren",
   "purchaseOrderNeedsDescription": "Geben Sie an, was bestellt wird, oder wählen Sie einen Artikel",
   "purchaseOrderNeedsPrice": "Ein Stückpreis, 0 oder mehr",
@@ -12709,6 +12717,13 @@
   "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
   "purchaseOrderRemoveLine": "Position entfernen",
   "purchaseOrderSave": "Entwurf speichern",
+  "purchaseOrderSendArrived": "Sie ist angekommen",
+  "purchaseOrderSendAwaits": "Eine E-Mail an {recipient} hat kein bestätigtes Ergebnis. Ist sie angekommen?",
+  "purchaseOrderSendEmail": "Per E-Mail senden",
+  "purchaseOrderSendLost": "Sie ist nicht angekommen",
+  "purchaseOrderSendRefused": "Die E-Mail wurde abgelehnt: {reason}. Die Bestellung bleibt ein Entwurf.",
+  "purchaseOrderSendUnconfirmed": "Es kam keine bestätigte Antwort. Fragen Sie beim Lieferanten nach, bevor Sie erneut senden.",
+  "purchaseOrderSentTo": "Gesendet an {recipient}",
   "purchaseOrderStateCancelled": "Storniert",
   "purchaseOrderStateDraft": "Entwurf",
   "purchaseOrderStatePartlyReceived": "Teilweise erhalten",

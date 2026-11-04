@@ -78,4 +78,83 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
       },
     ),
   );
+
+  @override
+  Future<List<PurchaseOrderSend>> fetchSends(String workspaceId) async {
+    final rows = await _client
+        .from('purchase_order_sends')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_datetime', ascending: false);
+    return [for (final row in rows) PurchaseOrderSend.fromJson(row)];
+  }
+
+  @override
+  Future<PurchaseOrderMailSettings?> fetchMailSettings(
+    String workspaceId,
+  ) async {
+    final row = await _client
+        .from('purchase_order_mail_settings')
+        .select('sender_email, sender_name, has_api_key, revision')
+        .eq('workspace_id', workspaceId)
+        .maybeSingle();
+    return row == null ? null : PurchaseOrderMailSettings.fromJson(row);
+  }
+
+  @override
+  Future<PurchaseOrderMailSettings> saveMailSettings(
+    String workspaceId,
+    PurchaseOrderMailDraft draft,
+  ) async => PurchaseOrderMailSettings.fromJson(
+    await _client.rpc<Object?>(
+      'save_purchase_order_mail_settings_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_sender_email': draft.senderEmail.trim(),
+        'p_sender_name': draft.senderName.trim(),
+        // Empty keeps the stored key; the answer never carries one.
+        'p_api_key': draft.apiKey.trim().isEmpty ? null : draft.apiKey.trim(),
+        'p_revision': draft.revision,
+      },
+    ),
+  );
+
+  @override
+  Future<PurchaseOrderSend> sendByEmail(
+    String workspaceId,
+    PurchaseOrder order,
+    String attemptId,
+    PurchaseOrderMail mail,
+  ) async {
+    final response = await _client.functions.invoke(
+      'send-purchase-order',
+      body: {
+        'workspace_id': workspaceId,
+        'order_id': order.id,
+        'revision': order.revision,
+        'attempt_id': attemptId,
+        'subject': mail.subject,
+        'text': mail.text,
+        'pdf_base64': mail.pdfBase64,
+        'file_name': mail.fileName,
+      },
+    );
+    return PurchaseOrderSend.fromJson(response.data);
+  }
+
+  @override
+  Future<PurchaseOrderSend> resolveSend(
+    String workspaceId,
+    String attemptId, {
+    required bool delivered,
+  }) async => PurchaseOrderSend.fromJson(
+    await _client.rpc<Object?>(
+      'resolve_purchase_order_send_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_attempt_id': attemptId,
+        'p_delivered': delivered,
+      },
+    ),
+  );
 }

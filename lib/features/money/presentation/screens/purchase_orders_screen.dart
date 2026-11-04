@@ -20,6 +20,8 @@ import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
 import '../purchase_order_print.dart';
+import '../widgets/purchase_order_mail_sheet.dart';
+import '../widgets/purchase_order_send_actions.dart';
 import '../widgets/purchase_order_sheet.dart';
 import 'money_view_data.dart';
 
@@ -47,7 +49,28 @@ class PurchaseOrdersScreen extends ConsumerWidget {
         ? null
         : ref.watch(purchaseOrdersProvider(workspace.id));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.purchaseOrdersTitle)),
+      appBar: AppBar(
+        title: Text(l10n.purchaseOrdersTitle),
+        actions: [
+          // #3307 — how the space e-mails its orders, for its billing
+          // manager.
+          if (workspace != null &&
+              MoneyViewData.purchasePermissionNames(
+                ref,
+              ).contains('manageBilling'))
+            IconButton(
+              key: const ValueKey('purchase-order-mail-settings'),
+              tooltip: l10n.purchaseOrderMailSettings,
+              icon: const Icon(Icons.forward_to_inbox_outlined),
+              onPressed: () async => PurchaseOrderMailSheet(context, ref).open(
+                workspaceId: workspace.id,
+                current: await ref.read(
+                  purchaseOrderMailSettingsProvider(workspace.id).future,
+                ),
+              ),
+            ),
+        ],
+      ),
       floatingActionButton: workspace == null || !canWrite
           ? null
           : FloatingActionButton.extended(
@@ -245,6 +268,12 @@ class _OrderTile extends ConsumerWidget {
                     child: Text(l10n.purchaseOrderCancel),
                   ),
               ],
+            ),
+            PurchaseOrderSendActions(
+              order: order,
+              workspaceId: workspaceId,
+              canWrite: canWrite,
+              letterhead: letterhead,
             ),
           ],
         ),

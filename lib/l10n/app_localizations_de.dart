@@ -8365,6 +8365,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'purchase_documents': 'Einkaufsbelege',
       'purchase_lines': 'Einkaufszeilen',
       'purchase_obligations': 'Zu zahlende Beträge',
+      'purchase_orders': 'Bestellungen',
+      'purchase_order_lines': 'Bestellpositionen',
       'outgoing_payments': 'Ausgehende Zahlungen',
       'expense_schedules': 'Geplante Ausgaben',
       'expense_occurrences': 'Ausgabentermine',
@@ -19882,6 +19884,35 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get purchaseOrderMailInvalid =>
+      'Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel';
+
+  @override
+  String get purchaseOrderMailKey => 'Resend-API-Schlüssel';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.';
+
+  @override
+  String get purchaseOrderMailSave => 'Speichern';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Absenderadresse (eine bei Resend verifizierte Domain)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Absendername';
+
+  @override
+  String get purchaseOrderMailSettings => 'E-Mail-Versand';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Guten Tag,\n\nanbei finden Sie unsere Bestellung $reference.\n\nMit freundlichen Grüßen\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Als gesendet markieren';
 
   @override
@@ -19921,6 +19952,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchaseOrderSave => 'Entwurf speichern';
+
+  @override
+  String get purchaseOrderSendArrived => 'Sie ist angekommen';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'Eine E-Mail an $recipient hat kein bestätigtes Ergebnis. Ist sie angekommen?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Per E-Mail senden';
+
+  @override
+  String get purchaseOrderSendLost => 'Sie ist nicht angekommen';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'Die E-Mail wurde abgelehnt: $reason. Die Bestellung bleibt ein Entwurf.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'Es kam keine bestätigte Antwort. Fragen Sie beim Lieferanten nach, bevor Sie erneut senden.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Gesendet an $recipient';
+  }
 
   @override
   String get purchaseOrderStateCancelled => 'Storniert';

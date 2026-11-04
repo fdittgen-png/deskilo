@@ -261,6 +261,122 @@ class PurchaseOrderDraft {
   };
 }
 
+/// Where one e-mail attempt of an order stands. `unconfirmed` is nobody
+/// knowing whether it left (a timeout): a person decides it, delivered or
+/// not delivered; it is never sent again on its own.
+enum PurchaseOrderSendState {
+  pending('pending'),
+  accepted('accepted'),
+  refused('refused'),
+  unconfirmed('unconfirmed'),
+  delivered('delivered'),
+  notDelivered('not_delivered');
+
+  const PurchaseOrderSendState(this.wire);
+  final String wire;
+
+  static PurchaseOrderSendState of(String wire) =>
+      values.firstWhere((s) => s.wire == wire, orElse: () => pending);
+}
+
+/// One e-mail attempt of an order (`purchase_order_sends`, 0676).
+class PurchaseOrderSend {
+  const PurchaseOrderSend({
+    required this.id,
+    required this.orderId,
+    required this.state,
+    required this.recipient,
+    this.providerId = '',
+    this.reason = '',
+    this.createdAt,
+  });
+
+  factory PurchaseOrderSend.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'purchase order send');
+    return PurchaseOrderSend(
+      id: r.string('id'),
+      orderId: r.string('order_id'),
+      state: PurchaseOrderSendState.of(r.stringOr('state', 'pending')),
+      recipient: r.stringOr('recipient'),
+      providerId: r.stringOr('provider_id'),
+      reason: r.stringOr('reason'),
+      createdAt: DateTime.tryParse(
+        r.stringOrNull('created_at') ?? r.stringOr('created_datetime'),
+      ),
+    );
+  }
+
+  final String id;
+  final String orderId;
+  final PurchaseOrderSendState state;
+  final String recipient;
+  final String providerId;
+  final String reason;
+  final DateTime? createdAt;
+
+  /// Nobody knows whether it left: a person decides.
+  bool get awaitsDecision => state == PurchaseOrderSendState.unconfirmed;
+}
+
+/// How the space e-mails its orders: the sender, and whether a key is
+/// stored. The key itself never reaches the app.
+class PurchaseOrderMailSettings {
+  const PurchaseOrderMailSettings({
+    required this.senderEmail,
+    required this.hasApiKey,
+    required this.revision,
+    this.senderName = '',
+  });
+
+  factory PurchaseOrderMailSettings.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'purchase order mail settings');
+    return PurchaseOrderMailSettings(
+      senderEmail: r.stringOr('sender_email'),
+      senderName: r.stringOr('sender_name'),
+      hasApiKey: r.isTrue('has_api_key'),
+      revision: r.integer('revision'),
+    );
+  }
+
+  final String senderEmail;
+  final String senderName;
+  final bool hasApiKey;
+  final int revision;
+}
+
+/// What the mail settings form sends; an empty [apiKey] keeps the stored
+/// one.
+class PurchaseOrderMailDraft {
+  const PurchaseOrderMailDraft({
+    required this.senderEmail,
+    this.senderName = '',
+    this.apiKey = '',
+    this.revision = 0,
+  });
+
+  final String senderEmail;
+  final String senderName;
+  final String apiKey;
+  final int revision;
+
+  /// Whether the form may be sent: a sender address, a name a mail header
+  /// can carry, and a key on the first configuration.
+  bool validFor(PurchaseOrderMailSettings? current) =>
+      _isOrderEmail(senderEmail) &&
+      !senderName.contains(RegExp(r'[\r\n<>"]')) &&
+      ((current?.hasApiKey ?? false) || apiKey.trim().isNotEmpty) &&
+      (apiKey.trim().isEmpty ||
+          RegExp(r'^[A-Za-z0-9_\-]{8,200}$').hasMatch(apiKey.trim()));
+}
+
+/// The order's PDF and its words, for the e-mail.
+typedef PurchaseOrderMail = ({
+  String subject,
+  String text,
+  String pdfBase64,
+  String fileName,
+});
+
 /// Reads and writes the space's purchase orders. Every call is authorized
 /// on the server.
 abstract interface class PurchaseOrderRepository {
@@ -290,4 +406,30 @@ abstract interface class PurchaseOrderRepository {
     String reason,
     String requestId,
   );
+
+  /// The space's e-mail attempts, the latest first.
+  Future<List<PurchaseOrderSend>> fetchSends(String workspaceId);
+
+  /// How the space e-mails its orders; null before it is configured.
+  Future<PurchaseOrderMailSettings?> fetchMailSettings(String workspaceId);
+
+  Future<PurchaseOrderMailSettings> saveMailSettings(
+    String workspaceId,
+    PurchaseOrderMailDraft draft,
+  );
+
+  /// E-mails [order] under [attemptId]; the same id never sends twice.
+  Future<PurchaseOrderSend> sendByEmail(
+    String workspaceId,
+    PurchaseOrder order,
+    String attemptId,
+    PurchaseOrderMail mail,
+  );
+
+  /// A person decides an unconfirmed attempt.
+  Future<PurchaseOrderSend> resolveSend(
+    String workspaceId,
+    String attemptId, {
+    required bool delivered,
+  });
 }

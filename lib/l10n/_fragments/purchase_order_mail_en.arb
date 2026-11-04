@@ -1,0 +1,85 @@
+{
+  "purchaseOrderMailText": "Hello,\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}",
+  "@purchaseOrderMailText": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendEmail": "Send by e-mail",
+  "@purchaseOrderSendEmail": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSentTo": "Sent to {recipient}",
+  "@purchaseOrderSentTo": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendRefused": "The e-mail was refused: {reason}. The order stays a draft.",
+  "@purchaseOrderSendRefused": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendUnconfirmed": "No confirmed answer came back. Check with the supplier before sending again.",
+  "@purchaseOrderSendUnconfirmed": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendAwaits": "An e-mail to {recipient} has no confirmed outcome. Did it arrive?",
+  "@purchaseOrderSendAwaits": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendArrived": "It arrived",
+  "@purchaseOrderSendArrived": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendLost": "It did not arrive",
+  "@purchaseOrderSendLost": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSettings": "E-mail sending",
+  "@purchaseOrderMailSettings": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSender": "Sender address (a verified domain at Resend)",
+  "@purchaseOrderMailSender": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSenderName": "Sender name",
+  "@purchaseOrderMailSenderName": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKey": "Resend API key",
+  "@purchaseOrderMailKey": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKeyKept": "A key is stored. Leave empty to keep it; it is never shown again.",
+  "@purchaseOrderMailKeyKept": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailInvalid": "A sender address, a name without < > or quotes, and on the first save the API key",
+  "@purchaseOrderMailInvalid": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSave": "Save",
+  "@purchaseOrderMailSave": {
+    "description": "#3307 purchase order e-mail"
+  }
+}

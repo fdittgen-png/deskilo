@@ -3,7 +3,10 @@
 // #3307 — the Demo's purchase orders, in memory, by the server's rules
 // (0674): numbered per year, only a draft is edited, a request id replays
 // its answer, a stale revision and an unknown supplier are refused, a
-// received or cancelled order is final. Nothing leaves the device.
+// received or cancelled order is final. Nothing leaves the device: an
+// e-mail is simulated (0676's rules — the mail configured, a draft naming
+// its recipient, one attempt that may have left, the same attempt id
+// replayed) and recorded as accepted, the order sent by e-mail.
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/purchase_order.dart';
@@ -25,6 +28,11 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   final String currency;
 
   final List<PurchaseOrder> orders = [];
+  final List<PurchaseOrderSend> sends = [];
+
+  /// How the Demo space e-mails its orders; null until configured. The
+  /// Demo keeps no key: it only knows one was given.
+  PurchaseOrderMailSettings? mail;
   final Map<String, PurchaseOrder> _requests = {};
 
   static PostgrestException _refused(String message, [String code = '22023']) =>
@@ -186,5 +194,116 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       cancelledAt: now(),
       cancelReason: reason.trim(),
     );
+  }
+
+  @override
+  Future<List<PurchaseOrderSend>> fetchSends(String workspaceId) async =>
+      sends.reversed.toList();
+
+  @override
+  Future<PurchaseOrderMailSettings?> fetchMailSettings(
+    String workspaceId,
+  ) async => mail;
+
+  @override
+  Future<PurchaseOrderMailSettings> saveMailSettings(
+    String workspaceId,
+    PurchaseOrderMailDraft draft,
+  ) async {
+    if (!draft.validFor(mail)) throw _refused('invalid mail settings');
+    if (mail != null && mail!.revision != draft.revision) {
+      throw _refused('stale revision', '40001');
+    }
+    return mail = PurchaseOrderMailSettings(
+      senderEmail: draft.senderEmail.trim(),
+      senderName: draft.senderName.trim(),
+      hasApiKey: true,
+      revision: (mail?.revision ?? 0) + 1,
+    );
+  }
+
+  @override
+  Future<PurchaseOrderSend> sendByEmail(
+    String workspaceId,
+    PurchaseOrder order,
+    String attemptId,
+    PurchaseOrderMail mail,
+  ) async {
+    if (sends.where((s) => s.id == attemptId).firstOrNull case final done?) {
+      return done;
+    }
+    final i = _index(order.id);
+    if (i < 0) throw _refused('unknown purchase order');
+    final o = orders[i];
+    if (o.state != PurchaseOrderState.draft) {
+      throw _refused('only a draft purchase order is sent');
+    }
+    if (o.revision != order.revision) throw _refused('stale revision', '40001');
+    if (!o.emailable) {
+      throw _refused('the order names no address to e-mail it to');
+    }
+    if (this.mail?.hasApiKey != true) {
+      throw _refused('this space has not configured how it e-mails its orders');
+    }
+    if (sends.any(
+      (s) =>
+          s.orderId == o.id &&
+          (s.awaitsDecision || s.state == PurchaseOrderSendState.pending),
+    )) {
+      throw _refused(
+        'an earlier send of this order has no confirmed outcome',
+        '55000',
+      );
+    }
+    final send = PurchaseOrderSend(
+      id: attemptId,
+      orderId: o.id,
+      state: PurchaseOrderSendState.accepted,
+      recipient: o.recipientEmail.trim(),
+      providerId: 'demo-$attemptId',
+      createdAt: now(),
+    );
+    sends.add(send);
+    orders[i] = _with(
+      o,
+      state: PurchaseOrderState.sent,
+      sentAt: now(),
+      sentVia: 'email',
+    );
+    return send;
+  }
+
+  @override
+  Future<PurchaseOrderSend> resolveSend(
+    String workspaceId,
+    String attemptId, {
+    required bool delivered,
+  }) async {
+    final i = sends.indexWhere((s) => s.id == attemptId);
+    if (i < 0) throw _refused('unknown send attempt');
+    final s = sends[i];
+    if (!s.awaitsDecision) {
+      throw _refused('only an unconfirmed send is decided by hand');
+    }
+    final resolved = PurchaseOrderSend(
+      id: s.id,
+      orderId: s.orderId,
+      state: delivered
+          ? PurchaseOrderSendState.delivered
+          : PurchaseOrderSendState.notDelivered,
+      recipient: s.recipient,
+      createdAt: s.createdAt,
+    );
+    sends[i] = resolved;
+    final o = _index(s.orderId);
+    if (delivered && o >= 0 && orders[o].state == PurchaseOrderState.draft) {
+      orders[o] = _with(
+        orders[o],
+        state: PurchaseOrderState.sent,
+        sentAt: now(),
+        sentVia: 'email',
+      );
+    }
+    return resolved;
   }
 }

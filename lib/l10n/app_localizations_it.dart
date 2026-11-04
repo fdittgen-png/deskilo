@@ -8353,6 +8353,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'purchase_documents': 'Documenti d\'acquisto',
       'purchase_lines': 'Righe d\'acquisto',
       'purchase_obligations': 'Importi da pagare',
+      'purchase_orders': 'Ordini di acquisto',
+      'purchase_order_lines': 'Righe d\'ordine',
       'outgoing_payments': 'Pagamenti in uscita',
       'expense_schedules': 'Spese programmate',
       'expense_occurrences': 'Scadenze di spesa',
@@ -19855,6 +19857,35 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get purchaseOrderMailInvalid =>
+      'Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API';
+
+  @override
+  String get purchaseOrderMailKey => 'Chiave API di Resend';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.';
+
+  @override
+  String get purchaseOrderMailSave => 'Salva';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Indirizzo del mittente (un dominio verificato su Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Nome del mittente';
+
+  @override
+  String get purchaseOrderMailSettings => 'Invio per e-mail';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Buongiorno,\n\nin allegato il nostro ordine $reference.\n\nCordiali saluti,\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Segna come inviato';
 
   @override
@@ -19894,6 +19925,34 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchaseOrderSave => 'Salva la bozza';
+
+  @override
+  String get purchaseOrderSendArrived => 'È arrivata';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'Un’e-mail a $recipient non ha un esito confermato. È arrivata?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Invia per e-mail';
+
+  @override
+  String get purchaseOrderSendLost => 'Non è arrivata';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'L’e-mail è stata rifiutata: $reason. L’ordine resta una bozza.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'Nessuna risposta confermata. Verifica con il fornitore prima di inviare di nuovo.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Inviato a $recipient';
+  }
 
   @override
   String get purchaseOrderStateCancelled => 'Annullato';

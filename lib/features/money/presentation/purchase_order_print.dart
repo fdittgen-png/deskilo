@@ -4,6 +4,9 @@
 // the `purchase_order` kind, its letter layout (the supplier in the
 // window) when the letter standard is on, else its bands; quick view, save
 // or share like every document.
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +14,7 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
+import '../domain/invoice_report.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_report.dart';
 import '../providers/supplier_providers.dart';
@@ -25,16 +29,17 @@ class PurchaseOrderPrint {
   final BuildContext context;
   final WidgetRef ref;
 
-  /// Opens [order]'s document under [letterhead] (the space's name and
-  /// address): quick view, save or share.
-  Future<void> show({
-    required String workspaceId,
-    required PurchaseOrder order,
-    required ({String name, String address}) letterhead,
-  }) async {
+  /// The data and the rendered bands of [order] under [letterhead]; null
+  /// once the screen is gone.
+  Future<({Map<String, Object?> data, InvoiceReport rendered, String title})?>
+  _document(
+    String workspaceId,
+    PurchaseOrder order,
+    ({String name, String address}) letterhead,
+  ) async {
     final l10n = context.l10n;
     final suppliers = await ref.read(suppliersProvider(workspaceId).future);
-    if (!context.mounted) return;
+    if (!context.mounted) return null;
     final locale = Localizations.localeOf(context).toString();
     final money = moneyFormat(order.currency, locale: locale);
     final day = DateFormat.yMMMd(locale);
@@ -54,33 +59,71 @@ class PurchaseOrderPrint {
         'workspace_address': letterhead.address,
       },
     );
-    final rendered = renderLetterDoc(
+    return (
+      data: data,
+      rendered: renderLetterDoc(
+        context,
+        ref,
+        docId: 'purchase_order',
+        data: data,
+      ),
+      title: '${l10n.reportDocPurchaseOrder} ${order.reference}',
+    );
+  }
+
+  Future<({Uint8List bytes, String fileName})> _pdf(
+    PurchaseOrder order,
+    ({Map<String, Object?> data, InvoiceReport rendered, String title}) doc,
+  ) async {
+    final pdf = await letterDocPdf(
       context,
       ref,
-      docId: 'purchase_order',
-      data: data,
+      report: doc.rendered,
+      title: doc.title,
+      layoutXml: letterLayoutXml(ref, docId: 'purchase_order'),
+      data: doc.data,
     );
-    final title = '${l10n.reportDocPurchaseOrder} ${order.reference}';
+    return (
+      bytes: pdf.bytes,
+      fileName: 'purchase-order-${order.reference}.pdf',
+    );
+  }
+
+  /// Opens [order]'s document under [letterhead] (the space's name and
+  /// address): quick view, save or share.
+  Future<void> show({
+    required String workspaceId,
+    required PurchaseOrder order,
+    required ({String name, String address}) letterhead,
+  }) async {
+    final doc = await _document(workspaceId, order, letterhead);
+    if (doc == null || !context.mounted) return;
     await runReportActions(
       context,
       ref,
       keyPrefix: 'purchase-order-print',
       logMessage: 'purchase order pdf failed',
-      render: () => rendered,
-      buildPdf: () async {
-        final pdf = await letterDocPdf(
-          context,
-          ref,
-          report: rendered,
-          title: title,
-          layoutXml: letterLayoutXml(ref, docId: 'purchase_order'),
-          data: data,
-        );
-        return (
-          bytes: pdf.bytes,
-          fileName: 'purchase-order-${order.reference}.pdf',
-        );
-      },
+      render: () => doc.rendered,
+      buildPdf: () => _pdf(order, doc),
+    );
+  }
+
+  /// #3307 — what the e-mail carries: the same document, its subject and
+  /// a short text in the reader's language; null once the screen is gone.
+  Future<PurchaseOrderMail?> mail({
+    required String workspaceId,
+    required PurchaseOrder order,
+    required ({String name, String address}) letterhead,
+  }) async {
+    final l10n = context.l10n;
+    final doc = await _document(workspaceId, order, letterhead);
+    if (doc == null || !context.mounted) return null;
+    final pdf = await _pdf(order, doc);
+    return (
+      subject: doc.title,
+      text: l10n.purchaseOrderMailText(order.reference, letterhead.name),
+      pdfBase64: base64Encode(pdf.bytes),
+      fileName: pdf.fileName,
     );
   }
 }

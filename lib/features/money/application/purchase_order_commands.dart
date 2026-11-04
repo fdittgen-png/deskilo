@@ -41,6 +41,49 @@ class PurchaseOrderCommands {
     _repo.cancel(workspaceId, order.id, order.revision, reason, requestId),
   );
 
+  /// E-mails [order] under [attemptId]; the list and the attempts are
+  /// read again whatever the outcome.
+  Future<PurchaseOrderSend> sendByEmail(
+    String workspaceId,
+    PurchaseOrder order,
+    String attemptId,
+    PurchaseOrderMail mail,
+  ) async {
+    try {
+      return await _repo.sendByEmail(workspaceId, order, attemptId, mail);
+    } finally {
+      _ref
+        ..invalidate(purchaseOrdersProvider(workspaceId))
+        ..invalidate(purchaseOrderSendsProvider(workspaceId));
+    }
+  }
+
+  /// A person decides an attempt nobody could confirm.
+  Future<PurchaseOrderSend> resolveSend(
+    String workspaceId,
+    String attemptId, {
+    required bool delivered,
+  }) async {
+    final send = await _repo.resolveSend(
+      workspaceId,
+      attemptId,
+      delivered: delivered,
+    );
+    _ref
+      ..invalidate(purchaseOrdersProvider(workspaceId))
+      ..invalidate(purchaseOrderSendsProvider(workspaceId));
+    return send;
+  }
+
+  Future<PurchaseOrderMailSettings> saveMailSettings(
+    String workspaceId,
+    PurchaseOrderMailDraft draft,
+  ) async {
+    final saved = await _repo.saveMailSettings(workspaceId, draft);
+    _ref.invalidate(purchaseOrderMailSettingsProvider(workspaceId));
+    return saved;
+  }
+
   Future<PurchaseOrder> _refreshed(
     String workspaceId,
     Future<PurchaseOrder> done,

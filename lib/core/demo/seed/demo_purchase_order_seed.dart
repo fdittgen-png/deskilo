@@ -13,6 +13,14 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
       if (s.isActive) s,
   ];
   if (suppliers.isEmpty) return;
+  // The space e-mails its orders from its own address; the Demo keeps no
+  // key and sends nothing.
+  orders.mail = const PurchaseOrderMailSettings(
+    senderEmail: 'orders@space.example',
+    senderName: 'Demo space',
+    hasApiKey: true,
+    revision: 1,
+  );
   final items = orders.services();
   String? item(int i) => items.isEmpty ? null : items[i % items.length].id;
   String name(int i) => items.isEmpty ? '' : items[i % items.length].name;

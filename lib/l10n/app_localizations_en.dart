@@ -8299,6 +8299,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'purchase_documents': 'Purchase documents',
       'purchase_lines': 'Purchase lines',
       'purchase_obligations': 'Amounts to pay',
+      'purchase_orders': 'Purchase orders',
+      'purchase_order_lines': 'Purchase order lines',
       'outgoing_payments': 'Outgoing payments',
       'expense_schedules': 'Scheduled expenses',
       'expense_occurrences': 'Expense dates',
@@ -19694,6 +19696,35 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get purchaseOrderMailInvalid =>
+      'A sender address, a name without < > or quotes, and on the first save the API key';
+
+  @override
+  String get purchaseOrderMailKey => 'Resend API key';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'A key is stored. Leave empty to keep it; it is never shown again.';
+
+  @override
+  String get purchaseOrderMailSave => 'Save';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Sender address (a verified domain at Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Sender name';
+
+  @override
+  String get purchaseOrderMailSettings => 'E-mail sending';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Hello,\n\nPlease find attached our purchase order $reference.\n\nKind regards,\n$space';
+  }
+
+  @override
   String get purchaseOrderMarkSent => 'Mark as sent';
 
   @override
@@ -19733,6 +19764,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseOrderSave => 'Save the draft';
+
+  @override
+  String get purchaseOrderSendArrived => 'It arrived';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'An e-mail to $recipient has no confirmed outcome. Did it arrive?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Send by e-mail';
+
+  @override
+  String get purchaseOrderSendLost => 'It did not arrive';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'The e-mail was refused: $reason. The order stays a draft.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'No confirmed answer came back. Check with the supplier before sending again.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Sent to $recipient';
+  }
 
   @override
   String get purchaseOrderStateCancelled => 'Cancelled';
