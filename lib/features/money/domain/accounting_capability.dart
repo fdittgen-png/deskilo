@@ -64,6 +64,14 @@ class AccountingCapability {
     this.specification = '',
   });
 
+  /// #2379 — a SAF-T Financial file read against its authority's published
+  /// schema in CI, refused while the chart map is incomplete: the local
+  /// book's postings, not necessarily the entity's complete books, and no
+  /// authority has received one yet.
+  const AccountingCapability.schemaValidated(this.formatId, this.specification)
+    : state = QualificationState.locallyValidated,
+      obligations = const {Obligation.completePostedBooks, Obligation.targetAcceptance};
+
   final String formatId;
   final QualificationState state;
 
@@ -123,44 +131,15 @@ const Map<String, AccountingCapability> accountingCapabilities = {
   // refused while the chart map is incomplete. The postings are the local
   // book's, not necessarily the entity's complete books, and no authority
   // has received one yet.
-  'saft_no': AccountingCapability(
-    formatId: 'saft_no',
-    state: QualificationState.locallyValidated,
-    obligations: {
-      Obligation.completePostedBooks,
-      Obligation.targetAcceptance,
-    },
-    specification:
-        'Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd',
-  ),
-  'saft_dk': AccountingCapability(
-    formatId: 'saft_dk',
-    state: QualificationState.locallyValidated,
-    obligations: {
-      Obligation.completePostedBooks,
-      Obligation.targetAcceptance,
-    },
-    specification:
-        'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd',
-  ),
-  'saft_ro': AccountingCapability(
-    formatId: 'saft_ro',
-    state: QualificationState.locallyValidated,
-    obligations: {
-      Obligation.completePostedBooks,
-      Obligation.targetAcceptance,
-    },
-    specification: 'ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd',
-  ),
-  'faia_lu': AccountingCapability(
-    formatId: 'faia_lu',
-    state: QualificationState.locallyValidated,
-    obligations: {
-      Obligation.completePostedBooks,
-      Obligation.targetAcceptance,
-    },
-    specification: 'AED FAIA 2.01, FAIA_v_2.01_full.xsd',
-  ),
+  'saft_no': AccountingCapability.schemaValidated('saft_no',
+      'Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd'),
+  'saft_dk': AccountingCapability.schemaValidated('saft_dk',
+      'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd'),
+  'saft_ro': AccountingCapability.schemaValidated('saft_ro', 'ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd'),
+  // Austria: a real file also needs the standard chart map (österreichischer
+  // Einheitskontenrahmen) and the header's profit basis and industry code.
+  'saft_at': AccountingCapability.schemaValidated('saft_at', 'BMF SAF-T AT 1.01, SAF-T_AT_1.01.xsd'),
+  'faia_lu': AccountingCapability.schemaValidated('faia_lu', 'AED FAIA 2.01, FAIA_v_2.01_full.xsd'),
   // The OECD publishes its 2.0 schema only inside its guidance; the file
   // is read against Luxembourg's publication of the same tree.
   'saft_oecd_full': AccountingCapability(

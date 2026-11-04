@@ -12646,6 +12646,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Österreich)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T mit Hauptbuch (XML, international)';
 
@@ -23088,11 +23091,62 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Branchenkennzahl';
+
+  @override
   String get saftLedgerIntro =>
       'Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.';
 
   @override
   String get saftLedgerTitle => 'Buchungen aufnehmen?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.';
+
+  @override
+  String get saftProfitBasisLabel => 'Art der Gewinnermittlung';
+
+  @override
+  String get saftSmallBusinessHelper =>
+      'Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.';
+
+  @override
+  String get saftSmallBusinessLabel =>
+      'Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'Nein';
+
+  @override
+  String get saftSmallBusinessYes => 'Ja';
+
+  @override
+  String get saftStandardAccountsIntro =>
+      'Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'Kein Vorschlag: Geben Sie das Standardkonto ein.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Vorgeschlagen: $suggestion. Bestätigen oder ändern Sie es.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Konten des Einheitskontenrahmens';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.';
+
+  @override
+  String get saftTaxNumberLabel => 'Steuernummer';
 
   @override
   String get saftWithPostings => 'Mit Buchungen';
