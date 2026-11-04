@@ -10,5 +10,10 @@
   "saftContactTitle": "Contacto para este archivo",
   "saftContactIntro": "El archivo de la administración indica una persona de contacto, y el de Luxemburgo también un teléfono. Solo se escribe en este archivo.",
   "taxRefSafTKeys": "SAF-T Financial (formato saf_t): la clave saf_t/<rol> asigna las cuentas de un rol contable a su código estándar, introducido como cuenta (Noruega: el GroupingCode, con su GroupingCategory como etiqueta; Luxemburgo: el StandardAccountID); la clave saf_t/tax:<output|input>:<grupo> indica el código de IVA estándar de un grupo de tipos como código de impuesto (Noruega).",
-  "journalOpeningRefused": "Los saldos de apertura (del {from} al {to}) no se han podido contabilizar: {reason}"
+  "journalOpeningRefused": "Los saldos de apertura (del {from} al {to}) no se han podido contabilizar: {reason}",
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "saftProfitBasisLabel": "Forma de determinar el beneficio",
+  "saftProfitBasisHelper": "La disposición de la ley austriaca del impuesto sobre la renta que siguen los libros, tal como la indica la cabecera del SAF-T AT.",
+  "saftIndustryCodeLabel": "Código de sector (Branchenkennzahl)",
+  "saftIndustryCodeHelper": "El código de sector con el que la administración tributaria austriaca conoce a la empresa."
 }

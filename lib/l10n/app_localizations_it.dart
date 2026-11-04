@@ -12364,6 +12364,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, internazionale)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T con il libro mastro (XML, internazionale)';
 
@@ -22782,11 +22785,25 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'Il codice di settore con cui l\'amministrazione finanziaria austriaca conosce l\'impresa.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Codice di settore (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
 
   @override
   String get saftLedgerTitle => 'Includere le scritture?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'La disposizione della legge austriaca sull\'imposta sul reddito seguita dalla contabilità, come la indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftProfitBasisLabel => 'Modalità di determinazione dell\'utile';
 
   @override
   String get saftWithPostings => 'Con le scritture';

@@ -159,6 +159,7 @@ class _FormatTile extends StatelessWidget {
         'saft_no' ||
         'saft_dk' ||
         'saft_ro' ||
+        'saft_at' ||
         'faia_lu' ||
         'saft_oecd_full' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,
@@ -184,6 +185,7 @@ String accountingFormatName(AppLocalizations l10n, String id) => switch (id) {
   'saft_pt' => l10n.invoiceExportSafTPt,
   'saft_no' => l10n.invoiceExportSafTNo,
   'faia_lu' => l10n.invoiceExportFaiaLu,
+  'saft_at' => l10n.invoiceExportSafTAt,
   'saft_oecd_full' => l10n.invoiceExportSafTFull,
   'datev' => l10n.invoiceExportDatev,
   'sage50' => l10n.invoiceExportSage,

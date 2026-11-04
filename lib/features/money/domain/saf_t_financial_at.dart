@@ -27,7 +27,7 @@ import 'saf_t_ledger.dart';
 
 /// A street line split into its street and its house number (`Hauptstraße
 /// 12/3`), or null when the line names no number.
-({String street, String number})? austrianStreet(String line) {
+({String street, String number})? _austrianStreet(String line) {
   final first = SafTFinancialFacts.streetLine(line).split(',').first.trim();
   final m = RegExp(r'^(.*\S)\s+(\d[\w/\-]*)$').firstMatch(first);
   if (m == null) return null;
@@ -41,10 +41,11 @@ class SafTAustriaXml extends SafTFinancialXml {
   void check() {
     super.check();
     final c = r.company;
-    if (r.profitBasis.trim().isEmpty)
+    if (r.profitBasis.trim().isEmpty) {
       gap(SafTGapKind.company, 'TaxAccountingBasis');
+    }
     if (r.industryCode.trim().isEmpty) gap(SafTGapKind.company, 'TaxEntity');
-    if (c.street.trim().isNotEmpty && austrianStreet(c.street) == null) {
+    if (c.street.trim().isNotEmpty && _austrianStreet(c.street) == null) {
       gap(SafTGapKind.company, 'BuildingNumber');
     }
     for (final (kind, parties) in [
@@ -54,7 +55,7 @@ class SafTAustriaXml extends SafTFinancialXml {
       for (final e in parties.entries) {
         final d = r.partyDetails[safTPartyKey(kind, e.key)];
         if (d == null ||
-            austrianStreet(d.street) == null ||
+            _austrianStreet(d.street) == null ||
             d.city.isEmpty ||
             d.postalCode.isEmpty) {
           gap(SafTGapKind.party, '${e.key} Address');
@@ -70,7 +71,7 @@ class SafTAustriaXml extends SafTFinancialXml {
     String postalCode,
     String country,
   ) {
-    final s = austrianStreet(street)!;
+    final s = _austrianStreet(street)!;
     builder.element(
       element,
       nest: () {
@@ -137,8 +138,9 @@ class SafTAustriaXml extends SafTFinancialXml {
               tag('AccountDescription', text(accountName(a)));
               tag('AccountType', accountType(a));
               tag('AccountID_oeEKR', standard.account);
-              if (standard.label.isNotEmpty)
+              if (standard.label.isNotEmpty) {
                 tag('AccountDescription_oeEKR', standard.label);
+              }
               balance('Opening', opening(a));
             },
           );

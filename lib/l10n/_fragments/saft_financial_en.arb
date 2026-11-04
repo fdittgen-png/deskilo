@@ -72,5 +72,25 @@
         "type": "String"
       }
     }
+  },
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "@invoiceExportSafTAt": {
+    "description": "#2379 the Austrian SAF-T AT 1.01 export (Bundesministerium für Finanzen)"
+  },
+  "saftProfitBasisLabel": "How the profit is determined",
+  "@saftProfitBasisLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftProfitBasisHelper": "The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.",
+  "@saftProfitBasisHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftIndustryCodeLabel": "Industry code (Branchenkennzahl)",
+  "@saftIndustryCodeLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftIndustryCodeHelper": "The industry code the Austrian tax office knows the company under.",
+  "@saftIndustryCodeHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   }
 }

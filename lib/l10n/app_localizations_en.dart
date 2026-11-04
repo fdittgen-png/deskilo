@@ -12277,6 +12277,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T with the general ledger (XML, international)';
 
@@ -22587,11 +22590,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'The industry code the Austrian tax office knows the company under.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Industry code (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.';
 
   @override
   String get saftLedgerTitle => 'Include postings?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.';
+
+  @override
+  String get saftProfitBasisLabel => 'How the profit is determined';
 
   @override
   String get saftWithPostings => 'With postings';

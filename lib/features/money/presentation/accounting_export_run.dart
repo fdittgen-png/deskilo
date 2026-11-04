@@ -232,12 +232,12 @@ class AccountingExportRun {
       case 'saft_no':
       case 'saft_dk':
       case 'saft_ro':
+      case 'saft_at':
       case 'faia_lu':
       case 'saft_oecd_full':
         await safTFinancialExport();
       case 'generic_journal_csv':
-        await exportGenericJournal(context, () async => journalFileOf(posted!),
-            save: saveJournal);
+        await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
     }
   }
 

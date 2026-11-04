@@ -12384,6 +12384,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Österreich)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T mit Hauptbuch (XML, international)';
 
@@ -22810,11 +22813,25 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Branchenkennzahl';
+
+  @override
   String get saftLedgerIntro =>
       'Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.';
 
   @override
   String get saftLedgerTitle => 'Buchungen aufnehmen?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.';
+
+  @override
+  String get saftProfitBasisLabel => 'Art der Gewinnermittlung';
 
   @override
   String get saftWithPostings => 'Mit Buchungen';

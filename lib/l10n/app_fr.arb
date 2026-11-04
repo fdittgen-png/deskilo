@@ -8219,6 +8219,7 @@
   "invoiceExportGobd": "Accès aux données GoBD (Z3)",
   "invoiceExportJournals": "Journaux et journal centralisateur (PDF, depuis la comptabilité)",
   "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportSafTAt": "SAF-T AT (Autriche)",
   "invoiceExportSafTFull": "SAF-T avec le grand livre (XML, international)",
   "invoiceExportSafTNo": "SAF-T Financial (Norvège)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -15457,6 +15458,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{le champ {subject} de la personne de contact} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}",
+  "saftIndustryCodeHelper": "Le code de branche sous lequel l'administration fiscale autrichienne connaît l'entreprise.",
+  "saftIndustryCodeLabel": "Code de branche (Branchenkennzahl)",
   "saftLedgerIntro": "Avec les numéros de comptes, le fichier porte des écritures en partie double que votre comptable peut importer au lieu de les saisir. Elles couvrent vos ventes et les règlements correspondants — pas l’ensemble de votre comptabilité.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15465,6 +15468,8 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "La disposition de la loi autrichienne sur l'impôt sur le revenu que suit la comptabilité, telle que l'en-tête du SAF-T AT l'indique.",
+  "saftProfitBasisLabel": "Méthode de détermination du bénéfice",
   "saftWithPostings": "Avec les écritures",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"

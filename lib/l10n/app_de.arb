@@ -8219,6 +8219,7 @@
   "invoiceExportGobd": "GoBD-Datenüberlassung (Z3)",
   "invoiceExportJournals": "Journale mit Sammeljournal (PDF, aus der Buchführung)",
   "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportSafTAt": "SAF-T AT (Österreich)",
   "invoiceExportSafTFull": "SAF-T mit Hauptbuch (XML, international)",
   "invoiceExportSafTNo": "SAF-T Financial (Norwegen)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -15457,6 +15458,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{kein Standardkonto für {subject}} standardTaxCode{kein Standard-Steuercode für {subject}} taxRate{kein Steuersatz für {subject}} company{das Feld {subject} des Unternehmens fehlt} contact{das Feld {subject} der Ansprechperson} party{{subject} fehlt bei einem Kunden oder Lieferanten} tooLong{{subject} ist länger, als die Datei erlaubt} other{{subject}}}",
+  "saftIndustryCodeHelper": "Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.",
+  "saftIndustryCodeLabel": "Branchenkennzahl",
   "saftLedgerIntro": "Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15465,6 +15468,8 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.",
+  "saftProfitBasisLabel": "Art der Gewinnermittlung",
   "saftWithPostings": "Mit Buchungen",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"

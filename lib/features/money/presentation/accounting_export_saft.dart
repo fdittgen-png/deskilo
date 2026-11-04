@@ -17,12 +17,13 @@ import 'widgets/saft_contact_dialog.dart';
 
 extension SafTFinancialExports on AccountingExportRun {
   Future<void> safTFinancialExport() async {
-    final contact = await showSafTContactDialog(context);
-    if (contact == null || !context.mounted) return;
+    final profile = SafTFinancialProfile.ofFormat(format.id)!;
+    final answers = await showSafTContactDialog(context, austria: profile.austriaShape);
+    if (answers == null || !context.mounted) return;
     await exportGenericJournal(
       context,
       () async => switch (posted) {
-        final JournalPosted books => _written(books, contact, await _parties(books)),
+        final JournalPosted books => _written(books, answers, await _parties(books)),
         final other? => other,
         null => const JournalNeedsLocalBook(),
       },
@@ -42,7 +43,7 @@ extension SafTFinancialExports on AccountingExportRun {
 
   Future<GenericJournal> _written(
     JournalPosted books,
-    SafTContact contact,
+    SafTHeaderAnswers answers,
     Map<String, SafTParty> parties,
   ) async {
     final reference = workspaceTaxReference(ref);
@@ -58,7 +59,11 @@ extension SafTFinancialExports on AccountingExportRun {
       partyDetails: parties,
       company: company,
       companyIban: workspaceIban(workspace),
-      contact: contact,
+      contact: answers.contact,
+      profitBasis: answers.profitBasis,
+      industryCode: answers.industryCode,
+      // #2379 — Austria's Kleinunternehmer: the space's own VAT exemption.
+      smallBusiness: workspace.vatRegime == 'exempt',
       currency: books.functionalCurrency ?? workspace.currencyCode,
       softwareVersion: safTSoftwareVersion,
       createdAt: now,
