@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
@@ -57,7 +56,9 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
     // Spare credit only: an avoir of any month, or a payment left over
     // from a PAST month — running-month payments offset the upcoming
     // invoice and stay ordinary payments.
-    final nowPeriod = yearMonth(kTestNow.year, kTestNow.month);
+    // #3292 — the space's own day (the Demo's clock), not the tests' fixed one.
+    final today = _m.clock();
+    final nowPeriod = yearMonth(today.year, today.month);
     final credit = _m.ledger
         .where(
           (e) =>
@@ -116,8 +117,11 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
   }
 
   @override
-  Future<List<LedgerEntry>> fetchLedger(String memberId) async =>
-      List.of(_m.ledger);
+  Future<List<LedgerEntry>> fetchLedger(String memberId) async => [
+    // #3292 — one member's entries, as the server's `member_id` filter reads.
+    for (final e in _m.ledger)
+      if (e.memberId == memberId) e,
+  ];
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async =>

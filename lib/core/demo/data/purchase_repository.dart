@@ -21,19 +21,20 @@ class FakePurchaseRepository
   @override final String functionalCurrency;
   /// The demo space: two approved claims of the demo members, one untouched
   /// and one part-paid, so the To-pay tab, a payment and a reversal can all
-  /// be tried exactly as in production.
-  factory FakePurchaseRepository.demo({String Function()? actor}) =>
+  /// be tried exactly as in production. Dated from [today] (#3292): received
+  /// three weeks before, the part payment ten days before, never ahead.
+  factory FakePurchaseRepository.demo({String Function()? actor, DateTime? today}) =>
       FakePurchaseRepository(actor: actor)
     ..payables.addAll([
-      _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning supplies'),
-      _demoClaim('demo-claim-3', 'member-1', 5400, 'event catering'),
-      _demoClaim('demo-claim-4', 'member-2', 2850, 'reference books'),
+      _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning supplies', received: today?.subtract(const Duration(days: 21))),
+      _demoClaim('demo-claim-3', 'member-1', 5400, 'event catering', received: today?.subtract(const Duration(days: 21))),
+      _demoClaim('demo-claim-4', 'member-2', 2850, 'reference books', received: today?.subtract(const Duration(days: 21))),
       _demoClaim(
         'demo-claim-2',
         'member-3',
         8000,
         'coffee',
-        paid: 3000,
+        paid: 3000, received: today?.subtract(const Duration(days: 21)),
         allocations: [
           SettlementAllocation(
             id: 'demo-allocation-0',
@@ -41,17 +42,12 @@ class FakePurchaseRepository
             amountCents: 3000,
             method: 'bank_transfer',
             reference: 'Demo transfer',
-            paidOn: DateTime(2026, 10, 10),
+            paidOn: (today ?? DateTime(2026, 10, 20)).subtract(const Duration(days: 10)),
           ),
         ],
       ),
     ])
-    ..claimRates.addAll({
-      'p-demo-claim-1': 20,
-      'p-demo-claim-2': 5.5,
-      'p-demo-claim-3': 10,
-      'p-demo-claim-4': 5.5,
-    });
+    ..claimRates.addAll({'p-demo-claim-1': 20, 'p-demo-claim-2': 5.5, 'p-demo-claim-3': 10, 'p-demo-claim-4': 5.5});
 
   /// Told when an offset settles an invoice, so the demo's invoice stands
   /// paid as the server's would (the demo wires it to its money).
@@ -67,6 +63,7 @@ class FakePurchaseRepository
     String category, {
     int paid = 0,
     List<SettlementAllocation> allocations = const [],
+    DateTime? received,
   }) => PayableRow(
     obligation: PurchaseObligation(
       id: id,
@@ -88,6 +85,7 @@ class FakePurchaseRepository
       reference: '',
       currency: 'EUR',
       grossCents: amount,
+      receivedOn: received,
     ),
   );
 
