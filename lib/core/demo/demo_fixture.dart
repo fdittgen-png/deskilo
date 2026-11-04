@@ -46,6 +46,7 @@ import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
+import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
@@ -114,6 +115,7 @@ class DemoFixture {
     required this.secondSpace,
     required this.london,
     required this.newYork,
+    required this.twin,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -206,6 +208,8 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, actor: () => actor.memberId, now: today)
+      ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
@@ -268,6 +272,7 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
+      twin: twin,
     );
   }
 
@@ -325,6 +330,9 @@ class DemoFixture {
   final DemoLondonData london;
   final DemoNewYorkData newYork;
 
+  /// #3302 — the main space's development twin, with stores of its own.
+  final DemoTwinData twin;
+
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
 
@@ -352,6 +360,7 @@ class DemoFixture {
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);
+    twin.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).
