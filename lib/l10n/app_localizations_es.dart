@@ -3369,6 +3369,53 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta dirección pide un análisis que no existe; no se ha leído nada.';
 
   @override
+  String get biItemMethodAverage => 'coste medio';
+
+  @override
+  String get biItemMethodLast => 'última compra';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines líneas de compra de $items artículos';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Las líneas de compra aprobadas que nombran un artículo, con fecha en el periodo: lo que cuestan (base más el impuesto no recuperable). La tabla da el precio unitario de cada artículo por proveedor. Los abonos quedan fuera.';
+
+  @override
+  String get biItemPricesTitle => 'Precios de artículos por proveedor';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Vendido por $revenue sin IVA, coste $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Cada artículo que consumieron los miembros en el periodo: su ingreso neto menos las unidades vendidas al coste unitario, según el método de coste del espacio. Un margen, no un beneficio: no se imputa ningún otro coste.';
+
+  @override
+  String get biItemProductTitle => 'Margen por producto';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count productos vendidos nunca se compraron: no tienen coste y quedan fuera del margen';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count proveedores';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Para cada proveedor: los artículos comprados en el periodo, al precio que pagaron los miembros en el periodo menos su precio unitario. Los artículos no vendidos en el periodo se cuentan aparte.';
+
+  @override
+  String get biItemVendorTitle => 'Margen por proveedor';
+
+  @override
   String get biKindCurrent => 'Ahora';
 
   @override
@@ -20204,6 +20251,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesInvoiceDate => 'Fecha de la factura';
 
   @override
+  String get purchasesItem => 'Artículo comprado';
+
+  @override
   String get purchasesKindBill => 'Factura de proveedor';
 
   @override
@@ -20230,6 +20280,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Otro';
+
+  @override
+  String get purchasesNoItem => 'Ningún artículo';
 
   @override
   String get purchasesNoSupplier => 'Ningún proveedor elegido';
@@ -20348,6 +20401,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesPurposeStock => 'Mercancías para reventa';
 
   @override
+  String get purchasesQuantity => 'Cantidad';
+
+  @override
   String get purchasesReference => 'Número de factura';
 
   @override
@@ -20457,6 +20513,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unidad (p. ej. caja, resma)';
 
   @override
   String get pushAllowAction => 'Permitir';
@@ -23653,6 +23712,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'true: un miembro puede exportar y borrar sus datos desde la aplicación. false: presenta una solicitud de derechos, que gestiona el administrador de datos personales. Los propietarios y el administrador de datos personales nunca quedan bloqueados, y presentar una solicitud siempre está abierto.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: todas las compras aprobadas del artículo hasta el final del periodo, ponderadas por sus unidades. last: la última compra fechada hasta entonces. No cambia ningún documento, solo los márgenes.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.';
 
@@ -23924,6 +23987,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Los miembros exportan y borran ellos mismos sus datos';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Cómo se lee el coste unitario de un artículo en los márgenes';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

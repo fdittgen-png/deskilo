@@ -4193,6 +4193,83 @@
   "@biInvalidAddress": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biItemMethodAverage": "average cost",
+  "@biItemMethodAverage": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemMethodLast": "last purchase",
+  "@biItemMethodLast": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesBasis": "{lines} purchase lines of {items} items",
+  "@biItemPricesBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "lines": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemPricesDefinition": "The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.",
+  "@biItemPricesDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesTitle": "Item prices by supplier",
+  "@biItemPricesTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductBasis": "Sold for {revenue} net, cost {cost} ({method})",
+  "@biItemProductBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "revenue": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemProductDefinition": "Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.",
+  "@biItemProductDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductTitle": "Margin by product",
+  "@biItemProductTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemUncosted": "{count} products sold were never bought: they have no cost and are left out of the margin",
+  "@biItemUncosted": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorBasis": "{count} suppliers",
+  "@biItemVendorBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorDefinition": "For each supplier: the items bought from it in the period, at the price the members paid for them in the period minus the supplier’s unit price. Items not sold in the period are counted apart.",
+  "@biItemVendorDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemVendorTitle": "Margin by supplier",
+  "@biItemVendorTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "biKindCurrent": "Now",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -24010,6 +24087,10 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Item bought",
+  "@purchasesItem": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesKindBill": "Supplier bill",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -24045,6 +24126,10 @@
   "purchasesMethodOther": "Other",
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
+  },
+  "purchasesNoItem": "No item",
+  "@purchasesNoItem": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "purchasesNoSupplier": "No supplier chosen",
   "@purchasesNoSupplier": {
@@ -24210,6 +24295,10 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantity",
+  "@purchasesQuantity": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesReference": "Invoice number",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -24355,6 +24444,10 @@
   "purchasesTotal": "Total",
   "@purchasesTotal": {
     "description": "#2573 purchases"
+  },
+  "purchasesUnit": "Unit (e.g. box, ream)",
+  "@purchasesUnit": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "pushAllowAction": "Allow",
   "@pushAllowAction": {
@@ -27914,6 +28007,10 @@
     "description": "#3098 settings: Setting hint."
   },
   "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
+  "settingHintPurchaseItemCostMethod": "average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.",
+  "@settingHintPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "settingHintPurchasePaymentChecker": "A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -28196,6 +28293,10 @@
     "description": "#3098 settings: Setting label."
   },
   "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
+  "settingLabelPurchaseItemCostMethod": "How an item's unit cost is read in the margins",
+  "@settingLabelPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "settingLabelPurchasePaymentChecker": "Payments a second person records from (currency units)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

@@ -2097,6 +2097,18 @@
   "biGroupNone": "Keine Gruppierung",
   "biIncompatible": "Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.",
   "biInvalidAddress": "Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.",
+  "biItemMethodAverage": "Durchschnittskosten",
+  "biItemMethodLast": "letzter Einkauf",
+  "biItemPricesBasis": "{lines} Einkaufspositionen von {items} Artikeln",
+  "biItemPricesDefinition": "Die genehmigten Einkaufspositionen mit Artikel und Datum im Zeitraum: was sie kosten (netto plus nicht abziehbare Steuer). Die Tabelle zeigt den Stückpreis jedes Artikels je Lieferant. Gutschriften bleiben außen vor.",
+  "biItemPricesTitle": "Artikelpreise nach Lieferant",
+  "biItemProductBasis": "Netto für {revenue} verkauft, Kosten {cost} ({method})",
+  "biItemProductDefinition": "Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.",
+  "biItemProductTitle": "Marge nach Produkt",
+  "biItemUncosted": "{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus der Marge heraus",
+  "biItemVendorBasis": "{count} Lieferanten",
+  "biItemVendorDefinition": "Für jeden Lieferanten: die im Zeitraum bei ihm gekauften Artikel, zum Preis, den die Mitglieder im Zeitraum dafür gezahlt haben, abzüglich seines Stückpreises. Im Zeitraum nicht verkaufte Artikel werden getrennt gezählt.",
+  "biItemVendorTitle": "Marge nach Lieferant",
   "biKindCurrent": "Jetzt",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -12891,6 +12903,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Gekaufter Artikel",
   "purchasesKindBill": "Lieferantenrechnung",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12927,6 +12940,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Kein Artikel",
   "purchasesNoSupplier": "Kein Lieferant gewählt",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13085,6 +13099,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Menge",
   "purchasesReference": "Rechnungsnummer",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13231,6 +13246,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Einheit (z. B. Karton, Ries)",
   "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
@@ -15891,6 +15907,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.",
   "settingHintPrivacyMemberSelfService": "true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.",
+  "settingHintPurchaseItemCostMethod": "average: jeder genehmigte Kauf des Artikels bis zum Ende des Zeitraums, nach Stückzahl gewichtet. last: der letzte Kauf bis dahin. Es ändert keinen Beleg, nur die Margen.",
   "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16074,6 +16091,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
   "settingLabelPrivacyMemberSelfService": "Mitglieder exportieren und löschen ihre Daten selbst",
+  "settingLabelPurchaseItemCostMethod": "Wie die Stückkosten eines Artikels in den Margen gelesen werden",
   "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

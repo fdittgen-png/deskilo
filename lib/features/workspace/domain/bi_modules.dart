@@ -490,6 +490,38 @@ const biModules = <BiModule>[
     },
     drill: _customerInvoices,
   ),
+  // #3294 step 4 — what an item costs from each supplier, the margin each
+  // product leaves and the margin each supplier's prices leave (0675).
+  BiModule(
+    id: 'items.unit_prices',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorPurchases,
+  ),
+  BiModule(
+    id: 'items.product_margin',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'items.vendor_margin',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorSuppliers,
+  ),
 ];
 
 /// #3294 step 2 — the suppliers behind a vendor figure.

@@ -2097,6 +2097,18 @@
   "biGroupNone": "Nessun raggruppamento",
   "biIncompatible": "Il server definisce ora questo indicatore in modo diverso da come lo conosce questa versione dell'app: aggiorni l'app per vederlo.",
   "biInvalidAddress": "Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.",
+  "biItemMethodAverage": "costo medio",
+  "biItemMethodLast": "ultimo acquisto",
+  "biItemPricesBasis": "{lines} righe d’acquisto di {items} articoli",
+  "biItemPricesDefinition": "Le righe d’acquisto approvate che indicano un articolo, datate nel periodo: quanto costano (imponibile più l’imposta non recuperabile). La tabella riporta il prezzo unitario di ogni articolo per fornitore. Le note di credito sono escluse.",
+  "biItemPricesTitle": "Prezzi degli articoli per fornitore",
+  "biItemProductBasis": "Venduto a {revenue} netto, costo {cost} ({method})",
+  "biItemProductDefinition": "Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.",
+  "biItemProductTitle": "Margine per prodotto",
+  "biItemUncosted": "{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori dal margine",
+  "biItemVendorBasis": "{count} fornitori",
+  "biItemVendorDefinition": "Per ogni fornitore: gli articoli acquistati da lui nel periodo, al prezzo pagato dai membri nel periodo meno il suo prezzo unitario. Gli articoli non venduti nel periodo sono contati a parte.",
+  "biItemVendorTitle": "Margine per fornitore",
   "biKindCurrent": "Ora",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -12891,6 +12903,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Articolo acquistato",
   "purchasesKindBill": "Fattura fornitore",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12927,6 +12940,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Nessun articolo",
   "purchasesNoSupplier": "Nessun fornitore scelto",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13085,6 +13099,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantità",
   "purchasesReference": "Numero di fattura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13231,6 +13246,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Unità (es. scatola, risma)",
   "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
@@ -15891,6 +15907,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuti in cui l'app deve essere rimasta fuori vista (in background, una scheda nascosta, un chiosco in standby) prima di rileggere tutto ciò che mostra al ritorno. Cambiare finestra non rilegge mai; una connessione in diretta persa rilegge sempre.",
   "settingHintPrivacyMemberSelfService": "true: un membro può esportare e cancellare i propri dati dall’app. false: presenta una richiesta di diritti, gestita dall’amministratore dei dati personali. I proprietari e l’amministratore dei dati personali non sono mai bloccati, e presentare una richiesta resta sempre possibile.",
+  "settingHintPurchaseItemCostMethod": "average: tutti gli acquisti approvati dell’articolo fino alla fine del periodo, ponderati per unità. last: l’ultimo acquisto datato entro allora. Non cambia alcun documento, solo i margini.",
   "settingHintPurchasePaymentChecker": "Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16074,6 +16091,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Rileggi dopo un'assenza",
   "settingLabelPrivacyMemberSelfService": "I membri esportano e cancellano da soli i propri dati",
+  "settingLabelPurchaseItemCostMethod": "Come si legge il costo unitario di un articolo nei margini",
   "settingLabelPurchasePaymentChecker": "Pagamenti registrati da una seconda persona a partire da (unità monetarie)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

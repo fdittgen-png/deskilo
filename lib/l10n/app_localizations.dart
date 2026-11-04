@@ -5614,6 +5614,78 @@ abstract class AppLocalizations {
   /// **'This address asks for an analysis that does not exist; nothing was read.'**
   String get biInvalidAddress;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average cost'**
+  String get biItemMethodAverage;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'last purchase'**
+  String get biItemMethodLast;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{lines} purchase lines of {items} items'**
+  String biItemPricesBasis(String lines, String items);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.'**
+  String get biItemPricesDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item prices by supplier'**
+  String get biItemPricesTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Sold for {revenue} net, cost {cost} ({method})'**
+  String biItemProductBasis(String revenue, String cost, String method);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.'**
+  String get biItemProductDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Margin by product'**
+  String get biItemProductTitle;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} products sold were never bought: they have no cost and are left out of the margin'**
+  String biItemUncosted(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'{count} suppliers'**
+  String biItemVendorBasis(String count);
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'For each supplier: the items bought from it in the period, at the price the members paid for them in the period minus the supplier’s unit price. Items not sold in the period are counted apart.'**
+  String get biItemVendorDefinition;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Margin by supplier'**
+  String get biItemVendorTitle;
+
   /// Business analytics dashboard: biKindCurrent
   ///
   /// In en, this message translates to:
@@ -33462,6 +33534,12 @@ abstract class AppLocalizations {
   /// **'Invoice date'**
   String get purchasesInvoiceDate;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Item bought'**
+  String get purchasesItem;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -33515,6 +33593,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get purchasesMethodOther;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'No item'**
+  String get purchasesNoItem;
 
   /// #2573 purchases
   ///
@@ -33726,6 +33810,12 @@ abstract class AppLocalizations {
   /// **'Goods for resale'**
   String get purchasesPurposeStock;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get purchasesQuantity;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -33929,6 +34019,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get purchasesTotal;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (e.g. box, ream)'**
+  String get purchasesUnit;
 
   /// #2559 Settings button: the deliberate action that raises the system notification prompt
   ///
@@ -39384,6 +39480,12 @@ abstract class AppLocalizations {
   /// **'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.'**
   String get settingHintPrivacyMemberSelfService;
 
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.'**
+  String get settingHintPurchaseItemCostMethod;
+
   /// #2574 maker-checker settings
   ///
   /// In en, this message translates to:
@@ -39815,6 +39917,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members export and erase their own data directly'**
   String get settingLabelPrivacyMemberSelfService;
+
+  /// #3294 step 4 items on purchase lines
+  ///
+  /// In en, this message translates to:
+  /// **'How an item\'s unit cost is read in the margins'**
+  String get settingLabelPurchaseItemCostMethod;
 
   /// #2574 maker-checker settings
   ///

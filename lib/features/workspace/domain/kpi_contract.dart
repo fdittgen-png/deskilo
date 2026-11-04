@@ -19,6 +19,7 @@ import 'package:meta/meta.dart';
 
 import 'kpi_customers.dart';
 import 'kpi_descriptor.dart';
+import 'kpi_items.dart';
 import 'kpi_overview.dart';
 import 'kpi_purchases.dart';
 import 'kpi_sales.dart';
@@ -181,6 +182,7 @@ const kpiCatalogue = <KpiDefinition>[
   ...customerKpis,
   ...vendorKpis,
   ...salesKpis,
+  ...itemKpis,
 ];
 
 /// The definition registered under [id], or null for an unknown id.

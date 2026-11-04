@@ -1,0 +1,20 @@
+{
+  "purchasesItem": "Article acheté",
+  "purchasesNoItem": "Aucun article",
+  "purchasesQuantity": "Quantité",
+  "purchasesUnit": "Unité (p. ex. carton, rame)",
+  "settingLabelPurchaseItemCostMethod": "Comment le coût unitaire d’un article est lu dans les marges",
+  "settingHintPurchaseItemCostMethod": "average : tous les achats approuvés de l’article jusqu’à la fin de la période, pondérés par leurs unités. last : le dernier achat daté d’ici là. Aucune pièce n’est modifiée, seulement les marges.",
+  "biItemPricesTitle": "Prix des articles par fournisseur",
+  "biItemPricesBasis": "{lines} lignes d’achat de {items} articles",
+  "biItemPricesDefinition": "Les lignes d’achat approuvées qui nomment un article, datées de la période : ce qu’elles coûtent (HT plus la taxe non récupérable). Le tableau donne le prix unitaire de chaque article par fournisseur. Les avoirs sont laissés de côté.",
+  "biItemProductTitle": "Marge par produit",
+  "biItemProductBasis": "Vendu {revenue} HT, coût {cost} ({method})",
+  "biItemProductDefinition": "Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.",
+  "biItemUncosted": "{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors de la marge",
+  "biItemMethodAverage": "coût moyen",
+  "biItemMethodLast": "dernier achat",
+  "biItemVendorTitle": "Marge par fournisseur",
+  "biItemVendorBasis": "{count} fournisseurs",
+  "biItemVendorDefinition": "Pour chaque fournisseur : les articles achetés chez lui sur la période, au prix payé par les membres sur la période moins son prix unitaire. Les articles non vendus sur la période sont comptés à part."
+}

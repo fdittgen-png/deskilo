@@ -24,6 +24,7 @@ import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_customer_views.dart';
 import 'bi_dashboard.dart';
+import 'bi_item_views.dart';
 import 'bi_overview_views.dart';
 import 'bi_purchase_views.dart';
 import 'bi_result_views.dart';
@@ -203,6 +204,7 @@ final biModuleViews = <String, BiModuleView>{
   ...customerModuleViews,
   ...vendorModuleViews,
   ...salesModuleViews,
+  ...itemModuleViews,
 };
 
 /// The change, worded: "+3.2 pp" for a ratio; for an amount the

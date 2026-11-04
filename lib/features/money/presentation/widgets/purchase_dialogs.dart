@@ -9,8 +9,12 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/purchase.dart';
+import '../../domain/service_item.dart';
 import '../../domain/supplier.dart';
+import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
 import 'purchase_exchange_rate.dart';
@@ -42,7 +46,10 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   final _description = TextEditingController();
   final _gross = TextEditingController();
   final _tax = TextEditingController();
+  final _quantity = TextEditingController();
+  final _unit = TextEditingController();
   String? _supplierId;
+  String? _itemId;
   var _purpose = 'unresolved';
   PurchasePlace? _place;
   PurchaseCurrencyChoice _money = (currency: null, rate: null);
@@ -56,7 +63,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
 
   @override
   void dispose() {
-    for (final c in [_reference, _description, _gross, _tax]) {
+    for (final c in [_reference, _description, _gross, _tax, _quantity, _unit]) {
       c.dispose();
     }
     super.dispose();
@@ -70,6 +77,17 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
     // Another currency than the space's is captured with its rate.
     if (_money.currency != null && _money.rate == null) return null;
+    // #3294 — an item is bought in a quantity above zero.
+    PurchaseItem? item;
+    if (_itemId case final id?) {
+      final quantity = double.tryParse(_quantity.text.trim().replaceAll(',', '.'));
+      if (quantity == null || quantity <= 0) return null;
+      item = PurchaseItem(
+        serviceId: id,
+        quantity: quantity,
+        unit: _unit.text.trim(),
+      );
+    }
     return PurchaseBillDraft(
       grossCents: gross,
       supplierId: _supplierId,
@@ -82,6 +100,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       place: _place,
       currency: _money.currency,
       exchangeRate: _money.rate,
+      item: item,
     );
   }
 
@@ -124,7 +143,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.place == b.place &&
       a.currency == b.currency &&
       a.exchangeRate == b.exchangeRate &&
-      a.dueOn == b.dueOn;
+      a.dueOn == b.dueOn &&
+      a.item == b.item;
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
     context: context,
@@ -144,6 +164,14 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               const <Supplier>[])
         if (s.isActive) s,
     ];
+    // #3294 — the item a line bought, for the item figures: offered while
+    // the purchase figures are on.
+    final itemsOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.purchaseAnalytics);
+    final items = itemsOn
+        ? ref.watch(servicesProvider).value ?? const <ServiceItem>[]
+        : const <ServiceItem>[];
     return AlertDialog(
       title: Text(l10n.purchasesAddBill),
       content: SingleChildScrollView(
@@ -199,6 +227,36 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               label: l10n.purchasesDescription,
               maxLength: 500,
             ),
+            if (itemsOn) ...[
+              DropdownButtonFormField<String?>(
+                key: const ValueKey('purchase-item'),
+                initialValue: _itemId,
+                isExpanded: true,
+                decoration: InputDecoration(labelText: l10n.purchasesItem),
+                items: [
+                  DropdownMenuItem<String?>(child: Text(l10n.purchasesNoItem)),
+                  for (final i in items)
+                    DropdownMenuItem<String?>(value: i.id, child: Text(i.name)),
+                ],
+                onChanged: (v) => setState(() => _itemId = v),
+              ),
+              if (_itemId != null) ...[
+                AppTextField(
+                  key: const ValueKey('purchase-quantity'),
+                  controller: _quantity,
+                  label: l10n.purchasesQuantity,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                ),
+                AppTextField(
+                  key: const ValueKey('purchase-unit'),
+                  controller: _unit,
+                  label: l10n.purchasesUnit,
+                  maxLength: 20,
+                ),
+              ],
+            ],
             // A bill in another currency, with its rate (when switched on).
             PurchaseCurrencyFields(
               // recorder-key-exempt: a data callback; the fields are keyed.

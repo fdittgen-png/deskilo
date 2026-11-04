@@ -3343,6 +3343,53 @@ class AppLocalizationsEn extends AppLocalizations {
       'This address asks for an analysis that does not exist; nothing was read.';
 
   @override
+  String get biItemMethodAverage => 'average cost';
+
+  @override
+  String get biItemMethodLast => 'last purchase';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines purchase lines of $items items';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.';
+
+  @override
+  String get biItemPricesTitle => 'Item prices by supplier';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Sold for $revenue net, cost $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.';
+
+  @override
+  String get biItemProductTitle => 'Margin by product';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count products sold were never bought: they have no cost and are left out of the margin';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count suppliers';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'For each supplier: the items bought from it in the period, at the price the members paid for them in the period minus the supplier’s unit price. Items not sold in the period are counted apart.';
+
+  @override
+  String get biItemVendorTitle => 'Margin by supplier';
+
+  @override
   String get biKindCurrent => 'Now';
 
   @override
@@ -20058,6 +20105,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesInvoiceDate => 'Invoice date';
 
   @override
+  String get purchasesItem => 'Item bought';
+
+  @override
   String get purchasesKindBill => 'Supplier bill';
 
   @override
@@ -20084,6 +20134,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Other';
+
+  @override
+  String get purchasesNoItem => 'No item';
 
   @override
   String get purchasesNoSupplier => 'No supplier chosen';
@@ -20202,6 +20255,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesPurposeStock => 'Goods for resale';
 
   @override
+  String get purchasesQuantity => 'Quantity';
+
+  @override
   String get purchasesReference => 'Invoice number';
 
   @override
@@ -20311,6 +20367,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unit (e.g. box, ream)';
 
   @override
   String get pushAllowAction => 'Allow';
@@ -23468,6 +23527,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
 
@@ -23717,6 +23780,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Members export and erase their own data directly';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'How an item\'s unit cost is read in the margins';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

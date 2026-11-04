@@ -3369,6 +3369,53 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.';
 
   @override
+  String get biItemMethodAverage => 'Durchschnittskosten';
+
+  @override
+  String get biItemMethodLast => 'letzter Einkauf';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines Einkaufspositionen von $items Artikeln';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Die genehmigten Einkaufspositionen mit Artikel und Datum im Zeitraum: was sie kosten (netto plus nicht abziehbare Steuer). Die Tabelle zeigt den Stückpreis jedes Artikels je Lieferant. Gutschriften bleiben außen vor.';
+
+  @override
+  String get biItemPricesTitle => 'Artikelpreise nach Lieferant';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Netto für $revenue verkauft, Kosten $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.';
+
+  @override
+  String get biItemProductTitle => 'Marge nach Produkt';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus der Marge heraus';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count Lieferanten';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Für jeden Lieferanten: die im Zeitraum bei ihm gekauften Artikel, zum Preis, den die Mitglieder im Zeitraum dafür gezahlt haben, abzüglich seines Stückpreises. Im Zeitraum nicht verkaufte Artikel werden getrennt gezählt.';
+
+  @override
+  String get biItemVendorTitle => 'Marge nach Lieferant';
+
+  @override
   String get biKindCurrent => 'Jetzt';
 
   @override
@@ -20247,6 +20294,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesInvoiceDate => 'Rechnungsdatum';
 
   @override
+  String get purchasesItem => 'Gekaufter Artikel';
+
+  @override
   String get purchasesKindBill => 'Lieferantenrechnung';
 
   @override
@@ -20273,6 +20323,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Andere';
+
+  @override
+  String get purchasesNoItem => 'Kein Artikel';
 
   @override
   String get purchasesNoSupplier => 'Kein Lieferant gewählt';
@@ -20391,6 +20444,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesPurposeStock => 'Handelsware zum Weiterverkauf';
 
   @override
+  String get purchasesQuantity => 'Menge';
+
+  @override
   String get purchasesReference => 'Rechnungsnummer';
 
   @override
@@ -20501,6 +20557,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Gesamt';
+
+  @override
+  String get purchasesUnit => 'Einheit (z. B. Karton, Ries)';
 
   @override
   String get pushAllowAction => 'Erlauben';
@@ -23695,6 +23754,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: jeder genehmigte Kauf des Artikels bis zum Ende des Zeitraums, nach Stückzahl gewichtet. last: der letzte Kauf bis dahin. Es ändert keinen Beleg, nur die Margen.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
 
@@ -23955,6 +24018,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Mitglieder exportieren und löschen ihre Daten selbst';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Wie die Stückkosten eines Artikels in den Margen gelesen werden';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

@@ -3364,6 +3364,53 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.';
 
   @override
+  String get biItemMethodAverage => 'costo medio';
+
+  @override
+  String get biItemMethodLast => 'ultimo acquisto';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines righe d’acquisto di $items articoli';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Le righe d’acquisto approvate che indicano un articolo, datate nel periodo: quanto costano (imponibile più l’imposta non recuperabile). La tabella riporta il prezzo unitario di ogni articolo per fornitore. Le note di credito sono escluse.';
+
+  @override
+  String get biItemPricesTitle => 'Prezzi degli articoli per fornitore';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Venduto a $revenue netto, costo $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.';
+
+  @override
+  String get biItemProductTitle => 'Margine per prodotto';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori dal margine';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count fornitori';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Per ogni fornitore: gli articoli acquistati da lui nel periodo, al prezzo pagato dai membri nel periodo meno il suo prezzo unitario. Gli articoli non venduti nel periodo sono contati a parte.';
+
+  @override
+  String get biItemVendorTitle => 'Margine per fornitore';
+
+  @override
   String get biKindCurrent => 'Ora';
 
   @override
@@ -20222,6 +20269,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesInvoiceDate => 'Data della fattura';
 
   @override
+  String get purchasesItem => 'Articolo acquistato';
+
+  @override
   String get purchasesKindBill => 'Fattura fornitore';
 
   @override
@@ -20248,6 +20298,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Altro';
+
+  @override
+  String get purchasesNoItem => 'Nessun articolo';
 
   @override
   String get purchasesNoSupplier => 'Nessun fornitore scelto';
@@ -20366,6 +20419,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesPurposeStock => 'Merci per la rivendita';
 
   @override
+  String get purchasesQuantity => 'Quantità';
+
+  @override
   String get purchasesReference => 'Numero di fattura';
 
   @override
@@ -20475,6 +20531,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Totale';
+
+  @override
+  String get purchasesUnit => 'Unità (es. scatola, risma)';
 
   @override
   String get pushAllowAction => 'Consenti';
@@ -23670,6 +23729,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'true: un membro può esportare e cancellare i propri dati dall’app. false: presenta una richiesta di diritti, gestita dall’amministratore dei dati personali. I proprietari e l’amministratore dei dati personali non sono mai bloccati, e presentare una richiesta resta sempre possibile.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: tutti gli acquisti approvati dell’articolo fino alla fine del periodo, ponderati per unità. last: l’ultimo acquisto datato entro allora. Non cambia alcun documento, solo i margini.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.';
 
@@ -23941,6 +24004,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'I membri esportano e cancellano da soli i propri dati';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Come si legge il costo unitario di un articolo nei margini';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
