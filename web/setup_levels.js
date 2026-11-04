@@ -24,13 +24,15 @@ const levelRank=(p,id)=>levelIds(p).indexOf(id);
 function recommendLevels(answers){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>!x.any.length||x.any.some(q=>answers[q]===true));out[p]={level:r.level,reason:r.reason}}return out}
 // Each process's level as the switches say: the highest whose switches and
 // every lower level's are all ticked — currentSetupLevels.
-function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
+function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]||!availableHere(k)))break;reached=l.id}out[pr.key]=reached}return out}
+// #3300 — a switch the country does not offer is neither ticked nor
+// unticked by a level and never holds one back.
 // A level ticks its switches and every lower level's, and unticks the
 // higher ones' — setupFeatureDelta. The expert view keeps every switch.
 // applyLevels sets the switches of each [process, level] pair in a copy of
 // them and writes it once, with `also`.
 function applyLevels(pairs,also=[]){const f={...S.features};let used=false;
- for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f)f[k]=i<=r}));used=true}
+ for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f&&availableHere(k))f[k]=i<=r}));used=true}
  setMany([...also,['features',f],...(used?[['journey.used',true]]:[])])}
 function applyLevel(p,id){applyLevels([[p,id]])}
 // #3076 — the questions open from what the space already does: a question
