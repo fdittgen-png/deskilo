@@ -9,10 +9,17 @@
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_main_books_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo/features/money/domain/premises_lease.dart';
+import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 typedef _Space = ({
@@ -215,6 +222,166 @@ void main() {
         expect(issued.difference(posted), isEmpty,
             reason: 'issued sales without a posting');
       });
+
+      group('Pézenas purchases', () {
+        final purchasing = seedDemoPurchasing(
+          fixture.seededAt,
+          money: fixture.money,
+          plan: (fixture.workspaces, fixture.floorPlan),
+          actor: () => fixture.activeMemberId,
+        );
+        Future<List<PurchaseDetail>> details() async => [
+              for (final s in await purchasing.purchases.fetchPurchases('ws-1'))
+                await purchasing.purchases.fetchDetail('ws-1', s.id),
+            ];
+        int settled(List<SettlementAllocation> a) => a
+            .where((x) => !x.reversed)
+            .fold(0, (n, x) => n + (x.isReversal ? -x.amountCents : x.amountCents));
+
+        test('an approved bill or receipt owes exactly its gross once; what is '
+            'not approved owes nothing', () async {
+          for (final d in await details()) {
+            final gross = d.lines.fold(0, (int n, l) => n + l.grossCents);
+            expect(d.summary.grossCents, gross, reason: d.summary.id);
+            final owed = d.summary.state == PurchaseState.approved &&
+                d.summary.kind != PurchaseKind.creditNote;
+            expect(d.obligations, hasLength(owed ? 1 : 0), reason: d.summary.id);
+            for (final o in d.obligations) {
+              expect(o.amountCents, gross, reason: d.summary.id);
+            }
+          }
+        });
+
+        test('a payment out is its allocations, never more than owed, never '
+            'dated after now; paid, partial and unpaid all stand, for the '
+            'suppliers and for the members', () async {
+          final states = <CreditorKind, Set<String>>{};
+          for (final r in purchasing.purchases.payables) {
+            final o = r.obligation;
+            expect(o.paidCents, settled(o.allocations), reason: o.id);
+            expect(o.paidCents + o.appliedCents + o.remainingCents, o.amountCents,
+                reason: o.id);
+            expect(o.remainingCents, greaterThanOrEqualTo(0), reason: o.id);
+            for (final a in o.allocations) {
+              expect(a.paidOn == null || !a.paidOn!.isAfter(now), isTrue,
+                  reason: '${o.id} paid in the future');
+            }
+            states.putIfAbsent(o.creditorKind, () => {}).add(
+                  o.remainingCents == 0
+                      ? 'paid'
+                      : o.paidCents == 0 ? 'unpaid' : 'partial',
+                );
+          }
+          expect(states[CreditorKind.supplier], {'paid', 'partial', 'unpaid'});
+          expect(states[CreditorKind.member], {'paid', 'partial', 'unpaid'});
+          final docs = await details();
+          expect(docs.where((d) => d.summary.kind == PurchaseKind.creditNote),
+              isNotEmpty, reason: 'a supplier credit note');
+        });
+
+        test('the lease: every matched rent occurrence is a bill of the lessor '
+            'that the space holds, its line as the match states it', () async {
+          final lease = seedDemoLease(fixture.seededAt).leases.single;
+          final rent = lease.terms
+              .singleWhere((t) => t.kind == LeaseTermKind.rent)
+              .amountCents;
+          final page = await seedDemoCommitments(fixture.seededAt)
+              .fetchCommitments('ws-1', lease.id);
+          final byId = {for (final d in await details()) d.summary.id: d};
+          var matched = 0;
+          for (final o in page.occurrences) {
+            expect(o.expectedCents, rent, reason: o.id);
+            expect(o.matchedCents, lessThanOrEqualTo(o.expectedCents), reason: o.id);
+            for (final CommitmentMatch m in o.matches) {
+              matched++;
+              final bill = byId[m.purchaseId];
+              expect(bill, isNotNull, reason: '${o.id}: no ${m.purchaseId}');
+              expect(bill!.summary.supplierId, lease.supplierId, reason: m.purchaseId);
+              expect(bill.summary.state, PurchaseState.approved, reason: m.purchaseId);
+              expect(bill.summary.reference, m.reference, reason: m.purchaseId);
+              final line = bill.lines.singleWhere((l) => l.lineNo == m.lineNo);
+              expect(line.grossCents, m.lineGrossCents, reason: m.purchaseId);
+              expect(m.lineUnallocatedCents, line.grossCents - m.allocatedCents,
+                  reason: m.purchaseId);
+              expect(o.dueOn.isAfter(now), isFalse, reason: o.id);
+            }
+          }
+          expect(matched, greaterThan(0));
+        });
+
+        test('the equipment register: every asset and candidate is a line of a '
+            'purchase the space holds, at its cost', () async {
+          final register = seedDemoAssets(fixture.seededAt);
+          final byId = {for (final d in await details()) d.summary.id: d};
+          for (final WorkspaceAsset a in register.assets) {
+            final bill = byId[a.purchaseId];
+            expect(bill, isNotNull, reason: '${a.id}: no ${a.purchaseId}');
+            final line = bill!.lines.singleWhere((l) => l.lineNo == a.lineNo);
+            expect(line.description, a.description, reason: a.id);
+            expect(bill.summary.reference, a.originalReference, reason: a.id);
+            expect(bill.supplierName, a.supplierName, reason: a.id);
+            // Net plus the tax not recovered.
+            expect(
+              a.acquisitionCostCents,
+              line.netCents! + line.taxCents! - line.recoverableTaxCents!,
+              reason: a.id,
+            );
+            if (a.availableForUseOn case final day?) {
+              expect(day.isAfter(now), isFalse, reason: '${a.id} in use ahead');
+              expect(bill.summary.receivedOn!.isAfter(day), isFalse, reason: a.id);
+            }
+          }
+          for (final c in register.candidates) {
+            final bill = byId[c.purchaseId];
+            expect(bill, isNotNull, reason: 'candidate: no ${c.purchaseId}');
+            final line = bill!.lines.singleWhere((l) => l.lineNo == c.lineNo);
+            expect(line.grossCents, c.grossCents, reason: c.purchaseId);
+            expect(line.description, c.description, reason: c.purchaseId);
+            expect(bill.supplierName, c.supplierName, reason: c.purchaseId);
+          }
+        });
+
+        test('the books post each approved bill of the period once, and each '
+            'payment out once', () async {
+          final books = demoMainBooks(fixture, purchasing);
+          final to = DateTime(now.year, now.month, now.day, 23, 59, 59);
+          final from = DateTime(to.year - 1, to.month, to.day);
+          final set = await books.fetchPostings(
+              'ws-1', 'demo-site-studio', from, to);
+          expect(set.blockers, isEmpty);
+          bool inPeriod(DateTime d) => !d.isBefore(from) && !d.isAfter(to);
+          for (final d in await details()) {
+            final day = d.summary.originalDate ?? d.summary.receivedOn;
+            final posted = d.summary.state == PurchaseState.approved &&
+                day != null &&
+                inPeriod(day) &&
+                (d.summary.kind == PurchaseKind.memberReceipt ||
+                    d.obligations.isNotEmpty) &&
+                d.summary.currency == 'EUR';
+            final documents = set.postings.where((p) =>
+                p.documentId == d.summary.id &&
+                (p.kind == PostingKind.supplierBill ||
+                    p.kind == PostingKind.memberReceipt ||
+                    p.kind == PostingKind.supplierCreditNote));
+            expect(documents, hasLength(posted ? 1 : 0), reason: d.summary.id);
+            final payments = {
+              for (final o in d.obligations)
+                for (final a in o.allocations)
+                  if (!a.reversed && a.paidOn != null && inPeriod(a.paidOn!)) a.id,
+            };
+            final paid = set.postings.where((p) =>
+                p.documentId == d.summary.id &&
+                (p.kind == PostingKind.supplierPayment ||
+                    p.kind == PostingKind.reimbursement));
+            expect(paid, hasLength(posted ? payments.length : 0),
+                reason: '${d.summary.id} payments');
+          }
+          for (final p in set.postings) {
+            expect(p.balanced, isTrue, reason: '${p.kind} ${p.documentNumber}');
+          }
+        });
+      });
+
 
       test('Leipzig is exempt: no invoice charges VAT and it files no return',
           () {
