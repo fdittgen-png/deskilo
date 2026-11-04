@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -116,17 +118,29 @@ class InvoiceStageStrip extends ConsumerWidget {
           AppSpacing.md,
           0,
         ),
-        child: Row(children: [
-          for (final (i, tile) in tiles.indexed) ...[
-            if (i > 0)
-              Icon(
-                Icons.chevron_right,
-                size: 16,
-                color: Theme.of(context).colorScheme.outline,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final tileWidth = math.max(150.0, (constraints.maxWidth - 48) / 4);
+            return SingleChildScrollView(
+              key: const ValueKey('invoice-stages-scroll'),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final (i, tile) in tiles.indexed) ...[
+                    if (i > 0)
+                      Icon(
+                        Icons.chevron_right,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                    SizedBox(width: tileWidth, child: tile),
+                  ],
+                ],
               ),
-            Expanded(child: tile),
-          ],
-        ]),
+            );
+          },
+        ),
       ),
     );
   }
@@ -186,7 +200,6 @@ class _StageTile extends StatelessWidget {
             Text(
               '$index · $label',
               style: theme.textTheme.labelSmall?.copyWith(color: foreground),
-              overflow: TextOverflow.ellipsis,
             ),
             Text(
               '$count',
@@ -199,8 +212,7 @@ class _StageTile extends StatelessWidget {
               Text(
                 detail!,
                 style: theme.textTheme.labelSmall?.copyWith(color: foreground),
-                overflow: TextOverflow.ellipsis,
-              ),
+                ),
             if (alert != null)
               Text(
                 alert!,
@@ -208,8 +220,7 @@ class _StageTile extends StatelessWidget {
                   color: foreground,
                   fontWeight: FontWeight.bold,
                 ),
-                overflow: TextOverflow.ellipsis,
-              ),
+                ),
           ],
         ),
       ),

@@ -3,11 +3,11 @@
 import '../../../features/workspace/domain/member.dart';
 import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
-import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 import 'demo_city_people_seed.dart';
+import 'demo_flags.dart';
 
 const demoNewYorkSpaceId = 'ws-4';
 
@@ -20,9 +20,7 @@ Workspace demoNewYorkSpace() => Workspace(
   inviteCode: 'HUDSONDEMO',
   environment: 'prod',
   rolePermissions: everydayMatrix(),
-  featureFlags: {
-    for (final feature in featureManifest.keys) feature.dbKey: true,
-  },
+  featureFlags: {...demoFeatureFlags},
   address: '100 Example Avenue\nNew York, NY 10001',
   street: '100 Example Avenue',
   city: 'New York',

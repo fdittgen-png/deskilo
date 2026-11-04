@@ -4260,6 +4260,15 @@
       }
     }
   },
+  "demoSetupCardOpenSpace": "Passer à {space}",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
   "demoSetupCardTitle": "Comment fonctionne la démo",
   "@demoSetupCardTitle": {
     "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
@@ -9095,6 +9104,10 @@
   "journeyStageConfirm": "À confirmer",
   "journeyStageIssue": "À émettre",
   "journeyStageStripLabel": "Le processus de facturation : émettre, encaisser, confirmer, clore",
+  "journeyStateCancelled": "Annulé",
+  "journeyStateCurrent": "Étape actuelle",
+  "journeyStateDone": "Terminé",
+  "journeyStateUpcoming": "À venir",
   "journeyStepClosed": "Close",
   "journeyStepConfirmation": "Confirmation",
   "journeyStepIssued": "Émise",
@@ -11794,6 +11807,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Date de naissance",
+  "personalBirthdayClear": "Effacer la date de naissance",
+  "personalBirthdayHelp": "Seuls vous, les personnes autorisées à voir les données personnelles des membres et l'administrateur des données personnelles de l'espace peuvent la lire. Une personne qui ne fait que facturer ne le peut pas.",
+  "personalBirthdayInvalid": "Une date de naissance ne peut pas être dans le futur ni avant 1900.",
+  "personalBirthdayPick": "Choisir une date",
+  "personalBirthdaySaveFailed": "Vos informations sont enregistrées, mais pas la date de naissance.",
   "personalInfoCity": "Ville",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -12160,6 +12179,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "Le serveur a refusé : {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Pourquoi elles sont conservées",
+  "privacyAdminComplete": "Clore",
+  "privacyAdminDetails": "Détails (facultatif)",
+  "privacyAdminEmpty": "Aucune demande pour le moment.",
+  "privacyAdminExtend": "Prolonger le délai",
+  "privacyAdminExtendReason": "Motif de la prolongation (10 caractères au moins)",
+  "privacyAdminIncidentIntro": "Les personnes qui gèrent les données personnelles de cet espace sont prévenues aussitôt. Dites ce qui s'est passé ; ne collez pas de données personnelles ici.",
+  "privacyAdminIncidentNote": "Ce qui s'est passé (facultatif, 1000 caractères au plus)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} =1{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Enregistrer et prévenir",
+  "privacyAdminIncidentTitle": "Enregistrer un incident de données",
+  "privacyAdminIntro": "Les demandes des membres sur leurs données personnelles, et les incidents que vous enregistrez. Chaque demande reçoit une réponse sous un mois civil.",
+  "privacyAdminKind": "Type de demande",
+  "privacyAdminLoadFailed": "Les demandes n'ont pas pu être lues.",
+  "privacyAdminMember": "Membre",
+  "privacyAdminOpenTile": "Données personnelles et demandes de droits",
+  "privacyAdminOutcomeKind": "Ce qu'il est advenu des données",
+  "privacyAdminPeriod": "Pendant combien de temps",
+  "privacyAdminReceivedOn": "Reçue le {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Enregistrer une demande",
+  "privacyAdminRefusalReason": "Motif du refus (10 caractères au moins)",
+  "privacyAdminRefuse": "Refuser",
+  "privacyAdminSave": "Enregistrer",
+  "privacyAdminStore": "Où (un stockage ou une liste)",
+  "privacyAdminTitle": "Données personnelles et demandes de droits",
   "privacyErase": "Quitter cet espace et effacer mes données",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -12220,6 +12286,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "Une fuite de données",
+  "privacyIncidentOther": "Un autre incident",
+  "privacyIncidentWrongInvoice": "Une facture erronée",
   "privacyIntro": "Vos données ne sont jamais pistées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment ; leur hébergement figure dans la notice de confidentialité de cette installation. Voici vos droits au titre du RGPD — chacun est un bouton.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -12283,6 +12352,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Rectifiées",
+  "privacyOutcomeFailed": "Non réalisées",
+  "privacyOutcomePendingExternal": "Encore ouvertes ailleurs",
+  "privacyOutcomeRemoved": "Supprimées",
+  "privacyOutcomeRestricted": "Limitées",
+  "privacyOutcomeRetained": "Conservées (avec un motif)",
   "privacyPolicy": "Politique de confidentialité",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"

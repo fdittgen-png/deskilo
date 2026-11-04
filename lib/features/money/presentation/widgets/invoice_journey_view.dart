@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -91,6 +93,14 @@ String invoiceStepLabel(AppLocalizations l10n, InvoiceStep step) =>
       InvoiceStep.closed => l10n.journeyStepClosed,
     };
 
+String _stepStateLabel(AppLocalizations l10n, InvoiceStepState state) =>
+    switch (state) {
+      InvoiceStepState.done => l10n.journeyStateDone,
+      InvoiceStepState.current => l10n.journeyStateCurrent,
+      InvoiceStepState.todo => l10n.journeyStateUpcoming,
+      InvoiceStepState.cancelled => l10n.journeyStateCancelled,
+    };
+
 /// The four steps as a bar: a dot per step joined by a line, done steps
 /// filled, the current one ringed, the closed step of an erroneous
 /// invoice crossed. Labels under the dots so the bar reads without a
@@ -109,51 +119,62 @@ class InvoiceJourneyBar extends StatelessWidget {
     return Semantics(
       label: [
         for (final step in InvoiceStep.values)
-          '${invoiceStepLabel(l10n, step)}: ${steps[step]!.name}',
+          '${invoiceStepLabel(l10n, step)}: ${_stepStateLabel(l10n, steps[step]!)}',
       ].join(', '),
-      child: Row(
-        key: const ValueKey('invoice-journey-bar'),
-        children: [
-          for (final (i, step) in InvoiceStep.values.indexed)
-            Expanded(
-              child: Column(children: [
-                Row(children: [
+      child: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: math.max(constraints.maxWidth, 400),
+            child: Row(
+              key: const ValueKey('invoice-journey-bar'),
+              children: [
+                for (final (i, step) in InvoiceStep.values.indexed)
                   Expanded(
-                    child: i == 0
-                        ? const SizedBox.shrink()
-                        : _connector(scheme, steps[step]!),
-                  ),
-                  _Dot(state: steps[step]!),
-                  Expanded(
-                    child: i == InvoiceStep.values.length - 1
-                        ? const SizedBox.shrink()
-                        : _connector(
-                            scheme,
-                            steps[InvoiceStep.values[i + 1]]!,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: i == 0
+                                  ? const SizedBox.shrink()
+                                  : _connector(scheme, steps[step]!),
+                            ),
+                            _Dot(state: steps[step]!),
+                            Expanded(
+                              child: i == InvoiceStep.values.length - 1
+                                  ? const SizedBox.shrink()
+                                  : _connector(
+                                      scheme,
+                                      steps[InvoiceStep.values[i + 1]]!,
+                                    ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          invoiceStepLabel(l10n, step),
+                          key: ValueKey('invoice-journey-step-${step.name}'),
+                          style: labelStyle?.copyWith(
+                            color: switch (steps[step]!) {
+                              InvoiceStepState.current => scheme.primary,
+                              InvoiceStepState.cancelled => scheme.error,
+                              InvoiceStepState.done => scheme.onSurface,
+                              InvoiceStepState.todo => scheme.outline,
+                            },
+                            fontWeight: steps[step] == InvoiceStepState.current
+                                ? FontWeight.bold
+                                : null,
                           ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                ]),
-                const SizedBox(height: 2),
-                Text(
-                  invoiceStepLabel(l10n, step),
-                  key: ValueKey('invoice-journey-step-${step.name}'),
-                  style: labelStyle?.copyWith(
-                    color: switch (steps[step]!) {
-                      InvoiceStepState.current => scheme.primary,
-                      InvoiceStepState.cancelled => scheme.error,
-                      InvoiceStepState.done => scheme.onSurface,
-                      InvoiceStepState.todo => scheme.outline,
-                    },
-                    fontWeight: steps[step] == InvoiceStepState.current
-                        ? FontWeight.bold
-                        : null,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ]),
+              ],
             ),
-        ],
+          ),
+        ),
       ),
     );
   }

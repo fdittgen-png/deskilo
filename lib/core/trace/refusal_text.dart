@@ -71,6 +71,10 @@ enum KnownRefusal {
   /// #2571 (DKE01) — a destructive step over records still under retention:
   /// the server deleted nothing.
   retentionKept,
+
+  /// #3278 (0666) — the workspace handles data requests itself: the member's
+  /// own export and erasure are off and a rights request is filed instead.
+  privacySelfServiceOff,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -95,6 +99,13 @@ const List<String> permissionRefusalSubstrings = [
 const List<String> sessionRefusalSubstrings = [
   'not authenticated',
   'jwt expired',
+];
+
+/// #3278 — the refusal of a member's own export or erasure when the workspace
+/// turned direct access off (it carries errcode 42501, so it is read first).
+@visibleForTesting
+const List<String> privacySelfServiceOffSubstrings = [
+  'privacy_self_service_off',
 ];
 
 /// Substrings that mean somebody else already acted.
@@ -125,6 +136,12 @@ const Map<String, KnownRefusal> _bankRefusals = {
 
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
+  // #3278 — a 42501 that carries its own words: read before the generic one.
+  final said = serverErrorMessage(error)?.toLowerCase();
+  if (said != null &&
+      privacySelfServiceOffSubstrings.any(said.contains)) {
+    return KnownRefusal.privacySelfServiceOff;
+  }
   // 42501 is Postgres's own insufficient_privilege — an RLS refusal or a
   // revoked grant, which never carries one of our sentences.
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
@@ -177,5 +194,6 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.bankMatchUndoLaterFirst => l10n.refusalBankMatchUndoLaterFirst,
       KnownRefusal.retentionKept =>
         l10n.retentionResetRefused(l10n.retentionKeptReview),
+      KnownRefusal.privacySelfServiceOff => l10n.privacySelfServiceOff,
       null => null,
     };

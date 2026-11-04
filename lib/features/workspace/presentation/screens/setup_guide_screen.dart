@@ -41,12 +41,27 @@ class SetupGuideScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    final workspace = ref.watch(currentWorkspaceProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.setupGuideTitle)),
-      body: workspaceId == null
-          ? const LoadingView()
-          : _SetupGuideBody(workspaceId: workspaceId),
+      body: switch (workspace) {
+        AsyncData(:final value) when value != null => _SetupGuideBody(
+          workspaceId: value.id,
+        ),
+        AsyncError() || AsyncData() => ListView(
+          children: [
+            InlineBanner(
+              key: const ValueKey('setup-guide-workspace-unavailable'),
+              icon: Icons.cloud_off_outlined,
+              text: l10n.setupGuideUnavailable,
+              actionLabel: MaterialLocalizations.of(context)
+                  .refreshIndicatorSemanticLabel,
+              onAction: () => ref.invalidate(currentWorkspaceProvider),
+            ),
+          ],
+        ),
+        _ => const LoadingView(),
+      },
     );
   }
 }

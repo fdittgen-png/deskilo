@@ -255,7 +255,7 @@ void main() {
     expect(find.byKey(const ValueKey('finances-invoice-cn')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('finances-type')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('finances-type-invoice')).last);
+    await tester.tap(find.text('Invoice').last);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('finances-invoice-cn')), findsNothing);
     expect(find.byKey(const ValueKey('finances-paid-empty')), findsOneWidget);

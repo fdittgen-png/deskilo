@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/members/presentation/screens/managed_profile_screen.dart';
 import '../../features/members/presentation/screens/member_page.dart';
+import '../../features/members/presentation/screens/privacy_admin_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -37,6 +38,17 @@ List<RouteBase> membersRoutes(RouteEnv env) {
       ),
       builder: (context, state) =>
           ManagedProfileScreen(memberId: state.uri.queryParameters['member']),
+    ),
+    // #3278 — the personal data admin: rights requests and privacy incidents.
+    GoRoute(
+      path: '/members/privacy',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.memberDataExport],
+          to: '/settings',
+        ),
+      ),
+      builder: (context, state) => const PrivacyAdminScreen(),
     ),
   ];
 }

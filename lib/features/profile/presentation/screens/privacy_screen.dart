@@ -45,6 +45,18 @@ class PrivacyScreen extends ConsumerWidget {
   /// When set, the legacy single-workspace share gives way to a link there.
   final String? myDataPath;
 
+  /// Whoever the server lets decide this workspace's rights requests: an
+  /// owner, or a holder of `viewPersonalData` or `managePrivacy`.
+  bool _decidesRightsRequests(WidgetRef ref) {
+    // By name, so the profile feature takes no further import from the
+    // workspace feature (the declared direction only falls); the route
+    // (`/members/privacy`) and the server ask the same permissions again.
+    final held = {for (final p in ref.watch(myPermissionsProvider)) p.name};
+    return (ref.watch(myMemberProvider).value?.isOwner ?? false) ||
+        held.contains('managePrivacy') ||
+        held.contains('viewPersonalData');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -120,6 +132,17 @@ class PrivacyScreen extends ConsumerWidget {
                 : (l10n.privacyEraseHint)),
             enabled: !isOwner,
             onTap: isOwner ? null : () => _erase(context, ref),
+          ),
+        // #3278 — the personal data admin's screen: for whoever may decide the
+        // workspace's rights requests (the server asks again for every write).
+        if (exportOn && _decidesRightsRequests(ref))
+          ListTile(
+            key: const ValueKey('privacy-admin-open'),
+            leading: const Icon(Icons.admin_panel_settings_outlined),
+            title: Text(l10n.privacyAdminOpenTile),
+            subtitle: Text(l10n.privacyAdminIntro),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/members/privacy'),
           ),
         // #1915 — rights requests: filed, dated, answered or refused.
         RightsRequestsTile(
