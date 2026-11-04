@@ -29,7 +29,14 @@ class SupabaseProfileRepository implements ProfileRepository {
         .eq('id', userId)
         .maybeSingle();
     if (row == null) return null;
-    return Profile.fromDb(row);
+    // #3278 (0669) — the birthday lives in its own table, readable by fewer
+    // people than the profile row; my own row is merged into my profile.
+    final birthday = await _client
+        .from('profile_birthdays')
+        .select('birthday')
+        .eq('user_id', userId)
+        .maybeSingle();
+    return Profile.fromDb({...row, 'birthday': birthday?['birthday']});
   }
 
   @override
@@ -106,14 +113,17 @@ class SupabaseProfileRepository implements ProfileRepository {
     if (userId == null) {
       throw StateError('cannot update the profile while signed out');
     }
-    // Self-only via profiles_update RLS; the 0668 check refuses a date before
-    // 1900 or in the future.
-    await _client
-        .from('profiles')
-        .update({
-          'birthday': birthday == null ? null : birthdayWire(birthday),
-        })
-        .eq('id', userId);
+    // #3278 (0669) — its own table: profile_birthdays RLS restricts writes
+    // to self, and the check refuses a date before 1900 or in the future.
+    // Clearing it removes the row.
+    if (birthday == null) {
+      await _client.from('profile_birthdays').delete().eq('user_id', userId);
+      return;
+    }
+    await _client.from('profile_birthdays').upsert({
+      'user_id': userId,
+      'birthday': birthdayWire(birthday),
+    });
   }
 
   @override

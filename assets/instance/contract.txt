@@ -1156,8 +1156,11 @@ constraint privacy_notices.privacy_notices_space_id_fkey FOREIGN KEY (space_id) 
 constraint privacy_notices.privacy_notices_status_check CHECK ((status = ANY (ARRAY['published'::text, 'superseded'::text])))
 constraint privacy_notices.privacy_notices_version_check CHECK ((version ~ '^[0-9A-Za-z._-]{1,40}$'::text))
 constraint privacy_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint profile_birthdays.profile_birthdays_pkey PRIMARY KEY (user_id)
+constraint profile_birthdays.profile_birthdays_plausible CHECK (((birthday >= '1900-01-01'::date) AND (birthday <= CURRENT_DATE)))
+constraint profile_birthdays.profile_birthdays_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint profile_birthdays.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint profiles.profiles_address_check CHECK ((char_length(address) <= 400))
-constraint profiles.profiles_birthday_plausible CHECK (((birthday IS NULL) OR ((birthday >= '1900-01-01'::date) AND (birthday <= CURRENT_DATE))))
 constraint profiles.profiles_city_check CHECK ((char_length(city) <= 120))
 constraint profiles.profiles_clock_check CHECK ((clock = ANY (ARRAY['auto'::text, '24h'::text, '12h'::text])))
 constraint profiles.profiles_company_check CHECK ((char_length(company) <= 160))
@@ -2672,6 +2675,7 @@ routine public.preview_my_member_profile(p_as text) -> jsonb | function | define
 routine public.preview_series(p_workspace_id uuid, p_seat_id uuid, p_first_start timestamp with time zone, p_first_end timestamp with time zone, p_pattern text, p_until timestamp with time zone, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:7fd3ab9e7e9a
 routine public.preview_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b115c43eb789
 routine public.privacy_notice_manifest_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:a749c88d5751
+routine public.profile_birthday_readable(p_subject uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:81f6b97641a8
 routine public.profile_directory_person() -> trigger | function | definer | volatile | exec:service_role | body:6ae1f1405a18
 routine public.profile_full_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:02ff110b4db3
 routine public.profile_person_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:e98ff75cb6c9
@@ -3386,6 +3390,7 @@ trigger presence.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp 
 trigger price_negotiations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.price_negotiations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notice_acknowledgments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notice_acknowledgments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger profile_birthdays.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.profile_birthdays FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger profiles.profiles_default_workspace_ref CREATE TRIGGER profiles_default_workspace_ref BEFORE INSERT OR UPDATE OF default_workspace_id, default_workspace_network_id ON public.profiles FOR EACH ROW EXECUTE FUNCTION profiles_default_workspace_ref()
 trigger profiles.profiles_directory_person CREATE TRIGGER profiles_directory_person BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION profile_directory_person()
 trigger profiles.profiles_person_preferences CREATE TRIGGER profiles_person_preferences AFTER INSERT OR UPDATE OF format_locale, clock, time_zone_mode, preferred_locale ON public.profiles FOR EACH ROW EXECUTE FUNCTION sync_person_preferences()
