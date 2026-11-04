@@ -8328,6 +8328,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an.",
   "invoiceGapVatNotSupported": "Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.",
   "invoiceHeldNote": "Mahnungen angehalten: {reason}",
   "@invoiceHeldNote": {

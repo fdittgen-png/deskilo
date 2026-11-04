@@ -12646,6 +12646,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.';
 
   @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.';
+
+  @override
   String get invoiceGapVatNotSupported =>
       'The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.';
 

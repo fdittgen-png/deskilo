@@ -2304,6 +2304,7 @@ routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_p
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:20005fb63ed0
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
+routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
 routine public.invoices_immutable() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:a675f0d72a42
 routine public.invoices_reimbursement_guard() -> trigger | function | definer | volatile | exec:service_role | body:5d0879fd3190
@@ -2748,6 +2749,7 @@ routine public.purchase_state_of_event(p_status text) -> text | function | invok
 routine public.purchase_write_lines(p_workspace_id uuid, p_purchase_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:5efec05cf1f6
 routine public.purge_expired_field_answer_holds() -> integer | function | definer | volatile | exec:service_role | body:8dcbf0fddd71
 routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
+routine public.qrr_check_digit(p_body text) -> integer | function | invoker | immutable | exec:service_role | body:4ae5fed98fba
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
@@ -3318,6 +3320,7 @@ trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invoices.book_period_void_guard CREATE TRIGGER book_period_void_guard BEFORE UPDATE OF voided_at ON public.invoices FOR EACH ROW EXECUTE FUNCTION book_period_void_guard()
 trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
 trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_maturity_freeze()
+trigger invoices.invoice_qrr_freeze CREATE TRIGGER invoice_qrr_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_qrr_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.invoices_reimbursement_guard CREATE TRIGGER invoices_reimbursement_guard BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_reimbursement_guard()
 trigger invoices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.invoices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()

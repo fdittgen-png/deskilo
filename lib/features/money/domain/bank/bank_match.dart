@@ -44,10 +44,14 @@ class OpenInvoice {
     required this.currency,
     required this.issuedAt,
     required this.dueCents,
+    this.frozenQrr,
   });
 
   final String id;
   final String number;
+
+  /// #2380 — the QRR frozen at issue (0677); null on an older invoice.
+  final String? frozenQrr;
   final String memberName;
   final String currency;
   final DateTime issuedAt;
@@ -75,6 +79,10 @@ List<OpenInvoice> openInvoices(
           currency: i.currency,
           issuedAt: i.issuedAt,
           dueCents: due,
+          frozenQrr: switch (i.legalSnapshot?['qrr']) {
+            final String q when isValidQrr(q) => q,
+            _ => null,
+          },
         ),
 ];
 
@@ -102,7 +110,11 @@ class _OpenIndex {
   _OpenIndex(List<OpenInvoice> open) {
     for (final i in open) {
       (byCurrency[i.currency] ??= []).add(i);
-      if (qrrReferenceOf(i.number) case final r?) (byQr[r] ??= []).add(i);
+      // #2380 — the reference the invoice printed: the one frozen at issue,
+      // or, for an invoice older than 0677, the one derived from its number.
+      if (i.frozenQrr ?? qrrReferenceOf(i.number) case final r?) {
+        (byQr[r] ??= []).add(i);
+      }
       if (scorReferenceOf(i.number) case final r?) (byRf[r] ??= []).add(i);
       final n = i.number.trim().toUpperCase();
       if (n.isNotEmpty && n.contains(RegExp('[0-9]'))) numbers[i.id] = n;

@@ -150,6 +150,12 @@ String? qrrReferenceOf(String number) {
   return '$body${qrrCheckDigit(body)}';
 }
 
+/// #2380 — the QRR of an invoice: the one frozen at issue in its legal
+/// snapshot (`legal_snapshot.qrr`, 0677) when it holds a valid one, else the
+/// reference derived from its number (invoices issued before 0677).
+String? invoiceQrrOf(String number, Map<String, Object?>? legalSnapshot) =>
+    _frozenQrrOf(legalSnapshot) ?? qrrReferenceOf(number);
+
 bool isValidQrr(String reference) =>
     RegExp(r'^\d{27}$').hasMatch(reference) &&
     qrrCheckDigit(reference.substring(0, 26)) ==
@@ -164,6 +170,42 @@ String? scorReferenceOf(String text) {
   final check = (98 - n).toString().padLeft(2, '0');
   return 'RF$check$body';
 }
+
+/// #2380 — BT-83, the remittance reference an e-invoice states for a
+/// payment to [account] (its BT-84). For a QR-IBAN, the only reference such
+/// an account accepts is a QRR, and only the one frozen at issue
+/// (`legal_snapshot.qrr`, 0677) is published: the one derived from the
+/// number's digits is ambiguous (`F-2026-0402` and `U-2026-04-02` share it),
+/// so without a frozen one the reference is '' and the export is refused
+/// (`EInvoiceGap.qrIbanWithoutReference`). For an ordinary IBAN, the
+/// ISO 11649 creditor reference of [invoiceNumber]. '' for a credit note,
+/// which asks for no payment, and without an account.
+String paymentReferenceFor({
+  required String account,
+  required String invoiceNumber,
+  required bool creditNote,
+  Map<String, Object?>? legalSnapshot,
+}) {
+  if (creditNote || account.trim().isEmpty) return '';
+  if (isQrIban(account)) return _frozenQrrOf(legalSnapshot) ?? '';
+  return scorReferenceOf(invoiceNumber) ?? '';
+}
+
+/// The QRR frozen at issue in [legalSnapshot], when it holds a valid one.
+String? _frozenQrrOf(Map<String, Object?>? legalSnapshot) =>
+    switch (legalSnapshot?['qrr']) {
+      final String q when isValidQrr(q) => q,
+      _ => null,
+    };
+
+/// Whether an e-invoice paying [account] cannot be stated: a QR-IBAN with
+/// no frozen QRR to publish (a sale; a credit note asks for no payment).
+bool qrIbanWithoutReference({
+  required String account,
+  required bool creditNote,
+  Map<String, Object?>? legalSnapshot,
+}) =>
+    !creditNote && isQrIban(account) && _frozenQrrOf(legalSnapshot) == null;
 
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
@@ -298,10 +340,16 @@ class SwissQrBill {
     required String currency,
     required String invoiceNumber,
     String additionalInfo = '',
+    String? frozenQrr,
   }) {
     final qr = qrIban.replaceAll(' ', '');
     final plain = iban.replaceAll(' ', '');
-    final qrRef = qr.isEmpty ? null : qrrReferenceOf(invoiceNumber);
+    // #2380 — the reference frozen at issue, when the invoice has one.
+    final qrRef = qr.isEmpty
+        ? null
+        : (frozenQrr != null && isValidQrr(frozenQrr)
+              ? frozenQrr
+              : qrrReferenceOf(invoiceNumber));
     SwissQrBill bill;
     if (qrRef != null && isQrIban(qr)) {
       bill = _make(

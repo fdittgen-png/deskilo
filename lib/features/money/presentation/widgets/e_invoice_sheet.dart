@@ -58,6 +58,8 @@ String _eInvoiceGapText(AppLocalizations l10n, EInvoiceGap gap) =>
       EInvoiceGap.noChargeLines => l10n.invoiceGapNoChargeLines,
       EInvoiceGap.creditNoteWithPayments =>
         l10n.invoiceGapCreditNoteWithPayments,
+      EInvoiceGap.qrIbanWithoutReference =>
+        l10n.invoiceGapQrIbanWithoutReference,
       EInvoiceGap.missingSellerCity => l10n.invoiceGapMissingSellerCity,
       EInvoiceGap.missingSellerPostalCode =>
         l10n.invoiceGapMissingSellerPostalCode,

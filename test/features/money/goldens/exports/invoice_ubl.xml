@@ -48,6 +48,7 @@
   </cac:AccountingCustomerParty>
   <cac:PaymentMeans>
     <cbc:PaymentMeansCode>30</cbc:PaymentMeansCode>
+    <cbc:PaymentID>RF16INV20260001</cbc:PaymentID>
     <cac:PayeeFinancialAccount>
       <cbc:ID>FR7630006000011234567890189</cbc:ID>
     </cac:PayeeFinancialAccount>

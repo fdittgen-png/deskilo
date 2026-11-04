@@ -1,0 +1,3 @@
+{
+  "invoiceGapQrIbanWithoutReference": "Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an."
+}

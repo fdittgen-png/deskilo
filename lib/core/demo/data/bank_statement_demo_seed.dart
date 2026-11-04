@@ -51,7 +51,7 @@ FakeBankStatementRepository seedDemoBankStatements(
   // A QR reference keeps only the number's digits, so two numbers that
   // differ by their letters share one; the demo pays an invoice whose
   // reference is its own.
-  String? qrr(OpenInvoice i) => qrrReferenceOf(i.number);
+  String? qrr(OpenInvoice i) => i.frozenQrr ?? qrrReferenceOf(i.number);
   final byQr = open
       .where(
         (i) =>
