@@ -167,7 +167,7 @@ as $registry$
     "accountingConnectors": {"parent": "accountingBook", "default": false, "core": false},
     "bankImport": {"parent": "invoicing", "default": false, "core": false},
     "planDecor": {"parent": null, "default": true, "core": true},
-    "mtdSubmission": {"parent": "vatDeclarations", "default": false, "core": false},
+    "mtdSubmission": {"parent": "vatDeclarations", "default": false, "core": false, "countries": ["GB"]},
     "purchaseOrders": {"parent": "purchases", "default": false, "core": false}
   }'::jsonb
 $registry$;
