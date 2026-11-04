@@ -45,6 +45,10 @@ class SafTAustriaXml extends SafTFinancialXml {
       gap(SafTGapKind.company, 'TaxAccountingBasis');
     }
     if (r.industryCode.trim().isEmpty) gap(SafTGapKind.company, 'TaxEntity');
+    if (r.taxNumber.trim().isEmpty) {
+      gap(SafTGapKind.company, 'TaxRegistrationNumber');
+    }
+    if (r.smallBusiness == null) gap(SafTGapKind.company, 'Kleinunternehmer_AT');
     if (c.street.trim().isNotEmpty && _austrianStreet(c.street) == null) {
       gap(SafTGapKind.company, 'BuildingNumber');
     }
@@ -93,12 +97,15 @@ class SafTAustriaXml extends SafTFinancialXml {
         builder.element(
           'TaxID',
           nest: () {
-            tag('TaxRegistrationNumber', c.legalId);
+            // The tax office's Steuernummer; the Firmenbuch number is
+            // CompanyID below.
+            tag('TaxRegistrationNumber', r.taxNumber.trim());
             if (c.vatId.isNotEmpty) tag('VATNumber', c.vatId);
           },
         );
         tag('CompanyName', c.name);
         _address('CompanyAddress', c.street, c.city, c.postalCode, c.country);
+        if (c.legalId.isNotEmpty) tag('CompanyID', c.legalId);
         builder.element(
           'ContactInformation',
           nest: () {
@@ -114,7 +121,7 @@ class SafTAustriaXml extends SafTFinancialXml {
         tag('FiscalYear', '${r.period.from.year}');
         tag('StartDate', isoDay(r.period.from));
         tag('EndDate', isoDay(r.period.to));
-        tag('Kleinunternehmer_AT', r.smallBusiness ? 'true' : 'false');
+        tag('Kleinunternehmer_AT', r.smallBusiness! ? 'true' : 'false');
         tag('CurrencyCode', r.currency);
         tag('AuditFileVersion', profile.version);
         tag('DateCreated', isoDay(r.createdAt));

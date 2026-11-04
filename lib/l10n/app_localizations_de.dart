@@ -22834,6 +22834,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get saftProfitBasisLabel => 'Art der Gewinnermittlung';
 
   @override
+  String get saftSmallBusinessHelper =>
+      'Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.';
+
+  @override
+  String get saftSmallBusinessLabel =>
+      'Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'Nein';
+
+  @override
+  String get saftSmallBusinessYes => 'Ja';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.';
+
+  @override
+  String get saftTaxNumberLabel => 'Steuernummer';
+
+  @override
   String get saftWithPostings => 'Mit Buchungen';
 
   @override

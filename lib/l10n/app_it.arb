@@ -15470,6 +15470,12 @@
   },
   "saftProfitBasisHelper": "La disposizione della legge austriaca sull'imposta sul reddito seguita dalla contabilità, come la indica l'intestazione del SAF-T AT.",
   "saftProfitBasisLabel": "Modalità di determinazione dell'utile",
+  "saftSmallBusinessHelper": "Se l'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l'intestazione del SAF-T AT.",
+  "saftSmallBusinessLabel": "Piccola impresa (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessNo": "No",
+  "saftSmallBusinessYes": "Sì",
+  "saftTaxNumberHelper": "Il numero che l'amministrazione finanziaria austriaca assegna all'impresa, non il numero del registro delle imprese.",
+  "saftTaxNumberLabel": "Numero fiscale (Steuernummer)",
   "saftWithPostings": "Con le scritture",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"

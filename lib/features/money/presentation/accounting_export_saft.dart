@@ -62,8 +62,8 @@ extension SafTFinancialExports on AccountingExportRun {
       contact: answers.contact,
       profitBasis: answers.profitBasis,
       industryCode: answers.industryCode,
-      // #2379 — Austria's Kleinunternehmer: the space's own VAT exemption.
-      smallBusiness: workspace.vatRegime == 'exempt',
+      taxNumber: answers.taxNumber,
+      smallBusiness: answers.smallBusiness,
       currency: books.functionalCurrency ?? workspace.currencyCode,
       softwareVersion: safTSoftwareVersion,
       createdAt: now,

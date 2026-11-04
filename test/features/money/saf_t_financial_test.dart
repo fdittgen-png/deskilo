@@ -216,7 +216,8 @@ InvoiceParty _company(String country) => InvoiceParty(
   },
   country: country,
   legalId: switch (country) {
-    'AT' => '12 345/6789',
+    // The Firmenbuch number: the company register's, not the tax office's.
+    'AT' => 'FN 123456a',
     'DK' => '10150817',
     'RO' => '14399840',
     _ => '999999999',
@@ -250,6 +251,8 @@ SafTFinancialRequest _request(
   bool standardRateOnly = false,
   String profitBasis = '§ 5 EStG',
   String industryCode = '6820',
+  String taxNumber = '12 345/6789',
+  bool? smallBusiness = false,
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
@@ -300,6 +303,8 @@ SafTFinancialRequest _request(
   reference: reference ?? _reference(),
   profitBasis: profitBasis,
   industryCode: industryCode,
+  taxNumber: taxNumber,
+  smallBusiness: smallBusiness,
 );
 
 XmlDocument _file(SafTFinancialRequest request) =>
@@ -495,9 +500,15 @@ void main() {
       expect(root.namespaceUri, 'urn:OECD:StandardAuditFile-Taxation:AT_1.01');
       final h = root.findElements('Header').single;
       expect(h.childElements.map((e) => e.name.local).take(11), [
-        'TaxID', 'CompanyName', 'CompanyAddress', 'ContactInformation', 'TaxAccountingBasis',
-        'TaxEntity', 'FiscalYear', 'StartDate', 'EndDate', 'Kleinunternehmer_AT', 'CurrencyCode',
+        'TaxID', 'CompanyName', 'CompanyAddress', 'CompanyID', 'ContactInformation', 'TaxAccountingBasis',
+        'TaxEntity', 'FiscalYear', 'StartDate', 'EndDate', 'Kleinunternehmer_AT',
       ]);
+      // The tax office's Steuernummer is the TaxRegistrationNumber; the
+      // Firmenbuch number is the CompanyID, never in its place.
+      final taxId = h.findElements('TaxID').single;
+      expect(_textOf(taxId, 'TaxRegistrationNumber'), '12 345/6789');
+      expect(_textOf(h, 'CompanyID'), 'FN 123456a');
+      expect(_textOf(h, 'Kleinunternehmer_AT'), 'false');
       expect(_textOf(h, 'AuditFileVersion'), '1.01');
       expect(_textOf(h, 'TaxAccountingBasis'), '§ 5 EStG');
       expect(_textOf(h, 'TaxEntity'), '6820');
@@ -542,6 +553,13 @@ void main() {
         SafTGap(SafTGapKind.company, 'TaxAccountingBasis'),
         SafTGap(SafTGapKind.company, 'TaxEntity'),
       ]));
+      // No Steuernummer stated: refused, never the Firmenbuch number in its
+      // place; the small-business status unknown: refused, never derived.
+      final unstated = _request(profile, country: 'AT', taxNumber: '', smallBusiness: null);
+      expect(_gaps(unstated), containsAll(const [
+        SafTGap(SafTGapKind.company, 'TaxRegistrationNumber'),
+        SafTGap(SafTGapKind.company, 'Kleinunternehmer_AT'),
+      ]));
       expect(
         _gaps(_request(profile, country: 'AT', reference: _reference(maps: const []))),
         contains(isA<SafTGap>().having((g) => g.kind, 'kind', SafTGapKind.standardAccount)),
@@ -572,6 +590,7 @@ void main() {
         partyDetails: base.partyDetails, company: base.company, contact: base.contact,
         currency: base.currency, softwareVersion: base.softwareVersion, createdAt: base.createdAt,
         reference: base.reference, profitBasis: '§ 5 EStG', industryCode: '6820',
+        taxNumber: '12 345/6789', smallBusiness: false,
       );
       final file = _file(book);
       final codes = file.findAllElements('AccountID_oeEKR').map((e) => e.innerText).toSet();

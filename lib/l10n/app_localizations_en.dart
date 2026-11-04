@@ -22611,6 +22611,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saftProfitBasisLabel => 'How the profit is determined';
 
   @override
+  String get saftSmallBusinessHelper =>
+      'Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Small business (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Yes';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'The number the Austrian tax office gives the company, not its company register number.';
+
+  @override
+  String get saftTaxNumberLabel => 'Tax number (Steuernummer)';
+
+  @override
   String get saftWithPostings => 'With postings';
 
   @override

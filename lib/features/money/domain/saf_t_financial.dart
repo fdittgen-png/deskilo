@@ -290,7 +290,8 @@ class SafTFinancialRequest {
     this.companyIban = '',
     this.profitBasis = '',
     this.industryCode = '',
-    this.smallBusiness = false,
+    this.taxNumber = '',
+    this.smallBusiness,
   });
 
   final SafTFinancialProfile profile;
@@ -327,13 +328,17 @@ class SafTFinancialRequest {
   final String companyIban;
 
   /// #2379 — Austria: how the profit is determined (`TaxAccountingBasis`:
-  /// § 4 (1), § 4 (3) or § 5 EStG …) and the industry code
-  /// (`TaxEntity`, Branchenkennzahl), which its header requires; and
-  /// whether the company is a small business exempt under § 6 (1) Z 27
-  /// UStG (`Kleinunternehmer_AT`).
+  /// § 4 (1), § 4 (3) or § 5 EStG …), the industry code (`TaxEntity`,
+  /// Branchenkennzahl) and the tax office's Steuernummer
+  /// (`TaxID/TaxRegistrationNumber`, not the Firmenbuch number of
+  /// [company]), which its header requires; and whether the company is a
+  /// small business under § 6 (1) Z 27 UStG (`Kleinunternehmer_AT`): null
+  /// when nobody stated it, which refuses the file (a VAT exemption is not
+  /// that status).
   final String profitBasis;
   final String industryCode;
-  final bool smallBusiness;
+  final String taxNumber;
+  final bool? smallBusiness;
 }
 
 /// What a missing fact is about.

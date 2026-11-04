@@ -15,5 +15,11 @@
   "saftProfitBasisLabel": "Méthode de détermination du bénéfice",
   "saftProfitBasisHelper": "La disposition de la loi autrichienne sur l'impôt sur le revenu que suit la comptabilité, telle que l'en-tête du SAF-T AT l'indique.",
   "saftIndustryCodeLabel": "Code de branche (Branchenkennzahl)",
-  "saftIndustryCodeHelper": "Le code de branche sous lequel l'administration fiscale autrichienne connaît l'entreprise."
+  "saftIndustryCodeHelper": "Le code de branche sous lequel l'administration fiscale autrichienne connaît l'entreprise.",
+  "saftTaxNumberLabel": "Numéro fiscal (Steuernummer)",
+  "saftTaxNumberHelper": "Le numéro que l'administration fiscale autrichienne attribue à l'entreprise, pas son numéro au registre du commerce.",
+  "saftSmallBusinessLabel": "Petite entreprise (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessYes": "Oui",
+  "saftSmallBusinessNo": "Non",
+  "saftSmallBusinessHelper": "Si l'entreprise est une petite entreprise au sens du § 6 (1) Z 27 UStG, comme l'indique l'en-tête du SAF-T AT."
 }

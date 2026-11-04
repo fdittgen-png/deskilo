@@ -20,7 +20,13 @@ const _austrianProfitBases = ['§ 4 Abs. 1 EStG', '§ 4 Abs. 3 EStG', '§ 5 EStG
 
 /// What the person states for the file: the contact, and for Austria the
 /// profit basis and the industry code (empty elsewhere).
-typedef SafTHeaderAnswers = ({SafTContact contact, String profitBasis, String industryCode});
+typedef SafTHeaderAnswers = ({
+  SafTContact contact,
+  String profitBasis,
+  String industryCode,
+  String taxNumber,
+  bool? smallBusiness,
+});
 
 /// The answers, or null when the person backed out. [austria] also asks
 /// Austria's two header facts.
@@ -42,6 +48,7 @@ class _SafTContactDialog extends StatefulWidget {
 class _SafTContactDialogState extends State<_SafTContactDialog> {
   final _fields = FormControllers();
   String _profitBasis = '';
+  bool? _smallBusiness;
 
   @override
   void dispose() {
@@ -111,6 +118,27 @@ class _SafTContactDialogState extends State<_SafTContactDialog> {
                   helper: l10n.saftIndustryCodeHelper,
                   keyboardType: TextInputType.number,
                 ),
+                const FormGap(),
+                AppTextField(
+                  key: const ValueKey('saft-tax-number'),
+                  controller: _fields['taxNumber'],
+                  label: l10n.saftTaxNumberLabel,
+                  helper: l10n.saftTaxNumberHelper,
+                ),
+                const FormGap(),
+                DropdownButtonFormField<bool>(
+                  key: const ValueKey('saft-small-business'),
+                  decoration: InputDecoration(
+                    labelText: l10n.saftSmallBusinessLabel,
+                    helperText: l10n.saftSmallBusinessHelper,
+                    helperMaxLines: 3,
+                  ),
+                  items: [
+                    DropdownMenuItem(value: true, child: Text(l10n.saftSmallBusinessYes)),
+                    DropdownMenuItem(value: false, child: Text(l10n.saftSmallBusinessNo)),
+                  ],
+                  onChanged: (v) => setState(() => _smallBusiness = v),
+                ),
               ],
             ],
           ),
@@ -132,6 +160,8 @@ class _SafTContactDialogState extends State<_SafTContactDialog> {
             ),
             profitBasis: _profitBasis,
             industryCode: _fields.text('industry'),
+            taxNumber: _fields.text('taxNumber'),
+            smallBusiness: _smallBusiness,
           )),
           child: Text(l10n.commonOk),
         ),

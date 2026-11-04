@@ -26990,6 +26990,30 @@
   "@saftProfitBasisLabel": {
     "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
+  "saftSmallBusinessHelper": "Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.",
+  "@saftSmallBusinessHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessLabel": "Small business (§ 6 (1) Z 27 UStG)",
+  "@saftSmallBusinessLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessNo": "No",
+  "@saftSmallBusinessNo": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessYes": "Yes",
+  "@saftSmallBusinessYes": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftTaxNumberHelper": "The number the Austrian tax office gives the company, not its company register number.",
+  "@saftTaxNumberHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftTaxNumberLabel": "Tax number (Steuernummer)",
+  "@saftTaxNumberLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
   "saftWithPostings": "With postings",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"

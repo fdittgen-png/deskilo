@@ -22806,6 +22806,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get saftProfitBasisLabel => 'Modalità di determinazione dell\'utile';
 
   @override
+  String get saftSmallBusinessHelper =>
+      'Se l\'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Piccola impresa (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Sì';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'Il numero che l\'amministrazione finanziaria austriaca assegna all\'impresa, non il numero del registro delle imprese.';
+
+  @override
+  String get saftTaxNumberLabel => 'Numero fiscale (Steuernummer)';
+
+  @override
   String get saftWithPostings => 'Con le scritture';
 
   @override

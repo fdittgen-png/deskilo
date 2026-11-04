@@ -38031,6 +38031,42 @@ abstract class AppLocalizations {
   /// **'How the profit is determined'**
   String get saftProfitBasisLabel;
 
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.'**
+  String get saftSmallBusinessHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Small business (§ 6 (1) Z 27 UStG)'**
+  String get saftSmallBusinessLabel;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get saftSmallBusinessNo;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get saftSmallBusinessYes;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'The number the Austrian tax office gives the company, not its company register number.'**
+  String get saftTaxNumberHelper;
+
+  /// #2379 the Austrian SAF-T AT header facts asked at export
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get saftTaxNumberLabel;
+
   /// #669 - SAF-T derived postings
   ///
   /// In en, this message translates to:
