@@ -8,14 +8,27 @@
 import 'setup_levels.dart';
 import 'workspace_feature.dart';
 
+/// #3300 — whether [country] offers [f]: a level never switches on (or
+/// off) a feature the space's country does not offer, and such a feature
+/// never holds a level back; its stored switch is kept as it is.
+bool _offered(WorkspaceFeature f, String? country) =>
+    featureAvailableIn(featureManifest[f]?.availableIn, country);
+
 /// Each process's level as the stored features say: the highest level
 /// whose features and those of every level below it are all on.
-SetupLevelVector currentSetupLevels(Set<WorkspaceFeature> on) => {
+SetupLevelVector currentSetupLevels(
+  Set<WorkspaceFeature> on, {
+  String? country,
+}) => {
   for (final MapEntry(key: process, value: levels) in setupLevels.entries)
     process: () {
       var reached = levels.first.id;
       for (final level in levels) {
-        if (!on.containsAll(level.features)) break;
+        if (!on.containsAll(
+          level.features.where((f) => _offered(f, country)),
+        )) {
+          break;
+        }
         reached = level.id;
       }
       return reached;
@@ -52,6 +65,7 @@ SetupLevelChange planSetupLevels({
   required Set<WorkspaceFeature> stored,
   required SetupLevelVector current,
   required SetupLevelVector chosen,
+  String? country,
 }) {
   final changed = {
     for (final MapEntry(key: process, value: level) in chosen.entries)
@@ -60,11 +74,13 @@ SetupLevelChange planSetupLevels({
   final delta = setupFeatureDelta({for (final p in changed) p: chosen[p]!});
   final on = [
     for (final f in WorkspaceFeature.values)
-      if (delta.on.contains(f) && !stored.contains(f)) f,
+      if (delta.on.contains(f) && !stored.contains(f) && _offered(f, country))
+        f,
   ];
   final off = [
     for (final f in WorkspaceFeature.values)
-      if (delta.off.contains(f) && stored.contains(f)) f,
+      if (delta.off.contains(f) && stored.contains(f) && _offered(f, country))
+        f,
   ];
   return SetupLevelChange(
     processes: changed,

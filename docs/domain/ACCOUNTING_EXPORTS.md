@@ -178,6 +178,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `saft_no` | Skatteetaten · SAF-T Financial · 1.30 | file | journal | NO | locallyValidated | Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd |
 | `faia_lu` | Administration de l'enregistrement · FAIA · 2.01 | file | journal | LU | locallyValidated | AED FAIA 2.01, FAIA_v_2.01_full.xsd |
 | `saft_ro` | ANAF · SAF-T (D406) · 2.4.9 | file | journal | RO | locallyValidated | ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd |
+| `saft_at` | BMF · SAF-T AT · 1.01 | file | journal | AT | locallyValidated | BMF SAF-T AT 1.01, SAF-T_AT_1.01.xsd |
 | `denmark_registered_system` | Erhvervsstyrelsen · Registered digital bookkeeping system · Bogføringsloven 2022 | api | documents | DK | specificationNeeded | not named yet |
 | `saft_dk` | Erhvervsstyrelsen · SAF-T DK · 2.1 | file | journal | DK | locallyValidated | Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd |
 | `economic_api` | Visma · e-conomic · REST API | api | documents | DK | specificationNeeded | not named yet |
@@ -216,6 +217,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `xero_ca` | Xero · Xero · Accounting API 2.0, Canadian organisation | api | documents | CA | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_us` | Xero · Xero · Accounting API 2.0, US organisation | api | documents | US | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_eu` | Xero · Xero · Accounting API 2.0, EU organisation | api | documents | EU members | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
+| `xero_invoice_csv` | Xero · Xero · sales invoice import template (CSV) | file | documents | CA, EU members, GB, US | implemented | Xero sales invoice import template (CSV) |
 | `business_central_de` | Microsoft · Dynamics 365 Business Central · API v2.0, German localisation | api | documents | DE | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
 | `business_central_fr` | Microsoft · Dynamics 365 Business Central · API v2.0, French localisation | api | documents | FR | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
 | `business_central_ch` | Microsoft · Dynamics 365 Business Central · API v2.0, Swiss localisation | api | documents | CH | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |

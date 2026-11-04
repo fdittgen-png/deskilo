@@ -2761,6 +2761,10 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "supplier payable due date",
+  "@biBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
+  },
   "biBasisPaymentMatchedAt": "date the payment was matched",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -3331,6 +3335,10 @@
   "biEditorBasisOccurrenceDue": "by due date",
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorBasisPayableDue": "by supplier payable due date",
+  "@biEditorBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   },
   "biEditorBasisPaymentMatched": "by payment matched",
   "@biEditorBasisPaymentMatched": {
@@ -4185,6 +4193,92 @@
   "@biInvalidAddress": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biItemMethodAverage": "average cost",
+  "@biItemMethodAverage": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemMethodLast": "last purchase",
+  "@biItemMethodLast": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesBasis": "{lines} purchase lines of {items} items",
+  "@biItemPricesBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "lines": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemPricesDefinition": "The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.",
+  "@biItemPricesDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesTitle": "Item prices by supplier",
+  "@biItemPricesTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductBasis": "Sold for {revenue} net, cost {cost} ({method})",
+  "@biItemProductBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "revenue": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemProductDefinition": "Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.",
+  "@biItemProductDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductTitle": "Margin by product",
+  "@biItemProductTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemUncosted": "{count} products sold were never bought: they have no cost and are left out of the cost and margin",
+  "@biItemUncosted": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemUnresolved": "{count} purchase lines name a supply only by its text: they are not matched to an item and are left out",
+  "@biItemUnresolved": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorBasis": "{count} suppliers",
+  "@biItemVendorBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorDefinition": "For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.",
+  "@biItemVendorDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemVendorTitle": "Supplier prices compared",
+  "@biItemVendorTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "biKindCurrent": "Now",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -4666,6 +4760,147 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Supplements",
+  "@biSalesKindAccessories": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindAdjustment": "Adjustments",
+  "@biSalesKindAdjustment": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindBasis": "{gross} with VAT, {lines} lines on {invoices} invoices",
+  "@biSalesKindBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      },
+      "lines": {
+        "type": "String"
+      },
+      "invoices": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesKindDefinition": "What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.",
+  "@biSalesKindDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindDesk": "Desks",
+  "@biSalesKindDesk": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindLevel": "Levels",
+  "@biSalesKindLevel": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOffice": "Rooms",
+  "@biSalesKindOffice": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOther": "Other",
+  "@biSalesKindOther": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOverage": "Extra half-days",
+  "@biSalesKindOverage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindPackage": "Packages",
+  "@biSalesKindPackage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindService": "Services",
+  "@biSalesKindService": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindSubscription": "Subscriptions",
+  "@biSalesKindSubscription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindTitle": "Sales by kind",
+  "@biSalesKindTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesNetUnknown": "{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net",
+  "@biSalesNetUnknown": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesNoDescription": "No description",
+  "@biSalesNoDescription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomBasis": "Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)",
+  "@biSalesRoomBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      },
+      "rooms": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomDefinition": "For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.",
+  "@biSalesRoomDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomLine": "{room}: charged {charges}, cost {cost}, {uses} bookings",
+  "@biSalesRoomLine": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      },
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomTitle": "Margin of the rented rooms",
+  "@biSalesRoomTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomsOff": "The space rents no rooms: switch on rented rooms to see their margin",
+  "@biSalesRoomsOff": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceBasis": "{count} services and packages",
+  "@biSalesServiceBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesServiceDefinition": "The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.",
+  "@biSalesServiceDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceTitle": "Sales by service",
+  "@biSalesServiceTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
   "biSeatCentre": "of all seat time",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -4737,6 +4972,202 @@
   "biUnavailable": "This analysis could not be computed.",
   "@biUnavailable": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biVendorCategoryBasis": "{count} categories",
+  "@biVendorCategoryBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCategoryTitle": "Spend by category",
+  "@biVendorCategoryTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortHeld": "On hold",
+  "@biVendorCohortHeld": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortLate": "Paid late",
+  "@biVendorCohortLate": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortLine": "{cohort}: {count} bills, {amount}",
+  "@biVendorCohortLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCohortOnTime": "Paid on time",
+  "@biVendorCohortOnTime": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortOpen": "Unpaid",
+  "@biVendorCohortOpen": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortPartial": "Partly paid",
+  "@biVendorCohortPartial": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUndated": "Settled without a payment",
+  "@biVendorCohortUndated": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUnknownDue": "No due date",
+  "@biVendorCohortUnknownDue": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCredited": "Credit notes subtracted: {amount} ({count})",
+  "@biVendorCredited": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
+  "@biVendorDelay": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      },
+      "weighted": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagBasis": "{documents} bills; median {median} days, 90th percentile {p90}",
+  "@biVendorLagBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagDefinition": "The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.",
+  "@biVendorLagDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorLagTitle": "Days for a bill to arrive",
+  "@biVendorLagTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorLagUndated": "{count} bills carry no supplier date or no received date and are left out",
+  "@biVendorLagUndated": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorNoCategory": "No category",
+  "@biVendorNoCategory": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorNothingToMeasure": "Nothing in the period to measure",
+  "@biVendorNothingToMeasure": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityBasis": "{onTime} of {settled} settled bills paid by their due date",
+  "@biVendorPunctualityBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "settled": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorPunctualityDefinition": "What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.",
+  "@biVendorPunctualityDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityLine": "{name}: {onTime} on time, {late} late, of {due} due",
+  "@biVendorPunctualityLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "onTime": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorPunctualityTitle": "Paying suppliers on time",
+  "@biVendorPunctualityTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorSpendBasis": "{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}",
+  "@biVendorSpendBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "suppliers": {
+        "type": "String"
+      },
+      "top": {
+        "type": "String"
+      },
+      "topCost": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorSpendDefinition": "The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.",
+  "@biVendorSpendDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorSpendTitle": "Spend by supplier",
+  "@biVendorSpendTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorUnassigned": "Without a supplier (members’ receipts): {amount}",
+  "@biVendorUnassigned": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "biViewCardsIncompatible": "{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.",
   "@biViewCardsIncompatible": {
@@ -14824,6 +15255,10 @@
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
   },
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "@invoiceExportSafTAt": {
+    "description": "#2379 the Austrian SAF-T AT 1.01 export (Bundesministerium für Finanzen)"
+  },
   "invoiceExportSafTFull": "SAF-T with the general ledger (XML, international)",
   "@invoiceExportSafTFull": {
     "description": "Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger"
@@ -14847,6 +15282,10 @@
   "invoiceExportTrialBalance": "Trial balance, general and auxiliary (PDF, from the book)",
   "@invoiceExportTrialBalance": {
     "description": "Accounting export sheet (#2376): the trial balance report"
+  },
+  "invoiceExportXeroInvoiceCsv": "Xero (sales invoice import)",
+  "@invoiceExportXeroInvoiceCsv": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
   },
   "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
   "invoiceFacturXDownload": "Download Factur-X (PDF)",
@@ -14929,6 +15368,10 @@
   "invoiceGapPublicSectorRefs": "Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.",
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoiceGapQrIbanWithoutReference": "This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.",
+  "@invoiceGapQrIbanWithoutReference": {
+    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0677)."
   },
   "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {
@@ -23843,6 +24286,10 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Item bought",
+  "@purchasesItem": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesKindBill": "Supplier bill",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -23878,6 +24325,10 @@
   "purchasesMethodOther": "Other",
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
+  },
+  "purchasesNoItem": "No item",
+  "@purchasesNoItem": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "purchasesNoSupplier": "No supplier chosen",
   "@purchasesNoSupplier": {
@@ -24043,6 +24494,10 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantity",
+  "@purchasesQuantity": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesReference": "Invoice number",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -24188,6 +24643,10 @@
   "purchasesTotal": "Total",
   "@purchasesTotal": {
     "description": "#2573 purchases"
+  },
+  "purchasesUnit": "Unit (e.g. box, ream)",
+  "@purchasesUnit": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "pushAllowAction": "Allow",
   "@pushAllowAction": {
@@ -27131,6 +27590,14 @@
       }
     }
   },
+  "saftIndustryCodeHelper": "The industry code the Austrian tax office knows the company under.",
+  "@saftIndustryCodeHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftIndustryCodeLabel": "Industry code (Branchenkennzahl)",
+  "@saftIndustryCodeLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
   "saftLedgerIntro": "With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -27138,6 +27605,59 @@
   "saftLedgerTitle": "Include postings?",
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
+  },
+  "saftProfitBasisHelper": "The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.",
+  "@saftProfitBasisHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftProfitBasisLabel": "How the profit is determined",
+  "@saftProfitBasisLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessHelper": "Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.",
+  "@saftSmallBusinessHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessLabel": "Small business (§ 6 (1) Z 27 UStG)",
+  "@saftSmallBusinessLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessNo": "No",
+  "@saftSmallBusinessNo": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessYes": "Yes",
+  "@saftSmallBusinessYes": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftStandardAccountsIntro": "Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account's role; check it: not every account of a role belongs on the same standard account.",
+  "@saftStandardAccountsIntro": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsNoSuggestion": "No suggestion: enter the standard account.",
+  "@saftStandardAccountsNoSuggestion": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsSuggested": "Suggested: {suggestion}. Confirm or change it.",
+  "@saftStandardAccountsSuggested": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export",
+    "placeholders": {
+      "suggestion": {
+        "type": "String"
+      }
+    }
+  },
+  "saftStandardAccountsTitle": "Standard chart accounts",
+  "@saftStandardAccountsTitle": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftTaxNumberHelper": "The number the Austrian tax office gives the company, not its company register number.",
+  "@saftTaxNumberHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftTaxNumberLabel": "Tax number (Steuernummer)",
+  "@saftTaxNumberLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
   "saftWithPostings": "With postings",
   "@saftWithPostings": {
@@ -27747,6 +28267,10 @@
     "description": "#3098 settings: Setting hint."
   },
   "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
+  "settingHintPurchaseItemCostMethod": "average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.",
+  "@settingHintPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "settingHintPurchasePaymentChecker": "A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -28029,6 +28553,10 @@
     "description": "#3098 settings: Setting label."
   },
   "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
+  "settingLabelPurchaseItemCostMethod": "How an item's unit cost is read in the margins",
+  "@settingLabelPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "settingLabelPurchasePaymentChecker": "Payments a second person records from (currency units)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -36334,5 +36862,64 @@
   "workspaceXmlImportSuccess": "Workspace imported.",
   "@workspaceXmlImportSuccess": {
     "description": "Snackbar after a successful XML import (#165)"
+  },
+  "xeroInvoiceAccountCode": "Sales account code",
+  "@xeroInvoiceAccountCode": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsIntro": "Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.",
+  "@xeroInvoiceAccountsIntro": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsTitle": "Xero export",
+  "@xeroInvoiceAccountsTitle": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
+  "@xeroInvoiceCreditNotesLeftOut": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "xeroInvoiceDateOrder": "Date order in your organisation",
+  "@xeroInvoiceDateOrder": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceDayFirst": "Day first (31/12/2026)",
+  "@xeroInvoiceDayFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceImportTaxExclusive": "In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.",
+  "@xeroInvoiceImportTaxExclusive": {
+    "description": "#2372 - the instruction for the Xero import screen"
+  },
+  "xeroInvoiceMonthFirst": "Month first (12/31/2026)",
+  "@xeroInvoiceMonthFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedAccount": "Enter the sales account code.",
+  "@xeroInvoiceRefusedAccount": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedTaxType": "Name the Xero tax rate for {rate}.",
+  "@xeroInvoiceRefusedTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "xeroInvoiceTaxType": "Xero tax rate for {rate}",
+  "@xeroInvoiceTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
   }
 }

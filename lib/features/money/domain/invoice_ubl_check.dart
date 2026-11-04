@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invoice.dart';
+import 'swiss_qr_bill.dart';
 import 'vat_compliance.dart';
 import 'vat_regime.dart';
 
@@ -45,6 +46,11 @@ enum EInvoiceGap {
   /// an EN 16931 credit note has no truthful place for money already
   /// moved, so the document is refused rather than mis-stated.
   creditNoteWithPayments,
+
+  /// #2380 — the payment account is a Swiss QR-IBAN but the invoice has no
+  /// QR reference frozen at issue: such an account refuses a payment
+  /// without one, and the reference derived from the number is ambiguous.
+  qrIbanWithoutReference,
 
   /// Not fatal for the norm, but national profiles (XRechnung, Peppol
   /// BIS) require the seller's city…
@@ -142,6 +148,8 @@ EInvoiceReadiness checkEInvoiceReadiness({
   /// #922 — where the document is bound: 'government' asks for the
   /// public-sector references. Anything else does not.
   String destination = '',
+  /// #2380 — the account the document names (BT-84); '' = none.
+  String iban = '',
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
@@ -169,6 +177,12 @@ EInvoiceReadiness checkEInvoiceReadiness({
     if (invoice.isCreditNote &&
         invoice.lines.any((l) => l.amountCents < 0 && l.vatPercent == 0))
       EInvoiceGap.creditNoteWithPayments,
+    if (qrIbanWithoutReference(
+      account: iban,
+      creditNote: invoice.totalCents < 0,
+      legalSnapshot: invoice.legalSnapshot,
+    ))
+      EInvoiceGap.qrIbanWithoutReference,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
     if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,
     if (destination == 'government' &&

@@ -142,11 +142,12 @@ import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
+import 'seed/demo_main_books_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_setup_seed.dart';
+import 'seed/demo_twin_seed.dart';
 
 /// The main space's purchase side, seeded once for the session: its
 /// providers and the setup guide's evidence read the same repositories.
@@ -162,10 +163,7 @@ _MainBooks _seedMainBooks(DemoFixture fixture) {
   return (
     purchasing: purchasing,
     // #1869 in memory; #2365 posts the demo money and its supplier bills.
-    books: FakeBookProfileRepository(
-      money: fixture.money,
-      purchases: purchasing.purchases,
-    )..profiles.add(demoBookProfile(fixture.seededAt)),
+    books: demoMainBooks(fixture, purchasing),
     // #2569 — the lease the demo space holds as tenant.
     lease: seedDemoLease(fixture.seededAt),
     // #2576 — the equipment the demo space bought.
@@ -215,6 +213,15 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         reservations: fixture.newYork.reservations,
         money: fixture.newYork.money,
         events: fixture.newYork.events,
+      ),
+      // #3302 — the twin's guide reads its own (copied) plan and its own,
+      // empty activity: what a development side holds before a rehearsal.
+      demoTwinSpaceId: DemoSetupSources(
+        space: fixture.twin.workspaces,
+        plan: fixture.twin.floorPlan,
+        reservations: fixture.twin.reservations,
+        money: fixture.twin.money,
+        events: fixture.twin.events,
       ),
     },
     acknowledged: {'ws-1': demoMainSpaceMarkedDone},

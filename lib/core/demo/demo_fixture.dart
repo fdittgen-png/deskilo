@@ -29,6 +29,7 @@ import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
+import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
 import 'data/notification_service.dart';
 import 'data/plan_resource_repository.dart';
@@ -46,6 +47,7 @@ import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
+import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
@@ -114,6 +116,7 @@ class DemoFixture {
     required this.secondSpace,
     required this.london,
     required this.newYork,
+    required this.twin,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -139,7 +142,7 @@ class DemoFixture {
     );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events, clock: () => today);
     // #2571 — legal holds; books under retention refuse a reset.
     final holds = seedDemoRetentionHolds(workspaces.workspaces.first.id, today);
     workspaces.booksKept = (id) => demoBooksKept(
@@ -171,6 +174,10 @@ class DemoFixture {
     seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
     seedDemoAnnex(floorPlan, reservations, today); // #2568
     seedDemoMoney(money, today);
+    // #3305 — each member reads their own statement.
+    money.accountQueries.statementSource =
+        demoStatementSource(workspaces, reservations, 'ws-1',
+            actor: () => actor.memberId, credits: credits);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoYearOfResources(reservations, workspaces, today);
@@ -206,6 +213,8 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
+      ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
@@ -268,6 +277,7 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
+      twin: twin,
     );
   }
 
@@ -325,6 +335,9 @@ class DemoFixture {
   final DemoLondonData london;
   final DemoNewYorkData newYork;
 
+  /// #3302 — the main space's development twin, with stores of its own.
+  final DemoTwinData twin;
+
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
 
@@ -346,12 +359,13 @@ class DemoFixture {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
     // #3293 — a self-assignment is refused for whoever the persona is.
-    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles]) {
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, twin.roles]) {
       r.callerMemberId = persona.memberId;
     }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);
+    twin.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).

@@ -889,9 +889,10 @@ jobs:
       contents: read
       packages: read
     needs: [classify]
-    # Always evaluated: a classify job that died must not skip this one,
-    # because a skipped required context counts as passing.
-    if: always()
+    # #3318 — still run if classification fails, but let cancellation stop
+    # this long job and release the PR's concurrency slot for its new head.
+    # `always()` also survives cancellation and strands the replacement.
+    if: ${{ !cancelled() }}
     env:
       # #1446 C2 — only an explicit `not_applicable` stands the job down;
       # `required`, an empty output from a classify job that died, or a

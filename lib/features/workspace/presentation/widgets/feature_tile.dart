@@ -94,7 +94,9 @@ class FeatureTile extends ConsumerWidget {
 
   /// What turning this on would switch on as well, already named.
   final List<String> alsoEnables;
-  final ValueChanged<bool> onChanged;
+  /// Null when the switch cannot be turned on here (#3300: a feature its
+  /// country does not offer); a stored ON can still be turned off.
+  final ValueChanged<bool>? onChanged;
 
   /// #1850 — the row's maturity and lifecycle; the registry's when null.
   final FeatureAssessment? assessment;

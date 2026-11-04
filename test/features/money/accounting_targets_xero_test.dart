@@ -13,9 +13,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 const _ids = {'xero_gb', 'xero_ca', 'xero_us', 'xero_eu'};
 
+/// The API regions; #2372's import file `xero_invoice_csv` is a file
+/// target of its own (xero_invoice_csv_test.dart).
 List<AccountingTarget> get _xero => [
   for (final t in accountingTargets)
-    if (t.id.startsWith('xero_')) t,
+    if (t.id.startsWith('xero_') && t.transport == AccountingTransport.api) t,
 ];
 
 void main() {
@@ -43,7 +45,7 @@ void main() {
   test('each region is offered where its organisations are', () {
     String? xeroIn(String country) =>
         targetsFor(country)
-            .where((t) => t.id.startsWith('xero_'))
+            .where((t) => t.id.startsWith('xero_') && t.transport == AccountingTransport.api)
             .singleOrNull
             ?.id;
     expect(xeroIn('GB'), 'xero_gb');

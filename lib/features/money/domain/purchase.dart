@@ -63,6 +63,9 @@ class PurchaseLine {
     this.resourceKind,
     this.resourceId,
     this.placeName = '',
+    this.serviceId,
+    this.quantity = 1,
+    this.unit = '',
   });
 
   factory PurchaseLine.fromJson(Object? raw) {
@@ -80,6 +83,9 @@ class PurchaseLine {
       resourceKind: r.stringOrNull('resource_kind'),
       resourceId: r.stringOrNull('resource_id'),
       placeName: r.stringOr('place_name'),
+      serviceId: r.stringOrNull('service_id'),
+      quantity: r.doubleOrNull('quantity') ?? 1,
+      unit: r.stringOr('unit'),
     );
   }
 
@@ -101,6 +107,12 @@ class PurchaseLine {
 
   /// The name of that place as the server read it; '' when there is none.
   final String placeName;
+
+  /// #3294 — the catalogue item the line bought (a service or a supply of
+  /// the space), how many of it and in what unit; null buys no item.
+  final String? serviceId;
+  final double quantity;
+  final String unit;
 
   bool get taxStated => taxCents != null;
 }

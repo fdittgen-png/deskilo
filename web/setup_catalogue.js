@@ -702,6 +702,9 @@ window.SETUP_REGISTRY={
  "availableIn": {
   "recapitulativeStatement": [
    "@eu"
+  ],
+  "mtdSubmission": [
+   "GB"
   ]
  },
  "permissions": [

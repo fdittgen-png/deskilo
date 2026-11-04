@@ -73,4 +73,27 @@ const List<AccountingTarget> xeroAccountingTargets = [
     taxCodeModel: TaxCodeModel.perRate,
     connectsBy: {AccountingAuthKind.oauth2},
   ),
+  // #2372 — the sales-invoice import template: what an organisation
+  // without the API connection imports by hand, as draft invoices.
+  AccountingTarget(
+    id: 'xero_invoice_csv',
+    vendor: 'Xero',
+    product: 'Xero',
+    edition: 'sales invoice import template (CSV)',
+    countries: {'GB', 'CA', 'US', accountingCountriesEu},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _xeroInvoiceCsvFormat,
+  ),
 ];
+
+/// #2372 — Xero's sales-invoice template: the sales account and each tax
+/// rate are the organisation's own, so the export asks for them.
+const _xeroInvoiceCsvFormat = AccountingFormat(
+  id: 'xero_invoice_csv',
+  claim: FormatClaim.exchange,
+  extension: 'csv',
+  needsAccounts: true,
+);
