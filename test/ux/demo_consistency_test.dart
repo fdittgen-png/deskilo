@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
@@ -58,11 +59,14 @@ void main() {
       isNotEmpty,
       reason: 'the member has invoices on the workspace Money page',
     );
-    // Me spans every space the person is in: the main one and Leipzig.
+    // Me spans every space the person is in: the main one and Leipzig
+    // (euros), London (pounds) and New York (dollars).
     final mine =
         [
           ...journey.fixture.money.invoices,
           ...journey.fixture.secondSpace.money.invoices,
+          ...journey.fixture.london.money.invoices,
+          ...journey.fixture.newYork.money.invoices,
         ].where(
           (i) =>
               i.memberId == journey.fixture.actor.memberId &&
@@ -78,6 +82,11 @@ void main() {
       _shows('Nothing to pay — you are up to date.'),
       overview.outstanding.isEmpty,
     );
+    // The amount to pay is one figure per currency, never one total.
+    for (final e in overview.owedByCurrency.entries) {
+      expect(find.text(moneyFormat(e.key).formatMinor(e.value)), findsWidgets,
+          reason: 'the ${e.key} amount to pay');
+    }
   });
 
   testWidgets('Workspace status reads the demo\'s own invoices', (
