@@ -21,6 +21,19 @@ Future<void> showInvoiceProcessSheet(BuildContext context) =>
       builder: (context) => const _ProcessBody(),
     );
 
+/// Opens the shared explanation from the personal-finances screen.
+class InvoiceProcessHelpButton extends StatelessWidget {
+  const InvoiceProcessHelpButton({super.key});
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+    key: const ValueKey('personal-invoice-process'),
+    tooltip: context.l10n.journeyHowTitle,
+    icon: const Icon(Icons.account_tree_outlined),
+    onPressed: () => showInvoiceProcessSheet(context),
+  );
+}
+
 class _ProcessBody extends StatelessWidget {
   const _ProcessBody();
 

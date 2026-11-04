@@ -74,6 +74,9 @@ class InvoicesScreen extends ConsumerWidget {
       isEu: isEuCountry(countryCode),
       showMemberNames: (me?.canAdminister ?? false) ||
           perms.contains(WorkspacePermission.viewFinances),
+      setupGuideAvailable: perms.contains(WorkspacePermission.manageConfiguration) &&
+          features.contains(WorkspaceFeature.setupGuide),
+      canViewWorkspaceSettings: perms.contains(WorkspacePermission.workspaceSettings),
       features: features,
     );
 
@@ -90,7 +93,7 @@ class InvoicesScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text(l10n.myInvoicesTitle),
-          actions: [tools],
+          actions: [_personalFinancesAction(context), tools],
         ),
         body: Column(children: [
           _Banner(
@@ -160,7 +163,20 @@ class InvoicesScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.invoicingHubTitle),
-          actions: [tools],
+          actions: [
+            _personalFinancesAction(context),
+            if (facts.setupGuideAvailable || facts.canViewWorkspaceSettings)
+              IconButton(
+                key: const ValueKey('invoicing-setup-guide'),
+                tooltip: facts.setupGuideAvailable
+                    ? l10n.setupGuideTitle : l10n.workspaceSettingsTitle,
+                icon: const Icon(Icons.settings_outlined),
+                onPressed: () => context.push(
+                  facts.setupGuideAvailable ? '/setup' : '/workspace-settings',
+                ),
+              ),
+            tools,
+          ],
           bottom: AppTabBar.bottom(context, tabs: [
             AppTab(l10n.invoiceTabToInvoice,
                 key: const ValueKey('invoice-tab-todo')),
@@ -262,8 +278,18 @@ typedef _HubFacts = ({
   bool vatExempt,
   bool isEu,
   bool showMemberNames,
+  bool setupGuideAvailable,
+  bool canViewWorkspaceSettings,
   Set<WorkspaceFeature> features,
 });
+
+/// Personal finances remain a separate destination from workspace invoicing.
+Widget _personalFinancesAction(BuildContext context) => IconButton(
+  key: const ValueKey('invoicing-personal-action'),
+  tooltip: context.l10n.invoicingMyFinances,
+  icon: const Icon(Icons.person_outline),
+  onPressed: () => context.push(myFinancesRoute()),
+);
 
 /// One entry of the tools menu: its key, icon, label and action.
 typedef _ToolItem = (String, IconData, String, VoidCallback);
@@ -301,8 +327,7 @@ List<_ToolItem> _toolItems(
       'invoicing-my-finances-tool',
       Icons.account_balance_wallet_outlined,
       l10n.invoicingMyFinances,
-      () => context.push(myFinancesRoute(
-        workspaceId: ref.read(activeWorkspaceIdProvider).value)),
+      () => context.push(myFinancesRoute()),
     ),
     if (repartitionOn)
       (
@@ -411,10 +436,7 @@ class _Banner extends StatelessWidget {
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
                   key: const ValueKey('invoicing-my-finances'),
-                  onPressed: () => context.push(myFinancesRoute(
-          workspaceId: ProviderScope.containerOf(context)
-                          .read(activeWorkspaceIdProvider)
-                          .value)),
+                  onPressed: () => context.push(myFinancesRoute()),
                   child: Text(l10n.invoicingMyFinances),
                 ),
               ),

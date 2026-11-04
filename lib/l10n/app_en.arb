@@ -7385,6 +7385,15 @@
       }
     }
   },
+  "demoSetupCardOpenSpace": "Switch to {space}",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
   "demoSetupCardTitle": "How the demo works",
   "@demoSetupCardTitle": {
     "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
@@ -15806,6 +15815,10 @@
   "journeyStageConfirm": "To confirm",
   "journeyStageIssue": "To issue",
   "journeyStageStripLabel": "The invoicing process: issue, collect, confirm, close",
+  "journeyStateCancelled": "Cancelled",
+  "journeyStateCurrent": "Current step",
+  "journeyStateDone": "Completed",
+  "journeyStateUpcoming": "Upcoming",
   "journeyStepClosed": "Closed",
   "journeyStepConfirmation": "Confirmation",
   "journeyStepIssued": "Issued",

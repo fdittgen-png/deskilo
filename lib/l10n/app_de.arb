@@ -4260,6 +4260,15 @@
       }
     }
   },
+  "demoSetupCardOpenSpace": "Zu {space} wechseln",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
   "demoSetupCardTitle": "So funktioniert die Demo",
   "@demoSetupCardTitle": {
     "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
@@ -9095,6 +9104,10 @@
   "journeyStageConfirm": "Zu bestätigen",
   "journeyStageIssue": "Auszustellen",
   "journeyStageStripLabel": "Der Fakturierungsprozess: ausstellen, einziehen, bestätigen, abschließen",
+  "journeyStateCancelled": "Storniert",
+  "journeyStateCurrent": "Aktueller Schritt",
+  "journeyStateDone": "Abgeschlossen",
+  "journeyStateUpcoming": "Ausstehend",
   "journeyStepClosed": "Abgeschlossen",
   "journeyStepConfirmation": "Bestätigung",
   "journeyStepIssued": "Ausgestellt",

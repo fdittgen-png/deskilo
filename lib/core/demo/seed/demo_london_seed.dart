@@ -25,6 +25,7 @@ import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 import 'demo_city_people_seed.dart';
+import 'demo_flags.dart';
 
 const demoLondonSpaceId = 'ws-3';
 const _spaceName = 'Camden Yard Cowork';
@@ -37,8 +38,9 @@ const demoLondonVrn = '999904143';
 
 /// The features of the London space: a new space's, plus VAT returns and the
 /// MTD submission. Accounting connectors stay off: MTD does not need them.
-final Map<String, bool> _featureFlags = {
-  for (final feature in featureManifest.keys) feature.dbKey: true,
+final Map<String, Object?> _featureFlags = {
+  ...demoFeatureFlags,
+  WorkspaceFeature.mtdSubmission.dbKey: true,
 };
 
 Workspace demoLondonSpace() => Workspace(

@@ -10123,6 +10123,12 @@ abstract class AppLocalizations {
   /// **'See a space half way: {space}'**
   String demoSetupCardOpenHalfDone(String space);
 
+  /// Switch between Demo workspaces without claiming their setup state.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {space}'**
+  String demoSetupCardOpenSpace(String space);
+
   /// #2872 the setup guide in the demo: demoSetupCardTitle
   ///
   /// In en, this message translates to:
@@ -21868,6 +21874,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The invoicing process: issue, collect, confirm, close'**
   String get journeyStageStripLabel;
+
+  /// No description provided for @journeyStateCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get journeyStateCancelled;
+
+  /// No description provided for @journeyStateCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current step'**
+  String get journeyStateCurrent;
+
+  /// No description provided for @journeyStateDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get journeyStateDone;
+
+  /// No description provided for @journeyStateUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get journeyStateUpcoming;
 
   /// No description provided for @journeyStepClosed.
   ///
