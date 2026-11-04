@@ -341,3 +341,104 @@ Deno.test("a receipt is a payment on its invoice, found by its number", async ()
     "1132.30",
   ]]);
 });
+
+// #2377 — two issuers (two workspaces, two bexio companies, two
+// connections) whose local identifiers coincide: the same document id and
+// number, the same member key, the same map keys. Each delivery is its
+// connection's own: one store keeps them apart by connection, each company
+// receives its document once, on its own contact, tax and account ids, and
+// neither issuer's acknowledgement stands for the other's.
+Deno.test("separate issuers sharing local ids deliver independently, each on its own maps", async () => {
+  const issuers = [
+    {
+      connection: "c-issuer-a",
+      company: bexio(),
+      contact: "501",
+      tax81: "16",
+      tax26: "17",
+      acc: ["340", "341"],
+    },
+    {
+      connection: "c-issuer-b",
+      company: bexio(),
+      contact: "902",
+      tax81: "16",
+      tax26: "17",
+      acc: ["320", "321"],
+    },
+  ];
+  const mapsOf = (i: (typeof issuers)[number]): AccountingMap[] => [
+    { kind: "party", key: member, remoteId: i.contact, remoteCode: "" },
+    { kind: "tax", key: tax81, remoteId: i.tax81, remoteCode: "UN81" },
+    { kind: "tax", key: tax26, remoteId: i.tax26, remoteCode: "UR26" },
+    {
+      kind: "account",
+      key: "revenue:standard",
+      remoteId: i.acc[0],
+      remoteCode: i.acc[0],
+    },
+    {
+      kind: "account",
+      key: "revenue:reduced",
+      remoteId: i.acc[1],
+      remoteCode: i.acc[1],
+    },
+  ];
+  const doc = invoice("d1", "INV-101");
+  const store = new MemoryStore();
+  const run = async () => {
+    const out = [];
+    for (const i of issuers) {
+      const adapter = bexioAdapter({ [documentKey(doc.kind, doc.id)]: doc }, {
+        fetch: i.company.fetchImpl,
+        config,
+      });
+      out.push(
+        await deliver(
+          { ...jobOf(doc), connectionId: i.connection },
+          mapsOf(i),
+          store,
+          adapter,
+        ),
+      );
+    }
+    return out;
+  };
+
+  const first = await run();
+  assertEquals(
+    first.map((o) => o.status),
+    ["acknowledged", "acknowledged"],
+    "issuer B's identical local id is not taken for issuer A's delivery",
+  );
+  assertEquals(store.rows.size, 2, "one delivery row per connection");
+  for (const i of issuers) {
+    const held = i.company.docs.kb_invoice;
+    assertEquals(
+      held.map((d) => d.document_nr),
+      ["INV-101"],
+      `${i.connection} holds its invoice once`,
+    );
+    assertEquals(
+      held[0].contact_id,
+      Number(i.contact),
+      `${i.connection}'s own contact`,
+    );
+    const positions = held[0].positions as { account_id: number }[];
+    assertEquals(
+      positions.map((p) => p.account_id),
+      i.acc.map(Number),
+      `${i.connection}'s own accounts`,
+    );
+  }
+
+  const calls = issuers.map((i) => i.company.calls.length);
+  const again = await run();
+  assertEquals(again.map((o) => o.status), ["unchanged", "unchanged"]);
+  assertEquals(
+    issuers.map((i) => i.company.calls.length),
+    calls,
+    "nothing is asked of either company again",
+  );
+  assertEquals(issuers.map((i) => i.company.docs.kb_invoice.length), [1, 1]);
+});
