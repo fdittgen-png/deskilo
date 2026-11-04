@@ -49,8 +49,8 @@ import {
   type PostingParty,
   postingSha256,
   postingsOf,
-  type TaxComponent,
-  taxComponentsOf,
+  taxBreakdownOf,
+  type TaxEntry,
 } from "../_shared/accounting_postings.ts";
 import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
 import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
@@ -149,22 +149,24 @@ async function creditedNumbers(
 
 /** #2371 — the tax frozen at issue of each sale of [documentIds]
  * (`invoices.vat_totals`), as the caller reads it; null when a sale cannot
- * be read or its breakdown is not that shape. */
+ * be read, or its breakdown is absent or not that shape. */
 async function frozenTaxOf(
   caller: CallerDb,
   documentIds: string[],
-): Promise<Record<string, TaxComponent[]> | null> {
+): Promise<Record<string, TaxEntry[]> | null> {
   if (documentIds.length === 0) return {};
   const { data, error } = await caller.from("invoices").select(
     "id, vat_totals",
   ).in("id", documentIds);
   if (error || !Array.isArray(data)) return null;
-  const out: Record<string, TaxComponent[]> = {};
+  const out: Record<string, TaxEntry[]> = {};
   for (const row of data as Record<string, unknown>[]) {
     if (typeof row.id !== "string") continue;
-    const components = taxComponentsOf(row.vat_totals ?? []);
-    if (!components) return null;
-    out[row.id] = components;
+    // An absent breakdown is missing evidence, never a sale without tax:
+    // the delivery fails closed on it.
+    const breakdown = taxBreakdownOf(row.vat_totals);
+    if (!breakdown) return null;
+    out[row.id] = breakdown;
   }
   return documentIds.every((id) => id in out) ? out : null;
 }
@@ -377,7 +379,7 @@ export async function deliverPeriod(
     ]);
     if (!frozen) return json({ error: "not allowed to read the books" }, 403);
     for (const s of sales) {
-      s.posting = { ...s.posting, taxComponents: frozen[s.posting.documentId] };
+      s.posting = { ...s.posting, taxBreakdown: frozen[s.posting.documentId] };
     }
   }
   if (chosen.length > 0) {

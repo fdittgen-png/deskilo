@@ -638,7 +638,12 @@ function quickbooks() {
     }
     if (url.pathname.endsWith("/query")) {
       const entity = /from (\w+)/.exec(url.searchParams.get("query") ?? "")![1];
-      return Response.json({ QueryResponse: { [entity]: [] } });
+      // The code the sale's rate group is mapped to, and its one rate.
+      const rows: Record<string, unknown[]> = {
+        TaxCode: [{ Id: "TC-20", SalesTaxRateList: { TaxRateDetail: [{ TaxRateRef: { value: "T20" } }] } }],
+        TaxRate: [{ Id: "T20", RateValue: 20 }],
+      };
+      return Response.json({ QueryResponse: { [entity]: rows[entity] ?? [] } });
     }
     if (init?.method === "POST") {
       st.posts++;
@@ -706,3 +711,35 @@ Deno.test("#2371 a sale whose frozen tax cannot be read delivers nothing to Quic
   }
 });
 
+
+Deno.test("#2371 through the runner: a taxed sale whose invoice froze an empty breakdown is a conflict, one with none is refused", async () => {
+  // vat_totals [] on a sale that carries 20.00 of tax: the evidence does not
+  // prove a zero-tax document, so the split stays unverified.
+  const qb = quickbooks();
+  const empty = world({
+    target: "quickbooks_online_ca",
+    maps: qboMaps as typeof allMaps,
+    postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+    invoices: [{ id: INV, vat_totals: [] }],
+    fetcher: qb.fetcher,
+    tenant: "9130350000000001",
+  });
+  assertEquals((await run(empty)).status, 200);
+  const [row] = [...empty.log.rows.values()];
+  assertEquals(row.status, "conflict");
+  assert(row.error.includes("the frozen breakdown does not explain the tax of standard"), row.error);
+
+  // An invoice row without its breakdown at all is missing evidence: the
+  // run fails closed before anything is sent.
+  const none = quickbooks();
+  const absent = world({
+    target: "quickbooks_online_ca",
+    maps: qboMaps as typeof allMaps,
+    postings: [{ ...sale(INV, "F-1", "2026-03-02"), currency: "CAD" }],
+    invoices: [{ id: INV }],
+    fetcher: none.fetcher,
+    tenant: "9130350000000001",
+  });
+  assertEquals((await run(absent)).status, 403);
+  assertEquals(none.st.posts, 0);
+});
