@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #3308 (0672) -- a guest pass sold at the desk: the pass's own price and
+-- #3308 (0685) -- a guest pass sold at the desk: the pass's own price and
 -- units, the guest's customer record (a managed profile of origin 'guest',
 -- one per sale), the booking on the seat, the charge and its invoice,
 -- the recorded payment, the replay of the same request, and the refusals

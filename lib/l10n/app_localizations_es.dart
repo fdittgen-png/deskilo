@@ -8619,6 +8619,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'purchase_documents': 'Documentos de compra',
       'purchase_lines': 'Líneas de compra',
       'purchase_obligations': 'Importes a pagar',
+      'purchase_orders': 'Pedidos de compra',
+      'purchase_order_lines': 'Líneas de pedido',
+      'purchase_order_sends': 'Envíos de pedidos',
+      'purchase_order_receipts': 'Recepciones',
+      'purchase_order_receipt_lines': 'Líneas de recepción',
       'outgoing_payments': 'Pagos salientes',
       'expense_schedules': 'Gastos programados',
       'expense_occurrences': 'Vencimientos de gastos',
@@ -9585,6 +9590,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featurePurchaseAnalyticsTitle =>
       'Indicadores de compras (análisis)';
+
+  @override
+  String get featurePurchaseOrdersDesc =>
+      'Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Pedir a los proveedores';
 
   @override
   String get featurePurchasesDesc =>
@@ -20142,6 +20154,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseApprovalsTitle => 'Facturas de proveedores por aprobar';
 
   @override
+  String purchaseBillForOrder(String reference) {
+    return 'Pedido de compra $reference';
+  }
+
+  @override
+  String get purchaseBillNoOrder => 'Ningún pedido';
+
+  @override
+  String get purchaseBillOrder => 'Pedido de compra';
+
+  @override
+  String get purchaseBillOrderHint =>
+      'El pedido que cobra esta factura: sus importes se toman y siguen editables';
+
+  @override
   String get purchaseEntryAdd => 'Añadir compra / gasto';
 
   @override
@@ -20184,6 +20211,217 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchaseNeedsReview => 'Por revisar';
+
+  @override
+  String get purchaseOrderAddLine => 'Añadir una línea';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'Una dirección de correo, o déjelo vacío para imprimir';
+
+  @override
+  String get purchaseOrderBadVatRate => 'Un tipo de IVA de 0 a 99';
+
+  @override
+  String get purchaseOrderCancel => 'Anular el pedido';
+
+  @override
+  String get purchaseOrderCancelReason => '¿Por qué se anula?';
+
+  @override
+  String get purchaseOrderDescription => 'Qué se pide';
+
+  @override
+  String get purchaseOrderEdit => 'Editar el pedido';
+
+  @override
+  String get purchaseOrderEmail => 'Dirección de correo para enviarlo';
+
+  @override
+  String get purchaseOrderExpected => 'Entrega prevista';
+
+  @override
+  String get purchaseOrderFreeText => 'Texto libre';
+
+  @override
+  String get purchaseOrderItem => 'Artículo del catálogo';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Línea $n';
+  }
+
+  @override
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  ) {
+    return '$description: $received de $ordered recibidos';
+  }
+
+  @override
+  String get purchaseOrderMailInvalid =>
+      'Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API';
+
+  @override
+  String get purchaseOrderMailKey => 'Clave de API de Resend';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.';
+
+  @override
+  String get purchaseOrderMailSave => 'Guardar';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Dirección del remitente (un dominio verificado en Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Nombre del remitente';
+
+  @override
+  String get purchaseOrderMailSettings => 'Envío por correo';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Hola:\n\nAdjuntamos nuestro pedido $reference.\n\nSaludos cordiales,\n$space';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Marcar como enviado';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Indique qué se pide o elija un artículo';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'Un precio unitario, 0 o más';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'Una cantidad mayor que cero';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Elija el proveedor';
+
+  @override
+  String get purchaseOrderNew => 'Nuevo pedido';
+
+  @override
+  String get purchaseOrderNote => 'Nota para el proveedor';
+
+  @override
+  String get purchaseOrderPickDate => 'Elegir la fecha de entrega prevista';
+
+  @override
+  String get purchaseOrderPrint => 'Imprimir';
+
+  @override
+  String get purchaseOrderQuantity => 'Cantidad';
+
+  @override
+  String get purchaseOrderReceive => 'Registrar una entrega';
+
+  @override
+  String purchaseOrderReceiveLine(String description, String left) {
+    return '$description ($left por llegar)';
+  }
+
+  @override
+  String get purchaseOrderReceiveNote => 'Nota (opcional)';
+
+  @override
+  String get purchaseOrderReceiveNothing =>
+      'Indique lo que llegó de al menos una línea';
+
+  @override
+  String purchaseOrderReceiveTitle(String reference) {
+    return 'Entrega de $reference';
+  }
+
+  @override
+  String get purchaseOrderReceiveTooMany => 'Más de lo que queda de esta línea';
+
+  @override
+  String get purchaseOrderReceivedOn => 'Llegó el';
+
+  @override
+  String get purchaseOrderRefused =>
+      'El pedido no se modificó. Revise los datos e inténtelo de nuevo.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Quitar la línea';
+
+  @override
+  String get purchaseOrderSave => 'Guardar el borrador';
+
+  @override
+  String get purchaseOrderSendArrived => 'Llegó';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'Un correo a $recipient no tiene un resultado confirmado. ¿Llegó?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Enviar por correo';
+
+  @override
+  String get purchaseOrderSendLost => 'No llegó';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'El correo fue rechazado: $reason. El pedido sigue en borrador.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'No llegó ninguna respuesta confirmada. Compruebe con el proveedor antes de volver a enviar.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Enviado a $recipient';
+  }
+
+  @override
+  String get purchaseOrderStateCancelled => 'Anulado';
+
+  @override
+  String get purchaseOrderStateDraft => 'Borrador';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Recibido en parte';
+
+  @override
+  String get purchaseOrderStateReceived => 'Recibido';
+
+  @override
+  String get purchaseOrderStateSent => 'Enviado';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Proveedor';
+
+  @override
+  String get purchaseOrderUnit => 'Unidad (p. ej. caja)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Precio unitario sin IVA';
+
+  @override
+  String get purchaseOrderVatRate => 'Tipo de IVA (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'Aún no hay pedidos. Un pedido nuevo empieza como borrador que puede editar, imprimir y enviar.';
+
+  @override
+  String get purchaseOrdersTitle => 'Pedidos de compra';
 
   @override
   String get purchaseQualified => 'Contabilidad cualificada';
@@ -21768,6 +22006,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportDocPayments => 'Informe de pagos';
 
   @override
+  String get reportDocPurchaseOrder => 'Pedido de compra';
+
+  @override
   String get reportDocSpaceCodes => 'Tarjetas QR de espacios';
 
   @override
@@ -21797,6 +22038,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visual';
+
+  @override
+  String get reportExpectedDelivery => 'Entrega prevista';
 
   @override
   String get reportFieldGroupBank => 'Datos bancarios';

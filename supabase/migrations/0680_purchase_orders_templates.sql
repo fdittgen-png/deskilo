@@ -3,12 +3,12 @@
 -- (the template field registry and the builtin template's row are restated;
 -- no workspace's stored flags move)
 --
--- 0673 (#3308) -- guestPasses in the two other generated registries a flag
+-- 0680 (#3307) -- purchaseOrders in the two other generated registries a flag
 -- belongs to: the template field registry
 -- (dart run tool/build_template_field_registry_sql.dart) and the builtin
 -- workspace template, which writes every flag explicitly
--- (supabase/templates/association_fr.json). Its own migration because the
--- two together are too long to sit beside the feature registry in 0672.
+-- (supabase/templates/association_fr.json).
+
 -- ── the template field registry knows the flag (dart run tool/build_template_field_registry_sql.dart) ──
 create or replace function public.template_field_registry()
 returns jsonb
@@ -260,7 +260,6 @@ as $registry$
     {"id":"workspace.feature_flags.foreignCurrencyPurchases","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.purchases"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.formHelpHints","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"operations"},
     {"id":"workspace.feature_flags.guestParticipation","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
-    {"id":"workspace.feature_flags.guestPasses","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"workspaceAccess"},
     {"id":"workspace.feature_flags.holidayImport","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.publicHolidays"],"process":"spaceManagement"},
     {"id":"workspace.feature_flags.inputVat","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.vatDeclarations"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.instanceWizard","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"operations"},
@@ -315,6 +314,7 @@ as $registry$
     {"id":"workspace.feature_flags.publicHolidays","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"spaceManagement"},
     {"id":"workspace.feature_flags.publicListings","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"spaceManagement"},
     {"id":"workspace.feature_flags.purchaseAnalytics","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.purchases"],"process":"billingPayments"},
+    {"id":"workspace.feature_flags.purchaseOrders","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.purchases"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.purchases","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.moneyTab"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.pushNotifications","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"integrations"},
     {"id":"workspace.feature_flags.qrBadges","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.kioskMode"],"process":"workspaceAccess"},
@@ -443,7 +443,7 @@ $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
 grant execute on function public.template_field_registry() to authenticated;
 
--- ── the builtin template carries `guestPasses` ──
+-- ── the builtin template carries `purchaseOrders` ──
 insert into public.workspace_templates
   (key, name, description, sort_order, visibility, schema_version, template_version,
    tags, entities, configuration, floor_plan)
@@ -567,7 +567,6 @@ values (
       "messagesHub": true,
       "moneyTab": true,
       "mtdSubmission": false,
-      "guestPasses": false,
       "multiSite": false,
       "navigationStyle": true,
       "nfcBadges": false,
@@ -589,6 +588,7 @@ values (
       "publicHolidays": false,
       "publicListings": false,
       "purchaseAnalytics": false,
+      "purchaseOrders": false,
       "purchases": false,
       "pushNotifications": true,
       "qrBadges": false,
@@ -919,4 +919,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(673);
+select public.set_deskilo_schema_version(680);

@@ -1362,9 +1362,9 @@ window.SETUP_L10N={
     "Submit UK VAT returns to HMRC",
     "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only."
    ],
-   "guestPasses": [
-    "Guest passes at the desk",
-    "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay."
+   "purchaseOrders": [
+    "Order from suppliers",
+    "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only."
    ]
   },
   "process": {
@@ -3059,9 +3059,9 @@ window.SETUP_L10N={
     "Déposer la TVA britannique auprès de HMRC",
     "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
    ],
-   "guestPasses": [
-    "Pass invités à l'accueil",
-    "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent."
+   "purchaseOrders": [
+    "Commander auprès des fournisseurs",
+    "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent."
    ]
   },
   "process": {
@@ -4756,9 +4756,9 @@ window.SETUP_L10N={
     "Britische USt-Erklärung an HMRC senden",
     "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
    ],
-   "guestPasses": [
-    "Gästepässe am Empfang",
-    "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben."
+   "purchaseOrders": [
+    "Bei Lieferanten bestellen",
+    "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen."
    ]
   },
   "process": {
@@ -6453,9 +6453,9 @@ window.SETUP_L10N={
     "Presentar el IVA británico a HMRC",
     "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
    ],
-   "guestPasses": [
-    "Pases de invitado en recepción",
-    "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
+   "purchaseOrders": [
+    "Pedir a los proveedores",
+    "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas."
    ]
   },
   "process": {
@@ -8150,9 +8150,9 @@ window.SETUP_L10N={
     "Inviare l'IVA britannica a HMRC",
     "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
    ],
-   "guestPasses": [
-    "Pass ospite all'accoglienza",
-    "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
+   "purchaseOrders": [
+    "Ordinare ai fornitori",
+    "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture."
    ]
   },
   "process": {

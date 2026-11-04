@@ -35,6 +35,9 @@ const Map<String, bool> functionVerifyJwt = {
   'mollie-webhook': false,
   'paypal-webhook': false,
   'send-e-invoice': true,
+  // #3307 — a buyer's own session; begin_purchase_order_send_v1 decides
+  // who may send before the provider is reached.
+  'send-purchase-order': true,
   'send-push': true,
   'stripe-webhook': false,
   // #2863 — a billing manager's own session; the database answers who

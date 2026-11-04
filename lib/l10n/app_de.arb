@@ -6059,7 +6059,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
+  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} purchase_orders{Bestellungen} purchase_order_lines{Bestellpositionen} purchase_order_sends{Bestellversand} purchase_order_receipts{Wareneingänge} purchase_order_receipt_lines{Wareneingangspositionen} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
   "exportUncertifiedSoftware": "Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -6626,6 +6626,8 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen.",
+  "featurePurchaseOrdersTitle": "Bei Lieferanten bestellen",
   "featurePurchasesDesc": "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"
@@ -12771,6 +12773,10 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Bestellung {reference}",
+  "purchaseBillNoOrder": "Keine Bestellung",
+  "purchaseBillOrder": "Bestellung",
+  "purchaseBillOrderHint": "Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar",
   "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
   "purchaseEntryMe": "Ich habe selbst bezahlt",
   "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",
@@ -12784,6 +12790,66 @@
   "purchaseLinkInboxFailed": "Die Rechnung wurde nicht verknüpft. Der Beleg hat sich vielleicht inzwischen geändert: öffnen Sie ihn erneut und versuchen Sie es noch einmal.",
   "purchaseLinkInboxTitle": "Empfangene Rechnungen",
   "purchaseNeedsReview": "Zu prüfen",
+  "purchaseOrderAddLine": "Position hinzufügen",
+  "purchaseOrderBadEmail": "Eine E-Mail-Adresse, oder leer lassen zum Drucken",
+  "purchaseOrderBadVatRate": "Ein USt-Satz von 0 bis 99",
+  "purchaseOrderCancel": "Bestellung stornieren",
+  "purchaseOrderCancelReason": "Warum wird storniert?",
+  "purchaseOrderDescription": "Was bestellt wird",
+  "purchaseOrderEdit": "Bestellung bearbeiten",
+  "purchaseOrderEmail": "E-Mail-Adresse für den Versand",
+  "purchaseOrderExpected": "Erwartete Lieferung",
+  "purchaseOrderFreeText": "Freier Text",
+  "purchaseOrderItem": "Katalogartikel",
+  "purchaseOrderLine": "Position {n}",
+  "purchaseOrderLineReceived": "{description}: {received} von {ordered} erhalten",
+  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel",
+  "purchaseOrderMailKey": "Resend-API-Schlüssel",
+  "purchaseOrderMailKeyKept": "Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.",
+  "purchaseOrderMailSave": "Speichern",
+  "purchaseOrderMailSender": "Absenderadresse (eine bei Resend verifizierte Domain)",
+  "purchaseOrderMailSenderName": "Absendername",
+  "purchaseOrderMailSettings": "E-Mail-Versand",
+  "purchaseOrderMailText": "Guten Tag,\n\nanbei finden Sie unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
+  "purchaseOrderMarkSent": "Als gesendet markieren",
+  "purchaseOrderNeedsDescription": "Geben Sie an, was bestellt wird, oder wählen Sie einen Artikel",
+  "purchaseOrderNeedsPrice": "Ein Stückpreis, 0 oder mehr",
+  "purchaseOrderNeedsQuantity": "Eine Menge über null",
+  "purchaseOrderNeedsSupplier": "Wählen Sie den Lieferanten",
+  "purchaseOrderNew": "Neue Bestellung",
+  "purchaseOrderNote": "Hinweis an den Lieferanten",
+  "purchaseOrderPickDate": "Erwartetes Lieferdatum wählen",
+  "purchaseOrderPrint": "Drucken",
+  "purchaseOrderQuantity": "Menge",
+  "purchaseOrderReceive": "Wareneingang erfassen",
+  "purchaseOrderReceiveLine": "{description} (noch {left} offen)",
+  "purchaseOrderReceiveNote": "Notiz (optional)",
+  "purchaseOrderReceiveNothing": "Geben Sie an, was von mindestens einer Position angekommen ist",
+  "purchaseOrderReceiveTitle": "Lieferung zu {reference}",
+  "purchaseOrderReceiveTooMany": "Mehr als von dieser Position noch aussteht",
+  "purchaseOrderReceivedOn": "Angekommen am",
+  "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
+  "purchaseOrderRemoveLine": "Position entfernen",
+  "purchaseOrderSave": "Entwurf speichern",
+  "purchaseOrderSendArrived": "Sie ist angekommen",
+  "purchaseOrderSendAwaits": "Eine E-Mail an {recipient} hat kein bestätigtes Ergebnis. Ist sie angekommen?",
+  "purchaseOrderSendEmail": "Per E-Mail senden",
+  "purchaseOrderSendLost": "Sie ist nicht angekommen",
+  "purchaseOrderSendRefused": "Die E-Mail wurde abgelehnt: {reason}. Die Bestellung bleibt ein Entwurf.",
+  "purchaseOrderSendUnconfirmed": "Es kam keine bestätigte Antwort. Fragen Sie beim Lieferanten nach, bevor Sie erneut senden.",
+  "purchaseOrderSentTo": "Gesendet an {recipient}",
+  "purchaseOrderStateCancelled": "Storniert",
+  "purchaseOrderStateDraft": "Entwurf",
+  "purchaseOrderStatePartlyReceived": "Teilweise erhalten",
+  "purchaseOrderStateReceived": "Erhalten",
+  "purchaseOrderStateSent": "Gesendet",
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "purchaseOrderSupplier": "Lieferant",
+  "purchaseOrderUnit": "Einheit (z. B. Karton)",
+  "purchaseOrderUnitPrice": "Stückpreis netto",
+  "purchaseOrderVatRate": "USt-Satz (%)",
+  "purchaseOrdersEmpty": "Noch keine Bestellung. Eine neue Bestellung beginnt als Entwurf, den Sie bearbeiten, drucken und senden können.",
+  "purchaseOrdersTitle": "Bestellungen",
   "purchaseQualified": "Buchhaltung qualifiziert",
   "purchaseReceiptAdd": "Beleg mit mehreren Positionen",
   "purchaseReceiptAddLine": "Position hinzufügen",
@@ -14055,6 +14121,7 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Bestellung",
   "reportDocSpaceCodes": "QR-Karten der Plätze",
   "reportDocStatus": "Lage des Arbeitsbereichs",
   "@reportDocStatus": {
@@ -14086,6 +14153,7 @@
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportExpectedDelivery": "Erwartete Lieferung",
   "reportFieldGroupBank": "Bankverbindung",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"

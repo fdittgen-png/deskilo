@@ -24,6 +24,7 @@ import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -32,6 +33,7 @@ import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
@@ -49,6 +51,7 @@ import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -778,6 +781,26 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
           'demo-bill-licence-chf',
         ))?.currency ==
         'CHF',
+  ),
+  // #3307 — the orders the space sent its suppliers, one received.
+  WorkspaceFeature.purchaseOrders: _state(
+    _owner,
+    'orders to the suppliers: '
+    'a draft, one awaited, one received',
+    (w) async {
+      final orders = FakePurchaseOrderRepository(
+        suppliers: () => w.purchasing.suppliers.suppliers,
+        services: () => w.f.money.services,
+        now: () => w.now,
+      );
+      seedDemoPurchaseOrders(orders, w.now);
+      final states = {for (final o in await orders.fetchOrders('ws-1')) o.state};
+      return states.containsAll({
+        PurchaseOrderState.draft,
+        PurchaseOrderState.sent,
+        PurchaseOrderState.received,
+      });
+    },
   ),
   WorkspaceFeature.purchaseAnalytics: _state(
     _owner,

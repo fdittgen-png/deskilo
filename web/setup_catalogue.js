@@ -608,7 +608,7 @@ window.SETUP_REGISTRY={
    false
   ],
   [
-   "guestPasses",
+   "purchaseOrders",
    false
   ]
  ],
@@ -697,7 +697,7 @@ window.SETUP_REGISTRY={
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
   "mtdSubmission": "vatDeclarations",
-  "guestPasses": "invoicing"
+  "purchaseOrders": "purchases"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1100,8 +1100,7 @@ window.SETUP_PROCESSES=[
      "memberPage",
      "memberOrigin",
      "memberEnvironments",
-     "guestParticipation",
-     "guestPasses"
+     "guestParticipation"
     ]
    },
    {
@@ -1276,7 +1275,8 @@ window.SETUP_PROCESSES=[
      "premisesLease",
      "assetRegister",
      "purchaseAnalytics",
-     "foreignCurrencyPurchases"
+     "foreignCurrencyPurchases",
+     "purchaseOrders"
     ]
    },
    {
@@ -1589,8 +1589,7 @@ window.SETUP_LEVELS={
       "reportDesigner",
       "invoicingWizard",
       "settlementFold",
-      "carnets",
-      "guestPasses"
+      "carnets"
      ],
      "needs": {}
     }
@@ -1685,7 +1684,8 @@ window.SETUP_LEVELS={
       "premisesLease",
       "assetRegister",
       "purchaseAnalytics",
-      "foreignCurrencyPurchases"
+      "foreignCurrencyPurchases",
+      "purchaseOrders"
      ],
      "needs": {
       "money": "invoices"

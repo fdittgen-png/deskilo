@@ -14186,7 +14186,7 @@ abstract class AppLocalizations {
   /// #2861 workspace export: exportSheetName
   ///
   /// In en, this message translates to:
-  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
+  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
   String exportSheetName(String key);
 
   /// #669 - accounting export formats
@@ -15664,6 +15664,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchase figures (analytics)'**
   String get featurePurchaseAnalyticsTitle;
+
+  /// #3307 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.'**
+  String get featurePurchaseOrdersDesc;
+
+  /// #3307 feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Order from suppliers'**
+  String get featurePurchaseOrdersTitle;
 
   /// #2573 purchases
   ///
@@ -33354,6 +33366,30 @@ abstract class AppLocalizations {
   /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
 
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order {reference}'**
+  String purchaseBillForOrder(String reference);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'No order'**
+  String get purchaseBillNoOrder;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get purchaseBillOrder;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'The order this bill charges: its amounts are taken and stay editable'**
+  String get purchaseBillOrderHint;
+
   /// #2577 the guided purchase / expense entry
   ///
   /// In en, this message translates to:
@@ -33431,6 +33467,370 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needs review'**
   String get purchaseNeedsReview;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get purchaseOrderAddLine;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'One e-mail address, or leave it empty to print'**
+  String get purchaseOrderBadEmail;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A VAT rate from 0 to 99'**
+  String get purchaseOrderBadVatRate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the order'**
+  String get purchaseOrderCancel;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it cancelled?'**
+  String get purchaseOrderCancelReason;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'What is ordered'**
+  String get purchaseOrderDescription;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the order'**
+  String get purchaseOrderEdit;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail address to send it to'**
+  String get purchaseOrderEmail;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery'**
+  String get purchaseOrderExpected;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Free text'**
+  String get purchaseOrderFreeText;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue item'**
+  String get purchaseOrderItem;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Line {n}'**
+  String purchaseOrderLine(String n);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'{description}: {received} of {ordered} received'**
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  );
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'A sender address, a name without < > or quotes, and on the first save the API key'**
+  String get purchaseOrderMailInvalid;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Resend API key'**
+  String get purchaseOrderMailKey;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'A key is stored. Leave empty to keep it; it is never shown again.'**
+  String get purchaseOrderMailKeyKept;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get purchaseOrderMailSave;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Sender address (a verified domain at Resend)'**
+  String get purchaseOrderMailSender;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Sender name'**
+  String get purchaseOrderMailSenderName;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail sending'**
+  String get purchaseOrderMailSettings;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}'**
+  String purchaseOrderMailText(String reference, String space);
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as sent'**
+  String get purchaseOrderMarkSent;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Say what is ordered, or choose an item'**
+  String get purchaseOrderNeedsDescription;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A unit price, 0 or more'**
+  String get purchaseOrderNeedsPrice;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'A quantity above zero'**
+  String get purchaseOrderNeedsQuantity;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the supplier'**
+  String get purchaseOrderNeedsSupplier;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'New order'**
+  String get purchaseOrderNew;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Note to the supplier'**
+  String get purchaseOrderNote;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the expected delivery date'**
+  String get purchaseOrderPickDate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get purchaseOrderPrint;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get purchaseOrderQuantity;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Record a delivery'**
+  String get purchaseOrderReceive;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'{description} ({left} to come)'**
+  String purchaseOrderReceiveLine(String description, String left);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get purchaseOrderReceiveNote;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Enter what arrived of at least one line'**
+  String get purchaseOrderReceiveNothing;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery of {reference}'**
+  String purchaseOrderReceiveTitle(String reference);
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'More than what is left of this line'**
+  String get purchaseOrderReceiveTooMany;
+
+  /// #3307 goods receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived on'**
+  String get purchaseOrderReceivedOn;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'The order was not changed. Check the entries and try again.'**
+  String get purchaseOrderRefused;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the line'**
+  String get purchaseOrderRemoveLine;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Save the draft'**
+  String get purchaseOrderSave;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'It arrived'**
+  String get purchaseOrderSendArrived;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'An e-mail to {recipient} has no confirmed outcome. Did it arrive?'**
+  String purchaseOrderSendAwaits(String recipient);
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Send by e-mail'**
+  String get purchaseOrderSendEmail;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'It did not arrive'**
+  String get purchaseOrderSendLost;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail was refused: {reason}. The order stays a draft.'**
+  String purchaseOrderSendRefused(String reason);
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed answer came back. Check with the supplier before sending again.'**
+  String get purchaseOrderSendUnconfirmed;
+
+  /// #3307 purchase order e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to {recipient}'**
+  String purchaseOrderSentTo(String recipient);
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get purchaseOrderStateCancelled;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get purchaseOrderStateDraft;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Partly received'**
+  String get purchaseOrderStatePartlyReceived;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get purchaseOrderStateReceived;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get purchaseOrderStateSent;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} · {total}'**
+  String purchaseOrderSummary(String supplier, String total);
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get purchaseOrderSupplier;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (e.g. box)'**
+  String get purchaseOrderUnit;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price before VAT'**
+  String get purchaseOrderUnitPrice;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate (%)'**
+  String get purchaseOrderVatRate;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase order yet. A new order starts as a draft you can edit, print and send.'**
+  String get purchaseOrdersEmpty;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase orders'**
+  String get purchaseOrdersTitle;
 
   /// #2577 the three status chips of a purchase document
   ///
@@ -36192,6 +36592,12 @@ abstract class AppLocalizations {
   /// **'Payments report'**
   String get reportDocPayments;
 
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get reportDocPurchaseOrder;
+
   /// No description provided for @reportDocSpaceCodes.
   ///
   /// In en, this message translates to:
@@ -36251,6 +36657,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visual'**
   String get reportEditorVisual;
+
+  /// #3307 purchase orders
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery'**
+  String get reportExpectedDelivery;
 
   /// #966 report guide: reportFieldGroupBank
   ///

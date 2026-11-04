@@ -174,6 +174,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/purchases/approvals', RouteClass.workspace),
   RouteRule('/money/payments', RouteClass.workspace),
   RouteRule('/money/suppliers', RouteClass.workspace),
+  RouteRule('/money/purchase-orders', RouteClass.workspace),
   RouteRule('/suppliers', RouteClass.workspace),
   RouteRule('/money/sales', RouteClass.workspace),
   RouteRule('/money/cash', RouteClass.workspace),

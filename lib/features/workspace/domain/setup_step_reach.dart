@@ -73,6 +73,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.scheduledExpenses,
     _F.purchaseAnalytics,
     _F.foreignCurrencyPurchases,
+    _F.purchaseOrders,
   },
   // A room rented from a lessor is bookable inside the rental.
   'lease': {_F.externalRooms},

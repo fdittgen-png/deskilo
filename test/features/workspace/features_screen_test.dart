@@ -74,8 +74,9 @@ void main() {
     // #2370 — accountingConnectors: the accounting systems are asked for.
     // #2380 — bankImport: reading the bank's statements is asked for.
     // #2470 — mtdSubmission: filing with the tax authority is asked for.
+    // #3307 — purchaseOrders: ordering from suppliers is asked for.
     // #3308 — guestPasses: selling passes at the desk is asked for.
-    expect(onCount, featureManifest.length - 53);
+    expect(onCount, featureManifest.length - 54);
   });
 
   testWidgets(

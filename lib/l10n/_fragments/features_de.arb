@@ -263,6 +263,8 @@
   "featurePlanDecorDesc": "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben.",
   "featureMtdSubmissionTitle": "Britische USt-Erklärung an HMRC senden",
   "featureMtdSubmissionDesc": "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei.",
+  "featurePurchaseOrdersTitle": "Bei Lieferanten bestellen",
+  "featurePurchaseOrdersDesc": "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen.",
   "featureGuestPassesTitle": "Gästepässe am Empfang",
   "featureGuestPassesDesc": "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben."
 }

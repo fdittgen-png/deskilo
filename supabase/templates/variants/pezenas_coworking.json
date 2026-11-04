@@ -185,6 +185,7 @@
         "publicHolidays": true,
         "publicListings": false,
         "purchaseAnalytics": false,
+        "purchaseOrders": false,
         "purchases": false,
         "pushNotifications": true,
         "qrBadges": false,

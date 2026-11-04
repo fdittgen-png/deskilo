@@ -1359,6 +1359,12 @@
       "capabilities": []
     },
     {
+      "key": "purchaseOrders",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "purchases",
       "maturity": "beta",
       "lifecycle": "active",
