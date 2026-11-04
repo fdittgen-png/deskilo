@@ -8,6 +8,7 @@ import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
@@ -242,12 +243,19 @@ class _UblWriter {
     });
   }
 
-  /// BT-81/84 — where to pay (30 = credit transfer) and on what terms.
+  /// BT-81/83/84 — where to pay, with which reference, (30 = credit transfer) and on what terms.
   void payment() {
     final iban = input.iban;
     if (iban.isNotEmpty) {
       builder.element('cac:PaymentMeans', nest: () {
         cbc('PaymentMeansCode', '30');
+        // BT-83 — the reference the payer quotes with the transfer.
+        final reference = paymentReferenceFor(
+          account: iban,
+          invoiceNumber: invoice.number,
+          creditNote: invoice.totalCents < 0,
+        );
+        if (reference.isNotEmpty) cbc('PaymentID', reference);
         builder.element('cac:PayeeFinancialAccount', nest: () {
           cbc('ID', iban.replaceAll(' ', ''));
         });

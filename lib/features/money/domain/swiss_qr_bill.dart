@@ -175,6 +175,23 @@ String? scorReferenceOf(String text) {
   return 'RF$check$body';
 }
 
+/// #2380 — BT-83, the remittance reference an e-invoice states for a
+/// payment to [account] (its BT-84): the QRR built from [invoiceNumber] when
+/// [account] is a QR-IBAN, the only reference such an account accepts, else
+/// the ISO 11649 creditor reference; '' for a credit note, which asks for no
+/// payment, or when the number yields neither. The same functions as the
+/// QR-bill and the bank matching, so the reference a payer copies from the
+/// e-invoice is the one a statement line is matched by.
+String paymentReferenceFor({
+  required String account,
+  required String invoiceNumber,
+  required bool creditNote,
+}) {
+  if (creditNote || account.trim().isEmpty) return '';
+  if (isQrIban(account)) return qrrReferenceOf(invoiceNumber) ?? '';
+  return scorReferenceOf(invoiceNumber) ?? '';
+}
+
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
   if (!RegExp(r'^RF\d{2}[A-Z0-9]{1,21}$').hasMatch(s)) return false;
