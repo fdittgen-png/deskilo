@@ -8,7 +8,7 @@
 -- by the erasure of the last membership, whose preview says so; the table
 -- refuses an implausible one.
 begin;
-select plan(28);
+select plan(29);
 
 -- a1 owner · a2 subject (only member of this space besides the others) · a3 peer
 -- a4 billing clerk (co-owner holding only issueInvoices) · a5 admin holding
@@ -108,7 +108,7 @@ select is(public.preview_my_member_profile('privacy_admin') -> 'birthday' ->> 'b
 
 -- ── export and erasure ──────────────────────────────────────────────
 select ok(public.export_my_data('00000000-0000-4000-8000-0000003278b1')::text like '%1990-04-12%', 'the subject export carries the birthday');
-select is(public.export_my_personal_data_v1() -> 'profile' ->> 'birthday', '1990-04-12', 'the account export (Me, no workspace needed) carries the birthday');
+select is(public.export_my_personal_data_v1() -> 'profile' ->> 'birthday', '1990-04-12', 'the account export (Me) carries the birthday');
 select ok(public.preview_my_erasure('00000000-0000-4000-8000-0000003278b1')::text ilike '%birthday%', 'the erasure preview names the birthday');
 select lives_ok($$select public.erase_my_membership('00000000-0000-4000-8000-0000003278b1')$$, 'the last membership is erased');
 reset role;
@@ -118,6 +118,15 @@ select ok(not exists (select 1 from public.profile_birthdays where user_id = '00
                   and courtesy = '' and country_code = ''
              from public.profiles where id = '00000000-0000-4000-8000-0000003278a2'),
   'the birthday row is removed and the whole structured identity cleared, not only the name and address');
+
+-- with no membership left (the erasure above removed the last one), the
+-- account export still carries a birthday the person stores again
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000003278a2","role":"authenticated"}',true);
+set local role authenticated;
+insert into public.profile_birthdays(user_id, birthday) values ('00000000-0000-4000-8000-0000003278a2', date '1990-04-12');
+select is(public.export_my_personal_data_v1() -> 'profile' ->> 'birthday', '1990-04-12',
+  'with no workspace membership the account export carries the birthday');
+reset role;
 
 select * from finish();
 rollback;
