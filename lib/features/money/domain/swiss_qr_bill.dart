@@ -150,6 +150,16 @@ String? qrrReferenceOf(String number) {
   return '$body${qrrCheckDigit(body)}';
 }
 
+/// #2380 — the QRR of an invoice: the one frozen at issue in its legal
+/// snapshot (`legal_snapshot.qrr`, 0672) when it holds a valid one, else the
+/// reference derived from its number (invoices issued before 0672).
+String? invoiceQrrOf(String number, Map<String, Object?>? legalSnapshot) {
+  if (legalSnapshot?['qrr'] case final String frozen when isValidQrr(frozen)) {
+    return frozen;
+  }
+  return qrrReferenceOf(number);
+}
+
 bool isValidQrr(String reference) =>
     RegExp(r'^\d{27}$').hasMatch(reference) &&
     qrrCheckDigit(reference.substring(0, 26)) ==
@@ -298,10 +308,16 @@ class SwissQrBill {
     required String currency,
     required String invoiceNumber,
     String additionalInfo = '',
+    String? frozenQrr,
   }) {
     final qr = qrIban.replaceAll(' ', '');
     final plain = iban.replaceAll(' ', '');
-    final qrRef = qr.isEmpty ? null : qrrReferenceOf(invoiceNumber);
+    // #2380 — the reference frozen at issue, when the invoice has one.
+    final qrRef = qr.isEmpty
+        ? null
+        : (frozenQrr != null && isValidQrr(frozenQrr)
+              ? frozenQrr
+              : qrrReferenceOf(invoiceNumber));
     SwissQrBill bill;
     if (qrRef != null && isQrIban(qr)) {
       bill = _make(
