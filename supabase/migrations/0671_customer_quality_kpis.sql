@@ -320,4 +320,4 @@ grant execute on function public.kpi_customer_quality(uuid, text, text) to authe
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(670);
+select public.set_deskilo_schema_version(671);
