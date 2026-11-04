@@ -13,10 +13,17 @@ import 'demo_fixture.dart';
 /// The overview the server's `my_finance_overview` (0380) would answer for
 /// the persona [fixture] is acting as.
 FinanceOverview demoFinanceOverview(DemoFixture fixture) {
-  // Me reads every space the person is in: the main space and Leipzig.
+  // Me reads every space the person is in: the main space, Leipzig, London
+  // and New York. Each keeps its own currency (euros, pounds, dollars); Me
+  // never adds them together (FinanceOverview.owedByCurrency).
   final names = {for (final w in fixture.workspaces.workspaces) w.id: w.name};
   final parts = [
-    for (final money in [fixture.money, fixture.secondSpace.money])
+    for (final money in [
+      fixture.money,
+      fixture.secondSpace.money,
+      fixture.london.money,
+      fixture.newYork.money,
+    ])
       _overviewOf(money, fixture.actor.memberId, names),
   ];
   return FinanceOverview(
