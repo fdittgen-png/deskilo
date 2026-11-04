@@ -13,27 +13,30 @@
 --   d7 c2  4.00 issued in March, no due date                             -> unknown due
 --   e1 c2 -2.00 (-1.60 net) credit note of d1, issued in March.
 -- Outside the due months: d9 c6 5.00 issued in March without a VAT
--- breakdown (net not proven: left out of the net, counted), and a9 c6
--- 7.00 of January, unpaid (a debtor with no proven March sales).
+-- breakdown and b5 c6 4.00 whose second rate lacks its net (neither net
+-- proven: left out of the net, counted), a9 c6 7.00 of January, unpaid
+-- (a debtor with no proven March sales), and c7's February sale b3 3.00
+-- credited in March by b4 (-1.00, -0.80 net).
 -- Unpaid settlement: on time 1 of 2 settled; median -2, P90 10, weighted
 -- (-2*1200+10*900)/2100 = 3.1 days. Four reminders on three of eight
--- invoices due, one paid after its reminder. Credited 1.60 net, written off
--- 6.00 * 6.40/8.00 = 4.80 net. Sales by net: c3 24.00, c2 14.40, c5 10.00,
--- c4 9.40 = 57.80. Debtors now: c6 12.00, c3 11.00, c5 10.00 (f1), c2 4.00,
--- c4 3.00 = 40.00: another population and another order.
+-- invoices due, one paid after its reminder. Credited 2.40 net, written off
+-- 6.00 * 6.40/8.00 = 4.80 net. Sales by signed net: c3 24.00, c2 14.40,
+-- c5 10.00, c4 9.40, c7 -0.80 = 57.00. Debtors now: c6 16.00, c3 11.00,
+-- c5 10.00 (f1), c2 4.00, c4 3.00, c7 2.00 = 46.00: another population
+-- and another order.
 -- Paid settlement: late 3 (19.00); delays -2, 7, 10, 13 -> median 7, P90 13,
--- weighted 17200/3100 = 5.5; c5 owes nothing, 30.00 owed by four debtors.
+-- weighted 17200/3100 = 5.5; c5 owes nothing, 36.00 owed by five debtors.
 -- The owner reads names; an analyst without viewPersonalData reads ranks
 -- only; without viewFinances, or with the status flag off, nothing is read;
 -- a dollar invoice leaves every amount unknown (currency_mix) while the
 -- counts stay.
 begin;
-select plan(31);
+select plan(33);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000032940'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
  'authenticated','authenticated',suffix||'@customers.test','',now(),now(),now()
-  from unnest(array['a1','a2','a3','a4','a5','a6']) suffix;
+  from unnest(array['a1','a2','a3','a4','a5','a6','e7']) suffix;
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,role_permissions,feature_flags) values
  ('00000000-0000-4000-8000-0000032940b1','Customers','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000032940a1','dev',
   '{"admin":["viewAnalytics","viewFinances"],"member":["viewAnalytics"]}',
@@ -44,7 +47,8 @@ insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) val
  ('00000000-0000-4000-8000-0000032940c3','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940a3',false,false,'active'),
  ('00000000-0000-4000-8000-0000032940c4','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940a4',false,false,'active'),
  ('00000000-0000-4000-8000-0000032940c5','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940a5',false,false,'active'),
- ('00000000-0000-4000-8000-0000032940c6','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940a6',false,false,'active');
+ ('00000000-0000-4000-8000-0000032940c6','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940a6',false,false,'active'),
+ ('00000000-0000-4000-8000-0000032940c7','00000000-0000-4000-8000-0000032940b1','00000000-0000-4000-8000-0000032940e7',false,false,'active');
 
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000032940' || p)::uuid;
@@ -138,6 +142,14 @@ update public.invoices set settled_by_invoice_id = pg_temp.u('f1') where id in (
 -- A taxable invoice without its breakdown, and a January debtor.
 select pg_temp.inv('d9', 'c6', 500, '2025-04-10', 'full', '[]');
 select pg_temp.inv('a9', 'c6', 700, '2025-01-31', 'full', null, null, '2025-01');
+-- A two-rate breakdown with one net missing: not proven either.
+select pg_temp.inv('b5', 'c6', 400, '2025-04-10', 'subscription',
+  '[{"percent":20,"category":"S","gross_cents":250,"net_cents":200,"vat_cents":50},
+    {"percent":10,"category":"AA","gross_cents":150,"vat_cents":15}]');
+-- c7: a February sale credited in March (-1.00, -0.80 net).
+select pg_temp.inv('b3', 'c7', 300, '2025-02-28', 'full', null, null, '2025-02');
+select pg_temp.inv('b4', 'c7', -100, null, 'full',
+  '[{"percent":25,"category":"S","gross_cents":-100,"net_cents":-80,"vat_cents":-20}]', 'b3');
 
 set local role authenticated;
 select set_config('t.owner', pg_temp.call('a1')::text, true);
@@ -160,26 +172,30 @@ select is(current_setting('t.owner')::jsonb -> 'dunning' ->> 'reminded_invoices'
 select is(current_setting('t.owner')::jsonb -> 'dunning' -> 'by_level', '{"1":3,"2":1}'::jsonb, 'by level');
 select is(current_setting('t.owner')::jsonb -> 'dunning' ->> 'paid_after_reminder', '1',
   'one reminded invoice was paid after its first reminder');
-select is(current_setting('t.owner')::jsonb -> 'credit' ->> 'credited_minor', '160', 'the credit note, net of VAT');
+select is(current_setting('t.owner')::jsonb -> 'credit' ->> 'credited_minor', '240',
+  'the credit notes, net of VAT, the one against a February sale included');
 select is(current_setting('t.owner')::jsonb -> 'credit' ->> 'written_off_minor', '480',
   'the written-off remainder, in proportion to its invoice''s net');
 select is(current_setting('t.owner')::jsonb -> 'credit' -> 'months',
-  '[{"month":"2025-03","credited_minor":"160","written_off_minor":"480"}]'::jsonb, 'by the invoice''s month');
-select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'net_minor', '5780',
-  'net invoiced, the credit note deducted, the settlement not counted again');
-select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'net_unknown', '1',
-  'a taxable invoice without its breakdown is left out of the net and counted');
+  '[{"month":"2025-03","credited_minor":"240","written_off_minor":"480"}]'::jsonb, 'by the invoice''s month');
+select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'net_minor', '5700',
+  'net invoiced, the credit notes deducted (c7''s against a February sale too), the settlement not counted again');
+select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'net_unknown', '2',
+  'an invoice without its breakdown, or with a rate missing its net, is left out of the net and counted');
 select ok(current_setting('t.owner')::jsonb -> 'reasons' ? 'net_not_proven', '... and said');
 select is(current_setting('t.owner')::jsonb -> 'concentration' -> 'rows',
   '[{"rank":1,"name":"Name c3","minor":"2400"},{"rank":2,"name":"Name c2","minor":"1440"},
-    {"rank":3,"name":"Name c5","minor":"1000"},{"rank":4,"name":"Name c4","minor":"940"}]'::jsonb,
-  'the owner reads the customers by name, the largest sales first');
-select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'open_minor', '4000',
+    {"rank":3,"name":"Name c5","minor":"1000"},{"rank":4,"name":"Name c4","minor":"940"},
+    {"rank":5,"name":"Name c7","minor":"-80"}]'::jsonb,
+  'the owner reads the customers by name, by signed net: a credit-only month ranks last, not dropped');
+select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'top_net_minor', '5700',
+  'the five largest against the same total');
+select is(current_setting('t.owner')::jsonb -> 'concentration' ->> 'open_minor', '4600',
   'owed now by every debtor, the January one and the settlement included');
 select is(current_setting('t.owner')::jsonb -> 'concentration' -> 'debtor_rows',
-  '[{"rank":1,"name":"Name c6","minor":"1200"},{"rank":2,"name":"Name c3","minor":"1100"},
+  '[{"rank":1,"name":"Name c6","minor":"1600"},{"rank":2,"name":"Name c3","minor":"1100"},
     {"rank":3,"name":"Name c5","minor":"1000"},{"rank":4,"name":"Name c2","minor":"400"},
-    {"rank":5,"name":"Name c4","minor":"300"}]'::jsonb,
+    {"rank":5,"name":"Name c4","minor":"300"},{"rank":6,"name":"Name c7","minor":"200"}]'::jsonb,
   'the debtors are ranked by what they owe: another population, another order');
 select is(current_setting('t.owner')::jsonb -> 'quality', '[]'::jsonb, 'a past month in one currency is whole');
 select is(current_setting('t.analyst')::jsonb ->> 'names_visible', 'false',
@@ -197,6 +213,8 @@ select throws_ok($q$select pg_temp.call('a1', '2025-03', '2027-03')$q$, '22023',
 
 -- The settlement is paid on the 25th: its sources are late, c5 owes nothing.
 reset role;
+select is(public.kpi_invoice_net('[{"net_cents":"12"},{"net_cents":1.5}]'), null::bigint,
+  'a malformed net is unknown, never an aborted figure');
 select pg_temp.pay('f1', 'c5', 1000, 'exact', '2025-03-25', '2025-03-26 12:00+01');
 set local role authenticated;
 select set_config('t.paid', pg_temp.call('a1')::text, true);
@@ -206,9 +224,9 @@ select is(array[(current_setting('t.paid')::jsonb -> 'payment' ->> 'median_days'
                 (current_setting('t.paid')::jsonb -> 'payment' ->> 'p90_days')::numeric,
                 (current_setting('t.paid')::jsonb -> 'payment' ->> 'weighted_days')::numeric],
   array[7, 13, 5.5]::numeric[], 'their delays count, once each');
-select is(current_setting('t.paid')::jsonb -> 'concentration' ->> 'open_minor', '3000',
+select is(current_setting('t.paid')::jsonb -> 'concentration' ->> 'open_minor', '3600',
   'the paid settlement is owed by nobody');
-select is(current_setting('t.paid')::jsonb -> 'concentration' ->> 'debtors', '4', 'four debtors left');
+select is(current_setting('t.paid')::jsonb -> 'concentration' ->> 'debtors', '5', 'five debtors left');
 
 reset role;
 insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,

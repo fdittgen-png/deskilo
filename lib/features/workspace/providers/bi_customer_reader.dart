@@ -50,7 +50,8 @@ BiMeasure customerMeasure(
       count &&
       k.reasons.contains('currency_mix') &&
       !k.reasons.contains('amount_not_exact');
-  final undefinedShare = f.denominator == 0;
+  // A share of nothing, or of a net the credits outweigh, is undefined.
+  final undefinedShare = f.denominator != null && f.denominator! <= 0;
   final dunningOff =
       moduleId == 'customers.dunning_load' && k.dunning == null;
   // A net the server could not prove leaves this module's net partial.

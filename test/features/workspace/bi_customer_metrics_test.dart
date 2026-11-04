@@ -42,7 +42,7 @@ Map<String, Object?> _row({
   bool names = true,
   bool mixed = false,
   bool dunning = true,
-  Object? creditedMinor = '160',
+  Object? creditedMinor = '240',
 }) {
   String? a(String v) => mixed ? null : v;
   return {
@@ -83,36 +83,38 @@ Map<String, Object?> _row({
       'months': [
         {
           'month': '2025-03',
-          'credited_minor': a('160'),
+          'credited_minor': a('240'),
           'written_off_minor': a('480'),
         },
       ],
     },
     'concentration': {
       'top_count': 5,
-      'net_unknown': 1,
-      'customers': 4,
-      'net_minor': a('5780'),
-      'top_net_minor': a('5780'),
-      'debtors': 5,
-      'open_minor': a('4000'),
-      'top_open_minor': a('4000'),
+      'net_unknown': 2,
+      'customers': 5,
+      'net_minor': a('5700'),
+      'top_net_minor': a('5700'),
+      'debtors': 6,
+      'open_minor': a('4600'),
+      'top_open_minor': a('4400'),
       'rows': [
         for (final (rank, name, net) in [
           (1, 'Name c3', '2400'),
           (2, 'Name c2', '1440'),
           (3, 'Name c5', '1000'),
           (4, 'Name c4', '940'),
+          (5, 'Name c7', '-80'),
         ])
           {'rank': rank, 'name': names ? name : null, 'minor': a(net)},
       ],
       'debtor_rows': [
         for (final (rank, name, open) in [
-          (1, 'Name c6', '1200'),
+          (1, 'Name c6', '1600'),
           (2, 'Name c3', '1100'),
           (3, 'Name c5', '1000'),
           (4, 'Name c2', '400'),
           (5, 'Name c4', '300'),
+          (6, 'Name c7', '200'),
         ])
           {'rank': rank, 'name': names ? name : null, 'minor': a(open)},
       ],
@@ -236,6 +238,9 @@ FakeMoneyRepository _march({bool settlementPaid = false}) {
     // A taxable invoice without its breakdown, and a January debtor.
     _invoice('d9', 'c6', 500, due: DateTime(2025, 4, 10), vat: const []),
     _invoice('a9', 'c6', 700, due: DateTime(2025, 1, 31), period: '2025-01'),
+    // c7: a February sale credited in March (-1.00, -0.80 net).
+    _invoice('b3', 'c7', 300, due: DateTime(2025, 2, 28), period: '2025-02'),
+    _invoice('b4', 'c7', -100, vat: [_vat(-100, -80)], replaces: 'b3'),
   ]);
   pay('d1', 'c2', 1200, 'exact', DateTime(2025, 3, 8), DateTime(2025, 4, 30));
   pay('d8', 'c3', 900, 'exact', DateTime(2025, 3, 11), DateTime(2025, 3, 12));
@@ -311,7 +316,7 @@ void main() {
       expect(k.completedCount, 2);
       expect((k.medianDays, k.p90Days, k.weightedDays), (-2, 10, 3.1));
       expect(k.dunning!.byLevel, {1: 3, 2: 1});
-      expect(k.creditedAndWrittenOffMinor, 640);
+      expect(k.creditedAndWrittenOffMinor, 720);
       expect(k.customers.first.name, 'Name c3');
       expect(k.debtors.first.name, 'Name c6');
       // A net not proven makes the net figures partial, and only those.
@@ -383,11 +388,11 @@ void main() {
       );
       expect(
         customerRows(k, 'customers.credit_and_writeoff').single.current.numerator,
-        640,
+        720,
       );
       final top = customerRows(k, 'customers.concentration');
-      expect(top.map((r) => r.key), ['rank-1', 'rank-2', 'rank-3', 'rank-4']);
-      expect(top.first.current.value(KpiAggregation.ratioOfSums), 2400 / 5780);
+      expect(top.map((r) => r.key), ['rank-1', 'rank-2', 'rank-3', 'rank-4', 'rank-5']);
+      expect(top.first.current.value(KpiAggregation.ratioOfSums), 2400 / 5700);
     });
 
     test('a row is named by the server, else by its rank', () {
@@ -439,8 +444,14 @@ void main() {
       expect(k.dunning!.remindedInvoices, 3);
       expect(k.dunning!.byLevel, {1: 3, 2: 1});
       expect(k.dunning!.paidAfterReminder, 1);
-      expect((k.creditedMinor, k.writtenOffMinor), (160, 480));
-      expect((k.netMinor, k.topNetMinor, k.netUnknown), (5780, 5780, 1));
+      expect((k.creditedMinor, k.writtenOffMinor), (240, 480));
+      expect(
+        (k.netMinor, k.topNetMinor, k.netUnknown),
+        (5700, 5700, 1),
+        reason: 'the March credit of c7 against a February sale is deducted; '
+            'the Demo reads the one invoice without a breakdown (a missing '
+            'rate net cannot be represented once parsed)',
+      );
       expect(k.reasons, contains('net_not_proven'));
       expect(
         [for (final c in k.customers) (c.rank, c.name, c.minor)],
@@ -449,9 +460,11 @@ void main() {
           (2, 'Name c2', 1440),
           (3, 'Name c5', 1000),
           (4, 'Name c4', 940),
+          (5, 'Name c7', -80),
         ],
+        reason: 'a credit-only month ranks last, not dropped',
       );
-      expect((k.openMinor, k.topOpenMinor, k.debtorCount), (4000, 4000, 5));
+      expect((k.openMinor, k.topOpenMinor, k.debtorCount), (4200, 4000, 6));
       expect(
         [for (final d in k.debtors) (d.rank, d.name, d.minor)],
         [
@@ -460,6 +473,7 @@ void main() {
           (3, 'Name c5', 1000),
           (4, 'Name c2', 400),
           (5, 'Name c4', 300),
+          (6, 'Name c7', 200),
         ],
         reason: 'the January debtor counts; debtors are another ranking',
       );
@@ -471,7 +485,7 @@ void main() {
       final k = await _demo(_march(settlementPaid: true));
       expect(k.cohorts[PaymentCohort.late], (count: 3, minor: 1900));
       expect((k.medianDays, k.p90Days, k.weightedDays), (7, 13, 5.5));
-      expect((k.openMinor, k.debtorCount), (3000, 4));
+      expect((k.openMinor, k.debtorCount), (3200, 5));
     });
 
     test('without personal data the customers are ranks', () async {
@@ -546,14 +560,14 @@ void main() {
         .data!;
     expect(value('customers.payment_behaviour'), '50.0%');
     expect(value('customers.dunning_load'), '4');
-    expect(value('customers.credit_and_writeoff'), '€6.40');
+    expect(value('customers.credit_and_writeoff'), '€7.20');
     expect(value('customers.concentration'), '100.0%');
     expect(
       find.text('1 of 2 settled invoices paid by their due date'),
       findsOneWidget,
     );
     expect(
-      find.text('4 reminders on 3 of 6 invoices falling due'),
+      find.text('4 reminders on 3 of 8 invoices falling due'),
       findsOneWidget,
     );
     expect(

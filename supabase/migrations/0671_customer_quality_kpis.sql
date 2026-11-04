@@ -19,7 +19,8 @@
 --       and the written-off remainders (total - paid), net of VAT (the
 --       remainder in proportion to its invoice's net);
 --   customers.concentration        the share of the net invoiced in the
---       months that the five largest customers make, and apart, the share
+--       months (every customer's credit notes deducted, a credit against an
+--       earlier sale included) that the five largest customers make, and apart, the share
 --       of what is owed now that the five largest debtors owe (whenever
 --       they were invoiced: two populations, two rankings).
 --
@@ -46,13 +47,21 @@ revoke execute on function public.kpi_registry() from public, anon;
 grant execute on function public.kpi_registry() to authenticated;
 
 -- The net of an invoice from its frozen VAT breakdown; null when it has
--- none: a missing snapshot does not prove that gross equals net.
+-- none, or when any component lacks a whole-number net_cents: a missing
+-- snapshot or a missing rate does not prove the net, and a malformed one
+-- must not abort the figures.
 create or replace function public.kpi_invoice_net(p_vat_totals jsonb)
 returns bigint
 language sql immutable set search_path = public as $fn$
-  select case when jsonb_typeof(p_vat_totals) = 'array' and jsonb_array_length(p_vat_totals) > 0
-              then (select sum((t ->> 'net_cents')::bigint) from jsonb_array_elements(p_vat_totals) t)
-         end;
+  select case
+    when jsonb_typeof(p_vat_totals) = 'array' and jsonb_array_length(p_vat_totals) > 0
+     and not exists (
+       select 1 from jsonb_array_elements(p_vat_totals) t
+        where jsonb_typeof(t) is distinct from 'object'
+           or jsonb_typeof(t -> 'net_cents') is distinct from 'number'
+           or (t ->> 'net_cents') !~ '^-?[0-9]{1,15}$')
+    then (select sum((t ->> 'net_cents')::bigint) from jsonb_array_elements(p_vat_totals) t)
+  end;
 $fn$;
 revoke execute on function public.kpi_invoice_net(jsonb) from public, anon, authenticated;
 
@@ -299,8 +308,12 @@ begin
      where i.workspace_id = p_workspace_id
      order by i.member_id, i.issued_at desc
   ), sales as (
+    -- Every customer with a proven net in the months, ranked by its signed
+    -- net: a credit against an earlier sale is deducted, never dropped,
+    -- and the top is read against the same total. When the others'
+    -- credits outweigh their sales the share exceeds 100 %: said, not cut.
     select n.member_id, n.net, row_number() over (order by n.net desc, n.member_id) as rank
-      from net n where n.net > 0
+      from net n where n.net is not null
   ), debtors as (
     select o.member_id, o.open, row_number() over (order by o.open desc, o.member_id) as rank
       from owed o where o.open > 0

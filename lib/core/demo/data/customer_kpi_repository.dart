@@ -344,7 +344,7 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
     );
   }
 
-  /// The customers by net invoiced in the months, the largest first; a
+  /// The customers by signed net invoiced in the months, the largest first; a
   /// customer's name is the one of its latest invoice.
   List<_Ranked> _ranked(List<Invoice> inScope) {
     final net = <String, int>{};
@@ -356,10 +356,11 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
         latest[i.memberId] = i;
       }
     }
+    // Every customer with a proven net, by its signed net: a credit
+    // against an earlier sale is deducted, never dropped (0671).
     return [
       for (final e in net.entries)
-        if (e.value > 0)
-          (id: e.key, net: e.value, name: latest[e.key]!.memberName),
+        (id: e.key, net: e.value, name: latest[e.key]!.memberName),
     ]..sort(
       (a, b) => b.net != a.net ? b.net.compareTo(a.net) : a.id.compareTo(b.id),
     );
