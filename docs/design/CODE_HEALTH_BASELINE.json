@@ -1,5 +1,5 @@
 {
-  "recordedSha": "9e003638c14ba8b161a748923a9a36d2beb194f8",
+  "recordedSha": "15742f553dc0838ece633ca45a17ea75007762cd",
   "recordedDate": "2026-11-04",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2380,"functions":13577,"cyclomatic>=9":1359,"cyclomatic>=25":75,"cognitive>=15":521,"cognitive>=30":69,"length>=150":45,"parameters>=5":613,"parameters>=7":149,"partOfFiles":17},
@@ -830,7 +830,7 @@
     {"p":"lib/core/demo/data/company_lookup_repository.dart","loc":55,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":17,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/connected_installations.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":0,"cyc":1,"len":15,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/credit_repository.dart","loc":49,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":3,"len":16,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/data/decision_effects.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":19,"cyc":17,"len":68,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/data/decision_effects.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":19,"cyc":17,"len":67,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/default_level_store.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":5,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/demo_cost_kpi_repository.dart","loc":72,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":20,"len":54,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/demo_hmrc_repository.dart","loc":139,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":13,"cyc":14,"len":39,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

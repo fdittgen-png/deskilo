@@ -7,6 +7,7 @@
 // approved join left the member waiting, an approved expense was never
 // credited. Effects the Demo does not hold a store for (a quota extension,
 // a negotiated price) stay the request's status, named in the audit.
+import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -48,8 +49,7 @@ void wireDecisionEffects(
       category: category,
       amountCents: cents,
       description: text,
-      period: e.payload['period'] as String? ??
-          '${at.year}-${at.month.toString().padLeft(2, '0')}',
+      period: e.payload['period'] as String? ?? yearMonth(at.year, at.month),
       createdAt: at,
     ));
   }
