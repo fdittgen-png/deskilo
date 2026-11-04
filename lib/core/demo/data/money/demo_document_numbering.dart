@@ -11,8 +11,14 @@ NumberSequence demoSeriesOf(FakeMoneyRepository m, String journal) {
   final held = m.numberSequences[journal];
   if (held != null && held.stored) return held;
   final series = held ?? NumberSequence.defaultsFor(journal);
+  // The counter never goes back: a series that already issued further keeps
+  // its own next value.
   return journal == 'invoice'
-      ? series.copyWith(nextValue: m.nextInvoiceNumber)
+      ? series.copyWith(
+          nextValue: series.nextValue > m.nextInvoiceNumber
+              ? series.nextValue
+              : m.nextInvoiceNumber,
+        )
       : series;
 }
 
