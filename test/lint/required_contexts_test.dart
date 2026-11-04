@@ -33,29 +33,37 @@ import 'lint_sources.dart';
 /// The contexts `branch_protection.sh` would require.
 List<String> _targetChecks() {
   final sh = File('scripts/branch_protection.sh').readAsStringSync();
-  final block = RegExp(r'TARGET_CHECKS=\((.*?)\n\)', dotAll: true)
-      .firstMatch(sh)
-      ?.group(1);
-  expect(block, isNotNull,
-      reason: 'TARGET_CHECKS is the list this lint exists to guard; if it '
-          'moved, the guard is measuring nothing');
-  return RegExp(r'^\s*"([^"]+)"\s*$', multiLine: true)
-      .allMatches(block!)
-      .map((m) => m.group(1)!)
-      .toList();
+  final block = RegExp(
+    r'TARGET_CHECKS=\((.*?)\n\)',
+    dotAll: true,
+  ).firstMatch(sh)?.group(1);
+  expect(
+    block,
+    isNotNull,
+    reason:
+        'TARGET_CHECKS is the list this lint exists to guard; if it '
+        'moved, the guard is measuring nothing',
+  );
+  return RegExp(
+    r'^\s*"([^"]+)"\s*$',
+    multiLine: true,
+  ).allMatches(block!).map((m) => m.group(1)!).toList();
 }
 
 /// Every `name:` a job in [workflow] publishes.
-Set<String> _jobNames(String workflow) => RegExp(r'^\s{4}name:\s*(.+?)\s*$',
-        multiLine: true)
-    .allMatches(File('.github/workflows/$workflow').readAsStringSync())
-    .map((m) => m.group(1)!)
-    .toSet();
+Set<String> _jobNames(String workflow) =>
+    RegExp(r'^\s{4}name:\s*(.+?)\s*$', multiLine: true)
+        .allMatches(File('.github/workflows/$workflow').readAsStringSync())
+        .map((m) => m.group(1)!)
+        .toSet();
 
 void main() {
   test('the list this lint guards is still there and still has entries', () {
-    expect(_targetChecks(), isNotEmpty,
-        reason: 'an empty parse would make every assertion below vacuous');
+    expect(
+      _targetChecks(),
+      isNotEmpty,
+      reason: 'an empty parse would make every assertion below vacuous',
+    );
   });
 
   test('every required context is a job some workflow actually emits', () {
@@ -64,13 +72,13 @@ void main() {
         ..._jobNames(file.uri.pathSegments.last),
     };
 
-    final missing =
-        _targetChecks().where((c) => !emitted.contains(c)).toList();
+    final missing = _targetChecks().where((c) => !emitted.contains(c)).toList();
 
     expect(
       missing,
       isEmpty,
-      reason: 'these contexts would be REQUIRED on master and no job '
+      reason:
+          'these contexts would be REQUIRED on master and no job '
           'publishes them:\n  ${missing.join('\n  ')}\n\n'
           'GitHub matches a required context by its exact string. A '
           'context nothing emits never reports, so every pull request '
@@ -86,13 +94,13 @@ void main() {
     expect(
       _targetChecks(),
       contains('analyze · l10n gate · test · coverage'),
-      reason: 'dropping it from the target list would make `apply` '
+      reason:
+          'dropping it from the target list would make `apply` '
           'REMOVE the only protection master has',
     );
   });
 
-  test('the complete quality result is targeted, not just the code half',
-      () {
+  test('the complete quality result is targeted, not just the code half', () {
     // #1446: the code job passing is not the run passing. On 2026-09-20
     // four pull requests merged with `quality · database` and
     // `quality · report` red, because only the first of the three was
@@ -101,28 +109,34 @@ void main() {
     expect(
       _targetChecks(),
       containsAll(const ['quality · database', 'quality · report']),
-      reason: 'the database replay and the report that carries the '
+      reason:
+          'the database replay and the report that carries the '
           'complete table must be required, or a red one merges',
     );
   });
 
-  test('the required-check list can be applied without resetting the rest',
-      () {
+  test('the required-check list can be applied without resetting the rest', () {
     // A PUT of the whole protection object sends null reviews and null
     // restrictions, so applying the check list would silently drop any
     // other protection. There has to be a command that changes only the
     // list, or nobody will dare run one.
     final sh = File('scripts/branch_protection.sh').readAsStringSync();
     expect(sh, contains('apply-checks'));
-    expect(sh, contains(r'-X PATCH "${API}/required_status_checks"'),
-        reason: 'apply-checks must PATCH the sub-resource; a PUT on the '
-            'protection object is the blunt command it exists to avoid');
+    expect(
+      sh,
+      contains(r'-X PATCH "${API}/required_status_checks"'),
+      reason:
+          'apply-checks must PATCH the sub-resource; a PUT on the '
+          'protection object is the blunt command it exists to avoid',
+    );
   });
 
-  test('a required context that waits on another job is always evaluated '
-      '(#1446 C2)', () {
-    // A job with `needs:` and no `if: always()` is SKIPPED when a job it
-    // waits on fails — and a skipped required context counts as passing.
+  test('required contexts run after dependency failure; the database job '
+      'respects cancellation (#1446 C2, #3318)', () {
+    // A job with `needs:` needs an explicit status function to run after
+    // dependency failure. Both always() and !cancelled() provide that.
+    // The expensive database job must also stop on cancellation, or an
+    // obsolete head blocks its replacement in the concurrency queue.
     // So a classify job that died would have skipped the database job,
     // and a database job that died would have skipped the report: the
     // two contexts meant to catch a failure would have vanished from
@@ -136,9 +150,16 @@ void main() {
       expect(job, isNotNull, reason: '$context is not a job of quality.yml');
       final header = job!.group(1)!;
       if (!header.contains('needs:')) continue;
-      expect(header, contains('if: always()'),
-          reason: '`$context` has `needs:` but no `if: always()` — a '
-              'failed dependency would skip it, and skipped is green');
+      final guard = context == 'quality · database'
+          ? r'if: ${{ !cancelled() }}'
+          : 'if: always()';
+      expect(
+        header,
+        contains(guard),
+        reason:
+            '`$context` must run after dependency failure; only '
+            'the expensive database job stops on cancellation.',
+      );
     }
   });
 
@@ -147,9 +168,13 @@ void main() {
     // nothing, the test above would pass on an empty set and prove the
     // opposite of what it claims.
     final emitted = _jobNames('quality.yml');
-    expect(emitted, contains('analyze · l10n gate · test · coverage'),
-        reason: 'the workflow parse found no job names, so the emptiness '
-            'above would have been meaningless');
+    expect(
+      emitted,
+      contains('analyze · l10n gate · test · coverage'),
+      reason:
+          'the workflow parse found no job names, so the emptiness '
+          'above would have been meaningless',
+    );
     expect(emitted, isNot(contains('a context nobody emits')));
   });
 }
