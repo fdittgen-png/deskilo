@@ -37,6 +37,9 @@ class FakeEventRepository implements EventRepository {
   final String Function()? _actor;
   final String workspaceId;
   final DateTime Function() _clock;
+
+  /// The space's clock, for the commands that file an event (#3304).
+  DateTime now() => _clock();
   Member? Function()? decider;
 
   /// The signed-in member's effective permissions in this space, which
@@ -45,6 +48,10 @@ class FakeEventRepository implements EventRepository {
 
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
+
+  /// #3291 — what the space's other stores do once an event is decided,
+  /// the effects respond_to_event applies (0101); none for the suite.
+  Future<void> Function(WorkspaceEvent decided, {required bool accepted})? onDecided;
   final policies = <ValidationPolicy>[];
 
   String _responding = 'member-1';
@@ -140,6 +147,7 @@ class FakeEventRepository implements EventRepository {
         status: EventStatus.rejected,
         decidedAt: _clock(),
       );
+      await onDecided?.call(events[i], accepted: false);
       return;
     }
     final required = policyFor(event.type.dbName, policies).requiredCount;
@@ -150,6 +158,7 @@ class FakeEventRepository implements EventRepository {
         status: EventStatus.confirmed,
         decidedAt: _clock(),
       );
+      await onDecided?.call(events[i], accepted: true);
     }
   }
 

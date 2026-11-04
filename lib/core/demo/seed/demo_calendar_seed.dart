@@ -16,6 +16,22 @@ void seedDemoCalendar(
   required FakeReservationRepository reservations,
   required FakeMoneyRepository money,
   required FakeEventRepository events,
+  String currency = 'EUR',
+}) {
+  // #3291 — read live, like calendar_items: a booking made, moved or
+  // cancelled in the session shows in the calendar at once.
+  void fill() => _fillDemoCalendar(calendar,
+      reservations: reservations, money: money, events: events, currency: currency);
+  fill();
+  calendar.beforeRead = fill;
+}
+
+void _fillDemoCalendar(
+  FakeCalendarRepository calendar, {
+  required FakeReservationRepository reservations,
+  required FakeMoneyRepository money,
+  required FakeEventRepository events,
+  required String currency,
 }) {
   final items = <CalendarItem>[];
   for (final r in reservations.reservations) {
@@ -55,7 +71,7 @@ void seedDemoCalendar(
         ),
       );
     }
-    if (r.status == ReservationStatus.checkedIn) {
+    if (r.status == ReservationStatus.checkedIn && r.checkedInAt == null) {
       items.add(
         CalendarItem(
           kind: CalendarKind.checkIn,
@@ -110,7 +126,7 @@ void seedDemoCalendar(
         memberId: entry.memberId,
         title: entry.description,
         amountCents: entry.amountCents,
-        currency: 'EUR',
+        currency: currency,
         link: LedgerLink(entry.period),
       ),
     );
@@ -124,7 +140,7 @@ void seedDemoCalendar(
         memberId: o.memberId,
         title: o.scheduleTitle,
         amountCents: o.amountCents,
-        currency: 'EUR',
+        currency: currency,
       ),
     );
   }
