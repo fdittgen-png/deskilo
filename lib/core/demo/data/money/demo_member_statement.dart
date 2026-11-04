@@ -13,46 +13,54 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 
+import '../credit_repository.dart';
 import '../money_repository.dart';
 import '../reservation_repository.dart';
 import '../workspace_repository.dart';
 
-/// Where a space's statement reads what is not money: its members, the open
-/// days of a month and the half-days a member's reservations used.
+/// Where a space's statement reads what is not money: its members, who is
+/// asking, the open days of a month, the half-days a member's reservations
+/// used and the half-days their credits covered.
 typedef DemoStatementSource = ({
   Member? Function(String memberId) member,
+  Member? Function() caller,
   int Function(String period) openDays,
   int Function(String memberId, String period) usedHalfDays,
+  int Function(String memberId, String period) creditHalfDays,
 });
 
-/// The source of the space [workspaceId] in [workspaces] and [reservations].
+/// The half-day boundary the server falls back to (`half_boundary_minutes`,
+/// 0109 #446): the Demo's spaces set no other.
+const _halfBoundaryMinutes = 12 * 60;
+
+bool _tzReady = false;
+
+/// The source of the space [workspaceId] in [workspaces], [reservations] and
+/// [credits]; [actor] is the member the session acts as.
 DemoStatementSource demoStatementSource(
   FakeWorkspaceRepository workspaces,
   FakeReservationRepository reservations,
-  String workspaceId,
-) => (
-  member: (id) => [
+  String workspaceId, {
+  required String Function() actor,
+  FakeCreditRepository? credits,
+}) {
+  if (!_tzReady) {
+    tzdata.initializeTimeZones();
+    _tzReady = true;
+  }
+  final zone = tz.getLocation(
+    workspaces.workspaces.firstWhere((w) => w.id == workspaceId).timezone,
+  );
+  Member? memberOf(String id) => [
     workspaces.myMember,
     ...workspaces.otherMembers,
-  ].where((m) => m.id == id).firstOrNull,
-  openDays: (period) {
-    final first = DateTime.parse('$period-01');
-    final open = workspaces.openWeekdays[workspaceId] ?? const [1, 2, 3, 4, 5];
-    final closed = {
-      for (final c in workspaces.closureDays)
-        if (c.workspaceId == workspaceId)
-          DateTime(c.day.year, c.day.month, c.day.day),
-    };
-    var days = 0;
-    for (var d = first; d.month == first.month; d = DateTime(d.year, d.month, d.day + 1)) {
-      if (open.contains(d.weekday) && !closed.contains(d)) days++;
-    }
-    return days;
-  },
-  usedHalfDays: (memberId, period) {
-    // Distinct (day, half) the member held, the boundary at noon.
-    final halves = <(DateTime, int)>{};
+  ].where((m) => m.id == id).firstOrNull;
+  // The reservations that count, with their start on the space's clock, as
+  // member_statement scans them: held, of the member, started in the month.
+  Iterable<(Reservation, tz.TZDateTime)> held(String memberId, String period) sync* {
     for (final r in reservations.reservations) {
       if (r.memberId != memberId ||
           !const {
@@ -62,16 +70,44 @@ DemoStatementSource demoStatementSource(
           }.contains(r.status)) {
         continue;
       }
-      final start = r.startsAt.toLocal();
-      if (yearMonth(start.year, start.month) != period) continue;
-      final day = DateTime(start.year, start.month, start.day);
-      final noon = day.add(const Duration(hours: 12));
-      if (start.isBefore(noon)) halves.add((day, 0));
-      if (r.endsAt.toLocal().isAfter(noon)) halves.add((day, 1));
+      final start = tz.TZDateTime.from(r.startsAt, zone);
+      if (yearMonth(start.year, start.month) == period) yield (r, start);
     }
-    return halves.length;
-  },
-);
+  }
+
+  return (
+    member: memberOf,
+    caller: () => memberOf(actor()),
+    openDays: (period) {
+      final first = DateTime.parse('$period-01');
+      final open = workspaces.openWeekdays[workspaceId] ?? const [1, 2, 3, 4, 5];
+      final closed = {
+        for (final c in workspaces.closureDays)
+          if (c.workspaceId == workspaceId)
+            DateTime(c.day.year, c.day.month, c.day.day),
+      };
+      var days = 0;
+      for (var d = first; d.month == first.month; d = DateTime(d.year, d.month, d.day + 1)) {
+        if (open.contains(d.weekday) && !closed.contains(d)) days++;
+      }
+      return days;
+    },
+    // One half-day per distinct (day, half) a reservation STARTS in, on the
+    // space's clock (0109/0208): a booking across noon counts its morning.
+    usedHalfDays: (memberId, period) => {
+      for (final (_, start) in held(memberId, period))
+        (start.year, start.month, start.day,
+            start.hour * 60 + start.minute < _halfBoundaryMinutes ? 0 : 1),
+    }.length,
+    // The month's live credit uses (0237 member_credit_uses_in_period).
+    creditHalfDays: (memberId, period) {
+      final ids = {for (final (r, _) in held(memberId, period)) r.id};
+      return (credits?.uses ?? const [])
+          .where((u) => u.releasedAt == null && ids.contains(u.reservationId))
+          .fold(0, (n, u) => n + u.halfDays);
+    },
+  );
+}
 
 /// [memberId]'s statement of [period] over [m]'s money and [source].
 Statement demoMemberStatement(
@@ -108,7 +144,9 @@ Statement demoMemberStatement(
   final openDays = source.openDays(period);
   final included = (openDays * 2 * pct / 100).ceil();
   final used = source.usedHalfDays(memberId, period);
-  final extra = used > included ? used - included : 0;
+  // Credit-covered half-days are not billed as overage (0237).
+  final covered = source.creditHalfDays(memberId, period);
+  final extra = used - included - covered > 0 ? used - included - covered : 0;
   // A credit an invoice match consumed settled that invoice: it does not
   // improve the month a second time. Charges always count.
   final consumed = {

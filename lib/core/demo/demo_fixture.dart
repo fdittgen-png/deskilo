@@ -176,7 +176,8 @@ class DemoFixture {
     seedDemoMoney(money, today);
     // #3305 — each member reads their own statement.
     money.accountQueries.statementSource =
-        demoStatementSource(workspaces, reservations, 'ws-1');
+        demoStatementSource(workspaces, reservations, 'ws-1',
+            actor: () => actor.memberId, credits: credits);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoYearOfResources(reservations, workspaces, today);

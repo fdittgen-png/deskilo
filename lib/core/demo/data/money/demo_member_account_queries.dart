@@ -25,6 +25,13 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
   Future<Statement> fetchStatement(String memberId, String period) async {
     _m.fetchedPeriods.add(period);
     if (statementSource case final source?) {
+      // As member_statement: a member reads their own statement; another
+      // member's needs the space's admin or owner.
+      final caller = source.caller();
+      if (caller == null ||
+          (caller.id != memberId && !caller.isAdmin && !caller.isOwner)) {
+        throw StateError('not your statement');
+      }
       return demoMemberStatement(_m, source, memberId, period);
     }
     // #512 — months fully before the membership owe NOTHING.

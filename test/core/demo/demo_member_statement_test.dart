@@ -17,7 +17,6 @@ import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
-import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -82,30 +81,6 @@ int _openDaysOf(_Space s, String period) {
   return n;
 }
 
-/// The half-days [member]'s held reservations cover in [period].
-int _usedOf(FakeReservationRepository r, String member, String period) => {
-  for (final x in r.reservations)
-    if (x.memberId == member &&
-        x.status != ReservationStatus.cancelled &&
-        x.status != ReservationStatus.released &&
-        yearMonth(x.startsAt.toLocal().year, x.startsAt.toLocal().month) ==
-            period)
-      for (final half in [
-        if (x.startsAt.toLocal().hour < 12) 0,
-        if (x.endsAt.toLocal().isAfter(
-          DateTime(
-            x.startsAt.toLocal().year,
-            x.startsAt.toLocal().month,
-            x.startsAt.toLocal().day,
-            12,
-          ),
-        ))
-          1,
-      ])
-        (x.startsAt.toLocal().year, x.startsAt.toLocal().month,
-            x.startsAt.toLocal().day, half),
-}.length;
-
 void main() {
   for (final now in [
     DateTime(2026, 5, 13, 10), // the Demo's own clock
@@ -114,11 +89,16 @@ void main() {
     DateTime(2027, 1, 1, 10), // a new year
   ]) {
     group('the Demo opened on $now', () {
-      for (final s in _spaces(DemoFixture.build(now: now))) {
+      final fixture = DemoFixture.build(now: now);
+      for (final s in _spaces(fixture)) {
         final members = <Member>[
           s.workspaces.myMember,
           ...s.workspaces.otherMembers,
         ];
+        // Everyone's statement is the owner's to read (#3314): the session
+        // acts as the space's owner.
+        void asOwner() =>
+            fixture.actor.memberId = members.firstWhere((m) => m.isOwner).id;
         final periods = {
           yearMonth(now.year, now.month),
           for (final e in s.money.ledger) e.period,
@@ -126,6 +106,7 @@ void main() {
 
         test('${s.name}: each member\'s statement of each period is computed '
             'from their own percentage, reservations and ledger', () async {
+          asOwner();
           var withLedger = 0;
           for (final member in members) {
             for (final period in periods) {
@@ -142,7 +123,9 @@ void main() {
                   .firstOrNull;
               final ledger = _ledgerOf(s.money, member.id, period);
               if (ledger != 0) withLedger++;
-              final used = _usedOf(s.reservations, member.id, period);
+              // The count itself is pinned by hand below (#3314); here the
+              // arithmetic around it.
+              final used = st.usedHalfDays;
               final openDays = _openDaysOf(s, period);
               final included = (openDays * 2 * pct / 100).ceil();
               final extra = used > included ? used - included : 0;
@@ -153,7 +136,6 @@ void main() {
               expect(st.feeCents, band?.feeCents ?? 0, reason: reason);
               expect(st.openDays, openDays, reason: reason);
               expect(st.includedHalfDays, included, reason: reason);
-              expect(st.usedHalfDays, used, reason: reason);
               expect(st.extraHalfDays, extra, reason: reason);
               expect(st.overageCents, overage, reason: reason);
               expect(st.creditsCents, ledger, reason: reason);
@@ -168,6 +150,7 @@ void main() {
         test('${s.name}: two members read two statements; one member\'s new '
             'charge moves their statement by its amount and nobody else\'s',
             () async {
+          asOwner();
           final period = yearMonth(now.year, now.month);
           Future<Map<String, Statement>> read() async => {
             for (final m in members)

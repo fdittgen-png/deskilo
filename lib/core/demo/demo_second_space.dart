@@ -66,7 +66,8 @@ class DemoSecondSpaceData {
     seedLeipzigMoney(money, now);
     // #3305 — each member reads their own statement.
     money.accountQueries.statementSource =
-        demoStatementSource(space, reservations, demoSecondSpaceId);
+        demoStatementSource(space, reservations, demoSecondSpaceId,
+            actor: actor);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(
       calendar,
