@@ -4,6 +4,7 @@
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/booking_granularity.dart';
 import '../../features/workspace/domain/workspace.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
@@ -84,6 +85,10 @@ class DemoNewYorkData {
       workspaceId: demoNewYorkSpaceId,
       clock: () => now,
       decider: () => space.memberOf(actor()),
+      viewerPermissions: () => effectivePermissions(
+        space.memberOf(actor()),
+        space.workspaces.where((w) => w.id == demoNewYorkSpaceId).firstOrNull,
+      ),
     );
     seedCityDecisions(events, 'ny', now);
     final money = FakeMoneyRepository(events: events);

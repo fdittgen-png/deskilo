@@ -15,6 +15,7 @@
 //     see what the product looks like in use, not a development strip.
 import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/bi_saved_view.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/book_profile_repository.dart';
@@ -134,6 +135,10 @@ class DemoFixture {
       actor: () => actor.memberId,
       clock: () => today,
       decider: () => workspaces.memberOf(actor.memberId),
+      viewerPermissions: () => effectivePermissions(
+        workspaces.memberOf(actor.memberId),
+        workspaces.workspaces.where((w) => w.id == 'ws-1').firstOrNull,
+      ),
     );
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.

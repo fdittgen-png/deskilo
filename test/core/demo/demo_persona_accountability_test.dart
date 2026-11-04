@@ -7,16 +7,20 @@
 // asserts the actor the act is recorded under, or the refusal the server
 // gives that persona. The matrix these rows prove is
 // docs/testing/DEMO_PERSONA_MATRIX.md.
+import 'package:deskilo/core/demo/data/event_visibility.dart';
+import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -367,6 +371,101 @@ void main() {
     fixture.becomePersona(DemoPersona.admin);
     expect(await routed.fetchEvents(demoSecondSpaceId), isEmpty);
     expect(await routed.fetchEvent('de-quota-ada'), isNull);
+  });
+
+  group('what an administrator reads is what their matrix reads', () {
+    // A type only the two finance rights read (a payment, a service
+    // charge): a quota is also manageReservations', an expense
+    // approveExpenses'.
+    bool finance(WorkspaceEvent e) => eventTypeViewPermissions(e.type.dbName)
+        .difference({
+          WorkspacePermission.viewFinances,
+          WorkspacePermission.issueInvoices,
+        })
+        .isEmpty;
+
+    test('an administrator explicitly without viewFinances and '
+        'issueInvoices reads nobody else\'s payment events nor their '
+        'decisions', () async {
+      final fixture = _as(DemoPersona.admin);
+      final others = [
+        for (final e in fixture.events.events)
+          if (e.workspaceId == 'ws-1' &&
+              finance(e) &&
+              e.actorMemberId != _chiara &&
+              e.subjectMemberId != _chiara &&
+              policyFor(
+                    e.type.dbName,
+                    fixture.events.policies,
+                  ).validatorScope ==
+                  'admins')
+            e.id,
+      ];
+      expect(others, isNotEmpty, reason: 'the Demo seeds such events');
+      final open = await fixture.events.fetchEvents('ws-1');
+      expect(
+        open.map((e) => e.id),
+        containsAll(others),
+        reason: 'the default administrator matrix reads finances',
+      );
+
+      final i = fixture.workspaces.workspaces.indexWhere((w) => w.id == 'ws-1');
+      final ws = fixture.workspaces.workspaces[i];
+      // The legacy adminInvoicing switch grants issueInvoices to every
+      // administrator, as has_permission_raw does: off, for a matrix that
+      // means what it says.
+      fixture.workspaces.workspaces[i] = ws.copyWith(
+        featureFlags: {
+          ...ws.featureFlags,
+          WorkspaceFeature.adminInvoicing.name: false,
+        },
+        rolePermissions: {
+          ...ws.rolePermissions,
+          'admin': [
+            for (final p in defaultPermissionsFor(PermissionRole.admin))
+              if (p != WorkspacePermission.viewFinances &&
+                  p != WorkspacePermission.issueInvoices)
+                p.name,
+          ],
+        },
+      );
+      final held = effectivePermissions(
+        fixture.workspaces.memberOf(_chiara),
+        fixture.workspaces.workspaces[i],
+      );
+      expect(held, isNot(contains(WorkspacePermission.viewFinances)));
+      expect(held, isNot(contains(WorkspacePermission.issueInvoices)));
+      final restricted = await fixture.events.fetchEvents('ws-1');
+      expect(restricted.map((e) => e.id), isNot(contains(anyOf(others))));
+      expect(await fixture.events.fetchDecisions('ws-1', others), isEmpty);
+      expect(await fixture.events.fetchEvent(others.first), isNull);
+      expect(
+        restricted.where((e) => e.type == EventType.memberJoin),
+        isNotEmpty,
+        reason: 'what manageMembers reads stays readable',
+      );
+    });
+
+    test('a decision of a Leipzig request is read by Leipzig\'s members '
+        'only, and only in Leipzig', () async {
+      final fixture = _as(DemoPersona.owner);
+      final leipzig = fixture.secondSpace.events;
+      expect(
+        await leipzig.fetchDecisions(demoSecondSpaceId, ['de-join-ada']),
+        isNotEmpty,
+      );
+      expect(
+        await leipzig.fetchDecisions('ws-1', ['de-join-ada']),
+        isEmpty,
+        reason: 'asked under another space',
+      );
+
+      fixture.becomePersona(DemoPersona.admin);
+      expect(
+        await leipzig.fetchDecisions(demoSecondSpaceId, ['de-join-ada']),
+        isEmpty,
+      );
+    });
   });
 
   group('roles', () {

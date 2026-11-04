@@ -9,6 +9,7 @@ import 'dart:async';
 
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/workspace.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
@@ -97,6 +98,10 @@ class DemoLondonData {
       workspaceId: demoLondonSpaceId,
       clock: () => now,
       decider: () => space.memberOf(actor()),
+      viewerPermissions: () => effectivePermissions(
+        space.memberOf(actor()),
+        space.workspaces.where((w) => w.id == demoLondonSpaceId).firstOrNull,
+      ),
     );
     seedCityDecisions(events, 'uk', now);
     final money = FakeMoneyRepository(events: events);

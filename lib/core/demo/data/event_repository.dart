@@ -5,8 +5,10 @@ import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import 'event_visibility.dart';
 import 'fixture_clock.dart';
 
 /// In-memory [EventRepository] mimicking respond_to_event semantics
@@ -29,12 +31,17 @@ class FakeEventRepository implements EventRepository {
     this.workspaceId = 'ws-1',
     DateTime Function()? clock,
     this.decider,
+    this.viewerPermissions,
   }) : _clock = clock ?? (() => kTestNow);
 
   final String Function()? _actor;
   final String workspaceId;
   final DateTime Function() _clock;
   Member? Function()? decider;
+
+  /// The signed-in member's effective permissions in this space, which
+  /// decide which other members' events they read (#3293).
+  Set<WorkspacePermission> Function()? viewerPermissions;
 
   final events = <WorkspaceEvent>[];
   final decisions = <EventDecision>[];
@@ -67,15 +74,17 @@ class FakeEventRepository implements EventRepository {
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
-  /// #3293 — events_select (0144): an administrator or owner of the
-  /// space, the event's actor or subject, or a validator its rule names.
-  /// Somebody who is not a member of the space reads none of it.
+  /// #3293 — events_select (0216): a type the member's permissions read
+  /// in this space ([eventTypeViewPermissions]), their own event as its
+  /// actor or subject, or a validator its rule names. Somebody who is not
+  /// an active member of the space reads none of it.
   bool _mayRead(WorkspaceEvent e) {
     if (decider == null) return true;
     final me = decider!();
     if (me == null || me.status != MemberStatus.active) return false;
-    if (me.isAdmin || me.isOwner) return true;
     if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
+    final held = viewerPermissions?.call() ?? const {};
+    if (eventTypeViewPermissions(e.type.dbName).any(held.contains)) return true;
     final policy = policyFor(e.type.dbName, policies);
     return policy.validatorScope == 'members' ||
         (policy.validatorScope == 'listed' &&
@@ -146,9 +155,16 @@ class FakeEventRepository implements EventRepository {
     String workspaceId,
     List<String> eventIds,
   ) async {
+    // #3293 — the decisions of the events the caller reads in this space.
+    final readable = {
+      for (final e in events)
+        if (e.workspaceId == workspaceId && eventIds.contains(e.id) && _mayRead(e))
+          e.id,
+    };
     final grouped = <String, List<EventDecision>>{};
     for (final decision in decisions) {
       if (!eventIds.contains(decision.eventId)) continue;
+      if (decider != null && !readable.contains(decision.eventId)) continue;
       grouped.putIfAbsent(decision.eventId, () => []).add(decision);
     }
     return grouped;
