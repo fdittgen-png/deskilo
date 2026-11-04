@@ -369,7 +369,58 @@ const biModules = <BiModule>[
       permission: WorkspacePermission.viewAnalytics,
     ),
   ),
+  // #3294 — the customers: how they pay against their due dates, the
+  // dunning that takes, what was credited or written off, and how
+  // concentrated the sales are (0669); each drills to the invoices.
+  BiModule(
+    id: 'customers.payment_behaviour',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.dunning_load',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    alsoRequires: {WorkspaceFeature.dunning},
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.credit_and_writeoff',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.concentration',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
 ];
+
+/// #3294 — the invoices behind a customer figure, for its months.
+const _customerInvoices = BiDrill(
+  route: '/invoice-register',
+  permission: WorkspacePermission.viewFinances,
+  carriesPeriod: true,
+);
 
 /// The modules [features] and [permissions] allow, in registry order.
 List<BiModule> visibleBiModules(

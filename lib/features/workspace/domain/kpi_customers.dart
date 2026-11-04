@@ -377,3 +377,15 @@ abstract interface class CustomerKpiRepository {
     required String toMonth,
   });
 }
+
+/// No server to read the customer figures from.
+class UnavailableCustomerKpiRepository implements CustomerKpiRepository {
+  const UnavailableCustomerKpiRepository();
+
+  @override
+  Future<CustomerQualityKpi> quality(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+}

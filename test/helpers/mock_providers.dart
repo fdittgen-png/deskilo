@@ -124,12 +124,14 @@ import 'package:deskilo/features/workspace/application/template_compare.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_fields_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_host.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_roles_repository.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
+import 'package:deskilo/features/workspace/providers/customer_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
@@ -246,6 +248,7 @@ List<Override> standardTestOverrides({
   ChargingStationRepository? chargingStations,
   BiViewRepository? biViews,
   FinanceKpiRepository? financeKpis,
+  CustomerKpiRepository? customerKpis,
   AccessoryRepository? accessories,
   PlaceFeedbackRepository? placeFeedback,
   ReservationRepository? reservations,
@@ -410,6 +413,9 @@ List<Override> standardTestOverrides({
     // #1924 — no server to sum invoices on unless a test brings one.
     financeKpiRepositoryProvider.overrideWithValue(
         financeKpis ?? const UnavailableFinanceKpiRepository()),
+    // #3294 — nor to read the customer figures from.
+    customerKpiRepositoryProvider.overrideWithValue(
+        customerKpis ?? const UnavailableCustomerKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),

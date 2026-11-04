@@ -38,6 +38,14 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
 
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 
+  /// Calendar days from [from] to [to], whatever a clock change between
+  /// them does to the hours.
+  static int _daysBetween(DateTime from, DateTime to) => DateTime.utc(
+    to.year,
+    to.month,
+    to.day,
+  ).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
+
   static String _month(Invoice i) =>
       i.period ?? yearMonth(i.issuedAt.year, i.issuedAt.month);
 
@@ -165,7 +173,7 @@ class DemoCustomerKpiRepository implements CustomerKpiRepository {
       for (final d in due)
         if (d.cohort == PaymentCohort.onTime || d.cohort == PaymentCohort.late)
           (
-            days: d.paidOn!.difference(_day(d.invoice.dueOn!)).inDays,
+            days: _daysBetween(d.invoice.dueOn!, d.paidOn!),
             total: d.invoice.totalCents,
           ),
     ];
