@@ -3,7 +3,7 @@
 -- (the server's copy of the feature manifest learns one country list; no
 -- stored flag moves)
 --
--- 0671 (#3300) -- mtdSubmission is offered in the United Kingdom only: HMRC's
+-- 0672 (#3300) -- mtdSubmission is offered in the United Kingdom only: HMRC's
 -- MTD VAT API serves UK VAT registrations. feature_available_in (0486) reads
 -- the list, so feature_effective(ws, 'mtdSubmission') is false outside GB
 -- whatever the stored switch says; a space that moves to GB gets its switch
@@ -173,4 +173,4 @@ $registry$;
 revoke execute on function public.feature_registry() from public, anon;
 grant execute on function public.feature_registry() to authenticated;
 
-select public.set_deskilo_schema_version(671);
+select public.set_deskilo_schema_version(672);
