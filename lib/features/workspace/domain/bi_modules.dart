@@ -456,6 +456,40 @@ const biModules = <BiModule>[
     },
     drill: _vendorSuppliers,
   ),
+  // #3294 step 3 — what the space sells, by kind of line and by service,
+  // and the margin each room it rents leaves (0674); each drills to the
+  // invoices of its months.
+  BiModule(
+    id: 'sales.revenue_by_kind',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'sales.revenue_by_service',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'sales.room_margin',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    alsoRequires: {WorkspaceFeature.externalRooms},
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
 ];
 
 /// #3294 step 2 — the suppliers behind a vendor figure.
@@ -470,7 +504,7 @@ const _vendorPurchases = BiDrill(
   permission: WorkspacePermission.viewFinances,
 );
 
-/// #3294 — the invoices behind a customer figure, for its months.
+/// #3294 — the invoices behind a customer or sales figure, for its months.
 const _customerInvoices = BiDrill(
   route: '/invoice-register',
   permission: WorkspacePermission.viewFinances,

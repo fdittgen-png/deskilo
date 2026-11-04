@@ -3724,6 +3724,94 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biRunningLabel => 'en cours';
 
   @override
+  String get biSalesKindAccessories => 'Suppléments';
+
+  @override
+  String get biSalesKindAdjustment => 'Ajustements';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross TTC, $lines lignes sur $invoices factures';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Ce que les factures de la période ont vendu, hors TVA, par nature de ligne. Les paiements et remboursements portés sur une facture ne sont pas des ventes ; un avoir se déduit. Le mois est celui de la facture.';
+
+  @override
+  String get biSalesKindDesk => 'Bureaux';
+
+  @override
+  String get biSalesKindLevel => 'Niveaux';
+
+  @override
+  String get biSalesKindOffice => 'Salles';
+
+  @override
+  String get biSalesKindOther => 'Autre';
+
+  @override
+  String get biSalesKindOverage => 'Demi-journées supplémentaires';
+
+  @override
+  String get biSalesKindPackage => 'Forfaits';
+
+  @override
+  String get biSalesKindService => 'Services';
+
+  @override
+  String get biSalesKindSubscription => 'Abonnements';
+
+  @override
+  String get biSalesKindTitle => 'Ventes par nature';
+
+  @override
+  String get biSalesNoDescription => 'Sans libellé';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges facturés pour $uses réservations, les salles coûtent $cost ($rooms salles)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Pour chaque salle louée par l’espace : ce que ses réservations ont rapporté, hors taxe, moins le coût propre de la salle (son loyer échu dans la période, ou son coût par usage multiplié par les usages). Aucun autre coût n’est imputé à la salle : c’est une marge, pas un bénéfice.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room : facturé $charges, coût $cost, $uses réservations';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Marge des salles louées';
+
+  @override
+  String get biSalesRoomsOff =>
+      'L’espace ne loue aucune salle : activez les salles louées pour voir leur marge';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count services et forfaits';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Les lignes de services et de forfaits des factures de la période, hors TVA, par le libellé sous lequel elles ont été vendues.';
+
+  @override
+  String get biSalesServiceTitle => 'Ventes par service';
+
+  @override
   String get biSeatCentre => 'du temps total des places';
 
   @override

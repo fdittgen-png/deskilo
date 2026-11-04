@@ -125,6 +125,7 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
+import 'package:deskilo/features/workspace/domain/kpi_sales.dart';
 import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_fields_repository.dart';
@@ -137,6 +138,7 @@ import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
+import 'package:deskilo/features/workspace/providers/sales_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
 import 'package:deskilo/features/workspace/providers/vendor_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
@@ -253,6 +255,7 @@ List<Override> standardTestOverrides({
   FinanceKpiRepository? financeKpis,
   CustomerKpiRepository? customerKpis,
   VendorKpiRepository? vendorKpis,
+  SalesKpiRepository? salesKpis,
   AccessoryRepository? accessories,
   PlaceFeedbackRepository? placeFeedback,
   ReservationRepository? reservations,
@@ -423,6 +426,9 @@ List<Override> standardTestOverrides({
     // #3294 step 2 — nor the vendor figures.
     vendorKpiRepositoryProvider.overrideWithValue(
         vendorKpis ?? const UnavailableVendorKpiRepository()),
+    // #3294 step 3 — nor the sales figures.
+    salesKpiRepositoryProvider.overrideWithValue(
+        salesKpis ?? const UnavailableSalesKpiRepository()),
     // #988 — the deployment engine, in memory.
     deploymentRepositoryProvider
         .overrideWithValue(deployment ?? FakeDeploymentRepository()),

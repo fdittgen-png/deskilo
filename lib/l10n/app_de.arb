@@ -2538,6 +2538,28 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Zuschläge",
+  "biSalesKindAdjustment": "Korrekturen",
+  "biSalesKindBasis": "{gross} inkl. MwSt., {lines} Positionen auf {invoices} Rechnungen",
+  "biSalesKindDefinition": "Was die Rechnungen des Zeitraums verkauft haben, netto, nach Art der Position. Zahlungen und Erstattungen auf einer Rechnung sind kein Umsatz; eine Gutschrift wird abgezogen. Maßgeblich ist der Monat der Rechnung.",
+  "biSalesKindDesk": "Tische",
+  "biSalesKindLevel": "Etagen",
+  "biSalesKindOffice": "Räume",
+  "biSalesKindOther": "Sonstiges",
+  "biSalesKindOverage": "Zusätzliche Halbtage",
+  "biSalesKindPackage": "Pakete",
+  "biSalesKindService": "Leistungen",
+  "biSalesKindSubscription": "Abonnements",
+  "biSalesKindTitle": "Umsatz nach Art",
+  "biSalesNoDescription": "Ohne Bezeichnung",
+  "biSalesRoomBasis": "{charges} für {uses} Buchungen berechnet, die Räume kosten {cost} ({rooms} Räume)",
+  "biSalesRoomDefinition": "Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.",
+  "biSalesRoomLine": "{room}: berechnet {charges}, Kosten {cost}, {uses} Buchungen",
+  "biSalesRoomTitle": "Marge der angemieteten Räume",
+  "biSalesRoomsOff": "Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen",
+  "biSalesServiceBasis": "{count} Leistungen und Pakete",
+  "biSalesServiceDefinition": "Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.",
+  "biSalesServiceTitle": "Umsatz nach Leistung",
   "biSeatCentre": "der gesamten Platzzeit",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"

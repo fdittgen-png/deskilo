@@ -3723,6 +3723,94 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biRunningLabel => 'laufend';
 
   @override
+  String get biSalesKindAccessories => 'Zuschläge';
+
+  @override
+  String get biSalesKindAdjustment => 'Korrekturen';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross inkl. MwSt., $lines Positionen auf $invoices Rechnungen';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Was die Rechnungen des Zeitraums verkauft haben, netto, nach Art der Position. Zahlungen und Erstattungen auf einer Rechnung sind kein Umsatz; eine Gutschrift wird abgezogen. Maßgeblich ist der Monat der Rechnung.';
+
+  @override
+  String get biSalesKindDesk => 'Tische';
+
+  @override
+  String get biSalesKindLevel => 'Etagen';
+
+  @override
+  String get biSalesKindOffice => 'Räume';
+
+  @override
+  String get biSalesKindOther => 'Sonstiges';
+
+  @override
+  String get biSalesKindOverage => 'Zusätzliche Halbtage';
+
+  @override
+  String get biSalesKindPackage => 'Pakete';
+
+  @override
+  String get biSalesKindService => 'Leistungen';
+
+  @override
+  String get biSalesKindSubscription => 'Abonnements';
+
+  @override
+  String get biSalesKindTitle => 'Umsatz nach Art';
+
+  @override
+  String get biSalesNoDescription => 'Ohne Bezeichnung';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges für $uses Buchungen berechnet, die Räume kosten $cost ($rooms Räume)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: berechnet $charges, Kosten $cost, $uses Buchungen';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Marge der angemieteten Räume';
+
+  @override
+  String get biSalesRoomsOff =>
+      'Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count Leistungen und Pakete';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.';
+
+  @override
+  String get biSalesServiceTitle => 'Umsatz nach Leistung';
+
+  @override
   String get biSeatCentre => 'der gesamten Platzzeit';
 
   @override

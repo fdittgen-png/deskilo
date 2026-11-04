@@ -2538,6 +2538,28 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Supplementi",
+  "biSalesKindAdjustment": "Rettifiche",
+  "biSalesKindBasis": "{gross} IVA inclusa, {lines} righe su {invoices} fatture",
+  "biSalesKindDefinition": "Ciò che le fatture del periodo hanno venduto, al netto dell’IVA, per tipo di riga. Pagamenti e rimborsi riportati su una fattura non sono vendite; una nota di credito si sottrae. Il mese è quello della fattura.",
+  "biSalesKindDesk": "Scrivanie",
+  "biSalesKindLevel": "Piani",
+  "biSalesKindOffice": "Sale",
+  "biSalesKindOther": "Altro",
+  "biSalesKindOverage": "Mezze giornate extra",
+  "biSalesKindPackage": "Pacchetti",
+  "biSalesKindService": "Servizi",
+  "biSalesKindSubscription": "Abbonamenti",
+  "biSalesKindTitle": "Vendite per tipo",
+  "biSalesNoDescription": "Senza descrizione",
+  "biSalesRoomBasis": "{charges} addebitati per {uses} prenotazioni, le sale costano {cost} ({rooms} sale)",
+  "biSalesRoomDefinition": "Per ogni sala presa in affitto dallo spazio: quanto è stato addebitato per le sue prenotazioni, al netto, meno il costo proprio della sala (il canone in scadenza nel periodo, o il costo per uso per gli usi). Nessun altro costo viene imputato alla sala: è un margine, non un utile.",
+  "biSalesRoomLine": "{room}: addebitato {charges}, costo {cost}, {uses} prenotazioni",
+  "biSalesRoomTitle": "Margine delle sale prese in affitto",
+  "biSalesRoomsOff": "Lo spazio non affitta sale: attiva le sale prese in affitto per vederne il margine",
+  "biSalesServiceBasis": "{count} servizi e pacchetti",
+  "biSalesServiceDefinition": "Le righe di servizi e pacchetti delle fatture del periodo, al netto dell’IVA, per la descrizione con cui sono state vendute.",
+  "biSalesServiceTitle": "Vendite per servizio",
   "biSeatCentre": "del tempo totale dei posti",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"

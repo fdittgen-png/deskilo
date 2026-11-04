@@ -3720,6 +3720,94 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biRunningLabel => 'en curso';
 
   @override
+  String get biSalesKindAccessories => 'Suplementos';
+
+  @override
+  String get biSalesKindAdjustment => 'Ajustes';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross con IVA, $lines líneas en $invoices facturas';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Lo que vendieron las facturas del periodo, sin IVA, por tipo de línea. Los pagos y reembolsos de una factura no son ventas; un abono se resta. El mes es el de la factura.';
+
+  @override
+  String get biSalesKindDesk => 'Mesas';
+
+  @override
+  String get biSalesKindLevel => 'Plantas';
+
+  @override
+  String get biSalesKindOffice => 'Salas';
+
+  @override
+  String get biSalesKindOther => 'Otros';
+
+  @override
+  String get biSalesKindOverage => 'Medias jornadas extra';
+
+  @override
+  String get biSalesKindPackage => 'Paquetes';
+
+  @override
+  String get biSalesKindService => 'Servicios';
+
+  @override
+  String get biSalesKindSubscription => 'Suscripciones';
+
+  @override
+  String get biSalesKindTitle => 'Ventas por tipo';
+
+  @override
+  String get biSalesNoDescription => 'Sin descripción';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges cobrados por $uses reservas, las salas cuestan $cost ($rooms salas)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: cobrado $charges, coste $cost, $uses reservas';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Margen de las salas alquiladas';
+
+  @override
+  String get biSalesRoomsOff =>
+      'El espacio no alquila salas: active las salas alquiladas para ver su margen';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count servicios y paquetes';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.';
+
+  @override
+  String get biSalesServiceTitle => 'Ventas por servicio';
+
+  @override
   String get biSeatCentre => 'del tiempo total de puestos';
 
   @override

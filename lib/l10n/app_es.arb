@@ -2538,6 +2538,28 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Suplementos",
+  "biSalesKindAdjustment": "Ajustes",
+  "biSalesKindBasis": "{gross} con IVA, {lines} líneas en {invoices} facturas",
+  "biSalesKindDefinition": "Lo que vendieron las facturas del periodo, sin IVA, por tipo de línea. Los pagos y reembolsos de una factura no son ventas; un abono se resta. El mes es el de la factura.",
+  "biSalesKindDesk": "Mesas",
+  "biSalesKindLevel": "Plantas",
+  "biSalesKindOffice": "Salas",
+  "biSalesKindOther": "Otros",
+  "biSalesKindOverage": "Medias jornadas extra",
+  "biSalesKindPackage": "Paquetes",
+  "biSalesKindService": "Servicios",
+  "biSalesKindSubscription": "Suscripciones",
+  "biSalesKindTitle": "Ventas por tipo",
+  "biSalesNoDescription": "Sin descripción",
+  "biSalesRoomBasis": "{charges} cobrados por {uses} reservas, las salas cuestan {cost} ({rooms} salas)",
+  "biSalesRoomDefinition": "Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.",
+  "biSalesRoomLine": "{room}: cobrado {charges}, coste {cost}, {uses} reservas",
+  "biSalesRoomTitle": "Margen de las salas alquiladas",
+  "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen",
+  "biSalesServiceBasis": "{count} servicios y paquetes",
+  "biSalesServiceDefinition": "Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.",
+  "biSalesServiceTitle": "Ventas por servicio",
   "biSeatCentre": "del tiempo total de puestos",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"

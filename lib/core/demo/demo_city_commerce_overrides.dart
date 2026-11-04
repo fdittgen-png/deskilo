@@ -17,6 +17,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/customer_kpi_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/providers/sales_kpi_providers.dart';
 import '../../features/workspace/providers/vendor_kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/asset_valuation_repository.dart';
@@ -27,7 +28,9 @@ import 'data/kpi_repositories.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/money_repository.dart';
 import 'data/premises_lease_repository.dart';
+import 'data/reservation_repository.dart';
 import 'data/room_rental_repository.dart';
+import 'data/sales_kpi_repository.dart';
 import 'data/vendor_kpi_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
@@ -177,6 +180,46 @@ List<Override> demoCityCommerceOverrides(
     roomRentalRepositoryProvider.overrideWith(
       (ref) => choose(ref, homeRooms, londonRooms, nyRooms),
     ),
+    // #3294 step 3 — the sales figures of each of the four spaces, from its
+    // own invoices and the rooms it rents; Leipzig rents none.
+    salesKpiRepositoryProvider.overrideWith((ref) {
+      DemoSalesKpiRepository sales(
+        FakeMoneyRepository money,
+        FakeRoomRentalRepository rooms,
+        FakeReservationRepository bookings,
+        String currency,
+      ) => DemoSalesKpiRepository(
+        invoices: () => money.invoices,
+        rooms: rooms,
+        bookings: () => bookings.reservations,
+        roomsEnabled: () => ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.externalRooms),
+        now: fixture.seededAt,
+        currency: currency,
+      );
+      return switch (ref.watch(currentWorkspaceProvider).value?.id) {
+        demoSecondSpaceId => sales(
+          fixture.secondSpace.money,
+          FakeRoomRentalRepository(),
+          fixture.secondSpace.reservations,
+          'EUR',
+        ),
+        demoLondonSpaceId => sales(
+          fixture.london.money,
+          londonRooms,
+          fixture.london.reservations,
+          'GBP',
+        ),
+        demoNewYorkSpaceId => sales(
+          fixture.newYork.money,
+          nyRooms,
+          fixture.newYork.reservations,
+          'USD',
+        ),
+        _ => sales(fixture.money, homeRooms, fixture.reservations, 'EUR'),
+      };
+    }),
     // #2576 — the accountant's valuations of the demo space's equipment.
     assetValuationRepositoryProvider.overrideWith(
       (ref) => choose(ref, homeValuations, londonValuations, nyValuations),

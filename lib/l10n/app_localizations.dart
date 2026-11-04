@@ -6220,6 +6220,143 @@ abstract class AppLocalizations {
   /// **'running'**
   String get biRunningLabel;
 
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements'**
+  String get biSalesKindAccessories;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments'**
+  String get biSalesKindAdjustment;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{gross} with VAT, {lines} lines on {invoices} invoices'**
+  String biSalesKindBasis(String gross, String lines, String invoices);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.'**
+  String get biSalesKindDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Desks'**
+  String get biSalesKindDesk;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get biSalesKindLevel;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get biSalesKindOffice;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get biSalesKindOther;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get biSalesKindOverage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get biSalesKindPackage;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get biSalesKindService;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get biSalesKindSubscription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by kind'**
+  String get biSalesKindTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No description'**
+  String get biSalesNoDescription;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)'**
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  );
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.'**
+  String get biSalesRoomDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{room}: charged {charges}, cost {cost}, {uses} bookings'**
+  String biSalesRoomLine(String room, String charges, String cost, String uses);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Margin of the rented rooms'**
+  String get biSalesRoomTitle;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The space rents no rooms: switch on rented rooms to see their margin'**
+  String get biSalesRoomsOff;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} services and packages'**
+  String biSalesServiceBasis(String count);
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.'**
+  String get biSalesServiceDefinition;
+
+  /// #3294 step 3 sales analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by service'**
+  String get biSalesServiceTitle;
+
   /// Business analytics dashboard: biSeatCentre
   ///
   /// In en, this message translates to:

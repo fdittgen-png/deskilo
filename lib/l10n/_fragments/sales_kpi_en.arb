@@ -1,0 +1,134 @@
+{
+  "biSalesKindTitle": "Sales by kind",
+  "@biSalesKindTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindBasis": "{gross} with VAT, {lines} lines on {invoices} invoices",
+  "@biSalesKindBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      },
+      "lines": {
+        "type": "String"
+      },
+      "invoices": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesKindDefinition": "What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.",
+  "@biSalesKindDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindSubscription": "Subscriptions",
+  "@biSalesKindSubscription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOverage": "Extra half-days",
+  "@biSalesKindOverage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindAccessories": "Supplements",
+  "@biSalesKindAccessories": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindLevel": "Levels",
+  "@biSalesKindLevel": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOffice": "Rooms",
+  "@biSalesKindOffice": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindDesk": "Desks",
+  "@biSalesKindDesk": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindService": "Services",
+  "@biSalesKindService": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindPackage": "Packages",
+  "@biSalesKindPackage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindAdjustment": "Adjustments",
+  "@biSalesKindAdjustment": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOther": "Other",
+  "@biSalesKindOther": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceTitle": "Sales by service",
+  "@biSalesServiceTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceBasis": "{count} services and packages",
+  "@biSalesServiceBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesServiceDefinition": "The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.",
+  "@biSalesServiceDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesNoDescription": "No description",
+  "@biSalesNoDescription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomTitle": "Margin of the rented rooms",
+  "@biSalesRoomTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomBasis": "Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)",
+  "@biSalesRoomBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      },
+      "rooms": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomDefinition": "For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.",
+  "@biSalesRoomDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomLine": "{room}: charged {charges}, cost {cost}, {uses} bookings",
+  "@biSalesRoomLine": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      },
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomsOff": "The space rents no rooms: switch on rented rooms to see their margin",
+  "@biSalesRoomsOff": {
+    "description": "#3294 step 3 sales analytics"
+  }
+}
