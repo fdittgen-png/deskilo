@@ -46,7 +46,9 @@ language sql immutable as $q$
     ('get_setup_step_draft',
      'renders updated_by_name through profile_full_name; the match is the draft row''s own v.updated_at, not the profile''s'),
     ('export_my_data',
-     'returns the subject''s own profile row to the subject; access is decided by the active membership and the workspace''s privacy.member_self_service setting (it raises 42501 when the setting is off), never by a profile column');
+     'returns the subject''s own profile row to the subject; access is decided by the active membership and the workspace''s privacy.member_self_service setting (it raises 42501 when the setting is off), never by a profile column'),
+    ('move_payment_credit_v1',
+     'reads the receiving member''s name only for the moved credit''s ledger description; access is decided before, by bank_import_actor(issueInvoices), never by a profile column');
 $q$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
