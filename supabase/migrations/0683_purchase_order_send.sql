@@ -94,7 +94,7 @@ begin
   if not public.feature_effective(p_workspace_id, 'purchaseOrders') then
     raise exception 'purchase orders are switched off in this space' using errcode = '42501';
   end if;
-  if v_email !~ '^[^\s@]+@[^\s@]+\.[^\s@]+$' or v_email ~ '[\r\n]' or char_length(v_email) > 254 then
+  if v_email !~ '^[^\s@<>",;()\[\]\\]+@[^\s@<>",;()\[\]\\]+\.[^\s@<>",;()\[\]\\]+$' or v_email ~ '[\r\n]' or char_length(v_email) > 254 then
     raise exception 'the sender is not an e-mail address' using errcode = '22023';
   end if;
   if v_name ~ '[\r\n<>"]' or char_length(v_name) > 120 then
@@ -186,7 +186,7 @@ begin
   if v_order.revision <> coalesce(p_revision, -1) then
     raise exception 'stale revision' using errcode = '40001';
   end if;
-  if v_order.recipient_email !~ '^[^\s@]+@[^\s@]+\.[^\s@]+$' or v_order.recipient_email ~ '[\r\n]' then
+  if v_order.recipient_email !~ '^[^\s@<>",;()\[\]\\]+@[^\s@<>",;()\[\]\\]+\.[^\s@<>",;()\[\]\\]+$' or v_order.recipient_email ~ '[\r\n]' then
     raise exception 'the order names no address to e-mail it to' using errcode = '22023';
   end if;
   if not exists (select 1 from public.purchase_order_mail_settings m
@@ -244,6 +244,8 @@ create or replace function public.resolve_purchase_order_send_v1(
   p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
+  -- A technical bound, not a business value: far beyond any live attempt.
+  c_stuck constant interval := interval '10 minutes';
   v_me uuid;
   v_send public.purchase_order_sends;
 begin
@@ -251,7 +253,10 @@ begin
   select * into v_send from public.purchase_order_sends
    where id = p_attempt_id and workspace_id = p_workspace_id for update;
   if v_send.id is null then raise exception 'unknown send attempt' using errcode = '22023'; end if;
-  if v_send.state <> 'unconfirmed' then
+  -- An attempt left pending past the bound (the edge function gives the
+  -- provider 20 seconds; a crash leaves no finish) is decided the same way.
+  if not (v_send.state = 'unconfirmed'
+          or (v_send.state = 'pending' and v_send.created_datetime < now() - c_stuck)) then
     raise exception 'only an unconfirmed send is decided by hand' using errcode = '22023';
   end if;
   update public.purchase_order_sends

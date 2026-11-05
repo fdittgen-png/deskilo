@@ -6,7 +6,8 @@
 // received or cancelled order is final. Nothing leaves the device: an
 // e-mail is simulated (0683's rules — the mail configured, a draft naming
 // its recipient, one attempt that may have left, the same attempt id
-// replayed) and recorded as accepted, the order sent by e-mail. A delivery
+// replayed) and recorded as accepted, the order sent by e-mail; an order
+// whose e-mail may be on its way is frozen. A delivery
 // follows 0684: only a sent or partly received order at its revision, no
 // line beyond what was ordered, never dated after today.
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -51,6 +52,19 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       [...orders]..sort((a, b) => b.reference.compareTo(a.reference));
 
   int _index(String id) => orders.indexWhere((o) => o.id == id);
+
+  /// 0681: an order whose e-mail may be on its way is not edited, marked
+  /// sent or cancelled.
+  void _noSendInFlight(String orderId) {
+    if (sends.any(
+      (s) =>
+          s.orderId == orderId &&
+          (s.state == PurchaseOrderSendState.pending ||
+              s.state == PurchaseOrderSendState.unconfirmed),
+    )) {
+      throw _refused('an e-mail of this order may be on its way', '55000');
+    }
+  }
 
   PurchaseOrder _with(
     PurchaseOrder o, {
@@ -118,6 +132,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       if (was.revision != draft.expectedRevision) {
         throw _refused('stale revision', '40001');
       }
+      _noSendInFlight(was.id);
       saved = PurchaseOrder(
         id: was.id,
         reference: was.reference,
@@ -171,6 +186,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       throw _refused('only a draft purchase order is sent');
     }
     if (o.revision != revision) throw _refused('stale revision', '40001');
+    _noSendInFlight(o.id);
     return _requests[requestId] = orders[i] = _with(
       o,
       state: PurchaseOrderState.sent,
@@ -195,6 +211,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       throw _refused('a ${o.state.wire} purchase order is not cancelled');
     }
     if (o.revision != revision) throw _refused('stale revision', '40001');
+    _noSendInFlight(o.id);
     return _requests[requestId] = orders[i] = _with(
       o,
       state: PurchaseOrderState.cancelled,

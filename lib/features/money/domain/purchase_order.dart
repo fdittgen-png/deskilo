@@ -163,12 +163,15 @@ class PurchaseOrder {
       state == PurchaseOrderState.draft && _isOrderEmail(recipientEmail);
 }
 
-/// An address an order may be e-mailed to: one address, no line breaks.
+/// An address an order may be e-mailed to: one address, no line breaks,
+/// nothing a mail header reads as a name or a list (0681, 0683).
 bool _isOrderEmail(String value) {
   final v = value.trim();
   return v.length <= 254 &&
       !value.contains(RegExp(r'[\r\n]')) &&
-      RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(v);
+      RegExp(
+        r'^[^\s@<>",;()\[\]\\]+@[^\s@<>",;()\[\]\\]+\.[^\s@<>",;()\[\]\\]+$',
+      ).hasMatch(v);
 }
 
 /// One line of a draft.

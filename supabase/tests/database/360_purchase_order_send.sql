@@ -5,7 +5,7 @@
 -- role; a pending or unconfirmed attempt blocks a second one; a person
 -- decides an unconfirmed one; an accepted one sends the order by e-mail.
 begin;
-select plan(24);
+select plan(28);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000033071'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -124,6 +124,30 @@ set local role authenticated;
 
 select is(pg_temp.as_user('a2', $q$select to_jsonb(count(*)) from public.purchase_order_sends$q$)::text, '2',
   'a finance reader reads the attempts');
+
+-- ── an attempt stuck pending (no finish ever came) ─────────────────────
+select set_config('t.o4', pg_temp.order_of('orders@alpha.test')::text, true);
+select set_config('t.s4', gen_random_uuid()::text, true);
+select pg_temp.as_user('a1', pg_temp.begin_send(current_setting('t.o4')::jsonb, current_setting('t.s4')::uuid));
+select ok(pg_temp.err('a1', format('select public.resolve_purchase_order_send_v1(%L, %L, true)',
+    pg_temp.u('b1'), current_setting('t.s4'))) like '%only an unconfirmed send%',
+  'a live pending attempt is not decided by hand');
+reset role;
+-- The system columns keep their creation time; the clock is moved past it
+-- with the triggers off, as a crashed function leaves it.
+set local session_replication_role = replica;
+update public.purchase_order_sends set created_datetime = now() - interval '11 minutes'
+ where id = current_setting('t.s4')::uuid;
+set local session_replication_role = origin;
+set local role authenticated;
+select is(pg_temp.as_user('a1', format('select public.resolve_purchase_order_send_v1(%L, %L, false)',
+    pg_temp.u('b1'), current_setting('t.s4'))) ->> 'state', 'not_delivered',
+  'one stuck pending past the bound is decided, and the order is free again');
+select is(pg_temp.as_user('a1', pg_temp.begin_send(
+    jsonb_build_object('id', current_setting('t.o4')::jsonb ->> 'id', 'revision', current_setting('t.o4')::jsonb ->> 'revision'),
+    gen_random_uuid())) ->> 'state', 'pending', '... and it is sent again');
+select ok(pg_temp.err('a1', pg_temp.settings(null, 2, 'Orders <orders@space.test>')) like '%not an e-mail address%',
+  'a sender carrying a display name or a list is refused');
 
 select * from finish();
 rollback;

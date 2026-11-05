@@ -198,6 +198,23 @@ returns jsonb language sql stable security definer set search_path = public as $
 $fn$;
 revoke execute on function public.purchase_order_json(uuid) from public, anon, authenticated;
 
+-- An order whose e-mail may be on its way (an attempt pending or not yet
+-- decided, 0683) is neither edited, nor marked sent by print, nor
+-- cancelled: the supplier could receive what the space no longer has.
+-- Called under the order's row lock, which the send's begin also takes.
+-- (plpgsql reads the table when it runs, after 0683 has created it.)
+create or replace function public.purchase_order_no_send_in_flight(p_order_id uuid)
+returns void language plpgsql stable security definer set search_path = public as $fn$
+begin
+  if exists (select 1 from public.purchase_order_sends s
+              where s.order_id = p_order_id and s.state in ('pending', 'unconfirmed')) then
+    raise exception 'an e-mail of this order may be on its way: decide it first'
+      using errcode = '55000';
+  end if;
+end;
+$fn$;
+revoke execute on function public.purchase_order_no_send_in_flight(uuid) from public, anon, authenticated;
+
 create or replace function public.save_purchase_order_v1(
   p_workspace_id uuid, p_request_id uuid, p_expected_revision int, p_payload jsonb
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
@@ -240,10 +257,10 @@ begin
   if v_currency !~ '^[A-Z]{3}$' then
     raise exception 'unknown currency' using errcode = '22023';
   end if;
-  if v_email <> '' and (v_email !~ '^[^\s@]+@[^\s@]+\.[^\s@]+$' or v_email ~ '[\r\n]') then
+  if v_email <> '' and (v_email !~ '^[^\s@<>",;()\[\]\\]+@[^\s@<>",;()\[\]\\]+\.[^\s@<>",;()\[\]\\]+$' or v_email ~ '[\r\n]') then
     raise exception 'the address the order is e-mailed to is not an e-mail address' using errcode = '22023';
   end if;
-  if jsonb_typeof(p_payload -> 'lines') <> 'array'
+  if coalesce(jsonb_typeof(p_payload -> 'lines'), '') <> 'array'
      or jsonb_array_length(p_payload -> 'lines') not between 1 and 200 then
     raise exception 'an order has between 1 and 200 lines' using errcode = '22023';
   end if;
@@ -275,6 +292,7 @@ begin
     if v_order.revision <> coalesce(p_expected_revision, -1) then
       raise exception 'stale revision' using errcode = '40001';
     end if;
+    perform public.purchase_order_no_send_in_flight(v_order.id);
     update public.purchase_orders set
         revision = revision + 1, supplier_id = v_supplier, currency = v_currency,
         expected_on = nullif(p_payload ->> 'expected_on', '')::date,
@@ -342,6 +360,7 @@ begin
   if v_order.revision <> coalesce(p_revision, -1) then
     raise exception 'stale revision' using errcode = '40001';
   end if;
+  perform public.purchase_order_no_send_in_flight(v_order.id);
   update public.purchase_orders
      set state = 'sent', sent_at = now(), sent_via = 'print', revision = revision + 1
    where id = v_order.id;
@@ -377,6 +396,7 @@ begin
   if v_order.revision <> coalesce(p_revision, -1) then
     raise exception 'stale revision' using errcode = '40001';
   end if;
+  perform public.purchase_order_no_send_in_flight(v_order.id);
   update public.purchase_orders
      set state = 'cancelled', cancelled_at = now(), cancel_reason = v_reason, revision = revision + 1
    where id = v_order.id;

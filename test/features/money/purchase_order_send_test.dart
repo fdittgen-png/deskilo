@@ -126,6 +126,13 @@ void main() {
       ).validFor(stored),
       isFalse,
     );
+    for (final bad in ['Orders <a@b.co>', 'a@b.co, c@d.co', 'a"b@c.co']) {
+      expect(
+        PurchaseOrderMailDraft(senderEmail: bad).validFor(stored),
+        isFalse,
+        reason: bad,
+      );
+    }
   });
 
   group('the Demo simulates and keeps the fences', () {
@@ -197,6 +204,19 @@ void main() {
             isA<PostgrestException>().having((e) => e.code, 'code', '55000'),
           ),
         );
+        // While it may be on its way, the order is neither marked sent by
+        // print nor cancelled.
+        for (final write in [
+          () => repo.markSent('ws', order.id, order.revision, 'm1'),
+          () => repo.cancel('ws', order.id, order.revision, 'late', 'c1'),
+        ]) {
+          await expectLater(
+            write(),
+            throwsA(
+              isA<PostgrestException>().having((e) => e.code, 'code', '55000'),
+            ),
+          );
+        }
         final decided = await repo.resolveSend('ws', 'lost', delivered: false);
         expect(decided.state, PurchaseOrderSendState.notDelivered);
         expect(repo.orders.single.state, PurchaseOrderState.draft);
