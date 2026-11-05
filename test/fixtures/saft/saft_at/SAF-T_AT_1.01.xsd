@@ -1,0 +1,2235 @@
+<?xml version="1.0"?>
+<!-- Mit XMLSpy v2008 rel. 2 sp1 (http://www.altova.com) von Bundesministerium für Finanzen (Bundesministerium für Finanzen) bearbeitet -->
+<!-- edited with XMLSpy v2008 sp2 (http://www.altova.com) by RIA: Silke Frisch, Heidelinde Eberhart-Muth, Karl Nachtnebel, Bernhard Pfeifer, Romana Reiterer, Wolfgang Reiterer -->
+<xs:schema xmlns="urn:OECD:StandardAuditFile-Taxation:AT_1.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:doc="urn:schemas-OECD:schema-extensions:documentation" targetNamespace="urn:OECD:StandardAuditFile-Taxation:AT_1.01" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.00" id="SAF-T_AT">
+	<xs:annotation>
+		<xs:documentation>
+			<doc:Title>OECD Standard Audit File:AT_1.01</doc:Title>
+			<doc:Copyright>Erstellt vom BMF</doc:Copyright>
+			<doc:Subject>Standard Audit File - Taxation Austria</doc:Subject>
+			<doc:Version>
+				<doc:Number>1.01 Final Basis: OECD SAF-T 1.93</doc:Number>
+				<doc:Status>Final AT</doc:Status>
+			</doc:Version>
+			<doc:Author>RIA: Silke Frisch, Heidelinde Eberhart-Muth, Karl Nachtnebel, Bernhard Pfeifer, Romana Reiterer, Wolfgang Reiterer</doc:Author>
+			<doc:ModificationDate>31-01-2009</doc:ModificationDate>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AddressStructure">
+		<xs:sequence>
+			<xs:element ref="BuildingNumber"/>
+			<xs:element ref="StreetName">
+				<xs:annotation>
+					<xs:documentation>Strasse, wenn nicht vorhanden Angabe des Ortsteiles bzw. Ortsbezeichnung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="AddressDetail" minOccurs="0"/>
+			<xs:element ref="City"/>
+			<xs:element ref="PostalCode"/>
+			<xs:element ref="Region" minOccurs="0"/>
+			<xs:element ref="Country"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactInformationType">
+		<xs:sequence>
+			<xs:element ref="Contact"/>
+			<xs:element ref="Telephone"/>
+			<xs:element ref="Fax" minOccurs="0"/>
+			<xs:element ref="Email" minOccurs="0"/>
+			<xs:element ref="Website" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShippingPointStructure">
+		<xs:sequence>
+			<xs:element ref="DeliveryID" minOccurs="0"/>
+			<xs:element ref="DeliveryDate" minOccurs="0"/>
+			<xs:element ref="WarehouseID" minOccurs="0"/>
+			<xs:element ref="LocationID" minOccurs="0"/>
+			<xs:element ref="UCR" minOccurs="0"/>
+			<xs:element ref="Address" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxIDstructure">
+		<xs:sequence>
+			<xs:element ref="TaxID" minOccurs="0"/>
+			<xs:element ref="TaxType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Steuerart (OECD-Vorgabe)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TaxCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Steuercode (OECD-Vorgabe)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TaxVerificationDate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxTableType">
+		<xs:sequence>
+			<xs:element ref="TaxType"/>
+			<xs:element ref="Description">
+				<xs:annotation>
+					<xs:documentation>Bezeichnung Steuerart</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxCodeDetails" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TaxCode"/>
+						<xs:element ref="Description">
+							<xs:annotation>
+								<xs:documentation>Bezeichnung Steuercode</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="TaxPercentage"/>
+						<xs:element ref="EffectiveDate" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AccountDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kontobezeichnung</xs:documentation>
+			<xs:documentation>Name of individual GL account</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AccountID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kontonummer</xs:documentation>
+			<xs:documentation>General Ledger Account code</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AccountType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kontenart - Aktives bzw. passives Bestandskonto, Ertragskonto, Aufwandskonto</xs:documentation>
+			<xs:documentation>Type of account  - Asset/Liability/Sale/Expense</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AccumulatedDepreciation" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Kumulierte AfA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AcquisitionAndProductionCosts" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Anschaffungs- und Herstellungskosten</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Address" type="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Adresse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AddressDetail" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Adresszusatz</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AppreciationInValue" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Betrag der Zuschreibung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Analysis">
+		<xs:annotation>
+			<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AnalysisID" minOccurs="0"/>
+				<xs:element ref="Description" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AnalysisID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+			<xs:documentation>Analysis code identifier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetAddition" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Zugang Anlagegüter im Wirtschaftsjahr</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Anlagenbezeichnung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetDisposal" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Abgang Anlagegüter im Wirtschaftsjahr</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Anlagennummer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetLifeYear" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Nutzungsdauer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AssetStatement">
+		<xs:annotation>
+			<xs:documentation>Anlagenverzeichnis</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NumberOfAssets" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>Anzahl der Anlagegüter</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TotalAcquisitionAndProductionCosts" type="SAFmonetaryType">
+					<xs:annotation>
+						<xs:documentation>Gesamtsumme der Anschaffungs- und Herstellungskosten</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TotalBookValueEnd" type="SAFmonetaryType">
+					<xs:annotation>
+						<xs:documentation>Gesamtsumme der Buchwerte am Ende des Jahres</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Asset" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AccountID">
+								<xs:annotation>
+									<xs:documentation>Konto Nummer der Verbuchung des Anlagegutes</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="AssetID"/>
+							<xs:element ref="AssetDescription"/>
+							<xs:element ref="DateOfAcquisition"/>
+							<xs:element name="SupplierAsset">
+								<xs:annotation>
+									<xs:documentation>Angaben zum Lieferanten des Anlagengutes</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SupplierName"/>
+										<xs:element ref="SupplierID" minOccurs="0"/>
+										<xs:element ref="Address"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="StartUpDate" minOccurs="0"/>
+							<xs:element ref="AcquisitionAndProductionCosts"/>
+							<xs:element ref="AssetAddition" minOccurs="0"/>
+							<xs:element ref="Transfers" minOccurs="0"/>
+							<xs:element ref="AssetDisposal" minOccurs="0"/>
+							<xs:element name="AcquisitionAndProductionCostsEnd" type="SAFmonetaryType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Anschaffungs- und Herstellungskosten zum Ende des Wirtschaftsjahres</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="AssetLifeYear">
+								<xs:annotation>
+									<xs:documentation>Nutzungsdauer in Jahren</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AssetLifeMonth" type="SAFdecimalType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Nutzungsdauer in Monaten</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepreciationMethod" type="SAFtextType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Art der Absetzung für Abnutzung im laufenden Wirtschaftsjahr</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepreciationPercentage" type="SAFdecimalType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>AfA-Prozentsatz</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="BookValueBegin" minOccurs="0"/>
+							<xs:element ref="AppreciationInValue" minOccurs="0"/>
+							<xs:element ref="DepreciationForYear"/>
+							<xs:element name="ExtraordinaryDepreciationMethod" type="SAFtextType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Art der Sonderabschreibung</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="ExtraordinaryDepreciation" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Sonderabschreibungen im laufenden Geschäftsjahr</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AdditionalExtraordinaryDepreciation" type="SAFmonetaryType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Weitere Sonderabschreibungen</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="BookValueEnd"/>
+							<xs:element name="PurchaseOrderDate" type="SAFdateType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Datum der Bestellung eines Wirtschaftsgutes</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="InvestmentSupport" minOccurs="0"/>
+							<xs:element ref="AccumulatedDepreciation" minOccurs="0"/>
+							<xs:element name="AssetTransactions" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="AssetTransactionType" type="SAFtextType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Eine von der Software vorgegebene Nummer für eine Bewegungsart</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AssetTransactionTypeDescription" type="SAFtextType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Bezeichnung der Bewegungsart (z. B. im Anlagevermögen: Zuschreibung für ein Wirtschaftsgut).</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AssetTransactionDate" type="SAFdateType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Datum, unter dem eine Bewegungsart erfasst ist (zum Beispiel im Anlagevermögen: Datum, unter dem der Zugang eines Wirtschaftsgutes erfolgte).</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AssetTransactionAmount" type="SAFmonetaryType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Wert der Buchung/Transaction</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AssetSales" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AcquisitionAndProductionCostsOnSale" type="SAFmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Wert der Anschaffungs- und Herstellungskosten eines Wirtschaftsgutes</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="BookValueOnSale" type="SAFmonetaryType">
+														<xs:annotation>
+															<xs:documentation>Restbuchwert des Wirtschaftsgutes zum Abgangszeitpunkt (Brutto AHK Wert abzüglich aufgelaufener AfA)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="NetSalesRevenue" type="SAFmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Wert des Erlöses eines verkauften Wirtschaftsgutes ohne USt (entspricht Umsatzerlös und nicht Buchgewinn o. -verlust)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="NetSalesEarnings" type="SAFmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Wert des Buchverlustes oder -gewinnes eines Wirtschaftsgutes bei Anlagenabgang</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TransactionDateSale" type="SAFtextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Datum, das einen Datensatz bzw. eine Buchungstransaktion einer definierten Periode (Besteuerungszeitraum) zuordnet. In der Regel das Kalenderjahr, ein Quartal oder Monat. Muss nicht ausgefüllt werden, wenn es dem AssetTransactionDate entspricht.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AuditFile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Header">
+					<xs:annotation>
+						<xs:documentation>Unternehmensstammdaten</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="MasterFiles">
+					<xs:annotation>
+						<xs:documentation>Stammdaten (Konten, Lieferanten, Kunden, etc.)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GeneralLedgerEntries" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Buchungsjournal(e)</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="NumberOfEntries"/>
+							<xs:element ref="TotalDebit"/>
+							<xs:element ref="TotalCredit"/>
+							<xs:element name="Journal" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="JournalID" type="SAFtextType">
+											<xs:annotation>
+												<xs:documentation>Eindeutige Kennung des Buchungsjournales, oder der Rechnungen und Zahlungen in einer Einnahmen-Ausgaben-Rechnung </xs:documentation>
+												<xs:documentation>Source GL journal identifier, or invoices and payments in single ledger systems</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="Description">
+											<xs:annotation>
+												<xs:documentation>Journalkennzeichnung</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Type" type="SAFtextType">
+											<xs:annotation>
+												<xs:documentation>Journaltyp/Journalart, z.B. Hauptbuchjournal, Fakturenjournal, ...</xs:documentation>
+												<xs:documentation>Grouping mechanism for journals</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Transaction" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="GLPostingDate">
+														<xs:annotation>
+															<xs:documentation>Buchungsdatum</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="TransactionDate"/>
+													<xs:element ref="Period"/>
+													<xs:element ref="TransactionCode" minOccurs="0"/>
+													<xs:element ref="TransactionID">
+														<xs:annotation>
+															<xs:documentation>Belegnummer</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="Description" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Buchungstext auf Transaktionsebene</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="CompanyCode" type="SAFtextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Buchungskreis, Abrechnungskreis</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="CustomerID" minOccurs="0"/>
+													<xs:element ref="SupplierID" minOccurs="0"/>
+													<xs:element ref="BatchID" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Stapelverarbeitungsnummer</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SourceID" type="SAFtextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Benutzerkennung; Angaben zur Person oder Anwendung, welche die den Geschäftsfall eingegeben hat (Namenskürzel)</xs:documentation>
+															<xs:documentation>Details of person or application entered the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="SystemID" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Systemerfassungsnummer</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Line" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="RecordID">
+																	<xs:annotation>
+																		<xs:documentation>Eindeutige Datensatznummer bezogen aufs Journal/Laufende, eindeutige Nummerierung der Buchungszeilen bezogen auf das jeweilige Journal</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="AccountID"/>
+																<xs:element ref="ValutaDate" minOccurs="0"/>
+																<xs:element ref="PostingText"/>
+																<xs:element ref="Analysis" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation> (OECD-Vorgabe)</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SourceDocumentID" type="SAFtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Referenznummer Quelldokument</xs:documentation>
+																		<xs:documentation>Source document number to which line relates</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SystemEntryDate" type="SAFdateType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Systemerfassungsdatum - Vom System generiertes Buchungsdatum (OECD-Vorgabe)</xs:documentation>
+																		<xs:documentation>Date captured  by system</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:choice>
+																	<xs:element ref="DebitAmount"/>
+																	<xs:element ref="CreditAmount"/>
+																</xs:choice>
+																<xs:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+																<xs:element ref="CostAccounting" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="InventoryStockLevels" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Inventurdaten</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SourceDocuments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Quelldaten</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="SalesInvoices" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="NumberOfEntries"/>
+										<xs:element ref="TotalDebit"/>
+										<xs:element ref="TotalCredit"/>
+										<xs:element name="Invoice" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="InvoiceNo"/>
+													<xs:element ref="Period" minOccurs="0"/>
+													<xs:element ref="InvoiceDate"/>
+													<xs:element ref="InvoiceType" minOccurs="0"/>
+													<xs:element ref="AccountID" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Kontonummer Kundenkonto</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="CustomerID" minOccurs="0"/>
+													<xs:element ref="Source" minOccurs="0"/>
+													<xs:element ref="GLPostingDate" minOccurs="0"/>
+													<xs:element ref="BatchID" minOccurs="0"/>
+													<xs:element ref="SystemID" minOccurs="0"/>
+													<xs:element ref="TransactionCode" minOccurs="0"/>
+													<xs:element ref="TransactionID" minOccurs="0"/>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="LineNumber" minOccurs="0"/>
+																<xs:element ref="AccountID" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Kontonummer Erlöskonto</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="Analysis" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="OrderReferences" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="ShipTo" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="ShipFrom" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="GoodsServicesID" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Kennung Ware/Dienstleistung aufgrund eines Indikators (z. B. 1=Ware; 2=Dienstleistung, ...)</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="ProductCode"/>
+																<xs:element ref="ProductDescription"/>
+																<xs:element ref="Delivery"/>
+																<xs:element ref="Quantity"/>
+																<xs:element ref="UnitOfMeasure" minOccurs="0"/>
+																<xs:element ref="UnitPrice"/>
+																<xs:element ref="TaxPointDate"/>
+																<xs:element ref="References" minOccurs="0"/>
+																<xs:element ref="Description" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Zusätzliche Angaben zur Rechnung</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:choice>
+																	<xs:element ref="CreditAmount"/>
+																	<xs:element ref="DebitAmount"/>
+																</xs:choice>
+																<xs:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DocumentTotals" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="TaxPayable"/>
+																<xs:element ref="NetTotal"/>
+																<xs:element ref="GrossTotal"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+																<xs:element ref="Settlement" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PurchaseInvoices" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="NumberOfEntries"/>
+										<xs:element ref="TotalDebit"/>
+										<xs:element ref="TotalCredit"/>
+										<xs:element name="Invoice" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="InvoiceNo" minOccurs="0"/>
+													<xs:element ref="Period" minOccurs="0"/>
+													<xs:element ref="InvoiceDate"/>
+													<xs:element ref="InvoiceType" minOccurs="0"/>
+													<xs:element ref="AccountID" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Kontonummer Lieferantenkonto</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="SupplierID" minOccurs="0"/>
+													<xs:element ref="Source" minOccurs="0"/>
+													<xs:element ref="GLPostingDate" minOccurs="0"/>
+													<xs:element ref="BatchID" minOccurs="0"/>
+													<xs:element ref="SystemID" minOccurs="0"/>
+													<xs:element ref="TransactionCode" minOccurs="0"/>
+													<xs:element ref="TransactionID" minOccurs="0"/>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="LineNumber" minOccurs="0"/>
+																<xs:element ref="AccountID" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Kontonummer Sachkonto</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="Analysis" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="OrderReferences" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="ShipTo" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="ShipFrom" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="GoodsServicesID" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Kennung Ware/Dienstleistung aufgrund eines Indikators (z. B. 1=Ware; 2=Dienstleistung, ...)</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="ProductCode" minOccurs="0"/>
+																<xs:element ref="ProductDescription" minOccurs="0"/>
+																<xs:element ref="Delivery" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Lieferung/Leistungserstellung</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="Quantity" minOccurs="0"/>
+																<xs:element ref="UnitOfMeasure" minOccurs="0"/>
+																<xs:element ref="UnitPrice" minOccurs="0"/>
+																<xs:element ref="TaxPointDate" minOccurs="0"/>
+																<xs:element ref="References" minOccurs="0"/>
+																<xs:element ref="Description" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Zusätzliche Angaben zur Eingangsrechnung</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:choice>
+																	<xs:element ref="DebitAmount"/>
+																	<xs:element ref="CreditAmount"/>
+																</xs:choice>
+																<xs:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DocumentTotals" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="TaxPayable"/>
+																<xs:element ref="NetTotal"/>
+																<xs:element ref="GrossTotal"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+																<xs:element ref="Settlement" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Payments" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="NumberOfEntries"/>
+										<xs:element ref="TotalDebit"/>
+										<xs:element ref="TotalCredit"/>
+										<xs:element name="Payment" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="PaymentRefNo" minOccurs="0"/>
+													<xs:element ref="Period" minOccurs="0"/>
+													<xs:element ref="TransactionCode" minOccurs="0"/>
+													<xs:element ref="TransactionID" minOccurs="0"/>
+													<xs:element ref="TransactionDate"/>
+													<xs:element ref="PaymentType" minOccurs="0"/>
+													<xs:element ref="Description" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Zusätzliche Angaben zur Zahlung</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="BatchID" minOccurs="0"/>
+													<xs:element ref="SystemID" minOccurs="0"/>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="LineNumber" minOccurs="0"/>
+																<xs:element name="SourceDocumentRef" type="SAFtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Angabe des Quelldokuments, auf das Bezug genommen wird</xs:documentation>
+																		<xs:documentation>The source document to which the line relates</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="AccountID" minOccurs="0"/>
+																<xs:element ref="Analysis" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element ref="CustomerID" minOccurs="0"/>
+																<xs:element ref="SupplierID" minOccurs="0"/>
+																<xs:element ref="TaxPointDate" minOccurs="0"/>
+																<xs:element ref="Description" minOccurs="0"/>
+																<xs:choice>
+																	<xs:element ref="CreditAmount"/>
+																	<xs:element ref="DebitAmount"/>
+																</xs:choice>
+																<xs:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DocumentTotals" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="TaxPayable" minOccurs="0"/>
+																<xs:element ref="NetTotal" minOccurs="0"/>
+																<xs:element ref="GrossTotal"/>
+																<xs:element ref="Currency" minOccurs="0"/>
+																<xs:element ref="Settlement" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="MovementOfGoods" minOccurs="0"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="AssetStatement" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AuditFileVersion" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung der verwendeten Version des SAF-T (Bsp: Version 1.00_01, Version 1.93)</xs:documentation>
+			<xs:documentation>Identification of the Standard Audit File SAF-T version being used</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BatchID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Vom System generierte Stapelverarbeitungsnummer</xs:documentation>
+			<xs:documentation>Systems generated ID for batch</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BalanceSheetItemDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Beschreibung der jeweiligen Bilanzposition</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BalanceSheetItemCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Zuordung des Kontos zur Bilanzposition gem. § 224 UGB bzw. zur GuV-Postition gem. § 231 UGB  ODER  zur Bilanzposition gem. § 81c UGB bzw. zur GuV-Position gem. § 81e UGB (Versicherungen)  ODER  zur Bilanzposition gem. Anlage 2, Teil 1 zu § 43 BWG bzw. zur GuV-Position gem. Anlage 2 Teil 2 zu § 43 BWG (Banken)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BillingAddress" type="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Rechnungsadresse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BookValue" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Buchwert - Wert der Warenposition lt. Journalbuchung in der vorgegebenen Währung</xs:documentation>
+			<xs:documentation>Value of the transaction line as registrerd in the general ledger in default currency.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BookValueBegin" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Buchwert am Beginn des Wirtschaftsjahres</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BookValueEnd" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Buchwert am Ende des Wirtschaftsjahres</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BuildingNumber" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Hausnummer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="City" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Ort</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ClosingStockQuantity" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>LagerEndBestand: Menge des Warenbestandes am Ende der Buchungsperiode</xs:documentation>
+			<xs:documentation>In UOM Physical Stock for selection period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ClosingStockValue" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>LagerEndWert: Wert des Warenbestandes in der vorgegebenen Währung am Ende der Buchungsperiode</xs:documentation>
+			<xs:documentation>Closing stock value in default currency for selection period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CompanyAddress" type="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Firmensitz bzw. Ort der Geschäftsleitung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CompanyEntity" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Gruppenzugehörigkeit (Gruppenbesteuerung)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CompanyID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Firmenbuchnummer des Unternehmens</xs:documentation>
+			<xs:documentation>Registration number of the Company</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CompanyName" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Name bzw. Firmenbezeichnung des Unternehmens, welches den SAF-T übermittelt</xs:documentation>
+			<xs:documentation>Company name of company supplying SAF-T  </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Contact" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Name der Ansprechperson im Unternehmen</xs:documentation>
+			<xs:documentation>Company contact</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ContactInformation" type="ContactInformationType"/>
+	<xs:element name="CostAccounting">
+		<xs:annotation>
+			<xs:documentation>Verweis auf Kostenrechnung</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CostCenter" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Zuordnung des Aufwandes zu einer Kostenstelle</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CostUnit" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kostenträger</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CostType" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kostenart</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Amount" type="SAFmonetaryType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Betrag</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Currency" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Country" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Land (Eingabe des 2-stelligen ISO-Codes)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CreditAmount" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Betrag Haben</xs:documentation>
+			<xs:documentation>Credit amount for transaction</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CreditNote">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Reference" minOccurs="0"/>
+				<xs:element ref="Reason" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Currency">
+		<xs:annotation>
+			<xs:documentation>Steuerwährung - wenn nichts eingetragen wird, wird die nationale Währung angenommen</xs:documentation>
+			<xs:documentation>Tax Currency - no entry means local currency   </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CurrencyCode"/>
+				<xs:choice>
+					<xs:element ref="ExchangeRate"/>
+					<xs:element ref="CurrencyDebitAmount"/>
+					<xs:element ref="CurrencyCreditAmount"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CurrencyCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Währungscode (3-stellig ISO) oder nationale Währung in der die Buchhaltung geführt wird</xs:documentation>
+			<xs:documentation>Currency Code (3 Char ISO) or local currency which accounts are audited in</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CurrencyCreditAmount" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>FW-Betrag Haben; Betrag Haben in Fremdwährung (anstelle des Umrechnungskurses)</xs:documentation>
+			<xs:documentation>Amount in foreign currency (instead of exchange rate)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CurrencyDebitAmount" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>FW-Betrag Soll; Betrag Soll in Fremdwährung (anstelle des Umrechnungskurses)</xs:documentation>
+			<xs:documentation>Amount in foreign currency (instead of exchange rate)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Customer">
+		<xs:annotation>
+			<xs:documentation>Kundenstammdaten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AccountID">
+					<xs:annotation>
+						<xs:documentation>Kontonummer</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="CustomerID" minOccurs="0"/>
+				<xs:element ref="CustomerName"/>
+				<xs:element ref="CustomerTaxID" minOccurs="0"/>
+				<xs:element ref="ContactInformation" minOccurs="0"/>
+				<xs:element ref="BillingAddress" maxOccurs="unbounded"/>
+				<xs:element ref="ShipToAddress" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SelfBillingIndicator" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kennzeichnung bzw. Indikator, ob eine Vereinbarung zum "Self-Billing" zwischen Kunden und Lieferanten existiert (OECD-Vorgabe)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CustomerID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kundennummer</xs:documentation>
+			<xs:documentation>Unique code for the customer </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CustomerName" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kundenname; Name bzw. Firmenbezeichnung des Kunden</xs:documentation>
+			<xs:documentation>Name of Customer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CustomerTaxID" type="TaxIDstructure">
+		<xs:annotation>
+			<xs:documentation>Steuerliche Informationen über den Kunden</xs:documentation>
+			<xs:documentation>Details of customer tax information</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DateCreated" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Datum der Erstellung des Standard Audit File - Tax</xs:documentation>
+			<xs:documentation>Date of production of SAF-T</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DateOfAcquisition" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Anschaffungsdatum</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DateOfAssetDisposal" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Datum des Anlagenabganges</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Delivery">
+		<xs:annotation>
+			<xs:documentation>Lieferung/Leistungserstellung</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="Date" type="SAFdateType">
+					<xs:annotation>
+						<xs:documentation>Datum der Lieferung/Leistungserstellung</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DeliveryPeriod">
+					<xs:annotation>
+						<xs:documentation>Zeitraum der Lieferung/Leistungserstellung</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FromDate" type="SAFdateType">
+								<xs:annotation>
+									<xs:documentation>Beginn der Leistungserstellung</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ToDate" type="SAFdateType">
+								<xs:annotation>
+									<xs:documentation>Ende der Leistungserstellung</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DebitAmount" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Betrag Soll</xs:documentation>
+			<xs:documentation>Debit amount for transaction</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DeliveryDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Lieferdatum</xs:documentation>
+			<xs:documentation>Date goods are delivered</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DeliveryID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Liefernummer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DepreciationForYear" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Abschreibungsbetrag für das laufende Wirtschaftsjahr</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Description" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Beschreibung - Angabe der relevanten Daten</xs:documentation>
+			<xs:documentation>Description of relevant data item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentLine" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>Belegzeile</xs:documentation>
+			<xs:documentation>Line number of the document</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentNumber" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Belegnummer - Referenznummer des Belegs</xs:documentation>
+			<xs:documentation>Reference number of the document</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Belegart</xs:documentation>
+			<xs:documentation>Type of documents selected</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EffectiveDate" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>(OECD-Vorgabe)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AccountID_oeEKR" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Zuordnung der Kontonummer zum entsprechenden Konto des Österreichischen Einheitskontenrahmens</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AccountDescription_oeEKR" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung des Kontos im Österreichischen Einheitskontenrahmen</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Email" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>E-Mail Adresse des Unternehmens</xs:documentation>
+			<xs:documentation>Company e-mail address</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="EndDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Ende des Wirtschaftsjahres</xs:documentation>
+			<xs:documentation>Company financial year end date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ExchangeRate">
+		<xs:annotation>
+			<xs:documentation>FW-Kurs; Eingabe des Umrechnungskurses - sofern vorhanden. Attribut der Berechnung: D=Division; M=Multiplikation</xs:documentation>
+			<xs:documentation>Exchange rate where applicable. Attribute CalculationType D=Divide, M=Multiply</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="SAFdecimalType">
+					<xs:attribute name="CalculationType" use="optional" default="D">
+						<xs:annotation>
+							<xs:documentation>D = Divide. M = Multiply</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="SAFtextType">
+								<xs:enumeration value="D"/>
+								<xs:enumeration value="M"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExtraordinaryDepreciation" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Außerordentliche Abschreibung/Sonderabschreibung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Fax" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Fax-Nummer des Unternehmens</xs:documentation>
+			<xs:documentation>Company fax number</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FiscalYear" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Fiscaljahr/Wirtschaftsjahr</xs:documentation>
+			<xs:documentation>Company financial year</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GLPostingDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Buchungsdatum - Datum der Erfassung des Geschäftsfalles</xs:documentation>
+			<xs:documentation>Date posting to GL</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GeneralLedger">
+		<xs:annotation>
+			<xs:documentation>Kontenstammdaten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AccountID"/>
+				<xs:element ref="AccountDescription"/>
+				<xs:element ref="AccountType"/>
+				<xs:element ref="AccountID_oeEKR"/>
+				<xs:element ref="AccountDescription_oeEKR" minOccurs="0"/>
+				<xs:element ref="BalanceSheetItemCode" minOccurs="0"/>
+				<xs:element ref="BalanceSheetItemDescription" minOccurs="0"/>
+				<xs:element ref="LeadCode" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Angaben zur verwendeten HGB Taxonomie (XBRL) - internationales Datenfeld (in Österreich gibt es derzeit keine XBRL Taxonomie (OECD-Vorgabe)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="LeadDescription" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Beschreibung der verwendeten HGB-Taxonomie (XBRL) - internationales Datenfeld (in Österreich gibt es derzeit keine XBRL Taxonomie (OECD-Vorgabe)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:element ref="OpeningDebitBalance"/>
+					<xs:element ref="OpeningCreditBalance"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GoodsServicesID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Kennung Ware/Dienstleistung aufgrund eines Indikators (z. B. 1=Ware; 2=Dienstleistung, ...)</xs:documentation>
+			<xs:documentation>Indicator showing if goods or service</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GrossTotal" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Gesamtbetrag brutto</xs:documentation>
+			<xs:documentation>Total amount including tax</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Header">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TaxID"/>
+				<xs:element ref="CompanyName"/>
+				<xs:element ref="CompanyAddress"/>
+				<xs:element ref="CompanyID" minOccurs="0"/>
+				<xs:element ref="ContactInformation"/>
+				<xs:element name="TaxAccountingBasis" type="SAFtextType">
+					<xs:annotation>
+						<xs:documentation>Eingabe der Art der Gewinnermittlung (§ 4(1) EStG, § 4(3) EStG, § 5 EStG, etc.)</xs:documentation>
+						<xs:documentation>Invoice Accounting, Cash Accounting, Delivery, other ...</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TaxEntity"/>
+				<xs:element ref="FiscalYear"/>
+				<xs:element ref="StartDate"/>
+				<xs:element ref="EndDate"/>
+				<xs:element name="Kleinunternehmer_AT" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>Eingabe einer Kennzeichnung, ob Kleinunternehmer gem. § 6 Abs. 1 Z 27 UStG ja oder nein; 1 = ja; 0 = nein (oder Verzichtserklärung gem. § 6 Abs. 3)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Taxonomy" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>HGB-Taxonomie, auf die der LeadCode verweist (OECD-Standard)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="CurrencyCode"/>
+				<xs:element ref="AuditFileVersion">
+					<xs:annotation>
+						<xs:documentation>Bezeichnung der verwendeten Version des SAF-T (Bsp: 1.00)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="DateCreated"/>
+				<xs:element ref="ProductID" minOccurs="0"/>
+				<xs:element ref="ProductVersion" minOccurs="0"/>
+				<xs:element name="SelectionCriteria" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Benutzerspezifische Angaben zur Erstellung des Audit Files</xs:documentation>
+						<xs:documentation>Criteria set by the user to populate the audit files</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence minOccurs="0">
+							<xs:element ref="TaxReportingJurisdiction" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Finanzamt (Zuständige Steuerbehörde(OECD-Vorgabe))</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="CompanyEntity" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Gruppenzugehörigkeit (Gruppenbesteuerung); Konzernzugehörigkeit</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="SelectionStartDate" minOccurs="0"/>
+							<xs:element ref="SelectionEndDate" minOccurs="0"/>
+							<xs:element ref="PeriodStart" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Zeitraum Beginn (OECD-Vorgabe)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="PeriodEnd" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Zeitraum Ende (OECD-Vorgabe)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="DocumentType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Belegart (OECD-Vorgabe)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HeaderComment" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eventuelle weitere Angaben zu den Unternehmensdaten</xs:documentation>
+						<xs:documentation>Comments on header file</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InventoryStockLevels">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ProductCode"/>
+				<xs:element name="PhysicalStock" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="WarehouseID" minOccurs="0"/>
+							<xs:element ref="WarehouseLocation" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Adresse Lager</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="LocationID" minOccurs="0"/>
+							<xs:element ref="StockAccountNo" minOccurs="0"/>
+							<xs:element ref="ProductCommodityCode" minOccurs="0"/>
+							<xs:element ref="OwnerID" minOccurs="0"/>
+							<xs:sequence minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Wird nicht benötigt, wenn das Feld UOMPhysicalStock dem Feld UOMBase entspricht</xs:documentation>
+									<xs:documentation>Not needed when UOMPhysicalStock equals UOMBase</xs:documentation>
+								</xs:annotation>
+								<xs:element ref="UnitOfMeasurePhysicalStock"/>
+								<xs:element ref="UOMToUOMBaseConversionFactor"/>
+							</xs:sequence>
+							<xs:element ref="UnitPrice">
+								<xs:annotation>
+									<xs:documentation>Grundpreis je Einheit für diese Warenposition</xs:documentation>
+									<xs:documentation>Base Unit price for this stock account</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="OpeningStockQuantity"/>
+							<xs:element ref="OpeningStockValue" minOccurs="0"/>
+							<xs:element ref="ClosingStockQuantity"/>
+							<xs:element ref="ClosingStockValue" minOccurs="0"/>
+							<xs:sequence minOccurs="0" maxOccurs="unbounded">
+								<xs:element ref="StockCharacteristic"/>
+								<xs:element ref="StockCharacteristicValue"/>
+							</xs:sequence>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InvestmentSupport" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Betrag der in Anspruch genommenen Investitionsbegünstigung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InvoiceDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Rechnungsdatum</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InvoiceNo" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Rechnungsnummer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InvoiceType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Rechnungsart, z. B: Rechnung, Gutschrift</xs:documentation>
+			<xs:documentation>Invoices / Credit Notes </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LeadCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Angaben zur verwendeten HGB Taxonomie (XBRL) - internationales Datenfeld (in Österreich gibt es derzeit keine XBRL Taxonomie</xs:documentation>
+			<xs:documentation> XBRL Taxonomy Code</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LeadDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Beschreibung der verwendeten HGB-Taxonomie (XBRL) - internationales Datenfeld (in Österreich gibt es derzeit keine XBRL Taxonomie</xs:documentation>
+			<xs:documentation>XBRL Taxonomy code description</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LineNumber" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>Positionsnummer </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="LocationID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Regalnummer; Lagerort der Waren im Lager(haus)</xs:documentation>
+			<xs:documentation>Location of goods in warehouse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MasterFiles">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="GeneralLedger" minOccurs="0"/>
+				<xs:element ref="Customer" minOccurs="0"/>
+				<xs:element ref="Supplier" minOccurs="0"/>
+				<xs:element ref="Product" minOccurs="0"/>
+				<xs:element ref="Owner" minOccurs="0"/>
+				<xs:element name="TaxTable" type="TaxTableType" minOccurs="0"/>
+				<xs:element name="UOMTable" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Tabelle mit der Beschreibung der verschiedenen Maßeinheiten</xs:documentation>
+						<xs:documentation>Table with descriptions of all different kinds of UOM's</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice>
+								<xs:element ref="UnitOfMeasure"/>
+								<xs:element ref="UOMBase"/>
+								<xs:element ref="UOMPurchase"/>
+								<xs:element ref="UOMSale"/>
+								<xs:element ref="UOMStandard"/>
+							</xs:choice>
+							<xs:element ref="UnitOfMeasureDescription"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TransactionTypeTable" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Tabelle mit der Beschreibung aller möglichen Arten von Geschäftsfällen</xs:documentation>
+						<xs:documentation>Table with descriptions of all different kinds of transactiontype and transactionsubtypes</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice>
+								<xs:element ref="TransactionType"/>
+								<xs:element ref="TransactionSubType">
+									<xs:annotation>
+										<xs:documentation>Eingabe des Codes für das Statistische Verfahren</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+							<xs:element ref="TransactionDescription">
+								<xs:annotation>
+									<xs:documentation>Beschreibung des Codes</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MovementOfGoods">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NumberOfMovementLines">
+					<xs:annotation>
+						<xs:documentation>Anzahl der Lines</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TotalQuantityReceived"/>
+				<xs:element ref="TotalQuantityIssued"/>
+				<xs:element name="StockMovement" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="TransactionReference" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Belegbezug - Eindeutige Referenz zum Geschäftsfall</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="TransactionDate"/>
+							<xs:element ref="TransactionPostingDate" minOccurs="0"/>
+							<xs:element ref="TransactionPostingTime" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Buchungszeit (OECD-Vorgabe)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="TaxPointDate" minOccurs="0"/>
+							<xs:element ref="TransactionType" minOccurs="0"/>
+							<xs:element ref="Source" minOccurs="0"/>
+							<xs:element ref="SystemID" minOccurs="0"/>
+							<xs:element name="DocumentReference" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DocumentNumber"/>
+										<xs:element ref="DocumentType"/>
+										<xs:element ref="DocumentLine" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="CustomerID" minOccurs="0"/>
+							<xs:element ref="SupplierID" minOccurs="0"/>
+							<xs:element ref="TransactionCode" minOccurs="0"/>
+							<xs:element ref="TransactionID" minOccurs="0"/>
+							<xs:element name="Line" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="LineNumber"/>
+										<xs:element ref="AccountID" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Kontonummer Sachkonto</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="ProductCode"/>
+										<xs:element ref="ShipTo" minOccurs="0"/>
+										<xs:element ref="ShipFrom" minOccurs="0"/>
+										<xs:element name="ModeOfTransport" type="xs:integer" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Verkehrszweig - Angabe lt. Tabelle für Intrastat</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="CountryOfOrigin" type="SAFtextType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Ursprungsland (2-stelliger Alpha-ISO-Code)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="StockAccountNo" minOccurs="0"/>
+										<xs:element ref="Quantity"/>
+										<xs:element name="NetMass" type="SAFdecimalType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Eigenmasse in KG</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="SupplementaryUnit" type="SAFdecimalType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Besondere Maßeinheit</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:sequence minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Wird nicht benötigt, wenn die UOM (Maßeinheit) dieser Position dem Datenfeld UOMPhysicalStock entspricht</xs:documentation>
+												<xs:documentation>Not needed when UOM of this line equals UOMPhysicalStock</xs:documentation>
+											</xs:annotation>
+											<xs:element ref="UnitOfMeasure"/>
+											<xs:element ref="UOMToUOMPhysicalStockConversionFactor"/>
+										</xs:sequence>
+										<xs:element ref="BookValue" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Rechnungsbetrag in € - Wert der Warenposition lt. Journalbuchung in der vorgegebenen Währung</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="StatisticalValue" type="SAFmonetaryType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Statistischer Wert</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="TransactionSubType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Eingabe des Statistisches Verfahren - Eingabe zB. für Intrastat</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="TransactionComments" minOccurs="0"/>
+										<xs:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NetTotal" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Gesamtbetrag netto</xs:documentation>
+			<xs:documentation>Total sales value excluding tax</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="NumberOfEntries" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>Anzahl der Einträge</xs:documentation>
+			<xs:documentation>Number of entries</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="NumberOfMovementLines" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>Anzahl der Warenbewegungen</xs:documentation>
+			<xs:documentation>Number of movementlines in selected period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OpeningCreditBalance" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>EB-Saldo Haben</xs:documentation>
+			<xs:documentation>Opening Credit Balance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OpeningDebitBalance" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>EB-Saldo Soll</xs:documentation>
+			<xs:documentation>Opening Debit balance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OpeningStockQuantity" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>LagerAnfangsBestand: Menge des Warenbestandes am Beginn der Buchungsperiode</xs:documentation>
+			<xs:documentation>In UOM Physical Stock for selection period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OpeningStockValue" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>LagerAnfangsWert: Wert des Warenbestandes in der vorgegebenen Währung am Beginn der Buchungsperiode</xs:documentation>
+			<xs:documentation>In default currency for selection period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OrderDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Bestelldatum</xs:documentation>
+			<xs:documentation>Date of order</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OrderReferences">
+		<xs:annotation>
+			<xs:documentation>Relevant order references</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OriginatingON" minOccurs="0"/>
+				<xs:element ref="OrderDate" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OriginatingON" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bestellnummer</xs:documentation>
+			<xs:documentation>Origination Order Number </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Owner">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AccountID"/>
+				<xs:element ref="OwnerID"/>
+				<xs:element ref="OwnerName">
+					<xs:annotation>
+						<xs:documentation>Eigentümer der Waren im Warenlager (z. B. bei Kommissionsware)</xs:documentation>
+						<xs:documentation>Owner of goods in storage</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ContactInformation" minOccurs="0"/>
+				<xs:element ref="Address"/>
+				<xs:element ref="TaxID" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OwnerID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Eigentümernummer; Bezug zu den Stammdaten des Eigentümers</xs:documentation>
+			<xs:documentation>Reference to the owner Master File</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OwnerName" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Eigentümername; Name bzw. Firmenbezeichnung des Eigentümers der Waren</xs:documentation>
+			<xs:documentation>Name of the owner of the goods</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PaymentRefNo" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Zahlungsreferenznummer - Eindeutige Bezugsnummer der Zahlung</xs:documentation>
+			<xs:documentation>Unique reference number for payment</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PaymentType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Zahlungsart</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Period" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Zeitraum (Buchungsperiode)</xs:documentation>
+			<xs:documentation>Accounting Period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PeriodStart" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Zeitraum Beginn</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PeriodEnd" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Zeitraum Ende</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PostalCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Postleitzahl</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PostingText" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Buchungstext</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Product">
+		<xs:annotation>
+			<xs:documentation>Produktstammdaten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ProductCode"/>
+				<xs:element ref="ProductType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Artikelart</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ProductGroup" minOccurs="0"/>
+				<xs:element ref="GoodsServicesID" minOccurs="0"/>
+				<xs:element ref="ProductDescription">
+					<xs:annotation>
+						<xs:documentation>Artikel-/Produktbezeichnung (Beschreibung der Ware bzw. Dienstleistung)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ProductCommodityCode" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Produktklassifizierung für Import/Export - Kombinierte Nomenklatur (KN8)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ProductIdentification" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Warenbezeichnung gem. Gebrauchszolltarif (entsprechend der Warennnummer KN8)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="ProductNumberCode" minOccurs="0"/>
+				<xs:element ref="ValuationMethod" minOccurs="0"/>
+				<xs:element ref="UOMBase"/>
+				<xs:element ref="UOMSale" minOccurs="0"/>
+				<xs:element ref="UOMPurchase" minOccurs="0"/>
+				<xs:element ref="TaxCode" minOccurs="0"/>
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Not needed when not applicable</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="UOMStandard">
+						<xs:annotation>
+							<xs:documentation>Maßeinheit, z. B. Kilo, Meter, Liter, m², etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="UOMToUOMBaseConversionFactor"/>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ProductCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Artikelnummer</xs:documentation>
+			<xs:documentation>Product code</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductCommodityCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Produktklassifizierung für Import/Export - Kombinierte Nomenklatur (KN8)</xs:documentation>
+			<xs:documentation>Classification for import / export</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Artikel-/Produktbezeichnung (Beschreibung der Ware bzw. Dienstleistung)</xs:documentation>
+			<xs:documentation>Description of goods or services.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductGroup" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Artikelgruppe/Produktgruppe</xs:documentation>
+			<xs:documentation>Code identifying aggregated level at which similar products are grouped</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung der Software, die den SAF-T erstellt hat</xs:documentation>
+			<xs:documentation>Software that generated the SAF-T</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductNumberCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>EAN- oder anderer Produktcode</xs:documentation>
+			<xs:documentation>EAN or other code</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Artikelart; Kennziffer bzw. Indikator zur Unterscheidung, ob es sich um eine Ware oder Dienstleistung handelt</xs:documentation>
+			<xs:documentation>Indicator showing if goods or services (Predescribed TABLE is possible)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProductVersion" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung der verwendeten Software-Version</xs:documentation>
+			<xs:documentation>Software Version</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Quantity" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Menge der gelieferten Ware bzw. Dienstleistung</xs:documentation>
+			<xs:documentation>Quantity of goods and services supplied    </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Reason" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Begründung - Grund für die Gutschrift</xs:documentation>
+			<xs:documentation>Credit note reason or rationale      </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RecordID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Journalnummer</xs:documentation>
+			<xs:documentation>Identifier to trace entry to journal line or posting reference</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Reference" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Rechnungsbezug - Nummer der Rechnung, auf die sich die Gutschrift bezieht</xs:documentation>
+			<xs:documentation>Credit note reference (where applicable) to original invoice      </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="References">
+		<xs:annotation>
+			<xs:documentation>Credit Note references</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CreditNote" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Region" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Region</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SelectionEndDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Auswahlzeitraum Ende</xs:documentation>
+			<xs:documentation>End date of the selection criteria</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SelectionStartDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Auswahlzeitraum Beginn</xs:documentation>
+			<xs:documentation>Start date of the selection criteria</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SelfBillingIndicator">
+		<xs:annotation>
+			<xs:documentation>Kennzeichnung bzw. Indikator, ob eine Vereinbarung zum "Self-Billing" zwischen Kunden und Lieferanten existiert</xs:documentation>
+			<xs:documentation>Indicator showing if a self-billing agreement exists between the customer and the supplier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Settlement">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SettlementDiscount" type="SAFmonetaryType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Zahlungsabschlag</xs:documentation>
+						<xs:documentation>Settlement / Other Discount  </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SettlementAmount" type="SAFmonetaryType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Zahlungsbetrag</xs:documentation>
+						<xs:documentation>Settlement amount</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SettlementDate" type="SAFdateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Zahlungsdatum</xs:documentation>
+						<xs:documentation>Date settled</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PaymentMechanism" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Zahlungsmechanismus</xs:documentation>
+						<xs:documentation>Payment mechanism </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ShipFrom" type="ShippingPointStructure">
+		<xs:annotation>
+			<xs:documentation>Angaben zum Versendeort</xs:documentation>
+			<xs:documentation>Ship from Details</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ShipFromAddress" type="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Versendeadresse - Angaben zum Ort der Versendung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ShipTo" type="ShippingPointStructure">
+		<xs:annotation>
+			<xs:documentation>Lieferadresse - Angaben zum Empfangsort</xs:documentation>
+			<xs:documentation>Ship To details</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ShipToAddress" type="AddressStructure"/>
+	<xs:element name="Source" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezug (sofern sich das Dokument auf ein anderes bezieht)</xs:documentation>
+			<xs:documentation>Source of Document</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StartDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Beginn des Wirtschaftsjahres</xs:documentation>
+			<xs:documentation>Company financial year start-date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StartUpDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Datum der Inbetriebnahme</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StockAccountNo" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Chargennummer/Seriennummer; genauere Identifizierung der Waren</xs:documentation>
+			<xs:documentation>Stock batch, lot, serial identification. Not used when there is exactly 1 PhysicalStock entry per ProductCode</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StockCharacteristic" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Produkteigenschaft - Kriterium: Beschreibung der typischen Produktmerkmale</xs:documentation>
+			<xs:documentation>User definable characteristics of the goods. Predescribed TABLE is possible.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StockCharacteristicValue" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Produkteigenschaft - Wert, z. B. Gewicht, Verpackungsgröße, Farbe, etc. </xs:documentation>
+			<xs:documentation>The weight, pack size, colour etc.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StreetName" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Strasse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Supplier">
+		<xs:annotation>
+			<xs:documentation>Lieferantenstammdaten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AccountID">
+					<xs:annotation>
+						<xs:documentation>Kontonummer</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SupplierID" minOccurs="0"/>
+				<xs:element ref="SupplierName"/>
+				<xs:element ref="SupplierTaxID" minOccurs="0"/>
+				<xs:element ref="ContactInformation" minOccurs="0"/>
+				<xs:element ref="Address" maxOccurs="unbounded"/>
+				<xs:element ref="ShipToAddress" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ShipFromAddress" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SelfBillingIndicator" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kennzeichnung bzw. Indikator, ob eine Vereinbarung zum "Self-Billing" zwischen Kunden und Lieferanten existiert (OECD-Vorgabe)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SupplierID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Lieferantennummer</xs:documentation>
+			<xs:documentation>Unique code for the supplier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SupplierName" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Lieferantenname; Name bzw. Firmenbezeichnung des Lieferanten</xs:documentation>
+			<xs:documentation>Name of Supplier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SupplierTaxID" type="TaxIDstructure">
+		<xs:annotation>
+			<xs:documentation>Steuerliche Angaben zum Lieferanten</xs:documentation>
+			<xs:documentation>Details of supplier tax information</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SystemID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Systemerfassungsnummer - eindeutige vom System für das Dokumet generierte Nummer</xs:documentation>
+			<xs:documentation>Unique number created by the system for the document</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Tax">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TaxType"/>
+				<xs:element ref="TaxCode"/>
+				<xs:element ref="Currency" minOccurs="0"/>
+				<xs:element ref="TaxPercentage"/>
+				<xs:element ref="TaxAmount"/>
+				<xs:element ref="TaxExemptionReason" minOccurs="0"/>
+				<xs:element name="SysInfo" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Systeminformation (OECD-Vorgabe)</xs:documentation>
+						<xs:documentation>System Information and controls - generic holder for information on above.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TaxAmount" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Betrag Steuer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Steuercode</xs:documentation>
+			<xs:documentation>Tax Code for lookup in tables</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxEntity" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Branchenkennzahl</xs:documentation>
+			<xs:documentation>Company / Division / Branch reference</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxExemptionReason" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Begründung für Steuerbefreiung/-ermäßigung (Hinweis auf Gesetzestext)</xs:documentation>
+			<xs:documentation>Tax exemption or reduction reason or rationale </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Taxonomy" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>HGB-Taxonomie, auf die der LeadCode verweist</xs:documentation>
+			<xs:documentation>XBRL Taxonomy being referred to in LeadCode</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxPayable" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Summe Steuer</xs:documentation>
+			<xs:documentation>Total tax payable</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxPercentage" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Steuersatz</xs:documentation>
+			<xs:documentation>Tax percentage.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxPointDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Datum der Entstehung der Steuerschuld - falls keine Angabe, dann das Rechnungsdatum</xs:documentation>
+			<xs:documentation>Tax Point date where recorded or if not recorded then the Invoice date </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxID">
+		<xs:annotation>
+			<xs:documentation>Steuerdaten des Unternehmens</xs:documentation>
+			<xs:documentation>Fiscal registration number of the entity</xs:documentation>
+			<xs:documentation>Tax identification number of customer</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FA" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eingabe der zweistelligen Nummer des zuständigen Finanzamtes</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TaxRegistrationNumber" type="SAFtextType">
+					<xs:annotation>
+						<xs:documentation>Eingabe der Steuernummer (bei österreichischer Steuernummer Format: 123/4567)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VATNumber" type="SAFtextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eingabe der UID-Nummer (inkl. Landeskennung)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TaxReportingJurisdiction" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Finanzamt (Zuständige Steuerbehörde)</xs:documentation>
+			<xs:documentation>Tax Reporting Jurisdiction</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Steuerart</xs:documentation>
+			<xs:documentation>Tax type for look-up in tables</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TaxVerificationDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Überprüfungsdatum (Datum der letzten Überprüfung der Gültigkeit der Steuernummer bzw. UID-Nummer)</xs:documentation>
+			<xs:documentation>Date Tax verification last checked</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Telephone" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Telefonnummer des Unternehmens</xs:documentation>
+			<xs:documentation>Company telephone number</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalCredit" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Gesamt Haben; Gesamtsumme aller Haben-Beträge</xs:documentation>
+			<xs:documentation>The total of all credit amounts</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalDebit" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Gesamt Soll; Gesamtsummer aller Soll-Beträge</xs:documentation>
+			<xs:documentation>The total of all debit amounts</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalQuantityIssued" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Gesamtmenge Warenausgang - Menge der gelieferten Waren im ausgewählten Zeitraum</xs:documentation>
+			<xs:documentation>Quantity of goods issued in selected period</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalQuantityReceived" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Gesamtmenge Wareneingang - Menge der erhaltenen Waren im ausgewählten Zeitraum</xs:documentation>
+			<xs:documentation>Quantity of goods received</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionCode" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Belegkreis, Belegart</xs:documentation>
+			<xs:documentation>Document Number Range</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionComments" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Anmerkung zur Warenbewegung</xs:documentation>
+			<xs:documentation>A reason for the movement</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Belegdatum</xs:documentation>
+			<xs:documentation>Document date </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Beschreibung des Geschäftsfalles</xs:documentation>
+			<xs:documentation>Description of the transaction(sub)type</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Belegnummer</xs:documentation>
+			<xs:documentation>Cross-reference to GL posting</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionPostingDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Buchungsdatum - Datum der Verbuchung, wenn es nicht dem Belegdatum entspricht</xs:documentation>
+			<xs:documentation>Date of posting of the transaction if different to Transaction Date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionPostingTime" type="xs:time">
+		<xs:annotation>
+			<xs:documentation>Buchungszeit</xs:documentation>
+			<xs:documentation>Time of posting of the transaction</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionReference" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>BelegBezug - Eindeutige Refernz zum Geschäftsfall</xs:documentation>
+			<xs:documentation>Unique reference to the transaction.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionSubType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Untergliederung des Geschäftsfalles</xs:documentation>
+			<xs:documentation>Indentify type of transaction on line level: efficiencyloss, use of components in production, etc. Predescribed TABLE is possible.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TransactionType" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Art des Geschäftes (Vordefinition in Tabelle möglich) - Eingabe der Codes 1 - 9 der Art des Geschäftes für Intrastat-Meldung </xs:documentation>
+			<xs:documentation>Identify sale, purchase, adjustment, movement etc. Predescribed TABLE is possible.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Transfers" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Umbuchungen</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UCR" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>UCR - Unique consignment reference number (Einheitliche lieferungsbezogene Referenznummer - Zoll (WCO))</xs:documentation>
+			<xs:documentation>Unique consignment reference number</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UnitOfMeasure" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Verpackungseinheit</xs:documentation>
+			<xs:documentation>Quantity unit of measure e.g. pack of 12</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UnitOfMeasureDescription" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung Verpackungseinheit</xs:documentation>
+			<xs:documentation>Description of the UOM</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UnitOfMeasurePhysicalStock" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Maßeinheit Inventur</xs:documentation>
+			<xs:documentation>Unit of Measurement for this Physical Stock position</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UnitPrice" type="SAFmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Einzelpreis der Ware (je Masseinheit)</xs:documentation>
+			<xs:documentation>Unit price for the unit/group of units per UOM</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMBase" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Mengeneinheit Basis - Mengeneinheit für Lagerverwaltung für dieses Produkt (vordefinierte Tabelle ist möglich)</xs:documentation>
+			<xs:documentation>Unit of measure for Stock Administration for this product Predescribed TABLE is possible.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMPurchase" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Mengeneinheit Einkauf</xs:documentation>
+			<xs:documentation>Unit of Measure - Purchase</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMSale" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Mengeneinheit Verkauf</xs:documentation>
+			<xs:documentation>Unit of Measure - Sale</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMStandard" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Maßeinheit, z. B. Kilo, Meter, Liter, etc.</xs:documentation>
+			<xs:documentation>A Standard Unit of Measure applicable for this product, f.i. Kilo, Metres, Litres (Predescribed TABLE is possible)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMToUOMBaseConversionFactor" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Umrechnungsfaktor der Maßeinheit</xs:documentation>
+			<xs:documentation>Conversion factor of the UOM to UOM Base</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UOMToUOMPhysicalStockConversionFactor" type="SAFdecimalType">
+		<xs:annotation>
+			<xs:documentation>Umrechnungsfaktor Maßeinheit Inventur</xs:documentation>
+			<xs:documentation>Conversion factor of the UOM to UOM Physical Stock</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ValuationMethod" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Bewertungsverfahren, z. B. FIFO, LIFO, Durchschnittspreisverfahren, etc.</xs:documentation>
+			<xs:documentation>FIFO, LIFO, Average cost etc.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ValutaDate" type="SAFdateType">
+		<xs:annotation>
+			<xs:documentation>Eingabe Valutadatum, wenn Abweichung von Belegdatum</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WarehouseID" type="SAFtextType">
+		<xs:annotation>
+			<xs:documentation>Lager(haus)Nr/-bezeichnung; Bezeichnung des Lagers, wo sich die Ware befindet (inkl. Waren in Bearbeitung oder unterwegs befindliche Waren) </xs:documentation>
+			<xs:documentation>Warehouse where goods held - also to identify work-in-progress, or stock-in-transit</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WarehouseLocation" type="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>Warehouse location</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Website" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Homepage des Unternehmens</xs:documentation>
+			<xs:documentation>Company website URL</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:simpleType name="SAFdateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFdecimalType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFmonetaryType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="SAFtextType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+</xs:schema>

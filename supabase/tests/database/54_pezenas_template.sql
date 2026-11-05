@@ -230,6 +230,7 @@ begin
       "messagesHub": true,
       "moneyTab": true,
       "mtdSubmission": false,
+      "purchaseOrders": false,
       "multiSite": false,
       "navigationStyle": true,
       "nfcBadges": false,

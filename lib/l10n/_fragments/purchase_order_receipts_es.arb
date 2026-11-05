@@ -1,0 +1,14 @@
+{
+  "purchaseOrderLineReceived": "{description}: {received} de {ordered} recibidos",
+  "purchaseOrderReceive": "Registrar una entrega",
+  "purchaseOrderReceiveTitle": "Entrega de {reference}",
+  "purchaseOrderReceiveTooMany": "Más de lo que queda de esta línea",
+  "purchaseOrderReceiveNothing": "Indique lo que llegó de al menos una línea",
+  "purchaseOrderReceivedOn": "Llegó el",
+  "purchaseOrderReceiveLine": "{description} ({left} por llegar)",
+  "purchaseOrderReceiveNote": "Nota (opcional)",
+  "purchaseBillOrder": "Pedido de compra",
+  "purchaseBillOrderHint": "El pedido que cobra esta factura: sus importes se toman y siguen editables",
+  "purchaseBillNoOrder": "Ningún pedido",
+  "purchaseBillForOrder": "Pedido de compra {reference}"
+}

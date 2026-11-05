@@ -21,6 +21,7 @@ import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
 import '../data/workspace_repository.dart';
 import 'demo_purchase_approval_seed.dart';
+import 'demo_purchase_history_seed.dart';
 
 /// The three in-memory repositories of the purchase side, seeded.
 class DemoPurchasing {
@@ -43,12 +44,12 @@ DemoPurchasing seedDemoPurchasing(
 }) {
   final suppliers = FakeSupplierRepository()..suppliers.addAll(_suppliers);
   final inbox = FakeEInvoiceInboxRepository();
-  final purchases = FakePurchaseRepository.demo(actor: actor);
+  final today = DateTime(now.year, now.month, now.day);
+  final purchases = FakePurchaseRepository.demo(actor: actor, today: today);
   // #2573 — a line names the demo space's own sites, levels and offices.
   if (plan != null) {
     purchases.placesOf = (ws) => demoPurchasePlaces(plan.$1, plan.$2, ws);
   }
-  final today = DateTime(now.year, now.month, now.day);
   if (money != null) {
     purchases.onOffset = (invoiceId, cents) =>
         _settle(money, invoiceId, cents, now);
@@ -58,11 +59,8 @@ DemoPurchasing seedDemoPurchasing(
   seedDemoPurchaseApproval(purchases, today, _suppliers[2]);
   _seedForeignBill(purchases, today);
   _seedReimbursedReceipt(purchases, today);
-  return DemoPurchasing(
-    suppliers: suppliers,
-    inbox: inbox,
-    purchases: purchases,
-  );
+  seedDemoPurchaseHistory(purchases, now);
+  return DemoPurchasing(suppliers: suppliers, inbox: inbox, purchases: purchases);
 }
 
 const _suppliers = [

@@ -15,35 +15,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/setup_status.dart';
 
-/// #3076 — the goal the space chose, said once, with the way to change it.
-class SetupGoalLine extends StatelessWidget {
-  const SetupGoalLine({super.key, required this.goal, required this.onChange});
-
-  final SetupMilestoneStatus goal;
-  final VoidCallback onChange;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Row(
-      key: const ValueKey('setup-guide-goal'),
-      children: [
-        Expanded(
-          child: Text(
-            l10n.setupGoalLine(l10n.setupMilestoneName(goal.milestone)),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        TextButton(
-          key: const ValueKey('setup-guide-goal-change'),
-          onPressed: onChange,
-          child: Text(l10n.setupGoalChange),
-        ),
-      ],
-    );
-  }
-}
-
 /// The milestones the space chose, each with where it stands.
 class SetupGuideMilestones extends StatelessWidget {
   const SetupGuideMilestones({super.key, required this.status});
@@ -60,7 +31,14 @@ class SetupGuideMilestones extends StatelessWidget {
           m.required,
           l10n.setupStepTitle(step.step),
         ),
-        _ => l10n.setupGuideAllDone,
+        (final m?, null) =>
+          '${l10n.setupMilestoneName(m.milestone)} · '
+              '${l10n.setupGuideProgress(m.ready, m.required)} · '
+              '${l10n.setupOverviewWaiting}',
+        _ =>
+          status.goal == null
+              ? l10n.setupOverviewChoose
+              : l10n.setupGuideAllDone,
       };
 
   @override

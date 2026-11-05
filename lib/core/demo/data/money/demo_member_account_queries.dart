@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
@@ -8,6 +7,7 @@ import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 
 import '../money_repository.dart';
+import 'demo_member_statement.dart';
 
 /// #2591 — a member's account, statement, ledger and usage reads, in the demo:
 /// answered from one space's in-memory money store ([FakeMoneyRepository]);
@@ -17,9 +17,23 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
 
   final FakeMoneyRepository _m;
 
+  /// #3305 — set by the Demo: the statement is then each member's own, as the
+  /// server computes it; unset, a test's canned [FakeMoneyRepository.statement].
+  DemoStatementSource? statementSource;
+
   @override
   Future<Statement> fetchStatement(String memberId, String period) async {
     _m.fetchedPeriods.add(period);
+    if (statementSource case final source?) {
+      // As member_statement: a member reads their own statement; another
+      // member's needs the space's admin or owner.
+      final caller = source.caller();
+      if (caller == null ||
+          (caller.id != memberId && !caller.isAdmin && !caller.isOwner)) {
+        throw StateError('not your statement');
+      }
+      return demoMemberStatement(_m, source, memberId, period);
+    }
     // #512 — months fully before the membership owe NOTHING.
     if (_m.memberJoinedPeriod != null &&
         period.compareTo(_m.memberJoinedPeriod!) < 0) {
@@ -57,7 +71,9 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
     // Spare credit only: an avoir of any month, or a payment left over
     // from a PAST month — running-month payments offset the upcoming
     // invoice and stay ordinary payments.
-    final nowPeriod = yearMonth(kTestNow.year, kTestNow.month);
+    // #3292 — the space's own day (the Demo's clock), not the tests' fixed one.
+    final today = _m.clock();
+    final nowPeriod = yearMonth(today.year, today.month);
     final credit = _m.ledger
         .where(
           (e) =>
@@ -116,8 +132,11 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
   }
 
   @override
-  Future<List<LedgerEntry>> fetchLedger(String memberId) async =>
-      List.of(_m.ledger);
+  Future<List<LedgerEntry>> fetchLedger(String memberId) async => [
+    // #3292 — one member's entries, as the server's `member_id` filter reads.
+    for (final e in _m.ledger)
+      if (e.memberId == memberId) e,
+  ];
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async =>

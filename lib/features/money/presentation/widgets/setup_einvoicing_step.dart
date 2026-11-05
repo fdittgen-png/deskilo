@@ -45,6 +45,7 @@ class SetupEInvoicingStep extends ConsumerWidget {
                 ref.watch(eInvoiceGatewayProvider).value ??
                 EInvoiceGatewayConfig.notConfigured,
           ),
+          previewTitle: context.l10n.setupGuidanceTitle,
           preview: _Obligations(countryCode: countryCode),
         ),
         AsyncError() => Padding(

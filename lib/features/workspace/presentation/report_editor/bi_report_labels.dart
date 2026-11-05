@@ -34,6 +34,7 @@ String biDateBasisLabel(AppLocalizations l10n, KpiDateBasis basis) =>
       KpiDateBasis.documentDate => l10n.biEditorBasisDocumentDate,
       KpiDateBasis.occurrenceDue => l10n.biEditorBasisOccurrenceDue,
       KpiDateBasis.invoiceDue => l10n.biEditorBasisInvoiceDue,
+      KpiDateBasis.payableDue => l10n.biEditorBasisPayableDue,
       KpiDateBasis.bookValuePeriod => l10n.biEditorBasisBookValue,
       KpiDateBasis.periodEnd => l10n.biEditorBasisPeriodEnd,
       KpiDateBasis.currentState => l10n.biEditorBasisCurrentState,

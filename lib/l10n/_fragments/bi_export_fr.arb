@@ -336,5 +336,6 @@
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
   },
-  "biBasisInvoiceDue": "date d’échéance de la facture"
+  "biBasisInvoiceDue": "date d’échéance de la facture",
+  "biBasisPayableDue": "date d’échéance de la dette fournisseur"
 }

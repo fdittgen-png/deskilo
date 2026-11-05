@@ -15,6 +15,7 @@ import 'professional_report_bands.dart';
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
 import 'report_defaults_books.dart';
+import 'report_defaults_purchase_order.dart';
 import 'vat_declaration_report_defaults.dart';
 
 export 'report_defaults_batch.dart';
@@ -603,20 +604,19 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations l10n) {
 ReportBands defaultBandsForDoc(String docId, AppLocalizations l10n) {
   final kind = reportKindById(docId, reminderLevels: kMaxReminderLevels);
   if (kind == null) return ReportBands.empty;
-  return professionalReportBands(
-    kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
+  return professionalReportBands(kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
 }
 
 ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
     switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
-      ReportRootSlot() || ReportProformaSlot() =>
-        defaultInvoiceTemplate(l10n).invoiceBands,
+      ReportRootSlot() || ReportProformaSlot() => defaultInvoiceTemplate(l10n).invoiceBands,
       ReportStatementSlot() => _defaultStatementBands(l10n),
       ReportDocSlot(key: 'agreement') => _defaultAgreementBands(l10n),
       ReportDocSlot(key: 'payments') => _defaultPaymentsBands(l10n),
       ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
       ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
       ReportDocSlot(key: 'status') => _defaultStatusBands(l10n),
+      ReportDocSlot(key: 'purchase_order') => purchaseOrderBands(l10n),
       ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n.biPdfTitle),
       ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n.workspaceConfigPdfTitle),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),

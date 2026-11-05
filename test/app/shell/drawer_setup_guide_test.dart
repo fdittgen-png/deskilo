@@ -2,7 +2,7 @@
 //
 // #3077 — the invariant: the sidebar offers the setup guide's door only for
 // someone who configures the space, while the guide has a milestone open;
-// once every milestone is reached the door is gone.
+// the destination remains available after setup is complete.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
@@ -82,11 +82,11 @@ void main() {
     expect(find.byKey(const ValueKey('drawer-setup-guide')), findsOneWidget);
   });
 
-  testWidgets('the door is gone once every milestone is reached', (
+  testWidgets('configuration remains reachable once every milestone is reached', (
     tester,
   ) async {
     await _open(tester, done: true);
     await _reveal(tester);
-    expect(find.byKey(const ValueKey('drawer-setup-guide')), findsNothing);
+    expect(find.byKey(const ValueKey('drawer-setup-guide')), findsOneWidget);
   });
 }

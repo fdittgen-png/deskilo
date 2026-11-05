@@ -19,6 +19,7 @@ import 'data/demo_hmrc_repository.dart';
 import 'data/event_repository.dart';
 import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
+import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/workspace_fields_repository.dart';
@@ -158,6 +159,9 @@ class DemoLondonData {
     city.accessories.seedSmallCatalog(workspaceId: demoLondonSpaceId);
     seedCityCharger(city.chargingStations, 'uk');
     events.viewerPermissions = demoViewerPermissions(space, city.roles, demoLondonSpaceId, actor);
+    // #3305 — each member reads their own statement, as member_statement.
+    city.money.accountQueries.statementSource =
+        demoStatementSource(city.workspaces, city.reservations, demoLondonSpaceId, actor: actor, credits: city.credits);
     return city;
   }
 

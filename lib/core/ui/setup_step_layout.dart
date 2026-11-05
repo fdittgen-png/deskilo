@@ -10,18 +10,24 @@ import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 
 class SetupStepLayout extends StatelessWidget {
-  const SetupStepLayout({super.key, required this.form, required this.preview});
+  const SetupStepLayout({
+    super.key,
+    required this.form,
+    required this.preview,
+    this.previewTitle,
+  });
 
   /// The width from which the panes stand side by side.
   static const double wideWidth = 720;
 
   final Widget form;
   final Widget preview;
+  final String? previewTitle;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
-      final pane = _PreviewPane(child: preview);
+      final pane = _PreviewPane(title: previewTitle, child: preview);
       if (box.maxWidth < wideWidth) {
         return ListView(
           key: const ValueKey('setup-step-one-column'),
@@ -50,7 +56,8 @@ class SetupStepLayout extends StatelessWidget {
 }
 
 class _PreviewPane extends StatelessWidget {
-  const _PreviewPane({required this.child});
+  const _PreviewPane({required this.child, this.title});
+  final String? title;
   final Widget child;
 
   @override
@@ -67,7 +74,7 @@ class _PreviewPane extends StatelessWidget {
             Semantics(
               header: true,
               child: Text(
-                context.l10n.setupStepPreviewTitle,
+                title ?? context.l10n.setupStepPreviewTitle,
                 style: theme.textTheme.titleSmall,
               ),
             ),

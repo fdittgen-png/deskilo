@@ -1,0 +1,17 @@
+{
+  "purchaseOrderMailText": "Buongiorno,\n\nin allegato il nostro ordine {reference}.\n\nCordiali saluti,\n{space}",
+  "purchaseOrderSendEmail": "Invia per e-mail",
+  "purchaseOrderSentTo": "Inviato a {recipient}",
+  "purchaseOrderSendRefused": "L’e-mail è stata rifiutata: {reason}. L’ordine resta una bozza.",
+  "purchaseOrderSendUnconfirmed": "Nessuna risposta confermata. Verifica con il fornitore prima di inviare di nuovo.",
+  "purchaseOrderSendAwaits": "Un’e-mail a {recipient} non ha un esito confermato. È arrivata?",
+  "purchaseOrderSendArrived": "È arrivata",
+  "purchaseOrderSendLost": "Non è arrivata",
+  "purchaseOrderMailSettings": "Invio per e-mail",
+  "purchaseOrderMailSender": "Indirizzo del mittente (un dominio verificato su Resend)",
+  "purchaseOrderMailSenderName": "Nome del mittente",
+  "purchaseOrderMailKey": "Chiave API di Resend",
+  "purchaseOrderMailKeyKept": "Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.",
+  "purchaseOrderMailInvalid": "Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API",
+  "purchaseOrderMailSave": "Salva"
+}

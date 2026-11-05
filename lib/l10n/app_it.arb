@@ -1097,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "data di scadenza del debito verso il fornitore",
   "biBasisPaymentMatchedAt": "data dell’abbinamento del pagamento",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1346,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "per scadenza del debito verso il fornitore",
   "biEditorBasisPaymentMatched": "secondo il pagamento riconciliato",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -2095,6 +2097,19 @@
   "biGroupNone": "Nessun raggruppamento",
   "biIncompatible": "Il server definisce ora questo indicatore in modo diverso da come lo conosce questa versione dell'app: aggiorni l'app per vederlo.",
   "biInvalidAddress": "Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.",
+  "biItemMethodAverage": "costo medio",
+  "biItemMethodLast": "ultimo acquisto",
+  "biItemPricesBasis": "{lines} righe d’acquisto di {items} articoli",
+  "biItemPricesDefinition": "Le righe d’acquisto approvate che indicano un articolo, datate nel periodo: quanto costano (imponibile più l’imposta non recuperabile). La tabella riporta il prezzo unitario di ogni articolo per fornitore. Le note di credito sono escluse.",
+  "biItemPricesTitle": "Prezzi degli articoli per fornitore",
+  "biItemProductBasis": "Venduto a {revenue} netto, costo {cost} ({method})",
+  "biItemProductDefinition": "Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.",
+  "biItemProductTitle": "Margine per prodotto",
+  "biItemUncosted": "{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine",
+  "biItemUnresolved": "{count} righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori",
+  "biItemVendorBasis": "{count} fornitori",
+  "biItemVendorDefinition": "Per ogni fornitore: quanto gli articoli acquistati da lui nel periodo sono costati oltre il prezzo unitario più basso pagato nel periodo per lo stesso articolo, da qualunque fornitore. Nessun margine per fornitore: nessuna vendita registra quale acquisto ha consumato.",
+  "biItemVendorTitle": "Prezzi dei fornitori a confronto",
   "biKindCurrent": "Ora",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2536,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Supplementi",
+  "biSalesKindAdjustment": "Rettifiche",
+  "biSalesKindBasis": "{gross} IVA inclusa, {lines} righe su {invoices} fatture",
+  "biSalesKindDefinition": "Ciò che le fatture del periodo hanno venduto, al netto dell’IVA, per tipo di riga. Pagamenti e rimborsi riportati su una fattura non sono vendite; una nota di credito si sottrae. Il mese è quello della fattura.",
+  "biSalesKindDesk": "Scrivanie",
+  "biSalesKindLevel": "Piani",
+  "biSalesKindOffice": "Sale",
+  "biSalesKindOther": "Altro",
+  "biSalesKindOverage": "Mezze giornate extra",
+  "biSalesKindPackage": "Pacchetti",
+  "biSalesKindService": "Servizi",
+  "biSalesKindSubscription": "Abbonamenti",
+  "biSalesKindTitle": "Vendite per tipo",
+  "biSalesNetUnknown": "{count} righe di vendita non hanno un’aliquota IVA leggibile: il loro netto è ignoto e resta fuori dal netto",
+  "biSalesNoDescription": "Senza descrizione",
+  "biSalesRoomBasis": "{charges} addebitati per {uses} prenotazioni, le sale costano {cost} ({rooms} sale)",
+  "biSalesRoomDefinition": "Per ogni sala presa in affitto dallo spazio: quanto è stato addebitato per le sue prenotazioni, al netto, meno il costo proprio della sala (il canone in scadenza nel periodo, o il costo per uso per gli usi). Nessun altro costo viene imputato alla sala: è un margine, non un utile.",
+  "biSalesRoomLine": "{room}: addebitato {charges}, costo {cost}, {uses} prenotazioni",
+  "biSalesRoomTitle": "Margine delle sale prese in affitto",
+  "biSalesRoomsOff": "Lo spazio non affitta sale: attiva le sale prese in affitto per vederne il margine",
+  "biSalesServiceBasis": "{count} servizi e pacchetti",
+  "biSalesServiceDefinition": "Le righe di servizi e pacchetti delle fatture del periodo, al netto dell’IVA, per la descrizione con cui sono state vendute.",
+  "biSalesServiceTitle": "Vendite per servizio",
   "biSeatCentre": "del tempo totale dei posti",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2584,6 +2622,32 @@
   },
   "biTotal": "Totale",
   "biUnavailable": "Non è stato possibile calcolare questa analisi.",
+  "biVendorCategoryBasis": "{count} categorie",
+  "biVendorCategoryTitle": "Spesa per categoria",
+  "biVendorCohortHeld": "Sospese",
+  "biVendorCohortLate": "Pagate in ritardo",
+  "biVendorCohortLine": "{cohort}: {count} fatture, {amount}",
+  "biVendorCohortOnTime": "Pagate puntualmente",
+  "biVendorCohortOpen": "Non pagate",
+  "biVendorCohortPartial": "Pagate in parte",
+  "biVendorCohortUndated": "Saldate senza pagamento",
+  "biVendorCohortUnknownDue": "Senza scadenza",
+  "biVendorCredited": "Note di credito sottratte: {amount} ({count})",
+  "biVendorDelay": "Giorni dalla scadenza al pagamento: mediana {median}, 90° percentile {p90}, ponderato per importo {weighted} (negativo: in anticipo)",
+  "biVendorLagBasis": "{documents} fatture; mediana {median} giorni, 90° percentile {p90}",
+  "biVendorLagDefinition": "Le fatture fornitore approvate datate nel periodo: i giorni dalla data indicata dal fornitore all’arrivo nello spazio, in media; la tabella elenca ogni fornitore.",
+  "biVendorLagTitle": "Giorni per ricevere una fattura",
+  "biVendorLagUndated": "{count} fatture senza data del fornitore o di ricezione sono escluse",
+  "biVendorNoCategory": "Senza categoria",
+  "biVendorNothingToMeasure": "Niente da misurare nel periodo",
+  "biVendorPunctualityBasis": "{onTime} di {settled} fatture saldate pagate entro la scadenza",
+  "biVendorPunctualityDefinition": "Ciò che lo spazio deve ai fornitori in scadenza nel periodo, ogni debito in un solo gruppo. Una fattura saldata è puntuale quando il suo ultimo pagamento è stato dichiarato pagato entro la scadenza: la data valuta della banca quando il pagamento la riporta, altrimenti la data di pagamento registrata.",
+  "biVendorPunctualityLine": "{name}: {onTime} puntuali, {late} in ritardo, su {due} in scadenza",
+  "biVendorPunctualityTitle": "Pagamento puntuale dei fornitori",
+  "biVendorSpendBasis": "{documents} documenti di {suppliers} fornitori; i {top} maggiori: {topCost}",
+  "biVendorSpendDefinition": "I documenti d’acquisto approvati datati nel periodo: quanto costano allo spazio, l’imponibile più l’imposta non recuperabile. Una nota di credito si sottrae. I documenti in un’altra valuta non vengono convertiti.",
+  "biVendorSpendTitle": "Spesa per fornitore",
+  "biVendorUnassigned": "Senza fornitore (ricevute dei membri): {amount}",
   "biViewCardsIncompatible": "{count} analisi di questa vista sono state salvate quando il loro indicatore significava altro e vengono omesse invece di essere mostrate con un altro significato.",
   "biViewChart": "Grafico",
   "biViewClearMyDefault": "Non aprire più la mia vista predefinita",
@@ -5995,7 +6059,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Informazioni sull'esportazione} workspace{Spazio} levels{Piani} desks{Scrivanie} seats{Posti} users{Membri} reservations{Prenotazioni} check_ins{Presenze} payments{Pagamenti} services{Servizi usati} service_catalog{Prezzi dei servizi} invoices{Fatture} offices{Sale} ledger{Conti dei membri} events{Richieste} decisions{Decisioni} invoice_lines{Righe di fattura} sites{Sedi} plans{Piani tariffari} fee_bands{Fasce tariffarie} packages{Pacchetti} credit_products{Tipi di carnet} vat_rates{Aliquote IVA} accessories{Accessori} seat_accessories{Accessori per posto} closure_days{Giorni di chiusura} validation_policies{Regole di approvazione} workspace_roles{Ruoli} workspace_role_members{Titolari dei ruoli} workspace_field_definitions{Domande} workspace_field_values{Risposte} number_sequences{Serie di numerazione} charging_stations{Colonnine di ricarica} plan_images{Immagini della pianta} setting_values{Impostazioni} member_credits{Carnet} member_credit_uses{Utilizzi dei carnet} price_negotiations{Trattative di prezzo} quota_extensions{Estensioni di quota} usage_records{Utilizzo} invoice_matches{Saldo delle fatture} invoice_reminders{Solleciti} invoice_dunning_holds{Solleciti sospesi} tax_exemption_certificates{Certificati di esenzione} suppliers{Fornitori} purchase_documents{Documenti d'acquisto} purchase_lines{Righe d'acquisto} purchase_obligations{Importi da pagare} outgoing_payments{Pagamenti in uscita} expense_schedules{Spese programmate} expense_occurrences{Scadenze di spesa} expense_repartitions{Costi condivisi} premises_leases{Contratti di locazione} lease_terms{Condizioni di locazione} lease_settlements{Conguagli di locazione} room_rentals{Affitti di sale} room_rental_fees{Tariffe di affitto} workspace_assets{Cespiti} asset_valuation_batches{Valutazioni dei cespiti} asset_valuation_rows{Righe di valutazione} book_profiles{Profili contabili} book_accounts{Piano dei conti} book_mappings{Mappatura dei conti} book_periods{Periodi contabili} vat_declarations{Dichiarazioni IVA} einvoice_inbox{Fatture elettroniche ricevute} guest_participations{Visite di ospiti} rights_requests{Richieste privacy} overview{Panoramica} features{Funzioni} other{{key}}}",
+  "exportSheetName": "{key, select, about{Informazioni sull'esportazione} workspace{Spazio} levels{Piani} desks{Scrivanie} seats{Posti} users{Membri} reservations{Prenotazioni} check_ins{Presenze} payments{Pagamenti} services{Servizi usati} service_catalog{Prezzi dei servizi} invoices{Fatture} offices{Sale} ledger{Conti dei membri} events{Richieste} decisions{Decisioni} invoice_lines{Righe di fattura} sites{Sedi} plans{Piani tariffari} fee_bands{Fasce tariffarie} packages{Pacchetti} credit_products{Tipi di carnet} vat_rates{Aliquote IVA} accessories{Accessori} seat_accessories{Accessori per posto} closure_days{Giorni di chiusura} validation_policies{Regole di approvazione} workspace_roles{Ruoli} workspace_role_members{Titolari dei ruoli} workspace_field_definitions{Domande} workspace_field_values{Risposte} number_sequences{Serie di numerazione} charging_stations{Colonnine di ricarica} plan_images{Immagini della pianta} setting_values{Impostazioni} member_credits{Carnet} member_credit_uses{Utilizzi dei carnet} price_negotiations{Trattative di prezzo} quota_extensions{Estensioni di quota} usage_records{Utilizzo} invoice_matches{Saldo delle fatture} invoice_reminders{Solleciti} invoice_dunning_holds{Solleciti sospesi} tax_exemption_certificates{Certificati di esenzione} suppliers{Fornitori} purchase_documents{Documenti d'acquisto} purchase_lines{Righe d'acquisto} purchase_obligations{Importi da pagare} purchase_orders{Ordini di acquisto} purchase_order_lines{Righe d'ordine} purchase_order_sends{Invii degli ordini} purchase_order_receipts{Ricevimenti merce} purchase_order_receipt_lines{Righe di ricevimento} outgoing_payments{Pagamenti in uscita} expense_schedules{Spese programmate} expense_occurrences{Scadenze di spesa} expense_repartitions{Costi condivisi} premises_leases{Contratti di locazione} lease_terms{Condizioni di locazione} lease_settlements{Conguagli di locazione} room_rentals{Affitti di sale} room_rental_fees{Tariffe di affitto} workspace_assets{Cespiti} asset_valuation_batches{Valutazioni dei cespiti} asset_valuation_rows{Righe di valutazione} book_profiles{Profili contabili} book_accounts{Piano dei conti} book_mappings{Mappatura dei conti} book_periods{Periodi contabili} vat_declarations{Dichiarazioni IVA} einvoice_inbox{Fatture elettroniche ricevute} guest_participations{Visite di ospiti} rights_requests{Richieste privacy} overview{Panoramica} features{Funzioni} other{{key}}}",
   "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifichi con il suo commercialista se le è richiesto.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -6560,6 +6624,8 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture.",
+  "featurePurchaseOrdersTitle": "Ordinare ai fornitori",
   "featurePurchasesDesc": "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"
@@ -8219,6 +8285,7 @@
   "invoiceExportGobd": "Accesso ai dati GoBD (Z3)",
   "invoiceExportJournals": "Giornali e riepilogo (PDF, dalla contabilità)",
   "invoiceExportSafT": "SAF-T (XML, internazionale)",
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
   "invoiceExportSafTFull": "SAF-T con il libro mastro (XML, internazionale)",
   "invoiceExportSafTNo": "SAF-T Financial (Norvegia)",
   "invoiceExportSafTPt": "SAF-T (Portogallo)",
@@ -8231,6 +8298,7 @@
   },
   "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)",
   "invoiceExportTrialBalance": "Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)",
+  "invoiceExportXeroInvoiceCsv": "Xero (importazione fatture di vendita)",
   "invoiceExternalIssuingTitle": "Emetti questa fattura fuori dall’app",
   "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
   "invoiceFacturXExplain": "Un unico file: la fattura che legge una persona, con l'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.",
@@ -8262,6 +8330,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Questa fattura si paga su un QR-IBAN, che richiede il riferimento QR fissato all'emissione, e questa è stata emessa prima che tali riferimenti esistessero. Emetta una fattura sostitutiva o indichi l'IBAN ordinario come conto di pagamento.",
   "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.",
   "invoiceHeldNote": "Solleciti sospesi: {reason}",
   "@invoiceHeldNote": {
@@ -12669,6 +12738,10 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Ordine di acquisto {reference}",
+  "purchaseBillNoOrder": "Nessun ordine",
+  "purchaseBillOrder": "Ordine di acquisto",
+  "purchaseBillOrderHint": "L’ordine che questa fattura addebita: i suoi importi vengono ripresi e restano modificabili",
   "purchaseEntryAdd": "Aggiungi acquisto / spesa",
   "purchaseEntryMe": "Ho pagato io",
   "purchaseEntryMeHint": "La presenti come sua spesa: una volta approvata, lo spazio gliela deve.",
@@ -12682,6 +12755,66 @@
   "purchaseLinkInboxFailed": "La fattura non è stata collegata. Il documento potrebbe essere cambiato nel frattempo: lo riapra e riprovi.",
   "purchaseLinkInboxTitle": "Fatture ricevute",
   "purchaseNeedsReview": "Da rivedere",
+  "purchaseOrderAddLine": "Aggiungi una riga",
+  "purchaseOrderBadEmail": "Un indirizzo e-mail, o lascia vuoto per stampare",
+  "purchaseOrderBadVatRate": "Un’aliquota IVA da 0 a 99",
+  "purchaseOrderCancel": "Annulla l’ordine",
+  "purchaseOrderCancelReason": "Perché viene annullato?",
+  "purchaseOrderDescription": "Cosa si ordina",
+  "purchaseOrderEdit": "Modifica l’ordine",
+  "purchaseOrderEmail": "Indirizzo e-mail a cui inviarlo",
+  "purchaseOrderExpected": "Consegna prevista",
+  "purchaseOrderFreeText": "Testo libero",
+  "purchaseOrderItem": "Articolo del catalogo",
+  "purchaseOrderLine": "Riga {n}",
+  "purchaseOrderLineReceived": "{description}: {received} di {ordered} ricevuti",
+  "purchaseOrderMailInvalid": "Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API",
+  "purchaseOrderMailKey": "Chiave API di Resend",
+  "purchaseOrderMailKeyKept": "Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.",
+  "purchaseOrderMailSave": "Salva",
+  "purchaseOrderMailSender": "Indirizzo del mittente (un dominio verificato su Resend)",
+  "purchaseOrderMailSenderName": "Nome del mittente",
+  "purchaseOrderMailSettings": "Invio per e-mail",
+  "purchaseOrderMailText": "Buongiorno,\n\nin allegato il nostro ordine {reference}.\n\nCordiali saluti,\n{space}",
+  "purchaseOrderMarkSent": "Segna come inviato",
+  "purchaseOrderNeedsDescription": "Indica cosa si ordina o scegli un articolo",
+  "purchaseOrderNeedsPrice": "Un prezzo unitario, 0 o più",
+  "purchaseOrderNeedsQuantity": "Una quantità maggiore di zero",
+  "purchaseOrderNeedsSupplier": "Scegli il fornitore",
+  "purchaseOrderNew": "Nuovo ordine",
+  "purchaseOrderNote": "Nota per il fornitore",
+  "purchaseOrderPickDate": "Scegli la data di consegna prevista",
+  "purchaseOrderPrint": "Stampa",
+  "purchaseOrderQuantity": "Quantità",
+  "purchaseOrderReceive": "Registra una consegna",
+  "purchaseOrderReceiveLine": "{description} ({left} in arrivo)",
+  "purchaseOrderReceiveNote": "Nota (facoltativa)",
+  "purchaseOrderReceiveNothing": "Indica cosa è arrivato di almeno una riga",
+  "purchaseOrderReceiveTitle": "Consegna di {reference}",
+  "purchaseOrderReceiveTooMany": "Più di quanto resta di questa riga",
+  "purchaseOrderReceivedOn": "Arrivato il",
+  "purchaseOrderRefused": "L’ordine non è stato modificato. Controlla i dati e riprova.",
+  "purchaseOrderRemoveLine": "Rimuovi la riga",
+  "purchaseOrderSave": "Salva la bozza",
+  "purchaseOrderSendArrived": "È arrivata",
+  "purchaseOrderSendAwaits": "Un’e-mail a {recipient} non ha un esito confermato. È arrivata?",
+  "purchaseOrderSendEmail": "Invia per e-mail",
+  "purchaseOrderSendLost": "Non è arrivata",
+  "purchaseOrderSendRefused": "L’e-mail è stata rifiutata: {reason}. L’ordine resta una bozza.",
+  "purchaseOrderSendUnconfirmed": "Nessuna risposta confermata. Verifica con il fornitore prima di inviare di nuovo.",
+  "purchaseOrderSentTo": "Inviato a {recipient}",
+  "purchaseOrderStateCancelled": "Annullato",
+  "purchaseOrderStateDraft": "Bozza",
+  "purchaseOrderStatePartlyReceived": "Ricevuto in parte",
+  "purchaseOrderStateReceived": "Ricevuto",
+  "purchaseOrderStateSent": "Inviato",
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "purchaseOrderSupplier": "Fornitore",
+  "purchaseOrderUnit": "Unità (es. scatola)",
+  "purchaseOrderUnitPrice": "Prezzo unitario IVA esclusa",
+  "purchaseOrderVatRate": "Aliquota IVA (%)",
+  "purchaseOrdersEmpty": "Ancora nessun ordine. Un nuovo ordine inizia come bozza da modificare, stampare e inviare.",
+  "purchaseOrdersTitle": "Ordini di acquisto",
   "purchaseQualified": "Contabilità qualificata",
   "purchaseReceiptAdd": "Ricevuta con più righe",
   "purchaseReceiptAddLine": "Aggiungere una riga",
@@ -12841,6 +12974,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Articolo acquistato",
   "purchasesKindBill": "Fattura fornitore",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12877,6 +13011,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Nessun articolo",
   "purchasesNoSupplier": "Nessun fornitore scelto",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13035,6 +13170,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantità",
   "purchasesReference": "Numero di fattura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13181,6 +13317,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Unità (es. scatola, risma)",
   "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
@@ -13949,6 +14086,7 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Ordine di acquisto",
   "reportDocSpaceCodes": "Schede QR degli spazi",
   "reportDocStatus": "Situazione dello spazio",
   "@reportDocStatus": {
@@ -13980,6 +14118,7 @@
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportExpectedDelivery": "Consegna prevista",
   "reportFieldGroupBank": "Coordinate bancarie",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -15457,6 +15596,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{nessun conto standard per {subject}} standardTaxCode{nessun codice IVA standard per {subject}} taxRate{nessuna aliquota IVA per {subject}} company{manca il campo {subject} dell’impresa} contact{il campo {subject} della persona di contatto} party{manca {subject} per un cliente o fornitore} tooLong{{subject} supera la lunghezza ammessa dal file} other{{subject}}}",
+  "saftIndustryCodeHelper": "Il codice di settore con cui l'amministrazione finanziaria austriaca conosce l'impresa.",
+  "saftIndustryCodeLabel": "Codice di settore (Branchenkennzahl)",
   "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15465,6 +15606,18 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "La disposizione della legge austriaca sull'imposta sul reddito seguita dalla contabilità, come la indica l'intestazione del SAF-T AT.",
+  "saftProfitBasisLabel": "Modalità di determinazione dell'utile",
+  "saftSmallBusinessHelper": "Se l'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l'intestazione del SAF-T AT.",
+  "saftSmallBusinessLabel": "Piccola impresa (§ 6 (1) Z 27 UStG)",
+  "saftSmallBusinessNo": "No",
+  "saftSmallBusinessYes": "Sì",
+  "saftStandardAccountsIntro": "Confermi il conto del piano dei conti standard austriaco (Einheitskontenrahmen) sotto cui è scritto ogni conto del libro. Il suggerimento viene dal ruolo del conto; lo verifichi: non tutti i conti di un ruolo appartengono allo stesso conto standard.",
+  "saftStandardAccountsNoSuggestion": "Nessun suggerimento: inserisca il conto standard.",
+  "saftStandardAccountsSuggested": "Suggerito: {suggestion}. Lo confermi o lo modifichi.",
+  "saftStandardAccountsTitle": "Conti del piano standard",
+  "saftTaxNumberHelper": "Il numero che l'amministrazione finanziaria austriaca assegna all'impresa, non il numero del registro delle imprese.",
+  "saftTaxNumberLabel": "Numero fiscale (Steuernummer)",
   "saftWithPostings": "Con le scritture",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
@@ -15841,6 +15994,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuti in cui l'app deve essere rimasta fuori vista (in background, una scheda nascosta, un chiosco in standby) prima di rileggere tutto ciò che mostra al ritorno. Cambiare finestra non rilegge mai; una connessione in diretta persa rilegge sempre.",
   "settingHintPrivacyMemberSelfService": "true: un membro può esportare e cancellare i propri dati dall’app. false: presenta una richiesta di diritti, gestita dall’amministratore dei dati personali. I proprietari e l’amministratore dei dati personali non sono mai bloccati, e presentare una richiesta resta sempre possibile.",
+  "settingHintPurchaseItemCostMethod": "average: tutti gli acquisti approvati dell’articolo fino alla fine del periodo, ponderati per unità. last: l’ultimo acquisto datato entro allora. Non cambia alcun documento, solo i margini.",
   "settingHintPurchasePaymentChecker": "Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16024,6 +16178,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Rileggi dopo un'assenza",
   "settingLabelPrivacyMemberSelfService": "I membri esportano e cancellano da soli i propri dati",
+  "settingLabelPurchaseItemCostMethod": "Come si legge il costo unitario di un articolo nei margini",
   "settingLabelPurchasePaymentChecker": "Pagamenti registrati da una seconda persona a partire da (unità monetarie)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16374,6 +16529,18 @@
   "setupBasicsPreviewTime": "L’ora attuale",
   "setupBasicsPreviewTimeIn": "{time} ({offset})",
   "setupBasicsSaveFailed": "Non è stato possibile salvare i dati di base. Riprovi.",
+  "setupChoicesAdvanced": "Regolare ogni area",
+  "setupChoicesBookings": "Persone e prenotazioni",
+  "setupChoicesDetails": "Esaminare tutte le modifiche",
+  "setupChoicesManual": "La sua scelta viene mantenuta quando risponde alle altre domande.",
+  "setupChoicesMoney": "Denaro e gestione",
+  "setupChoicesNeedsDecision": "La scelta precedente viene mantenuta. Risolva le risposte «Non so ancora» prima di applicare.",
+  "setupChoicesOperations": "Gestione quotidiana",
+  "setupChoicesQuestionUnknown": "Non ancora deciso: {question}",
+  "setupChoicesReset": "Usi i livelli consigliati",
+  "setupChoicesSaving": "Salvataggio…",
+  "setupChoicesSummary": "Impostazioni che cambieranno: {count}",
+  "setupChoicesUnsaved": "Solo anteprima: non è stato applicato nulla.",
   "setupDraftChanged": "Modificato da un’altra persona mentre Lei stava modificando.",
   "setupDraftDiscard": "Scarta",
   "setupDraftKeepMine": "Mantieni le mie",
@@ -16466,6 +16633,7 @@
   "setupGrowVatRate": "{rate} %",
   "setupGrowVatUsualNote": "Un punto di partenza, non una consulenza fiscale: il Suo commercialista conferma quale aliquota si applica a ciò che vende.",
   "setupGrowVatUsualTitle": "Le aliquote abituali del Suo paese",
+  "setupGuidanceTitle": "Indicazioni e verifiche",
   "setupGuideAddIt": "Lo aggiunga",
   "setupGuideAddMore": "Aggiunga altro al suo spazio",
   "setupGuideAllDone": "Il suo spazio ha tutto ciò che ha scelto.",
@@ -16608,7 +16776,7 @@
   "setupLevelsConfirmOff": "Alcune funzioni saranno disattivate. I loro dati restano, ma smettono di funzionare finché non vengono riattivate.",
   "setupLevelsConflict": "Le funzioni sono cambiate nel frattempo. Guardi di nuovo, poi applichi.",
   "setupLevelsGap": "{level} richiede {needed}",
-  "setupLevelsIntro": "Risponda ad alcune domande semplici: ogni processo riceve il livello che richiedono, con il motivo. Cambi un livello a mano. Nulla cambia finché non applica, e l’anteprima nomina ogni funzione attivata o disattivata.",
+  "setupLevelsIntro": "Descriva come funziona il suo spazio. Verifichi cosa cambierà prima di applicare le sue scelte.",
   "setupLevelsNoChange": "Nulla cambia: lo spazio lo fa già.",
   "setupLevelsPresets": "Avvio rapido",
   "setupLevelsQuestions": "Sul suo spazio",
@@ -16636,6 +16804,8 @@
   "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} % ({policy}).",
   "setupNewMembersQuestions": "Domande poste all’adesione",
   "setupNewMembersSaveFailed": "Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.",
+  "setupNextIndependent": "Può svolgere questa attività mentre la tappa precedente è in attesa.",
+  "setupNextNamed": "Successiva: {step}",
   "setupNotificationsAudience": "{audience, select, deciders{Chi la decide} members{I membri} other{{audience}}}",
   "setupNotificationsChannels": "{channels, select, app{nell’app} app_push{nell’app e come notifica sul telefono} device{come promemoria sul proprio telefono, anche senza notifiche} other{{channels}}}",
   "setupNotificationsEvent": "{event, select, pending_request{Una richiesta attende una decisione} reservation_cancelled{Qualcun altro ha rimosso una prenotazione} check_in{Una prenotazione sta per iniziare: è ora del check-in} member_note{Un messaggio o un annuncio} member_mention{Qualcuno lo cita in una conversazione} invoice_reminder{Un sollecito di pagamento} other{{event}}}",
@@ -16669,6 +16839,13 @@
   "setupOnlineTestTestKeys": "Chiavi di prova: il pagamento di un membro non muove denaro reale.",
   "setupOnlineTestTitle": "Pagamento di prova",
   "setupOnlineTestUnverified": "Queste chiavi non indicano se sono di prova o reali. Le verifichi nel pannello del fornitore.",
+  "setupOutcomeProgress": "Avanzamento per obiettivo",
+  "setupOverviewChoose": "Scelga ciò che serve al suo spazio per vedere il piano di configurazione.",
+  "setupOverviewReady": "Il suo obiettivo è configurato. Può verificarlo o modificarlo qui in qualsiasi momento.",
+  "setupOverviewRemaining": "Attività necessarie rimanenti: {count}",
+  "setupOverviewTitle": "Stato dello spazio",
+  "setupOverviewUnchecked": "Alcune verifiche non sono disponibili. Aggiorni lo stato prima di considerare conclusa la configurazione.",
+  "setupOverviewWaiting": "Questa tappa è in attesa. Le attività indicano chi può sbloccarla.",
   "setupPaymentsPreviewEmpty": "I membri non vedono alcuna istruzione di pagamento finché Lei non ne compila una.",
   "setupPaymentsPreviewNote": "Su un estratto non pagato, sotto quanto il membro deve:",
   "setupPaymentsSaveFailed": "Non è stato possibile salvare le istruzioni di pagamento. Riprovi.",
@@ -16729,6 +16906,7 @@
   "setupStepOpenScreen": "Apra",
   "setupStepPreviewTitle": "Cosa vedranno i Suoi membri",
   "setupStepTitle": "{key, select, basics{Nome, paese e fuso orario} hours{Orari di apertura} places{Posti sulla pianta} member_rights{Cosa possono fare i membri} invite{Invitare membri} pricing{Prezzi e piani} services{Servizi} payment_methods{Come pagano i membri} online_payments{Pagamenti online} approvals{Approvazioni} new_members{Nuovi membri} notifications{Notifiche} limits{Limiti di prenotazione} kiosk{Chiosco e badge} purchases{Fornitori e acquisti} lease{Il suo affitto} assets{Attrezzature} look{Colori e vocabolario} public_page{Pagina pubblica} legal_identity{Identità legale} vat{IVA} numbering{Numerazione delle fatture} documents{Aspetto delle fatture} einvoicing{Fatturazione elettronica} accounting{Contabilità} reminders{Solleciti di pagamento} first_booking{Una prima prenotazione} recovery{Una copia dei suoi dati} assistant{Assistente} other{{key}}}",
+  "setupTaskSaved": "Lo stato riflette le impostazioni salvate. Aprire un’attività non la completa.",
   "shellBarHiddenAnnounce": "Barra di navigazione nascosta",
   "shellBarHideHint": "Tenga premuto per la vista a schermo intero",
   "shellBarShowHint": "Tenga premuto per mostrare la barra di navigazione",
@@ -20319,5 +20497,16 @@
   "workspaceXmlImportPreviewWarning": "La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L'operazione non può essere annullata.",
   "workspaceXmlImportReservationsError": "Questo spazio ha già delle prenotazioni, quindi la planimetria non può essere sostituita. L'importazione è possibile solo prima della prima prenotazione.",
   "workspaceXmlImportSubtitle": "Ripristina impostazioni e planimetria da un file esportato. Sostituisce la planimetria attuale.",
-  "workspaceXmlImportSuccess": "Spazio importato."
+  "workspaceXmlImportSuccess": "Spazio importato.",
+  "xeroInvoiceAccountCode": "Codice del conto ricavi",
+  "xeroInvoiceAccountsIntro": "Xero importa queste fatture come bozze: le approvi in Xero. Il conto ricavi e le aliquote sono quelli della Sua organizzazione: ne copi i nomi da Xero.",
+  "xeroInvoiceAccountsTitle": "Esportazione Xero",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.} other{{count} note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.}}",
+  "xeroInvoiceDateOrder": "Ordine delle date della Sua organizzazione",
+  "xeroInvoiceDayFirst": "Prima il giorno (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.",
+  "xeroInvoiceMonthFirst": "Prima il mese (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Inserisci il codice del conto ricavi.",
+  "xeroInvoiceRefusedTaxType": "Indica l’aliquota Xero per {rate}.",
+  "xeroInvoiceTaxType": "Aliquota Xero per {rate}"
 }

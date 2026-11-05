@@ -2331,6 +2331,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biBasisOccurrenceDue => 'data di scadenza';
 
   @override
+  String get biBasisPayableDue =>
+      'data di scadenza del debito verso il fornitore';
+
+  @override
   String get biBasisPaymentMatchedAt => 'data dell’abbinamento del pagamento';
 
   @override
@@ -2725,6 +2729,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'secondo la scadenza';
+
+  @override
+  String get biEditorBasisPayableDue =>
+      'per scadenza del debito verso il fornitore';
 
   @override
   String get biEditorBasisPaymentMatched => 'secondo il pagamento riconciliato';
@@ -3356,6 +3364,58 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.';
 
   @override
+  String get biItemMethodAverage => 'costo medio';
+
+  @override
+  String get biItemMethodLast => 'ultimo acquisto';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines righe d’acquisto di $items articoli';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'Le righe d’acquisto approvate che indicano un articolo, datate nel periodo: quanto costano (imponibile più l’imposta non recuperabile). La tabella riporta il prezzo unitario di ogni articolo per fornitore. Le note di credito sono escluse.';
+
+  @override
+  String get biItemPricesTitle => 'Prezzi degli articoli per fornitore';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Venduto a $revenue netto, costo $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.';
+
+  @override
+  String get biItemProductTitle => 'Margine per prodotto';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count fornitori';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'Per ogni fornitore: quanto gli articoli acquistati da lui nel periodo sono costati oltre il prezzo unitario più basso pagato nel periodo per lo stesso articolo, da qualunque fornitore. Nessun margine per fornitore: nessuna vendita registra quale acquisto ha consumato.';
+
+  @override
+  String get biItemVendorTitle => 'Prezzi dei fornitori a confronto';
+
+  @override
   String get biKindCurrent => 'Ora';
 
   @override
@@ -3709,6 +3769,99 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biRunningLabel => 'in corso';
 
   @override
+  String get biSalesKindAccessories => 'Supplementi';
+
+  @override
+  String get biSalesKindAdjustment => 'Rettifiche';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross IVA inclusa, $lines righe su $invoices fatture';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'Ciò che le fatture del periodo hanno venduto, al netto dell’IVA, per tipo di riga. Pagamenti e rimborsi riportati su una fattura non sono vendite; una nota di credito si sottrae. Il mese è quello della fattura.';
+
+  @override
+  String get biSalesKindDesk => 'Scrivanie';
+
+  @override
+  String get biSalesKindLevel => 'Piani';
+
+  @override
+  String get biSalesKindOffice => 'Sale';
+
+  @override
+  String get biSalesKindOther => 'Altro';
+
+  @override
+  String get biSalesKindOverage => 'Mezze giornate extra';
+
+  @override
+  String get biSalesKindPackage => 'Pacchetti';
+
+  @override
+  String get biSalesKindService => 'Servizi';
+
+  @override
+  String get biSalesKindSubscription => 'Abbonamenti';
+
+  @override
+  String get biSalesKindTitle => 'Vendite per tipo';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count righe di vendita non hanno un’aliquota IVA leggibile: il loro netto è ignoto e resta fuori dal netto';
+  }
+
+  @override
+  String get biSalesNoDescription => 'Senza descrizione';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return '$charges addebitati per $uses prenotazioni, le sale costano $cost ($rooms sale)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'Per ogni sala presa in affitto dallo spazio: quanto è stato addebitato per le sue prenotazioni, al netto, meno il costo proprio della sala (il canone in scadenza nel periodo, o il costo per uso per gli usi). Nessun altro costo viene imputato alla sala: è un margine, non un utile.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: addebitato $charges, costo $cost, $uses prenotazioni';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Margine delle sale prese in affitto';
+
+  @override
+  String get biSalesRoomsOff =>
+      'Lo spazio non affitta sale: attiva le sale prese in affitto per vederne il margine';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count servizi e pacchetti';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'Le righe di servizi e pacchetti delle fatture del periodo, al netto dell’IVA, per la descrizione con cui sono state vendute.';
+
+  @override
+  String get biSalesServiceTitle => 'Vendite per servizio';
+
+  @override
   String get biSeatCentre => 'del tempo totale dei posti';
 
   @override
@@ -3760,6 +3913,117 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Non è stato possibile calcolare questa analisi.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categorie';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Spesa per categoria';
+
+  @override
+  String get biVendorCohortHeld => 'Sospese';
+
+  @override
+  String get biVendorCohortLate => 'Pagate in ritardo';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count fatture, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Pagate puntualmente';
+
+  @override
+  String get biVendorCohortOpen => 'Non pagate';
+
+  @override
+  String get biVendorCohortPartial => 'Pagate in parte';
+
+  @override
+  String get biVendorCohortUndated => 'Saldate senza pagamento';
+
+  @override
+  String get biVendorCohortUnknownDue => 'Senza scadenza';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Note di credito sottratte: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Giorni dalla scadenza al pagamento: mediana $median, 90° percentile $p90, ponderato per importo $weighted (negativo: in anticipo)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents fatture; mediana $median giorni, 90° percentile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'Le fatture fornitore approvate datate nel periodo: i giorni dalla data indicata dal fornitore all’arrivo nello spazio, in media; la tabella elenca ogni fornitore.';
+
+  @override
+  String get biVendorLagTitle => 'Giorni per ricevere una fattura';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count fatture senza data del fornitore o di ricezione sono escluse';
+  }
+
+  @override
+  String get biVendorNoCategory => 'Senza categoria';
+
+  @override
+  String get biVendorNothingToMeasure => 'Niente da misurare nel periodo';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime di $settled fatture saldate pagate entro la scadenza';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'Ciò che lo spazio deve ai fornitori in scadenza nel periodo, ogni debito in un solo gruppo. Una fattura saldata è puntuale quando il suo ultimo pagamento è stato dichiarato pagato entro la scadenza: la data valuta della banca quando il pagamento la riporta, altrimenti la data di pagamento registrata.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime puntuali, $late in ritardo, su $due in scadenza';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Pagamento puntuale dei fornitori';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documenti di $suppliers fornitori; i $top maggiori: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'I documenti d’acquisto approvati datati nel periodo: quanto costano allo spazio, l’imponibile più l’imposta non recuperabile. Una nota di credito si sottrae. I documenti in un’altra valuta non vengono convertiti.';
+
+  @override
+  String get biVendorSpendTitle => 'Spesa per fornitore';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Senza fornitore (ricevute dei membri): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -8353,6 +8617,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'purchase_documents': 'Documenti d\'acquisto',
       'purchase_lines': 'Righe d\'acquisto',
       'purchase_obligations': 'Importi da pagare',
+      'purchase_orders': 'Ordini di acquisto',
+      'purchase_order_lines': 'Righe d\'ordine',
+      'purchase_order_sends': 'Invii degli ordini',
+      'purchase_order_receipts': 'Ricevimenti merce',
+      'purchase_order_receipt_lines': 'Righe di ricevimento',
       'outgoing_payments': 'Pagamenti in uscita',
       'expense_schedules': 'Spese programmate',
       'expense_occurrences': 'Scadenze di spesa',
@@ -9311,6 +9580,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featurePurchaseAnalyticsTitle =>
       'Indicatori degli acquisti (analisi)';
+
+  @override
+  String get featurePurchaseOrdersDesc =>
+      'Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Ordinare ai fornitori';
 
   @override
   String get featurePurchasesDesc =>
@@ -12364,6 +12640,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, internazionale)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T con il libro mastro (XML, internazionale)';
 
@@ -12383,6 +12662,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceExportTrialBalance =>
       'Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)';
+
+  @override
+  String get invoiceExportXeroInvoiceCsv =>
+      'Xero (importazione fatture di vendita)';
 
   @override
   String get invoiceExternalIssuingTitle =>
@@ -12463,6 +12746,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceGapPublicSectorRefs =>
       'Destinata a una piattaforma pubblica senza numero di impegno né codice servizio — Chorus Pro rifiuta la maggior parte dei depositi senza uno dei due.';
+
+  @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'Questa fattura si paga su un QR-IBAN, che richiede il riferimento QR fissato all\'emissione, e questa è stata emessa prima che tali riferimenti esistessero. Emetta una fattura sostitutiva o indichi l\'IBAN ordinario come conto di pagamento.';
 
   @override
   String get invoiceGapVatNotSupported =>
@@ -19766,6 +20053,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchaseApprovalsTitle => 'Fatture fornitori da approvare';
 
   @override
+  String purchaseBillForOrder(String reference) {
+    return 'Ordine di acquisto $reference';
+  }
+
+  @override
+  String get purchaseBillNoOrder => 'Nessun ordine';
+
+  @override
+  String get purchaseBillOrder => 'Ordine di acquisto';
+
+  @override
+  String get purchaseBillOrderHint =>
+      'L’ordine che questa fattura addebita: i suoi importi vengono ripresi e restano modificabili';
+
+  @override
   String get purchaseEntryAdd => 'Aggiungi acquisto / spesa';
 
   @override
@@ -19807,6 +20109,218 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchaseNeedsReview => 'Da rivedere';
+
+  @override
+  String get purchaseOrderAddLine => 'Aggiungi una riga';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'Un indirizzo e-mail, o lascia vuoto per stampare';
+
+  @override
+  String get purchaseOrderBadVatRate => 'Un’aliquota IVA da 0 a 99';
+
+  @override
+  String get purchaseOrderCancel => 'Annulla l’ordine';
+
+  @override
+  String get purchaseOrderCancelReason => 'Perché viene annullato?';
+
+  @override
+  String get purchaseOrderDescription => 'Cosa si ordina';
+
+  @override
+  String get purchaseOrderEdit => 'Modifica l’ordine';
+
+  @override
+  String get purchaseOrderEmail => 'Indirizzo e-mail a cui inviarlo';
+
+  @override
+  String get purchaseOrderExpected => 'Consegna prevista';
+
+  @override
+  String get purchaseOrderFreeText => 'Testo libero';
+
+  @override
+  String get purchaseOrderItem => 'Articolo del catalogo';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Riga $n';
+  }
+
+  @override
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  ) {
+    return '$description: $received di $ordered ricevuti';
+  }
+
+  @override
+  String get purchaseOrderMailInvalid =>
+      'Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API';
+
+  @override
+  String get purchaseOrderMailKey => 'Chiave API di Resend';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.';
+
+  @override
+  String get purchaseOrderMailSave => 'Salva';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Indirizzo del mittente (un dominio verificato su Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Nome del mittente';
+
+  @override
+  String get purchaseOrderMailSettings => 'Invio per e-mail';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Buongiorno,\n\nin allegato il nostro ordine $reference.\n\nCordiali saluti,\n$space';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Segna come inviato';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Indica cosa si ordina o scegli un articolo';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'Un prezzo unitario, 0 o più';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'Una quantità maggiore di zero';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Scegli il fornitore';
+
+  @override
+  String get purchaseOrderNew => 'Nuovo ordine';
+
+  @override
+  String get purchaseOrderNote => 'Nota per il fornitore';
+
+  @override
+  String get purchaseOrderPickDate => 'Scegli la data di consegna prevista';
+
+  @override
+  String get purchaseOrderPrint => 'Stampa';
+
+  @override
+  String get purchaseOrderQuantity => 'Quantità';
+
+  @override
+  String get purchaseOrderReceive => 'Registra una consegna';
+
+  @override
+  String purchaseOrderReceiveLine(String description, String left) {
+    return '$description ($left in arrivo)';
+  }
+
+  @override
+  String get purchaseOrderReceiveNote => 'Nota (facoltativa)';
+
+  @override
+  String get purchaseOrderReceiveNothing =>
+      'Indica cosa è arrivato di almeno una riga';
+
+  @override
+  String purchaseOrderReceiveTitle(String reference) {
+    return 'Consegna di $reference';
+  }
+
+  @override
+  String get purchaseOrderReceiveTooMany =>
+      'Più di quanto resta di questa riga';
+
+  @override
+  String get purchaseOrderReceivedOn => 'Arrivato il';
+
+  @override
+  String get purchaseOrderRefused =>
+      'L’ordine non è stato modificato. Controlla i dati e riprova.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Rimuovi la riga';
+
+  @override
+  String get purchaseOrderSave => 'Salva la bozza';
+
+  @override
+  String get purchaseOrderSendArrived => 'È arrivata';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'Un’e-mail a $recipient non ha un esito confermato. È arrivata?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Invia per e-mail';
+
+  @override
+  String get purchaseOrderSendLost => 'Non è arrivata';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'L’e-mail è stata rifiutata: $reason. L’ordine resta una bozza.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'Nessuna risposta confermata. Verifica con il fornitore prima di inviare di nuovo.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Inviato a $recipient';
+  }
+
+  @override
+  String get purchaseOrderStateCancelled => 'Annullato';
+
+  @override
+  String get purchaseOrderStateDraft => 'Bozza';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Ricevuto in parte';
+
+  @override
+  String get purchaseOrderStateReceived => 'Ricevuto';
+
+  @override
+  String get purchaseOrderStateSent => 'Inviato';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Fornitore';
+
+  @override
+  String get purchaseOrderUnit => 'Unità (es. scatola)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Prezzo unitario IVA esclusa';
+
+  @override
+  String get purchaseOrderVatRate => 'Aliquota IVA (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'Ancora nessun ordine. Un nuovo ordine inizia come bozza da modificare, stampare e inviare.';
+
+  @override
+  String get purchaseOrdersTitle => 'Ordini di acquisto';
 
   @override
   String get purchaseQualified => 'Contabilità qualificata';
@@ -20015,6 +20529,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesInvoiceDate => 'Data della fattura';
 
   @override
+  String get purchasesItem => 'Articolo acquistato';
+
+  @override
   String get purchasesKindBill => 'Fattura fornitore';
 
   @override
@@ -20041,6 +20558,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Altro';
+
+  @override
+  String get purchasesNoItem => 'Nessun articolo';
 
   @override
   String get purchasesNoSupplier => 'Nessun fornitore scelto';
@@ -20159,6 +20679,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesPurposeStock => 'Merci per la rivendita';
 
   @override
+  String get purchasesQuantity => 'Quantità';
+
+  @override
   String get purchasesReference => 'Numero di fattura';
 
   @override
@@ -20268,6 +20791,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Totale';
+
+  @override
+  String get purchasesUnit => 'Unità (es. scatola, risma)';
 
   @override
   String get pushAllowAction => 'Consenti';
@@ -21374,6 +21900,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportDocPayments => 'Report dei pagamenti';
 
   @override
+  String get reportDocPurchaseOrder => 'Ordine di acquisto';
+
+  @override
   String get reportDocSpaceCodes => 'Schede QR degli spazi';
 
   @override
@@ -21403,6 +21932,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visuale';
+
+  @override
+  String get reportExpectedDelivery => 'Consegna prevista';
 
   @override
   String get reportFieldGroupBank => 'Coordinate bancarie';
@@ -22782,11 +23314,61 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'Il codice di settore con cui l\'amministrazione finanziaria austriaca conosce l\'impresa.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Codice di settore (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
 
   @override
   String get saftLedgerTitle => 'Includere le scritture?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'La disposizione della legge austriaca sull\'imposta sul reddito seguita dalla contabilità, come la indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftProfitBasisLabel => 'Modalità di determinazione dell\'utile';
+
+  @override
+  String get saftSmallBusinessHelper =>
+      'Se l\'impresa è una piccola impresa ai sensi del § 6 (1) Z 27 UStG, come lo indica l\'intestazione del SAF-T AT.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Piccola impresa (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Sì';
+
+  @override
+  String get saftStandardAccountsIntro =>
+      'Confermi il conto del piano dei conti standard austriaco (Einheitskontenrahmen) sotto cui è scritto ogni conto del libro. Il suggerimento viene dal ruolo del conto; lo verifichi: non tutti i conti di un ruolo appartengono allo stesso conto standard.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'Nessun suggerimento: inserisca il conto standard.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggerito: $suggestion. Lo confermi o lo modifichi.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Conti del piano standard';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'Il numero che l\'amministrazione finanziaria austriaca assegna all\'impresa, non il numero del registro delle imprese.';
+
+  @override
+  String get saftTaxNumberLabel => 'Numero fiscale (Steuernummer)';
 
   @override
   String get saftWithPostings => 'Con le scritture';
@@ -23463,6 +24045,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'true: un membro può esportare e cancellare i propri dati dall’app. false: presenta una richiesta di diritti, gestita dall’amministratore dei dati personali. I proprietari e l’amministratore dei dati personali non sono mai bloccati, e presentare una richiesta resta sempre possibile.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: tutti gli acquisti approvati dell’articolo fino alla fine del periodo, ponderati per unità. last: l’ultimo acquisto datato entro allora. Non cambia alcun documento, solo i margini.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.';
 
@@ -23734,6 +24320,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'I membri esportano e cancellano da soli i propri dati';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'Come si legge il costo unitario di un articolo nei margini';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
@@ -24230,6 +24820,49 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile salvare i dati di base. Riprovi.';
 
   @override
+  String get setupChoicesAdvanced => 'Regolare ogni area';
+
+  @override
+  String get setupChoicesBookings => 'Persone e prenotazioni';
+
+  @override
+  String get setupChoicesDetails => 'Esaminare tutte le modifiche';
+
+  @override
+  String get setupChoicesManual =>
+      'La sua scelta viene mantenuta quando risponde alle altre domande.';
+
+  @override
+  String get setupChoicesMoney => 'Denaro e gestione';
+
+  @override
+  String get setupChoicesNeedsDecision =>
+      'La scelta precedente viene mantenuta. Risolva le risposte «Non so ancora» prima di applicare.';
+
+  @override
+  String get setupChoicesOperations => 'Gestione quotidiana';
+
+  @override
+  String setupChoicesQuestionUnknown(String question) {
+    return 'Non ancora deciso: $question';
+  }
+
+  @override
+  String get setupChoicesReset => 'Usi i livelli consigliati';
+
+  @override
+  String get setupChoicesSaving => 'Salvataggio…';
+
+  @override
+  String setupChoicesSummary(int count) {
+    return 'Impostazioni che cambieranno: $count';
+  }
+
+  @override
+  String get setupChoicesUnsaved =>
+      'Solo anteprima: non è stato applicato nulla.';
+
+  @override
   String get setupDraftChanged =>
       'Modificato da un’altra persona mentre Lei stava modificando.';
 
@@ -24513,6 +25146,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupGrowVatUsualTitle => 'Le aliquote abituali del Suo paese';
+
+  @override
+  String get setupGuidanceTitle => 'Indicazioni e verifiche';
 
   @override
   String get setupGuideAddIt => 'Lo aggiunga';
@@ -24812,7 +25448,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupLevelsIntro =>
-      'Risponda ad alcune domande semplici: ogni processo riceve il livello che richiedono, con il motivo. Cambi un livello a mano. Nulla cambia finché non applica, e l’anteprima nomina ogni funzione attivata o disattivata.';
+      'Descriva come funziona il suo spazio. Verifichi cosa cambierà prima di applicare le sue scelte.';
 
   @override
   String get setupLevelsNoChange => 'Nulla cambia: lo spazio lo fa già.';
@@ -24938,6 +25574,15 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.';
+
+  @override
+  String get setupNextIndependent =>
+      'Può svolgere questa attività mentre la tappa precedente è in attesa.';
+
+  @override
+  String setupNextNamed(String step) {
+    return 'Successiva: $step';
+  }
 
   @override
   String setupNotificationsAudience(String audience) {
@@ -25097,6 +25742,33 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupOnlineTestUnverified =>
       'Queste chiavi non indicano se sono di prova o reali. Le verifichi nel pannello del fornitore.';
+
+  @override
+  String get setupOutcomeProgress => 'Avanzamento per obiettivo';
+
+  @override
+  String get setupOverviewChoose =>
+      'Scelga ciò che serve al suo spazio per vedere il piano di configurazione.';
+
+  @override
+  String get setupOverviewReady =>
+      'Il suo obiettivo è configurato. Può verificarlo o modificarlo qui in qualsiasi momento.';
+
+  @override
+  String setupOverviewRemaining(int count) {
+    return 'Attività necessarie rimanenti: $count';
+  }
+
+  @override
+  String get setupOverviewTitle => 'Stato dello spazio';
+
+  @override
+  String get setupOverviewUnchecked =>
+      'Alcune verifiche non sono disponibili. Aggiorni lo stato prima di considerare conclusa la configurazione.';
+
+  @override
+  String get setupOverviewWaiting =>
+      'Questa tappa è in attesa. Le attività indicano chi può sbloccarla.';
 
   @override
   String get setupPaymentsPreviewEmpty =>
@@ -25465,6 +26137,10 @@ class AppLocalizationsIt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupTaskSaved =>
+      'Lo stato riflette le impostazioni salvate. Aprire un’attività non la completa.';
 
   @override
   String get shellBarHiddenAnnounce => 'Barra di navigazione nascosta';
@@ -30923,4 +31599,54 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Spazio importato.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Codice del conto ricavi';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero importa queste fatture come bozze: le approvi in Xero. Il conto ricavi e le aliquote sono quelli della Sua organizzazione: ne copi i nomi da Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Esportazione Xero';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count note di credito non sono in questo file: Xero importa le note di credito con un modello proprio.',
+      one: 'Una nota di credito non è in questo file: Xero importa le note di credito con un modello proprio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder =>
+      'Ordine delle date della Sua organizzazione';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Prima il giorno (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'Nell’importazione in Xero scelga “Tax exclusive” (al netto) per gli importi: il file contiene il netto di ogni aliquota e l’IVA registrata sulla fattura.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Prima il mese (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount =>
+      'Inserisci il codice del conto ricavi.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Indica l’aliquota Xero per $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Aliquota Xero per $rate';
+  }
 }

@@ -271,4 +271,6 @@ DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tanks
 
 ## License
 
+Project-owned documentation is licensed under the same terms as the app; see [Documentation license](DOCUMENTATION-LICENSE.md) for scope and third-party notices.
+
 [AGPL-3.0-or-later](LICENSE) © 2026 Florian DITTGEN. **Anyone who uses, modifies or redistributes the code must credit the author** — keep the copyright notices and show *"Based on DesKilo by Florian DITTGEN"* in the app's legal notices ([additional term, AGPL §7(b)](LICENSE-EXCEPTIONS.md#5-credit-the-author-additional-term-agpl-7b)). It comes with an [app-store exception](LICENSE-EXCEPTIONS.md), a [commercial licence](COMMERCIAL-LICENCE.md) for companies that would rather not publish their changes, and a [trademark policy](TRADEMARK.md) for the name. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a commercial licence.

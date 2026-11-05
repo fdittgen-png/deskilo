@@ -606,6 +606,10 @@ window.SETUP_REGISTRY={
   [
    "mtdSubmission",
    false
+  ],
+  [
+   "purchaseOrders",
+   false
   ]
  ],
  "requires": {
@@ -692,7 +696,8 @@ window.SETUP_REGISTRY={
   "foreignCurrencyPurchases": "purchases",
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
-  "mtdSubmission": "vatDeclarations"
+  "mtdSubmission": "vatDeclarations",
+  "purchaseOrders": "purchases"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1270,7 +1275,8 @@ window.SETUP_PROCESSES=[
      "premisesLease",
      "assetRegister",
      "purchaseAnalytics",
-     "foreignCurrencyPurchases"
+     "foreignCurrencyPurchases",
+     "purchaseOrders"
     ]
    },
    {
@@ -1678,7 +1684,8 @@ window.SETUP_LEVELS={
       "premisesLease",
       "assetRegister",
       "purchaseAnalytics",
-      "foreignCurrencyPurchases"
+      "foreignCurrencyPurchases",
+      "purchaseOrders"
      ],
      "needs": {
       "money": "invoices"
