@@ -48,7 +48,7 @@
   "@setupLevelsTitle": {
     "description": "#2868 setup levels: setupLevelsTitle"
   },
-  "setupLevelsIntro": "Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.",
+  "setupLevelsIntro": "Tell us how your workspace works. Review what will change before applying your choices.",
   "@setupLevelsIntro": {
     "description": "#2868 setup levels: setupLevelsIntro"
   },

@@ -98,6 +98,7 @@ String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_pin_min_length' => l10n.settingLabelSecurityBadgePinMinLength,
       'security.badge_workspace_failure_limit' => l10n.settingLabelSecurityBadgeWorkspaceFailureLimit,
       'privacy.member_self_service' => l10n.settingLabelPrivacyMemberSelfService,
+      'purchase.item_cost_method' => l10n.settingLabelPurchaseItemCostMethod,
       _ => _liveUpdateSettingLabel(l10n, key),
     };
 
@@ -201,6 +202,7 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_pin_min_length' => l10n.settingHintSecurityBadgePinMinLength,
       'security.badge_workspace_failure_limit' => l10n.settingHintSecurityBadgeWorkspaceFailureLimit,
       'privacy.member_self_service' => l10n.settingHintPrivacyMemberSelfService,
+      'purchase.item_cost_method' => l10n.settingHintPurchaseItemCostMethod,
       _ => _liveUpdateSettingHint(l10n, key),
     };
 

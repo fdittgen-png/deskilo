@@ -2315,6 +2315,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biBasisOccurrenceDue => 'due date';
 
   @override
+  String get biBasisPayableDue => 'supplier payable due date';
+
+  @override
   String get biBasisPaymentMatchedAt => 'date the payment was matched';
 
   @override
@@ -2709,6 +2712,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorBasisOccurrenceDue => 'by due date';
+
+  @override
+  String get biEditorBasisPayableDue => 'by supplier payable due date';
 
   @override
   String get biEditorBasisPaymentMatched => 'by payment matched';
@@ -3337,6 +3343,58 @@ class AppLocalizationsEn extends AppLocalizations {
       'This address asks for an analysis that does not exist; nothing was read.';
 
   @override
+  String get biItemMethodAverage => 'average cost';
+
+  @override
+  String get biItemMethodLast => 'last purchase';
+
+  @override
+  String biItemPricesBasis(String lines, String items) {
+    return '$lines purchase lines of $items items';
+  }
+
+  @override
+  String get biItemPricesDefinition =>
+      'The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.';
+
+  @override
+  String get biItemPricesTitle => 'Item prices by supplier';
+
+  @override
+  String biItemProductBasis(String revenue, String cost, String method) {
+    return 'Sold for $revenue net, cost $cost ($method)';
+  }
+
+  @override
+  String get biItemProductDefinition =>
+      'Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.';
+
+  @override
+  String get biItemProductTitle => 'Margin by product';
+
+  @override
+  String biItemUncosted(String count) {
+    return '$count products sold were never bought: they have no cost and are left out of the cost and margin';
+  }
+
+  @override
+  String biItemUnresolved(String count) {
+    return '$count purchase lines name a supply only by its text: they are not matched to an item and are left out';
+  }
+
+  @override
+  String biItemVendorBasis(String count) {
+    return '$count suppliers';
+  }
+
+  @override
+  String get biItemVendorDefinition =>
+      'For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.';
+
+  @override
+  String get biItemVendorTitle => 'Supplier prices compared';
+
+  @override
   String get biKindCurrent => 'Now';
 
   @override
@@ -3688,6 +3746,99 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biRunningLabel => 'running';
 
   @override
+  String get biSalesKindAccessories => 'Supplements';
+
+  @override
+  String get biSalesKindAdjustment => 'Adjustments';
+
+  @override
+  String biSalesKindBasis(String gross, String lines, String invoices) {
+    return '$gross with VAT, $lines lines on $invoices invoices';
+  }
+
+  @override
+  String get biSalesKindDefinition =>
+      'What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.';
+
+  @override
+  String get biSalesKindDesk => 'Desks';
+
+  @override
+  String get biSalesKindLevel => 'Levels';
+
+  @override
+  String get biSalesKindOffice => 'Rooms';
+
+  @override
+  String get biSalesKindOther => 'Other';
+
+  @override
+  String get biSalesKindOverage => 'Extra half-days';
+
+  @override
+  String get biSalesKindPackage => 'Packages';
+
+  @override
+  String get biSalesKindService => 'Services';
+
+  @override
+  String get biSalesKindSubscription => 'Subscriptions';
+
+  @override
+  String get biSalesKindTitle => 'Sales by kind';
+
+  @override
+  String biSalesNetUnknown(String count) {
+    return '$count sales lines carry no readable VAT rate: their net is unknown and left out of the net';
+  }
+
+  @override
+  String get biSalesNoDescription => 'No description';
+
+  @override
+  String biSalesRoomBasis(
+    String charges,
+    String cost,
+    String uses,
+    String rooms,
+  ) {
+    return 'Charged $charges for $uses bookings, the rooms cost $cost ($rooms rooms)';
+  }
+
+  @override
+  String get biSalesRoomDefinition =>
+      'For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.';
+
+  @override
+  String biSalesRoomLine(
+    String room,
+    String charges,
+    String cost,
+    String uses,
+  ) {
+    return '$room: charged $charges, cost $cost, $uses bookings';
+  }
+
+  @override
+  String get biSalesRoomTitle => 'Margin of the rented rooms';
+
+  @override
+  String get biSalesRoomsOff =>
+      'The space rents no rooms: switch on rented rooms to see their margin';
+
+  @override
+  String biSalesServiceBasis(String count) {
+    return '$count services and packages';
+  }
+
+  @override
+  String get biSalesServiceDefinition =>
+      'The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.';
+
+  @override
+  String get biSalesServiceTitle => 'Sales by service';
+
+  @override
   String get biSeatCentre => 'of all seat time';
 
   @override
@@ -3739,6 +3890,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biUnavailable => 'This analysis could not be computed.';
+
+  @override
+  String biVendorCategoryBasis(String count) {
+    return '$count categories';
+  }
+
+  @override
+  String get biVendorCategoryTitle => 'Spend by category';
+
+  @override
+  String get biVendorCohortHeld => 'On hold';
+
+  @override
+  String get biVendorCohortLate => 'Paid late';
+
+  @override
+  String biVendorCohortLine(String cohort, String count, String amount) {
+    return '$cohort: $count bills, $amount';
+  }
+
+  @override
+  String get biVendorCohortOnTime => 'Paid on time';
+
+  @override
+  String get biVendorCohortOpen => 'Unpaid';
+
+  @override
+  String get biVendorCohortPartial => 'Partly paid';
+
+  @override
+  String get biVendorCohortUndated => 'Settled without a payment';
+
+  @override
+  String get biVendorCohortUnknownDue => 'No due date';
+
+  @override
+  String biVendorCredited(String amount, String count) {
+    return 'Credit notes subtracted: $amount ($count)';
+  }
+
+  @override
+  String biVendorDelay(String median, String p90, String weighted) {
+    return 'Days from the due date to the payment: median $median, 90th percentile $p90, weighted by amount $weighted (negative: early)';
+  }
+
+  @override
+  String biVendorLagBasis(String documents, String median, String p90) {
+    return '$documents bills; median $median days, 90th percentile $p90';
+  }
+
+  @override
+  String get biVendorLagDefinition =>
+      'The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.';
+
+  @override
+  String get biVendorLagTitle => 'Days for a bill to arrive';
+
+  @override
+  String biVendorLagUndated(String count) {
+    return '$count bills carry no supplier date or no received date and are left out';
+  }
+
+  @override
+  String get biVendorNoCategory => 'No category';
+
+  @override
+  String get biVendorNothingToMeasure => 'Nothing in the period to measure';
+
+  @override
+  String biVendorPunctualityBasis(String onTime, String settled) {
+    return '$onTime of $settled settled bills paid by their due date';
+  }
+
+  @override
+  String get biVendorPunctualityDefinition =>
+      'What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.';
+
+  @override
+  String biVendorPunctualityLine(
+    String name,
+    String onTime,
+    String late,
+    String due,
+  ) {
+    return '$name: $onTime on time, $late late, of $due due';
+  }
+
+  @override
+  String get biVendorPunctualityTitle => 'Paying suppliers on time';
+
+  @override
+  String biVendorSpendBasis(
+    String documents,
+    String suppliers,
+    String top,
+    String topCost,
+  ) {
+    return '$documents documents from $suppliers suppliers; the $top largest: $topCost';
+  }
+
+  @override
+  String get biVendorSpendDefinition =>
+      'The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.';
+
+  @override
+  String get biVendorSpendTitle => 'Spend by supplier';
+
+  @override
+  String biVendorUnassigned(String amount) {
+    return 'Without a supplier (members’ receipts): $amount';
+  }
 
   @override
   String biViewCardsIncompatible(String count) {
@@ -8299,6 +8561,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'purchase_documents': 'Purchase documents',
       'purchase_lines': 'Purchase lines',
       'purchase_obligations': 'Amounts to pay',
+      'purchase_orders': 'Purchase orders',
+      'purchase_order_lines': 'Purchase order lines',
+      'purchase_order_sends': 'Purchase order sendings',
+      'purchase_order_receipts': 'Goods receipts',
+      'purchase_order_receipt_lines': 'Goods receipt lines',
       'outgoing_payments': 'Outgoing payments',
       'expense_schedules': 'Scheduled expenses',
       'expense_occurrences': 'Expense dates',
@@ -9249,6 +9516,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featurePurchaseAnalyticsTitle => 'Purchase figures (analytics)';
+
+  @override
+  String get featurePurchaseOrdersDesc =>
+      'Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.';
+
+  @override
+  String get featurePurchaseOrdersTitle => 'Order from suppliers';
 
   @override
   String get featurePurchasesDesc =>
@@ -12277,6 +12551,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
+  String get invoiceExportSafTAt => 'SAF-T AT (Austria)';
+
+  @override
   String get invoiceExportSafTFull =>
       'SAF-T with the general ledger (XML, international)';
 
@@ -12296,6 +12573,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceExportTrialBalance =>
       'Trial balance, general and auxiliary (PDF, from the book)';
+
+  @override
+  String get invoiceExportXeroInvoiceCsv => 'Xero (sales invoice import)';
 
   @override
   String get invoiceExternalIssuingTitle =>
@@ -12376,6 +12656,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceGapPublicSectorRefs =>
       'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.';
+
+  @override
+  String get invoiceGapQrIbanWithoutReference =>
+      'This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.';
 
   @override
   String get invoiceGapVatNotSupported =>
@@ -19605,6 +19889,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseApprovalsTitle => 'Supplier bills to approve';
 
   @override
+  String purchaseBillForOrder(String reference) {
+    return 'Purchase order $reference';
+  }
+
+  @override
+  String get purchaseBillNoOrder => 'No order';
+
+  @override
+  String get purchaseBillOrder => 'Purchase order';
+
+  @override
+  String get purchaseBillOrderHint =>
+      'The order this bill charges: its amounts are taken and stay editable';
+
+  @override
   String get purchaseEntryAdd => 'Add purchase / expense';
 
   @override
@@ -19646,6 +19945,218 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseNeedsReview => 'Needs review';
+
+  @override
+  String get purchaseOrderAddLine => 'Add a line';
+
+  @override
+  String get purchaseOrderBadEmail =>
+      'One e-mail address, or leave it empty to print';
+
+  @override
+  String get purchaseOrderBadVatRate => 'A VAT rate from 0 to 99';
+
+  @override
+  String get purchaseOrderCancel => 'Cancel the order';
+
+  @override
+  String get purchaseOrderCancelReason => 'Why is it cancelled?';
+
+  @override
+  String get purchaseOrderDescription => 'What is ordered';
+
+  @override
+  String get purchaseOrderEdit => 'Edit the order';
+
+  @override
+  String get purchaseOrderEmail => 'E-mail address to send it to';
+
+  @override
+  String get purchaseOrderExpected => 'Expected delivery';
+
+  @override
+  String get purchaseOrderFreeText => 'Free text';
+
+  @override
+  String get purchaseOrderItem => 'Catalogue item';
+
+  @override
+  String purchaseOrderLine(String n) {
+    return 'Line $n';
+  }
+
+  @override
+  String purchaseOrderLineReceived(
+    String description,
+    String received,
+    String ordered,
+  ) {
+    return '$description: $received of $ordered received';
+  }
+
+  @override
+  String get purchaseOrderMailInvalid =>
+      'A sender address, a name without < > or quotes, and on the first save the API key';
+
+  @override
+  String get purchaseOrderMailKey => 'Resend API key';
+
+  @override
+  String get purchaseOrderMailKeyKept =>
+      'A key is stored. Leave empty to keep it; it is never shown again.';
+
+  @override
+  String get purchaseOrderMailSave => 'Save';
+
+  @override
+  String get purchaseOrderMailSender =>
+      'Sender address (a verified domain at Resend)';
+
+  @override
+  String get purchaseOrderMailSenderName => 'Sender name';
+
+  @override
+  String get purchaseOrderMailSettings => 'E-mail sending';
+
+  @override
+  String purchaseOrderMailText(String reference, String space) {
+    return 'Hello,\n\nPlease find attached our purchase order $reference.\n\nKind regards,\n$space';
+  }
+
+  @override
+  String get purchaseOrderMarkSent => 'Mark as sent';
+
+  @override
+  String get purchaseOrderNeedsDescription =>
+      'Say what is ordered, or choose an item';
+
+  @override
+  String get purchaseOrderNeedsPrice => 'A unit price, 0 or more';
+
+  @override
+  String get purchaseOrderNeedsQuantity => 'A quantity above zero';
+
+  @override
+  String get purchaseOrderNeedsSupplier => 'Choose the supplier';
+
+  @override
+  String get purchaseOrderNew => 'New order';
+
+  @override
+  String get purchaseOrderNote => 'Note to the supplier';
+
+  @override
+  String get purchaseOrderPickDate => 'Pick the expected delivery date';
+
+  @override
+  String get purchaseOrderPrint => 'Print';
+
+  @override
+  String get purchaseOrderQuantity => 'Quantity';
+
+  @override
+  String get purchaseOrderReceive => 'Record a delivery';
+
+  @override
+  String purchaseOrderReceiveLine(String description, String left) {
+    return '$description ($left to come)';
+  }
+
+  @override
+  String get purchaseOrderReceiveNote => 'Note (optional)';
+
+  @override
+  String get purchaseOrderReceiveNothing =>
+      'Enter what arrived of at least one line';
+
+  @override
+  String purchaseOrderReceiveTitle(String reference) {
+    return 'Delivery of $reference';
+  }
+
+  @override
+  String get purchaseOrderReceiveTooMany =>
+      'More than what is left of this line';
+
+  @override
+  String get purchaseOrderReceivedOn => 'Arrived on';
+
+  @override
+  String get purchaseOrderRefused =>
+      'The order was not changed. Check the entries and try again.';
+
+  @override
+  String get purchaseOrderRemoveLine => 'Remove the line';
+
+  @override
+  String get purchaseOrderSave => 'Save the draft';
+
+  @override
+  String get purchaseOrderSendArrived => 'It arrived';
+
+  @override
+  String purchaseOrderSendAwaits(String recipient) {
+    return 'An e-mail to $recipient has no confirmed outcome. Did it arrive?';
+  }
+
+  @override
+  String get purchaseOrderSendEmail => 'Send by e-mail';
+
+  @override
+  String get purchaseOrderSendLost => 'It did not arrive';
+
+  @override
+  String purchaseOrderSendRefused(String reason) {
+    return 'The e-mail was refused: $reason. The order stays a draft.';
+  }
+
+  @override
+  String get purchaseOrderSendUnconfirmed =>
+      'No confirmed answer came back. Check with the supplier before sending again.';
+
+  @override
+  String purchaseOrderSentTo(String recipient) {
+    return 'Sent to $recipient';
+  }
+
+  @override
+  String get purchaseOrderStateCancelled => 'Cancelled';
+
+  @override
+  String get purchaseOrderStateDraft => 'Draft';
+
+  @override
+  String get purchaseOrderStatePartlyReceived => 'Partly received';
+
+  @override
+  String get purchaseOrderStateReceived => 'Received';
+
+  @override
+  String get purchaseOrderStateSent => 'Sent';
+
+  @override
+  String purchaseOrderSummary(String supplier, String total) {
+    return '$supplier · $total';
+  }
+
+  @override
+  String get purchaseOrderSupplier => 'Supplier';
+
+  @override
+  String get purchaseOrderUnit => 'Unit (e.g. box)';
+
+  @override
+  String get purchaseOrderUnitPrice => 'Unit price before VAT';
+
+  @override
+  String get purchaseOrderVatRate => 'VAT rate (%)';
+
+  @override
+  String get purchaseOrdersEmpty =>
+      'No purchase order yet. A new order starts as a draft you can edit, print and send.';
+
+  @override
+  String get purchaseOrdersTitle => 'Purchase orders';
 
   @override
   String get purchaseQualified => 'Accounting qualified';
@@ -19853,6 +20364,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesInvoiceDate => 'Invoice date';
 
   @override
+  String get purchasesItem => 'Item bought';
+
+  @override
   String get purchasesKindBill => 'Supplier bill';
 
   @override
@@ -19879,6 +20393,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesMethodOther => 'Other';
+
+  @override
+  String get purchasesNoItem => 'No item';
 
   @override
   String get purchasesNoSupplier => 'No supplier chosen';
@@ -19997,6 +20514,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesPurposeStock => 'Goods for resale';
 
   @override
+  String get purchasesQuantity => 'Quantity';
+
+  @override
   String get purchasesReference => 'Invoice number';
 
   @override
@@ -20106,6 +20626,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesTotal => 'Total';
+
+  @override
+  String get purchasesUnit => 'Unit (e.g. box, ream)';
 
   @override
   String get pushAllowAction => 'Allow';
@@ -21201,6 +21724,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportDocPayments => 'Payments report';
 
   @override
+  String get reportDocPurchaseOrder => 'Purchase order';
+
+  @override
   String get reportDocSpaceCodes => 'Space QR cards';
 
   @override
@@ -21230,6 +21756,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportEditorVisual => 'Visual';
+
+  @override
+  String get reportExpectedDelivery => 'Expected delivery';
 
   @override
   String get reportFieldGroupBank => 'Bank details';
@@ -22587,11 +23116,61 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get saftIndustryCodeHelper =>
+      'The industry code the Austrian tax office knows the company under.';
+
+  @override
+  String get saftIndustryCodeLabel => 'Industry code (Branchenkennzahl)';
+
+  @override
   String get saftLedgerIntro =>
       'With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.';
 
   @override
   String get saftLedgerTitle => 'Include postings?';
+
+  @override
+  String get saftProfitBasisHelper =>
+      'The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.';
+
+  @override
+  String get saftProfitBasisLabel => 'How the profit is determined';
+
+  @override
+  String get saftSmallBusinessHelper =>
+      'Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.';
+
+  @override
+  String get saftSmallBusinessLabel => 'Small business (§ 6 (1) Z 27 UStG)';
+
+  @override
+  String get saftSmallBusinessNo => 'No';
+
+  @override
+  String get saftSmallBusinessYes => 'Yes';
+
+  @override
+  String get saftStandardAccountsIntro =>
+      'Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account\'s role; check it: not every account of a role belongs on the same standard account.';
+
+  @override
+  String get saftStandardAccountsNoSuggestion =>
+      'No suggestion: enter the standard account.';
+
+  @override
+  String saftStandardAccountsSuggested(String suggestion) {
+    return 'Suggested: $suggestion. Confirm or change it.';
+  }
+
+  @override
+  String get saftStandardAccountsTitle => 'Standard chart accounts';
+
+  @override
+  String get saftTaxNumberHelper =>
+      'The number the Austrian tax office gives the company, not its company register number.';
+
+  @override
+  String get saftTaxNumberLabel => 'Tax number (Steuernummer)';
 
   @override
   String get saftWithPostings => 'With postings';
@@ -23263,6 +23842,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.';
 
   @override
+  String get settingHintPurchaseItemCostMethod =>
+      'average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
 
@@ -23512,6 +24095,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPrivacyMemberSelfService =>
       'Members export and erase their own data directly';
+
+  @override
+  String get settingLabelPurchaseItemCostMethod =>
+      'How an item\'s unit cost is read in the margins';
 
   @override
   String get settingLabelPurchasePaymentChecker =>
@@ -24002,6 +24589,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupChoicesAdvanced => 'Adjust each area';
+
+  @override
+  String get setupChoicesBookings => 'People and bookings';
+
+  @override
+  String get setupChoicesDetails => 'Inspect all changes';
+
+  @override
+  String get setupChoicesManual =>
+      'Your choice is kept when you answer other questions.';
+
+  @override
+  String get setupChoicesMoney => 'Money and administration';
+
+  @override
+  String get setupChoicesNeedsDecision =>
+      'Your previous choice is kept. Resolve “not sure yet” before applying.';
+
+  @override
+  String get setupChoicesOperations => 'Day-to-day operation';
+
+  @override
+  String setupChoicesQuestionUnknown(String question) {
+    return 'Not sure yet: $question';
+  }
+
+  @override
+  String get setupChoicesReset => 'Use suggested levels';
+
+  @override
+  String get setupChoicesSaving => 'Saving…';
+
+  @override
+  String setupChoicesSummary(int count) {
+    return 'Settings that will change: $count';
+  }
+
+  @override
+  String get setupChoicesUnsaved => 'Preview only — nothing has been applied.';
+
+  @override
   String get setupDraftChanged =>
       'Changed by someone else while you were editing.';
 
@@ -24282,6 +24911,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGrowVatUsualTitle => 'Your country\'s usual rates';
+
+  @override
+  String get setupGuidanceTitle => 'Guidance and checks';
 
   @override
   String get setupGuideAddIt => 'Add it';
@@ -24579,7 +25211,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupLevelsIntro =>
-      'Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.';
+      'Tell us how your workspace works. Review what will change before applying your choices.';
 
   @override
   String get setupLevelsNoChange =>
@@ -24706,6 +25338,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'The new-member defaults could not be saved. Try again.';
+
+  @override
+  String get setupNextIndependent =>
+      'You can do this while the earlier milestone is waiting.';
+
+  @override
+  String setupNextNamed(String step) {
+    return 'Next: $step';
+  }
 
   @override
   String setupNotificationsAudience(String audience) {
@@ -24866,6 +25507,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupOnlineTestUnverified =>
       'These keys do not show whether they are test or live keys. Check them in the provider\'s dashboard.';
+
+  @override
+  String get setupOutcomeProgress => 'Progress by outcome';
+
+  @override
+  String get setupOverviewChoose =>
+      'Choose what your workspace needs to see its setup plan.';
+
+  @override
+  String get setupOverviewReady =>
+      'Your chosen goal is configured. You can review or change it here at any time.';
+
+  @override
+  String setupOverviewRemaining(int count) {
+    return 'Required tasks remaining: $count';
+  }
+
+  @override
+  String get setupOverviewTitle => 'Workspace status';
+
+  @override
+  String get setupOverviewUnchecked =>
+      'Some checks are unavailable. Refresh the status before considering setup complete.';
+
+  @override
+  String get setupOverviewWaiting =>
+      'This milestone is waiting. The tasks below explain who can unblock it.';
 
   @override
   String get setupPaymentsPreviewEmpty =>
@@ -25231,6 +25899,10 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupTaskSaved =>
+      'Status is based on saved settings. Opening a task does not complete it.';
 
   @override
   String get shellBarHiddenAnnounce => 'Navigation bar hidden';
@@ -30628,4 +31300,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceXmlImportSuccess => 'Workspace imported.';
+
+  @override
+  String get xeroInvoiceAccountCode => 'Sales account code';
+
+  @override
+  String get xeroInvoiceAccountsIntro =>
+      'Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.';
+
+  @override
+  String get xeroInvoiceAccountsTitle => 'Xero export';
+
+  @override
+  String xeroInvoiceCreditNotesLeftOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count credit notes are not in this file: Xero imports credit notes with their own template.',
+      one: 'One credit note is not in this file: Xero imports credit notes with their own template.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get xeroInvoiceDateOrder => 'Date order in your organisation';
+
+  @override
+  String get xeroInvoiceDayFirst => 'Day first (31/12/2026)';
+
+  @override
+  String get xeroInvoiceImportTaxExclusive =>
+      'In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.';
+
+  @override
+  String get xeroInvoiceMonthFirst => 'Month first (12/31/2026)';
+
+  @override
+  String get xeroInvoiceRefusedAccount => 'Enter the sales account code.';
+
+  @override
+  String xeroInvoiceRefusedTaxType(String rate) {
+    return 'Name the Xero tax rate for $rate.';
+  }
+
+  @override
+  String xeroInvoiceTaxType(String rate) {
+    return 'Xero tax rate for $rate';
+  }
 }

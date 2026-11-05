@@ -23,15 +23,13 @@ const STEPS=[
   return[h('p',{class:'hint'},T('levelsOffline')),
    lbl(JT('setupLevelsQuestions')),
    ...questionRows(),
-   lbl(JT('setupLevelsPresets')),
-   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
-   lbl(JT('setupLevelsChoice')),
-   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
+   advancedLevels(now,rec,preset),
    ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
    h('p',{class:'hint'},T('levelsExpertHint')),
    h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
  check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
-  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
+  if(unknownQs.size)f.push(F.err(JT('setupChoicesNeedsDecision'),'levels'));
+  if(!gaps.length&&!unknownQs.size)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
   return f}},
 
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},

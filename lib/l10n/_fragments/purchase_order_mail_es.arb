@@ -1,0 +1,17 @@
+{
+  "purchaseOrderMailText": "Hola:\n\nAdjuntamos nuestro pedido {reference}.\n\nSaludos cordiales,\n{space}",
+  "purchaseOrderSendEmail": "Enviar por correo",
+  "purchaseOrderSentTo": "Enviado a {recipient}",
+  "purchaseOrderSendRefused": "El correo fue rechazado: {reason}. El pedido sigue en borrador.",
+  "purchaseOrderSendUnconfirmed": "No llegó ninguna respuesta confirmada. Compruebe con el proveedor antes de volver a enviar.",
+  "purchaseOrderSendAwaits": "Un correo a {recipient} no tiene un resultado confirmado. ¿Llegó?",
+  "purchaseOrderSendArrived": "Llegó",
+  "purchaseOrderSendLost": "No llegó",
+  "purchaseOrderMailSettings": "Envío por correo",
+  "purchaseOrderMailSender": "Dirección del remitente (un dominio verificado en Resend)",
+  "purchaseOrderMailSenderName": "Nombre del remitente",
+  "purchaseOrderMailKey": "Clave de API de Resend",
+  "purchaseOrderMailKeyKept": "Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.",
+  "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API",
+  "purchaseOrderMailSave": "Guardar"
+}

@@ -86,6 +86,11 @@ void main() {
         'customers.dunning_load',
         'customers.credit_and_writeoff',
         'customers.concentration',
+        // #3294 steps 3-4 — the invoices behind a sales or product figure.
+        'sales.revenue_by_kind',
+        'sales.revenue_by_service',
+        'sales.room_margin',
+        'items.product_margin',
       });
     });
   });

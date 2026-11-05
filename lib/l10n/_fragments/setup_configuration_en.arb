@@ -1,0 +1,114 @@
+{
+  "setupOverviewTitle": "Workspace status",
+  "@setupOverviewTitle": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewRemaining": "Required tasks remaining: {count}",
+  "@setupOverviewRemaining": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupOverviewWaiting": "This milestone is waiting. The tasks below explain who can unblock it.",
+  "@setupOverviewWaiting": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewUnchecked": "Some checks are unavailable. Refresh the status before considering setup complete.",
+  "@setupOverviewUnchecked": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewReady": "Your chosen goal is configured. You can review or change it here at any time.",
+  "@setupOverviewReady": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewChoose": "Choose what your workspace needs to see its setup plan.",
+  "@setupOverviewChoose": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOutcomeProgress": "Progress by outcome",
+  "@setupOutcomeProgress": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupNextIndependent": "You can do this while the earlier milestone is waiting.",
+  "@setupNextIndependent": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupTaskSaved": "Status is based on saved settings. Opening a task does not complete it.",
+  "@setupTaskSaved": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupNextNamed": "Next: {step}",
+  "@setupNextNamed": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGuidanceTitle": "Guidance and checks",
+  "@setupGuidanceTitle": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesSummary": "Settings that will change: {count}",
+  "@setupChoicesSummary": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupChoicesUnsaved": "Preview only — nothing has been applied.",
+  "@setupChoicesUnsaved": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesNeedsDecision": "Your previous choice is kept. Resolve “not sure yet” before applying.",
+  "@setupChoicesNeedsDecision": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesAdvanced": "Adjust each area",
+  "@setupChoicesAdvanced": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesDetails": "Inspect all changes",
+  "@setupChoicesDetails": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesBookings": "People and bookings",
+  "@setupChoicesBookings": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesMoney": "Money and administration",
+  "@setupChoicesMoney": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesOperations": "Day-to-day operation",
+  "@setupChoicesOperations": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesQuestionUnknown": "Not sure yet: {question}",
+  "@setupChoicesQuestionUnknown": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "question": {
+        "type": "String"
+      }
+    }
+  },
+  "setupChoicesManual": "Your choice is kept when you answer other questions.",
+  "@setupChoicesManual": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesReset": "Use suggested levels",
+  "setupChoicesSaving": "Saving…",
+  "@setupChoicesReset": {
+    "description": "Restore recommended process levels instead of manual overrides."
+  },
+  "@setupChoicesSaving": {
+    "description": "Visible while applying setup choices and saving the journey."
+  }
+}

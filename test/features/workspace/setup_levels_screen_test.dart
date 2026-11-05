@@ -27,6 +27,17 @@ Future<FakeWorkspaceRepository> _pump(WidgetTester tester) async {
     overrides: standardTestOverrides(workspace: repo),
   );
   await tester.pumpAndSettle();
+  for (final (key, child) in [
+    ('setup-questions-money', 'setup-question-issue_invoices'),
+    ('setup-questions-operations', 'setup-question-door_tablet'),
+    ('setup-choices-advanced', 'setup-level-bookings'),
+  ]) {
+    if (find.byKey(ValueKey(child)).evaluate().isEmpty) {
+      await tester.tap(find.byKey(ValueKey(key)));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+    }
+  }
   return repo;
 }
 
@@ -44,6 +55,34 @@ SetupLevelChange _planFor(FakeWorkspaceRepository repo, SetupLevelVector v) {
 }
 
 void main() {
+  testWidgets('answering a question preserves deliberate levels until reset', (
+    tester,
+  ) async {
+    await _pump(tester);
+    await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    final before = tester
+        .widget<DropdownButton<String>>(
+          find.byKey(const ValueKey('setup-level-bookings')),
+        )
+        .value;
+    await tester.tap(
+      find.byKey(const ValueKey('setup-question-approve_bookings')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(
+      tester
+          .widget<DropdownButton<String>>(
+            find.byKey(const ValueKey('setup-level-bookings')),
+          )
+          .value,
+      before,
+    );
+    expect(find.byKey(const ValueKey('setup-choices-reset')), findsOneWidget);
+  });
+
   testWidgets('before an answer, nothing changes', (tester) async {
     await _pump(tester);
     expect(

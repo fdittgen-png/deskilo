@@ -1097,6 +1097,7 @@
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisPayableDue": "Fälligkeitsdatum der Lieferantenschuld",
   "biBasisPaymentMatchedAt": "Datum der Zuordnung der Zahlung",
   "@biBasisPaymentMatchedAt": {
     "description": "#2581 analytical report print layout and exports"
@@ -1346,6 +1347,7 @@
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisPayableDue": "nach Fälligkeit der Lieferantenschuld",
   "biEditorBasisPaymentMatched": "nach zugeordneter Zahlung",
   "@biEditorBasisPaymentMatched": {
     "description": "#2580 BI report editor"
@@ -2095,6 +2097,19 @@
   "biGroupNone": "Keine Gruppierung",
   "biIncompatible": "Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.",
   "biInvalidAddress": "Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.",
+  "biItemMethodAverage": "Durchschnittskosten",
+  "biItemMethodLast": "letzter Einkauf",
+  "biItemPricesBasis": "{lines} Einkaufspositionen von {items} Artikeln",
+  "biItemPricesDefinition": "Die genehmigten Einkaufspositionen mit Artikel und Datum im Zeitraum: was sie kosten (netto plus nicht abziehbare Steuer). Die Tabelle zeigt den Stückpreis jedes Artikels je Lieferant. Gutschriften bleiben außen vor.",
+  "biItemPricesTitle": "Artikelpreise nach Lieferant",
+  "biItemProductBasis": "Netto für {revenue} verkauft, Kosten {cost} ({method})",
+  "biItemProductDefinition": "Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.",
+  "biItemProductTitle": "Marge nach Produkt",
+  "biItemUncosted": "{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus",
+  "biItemUnresolved": "{count} Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor",
+  "biItemVendorBasis": "{count} Lieferanten",
+  "biItemVendorDefinition": "Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.",
+  "biItemVendorTitle": "Lieferantenpreise im Vergleich",
   "biKindCurrent": "Jetzt",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -2536,6 +2551,29 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Zuschläge",
+  "biSalesKindAdjustment": "Korrekturen",
+  "biSalesKindBasis": "{gross} inkl. MwSt., {lines} Positionen auf {invoices} Rechnungen",
+  "biSalesKindDefinition": "Was die Rechnungen des Zeitraums verkauft haben, netto, nach Art der Position. Zahlungen und Erstattungen auf einer Rechnung sind kein Umsatz; eine Gutschrift wird abgezogen. Maßgeblich ist der Monat der Rechnung.",
+  "biSalesKindDesk": "Tische",
+  "biSalesKindLevel": "Etagen",
+  "biSalesKindOffice": "Räume",
+  "biSalesKindOther": "Sonstiges",
+  "biSalesKindOverage": "Zusätzliche Halbtage",
+  "biSalesKindPackage": "Pakete",
+  "biSalesKindService": "Leistungen",
+  "biSalesKindSubscription": "Abonnements",
+  "biSalesKindTitle": "Umsatz nach Art",
+  "biSalesNetUnknown": "{count} Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus",
+  "biSalesNoDescription": "Ohne Bezeichnung",
+  "biSalesRoomBasis": "{charges} für {uses} Buchungen berechnet, die Räume kosten {cost} ({rooms} Räume)",
+  "biSalesRoomDefinition": "Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.",
+  "biSalesRoomLine": "{room}: berechnet {charges}, Kosten {cost}, {uses} Buchungen",
+  "biSalesRoomTitle": "Marge der angemieteten Räume",
+  "biSalesRoomsOff": "Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen",
+  "biSalesServiceBasis": "{count} Leistungen und Pakete",
+  "biSalesServiceDefinition": "Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.",
+  "biSalesServiceTitle": "Umsatz nach Leistung",
   "biSeatCentre": "der gesamten Platzzeit",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -2584,6 +2622,32 @@
   },
   "biTotal": "Gesamt",
   "biUnavailable": "Diese Analyse konnte nicht berechnet werden.",
+  "biVendorCategoryBasis": "{count} Kategorien",
+  "biVendorCategoryTitle": "Ausgaben nach Kategorie",
+  "biVendorCohortHeld": "Zurückgestellt",
+  "biVendorCohortLate": "Verspätet bezahlt",
+  "biVendorCohortLine": "{cohort}: {count} Rechnungen, {amount}",
+  "biVendorCohortOnTime": "Pünktlich bezahlt",
+  "biVendorCohortOpen": "Unbezahlt",
+  "biVendorCohortPartial": "Teilweise bezahlt",
+  "biVendorCohortUndated": "Ohne Zahlung beglichen",
+  "biVendorCohortUnknownDue": "Ohne Fälligkeit",
+  "biVendorCredited": "Abgezogene Gutschriften: {amount} ({count})",
+  "biVendorDelay": "Tage von der Fälligkeit bis zur Zahlung: Median {median}, 90. Perzentil {p90}, nach Betrag gewichtet {weighted} (negativ: früher)",
+  "biVendorLagBasis": "{documents} Rechnungen; Median {median} Tage, 90. Perzentil {p90}",
+  "biVendorLagDefinition": "Die genehmigten Lieferantenrechnungen mit Datum im Zeitraum: die Tage vom Datum auf der Rechnung bis zu ihrem Eingang im Space, im Durchschnitt; die Tabelle zeigt jeden Lieferanten.",
+  "biVendorLagTitle": "Tage bis zum Eingang einer Rechnung",
+  "biVendorLagUndated": "{count} Rechnungen ohne Lieferantendatum oder Eingangsdatum bleiben außen vor",
+  "biVendorNoCategory": "Ohne Kategorie",
+  "biVendorNothingToMeasure": "Im Zeitraum gibt es nichts zu messen",
+  "biVendorPunctualityBasis": "{onTime} von {settled} beglichenen Rechnungen bis zur Fälligkeit bezahlt",
+  "biVendorPunctualityDefinition": "Was der Space seinen Lieferanten schuldet und im Zeitraum fällig wird, jeweils in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn die Zahlung eines trägt, sonst das erfasste Zahlungsdatum.",
+  "biVendorPunctualityLine": "{name}: {onTime} pünktlich, {late} verspätet, von {due} fälligen",
+  "biVendorPunctualityTitle": "Pünktliche Zahlung an Lieferanten",
+  "biVendorSpendBasis": "{documents} Belege von {suppliers} Lieferanten; die {top} größten: {topCost}",
+  "biVendorSpendDefinition": "Die genehmigten Einkaufsbelege mit Datum im Zeitraum: was sie den Space kosten, netto plus die nicht abziehbare Steuer. Eine Gutschrift wird abgezogen. Belege in einer anderen Währung werden nicht umgerechnet.",
+  "biVendorSpendTitle": "Ausgaben nach Lieferant",
+  "biVendorUnassigned": "Ohne Lieferant (Belege von Mitgliedern): {amount}",
   "biViewCardsIncompatible": "{count} Analysen dieser Ansicht wurden gespeichert, als ihre Kennzahl etwas anderes bedeutete, und werden weggelassen statt mit anderer Bedeutung gezeigt.",
   "biViewChart": "Diagramm",
   "biViewClearMyDefault": "Meine Standardansicht nicht mehr öffnen",
@@ -5995,7 +6059,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
+  "exportSheetName": "{key, select, about{Über diesen Export} workspace{Arbeitsbereich} levels{Etagen} desks{Tische} seats{Plätze} users{Mitglieder} reservations{Buchungen} check_ins{Anwesenheit} payments{Zahlungen} services{Genutzte Leistungen} service_catalog{Leistungspreise} invoices{Rechnungen} offices{Räume} ledger{Mitgliederkonten} events{Anträge} decisions{Entscheidungen} invoice_lines{Rechnungszeilen} sites{Standorte} plans{Tarife} fee_bands{Preisstufen} packages{Pakete} credit_products{Kontingentarten} vat_rates{USt.-Sätze} accessories{Zubehör} seat_accessories{Platz-Zubehör} closure_days{Schließtage} validation_policies{Freigaberegeln} workspace_roles{Rollen} workspace_role_members{Rolleninhaber} workspace_field_definitions{Fragen} workspace_field_values{Antworten} number_sequences{Nummernkreise} charging_stations{Ladestationen} plan_images{Planbilder} setting_values{Einstellungen} member_credits{Kontingente} member_credit_uses{Kontingentnutzung} price_negotiations{Preisverhandlungen} quota_extensions{Kontingenterweiterungen} usage_records{Nutzung} invoice_matches{Rechnungsausgleich} invoice_reminders{Mahnungen} invoice_dunning_holds{Mahnsperren} tax_exemption_certificates{Freistellungsbescheinigungen} suppliers{Lieferanten} purchase_documents{Einkaufsbelege} purchase_lines{Einkaufszeilen} purchase_obligations{Zu zahlende Beträge} purchase_orders{Bestellungen} purchase_order_lines{Bestellpositionen} purchase_order_sends{Bestellversand} purchase_order_receipts{Wareneingänge} purchase_order_receipt_lines{Wareneingangspositionen} outgoing_payments{Ausgehende Zahlungen} expense_schedules{Geplante Ausgaben} expense_occurrences{Ausgabentermine} expense_repartitions{Geteilte Kosten} premises_leases{Mietverträge} lease_terms{Mietbedingungen} lease_settlements{Mietabrechnungen} room_rentals{Raumanmietungen} room_rental_fees{Mietgebühren} workspace_assets{Anlagegüter} asset_valuation_batches{Anlagenbewertungen} asset_valuation_rows{Bewertungszeilen} book_profiles{Buchhaltungsprofile} book_accounts{Kontenrahmen} book_mappings{Kontenzuordnungen} book_periods{Buchungsperioden} vat_declarations{USt.-Voranmeldungen} einvoice_inbox{Empfangene E-Rechnungen} guest_participations{Gästebesuche} rights_requests{Datenschutzanfragen} overview{Überblick} features{Funktionen} other{{key}}}",
   "exportUncertifiedSoftware": "Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -6560,6 +6624,8 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen.",
+  "featurePurchaseOrdersTitle": "Bei Lieferanten bestellen",
   "featurePurchasesDesc": "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"
@@ -8219,6 +8285,7 @@
   "invoiceExportGobd": "GoBD-Datenüberlassung (Z3)",
   "invoiceExportJournals": "Journale mit Sammeljournal (PDF, aus der Buchführung)",
   "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportSafTAt": "SAF-T AT (Österreich)",
   "invoiceExportSafTFull": "SAF-T mit Hauptbuch (XML, international)",
   "invoiceExportSafTNo": "SAF-T Financial (Norwegen)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -8231,6 +8298,7 @@
   },
   "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
   "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
+  "invoiceExportXeroInvoiceCsv": "Xero (Import von Ausgangsrechnungen)",
   "invoiceExternalIssuingTitle": "Diese Rechnung außerhalb der App ausstellen",
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
@@ -8262,6 +8330,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
+  "invoiceGapQrIbanWithoutReference": "Diese Rechnung wird auf eine QR-IBAN bezahlt, die die bei der Ausstellung festgehaltene QR-Referenz verlangt; diese Rechnung wurde vor solchen Referenzen ausgestellt. Stellen Sie eine Ersatzrechnung aus oder geben Sie die gewöhnliche IBAN als Zahlungskonto an.",
   "invoiceGapVatNotSupported": "Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.",
   "invoiceHeldNote": "Mahnungen angehalten: {reason}",
   "@invoiceHeldNote": {
@@ -12669,6 +12738,10 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Bestellung {reference}",
+  "purchaseBillNoOrder": "Keine Bestellung",
+  "purchaseBillOrder": "Bestellung",
+  "purchaseBillOrderHint": "Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar",
   "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
   "purchaseEntryMe": "Ich habe selbst bezahlt",
   "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",
@@ -12682,6 +12755,66 @@
   "purchaseLinkInboxFailed": "Die Rechnung wurde nicht verknüpft. Der Beleg hat sich vielleicht inzwischen geändert: öffnen Sie ihn erneut und versuchen Sie es noch einmal.",
   "purchaseLinkInboxTitle": "Empfangene Rechnungen",
   "purchaseNeedsReview": "Zu prüfen",
+  "purchaseOrderAddLine": "Position hinzufügen",
+  "purchaseOrderBadEmail": "Eine E-Mail-Adresse, oder leer lassen zum Drucken",
+  "purchaseOrderBadVatRate": "Ein USt-Satz von 0 bis 99",
+  "purchaseOrderCancel": "Bestellung stornieren",
+  "purchaseOrderCancelReason": "Warum wird storniert?",
+  "purchaseOrderDescription": "Was bestellt wird",
+  "purchaseOrderEdit": "Bestellung bearbeiten",
+  "purchaseOrderEmail": "E-Mail-Adresse für den Versand",
+  "purchaseOrderExpected": "Erwartete Lieferung",
+  "purchaseOrderFreeText": "Freier Text",
+  "purchaseOrderItem": "Katalogartikel",
+  "purchaseOrderLine": "Position {n}",
+  "purchaseOrderLineReceived": "{description}: {received} von {ordered} erhalten",
+  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel",
+  "purchaseOrderMailKey": "Resend-API-Schlüssel",
+  "purchaseOrderMailKeyKept": "Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.",
+  "purchaseOrderMailSave": "Speichern",
+  "purchaseOrderMailSender": "Absenderadresse (eine bei Resend verifizierte Domain)",
+  "purchaseOrderMailSenderName": "Absendername",
+  "purchaseOrderMailSettings": "E-Mail-Versand",
+  "purchaseOrderMailText": "Guten Tag,\n\nanbei finden Sie unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
+  "purchaseOrderMarkSent": "Als gesendet markieren",
+  "purchaseOrderNeedsDescription": "Geben Sie an, was bestellt wird, oder wählen Sie einen Artikel",
+  "purchaseOrderNeedsPrice": "Ein Stückpreis, 0 oder mehr",
+  "purchaseOrderNeedsQuantity": "Eine Menge über null",
+  "purchaseOrderNeedsSupplier": "Wählen Sie den Lieferanten",
+  "purchaseOrderNew": "Neue Bestellung",
+  "purchaseOrderNote": "Hinweis an den Lieferanten",
+  "purchaseOrderPickDate": "Erwartetes Lieferdatum wählen",
+  "purchaseOrderPrint": "Drucken",
+  "purchaseOrderQuantity": "Menge",
+  "purchaseOrderReceive": "Wareneingang erfassen",
+  "purchaseOrderReceiveLine": "{description} (noch {left} offen)",
+  "purchaseOrderReceiveNote": "Notiz (optional)",
+  "purchaseOrderReceiveNothing": "Geben Sie an, was von mindestens einer Position angekommen ist",
+  "purchaseOrderReceiveTitle": "Lieferung zu {reference}",
+  "purchaseOrderReceiveTooMany": "Mehr als von dieser Position noch aussteht",
+  "purchaseOrderReceivedOn": "Angekommen am",
+  "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
+  "purchaseOrderRemoveLine": "Position entfernen",
+  "purchaseOrderSave": "Entwurf speichern",
+  "purchaseOrderSendArrived": "Sie ist angekommen",
+  "purchaseOrderSendAwaits": "Eine E-Mail an {recipient} hat kein bestätigtes Ergebnis. Ist sie angekommen?",
+  "purchaseOrderSendEmail": "Per E-Mail senden",
+  "purchaseOrderSendLost": "Sie ist nicht angekommen",
+  "purchaseOrderSendRefused": "Die E-Mail wurde abgelehnt: {reason}. Die Bestellung bleibt ein Entwurf.",
+  "purchaseOrderSendUnconfirmed": "Es kam keine bestätigte Antwort. Fragen Sie beim Lieferanten nach, bevor Sie erneut senden.",
+  "purchaseOrderSentTo": "Gesendet an {recipient}",
+  "purchaseOrderStateCancelled": "Storniert",
+  "purchaseOrderStateDraft": "Entwurf",
+  "purchaseOrderStatePartlyReceived": "Teilweise erhalten",
+  "purchaseOrderStateReceived": "Erhalten",
+  "purchaseOrderStateSent": "Gesendet",
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "purchaseOrderSupplier": "Lieferant",
+  "purchaseOrderUnit": "Einheit (z. B. Karton)",
+  "purchaseOrderUnitPrice": "Stückpreis netto",
+  "purchaseOrderVatRate": "USt-Satz (%)",
+  "purchaseOrdersEmpty": "Noch keine Bestellung. Eine neue Bestellung beginnt als Entwurf, den Sie bearbeiten, drucken und senden können.",
+  "purchaseOrdersTitle": "Bestellungen",
   "purchaseQualified": "Buchhaltung qualifiziert",
   "purchaseReceiptAdd": "Beleg mit mehreren Positionen",
   "purchaseReceiptAddLine": "Position hinzufügen",
@@ -12841,6 +12974,7 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Gekaufter Artikel",
   "purchasesKindBill": "Lieferantenrechnung",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -12877,6 +13011,7 @@
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
   },
+  "purchasesNoItem": "Kein Artikel",
   "purchasesNoSupplier": "Kein Lieferant gewählt",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -13035,6 +13170,7 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Menge",
   "purchasesReference": "Rechnungsnummer",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -13181,6 +13317,7 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "purchasesUnit": "Einheit (z. B. Karton, Ries)",
   "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
@@ -13949,6 +14086,7 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Bestellung",
   "reportDocSpaceCodes": "QR-Karten der Plätze",
   "reportDocStatus": "Lage des Arbeitsbereichs",
   "@reportDocStatus": {
@@ -13980,6 +14118,7 @@
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportExpectedDelivery": "Erwartete Lieferung",
   "reportFieldGroupBank": "Bankverbindung",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -15457,6 +15596,8 @@
     "description": "#669 - SAF-T derived postings"
   },
   "saftGap": "{kind, select, standardAccount{kein Standardkonto für {subject}} standardTaxCode{kein Standard-Steuercode für {subject}} taxRate{kein Steuersatz für {subject}} company{das Feld {subject} des Unternehmens fehlt} contact{das Feld {subject} der Ansprechperson} party{{subject} fehlt bei einem Kunden oder Lieferanten} tooLong{{subject} ist länger, als die Datei erlaubt} other{{subject}}}",
+  "saftIndustryCodeHelper": "Die Branchenkennzahl, unter der das Finanzamt das Unternehmen führt.",
+  "saftIndustryCodeLabel": "Branchenkennzahl",
   "saftLedgerIntro": "Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -15465,6 +15606,18 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftProfitBasisHelper": "Die Bestimmung des österreichischen Einkommensteuergesetzes, nach der die Bücher geführt werden, wie sie der Kopf der SAF-T AT angibt.",
+  "saftProfitBasisLabel": "Art der Gewinnermittlung",
+  "saftSmallBusinessHelper": "Ob das Unternehmen Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG ist, wie es der Kopf der SAF-T AT angibt.",
+  "saftSmallBusinessLabel": "Kleinunternehmer (§ 6 Abs. 1 Z 27 UStG)",
+  "saftSmallBusinessNo": "Nein",
+  "saftSmallBusinessYes": "Ja",
+  "saftStandardAccountsIntro": "Bestätigen Sie, unter welchem Konto des österreichischen Einheitskontenrahmens jedes Konto der Buchhaltung geschrieben wird. Ein Vorschlag kommt aus der Rolle des Kontos; prüfen Sie ihn: Nicht jedes Konto einer Rolle gehört auf dasselbe Standardkonto.",
+  "saftStandardAccountsNoSuggestion": "Kein Vorschlag: Geben Sie das Standardkonto ein.",
+  "saftStandardAccountsSuggested": "Vorgeschlagen: {suggestion}. Bestätigen oder ändern Sie es.",
+  "saftStandardAccountsTitle": "Konten des Einheitskontenrahmens",
+  "saftTaxNumberHelper": "Die Nummer, die das Finanzamt dem Unternehmen vergeben hat, nicht die Firmenbuchnummer.",
+  "saftTaxNumberLabel": "Steuernummer",
   "saftWithPostings": "Mit Buchungen",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
@@ -15841,6 +15994,7 @@
   },
   "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.",
   "settingHintPrivacyMemberSelfService": "true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.",
+  "settingHintPurchaseItemCostMethod": "average: jeder genehmigte Kauf des Artikels bis zum Ende des Zeitraums, nach Stückzahl gewichtet. last: der letzte Kauf bis dahin. Es ändert keinen Beleg, nur die Margen.",
   "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16024,6 +16178,7 @@
   },
   "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
   "settingLabelPrivacyMemberSelfService": "Mitglieder exportieren und löschen ihre Daten selbst",
+  "settingLabelPurchaseItemCostMethod": "Wie die Stückkosten eines Artikels in den Margen gelesen werden",
   "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -16374,6 +16529,18 @@
   "setupBasicsPreviewTime": "Die aktuelle Uhrzeit",
   "setupBasicsPreviewTimeIn": "{time} ({offset})",
   "setupBasicsSaveFailed": "Die Grunddaten konnten nicht gespeichert werden. Versuchen Sie es erneut.",
+  "setupChoicesAdvanced": "Bereiche einzeln anpassen",
+  "setupChoicesBookings": "Personen und Buchungen",
+  "setupChoicesDetails": "Alle Änderungen prüfen",
+  "setupChoicesManual": "Ihre Auswahl bleibt beim Beantworten anderer Fragen erhalten.",
+  "setupChoicesMoney": "Geld und Verwaltung",
+  "setupChoicesNeedsDecision": "Ihre bisherige Auswahl bleibt erhalten. Klären Sie „Noch nicht sicher“, bevor Sie die Änderungen übernehmen.",
+  "setupChoicesOperations": "Täglicher Betrieb",
+  "setupChoicesQuestionUnknown": "Noch unklar: {question}",
+  "setupChoicesReset": "Empfohlene Stufen verwenden",
+  "setupChoicesSaving": "Wird gespeichert…",
+  "setupChoicesSummary": "Einstellungen, die sich ändern: {count}",
+  "setupChoicesUnsaved": "Nur Vorschau – noch nichts angewendet.",
   "setupDraftChanged": "Von jemand anderem geändert, während Sie bearbeitet haben.",
   "setupDraftDiscard": "Verwerfen",
   "setupDraftKeepMine": "Meine behalten",
@@ -16466,6 +16633,7 @@
   "setupGrowVatRate": "{rate} %",
   "setupGrowVatUsualNote": "Ein Ausgangspunkt, keine Steuerberatung: Ihre Steuerberatung bestätigt, welcher Satz für Ihre Leistungen gilt.",
   "setupGrowVatUsualTitle": "Die üblichen Sätze Ihres Landes",
+  "setupGuidanceTitle": "Hinweise und Prüfungen",
   "setupGuideAddIt": "Hinzufügen",
   "setupGuideAddMore": "Mehr zu Ihrem Bereich hinzufügen",
   "setupGuideAllDone": "Ihr Bereich hat alles, was Sie gewählt haben.",
@@ -16608,7 +16776,7 @@
   "setupLevelsConfirmOff": "Einige Funktionen werden ausgeschaltet. Ihre Daten bleiben, aber sie arbeiten nicht mehr, bis sie wieder eingeschaltet werden.",
   "setupLevelsConflict": "Die Funktionen haben sich inzwischen geändert. Sehen Sie erneut nach und wenden Sie dann an.",
   "setupLevelsGap": "{level} braucht {needed}",
-  "setupLevelsIntro": "Beantworten Sie ein paar einfache Fragen: Jeder Prozess erhält die Stufe, die sie verlangen, mit Begründung. Ändern Sie eine Stufe von Hand. Nichts ändert sich vor dem Anwenden, und die Vorschau nennt jede Funktion, die ein- oder ausgeschaltet wird.",
+  "setupLevelsIntro": "Beschreiben Sie, wie Ihr Arbeitsbereich funktioniert. Prüfen Sie die Änderungen, bevor Sie Ihre Auswahl übernehmen.",
   "setupLevelsNoChange": "Nichts ändert sich: Der Raum tut das bereits.",
   "setupLevelsPresets": "Schnellstart",
   "setupLevelsQuestions": "Über Ihren Raum",
@@ -16636,6 +16804,8 @@
   "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} % ({policy}).",
   "setupNewMembersQuestions": "Fragen beim Beitritt",
   "setupNewMembersSaveFailed": "Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.",
+  "setupNextIndependent": "Sie können dies erledigen, während der frühere Meilenstein wartet.",
+  "setupNextNamed": "Weiter: {step}",
   "setupNotificationsAudience": "{audience, select, deciders{Wer darüber entscheidet} members{Mitglieder} other{{audience}}}",
   "setupNotificationsChannels": "{channels, select, app{in der App} app_push{in der App und als Benachrichtigung auf dem Telefon} device{als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen} other{{channels}}}",
   "setupNotificationsEvent": "{event, select, pending_request{Eine Anfrage wartet auf eine Entscheidung} reservation_cancelled{Eine Buchung wurde von jemand anderem entfernt} check_in{Eine Buchung beginnt gleich: Zeit zum Einchecken} member_note{Eine Nachricht oder eine Ankündigung} member_mention{Jemand erwähnt das Mitglied in einem Gespräch} invoice_reminder{Eine Zahlungserinnerung} other{{event}}}",
@@ -16669,6 +16839,13 @@
   "setupOnlineTestTestKeys": "Testschlüssel: Die Zahlung eines Mitglieds bewegt kein echtes Geld.",
   "setupOnlineTestTitle": "Testzahlung",
   "setupOnlineTestUnverified": "Diese Schlüssel zeigen nicht, ob es Test- oder Live-Schlüssel sind. Prüfen Sie sie im Dashboard des Anbieters.",
+  "setupOutcomeProgress": "Fortschritt nach Ziel",
+  "setupOverviewChoose": "Wählen Sie, was Ihr Arbeitsraum benötigt, um den Einrichtungsplan zu sehen.",
+  "setupOverviewReady": "Ihr gewähltes Ziel ist eingerichtet. Sie können es hier jederzeit prüfen oder ändern.",
+  "setupOverviewRemaining": "Noch erforderliche Aufgaben: {count}",
+  "setupOverviewTitle": "Status des Arbeitsraums",
+  "setupOverviewUnchecked": "Einige Prüfungen sind nicht verfügbar. Aktualisieren Sie den Status, bevor Sie die Einrichtung als abgeschlossen betrachten.",
+  "setupOverviewWaiting": "Dieser Meilenstein wartet. Die Aufgaben unten zeigen, wer ihn freigeben kann.",
   "setupPaymentsPreviewEmpty": "Mitglieder sehen keine Zahlungshinweise, bis Sie einen eintragen.",
   "setupPaymentsPreviewNote": "Auf einer offenen Abrechnung, unter dem geschuldeten Betrag:",
   "setupPaymentsSaveFailed": "Die Zahlungshinweise konnten nicht gespeichert werden. Bitte erneut versuchen.",
@@ -16729,6 +16906,7 @@
   "setupStepOpenScreen": "Öffnen",
   "setupStepPreviewTitle": "Was Ihre Mitglieder sehen",
   "setupStepTitle": "{key, select, basics{Name, Land und Zeitzone} hours{Öffnungszeiten} places{Plätze auf dem Plan} member_rights{Was Mitglieder dürfen} invite{Mitglieder einladen} pricing{Preise und Tarife} services{Leistungen} payment_methods{Wie Mitglieder zahlen} online_payments{Online-Zahlung} approvals{Freigaben} new_members{Neue Mitglieder} notifications{Benachrichtigungen} limits{Buchungsgrenzen} kiosk{Kiosk und Ausweise} purchases{Lieferanten und Einkäufe} lease{Ihr Mietvertrag} assets{Ausstattung} look{Farben und Begriffe} public_page{Öffentliche Seite} legal_identity{Rechtliche Angaben} vat{Umsatzsteuer} numbering{Rechnungsnummern} documents{Rechnungsbild} einvoicing{E-Rechnung} accounting{Buchhaltung} reminders{Zahlungserinnerungen} first_booking{Eine erste Buchung} recovery{Eine Kopie Ihrer Daten} assistant{Assistent} other{{key}}}",
+  "setupTaskSaved": "Der Status basiert auf gespeicherten Einstellungen. Das Öffnen einer Aufgabe schließt sie nicht ab.",
   "shellBarHiddenAnnounce": "Navigationsleiste ausgeblendet",
   "shellBarHideHint": "Lange drücken für die Vollbildansicht",
   "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
@@ -20319,5 +20497,16 @@
   "workspaceXmlImportPreviewWarning": "Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.",
   "workspaceXmlImportReservationsError": "Dieser Workspace hat bereits Reservierungen, daher kann sein Raumplan nicht ersetzt werden. Ein Import ist nur vor der ersten Buchung möglich.",
   "workspaceXmlImportSubtitle": "Einstellungen und Raumplan aus einer exportierten Datei wiederherstellen. Ersetzt den aktuellen Raumplan.",
-  "workspaceXmlImportSuccess": "Workspace importiert."
+  "workspaceXmlImportSuccess": "Workspace importiert.",
+  "xeroInvoiceAccountCode": "Code des Erlöskontos",
+  "xeroInvoiceAccountsIntro": "Xero importiert diese Rechnungen als Entwürfe: Geben Sie sie in Xero frei. Erlöskonto und Steuersätze sind die Ihrer Organisation; übernehmen Sie deren Namen aus Xero.",
+  "xeroInvoiceAccountsTitle": "Xero-Export",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.} other{{count} Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.}}",
+  "xeroInvoiceDateOrder": "Datumsreihenfolge Ihrer Organisation",
+  "xeroInvoiceDayFirst": "Tag zuerst (31/12/2026)",
+  "xeroInvoiceImportTaxExclusive": "Wählen Sie beim Import in Xero „Tax exclusive“ (netto) für die Beträge: Die Datei enthält je Steuersatz den Nettobetrag und die auf der Rechnung erfasste Steuer.",
+  "xeroInvoiceMonthFirst": "Monat zuerst (12/31/2026)",
+  "xeroInvoiceRefusedAccount": "Geben Sie den Code des Erlöskontos ein.",
+  "xeroInvoiceRefusedTaxType": "Nennen Sie den Xero-Steuersatz für {rate}.",
+  "xeroInvoiceTaxType": "Xero-Steuersatz für {rate}"
 }

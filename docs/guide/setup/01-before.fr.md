@@ -48,6 +48,8 @@ Vous voulez une vue d’ensemble avant de choisir quoi que ce soit. DesKilo regr
 
 **Public:** Propriétaire · Copropriétaire · Administrateur·rice
 
+Le guide de mise en place reste accessible dans le menu de l’espace après la configuration. Son récapitulatif indique l’espace, l’objectif choisi et le nombre de tâches obligatoires restantes. Ouvrez le détail des résultats pour voir chaque jalon. L’action conseillée mène à une tâche réalisable maintenant ; les tâches en attente d’une autre étape ou de l’opérateur le précisent. Une vérification indisponible ne signifie pas que la tâche est terminée. La progression dépend des réglages enregistrés : ouvrir une tâche ne la termine pas. Chaque tâche garde l’espace, l’objectif et son état visibles, et nomme la destination suivante.
+
 Vous voulez connaître le chemin le plus court vers un espace que l’on peut réserver. L’application tient une liste de préparation, **Mise en place de cet espace**, et, sur l’écran Réserver, dit aux propriétaires ce qui manque : *Avant que quiconque puisse réserver ici*.
 
 *Ce qui doit exister avant la première réservation*

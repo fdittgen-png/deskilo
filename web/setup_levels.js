@@ -34,22 +34,38 @@ function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=
 function applyLevels(pairs,also=[]){const f={...S.features};let used=false;
  for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f&&availableHere(k))f[k]=i<=r}));used=true}
  setMany([...also,['features',f],...(used?[['journey.used',true]]:[])])}
-function applyLevel(p,id){applyLevels([[p,id]])}
+const chosenLevels=new Map();
+function applyLevel(p,id){chosenLevels.set(p,id);applyLevels([[p,id]])}
 // #3076 — the questions open from what the space already does: a question
 // is yes where its evidence level is reached (setupQuestionEvidence) until
-// the owner has answered; "not sure yet" is no for now, and says so.
+// the owner has answered; unresolved choices preserve the previous value.
 function answersFromLevels(now){const out={};for(const q of LEVELS.questions){const e=LEVELS.evidence[q];out[q]=!!e&&levelRank(e.process,now[e.process])>=levelRank(e.process,e.level)}return out}
 const shownAnswers=()=>S.journey.used?S.journey.answers:answersFromLevels(levelsNow());
 const unknownQs=new Set();
-function markUnknown(q){answerQuestion(q,false);unknownQs.add(q)}
-function unknownNote(q){if(!unknownQs.has(q))return'';const a=shownAnswers(),yes=recommendLevels({...a,[q]:true}),no=recommendLevels({...a,[q]:false});
- return JT('setupAnswerUnknownNote',{list:LEVELS.processes.filter(pr=>yes[pr.key].level!==no[pr.key].level).map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+no[pr.key].level)).join(T('listSep'))})}
-function questionRows(){return LEVELS.questions.flatMap(q=>[checkbox(jw('question',q),null,shownAnswers()[q]===true,v=>answerQuestion(q,v)),
+function markUnknown(q){unknownQs.add(q)}
+function unknownNote(q){return unknownQs.has(q)?JT('setupChoicesNeedsDecision'):''}
+const questionGroups=[
+ ['bookings','setupChoicesBookings',['approve_bookings','several_rooms_or_sites','public_page']],
+ ['money','setupChoicesMoney',['members_owe_money','issue_invoices','pay_online','vat_registered']],
+ ['operations','setupChoicesOperations',['association','keep_books','tracks_purchases','door_tablet','organised']]
+];
+const openQuestionGroups=new Set(['bookings']);
+function questionRows(){return questionGroups.map(([id,title,questions])=>{
+ const d=h('details',{class:'adv',...(openQuestionGroups.has(id)?{open:''}:{})},h('summary',{},JT(title)),
+ ...questions.flatMap(q=>[checkbox(jw('question',q),null,shownAnswers()[q]===true,v=>answerQuestion(q,v)),
  chip(JT('setupAnswerUnknown'),unknownQs.has(q),o=>{if(o)markUnknown(q);else unknownQs.delete(q)}),
- ...(unknownQs.has(q)?[h('p',{class:'hint'},unknownNote(q))]:[])])}
+ ...(unknownQs.has(q)?[h('p',{class:'hint'},unknownNote(q))]:[])]));
+ d.ontoggle=()=>{d.open?openQuestionGroups.add(id):openQuestionGroups.delete(id)};return d})}
+let levelsAdvancedOpen=false;
+function advancedLevels(now,rec,preset){const d=h('details',{class:'adv',...(levelsAdvancedOpen?{open:''}:{})},h('summary',{},JT('setupChoicesAdvanced')),
+ h('p',{},JT('setupLevelsPresets')),
+ h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
+ ...(chosenLevels.size?[h('p',{class:'hint'},JT('setupChoicesManual')),h('button',{class:'btn ghost',type:'button',onclick:()=>{chosenLevels.clear();applyLevels(Object.entries(recommendLevels(shownAnswers())).map(([p,r])=>[p,r.level]));render()}},JT('setupChoicesReset'))]:[]),
+ ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)));
+ d.ontoggle=()=>{levelsAdvancedOpen=d.open};return d}
 function answerQuestion(q,v){unknownQs.delete(q);const a={...shownAnswers(),[q]:v},rec=recommendLevels(a);
- applyLevels(Object.entries(rec).map(([p,r])=>[p,r.level]),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
-function applyPreset(name){applyLevels(Object.entries(LEVELS.presets[name]||{}))}
+ applyLevels(Object.entries(rec).map(([p,r])=>[p,chosenLevels.get(p)??r.level]),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
+function applyPreset(name){chosenLevels.clear();for(const[p,l]of Object.entries(LEVELS.presets[name]||{}))chosenLevels.set(p,l);applyLevels([...chosenLevels])}
 const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
 // What a vector lacks: each chosen level (and those below it) whose needs
 // another process does not meet — setupVectorGaps.

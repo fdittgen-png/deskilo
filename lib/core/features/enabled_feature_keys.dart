@@ -29,6 +29,9 @@ const String accountingBookKey = 'accountingBook';
 /// exchange rate recorded on it.
 const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';
 
+/// #3294 — the purchase figures; with them a bill names the item it bought.
+const String purchaseAnalyticsKey = 'purchaseAnalytics';
+
 /// The accounting systems the books go to, and the transfers that carried
 /// them.
 const String accountingConnectorsKey = 'accountingConnectors';
@@ -36,3 +39,6 @@ const String accountingConnectorsKey = 'accountingConnectors';
 /// #2377 — the book periods and the export log: with the accounting
 /// systems, what makes the server log a file handed out.
 const String accountingPeriodsKey = 'accountingPeriods';
+
+/// #3307 — the purchase orders to the suppliers.
+const String purchaseOrdersKey = 'purchaseOrders';

@@ -8,6 +8,7 @@ import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
@@ -59,7 +60,22 @@ String buildInvoiceUbl(
     throw ArgumentError(
         'a credit note that nets payments has no EN 16931 credit-note form');
   }
+  _refuseQrIbanWithoutReference(input);
   return writer.write();
+}
+
+/// #2380 — a QR-IBAN account with no frozen QR reference cannot be stated:
+/// the account refuses a payment without one, and the derived one is
+/// ambiguous. The readiness check refuses it before export
+/// (EInvoiceGap.qrIbanWithoutReference); a direct call fails loudly.
+void _refuseQrIbanWithoutReference(EInvoiceInput input) {
+  if (qrIbanWithoutReference(
+    account: input.iban,
+    creditNote: input.invoice.totalCents < 0,
+    legalSnapshot: input.invoice.legalSnapshot,
+  )) {
+    throw ArgumentError('a QR-IBAN payment needs the QR reference frozen at issue');
+  }
 }
 
 /// The UBL document, one method per section of it.
@@ -242,12 +258,20 @@ class _UblWriter {
     });
   }
 
-  /// BT-81/84 — where to pay (30 = credit transfer) and on what terms.
+  /// BT-81/83/84 — where to pay, with which reference, (30 = credit transfer) and on what terms.
   void payment() {
     final iban = input.iban;
     if (iban.isNotEmpty) {
       builder.element('cac:PaymentMeans', nest: () {
         cbc('PaymentMeansCode', '30');
+        // BT-83 — the reference the payer quotes with the transfer.
+        final reference = paymentReferenceFor(
+          account: iban,
+          invoiceNumber: invoice.number,
+          creditNote: invoice.totalCents < 0,
+          legalSnapshot: invoice.legalSnapshot,
+        );
+        if (reference.isNotEmpty) cbc('PaymentID', reference);
         builder.element('cac:PayeeFinancialAccount', nest: () {
           cbc('ID', iban.replaceAll(' ', ''));
         });

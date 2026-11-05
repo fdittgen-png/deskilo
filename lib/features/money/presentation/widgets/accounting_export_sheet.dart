@@ -152,6 +152,7 @@ class _FormatTile extends StatelessWidget {
         'fec' ||
         'datev' ||
         'sage50' ||
+        'xero_invoice_csv' ||
         'ch_kmu' ||
         'banana_transactions' => Icons.table_chart_outlined,
         'saft' ||
@@ -159,6 +160,7 @@ class _FormatTile extends StatelessWidget {
         'saft_no' ||
         'saft_dk' ||
         'saft_ro' ||
+        'saft_at' ||
         'faia_lu' ||
         'saft_oecd_full' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,
@@ -184,9 +186,11 @@ String accountingFormatName(AppLocalizations l10n, String id) => switch (id) {
   'saft_pt' => l10n.invoiceExportSafTPt,
   'saft_no' => l10n.invoiceExportSafTNo,
   'faia_lu' => l10n.invoiceExportFaiaLu,
+  'saft_at' => l10n.invoiceExportSafTAt,
   'saft_oecd_full' => l10n.invoiceExportSafTFull,
   'datev' => l10n.invoiceExportDatev,
   'sage50' => l10n.invoiceExportSage,
+  'xero_invoice_csv' => l10n.invoiceExportXeroInvoiceCsv,
   'ch_kmu' => l10n.invoiceExportSwissKmu,
   'banana_transactions' => l10n.invoiceExportBanana,
   'accountant_csv' =>

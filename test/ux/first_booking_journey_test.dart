@@ -137,6 +137,23 @@ Future<void> _reloadIntoGuide(WidgetTester tester, _Space space) async {
 
 const _next = 'setup-guide-next';
 
+/// #3282 — the guide keeps each goal's progress in its "Progress by outcome"
+/// panel, disclosed on demand: the panel is opened and the goal's line read
+/// there, as the guide always showed it.
+Future<void> _expectGoalProgress(WidgetTester tester, String line) async {
+  final details = find.byKey(const ValueKey('setup-outcome-details'));
+  expect(details, findsOneWidget);
+  if (find.textContaining('Take bookings · ').evaluate().isEmpty) {
+    await tester.ensureVisible(details);
+    await tester.tap(details);
+    await tester.pumpAndSettle();
+  }
+  expect(
+    find.descendant(of: details, matching: find.textContaining(line)),
+    findsOneWidget,
+  );
+}
+
 void main() {
   testWidgets('a clean workspace reaches a first booking, reload included', (
     tester,
@@ -167,7 +184,7 @@ void main() {
     await space.workspace.setDefaultWorkspaceId(id);
 
     await _reloadIntoGuide(tester, space);
-    expect(find.textContaining('Take bookings · 2 of 4 done'), findsOneWidget);
+    await _expectGoalProgress(tester, 'Take bookings · 2 of 4 done');
     expect(await space.step('places'), SetupStepState.needsConfiguration);
     expect(
       await space.step('member_rights'),
@@ -190,7 +207,7 @@ void main() {
     // 3. The resource is created; the app starts afresh over the same data.
     space.plan.seedSmallPlan(workspaceId: id);
     await _reloadIntoGuide(tester, space);
-    expect(find.textContaining('Take bookings · 3 of 4 done'), findsOneWidget);
+    await _expectGoalProgress(tester, 'Take bookings · 3 of 4 done');
     expect(await space.step('places'), SetupStepState.ready);
     expect(await space.step('hours'), SetupStepState.ready);
     expect(
@@ -224,7 +241,7 @@ void main() {
       await space.step('first_booking'),
       SetupStepState.needsConfiguration,
     );
-    expect(find.textContaining('Take bookings · Done'), findsOneWidget);
+    await _expectGoalProgress(tester, 'Take bookings · Done');
     expect(
       find.byKey(const ValueKey('$_next-pricing')),
       findsOneWidget,
@@ -267,7 +284,7 @@ void main() {
 
     // The owner is shown what remains: the later outcomes are not reached.
     expect(await space.reached('money'), isFalse);
-    expect(find.textContaining('Take bookings · Done'), findsOneWidget);
+    await _expectGoalProgress(tester, 'Take bookings · Done');
     expect(find.textContaining('Ready for money · 5 of 7 done'), findsOneWidget);
     expect(find.textContaining('Live · 6 of 9 done'), findsOneWidget);
   });

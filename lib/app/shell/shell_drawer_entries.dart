@@ -155,6 +155,7 @@ class DrawerEntries {
         DrawerEntry('drawer-suppliers', Icons.storefront_outlined,
             l10n.suppliersTitle, () => go('/money/suppliers'),
             route: '/money/suppliers'),
+      ..._purchaseOrders(),
       // #3070 — the documents waiting for a decision; the drawer badges it.
       if (features.contains(WorkspaceFeature.purchases) &&
           may(WorkspacePermission.approveExpenses))
@@ -177,6 +178,18 @@ class DrawerEntries {
             route: '/money/cash'),
     ];
   }
+
+  /// #3307 — the space's orders to its suppliers, for a buyer or a
+  /// finance reader.
+  List<DrawerEntry> _purchaseOrders() => [
+    if (features.contains(WorkspaceFeature.purchases) &&
+        features.contains(WorkspaceFeature.purchaseOrders) &&
+        (may(WorkspacePermission.viewFinances) ||
+            may(WorkspacePermission.managePurchases)))
+      DrawerEntry('drawer-purchase-orders', Icons.local_shipping_outlined,
+          l10n.purchaseOrdersTitle, () => go('/money/purchase-orders'),
+          route: '/money/purchase-orders'),
+  ];
 
   /// The accounting and VAT sub-group of Finance: the one place the books,
   /// their export and import, the VAT and the legal identity are reached.

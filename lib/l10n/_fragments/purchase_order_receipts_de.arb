@@ -1,0 +1,14 @@
+{
+  "purchaseOrderLineReceived": "{description}: {received} von {ordered} erhalten",
+  "purchaseOrderReceive": "Wareneingang erfassen",
+  "purchaseOrderReceiveTitle": "Lieferung zu {reference}",
+  "purchaseOrderReceiveTooMany": "Mehr als von dieser Position noch aussteht",
+  "purchaseOrderReceiveNothing": "Geben Sie an, was von mindestens einer Position angekommen ist",
+  "purchaseOrderReceivedOn": "Angekommen am",
+  "purchaseOrderReceiveLine": "{description} (noch {left} offen)",
+  "purchaseOrderReceiveNote": "Notiz (optional)",
+  "purchaseBillOrder": "Bestellung",
+  "purchaseBillOrderHint": "Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar",
+  "purchaseBillNoOrder": "Keine Bestellung",
+  "purchaseBillForOrder": "Bestellung {reference}"
+}

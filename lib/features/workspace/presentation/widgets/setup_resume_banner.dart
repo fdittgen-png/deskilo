@@ -32,7 +32,7 @@ class SetupResumeBanner extends ConsumerWidget {
     final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
     final milestone = status?.nextMilestone;
     final step = status?.nextStep;
-    if (status == null || milestone == null || step == null) {
+    if (status == null || milestone == null) {
       return const SizedBox.shrink();
     }
     final card = Card(
@@ -45,12 +45,16 @@ class SetupResumeBanner extends ConsumerWidget {
         leading: const Icon(Icons.checklist_outlined),
         title: compact ? null : Text(l10n.setupGuideTitle),
         subtitle: Text(
-          l10n.setupGuideBanner(
-            l10n.setupMilestoneName(milestone.milestone),
-            milestone.ready,
-            milestone.required,
-            l10n.setupStepTitle(step.step),
-          ),
+          step == null
+              ? '${l10n.setupMilestoneName(milestone.milestone)} · '
+                    '${l10n.setupGuideProgress(milestone.ready, milestone.required)} · '
+                    '${l10n.setupOverviewWaiting}'
+              : l10n.setupGuideBanner(
+                  l10n.setupMilestoneName(milestone.milestone),
+                  milestone.ready,
+                  milestone.required,
+                  l10n.setupStepTitle(step.step),
+                ),
           maxLines: compact ? 1 : null,
           overflow: compact ? TextOverflow.ellipsis : null,
         ),
@@ -85,7 +89,7 @@ Widget? setupResumeBannerFor(
     return null;
   }
   final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
-  return status?.nextMilestone == null || status?.nextStep == null
+  return status?.nextMilestone == null
       ? null
       : SetupResumeBanner(workspaceId: workspaceId, compact: compact);
 }
@@ -97,8 +101,7 @@ List<ReadinessSection>? watchWorkspaceReadiness(
   String workspaceId,
 ) => ref.watch(workspaceReadinessProvider(workspaceId)).value;
 
-/// #3077 — whether the setup guide still has a milestone open for
-/// [workspaceId]: the sidebar offers its door only then.
+/// Configuration stays reachable after setup, while its feature is enabled.
 bool setupGuideOpenFor(WidgetRef ref, String? workspaceId) {
   if (workspaceId == null ||
       !ref
@@ -106,5 +109,5 @@ bool setupGuideOpenFor(WidgetRef ref, String? workspaceId) {
           .contains(WorkspaceFeature.setupGuide)) {
     return false;
   }
-  return ref.watch(workspaceSetupStatusProvider(workspaceId)).value?.nextMilestone != null;
+  return true;
 }

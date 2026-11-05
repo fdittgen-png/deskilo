@@ -18,8 +18,10 @@ import '../../domain/setup_steps.dart';
 import '../../domain/site.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/setup_basics_step.dart';
+import '../widgets/setup_configuration_overview.dart';
 import '../widgets/setup_grow_pages.dart';
 import '../widgets/setup_hours_step.dart';
 import '../widgets/setup_invite_step.dart';
@@ -68,10 +70,23 @@ class SetupStepScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(context.l10n.setupStepTitle(stepId))),
       body: workspace == null
           ? const LoadingView()
-          : _Session(
-              workspaceId: workspace.id,
-              stepId: stepId,
-              child: _page(ref, workspace),
+          : Column(
+              children: [
+                SetupTaskContext(
+                  workspaceName: workspace.name,
+                  stepId: stepId,
+                  status: ref
+                      .watch(workspaceSetupStatusProvider(workspace.id))
+                      .value,
+                ),
+                Expanded(
+                  child: _Session(
+                    workspaceId: workspace.id,
+                    stepId: stepId,
+                    child: _page(ref, workspace),
+                  ),
+                ),
+              ],
             ),
     );
   }
@@ -146,11 +161,10 @@ class _SessionState extends ConsumerState<_Session> {
 
 /// The places page from what this feature knows: the sites when there are
 /// several (default first) and whether the library is on.
-typedef SetupPlacesBuilder =
-    Widget Function({
-      required Map<String, String> sites,
-      required bool libraryOn,
-    });
+typedef SetupPlacesBuilder = Widget Function({
+  required Map<String, String> sites,
+  required bool libraryOn,
+});
 
 class _PlacesHost extends ConsumerWidget {
   const _PlacesHost({required this.page});
@@ -163,7 +177,10 @@ class _PlacesHost extends ConsumerWidget {
         ? ref.watch(sitesProvider).value ?? const []
         : const [];
     return page(
-      sites: {if (sites.length > 1) for (final s in sites) s.id: s.name},
+      sites: {
+        if (sites.length > 1)
+          for (final s in sites) s.id: s.name,
+      },
       libraryOn: features.contains(WorkspaceFeature.workspaceLibrary),
     );
   }

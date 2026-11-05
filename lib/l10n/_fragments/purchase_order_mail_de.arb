@@ -1,0 +1,17 @@
+{
+  "purchaseOrderMailText": "Guten Tag,\n\nanbei finden Sie unsere Bestellung {reference}.\n\nMit freundlichen Grüßen\n{space}",
+  "purchaseOrderSendEmail": "Per E-Mail senden",
+  "purchaseOrderSentTo": "Gesendet an {recipient}",
+  "purchaseOrderSendRefused": "Die E-Mail wurde abgelehnt: {reason}. Die Bestellung bleibt ein Entwurf.",
+  "purchaseOrderSendUnconfirmed": "Es kam keine bestätigte Antwort. Fragen Sie beim Lieferanten nach, bevor Sie erneut senden.",
+  "purchaseOrderSendAwaits": "Eine E-Mail an {recipient} hat kein bestätigtes Ergebnis. Ist sie angekommen?",
+  "purchaseOrderSendArrived": "Sie ist angekommen",
+  "purchaseOrderSendLost": "Sie ist nicht angekommen",
+  "purchaseOrderMailSettings": "E-Mail-Versand",
+  "purchaseOrderMailSender": "Absenderadresse (eine bei Resend verifizierte Domain)",
+  "purchaseOrderMailSenderName": "Absendername",
+  "purchaseOrderMailKey": "Resend-API-Schlüssel",
+  "purchaseOrderMailKeyKept": "Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.",
+  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel",
+  "purchaseOrderMailSave": "Speichern"
+}
