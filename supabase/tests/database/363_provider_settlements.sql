@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 item 4 (0683) — a provider's fee, net and payout are recorded as
+-- #2380 item 4 (0687) — a provider's fee, net and payout are recorded as
 -- facts: once, reconciled, and readable only to whoever may see the books.
 --
 -- The issue's Stripe fixture: three payments of 120.00, each 3.78 fee and

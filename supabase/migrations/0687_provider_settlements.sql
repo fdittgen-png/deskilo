@@ -170,4 +170,4 @@ create policy mcp_delegated_deny on public.provider_payouts as restrictive for a
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(683);
+select public.set_deskilo_schema_version(687);
