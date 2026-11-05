@@ -61,6 +61,8 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/demo_free_seat.dart';
+
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
 class _World {
@@ -232,13 +234,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         ],
       );
       final offer = (await passes.offers(demoLondonSpaceId)).single;
-      final day = w.now.add(const Duration(days: 20));
+      final slot = freeSeatForPass(london.floorPlan.seats, london.reservations.reservations,
+          DateTime(w.now.year, w.now.month, w.now.day + 20), startMinutes: 9 * 60, endMinutes: 17 * 60);
       final sale = await passes.sell(
         demoLondonSpaceId,
         draft: GuestPassDraft(
           offer: offer,
-          seatId: london.floorPlan.seats.first.id,
-          day: DateTime(day.year, day.month, day.day),
+          seatId: slot.seatId,
+          day: slot.day,
           startMinutes: 9 * 60,
           endMinutes: 17 * 60,
         ),

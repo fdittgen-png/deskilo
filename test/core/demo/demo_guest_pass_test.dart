@@ -6,6 +6,8 @@
 // record of origin guest, invoices the pass to the guest by name, files a
 // pending payment when the money was taken, and the same request never
 // sells twice; a persona without issueInvoices is refused.
+import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
+import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
@@ -15,13 +17,13 @@ import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
-import 'package:deskilo/features/plan/domain/seat.dart';
-import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
+import '../../helpers/demo_free_seat.dart';
 
 void main() {
   late DemoFixture fixture;
@@ -42,12 +44,6 @@ void main() {
     await container.read(myMemberProvider.future);
     return container.read(guestPassRepositoryProvider);
   }
-
-  /// A seat with no booking that day (the seeded month is busy).
-  String freeSeat(List<Seat> seats, List<Reservation> bookings, DateTime day) => seats
-      .map((s) => s.id)
-      .firstWhere((id) => !bookings.any((r) =>
-          r.seatId == id && r.startsAt.year == day.year && r.startsAt.month == day.month && r.startsAt.day == day.day));
 
   DateTime aDay(int ahead) {
     final d = fixture.seededAt.add(Duration(days: ahead));
@@ -82,10 +78,12 @@ void main() {
   test('a two-day London pass books the seat each day and invoices the guest in pounds', () async {
     final passes = await enter(demoLondonSpaceId);
     final offer = (await passes.offers(demoLondonSpaceId)).firstWhere((o) => o.unit == GuestPassUnit.day);
-    final seat = fixture.london.floorPlan.seats.first.id;
+    final slot = freeSeatForPass(fixture.london.floorPlan.seats, fixture.london.reservations.reservations, aDay(20),
+        days: 2, startMinutes: 540, endMinutes: 1080);
+    final seat = slot.seatId;
     final sale = await passes.sell(
       demoLondonSpaceId,
-      draft: GuestPassDraft(offer: offer, seatId: seat, day: aDay(20), startMinutes: 540, endMinutes: 1080, days: 2, paid: true, method: 'card'),
+      draft: GuestPassDraft(offer: offer, seatId: seat, day: slot.day, startMinutes: 540, endMinutes: 1080, days: 2, paid: true, method: 'card'),
       guest: const {'first_name': 'Gwen', 'last_name': 'Guest', 'email': 'gwen@guest.test'},
       requestId: 'r-london',
     );
@@ -94,7 +92,7 @@ void main() {
     final booked = fixture.london.reservations.reservations.where((r) => sale.reservationIds.contains(r.id)).toList();
     expect(booked, hasLength(2));
     expect(booked.every((r) => r.memberId == sale.memberId && r.seatId == seat), isTrue);
-    expect(booked.map((r) => r.startsAt.day).toSet(), {aDay(20).day, aDay(21).day});
+    expect(booked.map((r) => r.startsAt.day).toSet(), {slot.day.day, DateTime(slot.day.year, slot.day.month, slot.day.day + 1).day});
     final guest = fixture.london.workspaces.otherMembers.singleWhere((m) => m.id == sale.memberId);
     expect(guest.origin, MemberOrigin.guest);
     expect(guest.subscriptionPct, 0);
@@ -118,7 +116,11 @@ void main() {
     final offer = (await passes.offers(demoNewYorkSpaceId)).single;
     final sale = await passes.sell(
       demoNewYorkSpaceId,
-      draft: GuestPassDraft(offer: offer, seatId: freeSeat(fixture.newYork.floorPlan.seats, fixture.newYork.reservations.reservations, aDay(21)), day: aDay(21), startMinutes: 600, endMinutes: 750),
+      draft: () {
+        final slot = freeSeatForPass(fixture.newYork.floorPlan.seats, fixture.newYork.reservations.reservations, aDay(21),
+            startMinutes: 600, endMinutes: 750);
+        return GuestPassDraft(offer: offer, seatId: slot.seatId, day: slot.day, startMinutes: 600, endMinutes: 750);
+      }(),
       guest: const {'first_name': 'Hal', 'last_name': 'Hourly'},
       requestId: 'r-ny',
     );
@@ -130,7 +132,9 @@ void main() {
   test('the same request sells once', () async {
     final passes = await enter(demoLondonSpaceId);
     final offer = (await passes.offers(demoLondonSpaceId)).firstWhere((o) => o.unit == GuestPassUnit.hour);
-    final draft = GuestPassDraft(offer: offer, seatId: fixture.london.floorPlan.seats.last.id, day: aDay(22), startMinutes: 600, endMinutes: 660);
+    final slot = freeSeatForPass(fixture.london.floorPlan.seats, fixture.london.reservations.reservations, aDay(22),
+        startMinutes: 600, endMinutes: 660);
+    final draft = GuestPassDraft(offer: offer, seatId: slot.seatId, day: slot.day, startMinutes: 600, endMinutes: 660);
     const guest = {'first_name': 'Rita', 'last_name': 'Retry'};
     final a = await passes.sell(demoLondonSpaceId, draft: draft, guest: guest, requestId: 'r-same');
     final invoices = fixture.london.money.invoices.length;
@@ -153,5 +157,32 @@ void main() {
       ),
       throwsA(isA<PostgrestException>().having((e) => e.code, 'code', '42501')),
     );
+  });
+
+  test('the London journey sells at any Demo clock: the seat and day come from the fixture', () async {
+    for (final now in [demoSeedNow, demoSeedNow.add(const Duration(days: 47, hours: 5))]) {
+      final f = DemoFixture.build(now: now);
+      final passes = FakeGuestPassRepository(
+        workspaceId: demoLondonSpaceId,
+        currency: 'GBP',
+        reservations: f.london.reservations,
+        workspaces: f.london.workspaces,
+        money: f.london.money,
+        now: () => f.seededAt,
+        maySell: () => true,
+        mayPrice: () => true,
+        floorPlanSeats: () => f.london.floorPlan.seats,
+        offers: const [GuestPassOffer(id: 'd', name: 'Day pass', unit: GuestPassUnit.day, priceCents: 2500)],
+      );
+      final from = DateTime(f.seededAt.year, f.seededAt.month, f.seededAt.day + 20);
+      final slot = freeSeatForPass(f.london.floorPlan.seats, f.london.reservations.reservations, from,
+          days: 2, startMinutes: 540, endMinutes: 1080);
+      final sale = await passes.sell(demoLondonSpaceId,
+          draft: GuestPassDraft(offer: (await passes.offers(demoLondonSpaceId)).single, seatId: slot.seatId,
+              day: slot.day, startMinutes: 540, endMinutes: 1080, days: 2),
+          guest: const {'first_name': 'Clock', 'last_name': 'Proof'},
+          requestId: 'clock-$now');
+      expect(sale.reservationIds, hasLength(2), reason: 'at $now');
+    }
   });
 }
