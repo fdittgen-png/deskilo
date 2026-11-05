@@ -39,8 +39,7 @@ void main() {
     }
   });
 
-  test('every capability the issue names is there, and the roadmap ones '
-      'are roadmap', () {
+  test('delivered capabilities have a shipped catalogue entry', () {
     final byId = {
       for (final c in _manifest()['capabilities'] as List)
         (c as Map)['id'] as String: c['status'],
@@ -54,13 +53,14 @@ void main() {
       // master with gated unit and pgTAP evidence; off until an operator
       // switches it on for one installation.
       'mcp.read', 'mcp.write', 'mcp.consent', //
+      // #3326 — reconcile delivered outcomes with their bounded evidence.
+      'recovery.storage_auth', 'calendar.interchange', //
+      'suppliers.lookup', 'purchases.payables', 'purchases.orders',
+      'guests.passes', 'bank.reconciliation', 'accounting.connections',
+      'tax.hmrc_mtd', 'personal.workspace_separation', 'setup.guide',
+      'privacy.member_rights', 'webmcp.browser', //
     ]) {
       expect(byId[id], 'shipped', reason: id);
-    }
-    for (final id in [
-      'recovery.storage_auth', 'calendar.interchange', //
-    ]) {
-      expect(byId[id], 'roadmap', reason: '$id has no delivered evidence');
     }
   });
 
@@ -78,3 +78,4 @@ void main() {
     );
   });
 }
+

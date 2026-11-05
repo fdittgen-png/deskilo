@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-10-10.1",
+  "version": "2026-11-05.1",
   "capabilities": [
     {
       "id": "booking",
@@ -92,10 +92,11 @@
       "provider": "paypal",
       "component": ["supabase/functions/create-payment-order/", "supabase/functions/paypal-webhook/"],
       "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
-      "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
+      "limitations": "The real order and PayPal webhook handlers run against a stateful local PayPal stub, including approval and capture, signature refusal, wrong payment facts, replay, concurrency and a lost capture response. The stub verifies the local protocol and ledger effects; no PayPal sandbox or live signature acceptance is recorded.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/payment_config_screen_test.dart"},
-        {"scope": "unit", "ref": "test/features/workspace/payment_instructions_test.dart"}
+        {"scope": "unit", "ref": "test/features/workspace/payment_instructions_test.dart"},
+        {"scope": "local_integration", "ref": "scripts/payment_scenarios/paypal.sh"}
       ]
     },
     {
@@ -106,67 +107,78 @@
       "provider": "mollie",
       "component": ["supabase/functions/create-payment-order/", "supabase/functions/mollie-webhook/"],
       "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
-      "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
+      "limitations": "The real order and Mollie webhook handlers run against a stateful local stub. Classic callbacks cause a provider readback and settle only matching paid payments; pending, failed, mismatched, duplicate, concurrent and unavailable-provider cases are exercised. No Mollie sandbox acceptance is recorded; next-generation callbacks are refused.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/payment_config_screen_test.dart"},
-        {"scope": "local_integration", "ref": "supabase/tests/database/22_reconciliation.sql"}
+        {"scope": "local_integration", "ref": "supabase/tests/database/22_reconciliation.sql"},
+        {"scope": "local_integration", "ref": "scripts/payment_scenarios/mollie.sh"}
       ]
     },
     {
       "id": "payments.wero",
-      "outcome": "A member pays a bill with Wero, offered through the Mollie checkout.",
+      "outcome": "A member pays a bill with Wero through Mollie checkout; the callback reads the payment back with the Wero configuration and credits it once.",
       "status": "shipped",
       "features": ["onlinePayments"],
       "provider": "wero",
       "component": ["supabase/functions/create-payment-order/", "supabase/functions/mollie-webhook/"],
       "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
-      "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
+      "limitations": "Local handler integration exercises Wero separately from Mollie with its own credentials, method and payment, including a paid settlement and refusal of a wrong method. This is stateful stub evidence, not evidence that a Mollie account or bank has accepted Wero in a sandbox or live environment.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/payment_config_screen_test.dart"},
         {"scope": "unit", "ref": "test/features/money/payment_method_test.dart"},
-        {"scope": "unit", "ref": "test/features/workspace/payment_instructions_test.dart"}
+        {"scope": "unit", "ref": "test/features/workspace/payment_instructions_test.dart"},
+        {"scope": "local_integration", "ref": "scripts/payment_scenarios/mollie.sh"}
       ]
     },
     {
       "id": "accounting.export",
-      "outcome": "The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.",
+      "outcome": "A period's fiscal source and, where configured, the local book's postings produce accountant handoff files, FEC, DATEV and supported SAF-T financial files, with target qualification and missing mappings checked before export.",
       "status": "shipped",
-      "features": ["dataExport", "vatManagement"],
-      "component": ["lib/features/money/domain/fec.dart", "lib/features/money/domain/saf_t.dart", "lib/features/money/domain/datev.dart", "lib/features/money/domain/accounting_format.dart"],
-      "prerequisites": "A chart of accounts mapping; a VAT regime.",
-      "limitations": "Format conformance is proved against the published specifications, not against any accounting software's import; no certification is claimed.",
+      "features": ["dataExport", "vatManagement", "accountingBook"],
+      "component": ["lib/features/money/domain/fec.dart", "lib/features/money/domain/saf_t.dart", "lib/features/money/domain/datev.dart", "lib/features/money/domain/accounting_format.dart", "lib/features/money/domain/accounting_capability.dart", "lib/features/money/domain/accounting_capability_poland.dart", "lib/features/money/presentation/accounting_export_fec.dart"],
+      "prerequisites": "A VAT regime and legal issuer; the book authority, fiscal year and chart mappings required by the selected target; a source snapshot covering the requested period.",
+      "limitations": "Local format and source checks do not establish complete statutory books, certification or acceptance by an accountant's importer or authority. FEC retains its complete-books obligation; Portuguese SAF-T retains its software-certification obligation. Poland JPK_KR_PD remains blocked at specificationNeeded pending authoritative source coverage despite schema-valid sample generation. A target without a reviewed qualification is refused.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/fec_test.dart"},
         {"scope": "unit", "ref": "test/features/money/saf_t_test.dart"},
         {"scope": "unit", "ref": "test/features/money/accounting_journals_test.dart"},
-        {"scope": "unit", "ref": "test/features/money/accounting_standards_test.dart"}
+        {"scope": "unit", "ref": "test/features/money/accounting_standards_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/accounting_capability_qualification_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/posted_fec_export_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/saf_t_financial_targets_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/200_accounting_source_snapshot_v1.sql"}
       ]
     },
     {
       "id": "einvoice.generate",
-      "outcome": "An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.",
+      "outcome": "An invoice becomes a UBL 2.1, Factur-X (CII), FatturaPA or KSeF FA(3) document with channel-specific references and readiness checks.",
       "status": "shipped",
       "features": ["invoicing", "vatManagement"],
-      "component": ["lib/features/money/domain/invoice_ubl.dart", "lib/features/money/domain/invoice_ubl_check.dart", "lib/features/money/domain/e_invoice_routing.dart", "lib/features/money/domain/e_invoice_totals.dart"],
+      "component": ["lib/features/money/domain/invoice_ubl.dart", "lib/features/money/domain/invoice_ubl_check.dart", "lib/features/money/domain/e_invoice_routing.dart", "lib/features/money/domain/e_invoice_totals.dart", "lib/features/money/domain/invoice_cii.dart", "lib/features/money/domain/invoice_fatturapa.dart", "lib/features/money/domain/invoice_ksef_fa3.dart", "lib/features/money/domain/einvoice_channel_check.dart"],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
-      "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
+      "limitations": "Arithmetic, document structure and channel-specific prerequisites have local checks. Generated samples and national connector code do not establish acceptance by a destination platform or authority, and unsupported issuance routes remain refused.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/invoice_ubl_test.dart"},
         {"scope": "unit", "ref": "test/features/money/einvoice_line_arithmetic_test.dart"},
         {"scope": "unit", "ref": "test/features/money/e_invoice_routing_test.dart"},
-        {"scope": "unit", "ref": "test/features/money/chorus_pro_references_test.dart"}
+        {"scope": "unit", "ref": "test/features/money/chorus_pro_references_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/invoice_cii_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/invoice_fatturapa_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/invoice_ksef_fa3_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/einvoice_channels_test.dart"}
       ]
     },
     {
       "id": "einvoice.transmit",
-      "outcome": "With a platform configured, the app hands the document to the send-e-invoice function, which holds the credential, transmits and logs the attempt.",
+      "outcome": "With a platform configured, the app selects the supported document and destination, hands it to send-e-invoice, and reads back transmission attempts and provider-specific receipt fields.",
       "status": "shipped",
       "features": ["einvoiceCustomerDelivery"],
-      "component": ["supabase/functions/send-e-invoice/", "lib/features/money/domain/einvoice_gateway.dart"],
+      "component": ["supabase/functions/send-e-invoice/", "lib/features/money/domain/einvoice_gateway.dart", "lib/features/money/application/einvoice_receipt.dart"],
       "prerequisites": "Platform credentials configured by the operator.",
-      "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
+      "limitations": "The client handoff, channel selection and receipt interpretation are unit-tested using simulated responses. No real or sandbox transmission or acceptance by a national platform is recorded by this evidence.",
       "evidence": [
-        {"scope": "unit", "ref": "test/features/money/einvoice_send_test.dart"}
+        {"scope": "unit", "ref": "test/features/money/einvoice_send_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/einvoice_receipts_test.dart"}
       ]
     },
     {
@@ -176,7 +188,7 @@
       "features": [],
       "component": ["scripts/restore_check.sh"],
       "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
-      "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
+      "limitations": "The default CI drill restores public and auth database schemas and checks counts, tenant separation and reconciliation, including deliberate damage. It does not restore Storage objects or prove the Auth service configuration; the separate application rehearsal is recovery.storage_auth.",
       "evidence": [
         {"scope": "local_integration", "ref": "scripts/restore_check.sh"},
         {"scope": "local_integration", "ref": "ci:Restore drill"}
@@ -184,36 +196,46 @@
     },
     {
       "id": "recovery.storage_auth",
-      "outcome": "Storage objects, Auth configuration and the running application recover to a known state.",
-      "status": "roadmap",
+      "outcome": "An operator rehearses recovery of synthetic accounts, private Storage objects and application reads into a fresh disposable local installation.",
+      "status": "shipped",
       "features": [],
-      "component": [],
-      "prerequisites": "A rehearsed procedure, which does not exist yet.",
-      "limitations": "Nothing is rehearsed; do not plan a pilot on it.",
-      "issues": [1641]
+      "component": ["scripts/restore_check.sh", "scripts/recovery/"],
+      "prerequisites": "A local Docker and Supabase CLI environment, Flutter and Python, two fresh absolute local project directories, and an explicit disposable application-restore invocation.",
+      "limitations": "The full --application rehearsal is opt-in, not the CI Restore drill. The 3 November 2026 run passed on a6c9aa7d8 at schema 664 (docs/product/evidence/catalogue-review-2026-11-05.md); it is historical evidence, not a run of the current release. It restores synthetic accounts and identities while retaining the target installation and MCP configuration; it does not restore active sessions, refresh tokens, MFA/OAuth configuration or external credentials. Hosted recovery, email delivery and MCP were not exercised; raw Unicode Storage keys remain unsupported.",
+      "issues": [1641],
+      "evidence": [
+        {"scope": "unit", "ref": "test/tool/local_recovery_guards_test.dart"}
+      ]
     },
     {
       "id": "demo",
-      "outcome": "A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.",
+      "outcome": "A visitor tries supported booking, decisions, money and workspace scenarios using isolated in-memory Demo data, roles and spaces without a live backend.",
       "status": "shipped",
       "features": ["demoMode"],
       "component": ["lib/core/demo/"],
       "prerequisites": "None: the Demo is built into every client.",
-      "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
+      "limitations": "Named journey, workflow, persona and financial checks run against in-memory repositories. The Demo does not prove backend RLS or triggers, provider integrations, multi-device realtime or every screen journey. Leipzig intentionally uses new-workspace defaults; quota-extension and negotiated-price decisions do not have their corresponding stores, and some preview counts remain sample content.",
       "evidence": [
         {"scope": "unit", "ref": "test/core/demo/demo_scope_reach_test.dart"},
         {"scope": "unit", "ref": "test/core/demo/demo_session_test.dart"},
-        {"scope": "unit", "ref": "test/lint/demo_coverage_test.dart"}
+        {"scope": "unit", "ref": "test/lint/demo_coverage_test.dart"},
+        {"scope": "unit", "ref": "test/ux/demo_journeys_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_workflow_audit_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_persona_accountability_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_city_journey_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_twin_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_purchase_to_pay_journey_test.dart"},
+        {"scope": "unit", "ref": "test/core/demo/demo_bank_reconciliation_container_test.dart"}
       ]
     },
     {
       "id": "mcp.read",
       "outcome": "An MCP client reads a workspace's plan, bookings and members within the scopes the owner granted.",
       "status": "shipped",
-      "features": [],
+      "features": ["mcpAccess"],
       "component": ["supabase/functions/deskilo-mcp/", "supabase/functions/_shared/mcp_contract.ts", "lib/core/mcp/"],
       "prerequisites": "MCP ships off. The infrastructure operator switches it on for one installation after mcp-inspect has measured that target (docs/guides/OPERATIONS.md, MCP section); the workspace feature mcpAccess, default off, and an exposure policy decide what a workspace offers.",
-      "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here. Whether MCP is switched on for a given installation is that installation's state, not the code's.",
+      "limitations": "Repository checks, authenticated database tests and a real local PostgREST containment drill cover the named paths. There is no external OAuth-client, hosted-runtime or operator-pilot qualification recorded here. A delegated token in the local drill is minted with the local stack signing key; this does not rehearse the external consent/login flow. Installation activation remains an operator-controlled state.",
       "issues": [1607, 1609, 1616, 1620],
       "evidence": [
         {"scope": "unit", "ref": "test/tool/mcp_contract_test.dart"},
@@ -224,17 +246,19 @@
         {"scope": "local_integration", "ref": "supabase/tests/database/62_mcp_my_operations.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/63_mcp_bounded_reads.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/80_mcp_output_minimization.sql"},
-        {"scope": "local_integration", "ref": "supabase/tests/database/94_mcp_disclosure.sql"}
+        {"scope": "local_integration", "ref": "supabase/tests/database/94_mcp_disclosure.sql"},
+        {"scope": "local_integration", "ref": "scripts/mcp_containment_check.sh"},
+        {"scope": "local_integration", "ref": "ci:MCP token containment"}
       ]
     },
     {
       "id": "mcp.write",
-      "outcome": "An MCP client books, cancels or submits on a member's behalf through the same business RPCs the app uses, idempotently.",
+      "outcome": "An authorised MCP client requests supported workspace actions through the app's guarded commands, with idempotency and in-app confirmation where the contract requires them.",
       "status": "shipped",
-      "features": [],
+      "features": ["mcpAccess"],
       "component": ["supabase/functions/deskilo-mcp/", "lib/features/mcp/"],
       "prerequisites": "mcp.read switched on; the workspace's exposure policy and the person's own permissions for the operation; high-impact actions are confirmed by the person in the app.",
-      "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
+      "limitations": "Database and contract tests cover the named write, race and setup paths. No real external MCP-client write journey or named-runtime/operator-pilot execution is recorded here; installation activation, workspace exposure and current rights still govern availability.",
       "issues": [1612, 1619, 1620, 1624],
       "evidence": [
         {"scope": "unit", "ref": "test/features/mcp/mcp_confirmation_test.dart"},
@@ -243,16 +267,18 @@
         {"scope": "local_integration", "ref": "supabase/tests/database/60_mcp_action_confirmations.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/75_mcp_reservation_tools.sql"},
         {"scope": "local_integration", "ref": "supabase/tests/database/78_mcp_validation_decisions.sql"},
-        {"scope": "local_integration", "ref": "supabase/tests/database/82_mcp_workflow_matrices.sql"}
+        {"scope": "local_integration", "ref": "supabase/tests/database/82_mcp_workflow_matrices.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/259_mcp_setup_operations.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/288_mcp_setup_steps_writes.sql"}
       ]
     },
     {
       "id": "mcp.consent",
       "outcome": "A member consents to an MCP client per installation, sees what it may do, and revokes it.",
       "status": "shipped",
-      "features": [],
+      "features": ["mcpAccess"],
       "component": ["lib/features/mcp/"],
-      "prerequisites": "mcp.read switched on; the installation's own OAuth consent and per-workspace exposure policies.",
+      "prerequisites": "An app session to review or revoke connections. Granting new workspace access additionally requires installation activation, an eligible account and client, the workspace's effective mcpAccess feature and its exposure policy. Existing access management and revocation remain available when workspace MCP access is disabled.",
       "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
       "issues": [1610, 1615, 1633],
       "evidence": [
@@ -265,13 +291,199 @@
     },
     {
       "id": "calendar.interchange",
-      "outcome": "A member exports owned reservations as a standards-based calendar file.",
-      "status": "roadmap",
-      "features": [],
-      "component": [],
-      "prerequisites": "None beyond the calendar module.",
-      "limitations": "Not delivered; the in-app calendar is not an interchange format.",
-      "issues": [1643]
+      "outcome": "A member previews and saves one owned reservation as an RFC 5545 calendar file, with a fresh ownership and booking-state check before saving.",
+      "status": "shipped",
+      "features": ["calendarFileExport"],
+      "component": ["lib/features/reservations/domain/reservation_calendar_file.dart", "lib/features/reservations/application/save_calendar_file.dart", "lib/features/reservations/presentation/widgets/calendar_file_button.dart"],
+      "prerequisites": "calendarFileExport enabled and access to an owned reservation.",
+      "limitations": "This is one local .ics snapshot with UTC instants and a stable installation-scoped UID. It provides no import, subscription feed or ongoing calendar synchronization. Automated checks cover encoding, cancellation, ownership and changed previews; acceptance by external calendar applications and native platform save flows has not been recorded.",
+      "issues": [1643],
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/reservations/reservation_calendar_file_test.dart"},
+        {"scope": "unit", "ref": "test/features/reservations/application/save_calendar_file_test.dart"},
+        {"scope": "unit", "ref": "test/features/reservations/calendar_file_button_test.dart"}
+      ]
+    },
+    {
+      "id": "suppliers.lookup",
+      "outcome": "A billing manager looks up a supplier's VAT identifier, reviews returned fields and their provenance, edits them before saving, or continues manually while preserving the entered identity.",
+      "status": "shipped",
+      "features": ["supplyExpenses", "viesVerification"],
+      "provider": "vies",
+      "component": ["lib/features/money/presentation/widgets/supplier_lookup_dialog.dart", "lib/features/money/domain/supplier_prefill.dart", "supabase/functions/supplier-lookup/"],
+      "prerequisites": "Supplier management and VIES verification enabled; manageBilling permission; a supported country and VAT identifier.",
+      "limitations": "The current registry adapter is VIES; a valid VAT number may return no business profile. The cited widget evidence uses simulated registry replies, including failure and retry. It does not prove a real VIES lookup or establish that a returned legal identity is correct.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/supplier_lookup_dialog_test.dart"}
+      ]
+    },
+    {
+      "id": "purchases.payables",
+      "outcome": "A supplier bill or member expense becomes a purchase document with review, obligations and recorded settlement; supplier balances preserve each currency and expose all payables through continuation pages.",
+      "status": "shipped",
+      "features": ["purchases", "supplyExpenses", "inputVat"],
+      "component": ["lib/features/money/domain/purchase.dart", "lib/features/money/domain/purchase_obligation.dart", "lib/features/money/domain/supplier_balance.dart", "lib/features/money/presentation/widgets/supplier_payables_view.dart"],
+      "prerequisites": "The purchase features enabled; an eligible supplier or member expense and the permissions to capture, review or settle it.",
+      "limitations": "Unqualified tax information remains unknown rather than zero. Supplier approval requires a different authorized person from the submitter. The workflow records obligations and reported outgoing payments; it does not execute a bank transfer or prove statutory VAT deductibility.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/supplier_payables_view_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/206_purchases.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/213_supplier_bills.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/339_supplier_balance_reads.sql"}
+      ]
+    },
+    {
+      "id": "purchases.orders",
+      "outcome": "A buyer drafts and numbers a supplier purchase order, prints or emails it, records partial and full goods receipts, and links a supplier bill to the order.",
+      "status": "shipped",
+      "features": ["purchases", "purchaseOrders"],
+      "component": ["lib/features/money/domain/purchase_order.dart", "lib/features/money/domain/purchase_order_receipt.dart", "lib/features/money/presentation/screens/purchase_orders_screen.dart", "supabase/functions/send-purchase-order/"],
+      "prerequisites": "purchaseOrders enabled under purchases, an active supplier and managePurchases permission; email delivery also requires the workspace sender configuration and credential.",
+      "limitations": "The feature is off by default. Sent orders are frozen and stale revisions are refused. An unconfirmed email attempt blocks another send until a person resolves it. The local UI and database evidence does not prove email-provider acceptance or delivery to a supplier.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/purchase_order_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/purchase_order_send_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/359_purchase_orders.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/360_purchase_order_send.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/361_goods_receipts.sql"}
+      ]
+    },
+    {
+      "id": "guests.passes",
+      "outcome": "A permitted seller issues an hourly or daily guest pass at the desk; server pricing creates the guest identity, seat booking, charge, invoice and recorded payment once for the same sale request.",
+      "status": "shipped",
+      "features": ["invoicing", "guestPasses"],
+      "component": ["lib/features/money/domain/guest_pass.dart", "lib/features/money/application/guest_pass_commands.dart", "lib/features/money/presentation/screens/guest_passes_screen.dart"],
+      "prerequisites": "guestPasses enabled under invoicing, an active pass offer and place, and issueInvoices permission for the seller.",
+      "limitations": "The feature is off by default. Each sale uses its own managed guest profile. The evidence covers sale and payment recording in the application, not collection through an external payment provider.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/guest_passes_screen_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/362_guest_passes.sql"}
+      ]
+    },
+    {
+      "id": "bank.reconciliation",
+      "outcome": "A finance operator imports supported bank statement files, reviews duplicate candidates, matches incoming money to invoices and reconciles reported outgoing payments, with a reasoned undo path.",
+      "status": "shipped",
+      "features": ["moneyTab", "bankImport"],
+      "component": ["lib/features/money/domain/bank/bank_file.dart", "lib/features/money/domain/bank/bank_match.dart", "lib/features/money/application/bank_import_commands.dart", "lib/features/money/presentation/widgets/bank_statements_sheet.dart"],
+      "prerequisites": "bankImport enabled and the permissions for reading finances, matching receipts or reconciling outgoing payments; a supported statement file and a mapping for CSV input.",
+      "limitations": "This imports files rather than connecting directly to a bank. Duplicate movements without a stable bank identifier require review. Currency and import bounds are checked. Recorded reconciliation is not evidence of bank or payment-provider acceptance. Undo preserves the bank facts: incoming undo removes the invoice match and keeps its payment credit, while outgoing undo restores reported payment state with a reason; closed-period and incompatible settlement cases are refused.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/bank/bank_file_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/bank/bank_reconcile_sheet_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/305_bank_statements.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/335_bank_line_unreconcile.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/337_bank_line_unmatch_in.sql"}
+      ]
+    },
+    {
+      "id": "accounting.connections",
+      "outcome": "A billing manager connects a legal issuer to an implemented accounting target, maps accounts and tax codes, initiates period deliveries, and reviews document-level results and uncertain outcomes.",
+      "status": "shipped",
+      "features": ["accountingBook", "accountingConnectors"],
+      "component": ["lib/features/money/domain/accounting_connection.dart", "lib/features/money/domain/accounting_delivery_run.dart", "lib/features/money/presentation/widgets/accounting_targets_sheet.dart", "supabase/functions/accounting-connect/"],
+      "prerequisites": "accountingConnectors enabled, an issuer and qualified target, the target's app or token configuration and required account, party and tax mappings.",
+      "limitations": "The evidence exercises the app and database delivery contract, including permissions, secret isolation and idempotency. Implemented target adapters remain unaccepted by real provider accounts; specificationNeeded targets stay unavailable. An unresolved transmission is not reported as a successful delivery.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/accounting_targets_sheet_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/accounting_delivery_run_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/accounting_capability_qualification_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/299_accounting_connections.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/333_accounting_connection_server_checks.sql"}
+      ]
+    },
+    {
+      "id": "tax.hmrc_mtd",
+      "outcome": "A UK workspace owner reviews the nine VAT return boxes, submits through the configured HMRC MTD workflow, and sees a receipt or an explicit uncertain result that requires a checked recovery before retry.",
+      "status": "shipped",
+      "features": ["vatDeclarations", "mtdSubmission", "accountingConnectors"],
+      "provider": "hmrc",
+      "component": ["lib/features/money/domain/hmrc_submission.dart", "lib/features/money/presentation/widgets/hmrc_submit_sheet.dart", "supabase/functions/accounting-connect/hmrc.ts"],
+      "prerequisites": "A UK VAT-registered workspace with a VAT number, the web application, enabled MTD and accounting connection features, and a configured HMRC application and connection.",
+      "limitations": "The current evidence uses simulated function replies and a local database. No recorded Developer Hub sandbox submission or HMRC production acceptance is present. A lost response or expired attempt remains unconfirmed until the current attempt has been checked; no receipt is invented.",
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/money/hmrc_repository_test.dart"},
+        {"scope": "unit", "ref": "test/features/money/hmrc_submit_sheet_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/338_hmrc_recovery.sql"}
+      ]
+    },
+    {
+      "id": "personal.workspace_separation",
+      "outcome": "A person keeps a personal home and account context while switching among separately hosted workspaces; a failed workspace read is shown as unavailable or stale without replacing personal identity or another workspace's data.",
+      "status": "shipped",
+      "features": ["personalShell"],
+      "component": ["lib/core/backend/personal_home.dart", "lib/core/backend/personal_home_providers.dart", "lib/features/me/", "lib/features/directory/domain/personal_message_directory.dart", "lib/features/directory/data/supabase_personal_message_directory_repository.dart"],
+      "prerequisites": "A configured personal-home installation and workspace registrations with valid sessions; personalShell enables the new Me presentation, while the underlying identity and installation boundaries remain enforced independently.",
+      "limitations": "CI exercises seeded identities on three separate local stacks, including signed HTTP, database readback, cross-target refusal, outages and account epochs. This does not prove the complete one-registration onboarding and external identity-provider flow, or the Android/iPhone/desktop acceptance of the wider personal rework; #2560 remains open. Workspace operational data remains on its own installation.",
+      "issues": [2560],
+      "evidence": [
+        {"scope": "unit", "ref": "test/core/backend/personal_home_test.dart"},
+        {"scope": "unit", "ref": "test/features/me/me_personal_shell_test.dart"},
+        {"scope": "unit", "ref": "test/features/me/personal_overview_test.dart"},
+        {"scope": "unit", "ref": "test/lint/personal_workspace_context_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/269_personal_home_endpoint.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/270_personal_workspace_refs.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/274_personal_message_directory.sql"},
+        {"scope": "local_integration", "ref": "scripts/topology_stacks.sh"},
+        {"scope": "local_integration", "ref": "ci:Physical topology"}
+      ]
+    },
+    {
+      "id": "setup.guide",
+      "outcome": "A workspace owner follows evidence-based setup steps from a new workspace to a member's first booking, with persisted progress, explicit prerequisites and remaining work.",
+      "status": "shipped",
+      "features": ["setupGuide"],
+      "component": ["lib/features/workspace/domain/setup_status.dart", "lib/features/workspace/domain/setup_steps.dart", "lib/features/workspace/domain/setup_journey.dart", "lib/features/workspace/data/supabase_local_setup_repository.dart", "lib/features/workspace/presentation/screens/setup_guide_screen.dart", "lib/features/workspace/presentation/screens/setup_step_screen.dart"],
+      "prerequisites": "An admitted workspace owner or administrator with the permissions for the step, and the setupGuide feature.",
+      "limitations": "The screen journey runs over fake repositories and uses a plan fixture; separate authenticated database tests prove the real command and readiness sequence. These are not one complete real-browser onboarding rehearsal. The owner waived the five newcomer study on #2874; setup remains beta and displayed time estimates remain a script baseline, not measured newcomer performance.",
+      "issues": [2874],
+      "evidence": [
+        {"scope": "unit", "ref": "test/ux/first_booking_journey_test.dart"},
+        {"scope": "unit", "ref": "test/features/workspace/setup_member_path_test.dart"},
+        {"scope": "unit", "ref": "test/features/workspace/setup_status_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/250_workspace_setup_status.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/252_setup_step_evidence.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/345_first_booking_clean_journey.sql"}
+      ]
+    },
+    {
+      "id": "privacy.member_rights",
+      "outcome": "Members can inspect notices, export their personal data and submit rights requests; authorised controllers process requests, control self-service and record restricted privacy incidents, with an erasure preview showing retained and external data.",
+      "status": "shipped",
+      "features": ["memberDataExport"],
+      "component": ["lib/features/profile/", "lib/features/members/presentation/screens/privacy_admin_screen.dart", "lib/features/members/presentation/widgets/privacy_admin_sheets.dart", "supabase/migrations/0327_rights_requests.sql", "supabase/migrations/0329_privacy_notices.sql", "supabase/migrations/0665_privacy_permission_and_role.sql", "supabase/migrations/0666_privacy_self_service_and_incident.sql", "supabase/migrations/0667_privacy_registry_and_grants.sql", "supabase/migrations/0668_member_birthday_and_full_erasure.sql", "supabase/migrations/0669_profile_birthdays_own_table.sql", "supabase/migrations/0670_personal_export_birthday.sql"],
+      "prerequisites": "A workspace privacy contact and retention policy, memberDataExport for direct export, erasure and the administration entry, and an authorised rights controller; rights requests remain available without the direct self-service feature. Assigning the seeded Personal Data Admin custom role requires customRoles.",
+      "limitations": "Erasure is scoped to the installation and membership; accounting evidence and other retained records remain as disclosed, and external installations require separate action. A workspace can disable direct member export/erasure while the rights-request path stays available. Automated permission, field visibility, request, export and erasure checks do not establish legal compliance or independently qualify the operator's process.",
+      "issues": [3278],
+      "evidence": [
+        {"scope": "unit", "ref": "test/features/profile/privacy_admin_screen_test.dart"},
+        {"scope": "unit", "ref": "test/features/profile/privacy_my_data_link_test.dart"},
+        {"scope": "unit", "ref": "test/features/profile/privacy_notice_test.dart"},
+        {"scope": "unit", "ref": "test/features/profile/birthday_form_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/113_rights_requests.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/115_privacy_notices.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/349_privacy_permission_and_role.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/350_privacy_self_service_and_incident.sql"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/351_member_birthday.sql"}
+      ]
+    },
+    {
+      "id": "webmcp.browser",
+      "outcome": "A compatible browser can discover local tools on the public pages and use the signed-in web app's supported commands within its current workspace, with in-app confirmation where required.",
+      "status": "shipped",
+      "features": ["webMcp"],
+      "component": ["lib/core/webmcp/", "lib/app/webmcp_wiring.dart", "lib/app/webmcp_reads.dart", "lib/app/webmcp_writes.dart", "lib/app/webmcp_confirmed_writes.dart", "lib/app/webmcp_confirmations.dart", "lib/app/webmcp_confirmation_sheet.dart", "web/webmcp.js", "web/setup_webmcp.js", "web/product_webmcp.js", "web/welcome/welcome_webmcp.js"],
+      "prerequisites": "A browser providing modelContext; app tools additionally require sign-in, effective mcpAccess and webMcp features, and the per-device switch. External MCP-server activation is independent.",
+      "limitations": "Unsupported browsers register nothing; native clients have no WebMCP tools. Reads, output filtering, context withdrawal and confirmed writes are tested through fake modelContext. The 3 November Edge 156 browser run exercised public-page tools and signed-in reads/refusals, with no writes; the published app build SHA was not recorded. get_availability is intentionally not offered. No hosted external-MCP activation is implied.",
+      "issues": [2500, 2504],
+      "evidence": [
+        {"scope": "unit", "ref": "test/core/webmcp/webmcp_registry_test.dart"},
+        {"scope": "unit", "ref": "test/app/webmcp_wiring_test.dart"},
+        {"scope": "unit", "ref": "test/app/webmcp_confirmation_sheet_test.dart"},
+        {"scope": "unit", "ref": "test/lint/webmcp_pages_test.dart"},
+        {"scope": "unit", "ref": "test/lint/guide_webmcp_test.dart"}
+      ]
     }
   ]
 }
