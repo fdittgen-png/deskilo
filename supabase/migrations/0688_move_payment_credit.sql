@@ -3,7 +3,7 @@
 -- (invoice_lines_for(uuid, text) patched at one anchor: a moved credit and
 -- its reversal are left out of the lines, as a consumed credit already is)
 --
--- 0682 (#2380) -- a payment credit booked on the wrong member is moved to
+-- 0688 (#2380) -- a payment credit booked on the wrong member is moved to
 -- the right one, as a correcting entry. A bank line matched to the wrong
 -- payer (or a payment recorded against the wrong person) left the money on
 -- the wrong account: undoing the match (0650, 0657-0660) leaves the credit
@@ -202,9 +202,9 @@ begin
        and le.period = p_period
        and not exists (select 1 from public.ledger_credit_moves mv
                         where le.id in (mv.from_credit_id, mv.reversal_ledger_id))$a$);
-  if v_def is null then raise exception '0682: invoice_lines_for anchor missing'; end if;
+  if v_def is null then raise exception '0688: invoice_lines_for anchor missing'; end if;
   execute v_def;
 end
 $migration$;
 
-select public.set_deskilo_schema_version(682);
+select public.set_deskilo_schema_version(688);

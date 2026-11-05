@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2380 (0682) -- a payment credit booked on the wrong member is moved to
+-- #2380 (0688) -- a payment credit booked on the wrong member is moved to
 -- the right one as a correcting entry: the original is never edited; a
 -- reversal on the wrong member and a new credit on the right one, both in
 -- the credit's month, linked in ledger_credit_moves; the bank line now names
@@ -29,7 +29,18 @@ end;
 $$;
 create or replace function pg_temp.mv(p_credit uuid, p_to text, p_req text, p_reason text default 'paid by the colleague')
 returns jsonb language sql as $$
-  select public.move_payment_credit_v1(p_credit, pg_temp.m(p_to), p_reason, pg_temp.u(p_req))
+  select public.move_payment_credit_v1(p_credit, pg_temp.m(p_to), p_reason, md5(p_req)::uuid)
+$$;
+-- A member's month, read as the owner (member_statement answers its
+-- member or the space's staff, never an anonymous caller).
+create or replace function pg_temp.stmt(p_member uuid, p_period text) returns jsonb language plpgsql as $$
+declare v jsonb; v_prev text := current_setting('request.jwt.claims', true);
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u('a1'), 'role', 'authenticated')::text, true);
+  v := public.member_statement(p_member, p_period);
+  perform set_config('request.jwt.claims', coalesce(v_prev, ''), true);
+  return v;
+end;
 $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
@@ -65,7 +76,7 @@ insert into public.bank_statement_lines (workspace_id, statement_id, account, po
                                          amount_cents, currency, line_hash, payment_ledger_id)
 select pg_temp.ws(), st.id, 'FR76', 1, '2026-03-10', '2026-03-10', 4200, 'EUR', repeat('b', 64),
        current_setting('deskilo.mv.c1')::uuid from st;
-select set_config('deskilo.mv.before', public.member_statement(pg_temp.m('a2'), '2026-03') ->> 'credits_cents', true);
+select set_config('deskilo.mv.before', pg_temp.stmt(pg_temp.m('a2'), '2026-03') ->> 'credits_cents', true);
 
 -- 1-2. who may
 select pg_temp.act_as('a4');
@@ -106,9 +117,9 @@ select ok((select from_credit_id = current_setting('deskilo.mv.c1')::uuid and fr
   'the move is recorded: both credits, both members, who and why');
 select is((select payment_ledger_id from public.bank_statement_lines where workspace_id = pg_temp.ws()),
   (current_setting('deskilo.mv.r')::jsonb ->> 'credit_id')::uuid, 'the bank line now names the right member''s credit');
-select is(public.member_statement(pg_temp.m('a2'), '2026-03') ->> 'credits_cents',
+select is(pg_temp.stmt(pg_temp.m('a2'), '2026-03') ->> 'credits_cents',
   ((current_setting('deskilo.mv.before'))::int - 4200)::text, 'the wrong member''s month loses the credit');
-select is((public.member_statement(pg_temp.m('a3'), '2026-03') ->> 'credits_cents')::int, 4200,
+select is((pg_temp.stmt(pg_temp.m('a3'), '2026-03') ->> 'credits_cents')::int, 4200,
   'and the right member''s month has it');
 select ok(not exists (select 1 from jsonb_array_elements(public.invoice_lines_for(pg_temp.m('a2'), '2026-03')) l
                        where (l ->> 'amount_cents')::int in (4200, -4200)),

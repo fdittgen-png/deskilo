@@ -6115,6 +6115,38 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get creditMoveAction => 'Déplacer vers un autre membre';
+
+  @override
+  String get creditMoveBody =>
+      'Le paiement reste enregistré. Le compte de ce membre le restitue, et le membre qui a réellement payé le reçoit, dans le même mois.';
+
+  @override
+  String get creditMoveConfirm => 'Déplacer';
+
+  @override
+  String get creditMoveDone => 'Le paiement a été déplacé.';
+
+  @override
+  String get creditMoveFailed => 'Le paiement n\'a pas pu être déplacé.';
+
+  @override
+  String get creditMoveMemberLabel => 'Membre qui a payé';
+
+  @override
+  String get creditMoveMemberRequired => 'Choisissez le membre qui a payé.';
+
+  @override
+  String get creditMoveReasonLabel => 'Motif';
+
+  @override
+  String get creditMoveReasonRequired =>
+      'Indiquez pourquoi le paiement est déplacé.';
+
+  @override
+  String get creditMoveTitle => 'Déplacer ce paiement';
+
+  @override
   String get customerCapacityBusiness => 'Professionnel';
 
   @override

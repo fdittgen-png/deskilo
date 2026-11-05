@@ -10273,6 +10273,66 @@ abstract class AppLocalizations {
   /// **'This space will be created on {host}.'**
   String createOnHostBanner(String host);
 
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Move to another member'**
+  String get creditMoveAction;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment stays on record. This member\'s account gives it back, and the member who actually paid receives it, in the same month.'**
+  String get creditMoveBody;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get creditMoveConfirm;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment was moved.'**
+  String get creditMoveDone;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be moved.'**
+  String get creditMoveFailed;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Member who paid'**
+  String get creditMoveMemberLabel;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the member who paid.'**
+  String get creditMoveMemberRequired;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get creditMoveReasonLabel;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the payment moves.'**
+  String get creditMoveReasonRequired;
+
+  /// member profile money card: moving a payment booked on the wrong member (#2380)
+  ///
+  /// In en, this message translates to:
+  /// **'Move this payment'**
+  String get creditMoveTitle;
+
   /// #1916 invoice clauses: customerCapacityBusiness
   ///
   /// In en, this message translates to:
