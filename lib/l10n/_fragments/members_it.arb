@@ -473,5 +473,6 @@
   "creditMoveDone": "Il pagamento è stato spostato.",
   "@creditMoveDone": {
     "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
-  }
+  },
+  "memberOriginGuest": "Ha acquistato un pass ospite all'accoglienza"
 }

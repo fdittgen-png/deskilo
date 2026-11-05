@@ -14945,6 +14945,18 @@ abstract class AppLocalizations {
   /// **'Guest visits'**
   String get featureGuestParticipationTitle;
 
+  /// #3308 the guest pass flag
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.'**
+  String get featureGuestPassesDesc;
+
+  /// #3308 the guest pass flag
+  ///
+  /// In en, this message translates to:
+  /// **'Guest passes at the desk'**
+  String get featureGuestPassesTitle;
+
   /// Subtitle note: the feature is on but its parent is off (#800)
   ///
   /// In en, this message translates to:
@@ -17530,6 +17542,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Group name'**
   String get groupRenameTitle;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'On sale'**
+  String get guestPassActive;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Add a pass'**
+  String get guestPassAdd;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get guestPassChoose;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'First day'**
+  String get guestPassDay;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get guestPassDays;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the pass'**
+  String get guestPassEdit;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get guestPassFrom;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get guestPassName;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get guestPassNameRequired;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Paid at the desk'**
+  String get guestPassPaid;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'{price} per day'**
+  String guestPassPerDay(String price);
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'{price} per hour'**
+  String guestPassPerHour(String price);
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Price per unit'**
+  String get guestPassPrice;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price.'**
+  String get guestPassPriceInvalid;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'A pass lasts 1 to 31 days.'**
+  String get guestPassProblemDays;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'The end is before the start.'**
+  String get guestPassProblemEndBeforeStart;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'An hourly pass is for one day.'**
+  String get guestPassProblemHourlyOneDay;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a pass.'**
+  String get guestPassProblemNoOffer;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place.'**
+  String get guestPassProblemNoSeat;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'The pass could not be sold. The place may be taken, or the window outside the opening hours.'**
+  String get guestPassSaleFailed;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'The guest\'s name and contact are printed on the invoice. The guest does not become a member.'**
+  String get guestPassSaleIntro;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'The pass could not be saved.'**
+  String get guestPassSaveFailed;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get guestPassSeat;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Sell a pass'**
+  String get guestPassSell;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Pass sold: {total}, invoiced to {name}.'**
+  String guestPassSold(String total, String name);
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get guestPassTo;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'{units} × {price} = {total}'**
+  String guestPassTotal(String units, String price, String total);
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Per day'**
+  String get guestPassUnitDay;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Per hour'**
+  String get guestPassUnitHour;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'No pass yet. Add the passes the space sells.'**
+  String get guestPassesEmpty;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.'**
+  String get guestPassesIntro;
+
+  /// #3308 guest passes sold at the desk
+  ///
+  /// In en, this message translates to:
+  /// **'Guest passes'**
+  String get guestPassesTitle;
 
   /// #1867 live guide host
   ///
@@ -27255,6 +27459,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Founded this space'**
   String get memberOriginFounder;
+
+  /// #3308 a customer record made by a guest pass sale
+  ///
+  /// In en, this message translates to:
+  /// **'Bought a guest pass at the desk'**
+  String get memberOriginGuest;
 
   /// No description provided for @memberOriginHeading.
   ///

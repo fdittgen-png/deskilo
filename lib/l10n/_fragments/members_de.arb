@@ -473,5 +473,6 @@
   "creditMoveDone": "Die Zahlung wurde verschoben.",
   "@creditMoveDone": {
     "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
-  }
+  },
+  "memberOriginGuest": "Hat am Empfang einen Gästepass gekauft"
 }

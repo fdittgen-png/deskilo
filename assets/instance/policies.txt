@@ -139,6 +139,10 @@ public.financial_command_receipts.mcp_delegated_deny
 public.guest_participation_audit.mcp_delegated_deny
 public.guest_participation_audit.personal_native_session
 public.guest_participations.mcp_delegated_deny
+public.guest_pass_offers.guest_pass_offers_select
+public.guest_pass_offers.mcp_delegated_deny
+public.guest_passes.guest_passes_select
+public.guest_passes.mcp_delegated_deny
 public.hmrc_submissions.mcp_delegated_deny
 public.identity_authority.identity_public_authority
 public.identity_authority.mcp_delegated_deny
@@ -310,6 +314,8 @@ public.profiles.mcp_delegated_deny
 public.profiles.personal_native_session
 public.profiles.profiles_select
 public.profiles.profiles_update
+public.provider_payouts.mcp_delegated_deny
+public.provider_payouts.provider_payouts_select
 public.public_directory_sources.mcp_delegated_deny
 public.public_directory_sources.personal_native_session
 public.public_directory_sources.public_directory_read

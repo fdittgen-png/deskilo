@@ -553,5 +553,9 @@
   "creditMoveDone": "The payment was moved.",
   "@creditMoveDone": {
     "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "memberOriginGuest": "Bought a guest pass at the desk",
+  "@memberOriginGuest": {
+    "description": "#3308 a customer record made by a guest pass sale"
   }
 }

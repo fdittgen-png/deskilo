@@ -264,5 +264,7 @@
   "featureMtdSubmissionTitle": "Presentar el IVA británico a HMRC",
   "featureMtdSubmissionDesc": "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente.",
   "featurePurchaseOrdersTitle": "Pedir a los proveedores",
-  "featurePurchaseOrdersDesc": "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas."
+  "featurePurchaseOrdersDesc": "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas.",
+  "featureGuestPassesTitle": "Pases de invitado en recepción",
+  "featureGuestPassesDesc": "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
 }
