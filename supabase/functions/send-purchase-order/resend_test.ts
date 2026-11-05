@@ -116,3 +116,44 @@ Deno.test("a sender's name travels beside the address, never as a header", async
   );
   assertEquals(called, 0);
 });
+
+Deno.test("an address carrying header or list characters is never sent", async () => {
+  let called = 0;
+  const fake: typeof fetch = () => {
+    called++;
+    return Promise.resolve(new Response());
+  };
+  for (
+    const bad of [
+      "a<b@example.test",
+      "a@example.test>",
+      'a"b@example.test',
+      "a,b@example.test",
+      "a;b@example.test",
+    ]
+  ) {
+    assertEquals(
+      (await sendOrderViaResend({ ...order, recipient: bad }, fake)).kind,
+      "refused",
+      bad,
+    );
+    assertEquals(
+      (await sendOrderViaResend({ ...order, sender: bad }, fake)).kind,
+      "refused",
+      bad,
+    );
+  }
+  assertEquals(called, 0);
+});
+
+Deno.test("the provider is given a deadline; past it the outcome is unknown", async () => {
+  let signal: AbortSignal | null | undefined;
+  const hanging: typeof fetch = (_input, init) => {
+    signal = init?.signal;
+    return Promise.reject(new DOMException("deadline", "TimeoutError"));
+  };
+  assertEquals(await sendOrderViaResend(order, hanging), {
+    kind: "unconfirmed",
+  });
+  assertEquals(signal instanceof AbortSignal, true);
+});

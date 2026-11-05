@@ -48,6 +48,8 @@ Vuole avere un quadro d’insieme prima di scegliere qualsiasi cosa. DesKilo rag
 
 **Destinatari:** Proprietario · Comproprietario · Amministratore
 
+La guida alla configurazione resta disponibile nel menu dello spazio anche dopo la configurazione. Il riepilogo indica lo spazio, l’obiettivo scelto e il numero di attività obbligatorie ancora da completare. Apra i dettagli dei risultati per vedere ogni traguardo. L’azione consigliata porta a un’attività che può svolgere ora; quelle in attesa di un altro passaggio o dell’operatore lo indicano. Una verifica non disponibile non significa che l’attività sia conclusa. Il progresso dipende dalle impostazioni salvate: aprire un’attività non la completa. Ogni attività mantiene visibili spazio, obiettivo e stato, e indica la destinazione successiva.
+
 Vuole conoscere la strada più breve verso uno spazio prenotabile. L’app tiene un elenco di preparazione chiamato **Configurazione di questo spazio** e, nella schermata Prenota, indica ai proprietari che cosa manca con «Prima che qualcuno possa prenotare qui».
 
 *Che cosa deve esserci prima della prima prenotazione*

@@ -4,7 +4,7 @@
 -- a plain member reads and writes nothing; the series counts per space and
 -- year; a sent order and its lines are frozen; a request id replays.
 begin;
-select plan(24);
+select plan(30);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000033070'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -127,6 +127,34 @@ select is(pg_temp.as_user('a1', format('select public.cancel_purchase_order_v1(%
 select ok(pg_temp.err('a1', format('select public.mark_purchase_order_sent_v1(%L, %L, 4, %L)',
     pg_temp.u('b1'), current_setting('t.o1')::jsonb ->> 'id', gen_random_uuid())) like '%only a draft%',
   'a cancelled order is final');
+
+-- ── an e-mail on its way freezes the order (0683) ──────────────────────
+select set_config('t.o3', pg_temp.as_user('a1', pg_temp.save('a1', gen_random_uuid(), 0, pg_temp.order_payload('f1')))::text, true);
+reset role;
+insert into public.purchase_order_sends (id, workspace_id, order_id, recipient, actor_member_id)
+values (gen_random_uuid(), pg_temp.u('b1'), (current_setting('t.o3')::jsonb ->> 'id')::uuid, 'orders@alpha.test', pg_temp.u('c1'));
+set local role authenticated;
+select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 1,
+    pg_temp.order_payload('f1', jsonb_build_object('order_id', current_setting('t.o3')::jsonb ->> 'id'))))
+  like '55000%', 'a draft whose e-mail may be on its way is not edited');
+select ok(pg_temp.err('a1', format('select public.mark_purchase_order_sent_v1(%L, %L, 1, %L)',
+    pg_temp.u('b1'), current_setting('t.o3')::jsonb ->> 'id', gen_random_uuid())) like '55000%',
+  '... nor marked sent by print');
+select ok(pg_temp.err('a1', format('select public.cancel_purchase_order_v1(%L, %L, 1, %L, %L)',
+    pg_temp.u('b1'), current_setting('t.o3')::jsonb ->> 'id', 'too late', gen_random_uuid())) like '55000%',
+  '... nor cancelled');
+reset role;
+update public.purchase_order_sends set state = 'refused' where order_id = (current_setting('t.o3')::jsonb ->> 'id')::uuid;
+set local role authenticated;
+select is(pg_temp.as_user('a1', format('select public.cancel_purchase_order_v1(%L, %L, 1, %L, %L)',
+    pg_temp.u('b1'), current_setting('t.o3')::jsonb ->> 'id', 'not needed', gen_random_uuid())) ->> 'state',
+  'cancelled', 'a refused attempt frees it again');
+
+select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0, pg_temp.order_payload('f1') - 'lines'))
+  like '%between 1 and 200 lines%', 'an order without its lines is refused');
+select ok(pg_temp.err('a1', pg_temp.save('a1', gen_random_uuid(), 0,
+    pg_temp.order_payload('f1', '{"recipient_email": "orders@alpha.test, boss@alpha.test"}'))) like '%not an e-mail address%',
+  'an address carrying a list or header character is refused');
 
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"purchaseOrders": false}' where id = pg_temp.u('b1');

@@ -82,7 +82,7 @@ begin
   if p_request_id is null or p_received_on is null then
     raise exception 'a delivery has its day and a request id' using errcode = '22023';
   end if;
-  if jsonb_typeof(p_lines) <> 'array' or jsonb_array_length(p_lines) not between 1 and 200 then
+  if coalesce(jsonb_typeof(p_lines), '') <> 'array' or jsonb_array_length(p_lines) not between 1 and 200 then
     raise exception 'a delivery brings at least one line' using errcode = '22023';
   end if;
   v_digest := md5(p_order_id::text || coalesce(p_revision, 0)::text || p_received_on::text

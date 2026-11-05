@@ -18,7 +18,9 @@ export type OrderMailResult =
   | { kind: "refused"; reason: string }
   | { kind: "unconfirmed" };
 
-const mail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const mail = /^[^\s@<>",;()[\]\\]+@[^\s@<>",;()[\]\\]+\.[^\s@<>",;()[\]\\]+$/;
+/** How long the provider has to answer; past it the outcome is unknown. */
+const providerTimeoutMs = 20_000;
 const key = /^[A-Za-z0-9_-]{1,100}$/;
 const pdf = /^[A-Za-z0-9+/]+={0,2}$/;
 
@@ -56,6 +58,7 @@ export async function sendOrderViaResend(
         text: order.text,
         attachments: [{ filename: order.fileName, content: order.pdfBase64 }],
       }),
+      signal: AbortSignal.timeout(providerTimeoutMs),
     });
   } catch {
     return { kind: "unconfirmed" };

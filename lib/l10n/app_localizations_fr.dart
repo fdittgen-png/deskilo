@@ -24983,6 +24983,49 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les informations de base n’ont pas pu être enregistrées. Réessayez.';
 
   @override
+  String get setupChoicesAdvanced => 'Ajuster chaque domaine';
+
+  @override
+  String get setupChoicesBookings => 'Personnes et réservations';
+
+  @override
+  String get setupChoicesDetails => 'Voir tous les changements';
+
+  @override
+  String get setupChoicesManual =>
+      'Votre choix est conservé lorsque vous répondez aux autres questions.';
+
+  @override
+  String get setupChoicesMoney => 'Argent et gestion';
+
+  @override
+  String get setupChoicesNeedsDecision =>
+      'Votre choix précédent est conservé. Précisez les réponses « Je ne sais pas encore » avant d’appliquer.';
+
+  @override
+  String get setupChoicesOperations => 'Fonctionnement au quotidien';
+
+  @override
+  String setupChoicesQuestionUnknown(String question) {
+    return 'Pas encore décidé : $question';
+  }
+
+  @override
+  String get setupChoicesReset => 'Utiliser les niveaux conseillés';
+
+  @override
+  String get setupChoicesSaving => 'Enregistrement…';
+
+  @override
+  String setupChoicesSummary(int count) {
+    return 'Réglages qui changeront : $count';
+  }
+
+  @override
+  String get setupChoicesUnsaved =>
+      'Aperçu uniquement : rien n’a été appliqué.';
+
+  @override
   String get setupDraftChanged =>
       'Modifié par quelqu’un d’autre pendant votre saisie.';
 
@@ -25266,6 +25309,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupGrowVatUsualTitle => 'Les taux habituels de votre pays';
+
+  @override
+  String get setupGuidanceTitle => 'Conseils et vérifications';
 
   @override
   String get setupGuideAddIt => 'L\'ajouter';
@@ -25568,7 +25614,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupLevelsIntro =>
-      'Répondez à quelques questions simples : chaque processus reçoit le niveau qu’elles demandent, avec la raison. Modifiez un niveau à la main. Rien ne change avant d’appliquer, et l’aperçu nomme chaque fonction activée ou désactivée.';
+      'Décrivez le fonctionnement de votre espace. Vérifiez ce qui changera avant d’appliquer vos choix.';
 
   @override
   String get setupLevelsNoChange => 'Rien ne change : l’espace le fait déjà.';
@@ -25694,6 +25740,15 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Les réglages des nouveaux membres n’ont pas pu être enregistrés. Réessayez.';
+
+  @override
+  String get setupNextIndependent =>
+      'Vous pouvez avancer sur cette tâche pendant que l’étape précédente est en attente.';
+
+  @override
+  String setupNextNamed(String step) {
+    return 'Ensuite : $step';
+  }
 
   @override
   String setupNotificationsAudience(String audience) {
@@ -25855,6 +25910,33 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupOnlineTestUnverified =>
       'Ces clés n’indiquent pas si ce sont des clés de test ou de production. Vérifiez-les dans le tableau de bord du prestataire.';
+
+  @override
+  String get setupOutcomeProgress => 'Avancement par objectif';
+
+  @override
+  String get setupOverviewChoose =>
+      'Choisissez ce dont votre espace a besoin pour voir son parcours de mise en place.';
+
+  @override
+  String get setupOverviewReady =>
+      'Votre objectif est configuré. Vous pouvez le vérifier ou le modifier ici à tout moment.';
+
+  @override
+  String setupOverviewRemaining(int count) {
+    return 'Tâches indispensables restantes : $count';
+  }
+
+  @override
+  String get setupOverviewTitle => 'État de l’espace';
+
+  @override
+  String get setupOverviewUnchecked =>
+      'Certaines vérifications sont indisponibles. Actualisez l’état avant de considérer la mise en place terminée.';
+
+  @override
+  String get setupOverviewWaiting =>
+      'Cette étape est en attente. Les tâches ci-dessous indiquent qui peut la débloquer.';
 
   @override
   String get setupPaymentsPreviewEmpty =>
@@ -26228,6 +26310,10 @@ class AppLocalizationsFr extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupTaskSaved =>
+      'L’état repose sur les réglages enregistrés. Ouvrir une tâche ne la termine pas.';
 
   @override
   String get shellBarHiddenAnnounce => 'Barre de navigation masquée';

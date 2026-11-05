@@ -184,6 +184,8 @@ Chaque ligne de **Interrupteurs** porte un badge de maturité, qui dit jusqu’o
 
 **Public:** Propriétaire · Copropriétaire
 
+Pour choisir ce que fait l’espace, répondez aux questions regroupées autour des réservations, de l’argent et du fonctionnement quotidien. Les commandes de vérification et d’application restent visibles pendant le défilement. Vérifiez le nombre de réglages qui changeraient et leurs effets concrets avant d’appliquer ; répondre ne modifie pas l’espace. Les niveaux détaillés et les démarrages rapides se trouvent dans la section avancée. Un niveau choisi volontairement est conservé lorsque vous répondez à d’autres questions ; l’action des niveaux conseillés rétablit les recommandations. « Je ne sais pas encore » conserve la réponse précédente et empêche l’application tant que vous ne l’avez pas précisée. Le questionnaire hors ligne suit la même règle et bloque l’export si une réponse reste incertaine.
+
 Vous ne voulez pas décider cent choses. Voici trois points de départ réalistes ; chacun liste exactement ce qui est activé. Choisissez le plus proche, puis ajustez.
 
 Le premier n’a besoin d’aucun modèle. Le deuxième est le modèle prêt à l’emploi de l’application. Le troisième est construit à partir des fonctionnalités elles-mêmes. Ils portent le nom de ce qu’ils offrent, pas d’une taille.
