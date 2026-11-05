@@ -6122,6 +6122,8 @@ Vuole avere un quadro d’insieme prima di scegliere qualsiasi cosa. DesKilo rag
 
 **Destinatari:** Proprietario · Comproprietario · Amministratore
 
+La guida alla configurazione resta disponibile nel menu dello spazio anche dopo la configurazione. Il riepilogo indica lo spazio, l’obiettivo scelto e il numero di attività obbligatorie ancora da completare. Apra i dettagli dei risultati per vedere ogni traguardo. L’azione consigliata porta a un’attività che può svolgere ora; quelle in attesa di un altro passaggio o dell’operatore lo indicano. Una verifica non disponibile non significa che l’attività sia conclusa. Il progresso dipende dalle impostazioni salvate: aprire un’attività non la completa. Ogni attività mantiene visibili spazio, obiettivo e stato, e indica la destinazione successiva.
+
 Vuole conoscere la strada più breve verso uno spazio prenotabile. L’app tiene un elenco di preparazione chiamato **Configurazione di questo spazio** e, nella schermata Prenota, indica ai proprietari che cosa manca con «Prima che qualcuno possa prenotare qui».
 
 *Che cosa deve esserci prima della prima prenotazione*
@@ -6592,6 +6594,8 @@ Al momento in cui scriviamo, la maggior parte delle funzionalità risulta **Non 
 ### Tre punti di partenza
 
 **Destinatari:** Proprietario · Comproprietario
+
+Scelga cosa fa lo spazio rispondendo alle domande raggruppate su prenotazioni, denaro e attività quotidiane. I comandi per verificare e applicare restano visibili durante lo scorrimento. Controlli quanti parametri cambierebbero e gli effetti concreti prima di applicare; rispondere non modifica lo spazio. I livelli dettagliati e gli avvii rapidi sono nella sezione avanzata. Un livello scelto esplicitamente resta invariato quando risponde ad altre domande; l’azione per i livelli consigliati ripristina le raccomandazioni. «Non so ancora» mantiene la risposta precedente e impedisce di applicare finché non la chiarisce. Il questionario offline segue la stessa regola e blocca l’esportazione se una risposta resta incerta.
 
 Non vuole decidere cento cose. Ecco tre punti di partenza realistici; ciascuno elenca esattamente che cosa è attivo. Scelga il più vicino, poi adatti.
 

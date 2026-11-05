@@ -48,6 +48,8 @@ Usted quiere ver el conjunto antes de elegir nada. DesKilo agrupa sus funciones 
 
 **Público:** Propietario · Copropietario · Administrador/a
 
+La guía de configuración sigue disponible en el menú del espacio después de configurarlo. El resumen muestra el espacio, el objetivo elegido y el número de tareas obligatorias pendientes. Abra los detalles de los resultados para ver cada hito. La acción recomendada lleva a una tarea que puede realizar ahora; las que esperan otro paso o al operador lo indican. Una comprobación no disponible no significa que la tarea esté terminada. El progreso depende de los ajustes guardados: abrir una tarea no la completa. Cada tarea mantiene visibles el espacio, el objetivo y su estado, y nombra el siguiente destino.
+
 Usted quiere conocer el camino más corto hacia un espacio que se pueda reservar. La aplicación mantiene una lista de preparación llamada **Configuración de este espacio** y, en la pantalla Reservar, dice a los propietarios **Antes de que alguien pueda reservar aquí** qué falta.
 
 *Lo que debe existir antes de la primera reserva*

@@ -97,6 +97,8 @@ Future<List<String>> _pump(WidgetTester tester, SetupStatus status) async {
   for (var i = 0; i < 4; i++) {
     await tester.pump();
   }
+  await tester.tap(find.byKey(const ValueKey('setup-outcome-details')));
+  await tester.pumpAndSettle();
   return pushed;
 }
 

@@ -184,6 +184,8 @@ Al momento in cui scriviamo, la maggior parte delle funzionalità risulta **Non 
 
 **Destinatari:** Proprietario · Comproprietario
 
+Scelga cosa fa lo spazio rispondendo alle domande raggruppate su prenotazioni, denaro e attività quotidiane. I comandi per verificare e applicare restano visibili durante lo scorrimento. Controlli quanti parametri cambierebbero e gli effetti concreti prima di applicare; rispondere non modifica lo spazio. I livelli dettagliati e gli avvii rapidi sono nella sezione avanzata. Un livello scelto esplicitamente resta invariato quando risponde ad altre domande; l’azione per i livelli consigliati ripristina le raccomandazioni. «Non so ancora» mantiene la risposta precedente e impedisce di applicare finché non la chiarisce. Il questionario offline segue la stessa regola e blocca l’esportazione se una risposta resta incerta.
+
 Non vuole decidere cento cose. Ecco tre punti di partenza realistici; ciascuno elenca esattamente che cosa è attivo. Scelga il più vicino, poi adatti.
 
 Il primo non richiede alcun modello. Il secondo è il modello già pronto dell’app. Il terzo è costruito a partire dalle funzionalità stesse. Prendono il nome da ciò che offrono, non da una dimensione.

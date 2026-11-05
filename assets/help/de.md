@@ -6122,6 +6122,8 @@ Sie möchten das Ganze überblicken, bevor Sie etwas auswählen. DesKilo glieder
 
 **Zielgruppe:** Inhaber · Mitinhaber · Administrator:in
 
+Der Einrichtungsleitfaden bleibt nach der Einrichtung im Menü des Arbeitsbereichs erreichbar. Die Übersicht nennt den Arbeitsbereich, das gewählte Ziel und die verbleibenden Pflichtaufgaben. Öffnen Sie die Ergebnisdetails, um die einzelnen Meilensteine zu sehen. Die empfohlene Aktion führt zu einer Aufgabe, die Sie jetzt erledigen können; Aufgaben, die auf einen anderen Schritt oder den Betreiber warten, sind entsprechend gekennzeichnet. Eine nicht verfügbare Prüfung bedeutet nicht, dass die Aufgabe erledigt ist. Der Fortschritt beruht auf gespeicherten Einstellungen: Das Öffnen einer Aufgabe schließt sie nicht ab. Jede Aufgabe zeigt weiterhin Arbeitsbereich, Ziel und Status sowie das nächste Ziel.
+
 Sie möchten den kürzesten Weg zu einem Space, den man buchen kann. Die App führt eine Bereitschaftsliste namens **Einrichtung dieses Workspace** und sagt Inhabern auf dem Bildschirm Reservieren unter *Bevor hier jemand buchen kann*, was noch fehlt.
 
 *Was vor der ersten Buchung da sein muss*
@@ -6592,6 +6594,8 @@ Zum Zeitpunkt dieses Textes stehen die meisten Funktionen auf **Nicht bewertet**
 ### Drei Ausgangspunkte
 
 **Zielgruppe:** Inhaber · Mitinhaber
+
+Wählen Sie den Funktionsumfang mit den Fragen zu Buchungen, Geld und täglichem Betrieb. Prüfen und Übernehmen bleiben beim Scrollen sichtbar. Prüfen Sie die Anzahl der betroffenen Einstellungen und ihre konkreten Folgen vor dem Übernehmen; allein das Antworten ändert den Arbeitsbereich nicht. Detaillierte Prozessstufen und Schnellstarts stehen im erweiterten Abschnitt. Eine bewusst gewählte Stufe bleibt beim Beantworten weiterer Fragen erhalten; mit der Aktion für empfohlene Stufen kehren Sie zu den Empfehlungen zurück. „Noch nicht sicher“ behält die bisherige Antwort bei und verhindert das Übernehmen, bis Sie sie geklärt haben. Der Offline-Fragebogen verwendet dieselbe Regel und sperrt den Export bei ungeklärten Antworten.
 
 Sie möchten nicht hundert Dinge entscheiden. Hier sind drei realistische Ausgangspunkte; jeder nennt genau, was an ist. Wählen Sie den nächstliegenden und passen Sie ihn dann an.
 

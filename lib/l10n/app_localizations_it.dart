@@ -24575,6 +24575,49 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile salvare i dati di base. Riprovi.';
 
   @override
+  String get setupChoicesAdvanced => 'Regolare ogni area';
+
+  @override
+  String get setupChoicesBookings => 'Persone e prenotazioni';
+
+  @override
+  String get setupChoicesDetails => 'Esaminare tutte le modifiche';
+
+  @override
+  String get setupChoicesManual =>
+      'La sua scelta viene mantenuta quando risponde alle altre domande.';
+
+  @override
+  String get setupChoicesMoney => 'Denaro e gestione';
+
+  @override
+  String get setupChoicesNeedsDecision =>
+      'La scelta precedente viene mantenuta. Risolva le risposte «Non so ancora» prima di applicare.';
+
+  @override
+  String get setupChoicesOperations => 'Gestione quotidiana';
+
+  @override
+  String setupChoicesQuestionUnknown(String question) {
+    return 'Non ancora deciso: $question';
+  }
+
+  @override
+  String get setupChoicesReset => 'Usi i livelli consigliati';
+
+  @override
+  String get setupChoicesSaving => 'Salvataggio…';
+
+  @override
+  String setupChoicesSummary(int count) {
+    return 'Impostazioni che cambieranno: $count';
+  }
+
+  @override
+  String get setupChoicesUnsaved =>
+      'Solo anteprima: non è stato applicato nulla.';
+
+  @override
   String get setupDraftChanged =>
       'Modificato da un’altra persona mentre Lei stava modificando.';
 
@@ -24858,6 +24901,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupGrowVatUsualTitle => 'Le aliquote abituali del Suo paese';
+
+  @override
+  String get setupGuidanceTitle => 'Indicazioni e verifiche';
 
   @override
   String get setupGuideAddIt => 'Lo aggiunga';
@@ -25157,7 +25203,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupLevelsIntro =>
-      'Risponda ad alcune domande semplici: ogni processo riceve il livello che richiedono, con il motivo. Cambi un livello a mano. Nulla cambia finché non applica, e l’anteprima nomina ogni funzione attivata o disattivata.';
+      'Descriva come funziona il suo spazio. Verifichi cosa cambierà prima di applicare le sue scelte.';
 
   @override
   String get setupLevelsNoChange => 'Nulla cambia: lo spazio lo fa già.';
@@ -25283,6 +25329,15 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.';
+
+  @override
+  String get setupNextIndependent =>
+      'Può svolgere questa attività mentre la tappa precedente è in attesa.';
+
+  @override
+  String setupNextNamed(String step) {
+    return 'Successiva: $step';
+  }
 
   @override
   String setupNotificationsAudience(String audience) {
@@ -25442,6 +25497,33 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupOnlineTestUnverified =>
       'Queste chiavi non indicano se sono di prova o reali. Le verifichi nel pannello del fornitore.';
+
+  @override
+  String get setupOutcomeProgress => 'Avanzamento per obiettivo';
+
+  @override
+  String get setupOverviewChoose =>
+      'Scelga ciò che serve al suo spazio per vedere il piano di configurazione.';
+
+  @override
+  String get setupOverviewReady =>
+      'Il suo obiettivo è configurato. Può verificarlo o modificarlo qui in qualsiasi momento.';
+
+  @override
+  String setupOverviewRemaining(int count) {
+    return 'Attività necessarie rimanenti: $count';
+  }
+
+  @override
+  String get setupOverviewTitle => 'Stato dello spazio';
+
+  @override
+  String get setupOverviewUnchecked =>
+      'Alcune verifiche non sono disponibili. Aggiorni lo stato prima di considerare conclusa la configurazione.';
+
+  @override
+  String get setupOverviewWaiting =>
+      'Questa tappa è in attesa. Le attività indicano chi può sbloccarla.';
 
   @override
   String get setupPaymentsPreviewEmpty =>
@@ -25810,6 +25892,10 @@ class AppLocalizationsIt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupTaskSaved =>
+      'Lo stato riflette le impostazioni salvate. Aprire un’attività non la completa.';
 
   @override
   String get shellBarHiddenAnnounce => 'Barra di navigazione nascosta';

@@ -35,8 +35,12 @@ class SetupNextStepButton extends ConsumerWidget {
     final next = status?.stepAfter(open);
     return FilledButton.tonal(
       key: const ValueKey('setup-next-step'),
-      onPressed: () => _go(ref, workspaceId, next),
-      child: Text(next == null ? l10n.setupStepDone : l10n.setupStepNext),
+      onPressed: status == null ? null : () => _go(ref, workspaceId, next),
+      child: Text(
+        next == null
+            ? l10n.setupOverviewTitle
+            : l10n.setupNextNamed(l10n.setupStepTitle(next.step)),
+      ),
     );
   }
 
