@@ -115,6 +115,7 @@
         "foreignCurrencyPurchases": false,
         "formHelpHints": true,
         "guestParticipation": false,
+        "guestPasses": false,
         "holidayImport": false,
         "inputVat": false,
         "instanceWizard": false,

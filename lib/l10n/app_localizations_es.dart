@@ -9126,6 +9126,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureGuestParticipationTitle => 'Visitas de invitados';
 
   @override
+  String get featureGuestPassesDesc =>
+      'Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan.';
+
+  @override
+  String get featureGuestPassesTitle => 'Pases de invitado en recepción';
+
+  @override
   String get featureHeldBack =>
       'Esperando a la función de arriba: actívela y esta vuelve a funcionar.';
 
@@ -10687,6 +10694,116 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get groupRenameTitle => 'Nombre del grupo';
+
+  @override
+  String get guestPassActive => 'A la venta';
+
+  @override
+  String get guestPassAdd => 'Añadir un pase';
+
+  @override
+  String get guestPassChoose => 'Pase';
+
+  @override
+  String get guestPassDay => 'Primer día';
+
+  @override
+  String get guestPassDays => 'Días';
+
+  @override
+  String get guestPassEdit => 'Editar el pase';
+
+  @override
+  String get guestPassFrom => 'Desde';
+
+  @override
+  String get guestPassName => 'Nombre';
+
+  @override
+  String get guestPassNameRequired => 'Introduzca un nombre.';
+
+  @override
+  String get guestPassPaid => 'Pagado en recepción';
+
+  @override
+  String guestPassPerDay(String price) {
+    return '$price por día';
+  }
+
+  @override
+  String guestPassPerHour(String price) {
+    return '$price por hora';
+  }
+
+  @override
+  String get guestPassPrice => 'Precio por unidad';
+
+  @override
+  String get guestPassPriceInvalid => 'Introduzca un precio.';
+
+  @override
+  String get guestPassProblemDays => 'Un pase dura de 1 a 31 días.';
+
+  @override
+  String get guestPassProblemEndBeforeStart =>
+      'El final es anterior al inicio.';
+
+  @override
+  String get guestPassProblemHourlyOneDay =>
+      'Un pase por horas es para un solo día.';
+
+  @override
+  String get guestPassProblemNoOffer => 'Elija un pase.';
+
+  @override
+  String get guestPassProblemNoSeat => 'Elija un puesto.';
+
+  @override
+  String get guestPassSaleFailed =>
+      'No se pudo vender el pase. Puede que el puesto esté ocupado o que el horario quede fuera del horario de apertura.';
+
+  @override
+  String get guestPassSaleIntro =>
+      'El nombre y los datos de contacto del invitado figuran en la factura. El invitado no se convierte en miembro.';
+
+  @override
+  String get guestPassSaveFailed => 'No se pudo guardar el pase.';
+
+  @override
+  String get guestPassSeat => 'Puesto';
+
+  @override
+  String get guestPassSell => 'Vender un pase';
+
+  @override
+  String guestPassSold(String total, String name) {
+    return 'Pase vendido: $total, facturado a $name.';
+  }
+
+  @override
+  String get guestPassTo => 'Hasta';
+
+  @override
+  String guestPassTotal(String units, String price, String total) {
+    return '$units × $price = $total';
+  }
+
+  @override
+  String get guestPassUnitDay => 'Por día';
+
+  @override
+  String get guestPassUnitHour => 'Por hora';
+
+  @override
+  String get guestPassesEmpty =>
+      'Aún no hay pases. Añada los pases que vende el espacio.';
+
+  @override
+  String get guestPassesIntro =>
+      'Pases vendidos en recepción a invitados que no son miembros: se les reserva el puesto, se les factura el pase y el dinero cobrado se registra como pago.';
+
+  @override
+  String get guestPassesTitle => 'Pases de invitado';
 
   @override
   String get guideActionConfirmBooking =>
@@ -16532,6 +16649,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberOriginFounder => 'Fundó este espacio';
+
+  @override
+  String get memberOriginGuest => 'Compró un pase de invitado en recepción';
 
   @override
   String get memberOriginHeading => 'Cómo empezó esta afiliación';

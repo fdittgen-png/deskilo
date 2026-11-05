@@ -20,6 +20,7 @@ import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
 import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
@@ -32,6 +33,7 @@ import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
@@ -44,6 +46,7 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
+import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
@@ -57,6 +60,8 @@ import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/demo_free_seat.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -206,6 +211,46 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'visits paid to '
     'other spaces as a guest',
     (w) => w.f.guests.visits.isNotEmpty,
+  ),
+  // #3308 — a London day pass sold at the desk: the guest's place is booked
+  // and the pass invoiced to the guest, in pounds.
+  WorkspaceFeature.guestPasses: _action(
+    _owner,
+    'a day pass sold to a guest in London',
+    (w) async {
+      final london = w.f.london;
+      final passes = FakeGuestPassRepository(
+        workspaceId: demoLondonSpaceId,
+        currency: 'GBP',
+        reservations: london.reservations,
+        workspaces: london.workspaces,
+        money: london.money,
+        now: () => w.now,
+        maySell: () => true,
+        mayPrice: () => true,
+        floorPlanSeats: () => london.floorPlan.seats,
+        offers: const [
+          GuestPassOffer(id: 'p', name: 'Day pass', unit: GuestPassUnit.day, priceCents: 2500),
+        ],
+      );
+      final offer = (await passes.offers(demoLondonSpaceId)).single;
+      final slot = freeSeatForPass(london.floorPlan.seats, london.reservations.reservations,
+          DateTime(w.now.year, w.now.month, w.now.day + 20), startMinutes: 9 * 60, endMinutes: 17 * 60);
+      final sale = await passes.sell(
+        demoLondonSpaceId,
+        draft: GuestPassDraft(
+          offer: offer,
+          seatId: slot.seatId,
+          day: slot.day,
+          startMinutes: 9 * 60,
+          endMinutes: 17 * 60,
+        ),
+        guest: const {'first_name': 'Gwen', 'last_name': 'Guest'},
+        requestId: 'scenario-pass',
+      );
+      return sale.reservationIds.length == 1 &&
+          london.money.invoices.any((i) => i.id == sale.invoiceId && i.currency == 'GBP' && i.totalCents == 2500);
+    },
   ),
   // ── workspaceAccess / physicalAccess ─────────────────────────────────
   WorkspaceFeature.kioskMode: _state(

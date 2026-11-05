@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
+import '../../features/money/presentation/screens/guest_passes_screen.dart';
 import '../../features/money/presentation/screens/invoice_register_screen.dart';
 import '../../features/money/presentation/screens/invoices_screen.dart';
 import '../../features/money/presentation/screens/invoicing_wizard_screen.dart';
@@ -186,6 +187,17 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
     ),
     // The original short link goes through the canonical route's guards.
     GoRoute(path: '/suppliers', redirect: (context, state) => '/money/suppliers'),
+    // #3308 — passes sold at the desk to guests who are not members.
+    GoRoute(
+      path: '/money/guest-passes',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.guestPasses],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const GuestPassesScreen(),
+    ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(
       path: '/money/suppliers',

@@ -115,7 +115,7 @@ void main() {
       find.bySemanticsLabel(
         RegExp(
           r'^Workspace & access\. Needs attention\. '
-          r'\d+ of 2 subprocesses active\. \d+ of 20 features on',
+          r'\d+ of 2 subprocesses active\. \d+ of 21 features on',
         ),
       ),
       findsOneWidget,
