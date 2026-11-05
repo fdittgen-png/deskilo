@@ -210,6 +210,9 @@ const Map<String, String> _notExported = {
       '#2358 — the Verifactu alta and anulación records of a Spanish seller, chained '
           'by their huella: they are produced to the AEAT from this server; the '
           'invoices they record are exported themselves',
+  'provider_payouts':
+      '#2380 — the payouts a payment provider reported: the provider issues and keeps '
+          'them; the payments they carried are exported as ledger rows',
   'bank_line_unmatches':
       '#2380 — the record of a match of money in undone: it names a bank line, '
           'an invoice, a payment credit and two events of this server, which are '
@@ -441,6 +444,16 @@ Map<String, List<String>> _openItems() {
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'payment_intents': {
+    // #2380 — the provider's settlement facts of a payment (its fee, net,
+    // their currency, its transaction and payout): what the provider
+    // reports and keeps; the export carries the payment itself.
+    'provider_fee_cents',
+    'provider_net_cents',
+    'provider_fee_currency',
+    'provider_transaction_id',
+    'payout_id',
+  },
   'einvoice_inbox': {
     // The received document itself: it travels as a file of its own, not
     // as one cell of a sheet (0540).
