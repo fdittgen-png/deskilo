@@ -1,5 +1,5 @@
 {
-  "recordedSha": "b82e6f33380d048ab03a7ca484410db2cce498de",
+  "recordedSha": "74461620b92ce5b78e256bd7175f7a39b6146d0c",
   "recordedDate": "2026-11-04",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2447,"functions":13919,"cyclomatic>=9":1427,"cyclomatic>=25":78,"cognitive>=15":541,"cognitive>=30":70,"length>=150":47,"parameters>=5":636,"parameters>=7":155,"partOfFiles":17},
