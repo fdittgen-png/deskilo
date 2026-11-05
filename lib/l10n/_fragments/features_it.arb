@@ -264,5 +264,7 @@
   "featureMtdSubmissionTitle": "Inviare l'IVA britannica a HMRC",
   "featureMtdSubmissionDesc": "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte.",
   "featurePurchaseOrdersTitle": "Ordinare ai fornitori",
-  "featurePurchaseOrdersDesc": "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture."
+  "featurePurchaseOrdersDesc": "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture.",
+  "featureGuestPassesTitle": "Pass ospite all'accoglienza",
+  "featureGuestPassesDesc": "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
 }

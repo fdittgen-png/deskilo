@@ -122,6 +122,7 @@ class MemberContactCard extends ConsumerWidget {
           l10n.memberOriginInvited,
         MemberOrigin.delegated =>
           l10n.memberOriginDelegated,
+        MemberOrigin.guest => l10n.memberOriginGuest,
         MemberOrigin.unknown => '',
       };
 
@@ -129,6 +130,7 @@ class MemberContactCard extends ConsumerWidget {
         MemberOrigin.founder => Icons.flag_outlined,
         MemberOrigin.invited => Icons.mail_outline,
         MemberOrigin.delegated => Icons.badge_outlined,
+        MemberOrigin.guest => Icons.confirmation_number_outlined,
         MemberOrigin.unknown => Icons.help_outline,
       };
 

@@ -253,6 +253,11 @@ class MoneyActionSet {
             l10n.servicesTitle, '/services'),
       door('sales-hub-invoices', Icons.receipt_long_outlined,
           l10n.invoicesManage, '/invoices'),
+      // #3308 — passes sold at the desk, for who sells or prices them.
+      if (data.guestPassesOn &&
+          (held.contains('issueInvoices') || held.contains('manageServices')))
+        door('sales-hub-guest-passes', Icons.confirmation_number_outlined,
+            l10n.guestPassesTitle, '/money/guest-passes'),
       door('sales-hub-register', Icons.table_rows_outlined,
           l10n.invoiceRegisterTitle, '/invoice-register'),
       if (held.contains('manageBilling'))

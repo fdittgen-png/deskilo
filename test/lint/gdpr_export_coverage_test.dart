@@ -53,6 +53,12 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'guest_passes':
+      '#3308 — a pass sold at the desk to a guest, keyed by the guest\'s '
+          'customer record. A guest has no account, so no export_my_data call '
+          'is theirs; a rights request is answered by the space from the '
+          'workspace workbook, which carries the passes, the record\'s '
+          'managed identity and its invoices',
   'bi_export_evidence':
       '#2581 — that an analytics export was taken: who, which report and '
           'revision, the format and a digest of the figures, never a figure '

@@ -1365,6 +1365,10 @@ window.SETUP_L10N={
    "purchaseOrders": [
     "Order from suppliers",
     "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only."
+   ],
+   "guestPasses": [
+    "Guest passes at the desk",
+    "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay."
    ]
   },
   "process": {
@@ -3069,6 +3073,10 @@ window.SETUP_L10N={
    "purchaseOrders": [
     "Commander auprès des fournisseurs",
     "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent."
+   ],
+   "guestPasses": [
+    "Pass invités à l'accueil",
+    "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent."
    ]
   },
   "process": {
@@ -4773,6 +4781,10 @@ window.SETUP_L10N={
    "purchaseOrders": [
     "Bei Lieferanten bestellen",
     "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen."
+   ],
+   "guestPasses": [
+    "Gästepässe am Empfang",
+    "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben."
    ]
   },
   "process": {
@@ -6477,6 +6489,10 @@ window.SETUP_L10N={
    "purchaseOrders": [
     "Pedir a los proveedores",
     "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas."
+   ],
+   "guestPasses": [
+    "Pases de invitado en recepción",
+    "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
    ]
   },
   "process": {
@@ -8181,6 +8197,10 @@ window.SETUP_L10N={
    "purchaseOrders": [
     "Ordinare ai fornitori",
     "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture."
+   ],
+   "guestPasses": [
+    "Pass ospite all'accoglienza",
+    "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
    ]
   },
   "process": {
