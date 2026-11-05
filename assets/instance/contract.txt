@@ -3035,7 +3035,7 @@ routine public.seat_is_resource(p_seat_id uuid) -> boolean | function | definer 
 routine public.seats_resource_guard() -> trigger | function | definer | volatile | exec:service_role | body:d44ec236e57c
 routine public.seed_default_plans() -> trigger | function | definer | volatile | exec:service_role | body:a5869cc6e468
 routine public.sell_credit(p_workspace_id uuid, p_member_id uuid, p_product_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:b52a7eecbc20
-routine public.sell_guest_pass(p_workspace_id uuid, p_offer_id uuid, p_guest jsonb, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_request_id uuid, p_paid boolean, p_method text, p_days integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9831a6df92d4
+routine public.sell_guest_pass(p_workspace_id uuid, p_offer_id uuid, p_guest jsonb, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_request_id uuid, p_paid boolean, p_method text, p_days integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b8cc39ceea29
 routine public.send_account_group_message(p_group uuid, p_body text, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:853f8440175b
 routine public.send_account_message(p_recipient uuid, p_body text, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:897edf84f3ad
 routine public.send_conversation_message(p_conversation_id uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:47fa93ce998b

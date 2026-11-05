@@ -340,10 +340,23 @@ declare
   v_invoice uuid;
   v_payment uuid;
   v_pass uuid;
+  v_seller uuid;
 begin
   if auth.uid() is null then raise exception 'not authenticated'; end if;
   if public.mcp_is_delegated() then raise exception 'guest passes are sold in the Deskilo app'; end if;
   if p_request_id is null then raise exception 'a request id is required'; end if;
+  -- Authorised first: a replay answers only someone who may sell here.
+  if not public.feature_effective(p_workspace_id, 'guestPasses') then
+    raise exception 'guest passes are off in this space';
+  end if;
+  if not public.has_permission(p_workspace_id, 'issueInvoices') then
+    raise exception 'not allowed to sell a guest pass' using errcode = '42501';
+  end if;
+  select m.id into v_seller from public.members m
+   where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
+  -- One sale per request at a time: a concurrent retry waits here and
+  -- then replays, instead of failing on the unique request id.
+  perform pg_advisory_xact_lock(hashtextextended(p_workspace_id::text || p_request_id::text, 0));
   select * into v_done from public.guest_passes
    where workspace_id = p_workspace_id and client_request_id = p_request_id;
   if v_done.id is not null then
@@ -351,12 +364,6 @@ begin
       'reservation_ids', to_jsonb(v_done.reservation_ids), 'invoice_id', v_done.invoice_id,
       'payment_event_id', v_done.payment_event_id, 'units', v_done.units,
       'amount_cents', v_done.amount_cents, 'replayed', true);
-  end if;
-  if not public.feature_effective(p_workspace_id, 'guestPasses') then
-    raise exception 'guest passes are off in this space';
-  end if;
-  if not public.has_permission(p_workspace_id, 'issueInvoices') then
-    raise exception 'not allowed to sell a guest pass' using errcode = '42501';
   end if;
   select * into v_offer from public.guest_pass_offers
    where id = p_offer_id and workspace_id = p_workspace_id and active;
@@ -401,6 +408,10 @@ begin
    where id = v_member and member_number = '';
   insert into public.managed_identities (member_id, workspace_id, identity)
   values (v_member, p_workspace_id, v_identity);
+  -- As for any profile someone creates for a person (create_managed_member):
+  -- who wrote the guest's personal data is logged.
+  insert into public.data_access_log (workspace_id, actor_member_id, subject_member_id, category)
+  values (p_workspace_id, v_seller, v_member, 'profile');
 
   -- The pass is the guest's entitlement: it grants the half-days its window
   -- covers (two per local day, month by month), so the quota a member's

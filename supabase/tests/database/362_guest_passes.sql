@@ -7,7 +7,7 @@
 -- (flag off, a seller without issueInvoices, an inactive pass, a guest
 -- without a name). Who reads the offers and the sales.
 begin;
-select plan(20);
+select plan(22);
 
 create or replace function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000003308' || p)::uuid
@@ -38,8 +38,8 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select pg_temp.u(s), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        s || '@guest-pass.test', '', now(), now(), now()
-  from unnest(array['a1', 'a2']) s;
--- a1 owner, a2 plain member.
+  from unnest(array['a1', 'a2', 'a3']) s;
+-- a1 owner, a2 plain member, a3 a stranger (signed in, no membership).
 with w as (
   insert into public.workspaces(name, country_code, currency_code, timezone, created_by, street, city,
                                 postal_code, vat_regime, vat_id, feature_flags, booking_rules)
@@ -98,6 +98,18 @@ select ok((select i.member_name ilike '%Gina%' and i.kind = 'full' from public.i
             where i.id = (current_setting('deskilo.gp.s1')::jsonb ->> 'invoice_id')::uuid),
   'issued to the guest by name');
 select is((select count(*)::int from public.guest_passes where workspace_id = pg_temp.ws()), 1, 'one pass recorded');
+
+-- the guest's profile write is logged, as for any profile someone creates
+select ok(exists (select 1 from public.data_access_log l
+                   where l.workspace_id = pg_temp.ws() and l.category = 'profile'
+                     and l.subject_member_id = (current_setting('deskilo.gp.s1')::jsonb ->> 'member_id')::uuid
+                     and l.actor_member_id = (select id from public.members where workspace_id = pg_temp.ws() and user_id = pg_temp.u('a1'))),
+  'the seller is logged as the one who wrote the guest''s personal data');
+-- a stranger who knows the request id learns nothing from a replay
+select pg_temp.act_as(pg_temp.u('a3'));
+select throws_ok($$ select pg_temp.sell('b1', 'hour', '{"first_name":"Gina","last_name":"Guest"}', pg_temp.at(0, 10), pg_temp.at(0, 12.5)) $$,
+  '42501', null, 'a replay answers only someone who may sell here');
+reset role;
 
 -- 10-11. the same request again: the same sale, nothing twice
 select pg_temp.act_as(pg_temp.u('a1'));

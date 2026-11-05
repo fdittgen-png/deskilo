@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3308 — the Demo's guest passes, per space, as sell_guest_pass (0672)
+// #3308 — the Demo's guest passes, per space, as sell_guest_pass (0685)
 // does them: the seller needs issueInvoices, the space's passes need
 // manageServices; a sale writes a customer record of origin guest (no
 // account, no subscription), books the place day by day, charges the pass

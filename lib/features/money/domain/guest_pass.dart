@@ -3,7 +3,7 @@
 // #3308 — a pass sold at the desk to a guest who is not a member: the
 // space's passes, the sale's draft and its rules, and what the sale made.
 // The server prices the pass and books, charges and invoices it
-// (sell_guest_pass, 0672); these rules only keep a draft from being sent
+// (sell_guest_pass, 0685); these rules only keep a draft from being sent
 // that the server would refuse for a reason the form can name.
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
