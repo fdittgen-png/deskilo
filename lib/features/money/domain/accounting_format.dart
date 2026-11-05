@@ -27,8 +27,8 @@
 /// chart of accounts. #2379 writes them from a local book's postings
 /// (`accounting_targets_saft.dart`): Norway's and Luxembourg's FAIA, and
 /// the OECD tree. Portugal's `TaxAccountingBasis` 'C' stays absent (it
-/// needs certified software), and Poland's JPK_KR, Romania's D406,
-/// Lithuania's and Austria's each wait for their own profile. #2373 — Sage's German lines (KHK / Office Line)
+/// needs certified software). Poland's JPK_KR_PD and Romania's D406 are
+/// scoped exchange profiles; Lithuania and Austria await their profiles. #2373 — Sage's German lines (KHK / Office Line)
 /// import DATEV and the French ones the FEC (`accounting_targets_sage.dart`).
 library;
 

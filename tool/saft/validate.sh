@@ -19,6 +19,8 @@
 #                   git.erst.dk standard-filformater, SAF-T/XSD/
 #   saft_ro         ANAF, Romanian SAF-T (D406) 2.4.9
 #                   static.anaf.ro, Informatii_R/saf_t.htm
+#   jpk_kr_pl       Polish JPK_KR_PD(1) v1-1, Ministry of Finance
+#                   gov.pl/web/kas/struktury-jpk-w-podatkach-dochodowych
 #   saft_at         Bundesministerium für Finanzen, SAF-T AT 1.01 (the OECD
 #                   1.0 tree, namespace urn:OECD:StandardAuditFile-Taxation:AT_1.01)
 #                   bmf.gv.at/themen/steuern/fristen-verfahren/bundesabgabenordnung/
@@ -63,6 +65,12 @@ check "$NO" 5362d6778872b4ed2524e09b083e634ae950a4f1d9f1b95076b4c9e4df6a0650
 check "$LU" 957273b819739dd015950475a36642b6a0348c54d59f74e53787a97c887a96c5
 check "$DK" 01cd75f7bf10f1cdab00b48ea2579e97647d7d01fa00862f76edd5d0a6ad8ec3
 check "$RO" 80ad7eaaf2aafd656a6e3c0e69e3a8fcdb23262640287ebba6383ff3014dccc2
+PL=jpk_kr_pl/JPK_KR_PD_1_v1-1.xsd
+check "$PL" 251bab822af09d638225068538dcd64c0b3b56c11a13a0c7cda0f709e0d5063a
+check jpk_kr_pl/StrukturyDanych_v10-0E.xsd 1137ce6e3c11c2b9ef3f05e4e72d6dcd6b4fa94908ea558f2ba15de0259bb2aa
+check jpk_kr_pl/ElementarneTypyDanych_v10-0E.xsd 8a531cb181d3e298d11b28766655ae91fee2d7851440095932ffc82137ed2be1
+check jpk_kr_pl/KodyKrajow_v10-0E.xsd 1d41a1b3184188f2d20a51d3afde26204dda182ec5dacf018204dcc9870dc644
+check jpk_kr_pl/KodyUrzedowSkarbowych_v8-0E.xsd af27f583ea1ceb44ed37e0ec0d9bfdf2bfda74aadd5841ccbf0fc241175c2e91
 check "$AT" 105e52e52c83863c76eb8777a6efd3b65de34ea02f6b217110b16c1fd579b236
 check saft_at/EKR_fuer_SAF-T.csv 7c05810f2a85cb6e545874140f03b5945811000c07e8a8191188781298a90d10
 
@@ -87,4 +95,13 @@ validate saft_dk "$DK"
 validate saft_ro "$RO"
 validate saft_at "$AT"
 validate saft_oecd_full "$LU"
+# The official imports stay verbatim and resolve only through this local catalog.
+if [ ! -f "$samples/jpk_kr_pl.xml" ]; then
+  echo "::error::no jpk_kr_pl sample in $samples" >&2
+  status=1
+elif XML_CATALOG_FILES="$fixtures/jpk_kr_pl/catalog.xml" xmllint --nonet --noout --schema "$fixtures/$PL" "$samples/jpk_kr_pl.xml"; then
+  echo "jpk_kr_pl: valid against $PL"
+else
+  status=1
+fi
 exit $status

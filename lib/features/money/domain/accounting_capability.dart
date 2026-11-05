@@ -13,6 +13,7 @@ library;
 
 import 'package:meta/meta.dart';
 
+import 'accounting_capability_poland.dart';
 import 'accounting_format.dart';
 
 /// How far a format's production has been qualified. Ordered: a later
@@ -135,6 +136,7 @@ const Map<String, AccountingCapability> accountingCapabilities = {
       'Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd'),
   'saft_dk': AccountingCapability.schemaValidated('saft_dk',
       'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd'),
+  'jpk_kr_pl': polandJpkCapability,
   'saft_ro': AccountingCapability.schemaValidated('saft_ro', 'ANAF SAF-T D406, Ro_SAFT_Schema_v249_2025.xsd'),
   // Austria: a real file also needs the standard chart map (österreichischer
   // Einheitskontenrahmen) and the header's profit basis and industry code.
