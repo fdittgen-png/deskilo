@@ -18,7 +18,7 @@ ReportBands professionalReportBands({
       kind.slot is ReportProformaSlot ||
       kind.isReminder || kind.id == 'vat_declaration' ||
       kind.id == 'bi_analytics' || kind.id == 'workspace_configuration' ||
-      bookReportKinds.contains(kind.id)) {
+      bookReportKinds.contains(kind.id) || kind.id == 'bank_reconciliation') {
     return content;
   }
   final title = reportKindLabel(l10n, kind);

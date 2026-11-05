@@ -118,6 +118,26 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
     reason: 'demo records: VAT rate labels and an expense title as a '
         'space stores them',
   ),
+  'lib/core/demo/seed/demo_london_seed.dart': (
+    allowed: 3,
+    reason: 'Demo records: the London space\'s VAT rate labels as the '
+        'space stores them (#3290)',
+  ),
+  'lib/core/demo/seed/demo_city_money_seed.dart': (
+    allowed: 4,
+    reason: 'Demo records: English invoice descriptions as the London and '
+        'New York businesses would store them, not application labels',
+  ),
+  'lib/core/demo/seed/demo_city_purchase_seed.dart': (
+    allowed: 1,
+    reason: 'Demo records: an English supplier invoice title as the '
+        'fictional business stores it, not an application label',
+  ),
+  'lib/core/demo/seed/demo_city_workflow_seed.dart': (
+    allowed: 5,
+    reason: 'Demo records: fictional expense, badge and document titles stored by '
+        'the English-speaking spaces, not application interface labels',
+  ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,
     reason: 'cloud region names as the provider spells them — a place '

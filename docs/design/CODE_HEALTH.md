@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `694ad8ee2451db979bdc946da6ef309247ce5315` on 2026-11-01.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ed68693a850be5fea1a5c26bf19c0357a31f68c9` on 2026-11-02.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,21 +10,24 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2305 |
-| functions | 13318 |
-| cyclomatic>=9 | 1323 |
-| cyclomatic>=25 | 75 |
-| cognitive>=15 | 501 |
-| cognitive>=30 | 69 |
-| length>=150 | 45 |
-| parameters>=5 | 591 |
-| parameters>=7 | 146 |
-| partOfFiles | 22 |
+| files | 2454 |
+| functions | 13921 |
+| cyclomatic>=9 | 1429 |
+| cyclomatic>=25 | 79 |
+| cognitive>=15 | 543 |
+| cognitive>=30 | 72 |
+| length>=150 | 49 |
+| parameters>=5 | 636 |
+| parameters>=7 | 155 |
+| partOfFiles | 17 |
 
 ## Worst functions by cognitive complexity (baseline)
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
+| 163 | 109 | 312 | 1 | `lib/features/money/domain/jpk_kr_pd_validation.dart#jpkKrPdGaps` |
+| 80 | 17 | 104 | 0 | `lib/features/money/domain/saf_t_financial_at.dart#SafTAustriaXml.generalLedger` |
+| 64 | 21 | 221 | 1 | `lib/features/money/domain/jpk_kr_pd_writer.dart#buildJpkKrPd` |
 | 51 | 54 | 105 | 4 | `lib/core/public_network/public_network_codec.dart#_decodeValue` |
 | 51 | 26 | 130 | 1 | `lib/features/workspace/domain/bi_report_pdf.dart#_evolution` |
 | 51 | 19 | 111 | 1 | `lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build` |
@@ -46,8 +49,5 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
 | 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
 | 40 | 19 | 55 | 2 | `lib/features/money/domain/vat_forms.dart#fillVatForm` |
-| 40 | 38 | 143 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
-| 39 | 24 | 144 | 1 | `lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build` |
-| 38 | 26 | 123 | 2 | `lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build` |
-| 38 | 23 | 199 | 1 | `lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#_RefPickerSheetState.build` |
+| 40 | 38 | 141 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 

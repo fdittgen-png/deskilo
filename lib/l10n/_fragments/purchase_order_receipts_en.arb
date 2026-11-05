@@ -1,0 +1,79 @@
+{
+  "purchaseOrderLineReceived": "{description}: {received} of {ordered} received",
+  "@purchaseOrderLineReceived": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "received": {
+        "type": "String"
+      },
+      "ordered": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceive": "Record a delivery",
+  "@purchaseOrderReceive": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveTitle": "Delivery of {reference}",
+  "@purchaseOrderReceiveTitle": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveTooMany": "More than what is left of this line",
+  "@purchaseOrderReceiveTooMany": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveNothing": "Enter what arrived of at least one line",
+  "@purchaseOrderReceiveNothing": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceivedOn": "Arrived on",
+  "@purchaseOrderReceivedOn": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveLine": "{description} ({left} to come)",
+  "@purchaseOrderReceiveLine": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveNote": "Note (optional)",
+  "@purchaseOrderReceiveNote": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrder": "Purchase order",
+  "@purchaseBillOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrderHint": "The order this bill charges: its amounts are taken and stay editable",
+  "@purchaseBillOrderHint": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillNoOrder": "No order",
+  "@purchaseBillNoOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillForOrder": "Purchase order {reference}",
+  "@purchaseBillForOrder": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  }
+}

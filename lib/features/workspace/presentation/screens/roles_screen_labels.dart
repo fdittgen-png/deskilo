@@ -86,5 +86,7 @@ String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permRecordOutgoingPayments,
         WorkspacePermission.manageLease =>
           l10n.permManageLease,
+        WorkspacePermission.managePrivacy =>
+          l10n.permManagePrivacy,
         _ => permission.name,
       };

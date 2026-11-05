@@ -67,6 +67,20 @@ void main() {
           KnownRefusal.permission);
     });
 
+    test('a workspace that handles data requests itself (#3278, 42501)', () {
+      // The server's own words ride a 42501, so it is read before the generic
+      // permission refusal: a member told "not allowed" would not know to file
+      // a rights request.
+      final e = _pg('privacy_self_service_off: file a rights request instead',
+          code: '42501');
+      expect(knownRefusalOf(e), KnownRefusal.privacySelfServiceOff);
+      expect(knownRefusalText(englishL10n, e), englishL10n.privacySelfServiceOff);
+      expect(englishL10n.privacySelfServiceOff, contains('rights request'));
+      // An ordinary 42501 stays a permission refusal.
+      expect(knownRefusalOf(_pg('permission denied for table x', code: '42501')),
+          KnownRefusal.permission);
+    });
+
     test('a session that ended', () {
       expect(knownRefusalOf(_pg('not authenticated')), KnownRefusal.session);
       expect(knownRefusalOf(const AuthException('JWT expired')),
@@ -175,6 +189,7 @@ void main() {
         ...sessionRefusalSubstrings,
         ...alreadyDecidedSubstrings,
         ...changedMeanwhileSubstrings,
+        ...privacySelfServiceOffSubstrings,
       ])
         if (!postgresOwn.contains(s) && !sql.contains(s)) s,
     ];

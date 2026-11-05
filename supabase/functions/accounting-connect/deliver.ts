@@ -49,6 +49,8 @@ import {
   type PostingParty,
   postingSha256,
   postingsOf,
+  taxBreakdownOf,
+  type TaxEntry,
 } from "../_shared/accounting_postings.ts";
 import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
 import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
@@ -143,6 +145,30 @@ async function creditedNumbers(
     }
   }
   return documentIds.every((id) => seen.has(id)) ? numbers : null;
+}
+
+/** #2371 — the tax frozen at issue of each sale of [documentIds]
+ * (`invoices.vat_totals`), as the caller reads it; null when a sale cannot
+ * be read, or its breakdown is absent or not that shape. */
+async function frozenTaxOf(
+  caller: CallerDb,
+  documentIds: string[],
+): Promise<Record<string, TaxEntry[]> | null> {
+  if (documentIds.length === 0) return {};
+  const { data, error } = await caller.from("invoices").select(
+    "id, vat_totals",
+  ).in("id", documentIds);
+  if (error || !Array.isArray(data)) return null;
+  const out: Record<string, TaxEntry[]> = {};
+  for (const row of data as Record<string, unknown>[]) {
+    if (typeof row.id !== "string") continue;
+    // An absent breakdown is missing evidence, never a sale without tax:
+    // the delivery fails closed on it.
+    const breakdown = taxBreakdownOf(row.vat_totals);
+    if (!breakdown) return null;
+    out[row.id] = breakdown;
+  }
+  return documentIds.every((id) => id in out) ? out : null;
 }
 
 /** The longest an Edge function runs on the hosted platform (its
@@ -342,6 +368,20 @@ export async function deliverPeriod(
   const adapter = adapterOf(
     adapterContext(deps, held.target_id, token, held.remote_tenant_id),
   );
+  // #2371 — a target that checks a sale's tax against what was frozen at
+  // issue is handed it; a sale that cannot be read delivers nothing.
+  if (adapter.needsFrozenTax) {
+    const sales = chosen.filter(({ posting }) =>
+      posting.kind === "invoice" || posting.kind === "credit_note"
+    );
+    const frozen = await frozenTaxOf(caller, [
+      ...new Set(sales.map(({ posting }) => posting.documentId)),
+    ]);
+    if (!frozen) return json({ error: "not allowed to read the books" }, 403);
+    for (const s of sales) {
+      s.posting = { ...s.posting, taxBreakdown: frozen[s.posting.documentId] };
+    }
+  }
   if (chosen.length > 0) {
     const refused = await adapter.prepare();
     if (refused) return json({ error: "target_refused", detail: refused }, 409);

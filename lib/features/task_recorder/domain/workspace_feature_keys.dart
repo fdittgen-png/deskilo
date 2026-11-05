@@ -47,6 +47,7 @@ const Set<String> workspaceFeatureKeys = {
   'planObjectDelete',
   'planDecor',
   'mtdSubmission',
+  'guestPasses',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',
@@ -158,6 +159,7 @@ const Set<String> workspaceFeatureKeys = {
   'dataReport',
   'personalShell',
   'foreignCurrencyPurchases',
+  'purchaseOrders',
   'accountingConnectors',
   'bankImport',
 };

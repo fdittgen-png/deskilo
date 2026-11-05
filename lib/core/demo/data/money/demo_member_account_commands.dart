@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/member_account_commands.dart';
@@ -33,7 +32,33 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
       paidOn: paidOn,
       period: period,
     ));
-    return 'evt-payment-${_m.recordedPayments.length}';
+    final id = 'evt-payment-${_m.recordedPayments.length}';
+    // #3291 — mirror record_payment (0070): it files a PENDING payment
+    // event; the account is credited only once it is confirmed.
+    final events = _m.eventRepository;
+    if (events != null) {
+      final now = events.now();
+      events.events.add(
+        WorkspaceEvent(
+          id: id,
+          workspaceId: workspaceId,
+          type: EventType.payment,
+          action: EventAction.submitted,
+          actorMemberId: events.respondingMemberId,
+          subjectMemberId: memberId,
+          payload: {
+            'amount_cents': amountCents,
+            'note': note,
+            'method': method?.wireName ?? '',
+            'paid_on': isoDay(paidOn ?? now),
+            'period': period ?? yearMonth(now.year, now.month),
+          },
+          status: EventStatus.pending,
+          createdAt: now,
+        ),
+      );
+    }
+    return id;
   }
 
   @override
@@ -63,7 +88,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
     // service_charge event — the ledger charge appears on confirmation.
     final events = _m.eventRepository;
     if (events != null) {
-      final now = kTestNow;
+      final now = events.now();
       events.events.add(
         WorkspaceEvent(
           id: 'evt-service-${_m.recordedServiceCharges.length}',
@@ -131,7 +156,7 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
         actualMinutes: record.actualMinutes,
         basis: UsageBasis.corrected,
         correctedFromMinutes: record.countedMinutes,
-        correctedAt: kTestNow,
+        correctedAt: _m.clock(),
         spaceLabel: record.spaceLabel,
       );
     }

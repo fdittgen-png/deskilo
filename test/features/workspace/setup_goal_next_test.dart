@@ -132,12 +132,12 @@ void main() {
     await _pump(tester, _status());
     expect(
       find.descendant(
-        of: find.byKey(const ValueKey('setup-guide-goal')),
+        of: find.byKey(const ValueKey('setup-configuration-overview')),
         matching: find.text('Your goal: Ready for money'),
       ),
       findsOneWidget,
     );
-    await tester.tap(find.byKey(const ValueKey('setup-guide-goal-change')));
+    await tester.tap(find.byKey(const ValueKey('setup-guide-levels')));
     await tester.pumpAndSettle();
     expect(find.text('levels page'), findsOneWidget);
   });
@@ -167,7 +167,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('page places'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return')), findsOneWidget);
-    expect(find.text('Next step'), findsOneWidget);
+    expect(find.text('Next: tiers'), findsOneWidget);
     // One primary action on a step page (#3076), beside the way back.
     expect(find.byKey(const ValueKey('setup-next-step')), findsOneWidget);
     expect(find.byType(FilledButton), findsOneWidget);
@@ -176,7 +176,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('page tiers'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('Workspace status'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('setup-next-step')));
     await tester.pumpAndSettle();
@@ -196,12 +196,12 @@ void main() {
     expect(find.text('step places'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return')), findsOneWidget);
-    expect(find.text('Next step'), findsOneWidget);
+    expect(find.text('Next: tiers'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('setup-next-step')));
     await _go(tester);
     expect(find.text('page tiers'), findsOneWidget);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('Workspace status'), findsOneWidget);
   });
 
   testWidgets('the last open step opened by its route says Done, and a page '
@@ -209,7 +209,7 @@ void main() {
     final router = await _pump(tester, _status(open: ['tiers']));
     unawaited(router.push('/setup/step/tiers'));
     await _go(tester);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('Workspace status'), findsOneWidget);
     unawaited(router.push('/setup/levels'));
     await _go(tester);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);

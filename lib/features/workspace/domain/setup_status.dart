@@ -17,8 +17,7 @@ typedef SetupEstimate = ({int low, int high});
 /// median to the 80th percentile of the sessions that finished the step,
 /// 9999) only from five sessions on, and the catalogue's one figure
 /// (`setup_steps.dart`) is widened by this fixed rule below that.
-SetupEstimate _estimateRange(int minutes) =>
-    (low: minutes, high: minutes * 2);
+SetupEstimate _estimateRange(int minutes) => (low: minutes, high: minutes * 2);
 
 /// A step's state, as the server words it.
 enum SetupStepState {
@@ -198,7 +197,10 @@ class SetupStatus {
   /// What the next milestone still needs, in guide order.
   List<SetupStepStatus> get toDo => [
     for (final s in steps)
-      if (s.required && _forNext(s) && s.open) s,
+      if (s.required &&
+          _forNext(s) &&
+          (s.open || s.state == SetupStepState.unknown))
+        s,
   ];
 
   /// The one next action: the first of [toDo] the owner can act on now,
@@ -215,7 +217,8 @@ class SetupStatus {
     for (final s in steps)
       if (!toDo.contains(s) &&
           (s.state == SetupStepState.blocked ||
-              s.state == SetupStepState.needsOperator))
+              s.state == SetupStepState.needsOperator ||
+              s.state == SetupStepState.unknown))
         s,
   ];
 

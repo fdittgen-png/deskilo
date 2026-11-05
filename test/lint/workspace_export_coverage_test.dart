@@ -206,6 +206,10 @@ const Map<String, String> _notExported = {
       '#2380 — the movements of a bank file read into the space, and their links to the '
           'payments, invoices and outgoing payments of this server, which are '
           'exported themselves',
+  'verifactu_records':
+      '#2358 — the Verifactu alta and anulación records of a Spanish seller, chained '
+          'by their huella: they are produced to the AEAT from this server; the '
+          'invoices they record are exported themselves',
   'bank_line_unmatches':
       '#2380 — the record of a match of money in undone: it names a bank line, '
           'an invoice, a payment credit and two events of this server, which are '
@@ -218,6 +222,13 @@ const Map<String, String> _notExported = {
       '#3031 — the rate recorded with a purchase in another currency; it names '
           'purchase documents of this server, and the posted exports carry it '
           'beside each converted line',
+  'purchase_order_counters':
+      '#3307 — the last number each year of the purchase order series; its '
+          'state, not a record, and the orders carry their numbers',
+  'purchase_order_mail_settings':
+      '#3307 — the sender of the order mail and whether a key is stored; '
+          'configuration set again in the settings, the key itself stays in '
+          'the secret store',
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',

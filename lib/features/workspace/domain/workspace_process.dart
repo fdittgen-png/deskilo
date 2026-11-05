@@ -49,6 +49,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1835 — people who take part without being members: a visit is
       // admitted here, beside the people it is not a membership of.
       WorkspaceFeature.guestParticipation,
+      // #3308 — a pass sold to a guest at the desk, beside the visits.
+      WorkspaceFeature.guestPasses,
     ]),
     WorkspaceSubprocess('physicalAccess', [
       WorkspaceFeature.kioskMode,
@@ -170,6 +172,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.assetRegister,
       WorkspaceFeature.purchaseAnalytics,
       WorkspaceFeature.foreignCurrencyPurchases,
+      WorkspaceFeature.purchaseOrders,
     ]),
     WorkspaceSubprocess('tax', [
       WorkspaceFeature.accountingBook,

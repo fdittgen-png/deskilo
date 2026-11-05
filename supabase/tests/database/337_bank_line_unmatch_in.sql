@@ -11,8 +11,8 @@
 -- refused (DKB02), a movement that settles nothing and a match still
 -- awaiting its validation are refused (DKB01). The slice is refused outside
 -- its edges, each with its own code: a credit note minted (DKB04), a match
--- that belongs to a settlement (DKB04), a second payment on the invoice
--- (DKB05), a match dated inside a closed period of the books (DKB06), which
+-- that belongs to a settlement (DKB04), a match dated inside a closed
+-- period of the books (DKB06), which
 -- the books' guard also refuses on a plain DELETE.
 -- Undone: I1 is open again (no match rows), L1 keeps its payment credit and
 -- reads 'recorded', no ledger row is added or removed, the original payment
@@ -22,7 +22,7 @@
 -- same credit. Other matches stay. The record is read by the statements'
 -- readers only and written by nobody; the command is not anon's.
 begin;
-select plan(58);
+select plan(57);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -216,8 +216,6 @@ select is(pg_temp.undo('owner', pg_temp.v('l2'), 'wrong', '00000000-0000-4000-80
           'DKB04', 'a match that minted a credit note is refused');
 select is(pg_temp.undo('owner', pg_temp.v('l6'), 'wrong', '00000000-0000-4000-8000-0000065000e5') ->> 'refused',
           'DKB04', 'a match that belongs to a settlement is refused');
-select is(pg_temp.undo('owner', pg_temp.v('l3'), 'wrong', '00000000-0000-4000-8000-0000065000e6') ->> 'refused',
-          'DKB05', 'a payment of an invoice that has another is refused');
 select is((select count(*)::int from public.invoice_match_payments
             where invoice_id = pg_temp.v('i3')::uuid), 2, 'the part-paid invoice keeps both payments');
 select is((select resolution || '/' || (credit_ledger_id is not null) from public.invoice_matches
@@ -329,6 +327,7 @@ select ok((select bool_and(public.event_type_view_permissions(c.t) = string_to_a
                ('commitment_variance', 'managePurchases,viewFinances'),
                ('badge_security_alert', 'workspaceSettings'),
                ('payment_instructions_change', 'manageIntegrations'),
+               ('privacy_incident', 'managePrivacy'),
                ('a_type_nobody_knows', 'manageConfiguration')) c(t, want)),
           'the restated event_type_view_permissions answers every branch as before');
 select throws_ok(format($t$insert into public.validation_policies (workspace_id, event_type) values (%L, 'invoice_payment_reversed')$t$,

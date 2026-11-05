@@ -16,7 +16,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/demo/demo_link.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
-import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -28,16 +27,16 @@ import '../../application/setup_journey_save.dart';
 import '../../domain/feature_flags_write.dart';
 import '../../domain/setup_journey.dart';
 import '../../domain/setup_level_change.dart';
-import '../../domain/setup_level_demo.dart';
 import '../../domain/setup_levels.dart';
-import '../../domain/setup_step_reach.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/held_setup_choices.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../feature_copy.dart';
+import '../widgets/setup_choices_bar.dart';
+import '../widgets/setup_level_preview.dart';
 import '../widgets/setup_obligations_card.dart';
+import '../widgets/setup_process_choice.dart';
 
 class SetupLevelsScreen extends ConsumerStatefulWidget {
   const SetupLevelsScreen({super.key});
@@ -46,16 +45,13 @@ class SetupLevelsScreen extends ConsumerStatefulWidget {
   ConsumerState<SetupLevelsScreen> createState() => _SetupLevelsScreenState();
 }
 
-String _levelWord(AppLocalizations l10n, SetupProcess p, String level) =>
-    l10n.setupLevelName('${p.name}_$level');
-
 /// `tax.vat → money.invoices` in the reader's words.
 String _gapWords(AppLocalizations l10n, String gap) {
   final [from, to] = gap.split(' → ');
   String words(String pair) {
     final [process, level] = pair.split('.');
     final p = SetupProcess.values.byName(process);
-    return '${l10n.setupProcessName(process)}: ${_levelWord(l10n, p, level)}';
+    return '${l10n.setupProcessName(process)}: ${l10n.setupLevelName('${p.name}_$level')}';
   }
 
   return l10n.setupLevelsGap(words(from), words(to));
@@ -75,9 +71,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   /// the recommendation.
   final _chosen = <SetupProcess, String>{};
 
-  /// Questions the owner left at "not sure yet": answered no for now.
+  /// Unresolved answers keep their previous value and cannot be applied.
   final _unknown = <String>{};
   var _busy = false;
+  final _reviewKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +90,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final journey = ref.watch(setupJourneyProvider(workspace.id));
     if (journey case AsyncLoading(hasValue: false)) return const LoadingView();
     final stored = resolveEnabledFeatures(workspace.featureFlags);
-    final current = currentSetupLevels(stored);
+    final country = workspace.countryCode;
+    final current = currentSetupLevels(stored, country: country);
     final saved = _restoreOnce(journey, current, workspace.id);
     final recommended = recommendSetupLevels(_answers);
     final vector = {
@@ -104,67 +102,173 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       stored: stored,
       current: current,
       chosen: vector,
+      country: country,
     );
     final gaps = setupVectorGaps(vector);
     final nothingToApply = _nothingToApply(change, saved, vector);
-    final title = Theme.of(context).textTheme.titleMedium;
-    return ListView(
-      key: const ValueKey('setup-levels'),
-      padding: AppSpacing.gutterAll,
+    return Column(
       children: [
-        Text(l10n.setupLevelsIntro),
-        const SizedBox(height: AppSpacing.md),
-        Text(l10n.setupLevelsQuestions, style: title),
-        ..._questions(l10n, saved),
-        SetupObligationsCard(country: workspace.countryCode),
-        const SizedBox(height: AppSpacing.md),
-        Text(l10n.setupLevelsPresets, style: title),
-        Wrap(
-          spacing: AppSpacing.sm,
-          children: [
-            for (final preset in SetupPreset.values)
-              ActionChip(
-                key: ValueKey('setup-preset-${preset.name}'),
-                label: Text(l10n.setupPresetName(preset.name)),
-                onPressed: () => setState(() {
-                  _chosen
-                    ..clear()
-                    ..addAll(setupPresets[preset]!);
-                }),
-              ),
-          ],
+        Expanded(
+          child: SingleChildScrollView(
+            key: const ValueKey('setup-levels'),
+            padding: AppSpacing.gutterAll,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  workspace.name,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(l10n.setupLevelsIntro),
+                if (saved?.updatedByName case final String name)
+                  Text(l10n.setupJourneySavedBy(name)),
+                const SizedBox(height: AppSpacing.md),
+                _questionGroup(
+                  l10n,
+                  'bookings',
+                  l10n.setupChoicesBookings,
+                  const [
+                    'approve_bookings',
+                    'several_rooms_or_sites',
+                    'public_page',
+                  ],
+                  open: true,
+                ),
+                _questionGroup(l10n, 'money', l10n.setupChoicesMoney, const [
+                  'members_owe_money',
+                  'issue_invoices',
+                  'pay_online',
+                  'vat_registered',
+                ]),
+                _questionGroup(
+                  l10n,
+                  'operations',
+                  l10n.setupChoicesOperations,
+                  const [
+                    'association',
+                    'keep_books',
+                    'tracks_purchases',
+                    'door_tablet',
+                    'organised',
+                  ],
+                ),
+                ExpansionTile(
+                  key: const ValueKey('setup-choice-guidance'),
+                  title: Text(l10n.setupGuidanceTitle),
+                  children: [
+                    SetupObligationsCard(country: workspace.countryCode),
+                  ],
+                ),
+                _advanced(l10n, vector, recommended, workspace.id),
+                for (final gap in gaps)
+                  InlineBanner(
+                    icon: Icons.link_off,
+                    text: _gapWords(l10n, gap),
+                  ),
+                Container(
+                  key: _reviewKey,
+                  child: SetupLevelPreview(change: change),
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        Text(l10n.setupLevelsChoice, style: title),
-        for (final p in SetupProcess.values)
-          _ProcessLevel(
-            key: ValueKey('setup-process-${p.name}'),
-            process: p,
-            level: vector[p]!,
-            reason: vector[p] == recommended[p]!.level
-                ? l10n.setupReason(recommended[p]!.reason)
-                : null,
-            onChanged: (level) => setState(() => _chosen[p] = level),
-            onSeeDemo: (route) => _seeDemo(route, workspace.id),
-          ),
-        for (final gap in gaps)
-          InlineBanner(icon: Icons.link_off, text: _gapWords(l10n, gap)),
-        const SizedBox(height: AppSpacing.md),
-        _Preview(change: change),
-        const SizedBox(height: AppSpacing.md),
-        Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: FilledButton(
-            key: const ValueKey('setup-levels-apply'),
-            onPressed: nothingToApply || gaps.isNotEmpty || _busy
-                ? null
-                : () => _apply(workspace, change, vector, saved?.version),
-            child: Text(l10n.setupLevelsApply),
-          ),
+        SetupChoicesBar(
+          workspaceName: workspace.name,
+          changeCount: change.flags.length,
+          unchanged: nothingToApply,
+          unresolved: _unknown.isNotEmpty,
+          busy: _busy,
+          disabled: gaps.isNotEmpty,
+          onReview: () => Scrollable.ensureVisible(_reviewKey.currentContext!),
+          onApply: () => _apply(workspace, change, vector, saved?.version),
         ),
       ],
     );
   }
+
+  Widget _questionGroup(
+    AppLocalizations l10n,
+    String id,
+    String title,
+    List<String> questions, {
+    bool open = false,
+  }) => Card(
+    child: ExpansionTile(
+      key: ValueKey('setup-questions-$id'),
+      initiallyExpanded: open,
+      title: Text(title),
+      leading: Icon(switch (id) {
+        'bookings' => Icons.calendar_month_outlined,
+        'money' => Icons.payments_outlined,
+        _ => Icons.settings_outlined,
+      }),
+      subtitle: questions.any(_unknown.contains)
+          ? Text(
+              questions
+                  .where(_unknown.contains)
+                  .map(l10n.setupQuestion)
+                  .join(' · '),
+            )
+          : null,
+      childrenPadding: AppSpacing.mdAll,
+      children: _questions(l10n, questions),
+    ),
+  );
+
+  Widget _advanced(
+    AppLocalizations l10n,
+    SetupLevelVector vector,
+    Map<SetupProcess, SetupRecommendation> recommended,
+    String workspaceId,
+  ) => ExpansionTile(
+    key: const ValueKey('setup-choices-advanced'),
+    title: Text(l10n.setupChoicesAdvanced),
+    children: [
+      Text(l10n.setupLevelsPresets),
+      Wrap(
+        spacing: AppSpacing.sm,
+        children: [
+          for (final preset in SetupPreset.values)
+            ActionChip(
+              key: ValueKey('setup-preset-${preset.name}'),
+              label: Text(l10n.setupPresetName(preset.name)),
+              onPressed: _busy ? null : () => _choose(setupPresets[preset]),
+            ),
+        ],
+      ),
+      if (_chosen.isNotEmpty) ...[
+        Text(l10n.setupChoicesManual),
+        TextButton(
+          key: const ValueKey('setup-choices-reset'),
+          onPressed: _busy ? null : () => _choose(null),
+          child: Text(l10n.setupChoicesReset),
+        ),
+      ],
+      for (final p in SetupProcess.values)
+        SetupProcessChoice(
+          key: ValueKey('setup-process-${p.name}'),
+          process: p,
+          level: vector[p]!,
+          reason: vector[p] == recommended[p]!.level
+              ? l10n.setupReason(recommended[p]!.reason)
+              : null,
+          onChanged: (level) {
+            if (!_busy) setState(() => _chosen[p] = level);
+          },
+          onSeeDemo: (route) async {
+            if (!_busy) await _seeDemo(route, workspaceId);
+          },
+        ),
+    ],
+  );
+
+  void _choose(SetupLevelVector? levels) => setState(() {
+    _chosen
+      ..clear()
+      ..addAll(levels ?? {});
+    if (levels == null) _answered = true;
+  });
 
   /// The saved journey; its answers are taken over once loaded, and again
   /// once a conflict reloaded it. Without one, the questions open from what
@@ -179,6 +283,17 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       _restored = true;
       _unknown.clear();
       _answers = saved?.answers ?? setupAnswersFromLevels(current);
+      if (saved != null) {
+        final suggested = recommendSetupLevels(saved.answers);
+        for (final p in SetupProcess.values) {
+          final level = saved.levels[p];
+          if (level != null &&
+              current[p] == level &&
+              level != suggested[p]!.level) {
+            _chosen[p] = level;
+          }
+        }
+      }
       // #3235 — back from the demo example: what was not applied yet.
       final held = _held(workspaceId);
       if (held != null) {
@@ -215,16 +330,18 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       link: DemoLink.example(to: route),
       beforeEnter: () => user == null
           ? null
-          : ref.read(heldSetupChoicesControllerProvider.notifier).hold(
-                HeldSetupChoices(
-                  userId: user,
-                  workspaceId: workspaceId,
-                  answers: _answers,
-                  answered: _answered,
-                  chosen: Map.of(_chosen),
-                  unknown: Set.of(_unknown),
+          : ref
+                .read(heldSetupChoicesControllerProvider.notifier)
+                .hold(
+                  HeldSetupChoices(
+                    userId: user,
+                    workspaceId: workspaceId,
+                    answers: _answers,
+                    answered: _answered,
+                    chosen: Map.of(_chosen),
+                    unknown: Set.of(_unknown),
+                  ),
                 ),
-              ),
     );
   }
 
@@ -243,16 +360,15 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
               SetupProcess.values.any((p) => saved.levels[p] != vector[p])));
 
   /// Who saved the answers last, and each question with its answer.
-  List<Widget> _questions(AppLocalizations l10n, SetupJourney? saved) => [
-    if (saved?.updatedByName case final String name)
-      Text(l10n.setupJourneySavedBy(name)),
-    for (final key in setupQuestions) ...[
+  List<Widget> _questions(AppLocalizations l10n, List<String> questions) => [
+    for (final key in questions) ...[
       SwitchListTile(
         key: ValueKey('setup-question-$key'),
         contentPadding: EdgeInsets.zero,
         title: Text(l10n.setupQuestion(key)),
         value: _answers[key],
-        onChanged: (v) => _answer(key, yes: v),
+        onChanged: _busy ? null : (v) => _answer(key, yes: v),
+        subtitle: _unknown.contains(key) ? Text(l10n.setupAnswerUnknown) : null,
       ),
       // #3076 — the third answer: the safe level, and what stays there.
       Align(
@@ -261,7 +377,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           key: ValueKey('setup-question-$key-unknown'),
           label: Text(l10n.setupAnswerUnknown),
           selected: _unknown.contains(key),
-          onSelected: (on) => _answer(key, yes: false, unknown: on),
+          tooltip: l10n.setupChoicesQuestionUnknown(l10n.setupQuestion(key)),
+          onSelected: _busy
+              ? null
+              : (on) => _answer(key, yes: _answers[key], unknown: on),
         ),
       ),
       if (_unknown.contains(key))
@@ -274,24 +393,13 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
 
   void _answer(String key, {required bool yes, bool unknown = false}) =>
       setState(() {
-        _answers = _answers.withAnswer(key, yes: yes);
+        if (!unknown) _answers = _answers.withAnswer(key, yes: yes);
         _answered = true;
         unknown ? _unknown.add(key) : _unknown.remove(key);
-        _chosen.clear();
       });
 
-  /// The processes a yes would raise, at the level they stay at for now.
-  String _unknownNote(AppLocalizations l10n, String question) {
-    final yes = recommendSetupLevels(_answers.withAnswer(question, yes: true));
-    final no = recommendSetupLevels(_answers.withAnswer(question, yes: false));
-    return l10n.setupAnswerUnknownNote(
-      [
-        for (final p in SetupProcess.values)
-          if (yes[p]!.level != no[p]!.level)
-            '${l10n.setupProcessName(p.name)}: ${_levelWord(l10n, p, no[p]!.level)}',
-      ].join(', '),
-    );
-  }
+  String _unknownNote(AppLocalizations l10n, String question) =>
+      l10n.setupChoicesNeedsDecision;
 
   Future<void> _apply(
     Workspace workspace,
@@ -370,128 +478,4 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
         ),
       ) ??
       false;
-}
-
-/// One process: its name, the reason for its level, the level, and where
-/// the demo shows it.
-class _ProcessLevel extends ConsumerWidget {
-  const _ProcessLevel({
-    super.key,
-    required this.process,
-    required this.level,
-    required this.reason,
-    required this.onChanged,
-    required this.onSeeDemo,
-  });
-
-  final SetupProcess process;
-  final String level;
-  final String? reason;
-  final ValueChanged<String> onChanged;
-
-  /// Opens the demo example at a route.
-  final ValueChanged<String> onSeeDemo;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    // #3235 — not inside the demo, and only where the demo is switched on.
-    final demoOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.demoMode);
-    final demo = DemoEnvironment.maybeOf(context) != null || !demoOn
-        ? null
-        : setupLevelDemoRoute(process, level);
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(l10n.setupProcessName(process.name)),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (reason != null) Text(reason!),
-          if (demo != null)
-            TextButton(
-              key: ValueKey('setup-level-demo-${process.name}'),
-              style: TextButton.styleFrom(padding: EdgeInsets.zero),
-              onPressed: () => onSeeDemo(demo),
-              child: Text(l10n.setupLevelsSeeDemo),
-            ),
-        ],
-      ),
-      trailing: DropdownButton<String>(
-        key: ValueKey('setup-level-${process.name}'),
-        value: level,
-        onChanged: (v) => v == null ? null : onChanged(v),
-        items: [
-          for (final l in setupLevels[process]!)
-            DropdownMenuItem(
-              key: ValueKey('setup-level-${process.name}-${l.id}'),
-              value: l.id,
-              child: Text(_levelWord(l10n, process, l.id)),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// What applying would switch on and off, every feature by name.
-class _Preview extends StatelessWidget {
-  const _Preview({required this.change});
-  final SetupLevelChange change;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    // #3076 — what the space gets, in the member-facing words of the
-    // manifest, never the switches' own names.
-    List<Widget> outcomes(
-      String heading,
-      List<WorkspaceFeature> fs,
-      Key key,
-    ) => [
-      Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
-      for (final f in fs)
-        Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: Text('• ${featureDescription(l10n, f)}'),
-        ),
-    ];
-    return Card(
-      key: const ValueKey('setup-levels-preview'),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (change.isEmpty) Text(l10n.setupLevelsNoChange),
-            if (change.switchOn.isNotEmpty)
-              ...outcomes(
-                l10n.setupLevelsSwitchOn,
-                change.switchOn,
-                const ValueKey('setup-levels-on'),
-              ),
-            if (setupStepsFor(change.switchOn) case final steps
-                when steps.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                l10n.setupLevelsStepsFollow(
-                  steps.map((s) => l10n.setupStepTitle(s.id)).join(', '),
-                ),
-                key: const ValueKey('setup-levels-steps'),
-              ),
-            ],
-            if (change.switchOff.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.sm),
-              ...outcomes(
-                l10n.setupLevelsSwitchOff,
-                change.switchOff,
-                const ValueKey('setup-levels-off'),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
 }

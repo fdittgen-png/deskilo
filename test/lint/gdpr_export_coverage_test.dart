@@ -53,6 +53,12 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'guest_passes':
+      '#3308 — a pass sold at the desk to a guest, keyed by the guest\'s '
+          'customer record. A guest has no account, so no export_my_data call '
+          'is theirs; a rights request is answered by the space from the '
+          'workspace workbook, which carries the passes, the record\'s '
+          'managed identity and its invoices',
   'bi_export_evidence':
       '#2581 — that an analytics export was taken: who, which report and '
           'revision, the format and a digest of the figures, never a figure '
@@ -69,6 +75,12 @@ const Map<String, String> _notExported = {
       '#2568 — what a use of a rented room costs one audience entry: a price '
           'list of the room; what a member is charged is a ledger row, exported '
           'with the ledger',
+  'purchase_order_sends':
+      '#3307 — an attempt to e-mail an order of the space to its supplier: '
+          'who started it is a workspace record, in the workspace export',
+  'purchase_order_receipts':
+      '#3307 — a delivery of an order of the space, with who recorded it: a '
+          'workspace record, in the workspace export',
   'outgoing_payments':
       '#2574 — a payment a person reported as made to a member; its effect '
           'on the member\'s account is a ledger row, exported with the ledger',
@@ -152,6 +164,7 @@ const Set<String> _exported = {
   'account_field_audience', 'account_field_audience_spaces', // #1823: own visibility choices.
   'account_about', // #1823: own profession and bio.
   'presence', // #3123: the last-seen heartbeat, moved out of profiles.
+  'profile_birthdays', // #3278 (0669): the birthday, moved out of profiles.
   'workspace_applications', // #1791: account ownership of the subject's requests.
   'workspace_application_messages', // #1791: own replies and admission discussions.
   'member_preference_overrides', // #1791: own scoped preferences accompany the profile.

@@ -210,6 +210,10 @@ update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb
               current_setting('t.e')::uuid);
 update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"mcpAccess": false}'
  where id = current_setting('t.c')::uuid;
+-- #3269: a member books only with the right; the owner grants it, as the setup step says.
+update public.workspaces set role_permissions = coalesce(role_permissions, '{}'::jsonb) || jsonb_build_object(
+    'member', coalesce(role_permissions->'member', '[]'::jsonb) || '["makeReservations"]'::jsonb)
+ where id in (current_setting('t.a')::uuid, current_setting('t.u')::uuid, current_setting('t.e')::uuid);
 insert into public.members (workspace_id, user_id, status, is_admin, subscription_pct)
 select current_setting('t.' || w)::uuid, pg_temp.u(p), 'active', adm, 100
   from (values ('a', 'a2', false), ('b', 'a2', true), ('c', 'a2', false), ('u', 'a2', false),

@@ -412,5 +412,26 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,
     defaultOn: false,
+    // #3300 — HMRC's MTD VAT API serves UK VAT registrations only.
+    availableIn: {'GB'},
+  ),
+  // #3307 — the space orders from its suppliers: a numbered order with its
+  // lines and delivery date, printed or sent, and what arrived of it. Asked
+  // for, beside the purchases it precedes.
+  WorkspaceFeature.purchaseOrders: FeatureManifestEntry(
+    feature: WorkspaceFeature.purchaseOrders,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.purchases,
+    defaultOn: false,
+  ),
+  // #3308 — a pass sold at the desk to a guest who is not a member: its
+  // booking, its charge and its invoice. Asked for, under invoicing.
+  WorkspaceFeature.guestPasses: FeatureManifestEntry(
+    feature: WorkspaceFeature.guestPasses,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+    defaultOn: false,
   ),
 };

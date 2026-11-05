@@ -12,6 +12,10 @@
   "levelSupplementLabel": "Level reservations",
   "levelNotAllowed": "You are not allowed to reserve a whole desk, office or level.",
   "levelConflict": "The level has reservations in that period.",
+  "bookingNotAllowedError": "You may not make reservations in this space. Ask an owner to let members book.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "You already have a booking in that period — one place at a time.",
   "@bookingOnePlace": {
     "description": "Refusal when the member already holds an overlapping active reservation (#412)"

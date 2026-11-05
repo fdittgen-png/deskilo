@@ -1,5 +1,7 @@
 # #2603 -- pumpAndSettle calls per test file (files with 10 or more).
 # Reviewed interaction growth and reductions: see pump_and_settle_budget_test.dart.
+# review {"path":"test/ux/first_booking_journey_test.dart","before":0,"after":13,"invariant":"#3062 one clean-workspace journey: create through onboarding, three restarts into the guide, the step pages, the rights action and the week-grid booking; every settle waits for a navigation or a sheet","cost":"one test of about 5 s locally; a journey is one test by design, so the calls cannot be split across files without losing the restart state"}
+# review {"path":"test/ux/first_booking_journey_test.dart","before":13,"after":14,"invariant":"the \"Progress by outcome\" panel is opened before its lines are read","cost":"one settle for the panel's expansion animation"}
 11 test/app/entry_intents_flow_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
 25 test/app/shell/shell_drawer_test.dart
@@ -131,4 +133,5 @@
 48 test/features/workspace/workspace_settings_screen_test.dart
 10 test/features/workspace/workspace_xml_export_test.dart
 10 test/features/workspace/workspace_xml_import_screen_test.dart
+14 test/ux/first_booking_journey_test.dart
 11 test/ux/journey_contracts_test.dart

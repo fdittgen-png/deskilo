@@ -104,6 +104,8 @@ void main() {
         find.byKey(const ValueKey('instance-owner-email')), ' Owner@Example.org ');
     await _tap(tester, 'instance-apply-signin');
     expect(api.authPatches['ref1']!.single['mailer_autoconfirm'], false);
+    expect(api.authPatches['ref1']!.single['uri_allow_list'],
+        'deskilo://**,https://fdittgen-png.github.io/deskilo/**');
     expect(api.sql['ref1'],
         contains("select public.operator_record_instance_owner_claim('owner@example.org');"),
         reason: '#1829 — the creator\'s e-mail becomes the pending owner claim');

@@ -102,6 +102,8 @@ select pg_temp.act_as('00000000-0000-4000-8000-0000001631a1');
 select public.finalize_identity_binding();
 select set_config('t.a', public.create_workspace('Scope A', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
 select public.apply_workspace_template(current_setting('t.a')::uuid, (select id from public.workspace_templates where key = 'tiny'));
+-- #3269: a member books only with the right; the owner grants it, as the setup step says.
+select public.set_role_permission(current_setting('t.a')::uuid, 'member', 'makeReservations', true);
 select set_config('t.b', public.create_workspace('Scope B', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
 select pg_temp.act_as('00000000-0000-4000-8000-0000001631a2'); select public.finalize_identity_binding();
 select pg_temp.act_as('00000000-0000-4000-8000-0000001631a3'); select public.finalize_identity_binding();

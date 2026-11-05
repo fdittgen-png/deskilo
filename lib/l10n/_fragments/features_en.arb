@@ -585,5 +585,21 @@
   },
   "@featureMtdSubmissionDesc": {
     "description": "#2470 the HMRC MTD VAT submission flag"
+  },
+  "featurePurchaseOrdersTitle": "Order from suppliers",
+  "featurePurchaseOrdersDesc": "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.",
+  "@featurePurchaseOrdersTitle": {
+    "description": "#3307 feature title"
+  },
+  "@featurePurchaseOrdersDesc": {
+    "description": "#3307 feature description"
+  },
+  "featureGuestPassesTitle": "Guest passes at the desk",
+  "featureGuestPassesDesc": "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.",
+  "@featureGuestPassesTitle": {
+    "description": "#3308 the guest pass flag"
+  },
+  "@featureGuestPassesDesc": {
+    "description": "#3308 the guest pass flag"
   }
 }

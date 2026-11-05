@@ -373,6 +373,9 @@ const List<RouteCoverage> routeCoverage = [
     owner: '#1884',
   ),
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/guest-passes', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/purchase-orders', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/payments', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/sales', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/cash', CoverageStatus.planned, owner: '#1884'),
@@ -430,6 +433,7 @@ const List<RouteCoverage> routeCoverage = [
     owner: '#1884',
   ),
   RouteCoverage('/members/managed', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/privacy', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/payment-methods',
     CoverageStatus.excluded,

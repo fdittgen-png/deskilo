@@ -59,6 +59,10 @@ enum WorkspaceExportFailure {
   /// The host refused: the person is not a member there (any more).
   forbidden,
 
+  /// #3278 (0666) — the workspace handles data requests itself: the member's
+  /// own export is off and a rights request is filed instead.
+  selfServiceOff,
+
   /// The answer is not an own-data export this app can read.
   malformed,
 

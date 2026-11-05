@@ -164,6 +164,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.subscriptionChange:
     case EventType.matrixChange:
     case EventType.badgeSecurityAlert:
+    case EventType.privacyIncident:
       return NotificationCategory.members;
     // #1088 — a type this build does not know still belongs somewhere.
     // Reservations is the feed's general bucket, not a claim about it.

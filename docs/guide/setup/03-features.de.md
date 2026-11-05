@@ -184,6 +184,8 @@ Zum Zeitpunkt dieses Textes stehen die meisten Funktionen auf **Nicht bewertet**
 
 **Zielgruppe:** Inhaber · Mitinhaber
 
+Wählen Sie den Funktionsumfang mit den Fragen zu Buchungen, Geld und täglichem Betrieb. Prüfen und Übernehmen bleiben beim Scrollen sichtbar. Prüfen Sie die Anzahl der betroffenen Einstellungen und ihre konkreten Folgen vor dem Übernehmen; allein das Antworten ändert den Arbeitsbereich nicht. Detaillierte Prozessstufen und Schnellstarts stehen im erweiterten Abschnitt. Eine bewusst gewählte Stufe bleibt beim Beantworten weiterer Fragen erhalten; mit der Aktion für empfohlene Stufen kehren Sie zu den Empfehlungen zurück. „Noch nicht sicher“ behält die bisherige Antwort bei und verhindert das Übernehmen, bis Sie sie geklärt haben. Der Offline-Fragebogen verwendet dieselbe Regel und sperrt den Export bei ungeklärten Antworten.
+
 Sie möchten nicht hundert Dinge entscheiden. Hier sind drei realistische Ausgangspunkte; jeder nennt genau, was an ist. Wählen Sie den nächstliegenden und passen Sie ihn dann an.
 
 Der erste braucht keine Vorlage. Der zweite ist die fertige Vorlage der App. Der dritte wird aus den Funktionen selbst zusammengesetzt. Sie sind nach dem benannt, was sie bieten, nicht nach einer Größe.

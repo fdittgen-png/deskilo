@@ -20,7 +20,6 @@ import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../domain/member_note_refs.dart';
-import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/inbox_screen.dart';
 
@@ -73,12 +72,12 @@ Future<void> openRecordById(
       await showInvoiceDetailSheet(
         context,
         ref: ref,
-        invoice: invoice,
-        match: matches[invoice.id],
-        canIssue: ref
-            .read(myPermissionsProvider)
-            .contains(WorkspacePermission.issueInvoices),
-        isEu: isEuCountry(country),
+        view: InvoiceDetailView(
+          invoice: invoice,
+          match: matches[invoice.id],
+          canIssue: mayIssueInvoices(ref),
+          isEu: isEuCountry(country),
+        ),
       );
   }
 }

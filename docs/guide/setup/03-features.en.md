@@ -184,6 +184,8 @@ At the time of writing most features read **Unreviewed**, eighteen read **Beta**
 
 **Audience:** Owner · Co-owner
 
+To choose what the workspace does, answer the questions grouped around bookings, money and daily operation. The review and apply controls stay visible while you scroll. Review the number of settings that would change and the concrete effects before applying; nothing is applied merely by answering. Detailed process levels and quick starts are under the advanced section. A level you deliberately choose is kept when you answer other questions; use the suggested-level action to return to recommendations. “Not sure yet” keeps the previous answer and prevents applying until you resolve it. The offline questionnaire uses the same rule and blocks export while an answer is unresolved.
+
 You do not want to decide a hundred things. Here are three realistic starting points; each one lists exactly what is on. Pick the nearest, then adjust.
 
 The first needs no template. The second is the ready-made template of the app. The third is built from the features themselves. They are named after what they offer, not after a size.

@@ -17,6 +17,7 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'statement' => l10n.invoiceTemplateDocStatement,
     'agreement' => l10n.reportDocAgreement,
     'payments' => l10n.reportDocPayments,
+    'purchase_order' => l10n.reportDocPurchaseOrder,
     'usage' => l10n.reportDocUsage,
     'workspace' => l10n.reportDocWorkspace,
     'status' => l10n.reportDocStatus,
@@ -28,6 +29,7 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'general_ledger' => l10n.reportDocGeneralLedger,
     'trial_balance' => l10n.reportDocTrialBalance,
     'journals' => l10n.reportDocJournals,
+    'bank_reconciliation' => l10n.bankReconTitle,
     'badges' => l10n.reportDocBadges,
     'space_codes' => l10n.reportDocSpaceCodes,
     // A kind in the registry with no label here is a bug the lint test

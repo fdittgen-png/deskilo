@@ -103,10 +103,17 @@ class DemoCapacityKpiRepository implements KpiRepository {
 /// `kpi_purchases_summary` over the demo's purchase documents and the
 /// claims and payables they left.
 class DemoPurchaseKpiRepository implements PurchaseKpiRepository {
-  DemoPurchaseKpiRepository({required this.purchases, required this.now});
+  DemoPurchaseKpiRepository({
+    required this.purchases,
+    required this.now,
+    this.currency = 'EUR',
+  });
 
   final FakePurchaseRepository purchases;
   final DateTime now;
+
+  /// The space's currency: a US space does not read in euros.
+  final String currency;
 
   @override
   Future<PurchaseSummaryKpi> summary(
@@ -142,7 +149,7 @@ class DemoPurchaseKpiRepository implements PurchaseKpiRepository {
     return PurchaseSummaryKpi(
       fromMonth: fromMonth,
       toMonth: toMonth,
-      currency: 'EUR',
+      currency: currency,
       apOutstandingMinor: supplierDue,
       memberDueMinor: memberDue,
       pendingCount: pending.length,

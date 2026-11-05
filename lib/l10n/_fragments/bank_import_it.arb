@@ -108,13 +108,17 @@
   "@refusalBankMatchBeyondLink": {
     "description": "#2380 Refusal DKB04: the match did more than link a payment."
   },
-  "refusalBankMatchSeveralPayments": "A questa fattura sono abbinati altri pagamenti: questo non può essere annullato da solo. Nulla è stato modificato.",
+  "refusalBankMatchSeveralPayments": "I pagamenti di questa fattura non possono essere ricalcolati senza supposizioni (forse uno attende ancora la convalida): questo non può essere annullato qui. Nulla è stato modificato.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
   },
   "refusalBankMatchClosedPeriod": "Questo pagamento ha una data compresa in un periodo contabile chiuso: il suo abbinamento non può essere annullato. Nulla è stato modificato.",
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
+  },
+  "refusalBankMatchUndoLaterFirst": "È il primo pagamento della fattura: annulla prima i pagamenti successivi. Nulla è stato modificato.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "bankUnmatchReasonRequired": "Indichi perché l'abbinamento viene annullato.",
   "@bankUnmatchReasonRequired": {

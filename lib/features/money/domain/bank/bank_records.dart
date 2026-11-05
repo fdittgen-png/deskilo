@@ -14,6 +14,12 @@ import 'package:meta/meta.dart';
 import '../../../../core/data/json_reader.dart';
 import 'bank_statement.dart';
 
+/// The private original could not be found or accessed. Storage intentionally
+/// does not distinguish a missing object from a concealed permission refusal.
+class BankOriginalUnavailable implements Exception {
+  const BankOriginalUnavailable();
+}
+
 /// The permissions that read the bank statements (bank_statement_reader;
 /// the owner always does).
 const Set<String> bankStatementReaders = {'viewFinances', 'issueInvoices'};

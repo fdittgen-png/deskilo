@@ -19,8 +19,17 @@
 #                   git.erst.dk standard-filformater, SAF-T/XSD/
 #   saft_ro         ANAF, Romanian SAF-T (D406) 2.4.9
 #                   static.anaf.ro, Informatii_R/saf_t.htm
-#   jpk_kr_pl      Polish JPK_KR_PD(1) v1-1, Ministry of Finance
+#   jpk_kr_pl       Polish JPK_KR_PD(1) v1-1, Ministry of Finance
 #                   gov.pl/web/kas/struktury-jpk-w-podatkach-dochodowych
+#   saft_at         Bundesministerium für Finanzen, SAF-T AT 1.01 (the OECD
+#                   1.0 tree, namespace urn:OECD:StandardAuditFile-Taxation:AT_1.01)
+#                   bmf.gv.at/themen/steuern/fristen-verfahren/bundesabgabenordnung/
+#                   standard-audit-file-tax.html, SAF-T_AT_1.01.xsd; downloaded
+#                   2026-11-04, the page's only schema version (decree
+#                   BMF-010102/0002-IV/2/2009). Beside it EKR_fuer_SAF-T.csv,
+#                   the BMF's Kontenrahmen for SAF-T (same page, downloaded
+#                   2026-11-04, ISO-8859-1, CRLF): the source of the AT
+#                   account_map rows; pinned here, never read by xmllint.
 #   saft_oecd_full  the same FAIA 2.01 full schema: Luxembourg's publication
 #                   of the OECD 2.0 tree in the OECD namespace. The OECD's own
 #                   XSD is not published apart from its guidance, so this is
@@ -51,6 +60,7 @@ NO=saft_no/Norwegian_SAF-T_Financial_Schema_v_1.30.xsd
 LU=faia_lu/FAIA_v_2.01_full.xsd
 DK=saft_dk/Danish_SAF-T_Financial_Schema_v_2_1.xsd
 RO=saft_ro/Ro_SAFT_Schema_v249_2025.xsd
+AT=saft_at/SAF-T_AT_1.01.xsd
 check "$NO" 5362d6778872b4ed2524e09b083e634ae950a4f1d9f1b95076b4c9e4df6a0650
 check "$LU" 957273b819739dd015950475a36642b6a0348c54d59f74e53787a97c887a96c5
 check "$DK" 01cd75f7bf10f1cdab00b48ea2579e97647d7d01fa00862f76edd5d0a6ad8ec3
@@ -61,6 +71,8 @@ check jpk_kr_pl/StrukturyDanych_v10-0E.xsd 1137ce6e3c11c2b9ef3f05e4e72d6dcd6b4fa
 check jpk_kr_pl/ElementarneTypyDanych_v10-0E.xsd 8a531cb181d3e298d11b28766655ae91fee2d7851440095932ffc82137ed2be1
 check jpk_kr_pl/KodyKrajow_v10-0E.xsd 1d41a1b3184188f2d20a51d3afde26204dda182ec5dacf018204dcc9870dc644
 check jpk_kr_pl/KodyUrzedowSkarbowych_v8-0E.xsd af27f583ea1ceb44ed37e0ec0d9bfdf2bfda74aadd5841ccbf0fc241175c2e91
+check "$AT" 105e52e52c83863c76eb8777a6efd3b65de34ea02f6b217110b16c1fd579b236
+check saft_at/EKR_fuer_SAF-T.csv 7c05810f2a85cb6e545874140f03b5945811000c07e8a8191188781298a90d10
 
 status=0
 # validate <sample> <schema>
@@ -81,6 +93,7 @@ validate saft_no "$NO"
 validate faia_lu "$LU"
 validate saft_dk "$DK"
 validate saft_ro "$RO"
+validate saft_at "$AT"
 validate saft_oecd_full "$LU"
 # The official imports stay verbatim and resolve only through this local catalog.
 if [ ! -f "$samples/jpk_kr_pl.xml" ]; then

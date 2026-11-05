@@ -1497,6 +1497,10 @@
       }
     }
   },
+  "journeyStateDone": "Completed",
+  "journeyStateCurrent": "Current step",
+  "journeyStateUpcoming": "Upcoming",
+  "journeyStateCancelled": "Cancelled",
   "journeyStepIssued": "Issued",
   "journeyStepPayment": "Payment",
   "journeyStepConfirmation": "Confirmation",

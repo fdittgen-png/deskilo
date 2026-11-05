@@ -22,11 +22,15 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'bi_customer_views.dart';
 import 'bi_dashboard.dart';
+import 'bi_item_views.dart';
 import 'bi_overview_views.dart';
 import 'bi_purchase_views.dart';
 import 'bi_result_views.dart';
+import 'bi_sales_views.dart';
 import 'bi_toolbar.dart';
+import 'bi_vendor_views.dart';
 import 'capacity_evidence.dart';
 import 'capacity_kpi_card.dart';
 
@@ -39,6 +43,7 @@ class BiModuleView {
     required this.notes,
     required this.details,
     this.action,
+    this.rowLabel = _ownLabel,
   });
 
   final String Function(AppLocalizations l10n) title;
@@ -68,11 +73,35 @@ class BiModuleView {
 
   /// #2582 — what the card offers beyond reading it (the allocation rules).
   final Widget Function(BuildContext context)? action;
+
+  /// #3294 — the name of one of the module's own rows (a cohort, a level,
+  /// a customer's rank); null leaves the row's label.
+  final String? Function(BiRow row, AppLocalizations l10n, String locale)
+  rowLabel;
+
+  static String? _ownLabel(BiRow row, AppLocalizations l10n, String locale) =>
+      null;
+
+  /// [rows], each named by [rowLabel] where it names it.
+  List<BiRow> labelled(
+    List<BiRow> rows,
+    AppLocalizations l10n,
+    String locale,
+  ) => [
+    for (final row in rows)
+      BiRow(
+        key: row.key,
+        label: rowLabel(row, l10n, locale) ?? row.label,
+        current: row.current,
+        compared: row.compared,
+      ),
+  ];
 }
 
 // The BI table's column renderers: locale-aware (NumberFormat,
 // MoneyFormat), not the plain file formatters of lib/core (#2385).
-String _percentCell(num? v, String locale, String? currency) => v == null
+/// A share as a percentage with one decimal; a dash when it is undefined.
+String biPercentCell(num? v, String locale, String? currency) => v == null
     ? '—'
     : NumberFormat.decimalPercentPattern(
         locale: locale,
@@ -131,7 +160,7 @@ List<String> _financeDetails(
 final biModuleViews = <String, BiModuleView>{
   'capacity.seat_utilisation': BiModuleView(
     title: (l10n) => l10n.capacityKpiTitle,
-    value: _percentCell,
+    value: biPercentCell,
     basis: (m, l10n, locale) => switch (_seat(m)) {
       final k? => capacityKpiRatioLine(k, l10n, locale),
       null => '',
@@ -172,6 +201,10 @@ final biModuleViews = <String, BiModuleView>{
   ),
   ...purchaseModuleViews,
   ...overviewModuleViews,
+  ...customerModuleViews,
+  ...vendorModuleViews,
+  ...salesModuleViews,
+  ...itemModuleViews,
 };
 
 /// The change, worded: "+3.2 pp" for a ratio; for an amount the
@@ -393,7 +426,7 @@ class _Result extends ConsumerWidget {
         const SizedBox(height: AppSpacing.sm),
         if (query.view != BiView.dashboard)
         BiRows(
-          rows: [...result.groups, total],
+          rows: [...view.labelled(result.groups, l10n, locale), total],
           view: query.view,
           aggregation: agg,
           format: (v) => view.value(v, locale, result.currency),

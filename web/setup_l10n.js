@@ -1361,6 +1361,14 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Submit UK VAT returns to HMRC",
     "Send the prepared UK VAT return to HMRC from the app, through Making Tax Digital, and keep HMRC's receipt on the return. Off keeps the bridging file only."
+   ],
+   "purchaseOrders": [
+    "Order from suppliers",
+    "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only."
+   ],
+   "guestPasses": [
+    "Guest passes at the desk",
+    "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay."
    ]
   },
   "process": {
@@ -1525,7 +1533,8 @@ window.SETUP_L10N={
    "viewDocuments": "See the shared documents",
    "managePurchases": "Capture supplier bills",
    "recordOutgoingPayments": "Record payments to members",
-   "manageLease": "Record the premises lease"
+   "manageLease": "Record the premises lease",
+   "managePrivacy": "Handle personal data and rights requests"
   },
   "domain": {
    "payment": "Payment",
@@ -1685,6 +1694,13 @@ window.SETUP_L10N={
     "setupLevelsGap": "{level} needs {needed}",
     "setupAnswerUnknown": "Not sure yet",
     "setupAnswerUnknownNote": "Not decided yet: {list} stay at the safe choice. Nothing is switched on for this; come back to this question here whenever you know.",
+    "setupChoicesBookings": "People and bookings",
+    "setupChoicesMoney": "Money and administration",
+    "setupChoicesOperations": "Day-to-day operation",
+    "setupChoicesAdvanced": "Adjust each area",
+    "setupChoicesNeedsDecision": "Your previous choice is kept. Resolve “not sure yet” before applying.",
+    "setupChoicesManual": "Your choice is kept when you answer other questions.",
+    "setupChoicesReset": "Use suggested levels",
     "setupObligationsTitle": "What the law asks in {country}",
     "setupObligationUnconfirmed": "Not confirmed for this country — ask your accountant.",
     "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
@@ -3053,6 +3069,14 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Déposer la TVA britannique auprès de HMRC",
     "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
+   ],
+   "purchaseOrders": [
+    "Commander auprès des fournisseurs",
+    "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent."
+   ],
+   "guestPasses": [
+    "Pass invités à l'accueil",
+    "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent."
    ]
   },
   "process": {
@@ -3217,7 +3241,8 @@ window.SETUP_L10N={
    "viewDocuments": "Voir les documents partagés",
    "managePurchases": "Saisir les factures fournisseur",
    "recordOutgoingPayments": "Enregistrer les paiements aux membres",
-   "manageLease": "Enregistrer le bail des locaux"
+   "manageLease": "Enregistrer le bail des locaux",
+   "managePrivacy": "Gérer les données personnelles et les demandes de droits"
   },
   "domain": {
    "payment": "Paiement",
@@ -3377,6 +3402,13 @@ window.SETUP_L10N={
     "setupLevelsGap": "{level} demande {needed}",
     "setupAnswerUnknown": "Je ne sais pas encore",
     "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.",
+    "setupChoicesBookings": "Personnes et réservations",
+    "setupChoicesMoney": "Argent et gestion",
+    "setupChoicesOperations": "Fonctionnement au quotidien",
+    "setupChoicesAdvanced": "Ajuster chaque domaine",
+    "setupChoicesNeedsDecision": "Votre choix précédent est conservé. Précisez les réponses « Je ne sais pas encore » avant d’appliquer.",
+    "setupChoicesManual": "Votre choix est conservé lorsque vous répondez aux autres questions.",
+    "setupChoicesReset": "Utiliser les niveaux conseillés",
     "setupObligationsTitle": "Ce que demande la loi : {country}",
     "setupObligationUnconfirmed": "Non confirmé pour ce pays — demandez à votre comptable.",
     "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
@@ -4745,6 +4777,14 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Britische USt-Erklärung an HMRC senden",
     "Die vorbereitete britische USt-Erklärung aus der App über Making Tax Digital an HMRC senden und die Quittung von HMRC an der Erklärung behalten. Aus bleibt nur die Brückendatei."
+   ],
+   "purchaseOrders": [
+    "Bei Lieferanten bestellen",
+    "Nummerierte Bestellungen an Ihre Lieferanten mit Positionen, Preisen und Liefertermin erstellen, drucken oder per E-Mail senden und erfassen, was angekommen ist. Aus bleiben nur die Rechnungen."
+   ],
+   "guestPasses": [
+    "Gästepässe am Empfang",
+    "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben."
    ]
   },
   "process": {
@@ -4909,7 +4949,8 @@ window.SETUP_L10N={
    "viewDocuments": "Die geteilten Dokumente sehen",
    "managePurchases": "Lieferantenrechnungen erfassen",
    "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
-   "manageLease": "Mietvertrag der Räume erfassen"
+   "manageLease": "Mietvertrag der Räume erfassen",
+   "managePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten"
   },
   "domain": {
    "payment": "Zahlung",
@@ -5069,6 +5110,13 @@ window.SETUP_L10N={
     "setupLevelsGap": "{level} braucht {needed}",
     "setupAnswerUnknown": "Weiß ich noch nicht",
     "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
+    "setupChoicesBookings": "Personen und Buchungen",
+    "setupChoicesMoney": "Geld und Verwaltung",
+    "setupChoicesOperations": "Täglicher Betrieb",
+    "setupChoicesAdvanced": "Bereiche einzeln anpassen",
+    "setupChoicesNeedsDecision": "Ihre bisherige Auswahl bleibt erhalten. Klären Sie „Noch nicht sicher“, bevor Sie die Änderungen übernehmen.",
+    "setupChoicesManual": "Ihre Auswahl bleibt beim Beantworten anderer Fragen erhalten.",
+    "setupChoicesReset": "Empfohlene Stufen verwenden",
     "setupObligationsTitle": "Was das Gesetz verlangt: {country}",
     "setupObligationUnconfirmed": "Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.",
     "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
@@ -6437,6 +6485,14 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Presentar el IVA británico a HMRC",
     "Enviar la declaración de IVA británica preparada a HMRC desde la aplicación, mediante Making Tax Digital, y guardar el recibo de HMRC en la declaración. Desactivado, solo queda el archivo puente."
+   ],
+   "purchaseOrders": [
+    "Pedir a los proveedores",
+    "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas."
+   ],
+   "guestPasses": [
+    "Pases de invitado en recepción",
+    "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
    ]
   },
   "process": {
@@ -6601,7 +6657,8 @@ window.SETUP_L10N={
    "viewDocuments": "Ver los documentos compartidos",
    "managePurchases": "Registrar facturas de proveedor",
    "recordOutgoingPayments": "Registrar pagos a miembros",
-   "manageLease": "Registrar el contrato de alquiler"
+   "manageLease": "Registrar el contrato de alquiler",
+   "managePrivacy": "Gestionar los datos personales y las solicitudes de derechos"
   },
   "domain": {
    "payment": "Pago",
@@ -6761,6 +6818,13 @@ window.SETUP_L10N={
     "setupLevelsGap": "{level} necesita {needed}",
     "setupAnswerUnknown": "Aún no lo sé",
     "setupAnswerUnknownNote": "Aún sin decidir: {list} se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa.",
+    "setupChoicesBookings": "Personas y reservas",
+    "setupChoicesMoney": "Dinero y administración",
+    "setupChoicesOperations": "Funcionamiento diario",
+    "setupChoicesAdvanced": "Ajustar cada área",
+    "setupChoicesNeedsDecision": "Se conserva su elección anterior. Resuelva las respuestas «Aún no lo sé» antes de aplicar.",
+    "setupChoicesManual": "Su elección se conserva al responder otras preguntas.",
+    "setupChoicesReset": "Usar los niveles recomendados",
     "setupObligationsTitle": "Lo que exige la ley en {country}",
     "setupObligationUnconfirmed": "No confirmado para este país — consulte a su asesor contable.",
     "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
@@ -8129,6 +8193,14 @@ window.SETUP_L10N={
    "mtdSubmission": [
     "Inviare l'IVA britannica a HMRC",
     "Inviare a HMRC dall'applicazione la dichiarazione IVA britannica preparata, tramite Making Tax Digital, e conservare la ricevuta di HMRC sulla dichiarazione. Disattivato, resta solo il file ponte."
+   ],
+   "purchaseOrders": [
+    "Ordinare ai fornitori",
+    "Preparare ordini numerati per i fornitori con righe, prezzi e data di consegna, stamparli o inviarli per e-mail e registrare ciò che è arrivato. Disattivato, restano solo le fatture."
+   ],
+   "guestPasses": [
+    "Pass ospite all'accoglienza",
+    "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
    ]
   },
   "process": {
@@ -8293,7 +8365,8 @@ window.SETUP_L10N={
    "viewDocuments": "Vedere i documenti condivisi",
    "managePurchases": "Registrare le fatture dei fornitori",
    "recordOutgoingPayments": "Registrare i pagamenti ai soci",
-   "manageLease": "Registrare il contratto di locazione"
+   "manageLease": "Registrare il contratto di locazione",
+   "managePrivacy": "Gestire i dati personali e le richieste di diritti"
   },
   "domain": {
    "payment": "Pagamento",
@@ -8453,6 +8526,13 @@ window.SETUP_L10N={
     "setupLevelsGap": "{level} richiede {needed}",
     "setupAnswerUnknown": "Non lo so ancora",
     "setupAnswerUnknownNote": "Non ancora deciso: {list} restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa.",
+    "setupChoicesBookings": "Persone e prenotazioni",
+    "setupChoicesMoney": "Denaro e gestione",
+    "setupChoicesOperations": "Gestione quotidiana",
+    "setupChoicesAdvanced": "Regolare ogni area",
+    "setupChoicesNeedsDecision": "La scelta precedente viene mantenuta. Risolva le risposte «Non so ancora» prima di applicare.",
+    "setupChoicesManual": "La sua scelta viene mantenuta quando risponde alle altre domande.",
+    "setupChoicesReset": "Usi i livelli consigliati",
     "setupObligationsTitle": "Cosa chiede la legge in {country}",
     "setupObligationUnconfirmed": "Non confermato per questo paese — chieda al Suo commercialista.",
     "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",

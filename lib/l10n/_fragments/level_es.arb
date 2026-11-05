@@ -12,6 +12,10 @@
   "levelSupplementLabel": "Reservas de planta",
   "levelNotAllowed": "No tiene permiso para reservar una mesa, oficina o planta entera.",
   "levelConflict": "La planta tiene reservas en ese periodo.",
+  "bookingNotAllowedError": "No puede hacer reservas en este espacio. Pida a un propietario que permita reservar a los miembros.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
+  },
   "bookingOnePlace": "Ya tiene una reserva en ese periodo — un sitio a la vez.",
   "bookingCheckedInElsewhere": "Está registrado en otro sitio — haga la salida allí primero.",
   "spaceNotWholeBookable": "Este espacio no está configurado para reserva completa — el propietario activa \"Reservable como un todo\" en el editor.",

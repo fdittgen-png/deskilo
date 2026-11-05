@@ -32,6 +32,7 @@ void main() {
               onBranch: (_) {},
               go: (_, {bool push = false}) {},
               setupOpen: true,
+              openToPay: () {},
             );
             return const SizedBox();
           },

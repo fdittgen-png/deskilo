@@ -6,6 +6,7 @@
 // way to its resume banner.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/local_setup_views.dart';
@@ -102,13 +103,98 @@ Future<List<String>> _pump(
 }
 
 void main() {
+  for (final state in ['needs_operator', 'unknown']) {
+    testWidgets('$state does not claim an unfinished workspace is complete', (
+      tester,
+    ) async {
+      final status = SetupStatus.fromJson({
+        'steps': [
+          {
+            'step': 'online_payments',
+            'milestone': 'money',
+            'required': true,
+            'state': state,
+            'route': '/services',
+          },
+        ],
+        'milestones': [
+          {
+            'milestone': 'money',
+            'applies': true,
+            'required': 1,
+            'ready': 0,
+            'reached': false,
+          },
+        ],
+      });
+      await _pump(tester, status);
+      expect(find.byKey(const ValueKey('setup-guide-all-done')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('setup-step-online_payments')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('setup-guide-until')),
+        findsNothing,
+        reason: 'an external wait or an unavailable check has no completion estimate',
+      );
+    });
+  }
+
+  testWidgets('workspace load failure offers a retry and opens the guide', (
+    tester,
+  ) async {
+    var reads = 0;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(
+            localSetup: FakeLocalSetupRepository(status: _status()),
+          ),
+          currentWorkspaceProvider.overrideWith((ref) async {
+            if (reads++ == 0) throw StateError('offline');
+            return const Workspace(
+              id: 'ws-1',
+              name: 'Test',
+              countryCode: 'FR',
+              currencyCode: 'EUR',
+              timezone: 'Europe/Paris',
+              inviteCode: 'TEST',
+            );
+          }),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: SetupGuideScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('setup-guide-workspace-unavailable')),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Refresh'));
+    await tester.pumpAndSettle();
+    expect(reads, 2);
+    expect(
+      find.byKey(const ValueKey('setup-guide-next-places')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('the next action comes first and opens where it is done', (
     tester,
   ) async {
     final pushed = await _pump(tester, _status());
     expect(find.text('Places on the plan'), findsOneWidget);
     expect(find.text('about 10–20 min'), findsOneWidget);
-    expect(find.textContaining('Take bookings · 1 of 2 done'), findsOneWidget);
+    expect(find.text('1 of 2 done'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('setup-configuration-overview')),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('setup-guide-next-places')));
     await tester.pump();
     await tester.pump();
@@ -120,10 +206,7 @@ void main() {
     await _pump(tester, _status(), observed: {'places': (low: 4, high: 7)});
     expect(find.text('about 4–7 min'), findsOneWidget);
     expect(find.text('about 10–20 min'), findsNothing);
-    expect(
-      find.text('About 4–7 min until: Take bookings'),
-      findsOneWidget,
-    );
+    expect(find.text('About 4–7 min until: Take bookings'), findsOneWidget);
   });
 
   testWidgets('without observations the range is the catalogue rule', (
@@ -131,10 +214,7 @@ void main() {
   ) async {
     await _pump(tester, _status());
     expect(find.text('about 10–20 min'), findsOneWidget);
-    expect(
-      find.text('About 10–20 min until: Take bookings'),
-      findsOneWidget,
-    );
+    expect(find.text('About 10–20 min until: Take bookings'), findsOneWidget);
   });
 
   testWidgets('what can wait is folded, by group', (tester) async {
@@ -175,7 +255,9 @@ void main() {
     await _pump(
       tester,
       _status(),
-      home: const Scaffold(body: SetupResumeBanner(workspaceId: 'ws-1', compact: true)),
+      home: const Scaffold(
+        body: SetupResumeBanner(workspaceId: 'ws-1', compact: true),
+      ),
       features: {WorkspaceFeature.setupGuide},
     );
     final tile = tester.widget<ListTile>(

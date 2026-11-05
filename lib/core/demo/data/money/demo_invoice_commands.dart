@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -10,6 +9,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 
 import '../money_repository.dart';
+import 'demo_document_numbering.dart';
 
 /// #2591 — what a person does to an invoice, in the demo: answered from one
 /// space's in-memory money store ([FakeMoneyRepository]); every other port of
@@ -66,18 +66,22 @@ class DemoInvoiceCommands implements InvoiceCommands {
       }
       if (!_m.invoices[i].isVoided) {
         _m.invoices[i] = _m.invoices[i].copyWith(
-          voidedAt: kTestNow,
+          voidedAt: _m.clock(),
           voidedByName: 'Flo',
         );
       }
       replacesNumber = _m.invoices[i].number;
     }
+    // #3292 — numbered by the space's invoice series and dated by its clock,
+    // exactly as the numbering preview reads them.
+    final series = demoSeriesOf(_m, 'invoice');
+    final counter = series.nextValue;
     final invoice = Invoice(
       id: 'inv-${_m.nextInvoiceNumber}',
       workspaceId: workspaceId,
       memberId: memberId,
-      number: 'INV-2026-${_m.nextInvoiceNumber.toString().padLeft(4, '0')}',
-      issuedAt: kTestNow,
+      number: series.format(counter, _m.clock()),
+      issuedAt: _m.clock(),
       period: period,
       title: period,
       lines: lines,
@@ -110,7 +114,14 @@ class DemoInvoiceCommands implements InvoiceCommands {
           : const [],
       attendance: detailed ? List.of(_m.attendanceSeed) : const [],
     );
-    _m.nextInvoiceNumber++;
+    // The counter moves past the number just issued (a series that already
+    // numbered further sets it), so no number is ever issued twice.
+    _m.nextInvoiceNumber =
+        (counter > _m.nextInvoiceNumber ? counter : _m.nextInvoiceNumber) + 1;
+    // A configured series counts on; the default one reads the counter.
+    if (series.stored) {
+      _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
+    }
     _m.invoices.insert(0, invoice);
     return invoice.id;
   }
@@ -144,7 +155,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     }
     if (_m.invoices[i].isVoided) throw StateError('invoice already voided');
     _m.invoices[i] = _m.invoices[i].copyWith(
-      voidedAt: kTestNow,
+      voidedAt: _m.clock(),
       voidedByName: 'Flo',
     );
   }
@@ -158,7 +169,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     if (_m.dunningHolds.containsKey(invoiceId)) {
       throw StateError('this invoice is on hold');
     }
-    _m.invoiceReminders.putIfAbsent(invoiceId, () => []).add(kTestNow);
+    _m.invoiceReminders.putIfAbsent(invoiceId, () => []).add(_m.clock());
   }
 
   @override
@@ -180,8 +191,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
         description:
             'Refund ${invoice.number}'
             '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-        period: yearMonth(kTestNow.year, kTestNow.month),
-        createdAt: kTestNow,
+        period: yearMonth(_m.clock().year, _m.clock().month),
+        createdAt: _m.clock(),
       ),
     );
     _m.invoiceMatchesStore[invoiceId] = InvoiceMatch(
@@ -190,7 +201,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       resolution: 'refunded',
       note: trimmed,
       status: _m.matchPolicyConfigured ? 'pending' : 'confirmed',
-      matchedAt: kTestNow,
+      matchedAt: _m.clock(),
       byName: 'Flo',
     );
   }
@@ -220,7 +231,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       workspaceId: workspaceId,
       memberId: memberId,
       number: _m.nextSettlementId,
-      issuedAt: kTestNow,
+      issuedAt: _m.clock(),
       title: _m.nextSettlementId,
       lines: [
         for (final s in sources)
@@ -338,8 +349,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
           description:
               'Credit note ${invoice.number}'
               '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-          period: yearMonth(kTestNow.year, kTestNow.month),
-          createdAt: kTestNow,
+          period: yearMonth(_m.clock().year, _m.clock().month),
+          createdAt: _m.clock(),
         ),
       );
     }
@@ -352,7 +363,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
         resolution: resolution,
         note: trimmed.isEmpty ? existing.note : trimmed,
         paymentLedgerId: paymentLedgerId,
-        matchedAt: kTestNow,
+        matchedAt: _m.clock(),
         byName: 'Flo',
       );
       return;
@@ -370,7 +381,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
           workspaceId: invoice.workspaceId,
           type: EventType.invoicePayment,
           action: EventAction.created,
-          actorMemberId: 'member-1',
+          // #3293 — whoever recorded the match, not the first member.
+          actorMemberId: eventRepository.respondingMemberId,
           subjectMemberId: invoice.memberId,
           payload: {
             'invoice_id': invoiceId,
@@ -378,7 +390,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
             'resolution': resolution,
           },
           status: EventStatus.pending,
-          createdAt: kTestNow,
+          createdAt: _m.clock(),
         ),
       );
     }
@@ -389,7 +401,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       note: trimmed,
       status: _m.matchPolicyConfigured ? 'pending' : 'confirmed',
       paymentLedgerId: paymentLedgerId,
-      matchedAt: kTestNow,
+      matchedAt: _m.clock(),
       byName: 'Flo',
       eventId: eventId,
     );

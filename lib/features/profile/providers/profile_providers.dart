@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/context_client_providers.dart';
@@ -150,3 +151,25 @@ void invalidatePersonalPreferenceConsumers(Ref ref) {
     ..invalidate(workspaceMembersProvider)
     ..invalidate(myMemberProvider);
 }
+
+/// #3278 — the space the personal data admin acts on: its id and its members
+/// by name (the id stands in for a name not read yet). Null until a space is
+/// open.
+typedef PrivacyAdminSpace = ({
+  String id,
+  List<({String id, String name})> members,
+});
+
+final privacyAdminSpaceProvider =
+    Provider.autoDispose<PrivacyAdminSpace?>((ref) {
+  final id = ref.watch(currentWorkspaceProvider).value?.id;
+  if (id == null) return null;
+  final members =
+      ref.watch(workspaceMembersProvider).value ?? const <Member>[];
+  final names =
+      ref.watch(memberNamesProvider).value ?? const <String, String>{};
+  return (
+    id: id,
+    members: [for (final m in members) (id: m.id, name: names[m.id] ?? m.id)],
+  );
+});

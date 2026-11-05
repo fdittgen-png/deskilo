@@ -26,5 +26,6 @@ invoices (no database) and pins the files to it.
 
 ## State
 
-Not run against a database. The proof stays NOT RUN until a direct
-connection to the dev project exists; the gate then runs it rolled back.
+Run 2026-11-03 on a local database, committed seed and ANALYZE; see `RESULT-2026-11-03.md` for the
+numbers, the two findings it produced (migrations 0662 and 0663) and its limitations. The run on the
+dev project stays NOT RUN (the request limit), and the full proof was not re-run after 0663.

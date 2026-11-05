@@ -96,6 +96,8 @@ You want a picture of the whole before you choose anything. DesKilo groups its f
 
 **Audience:** Owner · Co-owner · Administrator
 
+The setup guide stays available in the workspace menu after setup. Its overview names the workspace, the chosen goal and the number of required tasks still to complete. Open the outcome details to see each milestone. The recommended action leads to a task you can do now; tasks waiting for another step or the operator say so. An unavailable check is not completion. Progress comes from saved settings: visiting a task does not complete it. Each task keeps the workspace, goal and task status visible, and names the next destination.
+
 You want to know the shortest road to a space people can book. The app keeps a readiness list called **Setting up this space** and, on the Reserve screen, tells owners **Before anyone can book here** what is missing.
 
 *What must be there before the first booking*
@@ -584,6 +586,8 @@ At the time of writing most features read **Unreviewed**, eighteen read **Beta**
 ### Three starting points
 
 **Audience:** Owner · Co-owner
+
+To choose what the workspace does, answer the questions grouped around bookings, money and daily operation. The review and apply controls stay visible while you scroll. Review the number of settings that would change and the concrete effects before applying; nothing is applied merely by answering. Detailed process levels and quick starts are under the advanced section. A level you deliberately choose is kept when you answer other questions; use the suggested-level action to return to recommendations. “Not sure yet” keeps the previous answer and prevents applying until you resolve it. The offline questionnaire uses the same rule and blocks export while an answer is unresolved.
 
 You do not want to decide a hundred things. Here are three realistic starting points; each one lists exactly what is on. Pick the nearest, then adjust.
 

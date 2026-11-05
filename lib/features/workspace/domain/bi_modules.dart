@@ -10,6 +10,7 @@
 // Pure Dart.
 library;
 
+import 'bi_modules_purchasing.dart';
 import 'bi_query.dart';
 import 'kpi_contract.dart';
 import 'workspace_feature.dart';
@@ -43,6 +44,7 @@ class BiModule {
     },
     this.groupings = const {},
     this.drill,
+    this.alsoRequires = const <WorkspaceFeature>{},
   });
 
   /// Stable id — the KPI id when the module shows one KPI.
@@ -71,6 +73,11 @@ class BiModule {
 
   /// Where the figure comes from, for the reader allowed to go there.
   final BiDrill? drill;
+
+  /// #3294 — features the module needs beside [feature] (the dunning load
+  /// needs dunning as well as the workspace status); the server checks
+  /// them again.
+  final Set<WorkspaceFeature> alsoRequires;
 
   /// Why [context] cannot be answered by this module; empty when it can.
   Set<BiUnsupported> unsupported(BiQueryContext context) => {
@@ -363,7 +370,60 @@ const biModules = <BiModule>[
       permission: WorkspacePermission.viewAnalytics,
     ),
   ),
+  // #3294 — the customers: how they pay against their due dates, the
+  // dunning that takes, what was credited or written off, and how
+  // concentrated the sales are (0671); each drills to the invoices.
+  BiModule(
+    id: 'customers.payment_behaviour',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.dunning_load',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    alsoRequires: {WorkspaceFeature.dunning},
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.credit_and_writeoff',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  BiModule(
+    id: 'customers.concentration',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceStatus,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _customerInvoices,
+  ),
+  // #3294 steps 2-4 — the vendor, sales and item figures (bi_modules_purchasing.dart).
+  ...purchasingBiModules,
 ];
+
+/// #3294 — the invoices behind a customer figure, for its months.
+const _customerInvoices = BiDrill(
+  route: '/invoice-register',
+  permission: WorkspacePermission.viewFinances,
+  carriesPeriod: true,
+);
 
 /// The modules [features] and [permissions] allow, in registry order.
 List<BiModule> visibleBiModules(
@@ -371,7 +431,9 @@ List<BiModule> visibleBiModules(
   Set<WorkspacePermission> permissions,
 ) => [
   for (final m in biModules)
-    if (features.contains(m.feature) && permissions.containsAll(m.permissions))
+    if (features.contains(m.feature) &&
+        features.containsAll(m.alsoRequires) &&
+        permissions.containsAll(m.permissions))
       m,
 ];
 

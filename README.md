@@ -150,7 +150,7 @@ The code includes workspace-scoped server permissions, personal-data export and 
 
 Store builds use Firebase Cloud Messaging for push notifications. A separate build without Google services is prepared for F-Droid; whether it is published there yet is stated in one place, the [F-Droid status](docs/guides/fdroid.md#status). See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
-The software is free and stays free: there is no software license fee. Hosting by the author, the reference deployment included, is free for everyone until 31 December 2027. From 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that (planned: from €29 a month on the shared server, from €79 on an isolated project); running your own instance never has a fee. The planned tariff and its reasoning are in [docs/business/business-plan.md](docs/business/business-plan.md). Customisations, including exclusive features, can be commissioned from the author. Your own hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
+The software is free and stays free: there is no software license fee. Hosting by the author, the reference deployment included, is free for everyone until 31 December 2027. From 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that (planned: from €29 a month on the shared server, from €79 on an isolated project); running your own instance never has a fee. Customisations, including exclusive features, can be commissioned from the author. Your own hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 
 </details>
 
@@ -270,5 +270,7 @@ Useful bug reports include the app version, platform, relevant workspace rules, 
 DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 ## License
+
+Project-owned documentation is licensed under the same terms as the app; see [Documentation license](DOCUMENTATION-LICENSE.md) for scope and third-party notices.
 
 [AGPL-3.0-or-later](LICENSE) © 2026 Florian DITTGEN. **Anyone who uses, modifies or redistributes the code must credit the author** — keep the copyright notices and show *"Based on DesKilo by Florian DITTGEN"* in the app's legal notices ([additional term, AGPL §7(b)](LICENSE-EXCEPTIONS.md#5-credit-the-author-additional-term-agpl-7b)). It comes with an [app-store exception](LICENSE-EXCEPTIONS.md), a [commercial licence](COMMERCIAL-LICENCE.md) for companies that would rather not publish their changes, and a [trademark policy](TRADEMARK.md) for the name. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a commercial licence.

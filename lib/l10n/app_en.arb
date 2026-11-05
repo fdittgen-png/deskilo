@@ -2354,6 +2354,102 @@
   "@bankOutTitle": {
     "description": "#2380 Reconcile dialog title for money out."
   },
+  "bankReconAccount": "Account",
+  "@bankReconAccount": {
+    "description": "#2380 partial bank reconciliation report: bankReconAccount."
+  },
+  "bankReconArithmeticDifference": "Statement file arithmetic difference (supported booked movements)",
+  "@bankReconArithmeticDifference": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconArithmeticDifference."
+  },
+  "bankReconBookingDate": "Stored booking date (may default to value date)",
+  "@bankReconBookingDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconBookingDate."
+  },
+  "bankReconBooksUnavailable": "Difference against books unavailable: account-linked booked opening and complete ledger facts are missing.",
+  "@bankReconBooksUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconBooksUnavailable."
+  },
+  "bankReconClearingUnavailable": "Provider clearing unavailable: clearing opening and complete settlement facts are missing.",
+  "@bankReconClearingUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconClearingUnavailable."
+  },
+  "bankReconClosing": "Closing balance stated by bank",
+  "@bankReconClosing": {
+    "description": "#2380 partial bank reconciliation report: bankReconClosing."
+  },
+  "bankReconCoverage": "Partial coverage: the bank-reported period and complete account coverage are not established.",
+  "@bankReconCoverage": {
+    "description": "#2380 partial bank reconciliation report: bankReconCoverage."
+  },
+  "bankReconCsvMappingUnavailable": "CSV column mapping was not retained",
+  "@bankReconCsvMappingUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconCsvMappingUnavailable."
+  },
+  "bankReconFileArithmeticScope": "Statement-file arithmetic compares the file balances with supported booked movements accepted by the import parser; it is not reconciliation with the books.",
+  "@bankReconFileArithmeticScope": {
+    "description": "#2380 scope of statement-file arithmetic, mandatory in customized output."
+  },
+  "bankReconFormatUnavailable": "File format or source limits cannot verify statement arithmetic",
+  "@bankReconFormatUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconFormatUnavailable."
+  },
+  "bankReconIdentityAmbiguous": "Source movement identity missing or duplicated",
+  "@bankReconIdentityAmbiguous": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconIdentityAmbiguous."
+  },
+  "bankReconNotIncluded": "Bank reconciliation reports are unavailable for this export.",
+  "@bankReconNotIncluded": {
+    "description": "#2380 partial bank reconciliation report: bankReconNotIncluded."
+  },
+  "bankReconObservedDates": "Stored movement dates",
+  "@bankReconObservedDates": {
+    "description": "#2380 partial bank reconciliation report: bankReconObservedDates."
+  },
+  "bankReconOpening": "Opening balance stated by bank",
+  "@bankReconOpening": {
+    "description": "#2380 partial bank reconciliation report: bankReconOpening."
+  },
+  "bankReconOriginalUnavailable": "Original source unavailable or inaccessible",
+  "@bankReconOriginalUnavailable": {
+    "description": "#2380 partial bank reconciliation report: bankReconOriginalUnavailable."
+  },
+  "bankReconReadUnavailable": "Original source unavailable or inaccessible; absence cannot be distinguished from denial",
+  "@bankReconReadUnavailable": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconReadUnavailable."
+  },
+  "bankReconRequestedPeriod": "Requested period",
+  "@bankReconRequestedPeriod": {
+    "description": "#2380 partial bank reconciliation report: bankReconRequestedPeriod."
+  },
+  "bankReconSeparateReads": "Statements, movements and source are separate reads; this is not a frozen snapshot.",
+  "@bankReconSeparateReads": {
+    "description": "#2380 partial bank reconciliation report: bankReconSeparateReads."
+  },
+  "bankReconSourceNotRetained": "Original source not retained or digest unavailable",
+  "@bankReconSourceNotRetained": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceNotRetained."
+  },
+  "bankReconSourceUnassociated": "Some source movements have no verified retained-line association; their status is unavailable.",
+  "@bankReconSourceUnassociated": {
+    "description": "#2380 partial bank reconciliation report: bankReconSourceUnassociated."
+  },
+  "bankReconSourceVerificationFailed": "Source hash, parsing, entry status or amounts, account, currency or balances could not be verified.",
+  "@bankReconSourceVerificationFailed": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconSourceVerificationFailed."
+  },
+  "bankReconTitle": "Bank reconciliation report",
+  "@bankReconTitle": {
+    "description": "#2380 partial bank reconciliation report: bankReconTitle."
+  },
+  "bankReconUnmappedCount": "Source movements without verified retained-row association",
+  "@bankReconUnmappedCount": {
+    "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
+  },
+  "bankReconValueDate": "Stored value date (may default to booking date)",
+  "@bankReconValueDate": {
+    "description": "#2380 partial bank reconciliation report: bankReconValueDate."
+  },
   "bankRefusedAtLine": "{reason} (line {line})",
   "@bankRefusedAtLine": {
     "description": "#2380 Refusal: the reason and the line it was found at.",
@@ -2653,6 +2749,10 @@
   "@biBasisDocumentDate": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biBasisInvoiceDue": "invoice due date",
+  "@biBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
+  },
   "biBasisInvoiceMonth": "month of the invoice",
   "@biBasisInvoiceMonth": {
     "description": "#2581 analytical report print layout and exports"
@@ -2660,6 +2760,10 @@
   "biBasisOccurrenceDue": "due date",
   "@biBasisOccurrenceDue": {
     "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPayableDue": "supplier payable due date",
+  "@biBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   },
   "biBasisPaymentMatchedAt": "date the payment was matched",
   "@biBasisPaymentMatchedAt": {
@@ -2909,6 +3013,239 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "The whole period is included. Comparison with a completed period is not like-for-like.",
+  "biCustomerCohortHeld": "On hold",
+  "@biCustomerCohortHeld": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortLate": "Paid late",
+  "@biCustomerCohortLate": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortLine": "{cohort}: {count} invoices, {amount}",
+  "@biCustomerCohortLine": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerCohortOnTime": "Paid on time",
+  "@biCustomerCohortOnTime": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortOpen": "Unpaid",
+  "@biCustomerCohortOpen": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortPartial": "Partly paid",
+  "@biCustomerCohortPartial": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortUndated": "Settled without a payment date",
+  "@biCustomerCohortUndated": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortUnknownDue": "No due date",
+  "@biCustomerCohortUnknownDue": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCohortWrittenOff": "Written off",
+  "@biCustomerCohortWrittenOff": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerConcentrationBasis": "The largest {top} of {customers} customers: {topNet} of {net} invoiced net",
+  "@biCustomerConcentrationBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "top": {
+        "type": "String"
+      },
+      "customers": {
+        "type": "String"
+      },
+      "topNet": {
+        "type": "String"
+      },
+      "net": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerConcentrationDefinition": "The share of the net invoiced in the period (credit notes deducted) that the largest customers make, and the share of what they owe today.",
+  "@biCustomerConcentrationDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerConcentrationOpen": "The {top} largest of {debtors} debtors owe {topOpen} of the {open} owed today, whenever they were invoiced.",
+  "@biCustomerConcentrationOpen": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "top": {
+        "type": "String"
+      },
+      "debtors": {
+        "type": "String"
+      },
+      "topOpen": {
+        "type": "String"
+      },
+      "open": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerConcentrationTitle": "Customer concentration",
+  "@biCustomerConcentrationTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCreditBasis": "{credited} in {notes} credit notes, {writtenOff} written off on {offs} invoices",
+  "@biCustomerCreditBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "credited": {
+        "type": "String"
+      },
+      "notes": {
+        "type": "String"
+      },
+      "writtenOff": {
+        "type": "String"
+      },
+      "offs": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerCreditDefinition": "By the invoice’s month, net of VAT: the credit notes, and what was written off of an invoice (its total less what was paid), in proportion to its net.",
+  "@biCustomerCreditDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerCreditTitle": "Credits and write-offs",
+  "@biCustomerCreditTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDebtorLine": "{name}: {amount} owed",
+  "@biCustomerDebtorLine": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
+  "@biCustomerDelay": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      },
+      "weighted": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningBasis": "{reminders} reminders on {reminded} of {due} invoices falling due",
+  "@biCustomerDunningBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "reminders": {
+        "type": "String"
+      },
+      "reminded": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningDefinition": "The reminders sent for the invoices falling due in the period, by level.",
+  "@biCustomerDunningDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDunningLevel": "Level {level}",
+  "@biCustomerDunningLevel": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerDunningOff": "Dunning is switched off for this space: no reminders are counted.",
+  "@biCustomerDunningOff": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerDunningTitle": "Dunning load",
+  "@biCustomerDunningTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNamesHidden": "Names are shown only to those who may read personal data; the others read ranks.",
+  "@biCustomerNamesHidden": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNetNotProven": "Some invoices carry no VAT breakdown, so their net is not proven: they are left out of the net figures.",
+  "@biCustomerNetNotProven": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerNothingToShare": "Nothing to share out in this period, so no share is shown.",
+  "@biCustomerNothingToShare": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerPaidAfterReminder": "{paid} of {reminded} reminded invoices were paid after their first reminder: a sequence in time, not proof that the reminder caused the payment.",
+  "@biCustomerPaidAfterReminder": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "reminded": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerPaymentBasis": "{onTime} of {settled} settled invoices paid by their due date",
+  "@biCustomerPaymentBasis": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "settled": {
+        "type": "String"
+      }
+    }
+  },
+  "biCustomerPaymentDefinition": "The invoices falling due in the period, each in one group. A settled invoice is on time when its last payment was reported paid on or before its due date: the bank’s value date when a reconciled line explains the payment, the recorded payment date otherwise, never the day it was matched. Amounts are what the invoices owe, VAT included.",
+  "@biCustomerPaymentDefinition": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerPaymentTitle": "Payment punctuality",
+  "@biCustomerPaymentTitle": {
+    "description": "#3294 customer analytics"
+  },
+  "biCustomerRank": "Customer {rank}",
+  "@biCustomerRank": {
+    "description": "#3294 customer analytics",
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  },
   "biDataNotApplicable": "No applicable capacity",
   "biDataNotRecorded": "Not recorded",
   "biDataPartial": "Partial data",
@@ -2987,6 +3324,10 @@
   "@biEditorBasisDocumentDate": {
     "description": "#2580 BI report editor"
   },
+  "biEditorBasisInvoiceDue": "by invoice due date",
+  "@biEditorBasisInvoiceDue": {
+    "description": "#3294 customer analytics"
+  },
   "biEditorBasisInvoiceMonth": "by invoice month",
   "@biEditorBasisInvoiceMonth": {
     "description": "#2580 BI report editor"
@@ -2994,6 +3335,10 @@
   "biEditorBasisOccurrenceDue": "by due date",
   "@biEditorBasisOccurrenceDue": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorBasisPayableDue": "by supplier payable due date",
+  "@biEditorBasisPayableDue": {
+    "description": "#3294 step 2 vendor analytics"
   },
   "biEditorBasisPaymentMatched": "by payment matched",
   "@biEditorBasisPaymentMatched": {
@@ -3848,6 +4193,92 @@
   "@biInvalidAddress": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biItemMethodAverage": "average cost",
+  "@biItemMethodAverage": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemMethodLast": "last purchase",
+  "@biItemMethodLast": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesBasis": "{lines} purchase lines of {items} items",
+  "@biItemPricesBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "lines": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemPricesDefinition": "The approved purchase lines that name an item, dated in the period: what they cost (net plus the tax that cannot be recovered). The table gives each item’s unit price from each supplier. Credit notes are left out.",
+  "@biItemPricesDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemPricesTitle": "Item prices by supplier",
+  "@biItemPricesTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductBasis": "Sold for {revenue} net, cost {cost} ({method})",
+  "@biItemProductBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "revenue": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemProductDefinition": "Each item the members consumed in the period: its net revenue minus the units sold at one unit’s cost, read by the space’s cost method. A margin, not a profit: no other cost is allocated.",
+  "@biItemProductDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemProductTitle": "Margin by product",
+  "@biItemProductTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemUncosted": "{count} products sold were never bought: they have no cost and are left out of the cost and margin",
+  "@biItemUncosted": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemUnresolved": "{count} purchase lines name a supply only by its text: they are not matched to an item and are left out",
+  "@biItemUnresolved": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorBasis": "{count} suppliers",
+  "@biItemVendorBasis": {
+    "description": "#3294 step 4 items on purchase lines",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biItemVendorDefinition": "For each supplier: what the items bought from it in the period cost above the lowest unit price paid for the same item in the period, any supplier. No margin by supplier is given: no sale records which purchase it used up.",
+  "@biItemVendorDefinition": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
+  "biItemVendorTitle": "Supplier prices compared",
+  "@biItemVendorTitle": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "biKindCurrent": "Now",
   "@biKindCurrent": {
     "description": "Business analytics dashboard: biKindCurrent"
@@ -4329,6 +4760,147 @@
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"
   },
+  "biSalesKindAccessories": "Supplements",
+  "@biSalesKindAccessories": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindAdjustment": "Adjustments",
+  "@biSalesKindAdjustment": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindBasis": "{gross} with VAT, {lines} lines on {invoices} invoices",
+  "@biSalesKindBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      },
+      "lines": {
+        "type": "String"
+      },
+      "invoices": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesKindDefinition": "What the invoices of the period sold, net of VAT, by the kind of line. Payments and reimbursements carried on an invoice are not sales; a credit note subtracts. The month is the invoice’s.",
+  "@biSalesKindDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindDesk": "Desks",
+  "@biSalesKindDesk": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindLevel": "Levels",
+  "@biSalesKindLevel": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOffice": "Rooms",
+  "@biSalesKindOffice": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOther": "Other",
+  "@biSalesKindOther": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindOverage": "Extra half-days",
+  "@biSalesKindOverage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindPackage": "Packages",
+  "@biSalesKindPackage": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindService": "Services",
+  "@biSalesKindService": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindSubscription": "Subscriptions",
+  "@biSalesKindSubscription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesKindTitle": "Sales by kind",
+  "@biSalesKindTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesNetUnknown": "{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net",
+  "@biSalesNetUnknown": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesNoDescription": "No description",
+  "@biSalesNoDescription": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomBasis": "Charged {charges} for {uses} bookings, the rooms cost {cost} ({rooms} rooms)",
+  "@biSalesRoomBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      },
+      "rooms": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomDefinition": "For each room the space rents: what its bookings were charged, net, minus the room’s own cost (its rent falling due in the period, or its cost per use times the uses). No other cost is allocated to the room: this is a margin, not a profit.",
+  "@biSalesRoomDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomLine": "{room}: charged {charges}, cost {cost}, {uses} bookings",
+  "@biSalesRoomLine": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      },
+      "charges": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      },
+      "uses": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesRoomTitle": "Margin of the rented rooms",
+  "@biSalesRoomTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesRoomsOff": "The space rents no rooms: switch on rented rooms to see their margin",
+  "@biSalesRoomsOff": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceBasis": "{count} services and packages",
+  "@biSalesServiceBasis": {
+    "description": "#3294 step 3 sales analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biSalesServiceDefinition": "The service and package lines of the period’s invoices, net of VAT, by the description they were sold under.",
+  "@biSalesServiceDefinition": {
+    "description": "#3294 step 3 sales analytics"
+  },
+  "biSalesServiceTitle": "Sales by service",
+  "@biSalesServiceTitle": {
+    "description": "#3294 step 3 sales analytics"
+  },
   "biSeatCentre": "of all seat time",
   "@biSeatCentre": {
     "description": "Business analytics dashboard: biSeatCentre"
@@ -4400,6 +4972,202 @@
   "biUnavailable": "This analysis could not be computed.",
   "@biUnavailable": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biVendorCategoryBasis": "{count} categories",
+  "@biVendorCategoryBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCategoryTitle": "Spend by category",
+  "@biVendorCategoryTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortHeld": "On hold",
+  "@biVendorCohortHeld": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortLate": "Paid late",
+  "@biVendorCohortLate": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortLine": "{cohort}: {count} bills, {amount}",
+  "@biVendorCohortLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorCohortOnTime": "Paid on time",
+  "@biVendorCohortOnTime": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortOpen": "Unpaid",
+  "@biVendorCohortOpen": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortPartial": "Partly paid",
+  "@biVendorCohortPartial": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUndated": "Settled without a payment",
+  "@biVendorCohortUndated": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCohortUnknownDue": "No due date",
+  "@biVendorCohortUnknownDue": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorCredited": "Credit notes subtracted: {amount} ({count})",
+  "@biVendorCredited": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDelay": "Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)",
+  "@biVendorDelay": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      },
+      "weighted": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagBasis": "{documents} bills; median {median} days, 90th percentile {p90}",
+  "@biVendorLagBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorLagDefinition": "The approved supplier bills dated in the period: the days from the date the supplier put on the bill to the day it reached the space, on average; the table lists each supplier.",
+  "@biVendorLagDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorLagTitle": "Days for a bill to arrive",
+  "@biVendorLagTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorLagUndated": "{count} bills carry no supplier date or no received date and are left out",
+  "@biVendorLagUndated": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorNoCategory": "No category",
+  "@biVendorNoCategory": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorNothingToMeasure": "Nothing in the period to measure",
+  "@biVendorNothingToMeasure": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityBasis": "{onTime} of {settled} settled bills paid by their due date",
+  "@biVendorPunctualityBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "settled": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorPunctualityDefinition": "What the space owes its suppliers, falling due in the period, each in one group. A settled bill is on time when its last payment was reported paid on or before its due date: the bank’s value date when the payment carries one, the recorded payment date otherwise.",
+  "@biVendorPunctualityDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorPunctualityLine": "{name}: {onTime} on time, {late} late, of {due} due",
+  "@biVendorPunctualityLine": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "onTime": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorPunctualityTitle": "Paying suppliers on time",
+  "@biVendorPunctualityTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorSpendBasis": "{documents} documents from {suppliers} suppliers; the {top} largest: {topCost}",
+  "@biVendorSpendBasis": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      },
+      "suppliers": {
+        "type": "String"
+      },
+      "top": {
+        "type": "String"
+      },
+      "topCost": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorSpendDefinition": "The approved purchase documents dated in the period: what they cost the space, the net plus the tax it cannot recover. A credit note subtracts. Documents in another currency are not converted.",
+  "@biVendorSpendDefinition": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorSpendTitle": "Spend by supplier",
+  "@biVendorSpendTitle": {
+    "description": "#3294 step 2 vendor analytics"
+  },
+  "biVendorUnassigned": "Without a supplier (members’ receipts): {amount}",
+  "@biVendorUnassigned": {
+    "description": "#3294 step 2 vendor analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "biViewCardsIncompatible": "{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.",
   "@biViewCardsIncompatible": {
@@ -5292,6 +6060,10 @@
   "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
+  },
+  "bookingNotAllowedError": "You may not make reservations in this space. Ask an owner to let members book.",
+  "@bookingNotAllowedError": {
+    "description": "Refusal when the member does not hold makeReservations (#3269)"
   },
   "bookingOnePlace": "You already have a booking in that period — one place at a time.",
   "@bookingOnePlace": {
@@ -7279,6 +8051,15 @@
   "demoSetupCardOpenHalfDone": "See a space half way: {space}",
   "@demoSetupCardOpenHalfDone": {
     "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenSpace": "Switch to {space}",
+  "@demoSetupCardOpenSpace": {
+    "description": "Switch between Demo workspaces without claiming their setup state.",
     "placeholders": {
       "space": {
         "type": "String"
@@ -9364,6 +10145,17 @@
       }
     }
   },
+  "eventPrivacyIncident": "A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}",
+  "@eventPrivacyIncident": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "eventQuotaRequested": "{actor} requests {halfDays} extra half-days for {period}",
   "@eventQuotaRequested": {
     "description": "Feed line of a quota-extension request event",
@@ -9593,6 +10385,7 @@
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
   },
   "eventTypePriceNegotiation": "Price negotiation",
+  "eventTypePrivacyIncident": "Privacy incident",
   "eventTypeQuota": "Extra half-days",
   "@eventTypeQuota": {
     "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
@@ -9905,7 +10698,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}",
+  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}",
   "@exportSheetName": {
     "description": "#2861 workspace export: exportSheetName",
     "placeholders": {
@@ -10365,6 +11158,14 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
+  "featureGuestPassesDesc": "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay.",
+  "@featureGuestPassesDesc": {
+    "description": "#3308 the guest pass flag"
+  },
+  "featureGuestPassesTitle": "Guest passes at the desk",
+  "@featureGuestPassesTitle": {
+    "description": "#3308 the guest pass flag"
+  },
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",
   "@featureHeldBack": {
     "description": "Subtitle note: the feature is on but its parent is off (#800)"
@@ -10803,6 +11604,14 @@
   "featurePurchaseAnalyticsTitle": "Purchase figures (analytics)",
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseOrdersDesc": "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.",
+  "@featurePurchaseOrdersDesc": {
+    "description": "#3307 feature description"
+  },
+  "featurePurchaseOrdersTitle": "Order from suppliers",
+  "@featurePurchaseOrdersTitle": {
+    "description": "#3307 feature title"
   },
   "featurePurchasesDesc": "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.",
   "@featurePurchasesDesc": {
@@ -12119,6 +12928,163 @@
   "groupRenameTitle": "Group name",
   "@groupRenameTitle": {
     "description": "workspace groups: rename, description, admins, info"
+  },
+  "guestPassActive": "On sale",
+  "@guestPassActive": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassAdd": "Add a pass",
+  "@guestPassAdd": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassChoose": "Pass",
+  "@guestPassChoose": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassDay": "First day",
+  "@guestPassDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassDays": "Days",
+  "@guestPassDays": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassEdit": "Edit the pass",
+  "@guestPassEdit": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassFrom": "From",
+  "@guestPassFrom": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassName": "Name",
+  "@guestPassName": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassNameRequired": "Enter a name.",
+  "@guestPassNameRequired": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPaid": "Paid at the desk",
+  "@guestPassPaid": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPerDay": "{price} per day",
+  "@guestPassPerDay": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassPerHour": "{price} per hour",
+  "@guestPassPerHour": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassPrice": "Price per unit",
+  "@guestPassPrice": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassPriceInvalid": "Enter a price.",
+  "@guestPassPriceInvalid": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemDays": "A pass lasts 1 to 31 days.",
+  "@guestPassProblemDays": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemEndBeforeStart": "The end is before the start.",
+  "@guestPassProblemEndBeforeStart": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemHourlyOneDay": "An hourly pass is for one day.",
+  "@guestPassProblemHourlyOneDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemNoOffer": "Choose a pass.",
+  "@guestPassProblemNoOffer": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassProblemNoSeat": "Choose a place.",
+  "@guestPassProblemNoSeat": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaleFailed": "The pass could not be sold. The place may be taken, or the window outside the opening hours.",
+  "@guestPassSaleFailed": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaleIntro": "The guest's name and contact are printed on the invoice. The guest does not become a member.",
+  "@guestPassSaleIntro": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSaveFailed": "The pass could not be saved.",
+  "@guestPassSaveFailed": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSeat": "Place",
+  "@guestPassSeat": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSell": "Sell a pass",
+  "@guestPassSell": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassSold": "Pass sold: {total}, invoiced to {name}.",
+  "@guestPassSold": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassTo": "To",
+  "@guestPassTo": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassTotal": "{units} × {price} = {total}",
+  "@guestPassTotal": {
+    "description": "#3308 guest passes sold at the desk",
+    "placeholders": {
+      "units": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassUnitDay": "Per day",
+  "@guestPassUnitDay": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassUnitHour": "Per hour",
+  "@guestPassUnitHour": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesEmpty": "No pass yet. Add the passes the space sells.",
+  "@guestPassesEmpty": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesIntro": "Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.",
+  "@guestPassesIntro": {
+    "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesTitle": "Guest passes",
+  "@guestPassesTitle": {
+    "description": "#3308 guest passes sold at the desk"
   },
   "guideActionConfirmBooking": "confirm the booking and wait for the answer",
   "@guideActionConfirmBooking": {
@@ -14297,6 +15263,10 @@
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
   },
+  "invoiceExportSafTAt": "SAF-T AT (Austria)",
+  "@invoiceExportSafTAt": {
+    "description": "#2379 the Austrian SAF-T AT 1.01 export (Bundesministerium für Finanzen)"
+  },
   "invoiceExportSafTFull": "SAF-T with the general ledger (XML, international)",
   "@invoiceExportSafTFull": {
     "description": "Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger"
@@ -14320,6 +15290,10 @@
   "invoiceExportTrialBalance": "Trial balance, general and auxiliary (PDF, from the book)",
   "@invoiceExportTrialBalance": {
     "description": "Accounting export sheet (#2376): the trial balance report"
+  },
+  "invoiceExportXeroInvoiceCsv": "Xero (sales invoice import)",
+  "@invoiceExportXeroInvoiceCsv": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
   },
   "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
   "invoiceFacturXDownload": "Download Factur-X (PDF)",
@@ -14402,6 +15376,10 @@
   "invoiceGapPublicSectorRefs": "Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.",
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
+  },
+  "invoiceGapQrIbanWithoutReference": "This invoice is paid to a QR-IBAN, which needs the QR reference frozen when an invoice is issued, and this one was issued before such references existed. Issue a replacement invoice, or name the ordinary IBAN as the payment account.",
+  "@invoiceGapQrIbanWithoutReference": {
+    "description": "#2380 — refusal of an e-invoice paid to a Swiss QR-IBAN when the invoice has no QR reference frozen at issue (issued before 0677)."
   },
   "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {
@@ -15694,6 +16672,10 @@
   "journeyStageConfirm": "To confirm",
   "journeyStageIssue": "To issue",
   "journeyStageStripLabel": "The invoicing process: issue, collect, confirm, close",
+  "journeyStateCancelled": "Cancelled",
+  "journeyStateCurrent": "Current step",
+  "journeyStateDone": "Completed",
+  "journeyStateUpcoming": "Upcoming",
   "journeyStepClosed": "Closed",
   "journeyStepConfirmation": "Confirmation",
   "journeyStepIssued": "Issued",
@@ -19038,6 +20020,10 @@
   },
   "memberOriginDelegated": "Profile created by an admin",
   "memberOriginFounder": "Founded this space",
+  "memberOriginGuest": "Bought a guest pass at the desk",
+  "@memberOriginGuest": {
+    "description": "#3308 a customer record made by a guest pass sale"
+  },
   "memberOriginHeading": "How this membership began",
   "memberOriginInvited": "Joined by invitation",
   "memberOveragePolicyLabel": "When days run out",
@@ -21439,6 +22425,7 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Manage commercial agreements",
+  "permManagePrivacy": "Handle personal data and rights requests",
   "permManagePurchases": "Capture supplier bills",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -21512,6 +22499,12 @@
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
   },
+  "personalBirthday": "Birthday",
+  "personalBirthdayClear": "Remove the birthday",
+  "personalBirthdayHelp": "Only you, people allowed to see members' personal data and the workspace's privacy admin can read it. Someone who only issues invoices cannot.",
+  "personalBirthdayInvalid": "A birthday cannot be in the future or before 1900.",
+  "personalBirthdayPick": "Choose a date",
+  "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
   "personalInfoCity": "City",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -22218,6 +23211,53 @@
       }
     }
   },
+  "privacyAdminActionFailed": "The server refused: {reason}",
+  "@privacyAdminActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminBasis": "Why it is kept",
+  "privacyAdminComplete": "Complete",
+  "privacyAdminDetails": "Details (optional)",
+  "privacyAdminEmpty": "No rights request yet.",
+  "privacyAdminExtend": "Extend the deadline",
+  "privacyAdminExtendReason": "Reason for the extension (at least 10 characters)",
+  "privacyAdminIncidentIntro": "The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.",
+  "privacyAdminIncidentNote": "What happened (optional, 1000 characters at most)",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
+  "@privacyAdminIncidentRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyAdminIncidentSend": "Record and tell them",
+  "privacyAdminIncidentTitle": "Record a privacy incident",
+  "privacyAdminIntro": "The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.",
+  "privacyAdminKind": "Kind of request",
+  "privacyAdminLoadFailed": "The requests could not be read.",
+  "privacyAdminMember": "Member",
+  "privacyAdminOpenTile": "Personal data and rights requests",
+  "privacyAdminOutcomeKind": "What happened to the data",
+  "privacyAdminPeriod": "For how long",
+  "privacyAdminReceivedOn": "Received on {date}",
+  "@privacyAdminReceivedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyAdminRecord": "Record a request",
+  "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
+  "privacyAdminRefuse": "Refuse",
+  "privacyAdminSave": "Save",
+  "privacyAdminStore": "Where (a store or a list)",
+  "privacyAdminTitle": "Personal data and rights requests",
   "privacyErase": "Leave this workspace and erase my data",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -22281,6 +23321,9 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
+  "privacyIncidentDataBreach": "A data breach",
+  "privacyIncidentOther": "Another incident",
+  "privacyIncidentWrongInvoice": "A wrong invoice",
   "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -22344,6 +23387,12 @@
       }
     }
   },
+  "privacyOutcomeCorrected": "Corrected",
+  "privacyOutcomeFailed": "Could not be done",
+  "privacyOutcomePendingExternal": "Still open elsewhere",
+  "privacyOutcomeRemoved": "Removed",
+  "privacyOutcomeRestricted": "Restricted",
+  "privacyOutcomeRetained": "Kept (with a reason)",
   "privacyPolicy": "Privacy policy",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -22360,6 +23409,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
   "privacySpaceNotice": "This space's privacy notice",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -22905,6 +23955,27 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Purchase order {reference}",
+  "@purchaseBillForOrder": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseBillNoOrder": "No order",
+  "@purchaseBillNoOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrder": "Purchase order",
+  "@purchaseBillOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrderHint": "The order this bill charges: its amounts are taken and stay editable",
+  "@purchaseBillOrderHint": {
+    "description": "#3307 goods receipts"
+  },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
     "description": "#2577 the guided purchase / expense entry"
@@ -22956,6 +24027,306 @@
   "purchaseNeedsReview": "Needs review",
   "@purchaseNeedsReview": {
     "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseOrderAddLine": "Add a line",
+  "@purchaseOrderAddLine": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderBadEmail": "One e-mail address, or leave it empty to print",
+  "@purchaseOrderBadEmail": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderBadVatRate": "A VAT rate from 0 to 99",
+  "@purchaseOrderBadVatRate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderCancel": "Cancel the order",
+  "@purchaseOrderCancel": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderCancelReason": "Why is it cancelled?",
+  "@purchaseOrderCancelReason": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderDescription": "What is ordered",
+  "@purchaseOrderDescription": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderEdit": "Edit the order",
+  "@purchaseOrderEdit": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderEmail": "E-mail address to send it to",
+  "@purchaseOrderEmail": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderExpected": "Expected delivery",
+  "@purchaseOrderExpected": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderFreeText": "Free text",
+  "@purchaseOrderFreeText": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderItem": "Catalogue item",
+  "@purchaseOrderItem": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderLine": "Line {n}",
+  "@purchaseOrderLine": {
+    "description": "#3307 purchase orders",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderLineReceived": "{description}: {received} of {ordered} received",
+  "@purchaseOrderLineReceived": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "received": {
+        "type": "String"
+      },
+      "ordered": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderMailInvalid": "A sender address, a name without < > or quotes, and on the first save the API key",
+  "@purchaseOrderMailInvalid": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKey": "Resend API key",
+  "@purchaseOrderMailKey": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKeyKept": "A key is stored. Leave empty to keep it; it is never shown again.",
+  "@purchaseOrderMailKeyKept": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSave": "Save",
+  "@purchaseOrderMailSave": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSender": "Sender address (a verified domain at Resend)",
+  "@purchaseOrderMailSender": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSenderName": "Sender name",
+  "@purchaseOrderMailSenderName": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSettings": "E-mail sending",
+  "@purchaseOrderMailSettings": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailText": "Hello,\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}",
+  "@purchaseOrderMailText": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderMarkSent": "Mark as sent",
+  "@purchaseOrderMarkSent": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsDescription": "Say what is ordered, or choose an item",
+  "@purchaseOrderNeedsDescription": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsPrice": "A unit price, 0 or more",
+  "@purchaseOrderNeedsPrice": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsQuantity": "A quantity above zero",
+  "@purchaseOrderNeedsQuantity": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsSupplier": "Choose the supplier",
+  "@purchaseOrderNeedsSupplier": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNew": "New order",
+  "@purchaseOrderNew": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNote": "Note to the supplier",
+  "@purchaseOrderNote": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderPickDate": "Pick the expected delivery date",
+  "@purchaseOrderPickDate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderPrint": "Print",
+  "@purchaseOrderPrint": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderQuantity": "Quantity",
+  "@purchaseOrderQuantity": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderReceive": "Record a delivery",
+  "@purchaseOrderReceive": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveLine": "{description} ({left} to come)",
+  "@purchaseOrderReceiveLine": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveNote": "Note (optional)",
+  "@purchaseOrderReceiveNote": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveNothing": "Enter what arrived of at least one line",
+  "@purchaseOrderReceiveNothing": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveTitle": "Delivery of {reference}",
+  "@purchaseOrderReceiveTitle": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveTooMany": "More than what is left of this line",
+  "@purchaseOrderReceiveTooMany": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceivedOn": "Arrived on",
+  "@purchaseOrderReceivedOn": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderRefused": "The order was not changed. Check the entries and try again.",
+  "@purchaseOrderRefused": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderRemoveLine": "Remove the line",
+  "@purchaseOrderRemoveLine": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSave": "Save the draft",
+  "@purchaseOrderSave": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSendArrived": "It arrived",
+  "@purchaseOrderSendArrived": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendAwaits": "An e-mail to {recipient} has no confirmed outcome. Did it arrive?",
+  "@purchaseOrderSendAwaits": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendEmail": "Send by e-mail",
+  "@purchaseOrderSendEmail": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendLost": "It did not arrive",
+  "@purchaseOrderSendLost": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendRefused": "The e-mail was refused: {reason}. The order stays a draft.",
+  "@purchaseOrderSendRefused": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendUnconfirmed": "No confirmed answer came back. Check with the supplier before sending again.",
+  "@purchaseOrderSendUnconfirmed": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSentTo": "Sent to {recipient}",
+  "@purchaseOrderSentTo": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderStateCancelled": "Cancelled",
+  "@purchaseOrderStateCancelled": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateDraft": "Draft",
+  "@purchaseOrderStateDraft": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStatePartlyReceived": "Partly received",
+  "@purchaseOrderStatePartlyReceived": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateReceived": "Received",
+  "@purchaseOrderStateReceived": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateSent": "Sent",
+  "@purchaseOrderStateSent": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "@purchaseOrderSummary": {
+    "description": "#3307 purchase orders",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSupplier": "Supplier",
+  "@purchaseOrderSupplier": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderUnit": "Unit (e.g. box)",
+  "@purchaseOrderUnit": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderUnitPrice": "Unit price before VAT",
+  "@purchaseOrderUnitPrice": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderVatRate": "VAT rate (%)",
+  "@purchaseOrderVatRate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrdersEmpty": "No purchase order yet. A new order starts as a draft you can edit, print and send.",
+  "@purchaseOrdersEmpty": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrdersTitle": "Purchase orders",
+  "@purchaseOrdersTitle": {
+    "description": "#3307 purchase orders"
   },
   "purchaseQualified": "Accounting qualified",
   "@purchaseQualified": {
@@ -23244,6 +24615,10 @@
   "@purchasesInvoiceDate": {
     "description": "#2573 purchases"
   },
+  "purchasesItem": "Item bought",
+  "@purchasesItem": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesKindBill": "Supplier bill",
   "@purchasesKindBill": {
     "description": "#2573 purchases"
@@ -23279,6 +24654,10 @@
   "purchasesMethodOther": "Other",
   "@purchasesMethodOther": {
     "description": "#2574 purchase payments"
+  },
+  "purchasesNoItem": "No item",
+  "@purchasesNoItem": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "purchasesNoSupplier": "No supplier chosen",
   "@purchasesNoSupplier": {
@@ -23444,6 +24823,10 @@
   "@purchasesPurposeStock": {
     "description": "#2576 equipment register: what a purchase line is for"
   },
+  "purchasesQuantity": "Quantity",
+  "@purchasesQuantity": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "purchasesReference": "Invoice number",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -23589,6 +24972,10 @@
   "purchasesTotal": "Total",
   "@purchasesTotal": {
     "description": "#2573 purchases"
+  },
+  "purchasesUnit": "Unit (e.g. box, ream)",
+  "@purchasesUnit": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "pushAllowAction": "Allow",
   "@pushAllowAction": {
@@ -24301,9 +25688,13 @@
   "@refusalBankMatchClosedPeriod": {
     "description": "#2380 Refusal DKB06: the payment is dated inside a closed period."
   },
-  "refusalBankMatchSeveralPayments": "Other payments are matched to this invoice, so this one cannot be undone alone. Nothing was changed.",
+  "refusalBankMatchSeveralPayments": "The payments of this invoice cannot be restated without guessing (one may still await its validation), so this one cannot be undone here. Nothing was changed.",
   "@refusalBankMatchSeveralPayments": {
-    "description": "#2380 Refusal DKB05: other payments are matched to the invoice."
+    "description": "#2380 (0657, 0660) Refusal DKB05: the payments of the invoice cannot be restated without guessing."
+  },
+  "refusalBankMatchUndoLaterFirst": "This is the invoice's first payment: undo its later payments first. Nothing was changed.",
+  "@refusalBankMatchUndoLaterFirst": {
+    "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
@@ -24762,6 +26153,10 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Purchase order",
+  "@reportDocPurchaseOrder": {
+    "description": "#3307 purchase orders"
+  },
   "reportDocSpaceCodes": "Space QR cards",
   "reportDocStatus": "Workspace status",
   "@reportDocStatus": {
@@ -24795,6 +26190,10 @@
   "reportEditorVisual": "Visual",
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportExpectedDelivery": "Expected delivery",
+  "@reportExpectedDelivery": {
+    "description": "#3307 purchase orders"
   },
   "reportFieldGroupBank": "Bank details",
   "@reportFieldGroupBank": {
@@ -26528,6 +27927,14 @@
       }
     }
   },
+  "saftIndustryCodeHelper": "The industry code the Austrian tax office knows the company under.",
+  "@saftIndustryCodeHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftIndustryCodeLabel": "Industry code (Branchenkennzahl)",
+  "@saftIndustryCodeLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
   "saftLedgerIntro": "With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -26535,6 +27942,59 @@
   "saftLedgerTitle": "Include postings?",
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
+  },
+  "saftProfitBasisHelper": "The provision of the Austrian Income Tax Act the books follow, as the SAF-T AT header states it.",
+  "@saftProfitBasisHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftProfitBasisLabel": "How the profit is determined",
+  "@saftProfitBasisLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessHelper": "Whether the company is a small business under § 6 (1) Z 27 UStG, as the SAF-T AT header states it.",
+  "@saftSmallBusinessHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessLabel": "Small business (§ 6 (1) Z 27 UStG)",
+  "@saftSmallBusinessLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessNo": "No",
+  "@saftSmallBusinessNo": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftSmallBusinessYes": "Yes",
+  "@saftSmallBusinessYes": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftStandardAccountsIntro": "Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account's role; check it: not every account of a role belongs on the same standard account.",
+  "@saftStandardAccountsIntro": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsNoSuggestion": "No suggestion: enter the standard account.",
+  "@saftStandardAccountsNoSuggestion": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftStandardAccountsSuggested": "Suggested: {suggestion}. Confirm or change it.",
+  "@saftStandardAccountsSuggested": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export",
+    "placeholders": {
+      "suggestion": {
+        "type": "String"
+      }
+    }
+  },
+  "saftStandardAccountsTitle": "Standard chart accounts",
+  "@saftStandardAccountsTitle": {
+    "description": "#2379 the Austrian standard chart accounts confirmed at export"
+  },
+  "saftTaxNumberHelper": "The number the Austrian tax office gives the company, not its company register number.",
+  "@saftTaxNumberHelper": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
+  },
+  "saftTaxNumberLabel": "Tax number (Steuernummer)",
+  "@saftTaxNumberLabel": {
+    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
   "saftWithPostings": "With postings",
   "@saftWithPostings": {
@@ -27143,6 +28603,11 @@
   "@settingHintPresenceResyncAfterAwayMinutes": {
     "description": "#3098 settings: Setting hint."
   },
+  "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
+  "settingHintPurchaseItemCostMethod": "average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.",
+  "@settingHintPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
+  },
   "settingHintPurchasePaymentChecker": "A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -27423,6 +28888,11 @@
   "settingLabelPresenceResyncAfterAwayMinutes": "Re-read after being away",
   "@settingLabelPresenceResyncAfterAwayMinutes": {
     "description": "#3098 settings: Setting label."
+  },
+  "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
+  "settingLabelPurchaseItemCostMethod": "How an item's unit cost is read in the margins",
+  "@settingLabelPurchaseItemCostMethod": {
+    "description": "#3294 step 4 items on purchase lines"
   },
   "settingLabelPurchasePaymentChecker": "Payments a second person records from (currency units)",
   "@settingLabelPurchasePaymentChecker": {
@@ -27995,6 +29465,64 @@
   "@setupBasicsSaveFailed": {
     "description": "#2870 setup steps: setupBasicsSaveFailed"
   },
+  "setupChoicesAdvanced": "Adjust each area",
+  "@setupChoicesAdvanced": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesBookings": "People and bookings",
+  "@setupChoicesBookings": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesDetails": "Inspect all changes",
+  "@setupChoicesDetails": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesManual": "Your choice is kept when you answer other questions.",
+  "@setupChoicesManual": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesMoney": "Money and administration",
+  "@setupChoicesMoney": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesNeedsDecision": "Your previous choice is kept. Resolve “not sure yet” before applying.",
+  "@setupChoicesNeedsDecision": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesOperations": "Day-to-day operation",
+  "@setupChoicesOperations": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupChoicesQuestionUnknown": "Not sure yet: {question}",
+  "@setupChoicesQuestionUnknown": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "question": {
+        "type": "String"
+      }
+    }
+  },
+  "setupChoicesReset": "Use suggested levels",
+  "@setupChoicesReset": {
+    "description": "Restore recommended process levels instead of manual overrides."
+  },
+  "setupChoicesSaving": "Saving…",
+  "@setupChoicesSaving": {
+    "description": "Visible while applying setup choices and saving the journey."
+  },
+  "setupChoicesSummary": "Settings that will change: {count}",
+  "@setupChoicesSummary": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupChoicesUnsaved": "Preview only — nothing has been applied.",
+  "@setupChoicesUnsaved": {
+    "description": "Workspace configuration guidance and status."
+  },
   "setupDraftChanged": "Changed by someone else while you were editing.",
   "@setupDraftChanged": {
     "description": "#2869 setup drafts: another configurer changed the setup step's draft meanwhile"
@@ -28359,6 +29887,10 @@
   "setupGrowVatUsualTitle": "Your country's usual rates",
   "@setupGrowVatUsualTitle": {
     "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
+  },
+  "setupGuidanceTitle": "Guidance and checks",
+  "@setupGuidanceTitle": {
+    "description": "Workspace configuration guidance and status."
   },
   "setupGuideAddIt": "Add it",
   "@setupGuideAddIt": {
@@ -28736,7 +30268,7 @@
       }
     }
   },
-  "setupLevelsIntro": "Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.",
+  "setupLevelsIntro": "Tell us how your workspace works. Review what will change before applying your choices.",
   "@setupLevelsIntro": {
     "description": "#2868 setup levels: setupLevelsIntro"
   },
@@ -28901,6 +30433,19 @@
   "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
   "@setupNewMembersSaveFailed": {
     "description": "#2871 setup run steps: setupNewMembersSaveFailed"
+  },
+  "setupNextIndependent": "You can do this while the earlier milestone is waiting.",
+  "@setupNextIndependent": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupNextNamed": "Next: {step}",
+  "@setupNextNamed": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
   },
   "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
   "@setupNotificationsAudience": {
@@ -29084,6 +30629,39 @@
   "setupOnlineTestUnverified": "These keys do not show whether they are test or live keys. Check them in the provider's dashboard.",
   "@setupOnlineTestUnverified": {
     "description": "#2871 setup run steps: setupOnlineTestUnverified"
+  },
+  "setupOutcomeProgress": "Progress by outcome",
+  "@setupOutcomeProgress": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewChoose": "Choose what your workspace needs to see its setup plan.",
+  "@setupOverviewChoose": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewReady": "Your chosen goal is configured. You can review or change it here at any time.",
+  "@setupOverviewReady": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewRemaining": "Required tasks remaining: {count}",
+  "@setupOverviewRemaining": {
+    "description": "Workspace configuration guidance and status.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupOverviewTitle": "Workspace status",
+  "@setupOverviewTitle": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewUnchecked": "Some checks are unavailable. Refresh the status before considering setup complete.",
+  "@setupOverviewUnchecked": {
+    "description": "Workspace configuration guidance and status."
+  },
+  "setupOverviewWaiting": "This milestone is waiting. The tasks below explain who can unblock it.",
+  "@setupOverviewWaiting": {
+    "description": "Workspace configuration guidance and status."
   },
   "setupPaymentsPreviewEmpty": "Members see no payment instructions until you fill one in.",
   "@setupPaymentsPreviewEmpty": {
@@ -29386,6 +30964,10 @@
         "type": "String"
       }
     }
+  },
+  "setupTaskSaved": "Status is based on saved settings. Opening a task does not complete it.",
+  "@setupTaskSaved": {
+    "description": "Workspace configuration guidance and status."
   },
   "shellBarHiddenAnnounce": "Navigation bar hidden",
   "@shellBarHiddenAnnounce": {
@@ -35729,5 +37311,64 @@
   "workspaceXmlImportSuccess": "Workspace imported.",
   "@workspaceXmlImportSuccess": {
     "description": "Snackbar after a successful XML import (#165)"
+  },
+  "xeroInvoiceAccountCode": "Sales account code",
+  "@xeroInvoiceAccountCode": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsIntro": "Xero imports these invoices as drafts: approve them in Xero. The sales account and the tax rates are your organisation’s own, so copy their names from Xero.",
+  "@xeroInvoiceAccountsIntro": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceAccountsTitle": "Xero export",
+  "@xeroInvoiceAccountsTitle": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
+  "@xeroInvoiceCreditNotesLeftOut": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "xeroInvoiceDateOrder": "Date order in your organisation",
+  "@xeroInvoiceDateOrder": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceDayFirst": "Day first (31/12/2026)",
+  "@xeroInvoiceDayFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceImportTaxExclusive": "In Xero’s import, choose “Tax exclusive” for the amounts: the file holds each rate’s net and the VAT the invoice recorded.",
+  "@xeroInvoiceImportTaxExclusive": {
+    "description": "#2372 - the instruction for the Xero import screen"
+  },
+  "xeroInvoiceMonthFirst": "Month first (12/31/2026)",
+  "@xeroInvoiceMonthFirst": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedAccount": "Enter the sales account code.",
+  "@xeroInvoiceRefusedAccount": {
+    "description": "#2372 - the Xero sales-invoice CSV export"
+  },
+  "xeroInvoiceRefusedTaxType": "Name the Xero tax rate for {rate}.",
+  "@xeroInvoiceRefusedTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "xeroInvoiceTaxType": "Xero tax rate for {rate}",
+  "@xeroInvoiceTaxType": {
+    "description": "#2372 - the Xero sales-invoice CSV export",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
   }
 }

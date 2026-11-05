@@ -1,0 +1,17 @@
+{
+  "purchaseOrderMailText": "Bonjour,\n\nVeuillez trouver ci-joint notre bon de commande {reference}.\n\nCordialement,\n{space}",
+  "purchaseOrderSendEmail": "Envoyer par e-mail",
+  "purchaseOrderSentTo": "Envoyée à {recipient}",
+  "purchaseOrderSendRefused": "L’e-mail a été refusé : {reason}. La commande reste en brouillon.",
+  "purchaseOrderSendUnconfirmed": "Aucune réponse confirmée. Vérifiez auprès du fournisseur avant de renvoyer.",
+  "purchaseOrderSendAwaits": "Un e-mail à {recipient} n’a pas de résultat confirmé. Est-il arrivé ?",
+  "purchaseOrderSendArrived": "Il est arrivé",
+  "purchaseOrderSendLost": "Il n’est pas arrivé",
+  "purchaseOrderMailSettings": "Envoi par e-mail",
+  "purchaseOrderMailSender": "Adresse d’expédition (un domaine vérifié chez Resend)",
+  "purchaseOrderMailSenderName": "Nom de l’expéditeur",
+  "purchaseOrderMailKey": "Clé d’API Resend",
+  "purchaseOrderMailKeyKept": "Une clé est enregistrée. Laissez vide pour la garder ; elle n’est plus jamais affichée.",
+  "purchaseOrderMailInvalid": "Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API",
+  "purchaseOrderMailSave": "Enregistrer"
+}

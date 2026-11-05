@@ -64,6 +64,10 @@ enum MemberOrigin {
   /// says when, this says how.
   delegated,
 
+  /// #3308 — a customer record written by a guest pass sold at the desk:
+  /// no account, no subscription, no role; the invoice's buyer.
+  guest,
+
   /// Not a value this build knows.
   unknown;
 

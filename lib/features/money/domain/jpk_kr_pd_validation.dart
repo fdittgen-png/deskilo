@@ -52,7 +52,7 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
       'Income-tax reconciliation K_1–K_8',
     ];
   }
-  void requiredText(String name, String value) {
+  void needFact(String name, String value) {
     if (value.trim().isEmpty) gaps.add(name);
   }
 
@@ -68,18 +68,18 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
   if (facts.addressCountry != 'PL') {
     gaps.add('Unsupported Polish entity address country');
   }
-  requiredText('NIP', facts.nip);
+  needFact('NIP', facts.nip);
   if (!RegExp(r'^[1-9]((\d[1-9])|([1-9]\d))\d{7}$').hasMatch(facts.nip)) {
     gaps.add('NIP must have 10 digits');
   }
-  requiredText('Legal name', facts.legalName);
-  requiredText('Voivodeship', facts.voivodeship);
-  requiredText('County', facts.county);
-  requiredText('Municipality', facts.municipality);
-  requiredText('Building number', facts.buildingNumber);
-  requiredText('City', facts.city);
-  requiredText('Postal code', facts.postalCode);
-  requiredText('Tax office code', facts.taxOfficeCode);
+  needFact('Legal name', facts.legalName);
+  needFact('Voivodeship', facts.voivodeship);
+  needFact('County', facts.county);
+  needFact('Municipality', facts.municipality);
+  needFact('Building number', facts.buildingNumber);
+  needFact('City', facts.city);
+  needFact('Postal code', facts.postalCode);
+  needFact('Tax office code', facts.taxOfficeCode);
   for (final field in <(String, String, int)>[
     ('Legal name', facts.legalName, 240),
     ('Voivodeship', facts.voivodeship, 36),
@@ -140,7 +140,7 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
     }
   }
   for (final account in accounts) {
-    requiredText('Account name $account', r.accountNames[account] ?? '');
+    needFact('Account name $account', r.accountNames[account] ?? '');
     if (account.length > 256 || (r.accountNames[account]?.length ?? 0) > 256) {
       gaps.add('Account identifier or name exceeds schema length $account');
     }
@@ -182,11 +182,11 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
         gaps.add('Closing balance mismatch $account');
       }
     }
-    requiredText('Account parent $account', detail?.parent ?? '');
+    needFact('Account parent $account', detail?.parent ?? '');
     if ((detail?.parent.length ?? 0) > 256) {
       gaps.add('Account parent exceeds schema length $account');
     }
-    requiredText(
+    needFact(
       'Polish account marker $account',
       detail?.reportingMarker ?? '',
     );
@@ -272,15 +272,15 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
             0) {
       gaps.add('Journal chronology $name');
     }
-    requiredText('Journal number $name', entry.journalNumber);
+    needFact('Journal number $name', entry.journalNumber);
     if (!numbers.add('${entry.journalName}\u0000${entry.journalNumber}')) {
       gaps.add('Duplicate journal number ${entry.journalNumber}');
     }
-    requiredText('Journal name $name', entry.journalName);
-    requiredText('Document number $name', posting.documentNumber);
-    requiredText('Document type $name', entry.documentType);
-    requiredText('Responsible person $name', entry.responsiblePerson);
-    requiredText('Journal description $name', entry.description);
+    needFact('Journal name $name', entry.journalName);
+    needFact('Document number $name', posting.documentNumber);
+    needFact('Document type $name', entry.documentType);
+    needFact('Responsible person $name', entry.responsiblePerson);
+    needFact('Journal description $name', entry.description);
     if (entry.lineDescriptions.length != posting.lines.length ||
         entry.lineDescriptions.any((line) => line.trim().isEmpty)) {
       gaps.add('Line descriptions $name');

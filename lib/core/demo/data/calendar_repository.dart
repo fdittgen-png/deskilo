@@ -24,11 +24,19 @@ class FakeCalendarRepository implements CalendarRepository {
   final List<DataAccessEntry> log = [];
   Map<String, dynamic> export = const {};
   bool erased = false;
+
+  /// #3291 — rebuilds [items] from the space's live stores before a read,
+  /// as calendar_items reads the tables themselves; null keeps [items].
+  void Function()? beforeRead;
+
+  /// #3278 — what the server answers an erasure with, for refusal tests.
+  Exception? eraseFailure;
   Exception? failure;
 
   @override
   Future<CalendarPage> fetchItems(String workspaceId, CalendarQuery query) async {
     if (failure != null) throw failure!;
+    beforeRead?.call();
     queries.add(query);
     final kinds = query.kinds;
     final subject = query.memberId ?? actor?.call();
@@ -59,6 +67,7 @@ class FakeCalendarRepository implements CalendarRepository {
 
   @override
   Future<void> eraseMyMembership(String workspaceId) async {
+    if (eraseFailure != null) throw eraseFailure!;
     erased = true;
   }
 }

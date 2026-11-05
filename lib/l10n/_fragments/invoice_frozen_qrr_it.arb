@@ -1,0 +1,3 @@
+{
+  "invoiceGapQrIbanWithoutReference": "Questa fattura si paga su un QR-IBAN, che richiede il riferimento QR fissato all'emissione, e questa è stata emessa prima che tali riferimenti esistessero. Emetta una fattura sostitutiva o indichi l'IBAN ordinario come conto di pagamento."
+}

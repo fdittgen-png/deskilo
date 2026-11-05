@@ -49,6 +49,12 @@ enum KpiDateBasis {
   /// The day a contract occurrence falls due.
   occurrenceDue,
 
+  /// #3294 — the day an invoice falls due, as its maturity froze it.
+  invoiceDue,
+
+  /// #3294 — the day a supplier payable falls due.
+  payableDue,
+
   /// The periods of confirmed book values.
   bookValuePeriod,
 
@@ -65,6 +71,8 @@ enum KpiDateBasis {
     paymentReportedPaid => 'payment_reported_paid',
     documentDate => 'document_date',
     occurrenceDue => 'occurrence_due',
+    invoiceDue => 'invoice_due',
+    payableDue => 'payable_due',
     bookValuePeriod => 'book_value_period',
     periodEnd => 'period_end',
     currentState => 'current_state',

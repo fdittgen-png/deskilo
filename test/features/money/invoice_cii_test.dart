@@ -244,6 +244,8 @@ void main() {
         'ApplicableHeaderTradeSettlement');
 
     expect(order, [
+      // BT-83 (#2380): CII places the payment reference before the currency.
+      'PaymentReference',
       'InvoiceCurrencyCode',
       'SpecifiedTradeSettlementPaymentMeans',
       'ApplicableTradeTax',

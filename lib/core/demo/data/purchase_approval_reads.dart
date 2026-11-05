@@ -8,14 +8,20 @@ import 'purchase_repository.dart';
 /// The Demo approver reviews bills submitted by another Demo member. Member
 /// receipts belong to expense validation, not this decision flow.
 class FakePurchaseApprovalReads implements PurchaseApprovalReads {
-  FakePurchaseApprovalReads(this.purchases, {this.thresholdUnits});
+  FakePurchaseApprovalReads(this.purchases, {
+    this.thresholdUnits,
+    this.allowedWorkspaceId = 'ws-1',
+    this.spaceCurrency = DemoPurchaseExchangeRates.spaceCurrency,
+  });
   final FakePurchaseRepository purchases;
   final Future<int> Function(String workspaceId)? thresholdUnits;
+  final String allowedWorkspaceId;
+  final String spaceCurrency;
   static const _cursorDate = '2000-01-01T00:00:00Z';
   static const _pageSize = 100;
 
   Future<List<PurchaseSummary>> _eligible(String workspaceId) async {
-    if (workspaceId != 'ws-1') {
+    if (workspaceId != allowedWorkspaceId) {
       throw StateError('purchase approvals are not available');
     }
     final rows = await purchases.fetchPurchases(workspaceId);
@@ -79,7 +85,7 @@ class FakePurchaseApprovalReads implements PurchaseApprovalReads {
       dueOn: original.dueOn,
     );
     final currency = original.summary.currency;
-    const space = DemoPurchaseExchangeRates.spaceCurrency;
+    final space = spaceCurrency;
     final held = currency == space
         ? null
         : await purchases.fetchExchangeRate(workspaceId, purchaseId);

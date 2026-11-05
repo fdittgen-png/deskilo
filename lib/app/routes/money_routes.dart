@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
+import '../../features/money/presentation/screens/guest_passes_screen.dart';
 import '../../features/money/presentation/screens/invoice_register_screen.dart';
 import '../../features/money/presentation/screens/invoices_screen.dart';
 import '../../features/money/presentation/screens/invoicing_wizard_screen.dart';
@@ -18,6 +19,7 @@ import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
 import '../../features/money/presentation/screens/payment_config_screen.dart';
 import '../../features/money/presentation/screens/purchase_approvals_screen.dart';
+import '../../features/money/presentation/screens/purchase_orders_screen.dart';
 import '../../features/money/presentation/screens/recorded_payments_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
@@ -183,6 +185,19 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         to: state.uri.queryParameters['to'],
       ),
     ),
+    // The original short link goes through the canonical route's guards.
+    GoRoute(path: '/suppliers', redirect: (context, state) => '/money/suppliers'),
+    // #3308 — passes sold at the desk to guests who are not members.
+    GoRoute(
+      path: '/money/guest-passes',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.guestPasses],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const GuestPassesScreen(),
+    ),
     // #3070 — the suppliers as a screen: list, search, a deep link.
     GoRoute(
       path: '/money/suppliers',
@@ -193,6 +208,17 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const SuppliersScreen(),
+    ),
+    // #3307 — the space's orders to its suppliers.
+    GoRoute(
+      path: '/money/purchase-orders',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.purchases, WorkspaceFeature.purchaseOrders],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const PurchaseOrdersScreen(),
     ),
   ];
 }

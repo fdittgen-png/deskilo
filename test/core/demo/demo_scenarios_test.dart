@@ -17,12 +17,14 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
-import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
+import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -31,6 +33,8 @@ import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_seed.dart';
@@ -42,10 +46,12 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
+import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -54,6 +60,8 @@ import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/demo_free_seat.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -203,6 +211,46 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'visits paid to '
     'other spaces as a guest',
     (w) => w.f.guests.visits.isNotEmpty,
+  ),
+  // #3308 — a London day pass sold at the desk: the guest's place is booked
+  // and the pass invoiced to the guest, in pounds.
+  WorkspaceFeature.guestPasses: _action(
+    _owner,
+    'a day pass sold to a guest in London',
+    (w) async {
+      final london = w.f.london;
+      final passes = FakeGuestPassRepository(
+        workspaceId: demoLondonSpaceId,
+        currency: 'GBP',
+        reservations: london.reservations,
+        workspaces: london.workspaces,
+        money: london.money,
+        now: () => w.now,
+        maySell: () => true,
+        mayPrice: () => true,
+        floorPlanSeats: () => london.floorPlan.seats,
+        offers: const [
+          GuestPassOffer(id: 'p', name: 'Day pass', unit: GuestPassUnit.day, priceCents: 2500),
+        ],
+      );
+      final offer = (await passes.offers(demoLondonSpaceId)).single;
+      final slot = freeSeatForPass(london.floorPlan.seats, london.reservations.reservations,
+          DateTime(w.now.year, w.now.month, w.now.day + 20), startMinutes: 9 * 60, endMinutes: 17 * 60);
+      final sale = await passes.sell(
+        demoLondonSpaceId,
+        draft: GuestPassDraft(
+          offer: offer,
+          seatId: slot.seatId,
+          day: slot.day,
+          startMinutes: 9 * 60,
+          endMinutes: 17 * 60,
+        ),
+        guest: const {'first_name': 'Gwen', 'last_name': 'Guest'},
+        requestId: 'scenario-pass',
+      );
+      return sale.reservationIds.length == 1 &&
+          london.money.invoices.any((i) => i.id == sale.invoiceId && i.currency == 'GBP' && i.totalCents == 2500);
+    },
   ),
   // ── workspaceAccess / physicalAccess ─────────────────────────────────
   WorkspaceFeature.kioskMode: _state(
@@ -617,7 +665,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'payment reported as made',
     (w) async {
       final repo = seedDemoBankStatements(w.f.money, w.now);
-      final statement = (await repo.fetchStatements('ws-1')).single;
+      final statement = (await repo.fetchStatements('ws-1'))
+          .singleWhere((s) => s.statementRef == 'DEMO-NTFCTN-1');
       final lines = await repo.fetchLines(statement.id);
       final open = openInvoices(w.f.money.invoices, w.f.money.invoiceMatchesStore);
       final byReference = BankWorkList(lines, open, windowDays: 60).referenceBatch;
@@ -735,6 +784,26 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
           'demo-bill-licence-chf',
         ))?.currency ==
         'CHF',
+  ),
+  // #3307 — the orders the space sent its suppliers, one received.
+  WorkspaceFeature.purchaseOrders: _state(
+    _owner,
+    'orders to the suppliers: '
+    'a draft, one awaited, one received',
+    (w) async {
+      final orders = FakePurchaseOrderRepository(
+        suppliers: () => w.purchasing.suppliers.suppliers,
+        services: () => w.f.money.services,
+        now: () => w.now,
+      );
+      seedDemoPurchaseOrders(orders, w.now);
+      final states = {for (final o in await orders.fetchOrders('ws-1')) o.state};
+      return states.containsAll({
+        PurchaseOrderState.draft,
+        PurchaseOrderState.sent,
+        PurchaseOrderState.received,
+      });
+    },
   ),
   WorkspaceFeature.purchaseAnalytics: _state(
     _owner,

@@ -12,8 +12,10 @@ import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_level_demo.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_levels_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,6 +55,16 @@ Future<void> _pump(
     ],
   );
   await tester.pumpAndSettle();
+  for (final (key, child) in [
+    ('setup-questions-money', 'setup-question-issue_invoices'),
+    ('setup-questions-operations', 'setup-question-door_tablet'),
+    ('setup-choices-advanced', 'setup-level-bookings'),
+  ]) {
+    if (find.byKey(ValueKey(child)).evaluate().isEmpty) {
+      await tester.tap(find.byKey(ValueKey(key)));
+      await tester.pumpAndSettle();
+    }
+  }
 }
 
 Future<void> _tap(WidgetTester tester, String key) async {
@@ -74,6 +86,42 @@ bool _answer(WidgetTester tester, String question) => tester
     .value;
 
 void main() {
+  testWidgets(
+    'opening old saved choices does not undo newer workspace settings',
+    (tester) async {
+      final local = FakeLocalSetupRepository();
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      final current = currentSetupLevels(
+        resolveEnabledFeatures(workspace.workspaces.first.featureFlags),
+      );
+      expect(current[SetupProcess.bookings], isNot('resources'));
+      await local.saveSetupJourney(
+        'ws-1',
+        answers: const SetupAnswers(),
+        levels: {SetupProcess.bookings: 'resources'},
+        expectedVersion: null,
+        requestId: 'older-choice',
+      );
+      await _pump(tester, local, workspace);
+      expect(
+        tester
+            .widget<DropdownButton<String>>(
+              find.byKey(const ValueKey('setup-level-bookings')),
+            )
+            .value,
+        current[SetupProcess.bookings],
+      );
+      expect(
+        tester
+            .widget<FilledButton>(
+              find.byKey(const ValueKey('setup-levels-apply')),
+            )
+            .onPressed,
+        isNull,
+      );
+    },
+  );
+
   testWidgets('applying remembers the answers and the levels, and the '
       'screen opens with them again', (tester) async {
     final local = FakeLocalSetupRepository();
@@ -154,6 +202,7 @@ void main() {
       FakeLocalSetupRepository(),
       FakeWorkspaceRepository.withWorkspace(),
     );
+    await _tap(tester, 'setup-choice-guidance');
     final card = find.byKey(const ValueKey('setup-obligations'));
     expect(card, findsOneWidget);
     expect(

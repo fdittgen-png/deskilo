@@ -27,6 +27,7 @@ import 'jpk_kr_pd_facts.dart';
 import 'jpk_kr_pd_validation.dart';
 import 'jpk_kr_pd_writer.dart';
 import 'posting.dart';
+import 'saf_t_financial_at.dart';
 import 'saf_t_financial_ro.dart';
 import 'saf_t_financial_xml.dart';
 import 'supplier.dart';
@@ -116,6 +117,22 @@ enum SafTFinancialProfile {
     taxType: 'VAT',
     taxDescription: 'VAT',
     standardAccountRequired: false,
+  ),
+
+  /// #2379 — the BMF's SAF-T AT 1.01 (BAO §§ 131, 132, decree
+  /// BMF-010102/0002-IV/2/2009): the OECD 1.0 tree in its own namespace,
+  /// every account on the Austrian standard chart (österreichischer
+  /// Einheitskontenrahmen), written by saf_t_financial_at.dart.
+  austria(
+    formatId: 'saft_at',
+    country: 'AT',
+    namespace: 'urn:OECD:StandardAuditFile-Taxation:AT_1.01',
+    version: '1.01',
+    // Not a fixed value in Austria: the profit determination the request
+    // states (SafTFinancialRequest.profitBasis).
+    accountingBasis: '',
+    taxType: 'USt',
+    taxDescription: 'Umsatzsteuer',
   );
 
   const SafTFinancialProfile({
@@ -157,6 +174,9 @@ enum SafTFinancialProfile {
 
   /// #2379 — Romania's D406 departs from the OECD tree in its own writer.
   bool get romaniaShape => this == SafTFinancialProfile.romania;
+
+  /// #2379 — Austria's file is the OECD 1.0 tree, in its own writer.
+  bool get austriaShape => this == SafTFinancialProfile.austria;
 
   /// Whether the company's header names its bank account (Denmark,
   /// Romania).
@@ -284,6 +304,11 @@ class SafTFinancialRequest {
     required this.reference,
     this.companyIban = '',
     this.polishFacts,
+    this.profitBasis = '',
+    this.industryCode = '',
+    this.taxNumber = '',
+    this.smallBusiness,
+    this.confirmedStandards = const {},
   });
 
   final SafTFinancialProfile profile;
@@ -321,6 +346,26 @@ class SafTFinancialRequest {
 
   /// Explicit JPK facts; absent inputs are refused rather than invented.
   final JpkKrPdFacts? polishFacts;
+
+  /// #2379 — Austria: how the profit is determined (`TaxAccountingBasis`:
+  /// § 4 (1), § 4 (3) or § 5 EStG …), the industry code (`TaxEntity`,
+  /// Branchenkennzahl) and the tax office's Steuernummer
+  /// (`TaxID/TaxRegistrationNumber`, not the Firmenbuch number of
+  /// [company]), which its header requires; and whether the company is a
+  /// small business under § 6 (1) Z 27 UStG (`Kleinunternehmer_AT`): null
+  /// when nobody stated it, which refuses the file (a VAT exemption is not
+  /// that status).
+  final String profitBasis;
+  final String industryCode;
+  final String taxNumber;
+  final bool? smallBusiness;
+
+  /// #2379 — Austria: the standard chart account the person confirmed for
+  /// each book account, by its code. The reference rows of a role are only
+  /// a suggestion (one role's accounts need not all sit on one standard
+  /// account: a foreign supplier is not 3300, nor every expense 5700); an
+  /// account nobody confirmed refuses the file, named.
+  final Map<String, AccountMapValue> confirmedStandards;
 }
 
 /// What a missing fact is about.
@@ -401,5 +446,8 @@ SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) {
   }
   return (request.profile.romaniaShape
           ? SafTRomaniaXml(request)
-          : SafTFinancialXml(request)).write();
+          : request.profile.austriaShape
+          ? SafTAustriaXml(request)
+          : SafTFinancialXml(request))
+      .write();
 }

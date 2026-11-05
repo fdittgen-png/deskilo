@@ -38,9 +38,12 @@ select set_config('deskilo.gs.seat',
 select set_config('deskilo.gs.day', ((now() at time zone 'Europe/Paris')::date + 7)::text, true);
 
 reset role;
--- Deterministic fixture hours, including weekends; no special booking rights.
+-- Deterministic fixture hours, including weekends. The members hold the one
+-- right a booking needs (#3269): the owner grants it, as the setup step says.
 update public.workspaces set booking_rules = booking_rules ||
-  '{"open_weekdays":[1,2,3,4,5,6,7],"granularity":"half_day","work_start_minutes":480,"half_boundary_minutes":720,"work_end_minutes":1080}'
+  '{"open_weekdays":[1,2,3,4,5,6,7],"granularity":"half_day","work_start_minutes":480,"half_boundary_minutes":720,"work_end_minutes":1080}',
+  role_permissions = jsonb_set(coalesce(role_permissions, '{}'::jsonb), '{member}',
+    coalesce(role_permissions->'member', '[]'::jsonb) || '["makeReservations"]')
  where id = current_setting('deskilo.gs.ws')::uuid;
 
 create function pg_temp.book(p_day_offset integer) returns uuid language sql as $$

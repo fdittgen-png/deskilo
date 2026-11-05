@@ -41,15 +41,17 @@ begin
   -- 12:00–17:00 and 08:00–17:00 in the workspace's own timezone.
   -- Every NOT NULL column without a default: name, country_code,
   -- currency_code, timezone, created_by.
+  -- #3269: a member books only with the right; the fixture's owner grants it.
   insert into public.workspaces (name, country_code, currency_code, timezone,
-                                 created_by, booking_rules)
+                                 created_by, booking_rules, role_permissions)
   values ('Convert', 'FR', 'EUR', 'Europe/Paris', u_owner,
           jsonb_build_object(
             'granularity', 'half_day',
             'open_weekdays', jsonb_build_array(1,2,3,4,5),
             'max_series_days', 180,
             'advance_horizon_days', 365,
-            'allow_past_bookings', false))
+            'allow_past_bookings', false),
+          '{"member": ["makeReservations"]}'::jsonb)
   returning id into ws;
 
   -- `members` has no display_name, and `status` defaults to 'active'

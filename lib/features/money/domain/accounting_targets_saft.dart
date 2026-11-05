@@ -50,6 +50,19 @@ const _saftRoFormat = AccountingFormat(
   needsLegalId: true,
 );
 
+/// #2379 — the BMF's SAF-T AT 1.01 (the OECD 1.0 tree), read against the
+/// published schema in CI; refused while an account has no account of the
+/// Austrian standard chart, or the header no profit basis, industry code or
+/// house number. An exchange file for the tax audit's data provision (BAO
+/// §§ 131, 132), handed over on request, not a return.
+const _saftAtFormat = AccountingFormat(
+  id: 'saft_at',
+  claim: FormatClaim.exchange,
+  extension: 'xml',
+  // needsLegalId stays off: the Steuernummer is asked at export, and a
+  // sole proprietor has no company-register number.
+);
+
 /// The OECD 2.0 tree with the ledger, no national restriction: what an
 /// auditor's or an accountant's software reads anywhere.
 const _saftOecdFullFormat = AccountingFormat(
@@ -120,6 +133,19 @@ const List<AccountingTarget> safTFinancialTargets = [
     operations: _ledgerOperations,
     taxCodeModel: TaxCodeModel.perRate,
     format: _saftRoFormat,
+  ),
+  AccountingTarget(
+    id: 'saft_at',
+    vendor: 'BMF',
+    authority: true,
+    product: 'SAF-T AT',
+    edition: '1.01',
+    countries: {'AT'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: _ledgerOperations,
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _saftAtFormat,
   ),
   // Denmark (Bogføringsloven 2022): the duty is to keep the books in a
   // registered digital bookkeeping system; DesKilo is not one. The two

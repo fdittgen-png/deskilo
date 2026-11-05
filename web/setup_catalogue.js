@@ -606,6 +606,14 @@ window.SETUP_REGISTRY={
   [
    "mtdSubmission",
    false
+  ],
+  [
+   "purchaseOrders",
+   false
+  ],
+  [
+   "guestPasses",
+   false
   ]
  ],
  "requires": {
@@ -692,11 +700,16 @@ window.SETUP_REGISTRY={
   "foreignCurrencyPurchases": "purchases",
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
-  "mtdSubmission": "vatDeclarations"
+  "mtdSubmission": "vatDeclarations",
+  "purchaseOrders": "purchases",
+  "guestPasses": "invoicing"
  },
  "availableIn": {
   "recapitulativeStatement": [
    "@eu"
+  ],
+  "mtdSubmission": [
+   "GB"
   ]
  },
  "permissions": [
@@ -733,7 +746,8 @@ window.SETUP_REGISTRY={
   "viewDocuments",
   "managePurchases",
   "recordOutgoingPayments",
-  "manageLease"
+  "manageLease",
+  "managePrivacy"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -770,7 +784,8 @@ window.SETUP_REGISTRY={
    "viewDocuments",
    "managePurchases",
    "recordOutgoingPayments",
-   "manageLease"
+   "manageLease",
+   "managePrivacy"
   ],
   "admin": [
    "manageMembers",
@@ -1090,7 +1105,8 @@ window.SETUP_PROCESSES=[
      "memberPage",
      "memberOrigin",
      "memberEnvironments",
-     "guestParticipation"
+     "guestParticipation",
+     "guestPasses"
     ]
    },
    {
@@ -1265,7 +1281,8 @@ window.SETUP_PROCESSES=[
      "premisesLease",
      "assetRegister",
      "purchaseAnalytics",
-     "foreignCurrencyPurchases"
+     "foreignCurrencyPurchases",
+     "purchaseOrders"
     ]
    },
    {
@@ -1578,7 +1595,8 @@ window.SETUP_LEVELS={
       "reportDesigner",
       "invoicingWizard",
       "settlementFold",
-      "carnets"
+      "carnets",
+      "guestPasses"
      ],
      "needs": {}
     }
@@ -1673,7 +1691,8 @@ window.SETUP_LEVELS={
       "premisesLease",
       "assetRegister",
       "purchaseAnalytics",
-      "foreignCurrencyPurchases"
+      "foreignCurrencyPurchases",
+      "purchaseOrders"
      ],
      "needs": {
       "money": "invoices"

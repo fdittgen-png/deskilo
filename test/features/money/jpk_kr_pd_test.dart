@@ -246,4 +246,14 @@ void main() {
       File('$dir/jpk_kr_pl.xml').writeAsStringSync(result.xml);
     }
   });
+
+  test('the same book gives the same bytes, pinned by a golden', () {
+    String xml() =>
+        (buildJpkKrPd(jpkSampleRequest(jpkSampleFacts())) as JpkKrPdFile).xml;
+    final golden = File('test/features/money/goldens/jpk_kr_pl.xml');
+    if (Platform.environment['UPDATE_SAFT_GOLDENS'] == '1') {
+      golden.writeAsStringSync(xml());
+    }
+    expect(xml(), golden.readAsStringSync());
+  });
 }

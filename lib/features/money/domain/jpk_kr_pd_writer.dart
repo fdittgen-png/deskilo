@@ -5,6 +5,7 @@
 // or acceptance by the authority.
 import 'package:xml/xml.dart';
 
+import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import 'jpk_kr_pd_validation.dart';
 import 'posting.dart';
@@ -35,10 +36,9 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
   final b = XmlBuilder();
   void tag(String name, Object value, {String? namespace}) =>
       b.element(name, namespace: namespace, nest: () => b.text('$value'));
-  String money(BigInt minor) {
-    final n = minor.abs();
-    return '${minor.isNegative ? '-' : ''}${n ~/ BigInt.from(100)}.${(n % BigInt.from(100)).toString().padLeft(2, '0')}';
-  }
+  // The sums are kept exact in BigInt; a book's year fits an int, which
+  // the shared file formatter takes.
+  String amount(BigInt minor) => minorToText(minor.toInt(), r.currency);
 
   BigInt total(Iterable<Posting> ps, String account, {required bool debit}) {
     var sum = BigInt.zero;
@@ -163,14 +163,14 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
                 tag('S_1', account);
                 tag('S_2', r.accountNames[account]!);
                 tag('S_3', facts.accountFacts[account]!.parent);
-                tag('S_4', money(BigInt.from(detail.openingDebit.minor)));
-                tag('S_5', money(BigInt.from(detail.openingCredit.minor)));
-                tag('S_6', money(debit));
-                tag('S_7', money(credit));
-                tag('S_8', money(debit));
-                tag('S_9', money(credit));
-                tag('S_10', money(BigInt.from(detail.closingDebit.minor)));
-                tag('S_11', money(BigInt.from(detail.closingCredit.minor)));
+                tag('S_4', amount(BigInt.from(detail.openingDebit.minor)));
+                tag('S_5', amount(BigInt.from(detail.openingCredit.minor)));
+                tag('S_6', amount(debit));
+                tag('S_7', amount(credit));
+                tag('S_8', amount(debit));
+                tag('S_9', amount(credit));
+                tag('S_10', amount(BigInt.from(detail.closingDebit.minor)));
+                tag('S_11', amount(BigInt.from(detail.closingCredit.minor)));
                 tag('S_12_1', facts.accountFacts[account]!.reportingMarker);
               },
             );
@@ -197,7 +197,7 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
             tag('D_8', isoDay(entry.bookingDate));
             tag('D_9', entry.responsiblePerson);
             tag('D_10', entry.description);
-            tag('D_11', money(documentAmount));
+            tag('D_11', amount(documentAmount));
             if (entry.ksefNumber != null && entry.ksefNumber!.isNotEmpty) {
               tag('D_12', entry.ksefNumber!);
             }
@@ -213,9 +213,9 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
                   tag('Z_2', entry.lineDescriptions[j]);
                   tag('Z_3', line.accountCode);
                   if (line.debit.minor != 0) {
-                    tag('Z_4', money(BigInt.from(line.debit.minor)));
+                    tag('Z_4', amount(BigInt.from(line.debit.minor)));
                   } else {
-                    tag('Z_7', money(BigInt.from(line.credit.minor)));
+                    tag('Z_7', amount(BigInt.from(line.credit.minor)));
                   }
                 },
               );
@@ -228,10 +228,10 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
           'Ctrl',
           nest: () {
             tag('C_1', r.postings.length);
-            tag('C_2', money(journalTotal));
+            tag('C_2', amount(journalTotal));
             tag('C_3', lines);
-            tag('C_4', money(debitTotal));
-            tag('C_5', money(creditTotal));
+            tag('C_4', amount(debitTotal));
+            tag('C_5', amount(creditTotal));
           },
         )
         ..element(
@@ -240,7 +240,7 @@ JpkKrPdResult buildJpkKrPd(JpkKrPdRequest r) {
             for (var i = 0; i < 8; i++) {
               tag(
                 'K_${i + 1}',
-                money(BigInt.from(facts.incomeTaxAdjustments[i].minor)),
+                amount(BigInt.from(facts.incomeTaxAdjustments[i].minor)),
               );
             }
           },

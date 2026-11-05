@@ -1,0 +1,59 @@
+{
+  "format": "deskilo.recovery",
+  "version": 1,
+  "status": "ready",
+  "scope": "disposable_local_only",
+  "cli": "2.118.0",
+  "limitations": [
+    "raw_unicode_storage_keys_unsupported",
+    "email_delivery_not_exercised"
+  ],
+  "mcp": "not_exercised",
+  "hosted": "not_exercised",
+  "checks": {
+    "source_start": "pass",
+    "database_regressions": "pass",
+    "registered_users": "pass",
+    "source_native_export": "pass",
+    "existing_database_drill": "pass",
+    "database_restore": "pass",
+    "storage_restore": "pass",
+    "target_native_auth_and_reads": "pass",
+    "storage_damage_detection": "pass"
+  },
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.9.6",
+    "images": {
+      "db": "public.ecr.aws/supabase/postgres:17.6.1.171",
+      "auth": "public.ecr.aws/supabase/gotrue:v2.197.0",
+      "storage": "public.ecr.aws/supabase/storage-api:v1.77.0"
+    },
+    "schema": 664
+  },
+  "database_regressions": {
+    "files": [
+      "12_storage_tenancy.sql",
+      "20_money_invariants.sql",
+      "22_reconciliation.sql",
+      "23_domain_invariants.sql",
+      "28_schema_version.sql"
+    ],
+    "assertions": 38
+  },
+  "elapsed_seconds": 100.149,
+  "timings_seconds": {
+    "source_start": 31.785,
+    "database_regressions": 1.902,
+    "source_auth_files_and_native_export": 17.829,
+    "existing_database_drill": 3.857,
+    "database_backup": 1.437,
+    "replace_source_with_target": 33.084,
+    "database_restore": 3.66,
+    "storage_restore": 0.097,
+    "target_native_auth_and_reads": 4.564,
+    "storage_damage_detection": 0.123,
+    "cleanup": 1.813
+  }
+}

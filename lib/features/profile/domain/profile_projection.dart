@@ -17,7 +17,11 @@ enum ProfilePurpose {
   /// address and the document language. Only for holders of
   /// `viewPersonalData` or `issueInvoices` in that space, and for the
   /// person themselves.
-  operational('operational');
+  operational('operational'),
+
+  /// #3278 — the birthday: the person, `viewPersonalData` and `managePrivacy`
+  /// holders only, never an invoicing clerk (a group of its own).
+  birthday('birthday');
 
   const ProfilePurpose(this.wire);
 
@@ -53,6 +57,7 @@ const Map<ProfilePurpose, List<String>> profilePurposeFields = {
     'address',
     'preferred_locale',
   ],
+  ProfilePurpose.birthday: ['birthday'],
 };
 
 /// The purposes one projection row was granted: listed in `purposes` AND

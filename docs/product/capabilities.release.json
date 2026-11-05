@@ -1022,6 +1022,12 @@
       "capabilities": []
     },
     {
+      "key": "guestPasses",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "holidayImport",
       "maturity": "beta",
       "lifecycle": "active",
@@ -1348,6 +1354,12 @@
     },
     {
       "key": "purchaseAnalytics",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "purchaseOrders",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

@@ -147,7 +147,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
   eval(l10nSource);
   eval(patch(src) + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
-globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
+globalThis.__chooseLevel=applyLevel; globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
 globalThis.__setMode=setMode; globalThis.__migrate=migrate; globalThis.__shown=shownAnswers; globalThis.__unknown=markUnknown; globalThis.__note=unknownNote;
 `);
@@ -207,7 +207,7 @@ if (process.argv.includes('--recommend-all')) {
   const P = globalThis.window.__setup;
   const questions = globalThis.window.SETUP_LEVELS.questions;
   const ticked = () => Object.entries(P.S.features).filter(([, v]) => v).map(([k]) => k).sort();
-  const out = { initial: ticked(), combos: [] };
+  const out = { country: P.S.country, initial: ticked(), combos: [] };
   // Answering touches only the switches and the journey: putting those two
   // back is a fresh page, without drawing it 4096 times.
   const fresh = JSON.stringify({ features: P.S.features, journey: P.S.journey });
@@ -663,11 +663,18 @@ const fakeContext = () => {
   globalThis.__unknown('pay_online');
   const note = globalThis.__note('pay_online');
   const s = globalThis.window.SETUP_L10N.en;
-  if (!note.includes(s.journey.process.payments) || !note.includes(s.journey.level.payments_off)) fail(`unknown: the note reads "${note}"`);
+  if (note !== s.journey.s.setupChoicesNeedsDecision) fail(`unknown: the note reads "${note}"`);
+  if (!globalThis.window.__setup.findings().some(x=>x.lvl==='err'&&x.t===note)) fail('unknown: export must be blocked until resolved');
   if (JSON.stringify(globalThis.__levelsNow()) !== before) fail('unknown: "not sure yet" moved a level the space has');
   globalThis.__answer('pay_online', true);
   if (globalThis.__note('pay_online') !== '') fail('unknown: answering for real leaves the note');
-  console.log('prefill: the questions open from the space; not sure yet keeps the safe level');
+  globalThis.__unknown('pay_online');
+  if (!globalThis.__shown().pay_online) fail('unknown: uncertainty changed an existing yes to no');
+  globalThis.__answer('pay_online', true);
+  globalThis.__chooseLevel('bookings','resources');
+  globalThis.__answer('approve_bookings', false);
+  if (globalThis.__levelsNow().bookings !== 'resources') fail('manual: another answer discarded a deliberate level');
+  console.log('prefill: uncertainty preserves the answer and blocks export; deliberate levels survive other answers');
 }
 // #3075 — one stepper: the rail draws the steps that apply, in the order the
 // counter counts them, on every step.

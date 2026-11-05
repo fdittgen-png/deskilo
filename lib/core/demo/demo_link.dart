@@ -11,6 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'demo_persona.dart';
 import 'seed/demo_london_seed.dart';
+import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
 part 'demo_link.g.dart';
@@ -56,14 +57,15 @@ const demoLinkRoutes = {
 /// step's own page (`/setup/step/<id>`, #2870).
 bool _demoLinkAllows(String? to) =>
     to != null &&
-    (demoLinkRoutes.contains(to) || RegExp(r'^/setup/step/[a-z_]+$').hasMatch(to));
+    (demoLinkRoutes.contains(to) ||
+        RegExp(r'^/setup/step/[a-z_]+$').hasMatch(to));
 
 /// Where a link asks the demo to start.
 class DemoLink {
   const DemoLink({this.persona, this.workspaceId, this.to});
 
   /// From the auth link's query: `persona` by name, `space` as `pezenas`
-  /// `leipzig` or `london`, `to` only when [_demoLinkAllows] it.
+  /// `leipzig`, `london` or `new-york`; `to` only when [_demoLinkAllows] it.
   factory DemoLink.parse(Map<String, String> query) => DemoLink(
     persona: DemoPersona.values
         .where((p) => p.name == query['persona'])
@@ -72,6 +74,7 @@ class DemoLink {
       'pezenas' => demoFirstSpaceId,
       'leipzig' => demoSecondSpaceId,
       'london' => demoLondonSpaceId,
+      'new-york' => demoNewYorkSpaceId,
       _ => null,
     },
     to: _demoLinkAllows(query['to']) ? query['to'] : null,
@@ -98,6 +101,7 @@ class DemoLink {
       null => null,
       demoSecondSpaceId => 'leipzig',
       demoLondonSpaceId => 'london',
+      demoNewYorkSpaceId => 'new-york',
       _ => 'pezenas',
     },
     'persona': ?persona?.name,

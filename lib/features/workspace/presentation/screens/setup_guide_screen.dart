@@ -1,16 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2869 (ADR 0047 §6) — the setup guide: one task list from creating the
-// space to opening it. The milestones the owner chose come first, then the
-// one next action, then what the next milestone still needs; what waits,
-// what a later milestone needs, what more the space could use, what was set
-// aside and what is done stay folded. Every state is a word, never only a
-// colour or an icon, and where the space stands is announced as words to
-// a screen reader. The status is the server's (0539); a step opens the
-// screen where it is done, and the guide reads again on the way back.
-// Steps outside the levels the owner chose are not in the plan: they wait,
-// folded, under "Add more to your space". Times are ranges, never
-// promises.
+// #3282 — one saved readiness model: workspace, chosen goal, remaining
+// work and a recommended action. Waiting and unavailable checks remain
+// visible even when the owner cannot act. Other outcomes and optional work
+// are disclosed separately; completion never removes the navigation entry.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +24,7 @@ import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
+import '../widgets/setup_configuration_overview.dart';
 import '../widgets/setup_guide_progress.dart';
 import '../widgets/setup_no_invoicing_banner.dart';
 import '../widgets/setup_return_bar.dart';
@@ -41,19 +35,39 @@ class SetupGuideScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    final workspace = ref.watch(currentWorkspaceProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.setupGuideTitle)),
-      body: workspaceId == null
-          ? const LoadingView()
-          : _SetupGuideBody(workspaceId: workspaceId),
+      body: switch (workspace) {
+        AsyncData(:final value) when value != null => _SetupGuideBody(
+          workspaceId: value.id,
+          workspaceName: value.name,
+        ),
+        AsyncError() || AsyncData() => ListView(
+          children: [
+            InlineBanner(
+              key: const ValueKey('setup-guide-workspace-unavailable'),
+              icon: Icons.cloud_off_outlined,
+              text: l10n.setupGuideUnavailable,
+              actionLabel: MaterialLocalizations.of(context)
+                  .refreshIndicatorSemanticLabel,
+              onAction: () => ref.invalidate(currentWorkspaceProvider),
+            ),
+          ],
+        ),
+        _ => const LoadingView(),
+      },
     );
   }
 }
 
 class _SetupGuideBody extends ConsumerWidget {
-  const _SetupGuideBody({required this.workspaceId});
+  const _SetupGuideBody({
+    required this.workspaceId,
+    required this.workspaceName,
+  });
   final String workspaceId;
+  final String workspaceName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,16 +96,17 @@ class _SetupGuideBody extends ConsumerWidget {
           key: const ValueKey('setup-guide-list'),
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
-            // Inside the demo: what it is, and the other space.
-            const DemoSetupCard(),
-            if (value.goal case final goal?)
-              SetupGoalLine(
-                goal: goal,
-                onChange: () => _openLevels(context, reload),
-              ),
-            SetupGuideMilestones(status: value),
+            SetupConfigurationOverview(
+              workspaceName: workspaceName,
+              status: value,
+              onChoose: () => _openLevels(context, reload),
+            ),
+            const SizedBox(height: AppSpacing.md),
             if (value.nextMilestone case final next?
-                when value.toNextMilestone.low > 0) ...[
+                when value.toDo.isNotEmpty &&
+                    value.toDo.every(
+                      (s) => s.state == SetupStepState.needsConfiguration,
+                    )) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.setupGuideUntil(
@@ -102,15 +117,11 @@ class _SetupGuideBody extends ConsumerWidget {
                 key: const ValueKey('setup-guide-until'),
               ),
             ],
-            // #2868 — what the space does decides which steps there are.
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: TextButton.icon(
-                key: const ValueKey('setup-guide-levels'),
-                icon: const Icon(Icons.tune),
-                label: Text(l10n.setupGuideLevelsLink),
-                onPressed: () => _openLevels(context, reload),
-              ),
+            ..._sections(context, value, actions),
+            ExpansionTile(
+              key: const ValueKey('setup-outcome-details'),
+              title: Text(l10n.setupOutcomeProgress),
+              children: [SetupGuideMilestones(status: value)],
             ),
             SetupNoInvoicingBanner(reload: reload),
             // #2876 — check the answers and go live.
@@ -127,9 +138,8 @@ class _SetupGuideBody extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.md),
-            ..._sections(context, value, actions),
-            const SizedBox(height: AppSpacing.md),
             SampleDataCard(workspaceId: workspaceId),
+            const DemoSetupCard(),
           ],
         ),
       ),
@@ -157,7 +167,7 @@ class _SetupGuideBody extends ConsumerWidget {
   ) {
     final l10n = context.l10n;
     final next = status.nextStep;
-    if (status.nextMilestone == null || next == null) {
+    if (status.nextMilestone == null && status.goal != null) {
       // Every milestone the owner chose is reached: say so, and keep what
       // more the space could use within reach.
       return [
@@ -179,7 +189,24 @@ class _SetupGuideBody extends ConsumerWidget {
         if (s != next) s,
     ];
     return [
-      _NextCard(step: next, actions: actions),
+      if (next != null) ...[
+        if (!status.toDo.contains(next) && status.toDo.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: Text(l10n.setupNextIndependent),
+          ),
+        _NextCard(step: next, actions: actions),
+      ] else if (status.nextMilestone != null)
+        InlineBanner(
+          key: const ValueKey('setup-guide-waiting-summary'),
+          icon: Icons.pending_actions,
+          text: status.toDo.any((s) => s.state == SetupStepState.unknown)
+              ? l10n.setupOverviewUnchecked
+              : l10n.setupOverviewWaiting,
+          actionLabel: MaterialLocalizations.of(context)
+              .refreshIndicatorSemanticLabel,
+          onAction: actions.reload,
+        ),
       if (toDo.isNotEmpty) ...[
         const SizedBox(height: AppSpacing.md),
         _Header(text: l10n.setupGuideToDo),
@@ -300,14 +327,19 @@ class _NextCard extends ConsumerWidget {
             const SizedBox(height: AppSpacing.xs),
             Text(l10n.setupStepHint(step.step)),
             const SizedBox(height: AppSpacing.sm),
-            Row(
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.xs,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  l10n.setupGuideEstimate(step.estimate.low, step.estimate.high),
+                  l10n.setupGuideEstimate(
+                    step.estimate.low,
+                    step.estimate.high,
+                  ),
                   key: const ValueKey('setup-guide-estimate'),
                   style: theme.textTheme.bodySmall,
                 ),
-                const Spacer(),
                 if (!inDemo && demoOn)
                   TextButton(
                     key: ValueKey('setup-guide-demo-${step.step}'),
