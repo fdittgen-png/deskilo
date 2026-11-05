@@ -76,8 +76,6 @@
 
       "lib/features/task_recorder/presentation/ui_capture.dart": 592,
 
-      "lib/features/workspace/domain/feature_lifecycle.dart": 525,
-
       "lib/features/workspace/domain/template_capabilities.dart": 588,
 
       "lib/features/workspace/domain/workspace_feature.dart": 633,
