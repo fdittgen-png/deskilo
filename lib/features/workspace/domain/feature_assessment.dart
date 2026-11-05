@@ -58,4 +58,3 @@ class FeatureAssessment {
   final String? introducedIn;
   final String? deprecatedIn;
 }
-

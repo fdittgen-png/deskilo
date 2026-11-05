@@ -341,4 +341,3 @@ List<String> validateFeatureAssessments({
   }
   return problems;
 }
-
