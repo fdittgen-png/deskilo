@@ -38,6 +38,16 @@ Future<void> _pump(WidgetTester tester, Map<String, dynamic> flags) async {
     ),
   );
   await tester.pumpAndSettle();
+  for (final (key, child) in [
+    ('setup-questions-money', 'setup-question-issue_invoices'),
+    ('setup-questions-operations', 'setup-question-door_tablet'),
+    ('setup-choices-advanced', 'setup-level-bookings'),
+  ]) {
+    if (find.byKey(ValueKey(child)).evaluate().isEmpty) {
+      await tester.tap(find.byKey(ValueKey(key)));
+      await tester.pumpAndSettle();
+    }
+  }
 }
 
 bool _on(WidgetTester tester, String question) => tester
@@ -45,6 +55,26 @@ bool _on(WidgetTester tester, String question) => tester
     .value;
 
 void main() {
+  testWidgets('uncertainty never downgrades an existing yes to no', (
+    tester,
+  ) async {
+    await _pump(tester, _flagsFor({SetupProcess.payments: 'online'}));
+    expect(_on(tester, 'pay_online'), isTrue);
+    await tester.tap(
+      find.byKey(const ValueKey('setup-question-pay_online-unknown')),
+    );
+    await tester.pumpAndSettle();
+    expect(_on(tester, 'pay_online'), isTrue);
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.byKey(const ValueKey('setup-levels-apply')),
+          )
+          .onPressed,
+      isNull,
+    );
+  });
+
   test('the answers a vector of levels stands for', () {
     final answers = setupAnswersFromLevels({
       SetupProcess.bookings: 'resources',
@@ -93,7 +123,7 @@ void main() {
     );
   });
 
-  testWidgets('"not sure yet" keeps the safe level and says what stays there', (
+  testWidgets('"not sure yet" preserves the answer and prevents applying', (
     tester,
   ) async {
     await _pump(tester, const {});
@@ -105,8 +135,15 @@ void main() {
     final note = tester.widget<Text>(
       find.byKey(const ValueKey('setup-question-pay_online-note')),
     );
-    expect(note.data, contains('Payments'));
-    expect(note.data, contains('By transfer'));
+    expect(note.data, contains('previous choice is kept'));
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.byKey(const ValueKey('setup-levels-apply')),
+          )
+          .onPressed,
+      isNull,
+    );
     // Answering for real replaces the note.
     await tester.tap(find.byKey(const ValueKey('setup-question-pay_online')));
     await tester.pumpAndSettle();

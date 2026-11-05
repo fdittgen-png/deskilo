@@ -24589,6 +24589,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupChoicesAdvanced => 'Adjust each area';
+
+  @override
+  String get setupChoicesBookings => 'People and bookings';
+
+  @override
+  String get setupChoicesDetails => 'Inspect all changes';
+
+  @override
+  String get setupChoicesManual =>
+      'Your choice is kept when you answer other questions.';
+
+  @override
+  String get setupChoicesMoney => 'Money and administration';
+
+  @override
+  String get setupChoicesNeedsDecision =>
+      'Your previous choice is kept. Resolve “not sure yet” before applying.';
+
+  @override
+  String get setupChoicesOperations => 'Day-to-day operation';
+
+  @override
+  String setupChoicesQuestionUnknown(String question) {
+    return 'Not sure yet: $question';
+  }
+
+  @override
+  String get setupChoicesReset => 'Use suggested levels';
+
+  @override
+  String get setupChoicesSaving => 'Saving…';
+
+  @override
+  String setupChoicesSummary(int count) {
+    return 'Settings that will change: $count';
+  }
+
+  @override
+  String get setupChoicesUnsaved => 'Preview only — nothing has been applied.';
+
+  @override
   String get setupDraftChanged =>
       'Changed by someone else while you were editing.';
 
@@ -24869,6 +24911,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGrowVatUsualTitle => 'Your country\'s usual rates';
+
+  @override
+  String get setupGuidanceTitle => 'Guidance and checks';
 
   @override
   String get setupGuideAddIt => 'Add it';
@@ -25166,7 +25211,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupLevelsIntro =>
-      'Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.';
+      'Tell us how your workspace works. Review what will change before applying your choices.';
 
   @override
   String get setupLevelsNoChange =>
@@ -25293,6 +25338,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'The new-member defaults could not be saved. Try again.';
+
+  @override
+  String get setupNextIndependent =>
+      'You can do this while the earlier milestone is waiting.';
+
+  @override
+  String setupNextNamed(String step) {
+    return 'Next: $step';
+  }
 
   @override
   String setupNotificationsAudience(String audience) {
@@ -25453,6 +25507,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupOnlineTestUnverified =>
       'These keys do not show whether they are test or live keys. Check them in the provider\'s dashboard.';
+
+  @override
+  String get setupOutcomeProgress => 'Progress by outcome';
+
+  @override
+  String get setupOverviewChoose =>
+      'Choose what your workspace needs to see its setup plan.';
+
+  @override
+  String get setupOverviewReady =>
+      'Your chosen goal is configured. You can review or change it here at any time.';
+
+  @override
+  String setupOverviewRemaining(int count) {
+    return 'Required tasks remaining: $count';
+  }
+
+  @override
+  String get setupOverviewTitle => 'Workspace status';
+
+  @override
+  String get setupOverviewUnchecked =>
+      'Some checks are unavailable. Refresh the status before considering setup complete.';
+
+  @override
+  String get setupOverviewWaiting =>
+      'This milestone is waiting. The tasks below explain who can unblock it.';
 
   @override
   String get setupPaymentsPreviewEmpty =>
@@ -25818,6 +25899,10 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupTaskSaved =>
+      'Status is based on saved settings. Opening a task does not complete it.';
 
   @override
   String get shellBarHiddenAnnounce => 'Navigation bar hidden';

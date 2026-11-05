@@ -184,6 +184,8 @@ En el momento de escribir esto, la mayoría de las funciones figuran como **Sin 
 
 **Público:** Propietario · Copropietario
 
+Elija lo que hace el espacio con las preguntas agrupadas sobre reservas, dinero y funcionamiento diario. Los controles para revisar y aplicar permanecen visibles al desplazarse. Revise cuántos ajustes cambiarían y sus efectos concretos antes de aplicar; responder no modifica el espacio. Los niveles detallados y los inicios rápidos están en la sección avanzada. Un nivel elegido expresamente se conserva al responder otras preguntas; la acción de niveles recomendados permite volver a las sugerencias. «Aún no lo sé» conserva la respuesta anterior e impide aplicar hasta resolverla. El cuestionario sin conexión sigue la misma regla y bloquea la exportación si queda una respuesta sin resolver.
+
 Usted no quiere decidir cien cosas. Aquí tiene tres puntos de partida realistas; cada uno enumera exactamente lo que está activado. Elija el más cercano y ajuste después.
 
 El primero no necesita plantilla. El segundo es la plantilla lista para usar de la aplicación. El tercero se construye con las propias funciones. Se nombran por lo que ofrecen, no por un tamaño.

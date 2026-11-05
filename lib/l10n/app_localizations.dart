@@ -41140,6 +41140,78 @@ abstract class AppLocalizations {
   /// **'The basics could not be saved. Try again.'**
   String get setupBasicsSaveFailed;
 
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust each area'**
+  String get setupChoicesAdvanced;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'People and bookings'**
+  String get setupChoicesBookings;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect all changes'**
+  String get setupChoicesDetails;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Your choice is kept when you answer other questions.'**
+  String get setupChoicesManual;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Money and administration'**
+  String get setupChoicesMoney;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Your previous choice is kept. Resolve “not sure yet” before applying.'**
+  String get setupChoicesNeedsDecision;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Day-to-day operation'**
+  String get setupChoicesOperations;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure yet: {question}'**
+  String setupChoicesQuestionUnknown(String question);
+
+  /// Restore recommended process levels instead of manual overrides.
+  ///
+  /// In en, this message translates to:
+  /// **'Use suggested levels'**
+  String get setupChoicesReset;
+
+  /// Visible while applying setup choices and saving the journey.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get setupChoicesSaving;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings that will change: {count}'**
+  String setupChoicesSummary(int count);
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview only — nothing has been applied.'**
+  String get setupChoicesUnsaved;
+
   /// #2869 setup drafts: another configurer changed the setup step's draft meanwhile
   ///
   /// In en, this message translates to:
@@ -41578,6 +41650,12 @@ abstract class AppLocalizations {
   /// **'Your country\'s usual rates'**
   String get setupGrowVatUsualTitle;
 
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Guidance and checks'**
+  String get setupGuidanceTitle;
+
   /// #2869 setup guide: opens the levels screen to add the step's part of the space
   ///
   /// In en, this message translates to:
@@ -42012,7 +42090,7 @@ abstract class AppLocalizations {
   /// #2868 setup levels: setupLevelsIntro
   ///
   /// In en, this message translates to:
-  /// **'Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.'**
+  /// **'Tell us how your workspace works. Review what will change before applying your choices.'**
   String get setupLevelsIntro;
 
   /// #2868 setup levels: setupLevelsNoChange
@@ -42176,6 +42254,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The new-member defaults could not be saved. Try again.'**
   String get setupNewMembersSaveFailed;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'You can do this while the earlier milestone is waiting.'**
+  String get setupNextIndependent;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {step}'**
+  String setupNextNamed(String step);
 
   /// #2871 setup run steps: setupNotificationsAudience
   ///
@@ -42374,6 +42464,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These keys do not show whether they are test or live keys. Check them in the provider\'s dashboard.'**
   String get setupOnlineTestUnverified;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress by outcome'**
+  String get setupOutcomeProgress;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what your workspace needs to see its setup plan.'**
+  String get setupOverviewChoose;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Your chosen goal is configured. You can review or change it here at any time.'**
+  String get setupOverviewReady;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Required tasks remaining: {count}'**
+  String setupOverviewRemaining(int count);
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace status'**
+  String get setupOverviewTitle;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Some checks are unavailable. Refresh the status before considering setup complete.'**
+  String get setupOverviewUnchecked;
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'This milestone is waiting. The tasks below explain who can unblock it.'**
+  String get setupOverviewWaiting;
 
   /// #2871 setup run steps: setupPaymentsPreviewEmpty
   ///
@@ -42698,6 +42830,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
   String setupStepTitle(String key);
+
+  /// Workspace configuration guidance and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status is based on saved settings. Opening a task does not complete it.'**
+  String get setupTaskSaved;
 
   /// Screen-reader announcement when the bar is swiped away (#1173)
   ///
