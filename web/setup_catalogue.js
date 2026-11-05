@@ -610,6 +610,10 @@ window.SETUP_REGISTRY={
   [
    "purchaseOrders",
    false
+  ],
+  [
+   "guestPasses",
+   false
   ]
  ],
  "requires": {
@@ -697,7 +701,8 @@ window.SETUP_REGISTRY={
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
   "mtdSubmission": "vatDeclarations",
-  "purchaseOrders": "purchases"
+  "purchaseOrders": "purchases",
+  "guestPasses": "invoicing"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1100,7 +1105,8 @@ window.SETUP_PROCESSES=[
      "memberPage",
      "memberOrigin",
      "memberEnvironments",
-     "guestParticipation"
+     "guestParticipation",
+     "guestPasses"
     ]
    },
    {
@@ -1589,7 +1595,8 @@ window.SETUP_LEVELS={
       "reportDesigner",
       "invoicingWizard",
       "settlementFold",
-      "carnets"
+      "carnets",
+      "guestPasses"
      ],
      "needs": {}
     }
