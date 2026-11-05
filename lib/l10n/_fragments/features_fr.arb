@@ -262,5 +262,7 @@
   "featurePlanDecorTitle": "Dessiner la salle sur le plan",
   "featurePlanDecorDesc": "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent.",
   "featureMtdSubmissionTitle": "Déposer la TVA britannique auprès de HMRC",
-  "featureMtdSubmissionDesc": "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste."
+  "featureMtdSubmissionDesc": "Envoyer la déclaration de TVA britannique préparée à HMRC depuis l'application, par Making Tax Digital, et garder l'accusé de HMRC sur la déclaration. Désactivé, seul le fichier de passerelle reste.",
+  "featurePurchaseOrdersTitle": "Commander auprès des fournisseurs",
+  "featurePurchaseOrdersDesc": "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent."
 }

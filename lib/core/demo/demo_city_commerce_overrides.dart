@@ -38,6 +38,7 @@ import 'data/sales_kpi_repository.dart';
 import 'data/vendor_kpi_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_books_seed.dart';
@@ -167,6 +168,13 @@ List<Override> demoCityCommerceOverrides(
       london: londonPurchasing,
       newYork: nyPurchasing,
       twin: fixture.twin.purchasing,
+    ),
+    // #3307 — the orders to their suppliers.
+    ...demoPurchaseOrderOverrides(
+      fixture,
+      purchasing,
+      london: londonPurchasing,
+      newYork: nyPurchasing,
     ),
     bookProfileRepositoryProvider.overrideWith(
       (ref) => choose(ref, mainBooks, londonBooks, nyBooks, twin.books),

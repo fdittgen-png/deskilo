@@ -10698,7 +10698,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}",
+  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}",
   "@exportSheetName": {
     "description": "#2861 workspace export: exportSheetName",
     "placeholders": {
@@ -11596,6 +11596,14 @@
   "featurePurchaseAnalyticsTitle": "Purchase figures (analytics)",
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseOrdersDesc": "Prepare numbered purchase orders for your suppliers with their lines, prices and delivery date, print them or send them by e-mail, and record what arrived. Off keeps the bills only.",
+  "@featurePurchaseOrdersDesc": {
+    "description": "#3307 feature description"
+  },
+  "featurePurchaseOrdersTitle": "Order from suppliers",
+  "@featurePurchaseOrdersTitle": {
+    "description": "#3307 feature title"
   },
   "featurePurchasesDesc": "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.",
   "@featurePurchasesDesc": {
@@ -23778,6 +23786,27 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Purchase order {reference}",
+  "@purchaseBillForOrder": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseBillNoOrder": "No order",
+  "@purchaseBillNoOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrder": "Purchase order",
+  "@purchaseBillOrder": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseBillOrderHint": "The order this bill charges: its amounts are taken and stay editable",
+  "@purchaseBillOrderHint": {
+    "description": "#3307 goods receipts"
+  },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
     "description": "#2577 the guided purchase / expense entry"
@@ -23829,6 +23858,306 @@
   "purchaseNeedsReview": "Needs review",
   "@purchaseNeedsReview": {
     "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseOrderAddLine": "Add a line",
+  "@purchaseOrderAddLine": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderBadEmail": "One e-mail address, or leave it empty to print",
+  "@purchaseOrderBadEmail": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderBadVatRate": "A VAT rate from 0 to 99",
+  "@purchaseOrderBadVatRate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderCancel": "Cancel the order",
+  "@purchaseOrderCancel": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderCancelReason": "Why is it cancelled?",
+  "@purchaseOrderCancelReason": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderDescription": "What is ordered",
+  "@purchaseOrderDescription": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderEdit": "Edit the order",
+  "@purchaseOrderEdit": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderEmail": "E-mail address to send it to",
+  "@purchaseOrderEmail": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderExpected": "Expected delivery",
+  "@purchaseOrderExpected": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderFreeText": "Free text",
+  "@purchaseOrderFreeText": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderItem": "Catalogue item",
+  "@purchaseOrderItem": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderLine": "Line {n}",
+  "@purchaseOrderLine": {
+    "description": "#3307 purchase orders",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderLineReceived": "{description}: {received} of {ordered} received",
+  "@purchaseOrderLineReceived": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "received": {
+        "type": "String"
+      },
+      "ordered": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderMailInvalid": "A sender address, a name without < > or quotes, and on the first save the API key",
+  "@purchaseOrderMailInvalid": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKey": "Resend API key",
+  "@purchaseOrderMailKey": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailKeyKept": "A key is stored. Leave empty to keep it; it is never shown again.",
+  "@purchaseOrderMailKeyKept": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSave": "Save",
+  "@purchaseOrderMailSave": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSender": "Sender address (a verified domain at Resend)",
+  "@purchaseOrderMailSender": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSenderName": "Sender name",
+  "@purchaseOrderMailSenderName": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailSettings": "E-mail sending",
+  "@purchaseOrderMailSettings": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderMailText": "Hello,\n\nPlease find attached our purchase order {reference}.\n\nKind regards,\n{space}",
+  "@purchaseOrderMailText": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderMarkSent": "Mark as sent",
+  "@purchaseOrderMarkSent": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsDescription": "Say what is ordered, or choose an item",
+  "@purchaseOrderNeedsDescription": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsPrice": "A unit price, 0 or more",
+  "@purchaseOrderNeedsPrice": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsQuantity": "A quantity above zero",
+  "@purchaseOrderNeedsQuantity": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNeedsSupplier": "Choose the supplier",
+  "@purchaseOrderNeedsSupplier": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNew": "New order",
+  "@purchaseOrderNew": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderNote": "Note to the supplier",
+  "@purchaseOrderNote": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderPickDate": "Pick the expected delivery date",
+  "@purchaseOrderPickDate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderPrint": "Print",
+  "@purchaseOrderPrint": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderQuantity": "Quantity",
+  "@purchaseOrderQuantity": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderReceive": "Record a delivery",
+  "@purchaseOrderReceive": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveLine": "{description} ({left} to come)",
+  "@purchaseOrderReceiveLine": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveNote": "Note (optional)",
+  "@purchaseOrderReceiveNote": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveNothing": "Enter what arrived of at least one line",
+  "@purchaseOrderReceiveNothing": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceiveTitle": "Delivery of {reference}",
+  "@purchaseOrderReceiveTitle": {
+    "description": "#3307 goods receipts",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderReceiveTooMany": "More than what is left of this line",
+  "@purchaseOrderReceiveTooMany": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderReceivedOn": "Arrived on",
+  "@purchaseOrderReceivedOn": {
+    "description": "#3307 goods receipts"
+  },
+  "purchaseOrderRefused": "The order was not changed. Check the entries and try again.",
+  "@purchaseOrderRefused": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderRemoveLine": "Remove the line",
+  "@purchaseOrderRemoveLine": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSave": "Save the draft",
+  "@purchaseOrderSave": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSendArrived": "It arrived",
+  "@purchaseOrderSendArrived": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendAwaits": "An e-mail to {recipient} has no confirmed outcome. Did it arrive?",
+  "@purchaseOrderSendAwaits": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendEmail": "Send by e-mail",
+  "@purchaseOrderSendEmail": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendLost": "It did not arrive",
+  "@purchaseOrderSendLost": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSendRefused": "The e-mail was refused: {reason}. The order stays a draft.",
+  "@purchaseOrderSendRefused": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendUnconfirmed": "No confirmed answer came back. Check with the supplier before sending again.",
+  "@purchaseOrderSendUnconfirmed": {
+    "description": "#3307 purchase order e-mail"
+  },
+  "purchaseOrderSentTo": "Sent to {recipient}",
+  "@purchaseOrderSentTo": {
+    "description": "#3307 purchase order e-mail",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderStateCancelled": "Cancelled",
+  "@purchaseOrderStateCancelled": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateDraft": "Draft",
+  "@purchaseOrderStateDraft": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStatePartlyReceived": "Partly received",
+  "@purchaseOrderStatePartlyReceived": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateReceived": "Received",
+  "@purchaseOrderStateReceived": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderStateSent": "Sent",
+  "@purchaseOrderStateSent": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "@purchaseOrderSummary": {
+    "description": "#3307 purchase orders",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSupplier": "Supplier",
+  "@purchaseOrderSupplier": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderUnit": "Unit (e.g. box)",
+  "@purchaseOrderUnit": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderUnitPrice": "Unit price before VAT",
+  "@purchaseOrderUnitPrice": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrderVatRate": "VAT rate (%)",
+  "@purchaseOrderVatRate": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrdersEmpty": "No purchase order yet. A new order starts as a draft you can edit, print and send.",
+  "@purchaseOrdersEmpty": {
+    "description": "#3307 purchase orders"
+  },
+  "purchaseOrdersTitle": "Purchase orders",
+  "@purchaseOrdersTitle": {
+    "description": "#3307 purchase orders"
   },
   "purchaseQualified": "Accounting qualified",
   "@purchaseQualified": {
@@ -25655,6 +25984,10 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Purchase order",
+  "@reportDocPurchaseOrder": {
+    "description": "#3307 purchase orders"
+  },
   "reportDocSpaceCodes": "Space QR cards",
   "reportDocStatus": "Workspace status",
   "@reportDocStatus": {
@@ -25688,6 +26021,10 @@
   "reportEditorVisual": "Visual",
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportExpectedDelivery": "Expected delivery",
+  "@reportExpectedDelivery": {
+    "description": "#3307 purchase orders"
   },
   "reportFieldGroupBank": "Bank details",
   "@reportFieldGroupBank": {

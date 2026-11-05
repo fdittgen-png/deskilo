@@ -6059,7 +6059,7 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{Acerca de esta exportación} workspace{Espacio} levels{Plantas} desks{Mesas} seats{Puestos} users{Miembros} reservations{Reservas} check_ins{Asistencia} payments{Pagos} services{Servicios usados} service_catalog{Precios de servicios} invoices{Facturas} offices{Salas} ledger{Cuentas de miembros} events{Solicitudes} decisions{Decisiones} invoice_lines{Líneas de factura} sites{Sedes} plans{Planes} fee_bands{Tramos de tarifa} packages{Paquetes} credit_products{Tipos de bono} vat_rates{Tipos de IVA} accessories{Accesorios} seat_accessories{Accesorios por puesto} closure_days{Días de cierre} validation_policies{Reglas de aprobación} workspace_roles{Roles} workspace_role_members{Titulares de roles} workspace_field_definitions{Preguntas} workspace_field_values{Respuestas} number_sequences{Series de numeración} charging_stations{Puntos de carga} plan_images{Imágenes del plano} setting_values{Ajustes} member_credits{Bonos} member_credit_uses{Usos de bonos} price_negotiations{Negociaciones de precio} quota_extensions{Ampliaciones de cuota} usage_records{Uso} invoice_matches{Liquidación de facturas} invoice_reminders{Recordatorios} invoice_dunning_holds{Recordatorios en pausa} tax_exemption_certificates{Certificados de exención} suppliers{Proveedores} purchase_documents{Documentos de compra} purchase_lines{Líneas de compra} purchase_obligations{Importes a pagar} outgoing_payments{Pagos salientes} expense_schedules{Gastos programados} expense_occurrences{Vencimientos de gastos} expense_repartitions{Costes compartidos} premises_leases{Arrendamientos} lease_terms{Condiciones del alquiler} lease_settlements{Liquidaciones del alquiler} room_rentals{Alquileres de salas} room_rental_fees{Tarifas de alquiler} workspace_assets{Activos} asset_valuation_batches{Valoraciones de activos} asset_valuation_rows{Líneas de valoración} book_profiles{Perfiles contables} book_accounts{Plan de cuentas} book_mappings{Asignación de cuentas} book_periods{Periodos contables} vat_declarations{Declaraciones de IVA} einvoice_inbox{E-facturas recibidas} guest_participations{Visitas de invitados} rights_requests{Solicitudes de privacidad} overview{Resumen} features{Funciones} other{{key}}}",
+  "exportSheetName": "{key, select, about{Acerca de esta exportación} workspace{Espacio} levels{Plantas} desks{Mesas} seats{Puestos} users{Miembros} reservations{Reservas} check_ins{Asistencia} payments{Pagos} services{Servicios usados} service_catalog{Precios de servicios} invoices{Facturas} offices{Salas} ledger{Cuentas de miembros} events{Solicitudes} decisions{Decisiones} invoice_lines{Líneas de factura} sites{Sedes} plans{Planes} fee_bands{Tramos de tarifa} packages{Paquetes} credit_products{Tipos de bono} vat_rates{Tipos de IVA} accessories{Accesorios} seat_accessories{Accesorios por puesto} closure_days{Días de cierre} validation_policies{Reglas de aprobación} workspace_roles{Roles} workspace_role_members{Titulares de roles} workspace_field_definitions{Preguntas} workspace_field_values{Respuestas} number_sequences{Series de numeración} charging_stations{Puntos de carga} plan_images{Imágenes del plano} setting_values{Ajustes} member_credits{Bonos} member_credit_uses{Usos de bonos} price_negotiations{Negociaciones de precio} quota_extensions{Ampliaciones de cuota} usage_records{Uso} invoice_matches{Liquidación de facturas} invoice_reminders{Recordatorios} invoice_dunning_holds{Recordatorios en pausa} tax_exemption_certificates{Certificados de exención} suppliers{Proveedores} purchase_documents{Documentos de compra} purchase_lines{Líneas de compra} purchase_obligations{Importes a pagar} purchase_orders{Pedidos de compra} purchase_order_lines{Líneas de pedido} purchase_order_sends{Envíos de pedidos} purchase_order_receipts{Recepciones} purchase_order_receipt_lines{Líneas de recepción} outgoing_payments{Pagos salientes} expense_schedules{Gastos programados} expense_occurrences{Vencimientos de gastos} expense_repartitions{Costes compartidos} premises_leases{Arrendamientos} lease_terms{Condiciones del alquiler} lease_settlements{Liquidaciones del alquiler} room_rentals{Alquileres de salas} room_rental_fees{Tarifas de alquiler} workspace_assets{Activos} asset_valuation_batches{Valoraciones de activos} asset_valuation_rows{Líneas de valoración} book_profiles{Perfiles contables} book_accounts{Plan de cuentas} book_mappings{Asignación de cuentas} book_periods{Periodos contables} vat_declarations{Declaraciones de IVA} einvoice_inbox{E-facturas recibidas} guest_participations{Visitas de invitados} rights_requests{Solicitudes de privacidad} overview{Resumen} features{Funciones} other{{key}}}",
   "exportUncertifiedSoftware": "Generado según la especificación publicada, pero DesKilo no es software certificado en este país — consulte con su asesor si se le exige.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -6624,6 +6624,8 @@
   "@featurePurchaseAnalyticsTitle": {
     "description": "#2582 purchase analytics"
   },
+  "featurePurchaseOrdersDesc": "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas.",
+  "featurePurchaseOrdersTitle": "Pedir a los proveedores",
   "featurePurchasesDesc": "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"
@@ -12736,6 +12738,10 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseBillForOrder": "Pedido de compra {reference}",
+  "purchaseBillNoOrder": "Ningún pedido",
+  "purchaseBillOrder": "Pedido de compra",
+  "purchaseBillOrderHint": "El pedido que cobra esta factura: sus importes se toman y siguen editables",
   "purchaseEntryAdd": "Añadir compra / gasto",
   "purchaseEntryMe": "Pagué yo",
   "purchaseEntryMeHint": "Preséntelo como su gasto: una vez aprobado, el espacio se lo debe.",
@@ -12749,6 +12755,66 @@
   "purchaseLinkInboxFailed": "La factura no se vinculó. Puede que el documento haya cambiado entretanto: vuelva a abrirlo e inténtelo de nuevo.",
   "purchaseLinkInboxTitle": "Facturas recibidas",
   "purchaseNeedsReview": "Por revisar",
+  "purchaseOrderAddLine": "Añadir una línea",
+  "purchaseOrderBadEmail": "Una dirección de correo, o déjelo vacío para imprimir",
+  "purchaseOrderBadVatRate": "Un tipo de IVA de 0 a 99",
+  "purchaseOrderCancel": "Anular el pedido",
+  "purchaseOrderCancelReason": "¿Por qué se anula?",
+  "purchaseOrderDescription": "Qué se pide",
+  "purchaseOrderEdit": "Editar el pedido",
+  "purchaseOrderEmail": "Dirección de correo para enviarlo",
+  "purchaseOrderExpected": "Entrega prevista",
+  "purchaseOrderFreeText": "Texto libre",
+  "purchaseOrderItem": "Artículo del catálogo",
+  "purchaseOrderLine": "Línea {n}",
+  "purchaseOrderLineReceived": "{description}: {received} de {ordered} recibidos",
+  "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API",
+  "purchaseOrderMailKey": "Clave de API de Resend",
+  "purchaseOrderMailKeyKept": "Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.",
+  "purchaseOrderMailSave": "Guardar",
+  "purchaseOrderMailSender": "Dirección del remitente (un dominio verificado en Resend)",
+  "purchaseOrderMailSenderName": "Nombre del remitente",
+  "purchaseOrderMailSettings": "Envío por correo",
+  "purchaseOrderMailText": "Hola:\n\nAdjuntamos nuestro pedido {reference}.\n\nSaludos cordiales,\n{space}",
+  "purchaseOrderMarkSent": "Marcar como enviado",
+  "purchaseOrderNeedsDescription": "Indique qué se pide o elija un artículo",
+  "purchaseOrderNeedsPrice": "Un precio unitario, 0 o más",
+  "purchaseOrderNeedsQuantity": "Una cantidad mayor que cero",
+  "purchaseOrderNeedsSupplier": "Elija el proveedor",
+  "purchaseOrderNew": "Nuevo pedido",
+  "purchaseOrderNote": "Nota para el proveedor",
+  "purchaseOrderPickDate": "Elegir la fecha de entrega prevista",
+  "purchaseOrderPrint": "Imprimir",
+  "purchaseOrderQuantity": "Cantidad",
+  "purchaseOrderReceive": "Registrar una entrega",
+  "purchaseOrderReceiveLine": "{description} ({left} por llegar)",
+  "purchaseOrderReceiveNote": "Nota (opcional)",
+  "purchaseOrderReceiveNothing": "Indique lo que llegó de al menos una línea",
+  "purchaseOrderReceiveTitle": "Entrega de {reference}",
+  "purchaseOrderReceiveTooMany": "Más de lo que queda de esta línea",
+  "purchaseOrderReceivedOn": "Llegó el",
+  "purchaseOrderRefused": "El pedido no se modificó. Revise los datos e inténtelo de nuevo.",
+  "purchaseOrderRemoveLine": "Quitar la línea",
+  "purchaseOrderSave": "Guardar el borrador",
+  "purchaseOrderSendArrived": "Llegó",
+  "purchaseOrderSendAwaits": "Un correo a {recipient} no tiene un resultado confirmado. ¿Llegó?",
+  "purchaseOrderSendEmail": "Enviar por correo",
+  "purchaseOrderSendLost": "No llegó",
+  "purchaseOrderSendRefused": "El correo fue rechazado: {reason}. El pedido sigue en borrador.",
+  "purchaseOrderSendUnconfirmed": "No llegó ninguna respuesta confirmada. Compruebe con el proveedor antes de volver a enviar.",
+  "purchaseOrderSentTo": "Enviado a {recipient}",
+  "purchaseOrderStateCancelled": "Anulado",
+  "purchaseOrderStateDraft": "Borrador",
+  "purchaseOrderStatePartlyReceived": "Recibido en parte",
+  "purchaseOrderStateReceived": "Recibido",
+  "purchaseOrderStateSent": "Enviado",
+  "purchaseOrderSummary": "{supplier} · {total}",
+  "purchaseOrderSupplier": "Proveedor",
+  "purchaseOrderUnit": "Unidad (p. ej. caja)",
+  "purchaseOrderUnitPrice": "Precio unitario sin IVA",
+  "purchaseOrderVatRate": "Tipo de IVA (%)",
+  "purchaseOrdersEmpty": "Aún no hay pedidos. Un pedido nuevo empieza como borrador que puede editar, imprimir y enviar.",
+  "purchaseOrdersTitle": "Pedidos de compra",
   "purchaseQualified": "Contabilidad cualificada",
   "purchaseReceiptAdd": "Justificante con varias líneas",
   "purchaseReceiptAddLine": "Añadir una línea",
@@ -14020,6 +14086,7 @@
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportDocPurchaseOrder": "Pedido de compra",
   "reportDocSpaceCodes": "Tarjetas QR de espacios",
   "reportDocStatus": "Situación del espacio",
   "@reportDocStatus": {
@@ -14051,6 +14118,7 @@
   "@reportEditorVisual": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportExpectedDelivery": "Entrega prevista",
   "reportFieldGroupBank": "Datos bancarios",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"

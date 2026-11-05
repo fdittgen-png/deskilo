@@ -69,6 +69,12 @@ const Map<String, String> _notExported = {
       '#2568 — what a use of a rented room costs one audience entry: a price '
           'list of the room; what a member is charged is a ledger row, exported '
           'with the ledger',
+  'purchase_order_sends':
+      '#3307 — an attempt to e-mail an order of the space to its supplier: '
+          'who started it is a workspace record, in the workspace export',
+  'purchase_order_receipts':
+      '#3307 — a delivery of an order of the space, with who recorded it: a '
+          'workspace record, in the workspace export',
   'outgoing_payments':
       '#2574 — a payment a person reported as made to a member; its effect '
           'on the member\'s account is a ledger row, exported with the ledger',

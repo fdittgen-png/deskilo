@@ -100,6 +100,8 @@ const List<ReportKind> fixedReportKinds = [
       numbersFirstPage: true),
   ReportKind(id: 'bank_reconciliation', slot: ReportDocSlot('bank_reconciliation'),
       numbersFirstPage: true),
+  // #3307 — the order the space sends its supplier.
+  ReportKind(id: 'purchase_order', slot: ReportDocSlot('purchase_order')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];
