@@ -22,6 +22,7 @@ import {
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMinor } from "../_shared/money.ts";
 import { paypalApi } from "../_shared/providers.ts";
+import { paypalFeeOf } from "../_shared/provider_settlement.ts";
 
 type Intent = {
   workspace_id: string;
@@ -77,13 +78,13 @@ function matches(intent: Intent, money: Money): boolean {
 /** The first capture of an order body PayPal returned, if completed. */
 function completedCapture(
   order: Record<string, unknown>,
-): { id: string; amount: Money } | null {
+): { id: string; amount: Money; raw: Record<string, unknown> } | null {
   const units = (order.purchase_units ?? []) as Array<Record<string, unknown>>;
   const captures = ((units[0]?.payments as Record<string, unknown> | undefined)
     ?.captures ?? []) as Array<Record<string, unknown>>;
   const capture = captures.find((c) => c.status === "COMPLETED");
   return capture
-    ? { id: String(capture.id), amount: capture.amount as Money }
+    ? { id: String(capture.id), amount: capture.amount as Money, raw: capture }
     : null;
 }
 
@@ -172,7 +173,11 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return respond("verification_error", 500);
   }
 
-  const settle = async (captureId: string, amount: Money): Promise<Response> => {
+  const settle = async (
+    captureId: string,
+    amount: Money,
+    capture: Record<string, unknown>,
+  ): Promise<Response> => {
     if (!matches(intent, amount)) {
       console.error("paypal capture does not match the intent", {
         orderId,
@@ -192,12 +197,30 @@ Deno.serve(async (req: Request): Promise<Response> => {
       return respond("settle_failed", 500);
     }
     console.log("paypal capture settled", { orderId, capture: captureId });
+    // #2380 — what PayPal kept of it and paid on, recorded once (0687). A
+    // capture without its breakdown records nothing; a failed record is
+    // retried by PayPal, the settlement above being idempotent.
+    const fee = paypalFeeOf(capture);
+    if (fee) {
+      const recorded = await admin.rpc("record_provider_fee_v1", {
+        p_provider: "paypal",
+        p_order_id: orderId,
+        p_fee_cents: fee.feeCents,
+        p_net_cents: fee.netCents,
+        p_currency: fee.currency,
+        p_transaction_id: fee.transactionId,
+      });
+      if (recorded.error) {
+        console.error("paypal fee record failed", recorded.error.message);
+        return respond("fee_record_failed", 500);
+      }
+    }
     return respond("ok", 200);
   };
 
   const type = event.event_type as string;
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
-    return await settle(String(resource.id), resource.amount as Money);
+    return await settle(String(resource.id), resource.amount as Money, resource);
   }
   if (type === "CHECKOUT.ORDER.APPROVED") {
     // #1555 — approval is the buyer saying yes; it moves no money. An
@@ -233,7 +256,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           console.log("paypal capture not completed yet", orderId);
           return respond("ok", 200);
         }
-        return await settle(capture.id, capture.amount);
+        return await settle(capture.id, capture.amount, capture.raw);
       }
       const detail = await res.text();
       if (!(res.status === 422 && detail.includes("ORDER_ALREADY_CAPTURED"))) {
@@ -252,7 +275,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       }
       const capture = completedCapture(await orderRes.json());
       if (!capture) return respond("ok", 200);
-      return await settle(capture.id, capture.amount);
+      return await settle(capture.id, capture.amount, capture.raw);
     } catch (e) {
       console.error("paypal capture error", String(e));
       return respond("capture_error", 500);

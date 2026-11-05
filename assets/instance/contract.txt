@@ -1094,6 +1094,7 @@ constraint payment_intents.payment_intents_member_id_same_workspace FOREIGN KEY 
 constraint payment_intents.payment_intents_period_check CHECK ((period ~ '^\d{4}-\d{2}$'::text))
 constraint payment_intents.payment_intents_pkey PRIMARY KEY (id)
 constraint payment_intents.payment_intents_provider_check CHECK ((provider = ANY (ARRAY['paypal'::text, 'stripe'::text, 'mollie'::text, 'wero'::text])))
+constraint payment_intents.payment_intents_provider_fee_cents_check CHECK (((provider_fee_cents IS NULL) OR (provider_fee_cents >= 0)))
 constraint payment_intents.payment_intents_provider_order_id_key UNIQUE (provider, order_id)
 constraint payment_intents.payment_intents_status_check CHECK ((status = ANY (ARRAY['created'::text, 'captured'::text, 'failed'::text])))
 constraint payment_intents.payment_intents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
@@ -1209,6 +1210,15 @@ constraint profiles.profiles_time_zone_mode_check CHECK ((time_zone_mode = ANY (
 constraint profiles.profiles_vat_id_check CHECK ((char_length(vat_id) <= 20))
 constraint profiles.profiles_whatsapp_check CHECK (((whatsapp = ''::text) OR (whatsapp ~ '^\+[0-9]{6,19}$'::text)))
 constraint profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint provider_payouts.provider_payouts_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint provider_payouts.provider_payouts_payout_id_check CHECK ((payout_id <> ''::text))
+constraint provider_payouts.provider_payouts_pkey PRIMARY KEY (id)
+constraint provider_payouts.provider_payouts_provider_check CHECK ((provider = ANY (ARRAY['stripe'::text, 'paypal'::text, 'mollie'::text])))
+constraint provider_payouts.provider_payouts_status_check CHECK ((status = ANY (ARRAY['pending'::text, 'in_transit'::text, 'paid'::text, 'failed'::text, 'canceled'::text])))
+constraint provider_payouts.provider_payouts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE RESTRICT
+constraint provider_payouts.provider_payouts_workspace_id_provider_payout_id_key UNIQUE (workspace_id, provider, payout_id)
+constraint provider_payouts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint provider_payouts.system_company_present CHECK ((company_id IS NOT NULL))
 constraint public_directory_sources.public_directory_sources_origin_check CHECK (((origin ~ '^https://[a-zA-Z0-9][a-zA-Z0-9.-]+(:[0-9]+)?$'::text) AND (length(origin) <= 512)))
 constraint public_directory_sources.public_directory_sources_pkey PRIMARY KEY (origin)
 constraint public_directory_sources.public_directory_sources_publishable_key_check CHECK (((length(publishable_key) >= 1) AND (length(publishable_key) <= 4096)))
@@ -2877,6 +2887,8 @@ routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | d
 routine public.record_member_reimbursement_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6903fd94329d
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:e81915235895
 routine public.record_privacy_incident(p_workspace_id uuid, p_kind text, p_note text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:9601cdaa88e2
+routine public.record_provider_fee_v1(p_provider text, p_order_id text, p_fee_cents bigint, p_net_cents bigint, p_currency text, p_transaction_id text) -> payment_intents | function | definer | volatile | exec:service_role | body:b9431b4bc2d6
+routine public.record_provider_payout_v1(p_workspace_id uuid, p_provider text, p_payout_id text, p_amount_cents bigint, p_currency text, p_arrival_date date, p_status text, p_transaction_ids text[]) -> jsonb | function | definer | volatile | exec:service_role | body:7476ddb349ef
 routine public.record_purchase_exchange_rate_v1(p_workspace_id uuid, p_purchase_id uuid, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:26191bc1ab28
 routine public.record_purchase_order_receipt_v1(p_workspace_id uuid, p_order_id uuid, p_revision integer, p_received_on date, p_lines jsonb, p_note text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fa077ef68804
 routine public.record_rights_request(p_workspace_id uuid, p_member_id uuid, p_kind text, p_details text, p_received_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:55e23d40bfd3
@@ -3542,6 +3554,7 @@ trigger profiles.profiles_person_preferences CREATE TRIGGER profiles_person_pref
 trigger profiles.public_person_card_on_name CREATE TRIGGER public_person_card_on_name AFTER UPDATE OF display_name ON public.profiles FOR EACH ROW EXECUTE FUNCTION public_person_card_sync()
 trigger profiles.refresh_public_profile CREATE TRIGGER refresh_public_profile AFTER UPDATE OF display_name ON public.profiles FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger provider_payouts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.provider_payouts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger public_directory_sources.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_directory_sources FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger public_person_cards.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_person_cards FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger public_workspace_cards.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_workspace_cards FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
