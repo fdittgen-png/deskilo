@@ -12,9 +12,11 @@
 - [Guía de puesta en marcha](https://fdittgen-png.github.io/deskilo/guide/setup-es.html) 🇪🇸
 - [Guida di avvio](https://fdittgen-png.github.io/deskilo/guide/setup-it.html) 🇮🇹
 
-*Developers*
-- [Architecture](Architecture)
+*Developers — project organization and implementation*
+
+- [Actor user guide and prompts](Technical-Reference#process-actors-and-role-prompts)
+- [AI project architecture](AI-Project-Architecture)
+- [Application architecture](Architecture)
 - [Implementation](Implementation)
-- [Technical reference](Technical-Reference)
-- [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts)
 - [CI and automation](CI-and-Automation)
+- [Technical reference](Technical-Reference)

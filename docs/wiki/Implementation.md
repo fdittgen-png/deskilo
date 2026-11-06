@@ -34,7 +34,8 @@ One train, one commit, every platform. Web publishing is a separate, opt-in step
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="images/diagram-issue-to-merge-dark.svg"><img src="images/diagram-issue-to-merge-light.svg" alt="The issue-to-merge flow: claim the issue, open a worktree, add the feature flag, pass the local gates, open a pull request, wait for the three required checks, merge, then ship with one release train dispatch." width="100%"></picture>
 
-Each step is written out in [From issue to merge](#from-issue-to-merge) below. [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts) provides bounded assignments for the responsibilities involved; a release requires its own existing authorization.
+Each step is written out in [From issue to merge](#from-issue-to-merge) below. [Actor user guide and prompts](Technical-Reference#process-actors-and-role-prompts) provides bounded assignments for the responsibilities involved; a release requires its own existing authorization.
+See [AI project architecture](AI-Project-Architecture) for the organizational principles, actor interactions, guided delivery loop and the distinction between current controls and reference practices.
 
 ## Repository layout
 

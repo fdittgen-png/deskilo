@@ -1,6 +1,6 @@
 <div align="center">
 
-**The DesKilo wiki — use it, understand it, build it.**
+**The DesKilo wiki — use it, understand it, organize its delivery, build it.**
 
 [User guide](https://fdittgen-png.github.io/deskilo/guide/en.html) &nbsp;·&nbsp; [Setup guide](https://fdittgen-png.github.io/deskilo/guide/setup-en.html) &nbsp;·&nbsp; [Architecture](Architecture) &nbsp;·&nbsp; [Technical reference](Technical-Reference) &nbsp;·&nbsp; [Implementation](Implementation)
 
@@ -64,7 +64,7 @@ What the product is for and what it covers, module by module; delivery status li
 ## Build it
 
 See [CI and automation](CI-and-Automation) for merge gates, test shards, database checks, releases, artifacts, and troubleshooting.
-Choose a responsibility and copy its assignment from [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts).
+The Developers documentation covers **project organization as well as technical implementation**. Start with [AI project architecture](AI-Project-Architecture) for the principles, human/agent collaboration, guided delivery cycle, evidence and knowledge flows. Use the [Actor user guide and prompts](Technical-Reference#process-actors-and-role-prompts) to understand each responsibility, prepare an assignment and hand over its result.
 
 <table>
 <tr>
