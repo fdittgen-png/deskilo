@@ -184,6 +184,8 @@ public.lease_settlements.lease_settlements_select
 public.lease_settlements.mcp_delegated_deny
 public.lease_terms.lease_terms_select
 public.lease_terms.mcp_delegated_deny
+public.ledger_credit_moves.ledger_credit_moves_select
+public.ledger_credit_moves.mcp_delegated_deny
 public.ledger_entries.ledger_select
 public.ledger_entries.mcp_delegated_deny
 public.levels.levels_external_hidden

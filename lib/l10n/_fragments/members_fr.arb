@@ -434,5 +434,45 @@
   "@groupNeedsPeople": {
     "description": "messenger: creating a group of people"
   },
+  "creditMoveAction": "Déplacer vers un autre membre",
+  "@creditMoveAction": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveTitle": "Déplacer ce paiement",
+  "@creditMoveTitle": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveBody": "Le paiement reste enregistré. Le compte de ce membre le restitue, et le membre qui a réellement payé le reçoit, dans le même mois.",
+  "@creditMoveBody": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberLabel": "Membre qui a payé",
+  "@creditMoveMemberLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberRequired": "Choisissez le membre qui a payé.",
+  "@creditMoveMemberRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonLabel": "Motif",
+  "@creditMoveReasonLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonRequired": "Indiquez pourquoi le paiement est déplacé.",
+  "@creditMoveReasonRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveConfirm": "Déplacer",
+  "@creditMoveConfirm": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveFailed": "Le paiement n'a pas pu être déplacé.",
+  "@creditMoveFailed": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveDone": "Le paiement a été déplacé.",
+  "@creditMoveDone": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
   "memberOriginGuest": "A acheté un pass invité à l'accueil"
 }

@@ -13,6 +13,7 @@ import '../../../money/domain/invoice.dart';
 import '../../../money/domain/ledger_entry.dart';
 import '../../../money/domain/member_account.dart';
 import '../../../money/presentation/widgets/account_card.dart';
+import '../../../money/presentation/widgets/move_credit_dialog.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -58,6 +59,9 @@ class MemberMoneyCard extends ConsumerWidget {
         permissions.contains(WorkspacePermission.viewFinances) ||
         permissions.contains(WorkspacePermission.issueInvoices);
     if (!maySee) return const SizedBox.shrink();
+    // #2380 — the role that bills moves a payment booked on the wrong
+    // member; never one's own (0688 asks the same right).
+    final mayMove = !isSelf && permissions.contains(WorkspacePermission.issueInvoices);
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currencyCode = workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
@@ -180,6 +184,7 @@ class MemberMoneyCard extends ConsumerWidget {
                   currency.formatMinor(payment.amountCents.abs()),
                   style: theme.textTheme.bodyMedium,
                 ),
+                if (mayMove) MoveCreditButton(credit: payment),
               ]),
             ),
         ],

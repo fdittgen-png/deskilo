@@ -759,6 +759,20 @@ constraint lease_terms.lease_terms_schedule_id_fkey FOREIGN KEY (schedule_id) RE
 constraint lease_terms.lease_terms_workspace_id_lease_id_fkey FOREIGN KEY (workspace_id, lease_id) REFERENCES premises_leases(workspace_id, id)
 constraint lease_terms.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint lease_terms.system_company_present CHECK ((company_id IS NOT NULL))
+constraint ledger_credit_moves.ledger_credit_moves_amount_cents_check CHECK ((amount_cents > 0))
+constraint ledger_credit_moves.ledger_credit_moves_from_credit_id_fkey FOREIGN KEY (from_credit_id) REFERENCES ledger_entries(id)
+constraint ledger_credit_moves.ledger_credit_moves_once UNIQUE (from_credit_id)
+constraint ledger_credit_moves.ledger_credit_moves_pkey PRIMARY KEY (id)
+constraint ledger_credit_moves.ledger_credit_moves_reason_check CHECK (((char_length(reason) >= 1) AND (char_length(reason) <= 300)))
+constraint ledger_credit_moves.ledger_credit_moves_request UNIQUE (workspace_id, request_id)
+constraint ledger_credit_moves.ledger_credit_moves_reversal_ledger_id_fkey FOREIGN KEY (reversal_ledger_id) REFERENCES ledger_entries(id)
+constraint ledger_credit_moves.ledger_credit_moves_to_credit_id_fkey FOREIGN KEY (to_credit_id) REFERENCES ledger_entries(id)
+constraint ledger_credit_moves.ledger_credit_moves_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint ledger_credit_moves.ledger_credit_moves_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint ledger_credit_moves.ledger_credit_moves_workspace_id_from_member_id_fkey FOREIGN KEY (workspace_id, from_member_id) REFERENCES members(workspace_id, id)
+constraint ledger_credit_moves.ledger_credit_moves_workspace_id_to_member_id_fkey FOREIGN KEY (workspace_id, to_member_id) REFERENCES members(workspace_id, id)
+constraint ledger_credit_moves.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint ledger_credit_moves.system_company_present CHECK ((company_id IS NOT NULL))
 constraint ledger_entries.ledger_entries_amount_cents_check CHECK ((amount_cents > 0))
 constraint ledger_entries.ledger_entries_category_check CHECK ((category = ANY (ARRAY['subscription'::text, 'overage'::text, 'expense'::text, 'payment'::text, 'adjustment'::text, 'service'::text, 'package'::text, 'refund'::text, 'reimbursement'::text])))
 constraint ledger_entries.ledger_entries_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE SET NULL
@@ -2410,7 +2424,7 @@ routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_
 routine public.invoice_issuing_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | invoker | stable | exec:service_role | body:789ffb6de6d5
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
 routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ec3dc4acff5e
-routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:20005fb63ed0
+routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:95f5c0930826
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
@@ -2687,6 +2701,7 @@ routine public.message_mentions_within(p_body text, p_allowed uuid[]) -> text | 
 routine public.message_ref_workspace(p_kind text, p_id uuid) -> uuid | function | definer | stable | exec:service_role | body:6778dc5294c4
 routine public.message_refs_allowed(p_body text, p_users uuid[]) -> boolean | function | definer | stable | exec:service_role | body:6143fc08b8db
 routine public.message_source(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:bf18325b19fb
+routine public.move_payment_credit_v1(p_credit_id uuid, p_to_member_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:75396e292c4d
 routine public.my_account_conversation_with(p_recipient uuid) -> uuid | function | definer | stable | exec:authenticated,service_role | body:740ada36937d
 routine public.my_account_conversations(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:26bd6f2f9a50
 routine public.my_account_group_messages(p_group uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a02203ce982f
@@ -3458,6 +3473,7 @@ trigger lease_settlements.lease_settlements_guard CREATE TRIGGER lease_settlemen
 trigger lease_settlements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_settlements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger lease_terms.lease_terms_guard CREATE TRIGGER lease_terms_guard BEFORE DELETE OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION lease_terms_guard()
 trigger lease_terms.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger ledger_credit_moves.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_credit_moves FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
 trigger ledger_entries.ledger_entries_supply_class CREATE TRIGGER ledger_entries_supply_class BEFORE INSERT ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entry_supply_class()
 trigger ledger_entries.purchase_obligation_credit_link CREATE TRIGGER purchase_obligation_credit_link AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'expense'::text) AND (new.event_id IS NOT NULL))) EXECUTE FUNCTION purchase_obligation_credit_link()

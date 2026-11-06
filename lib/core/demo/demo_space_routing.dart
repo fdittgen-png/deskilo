@@ -22,6 +22,7 @@ import '../../features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/providers/bank_statement_providers.dart';
+import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/hmrc_providers.dart';
 import '../../features/money/providers/money_providers.dart';
@@ -41,6 +42,7 @@ import 'data/bank_statement_demo_seed.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/finance_kpi_repository.dart';
+import 'data/money/demo_credit_moves.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -277,6 +279,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   memberAccountCommandsProvider.overrideWith(
     (ref) => money(ref).accountCommands,
   ),
+  creditMoveRepositoryProvider.overrideWith((ref) => DemoCreditMoves(money(ref))),
   reportTemplateRepositoryProvider.overrideWith(
     (ref) => money(ref).reportTemplates,
   ),

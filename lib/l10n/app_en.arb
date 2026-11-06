@@ -7641,6 +7641,46 @@
       }
     }
   },
+  "creditMoveAction": "Move to another member",
+  "@creditMoveAction": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveBody": "The payment stays on record. This member's account gives it back, and the member who actually paid receives it, in the same month.",
+  "@creditMoveBody": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveConfirm": "Move",
+  "@creditMoveConfirm": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveDone": "The payment was moved.",
+  "@creditMoveDone": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveFailed": "The payment could not be moved.",
+  "@creditMoveFailed": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberLabel": "Member who paid",
+  "@creditMoveMemberLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberRequired": "Choose the member who paid.",
+  "@creditMoveMemberRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonLabel": "Reason",
+  "@creditMoveReasonLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonRequired": "Say why the payment moves.",
+  "@creditMoveReasonRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveTitle": "Move this payment",
+  "@creditMoveTitle": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
   "customerCapacityBusiness": "Business",
   "@customerCapacityBusiness": {
     "description": "#1916 invoice clauses: customerCapacityBusiness"

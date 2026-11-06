@@ -6071,6 +6071,37 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get creditMoveAction => 'Move to another member';
+
+  @override
+  String get creditMoveBody =>
+      'The payment stays on record. This member\'s account gives it back, and the member who actually paid receives it, in the same month.';
+
+  @override
+  String get creditMoveConfirm => 'Move';
+
+  @override
+  String get creditMoveDone => 'The payment was moved.';
+
+  @override
+  String get creditMoveFailed => 'The payment could not be moved.';
+
+  @override
+  String get creditMoveMemberLabel => 'Member who paid';
+
+  @override
+  String get creditMoveMemberRequired => 'Choose the member who paid.';
+
+  @override
+  String get creditMoveReasonLabel => 'Reason';
+
+  @override
+  String get creditMoveReasonRequired => 'Say why the payment moves.';
+
+  @override
+  String get creditMoveTitle => 'Move this payment';
+
+  @override
   String get customerCapacityBusiness => 'Business';
 
   @override

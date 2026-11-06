@@ -6102,6 +6102,38 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get creditMoveAction => 'Sposta a un altro membro';
+
+  @override
+  String get creditMoveBody =>
+      'Il pagamento resta registrato. Il conto di questo membro lo restituisce e il membro che ha davvero pagato lo riceve, nello stesso mese.';
+
+  @override
+  String get creditMoveConfirm => 'Sposta';
+
+  @override
+  String get creditMoveDone => 'Il pagamento è stato spostato.';
+
+  @override
+  String get creditMoveFailed => 'Non è stato possibile spostare il pagamento.';
+
+  @override
+  String get creditMoveMemberLabel => 'Membro che ha pagato';
+
+  @override
+  String get creditMoveMemberRequired => 'Scegli il membro che ha pagato.';
+
+  @override
+  String get creditMoveReasonLabel => 'Motivo';
+
+  @override
+  String get creditMoveReasonRequired =>
+      'Indica perché il pagamento viene spostato.';
+
+  @override
+  String get creditMoveTitle => 'Sposta questo pagamento';
+
+  @override
   String get customerCapacityBusiness => 'Professionista';
 
   @override
