@@ -13485,7 +13485,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceSendStatusFailed => 'no transmitida';
 
   @override
+  String get invoiceSendStatusInProgress => 'en curso';
+
+  @override
   String get invoiceSendStatusRejected => 'rechazada';
+
+  @override
+  String get invoiceSendStatusUncertain =>
+      'resultado desconocido - comprobar antes de volver a enviar';
+
+  @override
+  String get invoiceSendUnresolved =>
+      'Esta factura ya se envió y el resultado aún no está establecido, por lo que no se volvió a enviar. Compruebe el registro de la plataforma antes de hacer nada más.';
 
   @override
   String invoiceSentOn(String date, String status) {

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
@@ -223,12 +224,7 @@ class InvoiceDetailSections {
     Widget line(String text) => _detailLine(theme, text);
     final sent = transmission;
     // The platform's answer, in the reader's language.
-    final sentStatus = switch (sent?.status) {
-      EInvoiceSubmissionStatus.accepted => l10n.invoiceSendStatusAccepted,
-      EInvoiceSubmissionStatus.rejected => l10n.invoiceSendStatusRejected,
-      EInvoiceSubmissionStatus.failed => l10n.invoiceSendStatusFailed,
-      null => '',
-    };
+    final sentStatus = _sentStatusWord(l10n, sent?.status);
 
     return [
       // Lifecycle facts: the correction chain, the payment that
@@ -314,3 +310,17 @@ Widget _detailLine(ThemeData theme, String text) => Padding(
 /// '20 %', '5.5 %' — a rate beside its caption.
 String _percentLabel(double percent) =>
     '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+
+/// The platform's answer, in the reader's language (#3335: also the two
+/// unsettled phases).
+String _sentStatusWord(
+  AppLocalizations l10n,
+  EInvoiceSubmissionStatus? status,
+) => switch (status) {
+  EInvoiceSubmissionStatus.accepted => l10n.invoiceSendStatusAccepted,
+  EInvoiceSubmissionStatus.rejected => l10n.invoiceSendStatusRejected,
+  EInvoiceSubmissionStatus.failed => l10n.invoiceSendStatusFailed,
+  EInvoiceSubmissionStatus.inProgress => l10n.invoiceSendStatusInProgress,
+  EInvoiceSubmissionStatus.uncertain => l10n.invoiceSendStatusUncertain,
+  null => '',
+};

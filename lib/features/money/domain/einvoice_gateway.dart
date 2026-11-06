@@ -76,6 +76,35 @@ enum EInvoiceSubmissionStatus {
 
   /// It could not be reached at all.
   failed,
+
+  /// #3335 — submitted and not yet answered: the document is prepared or its
+  /// dispatch is in flight. Nothing is sent again while it stands.
+  inProgress,
+
+  /// #3335 — the upload may have landed and its outcome is not known. Never
+  /// resent blindly: a lookup or a person with the send authority settles it.
+  uncertain;
+
+  /// The status a server row or answer carries: the new `phase` when the
+  /// server sends one, else the legacy `status` (an older server). A phase
+  /// this client does not know reads as [uncertain], never as a failure that
+  /// invites a resend.
+  static EInvoiceSubmissionStatus fromWire({String? phase, String? status}) {
+    final word = (phase != null && phase.isNotEmpty) ? phase : status;
+    return switch (word) {
+      'accepted' => accepted,
+      'rejected' => rejected,
+      'failed' => failed,
+      'prepared' || 'sent' => inProgress,
+      'uncertain' => uncertain,
+      null || '' => failed,
+      _ when phase != null && phase.isNotEmpty => uncertain,
+      _ => failed,
+    };
+  }
+
+  /// The submission is neither settled nor safely retryable.
+  bool get isUnresolved => this == inProgress || this == uncertain;
 }
 
 class EInvoiceSubmission {
@@ -186,14 +215,17 @@ class InvoiceTransmission {
 
   bool get accepted => status == EInvoiceSubmissionStatus.accepted;
 
+  /// #3335 — a submission whose outcome is not settled: no resend offered.
+  bool get isUnresolved => status.isUnresolved;
+
   bool get isTestSend => environment != 'prod';
 
   factory InvoiceTransmission.fromRow(Map<String, dynamic> row) =>
       InvoiceTransmission(
         invoiceId: row['invoice_id'] as String,
-        status: EInvoiceSubmissionStatus.values.firstWhere(
-          (s) => s.name == row['status'],
-          orElse: () => EInvoiceSubmissionStatus.failed,
+        status: EInvoiceSubmissionStatus.fromWire(
+          phase: row['phase'] as String?,
+          status: row['status'] as String?,
         ),
         sentAt: DateTime.parse(row['sent_at'] as String).toLocal(),
         provider: row['provider'] as String? ?? 'generic',

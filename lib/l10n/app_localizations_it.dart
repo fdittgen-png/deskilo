@@ -13488,7 +13488,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceSendStatusFailed => 'non trasmessa';
 
   @override
+  String get invoiceSendStatusInProgress => 'in corso';
+
+  @override
   String get invoiceSendStatusRejected => 'rifiutata';
+
+  @override
+  String get invoiceSendStatusUncertain =>
+      'esito sconosciuto - verificare prima di inviare di nuovo';
+
+  @override
+  String get invoiceSendUnresolved =>
+      'Questa fattura è già stata inviata e l\'esito non è ancora definito, quindi non è stata reinviata. Verifichi la registrazione della piattaforma prima di fare altro.';
 
   @override
   String invoiceSentOn(String date, String status) {

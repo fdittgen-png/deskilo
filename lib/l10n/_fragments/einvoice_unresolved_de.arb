@@ -1,0 +1,6 @@
+{
+  "@@locale": "de",
+  "invoiceSendStatusInProgress": "in Bearbeitung",
+  "invoiceSendStatusUncertain": "Ergebnis unbekannt - vor erneutem Senden prüfen",
+  "invoiceSendUnresolved": "Diese Rechnung wurde bereits übermittelt und das Ergebnis steht noch nicht fest, deshalb wurde sie nicht erneut gesendet. Prüfen Sie zuerst den Eintrag bei der Plattform."
+}

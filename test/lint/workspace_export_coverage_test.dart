@@ -451,7 +451,7 @@ Map<String, List<String>> _openItems() {
 const Map<String, Set<String>> _notExportedColumns = {
   'invoice_transmissions': {
     // #3335 — the dispatch bookkeeping of an e-invoice submission (its
-    // business key, binding, owner, generation, deadline, correlation key,
+    // business key, binding, owner, generation, deadline,
     // phase, document verdict, last query error and manual resolution):
     // delivery state of this installation towards one provider, not
     // portable configuration; the sent facts (status, receipt) stay exported.
@@ -461,7 +461,6 @@ const Map<String, Set<String>> _notExportedColumns = {
     'owner_id',
     'generation',
     'deadline',
-    'correlation_key',
     'verdict',
     'query_error',
     'requested_by',

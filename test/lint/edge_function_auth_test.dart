@@ -76,6 +76,15 @@ String _bundled(String slug, {bool authFirst = false}) {
   return files.map((f) => f['content'] as String).join();
 }
 
+/// Where the caller is resolved on the path every request takes. A function
+/// that keeps its decisions in a handler resolves the caller through
+/// `store.user(` there (the store holds `auth.getUser(`); checking the
+/// handler's own call is what makes "before any branch" falsifiable.
+int _callerResolvedAt(String source) {
+  final viaStore = source.indexOf('store.user(');
+  return viaStore >= 0 ? viaStore : source.indexOf('auth.getUser(');
+}
+
 void _assertGuarded(String name, String source, String where) {
   final chains = RegExp(
     r'\.from\(\s*"members"\s*\)(.*?)(maybeSingle|single)\(\)',
@@ -90,7 +99,9 @@ void _assertGuarded(String name, String source, String where) {
             'workspace, so this returns one row per member and '
             'maybeSingle() then refuses the caller.');
   }
-  final auth = source.indexOf('auth.getUser(');
+  expect(source, contains('auth.getUser('),
+      reason: '$name ($where) never resolves the caller');
+  final auth = _callerResolvedAt(source);
   expect(auth, greaterThan(-1),
       reason: '$name ($where) never resolves the caller');
   for (final answer in RegExp(r'action === "(\w+)"').allMatches(source)) {
@@ -188,7 +199,9 @@ void main() {
       });
 
       test('the caller is identified before any branch answers', () {
-        final auth = authSource.indexOf('auth.getUser(');
+        expect(authSource, contains('auth.getUser('),
+            reason: '$name never resolves the caller');
+        final auth = _callerResolvedAt(authSource);
         expect(auth, greaterThan(-1),
             reason: '$name never resolves the caller');
         // Every early return that hands data back to the caller.

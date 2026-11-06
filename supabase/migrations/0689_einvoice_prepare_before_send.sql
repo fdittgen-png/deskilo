@@ -23,7 +23,6 @@ alter table public.invoice_transmissions
   add column if not exists owner_id uuid,
   add column if not exists generation integer not null default 0,
   add column if not exists deadline timestamptz,
-  add column if not exists correlation_key text,
   add column if not exists verdict jsonb not null default '{}'::jsonb,
   add column if not exists query_error text not null default '',
   add column if not exists requested_by uuid,
@@ -33,6 +32,10 @@ alter table public.invoice_transmissions
   add column if not exists resolved_at timestamptz;
 
 update public.invoice_transmissions set phase = status where phase is null;
+
+-- (a first draft carried a correlation_key no connector can query by)
+alter table public.invoice_transmissions
+  drop column if exists correlation_key;
 
 alter table public.invoice_transmissions
   alter column phase set not null,

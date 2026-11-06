@@ -124,6 +124,18 @@ Future<void> sendEInvoice(
   if (!context.mounted) return;
   final submission = result;
   if (submission == null) return;
+  _announce(context, submission, environment, destination);
+}
+
+/// What the owner is told about a submission (#3335: an unsettled one sends
+/// nothing again and points at the platform's record).
+void _announce(
+  BuildContext context,
+  EInvoiceSubmission submission,
+  String environment,
+  String destination,
+) {
+  final l10n = context.l10n;
   if (submission.accepted) {
     AppSnack.success(
       context,
@@ -133,6 +145,10 @@ Future<void> sendEInvoice(
           ? (l10n.invoiceSendCustomerAccepted)
           : (l10n.invoiceSendAccepted),
     );
+    return;
+  }
+  if (submission.status.isUnresolved) {
+    AppSnack.error(context, l10n.invoiceSendUnresolved);
     return;
   }
   // The platform's own words beat a generic failure: they are what the

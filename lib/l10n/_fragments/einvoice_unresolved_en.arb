@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "invoiceSendStatusInProgress": "in progress",
+  "invoiceSendStatusUncertain": "outcome unknown - check before sending again",
+  "invoiceSendUnresolved": "This invoice was already submitted and the outcome is not settled yet, so it was not sent again. Check the platform's record before doing anything else.",
+  "@invoiceSendStatusInProgress": {
+    "description": "#3335 - transmission status word: submitted, answer pending"
+  },
+  "@invoiceSendStatusUncertain": {
+    "description": "#3335 - transmission status word: the upload may have landed and its outcome is unknown"
+  },
+  "@invoiceSendUnresolved": {
+    "description": "#3335 - snackbar when a send finds an earlier unresolved submission and sends nothing"
+  }
+}

@@ -22145,11 +22145,29 @@ abstract class AppLocalizations {
   /// **'not delivered'**
   String get invoiceSendStatusFailed;
 
+  /// #3335 - transmission status word: submitted, answer pending
+  ///
+  /// In en, this message translates to:
+  /// **'in progress'**
+  String get invoiceSendStatusInProgress;
+
   /// Transmission status word
   ///
   /// In en, this message translates to:
   /// **'rejected'**
   String get invoiceSendStatusRejected;
+
+  /// #3335 - transmission status word: the upload may have landed and its outcome is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'outcome unknown - check before sending again'**
+  String get invoiceSendStatusUncertain;
+
+  /// #3335 - snackbar when a send finds an earlier unresolved submission and sends nothing
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice was already submitted and the outcome is not settled yet, so it was not sent again. Check the platform\'s record before doing anything else.'**
+  String get invoiceSendUnresolved;
 
   /// Detail sheet: when it left and what came back
   ///

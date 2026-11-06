@@ -8922,7 +8922,10 @@
   "invoiceSendRejected": "La plataforma la rechazó.",
   "invoiceSendStatusAccepted": "aceptada",
   "invoiceSendStatusFailed": "no transmitida",
+  "invoiceSendStatusInProgress": "en curso",
   "invoiceSendStatusRejected": "rechazada",
+  "invoiceSendStatusUncertain": "resultado desconocido - comprobar antes de volver a enviar",
+  "invoiceSendUnresolved": "Esta factura ya se envió y el resultado aún no está establecido, por lo que no se volvió a enviar. Compruebe el registro de la plataforma antes de hacer nada más.",
   "invoiceSentOn": "Enviada el {date} · {status}",
   "@invoiceSentOn": {
     "placeholders": {
