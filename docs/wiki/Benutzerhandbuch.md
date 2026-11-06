@@ -5325,6 +5325,7 @@ Sie möchten eine ausgestellte Rechnung in ihrer maschinenlesbaren Form übergeb
 - Fehlt etwas, listet das Blatt es auf. **Rechtliche Identität vervollständigen** führt Sie zum Bildschirm, der es behebt.
 - Eine Rechnung, die signiert wurde, bevor Sie Ihre Identität vervollständigt haben, behält, womit sie ausgestellt wurde. Markieren Sie sie als fehlerhaft und stellen Sie eine Ersatzrechnung aus, wenn es darauf ankommt.
 - Welchen Weg ein Kunde nutzen muss, hängt von Ihrem Land und vom Kunden ab. Klären Sie das mit Ihrer Buchhaltung.
+- Geht die Antwort der Plattform verloren, nachdem das Dokument möglicherweise gesendet wurde, zeigt die Rechnung **Ergebnis unbekannt** und **Senden** wird nicht mehr angeboten. Prüfen Sie den Eintrag der Plattform, tippen Sie dann auf **Festhalten, was passiert ist** und geben Sie an, was Sie gefunden haben, woher Sie sicher sind und was Sie geprüft haben. Wer Rechnungen ausstellen darf, kann das einmal tun; dabei wird nichts gesendet.
 
 **Siehe auch:** [Die E-Rechnungs-Plattform](#die-e-rechnungs-plattform) · [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung)
 

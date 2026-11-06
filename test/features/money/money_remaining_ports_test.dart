@@ -267,6 +267,16 @@ class _EInvoices implements EInvoiceTransmissions {
   }) => throw UnimplementedError();
 
   @override
+  Future<EInvoiceResolveResult> resolveEInvoiceTransmission({
+    required String workspaceId,
+    required String transmissionId,
+    required EInvoiceResolution resolution,
+    required String reason,
+    required String evidence,
+    bool documentRejected = false,
+  }) => throw UnimplementedError();
+
+  @override
   Future<void> setEInvoiceCredentials(
     String workspaceId,
     Map<String, String> config,

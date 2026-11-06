@@ -1,0 +1,18 @@
+{
+  "@@locale": "it",
+  "eInvoiceResolveAction": "Registrare cosa è successo",
+  "eInvoiceResolveTitle": "Definire questo invio",
+  "eInvoiceResolveIntro": "Il documento potrebbe essere arrivato alla piattaforma e la risposta si è persa, quindi non è stato reinviato. Verifichi la registrazione della piattaforma e indichi ciò che ha trovato.",
+  "eInvoiceResolveAccepted": "La piattaforma ha il documento",
+  "eInvoiceResolveRejected": "La piattaforma ha rifiutato l'invio",
+  "eInvoiceResolveFailed": "Nulla è arrivato alla piattaforma (può essere reinviato)",
+  "eInvoiceResolveDocumentRejected": "L'autorità ha poi respinto il documento",
+  "eInvoiceResolveReason": "Perché ne è sicuro",
+  "eInvoiceResolveEvidence": "Cosa ha verificato (riferimento, data, dove)",
+  "eInvoiceResolveReasonRequired": "Dica perché ne è sicuro.",
+  "eInvoiceResolveEvidenceRequired": "Indichi la registrazione della piattaforma che ha verificato.",
+  "eInvoiceResolveSubmit": "Registra",
+  "eInvoiceResolveDone": "Registrato. L'invio è definito.",
+  "eInvoiceResolveAlready": "Qualcuno ha già definito questo invio.",
+  "eInvoiceResolveError": "Non è stato possibile registrare l'invio. Riprovi."
+}

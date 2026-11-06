@@ -1,0 +1,18 @@
+{
+  "@@locale": "de",
+  "eInvoiceResolveAction": "Festhalten, was passiert ist",
+  "eInvoiceResolveTitle": "Diese Übermittlung klären",
+  "eInvoiceResolveIntro": "Das Dokument ist möglicherweise bei der Plattform angekommen und die Antwort ging verloren, deshalb wurde es nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und halten Sie fest, was Sie gefunden haben.",
+  "eInvoiceResolveAccepted": "Die Plattform hat das Dokument",
+  "eInvoiceResolveRejected": "Die Plattform hat den Upload abgelehnt",
+  "eInvoiceResolveFailed": "Bei der Plattform ist nichts angekommen (es kann erneut gesendet werden)",
+  "eInvoiceResolveDocumentRejected": "Die Behörde hat das Dokument danach abgelehnt",
+  "eInvoiceResolveReason": "Woher Sie sicher sind",
+  "eInvoiceResolveEvidence": "Was Sie geprüft haben (Referenz, Datum, wo)",
+  "eInvoiceResolveReasonRequired": "Nennen Sie, woher Sie sicher sind.",
+  "eInvoiceResolveEvidenceRequired": "Nennen Sie den geprüften Eintrag der Plattform.",
+  "eInvoiceResolveSubmit": "Festhalten",
+  "eInvoiceResolveDone": "Festgehalten. Die Übermittlung ist geklärt.",
+  "eInvoiceResolveAlready": "Jemand hat diese Übermittlung bereits geklärt.",
+  "eInvoiceResolveError": "Die Übermittlung konnte nicht festgehalten werden. Versuchen Sie es erneut."
+}

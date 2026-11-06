@@ -674,3 +674,73 @@ Deno.test("a resolved no-acceptance failure may be dispatched again, with the sa
   assertEquals(retry.body.transmission_id, sent.body.transmission_id);
   assertEquals(s.rows.get(sent.body.transmission_id)!.generation, 2);
 });
+
+Deno.test("O10: a later document rejection is a verdict beside the upload; the phase stays accepted", async () => {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://sdi.test",
+    login_url: "https://login.test/login",
+    username: "u@x.it",
+    password: "p",
+  };
+  s.rows.set("t10", {
+    id: "t10",
+    key: "k",
+    binding: "b",
+    workspace_id: WS,
+    provider: "it_sdi",
+    phase: "accepted",
+    external_id: "u-1",
+    detail: "",
+    environment: "prod",
+    destination: "government",
+    format: "fatturaPa",
+    receipt: { uuid: "u-1" },
+    owner: "o",
+    generation: 1,
+    deadline: 0,
+    verdict: {},
+    queryError: "",
+    resolvedBy: "",
+    artifact: {
+      bytes: new Uint8Array() as Uint8Array<ArrayBuffer>,
+      sha256: "",
+      fileName: "",
+      mimeType: "",
+      receiverScheme: "",
+      receiverId: "",
+    },
+  });
+  const p = provider(() => new Response("{}"));
+  const answers: Record<string, unknown> = {
+    "https://login.test/login": { token: "jwt" },
+    "https://sdi.test/invoices/u-1": { marking: "rejected" },
+    "https://sdi.test/invoices/u-1/notifications": [
+      { type: "NS", message: "00404 duplicate" },
+    ],
+  };
+  const fetchImpl = ((input: string | URL | Request, init?: RequestInit) => {
+    const url = String(input instanceof Request ? input.url : input);
+    if ((init?.method ?? "GET") === "POST" && !url.endsWith("/login")) {
+      p.posts.push(url);
+    }
+    return Promise.resolve(
+      new Response(JSON.stringify(answers[url] ?? {}), { status: 200 }),
+    );
+  }) as typeof fetch;
+  const r = await read(
+    await call(s, fetchImpl, {
+      workspace_id: WS,
+      action: "status",
+      transmission_id: "t10",
+    }),
+  );
+  const row = s.rows.get("t10")!;
+  assertEquals(r.body.phase, "accepted"); // transport progress is kept
+  assertEquals(r.body.document_status, "rejected"); // the verdict, separately
+  assertEquals(row.phase, "accepted");
+  assertEquals((row.verdict as { status?: string }).status, "rejected");
+  assertEquals(row.receipt.uuid !== undefined, true);
+  assertEquals(p.posts.length, 0); // asking never uploads
+});

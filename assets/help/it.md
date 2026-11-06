@@ -5076,6 +5076,7 @@ Vuole consegnare una fattura emessa nella sua forma leggibile dalle macchine.
 - Se manca qualcosa, la scheda lo elenca. **Completare l'identità legale** Le apre la schermata che lo risolve.
 - Una fattura firmata prima che completasse la Sua identità conserva ciò con cui è stata emessa. La segni come errata e ne emetta una sostitutiva se è importante.
 - Quale canale debba usare un cliente dipende dal Suo Paese e dal cliente. Lo confermi con il Suo commercialista.
+- Se la risposta della piattaforma si perde quando il documento potrebbe essere partito, la fattura mostra **esito sconosciuto** e **Invia** non viene più proposto. Verifichi la registrazione della piattaforma, poi tocchi **Registrare cosa è successo** e indichi ciò che ha trovato, perché ne è sicuro e cosa ha verificato. Chi può emettere fatture può farlo una volta; con questo non viene inviato nulla.
 
 **Vedi anche:** [La piattaforma di fatturazione elettronica](help:user.money.einvoice.overview) · [La schermata Fatturazione](help:user.invoicing.hub)
 

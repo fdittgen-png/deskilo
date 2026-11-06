@@ -8,6 +8,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/einvoice_receipt.dart';
 import '../../domain/einvoice_gateway.dart';
+import 'einvoice_resolve_dialog.dart';
 
 /// #2358 — what a national channel said about a document after taking it
 /// (the KSeF number, the ANAF download id, the PA's status, the SdI
@@ -73,6 +74,21 @@ class EInvoiceReceiptLine extends ConsumerWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+          ),
+        // #3335 — an unsettled submission is settled by a person with the
+        // send authority; Send is not offered meanwhile.
+        if (canAsk &&
+            transmission.id.isNotEmpty &&
+            transmission.status == EInvoiceSubmissionStatus.uncertain)
+          TextButton.icon(
+            key: const ValueKey('einvoice-resolve'),
+            onPressed: () => showEInvoiceResolveDialog(
+              context,
+              workspaceId: workspaceId,
+              transmissionId: transmission.id,
+            ),
+            icon: const Icon(Icons.fact_check_outlined),
+            label: Text(l10n.eInvoiceResolveAction),
           ),
         if (askable)
           TextButton.icon(
