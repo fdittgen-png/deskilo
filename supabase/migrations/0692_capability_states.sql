@@ -22,8 +22,12 @@
 --  * set_capability_state_v1 -- the transitions of the contract:
 --      active -> servicing   the connector authority (manageBilling)
 --      servicing -> active   the same, and the feature must be on
---      servicing -> retired  owner, with a reason, refused while any delivery
---                            is unresolved (the first one named)
+--      servicing -> retired  owner, with a reason, refused while a delivery is
+--                            still unresolved: generated or sent on a live
+--                            connection (the count is named). failed and
+--                            conflict are terminal for retirement, and so is
+--                            anything on a revoked connection: in servicing
+--                            none of it can be relinked, re-sent or settled
 --      retired -> servicing  owner, with a reason
 --    Anything else is refused. Repeating the current state records nothing.
 --  * capability_states_v1 -- the state for the managers (derived or stored).
@@ -68,9 +72,21 @@ create table if not exists public.capability_states (
   changed_by_member_id uuid not null,
   changed_at timestamptz not null default now(),
   primary key (workspace_id, capability_key),
-  constraint capability_states_changed_by_fk
+  constraint capability_states_changed_by_member_id_same_workspace
     foreign key (workspace_id, changed_by_member_id) references public.members (workspace_id, id)
 );
+-- (the first draft named it capability_states_changed_by_fk)
+alter table public.capability_states drop constraint if exists capability_states_changed_by_fk;
+do $fk$
+begin
+  if not exists (select 1 from pg_constraint
+                  where conrelid = 'public.capability_states'::regclass
+                    and conname = 'capability_states_changed_by_member_id_same_workspace') then
+    alter table public.capability_states add constraint capability_states_changed_by_member_id_same_workspace
+      foreign key (workspace_id, changed_by_member_id) references public.members (workspace_id, id);
+  end if;
+end
+$fk$;
 select public.ensure_system_columns('capability_states');
 
 alter table public.capability_states enable row level security;
@@ -170,8 +186,11 @@ begin
     raise exception 'accounting connections are switched off in this space' using errcode = '0A000';
   end if;
   if p_to = 'retired' then
+    -- unresolved = could still complete: prepared or sent, on a live connection
     select count(*) into v_open from public.accounting_deliveries d
-     where d.workspace_id = p_workspace_id and d.status <> 'acknowledged';
+      join public.accounting_connections k on k.id = d.connection_id
+     where d.workspace_id = p_workspace_id and d.status in ('generated', 'sent')
+       and k.revoked_at is null;
     if v_open > 0 then
       raise exception '% deliveries are unresolved: finish them before retiring', v_open
         using errcode = '22023';

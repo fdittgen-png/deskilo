@@ -9,7 +9,7 @@
 -- and the outcome of admitted work; the feature choice stays authoritative; a
 -- plain member, another space's owner and an assistant's token move nothing.
 begin;
-select plan(31);
+select plan(33);
 
 create or replace function pg_temp.v(p text) returns text language sql as $$
   select current_setting('cs.' || p)
@@ -35,10 +35,10 @@ returns text language sql as $$
   select pg_temp.as_actor(p_who, format($q$select (r ->> 'state') || ':' || (r ->> 'changed') from (select public.set_capability_state_v1(%L, %L, %L, %L) as r) x$q$,
     pg_temp.v('ws'), p_key, p_to, p_reason))
 $$;
-create or replace function pg_temp.rec(p_doc text, p_status text, p_remote jsonb default '{}') returns text language plpgsql as $d$
+create or replace function pg_temp.rec(p_doc text, p_status text, p_remote jsonb default '{}', p_conn text default null) returns text language plpgsql as $d$
 declare v jsonb;
 begin
-  v := public.record_accounting_delivery(pg_temp.v('c1')::uuid, 'invoice', p_doc::uuid, date '2026-03-02', 'F-2026-0007',
+  v := public.record_accounting_delivery(coalesce(p_conn, pg_temp.v('c1'))::uuid, 'invoice', p_doc::uuid, date '2026-03-02', 'F-2026-0007',
          date '2026-01-01', date '2026-12-31', repeat('a', 64), p_status, p_remote, '');
   return v ->> 'outcome';
 exception when others then
@@ -94,6 +94,26 @@ begin
 end
 $seed$;
 
+-- Terminal work that must not block retirement: a failed delivery on the live
+-- connection, and a stale prepared one and a failed one on a revoked connection.
+do $old$
+declare
+  ws uuid := current_setting('cs.ws')::uuid; s2 uuid; co uuid;
+begin
+  insert into public.sites (workspace_id, name) values (ws, 'Annex') returning id into s2;
+  insert into public.accounting_connections
+    (workspace_id, issuer_site_id, target_id, auth_kind, remote_tenant_id, display_name, status, connected_at)
+  values (ws, s2, 'pennylane_api', 'token', '999', 'Old', 'connected', now()) returning id into co;
+  perform set_config('cs.co', co::text, false);
+end
+$old$;
+select pg_temp.rec('00000000-0000-4000-8000-00000336e005', 'generated');
+select pg_temp.rec('00000000-0000-4000-8000-00000336e005', 'failed');
+select pg_temp.rec('00000000-0000-4000-8000-00000336e006', 'generated', '{}', pg_temp.v('co'));
+select pg_temp.rec('00000000-0000-4000-8000-00000336e007', 'generated', '{}', pg_temp.v('co'));
+select pg_temp.rec('00000000-0000-4000-8000-00000336e007', 'failed', '{}', pg_temp.v('co'));
+update public.accounting_connections set status = 'revoked', revoked_at = now() where id = pg_temp.v('co')::uuid;
+
 -- 1. no row: derived from the feature
 select is(pg_temp.state_now('o'), 'active:true', 'no row: the state is derived (feature on = active)');
 select is(pg_temp.state_now('p'), '42501', 'a plain member does not read the state');
@@ -125,13 +145,21 @@ select is(pg_temp.set_state('a', 'servicing', ''), 'servicing:true', 'back to se
 select is(pg_temp.set_state('a', 'retired', 'closing'), '42501', 'a manager who is not the owner does not retire');
 select is(pg_temp.set_state('o', 'retired', ''), '22023', 'retiring needs a reason');
 select is(pg_temp.set_state('o', 'retired', 'closing'), '22023:unresolved', 'retiring is refused while a delivery is unresolved');
+select is((select count(*)::int from public.accounting_deliveries
+            where workspace_id = pg_temp.v('ws')::uuid and status = 'failed'), 2,
+  'a failed delivery on a live connection and one on a revoked connection exist');
+select is((select count(*)::int from public.accounting_deliveries d
+             join public.accounting_connections k on k.id = d.connection_id
+            where d.workspace_id = pg_temp.v('ws')::uuid and d.status = 'generated' and k.revoked_at is not null), 1,
+  'and a stale prepared delivery on a revoked connection');
 
 -- 5. resolve them, retire, and see what retired allows
 select pg_temp.rec('00000000-0000-4000-8000-00000336e001', 'acknowledged', '{"id": "R-1"}');
 select pg_temp.rec('00000000-0000-4000-8000-00000336e002', 'acknowledged', '{"id": "R-2"}');
-select is(pg_temp.set_state('o', 'retired', 'closing'), 'retired:true', 'the owner retires once nothing is unresolved');
+select is(pg_temp.set_state('o', 'retired', 'closing'), 'retired:true',
+  'the owner retires once nothing can still complete: failed work and work on a revoked connection do not block it');
 select is(pg_temp.rec('00000000-0000-4000-8000-00000336e003', 'generated'), '0A000', 'retired refuses new work');
-select is(pg_temp.as_actor('o', format($q$select jsonb_array_length(public.accounting_connections_v1(%L))::text$q$, pg_temp.v('ws'))), '1',
+select is(pg_temp.as_actor('o', format($q$select jsonb_array_length(public.accounting_connections_v1(%L))::text$q$, pg_temp.v('ws'))), '2',
   'retired: the history is still read');
 select is(pg_temp.set_state('o', 'active', 'again'), '22023', 'retired goes back through servicing, not to active');
 select is(pg_temp.set_state('a', 'servicing', 'reopen'), '42501', 'a manager who is not the owner does not reopen');
