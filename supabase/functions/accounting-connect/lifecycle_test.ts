@@ -103,6 +103,18 @@ Deno.test("revoking an OAuth connection revokes the refresh token at the target,
   assert(!JSON.stringify(answer).includes(SECRET));
 });
 
+Deno.test("the revocation's preliminary check names its purpose, so offboarding survives the feature being off (#3336)", async () => {
+  const w = world();
+  await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const check = w.calls.find((c) => c.fn === "accounting_connection_manageable_v1")!;
+  assertEquals(check.as, "caller");
+  assertEquals(check.args, { p_connection_id: CONN, p_purpose: "revoke" });
+  // verify and refresh are still work: they ask without a purpose
+  const verify = world({ target: "pennylane_api", authKind: "token" });
+  await handle(post({ action: "verify", connection_id: CONN }), verify.deps);
+  assertEquals(verify.calls.find((c) => c.fn === "accounting_connection_manageable_v1")!.args, { p_connection_id: CONN });
+});
+
 Deno.test("a target that refuses or is unreachable still leaves the connection revoked, the failure said", async () => {
   for (const vendor of [() => new Response('{"error":"server_error"}', { status: 500 })]) {
     const w = world({ vendor });
