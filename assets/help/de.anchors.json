@@ -262,6 +262,7 @@
   "user.money.reminders.automatic": "Automatische Mahnungen",
   "user.invoicing.register": "Das Rechnungsregister",
   "user.invoicing.accounting-export": "Buchhaltungsexporte",
+  "user.invoicing.accounting-state": "Neue Buchhaltungsarbeit stoppen",
   "user.invoicing.bi": "Business-Analysen",
   "user.advanced.overview": "Erweitert",
   "user.advanced.environments": "Ein Space hat zwei Seiten",

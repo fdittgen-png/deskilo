@@ -5,6 +5,7 @@
 // connect and map, exportData to log, the accountingConnectors flag for
 // all) and holds every secret; this refuses only what cannot be right, so
 // a form names the field before anything is sent.
+import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/accounting_delivery_run.dart';
@@ -37,6 +38,43 @@ class AccountingConnectionCommands {
   const AccountingConnectionCommands(this._repository);
 
   final AccountingConnectionRepository _repository;
+
+  /// #3336 — whether the connectors admit new work (0692).
+  Future<CapabilityState> capabilityState(String workspaceId) =>
+      _repository.fetchCapabilityState(workspaceId);
+
+  /// Moves the state from [from] to [to] with [reason] (trimmed and cut to
+  /// what the server keeps); null when nothing was sent: the move is not one
+  /// the contract allows [owner], or a reason it needs was not given.
+  Future<CapabilityState?> moveCapability(
+    String workspaceId, {
+    required CapabilityStateKind from,
+    required CapabilityStateKind to,
+    required String reason,
+    required bool owner,
+  }) async {
+    final why = reason.trim();
+    if (!capabilityMoves(from, owner: owner).contains(to)) return null;
+    if (capabilityMoveNeedsReason(from, to) && why.isEmpty) return null;
+    return _repository.setCapabilityState(
+      workspaceId,
+      to,
+      why.length <= capabilityReasonWidth
+          ? why
+          : why.substring(0, capabilityReasonWidth),
+    );
+  }
+
+  /// How the server's refusal of a move is worded on the screen.
+  static CapabilityRefusal refusalOf(Object error) {
+    final text = (serverErrorMessage(error) ??
+            (error is StateError ? error.message : ''))
+        .toLowerCase();
+    if (text.contains('unresolved')) return CapabilityRefusal.unresolved;
+    if (text.contains('only the owner')) return CapabilityRefusal.owner;
+    if (text.contains('switched off')) return CapabilityRefusal.switchedOff;
+    return CapabilityRefusal.other;
+  }
 
   /// Opens a connection to [targetId] for [issuerSiteId] reached with
   /// [token]; null when the token is too short (nothing is sent).

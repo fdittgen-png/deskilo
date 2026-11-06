@@ -94,6 +94,56 @@ class FakeAccountingConnectionRepository
         delivered: deliveries.any((d) => d.connectionId == c.id),
       );
 
+  /// #3336 — the state the connectors are in (0692): the feature on is
+  /// active until an operator decides otherwise.
+  CapabilityState _state = const CapabilityState(
+    kind: CapabilityStateKind.active,
+  );
+
+  @override
+  Future<CapabilityState> fetchCapabilityState(String workspaceId) async =>
+      _state;
+
+  /// The same moves and refusals as the server: active and servicing move
+  /// both ways; retiring and reopening are the owner's, with a reason, and
+  /// retiring is refused while a delivery on a live connection is prepared or
+  /// sent. The Demo's owner is the person using it.
+  @override
+  Future<CapabilityState> setCapabilityState(
+    String workspaceId,
+    CapabilityStateKind to,
+    String reason,
+  ) async {
+    final from = _state.kind;
+    if (from == to) return _state;
+    final allowed = capabilityMoves(from, owner: true);
+    if (!allowed.contains(to)) {
+      throw StateError('a capability goes from $from to $to only through servicing');
+    }
+    if (capabilityMoveNeedsReason(from, to) && reason.trim().isEmpty) {
+      throw StateError('a reason is required');
+    }
+    if (to == CapabilityStateKind.retired) {
+      final open = deliveries.where(
+        (d) =>
+            (d.status == DeliveryStatus.generated ||
+                d.status == DeliveryStatus.sent) &&
+            connections.any((c) => c.id == d.connectionId && c.live),
+      );
+      if (open.isNotEmpty) {
+        throw StateError(
+          '${open.length} deliveries are unresolved: finish them before retiring',
+        );
+      }
+    }
+    return _state = CapabilityState(
+      kind: to,
+      derived: false,
+      reason: reason.trim(),
+      changedAt: today,
+    );
+  }
+
   @override
   Future<AccountingConnection> openTokenConnection(
     String workspaceId, {

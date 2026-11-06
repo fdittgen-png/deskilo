@@ -54,6 +54,40 @@ class SupabaseAccountingConnectionRepository
   }
 
   @override
+  Future<CapabilityState> fetchCapabilityState(String workspaceId) async {
+    final result = await _client.rpc<Object?>(
+      'capability_states_v1',
+      params: {'p_workspace_id': workspaceId},
+    );
+    final list = result is List ? result : const <Object?>[];
+    final first = list.isEmpty ? null : list.first;
+    return CapabilityState.fromJson(
+      first is Map
+          ? Map<String, Object?>.from(first)
+          : const <String, Object?>{},
+    );
+  }
+
+  @override
+  Future<CapabilityState> setCapabilityState(
+    String workspaceId,
+    CapabilityStateKind to,
+    String reason,
+  ) async {
+    await _client.rpc<Object?>(
+      'set_capability_state_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_key': 'accountingConnectors',
+        'p_to': to.wire,
+        'p_reason': reason,
+      },
+    );
+    // the server recorded who and when: read it back rather than guess
+    return fetchCapabilityState(workspaceId);
+  }
+
+  @override
   Future<AccountingConnection> openTokenConnection(
     String workspaceId, {
     required String issuerSiteId,

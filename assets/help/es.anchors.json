@@ -262,6 +262,7 @@
   "user.money.reminders.automatic": "Recordatorios automáticos",
   "user.invoicing.register": "El registro de facturas",
   "user.invoicing.accounting-export": "Exportaciones contables",
+  "user.invoicing.accounting-state": "Detener el trabajo contable nuevo",
   "user.invoicing.bi": "Análisis de negocio",
   "user.advanced.overview": "Avanzado",
   "user.advanced.environments": "Un espacio tiene dos caras",
