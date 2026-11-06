@@ -91,6 +91,11 @@ const Map<String, String> _notExported = {
       '#2380 — the append-only record of a match of money in undone; it records '
           'who undid it (a member) but is an accounting history of the space, '
           'not the person\'s own data',
+  'ledger_credit_moves':
+      '#2380 — the append-only record of a payment credit moved to the member '
+          'who paid; it records who moved it (a member) but is an accounting '
+          'history of the space, and both members\' entries are ledger rows, '
+          'exported with the ledger',
   'bank_line_unreconciliations':
       '#2380 — the append-only record of a reconciliation of money out undone; '
           'it records who undid it (a member) but is an accounting history of '

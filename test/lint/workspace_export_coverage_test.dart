@@ -218,6 +218,10 @@ const Map<String, String> _notExported = {
       '#2380 — the record of a match of money in undone: it names a bank line, '
           'an invoice, a payment credit and two events of this server, which are '
           'exported or kept themselves',
+  'ledger_credit_moves':
+      '#2380 — the record of a payment credit moved to another member: it names '
+          'two ledger entries, a reversal and two members of this server, which '
+          'are exported themselves',
   'bank_line_unreconciliations':
       '#2380 — the record of a reconciliation of money out undone: it names a '
           'bank line and an outgoing payment of this server, which are exported '

@@ -6113,6 +6113,39 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get creditMoveAction => 'Zu einem anderen Mitglied verschieben';
+
+  @override
+  String get creditMoveBody =>
+      'Die Zahlung bleibt erfasst. Das Konto dieses Mitglieds gibt sie zurück, und das Mitglied, das tatsächlich gezahlt hat, erhält sie im selben Monat.';
+
+  @override
+  String get creditMoveConfirm => 'Verschieben';
+
+  @override
+  String get creditMoveDone => 'Die Zahlung wurde verschoben.';
+
+  @override
+  String get creditMoveFailed => 'Die Zahlung konnte nicht verschoben werden.';
+
+  @override
+  String get creditMoveMemberLabel => 'Mitglied, das gezahlt hat';
+
+  @override
+  String get creditMoveMemberRequired =>
+      'Wählen Sie das Mitglied, das gezahlt hat.';
+
+  @override
+  String get creditMoveReasonLabel => 'Grund';
+
+  @override
+  String get creditMoveReasonRequired =>
+      'Geben Sie an, warum die Zahlung verschoben wird.';
+
+  @override
+  String get creditMoveTitle => 'Diese Zahlung verschieben';
+
+  @override
   String get customerCapacityBusiness => 'Unternehmer';
 
   @override

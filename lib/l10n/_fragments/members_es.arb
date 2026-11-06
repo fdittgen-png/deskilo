@@ -434,5 +434,45 @@
   "@groupNeedsPeople": {
     "description": "messenger: creating a group of people"
   },
+  "creditMoveAction": "Mover a otro miembro",
+  "@creditMoveAction": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveTitle": "Mover este pago",
+  "@creditMoveTitle": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveBody": "El pago sigue registrado. La cuenta de este miembro lo devuelve y el miembro que realmente pagó lo recibe, en el mismo mes.",
+  "@creditMoveBody": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberLabel": "Miembro que pagó",
+  "@creditMoveMemberLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberRequired": "Elija el miembro que pagó.",
+  "@creditMoveMemberRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonLabel": "Motivo",
+  "@creditMoveReasonLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonRequired": "Indique por qué se mueve el pago.",
+  "@creditMoveReasonRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveConfirm": "Mover",
+  "@creditMoveConfirm": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveFailed": "No se pudo mover el pago.",
+  "@creditMoveFailed": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveDone": "El pago se ha movido.",
+  "@creditMoveDone": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
   "memberOriginGuest": "Compró un pase de invitado en recepción"
 }

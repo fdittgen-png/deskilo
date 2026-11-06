@@ -4126,6 +4126,46 @@
   "createHostUnavailable": "Die Server, die Ihr persönliches Zuhause anbietet, konnten nicht gelesen werden.",
   "createHostUnverified": "Ihre Identität kann dort nicht bestätigt werden",
   "createOnHostBanner": "Dieser Space wird auf {host} angelegt.",
+  "creditMoveAction": "Zu einem anderen Mitglied verschieben",
+  "@creditMoveAction": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveBody": "Die Zahlung bleibt erfasst. Das Konto dieses Mitglieds gibt sie zurück, und das Mitglied, das tatsächlich gezahlt hat, erhält sie im selben Monat.",
+  "@creditMoveBody": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveConfirm": "Verschieben",
+  "@creditMoveConfirm": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveDone": "Die Zahlung wurde verschoben.",
+  "@creditMoveDone": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveFailed": "Die Zahlung konnte nicht verschoben werden.",
+  "@creditMoveFailed": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberLabel": "Mitglied, das gezahlt hat",
+  "@creditMoveMemberLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveMemberRequired": "Wählen Sie das Mitglied, das gezahlt hat.",
+  "@creditMoveMemberRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonLabel": "Grund",
+  "@creditMoveReasonLabel": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveReasonRequired": "Geben Sie an, warum die Zahlung verschoben wird.",
+  "@creditMoveReasonRequired": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
+  "creditMoveTitle": "Diese Zahlung verschieben",
+  "@creditMoveTitle": {
+    "description": "member profile money card: moving a payment booked on the wrong member (#2380)"
+  },
   "customerCapacityBusiness": "Unternehmer",
   "@customerCapacityBusiness": {
     "description": "#1916 invoice clauses: customerCapacityBusiness"
