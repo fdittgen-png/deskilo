@@ -42,4 +42,9 @@ class CreditMoveCommands {
       requestId: requestId,
     );
   }
+
+  /// #3349 — the credits already moved off a member, which no match may
+  /// offer or take again.
+  Future<Set<String>> movedCreditIds(String workspaceId) =>
+      _repository.fetchMovedCreditIds(workspaceId);
 }

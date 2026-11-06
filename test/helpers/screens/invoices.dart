@@ -7,6 +7,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,6 +55,8 @@ Future<FakeMoneyRepository> pumpInvoices(
   // other caller keeps the tall one this file has always used, so
   // nothing existing changes.
   Size size = const Size(800, 1400),
+  // #3349 — a test of the credit move brings its own.
+  CreditMoveRepository? creditMoves,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
@@ -67,6 +70,7 @@ Future<FakeMoneyRepository> pumpInvoices(
           workspace: workspace,
           events: events,
           fileSharer: sharer,
+          creditMoves: creditMoves,
         ),
         if (saver != null) ...[
           fileSaverProvider.overrideWithValue(saver),

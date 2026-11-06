@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/data/paged_fetch.dart';
 import '../domain/credit_move.dart';
 
 /// #2380 — `move_payment_credit_v1` (0688).
@@ -29,5 +30,23 @@ class SupabaseCreditMoveRepository implements CreditMoveRepository {
     return CreditMove.fromJson(
       JsonReader.of(result, context: 'move_payment_credit_v1').json,
     );
+  }
+
+  @override
+  Future<Set<String>> fetchMovedCreditIds(String workspaceId) async {
+    final rows = await fetchAllPages(
+      table: 'ledger_credit_moves',
+      build: () => _client
+          .from('ledger_credit_moves')
+          .select('from_credit_id, reversal_ledger_id')
+          .eq('workspace_id', workspaceId)
+          .order('id', ascending: true),
+    );
+    return {
+      for (final row in rows) ...[
+        row['from_credit_id'] as String,
+        row['reversal_ledger_id'] as String,
+      ],
+    };
   }
 }

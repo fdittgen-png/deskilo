@@ -8624,6 +8624,7 @@
   },
   "invoiceLineAdjustment": "Rettifica",
   "invoiceMatchAction": "Segna come pagata",
+  "invoiceMatchCreditMoved": "Questo pagamento è stato spostato a un altro membro, quindi non può saldare questa fattura. Ricarichi e ne scelga un altro.",
   "invoiceMatchCreditNote": "Crea una nota di credito per l'eccedenza",
   "invoiceMatchForce": "Accetta comunque (motivare)",
   "invoiceMatchNoPayments": "Nessun pagamento registrato da riconciliare — lo registri o lo confermi prima.",

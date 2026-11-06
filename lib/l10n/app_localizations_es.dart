@@ -13109,6 +13109,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMatchAction => 'Marcar como pagada';
 
   @override
+  String get invoiceMatchCreditMoved =>
+      'Este pago se movió a otro miembro, así que no puede pagar esta factura. Recargue y elija otro.';
+
+  @override
   String get invoiceMatchCreditNote =>
       'Crear una nota de crédito por el exceso';
 

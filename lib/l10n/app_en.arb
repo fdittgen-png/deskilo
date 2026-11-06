@@ -15679,6 +15679,10 @@
   "@invoiceMatchAction": {
     "description": "Open card button + match dialog title/confirm (0067)"
   },
+  "invoiceMatchCreditMoved": "This payment was moved to another member, so it cannot pay this invoice. Reload and choose another.",
+  "@invoiceMatchCreditMoved": {
+    "description": "#3349 - matching a payment that was moved to another member"
+  },
   "invoiceMatchCreditNote": "Create a credit note for the excess",
   "@invoiceMatchCreditNote": {
     "description": "Overpayment resolution: credit note"

@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../core/i18n/money_format.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -21,6 +22,7 @@ import '../application/send_reminder.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
+import '../providers/credit_move_providers.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
 import 'invoice_journey.dart' show invoiceRemainingCents;
@@ -243,6 +245,10 @@ Future<void> matchInvoiceToPayment(
   final consumed = {
     for (final match in matches.values) ?match.paymentLedgerId,
     if (workspace != null) ...await invoiceQueries.fetchConsumedPaymentIds(workspace.id),
+    // #3349 — a credit moved to another member is no longer this member's
+    // money: neither the original nor its reversal is offered.
+    if (workspace != null)
+      ...await ref.read(creditMoveCommandsProvider).movedCreditIds(workspace.id),
   };
   // A standing PARTIAL match shifts the target: further payments are
   // measured against what is STILL DUE.
@@ -287,21 +293,35 @@ Future<void> matchInvoiceToPayment(
     ),
   );
   if (choice == null || !context.mounted) return;
+  var movedMeanwhile = false;
   if (!await runGuarded(
     context,
     domain: 'money',
     message: 'invoice match failed',
     errorText:
         l10n.workspaceGenericError,
-    action: () => ref
-        .read(invoiceCommandsProvider)
-        .matchInvoice(
-          invoiceId: invoice.id,
-          paymentLedgerId: choice.paymentLedgerId,
-          resolution: choice.resolution,
-          note: choice.note,
-        ),
+    action: () async {
+      try {
+        await ref
+            .read(invoiceCommandsProvider)
+            .matchInvoice(
+              invoiceId: invoice.id,
+              paymentLedgerId: choice.paymentLedgerId,
+              resolution: choice.resolution,
+              note: choice.note,
+            );
+      } on PostgrestException catch (e) {
+        // #3349 — a stale screen: the credit was moved after the list was
+        // read. Said in its own words, not as a generic failure.
+        if (!e.message.contains('was moved')) rethrow;
+        movedMeanwhile = true;
+      }
+    },
   )) {
+    return;
+  }
+  if (movedMeanwhile) {
+    if (context.mounted) AppSnack.error(context, l10n.invoiceMatchCreditMoved);
     return;
   }
   ref

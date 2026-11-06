@@ -73,4 +73,9 @@ class DemoCreditMoves implements CreditMoveRepository {
     _done[requestId] = (creditId: creditId, move: move);
     return move;
   }
+
+  @override
+  Future<Set<String>> fetchMovedCreditIds(String workspaceId) async => {
+    for (final d in _done.values) ...[d.creditId, d.move.reversalId],
+  };
 }

@@ -21509,6 +21509,12 @@ abstract class AppLocalizations {
   /// **'Mark as paid'**
   String get invoiceMatchAction;
 
+  /// #3349 - matching a payment that was moved to another member
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was moved to another member, so it cannot pay this invoice. Reload and choose another.'**
+  String get invoiceMatchCreditMoved;
+
   /// Overpayment resolution: credit note
   ///
   /// In en, this message translates to:

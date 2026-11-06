@@ -8624,6 +8624,7 @@
   },
   "invoiceLineAdjustment": "Anpassung",
   "invoiceMatchAction": "Als bezahlt markieren",
+  "invoiceMatchCreditMoved": "Diese Zahlung wurde einem anderen Mitglied zugeordnet und kann diese Rechnung nicht begleichen. Neu laden und eine andere wählen.",
   "invoiceMatchCreditNote": "Gutschrift über den Überschuss erstellen",
   "invoiceMatchForce": "Trotzdem akzeptieren (mit Begründung)",
   "invoiceMatchNoPayments": "Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen.",
