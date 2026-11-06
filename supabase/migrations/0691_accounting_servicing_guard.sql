@@ -59,7 +59,7 @@ begin
   return pg_temp.anchor_replace(p_def, p_old, p_new);
 end
 $f$;
-revoke execute on function pg_temp.patch(text, text, text, text) from public;
+revoke execute on function pg_temp.patch(text, text, text, text) from public, anon, authenticated;
 
 -- ── the actor check without the feature ──────────────────────────────────
 create or replace function public.accounting_connector_member(p_workspace_id uuid, p_permission text)
