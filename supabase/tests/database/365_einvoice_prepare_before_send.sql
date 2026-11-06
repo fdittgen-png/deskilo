@@ -86,8 +86,8 @@ select is((public.record_einvoice_outcome_v1(current_setting('ei.id1')::uuid, 1,
 select is((public.claim_einvoice_dispatch_v1(current_setting('ei.id1')::uuid,
   current_setting('ei.um')::uuid, 150)->>'claimed'), 'false', 'an uncertain record is never claimed again');
 select is((public.record_einvoice_outcome_v1(current_setting('ei.id1')::uuid, 1,
-  current_setting('ei.uo')::uuid, 'accepted', 'x', '', '{}')->>'recorded'), 'false',
-  'a late outcome does not replace the recorded uncertainty');
+  current_setting('ei.um')::uuid, 'accepted', 'x', '', '{}')->>'recorded'), 'false',
+  'a late outcome from another owner does not replace the recorded uncertainty');
 select is((public.record_einvoice_lookup_v1(current_setting('ei.id1')::uuid, null, null, null, null,
   'timeout')->>'phase'), 'uncertain', 'a failed lookup leaves it uncertain');
 

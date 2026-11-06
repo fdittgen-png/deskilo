@@ -43,7 +43,7 @@ select lives_ok(
 
 select is(
   (select count(*)::int from pg_constraint where conname like '%\_same\_workspace' and convalidated),
-  42, 'forty-two relations are held to one workspace (24 financial, incl. the guest pass''s offer and member (#3308) + 18 others)');
+  43, 'forty-three relations are held to one workspace (24 financial, incl. the guest pass''s offer and member (#3308) + 19 others, incl. the e-invoice artifact (#3335))');
 
 alter table public.member_notes drop constraint member_notes_to_member_id_same_workspace;
 select lives_ok(
