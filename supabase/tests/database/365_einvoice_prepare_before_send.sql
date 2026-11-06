@@ -9,7 +9,7 @@
 -- evidence, and cannot be repeated. The legacy `status` column stays a
 -- three-value projection an older client can read.
 begin;
-select plan(25);
+select plan(32);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -94,10 +94,47 @@ select is((public.record_einvoice_lookup_v1(current_setting('ei.id1')::uuid, nul
 -- expiry with no outcome ever recorded
 select set_config('ei.id2', (pg_temp.prep('customer', 'prod', 'h1', '')->>'id'), false);
 select public.claim_einvoice_dispatch_v1(current_setting('ei.id2')::uuid,
-  current_setting('ei.uo')::uuid, -5);
+  current_setting('ei.uo')::uuid, 150);
+update public.invoice_transmissions set deadline = now() - interval '1 minute'
+ where id = current_setting('ei.id2')::uuid;
 select is((public.claim_einvoice_dispatch_v1(current_setting('ei.id2')::uuid,
   current_setting('ei.um')::uuid, 150)->>'phase'), 'uncertain',
   'an expired dispatch with no outcome is uncertain, not claimable');
+
+-- a different owner cannot settle the expired dispatch; its own owner can
+select is((public.record_einvoice_outcome_v1(current_setting('ei.id2')::uuid, 1,
+  current_setting('ei.um')::uuid, 'accepted', 'x', '', '{}')->>'recorded'), 'false',
+  'another owner cannot settle an expired dispatch');
+select is((public.record_einvoice_outcome_v1(current_setting('ei.id2')::uuid, 1,
+  current_setting('ei.uo')::uuid, 'accepted', 'G', '', '{"guid":"G"}')->>'recorded'), 'true',
+  'the owner''s late outcome settles what expiry marked uncertain');
+-- a later status answer lands beside the upload receipt, never over it
+select public.record_einvoice_lookup_v1(current_setting('ei.id2')::uuid, null, null,
+  '{"x":1}'::jsonb, '{"v":1}'::jsonb, null);
+select is((select receipt->>'guid' || '|' || (verdict->>'v') from public.invoice_transmissions
+            where id = current_setting('ei.id2')::uuid), 'G|1',
+  'the upload receipt stays; the answer is the verdict');
+-- a window is required
+select throws_ok($$ select public.claim_einvoice_dispatch_v1(current_setting('ei.id1')::uuid,
+  current_setting('ei.uo')::uuid, 0) $$, '22023', null, 'a zero window is refused');
+select throws_ok($$ select public.claim_einvoice_dispatch_v1(current_setting('ei.id1')::uuid,
+  current_setting('ei.uo')::uuid, null) $$, '22023', null, 'a null window is refused');
+-- an older Edge Function writes status only
+insert into public.invoice_transmissions (workspace_id, invoice_id, provider, status)
+values (current_setting('ei.ws')::uuid, current_setting('ei.inv')::uuid, 'generic', 'failed');
+select is((select phase from public.invoice_transmissions
+            where business_key is null and status = 'failed' limit 1), 'failed',
+  'a legacy failed insert is phase failed, not prepared');
+-- a manual resolution can carry the document verdict
+select set_config('ei.id3', (pg_temp.prep('government', 'uat', 'h1', '')->>'id'), false);
+select public.claim_einvoice_dispatch_v1(current_setting('ei.id3')::uuid, current_setting('ei.uo')::uuid, 150);
+select public.record_einvoice_outcome_v1(current_setting('ei.id3')::uuid, 1,
+  current_setting('ei.uo')::uuid, 'uncertain', '', '', '{}');
+select public.resolve_einvoice_manually_v1(current_setting('ei.id3')::uuid, current_setting('ei.uo')::uuid,
+  'accepted', 'uploaded; authority refused it', 'portal ref 2', '{"document":"rejected"}'::jsonb);
+select is((select verdict->>'document' || '|' || phase from public.invoice_transmissions
+            where id = current_setting('ei.id3')::uuid), 'rejected|accepted',
+  'accepted upload with a separate rejected document verdict');
 
 select throws_ok($$ select public.resolve_einvoice_manually_v1(current_setting('ei.id1')::uuid,
   current_setting('ei.um')::uuid, 'failed', 'r', 'e') $$, '42501', null,

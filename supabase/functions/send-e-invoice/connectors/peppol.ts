@@ -53,6 +53,7 @@ export async function submitPeppol(
     };
   }
   const legalEntityId = Number(cfg.legal_entity_id);
+  doc.onDispatch?.();
   const res = await fetchImpl(
     join(cfg.base_url, "api/v2/document_submissions"),
     {

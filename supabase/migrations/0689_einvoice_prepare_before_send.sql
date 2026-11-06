@@ -39,13 +39,15 @@ alter table public.invoice_transmissions
   alter column phase set default 'prepared';
 
 alter table public.invoice_transmissions
+  drop constraint if exists invoice_transmissions_phase_check;
+alter table public.invoice_transmissions
   add constraint invoice_transmissions_phase_check
   check (phase in
     ('prepared', 'sent', 'accepted', 'rejected', 'failed', 'uncertain'));
 
 -- One logical transmission = one row. Rows written before this change
 -- keep a null key and stay a plain log.
-create unique index invoice_transmissions_business_key_uq
+create unique index if not exists invoice_transmissions_business_key_uq
   on public.invoice_transmissions (business_key)
   where business_key is not null;
 
@@ -70,9 +72,9 @@ comment on column public.invoice_transmissions.query_error is
 create or replace function public.invoice_transmissions_sync_phase()
 returns trigger language plpgsql set search_path = public as $fn$
 begin
-  if new.phase is null or (tg_op = 'INSERT' and new.phase = 'prepared'
-      and new.status in ('accepted', 'rejected')) then
-    -- an older Edge Function writes `status` only
+  if new.phase is null or (tg_op = 'INSERT' and new.business_key is null)
+  then
+    -- an older Edge Function writes `status` only (no business key)
     new.phase := new.status;
   end if;
   new.status := case new.phase
@@ -86,6 +88,8 @@ begin
 end;
 $fn$;
 
+drop trigger if exists invoice_transmissions_sync_phase
+  on public.invoice_transmissions;
 create trigger invoice_transmissions_sync_phase
   before insert or update on public.invoice_transmissions
   for each row execute function public.invoice_transmissions_sync_phase();
@@ -93,9 +97,8 @@ create trigger invoice_transmissions_sync_phase
 -- ── 3. the stored artifact ───────────────────────────────────────────
 -- The exact bytes that may leave, kept with the record so recovery never
 -- depends on a mutable request. Service role only.
-create table public.invoice_transmission_artifacts (
-  transmission_id uuid primary key
-    references public.invoice_transmissions(id) on delete cascade,
+create table if not exists public.invoice_transmission_artifacts (
+  transmission_id uuid primary key,
   workspace_id uuid not null references public.workspaces(id)
     on delete cascade,
   bytes bytea not null,
@@ -105,10 +108,25 @@ create table public.invoice_transmission_artifacts (
   receiver_scheme text not null default '',
   receiver_id text not null default ''
 );
+-- tenant integrity (0242): the artifact sits in its transmission's workspace
+alter table public.invoice_transmissions
+  drop constraint if exists invoice_transmissions_workspace_id_id_key;
+alter table public.invoice_transmissions
+  add constraint invoice_transmissions_workspace_id_id_key
+  unique (workspace_id, id);
+alter table public.invoice_transmission_artifacts
+  drop constraint if exists invoice_transmission_artifacts_same_workspace;
+alter table public.invoice_transmission_artifacts
+  add constraint invoice_transmission_artifacts_same_workspace
+  foreign key (workspace_id, transmission_id)
+  references public.invoice_transmissions (workspace_id, id)
+  on delete cascade;
 select public.ensure_system_columns('invoice_transmission_artifacts');
 
 alter table public.invoice_transmission_artifacts enable row level security;
 -- No select/insert policy: deny-all to client roles.
+drop policy if exists mcp_delegated_deny
+  on public.invoice_transmission_artifacts;
 create policy mcp_delegated_deny on public.invoice_transmission_artifacts
   as restrictive for all to authenticated
   using (not public.mcp_is_delegated())
@@ -205,6 +223,9 @@ as $fn$
 declare
   v_row public.invoice_transmissions;
 begin
+  if p_window_seconds is null or p_window_seconds <= 0 then
+    raise exception 'a dispatch window is required' using errcode = '22023';
+  end if;
   update public.invoice_transmissions set phase = 'uncertain'
     where id = p_id and phase = 'sent' and deadline < now();
   -- only a record that provably never dispatched (prepared) or whose
@@ -241,7 +262,7 @@ begin
         receipt_at = case when coalesce(p_receipt, '{}'::jsonb)
           = '{}'::jsonb then receipt_at else now() end
     where id = p_id and generation = p_generation and owner_id = p_owner
-      and phase = 'sent'
+      and phase in ('sent', 'uncertain')
     returning * into v_row;
   if not found then
     -- a stale or late writer: nothing changes
@@ -268,8 +289,11 @@ begin
       phase = coalesce(p_phase, phase),
       external_id = case when p_phase is null then external_id
         else coalesce(nullif(p_external_id, ''), external_id) end,
-      receipt = case when p_receipt is null then receipt else p_receipt end,
-      receipt_at = case when p_receipt is null then receipt_at
+      receipt = case when p_receipt is null then receipt
+        when phase = 'accepted' and receipt <> '{}'::jsonb then receipt
+        else p_receipt end,
+      receipt_at = case when p_receipt is null
+          or (phase = 'accepted' and receipt <> '{}'::jsonb) then receipt_at
         else now() end,
       verdict = coalesce(p_verdict, verdict),
       query_error = coalesce(p_query_error, '')
@@ -286,8 +310,11 @@ $fn$;
 -- The existing send authority (active member; owner/admin or
 -- issueInvoices), an attributable reason and evidence, and a
 -- compare-and-set on `uncertain`: a second resolution changes nothing.
+drop function if exists
+  public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text);
 create or replace function public.resolve_einvoice_manually_v1(
-  p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text
+  p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text,
+  p_verdict jsonb default null
 ) returns jsonb language plpgsql security definer set search_path = public
 as $fn$
 declare
@@ -319,7 +346,8 @@ begin
     set phase = p_outcome, resolved_by = p_actor,
         resolved_reason = left(trim(p_reason), 300),
         resolved_evidence = left(trim(p_evidence), 1000),
-        resolved_at = now(), detail = 'resolved_manually'
+        resolved_at = now(), detail = 'resolved_manually',
+        verdict = coalesce(p_verdict, verdict)
     where id = p_id and phase = 'uncertain'
     returning * into v_row;
   if not found then
@@ -350,9 +378,9 @@ grant execute on function public.record_einvoice_outcome_v1(uuid, integer, uuid,
 revoke execute on function public.record_einvoice_lookup_v1(uuid, text, text, jsonb, jsonb, text)
   from public, anon, authenticated;
 grant execute on function public.record_einvoice_lookup_v1(uuid, text, text, jsonb, jsonb, text) to service_role;
-revoke execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text)
+revoke execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text, jsonb)
   from public, anon, authenticated;
-grant execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text) to service_role;
+grant execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text, jsonb) to service_role;
 revoke execute on function public.invoice_transmissions_sync_phase()
   from public, anon, authenticated;
 

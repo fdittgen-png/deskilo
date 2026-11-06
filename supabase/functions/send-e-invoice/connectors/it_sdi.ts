@@ -43,6 +43,7 @@ export async function submitItSdi(
 ): Promise<Submission> {
   const token = await login(cfg, fetchImpl);
   if (token instanceof Response) return refused(token);
+  doc.onDispatch?.();
   const res = await fetchImpl(join(cfg.base_url, "invoices"), {
     method: "POST",
     headers: {
