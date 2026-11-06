@@ -9,3 +9,4 @@
 create_invoice/10 | reviewed: built by anchored patches over 0142; the live body checks the member and has_permission(..., 'issueInvoices') before any read or write
 import_floor_plan_v3/3 | reviewed: the live body checks has_permission(workspace, 'manageConfiguration')
 import_workspace_configuration/3 | reviewed: the live body checks auth.uid() and has_permission(workspace, 'manageConfiguration')
+accounting_connection_manageable_v1/2 | reviewed: rebuilt by 0691 from the live one-argument definition; the live body checks the connection, then accounting_connector_actor ('work') or accounting_connector_member ('revoke'), each requiring a signed-in native-token active member with manageBilling, and the HMRC prefix of 0648 is kept
