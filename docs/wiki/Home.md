@@ -64,6 +64,7 @@ What the product is for and what it covers, module by module; delivery status li
 ## Build it
 
 See [CI and automation](CI-and-Automation) for merge gates, test shards, database checks, releases, artifacts, and troubleshooting.
+Choose a responsibility and copy its assignment from [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts).
 
 <table>
 <tr>
