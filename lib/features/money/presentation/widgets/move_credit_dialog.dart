@@ -126,11 +126,14 @@ class _MoveCreditDialogState extends ConsumerState<_MoveCreditDialog> {
     final l10n = context.l10n;
     final names =
         ref.watch(memberNamesProvider).value ?? const <String, String>{};
-    // Someone still in the space: the server refuses a member who left.
+    // Someone still in the space, and not the biller: the server refuses a
+    // member who left and a move onto, or off, the biller's own account.
+    final me = ref.watch(myMemberProvider).value?.id;
     final members = [
       for (final m
           in ref.watch(workspaceMembersProvider).value ?? const <Member>[])
         if (m.id != widget.fromMemberId &&
+            m.id != me &&
             m.status != MemberStatus.exited &&
             !m.isKiosk)
           m,
