@@ -76,6 +76,11 @@ begin
   then
     -- an older Edge Function writes `status` only (no business key)
     new.phase := new.status;
+  elsif tg_op = 'UPDATE' and new.business_key is null
+      and new.status is distinct from old.status then
+    -- a deployed older Edge Function's status action writes `status`
+    -- on a legacy row: the phase follows it
+    new.phase := new.status;
   end if;
   new.status := case new.phase
     when 'accepted' then 'accepted'
@@ -109,13 +114,15 @@ create table if not exists public.invoice_transmission_artifacts (
   receiver_id text not null default ''
 );
 -- tenant integrity (0242): the artifact sits in its transmission's workspace
+alter table public.invoice_transmission_artifacts
+  drop constraint if exists invoice_transmission_artifacts_transmission_id_fkey;
+alter table public.invoice_transmission_artifacts
+  drop constraint if exists invoice_transmission_artifacts_same_workspace;
 alter table public.invoice_transmissions
   drop constraint if exists invoice_transmissions_workspace_id_id_key;
 alter table public.invoice_transmissions
   add constraint invoice_transmissions_workspace_id_id_key
   unique (workspace_id, id);
-alter table public.invoice_transmission_artifacts
-  drop constraint if exists invoice_transmission_artifacts_same_workspace;
 alter table public.invoice_transmission_artifacts
   add constraint invoice_transmission_artifacts_same_workspace
   foreign key (workspace_id, transmission_id)

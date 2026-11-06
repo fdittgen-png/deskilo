@@ -119,6 +119,7 @@ export interface TransmissionStore {
     outcome: "accepted" | "rejected" | "failed",
     reason: string,
     evidence: string,
+    verdict: Record<string, unknown> | null,
   ): Promise<{ resolved: boolean; phase?: Phase }>;
 }
 
@@ -237,7 +238,9 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
     },
     async artifact(id) {
       const { data } = await admin.from("invoice_transmission_artifacts")
-        .select("bytes, sha256, file_name, mime_type, receiver_scheme, receiver_id")
+        .select(
+          "bytes, sha256, file_name, mime_type, receiver_scheme, receiver_id",
+        )
         .eq("transmission_id", id).maybeSingle();
       if (!data) return null;
       return {
@@ -285,13 +288,14 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
       );
       return out.recorded;
     },
-    resolve(id, actor, outcome, reason, evidence) {
+    resolve(id, actor, outcome, reason, evidence, verdict) {
       return rpc("resolve_einvoice_manually_v1", {
         p_id: id,
         p_actor: actor,
         p_outcome: outcome,
         p_reason: reason,
         p_evidence: evidence,
+        p_verdict: verdict,
       });
     },
   };

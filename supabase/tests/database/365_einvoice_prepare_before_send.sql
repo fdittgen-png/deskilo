@@ -9,7 +9,7 @@
 -- evidence, and cannot be repeated. The legacy `status` column stays a
 -- three-value projection an older client can read.
 begin;
-select plan(32);
+select plan(35);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -125,6 +125,21 @@ values (current_setting('ei.ws')::uuid, current_setting('ei.inv')::uuid, 'generi
 select is((select phase from public.invoice_transmissions
             where business_key is null and status = 'failed' limit 1), 'failed',
   'a legacy failed insert is phase failed, not prepared');
+-- an older status action rewrites `status` of a legacy row: the phase follows
+update public.invoice_transmissions set status = 'rejected'
+ where business_key is null and status = 'failed';
+select is((select phase from public.invoice_transmissions where business_key is null limit 1),
+  'rejected', 'a legacy status update moves the phase with it');
+-- a failure that proved no acceptance is dispatchable again, same record
+select set_config('ei.id4', (pg_temp.prep('customer', 'uat', 'h1', '')->>'id'), false);
+select public.claim_einvoice_dispatch_v1(current_setting('ei.id4')::uuid, current_setting('ei.uo')::uuid, 150);
+select public.record_einvoice_outcome_v1(current_setting('ei.id4')::uuid, 1,
+  current_setting('ei.uo')::uuid, 'failed', '', 'refused credential', '{}');
+select is((public.claim_einvoice_dispatch_v1(current_setting('ei.id4')::uuid,
+  current_setting('ei.uo')::uuid, 150)->>'generation'), '2', 'a failed record is claimed again as generation 2');
+select is((select count(*)::int from public.invoice_transmissions where id = current_setting('ei.id4')::uuid),
+  1, 'on the same record');
+
 -- a manual resolution can carry the document verdict
 select set_config('ei.id3', (pg_temp.prep('government', 'uat', 'h1', '')->>'id'), false);
 select public.claim_einvoice_dispatch_v1(current_setting('ei.id3')::uuid, current_setting('ei.uo')::uuid, 150);

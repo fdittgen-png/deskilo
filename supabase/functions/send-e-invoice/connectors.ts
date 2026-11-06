@@ -175,8 +175,16 @@ export function classify(outcome: Submission, dispatched: boolean): Submission {
       ? { ...outcome, status: "uncertain" }
       : outcome;
   }
+  // 401/403/404: the credential or the endpoint was refused, the document
+  // was not read — no effect, and once the owner fixes it the same record
+  // may be dispatched again (a terminal `rejected` would block it for good)
+  if ([401, 403, 404].includes(outcome.httpStatus)) {
+    return { ...outcome, status: "failed" };
+  }
+  // 408/429 (timeout, throttle) and 409 (the platform may already hold it)
+  // prove nothing; other 4xx refuse the document itself
   const refusal = outcome.httpStatus >= 400 && outcome.httpStatus < 500 &&
-    outcome.httpStatus !== 408 && outcome.httpStatus !== 429;
+    ![408, 409, 429].includes(outcome.httpStatus);
   return refusal ? outcome : { ...outcome, status: "uncertain" };
 }
 

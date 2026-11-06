@@ -546,7 +546,7 @@ Deno.test("pl_ksef: a refused authentication sends nothing", async () => {
 const genericCfg = { endpoint: "https://x.test", auth_value: "t" };
 
 Deno.test("generic: a 5xx, a 408 or a 429 after the upload is uncertain, never a refusal", async () => {
-  for (const code of [500, 502, 503, 408, 429]) {
+  for (const code of [500, 502, 503, 408, 429, 409]) {
     const { calls, fetchImpl } = mock(() => ok("busy", code));
     const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
     assertEquals(out.status, "uncertain", String(code));
@@ -555,7 +555,7 @@ Deno.test("generic: a 5xx, a 408 or a 429 after the upload is uncertain, never a
 });
 
 Deno.test("generic: an explicit 4xx refusal of the upload is rejected", async () => {
-  for (const code of [400, 401, 403, 409, 422]) {
+  for (const code of [400, 422]) {
     const { fetchImpl } = mock(() => ok("no", code));
     const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
     assertEquals(out.status, "rejected", String(code));
@@ -573,4 +573,12 @@ Deno.test("generic: a destination the guard refuses sends nothing and fails", as
   // the guard refused before any request left: nothing can be accepted
   assertEquals(out.status, "failed");
   assertEquals(out.detail, "destination_not_allowed");
+});
+
+Deno.test("generic: a refused credential or endpoint (401/403/404) fails without blocking a later dispatch", async () => {
+  for (const code of [401, 403, 404]) {
+    const { fetchImpl } = mock(() => ok("no", code));
+    const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
+    assertEquals(out.status, "failed", String(code));
+  }
 });

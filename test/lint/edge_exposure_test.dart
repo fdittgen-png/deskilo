@@ -25,10 +25,18 @@ void main() {
     for (final entry in manifest.entries) {
       final cls = (entry.value as Map)['class'];
       if (cls != 'user_facing' && cls != 'system') continue;
-      final source = File('supabase/functions/${entry.key}/index.ts').readAsStringSync();
+      var source = File('supabase/functions/${entry.key}/index.ts').readAsStringSync();
+      // #3335 — a function may keep its decisions in a testable handler
+      // that index.ts only serves: the guard is then the handler's first act.
+      final handler = File('supabase/functions/${entry.key}/handler.ts');
+      var serveMarker = 'Deno.serve(';
+      if (handler.existsSync() && source.contains('./handler.ts')) {
+        source = handler.readAsStringSync();
+        serveMarker = 'export async function handle(';
+      }
       final guard = source.indexOf('refuseDelegated(req');
       expect(guard, greaterThan(0), reason: '${entry.key} never refuses a delegated token');
-      final serve = source.indexOf('Deno.serve(');
+      final serve = source.indexOf(serveMarker);
       final body = source.substring(serve);
       final firstPrivileged = [
         body.indexOf('createClient('),

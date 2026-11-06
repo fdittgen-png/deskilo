@@ -249,7 +249,7 @@ export async function submitPlKsef(
   const closed = await fetchImpl(
     join(cfg.base_url, KSEF.closeSession(encodeURIComponent(session))),
     { method: "POST", headers: json(token) },
-  );
+  ).catch(() => ({ ok: false }));
   return accepted(`${session}/${invoiceRef}`, JSON.stringify(sent), {
     sessionReferenceNumber: session,
     invoiceReferenceNumber: invoiceRef,

@@ -34,13 +34,27 @@ const _memberScoped = [
   'create-payment-order',
 ];
 
+/// A function's source as these checks read it (#3335): `index.ts`, plus —
+/// when the function keeps its decisions in a testable handler — `handler.ts`
+/// and `store.ts`. [authFirst] puts the store (which resolves the caller)
+/// before the handler; otherwise the handler (preflight, branches) leads.
+String _source(String name, {bool authFirst = false}) {
+  final dir = 'supabase/functions/$name';
+  String read(String f) =>
+      File('$dir/$f').existsSync() ? File('$dir/$f').readAsStringSync() : '';
+  final order = authFirst
+      ? ['store.ts', 'handler.ts', 'index.ts']
+      : ['handler.ts', 'store.ts', 'index.ts'];
+  return order.map(read).join('\n');
+}
+
 /// The same function as the self-hoster receives it. `bundle.json` is a
 /// GENERATED artifact committed to the repo, so a branch cut before a
 /// function was fixed regenerates it from the stale source — and merging
 /// that branch afterwards silently reverts the fix for every self-hosted
 /// instance while `supabase/functions/` still reads correct. A security
 /// review caught exactly that on the #1092 branch.
-String _bundled(String slug) {
+String _bundled(String slug, {bool authFirst = false}) {
   final bundle = jsonDecode(
     File('assets/instance/bundle.json').readAsStringSync(),
   ) as Map<String, dynamic>;
@@ -48,10 +62,18 @@ String _bundled(String slug) {
       .cast<Map<String, dynamic>>()
       .firstWhere((f) => f['slug'] == slug,
           orElse: () => throw StateError('$slug is not in the bundle'));
-  return (entry['files'] as List)
-      .cast<Map<String, dynamic>>()
-      .map((f) => f['content'] as String)
-      .join();
+  final files = (entry['files'] as List).cast<Map<String, dynamic>>().toList();
+  // the same reading order as [_source]: the function's own files lead
+  const own = ['store.ts', 'handler.ts', 'index.ts'];
+  int rank(Map<String, dynamic> f) {
+    final path = f['name'] as String;
+    final at = own.indexWhere((n) => path == '$slug/$n');
+    if (at < 0) return own.length;
+    return authFirst ? at : (at == 0 ? 1 : at == 1 ? 0 : 2);
+  }
+
+  files.sort((a, b) => rank(a).compareTo(rank(b)));
+  return files.map((f) => f['content'] as String).join();
 }
 
 void _assertGuarded(String name, String source, String where) {
@@ -83,8 +105,8 @@ void _assertGuarded(String name, String source, String where) {
 void main() {
   for (final name in _memberScoped) {
     group(name, () {
-      final source =
-          File('supabase/functions/$name/index.ts').readAsStringSync();
+      final source = _source(name);
+      final authSource = _source(name, authFirst: true);
 
       // Nothing in CI typechecks Deno, so a deleted binding that is still
       // referenced ships silently. Removing the second `caller` client in
@@ -111,7 +133,11 @@ void main() {
       });
 
       test('the BUNDLED copy is guarded too', () {
-        _assertGuarded(name, _bundled(name), 'assets/instance/bundle.json');
+        _assertGuarded(
+          name,
+          _bundled(name, authFirst: true),
+          'assets/instance/bundle.json',
+        );
       });
 
       // #1553 — these two are called from the app with
@@ -149,7 +175,7 @@ void main() {
         final chains = RegExp(
           r'\.from\(\s*"members"\s*\)(.*?)(maybeSingle|single)\(\)',
           dotAll: true,
-        ).allMatches(source);
+        ).allMatches(authSource);
         expect(chains, isNotEmpty,
             reason: '$name no longer looks members up — retire this entry');
         for (final chain in chains) {
@@ -162,11 +188,11 @@ void main() {
       });
 
       test('the caller is identified before any branch answers', () {
-        final auth = source.indexOf('auth.getUser(');
+        final auth = authSource.indexOf('auth.getUser(');
         expect(auth, greaterThan(-1),
             reason: '$name never resolves the caller');
         // Every early return that hands data back to the caller.
-        for (final answer in RegExp(r'action === "(\w+)"').allMatches(source)) {
+        for (final answer in RegExp(r'action === "(\w+)"').allMatches(authSource)) {
           expect(auth, lessThan(answer.start),
               reason: 'the "${answer.group(1)}" branch of $name answers '
                   'before the caller is known — a workspace id is not a '
