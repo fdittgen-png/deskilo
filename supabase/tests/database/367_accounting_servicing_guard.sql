@@ -11,7 +11,7 @@
 -- member, another space's owner and an assistant's delegated token are
 -- refused in both states.
 begin;
-select plan(19);
+select plan(23);
 
 create or replace function pg_temp.v(p text) returns text language sql as $$
   select current_setting('sg.' || p)
@@ -39,10 +39,10 @@ exception when others then
   return sqlstate;
 end;
 $$;
-create or replace function pg_temp.rec(p_doc text, p_status text) returns text language plpgsql as $d$
+create or replace function pg_temp.rec(p_doc text, p_status text, p_conn text default null) returns text language plpgsql as $d$
 declare v jsonb;
 begin
-  v := public.record_accounting_delivery(pg_temp.v('c1')::uuid, 'invoice', p_doc::uuid, date '2026-03-02', 'F-2026-0007',
+  v := public.record_accounting_delivery(coalesce(p_conn, pg_temp.v('c1'))::uuid, 'invoice', p_doc::uuid, date '2026-03-02', 'F-2026-0007',
          date '2026-01-01', date '2026-12-31', repeat('a', 64), p_status, '{}', '');
   return v ->> 'outcome';
 exception when others then
@@ -86,6 +86,36 @@ begin
 end
 $seed$;
 
+-- A revoked connection's two deliveries and a live connection of the same
+-- company on the same site: recording a delivery through the live one moves it
+-- (the relink), which is new work.
+do $relink$
+declare
+  ws uuid := current_setting('sg.ws')::uuid; s2 uuid; co uuid; cn uuid;
+begin
+  insert into public.sites (workspace_id, name) values (ws, 'Annex') returning id into s2;
+  insert into public.accounting_connections
+    (workspace_id, issuer_site_id, target_id, auth_kind, remote_tenant_id, display_name, status, connected_at)
+  values (ws, s2, 'pennylane_api', 'token', '999', 'Old', 'connected', now()) returning id into co;
+  perform set_config('sg.co', co::text, false);
+  perform set_config('sg.s2', s2::text, false);
+end
+$relink$;
+select pg_temp.rec('00000000-0000-4000-8000-00000336d0a1', 'generated', pg_temp.v('co'));
+select pg_temp.rec('00000000-0000-4000-8000-00000336d0b1', 'generated', pg_temp.v('co'));
+update public.accounting_connections set status = 'revoked', revoked_at = now() where id = pg_temp.v('co')::uuid;
+insert into public.accounting_connections
+  (workspace_id, issuer_site_id, target_id, auth_kind, remote_tenant_id, display_name, status, connected_at)
+values (pg_temp.v('ws')::uuid, pg_temp.v('s2')::uuid, 'pennylane_api', 'token', '999', 'New', 'connected', now());
+select set_config('sg.cn', (select id::text from public.accounting_connections
+                             where issuer_site_id = pg_temp.v('s2')::uuid and revoked_at is null), false);
+
+-- with the feature on, the relink still happens (the positive control)
+select is(pg_temp.rec('00000000-0000-4000-8000-00000336d0b1', 'generated', pg_temp.v('cn')), 'existing',
+  'with the feature on, a live connection takes over a revoked one''s delivery');
+select is((select connection_id::text from public.accounting_deliveries where document_id = '00000000-0000-4000-8000-00000336d0b1'),
+  pg_temp.v('cn'), 'and the delivery now belongs to the live connection');
+
 -- a delivery admitted while the feature is on
 select is(pg_temp.rec('00000000-0000-4000-8000-00000336d001', 'generated'), 'created', 'with the feature on, a delivery is admitted');
 
@@ -94,7 +124,7 @@ update public.workspaces set feature_flags = feature_flags || '{"accountingConne
  where id = pg_temp.v('ws')::uuid;
 
 select is(pg_temp.as_actor('o', format($q$select jsonb_array_length(public.accounting_connections_v1(%L))::text$q$, pg_temp.v('ws'))),
-  '1', 'servicing: the connections read for the manager');
+  '3', 'servicing: the connections read for the manager (live, revoked and the replacement)');
 select is(pg_temp.as_actor('o', format($q$select public.accounting_transfers_v1(%L, date '2026-01-01', date '2026-12-31')::text is not null$q$, pg_temp.v('ws'))),
   'true', 'servicing: the transfers read');
 select is(pg_temp.as_actor('p', format($q$select public.accounting_connections_v1(%L)::text$q$, pg_temp.v('ws'))),
@@ -122,11 +152,17 @@ select is(pg_temp.as_actor('o', format($q$select public.open_accounting_connecti
 select is(pg_temp.rec('00000000-0000-4000-8000-00000336d002', 'generated'), '0A000',
   'servicing: preparing a NEW delivery refuses with the unchanged 0A000');
 
+-- the relink is new work too: with the feature off nothing moves
+select is(pg_temp.rec('00000000-0000-4000-8000-00000336d0a1', 'generated', pg_temp.v('cn')), '0A000',
+  'servicing: a live connection does not take over a revoked one''s delivery');
+select is((select connection_id::text from public.accounting_deliveries where document_id = '00000000-0000-4000-8000-00000336d0a1'),
+  pg_temp.v('co'), 'servicing: and the delivery still belongs to the revoked connection');
+
 -- an admitted delivery completes and replays
 select is(pg_temp.rec('00000000-0000-4000-8000-00000336d001', 'sent'), 'updated', 'servicing: the outcome of an admitted delivery is recorded');
 select is(pg_temp.rec('00000000-0000-4000-8000-00000336d001', 'generated'), 'existing', 'servicing: a replay returns the existing delivery, nothing new is admitted');
-select is((select count(*)::int from public.accounting_deliveries where workspace_id = pg_temp.v('ws')::uuid), 1,
-  'servicing: exactly the admitted delivery exists');
+select is((select count(*)::int from public.accounting_deliveries where workspace_id = pg_temp.v('ws')::uuid), 3,
+  'servicing: only the deliveries admitted while the feature was on exist');
 
 -- revocation
 select is(pg_temp.as_actor('p', format($q$select public.revoke_accounting_connection_v1(%L)::text$q$, pg_temp.v('c1'))),

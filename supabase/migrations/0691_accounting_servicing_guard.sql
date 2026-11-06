@@ -25,7 +25,9 @@
 --  * the manageable door takes a purpose: 'work' (default) keeps the feature,
 --    'revoke' (the Edge revocation's preliminary check) does not.
 --  * record_accounting_delivery admits only a NEW delivery on the feature; an
---    outcome on an existing delivery records whatever the feature says.
+--    outcome on an existing delivery records whatever the feature says. The
+--    check sits right after the identity lookup, before the relink of a
+--    revoked connection's delivery, which is new work too.
 -- accounting_connector_actor, set_accounting_credentials and every other
 -- caller keep today's behaviour (the refusal text and 0A000 are unchanged).
 
@@ -48,6 +50,16 @@ end
 $f$;
 
 revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
+-- Re-appliable: a definition that already carries the new text is left alone.
+create or replace function pg_temp.patch(p_def text, p_old text, p_new text, p_done text)
+returns text language plpgsql as $f$
+begin
+  if position(p_done in p_def) > 0 then return p_def; end if;
+  return pg_temp.anchor_replace(p_def, p_old, p_new);
+end
+$f$;
+revoke execute on function pg_temp.patch(text, text, text, text) from public;
 
 -- ── the actor check without the feature ──────────────────────────────────
 create or replace function public.accounting_connector_member(p_workspace_id uuid, p_permission text)
@@ -80,24 +92,27 @@ declare
 begin
   -- reading the connections and the transfers is not new work
   select pg_get_functiondef('public.accounting_connections_v1(uuid)'::regprocedure) into v_def;
-  v_def := pg_temp.anchor_replace(v_def,
+  v_def := pg_temp.patch(v_def,
     $a$perform public.accounting_connector_actor(p_workspace_id, 'read');$a$,
-    $a$perform public.accounting_connector_member(p_workspace_id, 'read');$a$);
+    $a$perform public.accounting_connector_member(p_workspace_id, 'read');$a$,
+    $a$accounting_connector_member(p_workspace_id, 'read')$a$);
   if v_def is null then raise exception '0691: accounting_connections_v1 anchor missing'; end if;
   execute v_def;
 
   select pg_get_functiondef('public.accounting_transfers_v1(uuid,date,date)'::regprocedure) into v_def;
-  v_def := pg_temp.anchor_replace(v_def,
+  v_def := pg_temp.patch(v_def,
     $a$perform public.accounting_connector_actor(p_workspace_id, 'read');$a$,
-    $a$perform public.accounting_connector_member(p_workspace_id, 'read');$a$);
+    $a$perform public.accounting_connector_member(p_workspace_id, 'read');$a$,
+    $a$accounting_connector_member(p_workspace_id, 'read')$a$);
   if v_def is null then raise exception '0691: accounting_transfers_v1 anchor missing'; end if;
   execute v_def;
 
   -- revoking a connection is offboarding, never new work
   select pg_get_functiondef('public.revoke_accounting_connection_v1(uuid)'::regprocedure) into v_def;
-  v_def := pg_temp.anchor_replace(v_def,
+  v_def := pg_temp.patch(v_def,
     $a$perform public.accounting_connector_actor(c.workspace_id, 'manageBilling');$a$,
-    $a$perform public.accounting_connector_member(c.workspace_id, 'manageBilling');$a$);
+    $a$perform public.accounting_connector_member(c.workspace_id, 'manageBilling');$a$,
+    $a$accounting_connector_member(c.workspace_id, 'manageBilling')$a$);
   if v_def is null then raise exception '0691: revoke_accounting_connection_v1 anchor missing'; end if;
   execute v_def;
 
@@ -106,21 +121,23 @@ begin
   select pg_get_functiondef(
     'public.record_accounting_delivery(uuid, text, uuid, date, text, date, date, text, text, jsonb, text, integer)'::regprocedure
   ) into v_def;
-  v_def := pg_temp.anchor_replace(v_def,
+  v_def := pg_temp.patch(v_def,
     $a$if not public.feature_effective(c.workspace_id, 'accountingConnectors') then
     raise exception 'accounting connections are switched off in this space' using errcode = '0A000';
   end if;
   if p_status not in$a$,
-    $a$if p_status not in$a$);
+    $a$if p_status not in$a$,
+    $a$if d.id is null and not public.feature_effective$a$);
   if v_def is null then raise exception '0691: record_accounting_delivery early-guard anchor missing'; end if;
-  v_def := pg_temp.anchor_replace(v_def,
-    $a$if d.id is null then
-    if c.revoked_at is not null or c.status <> 'connected' then$a$,
-    $a$if d.id is null then
-    if not public.feature_effective(c.workspace_id, 'accountingConnectors') then
-      raise exception 'accounting connections are switched off in this space' using errcode = '0A000';
-    end if;
-    if c.revoked_at is not null or c.status <> 'connected' then$a$);
+  v_def := pg_temp.patch(v_def,
+    $a$where workspace_id = c.workspace_id and identity_key = v_identity for update;
+  if d.id is null and c.remote_tenant_id <> '' then$a$,
+    $a$where workspace_id = c.workspace_id and identity_key = v_identity for update;
+  if d.id is null and not public.feature_effective(c.workspace_id, 'accountingConnectors') then
+    raise exception 'accounting connections are switched off in this space' using errcode = '0A000';
+  end if;
+  if d.id is null and c.remote_tenant_id <> '' then$a$,
+    $a$if d.id is null and not public.feature_effective$a$);
   if v_def is null then raise exception '0691: record_accounting_delivery admission anchor missing'; end if;
   execute v_def;
 end
@@ -134,6 +151,9 @@ do $migration$
 declare
   v_def text;
 begin
+  if to_regprocedure('public.accounting_connection_manageable_v1(uuid)') is null then
+    return; -- already given its purpose
+  end if;
   select pg_get_functiondef('public.accounting_connection_manageable_v1(uuid)'::regprocedure) into v_def;
   v_def := pg_temp.anchor_replace(v_def,
     $a$accounting_connection_manageable_v1(p_connection_id uuid)$a$,
