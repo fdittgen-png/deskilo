@@ -439,8 +439,9 @@ successful publication are distinct. Resolve uncertain external effects before
 retrying an action that could be duplicated.
 For an approved experiment charter, provision only authorized sandbox resources
 with least-privilege access; keep production data and credentials outside it.
-Before authorized cleanup, verify integration or required learning records
-are retained outside the disposable project. Reconcile the whole inventory:
+Before authorized cleanup, verify completed LoB integration or a recorded
+rejection with harvested learnings. Retain the decision and evidence outside
+the disposable project. Reconcile the whole inventory:
 repository/wiki, pipelines/packages, environments, secrets/identity and work
 items. Record actual deletion and leftovers in the registry; expiry alone
 does not authorize a destructive action or erase required evidence.
@@ -491,7 +492,7 @@ TDD v2.2 §14 proposes a **line-of-business (LoB) factory**: the durable product
 | Owner/delegate at decision | Choose integrate, reject or at most one explicit extension under actual authority. Expiry brings the decision forward; it does not renew the budget or authorize deletion. |
 | Independent reviewer and integrator | Bring an accepted experiment into the LoB through an ordinary change request and all its applicable standards. Rework or rebuild what fails those standards; experiment code receives no lower bar. |
 | Documentation maintainer | Before disposal, retain a dated record of hypothesis, evidence, decision reason and reusable parts in the LoB's canonical knowledge home; include failed experiments and permitted source references. |
-| Operator and coordinator | Execute only authorized provisioning/cleanup, reconcile every experiment resource and update the registry from readback. Flag expired projects, orphaned resources and cost overruns; retained knowledge must survive disposal. |
+| Operator and coordinator | Provision only authorized sandbox resources. Clean up after verified LoB integration or recorded rejection with harvested learnings; reconcile every resource and update the registry from readback. Flag expiry, orphans and cost overruns; retained knowledge must survive disposal. |
 
 Put the approved charter and inventory in the assignment given to each canonical prompt. Stop ordinary experiment execution at its recorded limit, preserve useful work and evidence, and hand the decision to its accountable role. Provisioning, expiry automation and complete deletion require their own adopted controls and observed results; this guide does not install them.
 
