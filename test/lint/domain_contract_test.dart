@@ -3,11 +3,11 @@
 // Docs-parity lint: a domain contract keeps the shape that lets an issue
 // cite it and a reviewer check it (ADR 0048, #3335).
 //
-// A contract page names the commit it was checked against, declares its
-// states before its transition table uses them, and points only at files
-// that exist. Whether a rule is RIGHT stays with the review and with the
-// tests the page's Evidence section names — this test refuses only a page
-// that cannot be checked at all.
+// A contract page names a source revision, declares its table's states,
+// and uses existing files for the supported path references below.
+// Whether a rule is RIGHT stays with the review and with the tests the
+// page's Evidence section names. These checks validate structure, not
+// whether the implementation enforces the documented rules.
 
 import 'dart:io';
 
@@ -28,15 +28,98 @@ const _requiredSections = [
   '## Stop condition',
 ];
 
-/// A backticked repository path: `supabase/…/x.sql`, `lib/…/y.dart`.
+/// A backticked repository path or a peer Markdown filename (also `./peer.md`).
 final _pathRef = RegExp(
   r'`((?:supabase|lib|test|docs|tool|scripts|packages|\.github)/'
-  r'[A-Za-z0-9_./-]+\.[a-z0-9]+)`',
+  r'[A-Za-z0-9_./-]+\.[a-z0-9]+|(?:\./)?[A-Za-z0-9_.-]+\.md)`',
 );
 
 String _name(File f) => f.uri.pathSegments.last;
 
+List<String> _tableCells(String row) => row.length < 2
+    ? const []
+    : row.substring(1, row.length - 1)
+        .split('|').map((c) => c.trim()).toList();
+
+bool _isTableDecoration(String row) {
+  if (!row.startsWith('|') || !row.endsWith('|')) return false;
+  final cells = _tableCells(row);
+  if (cells.length != 5) return false;
+  return cells.join('|') == 'from|event|guard|to|effects' ||
+      cells.every((c) => RegExp(r'^:?-{3,}:?$').hasMatch(c));
+}
+
+Iterable<String> _transitionRows(Iterable<String> lines) => lines
+    .map((l) => l.trim())
+    .where((l) => l.contains('|') && !_isTableDecoration(l));
+
+String? _transitionError(String row, Set<String> declared) {
+  if (!row.startsWith('|') || !row.endsWith('|')) {
+    return 'a transition row needs leading and trailing pipes';
+  }
+  final cells = _tableCells(row);
+  if (cells.length != 5 || cells.any((c) => c.isEmpty)) {
+    return 'a transition row needs five nonempty cells';
+  }
+  for (final cell in [cells[0], cells[3]]) {
+    // Initial pseudo-state or a replay answering the existing attempt's state.
+    if (cell == '(none)' || cell.startsWith('*(')) continue;
+    final state = cell.replaceAll('`', '');
+    if (!declared.contains(state)) return 'undeclared state "$state"';
+  }
+  return null;
+}
+
+Iterable<String> _missingPaths(String text, File page) sync* {
+  for (final m in _pathRef.allMatches(text)) {
+    final path = m.group(1)!;
+    final local = !path.contains('/') || path.startsWith('./');
+    final file = File(local ? '${page.parent.path}/$path' : path);
+    if (!file.existsSync()) yield path;
+  }
+}
+
 void main() {
+  test('transition fixtures require five nonempty cells and known states', () {
+    const states = {'prepared', 'sent'};
+    expect(_transitionError(
+        '| `prepared` | claim | allowed | `sent` | post |', states), isNull);
+    for (final row in [
+      '| `prepared` | claim | allowed | `sent` |',
+      '| `prepared` | claim | allowed | `sent` | post | extra |',
+      '| `prepared` | | allowed | `sent` | post |',
+      '| `prepared` | claim | | `sent` | post |',
+      '| `prepared` | claim | allowed | `sent` | |',
+      '| `prepared` | claim | allowed | `unknown` | post |',
+      '| `prepared` | claim | allowed | `sent` | post',
+    ]) {
+      expect(_transitionError(row, states), isNotNull, reason: row);
+    }
+  });
+
+  test('table scan retains malformed rows and skips decorations', () {
+    const valid = '| `prepared` | claim | allowed | `sent` | post |';
+    const malformed = '`prepared` | claim | allowed | `sent` | post |';
+    final rows = _transitionRows([
+      '|from|event|guard|to|effects|',
+      '|---|---|---|---|---|',
+      '| :--- | ---: | :---: | --- | --- |',
+      valid, malformed, '|---|---|---|---|',
+    ]).toList();
+    expect(rows, [valid, malformed, '|---|---|---|---|']);
+    expect(_transitionError(rows[1], {'prepared', 'sent'}), isNotNull);
+  });
+
+  test('root and peer references reject missing files', () {
+    const text = '`docs/domain/contracts/README.md` `README.md` `./README.md` '
+        '`__missing_contract_fixture__.md` '
+        '`docs/domain/contracts/__missing_contract_fixture__.md`';
+    expect(_missingPaths(text, File('$_root/fixture.md')), [
+      '__missing_contract_fixture__.md',
+      'docs/domain/contracts/__missing_contract_fixture__.md',
+    ]);
+  });
+
   final pages = markdownFiles(_root, recursive: false)
       .where((f) => _name(f) != 'README.md')
       .toList();
@@ -77,14 +160,14 @@ void main() {
       }
     });
 
-    test('$name: every transition names declared states', () {
+    test('$name: every transition has five cells and declared states', () {
       final declaredLine = lines.firstWhere(
         (l) => l.startsWith('Declared states:'),
         orElse: () => '',
       );
       expect(declaredLine, isNotEmpty,
-          reason: '$name: "Declared states: `a`, `b`, …" must precede the '
-              'transition table.');
+          reason: '$name: "Declared states: `a`, `b`, …" must list the '
+              'table\'s states.');
       final declared = RegExp(r'`([^`]+)`')
           .allMatches(declaredLine)
           .map((m) => m.group(1)!)
@@ -94,39 +177,19 @@ void main() {
       final start = lines.indexOf('## States and transitions');
       final end = lines.indexWhere((l) => l.startsWith('## '), start + 1);
       final section = lines.sublist(start, end < 0 ? lines.length : end);
-      final rows = section
-          .where((l) => l.startsWith('|'))
-          .where((l) => !l.startsWith('| from |'))
-          .where((l) => !RegExp(r'^\|\s*-').hasMatch(l))
-          .toList();
+      final rows = _transitionRows(section).toList();
       expect(rows, isNotEmpty,
           reason: '$name: no "| from | event | guard | to | effects |" '
               'rows.');
 
       for (final row in rows) {
-        final cells = row.split('|').map((c) => c.trim()).toList();
-        expect(cells.length, greaterThanOrEqualTo(6),
-            reason: '$name: a transition row needs five cells: $row');
-        for (final cell in [cells[1], cells[4]]) {
-          // "(none)" is the initial pseudo-state; "*(…)*" is a replay
-          // that answers whatever state the existing attempt is in.
-          if (cell == '(none)' || cell.startsWith('*(')) continue;
-          final state = cell.replaceAll('`', '');
-          expect(declared, contains(state),
-              reason: '$name: transition names the state "$state", which '
-                  'is not in "Declared states": $row');
-        }
+        expect(_transitionError(row, declared), isNull, reason: '$name: $row');
       }
     });
 
-    test('$name: every backticked repository path exists', () {
-      for (final m in _pathRef.allMatches(text)) {
-        final path = m.group(1)!;
-        expect(File(path).existsSync(), isTrue,
-            reason: '$name: points at $path, which does not exist — a '
-                'contract that cites a file that moved sends the next '
-                'reader to the wrong place.');
-      }
+    test('$name: supported backticked file references exist', () {
+      expect(_missingPaths(text, page), isEmpty,
+          reason: '$name: a referenced file moved or does not exist.');
     });
   }
 }

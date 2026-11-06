@@ -30,7 +30,7 @@ body:
     id: scope
     attributes:
       label: Scope, exclusions, consumer and prerequisites
-      description: Included paths and contracts; adjacent work deliberately excluded; the real consumer of the result; the exact prerequisite outcome and its evidence, or none.
+      description: Included paths and contracts; checkpoint/integration owner and size boundary; adjacent work excluded; the real consumer; the exact prerequisite outcome and its evidence, or none.
     validations:
       required: true
   - type: textarea
@@ -42,22 +42,23 @@ body:
     id: contract
     attributes:
       label: Domain contract impact
-      description: Which views of the business rule move (docs/domain/contracts/README.md). Risk decides the assurance; the kind of change decides which section moves.
-      multiple: true
+      description: Choose one; identify the affected views in the reference and delta below (docs/domain/contracts/README.md).
+      multiple: false
       options:
-        - unchanged — cite the page or the invariant row
-        - data (concepts, identity, relationships, cardinalities)
-        - transitions (states, guards, retries, external effects)
-        - authority (who may trigger or resolve what)
-        - effects (what the outside world observes)
+        - unchanged — no business rule changes
+        - changed — data, transitions, authority or effects
     validations:
       required: true
   - type: textarea
     id: delta
     attributes:
-      label: Contract delta
+      label: Contract reference and delta
       description: |
-        Current rule → proposed rule, with the source of the proposed rule (issue, decision). Invariants, including temporal or historical exceptions. For a lifecycle: trigger and actor, guards, atomic effects, outcomes and prohibited effects, retry identity and recovery of an uncertain outcome. Leave empty when the contract is unchanged.
+        Link the affected page or invariant row, or explain why no business rule applies. If unchanged, give the reason.
+        If changed, name each affected view (data, transitions, authority, effects), current → proposed rule and its source (issue, decision), including lifecycle exceptions.
+        For a lifecycle, include trigger and actor, guards, atomic and external effects, outcomes and prohibited effects, retry identity and uncertain-outcome recovery.
+    validations:
+      required: true
   - type: dropdown
     id: risk
     attributes:
