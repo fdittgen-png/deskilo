@@ -238,6 +238,8 @@ The one shared reference for issues, PRs and agents (canonical wording and the c
 
 **Ready** — a checkpoint states the affected user and outcome, current vs expected behaviour, a minimal proving scenario, the exact producer prerequisite (or none), non-goals, business risk, the real consumer, the test layers that apply, and an ownership/size boundary. Refresh `master` and read the body plus later owner corrections first; a missing current proof means `unverified`, not `unimplemented`.
 
+Before implementation, cite the affected invariant row or contract and its delta, or explain why it is unchanged. The [domain-contract convention](domain/contracts/README.md) keeps simple rules in invariant rows and complex lifecycles in pages, maintained by the checkpoint's existing owner.
+
 **Done** — the producer and its real consumer work through success, refusal and recovery paths; acceptance maps to named tests; migration, setup, help, locale and registry changes of the slice are complete; the candidate SHA has green required checks. Operator, device or provider proof that is still missing is `NOT RUN` / `BLOCKED`, never `PASS`.
 
 **STOP** when Ready's outcome is Done. No speculative abstractions, extra platforms, unrelated cleanup or repeated polish cycles. An unrelated defect found on the way is filed separately; a regression the slice caused is fixed inside it.
@@ -245,6 +247,7 @@ The one shared reference for issues, PRs and agents (canonical wording and the c
 **Status words:** `still-open/unverified`, `implemented-in-PR #N`, `verified-at-SHA`, `blocked-by <checkpoint>`, `released-in`. Implemented is not verified, verified is not released.
 
 **Closure rules (in force):**
+- Merge only after the required CI checks for the exact candidate head SHA have completed successfully. A queued/running check or a later `master` pass is not pre-merge evidence.
 - A partial PR says `Refs #NN`. `Closes #NN` is for the PR that meets the whole acceptance, and the issue is only treated as closed once that PR is merged on `master` with any required release/device/operator evidence recorded.
 - A queued auto-merge is not a merge; a changed head SHA invalidates earlier evidence.
 - One registry-touching branch at a time (see below).

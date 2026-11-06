@@ -23,6 +23,9 @@ import '../../../core/vat/tax_reference.dart';
 import 'book_chart.dart';
 import 'fiscal_year.dart';
 import 'invoice.dart';
+import 'jpk_kr_pd_facts.dart';
+import 'jpk_kr_pd_validation.dart';
+import 'jpk_kr_pd_writer.dart';
 import 'posting.dart';
 import 'saf_t_financial_at.dart';
 import 'saf_t_financial_ro.dart';
@@ -102,6 +105,18 @@ enum SafTFinancialProfile {
     // ANAF's tax type of VAT (nomenclature TAX-IMP).
     taxType: '300',
     taxDescription: 'TVA',
+  ),
+
+  /// Polish JPK_KR_PD(1) v1-1; required non-posting facts are explicit.
+  poland(
+    formatId: 'jpk_kr_pl',
+    country: 'PL',
+    namespace: 'http://jpk.mf.gov.pl/wzor/2024/09/04/09041/',
+    version: '1-1',
+    accountingBasis: 'A',
+    taxType: 'VAT',
+    taxDescription: 'VAT',
+    standardAccountRequired: false,
   ),
 
   /// #2379 — the BMF's SAF-T AT 1.01 (BAO §§ 131, 132, decree
@@ -288,6 +303,7 @@ class SafTFinancialRequest {
     required this.createdAt,
     required this.reference,
     this.companyIban = '',
+    this.polishFacts,
     this.profitBasis = '',
     this.industryCode = '',
     this.taxNumber = '',
@@ -328,6 +344,9 @@ class SafTFinancialRequest {
   /// require.
   final String companyIban;
 
+  /// Explicit JPK facts; absent inputs are refused rather than invented.
+  final JpkKrPdFacts? polishFacts;
+
   /// #2379 — Austria: how the profit is determined (`TaxAccountingBasis`:
   /// § 4 (1), § 4 (3) or § 5 EStG …), the industry code (`TaxEntity`,
   /// Branchenkennzahl) and the tax office's Steuernummer
@@ -351,6 +370,9 @@ class SafTFinancialRequest {
 
 /// What a missing fact is about.
 enum SafTGapKind {
+  /// A named Polish reporting fact missing from the source.
+  polishFact,
+
   /// An account the profile's chart map does not cover.
   standardAccount,
 
@@ -408,10 +430,24 @@ final class SafTFinancialRefused extends SafTFinancialResult {
 }
 
 /// The SAF-T Financial file of [request], or why there is none.
-SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) =>
-    (request.profile.romaniaShape
-            ? SafTRomaniaXml(request)
-            : request.profile.austriaShape
-            ? SafTAustriaXml(request)
-            : SafTFinancialXml(request))
-        .write();
+SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) {
+  if (request.profile == SafTFinancialProfile.poland) {
+    final result = buildJpkKrPd(JpkKrPdRequest(
+      period: request.period, opening: request.opening, postings: request.postings,
+      accountNames: request.accountNames, parties: request.parties,
+      currency: request.currency, createdAt: request.createdAt, facts: request.polishFacts,
+    ));
+    return switch (result) {
+      JpkKrPdFile(:final xml) => SafTFinancialFile(xml),
+      JpkKrPdRefused(:final gaps) => SafTFinancialRefused(
+        [for (final gap in gaps) SafTGap(SafTGapKind.polishFact, gap)],
+      ),
+    };
+  }
+  return (request.profile.romaniaShape
+          ? SafTRomaniaXml(request)
+          : request.profile.austriaShape
+          ? SafTAustriaXml(request)
+          : SafTFinancialXml(request))
+      .write();
+}

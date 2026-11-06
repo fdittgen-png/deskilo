@@ -6,7 +6,7 @@ description: After a DesKilo push — the three required checks ("analyze · l10
 
 **Essentials**
 1. Required on master: `analyze · l10n gate · test · coverage`, `quality · database`, `quality · report`.
-2. `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Never `--admin`.
+2. Verify successful required checks for the exact candidate before invoking `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Never `--admin`.
 3. One bounded watcher per PR in the background; read JSON states, never grep the plain output.
 4. A run superseded by a newer push stays cancelled; a current-candidate infrastructure failure gets at most ONE coherent retry (below); anything else is real.
 5. Deploy with ONE train after the last merge: `gh workflow run release-train.yml -f track=alpha`.
@@ -26,6 +26,7 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
 - Do NOT grep the plain output for "pass": the analyze job's name contains "l10n"
   and "test". A failing test: `gh run view <id> --log-failed | grep -a "❌"`; a
   finished job's log mid-run: `gh api repos/{owner}/{repo}/actions/jobs/<job>/logs`.
+- The loop detects completion, not success. Verify all three required contexts above succeeded for the current head; missing, failed, cancelled or running checks block merge. Record their run/job evidence before merging.
 
 ## Failures that are not the code
 - **`cancelled` by a newer push** (the concurrency group superseded the run): leave
@@ -53,9 +54,10 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
   and name it in the body.
 
 ## Merge
-- `gh pr merge <n> --auto --squash --match-head-commit <sha>` — queue it as soon as
-  the PR is open; a queued auto-merge is not a merge, and a new head SHA invalidates
-  earlier evidence (AGENT_RULES "Ready, Done and closure"). Then confirm
+- `gh pr merge <n> --auto --squash --match-head-commit <sha>` — invoke only after
+  the current candidate's required checks succeeded. With protection absent,
+  auto-merge can merge immediately; it is not a substitute for that verification.
+  A new head invalidates earlier evidence (AGENT_RULES "Ready, Done and closure"). Then confirm
   `gh pr view <n> --json state,mergedAt` and that the squash commit is on origin/master.
 - `BLOCKED` = a required check is missing or red; never `--admin`, never force-push
   to master. `BEHIND`/`CONFLICTING` = merge master once (`deskilo-ship-feature` §5).
