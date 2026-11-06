@@ -1,0 +1,94 @@
+name: Checkpoint (implementation-ready slice)
+description: One reviewable slice with its consumer, its tests and its stop condition
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The Ready, Done and closure rules: [docs/AGENT_RULES.md](https://github.com/fdittgen-png/deskilo/blob/master/docs/AGENT_RULES.md#ready-done-and-closure). A partial PR says `Refs`; `Closes` is for the PR that meets the whole acceptance. Fill "not applicable" with a reason rather than leaving a field empty.
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Affected user and outcome
+      description: Who gains what observable capability, and which goal it serves.
+    validations:
+      required: true
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: Current and expected behaviour
+      description: The verified baseline (commit, file, test) and the intended change. Mark assumptions.
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Minimal proving scenario
+      description: The shortest realistic sequence that shows the result.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope, exclusions, consumer and prerequisites
+      description: Included paths and contracts; adjacent work deliberately excluded; the real consumer of the result; the exact prerequisite outcome and its evidence, or none.
+    validations:
+      required: true
+  - type: textarea
+    id: anchors
+    attributes:
+      label: Implementation anchors
+      description: Existing files, symbols, migrations, representative tests and commands, verified on the checked-out commit.
+  - type: dropdown
+    id: contract
+    attributes:
+      label: Domain contract impact
+      description: Which views of the business rule move (docs/domain/contracts/README.md). Risk decides the assurance; the kind of change decides which section moves.
+      multiple: true
+      options:
+        - unchanged — cite the page or the invariant row
+        - data (concepts, identity, relationships, cardinalities)
+        - transitions (states, guards, retries, external effects)
+        - authority (who may trigger or resolve what)
+        - effects (what the outside world observes)
+    validations:
+      required: true
+  - type: textarea
+    id: delta
+    attributes:
+      label: Contract delta
+      description: |
+        Current rule → proposed rule, with the source of the proposed rule (issue, decision). Invariants, including temporal or historical exceptions. For a lifecycle: trigger and actor, guards, atomic effects, outcomes and prohibited effects, retry identity and recovery of an uncertain outcome. Leave empty when the contract is unchanged.
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk
+      options:
+        - R0 — no runtime, policy, privacy or contractual effect
+        - R1 — reversible behaviour change, ordinary UI or API work, refactoring
+        - R2 — authorisation, money, personal data, destructive operation, submission to a third party, credentials, binding rules
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance and tests
+      description: |
+        One line per criterion with its test ids and when it is required (merge / activation / release / external acceptance). Each test names setup, action, expected result and side effects, the oracle, the layer. A heading like "success / refusal / recovery" is not a test.
+      value: |
+        | AC | Observable criterion | Tests | Required by |
+        |---|---|---|---|
+        | AC-1 |  |  | merge |
+    validations:
+      required: true
+  - type: textarea
+    id: completeness
+    attributes:
+      label: Completeness and rollout
+      description: Setup questionnaire, locales, help, registries, Demo case, migration compatibility, enablement, monitoring, recovery; deferred evidence with its gate and the action it restricts.
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when, and pause conditions
+      description: The exact closure boundary, and the thresholds (scope, authority, dependency, conflict) at which to stop and record instead of continuing.
+    validations:
+      required: true
