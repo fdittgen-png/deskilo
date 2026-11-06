@@ -16,4 +16,5 @@
 - [Architecture](Architecture)
 - [Implementation](Implementation)
 - [Technical reference](Technical-Reference)
+- [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts)
 - [CI and automation](CI-and-Automation)

@@ -34,7 +34,7 @@ One train, one commit, every platform. Web publishing is a separate, opt-in step
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="images/diagram-issue-to-merge-dark.svg"><img src="images/diagram-issue-to-merge-light.svg" alt="The issue-to-merge flow: claim the issue, open a worktree, add the feature flag, pass the local gates, open a pull request, wait for the three required checks, merge, then ship with one release train dispatch." width="100%"></picture>
 
-Each step is written out in [From issue to merge](#from-issue-to-merge) below.
+Each step is written out in [From issue to merge](#from-issue-to-merge) below. [Process actors and role prompts](Technical-Reference#process-actors-and-role-prompts) provides bounded assignments for the responsibilities involved; a release requires its own existing authorization.
 
 ## Repository layout
 
@@ -158,16 +158,17 @@ Every functionality ships behind a `WorkspaceFeature`. *Enable a feature and you
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="images/diagram-quality-gates-dark.svg"><img src="images/diagram-quality-gates-light.svg" alt="The test pyramid and quality gates: unit tests at the base, widget tests above, end to end tests at the top, beside lint ratchets, pgTAP database tests, migration replay and generated-file drift gates, all reported by the CI quality report." width="100%"></picture>
 
-**Before every push** run the fast gates and see them green:
+**Before every push**, discover and run only implicated generators, inspect their output, then run the fast gates on the resulting tree:
 
 ```bash
+dart run tool/preflight.dart --list   # which generators your change implicates
+# Run only those generators and inspect the resulting diff, then:
 dart analyze --fatal-infos            # exactly what CI runs; includes the riverpod_lint plugin
 flutter test test/lint                # every lint and registry pin
 flutter test test/<folders you touched>
-dart run tool/preflight.dart --list   # which generators your change implicates
 ```
 
-Then run only the generators `--list` names. Never run the whole preflight: its `build_runner` step can hang.
+Do not run the whole preflight by default; the project skill defines the affected generators and checks.
 
 **The full suite runs in CI only.** Do not run bare `flutter test` before a push. Several local full suites on one machine starve each other into timeouts. Docs-only changes need only the lint and doc tests.
 
@@ -206,9 +207,9 @@ A failure says **which discipline** regressed, because the run summary is one ta
 
 > **A workflow name is free to change; a job name is not.** A job name is a required status-check context. Renaming `analyze · l10n gate · test · coverage` would make every PR unmergeable until branch protection is updated in lockstep. Workflows are named `<Group> · <what it does>`; the table is in [`.github/workflows/README.md`](https://github.com/fdittgen-png/deskilo/blob/master/.github/workflows/README.md).
 
-- **Branch protection is data.** `scripts/branch_protection.sh` (verify, apply, show) holds it. `master` requires the checks above, blocks force-pushes and deletions, and demands linear history. Strict mode is off, so serialise merges rather than arming several at once.
+- **Verify effective branch protection.** `scripts/branch_protection.sh` (verify, apply, show) describes the intended configuration; inspect the live setting before relying on enforcement. The checks above are required by project policy even when GitHub protection is absent. Serialise merges and wait for current-candidate success before any merge command.
 - **Platform builds run on PRs that touch them:** *Release · macOS DMG*, *Release · Windows MSI*, *Publish · Web app* and *CI · F-Droid no-GMS audit*.
-- **Flakes.** `cancelled` means a runner hiccup or a superseded run: rerun once. Infrastructure flakes get one rerun. Anything else is real.
+- **Retries.** Diagnose the first producer failure and the candidate/attempt. For a genuinely transient failure on an unchanged Quality candidate, rerun the whole workflow once; do not combine artifacts from failed-job-only reruns. Follow [CI and automation](CI-and-Automation#diagnosing-and-retrying-a-failed-run).
 - **A red `quality · database` holds a PR open.** The usual cause is a stale `contract.txt`.
 - **Never `--admin`**, and never force-push to `master`.
 
@@ -219,13 +220,15 @@ A failure says **which discipline** regressed, because the run summary is one ta
 3. **Build.** Write the failing test first. Land flags, strings, `setup.html`, docs and migrations together (see the checklists on this page).
 4. **Local gates.** `dart analyze --fatal-infos`, `flutter test test/lint` and the affected folders, and the generators `preflight --list` names.
 5. **Pull request.** Conventional title with the issue number, for example `feat(scope): … (#123)`. Body: what and why, how it was tested. **`Refs #N`** for a partial PR; **`Closes #N`** only when the PR meets the whole acceptance. Keep PRs small.
-6. **Required checks.** Queue the merge as soon as the PR is open: `gh pr merge <n> --auto --squash --match-head-commit <sha>`. A queued auto-merge is not a merge, and a new head SHA invalidates earlier evidence.
-7. **Merge.** Confirm the PR is `MERGED` and the squash commit is on `origin/master`. If master moved under you, merge it into your branch **once**; never rebase. A migration PR that collided renames to the next free number inside that merge.
-8. **Ship.** After the last merge of a batch, dispatch one train (next section).
+6. **Required checks.** Wait for all three required contexts to complete successfully on the exact current head SHA before invoking merge or auto-merge. Missing, running, failed or cancelled checks block merge; auto-merge can merge immediately without branch protection. A new head invalidates earlier evidence.
+7. **Merge.** When authorized, squash-merge with the expected head SHA, then confirm `MERGED` and the landed commit on `origin/master`. Merge master into the branch only for the conflict, migration or shared-generated-file conditions in `docs/AGENT_RULES.md`; never rebase. A colliding migration takes the next free number inside that merge.
+8. **Handoff.** Record the landing, remaining gates and next outcome. A release is a separate action within existing owner authorization, not an automatic consequence of merging (next section).
 
 **Ready and Done.** *Ready* means the issue states the user, the outcome, the proving scenario, the real consumer and the test layers. *Done* means the producer and its consumer work through success, refusal and recovery, acceptance maps to named tests, and the candidate SHA has green required checks. Proof you could not obtain is `NOT RUN` or `BLOCKED`, never `PASS`. Stop when the outcome is Done: no speculative abstractions, no unrelated cleanup. A defect found on the way gets its own issue.
 
 ## Releases
+
+Prepare the candidate, target and evidence first. Dispatch only when the existing owner authorization covers that release and target; do not infer it from a code merge or a green build.
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="images/diagram-release-train-dark.svg"><img src="images/diagram-release-train-light.svg" alt="The release train: one dispatch resolves master to a single commit and ships it to Android on Play, iPhone and iPad on TestFlight, macOS and Windows installers, and the web, while F-Droid is submitted but not yet published." width="100%"></picture>
 
@@ -264,7 +267,7 @@ gh workflow run web.yml -f ref=master -f deploy=true                     # publi
 - [ ] A guide section with an `<!-- anchor: … -->` for everything a user can see or configure, in five languages, and the help symbol beside it (skill `deskilo-documentation`).
 - [ ] An ADR in `docs/decisions/` if you decided something; a rule in `AGENT_RULES.md` if the next contributor must obey it.
 - [ ] Gates green: `dart analyze --fatal-infos`, `flutter test test/lint`, the affected folders, the generators `preflight --list` names.
-- [ ] PR with `Refs` or `Closes`, auto-merge queued, merge verified.
+- [ ] PR with `Refs` or `Closes`, exact-candidate checks successful before merge, squash landing verified.
 
 ## Where next
 
