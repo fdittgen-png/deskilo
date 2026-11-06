@@ -182,10 +182,14 @@ void main() {
   group('a development workspace does not reach the outside world', () {
     test('it files nothing with a government platform, nor with a '
         "customer's service", () {
-      final fn = File('supabase/functions/send-e-invoice/index.ts')
+      // #3335 — the decisions live in handler.ts, the read in store.ts.
+      final fn = File('supabase/functions/send-e-invoice/handler.ts')
+          .readAsStringSync();
+      final store = File('supabase/functions/send-e-invoice/store.ts')
           .readAsStringSync();
       expect(fn, contains('development_workspace'));
-      expect(fn, contains("(ws?.environment ?? \"dev\") !== \"prod\""),
+      expect(fn, contains('(await store.workspaceEnvironment(workspaceId)) !== "prod"'));
+      expect(store, contains('data?.environment ?? "dev"'),
           reason: 'an unreadable environment must refuse, not send');
     });
 
@@ -199,7 +203,7 @@ void main() {
     test('reading the CONFIGURATION stays allowed — a rehearsal space is '
         'set up exactly like the real one; only the sending is refused',
         () {
-      final fn = File('supabase/functions/send-e-invoice/index.ts')
+      final fn = File('supabase/functions/send-e-invoice/handler.ts')
           .readAsStringSync();
       // The refusal sits after the config branch returns.
       expect(fn.indexOf('payload.action === "config"'),
