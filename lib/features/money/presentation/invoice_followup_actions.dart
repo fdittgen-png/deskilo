@@ -7,7 +7,6 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../core/i18n/money_format.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -17,6 +16,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/credit_move_commands.dart';
 import '../application/invoice_action.dart';
 import '../application/send_reminder.dart';
 import '../domain/dunning.dart';
@@ -310,10 +310,13 @@ Future<void> matchInvoiceToPayment(
               resolution: choice.resolution,
               note: choice.note,
             );
-      } on PostgrestException catch (e) {
+      } catch (e, st) {
         // #3349 — a stale screen: the credit was moved after the list was
         // read. Said in its own words, not as a generic failure.
-        if (!e.message.contains('was moved')) rethrow;
+        if (!CreditMoveCommands.refusedAsMoved(e)) {
+          // trace-exempt: rethrown for the caller's runGuarded to trace.
+          Error.throwWithStackTrace(e, st);
+        }
         movedMeanwhile = true;
       }
     },

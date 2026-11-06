@@ -4,6 +4,7 @@
 // edited. This refuses only what cannot be right before anything is sent;
 // the server decides the rest (a matched credit, an invoiced month, a
 // closed period) and says why in its refusal.
+import '../../../core/data/server_error.dart';
 import '../domain/credit_move.dart';
 import '../domain/ledger_entry.dart';
 
@@ -42,6 +43,11 @@ class CreditMoveCommands {
       requestId: requestId,
     );
   }
+
+  /// #3349 — whether the server refused a match because the credit was
+  /// moved to another member after the list was read.
+  static bool refusedAsMoved(Object error) =>
+      (serverErrorMessage(error) ?? '').contains('was moved');
 
   /// #3349 — the credits already moved off a member, which no match may
   /// offer or take again.
