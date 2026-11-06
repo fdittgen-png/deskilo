@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "invoiceMatchCreditMoved": "This payment was moved to another member, so it cannot pay this invoice. Reload and choose another.",
+  "@invoiceMatchCreditMoved": {
+    "description": "#3349 - matching a payment that was moved to another member"
+  }
+}

@@ -13183,6 +13183,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMatchAction => 'Als bezahlt markieren';
 
   @override
+  String get invoiceMatchCreditMoved =>
+      'Diese Zahlung wurde einem anderen Mitglied zugeordnet und kann diese Rechnung nicht begleichen. Neu laden und eine andere wählen.';
+
+  @override
   String get invoiceMatchCreditNote =>
       'Gutschrift über den Überschuss erstellen';
 

@@ -30,6 +30,7 @@ import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -91,11 +92,13 @@ import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
+import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
+import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
@@ -203,6 +206,8 @@ TypedFileSaver typedSaverOf(FileSaver saver) =>
     };
 
 List<Override> standardTestOverrides({
+  // #3349 — a test of the credit move brings its own; else the Demo's.
+  CreditMoveRepository? creditMoves,
   FakeMeRepository? me,
   FakeLinkedMeRepository? linkedMe,
   // #2590 — a test of the usage month's preparation brings its own.
@@ -459,7 +464,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(events ?? FakeEventRepository()),
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
-    ..._moneyOverrides(money ?? FakeMoneyRepository()),
+    ..._moneyOverrides(money ?? FakeMoneyRepository(), creditMoves),
     // #2590 — recording a month's usage is a command with no server here.
     usagePreparationProvider.overrideWithValue(
       usagePreparation ?? const FakeUsagePreparation(),
@@ -638,7 +643,10 @@ List<Override> _profileOverrides(ProfileRepository profile) => [
     ];
 
 /// #2591 — one fake serves the whole money boundary and its narrow reads.
-List<Override> _moneyOverrides(MoneyRepository money) => [
+List<Override> _moneyOverrides(
+  MoneyRepository money,
+  CreditMoveRepository? creditMoves,
+) => [
       moneyRepositoryProvider.overrideWithValue(money),
       invoiceQueriesProvider.overrideWithValue(money),
       memberAccountQueriesProvider.overrideWithValue(money),
@@ -656,6 +664,11 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
       documentNumberingProvider.overrideWithValue(money),
       paymentGatewayRepositoryProvider.overrideWithValue(money),
       eInvoiceTransmissionsProvider.overrideWithValue(money),
+      // #3349 — the match dialog reads the moved credits.
+      if (creditMoves != null)
+        creditMoveRepositoryProvider.overrideWithValue(creditMoves)
+      else if (money is FakeMoneyRepository)
+        creditMoveRepositoryProvider.overrideWithValue(DemoCreditMoves(money)),
       accountingSourceQueriesProvider.overrideWithValue(
         money is AccountingSourceQueries ? money as AccountingSourceQueries : FakeMoneyRepository(),
       ),

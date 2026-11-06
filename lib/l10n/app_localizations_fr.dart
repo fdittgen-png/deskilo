@@ -13192,6 +13192,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMatchAction => 'Marquer comme payée';
 
   @override
+  String get invoiceMatchCreditMoved =>
+      'Ce paiement a été déplacé vers un autre membre : il ne peut pas régler cette facture. Rechargez et choisissez-en un autre.';
+
+  @override
   String get invoiceMatchCreditNote => 'Créer un avoir pour l\'excédent';
 
   @override

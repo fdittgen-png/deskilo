@@ -44,6 +44,11 @@ abstract interface class CreditMoveRepository {
     required String reason,
     required String requestId,
   });
+
+  /// #3349 — the ids of the credits this workspace moved: each original
+  /// (`from_credit_id`) and its reversal. Empty for someone who may not read
+  /// them (the table's row security answers no rows, not an error).
+  Future<Set<String>> fetchMovedCreditIds(String workspaceId);
 }
 
 /// The longest reason the server keeps (0688).

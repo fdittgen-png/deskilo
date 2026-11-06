@@ -3748,6 +3748,7 @@ Map<String, _Getter> _part11() => {
   'invoiceIssueUnknownTitle': (l) => l.invoiceIssueUnknownTitle,
   'invoiceKindFull': (l) => l.invoiceKindFull,
   'invoiceLegalLatePenaltyDefault': (l) => l.invoiceLegalLatePenaltyDefault,
+  'invoiceMatchCreditMoved': (l) => l.invoiceMatchCreditMoved,
   'invoiceMissingBuyerVatId': (l) => l.invoiceMissingBuyerVatId,
   'invoicePdfActivity': (l) => l.invoicePdfActivity,
   'invoiceShare': (l) => l.invoiceShare,

@@ -13161,6 +13161,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceMatchAction => 'Segna come pagata';
 
   @override
+  String get invoiceMatchCreditMoved =>
+      'Questo pagamento è stato spostato a un altro membro, quindi non può saldare questa fattura. Ricarichi e ne scelga un altro.';
+
+  @override
   String get invoiceMatchCreditNote =>
       'Crea una nota di credito per l\'eccedenza';
 
