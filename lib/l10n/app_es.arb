@@ -8639,6 +8639,7 @@
   },
   "invoiceLineAdjustment": "Ajuste",
   "invoiceMatchAction": "Marcar como pagada",
+  "invoiceMatchCreditMoved": "Este pago se movió a otro miembro, así que no puede pagar esta factura. Recargue y elija otro.",
   "invoiceMatchCreditNote": "Crear una nota de crédito por el exceso",
   "invoiceMatchForce": "Aceptar de todos modos (justificar)",
   "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístrelo o confírmelo primero.",

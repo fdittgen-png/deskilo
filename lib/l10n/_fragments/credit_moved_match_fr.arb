@@ -1,0 +1,4 @@
+{
+  "@@locale": "fr",
+  "invoiceMatchCreditMoved": "Ce paiement a été déplacé vers un autre membre : il ne peut pas régler cette facture. Rechargez et choisissez-en un autre."
+}
