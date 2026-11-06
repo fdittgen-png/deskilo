@@ -320,11 +320,18 @@ Deno.test("O2: simultaneous requests upload once, whatever the bytes", async () 
     call(s, p.fetchImpl, bodyOf()),
     call(s, p.fetchImpl, bodyOf({ content_base64: btoa("<xml>two</xml>") })),
   ].map(async (x) => read(await x)));
-  assertEquals(p.posts.length, 1);
-  assertEquals(s.rows.size, 1);
-  assertEquals(rs.filter((x) => x.status === 200).length, 1);
-  assertEquals(rs.filter((x) => x.body.error === "binding_changed").length, 1);
-  assertEquals(rs.filter((x) => x.body.phase === "sent").length, 1);
+  // Which request reaches prepare first is not fixed; the invariants are:
+  assertEquals(p.posts.length, 1); // at most one provider upload
+  assertEquals(s.rows.size, 1); // one durable identity
+  assertEquals(rs.filter((x) => x.status === 200).length, 1); // one winner
+  for (const loser of rs.filter((x) => x.status !== 200)) {
+    // every other request is refused or told the dispatch is in flight
+    assertEquals(
+      loser.body.error === "binding_changed" || loser.body.phase === "sent",
+      true,
+      JSON.stringify(loser),
+    );
+  }
 });
 
 Deno.test("O3: a record prepared but never dispatched is claimed by the next request", async () => {
