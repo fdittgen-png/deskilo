@@ -8371,6 +8371,7 @@ const Set<String> uiLabelKeys = {
   'invoiceLegalSpecialField',
   'invoiceLineAdjustment',
   'invoiceMatchAction',
+  'invoiceMatchCreditMoved',
   'invoiceMatchCreditNote',
   'invoiceMatchForce',
   'invoiceMatchNoPayments',

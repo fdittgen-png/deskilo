@@ -2102,12 +2102,13 @@ routine public.account_space_eligible(p_user uuid, p_ref text) -> boolean | func
 routine public.account_visibility_lock(p_user uuid) -> void | function | definer | volatile | exec: | body:e19bb24a78c5
 routine public.account_visibility_saved_field(p_user uuid, p_field text) -> jsonb | function | definer | stable | exec: | body:a6b17bfc33d2
 routine public.accounting_connection_json(c accounting_connections) -> jsonb | function | definer | stable | exec:service_role | body:9587bdf2c8c3
-routine public.accounting_connection_manageable_v1(p_connection_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b2229b1ac4e1
+routine public.accounting_connection_manageable_v1(p_connection_id uuid, p_purpose text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:20be811d3d34
 routine public.accounting_connection_target_v1(p_connection_id uuid) -> text | function | definer | stable | exec:service_role | body:5058e93f876b
 routine public.accounting_connection_targets() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:900b1cffae4c
 routine public.accounting_connection_tenant_guard() -> trigger | function | definer | volatile | exec:service_role | body:6a47c72547e5
-routine public.accounting_connections_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:99f1d689f32c
+routine public.accounting_connections_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d5655b1c8b1e
 routine public.accounting_connector_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:9e3b2cb3bf81
+routine public.accounting_connector_member(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:1013da4861f5
 routine public.accounting_credentials_resolved(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fd972c886c6e
 routine public.accounting_delivery_json(d accounting_deliveries) -> jsonb | function | definer | stable | exec:service_role | body:0753a6267fb5
 routine public.accounting_idempotency_key(p_identity text) -> text | function | invoker | immutable | exec:service_role | body:acda5f1ff2aa
@@ -2117,7 +2118,7 @@ routine public.accounting_secret_keys(p_connection_id uuid) -> jsonb | function 
 routine public.accounting_secret_name(p_connection_id uuid, p_key text) -> text | function | invoker | immutable | exec:service_role | body:b5a3b934052e
 routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:976c7e443afc
 routine public.accounting_store_secret(p_connection_id uuid, p_key text, p_value text) -> void | function | definer | volatile | exec:service_role | body:ee0ab7c3cf07
-routine public.accounting_transfers_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f69b172d7dc0
+routine public.accounting_transfers_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:da9a8aa4e9d5
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
 routine public.acknowledge_setup_step(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:bb43f3a5566c
 routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:359ab91b1c36
@@ -2902,7 +2903,7 @@ routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with ti
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:6061a31874f8
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
-routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text, p_in_flight_seconds integer) -> jsonb | function | definer | volatile | exec:service_role | body:78f8997ea799
+routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text, p_in_flight_seconds integer) -> jsonb | function | definer | volatile | exec:service_role | body:3df71a222d85
 routine public.record_accounting_revocation(p_connection_id uuid, p_outcome text) -> jsonb | function | definer | volatile | exec:service_role | body:d94ea1290ee8
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
 routine public.record_badge_auth_failure(p_hash text, p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:f919b22408fe
@@ -3013,7 +3014,7 @@ routine public.retire_invite_code() -> trigger | function | definer | volatile |
 routine public.reverse_commitment_match_v1(p_workspace_id uuid, p_match_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97d633ba12e0
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
 routine public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6386a82bf7d4
-routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f688d8f887b1
+routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad7fded4fe08
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:acc4131b50b3
 routine public.revoke_hmrc_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:83fa286451e9

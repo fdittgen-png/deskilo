@@ -11,9 +11,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | measure | count |
 |---|---|
 | files | 2466 |
-| functions | 13953 |
+| functions | 13957 |
 | cyclomatic>=9 | 1433 |
-| cyclomatic>=25 | 79 |
+| cyclomatic>=25 | 80 |
 | cognitive>=15 | 542 |
 | cognitive>=30 | 73 |
 | length>=150 | 50 |

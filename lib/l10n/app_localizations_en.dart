@@ -13063,6 +13063,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMatchAction => 'Mark as paid';
 
   @override
+  String get invoiceMatchCreditMoved =>
+      'This payment was moved to another member, so it cannot pay this invoice. Reload and choose another.';
+
+  @override
   String get invoiceMatchCreditNote => 'Create a credit note for the excess';
 
   @override

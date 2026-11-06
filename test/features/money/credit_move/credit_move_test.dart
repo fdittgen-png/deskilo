@@ -53,6 +53,9 @@ class _Recording implements CreditMoveRepository {
     if (refusal != null) throw refusal!;
     return const CreditMove(id: 'mv', reversalId: 'rv', creditId: 'nc');
   }
+
+  @override
+  Future<Set<String>> fetchMovedCreditIds(String workspaceId) async => {};
 }
 
 Future<void> _tap(WidgetTester tester, Finder target) async {
@@ -284,8 +287,11 @@ void main() {
           ),
         ),
         overrides: [
-          ...standardTestOverrides(money: money, workspace: workspace),
-          creditMoveRepositoryProvider.overrideWithValue(repo),
+          ...standardTestOverrides(
+            money: money,
+            workspace: workspace,
+            creditMoves: repo,
+          ),
           if (rights != null) myPermissionsProvider.overrideWithValue(rights),
         ],
       );
