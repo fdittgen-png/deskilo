@@ -1,8 +1,10 @@
 # CI and automation
 
-This page explains what DesKilo's GitHub Actions workflows run, which results block a merge, what they publish, and how to diagnose a failure. Start with the [Actions dashboard](https://github.com/fdittgen-png/deskilo/actions) for a particular run.
+This page explains what DesKilo's GitHub Actions workflows run, how their results inform merge readiness, what they publish, and how to diagnose a failure. Start with the [Actions dashboard](https://github.com/fdittgen-png/deskilo/actions) for a particular run.
 
-**Verified on 31 October 2026**, against [master at `5db10f44bf`](https://github.com/fdittgen-png/deskilo/tree/5db10f44bf6e1c0550a2c56ccdfa2a88c906bba8/.github/workflows) and the live `master` branch-protection API. The linked source files are the authority when the implementation changes. Cron times below are **UTC**, so their local time changes with daylight saving.
+**Historical baseline: 31 October 2026**, against [master at `5db10f44bf`](https://github.com/fdittgen-png/deskilo/tree/5db10f44bf6e1c0550a2c56ccdfa2a88c906bba8/.github/workflows) and the then-live `master` branch-protection API. The linked source files are the authority when the implementation changes. Cron times below are **UTC**, so their local time changes with daylight saving.
+
+**Scoped recheck on 6 November 2026:** the [branch API](https://api.github.com/repos/fdittgen-png/deskilo/branches/master) returned `protected: false`, with protection-summary `enforcement_level: off` and an empty required-context list. The [quality workflow at `ab9d42c3c4`](https://github.com/fdittgen-png/deskilo/blob/ab9d42c3c4c3dd821e52a5343685071c3ecd0222/.github/workflows/quality.yml) defines six test shards. The merge-enforcement and shard descriptions below reflect this recheck; the remaining inventory retains its historical baseline.
 
 ## Contents
 
@@ -29,17 +31,17 @@ GitHub displays **workflow names** in the Actions sidebar and **job names** as s
 | `Status` | Operational inspection; some workflows also offer explicit write options |
 | `Tools` | Manually dispatched utilities |
 
-The live required checks on `master` are:
+**Project policy requires all three contexts below to finish successfully for the exact candidate before any merge.** The observed branch settings above do not establish GitHub enforcement of that policy; the person or agent merging must still satisfy it.
 
-| Required status-check context | What must succeed |
+| Workflow result | What must succeed for that result to pass |
 | --- | --- |
-| `analyze · l10n gate · test · coverage` | Preconditions, all four test shards, complete and consistent test evidence, and coverage floors |
+| `analyze · l10n gate · test · coverage` | Preconditions, all six test shards, complete and consistent test evidence, and coverage floors |
 | `quality · database` | The database disciplines, or an independently recorded classifier verdict that they do not apply |
 | `quality · report` | The complete quality table, its inputs, and all required upstream jobs |
 
-The verified setting is `strict: false`: branch protection does not itself require a branch to be up to date with `master`. That setting does not prove a candidate remains compatible with newly merged migrations. Readiness still requires the correct migration sequence and regenerated outputs.
+The earlier `strict: false` observation is historical, not the current enforcement claim. Repository policy still requires successful checks for the exact candidate before merging; source-controlled workflow logic alone cannot force that wait. Readiness also requires the correct migration sequence and regenerated outputs when the target changes.
 
-The individual shard names and other workflows are not in that verified required-context list. A green required aggregate includes the shard verdicts; renaming a protected aggregate requires a coordinated protection change. Additional native and format checks remain useful evidence even when branch protection does not require them.
+A green code aggregate includes the shard verdicts. Additional native and format checks remain useful evidence. If platform protection is configured to require these results, changes to their names must be coordinated with those settings.
 
 [Protection verification script](https://github.com/fdittgen-png/deskilo/blob/master/scripts/branch_protection.sh) distinguishes `verified-match`, `verified-drift`, and `unverified-access`. Its advisory CI invocation can be green without having permission to inspect settings. Use a successful authenticated settings read to establish the actual requirements.
 
@@ -49,26 +51,20 @@ The individual shard names and other workflows are not in that verified required
 
 ```mermaid
 flowchart TD
-    E[PR, master push, schedule or dispatch] --> C[Classify change]
-    E --> G[Gate shard and preconditions]
-    E --> M[Money a-m and reservations shard]
-    E --> M2[Money n-z, me and auth shard]
-    E --> W[Workspace shard]
-    E --> R[Other features shard]
-    E --> K[Core, app, profile and a11y shard]
-    C --> D[Database verification or evidenced stand-down]
-    G --> A[Required code aggregate and coverage]
+    E["PR, master push, schedule or dispatch"] --> C["Classify change"]
+    E --> G["Gate and core shards"]
+    E --> M["Two money shards"]
+    E --> F["Workspace and other feature shards"]
+    C --> D["Database checks or evidenced stand-down"]
+    G --> A["Code aggregate and coverage"]
     M --> A
-    M2 --> A
-    W --> A
-    R --> A
-    K --> A
-    C --> Q[Required final quality report]
+    F --> A
+    C --> Q["Final quality report"]
     A --> Q
     D --> Q
 ```
 
-The four test jobs run independently on Ubuntu runners. The database job starts after classification and runs beside them. The final report waits for classification, every shard, the code aggregate, and database verification.
+Each shard box groups two independent jobs; the table below names all six. They run independently on Ubuntu runners. The database job starts after classification and runs beside them. The final report waits for classification, every shard, the code aggregate, and database verification.
 
 ### Change classification
 
@@ -314,6 +310,6 @@ For database changes, prove the actual RLS/RPC/trigger behavior with pgTAP or th
 
 Measure performance from comparable run samples: queue time, executing job time, setup overhead, and the slowest parallel shard. Do not sum parallel wall clocks or present a proposed shard balance as a measured speedup. [`scripts/ci_timings.sh`](https://github.com/fdittgen-png/deskilo/blob/master/scripts/ci_timings.sh) and the timing artifacts help locate the critical path. [`docs/ci/CI_BASELINE.md`](https://github.com/fdittgen-png/deskilo/blob/master/docs/ci/CI_BASELINE.md) contains dated historical samples; its old layouts and protection snapshots are not current settings evidence.
 
-When changing CI, update its producers, consumers, `needs` graph, artifact names, retry behavior, quality manifest, and workflow tests together. Preserve the protected job names unless repository settings change in lockstep. Keep this page and its repository source, `docs/wiki/CI-and-Automation.md`, in step when publishing the wiki.
+When changing CI, update its producers, consumers, `needs` graph, artifact names, retry behavior, quality manifest, and workflow tests together. Coordinate job-name changes with their report consumers and any configured protection. Keep this page and its repository source, `docs/wiki/CI-and-Automation.md`, in step when publishing the wiki.
 
-Related documentation: [Implementation](Implementation), [Technical reference](Technical-Reference), [Environments: dev and prod](Environments-Guide), [workflow conventions](https://github.com/fdittgen-png/deskilo/blob/master/.github/workflows/README.md), and [contribution rules](https://github.com/fdittgen-png/deskilo/blob/master/CONTRIBUTING.md).
+Related documentation: [Implementation](Implementation), [Technical reference](Technical-Reference), [Environments: dev and prod](https://fdittgen-png.github.io/deskilo/guide/en.html#user.advanced.environments), [workflow conventions](https://github.com/fdittgen-png/deskilo/blob/master/.github/workflows/README.md), and [contribution rules](https://github.com/fdittgen-png/deskilo/blob/master/CONTRIBUTING.md).

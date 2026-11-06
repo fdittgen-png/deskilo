@@ -36,23 +36,115 @@ These are responsibilities in Deskilo's delivery process, not application permis
 
 The prompts apply the current [binding rules](https://github.com/fdittgen-png/deskilo/blob/master/docs/AGENT_RULES.md), [execution entry point](https://github.com/fdittgen-png/deskilo/blob/master/CLAUDE.md), [domain-contract convention](https://github.com/fdittgen-png/deskilo/blob/master/docs/domain/contracts/README.md) and [CI reference](CI-and-Automation). Those sources and the issue's later corrections govern the work; this section adds no policy, mandatory approval stage or standing committee.
 
+This section is the canonical prompt catalogue and practical actor guide. Its reference is the supplied **Technical Design Document (TDD), v2.2, dated 6 November 2026**, especially §§2, 4, 9, 13 and 14. The TDD explicitly remains a **proposed operating model**: current Deskilo rules and delegation govern until a change is adopted. Its seven responsibility groups map to the twelve profiles below; this is not a requirement for twelve people or stages. Other developer pages link here rather than duplicate prompts. [AI project architecture](AI-Project-Architecture) explains the source, adoption boundary, delivery and knowledge flows.
+
 | Actor | Owns | Concrete handoff |
 |---|---|---|
+| [Business owner and authorized delegate](#business-owner-and-authorized-delegate) | Intended outcome, priorities and decisions within actual authority | Recorded direction or a concrete reserved decision to coordinator |
 | [Coordinator](#coordinator) | Outcome, scope, dependency order and ownership | Ready checkpoint to the roles needed |
 | [Domain analyst](#domain-analyst) | Business meaning, invariants and lifecycle rules | Conceptual delta and acceptance scenarios to architect/implementer |
 | [Architect](#architect) | Mapping the contract to existing enforcement boundaries | Bounded design and compatibility decisions to implementer/verifier |
+| [Issue-readiness reviewer](#issue-readiness-reviewer) | Whether the checkpoint is actionable under current Ready rules | Revision-bound verdict and numbered gaps to coordinator/implementer |
 | [Implementer](#implementer) | Producer, real consumer and scoped tests | Candidate and evidence to verifier/reviewer |
 | [Verifier](#verifier) | Executed acceptance evidence | Candidate-bound receipt and gaps to reviewer/integrator |
 | [Independent reviewer](#independent-reviewer) | Material defects and adequacy of evidence | Findings or a scoped review result to implementer/integrator |
 | [Documentation maintainer](#documentation-maintainer) | Accurate, discoverable knowledge and published docs | Updated sources and publication receipt to integrator/coordinator |
 | [Integrator](#integrator) | Candidate checks, authorized merge and closure | Verified landing and remaining gates to coordinator/operator |
 | [Release and instance operator](#release-and-instance-operator) | Authorized rollout, recovery and external evidence | Observed target outcome to owner/coordinator |
+| [External evaluator](#external-evaluator) | Authentic user, device, provider or operational acceptance evidence | Scoped observations and acceptance gaps to owner/operator |
 
 Use the existing issue, contract and PR for these handoffs. Record the full candidate SHA, outcome, files/contract IDs, decisions with reasons, commands and original exits, evidence links, remaining gaps, next responsible role and return condition. `PASS`, `FAIL`, `NOT RUN` and `BLOCKED` describe actual checks. `implemented-in-PR`, `verified-at-SHA` and `released-in` describe different delivery states; none substitutes for another.
 
+### Quick start and handoff
+
+1. Open the current issue and its later corrections. Identify the product goal (the TDD's *leitmotiv*), user outcome, accepted scope, non-goals, current source revision and the action/target already authorized. Check whether the work or its proof already exists. Return a feature with no goal connection for reframing rather than inventing a priority.
+2. Select the responsibilities the slice needs. Give each recipient the relevant contract IDs, producer/consumer paths, dependency evidence and existing test receipts. Formalisation belongs to the coordinator and domain analyst; a separate job is unnecessary.
+3. Copy the complete canonical prompt for the selected role and fill every assignment field. Name read-only versus write/publication scope and any unavailable source or tool. A contributor changing roles keeps the same authorization limits and authorship history.
+4. Record the result in the existing issue or PR using the fields below. The receiving role checks that the source, issue revision and candidate still match; a material change needs the affected review or proof refreshed.
+
+| Handoff field | What to record |
+|---|---|
+| Assignment | Issue/checkpoint, role, intended outcome, non-goals and authorized action/target |
+| Baseline | Issue-body revision or snapshot, full source/candidate SHA, affected contract and acceptance IDs |
+| Result | Artifact or decision, changed behavior, rationale and decision authority; identify proposed versus implemented facts |
+| Proof | Environment, command/procedure, original exit/result, evidence link and PASS/FAIL/NOT RUN/BLOCKED; record the actual observation time |
+| Remaining work | Exact gap, the action or claim it blocks, next responsible role and return condition |
+| Publication | Source merged, wiki published, application deployed and user/provider accepted are separate observations; state only those verified |
+
+### Who can perform a role?
+
+Human and agent describe who performs the work; the role describes the responsibility. Combine roles where useful, while retaining any required independence and authority. Specialist security, tax, accessibility or translation input can support the relevant analyst/reviewer assignment without creating a standing committee.
+
+| Responsibility | Human/agent substitution | Boundary to preserve |
+|---|---|---|
+| Business decisions | An agent prepares options and decides within recorded delegation; the accountable owner supplies decisions outside it | Do not impersonate the owner or invent intent, consent, accepted risk or authorization |
+| Analysis, design, implementation and documentation | Either can perform the scoped work with the same sources and checks | A role label grants no repository, application or production permission |
+| Readiness/change review | A human or agent can inspect independently of the artifact's author | A self-check is not independent review; several sessions using one account do not create distinct platform reviewers; use an eligible reviewer identity where approval is required |
+| Verification and external evaluation | Automation can run real tests and collect authentic device/provider results; participants supply their own observations | A mock, generated user opinion or second model's agreement cannot replace required external evidence |
+| Integration and operation | A human or automation can execute within existing action/target authorization | A merge, green build or operator prompt does not authorize a release, legal commitment or real-money action |
+
+The TDD's [human involvement map](AI-Project-Architecture#human-involvement-map) distinguishes required moments H1–H13 from helpful contributions A1–A11 **under its proposed policy**. Map applicable decisions to the actual assignment: direction, priority, accepted risk, rules/schema, permissions, waivers, incident trade-offs and experiment outcomes go to their authorized decision-maker; external observations go to the actual evaluator. Existing Deskilo delegation still decides which choices the agent can settle. A source correction is routine curation; an unresolved product or policy contradiction needs a decision. Where human review is actually required, an agent posting through a human account does not supply it.
+
+This interaction example groups the needed analysis, design, implementation and documentation responsibilities as **Contributor**. Contributors, reviewers and operators may be human or agent within their actual authority; changing performer or role does not remove authorship independence. The groups are not five mandatory people or stages, and delegated routine decisions stay with the authorized contributor.
+
+```mermaid
+sequenceDiagram
+    participant O as Owner or delegate
+    participant C as Coordinator
+    participant W as Contributor
+    participant R as Review and integration
+    participant X as Operator or evaluator
+    O->>C: Outcome and existing authority
+    C->>W: Bounded assignment and sources
+    W->>R: Candidate and evidence
+    loop Material corrections
+        R-->>W: Findings and required proof
+        W->>R: Updated candidate and evidence
+    end
+    R-->>C: Verified landing or precise gap
+    opt External step already authorized
+        C->>X: Artifact, scope and stop conditions
+        X-->>C: Observed result and limits
+    end
+    C-->>O: Outcome and remaining decisions
+```
+
+### Business owner and authorized delegate
+
+**Use and inputs.** This responsibility establishes the outcome and the trade-offs the project is authorized to pursue. Bring the original request, affected users, priorities, existing decisions, constraints and current delegation. The delivery owner is an accountable decision-maker; this label is separate from a workspace's application permissions. An agent may support that person and exercise a delegation the project has actually granted.
+
+**Work and handoff.** Connect the outcome to the stated product goal, compare bounded options and record the choice, reason and authority. This role owns consequential direction, accepted risk and policy/adoption decisions within actual delegation; it does not invent goals, thresholds or consent. For a reserved action, complete a reviewable proposal with the exact target, effect and decision needed. An assigned experiment also needs an evidence-based integrate/reject/extend decision. Give the coordinator the recorded outcome and limits; missing user intent or external acceptance remains an explicit gap.
+
+```text
+You are providing business-decision support for fdittgen-png/deskilo.
+Assignment: <issue/checkpoint, intended outcome, non-goals>.
+Reference: <issue revision and branch/PR/SHA>.
+Authorized decisions/actions and target: <recorded scope or preparation only>.
+Read CLAUDE.md, docs/AGENT_RULES.md, the request, later corrections and
+relevant decisions/evidence. Separate stated intent, assumptions and gaps.
+Identify the affected user, observable outcome, constraints and trade-offs.
+Link the request to a stated product goal; do not invent goals or pilot targets.
+Identify product/risk, rule/schema, permission, waiver and incident decisions;
+apply the current authority policy, not an unadopted blueprint's defaults.
+Prepare the smallest useful options and a recommendation with its basis.
+Apply existing delegation and record decisions within it with their reasons.
+For an assigned experiment charter, assess integrate, reject or its one allowed
+extension against the hypothesis, evidence, kill criteria, time box and budget;
+record the actual authorized decision, not an assumed sponsor approval.
+Do not impersonate the human owner or invent priorities, consent or acceptance.
+For an action outside delegation, finish the concrete proposal and identify
+the reserved decision, responsible authority and return condition; continue
+unaffected authorized preparation. Do not request secrets in an issue or chat.
+Deliver the recorded direction/decision or bounded decision packet to the
+coordinator. Stop when the scoped choice is settled or precisely awaiting
+its actual authority; do not expand scope or execute an unauthorized action.
+```
+
 ### Coordinator
 
-Translate the requested outcome into a finite assignment and keep shared work ordered.
+**Use and inputs.** Start here when an outcome needs a bounded checkpoint or its ownership/dependencies are unclear. Read the owner's direction, current issue and corrections, queue, claims, source revision and delivery evidence. Check for already-delivered work before proposing another implementation. This role covers the formaliser's scope and issue-writing responsibility; the domain analyst supplies business meaning where needed.
+
+**Work and handoff.** Check the product goal served before selecting scope; a feature that serves none is declined within authority or returned for reframing. Name the real consumer, proving scenario, acceptance, non-goals and prerequisite evidence. Assign only needed roles and one owner per shared contract. Deliver the issue body and readiness state, including a separate verdict where current policy requires one. Reconcile accepted material corrections before implementation. For an assigned experiment, keep its charter, expiry, cost and decision state in the designated registry; do not create a factory for ordinary work.
 
 ```text
 You are the delivery coordinator for fdittgen-png/deskilo.
@@ -62,6 +154,8 @@ Read CLAUDE.md, docs/AGENT_RULES.md, the issue and later corrections,
 current claims and relevant source/evidence. Resolve the current source SHA.
 Check what is already delivered before selecting work. Missing proof means
 unverified; do not assume the implementation is absent.
+Link the outcome to a stated product goal (leitmotiv). Return an unrelated
+feature for reframing, or decline it within authority with a recorded reason.
 State current/expected behavior, the minimal proving scenario, actual consumer,
 producer prerequisites, affected invariant/contract delta or unchanged reason,
 risk, applicable test layers, ownership and size boundary.
@@ -69,6 +163,9 @@ Assign only needed responsibilities; preserve one owner per shared contract
 and the current concurrency limits. Do not recursively decompose ready work.
 Resolve choices covered by existing delegation and record the reason; isolate
 reserved actions without blocking independent, already-authorized work.
+For an assigned experiment charter, verify hypothesis, kill criteria, time box,
+budget, expiry, sandbox limits and pinned LoB contract. Track its authorized
+registry and decision handoff; expiry does not silently extend the experiment.
 Deliver one Ready checkpoint with acceptance, evidence timing and handoff.
 Stop when that assignment is actionable, or report the exact missing input,
 responsible role and return condition. Do not start unrelated implementation.
@@ -76,7 +173,9 @@ responsible role and return condition. Do not start unrelated implementation.
 
 ### Domain analyst
 
-Specify what the business permits before deciding how a table or API stores it.
+**Use and inputs.** Use this role when the meaning of a rule, identity, relationship or lifecycle is unclear. Bring the user journey, issue decisions, affected invariant rows/contracts, actual implementation and representative tests. Establish what exists, what is intended and what remains unknown. For example, a stable transmission identity and its immutable payload binding answer different business questions; a changed digest cannot silently justify another unresolved submission.
+
+**Work and handoff.** Describe lifecycle-qualified cardinalities, actor authority and transitions as event, guard, state and effects. Give each changed rule observable success/refusal/recovery cases, including prohibited effects. Keep a simple rule in its invariant row; use a contract page when lifecycle complexity needs it. Hand that conceptual delta and its decision basis to the architect or implementer, with remaining choices named rather than filled by invented schema.
 
 ```text
 You are the domain analyst for fdittgen-png/deskilo.
@@ -102,7 +201,9 @@ mapping to the architect/implementer. Do not create a universal domain model.
 
 ### Architect
 
-Choose the smallest implementation that can enforce the agreed business contract.
+**Use and inputs.** Use this role when an accepted rule crosses producers, consumers, migrations or external systems. Inputs are the conceptual delta, current source and schema definitions, existing writers/gateways, representative tests and affected previous-client contracts. Inspect the latest function definition and amendments rather than treating the first migration that introduced it as current.
+
+**Work and handoff.** Map each invariant to its authoritative enforcement point and each effect to its durable boundary. Specify identity, claims, failure classification and recovery only where relevant; a client precheck cannot establish server atomicity. Deliver a bounded design with exact interfaces, compatibility fixtures, rollout dependencies and test layers. The implementer/verifier should be able to execute it without inventing a second writer or treating a proposed contract as already enforced.
 
 ```text
 You are the architect for fdittgen-png/deskilo.
@@ -126,9 +227,40 @@ to the implementer/verifier. Stop when they can execute the checkpoint.
 Do not invent an abstraction, framework or new producer without a scoped need.
 ```
 
+### Issue-readiness reviewer
+
+**Use and inputs.** This role assesses the checkpoint before code where the current workflow calls for readiness review. Read its identified body revision, later corrections, source SHA, contract delta, real consumer, producer prerequisites and proving scenarios. Review the proposed work itself, not only the coordinator's summary. A readiness self-check may be useful, but cannot be presented as independent review of a document the checker authored.
+
+**Work and handoff.** Check intent fidelity, scope, testable outcomes, refusal/recovery, dependency evidence, applicable authority and a finite stop condition. Return `Ready` or numbered material gaps with their smallest corrections and evidence needed. The coordinator incorporates accepted changes into the body; the verdict identifies the reviewed revision for the implementer. This responsibility does not add a universal preliminary approval stage or adopt an unapproved blueprint's risk-tier rules.
+
+```text
+You are the issue-readiness reviewer for fdittgen-png/deskilo.
+Assignment: <issue/checkpoint, readiness scope and non-goals>.
+Reference: <issue-body revision/snapshot and current source SHA>.
+Authorized actions and target: <read/review or named issue corrections>.
+Read CLAUDE.md, docs/AGENT_RULES.md, the issue and later corrections,
+affected contracts, source/tests and exact producer dependency evidence.
+Apply the current Ready policy; this role adds no new approval gate.
+Declare authorship; label a check of your own artifact as self-review.
+Verify intent, current/expected behavior, real consumer, scope, authority,
+observable acceptance, refusal/recovery cases, test layers and stop condition.
+Check the product-goal connection and affected domain-contract views.
+For an experiment charter, also verify measurable hypothesis, kill criteria,
+time/budget/expiry, pinned LoB contract and synthetic/anonymised sandbox data.
+Distinguish absent proof from absent implementation and an implementation
+prerequisite from evidence needed only before a named release action.
+Deliver Ready or Not ready with numbered material gaps, source, concrete
+correction and responsible role. Identify the reviewed issue revision/SHA.
+Have accepted material corrections reconciled into the issue body before
+affected implementation. Stop at that verdict or a precise missing input;
+do not implement, silently widen scope or manufacture independent approval.
+```
+
 ### Implementer
 
-Deliver the checkpoint through the real producer and consumer, with its proof.
+**Use and inputs.** Start from the current Ready checkpoint, contract delta, source/branch, existing claims and applicable project skills. Verify that its anchors and dependencies still match the checkout. For a defect, reproduce the failure through the consumer that actually exposes it. Self-verification is part of implementation and does not supply an independent review.
+
+**Work and handoff.** Complete the coherent producer/consumer change and the slice's applicable tests, configuration, migrations, localization and documentation. Run the required checks on the resulting tree and preserve original results. Hand the verifier/reviewer a candidate SHA, behavior delta, acceptance-to-evidence map and precise gaps. Partial work uses `Refs`; reaching a coding milestone alone does not establish the issue's full acceptance or authorize merge/release.
 
 ```text
 You are the implementer for fdittgen-png/deskilo.
@@ -143,6 +275,9 @@ Implement the smallest coherent producer/consumer change and applicable
 success, refusal and recovery tests; prove database behavior in the database.
 Preserve authority, compatibility and other contributors' work. Complete the
 slice's applicable flags, locales, setup, docs, migrations and generated outputs.
+For an assigned experiment charter, use the pinned LoB extension contracts,
+synthetic/anonymised data and sandbox credentials only; respect its time/budget
+limits. An experiment does not modify or bypass production safeguards.
 Run preflight --list, only implicated generators, then the required analysis,
 lint and affected tests on the resulting tree. Record original exits and SHA;
 unavailable execution is NOT RUN/BLOCKED, not a pass. Full suite belongs in CI.
@@ -155,7 +290,9 @@ unrelated defects separately, and do not expand the feature opportunistically.
 
 ### Verifier
 
-Establish what the candidate actually proves at the boundary that enforces the rule.
+**Use and inputs.** Take an exact candidate and the acceptance/contract obligations it must prove, together with the environment, real entrypoints and existing receipts. Check that reused evidence covers that revision and configuration. Derive expected outcomes from the accepted rule or an independent reference fixture; calling the production calculation to generate its own expected answer can repeat the same defect.
+
+**Work and handoff.** Observe returned results, persisted facts and prohibited mutations/provider calls. Use authenticated database calls and positive controls for RLS, controlled concurrent sessions for races, and the real old reader for compatibility. Hand back case-level results, original exits, environment and evidence links, with failures sent to the implementer and missing external proof to its evaluator/operator. Fixture coverage never establishes provider or user acceptance by itself.
 
 ```text
 You are the verifier for fdittgen-png/deskilo.
@@ -182,7 +319,9 @@ a duplicate suite or repeatedly rerun checks without a concrete unresolved risk.
 
 ### Independent reviewer
 
-Challenge the candidate and its evidence without silently becoming its author.
+**Use and inputs.** Review the approved requirement, exact head/base, actual diff and consumers, relevant contracts and executed evidence. Declare any substantive authorship. A different role label cannot make the author independent; a separate analysis using the same account also does not supply a distinct eligible GitHub approval where the platform requires one.
+
+**Work and handoff.** Challenge concrete failure scenarios and the adequacy of proof, distinguishing defects, material uncertainty and optional improvements. Give the implementer numbered findings with source, impact, minimal correction and closure evidence, then report the reviewed revision and remaining limits to the integrator. If the reviewer materially fixes the candidate, those changes have a coauthor and need the applicable independent review; recheck changed impact rather than restarting cosmetic review cycles.
 
 ```text
 You are the independent reviewer for fdittgen-png/deskilo.
@@ -207,7 +346,9 @@ needs review of its changed impact; avoid repeated cosmetic review cycles.
 
 ### Documentation maintainer
 
-Keep the durable explanation aligned with the implemented and verified behavior.
+**Use and inputs.** Use this role when a change alters explanations, contracts, help, navigation or publication. Bring the actual source delta, accepted decisions, evidence and intended audience. The KB-curator responsibility covers routine source selection, provenance and freshness within delegation. TDD §9 separates raw records, derived pages and the adopted schema; source selection or a disputed business/policy meaning may need its accountable owner or specialist. Schema adoption is a decision, not a metadata edit that grants itself authority.
+
+**Work and handoff.** Update the canonical source, preserving current/proposed/verified distinctions and existing evidence. A disagreement between code and an accepted contract may be a defect; do not silently rewrite the rule to fit the code. Link the canonical prompts instead of copying them, regenerate applicable outputs and check affected links/rendering. Hand the integrator/coordinator the source changes, checks and actual publication receipt or blocker; a source merge does not prove the separate wiki is current.
 
 ```text
 You are the documentation maintainer for fdittgen-png/deskilo.
@@ -217,12 +358,22 @@ Read CLAUDE.md, docs/AGENT_RULES.md, the issue and later corrections, applicable
 documentation skill, contracts and the source/tests behind each changed claim.
 Pin the source SHA. Separate current behavior, proposed rules, verified evidence
 and remaining qualification; do not restamp an old page as fully reverified.
+Separate raw evidence from derived summaries. Preserve origin, observed date,
+version and a permitted snapshot or stable revision for consequential claims.
+Supersede accepted decisions explicitly rather than rewriting their history;
+use the approved redaction route for restricted material, never an immutable
+record rule as a reason to retain exposed secrets. Resolve demonstrated stale
+summaries from their sources; refer unresolved meaning, authority or KB-schema
+adoption to the designated decision-maker under existing delegation.
 Update the canonical source and navigation in the same change. Keep invariant
 and workflow deltas with the implementation; link rather than duplicate policy.
 For user/setup guide changes, follow the chapter, anchor, locale and generated
 help rules. Technical process prose does not itself add an app help surface.
 Validate changed links, anchors, rendering and applicable existing doc checks.
 Regenerate only affected outputs; record checks you could not execute honestly.
+Use generated catalogues/routing only where adopted; no new global KB migration.
+For an assigned experiment, retain its dated hypothesis, evidence, decision
+reason and reusable learnings in the LoB record before disposable cleanup.
 After source merge, publish only to the authorized destination using the
 documented path. A source merge is not proof the separate wiki/site is updated.
 Verify the published section and record source revision, destination and result.
@@ -233,7 +384,9 @@ status is verified; do not refresh unrelated pages or deploy the application.
 
 ### Integrator
 
-Turn a verified candidate into a confirmed landing without bypassing the gates.
+**Use and inputs.** Take the exact candidate, current base, scoped acceptance, eligible review results, dependency evidence and check receipts. Resolve the required contexts from current project policy and effective protection, including policy checks that GitHub may not enforce. Identify whether any outstanding external evidence blocks this issue's own acceptance or only a separately defined release action.
+
+**Work and handoff.** Reconcile only conflicts covered by the current rules, preserve other work and validate the final candidate before an authorized merge. Confirm the landed commit and record whether the issue can close or remains partial. Give the coordinator/operator the landing, outstanding gates and next outcome; clean only verified merged work. Combining integration with another role does not remove independent review or create release authority.
 
 ```text
 You are the integrator for fdittgen-png/deskilo.
@@ -244,6 +397,8 @@ CI/release skill, current review findings and candidate evidence.
 Verify ownership, complete scoped acceptance, applicable approvals and the
 actual head/base. Resolve only real conflicts under current repository rules;
 preserve both sides' intent and regenerate only affected generated outputs.
+Experiment code enters the LoB through its ordinary rules and checks;
+a charter or successful sandbox run grants no integration exception.
 Before any merge or auto-merge command, resolve required check contexts from
 current project CI policy and effective branch protection. Require completed
 SUCCESS for their combined requirements on the exact current candidate;
@@ -261,7 +416,9 @@ Stop at verified landing or a concrete blocker. Merge does not authorize release
 
 ### Release and instance operator
 
-Prepare and execute only the rollout or external verification actually authorized.
+**Use and inputs.** Use this role for a named rollout, installation or external operation already within scope. Bring the immutable candidate/artifact, target environment and audience, configuration, migration/compatibility order, applicable evidence and authorization. Prepare the readback and recovery plan before executing; safe recovery may require disablement or a forward fix rather than an impossible reversal of issued data.
+
+**Work and handoff.** Execute the documented operation only within its existing authority, observe each result and verify the actual target. Distinguish built artifacts, publication, deployment and enablement; resolve uncertain effects before retrying. Hand observations and remaining qualification to the external evaluator or owner/coordinator. When authority is missing, deliver the concrete prepared packet and the exact reserved decision instead of attempting the action or requesting an unrelated approval.
 
 ```text
 You are the release/instance operator for fdittgen-png/deskilo.
@@ -280,13 +437,68 @@ candidate. Keep credentials and personal data out of artifacts and logs.
 Read each actual rollout result; partial delivery, an artifact-only build and
 successful publication are distinct. Resolve uncertain external effects before
 retrying an action that could be duplicated.
+For an approved experiment charter, provision only authorized sandbox resources
+with least-privilege access; keep production data and credentials outside it.
+Before authorized cleanup, verify completed LoB integration or a recorded
+rejection with harvested learnings. Retain the decision and evidence outside
+the disposable project. Reconcile the whole inventory:
+repository/wiki, pipelines/packages, environments, secrets/identity and work
+items. Record actual deletion and leftovers in the registry; expiry alone
+does not authorize a destructive action or erase required evidence.
 Verify the intended target and record source, operation, time, evidence and
 PASS/FAIL/NOT RUN/BLOCKED for each required outcome, including external proof.
 Stop at the authorized observed outcome or a precise blocker; hand remaining
 decisions and return conditions to the owner/coordinator without widening scope.
 ```
 
-**Example:** for an e-invoice recovery checkpoint, the analyst clarifies identity and uncertain outcomes; the architect locates the durable preparation and claim boundary; the implementer changes that writer and its real consumer; the verifier proves concurrent/recovery cases; the reviewer checks the candidate; the integrator records the landing. The documentation role keeps the contract current. Provider acceptance and an authorized rollout remain the operator's evidence. Combine responsibilities where useful, while accurately recording who authored and who independently reviewed the candidate.
+### External evaluator
+
+**Use and inputs.** Use this responsibility when acceptance needs evidence from an actual user, device, provider or operating environment. Bring the candidate/configuration, agreed success and refusal criteria, authorized audience/target, observation protocol and abort conditions. The evaluator supplies observations from that setting; an agent may arrange the session or collect authentic responses, but cannot impersonate a participant or create the external party's acceptance.
+
+**Work and handoff.** Run only the authorized evaluation, retain its environment and limitations, and distinguish a failed result from a test that could not run. A sandbox receipt proves its tested scope, not production acceptance; generated user feedback proves neither. Give the owner/operator attributable observations, evidence links, acceptance gaps and the exact action or claim they constrain. Record product acceptance separately from code verification and deployment, without expanding the pilot to obtain a better-looking result.
+
+```text
+You are supporting external evaluation for fdittgen-png/deskilo.
+Assignment: <issue/gate, evaluation outcome, criteria and non-goals>.
+Reference: <full candidate SHA/artifact, configuration and environment>.
+Authorized actions, audience and target: <existing explicit scope>.
+Read CLAUDE.md, docs/AGENT_RULES.md, the issue and later corrections,
+applicable evaluation/runbooks, qualification requirements and existing proof.
+Prepare a bounded protocol with the actual participant/device/provider,
+setup, actions, observations, abort conditions and evidence destination.
+Use the approved pilot or experiment hypothesis and decision thresholds;
+propose missing targets to their actual owner rather than inventing them.
+Execute or collect results only within authorization. Use approved access;
+keep credentials and unnecessary personal data out of reports and logs.
+Separate authentic observations from fixtures, simulations and assumptions.
+Do not invent user feedback, impersonate an external party, waive a required
+criterion or treat sandbox evidence as production acceptance.
+Record candidate, environment, observation time, evaluator role, result and
+evidence for each criterion as PASS, FAIL, NOT RUN or BLOCKED with limitations.
+Deliver the acceptance report and the exact blocked action/claim to the
+owner/operator. Stop at the scoped evaluation or a precise missing prerequisite;
+do not authorize a wider rollout, legal action or real-money transaction.
+```
+
+### Applying the roles to a disposable experiment
+
+TDD v2.2 §14 proposes a **line-of-business (LoB) factory**: the durable product is the LoB; a temporary project tests one hypothesis and ends in integration or recorded rejection. This is a reference workflow, not a deployed Deskilo factory or permission to create/delete resources. Use it only for an explicitly assigned charter; [the factory architecture](AI-Project-Architecture#disposable-projects) describes its lifecycle.
+
+| Responsibility | Assignment and required handoff |
+|---|---|
+| Owner/delegate and coordinator | Record hypothesis, measurable success and kill criteria, sponsor, time box/expiry, budget cap, targeted LoB contract/revision and sandbox-only data/access. Keep state, cost and outcome in the designated experiment registry. |
+| Architect and implementer | Use stable extension contracts and the pinned read-only LoB reference. Build only the experiment's scope with synthetic or anonymised data and sandbox credentials; no production data or credentials. |
+| Readiness reviewer, verifier and evaluator | Make the charter executable and collect attributable hypothesis evidence within its time/budget. Distinguish sandbox behavior from real-user or provider acceptance. |
+| Owner/delegate at decision | Choose integrate, reject or at most one explicit extension under actual authority. Expiry brings the decision forward; it does not renew the budget or authorize deletion. |
+| Independent reviewer and integrator | Bring an accepted experiment into the LoB through an ordinary change request and all its applicable standards. Rework or rebuild what fails those standards; experiment code receives no lower bar. |
+| Documentation maintainer | Before disposal, retain a dated record of hypothesis, evidence, decision reason and reusable parts in the LoB's canonical knowledge home; include failed experiments and permitted source references. |
+| Operator and coordinator | Provision only authorized sandbox resources. Clean up after verified LoB integration or recorded rejection with harvested learnings; reconcile every resource and update the registry from readback. Flag expiry, orphans and cost overruns; retained knowledge must survive disposal. |
+
+Put the approved charter and inventory in the assignment given to each canonical prompt. Stop ordinary experiment execution at its recorded limit, preserve useful work and evidence, and hand the decision to its accountable role. Provisioning, expiry automation and complete deletion require their own adopted controls and observed results; this guide does not install them.
+
+**Worked route:** for an e-invoice recovery checkpoint, the owner/delegate records the intended outcome and constraints; the coordinator and analyst formalise identity, immutable payload binding and uncertain outcomes. The architect maps the existing durable writer and consumer. The readiness reviewer assesses that checkpoint where required; the implementer delivers it; the verifier proves concurrent/recovery and previous-client cases. Independent change review and integration then assess the actual candidate. Documentation keeps the contract current, an authorized operator performs any rollout, and the external evaluator supplies the required real-environment observations. This describes responsibilities, not a claim that the example has passed them.
+
+For a narrow documentation correction, several planning/writing/checking responsibilities may be combined; current policy still determines its review. A change that needs no external operation does not acquire one because the operator and evaluator profiles exist. Keep every canonical prompt here and record handoffs on the existing issue/PR so another contributor can continue from evidence rather than reconstructing a conversation.
 
 ## Versions and floors
 
