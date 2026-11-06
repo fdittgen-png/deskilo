@@ -5325,6 +5325,7 @@ Vous voulez remettre une facture émise sous sa forme lisible par une machine.
 - Si quelque chose manque, la feuille le liste. **Compléter l'identité légale** vous mène à l'écran qui le corrige.
 - Une facture signée avant que vous ayez complété votre identité garde ce avec quoi elle a été émise. Marquez-la comme erronée et émettez-en une de remplacement si cela compte.
 - Le canal que doit utiliser un client dépend de votre pays et du client. Confirmez avec votre comptable.
+- Si la réponse de la plateforme se perd alors que le document a peut-être été envoyé, la facture affiche **résultat inconnu** et **Envoyer** n'est plus proposé. Vérifiez l'enregistrement de la plateforme, puis touchez **Consigner ce qui s'est passé** et indiquez ce que vous avez constaté, pourquoi vous en êtes sûr et ce que vous avez vérifié. Une personne autorisée à émettre des factures peut le faire une fois ; rien n'est envoyé par ce geste.
 
 **Voir aussi:** [La plateforme de facturation électronique](#la-plateforme-de-facturation-électronique) · [L'écran Facturation](#lécran-facturation)
 

@@ -5166,6 +5166,21 @@
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
   },
+  "eInvoiceResolveAccepted": "La plateforme a le document",
+  "eInvoiceResolveAction": "Consigner ce qui s'est passé",
+  "eInvoiceResolveAlready": "Quelqu'un a déjà réglé cet envoi.",
+  "eInvoiceResolveDocumentRejected": "L'administration a ensuite rejeté le document",
+  "eInvoiceResolveDone": "Consigné. L'envoi est réglé.",
+  "eInvoiceResolveError": "L'envoi n'a pas pu être consigné. Réessayez.",
+  "eInvoiceResolveEvidence": "Ce que vous avez vérifié (référence, date, où)",
+  "eInvoiceResolveEvidenceRequired": "Indiquez l'enregistrement de la plateforme que vous avez vérifié.",
+  "eInvoiceResolveFailed": "Rien n'est arrivé à la plateforme (il peut être renvoyé)",
+  "eInvoiceResolveIntro": "Le document est peut-être arrivé à la plateforme et sa réponse s'est perdue : il n'a donc pas été renvoyé. Vérifiez l'enregistrement de la plateforme, puis indiquez ce que vous avez constaté.",
+  "eInvoiceResolveReason": "Pourquoi vous en êtes sûr",
+  "eInvoiceResolveReasonRequired": "Dites pourquoi vous en êtes sûr.",
+  "eInvoiceResolveRejected": "La plateforme a refusé l'envoi",
+  "eInvoiceResolveSubmit": "Consigner",
+  "eInvoiceResolveTitle": "Régler cet envoi",
   "eInvoiceSubdivisionField": "Département, județ ou province (p. ex. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

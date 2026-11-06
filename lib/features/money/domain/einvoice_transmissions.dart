@@ -46,6 +46,19 @@ abstract interface class EInvoiceTransmissions {
     required String transmissionId,
   });
 
+  /// #3335 — settles an `uncertain` submission by hand: what the person
+  /// established ([resolution]), why, and the platform record they checked.
+  /// The function re-checks the send authority and refuses a second
+  /// resolution; a refusal is a result, not a throw.
+  Future<EInvoiceResolveResult> resolveEInvoiceTransmission({
+    required String workspaceId,
+    required String transmissionId,
+    required EInvoiceResolution resolution,
+    required String reason,
+    required String evidence,
+    bool documentRejected = false,
+  });
+
   /// Owner-only: merge the platform credentials (blank fields keep their
   /// stored value, so an endpoint changes without re-typing a token).
   Future<void> setEInvoiceCredentials(

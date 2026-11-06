@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
 
+export 'einvoice_resolution.dart';
+
 /// Whether this workspace can SEND an e-invoice, and what it still needs
 /// (0073). Probed from the `send-e-invoice` function so the app never
 /// offers a button that cannot work: an undeployed function or an
@@ -179,6 +181,25 @@ class InvoiceTransmission {
     }
     return '';
   }
+
+  /// The same row after it was settled by hand (#3335).
+  InvoiceTransmission copyWithStatus(EInvoiceSubmissionStatus value) =>
+      InvoiceTransmission(
+        invoiceId: invoiceId,
+        status: value,
+        sentAt: sentAt,
+        id: id,
+        format: format,
+        receipt: receipt,
+        receiptAt: receiptAt,
+        provider: provider,
+        externalId: externalId,
+        documentHash: documentHash,
+        detail: detail,
+        byName: byName,
+        environment: environment,
+        destination: destination,
+      );
 
   InvoiceTransmission copyWithReceipt(Map<String, Object?> value) =>
       InvoiceTransmission(

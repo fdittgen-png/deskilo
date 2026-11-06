@@ -126,6 +126,29 @@ void main() {
   });
 
   testWidgets(
+      'a prepared or in-flight submission still offers Send (#3335): the '
+      'server claims the first and answers "in progress" to the second, so '
+      'an invoice whose function died is never stranded', (tester) async {
+    for (final status in [EInvoiceSubmissionStatus.inProgress]) {
+      final money = await _seeded()
+        ..einvoiceGateway = const EInvoiceGatewayConfig(configured: true);
+      final invoice = money.invoices.single;
+      money.transmissions[invoice.id] = InvoiceTransmission(
+        invoiceId: invoice.id,
+        status: status,
+        sentAt: DateTime(2026, 6, 30, 10),
+      );
+      await _pumpArchive(tester, money: money);
+
+      await _openEInvoiceSheet(tester, invoice.id);
+
+      expect(find.byKey(const ValueKey('invoice-einvoice-send')),
+          findsOneWidget,
+          reason: status.name);
+    }
+  });
+
+  testWidgets(
       'with a platform configured, Send posts the FACTUR-X document and '
       'reports what the platform answered', (tester) async {
     final money = await _seeded()

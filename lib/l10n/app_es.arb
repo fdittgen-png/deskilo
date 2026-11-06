@@ -5166,6 +5166,21 @@
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
   },
+  "eInvoiceResolveAccepted": "La plataforma tiene el documento",
+  "eInvoiceResolveAction": "Registrar lo ocurrido",
+  "eInvoiceResolveAlready": "Alguien ya resolvió este envío.",
+  "eInvoiceResolveDocumentRejected": "La autoridad rechazó después el documento",
+  "eInvoiceResolveDone": "Registrado. El envío está resuelto.",
+  "eInvoiceResolveError": "No se pudo registrar el envío. Inténtelo de nuevo.",
+  "eInvoiceResolveEvidence": "Lo que comprobó (referencia, fecha, dónde)",
+  "eInvoiceResolveEvidenceRequired": "Indique el registro de la plataforma que comprobó.",
+  "eInvoiceResolveFailed": "No llegó nada a la plataforma (se puede volver a enviar)",
+  "eInvoiceResolveIntro": "Puede que el documento llegara a la plataforma y se perdiera su respuesta, por eso no se volvió a enviar. Compruebe el registro de la plataforma y diga lo que encontró.",
+  "eInvoiceResolveReason": "Por qué está seguro",
+  "eInvoiceResolveReasonRequired": "Diga por qué está seguro.",
+  "eInvoiceResolveRejected": "La plataforma rechazó el envío",
+  "eInvoiceResolveSubmit": "Registrar",
+  "eInvoiceResolveTitle": "Resolver este envío",
   "eInvoiceSubdivisionField": "Provincia o distrito (p. ej. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

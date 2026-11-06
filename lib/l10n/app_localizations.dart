@@ -12175,6 +12175,96 @@ abstract class AppLocalizations {
   /// **'The platform has nothing new about this document yet.'**
   String get eInvoiceReceiptNothingYet;
 
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'The platform has the document'**
+  String get eInvoiceResolveAccepted;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Record what happened'**
+  String get eInvoiceResolveAction;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Someone already settled this submission.'**
+  String get eInvoiceResolveAlready;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'The authority then rejected the document'**
+  String get eInvoiceResolveDocumentRejected;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded. The submission is settled.'**
+  String get eInvoiceResolveDone;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'The submission could not be recorded. Try again.'**
+  String get eInvoiceResolveError;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'What you checked (reference, date, where)'**
+  String get eInvoiceResolveEvidence;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Name the platform record you checked.'**
+  String get eInvoiceResolveEvidenceRequired;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing reached the platform (it can be sent again)'**
+  String get eInvoiceResolveFailed;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'The document may have reached the platform and its answer was lost, so it was not sent again. Check the platform\'s own record, then say what you found.'**
+  String get eInvoiceResolveIntro;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Why you are sure'**
+  String get eInvoiceResolveReason;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Say why you are sure.'**
+  String get eInvoiceResolveReasonRequired;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'The platform refused the upload'**
+  String get eInvoiceResolveRejected;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get eInvoiceResolveSubmit;
+
+  /// #3335 - settling an uncertain e-invoice submission by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Settle this submission'**
+  String get eInvoiceResolveTitle;
+
   /// #2358 field: county or province
   ///
   /// In en, this message translates to:
