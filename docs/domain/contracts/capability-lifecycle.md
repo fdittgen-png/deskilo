@@ -48,6 +48,20 @@ Declared states: `active`, `servicing`, `retired`.
 | `servicing` | retire | operator authority; no unresolved admitted work, checked atomically against admission (D2) | `retired` | retained artifacts readable; credentials revocable; no new work; refusal leaves servicing available |
 | `retired` | reopen for servicing | owner decision, recorded with its reason | `servicing` | only to resolve an operation that was admitted before retirement; new operations stay refused |
 
+**Slice 1 (accounting connectors, 0691).** Until the state table of the
+lifecycle slice exists, the operational state of the accounting
+connectors is *derived* from the existing feature choice: `accountingConnectors`
+on is `active`; off is `servicing`. In `servicing`, new work is refused with
+the unchanged `0A000` (opening a connection, a mapping, a token, preparing a
+**new** delivery, an export that logs), while the following keep working under
+their existing authority: reading connections and transfers, the manageable
+check for revocation, revoking a connection (repeat-safe), and recording the
+outcome of, or replaying, a delivery that was admitted while `active`.
+`retired` and the reopen decision do not exist yet. Authority is never
+relaxed by the state: `accounting_connector_member` is the actor check without
+the feature, and every door still needs a signed-in native-token active member
+with the right permission.
+
 The proposed table excludes `retired` → `active` without
 passing through `servicing` and a reviewed reactivation; any state →
 anything that bypasses a closed period (ADR 0045) or a retention hold

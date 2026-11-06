@@ -37,7 +37,13 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
   // The tokens are read before the Vault is cleared, and kept in memory
   // for the one call below. The target says which door asks the question.
   const targetId = await targetIdOf(deps, connectionId);
-  const allowed = await caller.rpc(manageableRpc(targetId), { p_connection_id: connectionId });
+  // #3336 — offboarding is not new work: the preliminary check names its
+  // purpose, so a space whose accounting feature is off can still revoke. The
+  // HMRC door has its own contract and takes no purpose.
+  const allowed = await caller.rpc(
+    manageableRpc(targetId),
+    targetId === "hmrc_mtd" ? { p_connection_id: connectionId } : { p_connection_id: connectionId, p_purpose: "revoke" },
+  );
   if (allowed.error || !allowed.data) return json({ error: "not allowed to manage this connection" }, 403);
   const held = await resolved(deps, connectionId);
   const revoked = await caller.rpc(held?.target_id === "hmrc_mtd" ? "revoke_hmrc_connection_v1" : "revoke_accounting_connection_v1", {
