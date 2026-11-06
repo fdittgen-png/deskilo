@@ -7275,6 +7275,58 @@ class AppLocalizationsFr extends AppLocalizations {
       'La plateforme n’a encore rien de nouveau sur ce document.';
 
   @override
+  String get eInvoiceResolveAccepted => 'La plateforme a le document';
+
+  @override
+  String get eInvoiceResolveAction => 'Consigner ce qui s\'est passé';
+
+  @override
+  String get eInvoiceResolveAlready => 'Quelqu\'un a déjà réglé cet envoi.';
+
+  @override
+  String get eInvoiceResolveDocumentRejected =>
+      'L\'administration a ensuite rejeté le document';
+
+  @override
+  String get eInvoiceResolveDone => 'Consigné. L\'envoi est réglé.';
+
+  @override
+  String get eInvoiceResolveError =>
+      'L\'envoi n\'a pas pu être consigné. Réessayez.';
+
+  @override
+  String get eInvoiceResolveEvidence =>
+      'Ce que vous avez vérifié (référence, date, où)';
+
+  @override
+  String get eInvoiceResolveEvidenceRequired =>
+      'Indiquez l\'enregistrement de la plateforme que vous avez vérifié.';
+
+  @override
+  String get eInvoiceResolveFailed =>
+      'Rien n\'est arrivé à la plateforme (il peut être renvoyé)';
+
+  @override
+  String get eInvoiceResolveIntro =>
+      'Le document est peut-être arrivé à la plateforme et sa réponse s\'est perdue : il n\'a donc pas été renvoyé. Vérifiez l\'enregistrement de la plateforme, puis indiquez ce que vous avez constaté.';
+
+  @override
+  String get eInvoiceResolveReason => 'Pourquoi vous en êtes sûr';
+
+  @override
+  String get eInvoiceResolveReasonRequired =>
+      'Dites pourquoi vous en êtes sûr.';
+
+  @override
+  String get eInvoiceResolveRejected => 'La plateforme a refusé l\'envoi';
+
+  @override
+  String get eInvoiceResolveSubmit => 'Consigner';
+
+  @override
+  String get eInvoiceResolveTitle => 'Régler cet envoi';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Département, județ ou province (p. ex. RO-B, MI)';
 

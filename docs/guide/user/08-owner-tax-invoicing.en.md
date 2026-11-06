@@ -801,6 +801,7 @@ You want to hand an issued invoice over in its machine-readable form.
 - If something is missing, the sheet lists it. **Complete the legal identity** takes you to the screen that fixes it.
 - An invoice signed before you completed your identity keeps what it was issued with. Mark it erroneous and issue a replacement if it matters.
 - Which channel a customer must use depends on your country and the customer. Confirm with your accountant.
+- If the platform's answer is lost after the document may have left, the invoice shows **outcome unknown** and **Send** is not offered again. Check the platform's own record, then tap **Record what happened** and say what you found, why you are sure and what you checked. Someone who may issue invoices can do this once; nothing is sent by it.
 
 **See also:** [The e-invoicing platform](help:user.money.einvoice.overview) · [The Invoicing screen](help:user.invoicing.hub)
 

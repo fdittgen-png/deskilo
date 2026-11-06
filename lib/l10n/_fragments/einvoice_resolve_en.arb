@@ -1,0 +1,63 @@
+{
+  "@@locale": "en",
+  "eInvoiceResolveAction": "Record what happened",
+  "@eInvoiceResolveAction": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveTitle": "Settle this submission",
+  "@eInvoiceResolveTitle": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveIntro": "The document may have reached the platform and its answer was lost, so it was not sent again. Check the platform's own record, then say what you found.",
+  "@eInvoiceResolveIntro": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveAccepted": "The platform has the document",
+  "@eInvoiceResolveAccepted": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveRejected": "The platform refused the upload",
+  "@eInvoiceResolveRejected": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveFailed": "Nothing reached the platform (it can be sent again)",
+  "@eInvoiceResolveFailed": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveDocumentRejected": "The authority then rejected the document",
+  "@eInvoiceResolveDocumentRejected": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveReason": "Why you are sure",
+  "@eInvoiceResolveReason": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveEvidence": "What you checked (reference, date, where)",
+  "@eInvoiceResolveEvidence": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveReasonRequired": "Say why you are sure.",
+  "@eInvoiceResolveReasonRequired": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveEvidenceRequired": "Name the platform record you checked.",
+  "@eInvoiceResolveEvidenceRequired": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveSubmit": "Record",
+  "@eInvoiceResolveSubmit": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveDone": "Recorded. The submission is settled.",
+  "@eInvoiceResolveDone": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveAlready": "Someone already settled this submission.",
+  "@eInvoiceResolveAlready": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  },
+  "eInvoiceResolveError": "The submission could not be recorded. Try again.",
+  "@eInvoiceResolveError": {
+    "description": "#3335 - settling an uncertain e-invoice submission by hand"
+  }
+}

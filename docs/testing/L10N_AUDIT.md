@@ -27,11 +27,11 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_london_seed.dart:218` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_london_seed.dart:219` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_london_seed.dart:220` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:216` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:219` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:225` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:231` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:247` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:230` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:233` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:239` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:245` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:261` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_network_seed.dart:317` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_network_seed.dart:333` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |

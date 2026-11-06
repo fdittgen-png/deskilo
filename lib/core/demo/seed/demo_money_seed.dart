@@ -5,6 +5,7 @@
 // payments behind them, VAT rates, a recurring expense with its due
 // occurrence and the usage the bookings counted. Every date follows the
 // seeded instant.
+import '../../../features/money/domain/einvoice_gateway.dart';
 import '../../../features/money/domain/expense_schedule.dart';
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
@@ -119,6 +120,19 @@ void seedDemoMoneyStory(
       replacesNumber: demoInvoiceNumber(twoMonthsAgo, 1),
     ),
   ]);
+
+  // #3335 — Chiara's invoice was sent to the platform and the answer was
+  // lost: the submission is `uncertain`, Send is not offered, and an issuer
+  // settles it by hand from the invoice (Demo use case of the resolution).
+  money.transmissions['demo-invoice-chiara'] = InvoiceTransmission(
+    id: 'demo-transmission-chiara',
+    invoiceId: 'demo-invoice-chiara',
+    status: EInvoiceSubmissionStatus.uncertain,
+    sentAt: lastMonth.add(const Duration(days: 1)),
+    provider: 'peppol',
+    format: 'peppolBis',
+    detail: 'In progress or unresolved - do not resend',
+  );
 
   // The payments behind last month's paid invoices, and their matches.
   void paid(

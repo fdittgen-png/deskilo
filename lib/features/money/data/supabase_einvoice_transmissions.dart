@@ -175,6 +175,37 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
   }
 
   @override
+  Future<EInvoiceResolveResult> resolveEInvoiceTransmission({
+    required String workspaceId,
+    required String transmissionId,
+    required EInvoiceResolution resolution,
+    required String reason,
+    required String evidence,
+    bool documentRejected = false,
+  }) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'resolve',
+      'transmission_id': transmissionId,
+      'outcome': resolution.name,
+      'reason': reason,
+      'evidence': evidence,
+      if (documentRejected && resolution == EInvoiceResolution.accepted)
+        'verdict': {'document': 'rejected'},
+    });
+    if (data == null) {
+      return const EInvoiceResolveResult(resolved: false, error: 'not_deployed');
+    }
+    final answer = JsonReader.of(data, context: 'send-e-invoice resolve');
+    return EInvoiceResolveResult(
+      resolved: data['resolved'] == true,
+      error: data['resolved'] == true
+          ? ''
+          : answer.stringOr('error', 'already_settled'),
+    );
+  }
+
+  @override
   Future<void> setEInvoiceCredentials(
     String workspaceId,
     Map<String, String> config,

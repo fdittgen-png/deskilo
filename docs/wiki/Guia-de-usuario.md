@@ -5325,6 +5325,7 @@ Quiere entregar una factura emitida en su forma legible por máquina.
 - Si falta algo, la hoja lo enumera. **Completar la identidad legal** le lleva a la pantalla que lo corrige.
 - Una factura firmada antes de que completara su identidad conserva lo que tenía al emitirse. Márquela como errónea y emita una sustitutiva si es importante.
 - Qué canal debe usar un cliente depende de su país y del cliente. Confírmelo con su gestor.
+- Si se pierde la respuesta de la plataforma cuando el documento pudo haberse enviado, la factura muestra **resultado desconocido** y ya no se ofrece **Enviar**. Compruebe el registro de la plataforma, pulse **Registrar lo ocurrido** e indique lo que encontró, por qué está seguro y qué comprobó. Quien pueda emitir facturas puede hacerlo una vez; no se envía nada con ello.
 
 **Véase también:** [La plataforma de facturación electrónica](#la-plataforma-de-facturación-electrónica) · [La pantalla de Facturación](#la-pantalla-de-facturación)
 

@@ -7222,6 +7222,58 @@ class AppLocalizationsEn extends AppLocalizations {
       'The platform has nothing new about this document yet.';
 
   @override
+  String get eInvoiceResolveAccepted => 'The platform has the document';
+
+  @override
+  String get eInvoiceResolveAction => 'Record what happened';
+
+  @override
+  String get eInvoiceResolveAlready =>
+      'Someone already settled this submission.';
+
+  @override
+  String get eInvoiceResolveDocumentRejected =>
+      'The authority then rejected the document';
+
+  @override
+  String get eInvoiceResolveDone => 'Recorded. The submission is settled.';
+
+  @override
+  String get eInvoiceResolveError =>
+      'The submission could not be recorded. Try again.';
+
+  @override
+  String get eInvoiceResolveEvidence =>
+      'What you checked (reference, date, where)';
+
+  @override
+  String get eInvoiceResolveEvidenceRequired =>
+      'Name the platform record you checked.';
+
+  @override
+  String get eInvoiceResolveFailed =>
+      'Nothing reached the platform (it can be sent again)';
+
+  @override
+  String get eInvoiceResolveIntro =>
+      'The document may have reached the platform and its answer was lost, so it was not sent again. Check the platform\'s own record, then say what you found.';
+
+  @override
+  String get eInvoiceResolveReason => 'Why you are sure';
+
+  @override
+  String get eInvoiceResolveReasonRequired => 'Say why you are sure.';
+
+  @override
+  String get eInvoiceResolveRejected => 'The platform refused the upload';
+
+  @override
+  String get eInvoiceResolveSubmit => 'Record';
+
+  @override
+  String get eInvoiceResolveTitle => 'Settle this submission';
+
+  @override
   String get eInvoiceSubdivisionField => 'County or province (e.g. RO-B, MI)';
 
   @override
