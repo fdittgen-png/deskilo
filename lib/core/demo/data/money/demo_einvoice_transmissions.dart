@@ -89,6 +89,42 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
     return const EInvoiceSubmission(status: EInvoiceSubmissionStatus.accepted);
   }
 
+  /// #3335 — mirrors the server: only an `uncertain` submission settles,
+  /// with a reason and the evidence, and a second resolution changes
+  /// nothing.
+  @override
+  Future<EInvoiceResolveResult> resolveEInvoiceTransmission({
+    required String workspaceId,
+    required String transmissionId,
+    required EInvoiceResolution resolution,
+    required String reason,
+    required String evidence,
+    bool documentRejected = false,
+  }) async {
+    if (einvoiceResolutionProblem(reason: reason, evidence: evidence) != null) {
+      return const EInvoiceResolveResult(
+        resolved: false,
+        error: 'a reason and the evidence are required',
+      );
+    }
+    for (final MapEntry(:key, :value) in _m.transmissions.entries) {
+      if (value.id != transmissionId) continue;
+      if (value.status != EInvoiceSubmissionStatus.uncertain) {
+        return const EInvoiceResolveResult(
+          resolved: false,
+          error: 'already_settled',
+        );
+      }
+      _m.transmissions[key] = value.copyWithStatus(switch (resolution) {
+        EInvoiceResolution.accepted => EInvoiceSubmissionStatus.accepted,
+        EInvoiceResolution.rejected => EInvoiceSubmissionStatus.rejected,
+        EInvoiceResolution.failed => EInvoiceSubmissionStatus.failed,
+      });
+      return const EInvoiceResolveResult(resolved: true);
+    }
+    return const EInvoiceResolveResult(resolved: false, error: 'unknown');
+  }
+
   @override
   Future<void> setEInvoiceCredentials(
     String workspaceId,

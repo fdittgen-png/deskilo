@@ -323,6 +323,9 @@ abstract final class HelpAnchor {
   /// Where a structured invoice goes, and with which credentials.
   static const einvoiceOverview = 'user.money.einvoice.overview';
 
+  /// Sending an issued invoice, and settling a send whose outcome is unknown.
+  static const einvoiceSend = 'user.money.einvoice.send';
+
   /// The address the document is posted to.
   static const einvoiceEndpoint = 'user.money.einvoice.endpoint';
 
@@ -422,6 +425,7 @@ abstract final class HelpAnchor {
     availabilityOutsideHours,
     availabilityLimits,
     einvoiceOverview,
+    einvoiceSend,
     einvoiceEndpoint,
     einvoiceToken,
     einvoiceAuthHeader,

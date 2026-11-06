@@ -306,10 +306,13 @@ class _EInvoiceExportRun {
     final sendGaps = gateway.configured
         ? channelGaps(sendFormat, seller: s.seller, buyer: s.buyer, iban: s.iban)
         : const <ChannelGap>[];
+    // Only an `uncertain` submission stops Send (#3335): a prepared one is
+    // claimed by the next send, and one in flight answers "in progress" until
+    // its window passes and the server marks it uncertain — hiding those
+    // would strand an invoice whose function died.
     final unsettled =
-        ref.read(invoiceTransmissionsProvider).value?[s.invoice.id]
-            ?.isUnresolved ??
-        false;
+        ref.read(invoiceTransmissionsProvider).value?[s.invoice.id]?.status ==
+        EInvoiceSubmissionStatus.uncertain;
     return showEInvoiceSheet(
       context,
       route: route,
@@ -324,8 +327,8 @@ class _EInvoiceExportRun {
       canFixIdentity: roles.owner,
       identityFixedSince: identityFixedSince,
       // Only an issuer sends, and only when a platform is configured — and
-      // not while an earlier submission is unsettled (#3335): the server
-      // would refuse it anyway, so the button is not offered.
+      // not while an earlier submission's outcome is unknown (#3335): the
+      // server would refuse it anyway, so the button is not offered.
       canSend:
           gateway.configured && roles.issuer && sendGaps.isEmpty && !unsettled,
       // The customer leg (#568): its own endpoint, its own flag, the same

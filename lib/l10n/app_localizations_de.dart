@@ -7272,6 +7272,61 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Plattform meldet zu diesem Dokument noch nichts Neues.';
 
   @override
+  String get eInvoiceResolveAccepted => 'Die Plattform hat das Dokument';
+
+  @override
+  String get eInvoiceResolveAction => 'Festhalten, was passiert ist';
+
+  @override
+  String get eInvoiceResolveAlready =>
+      'Jemand hat diese Übermittlung bereits geklärt.';
+
+  @override
+  String get eInvoiceResolveDocumentRejected =>
+      'Die Behörde hat das Dokument danach abgelehnt';
+
+  @override
+  String get eInvoiceResolveDone =>
+      'Festgehalten. Die Übermittlung ist geklärt.';
+
+  @override
+  String get eInvoiceResolveError =>
+      'Die Übermittlung konnte nicht festgehalten werden. Versuchen Sie es erneut.';
+
+  @override
+  String get eInvoiceResolveEvidence =>
+      'Was Sie geprüft haben (Referenz, Datum, wo)';
+
+  @override
+  String get eInvoiceResolveEvidenceRequired =>
+      'Nennen Sie den geprüften Eintrag der Plattform.';
+
+  @override
+  String get eInvoiceResolveFailed =>
+      'Bei der Plattform ist nichts angekommen (es kann erneut gesendet werden)';
+
+  @override
+  String get eInvoiceResolveIntro =>
+      'Das Dokument ist möglicherweise bei der Plattform angekommen und die Antwort ging verloren, deshalb wurde es nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und halten Sie fest, was Sie gefunden haben.';
+
+  @override
+  String get eInvoiceResolveReason => 'Woher Sie sicher sind';
+
+  @override
+  String get eInvoiceResolveReasonRequired =>
+      'Nennen Sie, woher Sie sicher sind.';
+
+  @override
+  String get eInvoiceResolveRejected =>
+      'Die Plattform hat den Upload abgelehnt';
+
+  @override
+  String get eInvoiceResolveSubmit => 'Festhalten';
+
+  @override
+  String get eInvoiceResolveTitle => 'Diese Übermittlung klären';
+
+  @override
   String get eInvoiceSubdivisionField => 'Kreis oder Provinz (z. B. RO-B, MI)';
 
   @override

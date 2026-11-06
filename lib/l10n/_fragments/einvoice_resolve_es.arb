@@ -1,0 +1,18 @@
+{
+  "@@locale": "es",
+  "eInvoiceResolveAction": "Registrar lo ocurrido",
+  "eInvoiceResolveTitle": "Resolver este envío",
+  "eInvoiceResolveIntro": "Puede que el documento llegara a la plataforma y se perdiera su respuesta, por eso no se volvió a enviar. Compruebe el registro de la plataforma y diga lo que encontró.",
+  "eInvoiceResolveAccepted": "La plataforma tiene el documento",
+  "eInvoiceResolveRejected": "La plataforma rechazó el envío",
+  "eInvoiceResolveFailed": "No llegó nada a la plataforma (se puede volver a enviar)",
+  "eInvoiceResolveDocumentRejected": "La autoridad rechazó después el documento",
+  "eInvoiceResolveReason": "Por qué está seguro",
+  "eInvoiceResolveEvidence": "Lo que comprobó (referencia, fecha, dónde)",
+  "eInvoiceResolveReasonRequired": "Diga por qué está seguro.",
+  "eInvoiceResolveEvidenceRequired": "Indique el registro de la plataforma que comprobó.",
+  "eInvoiceResolveSubmit": "Registrar",
+  "eInvoiceResolveDone": "Registrado. El envío está resuelto.",
+  "eInvoiceResolveAlready": "Alguien ya resolvió este envío.",
+  "eInvoiceResolveError": "No se pudo registrar el envío. Inténtelo de nuevo."
+}

@@ -7263,6 +7263,57 @@ class AppLocalizationsEs extends AppLocalizations {
       'La plataforma aún no tiene nada nuevo sobre este documento.';
 
   @override
+  String get eInvoiceResolveAccepted => 'La plataforma tiene el documento';
+
+  @override
+  String get eInvoiceResolveAction => 'Registrar lo ocurrido';
+
+  @override
+  String get eInvoiceResolveAlready => 'Alguien ya resolvió este envío.';
+
+  @override
+  String get eInvoiceResolveDocumentRejected =>
+      'La autoridad rechazó después el documento';
+
+  @override
+  String get eInvoiceResolveDone => 'Registrado. El envío está resuelto.';
+
+  @override
+  String get eInvoiceResolveError =>
+      'No se pudo registrar el envío. Inténtelo de nuevo.';
+
+  @override
+  String get eInvoiceResolveEvidence =>
+      'Lo que comprobó (referencia, fecha, dónde)';
+
+  @override
+  String get eInvoiceResolveEvidenceRequired =>
+      'Indique el registro de la plataforma que comprobó.';
+
+  @override
+  String get eInvoiceResolveFailed =>
+      'No llegó nada a la plataforma (se puede volver a enviar)';
+
+  @override
+  String get eInvoiceResolveIntro =>
+      'Puede que el documento llegara a la plataforma y se perdiera su respuesta, por eso no se volvió a enviar. Compruebe el registro de la plataforma y diga lo que encontró.';
+
+  @override
+  String get eInvoiceResolveReason => 'Por qué está seguro';
+
+  @override
+  String get eInvoiceResolveReasonRequired => 'Diga por qué está seguro.';
+
+  @override
+  String get eInvoiceResolveRejected => 'La plataforma rechazó el envío';
+
+  @override
+  String get eInvoiceResolveSubmit => 'Registrar';
+
+  @override
+  String get eInvoiceResolveTitle => 'Resolver este envío';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Provincia o distrito (p. ej. RO-B, MI)';
 

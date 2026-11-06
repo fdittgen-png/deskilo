@@ -5166,6 +5166,21 @@
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
   },
+  "eInvoiceResolveAccepted": "Die Plattform hat das Dokument",
+  "eInvoiceResolveAction": "Festhalten, was passiert ist",
+  "eInvoiceResolveAlready": "Jemand hat diese Übermittlung bereits geklärt.",
+  "eInvoiceResolveDocumentRejected": "Die Behörde hat das Dokument danach abgelehnt",
+  "eInvoiceResolveDone": "Festgehalten. Die Übermittlung ist geklärt.",
+  "eInvoiceResolveError": "Die Übermittlung konnte nicht festgehalten werden. Versuchen Sie es erneut.",
+  "eInvoiceResolveEvidence": "Was Sie geprüft haben (Referenz, Datum, wo)",
+  "eInvoiceResolveEvidenceRequired": "Nennen Sie den geprüften Eintrag der Plattform.",
+  "eInvoiceResolveFailed": "Bei der Plattform ist nichts angekommen (es kann erneut gesendet werden)",
+  "eInvoiceResolveIntro": "Das Dokument ist möglicherweise bei der Plattform angekommen und die Antwort ging verloren, deshalb wurde es nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und halten Sie fest, was Sie gefunden haben.",
+  "eInvoiceResolveReason": "Woher Sie sicher sind",
+  "eInvoiceResolveReasonRequired": "Nennen Sie, woher Sie sicher sind.",
+  "eInvoiceResolveRejected": "Die Plattform hat den Upload abgelehnt",
+  "eInvoiceResolveSubmit": "Festhalten",
+  "eInvoiceResolveTitle": "Diese Übermittlung klären",
   "eInvoiceSubdivisionField": "Kreis oder Provinz (z. B. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
