@@ -306,6 +306,10 @@ class _EInvoiceExportRun {
     final sendGaps = gateway.configured
         ? channelGaps(sendFormat, seller: s.seller, buyer: s.buyer, iban: s.iban)
         : const <ChannelGap>[];
+    final unsettled =
+        ref.read(invoiceTransmissionsProvider).value?[s.invoice.id]
+            ?.isUnresolved ??
+        false;
     return showEInvoiceSheet(
       context,
       route: route,
@@ -319,13 +323,17 @@ class _EInvoiceExportRun {
       today: ref.read(clockProvider).now(),
       canFixIdentity: roles.owner,
       identityFixedSince: identityFixedSince,
-      // Only an issuer sends, and only when a platform is configured.
-      canSend: gateway.configured && roles.issuer && sendGaps.isEmpty,
+      // Only an issuer sends, and only when a platform is configured — and
+      // not while an earlier submission is unsettled (#3335): the server
+      // would refuse it anyway, so the button is not offered.
+      canSend:
+          gateway.configured && roles.issuer && sendGaps.isEmpty && !unsettled,
       // The customer leg (#568): its own endpoint, its own flag, the same
       // issuer gate.
       canSendCustomer:
           gateway.customerConfigured &&
           roles.issuer &&
+          !unsettled &&
           ref
               .read(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.einvoiceCustomerDelivery),

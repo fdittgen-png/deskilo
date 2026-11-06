@@ -10,22 +10,22 @@
 #      and the record is at generation 1.
 set -euo pipefail
 url=${1:?usage: einvoice_claim_race.sh DATABASE_URL}
-ws=00000000-0000-4000-8000-000000033501
-owner=00000000-0000-4000-8000-000000033502
+# fresh ids per run: invoices cannot be deleted (invoices_no_mutation, 0183),
+# so a rerun on the same database must not collide with an earlier fixture
+uid() { uuidgen | tr 'A-Z' 'a-z'; }
+ws=$(uid)
+owner=$(uid)
 scratch=$(mktemp -d)
+# Only the transmissions (and their artifacts, by cascade) are removable; the
+# disposable database drops the rest. A cleanup failure is a warning and never
+# turns a held race red.
 cleanup() {
-  local original_status=$? cleanup_status=0
-  psql "$url" -X -q -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL || cleanup_status=$?
+  local original_status=$?
+  psql "$url" -X -q -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL ||
 delete from public.invoice_transmissions where workspace_id = '$ws';
-delete from public.invoices where workspace_id = '$ws';
-delete from public.workspaces where id = '$ws';
-delete from auth.users where id = '$owner';
 SQL
+    echo "::warning::e-invoice race fixture cleanup failed" >&2
   rm -rf "$scratch"
-  if (( cleanup_status != 0 )); then
-    echo "::error::e-invoice race fixture cleanup failed" >&2
-    exit 1
-  fi
   exit "$original_status"
 }
 trap cleanup EXIT
