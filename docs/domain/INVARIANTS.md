@@ -6,6 +6,11 @@ than believed. This is the list, and every row says which file runs it.
 A row without a test file is a claim; this document exists so that is
 visible rather than implicit.
 
+A rule that spans data, time, authority, concurrency and a third party
+at once does not fit a row. It gets a contract page in `contracts/`
+(ADR 0048) — the same discipline, with the states and transitions
+written out and each proposed rule naming its issue.
+
 | invariant | enforced by | executed by |
 |---|---|---|
 | a seat cannot hold two overlapping reservations | `exclude using gist` on `reservations` (0005) | `23_domain_invariants.sql` |
