@@ -744,3 +744,34 @@ Deno.test("O10: a later document rejection is a verdict beside the upload; the p
   assertEquals(row.receipt.uuid !== undefined, true);
   assertEquals(p.posts.length, 0); // asking never uploads
 });
+
+Deno.test("O3/O4: a send on a record whose dispatch window passed answers uncertain and uploads nothing", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  // the function died mid-POST: claimed, never recorded, deadline passed
+  const prep = await s.prepare({
+    workspaceId: WS,
+    invoiceId: INV,
+    provider: "generic",
+    destination: "government",
+    environment: "prod",
+    actor: USER,
+    byName: "T",
+    format: "facturX",
+    hash: await hash("<xml>one</xml>"),
+    fileName: "F-1.pdf",
+    mimeType: "application/pdf",
+    receiverScheme: "",
+    receiverId: "",
+    bytes: new TextEncoder().encode("<xml>one</xml>") as Uint8Array<
+      ArrayBuffer
+    >,
+  });
+  await s.claim(prep.id!, "dead-owner", 150);
+  s.now += 10 * 60_000;
+  const r = await read(await call(s, p.fetchImpl, bodyOf()));
+  assertEquals(r.body.phase, "uncertain");
+  assertEquals(r.body.status, "failed"); // what an older client decodes
+  assertEquals(p.posts.length, 0);
+  assertEquals(s.rows.get(prep.id!)!.phase, "uncertain");
+});
