@@ -12,6 +12,7 @@ import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -254,6 +255,7 @@ void main() {
       WidgetTester tester, {
       bool bankImport = true,
       bool isSelf = false,
+      Set<WorkspacePermission>? rights,
     }) async {
       final repo = _Recording();
       final money = FakeMoneyRepository()..ledger.add(_entry());
@@ -290,6 +292,7 @@ void main() {
             workspace: workspace,
             creditMoves: repo,
           ),
+          if (rights != null) myPermissionsProvider.overrideWithValue(rights),
         ],
       );
       await tester.pumpAndSettle();
@@ -313,6 +316,21 @@ void main() {
       expect(find.text('The payment was moved.'), findsOneWidget);
     });
 
+    testWidgets(
+      'the biller is not offered as the member who paid (#3346): the server '
+      'refuses a move onto, or off, your own account',
+      (tester) async {
+        await pump(tester);
+        await _tap(
+          tester,
+          find.byKey(const ValueKey('member-payment-move-c-1')),
+        );
+        await _tap(tester, find.byKey(const ValueKey('credit-move-member')));
+        expect(find.text('Bea'), findsWidgets);
+        expect(find.text('Flo'), findsNothing);
+      },
+    );
+
     testWidgets('a refusal says the payment was not moved', (tester) async {
       final repo = await pump(tester);
       repo.refusal = const PostgrestException(
@@ -324,6 +342,29 @@ void main() {
       expect(repo.calls, hasLength(1));
       expect(find.text('The payment was moved.'), findsNothing);
     });
+
+    testWidgets(
+      'someone who may see the money but not issue invoices sees no move '
+      '(#3346)',
+      (tester) async {
+        await pump(tester, rights: {WorkspacePermission.viewFinances});
+        expect(
+          find.byKey(const ValueKey('member-payment-move-c-1')),
+          findsNothing,
+        );
+        await pump(
+          tester,
+          rights: {
+            WorkspacePermission.viewFinances,
+            WorkspacePermission.issueInvoices,
+          },
+        );
+        expect(
+          find.byKey(const ValueKey('member-payment-move-c-1')),
+          findsOneWidget,
+        );
+      },
+    );
 
     testWidgets('no move without the bank import, nor on your own page', (
       tester,
