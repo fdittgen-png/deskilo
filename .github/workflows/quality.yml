@@ -1035,6 +1035,8 @@ jobs:
           bash scripts/snapshot_concurrency_check.sh "$DB_URL"
           # HMRC submission claims must serialize and grant a fresh lease after waiting.
           bash scripts/hmrc_recovery_race.sh "$DB_URL"
+          # #3346 — a payment credit is moved or matched, never both.
+          bash scripts/credit_move_match_race.sh "$DB_URL"
           # #3335 — one e-invoice dispatch owner under real concurrent claims.
           bash scripts/einvoice_claim_race.sh "$DB_URL"
 

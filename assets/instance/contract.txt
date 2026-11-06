@@ -2711,7 +2711,7 @@ routine public.message_mentions_within(p_body text, p_allowed uuid[]) -> text | 
 routine public.message_ref_workspace(p_kind text, p_id uuid) -> uuid | function | definer | stable | exec:service_role | body:6778dc5294c4
 routine public.message_refs_allowed(p_body text, p_users uuid[]) -> boolean | function | definer | stable | exec:service_role | body:6143fc08b8db
 routine public.message_source(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:bf18325b19fb
-routine public.move_payment_credit_v1(p_credit_id uuid, p_to_member_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:75396e292c4d
+routine public.move_payment_credit_v1(p_credit_id uuid, p_to_member_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:378443ccb0dd
 routine public.my_account_conversation_with(p_recipient uuid) -> uuid | function | definer | stable | exec:authenticated,service_role | body:740ada36937d
 routine public.my_account_conversations(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:26bd6f2f9a50
 routine public.my_account_group_messages(p_group uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a02203ce982f
@@ -2931,6 +2931,7 @@ routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row
 routine public.refresh_public_person_card(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:92b2d2dba224
 routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:dc0e56065f83
 routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:4ddfb2ff4fe1
+routine public.refuse_match_of_moved_credit() -> trigger | function | definer | volatile | exec:service_role | body:785020e28721
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_id uuid, p_line_no integer, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b5137c57cdf6
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_line_id uuid, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c55d031a8ede
 routine public.register_my_nfc_badge(p_workspace_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:741684565a6f
@@ -3469,8 +3470,10 @@ trigger instance_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_column
 trigger instance_owner_claims.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_owner_claims FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invitations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_match_payments.invoice_match_payments_refuse_moved CREATE TRIGGER invoice_match_payments_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_match_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_matches.book_period_match_guard CREATE TRIGGER book_period_match_guard BEFORE INSERT OR DELETE OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION book_period_match_guard()
+trigger invoice_matches.invoice_matches_refuse_moved CREATE TRIGGER invoice_matches_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
