@@ -1,6 +1,6 @@
 # ADR 0048 — A rule that spans data, time, authority and a third party gets a contract page beside the invariants
 
-**Status:** proposed · **Date:** 2026-11-06 · **Refs:** #3335, #3336, #3328
+**Status:** accepted · **Date:** 2026-11-06 · **Refs:** #3335, #3336, #3328
 
 ## Context
 `docs/domain/INVARIANTS.md` (#1248) lists each business rule with what
@@ -35,20 +35,21 @@ The alternatives considered:
 2. It states the **conceptual** rule in plain words and, under it, the
    **implementation mapping** — the function, column, constraint and
    test. The physical schema is not repeated.
-3. A page is required when a change alters a business relationship, an
-   invariant, an authority rule, a lifecycle transition or an externally
-   observable effect. The issue carries the delta; the page carries the
-   result, in the same pull request. A refactor states "contract
-   unchanged".
+3. A simple rule, including a static relationship, stays in an invariant
+   row. A complex lifecycle gets a page when states, guards, concurrency
+   or recovery do not fit clearly in one row. Update any affected row or
+   page in the behaviour's pull request; the issue carries the delta.
+   An unchanged contract is cited with a reason.
 4. Risk and modelling stay separate: the risk tier decides the review
-   and the evidence; the kind of change decides which section moves.
+   and evidence under existing rules; the kind of change decides which section moves.
 5. `test/lint/domain_contract_test.dart` refuses a page that cannot be
    checked — a missing section, a transition naming an undeclared
    state, a path that no longer exists, a baseline without a full
    commit — and nothing more. Whether a rule is right stays with the
    review (ADR 0040: project rules stay lint tests).
-6. The first page is the e-invoice transmission (#3335). The second is
-   the capability lifecycle (#3336). No existing issue is rewritten.
+6. E-invoice transmission (#3335) and capability lifecycle (#3336) are
+   pilot pages. Accepting this convention does not implement or approve
+   their proposed domain rules; those remain with their issues.
 
 ## Consequences
 - An issue that changes one of these rules is reviewed against a stated

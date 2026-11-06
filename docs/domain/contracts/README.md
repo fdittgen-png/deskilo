@@ -57,33 +57,41 @@ versus *as history*.
 `from · event · guard · to · effects` is enough for the rules this
 repository has needed. A diagram is welcome when it helps a reader; it
 is never the only form, because the lint reads the table.
+Use five nonempty cells with leading/trailing pipes and optional alignment.
+Write `always` for an unconditional guard and `none` for no effects.
 
 ## When a page is required
 
-Risk decides the assurance; the *kind of change* decides which section
-moves. An index-only migration needs careful rollout and no contract
-edit. Changing an authorisation predicate needs a contract edit and no
-schema change.
+Keep a simple or static rule in its invariant row. Use a page for a
+complex lifecycle whose states, guards, concurrency or recovery need
+more space, and update affected sections when behaviour changes.
+Risk sets assurance under `docs/AGENT_RULES.md`: an index-only change
+needs no contract edit; an authorisation change may need no schema edit.
 
 | change | contract impact |
 |---|---|
 | wording, formatting, a presentation change on an unchanged rule | none; cite the page where it helps |
 | a relationship, identity, cardinality or business value | Concepts / Relationships / Invariants delta |
 | a lifecycle, guard, retry or external effect | States / Processing delta |
-| authority, money, a destructive operation, a submission to a third party | every affected section, plus the explicit concurrency and recovery rule — and the critical-scope review the rules already require |
+| authority, money, a destructive operation, a submission to a third party | every affected section, with explicit concurrency and recovery where applicable; existing review and authority rules apply |
 
-The issue carries the **delta** (the checkpoint template has the
-section); the page carries the **result**, updated in the same pull
-request as the behaviour. A pure refactor states "contract unchanged"
-and names the page.
+The issue carries the **delta**; the row or page carries the **result**
+in the behaviour's pull request. An unchanged contract is cited with
+a reason; where no business rule is affected, say why. The checkpoint's
+existing owner maintains the rule and coordinates its consumers.
+
+Record each decision, reason and authority on the issue: implementer,
+existing owner delegation, or a reserved owner action under
+`docs/AGENT_RULES.md`. Delegation is not independent review.
 
 ## What the lint checks, and what it cannot
 
-`test/lint/domain_contract_test.dart` refuses a page that cannot be
-checked: a missing section, a transition naming an undeclared state, a
-backticked path that no longer exists, a baseline without a full commit.
-It does not judge whether a rule is right. That stays with the review
-and with the tests the Evidence section names.
+`test/lint/domain_contract_test.dart` checks required headings, full commit
+hash and issue-reference syntax, five nonempty transition cells, declared states,
+and backticked repository-root or peer Markdown paths (`page.md` or `./page.md`).
+It checks file existence, not symbols, anchors, commit existence or test
+results. Semantic correctness and a code change's contract impact stay
+with the review and the tests the Evidence section names.
 
 ## Three safeguards
 
