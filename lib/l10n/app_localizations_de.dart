@@ -13505,7 +13505,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceSendStatusFailed => 'nicht übermittelt';
 
   @override
+  String get invoiceSendStatusInProgress => 'in Bearbeitung';
+
+  @override
   String get invoiceSendStatusRejected => 'abgelehnt';
+
+  @override
+  String get invoiceSendStatusUncertain =>
+      'Ergebnis unbekannt - vor erneutem Senden prüfen';
+
+  @override
+  String get invoiceSendUnresolved =>
+      'Diese Rechnung wurde bereits übermittelt und das Ergebnis steht noch nicht fest, deshalb wurde sie nicht erneut gesendet. Prüfen Sie zuerst den Eintrag bei der Plattform.';
 
   @override
   String invoiceSentOn(String date, String status) {

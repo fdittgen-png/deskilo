@@ -1,0 +1,6 @@
+{
+  "@@locale": "it",
+  "invoiceSendStatusInProgress": "in corso",
+  "invoiceSendStatusUncertain": "esito sconosciuto - verificare prima di inviare di nuovo",
+  "invoiceSendUnresolved": "Questa fattura è già stata inviata e l'esito non è ancora definito, quindi non è stata reinviata. Verifichi la registrazione della piattaforma prima di fare altro."
+}

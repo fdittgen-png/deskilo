@@ -52,6 +52,7 @@ export async function submitRoEfactura(
   const standard = /<(?:\w+:)?CreditNote\b/.test(head) ? "CN" : "UBL";
   const url = join(cfg.base_url, "upload") +
     `?standard=${standard}&cif=${encodeURIComponent(cfg.cif)}`;
+  doc.onDispatch?.();
   const res = await fetchImpl(url, {
     method: "POST",
     headers: {

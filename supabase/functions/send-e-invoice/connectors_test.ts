@@ -85,7 +85,7 @@ Deno.test("a format the provider does not take is refused before any call", asyn
   ) {
     const { calls, fetchImpl } = mock(() => ok({}));
     const out = await submit(provider, {}, xml(format), fetchImpl);
-    assertEquals(out.status, "rejected", provider);
+    assertEquals(out.status, "failed", provider);
     assertMatch(out.detail, /does not accept/);
     assertEquals(calls.length, 0, provider);
   }
@@ -154,7 +154,7 @@ Deno.test("peppol: no electronic address, nothing to route to", async () => {
     ...xml("peppolBis"),
     receiver: undefined,
   }, fetchImpl);
-  assertEquals(out.status, "rejected");
+  assertEquals(out.status, "failed");
   assertEquals(calls.length, 0);
 });
 
@@ -207,7 +207,8 @@ Deno.test("fr_pa: a refused token is a refusal, not a send", async () => {
     xml("en16931Cii"),
     fetchImpl,
   );
-  assertEquals(out.status, "rejected");
+  // the token step: nothing carrying the document has left
+  assertEquals(out.status, "failed");
   assertEquals(out.detail, "401 bad client");
   assertEquals(calls.length, 1);
 });
@@ -337,10 +338,21 @@ Deno.test("every connector: a non-2xx answer is a refusal, a thrown fetch a fail
   for (const [provider, cfg] of Object.entries(cfgs)) {
     const { fetchImpl } = mock(() => ok("x".repeat(900), 400));
     const no = await submit(provider, cfg, xml(formats[provider]), fetchImpl);
-    assertEquals(no.status, "rejected", provider);
+    // it_sdi refuses at the login, before the document left
+    assertEquals(
+      no.status,
+      provider === "it_sdi" ? "failed" : "rejected",
+      provider,
+    );
     assertEquals(no.detail.length, 500, provider);
     const down = await submit(provider, cfg, xml(formats[provider]), throwing);
-    assertEquals(down.status, "failed", provider);
+    // it_sdi logs in first: the throw comes before the document left.
+    // The others throw on the upload itself, which may have landed.
+    assertEquals(
+      down.status,
+      provider === "it_sdi" ? "failed" : "uncertain",
+      provider,
+    );
     assertMatch(down.detail, /network down/);
   }
 });
@@ -525,6 +537,48 @@ Deno.test("pl_ksef: a refused authentication sends nothing", async () => {
     xml("ksefFa3"),
     fetchImpl,
   );
-  assertEquals(out.status, "rejected");
+  assertEquals(out.status, "failed");
   assertEquals(calls.length, 1);
+});
+
+// ── #3335: what an answer proves about acceptance ───────────────────
+
+const genericCfg = { endpoint: "https://x.test", auth_value: "t" };
+
+Deno.test("generic: a 5xx, a 408 or a 429 after the upload is uncertain, never a refusal", async () => {
+  for (const code of [500, 502, 503, 408, 429, 409]) {
+    const { calls, fetchImpl } = mock(() => ok("busy", code));
+    const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
+    assertEquals(out.status, "uncertain", String(code));
+    assertEquals(calls.length, 1);
+  }
+});
+
+Deno.test("generic: an explicit 4xx refusal of the upload is rejected", async () => {
+  for (const code of [400, 422]) {
+    const { fetchImpl } = mock(() => ok("no", code));
+    const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
+    assertEquals(out.status, "rejected", String(code));
+  }
+});
+
+Deno.test("generic: a destination the guard refuses sends nothing and fails", async () => {
+  const refusing = () => Promise.reject(new Error("destination_not_allowed"));
+  const out = await submit(
+    "generic",
+    genericCfg,
+    xml("facturX"),
+    refusing as unknown as typeof fetch,
+  );
+  // the guard refused before any request left: nothing can be accepted
+  assertEquals(out.status, "failed");
+  assertEquals(out.detail, "destination_not_allowed");
+});
+
+Deno.test("generic: a refused credential or endpoint (401/403/404) fails without blocking a later dispatch", async () => {
+  for (const code of [401, 403, 404]) {
+    const { fetchImpl } = mock(() => ok("no", code));
+    const out = await submit("generic", genericCfg, xml("facturX"), fetchImpl);
+    assertEquals(out.status, "failed", String(code));
+  }
 });

@@ -75,6 +75,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'invoice_transmission_artifacts': 'service-only copy of the exact e-invoice bytes prepared for a provider (#3335): a delivery fact of this installation, never client-readable, not portable configuration',
   'badge_auth_attempts': 'service-only attack signals, including token hashes and unknown tags; never disclose credential probes in a workspace workbook (#3091)',
   'workspace_favorites': 'a person\'s own favourite workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
   'workspace_ratings': 'a person\'s own 0-5 star ratings of workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
@@ -448,6 +449,26 @@ Map<String, List<String>> _openItems() {
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'invoice_transmissions': {
+    // #3335 — the dispatch bookkeeping of an e-invoice submission (its
+    // business key, binding, owner, generation, deadline,
+    // phase, document verdict, last query error and manual resolution):
+    // delivery state of this installation towards one provider, not
+    // portable configuration; the sent facts (status, receipt) stay exported.
+    'phase',
+    'business_key',
+    'binding_hash',
+    'owner_id',
+    'generation',
+    'deadline',
+    'verdict',
+    'query_error',
+    'requested_by',
+    'resolved_by',
+    'resolved_reason',
+    'resolved_evidence',
+    'resolved_at',
+  },
   'payment_intents': {
     // #2380 — the provider's settlement facts of a payment (its fee, net,
     // their currency, its transaction and payout): what the provider

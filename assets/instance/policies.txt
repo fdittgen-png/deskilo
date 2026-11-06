@@ -176,6 +176,7 @@ public.invoice_maturities.invoice_maturities_select
 public.invoice_maturities.mcp_delegated_deny
 public.invoice_reminders.invoice_reminders_select
 public.invoice_reminders.mcp_delegated_deny
+public.invoice_transmission_artifacts.mcp_delegated_deny
 public.invoice_transmissions.invoice_transmissions_select
 public.invoice_transmissions.mcp_delegated_deny
 public.invoices.invoices_select

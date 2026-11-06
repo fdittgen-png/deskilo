@@ -13386,7 +13386,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceSendStatusFailed => 'not delivered';
 
   @override
+  String get invoiceSendStatusInProgress => 'in progress';
+
+  @override
   String get invoiceSendStatusRejected => 'rejected';
+
+  @override
+  String get invoiceSendStatusUncertain =>
+      'outcome unknown - check before sending again';
+
+  @override
+  String get invoiceSendUnresolved =>
+      'This invoice was already submitted and the outcome is not settled yet, so it was not sent again. Check the platform\'s record before doing anything else.';
 
   @override
   String invoiceSentOn(String date, String status) {

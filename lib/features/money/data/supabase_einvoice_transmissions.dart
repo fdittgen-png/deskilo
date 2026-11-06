@@ -138,11 +138,10 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
         detail: 'not_deployed',
       );
     }
-    final status = data['status'] as String?;
     return EInvoiceSubmission(
-      status: EInvoiceSubmissionStatus.values.firstWhere(
-        (s) => s.name == status,
-        orElse: () => EInvoiceSubmissionStatus.failed,
+      status: EInvoiceSubmissionStatus.fromWire(
+        phase: data['phase'] as String?,
+        status: data['status'] as String?,
       ),
       externalId: data['external_id'] as String? ?? '',
       detail: data['detail'] as String? ?? data['error'] as String? ?? '',
@@ -166,11 +165,10 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
       );
     }
     final answer = JsonReader.of(data, context: 'send-e-invoice status');
-    final status = answer.stringOr('status');
     return EInvoiceSubmission(
-      status: EInvoiceSubmissionStatus.values.firstWhere(
-        (s) => s.name == status,
-        orElse: () => EInvoiceSubmissionStatus.failed,
+      status: EInvoiceSubmissionStatus.fromWire(
+        phase: answer.stringOr('phase'),
+        status: answer.stringOr('status'),
       ),
       detail: answer.stringOr('detail', answer.stringOr('error')),
     );

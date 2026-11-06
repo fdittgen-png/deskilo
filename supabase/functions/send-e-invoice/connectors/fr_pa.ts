@@ -73,6 +73,7 @@ export async function submitFrPa(
     new Blob([doc.bytes], { type: doc.mimeType }),
     doc.fileName,
   );
+  doc.onDispatch?.();
   const res = await fetchImpl(join(cfg.base_url, "v1/flows"), {
     method: "POST",
     headers: { "Authorization": `Bearer ${token}` },

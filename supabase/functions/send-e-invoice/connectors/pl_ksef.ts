@@ -225,6 +225,7 @@ export async function submitPlKsef(
   if (opened instanceof Response) return refused(opened);
   const session = String(opened.referenceNumber ?? "");
   const encrypted = await aesEncrypt(aesKey, iv, doc.bytes);
+  doc.onDispatch?.();
   const sent = await call(
     fetchImpl,
     join(cfg.base_url, KSEF.sendInvoice(encodeURIComponent(session))),
@@ -248,7 +249,7 @@ export async function submitPlKsef(
   const closed = await fetchImpl(
     join(cfg.base_url, KSEF.closeSession(encodeURIComponent(session))),
     { method: "POST", headers: json(token) },
-  );
+  ).catch(() => ({ ok: false }));
   return accepted(`${session}/${invoiceRef}`, JSON.stringify(sent), {
     sessionReferenceNumber: session,
     invoiceReferenceNumber: invoiceRef,

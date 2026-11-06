@@ -9,7 +9,13 @@ export type Config = Record<string, string>;
 export type Fetch = typeof fetch;
 
 export interface Submission {
-  status: "accepted" | "rejected" | "failed";
+  /** accepted = the platform took the upload; rejected = it affirmatively
+   * refused the upload; failed = nothing can have been accepted (#3335);
+   * uncertain = the upload may have landed and the answer is missing,
+   * unreadable or ambiguous — never to be resent automatically. */
+  status: "accepted" | "rejected" | "failed" | "uncertain";
+  /** The HTTP status of a refusing answer, when there was one. */
+  httpStatus?: number;
   externalId: string;
   detail: string;
   /** What the provider said about the document, as it said it: the
@@ -29,6 +35,10 @@ export interface ConnectorDocument {
   receiver?: { scheme: string; id: string };
   /** The invoice number, for providers that track by it. */
   number?: string;
+  /** Called by a connector immediately before the request that carries the
+   * document: from then on a missing or unreadable answer is `uncertain`,
+   * before it nothing can have been accepted (#3335). */
+  onDispatch?: () => void;
 }
 
 /** A provider's own words, cut to what a log row can hold. */
@@ -39,6 +49,7 @@ export async function refused(res: Response): Promise<Submission> {
   const text = await res.text();
   return {
     status: "rejected",
+    httpStatus: res.status,
     externalId: "",
     detail: clip(`${res.status} ${text}`),
     receipt: {},

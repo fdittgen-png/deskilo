@@ -104,32 +104,88 @@ export async function submit(
 ): Promise<Submission> {
   const formats = acceptedFormats(provider);
   if (formats.length > 0 && !formats.includes(doc.format)) {
+    // nothing has left: a refusal of ours, not the platform's verdict
     return {
-      status: "rejected",
+      status: "failed",
       externalId: "",
       detail: `${provider} does not accept ${doc.format} ` +
         `(it takes ${formats.join(", ")})`,
       receipt: {},
     };
   }
+  let dispatched = false;
+  const tracked: ConnectorDocument = {
+    ...doc,
+    onDispatch: () => {
+      dispatched = true;
+    },
+  };
   try {
     switch (provider) {
       case "peppol":
-        return await submitPeppol(cfg, doc, fetchImpl);
+        return classify(
+          await submitPeppol(cfg, tracked, fetchImpl),
+          dispatched,
+        );
       case "fr_pa":
-        return await submitFrPa(cfg, doc, fetchImpl);
+        return classify(await submitFrPa(cfg, tracked, fetchImpl), dispatched);
       case "it_sdi":
-        return await submitItSdi(cfg, doc, fetchImpl);
+        return classify(await submitItSdi(cfg, tracked, fetchImpl), dispatched);
       case "pl_ksef":
-        return await submitPlKsef(cfg, doc, fetchImpl);
+        return classify(
+          await submitPlKsef(cfg, tracked, fetchImpl),
+          dispatched,
+        );
       case "ro_efactura":
-        return await submitRoEfactura(cfg, doc, fetchImpl);
+        return classify(
+          await submitRoEfactura(cfg, tracked, fetchImpl),
+          dispatched,
+        );
       default:
-        return await submitGeneric(cfg, doc, fetchImpl);
+        return classify(
+          await submitGeneric(cfg, tracked, fetchImpl),
+          dispatched,
+        );
     }
   } catch (error) {
-    return unreachable(error);
+    // A thrown error before the upload request left proves nothing was
+    // accepted; after it, the upload may have landed (#3335).
+    return classify(unreachable(error), dispatched);
   }
+}
+
+/** What an answer proves about acceptance (#3335). Before the request that
+ * carries the document, nothing can have been accepted: `failed`. After it,
+ * only an explicit refusal (a 4xx other than a timeout or a throttle) is
+ * `rejected`; a thrown error, a 5xx, a timeout and an unreadable answer are
+ * `uncertain` — they never permit another upload by themselves. A verdict
+ * the connector itself read from a successful answer is kept as it is. */
+export function classify(outcome: Submission, dispatched: boolean): Submission {
+  if (outcome.status === "accepted") return outcome;
+  // the destination guard refuses before any request is made (#3090)
+  if (!dispatched || outcome.detail === "destination_not_allowed") {
+    return outcome.status === "failed"
+      ? outcome
+      : { ...outcome, status: "failed" };
+  }
+  if (outcome.httpStatus === undefined) {
+    // no HTTP refusal: a thrown error (failed) is uncertain after dispatch;
+    // a connector-read document answer (rejected) stays a refusal
+    return outcome.status === "failed"
+      ? { ...outcome, status: "uncertain" }
+      : outcome;
+  }
+  // 401/403/404: the credential or the endpoint was refused, the document
+  // was not read — no effect, and once the owner fixes it the same record
+  // may be dispatched again (a terminal `rejected` would block it for good)
+  if ([401, 403, 404].includes(outcome.httpStatus)) {
+    return { ...outcome, status: "failed" };
+  }
+  // 408/429 (timeout, throttle) and 409 (the platform may already hold it)
+  // prove nothing; other 4xx refuse the document itself
+  const refusal = outcome.httpStatus >= 400 && outcome.httpStatus < 500 &&
+    ![408, 409, 429].includes(outcome.httpStatus);
+  return refusal ? outcome : { ...outcome, status: "uncertain" };
 }
 
 /** Asks [provider] what became of an earlier submission. The generic

@@ -26,6 +26,7 @@ export async function submitGeneric(
     new Blob([doc.bytes], { type: doc.mimeType }),
     doc.fileName,
   );
+  doc.onDispatch?.();
   const res = await fetchImpl(cfg.endpoint, {
     method: "POST",
     headers: { [cfg.auth_header || "Authorization"]: cfg.auth_value },

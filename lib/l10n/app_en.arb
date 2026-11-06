@@ -16162,9 +16162,21 @@
   "@invoiceSendStatusFailed": {
     "description": "Transmission status word"
   },
+  "invoiceSendStatusInProgress": "in progress",
+  "@invoiceSendStatusInProgress": {
+    "description": "#3335 - transmission status word: submitted, answer pending"
+  },
   "invoiceSendStatusRejected": "rejected",
   "@invoiceSendStatusRejected": {
     "description": "Transmission status word"
+  },
+  "invoiceSendStatusUncertain": "outcome unknown - check before sending again",
+  "@invoiceSendStatusUncertain": {
+    "description": "#3335 - transmission status word: the upload may have landed and its outcome is unknown"
+  },
+  "invoiceSendUnresolved": "This invoice was already submitted and the outcome is not settled yet, so it was not sent again. Check the platform's record before doing anything else.",
+  "@invoiceSendUnresolved": {
+    "description": "#3335 - snackbar when a send finds an earlier unresolved submission and sends nothing"
   },
   "invoiceSentOn": "Sent {date} · {status}",
   "@invoiceSentOn": {

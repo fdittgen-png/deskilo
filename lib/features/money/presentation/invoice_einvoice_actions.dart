@@ -124,6 +124,18 @@ Future<void> sendEInvoice(
   if (!context.mounted) return;
   final submission = result;
   if (submission == null) return;
+  _announce(context, submission, environment, destination);
+}
+
+/// What the owner is told about a submission (#3335: an unsettled one sends
+/// nothing again and points at the platform's record).
+void _announce(
+  BuildContext context,
+  EInvoiceSubmission submission,
+  String environment,
+  String destination,
+) {
+  final l10n = context.l10n;
   if (submission.accepted) {
     AppSnack.success(
       context,
@@ -133,6 +145,10 @@ Future<void> sendEInvoice(
           ? (l10n.invoiceSendCustomerAccepted)
           : (l10n.invoiceSendAccepted),
     );
+    return;
+  }
+  if (submission.status.isUnresolved) {
+    AppSnack.error(context, l10n.invoiceSendUnresolved);
     return;
   }
   // The platform's own words beat a generic failure: they are what the
@@ -290,6 +306,10 @@ class _EInvoiceExportRun {
     final sendGaps = gateway.configured
         ? channelGaps(sendFormat, seller: s.seller, buyer: s.buyer, iban: s.iban)
         : const <ChannelGap>[];
+    final unsettled =
+        ref.read(invoiceTransmissionsProvider).value?[s.invoice.id]
+            ?.isUnresolved ??
+        false;
     return showEInvoiceSheet(
       context,
       route: route,
@@ -303,13 +323,17 @@ class _EInvoiceExportRun {
       today: ref.read(clockProvider).now(),
       canFixIdentity: roles.owner,
       identityFixedSince: identityFixedSince,
-      // Only an issuer sends, and only when a platform is configured.
-      canSend: gateway.configured && roles.issuer && sendGaps.isEmpty,
+      // Only an issuer sends, and only when a platform is configured — and
+      // not while an earlier submission is unsettled (#3335): the server
+      // would refuse it anyway, so the button is not offered.
+      canSend:
+          gateway.configured && roles.issuer && sendGaps.isEmpty && !unsettled,
       // The customer leg (#568): its own endpoint, its own flag, the same
       // issuer gate.
       canSendCustomer:
           gateway.customerConfigured &&
           roles.issuer &&
+          !unsettled &&
           ref
               .read(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.einvoiceCustomerDelivery),
