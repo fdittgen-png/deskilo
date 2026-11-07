@@ -15,6 +15,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/jpk_kr_pd_gap.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_writer.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
@@ -362,7 +363,7 @@ void main() {
     expect(result, isA<SafTFinancialRefused>());
     final gaps = (result as SafTFinancialRefused).gaps;
     expect(gaps.any((gap) => gap.kind == SafTGapKind.polishFact &&
-        gap.subject.contains('Income-tax reconciliation')), isTrue);
+        gap.polish?.code == JpkKrPdGapCode.sectionReconciliation), isTrue);
   });
 
   test('the seeded year has both sides of the fiscal year start', () {

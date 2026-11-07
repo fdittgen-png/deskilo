@@ -8,6 +8,7 @@ import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_countries.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_facts.dart';
+import 'package:deskilo/features/money/domain/jpk_kr_pd_gap.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_markers.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_offices.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_writer.dart';
@@ -85,12 +86,12 @@ void main() {
 
   test('missing supplemental facts refuse without producing XML', () {
     final result = buildJpkKrPd(jpkSampleRequest(null)) as JpkKrPdRefused;
-    expect(result.gaps, contains('Income-tax reconciliation K_1–K_8'));
-    expect(result.gaps, contains('Journal sequence and responsible person'));
-    expect(result.gaps, contains('KSeF applicability and identifier'));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.sectionReconciliation)));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.sectionJournal)));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.sectionKsef)));
     expect(
       result.gaps,
-      contains('Source document and booking dates, amount and line details'),
+      contains(const JpkKrPdGap(JpkKrPdGapCode.sectionSource)),
     );
   });
   test('a counterparty cannot be supplied without a source party', () {
@@ -108,7 +109,7 @@ void main() {
         ),
       ),
     ) as JpkKrPdRefused;
-    expect(result.gaps, contains('Counterparty source missing INV-1'));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.counterpartySourceMissing, subject: 'INV-1')));
   });
   test('a counterparty must match the source document party', () {
     final result = buildJpkKrPd(
@@ -132,7 +133,7 @@ void main() {
         },
       ),
     ) as JpkKrPdRefused;
-    expect(result.gaps, contains('Counterparty source mismatch INV-1'));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.counterpartySourceMismatch, subject: 'INV-1')));
   });
   test('unreferenced counterparty facts are refused', () {
     final result = buildJpkKrPd(
@@ -148,7 +149,7 @@ void main() {
         ),
       ),
     ) as JpkKrPdRefused;
-    expect(result.gaps, contains('Unreferenced counterparty P1'));
+    expect(result.gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.unreferencedCounterparty, subject: 'P1')));
   });
   test('missing responsible person, invalid marker and KSeF are named', () {
     final gaps = (buildJpkKrPd(
@@ -160,9 +161,9 @@ void main() {
         ),
       ),
     ) as JpkKrPdRefused).gaps;
-    expect(gaps, contains('Responsible person INV-1'));
-    expect(gaps, contains('Invalid Polish account marker 100'));
-    expect(gaps, contains('KSeF identifier INV-1'));
+    expect(gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.missing, field: JpkKrPdField.responsiblePerson, subject: 'INV-1')));
+    expect(gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.invalidMarker, subject: '100')));
+    expect(gaps, contains(const JpkKrPdGap(JpkKrPdGapCode.ksefMissing, subject: 'INV-1')));
   });
   test(
     'existing financial export adapter consumes the supplied frozen postings',
@@ -213,11 +214,11 @@ void main() {
       expect(
         result.gaps,
         containsAll([
-          'Verified source journal sequence',
-          'Journal source mismatch INV-1',
-          'Closing balance mismatch 100',
-          'Invalid tax office code',
-          'Line numbers INV-1',
+          const JpkKrPdGap(JpkKrPdGapCode.journalSequenceUnverified),
+          const JpkKrPdGap(JpkKrPdGapCode.journalSourceMismatch, subject: 'INV-1'),
+          const JpkKrPdGap(JpkKrPdGapCode.closingMismatch, subject: '100'),
+          const JpkKrPdGap(JpkKrPdGapCode.invalidOffice),
+          const JpkKrPdGap(JpkKrPdGapCode.lineNumbers, subject: 'INV-1'),
         ]),
       );
     },

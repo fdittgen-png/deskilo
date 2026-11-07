@@ -6,6 +6,8 @@ import '../../../core/time/date_text.dart';
 import 'fiscal_year.dart';
 import 'jpk_kr_pd_countries.dart';
 import 'jpk_kr_pd_facts.dart';
+import 'jpk_kr_pd_gap.dart';
+import 'jpk_kr_pd_limits.dart';
 import 'jpk_kr_pd_markers.dart';
 import 'jpk_kr_pd_offices.dart';
 import 'posting.dart';
@@ -31,85 +33,63 @@ class JpkKrPdRequest {
   final JpkKrPdFacts? facts;
 }
 
-/// Every returned message names a missing or contradictory source fact.
-List<String> jpkKrPdGaps(JpkKrPdRequest r) {
-  final gaps = <String>{};
+/// Every returned gap names a missing or contradictory source fact.
+List<JpkKrPdGap> jpkKrPdGaps(JpkKrPdRequest r) {
+  final gaps = <JpkKrPdGap>{};
+  void gap(JpkKrPdGapCode code, {JpkKrPdField? field, String subject = '', int limit = 0}) =>
+      gaps.add(JpkKrPdGap(code, field: field, subject: subject, limit: limit));
   if (r.currency.trim().toUpperCase() != 'PLN') {
-    gaps.add('Functional currency must be PLN');
+    gap(JpkKrPdGapCode.currencyNotPln);
   }
-  if (r.postings.isEmpty) gaps.add('Dziennik requires posted entries');
-  if (r.period.to.isBefore(r.period.from)) gaps.add('Invalid reporting year');
+  if (r.postings.isEmpty) gap(JpkKrPdGapCode.noPostings);
+  if (r.period.to.isBefore(r.period.from)) gap(JpkKrPdGapCode.invalidYear);
   final facts = r.facts;
   if (facts == null) {
-    return [
-      ...gaps,
-      'Polish entity and address',
-      'Tax office and submission purpose',
-      'Account parent, Polish reporting markers and source balances',
-      'Journal sequence and responsible person',
-      'Source document and booking dates, amount and line details',
-      'KSeF applicability and identifier',
-      'Income-tax reconciliation K_1–K_8',
-    ];
+    return [...gaps, ..._missingFactSections];
   }
-  void needFact(String name, String value) {
-    if (value.trim().isEmpty) gaps.add(name);
+  void needFact(JpkKrPdField field, String value, [String subject = '']) {
+    if (value.trim().isEmpty) gap(JpkKrPdGapCode.missing, field: field, subject: subject);
   }
 
   if (!facts.journalSequenceVerified) {
-    gaps.add('Verified source journal sequence');
+    gap(JpkKrPdGapCode.journalSequenceUnverified);
   }
   if (facts.taxYear.to.isBefore(facts.taxYear.from)) {
-    gaps.add('Income-tax year');
+    gap(JpkKrPdGapCode.taxYear);
   }
   if (!facts.otherEntityCategory) {
-    gaps.add('Unsupported Polish reporting entity category');
+    gap(JpkKrPdGapCode.entityCategory);
   }
   if (facts.addressCountry != 'PL') {
-    gaps.add('Unsupported Polish entity address country');
+    gap(JpkKrPdGapCode.addressCountry);
   }
-  needFact('NIP', facts.nip);
+  needFact(JpkKrPdField.nip, facts.nip);
   if (!RegExp(r'^[1-9]((\d[1-9])|([1-9]\d))\d{7}$').hasMatch(facts.nip)) {
-    gaps.add('NIP must have 10 digits');
+    gap(JpkKrPdGapCode.nipFormat);
   }
-  needFact('Legal name', facts.legalName);
-  needFact('Voivodeship', facts.voivodeship);
-  needFact('County', facts.county);
-  needFact('Municipality', facts.municipality);
-  needFact('Building number', facts.buildingNumber);
-  needFact('City', facts.city);
-  needFact('Postal code', facts.postalCode);
-  needFact('Tax office code', facts.taxOfficeCode);
-  for (final field in <(String, String, int)>[
-    ('Legal name', facts.legalName, 240),
-    ('Voivodeship', facts.voivodeship, 36),
-    ('County', facts.county, 36),
-    ('Municipality', facts.municipality, 36),
-    ('Building number', facts.buildingNumber, 9),
-    ('City', facts.city, 56),
-    ('Postal code', facts.postalCode, 8),
-    ('Street', facts.street, 65),
-  ]) {
-    if (field.$2.length > field.$3) {
-      gaps.add('${field.$1} exceeds schema length');
-    }
-  }
+  needFact(JpkKrPdField.legalName, facts.legalName);
+  needFact(JpkKrPdField.voivodeship, facts.voivodeship);
+  needFact(JpkKrPdField.county, facts.county);
+  needFact(JpkKrPdField.municipality, facts.municipality);
+  needFact(JpkKrPdField.buildingNumber, facts.buildingNumber);
+  needFact(JpkKrPdField.city, facts.city);
+  needFact(JpkKrPdField.postalCode, facts.postalCode);
+  needFact(JpkKrPdField.taxOfficeCode, facts.taxOfficeCode);
+  gaps.addAll(_addressLengthGaps(facts));
   if (!jpkKrPdOffices.contains(facts.taxOfficeCode)) {
-    gaps.add('Invalid tax office code');
+    gap(JpkKrPdGapCode.invalidOffice);
   }
   if (facts.submissionPurpose != 1 && facts.submissionPurpose != 2) {
-    gaps.add('Submission purpose must be 1 or 2');
+    gap(JpkKrPdGapCode.purpose);
   }
   if (facts.incomeTaxAdjustments.length != 8 ||
       facts.incomeTaxAdjustments.any((amount) => amount.currency != 'PLN')) {
-    gaps.add('Income-tax reconciliation K_1–K_8 in PLN');
+    gap(JpkKrPdGapCode.reconciliation);
   }
   final accounts = <String>{...r.accountNames.keys};
   for (final posting in r.opening) {
     if (isoDay(posting.date).compareTo(isoDay(r.period.from)) >= 0) {
-      gaps.add(
-        'Opening posting outside opening period ${posting.documentNumber}',
-      );
+      gap(JpkKrPdGapCode.openingOutside, subject: posting.documentNumber);
     }
   }
   for (final posting in [...r.opening, ...r.postings]) {
@@ -122,27 +102,28 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
       (n, line) => n + BigInt.from(line.credit.minor),
     );
     if (posting.lines.isEmpty || debit != credit) {
-      gaps.add('Unbalanced posting ${posting.documentNumber}');
+      gap(JpkKrPdGapCode.unbalanced, subject: posting.documentNumber);
     }
     for (final line in posting.lines) {
       accounts.add(line.accountCode);
       if (line.debit.minor < 0 ||
           line.credit.minor < 0 ||
           ((line.debit.minor == 0) == (line.credit.minor == 0))) {
-        gaps.add('Invalid debit or credit ${posting.documentNumber}');
+        gap(JpkKrPdGapCode.invalidDebitCredit, subject: posting.documentNumber);
       }
       if (line.original != null) {
-        gaps.add('Foreign-currency line ${posting.documentNumber}');
+        gap(JpkKrPdGapCode.foreignLine, subject: posting.documentNumber);
       }
       if (line.debit.currency != 'PLN' || line.credit.currency != 'PLN') {
-        gaps.add('Posting currency ${posting.documentNumber}');
+        gap(JpkKrPdGapCode.postingCurrency, subject: posting.documentNumber);
       }
     }
   }
   for (final account in accounts) {
-    needFact('Account name $account', r.accountNames[account] ?? '');
-    if (account.length > 256 || (r.accountNames[account]?.length ?? 0) > 256) {
-      gaps.add('Account identifier or name exceeds schema length $account');
+    needFact(JpkKrPdField.accountName, r.accountNames[account] ?? '', account);
+    if (account.length > jpkKrPdTextLength ||
+        (r.accountNames[account]?.length ?? 0) > jpkKrPdTextLength) {
+      gap(JpkKrPdGapCode.tooLong, field: JpkKrPdField.accountIdentifier, subject: account, limit: jpkKrPdTextLength);
     }
     final detail = facts.accountFacts[account];
     if (detail != null) {
@@ -153,7 +134,7 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
         detail.closingCredit,
       ];
       if (balances.any((v) => v.currency != 'PLN' || v.minor < 0)) {
-        gaps.add('Account balances $account');
+        gap(JpkKrPdGapCode.accountBalances, subject: account);
       }
       BigInt net(Iterable<Posting> postings) {
         var value = BigInt.zero;
@@ -176,28 +157,25 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
           BigInt.from(detail.closingDebit.minor) -
           BigInt.from(detail.closingCredit.minor);
       if (opening != net(r.opening)) {
-        gaps.add('Opening balance mismatch $account');
+        gap(JpkKrPdGapCode.openingMismatch, subject: account);
       }
       if (closing != opening + net(r.postings)) {
-        gaps.add('Closing balance mismatch $account');
+        gap(JpkKrPdGapCode.closingMismatch, subject: account);
       }
     }
-    needFact('Account parent $account', detail?.parent ?? '');
-    if ((detail?.parent.length ?? 0) > 256) {
-      gaps.add('Account parent exceeds schema length $account');
+    needFact(JpkKrPdField.accountParent, detail?.parent ?? '', account);
+    if ((detail?.parent.length ?? 0) > jpkKrPdTextLength) {
+      gap(JpkKrPdGapCode.tooLong, field: JpkKrPdField.accountParent, subject: account, limit: jpkKrPdTextLength);
     }
-    needFact(
-      'Polish account marker $account',
-      detail?.reportingMarker ?? '',
-    );
+    needFact(JpkKrPdField.accountMarker, detail?.reportingMarker ?? '', account);
     if (detail != null && !jpkKrPdMarkers.contains(detail.reportingMarker)) {
-      gaps.add('Invalid Polish account marker $account');
+      gap(JpkKrPdGapCode.invalidMarker, subject: account);
     }
   }
   if (facts.entries.length != r.postings.length) {
-    gaps.add('Journal evidence for every posting');
+    gap(JpkKrPdGapCode.journalEvidence);
   }
-  final maxMinor = BigInt.parse('999999999999999999');
+  final maxMinor = BigInt.from(10).pow(jpkKrPdAmountDigits) - BigInt.one;
   var allDebit = BigInt.zero, allCredit = BigInt.zero;
   for (final account in accounts) {
     var debit = BigInt.zero, credit = BigInt.zero;
@@ -212,18 +190,18 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
     allDebit += debit;
     allCredit += credit;
     if (debit.abs() > maxMinor || credit.abs() > maxMinor) {
-      gaps.add('Account turnover exceeds schema precision $account');
+      gap(JpkKrPdGapCode.turnoverPrecision, subject: account);
     }
   }
   if (allDebit.abs() > maxMinor || allCredit.abs() > maxMinor) {
-    gaps.add('Journal totals exceed schema precision');
+    gap(JpkKrPdGapCode.totalsPrecision);
   }
   var documentsTotal = BigInt.zero;
   for (final entry in facts.entries) {
     documentsTotal += BigInt.from(entry.documentAmount.minor);
   }
   if (documentsTotal.abs() > maxMinor) {
-    gaps.add('Document total exceeds schema precision');
+    gap(JpkKrPdGapCode.documentTotalPrecision);
   }
   final partyCodes = <String>{};
   final referencedPartyCodes = {
@@ -232,20 +210,20 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
   };
   for (final party in facts.counterparties) {
     if (!referencedPartyCodes.contains(party.code)) {
-      gaps.add('Unreferenced counterparty ${party.code}');
+      gap(JpkKrPdGapCode.unreferencedCounterparty, subject: party.code);
     }
     if (party.country != null && !jpkKrPdCountries.contains(party.country)) {
-      gaps.add('Invalid counterparty country ${party.code}');
+      gap(JpkKrPdGapCode.invalidCounterpartyCountry, subject: party.code);
     }
     if (party.taxId != null &&
-        (party.taxId!.trim().isEmpty || party.taxId!.length > 50)) {
-      gaps.add('Invalid counterparty tax ID ${party.code}');
+        (party.taxId!.trim().isEmpty || party.taxId!.length > jpkKrPdTaxIdLength)) {
+      gap(JpkKrPdGapCode.invalidCounterpartyTaxId, subject: party.code);
     }
-    if (party.code.length > 256) {
-      gaps.add('Counterparty code exceeds schema length');
+    if (party.code.length > jpkKrPdTextLength) {
+      gap(JpkKrPdGapCode.tooLong, field: JpkKrPdField.counterpartyCode, subject: party.code, limit: jpkKrPdTextLength);
     }
     if (party.code.trim().isEmpty || !partyCodes.add(party.code)) {
-      gaps.add('Missing or duplicate counterparty code');
+      gap(JpkKrPdGapCode.counterpartyCodeInvalid);
     }
   }
   final numbers = <String>{};
@@ -255,48 +233,48 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
     final entry = facts.entries[i];
     final name = posting.documentNumber;
     if (entry.documentId != posting.documentId) {
-      gaps.add('Journal source mismatch $name');
+      gap(JpkKrPdGapCode.journalSourceMismatch, subject: name);
     }
     if (!r.period.contains(posting.date)) {
-      gaps.add('Posting outside reporting year $name');
+      gap(JpkKrPdGapCode.postingOutside, subject: name);
     }
     if (!r.period.contains(entry.bookingDate)) {
-      gaps.add('Booking outside reporting year $name');
+      gap(JpkKrPdGapCode.bookingOutside, subject: name);
     }
     if (entry.documentAmount.currency != 'PLN') {
-      gaps.add('Document amount $name');
+      gap(JpkKrPdGapCode.documentAmount, subject: name);
     }
     if (i > 0 &&
         isoDay(entry.bookingDate)
                 .compareTo(isoDay(facts.entries[i - 1].bookingDate)) <
             0) {
-      gaps.add('Journal chronology $name');
+      gap(JpkKrPdGapCode.chronology, subject: name);
     }
-    needFact('Journal number $name', entry.journalNumber);
+    needFact(JpkKrPdField.journalNumber, entry.journalNumber, name);
     if (!numbers.add('${entry.journalName}\u0000${entry.journalNumber}')) {
-      gaps.add('Duplicate journal number ${entry.journalNumber}');
+      gap(JpkKrPdGapCode.duplicateJournalNumber, subject: entry.journalNumber);
     }
-    needFact('Journal name $name', entry.journalName);
-    needFact('Document number $name', posting.documentNumber);
-    needFact('Document type $name', entry.documentType);
-    needFact('Responsible person $name', entry.responsiblePerson);
-    needFact('Journal description $name', entry.description);
+    needFact(JpkKrPdField.journalName, entry.journalName, name);
+    needFact(JpkKrPdField.documentNumber, posting.documentNumber, name);
+    needFact(JpkKrPdField.documentType, entry.documentType, name);
+    needFact(JpkKrPdField.responsiblePerson, entry.responsiblePerson, name);
+    needFact(JpkKrPdField.journalDescription, entry.description, name);
     if (entry.lineDescriptions.length != posting.lines.length ||
         entry.lineDescriptions.any((line) => line.trim().isEmpty)) {
-      gaps.add('Line descriptions $name');
+      gap(JpkKrPdGapCode.lineDescriptions, subject: name);
     }
     if (entry.lineNumbers.length != posting.lines.length ||
         entry.lineNumbers.any((number) => number.trim().isEmpty) ||
         entry.lineNumbers.toSet().length != entry.lineNumbers.length) {
-      gaps.add('Line numbers $name');
+      gap(JpkKrPdGapCode.lineNumbers, subject: name);
     }
     if (r.parties.containsKey(posting.documentId) &&
         (entry.counterpartyCode?.trim().isEmpty ?? true)) {
-      gaps.add('Counterparty code $name');
+      gap(JpkKrPdGapCode.counterpartyCode, subject: name);
     }
     final sourceParty = r.parties[posting.documentId];
     if (sourceParty == null && entry.counterpartyCode != null) {
-      gaps.add('Counterparty source missing $name');
+      gap(JpkKrPdGapCode.counterpartySourceMissing, subject: name);
     }
     if (sourceParty != null && entry.counterpartyCode != null) {
       final matching = facts.counterparties.where(
@@ -305,12 +283,12 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
       if (matching.isNotEmpty &&
           (matching.first.sourceKind != sourceParty.kind ||
               matching.first.sourceNumber != sourceParty.number)) {
-        gaps.add('Counterparty source mismatch $name');
+        gap(JpkKrPdGapCode.counterpartySourceMismatch, subject: name);
       }
     }
     if (entry.counterpartyCode != null &&
         !partyCodes.contains(entry.counterpartyCode)) {
-      gaps.add('Counterparty ${entry.counterpartyCode}');
+      gap(JpkKrPdGapCode.counterpartyUnknown, subject: entry.counterpartyCode!);
     }
     final texts = [
       entry.journalNumber,
@@ -320,26 +298,80 @@ List<String> jpkKrPdGaps(JpkKrPdRequest r) {
       entry.responsiblePerson,
       ...entry.lineNumbers,
     ];
-    if (texts.any((value) => value.length > 256) ||
-        entry.description.length > 512 ||
-        entry.lineDescriptions.any((value) => value.length > 512)) {
-      gaps.add('Journal text exceeds schema length $name');
-    }
+    gaps.addAll(_journalTextGaps(entry, texts, name));
     if (entry.ksefNumber != null &&
         entry.ksefNumber!.isNotEmpty &&
         !RegExp(
           r'^([1-9]((\d[1-9])|([1-9]\d))\d{7}|M\d{9}|[A-Z]{3}\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})$',
         ).hasMatch(entry.ksefNumber!)) {
-      gaps.add('Invalid KSeF identifier $name');
+      gap(JpkKrPdGapCode.invalidKsef, subject: name);
     }
     for (final lineNumber in entry.lineNumbers) {
       if (!lineNumbers.add('${entry.journalName}\u0000$lineNumber')) {
-        gaps.add('Duplicate line number $lineNumber in ${entry.journalName}');
+        gap(JpkKrPdGapCode.duplicateLineNumber, subject: '${entry.journalName} / $lineNumber');
       }
     }
     if (entry.ksefRequired && (entry.ksefNumber?.trim().isEmpty ?? true)) {
-      gaps.add('KSeF identifier $name');
+      gap(JpkKrPdGapCode.ksefMissing, subject: name);
     }
   }
   return List.unmodifiable(gaps);
+}
+
+/// The sections a refusal names when no Polish facts were supplied at all.
+const _missingFactSections = <JpkKrPdGap>[
+  JpkKrPdGap(JpkKrPdGapCode.sectionEntity),
+  JpkKrPdGap(JpkKrPdGapCode.sectionOffice),
+  JpkKrPdGap(JpkKrPdGapCode.sectionAccounts),
+  JpkKrPdGap(JpkKrPdGapCode.sectionJournal),
+  JpkKrPdGap(JpkKrPdGapCode.sectionSource),
+  JpkKrPdGap(JpkKrPdGapCode.sectionKsef),
+  JpkKrPdGap(JpkKrPdGapCode.sectionReconciliation),
+];
+
+/// The entity fields longer than the schema allows (never cut).
+Iterable<JpkKrPdGap> _addressLengthGaps(JpkKrPdFacts facts) sync* {
+  for (final (field, value, limit) in <(JpkKrPdField, String, int)>[
+    (JpkKrPdField.legalName, facts.legalName, jpkKrPdLegalNameLength),
+    (JpkKrPdField.voivodeship, facts.voivodeship, jpkKrPdAdminUnitLength),
+    (JpkKrPdField.county, facts.county, jpkKrPdAdminUnitLength),
+    (JpkKrPdField.municipality, facts.municipality, jpkKrPdAdminUnitLength),
+    (
+      JpkKrPdField.buildingNumber,
+      facts.buildingNumber,
+      jpkKrPdBuildingNumberLength,
+    ),
+    (JpkKrPdField.city, facts.city, jpkKrPdCityLength),
+    (JpkKrPdField.postalCode, facts.postalCode, jpkKrPdPostalCodeLength),
+    (JpkKrPdField.street, facts.street, jpkKrPdStreetLength),
+  ]) {
+    if (value.length > limit) {
+      yield JpkKrPdGap(JpkKrPdGapCode.tooLong, field: field, limit: limit);
+    }
+  }
+}
+
+/// The journal identifiers and descriptions of [entry] longer than the schema.
+Iterable<JpkKrPdGap> _journalTextGaps(
+  JpkEntryFact entry,
+  List<String> texts,
+  String name,
+) sync* {
+  if (texts.any((value) => value.length > jpkKrPdTextLength)) {
+    yield JpkKrPdGap(
+      JpkKrPdGapCode.tooLong,
+      field: JpkKrPdField.journalText,
+      subject: name,
+      limit: jpkKrPdTextLength,
+    );
+  }
+  if (entry.description.length > jpkKrPdLongTextLength ||
+      entry.lineDescriptions.any((v) => v.length > jpkKrPdLongTextLength)) {
+    yield JpkKrPdGap(
+      JpkKrPdGapCode.tooLong,
+      field: JpkKrPdField.journalDescription,
+      subject: name,
+      limit: jpkKrPdLongTextLength,
+    );
+  }
 }

@@ -7,6 +7,7 @@ import 'package:xml/xml.dart';
 
 import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
+import 'jpk_kr_pd_gap.dart';
 import 'jpk_kr_pd_validation.dart';
 import 'posting.dart';
 
@@ -25,7 +26,7 @@ final class JpkKrPdFile extends JpkKrPdResult {
 
 final class JpkKrPdRefused extends JpkKrPdResult {
   const JpkKrPdRefused(this.gaps);
-  final List<String> gaps;
+  final List<JpkKrPdGap> gaps;
 }
 
 /// Writes only after all supported mandatory facts have passed validation.

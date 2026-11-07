@@ -1,0 +1,30 @@
+{
+  "@@locale": "en",
+  "jpkKrPdField": "{field, select, nip{NIP} legalName{legal name} voivodeship{voivodeship} county{county} municipality{municipality} buildingNumber{building number} city{city} postalCode{postal code} street{street} taxOfficeCode{tax office code} accountName{account name} accountParent{account parent} accountMarker{Polish account marker} journalNumber{journal number} journalName{journal name} documentNumber{document number} documentType{document type} responsiblePerson{responsible person} journalDescription{journal description} accountIdentifier{account identifier or name} journalText{journal text} counterpartyCode{counterparty code} other{}}",
+  "@jpkKrPdField": {
+    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGap": "{code, select, currencyNotPln{the functional currency must be PLN} noPostings{the journal needs posted entries} invalidYear{the reporting year is invalid} sectionEntity{the Polish entity and its address} sectionOffice{the tax office and the submission purpose} sectionAccounts{the account parents, Polish reporting markers and source balances} sectionJournal{the journal sequence and the responsible person} sectionSource{the source document and booking dates, amounts and line details} sectionKsef{KSeF applicability and identifier} sectionReconciliation{the income-tax reconciliation K_1–K_8} journalSequenceUnverified{the source journal sequence is not verified} taxYear{the income-tax year is invalid} entityCategory{this Polish reporting entity category is not supported} addressCountry{the entity’s address country must be Poland} nipFormat{the NIP must have 10 valid digits} missing{{field}{subject} is missing} tooLong{{field}{subject} is longer than {limit} characters} invalidOffice{the tax office code is not a known office} purpose{the submission purpose must be 1 or 2} reconciliation{the income-tax reconciliation K_1–K_8 must be eight amounts in PLN} openingOutside{opening posting{subject} is dated inside the reporting period} unbalanced{posting{subject} is not balanced} invalidDebitCredit{posting{subject} has an invalid debit or credit} foreignLine{posting{subject} has a foreign-currency line} postingCurrency{posting{subject} is not in PLN} accountBalances{the balances of account{subject} are invalid} openingMismatch{the opening balance of account{subject} does not match the postings} closingMismatch{the closing balance of account{subject} does not match the postings} invalidMarker{the Polish reporting marker of account{subject} is invalid} journalEvidence{every posting needs journal evidence} turnoverPrecision{the turnover of account{subject} exceeds the schema precision} totalsPrecision{the journal totals exceed the schema precision} documentTotalPrecision{the document total exceeds the schema precision} unreferencedCounterparty{counterparty{subject} is not referenced by any entry} invalidCounterpartyCountry{the country of counterparty{subject} is invalid} invalidCounterpartyTaxId{the tax ID of counterparty{subject} is invalid} counterpartyCodeInvalid{a counterparty code is missing or duplicated} journalSourceMismatch{journal entry{subject} does not match its source document} postingOutside{posting{subject} is dated outside the reporting year} bookingOutside{booking{subject} is dated outside the reporting year} documentAmount{the document amount{subject} is not in PLN} chronology{entry{subject} breaks the chronological order of the journal} duplicateJournalNumber{the journal number{subject} is used twice} lineDescriptions{entry{subject}: line descriptions are missing or do not match its lines} lineNumbers{entry{subject}: line numbers are missing, duplicated or do not match its lines} counterpartyCode{entry{subject} needs a counterparty code} counterpartySourceMissing{entry{subject} names a counterparty its source document does not have} counterpartySourceMismatch{the counterparty of entry{subject} does not match its source document} counterpartyUnknown{counterparty{subject} is not in the counterparty list} invalidKsef{the KSeF identifier of entry{subject} is invalid} duplicateLineNumber{the line number{subject} is used twice in a journal} ksefMissing{entry{subject} needs its KSeF identifier} other{}}",
+  "@jpkKrPdGap": {
+    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "field": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  }
+}

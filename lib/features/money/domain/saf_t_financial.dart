@@ -24,6 +24,7 @@ import 'book_chart.dart';
 import 'fiscal_year.dart';
 import 'invoice.dart';
 import 'jpk_kr_pd_facts.dart';
+import 'jpk_kr_pd_gap.dart';
 import 'jpk_kr_pd_validation.dart';
 import 'jpk_kr_pd_writer.dart';
 import 'posting.dart';
@@ -370,7 +371,8 @@ class SafTFinancialRequest {
 
 /// What a missing fact is about.
 enum SafTGapKind {
-  /// A named Polish reporting fact missing from the source.
+  /// A Polish reporting fact missing or contradictory in the source; the
+  /// structured gap travels in [SafTGap.polish].
   polishFact,
 
   /// An account the profile's chart map does not cover.
@@ -397,18 +399,31 @@ enum SafTGapKind {
 }
 
 class SafTGap {
-  const SafTGap(this.kind, this.subject);
+  const SafTGap(this.kind, this.subject) : polish = null;
+
+  /// A Polish refusal: structured, worded by the presentation (#3380).
+  SafTGap.polish(JpkKrPdGap gap)
+    : kind = SafTGapKind.polishFact,
+      subject = gap.subject,
+      polish = gap;
+
   final SafTGapKind kind;
+
+  /// The structured Polish gap, for [SafTGapKind.polishFact].
+  final JpkKrPdGap? polish;
 
   /// The account, tax, field, party or value the gap is about.
   final String subject;
 
   @override
   bool operator ==(Object other) =>
-      other is SafTGap && other.kind == kind && other.subject == subject;
+      other is SafTGap &&
+      other.kind == kind &&
+      other.subject == subject &&
+      other.polish == polish;
 
   @override
-  int get hashCode => Object.hash(kind, subject);
+  int get hashCode => Object.hash(kind, subject, polish);
 
   @override
   String toString() => 'SafTGap(${kind.name}: $subject)';
@@ -440,7 +455,7 @@ SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) {
     return switch (result) {
       JpkKrPdFile(:final xml) => SafTFinancialFile(xml),
       JpkKrPdRefused(:final gaps) => SafTFinancialRefused(
-        [for (final gap in gaps) SafTGap(SafTGapKind.polishFact, gap)],
+        [for (final gap in gaps) SafTGap.polish(gap)],
       ),
     };
   }
