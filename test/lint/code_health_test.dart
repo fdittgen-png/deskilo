@@ -23,6 +23,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/code_health.dart';
+import 'lint_sources.dart';
 
 /// `void <name>() { if (a) { if (a) { ... } } }` nested [depth] deep:
 /// cognitive complexity depth * (depth + 1) / 2, cyclomatic depth + 1.
@@ -51,11 +52,29 @@ void main() {
   late Map<String, String> exceptions;
 
   setUpAll(() {
-    tree = measureTree('lib');
+    tree = measureAll();
     baseline = baselineFunctions(
         File('docs/design/CODE_HEALTH_BASELINE.json').readAsStringSync());
     exceptions = parseExceptions(
         File('test/lint/code_health_exceptions.txt').readAsStringSync());
+  });
+
+  test('#3396: every package with a lib/ is inside the scan', () {
+    final scanned = {for (final f in tree) f.path.split('/lib/').first};
+    final packages = [
+      for (final name in directoryNames('packages'))
+        if (filesWithExtension('packages/$name/lib', '.dart', recursive: true)
+            .any((f) => isMeasured(f.path)))
+          'packages/$name',
+    ];
+    expect(packages, isNotEmpty);
+    expect(
+      [for (final p in packages) if (!scanned.contains(p)) p],
+      isEmpty,
+      reason: 'code in a package escapes the complexity, length and parameter '
+          'ratchets unless the scan reaches it (tool/code_health.dart '
+          'measuredRoots)',
+    );
   });
 
   group('the tree', () {
