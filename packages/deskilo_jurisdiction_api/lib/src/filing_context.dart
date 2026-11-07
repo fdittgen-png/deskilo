@@ -143,12 +143,16 @@ class FilingContext {
     required this.currency,
     required List<FilingLine> lines,
     List<FilingBox> boxes = const [],
+    Map<String, List<FilingBox>> extraBoxes = const {},
     required this.party,
     required this.generatedAt,
     this.facts = const FilingFacts(),
     this.number = '',
   }) : lines = List.unmodifiable(lines),
-       boxes = List.unmodifiable(boxes);
+       boxes = List.unmodifiable(boxes),
+       extraBoxes = Map.unmodifiable({
+         for (final e in extraBoxes.entries) e.key: List<FilingBox>.unmodifiable(e.value),
+       });
 
   final DateTime periodStart;
   final DateTime periodEnd;
@@ -159,6 +163,10 @@ class FilingContext {
 
   /// The form's filled boxes, in the form's order; not modifiable.
   final List<FilingBox> boxes;
+
+  /// The boxes of a second form filed beside the first, by the form's name
+  /// (the Quebec `FPZ-500` beside the federal `GST34`); not modifiable.
+  final Map<String, List<FilingBox>> extraBoxes;
   final FilingParty party;
   final FilingFacts facts;
 

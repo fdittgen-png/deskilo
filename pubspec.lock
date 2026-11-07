@@ -420,10 +420,31 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_jurisdiction_ca:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_jurisdiction_ca"
+      relative: true
+    source: path
+    version: "0.1.0"
+  deskilo_jurisdiction_de:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_jurisdiction_de"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_jurisdiction_fr:
     dependency: "direct main"
     description:
       path: "packages/deskilo_jurisdiction_fr"
+      relative: true
+    source: path
+    version: "0.1.0"
+  deskilo_jurisdiction_gb:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_jurisdiction_gb"
       relative: true
     source: path
     version: "0.1.0"

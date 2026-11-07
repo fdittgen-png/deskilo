@@ -75,7 +75,8 @@ DatevTestBatch datevTestParse(String file) {
   return (
     header: datevTestFields(lines[0]),
     rows: [
-      for (final l in lines.skip(2).where((l) => l.isNotEmpty)) datevTestFields(l),
+      for (final l in lines.skip(2).where((l) => l.isNotEmpty))
+        datevTestFields(l),
     ],
   );
 }

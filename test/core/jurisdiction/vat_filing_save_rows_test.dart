@@ -130,7 +130,20 @@ void main() {
     }
   });
 
-  group('row 2: an invalid fixture is refused like the direct writer', () {
+  // The stable problem each invalid fixture has always been refused with (the
+  // writers left the dispatcher for their packages, #3332/#3333, so the
+  // reference is this table, not a call).
+  const expectedProblem = {
+    'DE year': VatFilingFileProblem.period,
+    'DE no tax number': VatFilingFileProblem.taxNumber,
+    'GB no VRN': VatFilingFileProblem.vatNumber,
+    'CH bad UID': VatFilingFileProblem.uid,
+    'CA bad business number': VatFilingFileProblem.businessNumber,
+    'ES no VAT id': VatFilingFileProblem.vatNumber,
+    'IT no fiscal code': VatFilingFileProblem.fiscalCode,
+  };
+
+  group('row 2: an invalid fixture is refused with its stable problem', () {
     final fixtures =
         <
           String,
@@ -174,17 +187,7 @@ void main() {
         };
     for (final MapEntry(key: name, value: f) in fixtures.entries) {
       test(name, () async {
-        VatFilingFileProblem? expected;
-        try {
-          vatFilingFile(
-            declaration: f.d,
-            party: f.party,
-            now: _now,
-            facts: f.facts,
-          );
-        } on VatFilingFileException catch (e) {
-          expected = e.problem;
-        }
+        final expected = expectedProblem[name];
         expect(expected, isNotNull, reason: 'the fixture really is invalid');
         final saver = _Saver();
         VatFilingFileException? thrown;

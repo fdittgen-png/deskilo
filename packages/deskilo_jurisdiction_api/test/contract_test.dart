@@ -149,4 +149,58 @@ void main() {
     expect(hhmm(d, separator: ''), '0905');
     expect(ymd(DateTime.utc(7, 1, 2)), '00070102');
   });
+
+  test('the shared helpers: periods, registration numbers, csv cells', () {
+    expect(monthOrQuarter(DateTime(2026, 3), DateTime(2026, 3, 31)), (
+      month: 3,
+      quarter: null,
+    ));
+    expect(monthOrQuarter(DateTime(2026, 4), DateTime(2026, 6, 30)), (
+      month: null,
+      quarter: 2,
+    ));
+    expect(monthOrQuarter(DateTime(2026), DateTime(2026, 12, 31)), isNull);
+    expect(monthOrQuarter(DateTime(2026, 2), DateTime(2026, 4, 30)), isNull);
+    expect(monthOrQuarter(DateTime(2026, 3, 2), DateTime(2026, 3, 31)), isNull);
+    expect(isValidCanadianBn('123456789 RT0001'), isTrue);
+    expect(isValidCanadianBn('123456789'), isFalse);
+    expect(isValidQstNumber('1234567890 TQ0001'), isTrue);
+    expect(formatCanadianRegistration('123456789rt0001'), '123456789 RT0001');
+    expect(formatCanadianRegistration('nope'), 'nope');
+    expect(csvCell('=SUM(A1)'), '"\'=SUM(A1)"');
+    expect(csvCell('a "b"'), r'''"a ""b"""''');
+  });
+
+  test('the extra boxes of a context are read-only too', () {
+    final extra = {
+      'FPZ-500': [
+        const FilingBox(code: '203', label: 'x', netCents: 1, vatCents: 2),
+      ],
+    };
+    final context = FilingContext(
+      periodStart: DateTime.utc(2026),
+      periodEnd: DateTime.utc(2026, 1, 31),
+      currency: 'CAD',
+      lines: const [],
+      extraBoxes: extra,
+      generatedAt: DateTime.utc(2026, 2),
+      party: const FilingParty(
+        countryCode: 'CA',
+        name: 'n',
+        street: 's',
+        postalCode: 'p',
+        city: 'c',
+        vatId: 'v',
+        legalId: 'l',
+      ),
+    );
+    extra['FPZ-500']!.clear();
+    extra.clear();
+    expect(context.extraBoxes['FPZ-500'], hasLength(1));
+    expect(() => context.extraBoxes['x'] = [], throwsUnsupportedError);
+    expect(
+      () => context.extraBoxes['FPZ-500']!.clear(),
+      throwsUnsupportedError,
+    );
+  });
 }

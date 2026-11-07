@@ -22,6 +22,14 @@ bool _allowed(String uri) =>
     uri.startsWith('package:deskilo_jurisdiction_api/') ||
     (!uri.contains(':') && !uri.contains('..'));
 
+/// The packages that write XML and so depend on `xml` (by name; a new one is a
+/// reviewed addition here).
+const _xmlPackages = {
+  'deskilo_jurisdiction_de',
+  'deskilo_jurisdiction_ch',
+  'deskilo_jurisdiction_it',
+};
+
 void main() {
   test('the API package imports nothing but core Dart, crypto and itself', () {
     final bad = <String>[];
@@ -102,7 +110,7 @@ void main() {
   // #3332 -- a country add-on is the same kind of package: it imports core
   // Dart, the contract and itself, depends on the contract alone and reads no
   // clock or environment. A package added later is held to this by its name.
-  test('every country add-on package depends on the contract alone', () {
+  test('every country add-on package depends on the contract alone (and xml only where it writes XML)', () {
     final countries = [
       for (final n in directoryNames('packages'))
         if (n.startsWith('deskilo_jurisdiction_') &&
@@ -127,8 +135,10 @@ void main() {
           )
           .map((l) => l.trim().split(':').first)
           .toList();
-      if (deps.join(',') != 'deskilo_jurisdiction_api') {
-        bad.add('$root/pubspec.yaml: dependencies are $deps');
+      final wantsXml = _xmlPackages.contains(name);
+      final expected = ['deskilo_jurisdiction_api', if (wantsXml) 'xml'];
+      if (deps.join(',') != expected.join(',')) {
+        bad.add('$root/pubspec.yaml: dependencies are $deps, want $expected');
       }
       for (final f in filesWithExtension(
         '$root/lib',
@@ -143,6 +153,7 @@ void main() {
               !(uri == 'dart:typed_data' ||
                   uri == 'dart:convert' ||
                   uri.startsWith('package:deskilo_jurisdiction_api/') ||
+                  (wantsXml && uri.startsWith('package:xml/')) ||
                   uri.startsWith('package:$name/') ||
                   (!uri.contains(':') && !uri.contains('..')))) {
             bad.add('${f.path}:${i + 1}: $uri');

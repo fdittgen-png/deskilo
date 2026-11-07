@@ -24,6 +24,7 @@ import 'package:xml/xml.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import 'support/filing_product.dart';
 
 VatDeclarationLine _line(
   double percent,
@@ -85,15 +86,33 @@ final _german = [
 ];
 
 String _elster(VatDeclaration d, {String taxNumber = '21/815/08150'}) =>
-    elsterUstvaXml(
-      declaration: d,
-      taxNumber: taxNumber,
-      name: 'Raum GmbH',
-      street: 'Hauptstr. 1',
-      postalCode: '10115',
-      city: 'Berlin',
-      createdOn: DateTime(2026, 10, 2),
-    );
+    productFile(
+      d,
+      const VatFilingParty(
+        countryCode: 'DE',
+        name: 'Raum GmbH',
+        street: 'Hauptstr. 1',
+        postalCode: '10115',
+        city: 'Berlin',
+        vatId: 'DE123456789',
+        legalId: '',
+      ),
+      facts: VatFilingFacts(taxNumber: taxNumber),
+      now: DateTime(2026, 10, 2),
+    ).text;
+
+String _mtd(VatDeclaration d, String vatId) => productFile(
+  d,
+  VatFilingParty(
+    countryCode: 'GB',
+    name: 'Desks Ltd',
+    street: '1 High St',
+    postalCode: 'N1 1AA',
+    city: 'London',
+    vatId: vatId,
+    legalId: '12345678',
+  ),
+).text;
 
 void main() {
   group('eCH-0217 (CH)', () {
@@ -250,7 +269,7 @@ void main() {
 
     test('one row: the nine boxes under HMRC field names, pence in 1-5, '
         'whole pounds in 6-9', () {
-      final csv = mtdBridgingCsv(declaration: d, vatId: 'GB 123 4567 89');
+      final csv = _mtd(d, 'GB 123 4567 89');
       final rows = csv.trim().split('\r\n');
       expect(rows, hasLength(2));
       final head = rows[0].split(',');
@@ -277,7 +296,7 @@ void main() {
 
     test('without a registration number there is no file', () {
       expect(
-        () => mtdBridgingCsv(declaration: d, vatId: 'GB12'),
+        () => _mtd(d, 'GB12'),
         throwsA(isA<VatFilingFileException>()),
       );
     });
@@ -292,11 +311,7 @@ void main() {
         vatId: 'GB123456789',
         legalId: '12345678',
       );
-      final file = vatFilingFile(
-        declaration: d,
-        party: party,
-        now: DateTime(2026, 10, 2),
-      );
+      final file = productFile(d, party, now: DateTime(2026, 10, 2));
       expect(file.fileName, 'mtd-vat-return-2026-07-01.csv');
       expect(file.text, startsWith('vrn,periodStart,'));
     });

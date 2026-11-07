@@ -7,52 +7,42 @@
 // same boxes from the declaration's lines (`supabase/functions/_shared/
 // hmrc_boxes.ts`; the shared case file is contracts/vat/gb_nine_boxes.json)
 // and refuses any difference.
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show FilingBox;
+import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart'
+    as gb
+    show mtdBoxCentsOf, mtdBoxIsWhole;
+
 import 'vat_declaration.dart';
 
-/// The HMRC field names of the nine boxes, in the order of the form.
-const mtdBoxFields = [
-  'vatDueSales',
-  'vatDueAcquisitions',
-  'totalVatDue',
-  'vatReclaimedCurrPeriod',
-  'netVatDue',
-  'totalValueSalesExVAT',
-  'totalValuePurchasesExVAT',
-  'totalValueGoodsSuppliedExVAT',
-  'totalAcquisitionsExVAT',
-];
-
-/// Boxes 1-5 are in pounds with pence; boxes 6-9 in whole pounds.
-bool _isWhole(String field) => mtdBoxFields.indexOf(field) >= 5;
+export 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart'
+    show mtdBoxFields, mtdBoxText;
 
 /// The nine boxes of [declaration] in CENTS (boxes 6-9 are whole pounds, so
-/// multiples of 100), keyed by HMRC's field names.
-Map<String, int> mtdBoxCents(VatDeclaration declaration) {
-  final cents = <String, int>{};
+/// multiples of 100), keyed by HMRC's field names. The arithmetic lives in the
+/// British add-on (#3333): this fills the form from the installed tax
+/// reference and hands its boxes over.
+Map<String, int> mtdBoxCents(VatDeclaration declaration) => gb.mtdBoxCentsOf([
   for (final box in vatFormBoxes(
     'GB',
     declaration.lines,
     periodEnd: declaration.periodEnd,
-  )) {
-    if (box.hasBase && box.baseKey.isNotEmpty) {
-      cents[box.baseKey] = (box.netCents ~/ 100) * 100;
-    }
-    if (box.hasTax && box.taxKey.isNotEmpty) cents[box.taxKey] = box.vatCents;
-  }
-  return {for (final f in mtdBoxFields) f: cents[f] ?? 0};
-}
-
-/// One box as the CSV writes it: pounds and pence, or whole pounds.
-String mtdBoxText(String field, int cents) {
-  if (_isWhole(field)) return (cents ~/ 100).toString();
-  final sign = cents < 0 ? '-' : '';
-  final abs = cents.abs();
-  return '$sign${abs ~/ 100}.${(abs % 100).toString().padLeft(2, '0')}';
-}
+  ))
+    FilingBox(
+      code: box.code,
+      label: box.label,
+      netCents: box.netCents,
+      vatCents: box.vatCents,
+      hasBase: box.hasBase,
+      hasTax: box.hasTax,
+      baseKey: box.baseKey,
+      taxKey: box.taxKey,
+    ),
+]);
 
 /// The boxes as the submission sends them: pounds as numbers (boxes 6-9
-/// whole), exactly the values [mtdBoxText] writes.
+/// whole), exactly the values `mtdBoxText` writes.
 Map<String, num> mtdBoxPounds(VatDeclaration declaration) => {
   for (final e in mtdBoxCents(declaration).entries)
-    e.key: _isWhole(e.key) ? e.value ~/ 100 : e.value / 100,
+    e.key: gb.mtdBoxIsWhole(e.key) ? e.value ~/ 100 : e.value / 100,
 };
