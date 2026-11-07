@@ -1,0 +1,18 @@
+name: deskilo_jurisdiction_api
+description: >-
+  The smallest contract a jurisdiction add-on implements for VAT filing
+  (#3331): a capability descriptor, immutable inputs, a structured
+  validation result and a generated artifact with its digest and provenance.
+  Pure Dart: no Flutter, Supabase, Riverpod or application types.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  crypto: ^3.0.7
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

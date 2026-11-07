@@ -58,6 +58,9 @@ dependencies:
   # #2592 - the document layout model and its PDF renderer (internal).
   deskilo_document_model:
     path: packages/deskilo_document_model
+  # #3331 - the contract of a jurisdiction add-on for VAT filing (internal).
+  deskilo_jurisdiction_api:
+    path: packages/deskilo_jurisdiction_api
   deskilo_document_pdf:
     path: packages/deskilo_document_pdf
   # #2592 C2 - the editing primitives of the report editor (internal).
