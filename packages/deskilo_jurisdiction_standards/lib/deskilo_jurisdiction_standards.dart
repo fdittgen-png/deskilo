@@ -6,3 +6,4 @@ export 'src/csv.dart';
 export 'src/date_text.dart';
 export 'src/periods.dart';
 export 'src/registration_numbers.dart';
+export 'src/sdi_natura.dart';

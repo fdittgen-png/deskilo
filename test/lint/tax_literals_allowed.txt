@@ -15,7 +15,7 @@ lib/features/money/domain/e_invoice_routing.dart :: 'ES': EInvoiceRoute( :: 1 ::
 lib/features/money/domain/e_invoice_routing.dart :: 'NL': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'PT': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'LU': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
-packages/deskilo_jurisdiction_it/lib/src/fatturapa_profile.dart :: 'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
+packages/deskilo_jurisdiction_standards/lib/src/sdi_natura.dart :: 'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? '10' : '9', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? 'oo' : 'np II', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/vat_compliance.dart :: 'AE' => 'VATEX-EU-AE', :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code

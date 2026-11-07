@@ -18,6 +18,7 @@
 import 'dart:convert' show utf8;
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 import 'package:xml/xml.dart';
 
 /// Bumped in the same commit as any change of the bytes this profile writes.
@@ -365,18 +366,6 @@ class _FatturaPaWriter {
     );
   }
 }
-
-/// Why a 0 % line carries no VAT, in SdI's codes (the FatturaPA and the
-/// registro IVA read the same one). Null for a taxed line.
-String? fatturaPaNatura(String category, {required String buyerCountry}) => switch (category) {
-  'O' => 'N2.2',
-  'E' => 'N4',
-  'Z' => 'N3.5',
-  'K' => 'N3.2',
-  'G' => 'N3.1',
-  'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1',
-  _ => null,
-};
 
 /// SdI's routing code: the recipient's own code, '0000000' when it is
 /// reached by PEC or through its fiscal drawer, 'XXXXXXX' abroad.
