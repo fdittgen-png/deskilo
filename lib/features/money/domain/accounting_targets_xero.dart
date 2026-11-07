@@ -7,6 +7,7 @@
 // manual journal, through supabase/functions/_shared/accounting_xero.ts.
 // Reached by signing in to a Xero application of the installation; the
 // sign-in binds the one organisation it authorised.
+import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// The operations every Xero region takes.
@@ -93,6 +94,7 @@ const List<AccountingTarget> xeroAccountingTargets = [
 /// rate are the organisation's own, so the export asks for them.
 const _xeroInvoiceCsvFormat = AccountingFormat(
   id: 'xero_invoice_csv',
+  kind: ExportKind.xeroInvoices,
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,

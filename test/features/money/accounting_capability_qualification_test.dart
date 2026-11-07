@@ -6,6 +6,7 @@
 // accepted by an authority.
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
+import 'package:deskilo/features/money/domain/accounting_export_sources.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -56,6 +57,7 @@ void main() {
       id: 'stray',
       claim: FormatClaim.exchange,
       extension: 'csv',
+      kind: ExportKind.accountantCsv,
     );
     expect(capabilityOf(stray).state, QualificationState.unsupported);
     expect(capabilityOf(stray).producible, isFalse);

@@ -35,6 +35,8 @@ library;
 import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
+import 'accounting_export_sources.dart';
+import 'accounting_format_model.dart';
 import 'accounting_target.dart';
 import 'accounting_targets_business_central.dart';
 import 'accounting_targets_ch.dart';
@@ -45,61 +47,15 @@ import 'accounting_targets_saft.dart';
 import 'accounting_targets_sage.dart';
 import 'accounting_targets_xero.dart';
 
+export 'accounting_format_model.dart';
 export 'accounting_target.dart';
-
-/// What a produced file claims about itself. Never widen one of these
-/// without the authority's own spec in hand.
-enum FormatClaim { regulatory, exchange, subset }
-
-/// One offerable export.
-class AccountingFormat {
-  const AccountingFormat({
-    required this.id,
-    required this.claim,
-    required this.extension,
-    this.needsAccounts = false,
-    this.needsLegalId = false,
-    this.uncertifiedSoftware = false,
-  });
-
-  /// Stable wire id — also the l10n key suffix and the test anchor.
-  final String id;
-
-  final FormatClaim claim;
-
-  final String extension;
-
-  /// The format posts to a chart of accounts DesKilo does not own, so
-  /// the export must ASK for the numbers and show them before writing.
-  /// Never invent them: every wrong code is unbooked by hand.
-  final bool needsAccounts;
-
-  /// The file is named after, or must carry, the company's registration
-  /// number — refusing early beats producing a file the authority will
-  /// reject on its name alone.
-  final bool needsLegalId;
-
-  /// The jurisdiction operates a software CERTIFICATION scheme and
-  /// DesKilo is not certified under it.
-  ///
-  /// Portugal is the case that forced this field. Its spec is public and
-  /// the file this app produces is true to it — but Portuguese
-  /// taxpayers above the statutory threshold must use *certified*
-  /// invoicing software, and a structurally perfect file from
-  /// uncertified software does not satisfy that obligation. The file
-  /// declares `SoftwareCertificateNumber` 0, which is the defined value
-  /// for "not certified", and the export sheet says so out loud.
-  ///
-  /// Producing the file quietly and letting the owner assume it settles
-  /// their obligation would be exactly the overclaim this whole registry
-  /// exists to prevent.
-  final bool uncertifiedSoftware;
-}
 
 /// SAF-T, invoicing subset — the OECD tree, ledger omitted on purpose.
 @visibleForTesting
 const safTFormat = AccountingFormat(
   id: 'saft',
+  kind: ExportKind.saft,
+  sources: SourceRequirements.postedWhenLocalBook,
   claim: FormatClaim.subset,
   extension: 'xml',
 );
@@ -115,6 +71,7 @@ const safTFormat = AccountingFormat(
 @visibleForTesting
 const safTPtFormat = AccountingFormat(
   id: 'saft_pt',
+  kind: ExportKind.saftPortugal,
   claim: FormatClaim.regulatory,
   extension: 'xml',
   needsLegalId: true,
@@ -127,6 +84,8 @@ const safTPtFormat = AccountingFormat(
 @visibleForTesting
 const fecFormat = AccountingFormat(
   id: 'fec',
+  kind: ExportKind.fec,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.regulatory,
   extension: 'txt',
   needsAccounts: true,
@@ -141,6 +100,8 @@ const fecFormat = AccountingFormat(
 /// Debitoren-Stammdaten, and the vouchers the rows link.
 const _datevFormat = AccountingFormat(
   id: 'datev',
+  kind: ExportKind.datev,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'zip',
   needsAccounts: true,
@@ -149,6 +110,8 @@ const _datevFormat = AccountingFormat(
 /// Sage 50's audit-trail CSV — the British import shape.
 const _sageFormat = AccountingFormat(
   id: 'sage50',
+  kind: ExportKind.sage,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,
@@ -169,6 +132,7 @@ const _sageFormat = AccountingFormat(
 /// the format claims nothing that could mislead them.
 const _accountantCsvFormat = AccountingFormat(
   id: 'accountant_csv',
+  kind: ExportKind.accountantCsv,
   claim: FormatClaim.exchange,
   extension: 'csv',
 );
@@ -178,6 +142,8 @@ const _accountantCsvFormat = AccountingFormat(
 /// Offered everywhere; it claims to be an exchange file and nothing more.
 const _genericJournalFormat = AccountingFormat(
   id: 'generic_journal_csv',
+  kind: ExportKind.genericJournal,
+  sources: SourceRequirements.postedOnly,
   claim: FormatClaim.exchange,
   extension: 'csv',
 );
@@ -193,6 +159,7 @@ const _genericJournalFormat = AccountingFormat(
 @visibleForTesting
 const auditTrailFormat = AccountingFormat(
   id: 'audit_trail',
+  kind: ExportKind.auditTrail,
   claim: FormatClaim.exchange,
   extension: 'csv',
 );
@@ -203,6 +170,8 @@ const auditTrailFormat = AccountingFormat(
 @visibleForTesting
 const archiveBundleFormat = AccountingFormat(
   id: 'bundle',
+  kind: ExportKind.archiveBundle,
+  sources: SourceRequirements.archiveYears,
   claim: FormatClaim.exchange,
   extension: 'zip',
   needsLegalId: true,
@@ -218,18 +187,24 @@ const archiveBundleFormat = AccountingFormat(
 /// designer, written as PDF.
 const _generalLedgerFormat = AccountingFormat(
   id: 'general_ledger',
+  kind: ExportKind.bookReport,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'pdf',
 );
 
 const _trialBalanceFormat = AccountingFormat(
   id: 'trial_balance',
+  kind: ExportKind.bookReport,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'pdf',
 );
 
 const _journalsFormat = AccountingFormat(
   id: 'journals',
+  kind: ExportKind.bookReport,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'pdf',
 );
@@ -243,6 +218,7 @@ const Set<String> bookReportFormats = {
 
 const _frEReportingFormat = AccountingFormat(
   id: 'fr_ereporting',
+  kind: ExportKind.frEReporting,
   claim: FormatClaim.subset,
   extension: 'xml',
 );

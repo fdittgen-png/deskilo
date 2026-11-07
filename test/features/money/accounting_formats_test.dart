@@ -13,9 +13,9 @@
 // shipped, and that is now a test rather than a hope.
 import 'dart:io';
 
-import 'package:deskilo/features/money/application/export/installed_accounting_exports.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
+import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
@@ -102,7 +102,7 @@ void main() {
       // registered with: a format without a registration, or whose family the
       // run does not handle, is dead code.
       for (final format in accountingTargets.map((t) => t.format).nonNulls) {
-        final kind = contributionOf(format.id)?.kind;
+        final kind = exportFormatOf(format.id)?.kind;
         expect(kind, isNotNull,
             reason: '${format.id} is in the registry but not registered');
         expect(export, contains('ExportKind.${kind!.name}'),
