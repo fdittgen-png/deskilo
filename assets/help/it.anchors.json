@@ -262,6 +262,7 @@
   "user.money.reminders.automatic": "Solleciti automatici",
   "user.invoicing.register": "Il registro fatture",
   "user.invoicing.accounting-export": "Esportazioni contabili",
+  "user.invoicing.accounting-state": "Fermare il nuovo lavoro contabile",
   "user.invoicing.bi": "Analisi aziendale",
   "user.advanced.overview": "Avanzate",
   "user.advanced.environments": "Uno spazio ha due lati",

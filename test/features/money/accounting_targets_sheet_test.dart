@@ -46,8 +46,9 @@ Future<void> _open(
   FakeAccountingConnectionRepository repo, {
   required Set<WorkspacePermission> permissions,
 }) async {
-  // Tall enough for every API target France is offered (Pennylane, Xero).
-  tester.view.physicalSize = const Size(1200, 6000);
+  // Tall enough for every API target France is offered (Pennylane, Xero)
+  // and the state card above them (#3336).
+  tester.view.physicalSize = const Size(1200, 6900);
   addTearDown(tester.view.resetPhysicalSize);
   await tester.pumpWidget(ProviderScope(
     overrides: [

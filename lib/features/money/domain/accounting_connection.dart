@@ -12,38 +12,11 @@
 import '../../../core/data/json_reader.dart';
 import 'accounting_delivery_run.dart';
 import 'accounting_target.dart';
+import 'capability_state.dart';
 import 'remote_revocation.dart';
 
-/// The right that connects, maps and revokes (the server's
-/// `accounting_connector_actor`).
-const String _accountingConnectPermission = 'manageBilling';
-
-/// The rights that read the connections and the transfers (the server's
-/// `accounting_reader`, beside the owner).
-const Set<String> accountingTransferReaders = {
-  'viewFinances',
-  'exportData',
-  _accountingConnectPermission,
-};
-
-/// What the accounting systems need of the space: its country (which
-/// targets it is offered), its issuers by id, the rights the reader holds
-/// (by name) and its members' names.
-class AccountingSystemsScope {
-  const AccountingSystemsScope({
-    required this.countryCode,
-    required this.issuers,
-    required this.permissions,
-    required this.memberNames,
-  });
-
-  final String countryCode;
-  final Map<String, String> issuers;
-  final Set<String> permissions;
-  final Map<String, String> memberNames;
-
-  bool get manage => permissions.contains(_accountingConnectPermission);
-}
+export 'accounting_systems_scope.dart';
+export 'capability_state.dart';
 
 /// The state of a connection as the screen shows it.
 enum ConnectionStatus {
@@ -436,6 +409,17 @@ final class SignInNotConfigured extends SignInStart {
 /// RPC or the `accounting-connect` function, and no read returns a secret.
 abstract class AccountingConnectionRepository {
   Future<List<AccountingConnection>> fetchConnections(String workspaceId);
+
+  /// #3336 — whether the connectors admit new work in this space (0692).
+  Future<CapabilityState> fetchCapabilityState(String workspaceId);
+
+  /// Moves the state; the server checks who may, records who and why, and
+  /// refuses a move the contract does not allow.
+  Future<CapabilityState> setCapabilityState(
+    String workspaceId,
+    CapabilityStateKind to,
+    String reason,
+  );
 
   /// A pending connection reached with a pasted token.
   Future<AccountingConnection> openTokenConnection(

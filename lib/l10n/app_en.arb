@@ -746,6 +746,90 @@
   "@acctRedeliver": {
     "description": "#2370 Transfers list: the button that delivers one document to its connection again."
   },
+  "acctStateActionReopen": "Reopen for servicing",
+  "@acctStateActionReopen": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateActionResume": "Resume new work",
+  "@acctStateActionResume": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateActionRetire": "Retire the connectors",
+  "@acctStateActionRetire": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateActionStop": "Stop new work",
+  "@acctStateActionStop": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateActive": "Active — new connections, mappings and deliveries are admitted",
+  "@acctStateActive": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateChanged": "The state was changed.",
+  "@acctStateChanged": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateConfirmReopen": "Reopen the connectors for servicing? New work stays refused.",
+  "@acctStateConfirmReopen": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateConfirmResume": "Admit new accounting work again?",
+  "@acctStateConfirmResume": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateConfirmRetire": "Retire the accounting connectors? Only the owner can reopen them, and only for servicing.",
+  "@acctStateConfirmRetire": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateConfirmStop": "Stop admitting new accounting work? Reading, revoking and finishing what was started stay possible.",
+  "@acctStateConfirmStop": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateDerived": "Follows the accounting connectors setting; nobody has decided otherwise.",
+  "@acctStateDerived": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateFailed": "The state could not be changed.",
+  "@acctStateFailed": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateReasonLabel": "Reason",
+  "@acctStateReasonLabel": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateReasonRequired": "Say why.",
+  "@acctStateReasonRequired": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateRefusedOff": "The accounting connectors are switched off in this space.",
+  "@acctStateRefusedOff": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateRefusedOwner": "Only the owner retires or reopens the connectors.",
+  "@acctStateRefusedOwner": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateRefusedUnresolved": "Deliveries are still in progress. Finish or settle them before retiring.",
+  "@acctStateRefusedUnresolved": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateRetired": "Retired — no new work; the history stays readable",
+  "@acctStateRetired": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateServicing": "Servicing — no new work; history, revoking and unfinished deliveries continue",
+  "@acctStateServicing": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateSubmit": "Confirm",
+  "@acctStateSubmit": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
+  "acctStateTitle": "New accounting work",
+  "@acctStateTitle": {
+    "description": "#3336 - the state of the accounting connectors (active / servicing / retired)"
+  },
   "acctTargetNotDeliveredYet": "No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.",
   "@acctTargetNotDeliveredYet": {
     "description": "#2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet."

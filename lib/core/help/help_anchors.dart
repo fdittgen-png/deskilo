@@ -386,13 +386,14 @@ abstract final class HelpAnchor {
 
   /// The accountant exports and what each format may claim.
   static const invoicingAccountingExport = 'user.invoicing.accounting-export';
-
+  static const invoicingAccountingState = 'user.invoicing.accounting-state';
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
     moneySupplierBalance,
     advancedDeploy,
     advancedTroubleshooting,
     invoicingAccountingExport,
+    invoicingAccountingState,
     moneyVatRates,
     moneyVatGroups,
     moneyVatDeclaration,

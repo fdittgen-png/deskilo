@@ -192,7 +192,18 @@ List<Override> demoCityCommerceOverrides(
           choose(ref, bookPeriods, londonAccounting.books, nyAccounting.books, twin.periods),
     ),
     accountingConnectionRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeAccounting, londonAccounting, nyAccounting, twin.accounting),
+      (ref) {
+        final accounting = choose(
+          ref,
+          homeAccounting,
+          londonAccounting,
+          nyAccounting,
+          twin.accounting,
+        );
+        // #3336 — retiring and reopening are the owner's, as on the server
+        return accounting
+          ..isOwner = () => ref.read(myMemberProvider).value?.isOwner ?? false;
+      },
     ),
     // #2568 — the rooms the demo space rents.
     roomRentalRepositoryProvider.overrideWith(

@@ -5394,6 +5394,27 @@ Consegna al Suo commercialista le fatture e i pagamenti dell'anno.
 
 **Vedi anche:** [Conto IVA](help:user.money.vat.account) · [Il registro fatture](help:user.invoicing.register)
 
+### Fermare il nuovo lavoro contabile
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole che i connettori contabili non accettino più nuovo lavoro, per esempio quando cambia commercialista, senza perdere ciò che è già stato inviato.
+
+**Passi**
+
+1. Apra **Sistemi contabili** e legga la scheda **Nuovo lavoro contabile**: indica se i connettori sono **Attivo**, **In manutenzione** o **Ritirato**.
+2. Per mettere in pausa, tocchi **Ferma il nuovo lavoro**. Per ammettere di nuovo lavoro, tocchi **Riprendi il nuovo lavoro**.
+3. Il proprietario può toccare **Ritira i connettori** dalla manutenzione e **Riapri per la manutenzione** dallo stato ritirato. Entrambi chiedono un **Motivo**.
+
+**Da sapere**
+
+- Finché non viene ammesso nulla di nuovo, può ancora leggere lo storico, revocare una connessione e concludere le consegne già iniziate.
+- Il ritiro viene rifiutato finché ci sono consegne in corso; le concluda o le regoli prima.
+- La scheda è mostrata solo a chi gestisce i connettori; solo il proprietario vede le azioni di ritiro e riapertura.
+- Senza una decisione propria, la scheda segue l'impostazione dei connettori contabili.
+
+**Vedi anche:** [Esportazioni contabili](help:user.invoicing.accounting-export)
+
 ### Analisi aziendale
 
 **Destinatari:** Proprietario · Amministratore fatturazione
