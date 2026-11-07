@@ -28,8 +28,15 @@ select ('00000000-0000-4000-8000-0000001974' || s)::uuid, '00000000-0000-0000-00
 -- a1 owner, a2 and a3 members, a4 a stranger.
 
 select pg_temp.act_as('00000000-0000-4000-8000-0000001974a1');
+-- #3420: the booking below starts now and must end inside the workspace's day
+-- with at least the minimum duration left. In the last two hours of the Paris
+-- day it would not, so the space then sits in Los Angeles, where it is
+-- mid-afternoon (the same device 24_booking_idempotency uses).
+select set_config('deskilo.j.tz', case
+  when extract(hour from now() at time zone 'Europe/Paris') >= 22
+  then 'America/Los_Angeles' else 'Europe/Paris' end, true);
 select set_config('deskilo.j.ws', public.create_workspace(
-  'Pilot journey', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
+  'Pilot journey', 'FR', 'EUR', current_setting('deskilo.j.tz'), 'dev', false, null)::text, true);
 select public.apply_workspace_template(current_setting('deskilo.j.ws')::uuid,
   (select id from public.workspace_templates where key = 'tiny'));
 -- #3269: a member books only with the right; the owner grants it, as the setup step says.
@@ -48,12 +55,12 @@ update public.workspaces set booking_rules = booking_rules ||
 -- Now until an hour from now, or the end of the Paris day; and next week.
 select set_config('deskilo.j.s', now()::text, true);
 select set_config('deskilo.j.e', least(now() + interval '1 hour',
-  (date_trunc('day', now() at time zone 'Europe/Paris') + interval '1 day' - interval '1 minute')
-    at time zone 'Europe/Paris')::text, true);
-select set_config('deskilo.j.fs', ((((now() at time zone 'Europe/Paris')::date + 7) + time '09:00')
-  at time zone 'Europe/Paris')::text, true);
-select set_config('deskilo.j.fe', ((((now() at time zone 'Europe/Paris')::date + 7) + time '11:00')
-  at time zone 'Europe/Paris')::text, true);
+  (date_trunc('day', now() at time zone current_setting('deskilo.j.tz')) + interval '1 day' - interval '1 minute')
+    at time zone current_setting('deskilo.j.tz'))::text, true);
+select set_config('deskilo.j.fs', ((((now() at time zone current_setting('deskilo.j.tz'))::date + 7) + time '09:00')
+  at time zone current_setting('deskilo.j.tz'))::text, true);
+select set_config('deskilo.j.fe', ((((now() at time zone current_setting('deskilo.j.tz'))::date + 7) + time '11:00')
+  at time zone current_setting('deskilo.j.tz'))::text, true);
 
 create function pg_temp.book(p_from text, p_to text) returns uuid language sql as $$
   select public.create_reservation_once(gen_random_uuid(),
