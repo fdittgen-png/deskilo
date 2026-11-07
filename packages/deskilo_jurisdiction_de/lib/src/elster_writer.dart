@@ -52,7 +52,7 @@ String elsterUstvaXml(
         attributes: {'version': '11'},
         nest: () {
           b
-            ..element('Verfahren', nest: 'ElsterAnmeldunG')
+            ..element('Verfahren', nest: 'ElsterAnmeldung')
             ..element('DatenArt', nest: 'UStVA')
             ..element('Vorgang', nest: 'send-Auth');
         },
