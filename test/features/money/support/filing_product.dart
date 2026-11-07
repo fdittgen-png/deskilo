@@ -45,5 +45,9 @@ import 'package:deskilo/features/money/domain/vat_filing_files.dart';
     );
   }
   final artifact = contribution.build(filing);
-  return (fileName: artifact.fileName, text: utf8.decode(artifact.bytes));
+  // the Spanish 303 is ISO-8859-1, every other file UTF-8
+  final text = artifact.mediaType.contains('iso-8859-1')
+      ? latin1.decode(artifact.bytes)
+      : utf8.decode(artifact.bytes);
+  return (fileName: artifact.fileName, text: text);
 }

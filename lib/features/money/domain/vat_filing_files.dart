@@ -41,12 +41,11 @@
 //
 // Both read the boxes `vatFormBoxes` fills, so the file and the PDF can
 // never disagree.
-import 'dart:convert' show Encoding, latin1, utf8;
+import 'dart:convert' show Encoding, utf8;
 
 import '../../../core/time/date_text.dart';
 import 'vat_declaration.dart';
 import 'vat_filing_ech0217.dart';
-import 'vat_filing_es.dart';
 import 'vat_filing_it.dart';
 import 'vat_filing_terms.dart';
 
@@ -79,12 +78,11 @@ class VatFilingParty {
   /// Swiss return says `formOfReporting` 2), not on the invoice.
   final bool onReceipts;
 
-  /// The country whose file this dispatcher still writes: `CH`, `ES`, `IT`,
+  /// The country whose file this dispatcher still writes: `CH`, `IT`,
   /// else null. The others have their own packages (#3332, #3333) and are
   /// chosen by the resolver, not here.
   String? get fileCountry => switch (countryCode.trim().toUpperCase()) {
     'CH' => 'CH',
-    'ES' => 'ES',
     'IT' => 'IT',
     _ => null,
   };
@@ -113,18 +111,6 @@ class VatFilingParty {
         organisationName: party.name,
         onReceipts: party.onReceipts,
         generatedAt: now,
-      ),
-    ),
-    // The Sede reads the 303 file as ISO-8859-1, one byte a position.
-    'ES' => (
-      encoding: latin1,
-      fileName: 'modelo-303-$start.txt',
-      text: aeat303File(
-        declaration: declaration,
-        vatId: party.vatId,
-        name: party.name,
-        onReceipts: party.onReceipts,
-        facts: facts,
       ),
     ),
     'IT' => (

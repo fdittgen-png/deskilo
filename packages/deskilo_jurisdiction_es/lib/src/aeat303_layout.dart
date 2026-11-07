@@ -6,8 +6,6 @@
 // layout test reads row by row). A field is its number, its first
 // position (1-based), its length, its kind and either the constant the
 // design prescribes or the casilla it carries.
-import 'package:meta/meta.dart';
-
 /// The design's four kinds of field.
 enum Aeat303Kind {
   /// `A` and `An`: letters, digits and blanks, left-aligned, blank-padded.
@@ -24,7 +22,6 @@ const _an = Aeat303Kind.alphanumeric;
 const _num = Aeat303Kind.unsigned;
 const _signed = Aeat303Kind.signed;
 
-@immutable
 class Aeat303Field {
   const Aeat303Field(
     this.number,

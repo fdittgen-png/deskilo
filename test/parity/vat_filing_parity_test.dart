@@ -396,7 +396,7 @@ void main() {
       // These countries left the dispatcher for their own packages (#3332,
       // #3333): their bytes are pinned by the goldens above, through the
       // product path.
-      if (const {'FR', 'DE', 'GB', 'CA'}.contains(c.country)) continue;
+      if (const {'FR', 'DE', 'GB', 'CA', 'ES'}.contains(c.country)) continue;
       final resolution = resolveCapability(
         JurisdictionOperation.vatFiling,
         LegalContext(countryCode: c.party.countryCode),
