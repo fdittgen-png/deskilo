@@ -31,6 +31,27 @@ import type { Phase, TransmissionStore } from "./store.ts";
  * transport limit of the platform rather than a business value (#3335 D4). */
 export const DISPATCH_WINDOW_SECONDS = 150;
 
+/** The keys a client may declare about itself, and the longest value (#3336).
+ * The database clips again (record_provenance); this keeps what leaves the
+ * handler small and honest. A value that is not a string is DROPPED, never
+ * coerced into one. */
+const DECLARED_KEYS = ["renderer", "renderer_version", "app_version", "format"];
+const DECLARED_WIDTH = 120;
+
+export function clipDeclared(value: unknown): Record<string, string> {
+  const out: Record<string, string> = {};
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+    return out;
+  }
+  for (const key of DECLARED_KEYS) {
+    const v = (value as Record<string, unknown>)[key];
+    if (typeof v === "string" && v.length > 0) {
+      out[key] = v.slice(0, DECLARED_WIDTH);
+    }
+  }
+  return out;
+}
+
 export interface Deps {
   store: TransmissionStore;
   fetchImpl?: typeof fetch;
@@ -180,6 +201,8 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     reason?: string;
     evidence?: string;
     verdict?: Record<string, unknown>;
+    // #3336 — what the client says about its renderer (clipped below)
+    declared?: unknown;
   };
   try {
     payload = await req.json();
@@ -424,6 +447,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       receiverScheme: payload.receiver_scheme ?? "",
       receiverId: payload.receiver_id ?? "",
       bytes,
+      declared: clipDeclared(payload.declared),
     });
   } catch (error) {
     console.error("send-e-invoice: prepare failed", error);

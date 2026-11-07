@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/app_info.dart';
 import '../application/invoice_action.dart';
 import '../data/supabase_accounting_source_queries.dart';
 import '../data/supabase_billing_rules_repository.dart';
@@ -133,4 +134,7 @@ PaymentGatewayRepository paymentGatewayRepository(Ref ref) =>
 /// #2591 — e-invoice transmission, its receipts and channel credentials.
 @Riverpod(keepAlive: true)
 EInvoiceTransmissions eInvoiceTransmissions(Ref ref) =>
-    SupabaseEInvoiceTransmissions(ref.watch(moneyClientProvider));
+    SupabaseEInvoiceTransmissions(
+      ref.watch(moneyClientProvider),
+      appVersion: () => ref.read(appVersionProvider.future),
+    );
