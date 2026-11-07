@@ -28,7 +28,7 @@ String ediTvaCa3(FilingContext context, {required String siren}) {
   final createdAt = context.generatedAt;
   final reference = _reference(context);
   final segments = <String>[
-    _seg(['UNH', '1', 'INFENT:D:00A:UN:TVA']),
+    _seg(['UNH', '1', 'INFENX:D:00A:UN:TVA']),
     _seg(['BGM', '3310CA3::DGF', reference, '9']),
     _seg(['DTM', '137:${ymd(createdAt)}:102']),
     _seg(['DTM', '194:${ymd(context.periodStart)}:102']),
