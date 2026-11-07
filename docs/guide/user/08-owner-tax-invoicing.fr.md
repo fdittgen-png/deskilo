@@ -1133,6 +1133,28 @@ Vous remettez à votre comptable les factures et les paiements de l'année.
 
 **Voir aussi:** [Compte de TVA](help:user.money.vat.account) · [Le registre des factures](help:user.invoicing.register)
 
+<!-- anchor: user.invoicing.accounting-state -->
+### Arrêter le nouveau travail comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez que vos connecteurs comptables n'acceptent plus de nouveau travail, par exemple en changeant de comptable, sans perdre ce qui a déjà été envoyé.
+
+**Étapes**
+
+1. Ouvrez **Systèmes comptables** et lisez la carte **Nouveau travail comptable** : elle indique si les connecteurs sont **Actif**, **En maintenance** ou **Retiré**.
+2. Pour mettre en pause, touchez **Arrêter le nouveau travail**. Pour admettre de nouveau du travail, touchez **Reprendre le nouveau travail**.
+3. Le propriétaire peut toucher **Retirer les connecteurs** depuis la maintenance, et **Rouvrir en maintenance** depuis l'état retiré. Les deux demandent un **Motif**.
+
+**Bon à savoir**
+
+- Tant que rien de nouveau n'est admis, vous pouvez encore lire l'historique, révoquer une connexion et terminer les livraisons déjà commencées.
+- Le retrait est refusé tant que des livraisons sont en cours ; terminez-les ou réglez-les d'abord.
+- La carte n'est montrée qu'aux personnes qui gèrent les connecteurs ; seul le propriétaire voit les actions de retrait et de réouverture.
+- Sans décision propre, la carte suit le réglage des connecteurs comptables.
+
+**Voir aussi :** [Exports comptables](help:user.invoicing.accounting-export)
+
 <!-- anchor: user.invoicing.bi -->
 ### Analyse d'activité
 

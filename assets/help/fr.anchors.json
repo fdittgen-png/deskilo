@@ -262,6 +262,7 @@
   "user.money.reminders.automatic": "Relances automatiques",
   "user.invoicing.register": "Le registre des factures",
   "user.invoicing.accounting-export": "Exports comptables",
+  "user.invoicing.accounting-state": "Arrêter le nouveau travail comptable",
   "user.invoicing.bi": "Analyse d'activité",
   "user.advanced.overview": "Avancé",
   "user.advanced.environments": "Un espace a deux côtés",

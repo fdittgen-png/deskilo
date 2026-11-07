@@ -582,6 +582,80 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctRedeliver => 'Erneut übertragen';
 
   @override
+  String get acctStateActionReopen => 'Für die Wartung wieder öffnen';
+
+  @override
+  String get acctStateActionResume => 'Neue Arbeit wieder zulassen';
+
+  @override
+  String get acctStateActionRetire => 'Anbindungen stilllegen';
+
+  @override
+  String get acctStateActionStop => 'Neue Arbeit stoppen';
+
+  @override
+  String get acctStateActive =>
+      'Aktiv — neue Verbindungen, Zuordnungen und Lieferungen werden angenommen';
+
+  @override
+  String get acctStateChanged => 'Der Zustand wurde geändert.';
+
+  @override
+  String get acctStateConfirmReopen =>
+      'Die Anbindungen für die Wartung wieder öffnen? Neue Arbeit bleibt abgelehnt.';
+
+  @override
+  String get acctStateConfirmResume =>
+      'Neue Buchhaltungsarbeit wieder annehmen?';
+
+  @override
+  String get acctStateConfirmRetire =>
+      'Die Buchhaltungsanbindungen stilllegen? Nur die Inhaberin oder der Inhaber kann sie wieder öffnen, und nur für die Wartung.';
+
+  @override
+  String get acctStateConfirmStop =>
+      'Keine neue Buchhaltungsarbeit mehr annehmen? Lesen, Widerrufen und das Beenden von Begonnenem bleiben möglich.';
+
+  @override
+  String get acctStateDerived =>
+      'Folgt der Einstellung der Buchhaltungsanbindungen; niemand hat anders entschieden.';
+
+  @override
+  String get acctStateFailed => 'Der Zustand konnte nicht geändert werden.';
+
+  @override
+  String get acctStateReasonLabel => 'Grund';
+
+  @override
+  String get acctStateReasonRequired => 'Nennen Sie den Grund.';
+
+  @override
+  String get acctStateRefusedOff =>
+      'Die Buchhaltungsanbindungen sind in diesem Bereich ausgeschaltet.';
+
+  @override
+  String get acctStateRefusedOwner =>
+      'Nur die Inhaberin oder der Inhaber legt die Anbindungen still oder öffnet sie wieder.';
+
+  @override
+  String get acctStateRefusedUnresolved =>
+      'Es laufen noch Lieferungen. Beenden oder klären Sie sie vor dem Stilllegen.';
+
+  @override
+  String get acctStateRetired =>
+      'Stillgelegt — keine neue Arbeit; der Verlauf bleibt lesbar';
+
+  @override
+  String get acctStateServicing =>
+      'Wartung — keine neue Arbeit; Verlauf, Widerruf und unfertige Lieferungen laufen weiter';
+
+  @override
+  String get acctStateSubmit => 'Bestätigen';
+
+  @override
+  String get acctStateTitle => 'Neue Buchhaltungsarbeit';
+
+  @override
   String get acctTargetNotDeliveredYet =>
       'An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.';
 
