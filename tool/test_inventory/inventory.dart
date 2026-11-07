@@ -249,6 +249,15 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'accounting interchange package',
+    root: 'packages/deskilo_accounting_interchange/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test in packages/deskilo_accounting_interchange (#3376)',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_accounting_interchange',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'jurisdiction ES package',
     root: 'packages/deskilo_jurisdiction_es/test',
     suffix: '_test.dart',
