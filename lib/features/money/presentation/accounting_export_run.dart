@@ -234,7 +234,7 @@ class AccountingExportRun {
       case ExportKind.genericJournal:
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
       case null:
-        break;
+        throw StateError('no export is registered for ${format.id}');
     }
   }
 
