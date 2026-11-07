@@ -2,3 +2,4 @@
 *.ics -text
 # The national tax schemas and layouts under test/fixtures/vat_filing/ are the authorities' bytes, pinned by SHA-256 in tool/vat_filing/validate.sh.
 test/fixtures/vat_filing/** -text
+test/parity/golden/** -text
