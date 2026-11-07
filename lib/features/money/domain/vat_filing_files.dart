@@ -46,7 +46,6 @@ import 'dart:convert' show Encoding, utf8;
 import '../../../core/time/date_text.dart';
 import 'vat_declaration.dart';
 import 'vat_filing_ech0217.dart';
-import 'vat_filing_it.dart';
 import 'vat_filing_terms.dart';
 
 export 'vat_filing_terms.dart';
@@ -78,12 +77,11 @@ class VatFilingParty {
   /// Swiss return says `formOfReporting` 2), not on the invoice.
   final bool onReceipts;
 
-  /// The country whose file this dispatcher still writes: `CH`, `IT`,
+  /// The country whose file this dispatcher still writes: `CH`,
   /// else null. The others have their own packages (#3332, #3333) and are
   /// chosen by the resolver, not here.
   String? get fileCountry => switch (countryCode.trim().toUpperCase()) {
     'CH' => 'CH',
-    'IT' => 'IT',
     _ => null,
   };
 }
@@ -111,16 +109,6 @@ class VatFilingParty {
         organisationName: party.name,
         onReceipts: party.onReceipts,
         generatedAt: now,
-      ),
-    ),
-    'IT' => (
-      encoding: utf8,
-      fileName: 'lipe-$start.xml',
-      text: lipeXml(
-        declaration: declaration,
-        vatId: party.vatId,
-        fiscalCode: party.legalId,
-        facts: facts,
       ),
     ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),

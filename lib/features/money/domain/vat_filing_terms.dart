@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The terms every filing file shares (see `vat_filing_files.dart`): why
-// one cannot be written, what the person is asked beyond the settings,
-// and the month or quarter a periodic return covers.
-import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
-    show monthOrQuarter;
-
-import 'vat_declaration.dart';
-
+// one cannot be written and what the person is asked beyond the settings.
 /// Why a filing file cannot be written for a declaration.
 enum VatFilingFileProblem {
   /// A UStVA covers a calendar month or quarter.
@@ -87,14 +81,4 @@ class VatFilingFacts {
 
   /// Spain: receives supplies taxed under the cash criterion.
   final bool cashCriterionRecipient;
-}
-
-/// The calendar month (1-12) or quarter (1-4) a return covers; anything
-/// else is not the period of a monthly or quarterly return.
-({int? month, int? quarter}) monthOrQuarterOf(VatDeclaration declaration) {
-  final period = monthOrQuarter(declaration.periodStart, declaration.periodEnd);
-  if (period == null) {
-    throw const VatFilingFileException(VatFilingFileProblem.period);
-  }
-  return period;
 }

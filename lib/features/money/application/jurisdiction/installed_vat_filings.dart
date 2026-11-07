@@ -9,6 +9,7 @@ import 'package:deskilo_jurisdiction_de/deskilo_jurisdiction_de.dart';
 import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
 import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
 import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart';
+import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import 'legacy_vat_filing_contribution.dart';
@@ -37,12 +38,9 @@ final List<VatFilingContribution> installedVatFilings = [
   const GbVatFilingContribution(),
   const CaVatFilingContribution(),
   const EsVatFilingContribution(),
+  const ItVatFilingContribution(),
   LegacyVatFilingContribution(
     _descriptor('CH', 'ech-0217-2'),
-    mediaType: 'application/xml',
-  ),
-  LegacyVatFilingContribution(
-    _descriptor('IT', 'lipe-ivp18'),
     mediaType: 'application/xml',
   ),
 ];

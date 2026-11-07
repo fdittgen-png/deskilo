@@ -1,8 +1,8 @@
 {
-  "recordedSha": "236a271bc21a0390e6af495edf961a0dc592bc7e",
+  "recordedSha": "296922349fdb6c66a0898071cd2c6356ddac6168",
   "recordedDate": "2026-11-07",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2470,"functions":13976,"cyclomatic>=9":1431,"cyclomatic>=25":80,"cognitive>=15":540,"cognitive>=30":73,"length>=150":51,"parameters>=5":641,"parameters>=7":154,"partOfFiles":17},
+  "totals": {"files":2469,"functions":13969,"cyclomatic>=9":1430,"cyclomatic>=25":80,"cognitive>=15":540,"cognitive>=30":73,"length>=150":51,"parameters>=5":641,"parameters>=7":154,"partOfFiles":17},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -1605,7 +1605,7 @@
     {"p":"lib/features/money/application/invoice_action.dart","loc":117,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":6,"len":38,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/invoice_detail_facts.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":8,"len":29,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/issue_invoice.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":28,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/application/jurisdiction/installed_vat_filings.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":8,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/jurisdiction/installed_vat_filings.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":8,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart","loc":211,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":7,"cyc":6,"len":81,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lease_commands.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":7,"len":18,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lookup_company.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":3,"len":17,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1939,9 +1939,8 @@
     {"p":"lib/features/money/domain/vat_declaration_period.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":7,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_declaration_report.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":8,"len":51,"params":10,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/vat_filing_ech0217.dart","loc":146,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":26,"cyc":18,"len":145,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/vat_filing_files.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":4,"len":38,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/vat_filing_it.dart","loc":139,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":12,"cyc":9,"len":63,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/vat_filing_terms.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":9,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/vat_filing_files.dart","loc":52,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":28,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/vat_filing_terms.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_form_boxes.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":4,"len":28,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_form_catalogue.dart","loc":95,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":6,"cyc":7,"len":27,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_form_catalogue/ca.dart","loc":124,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

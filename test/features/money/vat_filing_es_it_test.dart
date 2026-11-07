@@ -17,7 +17,6 @@ import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
-import 'package:deskilo/features/money/domain/vat_filing_it.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
 import 'package:flutter/material.dart';
@@ -305,12 +304,19 @@ void main() {
       ),
       String vatId = 'IT01234567890',
       String fiscalCode = '01234567890',
-    }) => lipeXml(
-      declaration: d,
-      vatId: vatId,
-      fiscalCode: fiscalCode,
+    }) => productFile(
+      d,
+      VatFilingParty(
+        countryCode: 'IT',
+        name: 'Spazio Srl',
+        street: '',
+        postalCode: '',
+        city: '',
+        vatId: vatId,
+        legalId: fiscalCode,
+      ),
       facts: facts,
-    );
+    ).text;
 
     test('one Modulo of the quarter, VP2-VP6 and VP14', () {
       final text = lipe(quarter);
