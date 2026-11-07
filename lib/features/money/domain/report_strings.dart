@@ -19,7 +19,7 @@
 // of words, and `reportStringsOf` is the single place that reads them
 // for a document. Per-language templates and reader-language resolution
 // are untouched; only HOW the resolved words reach a builder changes.
-import '../../profile/domain/personal_info.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Courtesy;
 
 class ReportStrings {
   const ReportStrings({
