@@ -31,6 +31,8 @@ void main() {
             uri.startsWith('package:deskilo_money_kernel/') ||
             uri.startsWith('package:deskilo_jurisdiction_standards/') ||
             uri.startsWith('package:crypto/') ||
+            uri.startsWith('package:deskilo_tax_reference/') ||
+            uri.startsWith('package:deskilo_vat_declaration/') ||
             uri.startsWith('package:deskilo_accounting_interchange/') ||
             own;
         if (!ok) bad.add('${f.path}:${i + 1}: $uri');
@@ -58,6 +60,8 @@ void main() {
       'crypto',
       'deskilo_jurisdiction_standards',
       'deskilo_money_kernel',
+      'deskilo_tax_reference',
+      'deskilo_vat_declaration',
     ]);
   });
 }
