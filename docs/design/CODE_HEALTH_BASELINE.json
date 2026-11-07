@@ -1,5 +1,5 @@
 {
-  "recordedSha": "d74a690931c688a2faad027ba1c742aae2f3283c",
+  "recordedSha": "4df2bd5a4f1c9af9b6914ec8b71e25d737d1edad",
   "recordedDate": "2026-11-07",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2470,"functions":13952,"cyclomatic>=9":1429,"cyclomatic>=25":80,"cognitive>=15":539,"cognitive>=30":73,"length>=150":51,"parameters>=5":640,"parameters>=7":154,"partOfFiles":17},
@@ -1486,7 +1486,7 @@
     {"p":"lib/features/mcp/providers/eligibility_review_form_provider.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":2,"cyc":5,"len":11,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/providers/mcp_consent_form_provider.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":2,"cyc":4,"len":14,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/providers/mcp_policy_form_provider.dart","loc":53,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":7,"len":12,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/mcp/providers/mcp_providers.dart","loc":301,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":7,"cyc":7,"len":40,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/mcp/providers/mcp_providers.dart","loc":316,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":7,"cyc":7,"len":49,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/account_favorite.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":7,"len":36,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/me_actions.dart","loc":101,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":16,"cyc":13,"len":56,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/me_spaces_layout.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":15,"cyc":11,"len":42,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
