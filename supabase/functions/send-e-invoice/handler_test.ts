@@ -28,6 +28,7 @@ interface Rec extends TransmissionRow {
   queryError: string;
   artifact: Artifact;
   resolvedBy: string;
+  declared?: Record<string, string>;
 }
 
 const WS = "ws-1";
@@ -142,6 +143,7 @@ class FakeStore implements TransmissionStore {
         receiverScheme: i.receiverScheme,
         receiverId: i.receiverId,
       },
+      declared: i.declared,
     });
     return Promise.resolve({ outcome: "prepared", id, phase: "prepared" });
   }
@@ -355,6 +357,7 @@ Deno.test("O3: a record prepared but never dispatched is claimed by the next req
     bytes: new TextEncoder().encode("<xml>one</xml>") as Uint8Array<
       ArrayBuffer
     >,
+    declared: {},
   });
   const r = await read(await call(s, p.fetchImpl, bodyOf()));
   assertEquals(r.body.phase, "accepted");
@@ -766,6 +769,7 @@ Deno.test("O3/O4: a send on a record whose dispatch window passed answers uncert
     bytes: new TextEncoder().encode("<xml>one</xml>") as Uint8Array<
       ArrayBuffer
     >,
+    declared: {},
   });
   await s.claim(prep.id!, "dead-owner", 150);
   s.now += 10 * 60_000;
@@ -774,4 +778,51 @@ Deno.test("O3/O4: a send on a record whose dispatch window passed answers uncert
   assertEquals(r.body.status, "failed"); // what an older client decodes
   assertEquals(p.posts.length, 0);
   assertEquals(s.rows.get(prep.id!)!.phase, "uncertain");
+});
+
+Deno.test("#3336: what the client declares is clipped to strings of four keys and kept apart", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  await call(
+    s,
+    p.fetchImpl,
+    bodyOf({
+      declared: {
+        renderer: "facturX",
+        app_version: "1.2.3",
+        renderer_version: 7, // a non-string is dropped, never coerced
+        format: ["facturX"],
+        issuer: "forged",
+        actor_user_id: "forged",
+      },
+    }),
+  );
+  const row = [...s.rows.values()][0];
+  assertEquals(row.declared, { renderer: "facturX", app_version: "1.2.3" });
+});
+
+Deno.test("#3336: a long declared value is cut and a malformed declaration is ignored", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  await call(
+    s,
+    p.fetchImpl,
+    bodyOf({ declared: { renderer: "x".repeat(400) } }),
+  );
+  assertEquals([...s.rows.values()][0].declared!.renderer.length, 120);
+  for (const bad of ["facturX", 42, null, ["renderer"], true]) {
+    const s2 = new FakeStore();
+    const r = await read(
+      await call(s2, provider(ok).fetchImpl, bodyOf({ declared: bad })),
+    );
+    assertEquals(r.status, 200); // the send is unaffected
+    assertEquals([...s2.rows.values()][0].declared, {});
+  }
+});
+
+Deno.test("#3336: a send without a declaration (an older client) records none", async () => {
+  const s = new FakeStore();
+  const r = await read(await call(s, provider(ok).fetchImpl, bodyOf()));
+  assertEquals(r.status, 200);
+  assertEquals([...s.rows.values()][0].declared, {});
 });
