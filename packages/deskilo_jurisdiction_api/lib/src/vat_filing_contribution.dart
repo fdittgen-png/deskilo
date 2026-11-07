@@ -9,8 +9,10 @@ import 'validation_result.dart';
 /// loading, authorization and logging).
 enum FilingSource { declaration, party, facts }
 
-/// A context that passed [VatFilingContribution.validate]. Only a
-/// contribution makes one, so `build` cannot be handed an unchecked input.
+/// A context a contribution validated. It is public so an implementation can
+/// make one, but it proves nothing by itself: `build` must validate again and
+/// refuse a filing its own `validate` would not issue (see
+/// [VatFilingContribution.build]).
 class ValidatedFiling {
   ValidatedFiling(this.context);
 
@@ -33,6 +35,8 @@ abstract class VatFilingContribution {
     FilingContext context,
   );
 
-  /// The file of a validated [filing].
+  /// The file of a validated [filing]. An implementation validates [filing]
+  /// again and throws a [StateError] when its own [validate] would refuse it
+  /// (a foreign or hand-made filing): `build` never skips the checks.
   GeneratedArtifact build(ValidatedFiling filing);
 }

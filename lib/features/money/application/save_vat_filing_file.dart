@@ -69,9 +69,16 @@ class SaveVatFilingFile {
     );
     final filing = checked.filing;
     if (filing == null) {
-      throw VatFilingFileException(
-        VatFilingFileProblem.values.byName(checked.result.codes.first),
-      );
+      // A code this host does not know is a contract fault, not a problem the
+      // person can fix: it takes the generic failure path (with its trace).
+      final problem =
+          VatFilingFileProblem.values.asNameMap()[checked.result.codes.firstOrNull];
+      if (problem == null) {
+        throw StateError(
+          'the add-on refused with codes ${checked.result.codes}',
+        );
+      }
+      throw VatFilingFileException(problem);
     }
     final artifact = contribution.build(filing);
     return _save(

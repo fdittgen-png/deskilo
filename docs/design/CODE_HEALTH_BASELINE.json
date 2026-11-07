@@ -1,8 +1,8 @@
 {
-  "recordedSha": "0a2940550f55243d06226e1f87a1aecb85743904",
+  "recordedSha": "5e64254cd3540c83e7cb3e85f8e5c0d3ccac98dc",
   "recordedDate": "2026-11-06",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2473,"functions":13997,"cyclomatic>=9":1435,"cyclomatic>=25":80,"cognitive>=15":542,"cognitive>=30":73,"length>=150":51,"parameters>=5":643,"parameters>=7":156,"partOfFiles":17},
+  "totals": {"files":2473,"functions":13998,"cyclomatic>=9":1435,"cyclomatic>=25":80,"cognitive>=15":542,"cognitive>=30":73,"length>=150":51,"parameters>=5":643,"parameters>=7":156,"partOfFiles":17},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -1606,7 +1606,7 @@
     {"p":"lib/features/money/application/invoice_detail_facts.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":8,"len":29,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/issue_invoice.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":28,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/jurisdiction/installed_vat_filings.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":8,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart","loc":173,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":3,"cyc":3,"len":60,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart","loc":184,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":3,"cyc":3,"len":60,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lease_commands.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":7,"len":18,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lookup_company.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":3,"len":17,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/offer_subscription_levels.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":15,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1622,7 +1622,7 @@
     {"p":"lib/features/money/application/save_dunning_rules.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":4,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/save_invoice_look.dart","loc":20,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":10,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/save_legal_identity.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":30,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/application/save_vat_filing_file.dart","loc":63,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":4,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/save_vat_filing_file.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":5,"len":40,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/save_vat_rates.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":4,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/schedule_expense.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":4,"cyc":5,"len":36,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/application/send_reminder.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":26,"params":7,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},

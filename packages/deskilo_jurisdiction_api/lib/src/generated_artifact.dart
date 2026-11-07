@@ -11,11 +11,12 @@ class GeneratedArtifact {
     required this.mediaType,
     required this.fileName,
     required Map<String, String> provenance,
-  }) : bytes = Uint8List.fromList(bytes),
+  }) : bytes = Uint8List.fromList(bytes).asUnmodifiableView(),
        sha256 = crypto.sha256.convert(bytes).toString(),
        provenance = Map.unmodifiable(provenance);
 
-  /// A private copy of the bytes: the artifact does not change after it is built.
+  /// A private, read-only view of a copy of the bytes: the artifact, and the
+  /// digest computed from them, cannot change after it is built.
   final Uint8List bytes;
   final String mediaType;
   final String fileName;

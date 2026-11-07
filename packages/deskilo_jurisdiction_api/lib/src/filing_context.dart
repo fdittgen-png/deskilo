@@ -3,7 +3,7 @@
 /// One line of a VAT return: what the period's documents add up to at one
 /// rate and category, in one direction.
 class FilingLine {
-  const FilingLine({
+  FilingLine({
     required this.percent,
     required this.netCents,
     required this.vatCents,
@@ -15,8 +15,8 @@ class FilingLine {
     this.corrects = '',
     this.correctsStart,
     this.correctsEnd,
-    this.components = const [],
-  });
+    List<FilingComponent> components = const [],
+  }) : components = List.unmodifiable(components);
 
   final double percent;
   final int netCents;
@@ -38,7 +38,8 @@ class FilingLine {
   final DateTime? correctsStart;
   final DateTime? correctsEnd;
 
-  /// The taxes the line is made of (GST and QST of a Canadian line).
+  /// The taxes the line is made of (GST and QST of a Canadian line); not
+  /// modifiable.
   final List<FilingComponent> components;
 }
 
@@ -110,20 +111,22 @@ class FilingFacts {
 /// Everything one VAT filing reads. Immutable; the moment of generation is
 /// passed in, so an implementation reads no clock.
 class FilingContext {
-  const FilingContext({
+  FilingContext({
     required this.periodStart,
     required this.periodEnd,
     required this.currency,
-    required this.lines,
+    required List<FilingLine> lines,
     required this.party,
     required this.generatedAt,
     this.facts = const FilingFacts(),
     this.number = '',
-  });
+  }) : lines = List.unmodifiable(lines);
 
   final DateTime periodStart;
   final DateTime periodEnd;
   final String currency;
+
+  /// The return's lines; not modifiable.
   final List<FilingLine> lines;
   final FilingParty party;
   final FilingFacts facts;

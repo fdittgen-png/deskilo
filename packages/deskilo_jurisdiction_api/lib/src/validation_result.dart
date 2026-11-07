@@ -25,8 +25,10 @@ class ValidationIssue {
 /// The outcome of validating a [FilingContext]: ok, or the issues.
 class ValidationResult {
   const ValidationResult.ok() : issues = const [];
-  const ValidationResult.refused(this.issues);
+  ValidationResult.refused(List<ValidationIssue> issues)
+    : issues = List.unmodifiable(issues);
 
+  /// What stops the filing; not modifiable.
   final List<ValidationIssue> issues;
 
   bool get isOk => issues.isEmpty;

@@ -26,7 +26,15 @@ void main() {
     );
     source[0] = 0;
     expect(utf8.decode(artifact.bytes), 'hello');
-    expect(() => artifact.provenance['module_id'] = 'y', throwsUnsupportedError);
+    expect(
+      () => artifact.bytes[0] = 0,
+      throwsUnsupportedError,
+      reason: 'the bytes the digest was computed from are read-only',
+    );
+    expect(
+      () => artifact.provenance['module_id'] = 'y',
+      throwsUnsupportedError,
+    );
   });
 
   test('the descriptor travels as provenance, with the contract version', () {
@@ -48,12 +56,62 @@ void main() {
 
   test('a validation result is ok or lists stable codes', () {
     expect(const ValidationResult.ok().isOk, isTrue);
-    const refused = ValidationResult.refused([
+    final refused = ValidationResult.refused([
       ValidationIssue('period'),
       ValidationIssue('taxNumber', field: 'facts.taxNumber'),
     ]);
     expect(refused.isOk, isFalse);
     expect(refused.codes, ['period', 'taxNumber']);
     expect(const ValidationIssue('a'), const ValidationIssue('a'));
+    expect(
+      () => refused.issues.add(const ValidationIssue('x')),
+      throwsUnsupportedError,
+    );
+  });
+
+  test('a context cannot be edited through the lists it was built from', () {
+    final components = [
+      const FilingComponent(
+        scheme: 'GST',
+        authority: 'CRA',
+        percent: 5,
+        baseCents: 100,
+        taxCents: 5,
+      ),
+    ];
+    final line = FilingLine(
+      percent: 5,
+      netCents: 100,
+      vatCents: 5,
+      grossCents: 105,
+      invoiceCount: 1,
+      components: components,
+    );
+    final lines = [line];
+    final context = FilingContext(
+      periodStart: DateTime.utc(2026),
+      periodEnd: DateTime.utc(2026, 1, 31),
+      currency: 'CAD',
+      lines: lines,
+      generatedAt: DateTime.utc(2026, 2),
+      party: const FilingParty(
+        countryCode: 'CA',
+        name: 'n',
+        street: 's',
+        postalCode: 'p',
+        city: 'c',
+        vatId: 'v',
+        legalId: 'l',
+      ),
+    );
+    lines.clear();
+    components.clear();
+    expect(context.lines, hasLength(1));
+    expect(context.lines.single.components, hasLength(1));
+    expect(() => context.lines.add(line), throwsUnsupportedError);
+    expect(
+      () => context.lines.single.components.clear(),
+      throwsUnsupportedError,
+    );
   });
 }

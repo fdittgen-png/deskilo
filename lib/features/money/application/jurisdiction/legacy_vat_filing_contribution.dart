@@ -12,6 +12,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../domain/vat_components.dart';
 import '../../domain/vat_declaration.dart';
@@ -58,6 +59,15 @@ class LegacyVatFilingContribution implements VatFilingContribution {
 
   @override
   GeneratedArtifact build(ValidatedFiling filing) {
+    // Never trust the token: a filing made by hand, or for another country's
+    // add-on, is checked again here.
+    if (!_isOwnCountry(filing.context.party.countryCode) ||
+        validate(filing.context).filing == null) {
+      throw StateError(
+        '${descriptor.moduleId} was asked to build a filing it would not '
+        'validate',
+      );
+    }
     final file = _write(filing.context);
     return GeneratedArtifact(
       bytes: Uint8List.fromList(file.encoding.encode(file.text)),
@@ -66,6 +76,12 @@ class LegacyVatFilingContribution implements VatFilingContribution {
       provenance: descriptor.toProvenance(),
     );
   }
+
+  /// Whether [countryCode] (as the host spells it: `UK` is `GB`) is the
+  /// country this add-on files for.
+  bool _isOwnCountry(String countryCode) => descriptor.capabilityId.endsWith(
+    '.${LegalContext(countryCode: countryCode).normalized}',
+  );
 
   ({String fileName, String text, Encoding encoding}) _write(
     FilingContext context,
