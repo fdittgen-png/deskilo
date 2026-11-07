@@ -36,6 +36,7 @@ void main() {
     final decoded = jsonDecode(
         File('assets/instance/bundle.json').readAsStringSync()) as Map;
     final shared = filesWithExtension('supabase/functions/_shared', '.ts')
+        .where((f) => !f.path.endsWith('_test.ts'))
         .map((f) => '_shared/${f.uri.pathSegments.last}')
         .toSet();
     expect(shared, isNotEmpty, reason: 'money.ts lives there');
@@ -81,6 +82,15 @@ void main() {
           '_shared/jurisdiction/fr/rules.ts',
         ]));
     expect(names, isNot(contains('demo/parts/deep/part_test.ts')));
+    put('supabase/functions/_shared/money_test.ts', 'export {};');
+    expect(
+        [
+          for (final x in (buildInstanceBundle(tmp.path)['functions'] as List)
+              .cast<Map<String, Object?>>()
+              .single['files'] as List)
+            (x as Map)['name'] as String
+        ],
+        isNot(contains('_shared/money_test.ts')));
     expect(_unresolvedImports([fn]), isEmpty);
   });
 
@@ -88,6 +98,12 @@ void main() {
     final decoded = jsonDecode(
         File('assets/instance/bundle.json').readAsStringSync()) as Map;
     expect(_unresolvedImports(decoded['functions'] as List), isEmpty);
+    for (final fn in decoded['functions'] as List) {
+      for (final x in (fn as Map)['files'] as List) {
+        expect((x as Map)['name'] as String, isNot(endsWith('_test.ts')),
+            reason: 'tests never deploy: ${fn['slug']}');
+      }
+    }
   });
 
   test('#1314 — every migration can run inside the one request that records '

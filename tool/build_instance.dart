@@ -84,6 +84,8 @@ Map<String, Object?> buildInstanceBundle(String root) {
   final shared = [
     if (sharedDir.existsSync())
       for (final f in _filesBelow(sharedDir))
+        // Tests never deploy, shared ones included.
+        if (!f.path.endsWith('_test.ts'))
         {
           'name': '_shared/${_relative(sharedDir, f)}',
           'content': f.readAsStringSync(),
