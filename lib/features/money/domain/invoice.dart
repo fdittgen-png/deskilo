@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
-import 'billing_rules.dart';
 import 'invoice_clauses.dart';
+import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
 import 'vat_rate.dart';
 
