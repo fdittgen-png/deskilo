@@ -12,8 +12,8 @@ import 'dart:io';
 
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
-import 'package:deskilo/features/money/application/export/installed_accounting_exports.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
+import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
@@ -206,8 +206,8 @@ void main() {
       'lib/features/money/presentation/accounting_export_run.dart',
     );
     final dispatched = {
-      for (final c in installedAccountingExports)
-        if (run.contains('ExportKind.${c.kind.name}')) c.formatId,
+      for (final f in exportFormats)
+        if (run.contains('ExportKind.${f.kind.name}')) f.id,
     };
     expect(dispatched, formats);
     // Every format any country is offered is in the table.

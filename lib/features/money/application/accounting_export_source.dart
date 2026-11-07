@@ -8,14 +8,14 @@
 // No format reads anything else for the period: what the file says, it
 // says about one moment.
 import '../../../core/trace/trace_logger.dart';
+import '../domain/accounting_export_formats.dart';
+import '../domain/accounting_export_sources.dart';
 import '../domain/accounting_source_queries.dart';
 import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/export_year.dart';
 import '../domain/invoice.dart';
-import 'export/accounting_export_contribution.dart';
-import 'export/installed_accounting_exports.dart';
 import 'generic_journal_export.dart';
 
 /// The books of one fiscal year as the accounting export holds them: ONE
@@ -118,7 +118,7 @@ class AccountingExportSource {
     );
     if (books == null) return null;
     // #3334 -- what the format declares, from the registry; not a set here.
-    final need = requirementsOf(formatId);
+    final need = sourcesOf(formatId);
     final posted =
         need.posting == ExportPosting.only ||
         (need.posting == ExportPosting.whenLocalBook &&

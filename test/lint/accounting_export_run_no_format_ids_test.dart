@@ -5,14 +5,14 @@
 // the run dispatches on (`ExportKind`, switched exhaustively); the run files do
 // not name a format by its id. A new format is a registration, not an edit to
 // the run.
-import 'package:deskilo/features/money/application/export/accounting_export_contribution.dart';
-import 'package:deskilo/features/money/application/export/installed_accounting_exports.dart';
+import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
+import 'package:deskilo/features/money/domain/accounting_export_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
 void main() {
-  final ids = [for (final c in installedAccountingExports) c.formatId];
+  final ids = [for (final f in exportFormats) f.id];
 
   test('no accounting export run file names a registered format id', () {
     final run = filesWithExtension(
@@ -42,7 +42,7 @@ void main() {
 
   test('every writer family is registered by a format, and the run covers '
       'every family', () {
-    final used = {for (final c in installedAccountingExports) c.kind};
+    final used = {for (final f in exportFormats) f.kind};
     expect(
       used,
       ExportKind.values.toSet(),
@@ -65,8 +65,8 @@ void main() {
   test('the Portuguese SAF-T is its own family, registered once', () {
     expect(
       [
-        for (final c in installedAccountingExports)
-          if (c.kind == ExportKind.saftPortugal) c.formatId,
+        for (final f in exportFormats)
+          if (f.kind == ExportKind.saftPortugal) f.id,
       ],
       ['saft_pt'],
     );
