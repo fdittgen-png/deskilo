@@ -7,12 +7,13 @@ import '../../../core/time/calendar_days.dart';
 // importers of this file keep reading it here until the sweep.
 export 'invoice_kind.dart';
 
-/// What an invoice CHARGES FOR (#802, migration 0142).
+/// When the two automatic invoice runs happen, stored in
+/// `workspaces.billing_rules` (migration 0142).
 ///
-/// A subscription is paid in advance, so its invoice has to exist before
-/// the month it covers; what the month actually cost — overage,
-/// accessories, services, packages, adjustments — cannot be known until
-/// the month ends. One document could never be both, so there are two.
+/// Every field is a decision an owner can defend to their members, which
+/// is why none of them is hard-coded: when the subscription invoice
+/// arrives, whether the end-of-month one is raised at all, and whether a
+/// member who owes nothing extra still gets the document that says so.
 class BillingRules {
   const BillingRules({
     this.subscriptionAuto = true,
