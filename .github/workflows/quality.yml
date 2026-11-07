@@ -167,6 +167,21 @@ jobs:
         run: dart pub get && dart analyze --fatal-infos && dart test
         working-directory: packages/deskilo_asset_gzip
 
+      # #3329 — every jurisdiction add-on package that has tests is
+      # analyzed and tested with coverage, without a step of its own to
+      # remember. test/lint/package_quality_test.dart pins that every
+      # package with tests is covered here, by name or by this loop.
+      - name: Tests of the jurisdiction packages
+        run: |
+          shopt -s nullglob
+          for p in packages/deskilo_jurisdiction_*/; do
+            [ -d "$p/test" ] || continue
+            echo "::group::$p"
+            (cd "$p" && dart pub get && dart analyze --fatal-infos \
+              && dart test --coverage=coverage) || exit 1
+            echo "::endgroup::"
+          done
+
       - name: Analyze (lib + test)
         # Direct Dart analysis waits for analyzer plugins to finish.
         run: dart analyze --fatal-infos

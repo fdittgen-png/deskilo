@@ -13,6 +13,7 @@ on:
   pull_request:
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'test/features/money/vat_filing_es_it_test.dart'
       - 'test/features/money/vat_registers_es_it_test.dart'
       - 'test/features/money/vat_filing_files_test.dart'
@@ -23,6 +24,7 @@ on:
     branches: [master]
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'test/fixtures/vat_filing/**'
       - 'tool/vat_filing/**'
   workflow_dispatch:

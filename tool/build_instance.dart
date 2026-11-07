@@ -46,6 +46,20 @@ const Map<String, bool> functionVerifyJwt = {
   'vies-check': true,
 };
 
+/// #3329 — every file below [dir], nested ones included, in path order:
+/// a module moved into a sub-directory must not drop out of the bundle.
+List<File> _filesBelow(Directory dir) => dir
+    .listSync(recursive: true, followLinks: false)
+    .whereType<File>()
+    .toList()
+  ..sort((a, b) => a.path.compareTo(b.path));
+
+/// [f]'s path under [dir], with `/` separators and no leading one.
+String _relative(Directory dir, File f) {
+  final base = dir.path.endsWith('/') ? dir.path : '${dir.path}/';
+  return f.path.substring(base.length).replaceAll(r'\', '/');
+}
+
 /// The bundle, built from the repository at [root].
 Map<String, Object?> buildInstanceBundle(String root) {
   final migrations = Directory('$root/supabase/migrations')
@@ -69,10 +83,9 @@ Map<String, Object?> buildInstanceBundle(String root) {
   final sharedDir = Directory('$root/supabase/functions/_shared');
   final shared = [
     if (sharedDir.existsSync())
-      for (final f in sharedDir.listSync().whereType<File>().toList()
-        ..sort((a, b) => a.path.compareTo(b.path)))
+      for (final f in _filesBelow(sharedDir))
         {
-          'name': '_shared/${f.uri.pathSegments.last}',
+          'name': '_shared/${_relative(sharedDir, f)}',
           'content': f.readAsStringSync(),
         },
   ];
@@ -93,13 +106,12 @@ Map<String, Object?> buildInstanceBundle(String root) {
                     dir.uri.pathSegments.where((s) => s.isNotEmpty).last] ??
                 true,
             'files': [
-              for (final f in dir.listSync().whereType<File>().toList()
-                ..sort((a, b) => a.path.compareTo(b.path)))
+              for (final f in _filesBelow(dir))
                 // A function's tests never deploy.
                 if (!f.path.endsWith('_test.ts'))
                 {
                   'name':
-                      '${dir.uri.pathSegments.where((s) => s.isNotEmpty).last}/${f.uri.pathSegments.last}',
+                      '${dir.uri.pathSegments.where((s) => s.isNotEmpty).last}/${_relative(dir, f)}',
                   'content': f.readAsStringSync(),
                 },
               ...shared,
