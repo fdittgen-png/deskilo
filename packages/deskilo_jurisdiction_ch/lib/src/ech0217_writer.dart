@@ -140,7 +140,7 @@ String ech0217Xml(FilingContext context) {
               'reportingPeriodTill',
               nest: ymd(context.periodEnd, separator: '-'),
             )
-            ..element('typeOfSubmission', nest: '1')
+            ..element('typeOfSubmission', nest: '2')
             ..element('formOfReporting', nest: onReceipts ? '2' : '1')
             ..element('businessReferenceId', nest: _reference50(context));
           b.element(
