@@ -476,6 +476,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_money_kernel:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_money_kernel"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_push:
     dependency: "direct main"
     description:

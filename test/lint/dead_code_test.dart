@@ -47,7 +47,7 @@ const Map<String, String> _allowed = {
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
 
   // Domain rules the app was meant to use and does not yet.
-  'lib/features/money/domain/accounting_amount.dart::settleForeign':
+  'packages/deskilo_money_kernel/lib/src/accounting_amount.dart::settleForeign':
       '#2365 — the accounting engine',
   'lib/features/money/domain/accounting_tax.dart::projectTax':
       '#2365 — the accounting engine',
@@ -187,6 +187,18 @@ int read() => counterProvider + user() + sql.length;
 import 'package:x/a.dart';
 void main() => onlyTested();
 ''');
+      // #3376: a scanned package is checked like lib/, an unlisted one is not.
+      write('packages/deskilo_money_kernel/lib/k.dart', '''
+int kernelUnused() => 1;
+int kernelUsed() => 2;
+''');
+      write('packages/other_package/lib/o.dart', '''
+int otherUnused() => 1;
+''');
+      write('lib/uses_kernel.dart', '''
+import 'package:deskilo_money_kernel/k.dart';
+int use() => kernelUsed();
+''');
       found = scanDeadCode(root.path);
     });
 
@@ -203,6 +215,13 @@ void main() => onlyTested();
             'a recursive call, a comment and a generated part are '
             'not references',
       );
+    });
+
+    test('an unused function of a scanned package is found, a used one is not '
+        'and an unlisted package is not scanned', () {
+      expect(kindOf('kernelUnused'), DeadCodeKind.unreferenced);
+      expect(kindOf('kernelUsed'), isNull);
+      expect(kindOf('otherUnused'), isNull);
     });
 
     test('a function only a test calls is found', () {
@@ -247,6 +266,8 @@ void main() => onlyTested();
         'onlyTested',
         'Box',
         'read', // lib/b.dart's own function, which nothing calls
+        'use', // lib/uses_kernel.dart's own function, which nothing calls
+        'kernelUnused', // the scanned kernel package (#3376)
       });
     });
   });

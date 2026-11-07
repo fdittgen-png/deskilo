@@ -31,6 +31,7 @@ void main() {
     'packages/deskilo_document_model/lib',
     'packages/deskilo_document_editor/lib',
     'packages/deskilo_task_recording/lib',
+    'packages/deskilo_money_kernel/lib', // #3376 -- JsonReader moved here
   ]).toList();
 
   test('no cast_nullable_to_non_nullable ignore in hand-written lib/', () {
