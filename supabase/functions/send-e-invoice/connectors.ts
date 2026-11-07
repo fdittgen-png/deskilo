@@ -40,13 +40,109 @@ const CONNECTORS: readonly Connector[] = [
   roEfacturaConnector,
 ];
 
-export const PROVIDERS: readonly string[] = CONNECTORS.map((c) => c.id);
+/** The registry of a list of connectors (#3338). The installed one is built
+ * from [CONNECTORS]; a test builds one WITHOUT a connector to prove the others
+ * keep working when a country's provider is retired. Every operation is
+ * derived from the list: nothing here names a provider. */
+export function buildRegistry(list: readonly Connector[]) {
+  const connectorOf = (provider: string): Connector =>
+    list.find((c) => c.id === provider) ?? genericConnector;
+  const providers: readonly string[] = list.map((c) => c.id);
+  const requiredFields = (provider: string): string[] =>
+    connectorOf(provider).requiredFields;
+  const acceptedFormats = (provider: string): string[] =>
+    connectorOf(provider).acceptedFormats;
+
+  /** Sends [doc] through [provider]. A document in a syntax the provider
+   * does not take is refused before anything leaves — a network that
+   * rejects it later costs the customer a day. */
+  async function submit(
+    provider: string,
+    cfg: Config,
+    doc: ConnectorDocument,
+    fetchImpl: Fetch = fetch,
+  ): Promise<Submission> {
+    if (!list.some((c) => c.id === provider)) {
+      // a retired or unknown provider never falls back to the generic upload
+      // (#3338): nothing leaves, and the owner is told why
+      return {
+        status: "failed",
+        externalId: "",
+        detail: `no connector is installed for ${provider}`,
+        receipt: {},
+      };
+    }
+    const formats = acceptedFormats(provider);
+    if (formats.length > 0 && !formats.includes(doc.format)) {
+      // nothing has left: a refusal of ours, not the platform's verdict
+      return {
+        status: "failed",
+        externalId: "",
+        detail: `${provider} does not accept ${doc.format} ` +
+          `(it takes ${formats.join(", ")})`,
+        receipt: {},
+      };
+    }
+    let dispatched = false;
+    const tracked: ConnectorDocument = {
+      ...doc,
+      onDispatch: () => {
+        dispatched = true;
+      },
+    };
+    try {
+      return classify(
+        await connectorOf(provider).submit(cfg, tracked, fetchImpl),
+        dispatched,
+      );
+    } catch (error) {
+      // A thrown error before the upload request left proves nothing was
+      // accepted; after it, the upload may have landed (#3335).
+      return classify(unreachable(error), dispatched);
+    }
+  }
+
+  /** Asks [provider] what became of an earlier submission. The generic
+   * upload has no read-back: its platforms vary too much. */
+  async function status(
+    provider: string,
+    cfg: Config,
+    externalId: string,
+    fetchImpl: Fetch = fetch,
+  ): Promise<Submission> {
+    if (!list.some((c) => c.id === provider)) {
+      return {
+        status: "failed",
+        externalId,
+        detail: `no connector is installed for ${provider}`,
+        receipt: {},
+      };
+    }
+    const readBack = connectorOf(provider).status;
+    if (readBack === undefined) {
+      return {
+        status: "failed",
+        externalId,
+        detail: "the generic upload has no status read-back",
+        receipt: {},
+      };
+    }
+    try {
+      return await readBack(cfg, externalId, fetchImpl);
+    } catch (error) {
+      return unreachable(error);
+    }
+  }
+
+  return { providers, requiredFields, acceptedFormats, submit, status };
+}
+
+const installed = buildRegistry(CONNECTORS);
+
+export const PROVIDERS: readonly string[] = installed.providers;
 export type Provider = string;
 
 export const isProvider = (value: string): boolean => PROVIDERS.includes(value);
-
-const connectorOf = (provider: string): Connector =>
-  CONNECTORS.find((c) => c.id === provider) ?? genericConnector;
 
 /** The documented test environments. A French accredited platform has
  * none shared — its URLs are the platform's own. */
@@ -55,52 +151,14 @@ export const SANDBOX: Record<string, Config> = Object.fromEntries(
 );
 
 /** The config fields a provider cannot send without. */
-export const requiredFields = (provider: string): string[] =>
-  connectorOf(provider).requiredFields;
+export const requiredFields = installed.requiredFields;
 
 /** The syntaxes a provider accepts, by the app's format names. Empty =
  * anything (the generic upload decides for itself). */
-export const acceptedFormats = (provider: string): string[] =>
-  connectorOf(provider).acceptedFormats;
+export const acceptedFormats = installed.acceptedFormats;
 
-/** Sends [doc] through [provider]. A document in a syntax the provider
- * does not take is refused before anything leaves — a network that
- * rejects it later costs the customer a day. */
-export async function submit(
-  provider: string,
-  cfg: Config,
-  doc: ConnectorDocument,
-  fetchImpl: Fetch = fetch,
-): Promise<Submission> {
-  const formats = acceptedFormats(provider);
-  if (formats.length > 0 && !formats.includes(doc.format)) {
-    // nothing has left: a refusal of ours, not the platform's verdict
-    return {
-      status: "failed",
-      externalId: "",
-      detail: `${provider} does not accept ${doc.format} ` +
-        `(it takes ${formats.join(", ")})`,
-      receipt: {},
-    };
-  }
-  let dispatched = false;
-  const tracked: ConnectorDocument = {
-    ...doc,
-    onDispatch: () => {
-      dispatched = true;
-    },
-  };
-  try {
-    return classify(
-      await connectorOf(provider).submit(cfg, tracked, fetchImpl),
-      dispatched,
-    );
-  } catch (error) {
-    // A thrown error before the upload request left proves nothing was
-    // accepted; after it, the upload may have landed (#3335).
-    return classify(unreachable(error), dispatched);
-  }
-}
+export const submit = installed.submit;
+export const status = installed.status;
 
 /** What an answer proves about acceptance (#3335). Before the request that
  * carries the document, nothing can have been accepted: `failed`. After it,
@@ -134,28 +192,4 @@ export function classify(outcome: Submission, dispatched: boolean): Submission {
   const refusal = outcome.httpStatus >= 400 && outcome.httpStatus < 500 &&
     ![408, 409, 429].includes(outcome.httpStatus);
   return refusal ? outcome : { ...outcome, status: "uncertain" };
-}
-
-/** Asks [provider] what became of an earlier submission. The generic
- * upload has no read-back: its platforms vary too much. */
-export async function status(
-  provider: string,
-  cfg: Config,
-  externalId: string,
-  fetchImpl: Fetch = fetch,
-): Promise<Submission> {
-  const readBack = connectorOf(provider).status;
-  if (readBack === undefined) {
-    return {
-      status: "failed",
-      externalId,
-      detail: "the generic upload has no status read-back",
-      receipt: {},
-    };
-  }
-  try {
-    return await readBack(cfg, externalId, fetchImpl);
-  } catch (error) {
-    return unreachable(error);
-  }
 }

@@ -165,7 +165,10 @@
         {"scope": "unit", "ref": "test/features/money/invoice_cii_test.dart"},
         {"scope": "unit", "ref": "test/features/money/invoice_fatturapa_test.dart"},
         {"scope": "unit", "ref": "test/features/money/invoice_ksef_fa3_test.dart"},
-        {"scope": "unit", "ref": "test/features/money/einvoice_channels_test.dart"}
+        {"scope": "unit", "ref": "test/features/money/einvoice_channels_test.dart"},
+        {"scope": "unit", "ref": "test/parity/fatturapa_parity_test.dart"},
+        {"scope": "unit", "ref": "test/core/jurisdiction/invoice_profile_resolver_test.dart"},
+        {"scope": "unit", "ref": "test/core/jurisdiction/retired_italy_test.dart"}
       ]
     },
     {
