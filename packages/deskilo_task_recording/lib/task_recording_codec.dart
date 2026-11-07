@@ -23,47 +23,14 @@ import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 
 import 'action_catalogue.dart';
-import 'safe_payload.dart';
-import 'step_values.dart';
+import 'src/field_checks.dart';
+import 'src/recording_issue.dart';
+import 'src/step_decoder.dart';
 import 'task_recording.dart';
 
+export 'src/recording_issue.dart';
+
 part 'task_recording_decoder.dart';
-part 'task_recording_steps.dart';
-
-/// Why a recording was refused or degraded.
-enum RecordingIssueCode {
-  tooLarge,
-  notJson,
-  notAnObject,
-  wrongFormat,
-  unsupportedSchema,
-  unknownKey,
-  missingField,
-  badValue,
-  tooMany,
-  tooLong,
-  sequence,
-  time,
-  unsafePayload,
-  orphanOutcome,
-  unknownAction,
-  unknownOutcome,
-  inconsistent,
-}
-
-/// One finding. A fatal one refuses the recording.
-class RecordingIssue {
-  const RecordingIssue(this.code, this.path, {this.fatal = true});
-
-  final RecordingIssueCode code;
-
-  /// Where, as a JSON path ("steps[3].payload"). Never the value.
-  final String path;
-  final bool fatal;
-
-  @override
-  String toString() => '${code.name} at $path${fatal ? '' : ' (degraded)'}';
-}
 
 /// What reading a recording produced.
 class RecordingDecodeResult {
@@ -190,23 +157,3 @@ const _rootKeys = {
   'completeness',
 };
 
-const _stepKeys = {
-  'seq',
-  'segment',
-  'elapsed_ms',
-  'kind',
-  'surface',
-  'action',
-  'action_version',
-  'target',
-  'page',
-  'payload',
-  'values',
-  'op',
-  'state',
-  'outcome',
-  'note',
-  'protected',
-  'origin',
-  'source_seq',
-};
