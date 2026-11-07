@@ -46,11 +46,6 @@ const Map<String, String> _allowed = {
   'lib/features/money/domain/verifactu.dart::verifactuRecordXml':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
 
-  // Found when the scan reached every package (#3401).
-  'packages/deskilo_jurisdiction_es/lib/src/aeat303_writer.dart::hasSpanishNif':
-      '#3407 — public and unreferenced: delete it or wire it into the filing check',
-  'packages/deskilo_document_pdf/lib/address_window.dart::addressWindowTopLimit':
-      '#3407 — read only by address_window_test: annotate or move it',
   // Domain rules the app was meant to use and does not yet.
   'packages/deskilo_money_kernel/lib/src/accounting_amount.dart::settleForeign':
       '#2365 — the accounting engine',

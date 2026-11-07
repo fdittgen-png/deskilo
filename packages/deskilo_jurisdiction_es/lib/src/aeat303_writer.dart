@@ -106,9 +106,6 @@ String aeat303File(FilingContext context) {
   return '$header$aux$pages</T3030$year${code}0000>';
 }
 
-/// Whether [vatId] is a NIF the file can carry.
-bool hasSpanishNif(String vatId) => _nif(vatId) != null;
-
 /// [65]: 100 % attributable to the State, 3 integer and 2 decimal positions.
 const _fullShare = 10000;
 

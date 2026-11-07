@@ -18,10 +18,6 @@ const double addressWindowTop = 45 * _mm;
 const double addressWindowWidth = 85 * _mm;
 const double addressWindowHeight = 40 * _mm;
 
-/// The lowest top-edge an aperture still shows. Drawing the field below
-/// this hides it, so it is a bound the conformance check asserts.
-const double addressWindowTopLimit = 50 * _mm;
-
 /// Where the document's own content resumes — 90 mm, below BOTH the
 /// field and the tolerance band under it. The invoice identification
 /// (the word "Facture", the number, the dates) starts here, so this is
