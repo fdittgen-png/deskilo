@@ -143,7 +143,8 @@ const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
   extension: 'zip',
-  needsAccounts: false,
+  needsAccounts: true,
+  needsLegalId: true,
 );
 
 /// Sage 50's audit-trail CSV — the British import shape.
