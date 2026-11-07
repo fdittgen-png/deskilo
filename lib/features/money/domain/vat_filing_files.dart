@@ -279,7 +279,7 @@ String elsterUstvaXml({
         attributes: {'version': '11'},
         nest: () {
           b
-            ..element('Verfahren', nest: 'ElsterAnmeldung')
+            ..element('Verfahren', nest: 'ElsterAnmeldunG')
             ..element('DatenArt', nest: 'UStVA')
             ..element('Vorgang', nest: 'send-Auth');
         },
@@ -373,7 +373,7 @@ String ediTvaCa3({
   final declarant = id.substring(0, 9);
   final reference = _reference(declaration);
   final segments = <String>[
-    _seg(['UNH', '1', 'INFENT:D:00A:UN:TVA']),
+    _seg(['UNH', '1', 'INFENX:D:00A:UN:TVA']),
     _seg(['BGM', '3310CA3::DGF', reference, '9']),
     _seg(['DTM', '137:${ymd(createdAt)}:102']),
     _seg(['DTM', '194:${ymd(declaration.periodStart)}:102']),

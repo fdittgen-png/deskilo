@@ -89,7 +89,7 @@ String lipeXml({
     'iv:Fornitura',
     namespaces: {_ivpNamespace: 'iv'},
     nest: () {
-      b.element('iv:Intestazione', nest: () => el('CodiceFornitura', 'IVP18'));
+      b.element('iv:Intestazione', nest: () => el('CodiceFornitura', 'IVP19'));
       b.element(
         'iv:Comunicazione',
         attributes: {'identificativo': '00001'},

@@ -113,7 +113,7 @@ String ech0217Xml({
             ..element('reportingPeriodFrom', nest: isoDay(declaration.periodStart))
             ..element('reportingPeriodTill', nest: isoDay(declaration.periodEnd))
             ..element('typeOfSubmission', nest: '1')
-            ..element('formOfReporting', nest: onReceipts ? '2' : '1')
+            ..element('formOfReporting', nest: onReceipts ? '2' : '3')
             ..element('businessReferenceId', nest: _reference50(declaration));
           b.element(
             'sendingApplication',

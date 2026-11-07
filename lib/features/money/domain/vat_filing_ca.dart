@@ -49,7 +49,7 @@ String gstQstReturnCsv({
   }
 
   section(
-    'GST34',
+    'GST35',
     vatFormBoxes('CA', declaration.lines, periodEnd: declaration.periodEnd),
   );
   section('FPZ-500', vatQstFormBoxes(declaration.lines));
