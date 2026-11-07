@@ -18,6 +18,7 @@ import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_declaration_build.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';

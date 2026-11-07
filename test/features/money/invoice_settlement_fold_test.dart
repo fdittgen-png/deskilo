@@ -11,7 +11,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_declaration_build.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:deskilo/features/money/presentation/widgets/invoice_detail_sheet.dart';
 import 'package:flutter/material.dart';
