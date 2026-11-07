@@ -579,6 +579,79 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctRedeliver => 'Deliver again';
 
   @override
+  String get acctStateActionReopen => 'Reopen for servicing';
+
+  @override
+  String get acctStateActionResume => 'Resume new work';
+
+  @override
+  String get acctStateActionRetire => 'Retire the connectors';
+
+  @override
+  String get acctStateActionStop => 'Stop new work';
+
+  @override
+  String get acctStateActive =>
+      'Active — new connections, mappings and deliveries are admitted';
+
+  @override
+  String get acctStateChanged => 'The state was changed.';
+
+  @override
+  String get acctStateConfirmReopen =>
+      'Reopen the connectors for servicing? New work stays refused.';
+
+  @override
+  String get acctStateConfirmResume => 'Admit new accounting work again?';
+
+  @override
+  String get acctStateConfirmRetire =>
+      'Retire the accounting connectors? Only the owner can reopen them, and only for servicing.';
+
+  @override
+  String get acctStateConfirmStop =>
+      'Stop admitting new accounting work? Reading, revoking and finishing what was started stay possible.';
+
+  @override
+  String get acctStateDerived =>
+      'Follows the accounting connectors setting; nobody has decided otherwise.';
+
+  @override
+  String get acctStateFailed => 'The state could not be changed.';
+
+  @override
+  String get acctStateReasonLabel => 'Reason';
+
+  @override
+  String get acctStateReasonRequired => 'Say why.';
+
+  @override
+  String get acctStateRefusedOff =>
+      'The accounting connectors are switched off in this space.';
+
+  @override
+  String get acctStateRefusedOwner =>
+      'Only the owner retires or reopens the connectors.';
+
+  @override
+  String get acctStateRefusedUnresolved =>
+      'Deliveries are still in progress. Finish or settle them before retiring.';
+
+  @override
+  String get acctStateRetired =>
+      'Retired — no new work; the history stays readable';
+
+  @override
+  String get acctStateServicing =>
+      'Servicing — no new work; history, revoking and unfinished deliveries continue';
+
+  @override
+  String get acctStateSubmit => 'Confirm';
+
+  @override
+  String get acctStateTitle => 'New accounting work';
+
+  @override
   String get acctTargetNotDeliveredYet =>
       'No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.';
 

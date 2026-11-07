@@ -23,6 +23,7 @@ import '../../domain/accounting_format.dart';
 import '../../domain/remote_revocation.dart';
 import '../../providers/accounting_connection_providers.dart';
 import '../../providers/book_profile_providers.dart';
+import 'accounting_capability_card.dart';
 import 'accounting_connection_dialogs.dart';
 import 'accounting_token_dialog.dart';
 import 'accounting_transfers_list.dart';
@@ -92,6 +93,13 @@ class AccountingTargetsView extends ConsumerWidget {
       children: [
         Text(l10n.acctTargetsIntro, style: Theme.of(context).textTheme.bodySmall),
         const FormGap(),
+        // #3336 — whether new accounting work is admitted, and the moves
+        CapabilityStateCard(
+          workspaceId: workspaceId,
+          manage: scope.manage,
+          owner: scope.owner,
+        ),
+        if (scope.manage) const FormGap(),
         if (apiTargets.isEmpty)
           Text(l10n.acctTargetsNoApiTarget, key: const ValueKey('acct-no-api-target')),
         connections.when(
