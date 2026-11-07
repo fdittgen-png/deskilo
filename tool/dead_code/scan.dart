@@ -50,6 +50,18 @@ class DeadCodeFinding {
 /// Directories whose Dart files are production readers of `lib/`.
 const productionRoots = ['lib', 'tool', 'integration_test', 'packages', 'bin'];
 
+/// Whether [path] is a source whose public declarations are checked: the
+/// application's `lib/`, and the `lib/` of the packages code was extracted
+/// into (#3376: moving code out of `lib/` must not take it out of the scan).
+/// A package joins this list when extracted code lands in it; references from
+/// `lib/`, `tool/`, every package and `bin/` all count as use.
+bool _isScanned(String path) =>
+    path.startsWith('lib/') ||
+    scannedPackages.any((p) => path.startsWith('packages/$p/lib/'));
+
+/// The packages whose own declarations are scanned for dead code.
+const scannedPackages = ['deskilo_money_kernel'];
+
 /// Scans the repository at [root] (the directory holding `lib/` and
 /// `test/`) and returns the findings sorted by path and line.
 List<DeadCodeFinding> scanDeadCode(String root) {
@@ -59,7 +71,7 @@ List<DeadCodeFinding> scanDeadCode(String root) {
 
   final findings = <DeadCodeFinding>[];
   for (final s in sources.values) {
-    if (!s.path.startsWith('lib/') || s.isGenerated) continue;
+    if (!_isScanned(s.path) || s.isGenerated) continue;
     if (s.path.startsWith('lib/l10n/')) continue;
     for (final d in s.declarations) {
       var production = false;
