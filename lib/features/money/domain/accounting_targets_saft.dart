@@ -5,6 +5,7 @@
 // D406 in saf_t_financial_ro.dart), and
 // Denmark's routes, where the duty is a registered bookkeeping system
 // rather than a file.
+import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// Skatteetaten's SAF-T Financial 1.30. Regulatory: written to the
@@ -12,6 +13,8 @@ import 'accounting_format.dart';
 /// or a tax code has no standard code of Norway's code lists.
 const _saftNoFormat = AccountingFormat(
   id: 'saft_no',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.regulatory,
   extension: 'xml',
   needsLegalId: true,
@@ -21,6 +24,8 @@ const _saftNoFormat = AccountingFormat(
 /// account or a party no postal address.
 const _faiaLuFormat = AccountingFormat(
   id: 'faia_lu',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.regulatory,
   extension: 'xml',
   needsLegalId: true,
@@ -33,6 +38,8 @@ const _faiaLuFormat = AccountingFormat(
 /// bookkeeping system, which this file does not make DesKilo.
 const _saftDkFormat = AccountingFormat(
   id: 'saft_dk',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.exchange,
   extension: 'xml',
   needsLegalId: true,
@@ -45,6 +52,8 @@ const _saftDkFormat = AccountingFormat(
 /// which this file leaves empty, and goes through ANAF's own validator.
 const _saftRoFormat = AccountingFormat(
   id: 'saft_ro',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.exchange,
   extension: 'xml',
   needsLegalId: true,
@@ -57,6 +66,8 @@ const _saftRoFormat = AccountingFormat(
 /// §§ 131, 132), handed over on request, not a return.
 const _saftAtFormat = AccountingFormat(
   id: 'saft_at',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.exchange,
   extension: 'xml',
   // needsLegalId stays off: the Steuernummer is asked at export, and a
@@ -67,6 +78,8 @@ const _saftAtFormat = AccountingFormat(
 /// auditor's or an accountant's software reads anywhere.
 const _saftOecdFullFormat = AccountingFormat(
   id: 'saft_oecd_full',
+  kind: ExportKind.saftFinancial,
+  sources: SourceRequirements.postedOnlyWithOpening,
   claim: FormatClaim.exchange,
   extension: 'xml',
   needsLegalId: true,

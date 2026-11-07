@@ -4,6 +4,7 @@
 // layout, bexio through its API, and the other products a Swiss fiduciary
 // runs, catalogued with how far each is qualified. Where a product's own
 // import is not specified yet, the Swiss journal is the working route.
+import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// The booking journal of a Swiss local book: its postings on the KMU
@@ -11,6 +12,8 @@ import 'accounting_format.dart';
 /// QR reference of each receivable. An exchange file a person reviews.
 const _swissJournalFormat = AccountingFormat(
   id: 'ch_kmu',
+  kind: ExportKind.swissKmu,
+  sources: SourceRequirements.postedOnlyNamed,
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,
@@ -20,6 +23,8 @@ const _swissJournalFormat = AccountingFormat(
 /// of transactions (a tab-separated text file).
 const _bananaFormat = AccountingFormat(
   id: 'banana_transactions',
+  kind: ExportKind.swissBanana,
+  sources: SourceRequirements.postedOnlyNamed,
   claim: FormatClaim.exchange,
   extension: 'txt',
   needsAccounts: true,

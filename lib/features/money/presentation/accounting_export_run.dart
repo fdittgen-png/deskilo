@@ -17,11 +17,10 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../application/export/accounting_export_contribution.dart';
-import '../application/export/installed_accounting_exports.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_connection.dart';
+import '../domain/accounting_export_sources.dart';
 import '../domain/accounting_format.dart';
 import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
@@ -203,8 +202,8 @@ class AccountingExportRun {
 }
 
   Future<void> _perform() async {
-    // #3334 -- the writer family the format is registered with, not its id.
-    switch (contributionOf(format.id)?.kind) {
+    // #3334 -- the writer family the format declares, not its id.
+    switch (format.kind) {
       case ExportKind.fec:
         await _fec();
       case ExportKind.datev: await datevExport();
@@ -233,8 +232,6 @@ class AccountingExportRun {
         await safTFinancialExport();
       case ExportKind.genericJournal:
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
-      case null:
-        throw StateError('no export is registered for ${format.id}');
     }
   }
 
