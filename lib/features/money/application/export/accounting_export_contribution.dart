@@ -24,6 +24,28 @@ enum ExportPosting {
   only,
 }
 
+/// The family of writer a format runs through. The export run switches on this
+/// (exhaustively, so a new family cannot be forgotten), never on a format id:
+/// the id of a format appears only in its registration.
+enum ExportKind {
+  fec,
+  datev,
+  sage,
+  xeroInvoices,
+  swissKmu,
+  swissBanana,
+  saft,
+  saftPortugal,
+  accountantCsv,
+  archiveBundle,
+  gobd,
+  frEReporting,
+  auditTrail,
+  bookReport,
+  saftFinancial,
+  genericJournal,
+}
+
 /// What an export format reads, declared once by the format.
 class SourceRequirements {
   const SourceRequirements({
@@ -53,11 +75,18 @@ class SourceRequirements {
 
 /// One export format, registered with the sources it declares.
 class AccountingExportContribution {
-  const AccountingExportContribution(this.formatId, this.requirements);
+  const AccountingExportContribution(
+    this.formatId,
+    this.kind,
+    this.requirements,
+  );
 
   /// The format's stable id (`fec`, `datev`, `sage50`, ...): unchanged by the
   /// registry.
   final String formatId;
+
+  /// The writer family the export run dispatches on.
+  final ExportKind kind;
 
   final SourceRequirements requirements;
 }

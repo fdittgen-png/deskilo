@@ -13,6 +13,7 @@
 // shipped, and that is now a test rather than a hope.
 import 'dart:io';
 
+import 'package:deskilo/features/money/application/export/installed_accounting_exports.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -97,8 +98,14 @@ void main() {
     ].map((p) => File(p).readAsStringSync()).join();
 
     test('the export switch handles every registry format', () {
+      // #3334 -- the run dispatches on the writer family a format is
+      // registered with: a format without a registration, or whose family the
+      // run does not handle, is dead code.
       for (final format in accountingTargets.map((t) => t.format).nonNulls) {
-        expect(export, contains("case '${format.id}':"),
+        final kind = contributionOf(format.id)?.kind;
+        expect(kind, isNotNull,
+            reason: '${format.id} is in the registry but not registered');
+        expect(export, contains('ExportKind.${kind!.name}'),
             reason: '${format.id} is in the registry but nothing exports '
                 'it — that is how DATEV shipped as dead code');
       }

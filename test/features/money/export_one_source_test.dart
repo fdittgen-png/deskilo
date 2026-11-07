@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
+import 'package:deskilo/features/money/application/export/installed_accounting_exports.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
@@ -199,11 +200,14 @@ void main() {
   final formats = {for (final t in accountingTargets) ?t.format?.id};
 
   test('the registry is the run\'s dispatch: no format escapes the table', () {
+    // #3334 -- the table is the registry: a format is dispatched when the run
+    // handles the writer family it is registered under.
+    final run = _source(
+      'lib/features/money/presentation/accounting_export_run.dart',
+    );
     final dispatched = {
-      for (final m in RegExp(r"case '(\w+)':").allMatches(
-        _source('lib/features/money/presentation/accounting_export_run.dart'),
-      ))
-        m.group(1)!,
+      for (final c in installedAccountingExports)
+        if (run.contains('ExportKind.${c.kind.name}')) c.formatId,
     };
     expect(dispatched, formats);
     // Every format any country is offered is in the table.
