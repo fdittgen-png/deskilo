@@ -21,21 +21,59 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// The text of [function]'s definition in the LAST migration that defines it.
-String _latestDefinition(String function) {
-  final header = 'create or replace function public.$function(';
+/// The text of [function]'s definition in the LAST of [files] (name, text,
+/// in migration order) that defines it. Headers match in any case, since
+/// `pg_get_functiondef` restatements are upper case; a later file that
+/// patches the function through `pg_get_functiondef` changes a body this
+/// test cannot read, so it fails rather than reading the older number.
+String latestDefinitionIn(List<(String, String)> files, String function) {
+  final header = RegExp(
+    'create\\s+or\\s+replace\\s+function\\s+public\\.$function\\s*\\(',
+    caseSensitive: false,
+  );
+  final next = RegExp(
+    r'create\s+or\s+replace\s+function',
+    caseSensitive: false,
+  );
+  final patch = RegExp(
+    "pg_get_functiondef\\([^)]*public\\.$function\\(",
+    caseSensitive: false,
+  );
   String? found;
-  for (final file in sqlFiles('supabase/migrations')
-    ..sort((a, b) => a.path.compareTo(b.path))) {
-    final text = file.readAsStringSync();
-    final at = text.indexOf(header);
-    if (at < 0) continue;
-    final next = text.indexOf('create or replace function', at + header.length);
-    found = text.substring(at, next < 0 ? text.length : next);
+  var foundAt = -1;
+  for (var i = 0; i < files.length; i++) {
+    final text = files[i].$2;
+    final m = header.allMatches(text).toList();
+    if (m.isEmpty) continue;
+    final from = m.last.start;
+    final n = next.firstMatch(text.substring(m.last.end));
+    found = text.substring(
+      from,
+      n == null ? text.length : m.last.end + n.start,
+    );
+    foundAt = i;
   }
-  expect(found, isNotNull, reason: 'no migration defines public.$function');
-  return found!;
+  if (found == null) throw StateError('no migration defines public.$function');
+  for (var i = foundAt + 1; i < files.length; i++) {
+    if (patch.hasMatch(files[i].$2)) {
+      throw StateError(
+        '${files[i].$1} patches public.$function through pg_get_functiondef '
+        'after its last literal definition: pin the patched width explicitly',
+      );
+    }
+  }
+  return found;
 }
+
+List<(String, String)> _migrations() => [
+  for (final f in sqlFiles(
+    'supabase/migrations',
+  )..sort((a, b) => a.path.compareTo(b.path)))
+    (f.path, f.readAsStringSync()),
+];
+
+String _latestDefinition(String function) =>
+    latestDefinitionIn(_migrations(), function);
 
 int _clip(String definition, String parameter) {
   final match = RegExp(
@@ -71,26 +109,45 @@ void main() {
   }
 
   test('the capability reason column accepts what the form allows', () {
-    final table = File(
-      'supabase/migrations/0692_capability_states.sql',
-    ).readAsStringSync();
+    final table = File('supabase/migrations/0692_capability_states.sql')
+        .readAsStringSync();
     final m = RegExp(r'char_length\(reason\) <= (\d+)').firstMatch(table);
     expect(m, isNotNull);
     expect(int.parse(m!.group(1)!), capabilityReasonWidth);
   });
 
   test('the edge handler clips a declared value at the database width', () {
-    final ts = File(
-      'supabase/functions/send-e-invoice/handler.ts',
-    ).readAsStringSync();
+    final ts = File('supabase/functions/send-e-invoice/handler.ts')
+        .readAsStringSync();
     final dart = int.parse(
       RegExp(r'const DECLARED_WIDTH = (\d+);').firstMatch(ts)!.group(1)!,
     );
-    final sql = RegExp(
-      r"left\(e\.value #>> '\{\}', (\d+)\)",
-    ).firstMatch(_latestDefinition('provenance_clip_declared'));
+    final sql = RegExp(r"left\(e\.value #>> '\{\}', (\d+)\)")
+        .firstMatch(_latestDefinition('provenance_clip_declared'));
     expect(sql, isNotNull);
     expect(dart, int.parse(sql!.group(1)!));
+  });
+
+  test('the latest definition wins whatever the header case', () {
+    final files = [
+      (
+        '0001',
+        "create or replace function public.f(a text) as \$\$ left(btrim(p_reason), 300) \$\$;",
+      ),
+      (
+        '0002',
+        "CREATE OR REPLACE FUNCTION public.f(a text) AS \$\$ left(btrim(p_reason), 200) \$\$;",
+      ),
+    ];
+    expect(_clip(latestDefinitionIn(files, 'f'), 'p_reason'), 200);
+  });
+
+  test('a later pg_get_functiondef patch of the function is refused', () {
+    final files = [
+      ('0001', "create or replace function public.f(a text) as \$\$ x \$\$;"),
+      ('0002', "select pg_get_functiondef('public.f(text)'::regprocedure);"),
+    ];
+    expect(() => latestDefinitionIn(files, 'f'), throwsStateError);
   });
 
   test('no other definer function clips a reason or evidence unpinned', () {
@@ -98,11 +155,12 @@ void main() {
     final clip = RegExp(
       r'left\((?:btrim|trim)\((?:coalesce\()?p_(?:reason|evidence)',
     );
-    final fn = RegExp(r'create or replace function public\.([a-z0-9_]+)\(');
+    final fn = RegExp(
+      r'create\s+or\s+replace\s+function\s+public\.([a-z0-9_]+)\s*\(',
+      caseSensitive: false,
+    );
     final latest = <String, String>{};
-    for (final file in sqlFiles('supabase/migrations')
-      ..sort((a, b) => a.path.compareTo(b.path))) {
-      final text = file.readAsStringSync();
+    for (final (_, text) in _migrations()) {
       final heads = fn.allMatches(text).toList();
       for (var i = 0; i < heads.length; i++) {
         final end = i + 1 < heads.length ? heads[i + 1].start : text.length;
