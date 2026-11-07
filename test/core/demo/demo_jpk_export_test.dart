@@ -11,6 +11,7 @@ import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/jpk_kr_pd_gap.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/saf_t_financial.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -93,11 +94,11 @@ void main() {
         ),
       );
       expect(result, isA<SafTFinancialRefused>());
-      final gaps = (result as SafTFinancialRefused).gaps.map(
-        (gap) => gap.subject,
+      final codes = (result as SafTFinancialRefused).gaps.map(
+        (gap) => gap.polish?.code,
       );
-      expect(gaps, contains('Functional currency must be PLN'));
-      expect(gaps, contains('Income-tax reconciliation K_1–K_8'));
+      expect(codes, contains(JpkKrPdGapCode.currencyNotPln));
+      expect(codes, contains(JpkKrPdGapCode.sectionReconciliation));
     },
   );
 }

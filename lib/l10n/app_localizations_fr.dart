@@ -14107,6 +14107,122 @@ class AppLocalizationsFr extends AppLocalizations {
       'Annulation du reliquat demandée — en attente des valideurs';
 
   @override
+  String jpkKrPdField(String field) {
+    String _temp0 = intl.Intl.selectLogic(field, {
+      'nip': 'NIP',
+      'legalName': 'raison sociale',
+      'voivodeship': 'voïvodie',
+      'county': 'powiat',
+      'municipality': 'commune',
+      'buildingNumber': 'numéro de bâtiment',
+      'city': 'ville',
+      'postalCode': 'code postal',
+      'street': 'rue',
+      'taxOfficeCode': 'code du bureau des impôts',
+      'accountName': 'nom du compte',
+      'accountParent': 'compte parent',
+      'accountMarker': 'marqueur polonais du compte',
+      'journalNumber': 'numéro de journal',
+      'journalName': 'nom du journal',
+      'documentNumber': 'numéro de pièce',
+      'documentType': 'type de pièce',
+      'responsiblePerson': 'personne responsable',
+      'journalDescription': 'libellé du journal',
+      'accountIdentifier': 'identifiant ou nom du compte',
+      'journalText': 'texte du journal',
+      'counterpartyCode': 'code de la contrepartie',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String jpkKrPdGap(String code, String field, String subject, String limit) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'currencyNotPln': 'la devise fonctionnelle doit être le PLN',
+      'noPostings': 'le journal doit contenir des écritures comptabilisées',
+      'invalidYear': 'l’exercice déclaré est invalide',
+      'sectionEntity': 'l’entité polonaise et son adresse',
+      'sectionOffice': 'le bureau des impôts et l’objet de la déclaration',
+      'sectionAccounts':
+          'les comptes parents, les marqueurs polonais et les soldes sources',
+      'sectionJournal': 'la séquence du journal et la personne responsable',
+      'sectionSource': 'les dates de pièce et de comptabilisation, les montants et le détail des lignes',
+      'sectionKsef': 'l’applicabilité et l’identifiant KSeF',
+      'sectionReconciliation':
+          'le rapprochement de l’impôt sur le revenu K_1–K_8',
+      'journalSequenceUnverified':
+          'la séquence du journal source n’est pas vérifiée',
+      'taxYear': 'l’année d’imposition est invalide',
+      'entityCategory': 'cette catégorie d’entité déclarante polonaise n’est pas prise en charge',
+      'addressCountry': 'le pays de l’adresse de l’entité doit être la Pologne',
+      'nipFormat': 'le NIP doit comporter 10 chiffres valides',
+      'missing': '$field$subject manque',
+      'tooLong': '$field$subject dépasse $limit caractères',
+      'invalidOffice': 'le code du bureau des impôts est inconnu',
+      'purpose': 'l’objet de la déclaration doit être 1 ou 2',
+      'reconciliation':
+          'le rapprochement K_1–K_8 doit comporter huit montants en PLN',
+      'openingOutside':
+          'l’écriture d’ouverture$subject est datée dans la période déclarée',
+      'unbalanced': 'l’écriture$subject n’est pas équilibrée',
+      'invalidDebitCredit':
+          'l’écriture$subject a un débit ou un crédit invalide',
+      'foreignLine':
+          'l’écriture$subject contient une ligne en devise étrangère',
+      'postingCurrency': 'l’écriture$subject n’est pas en PLN',
+      'accountBalances': 'les soldes du compte$subject sont invalides',
+      'openingMismatch':
+          'le solde d’ouverture du compte$subject ne correspond pas aux écritures',
+      'closingMismatch':
+          'le solde de clôture du compte$subject ne correspond pas aux écritures',
+      'invalidMarker': 'le marqueur polonais du compte$subject est invalide',
+      'journalEvidence': 'chaque écriture exige sa pièce de journal',
+      'turnoverPrecision':
+          'le mouvement du compte$subject dépasse la précision du schéma',
+      'totalsPrecision':
+          'les totaux du journal dépassent la précision du schéma',
+      'documentTotalPrecision':
+          'le total des pièces dépasse la précision du schéma',
+      'unreferencedCounterparty':
+          'la contrepartie$subject n’est référencée par aucune écriture',
+      'invalidCounterpartyCountry':
+          'le pays de la contrepartie$subject est invalide',
+      'invalidCounterpartyTaxId':
+          'l’identifiant fiscal de la contrepartie$subject est invalide',
+      'counterpartyCodeInvalid':
+          'un code de contrepartie manque ou est en double',
+      'journalSourceMismatch':
+          'l’écriture de journal$subject ne correspond pas à sa pièce source',
+      'postingOutside':
+          'l’écriture$subject est datée hors de l’exercice déclaré',
+      'bookingOutside':
+          'la comptabilisation$subject est datée hors de l’exercice déclaré',
+      'documentAmount': 'le montant de la pièce$subject n’est pas en PLN',
+      'chronology': 'l’écriture$subject rompt l’ordre chronologique du journal',
+      'duplicateJournalNumber':
+          'le numéro de journal$subject est utilisé deux fois',
+      'lineDescriptions':
+          'écriture$subject : libellés de ligne manquants ou ne correspondant pas aux lignes',
+      'lineNumbers':
+          'écriture$subject : numéros de ligne manquants, en double ou ne correspondant pas aux lignes',
+      'counterpartyCode': 'l’écriture$subject exige un code de contrepartie',
+      'counterpartySourceMissing':
+          'l’écriture$subject nomme une contrepartie que sa pièce source n’a pas',
+      'counterpartySourceMismatch':
+          'la contrepartie de l’écriture$subject ne correspond pas à sa pièce source',
+      'counterpartyUnknown':
+          'la contrepartie$subject n’est pas dans la liste des contreparties',
+      'invalidKsef': 'l’identifiant KSeF de l’écriture$subject est invalide',
+      'duplicateLineNumber':
+          'le numéro de ligne$subject est utilisé deux fois dans un journal',
+      'ksefMissing': 'l’écriture$subject exige son identifiant KSeF',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get kioskBadgeConfirm => 'Confirmer';
 
   @override

@@ -9331,6 +9331,33 @@
   "journeyTimelineTitle": "Verlauf",
   "journeyValidatorsMatch": "Zahlung zugeordnet — Entscheidung der Prüfer steht aus",
   "journeyValidatorsWriteoff": "Ausbuchung des Restbetrags beantragt — Prüfer entscheiden",
+  "jpkKrPdField": "{field, select, nip{NIP} legalName{vollständiger Name} voivodeship{Woiwodschaft} county{Landkreis} municipality{Gemeinde} buildingNumber{Hausnummer} city{Ort} postalCode{Postleitzahl} street{Straße} taxOfficeCode{Finanzamtscode} accountName{Kontoname} accountParent{übergeordnetes Konto} accountMarker{polnische Kontenkennzeichnung} journalNumber{Journalnummer} journalName{Journalname} documentNumber{Belegnummer} documentType{Belegart} responsiblePerson{verantwortliche Person} journalDescription{Journalbeschreibung} accountIdentifier{Kontokennung oder -name} journalText{Journaltext} counterpartyCode{Geschäftspartnercode} other{}}",
+  "@jpkKrPdField": {
+    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGap": "{code, select, currencyNotPln{die Funktionalwährung muss PLN sein} noPostings{das Journal braucht gebuchte Einträge} invalidYear{das Berichtsjahr ist ungültig} sectionEntity{die polnische Einheit und ihre Adresse} sectionOffice{das Finanzamt und der Zweck der Einreichung} sectionAccounts{die übergeordneten Konten, die polnischen Kennzeichen und die Quellsalden} sectionJournal{die Journalfolge und die verantwortliche Person} sectionSource{die Beleg- und Buchungsdaten, Beträge und Zeilendetails} sectionKsef{KSeF-Pflicht und -Kennung} sectionReconciliation{die Einkommensteuer-Überleitung K_1–K_8} journalSequenceUnverified{die Journalfolge der Quelle ist nicht geprüft} taxYear{das Steuerjahr ist ungültig} entityCategory{diese polnische Meldekategorie wird nicht unterstützt} addressCountry{das Adressland der Einheit muss Polen sein} nipFormat{die NIP muss 10 gültige Ziffern haben} missing{{field}{subject} fehlt} tooLong{{field}{subject} ist länger als {limit} Zeichen} invalidOffice{der Finanzamtscode ist unbekannt} purpose{der Zweck der Einreichung muss 1 oder 2 sein} reconciliation{die Überleitung K_1–K_8 braucht acht Beträge in PLN} openingOutside{die Eröffnungsbuchung{subject} liegt im Berichtszeitraum} unbalanced{die Buchung{subject} ist nicht ausgeglichen} invalidDebitCredit{die Buchung{subject} hat ein ungültiges Soll oder Haben} foreignLine{die Buchung{subject} enthält eine Fremdwährungszeile} postingCurrency{die Buchung{subject} ist nicht in PLN} accountBalances{die Salden des Kontos{subject} sind ungültig} openingMismatch{der Eröffnungssaldo des Kontos{subject} passt nicht zu den Buchungen} closingMismatch{der Schlusssaldo des Kontos{subject} passt nicht zu den Buchungen} invalidMarker{die polnische Kennzeichnung des Kontos{subject} ist ungültig} journalEvidence{jede Buchung braucht einen Journalnachweis} turnoverPrecision{der Umsatz des Kontos{subject} überschreitet die Schemagenauigkeit} totalsPrecision{die Journalsummen überschreiten die Schemagenauigkeit} documentTotalPrecision{die Belegsumme überschreitet die Schemagenauigkeit} unreferencedCounterparty{der Geschäftspartner{subject} wird von keinem Eintrag verwendet} invalidCounterpartyCountry{das Land des Geschäftspartners{subject} ist ungültig} invalidCounterpartyTaxId{die Steuernummer des Geschäftspartners{subject} ist ungültig} counterpartyCodeInvalid{ein Geschäftspartnercode fehlt oder ist doppelt} journalSourceMismatch{der Journaleintrag{subject} passt nicht zu seinem Quellbeleg} postingOutside{die Buchung{subject} liegt außerhalb des Berichtsjahres} bookingOutside{die Verbuchung{subject} liegt außerhalb des Berichtsjahres} documentAmount{der Belegbetrag{subject} ist nicht in PLN} chronology{der Eintrag{subject} verletzt die zeitliche Reihenfolge des Journals} duplicateJournalNumber{die Journalnummer{subject} wird doppelt verwendet} lineDescriptions{Eintrag{subject}: Zeilenbeschreibungen fehlen oder passen nicht zu den Zeilen} lineNumbers{Eintrag{subject}: Zeilennummern fehlen, sind doppelt oder passen nicht zu den Zeilen} counterpartyCode{der Eintrag{subject} braucht einen Geschäftspartnercode} counterpartySourceMissing{der Eintrag{subject} nennt einen Geschäftspartner, den der Quellbeleg nicht hat} counterpartySourceMismatch{der Geschäftspartner des Eintrags{subject} passt nicht zum Quellbeleg} counterpartyUnknown{der Geschäftspartner{subject} steht nicht in der Partnerliste} invalidKsef{die KSeF-Kennung des Eintrags{subject} ist ungültig} duplicateLineNumber{die Zeilennummer{subject} wird in einem Journal doppelt verwendet} ksefMissing{der Eintrag{subject} braucht seine KSeF-Kennung} other{}}",
+  "@jpkKrPdGap": {
+    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "field": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "kioskBadgeConfirm": "Bestätigen",
   "kioskBadgeFieldLabel": "Badge-Code",
   "kioskBadgeHint": "Scannen Sie den QR Ihres Badges oder tippen Sie seinen Code ein.",
