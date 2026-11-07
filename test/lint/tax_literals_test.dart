@@ -41,6 +41,7 @@ final _dartRoots = [
   ..._baseDartRoots,
   // #3401 -- the packages the money model moved into are still VAT code.
   'packages/deskilo_tax_reference/lib',
+  'packages/deskilo_vat_declaration/lib',
   'packages/deskilo_money_kernel/lib',
   'packages/deskilo_accounting_interchange/lib',
   for (final name in directoryNames(_jurisdictionPackages))

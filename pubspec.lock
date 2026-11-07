@@ -511,6 +511,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_vat_declaration:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_vat_declaration"
+      relative: true
+    source: path
+    version: "0.1.0"
   dio:
     dependency: "direct main"
     description:

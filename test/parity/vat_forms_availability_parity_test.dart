@@ -8,7 +8,6 @@
 // country. Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_forms.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 

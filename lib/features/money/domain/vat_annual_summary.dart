@@ -9,7 +9,6 @@
 import '../../../core/files/xlsx.dart';
 import '../../../core/i18n/currencies.dart';
 import 'vat_declaration.dart';
-import 'vat_form_catalogue.dart';
 
 /// The returns of [year] that count: one per period, the filed one where
 /// there is one, else the latest prepared; drafts never.

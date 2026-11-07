@@ -14,6 +14,18 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
+  'lib/features/money/domain/vat_forms.dart',
+  'lib/features/money/domain/vat_form_boxes.dart',
+  'lib/features/money/domain/vat_form_terms.dart',
+  'lib/features/money/domain/vat_form_catalogue/ca.dart',
+  'lib/features/money/domain/vat_form_catalogue/ch.dart',
+  'lib/features/money/domain/vat_form_catalogue/de.dart',
+  'lib/features/money/domain/vat_form_catalogue/es.dart',
+  'lib/features/money/domain/vat_form_catalogue/fr.dart',
+  'lib/features/money/domain/vat_form_catalogue/gb.dart',
+  'lib/features/money/domain/vat_form_catalogue/it.dart',
+
+  'lib/core/data/system_columns.dart',
   'lib/core/vat/tax_domain.dart',
   'lib/core/vat/tax_value.dart',
   'lib/core/vat/rate_component.dart',
@@ -44,7 +56,14 @@ void main() {
         if (m == null) continue;
         final uri = m.group(1)!;
         final own = !uri.contains(':') && !uri.contains('..');
-        if (!uri.startsWith('dart:') && !uri.startsWith('package:crypto/') && !own) bad.add('${f.path}:${i + 1}: $uri');
+        final ok =
+            uri.startsWith('dart:') ||
+            uri.startsWith('package:crypto/') ||
+            uri.startsWith('package:meta/') ||
+            own;
+        if (!ok) {
+          bad.add('${f.path}:${i + 1}: $uri');
+        }
       }
     }
     expect(
@@ -56,7 +75,7 @@ void main() {
     );
   });
 
-  test('the kernel depends on crypto alone', () {
+  test('the kernel depends on crypto and meta alone', () {
     final text = File('$_root/pubspec.yaml').readAsStringSync();
     final deps = RegExp(r'^dependencies:\n((?:  .+\n?)+)', multiLine: true)
         .firstMatch(text)!
@@ -65,38 +84,49 @@ void main() {
         .where((l) => RegExp(r'^  [a-z_]+:').hasMatch(l))
         .map((l) => l.trim().split(':').first)
         .toList();
-    expect(deps, ['crypto']);
+    expect(deps, ['crypto', 'meta']);
   });
 
-  test('a shim only re-exports a package', () {
-    final exportRe = RegExp(
-      r"^export 'package:deskilo_(money_kernel|accounting_interchange|tax_reference)/deskilo_\1\.dart';$",
-    );
-    for (final path in _shims) {
-      final code = File(path)
+  /// The code of [path] with comments and blank lines dropped, on one line.
+  String codeOf(String path) =>
+      File(path)
           .readAsLinesSync()
           .where((l) => l.trim().isNotEmpty && !l.trimLeft().startsWith('//'))
-          .toList();
-      expect(code, hasLength(1), reason: '$path holds more than a re-export');
-      expect(exportRe.hasMatch(code.single), isTrue, reason: path);
+          .map((l) => l.trim())
+          .join(' ');
+
+  const package =
+      r'(money_kernel|accounting_interchange|tax_reference|vat_declaration)';
+
+  test('a shim only re-exports a package (a hide list names the wrapped functions)', () {
+    final exportRe = RegExp(
+      "^export 'package:deskilo_$package/deskilo_\\1\\.dart'"
+      r'(?: hide [\w, ]+)?;$',
+    );
+    for (final path in _shims) {
+      final code = codeOf(path);
+      expect(
+        exportRe.hasMatch(code),
+        isTrue,
+        reason: '$path holds more than a re-export: $code',
+      );
     }
   });
 
-  test('no other file in lib only re-exports the kernel', () {
+  test('no other file in lib only re-exports a package', () {
     final found = <String>{};
+    final exportRe = RegExp(
+      "^export 'package:deskilo_$package/deskilo_\\1\\.dart'"
+      r'(?: hide [\w, ]+)?;$',
+    );
     for (final f in handWrittenDartFiles('lib')) {
-      final code = f
-          .readAsLinesSync()
-          .where((l) => l.trim().isNotEmpty && !l.trimLeft().startsWith('//'))
-          .toList();
-      if (code.length == 1 && RegExp(r"^export 'package:deskilo_(money_kernel|accounting_interchange|tax_reference)/").hasMatch(code.single)) {
-        found.add(f.path);
-      }
+      if (exportRe.hasMatch(codeOf(f.path))) found.add(f.path);
     }
     expect(
       found,
       _shims,
-      reason: 'a new shim is a new dependency to justify; the list only shrinks',
+      reason:
+          'a new shim is a new dependency to justify; the list only shrinks',
     );
   });
 }
