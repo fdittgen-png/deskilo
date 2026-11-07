@@ -1,8 +1,8 @@
 {
-  "recordedSha": "0f2c0e7e2cae93c70f886b6c1952cc912fc6fa45",
+  "recordedSha": "5268ac9f09754285ef7d623518737203d1e2e857",
   "recordedDate": "2026-11-07",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2568,"functions":14246,"cyclomatic>=9":1464,"cyclomatic>=25":84,"cognitive>=15":556,"cognitive>=30":76,"length>=150":52,"parameters>=5":649,"parameters>=7":156,"partOfFiles":18},
+  "totals": {"files":2569,"functions":14246,"cyclomatic>=9":1464,"cyclomatic>=25":84,"cognitive>=15":556,"cognitive>=30":76,"length>=150":52,"parameters>=5":649,"parameters>=7":156,"partOfFiles":18},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -1943,7 +1943,8 @@
     {"p":"lib/features/money/domain/vat_catalogue.dart","loc":130,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":11,"cyc":11,"len":33,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_compliance.dart","loc":146,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":18,"cyc":20,"len":51,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/vat_components.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":4,"cyc":7,"len":30,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/vat_declaration.dart","loc":278,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":12,"cyc":11,"len":50,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/vat_declaration.dart","loc":269,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":12,"cyc":11,"len":50,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/vat_declaration_build.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":14,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_declaration_period.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":7,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_declaration_report.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":8,"len":51,"params":10,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/vat_filing_files.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
