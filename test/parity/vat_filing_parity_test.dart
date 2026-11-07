@@ -23,7 +23,7 @@ import 'parity_golden.dart';
 const _dir = 'test/parity/golden/vat_filing';
 
 /// The fixed moment every file is generated at.
-final _now = DateTime(2026, 10, 2);
+final _now = DateTime.utc(2026, 10, 2, 12);
 
 VatDeclarationLine _line(
   double percent,
