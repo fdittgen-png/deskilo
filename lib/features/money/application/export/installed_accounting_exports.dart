@@ -37,7 +37,7 @@ const List<AccountingExportContribution> installedAccountingExports = [
   AccountingExportContribution('saft_pt', _documents),
   AccountingExportContribution('datev', _namedWhenLocalBook),
   AccountingExportContribution('gobd', _documents),
-  AccountingExportContribution('sage50', _postedOnlyNamed),
+  AccountingExportContribution('sage50', _namedWhenLocalBook),
   AccountingExportContribution('ch_kmu', _postedOnlyNamed),
   AccountingExportContribution('banana_transactions', _postedOnlyNamed),
   AccountingExportContribution('saft_no', _postedOnlyWithOpening),
