@@ -24,6 +24,31 @@ export interface Submission {
   receipt: Record<string, unknown>;
 }
 
+/** One provider, declared where it is implemented (#3337). The registry in
+ * connectors.ts is the only list of them: removing a provider is deleting its
+ * file and its line there, and no switch elsewhere names it. */
+export interface Connector {
+  /** The value of `einvoice_credentials.provider`. */
+  id: string;
+  /** The config fields the provider cannot send without. */
+  requiredFields: string[];
+  /** The syntaxes it accepts, by the app's format names; empty = anything. */
+  acceptedFormats: string[];
+  /** The documented test environment the owner starts from. */
+  sandbox: Config;
+  submit(
+    cfg: Config,
+    doc: ConnectorDocument,
+    fetchImpl: Fetch,
+  ): Promise<Submission>;
+  /** What became of an earlier submission; absent = no read-back. */
+  status?(
+    cfg: Config,
+    externalId: string,
+    fetchImpl: Fetch,
+  ): Promise<Submission>;
+}
+
 export interface ConnectorDocument {
   fileName: string;
   mimeType: string;

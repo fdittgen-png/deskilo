@@ -15,6 +15,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   join,
@@ -104,3 +105,13 @@ export async function statusRoEfactura(
   }
   return accepted(index, text, receipt);
 }
+
+/** The ro_efactura connector record (#3337). */
+export const roEfacturaConnector: Connector = {
+  id: "ro_efactura",
+  requiredFields: ["base_url", "cif", "access_token"],
+  acceptedFormats: ["ciusRo"],
+  sandbox: { base_url: "https://api.anaf.ro/test/FCTEL/rest" },
+  submit: submitRoEfactura,
+  status: statusRoEfactura,
+};

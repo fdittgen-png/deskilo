@@ -12,86 +12,56 @@
 
 import {
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   Submission,
   unreachable,
 } from "./connectors/common.ts";
-import { statusFrPa, submitFrPa } from "./connectors/fr_pa.ts";
-import { submitGeneric } from "./connectors/generic.ts";
-import { statusItSdi, submitItSdi } from "./connectors/it_sdi.ts";
-import { statusPeppol, submitPeppol } from "./connectors/peppol.ts";
-import { statusPlKsef, submitPlKsef } from "./connectors/pl_ksef.ts";
-import {
-  statusRoEfactura,
-  submitRoEfactura,
-} from "./connectors/ro_efactura.ts";
+import { frPaConnector } from "./connectors/fr_pa.ts";
+import { genericConnector } from "./connectors/generic.ts";
+import { itSdiConnector } from "./connectors/it_sdi.ts";
+import { peppolConnector } from "./connectors/peppol.ts";
+import { plKsefConnector } from "./connectors/pl_ksef.ts";
+import { roEfacturaConnector } from "./connectors/ro_efactura.ts";
 
 export type { Config, ConnectorDocument, Fetch, Submission };
 
-export const PROVIDERS = [
-  "generic",
-  "peppol",
-  "fr_pa",
-  "it_sdi",
-  "pl_ksef",
-  "ro_efactura",
-] as const;
-export type Provider = (typeof PROVIDERS)[number];
+/** THE list of installed connectors (#3337). A provider is removed by
+ * deleting its file and its line here; nothing below names a provider. The
+ * generic upload stays first: it answers for every provider value that has
+ * no connector of its own. */
+const CONNECTORS: readonly Connector[] = [
+  genericConnector,
+  peppolConnector,
+  frPaConnector,
+  itSdiConnector,
+  plKsefConnector,
+  roEfacturaConnector,
+];
 
-export const isProvider = (value: string): value is Provider =>
-  (PROVIDERS as readonly string[]).includes(value);
+export const PROVIDERS: readonly string[] = CONNECTORS.map((c) => c.id);
+export type Provider = string;
+
+export const isProvider = (value: string): boolean => PROVIDERS.includes(value);
+
+const connectorOf = (provider: string): Connector =>
+  CONNECTORS.find((c) => c.id === provider) ?? genericConnector;
 
 /** The documented test environments. A French accredited platform has
  * none shared — its URLs are the platform's own. */
-export const SANDBOX: Record<Provider, Config> = {
-  generic: {},
-  peppol: { base_url: "https://api.storecove.com" },
-  fr_pa: {},
-  it_sdi: {
-    base_url: "https://api-sandbox.acubeapi.com",
-    login_url: "https://common-sandbox.api.acubeapi.com/login",
-  },
-  pl_ksef: { base_url: "https://ksef-test.mf.gov.pl/api/v2" },
-  ro_efactura: { base_url: "https://api.anaf.ro/test/FCTEL/rest" },
-};
+export const SANDBOX: Record<string, Config> = Object.fromEntries(
+  CONNECTORS.map((c) => [c.id, c.sandbox]),
+);
 
 /** The config fields a provider cannot send without. */
-export function requiredFields(provider: string): string[] {
-  switch (provider) {
-    case "peppol":
-      return ["base_url", "api_key", "legal_entity_id"];
-    case "fr_pa":
-      return ["base_url", "token_url", "client_id", "client_secret"];
-    case "it_sdi":
-      return ["base_url", "login_url", "username", "password"];
-    case "pl_ksef":
-      return ["base_url", "nip", "ksef_token"];
-    case "ro_efactura":
-      return ["base_url", "cif", "access_token"];
-    default:
-      return ["endpoint", "auth_value"];
-  }
-}
+export const requiredFields = (provider: string): string[] =>
+  connectorOf(provider).requiredFields;
 
 /** The syntaxes a provider accepts, by the app's format names. Empty =
  * anything (the generic upload decides for itself). */
-export function acceptedFormats(provider: string): string[] {
-  switch (provider) {
-    case "peppol":
-      return ["peppolBis", "xrechnung"];
-    case "fr_pa":
-      return ["en16931Cii", "facturX", "en16931Ubl"];
-    case "it_sdi":
-      return ["fatturaPa"];
-    case "pl_ksef":
-      return ["ksefFa3"];
-    case "ro_efactura":
-      return ["ciusRo"];
-    default:
-      return [];
-  }
-}
+export const acceptedFormats = (provider: string): string[] =>
+  connectorOf(provider).acceptedFormats;
 
 /** Sends [doc] through [provider]. A document in a syntax the provider
  * does not take is refused before anything leaves — a network that
@@ -121,32 +91,10 @@ export async function submit(
     },
   };
   try {
-    switch (provider) {
-      case "peppol":
-        return classify(
-          await submitPeppol(cfg, tracked, fetchImpl),
-          dispatched,
-        );
-      case "fr_pa":
-        return classify(await submitFrPa(cfg, tracked, fetchImpl), dispatched);
-      case "it_sdi":
-        return classify(await submitItSdi(cfg, tracked, fetchImpl), dispatched);
-      case "pl_ksef":
-        return classify(
-          await submitPlKsef(cfg, tracked, fetchImpl),
-          dispatched,
-        );
-      case "ro_efactura":
-        return classify(
-          await submitRoEfactura(cfg, tracked, fetchImpl),
-          dispatched,
-        );
-      default:
-        return classify(
-          await submitGeneric(cfg, tracked, fetchImpl),
-          dispatched,
-        );
-    }
+    return classify(
+      await connectorOf(provider).submit(cfg, tracked, fetchImpl),
+      dispatched,
+    );
   } catch (error) {
     // A thrown error before the upload request left proves nothing was
     // accepted; after it, the upload may have landed (#3335).
@@ -196,26 +144,17 @@ export async function status(
   externalId: string,
   fetchImpl: Fetch = fetch,
 ): Promise<Submission> {
+  const readBack = connectorOf(provider).status;
+  if (readBack === undefined) {
+    return {
+      status: "failed",
+      externalId,
+      detail: "the generic upload has no status read-back",
+      receipt: {},
+    };
+  }
   try {
-    switch (provider) {
-      case "peppol":
-        return await statusPeppol(cfg, externalId, fetchImpl);
-      case "fr_pa":
-        return await statusFrPa(cfg, externalId, fetchImpl);
-      case "it_sdi":
-        return await statusItSdi(cfg, externalId, fetchImpl);
-      case "pl_ksef":
-        return await statusPlKsef(cfg, externalId, fetchImpl);
-      case "ro_efactura":
-        return await statusRoEfactura(cfg, externalId, fetchImpl);
-      default:
-        return {
-          status: "failed",
-          externalId,
-          detail: "the generic upload has no status read-back",
-          receipt: {},
-        };
-    }
+    return await readBack(cfg, externalId, fetchImpl);
   } catch (error) {
     return unreachable(error);
   }

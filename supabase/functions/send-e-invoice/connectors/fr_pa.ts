@@ -14,6 +14,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   join,
@@ -114,3 +115,13 @@ export async function statusFrPa(
     lifecycle: body.acknowledgement ?? body.lifecycle ?? null,
   });
 }
+
+/** The fr_pa connector record (#3337). */
+export const frPaConnector: Connector = {
+  id: "fr_pa",
+  requiredFields: ["base_url", "token_url", "client_id", "client_secret"],
+  acceptedFormats: ["en16931Cii", "facturX", "en16931Ubl"],
+  sandbox: {},
+  submit: submitFrPa,
+  status: statusFrPa,
+};

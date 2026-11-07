@@ -13,6 +13,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   join,
@@ -120,3 +121,13 @@ export async function statusPeppol(
   const body = parseJson(text);
   return accepted(guid, text, { guid, evidence: body });
 }
+
+/** The peppol connector record (#3337). */
+export const peppolConnector: Connector = {
+  id: "peppol",
+  requiredFields: ["base_url", "api_key", "legal_entity_id"],
+  acceptedFormats: ["peppolBis", "xrechnung"],
+  sandbox: { base_url: "https://api.storecove.com" },
+  submit: submitPeppol,
+  status: statusPeppol,
+};

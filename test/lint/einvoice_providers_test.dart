@@ -7,25 +7,20 @@
 // field the screen does not ask for is a channel that can never be
 // configured; a secret the database classifies as public is a token
 // echoed back to the screen. They must agree.
-import 'dart:io';
-
 import 'package:deskilo/features/money/domain/einvoice_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
-/// provider → its required fields, as connectors.ts's switch states them.
-Map<String, List<String>> _functionFields(String source) {
-  final body = source.substring(
-    source.indexOf('export function requiredFields'),
-    source.indexOf('export function acceptedFormats'),
-  );
+/// provider → its required fields, as each connector record states them
+/// (#3337: the records are the one place the function names a provider).
+Map<String, List<String>> _functionFields(String sources) {
   final fields = <String, List<String>>{};
-  final cases = RegExp(r'(case "(\w+)"|default):\s*return \[([^\]]*)\]')
-      .allMatches(body);
-  for (final m in cases) {
-    final provider = m.group(2) ?? 'generic';
-    fields[provider] = [
-      for (final f in RegExp(r'"(\w+)"').allMatches(m.group(3)!)) f.group(1)!,
+  final records = RegExp(
+    r'id: "(\w+)",\s*requiredFields: \[([^\]]*)\]',
+  ).allMatches(sources);
+  for (final m in records) {
+    fields[m.group(1)!] = [
+      for (final f in RegExp(r'"(\w+)"').allMatches(m.group(2)!)) f.group(1)!,
     ];
   }
   return fields;
@@ -43,8 +38,13 @@ String _latestSecretClassifier() {
 }
 
 void main() {
-  final connectors = File('supabase/functions/send-e-invoice/connectors.ts')
-      .readAsStringSync();
+  final connectors = [
+    for (final f in filesWithExtension(
+      'supabase/functions/send-e-invoice/connectors',
+      '.ts',
+    ))
+      if (!f.path.endsWith('_test.ts')) f.readAsStringSync(),
+  ].join('\n');
 
   test('the screen asks for exactly what the function needs', () {
     expect(_functionFields(connectors), eInvoiceProviderFields);
