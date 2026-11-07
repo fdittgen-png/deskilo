@@ -128,7 +128,7 @@ Map<String, String> _frontespizio(FilingContext context) {
     'PartitaIVA': partitaIva,
     if (hasDeclarant) 'CFDichiarante': declarantCf,
     if (hasDeclarant) 'CodiceCaricaDichiarante': role,
-    'FirmaDichiarazione': '1',
+    'FirmaDichiarazione': '0',
   };
 }
 
