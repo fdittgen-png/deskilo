@@ -24,11 +24,13 @@ List<YamlMap> _steps(String workflow, String job) {
 }
 
 late Directory _dir;
-({int code, String out}) _run(List<String> args) {
+({int code, String out}) _run(List<String> args,
+    [Map<String, String> env = const {}]) {
   final r = Process.runSync(
     'bash',
     ['${Directory.current.path}/$_script', ...args],
     workingDirectory: _dir.path,
+    environment: env,
   );
   return (code: r.exitCode, out: '${r.stdout}${r.stderr}');
 }
@@ -103,6 +105,47 @@ void main() {
       expect(r.code, 2, reason: r.out);
       expect(r.out, contains('the generator failed — nothing was compared'));
       expect(r.out, isNot(contains('modified: a.g.dart')));
+    });
+
+    test('a package that declares a generator is generated too, '
+        'and a drifted file there is red', () {
+      Directory('${_dir.path}/packages/p').createSync(recursive: true);
+      File('${_dir.path}/packages/p/pubspec.yaml').writeAsStringSync(
+          'name: p\ndev_dependencies:\n  build_runner: ^2.4.15\n');
+      File('${_dir.path}/packages/p/m.freezed.dart')
+          .writeAsStringSync('m\n');
+      _git(['add', '.']);
+      _git(['commit', '-q', '-m', 'package']);
+      final env = {'GENERATED_DRIFT_PUB_GET': 'true'};
+      final green = _run(['true', '--', '*.freezed.dart'], env);
+      expect(green.code, 0, reason: green.out);
+      expect(green.out, contains('(cd packages/p/ && true)'));
+      final red = _run(
+          ['[ "\$(basename "\$PWD")" != p ] || printf x >> m.freezed.dart',
+            '--', '*.freezed.dart'],
+          env);
+      expect(red.code, 1, reason: red.out);
+      expect(red.out, contains('modified: packages/p/m.freezed.dart'));
+    });
+
+    test('a package without a generator is left alone', () {
+      Directory('${_dir.path}/packages/q').createSync(recursive: true);
+      File('${_dir.path}/packages/q/pubspec.yaml')
+          .writeAsStringSync('name: q\ndependencies:\n  freezed_annotation: ^3.0.0\n');
+      final r = _run(['true', '--', '*.freezed.dart'],
+          {'GENERATED_DRIFT_PUB_GET': 'false'});
+      expect(r.code, 0, reason: r.out);
+      expect(r.out, isNot(contains('packages/q')));
+    });
+
+    test('a package generator that dies: exit 2', () {
+      Directory('${_dir.path}/packages/p').createSync(recursive: true);
+      File('${_dir.path}/packages/p/build.yaml').writeAsStringSync('');
+      File('${_dir.path}/packages/p/pubspec.yaml').writeAsStringSync('name: p\n');
+      final r = _run(['true', '--', '*.freezed.dart'],
+          {'GENERATED_DRIFT_PUB_GET': 'false'});
+      expect(r.code, 2, reason: r.out);
+      expect(r.out, contains('failed in packages/p/'));
     });
 
     test('a call without the separator or without a pathspec is usage', () {
