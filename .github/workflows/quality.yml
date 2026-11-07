@@ -1039,6 +1039,8 @@ jobs:
           bash scripts/credit_move_match_race.sh "$DB_URL"
           # #3335 — one e-invoice dispatch owner under real concurrent claims.
           bash scripts/einvoice_claim_race.sh "$DB_URL"
+          # #3336 — admission of new work and a capability state change serialise.
+          bash scripts/capability_state_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window

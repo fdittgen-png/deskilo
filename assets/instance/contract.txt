@@ -317,6 +317,14 @@ constraint book_profiles.book_profiles_revision_check CHECK ((revision >= 1))
 constraint book_profiles.book_profiles_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_profiles.system_company_present CHECK ((company_id IS NOT NULL))
+constraint capability_states.capability_states_capability_key_check CHECK ((capability_key = 'accountingConnectors'::text))
+constraint capability_states.capability_states_changed_by_member_id_same_workspace FOREIGN KEY (workspace_id, changed_by_member_id) REFERENCES members(workspace_id, id)
+constraint capability_states.capability_states_pkey PRIMARY KEY (workspace_id, capability_key)
+constraint capability_states.capability_states_reason_check CHECK ((char_length(reason) <= 300))
+constraint capability_states.capability_states_state_check CHECK ((state = ANY (ARRAY['active'::text, 'servicing'::text, 'retired'::text])))
+constraint capability_states.capability_states_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint capability_states.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint capability_states.system_company_present CHECK ((company_id IS NOT NULL))
 constraint charging_stations.charging_stations_accessory_id_fkey FOREIGN KEY (accessory_id) REFERENCES accessories(id) ON DELETE SET NULL
 constraint charging_stations.charging_stations_connector_check CHECK ((connector = ANY (ARRAY['type2'::text, 'ccs'::text, 'chademo'::text, 'tesla'::text, 'schuko'::text])))
 constraint charging_stations.charging_stations_name_check CHECK ((char_length(name) <= 80))
@@ -2107,7 +2115,7 @@ routine public.accounting_connection_target_v1(p_connection_id uuid) -> text | f
 routine public.accounting_connection_targets() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:900b1cffae4c
 routine public.accounting_connection_tenant_guard() -> trigger | function | definer | volatile | exec:service_role | body:6a47c72547e5
 routine public.accounting_connections_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d5655b1c8b1e
-routine public.accounting_connector_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:9e3b2cb3bf81
+routine public.accounting_connector_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | volatile | exec:service_role | body:3b3981efd0d6
 routine public.accounting_connector_member(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:1013da4861f5
 routine public.accounting_credentials_resolved(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fd972c886c6e
 routine public.accounting_delivery_json(d accounting_deliveries) -> jsonb | function | definer | stable | exec:service_role | body:0753a6267fb5
@@ -2217,6 +2225,9 @@ routine public.cancel_purchase_order_v1(p_workspace_id uuid, p_order_id uuid, p_
 routine public.cancel_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4a2e5af114ec
 routine public.cancel_series(p_series_id uuid, p_from timestamp with time zone) -> integer | function | definer | volatile | exec:authenticated,service_role | body:32e4632e19f7
 routine public.canonical_walkup_start(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> timestamp with time zone | function | definer | stable | exec:service_role | body:ebad206199df
+routine public.capability_admits(p_workspace_id uuid, p_key text) -> boolean | function | definer | volatile | exec:service_role | body:4684cb068928
+routine public.capability_lock_key(p_workspace_id uuid, p_key text) -> bigint | function | invoker | immutable | exec:service_role | body:28cb32d3da22
+routine public.capability_states_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a39585c04634
 routine public.capture_workspace_application() -> trigger | function | definer | volatile | exec:service_role | body:4d7f356fd850
 routine public.charging_stations_fee() -> trigger | function | definer | volatile | exec:service_role | body:832f6a1e1b26
 routine public.charging_stations_guard() -> trigger | function | definer | volatile | exec:service_role | body:ef1c3eea42cf
@@ -2903,7 +2914,7 @@ routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with ti
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:6061a31874f8
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
-routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text, p_in_flight_seconds integer) -> jsonb | function | definer | volatile | exec:service_role | body:3df71a222d85
+routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text, p_in_flight_seconds integer) -> jsonb | function | definer | volatile | exec:service_role | body:a4c6d051798c
 routine public.record_accounting_revocation(p_connection_id uuid, p_outcome text) -> jsonb | function | definer | volatile | exec:service_role | body:d94ea1290ee8
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
 routine public.record_badge_auth_failure(p_hash text, p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:f919b22408fe
@@ -3095,6 +3106,7 @@ routine public.set_badge_pin(p_pin text) -> void | function | definer | volatile
 routine public.set_billing_rule(p_workspace_id uuid, p_key text, p_value jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:090189bb6cc0
 routine public.set_billing_rules(p_workspace_id uuid, p_rules jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:3ed59206c285
 routine public.set_booking_rule(p_workspace_id uuid, p_key text, p_value jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5a3dc3bdde23
+routine public.set_capability_state_v1(p_workspace_id uuid, p_key text, p_to text, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f7fa8379e0e2
 routine public.set_co_owner(p_member_id uuid, p_status text) -> void | function | definer | volatile | exec:authenticated,service_role | body:f05bd267b2c2
 routine public.set_contact_availability(p_available boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:1fb588ebbe34
 routine public.set_conversation_details(p_conversation_id uuid, p_description text, p_announce_only boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:401d7d95ef43
@@ -3387,6 +3399,7 @@ trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_st
 trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_mappings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
 trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_stations_guard BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_guard()
 trigger charging_stations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
