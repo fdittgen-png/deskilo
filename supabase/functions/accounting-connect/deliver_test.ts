@@ -191,6 +191,8 @@ function world(opts: {
   manageable?: boolean;
   target?: string;
   status?: string;
+  /** The connection was revoked (offboarding): the credentials answer so. */
+  revoked?: boolean;
   /** An OAuth connection whose token expires at this instant. */
   oauthExpiresAt?: string;
   refresh?: () => Response;
@@ -281,7 +283,7 @@ function world(opts: {
             auth_kind: opts.oauthExpiresAt ? "oauth2" : "token",
             status: opts.status ?? "connected",
             remote_tenant_id: opts.tenant ?? "",
-            revoked: false,
+            revoked: opts.revoked ?? false,
             token_expires_at: opts.oauthExpiresAt ?? null,
             secrets: { access_token: "PL-secret", refresh_token: "RT-secret" },
           },
@@ -742,4 +744,23 @@ Deno.test("#2371 through the runner: a taxed sale whose invoice froze an empty b
   });
   assertEquals((await run(absent)).status, 403);
   assertEquals(none.st.posts, 0);
+});
+
+// #3336 L14 -- a connection revoked while work was unresolved: the recovery
+// request (a delivery run) reads the credentials, finds them revoked and asks
+// the provider for nothing -- no readback, no create, no token refresh --
+// and records no new delivery; the uncertainty stays for a person to resolve.
+Deno.test("a revoked connection's recovery run makes no provider call and records nothing", async () => {
+  const revoked = world({
+    status: "revoked",
+    revoked: true,
+  });
+  const answer = await run(revoked);
+  assertEquals(answer.status, 409);
+  assertEquals(revoked.order, [], "the provider was never called");
+  assertEquals(revoked.stored, [], "no token was refreshed or stored");
+  assert(
+    !revoked.calls.some((c) => c.fn === "record_accounting_delivery"),
+    "no delivery was recorded on a revoked connection",
+  );
 });
