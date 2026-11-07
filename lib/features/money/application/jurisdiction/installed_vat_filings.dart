@@ -4,6 +4,7 @@
 // list, compiled in (no downloadable plugin). One entry per country the
 // dispatcher served before, with the same file names, encodings and bytes.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import 'legacy_vat_filing_contribution.dart';
@@ -29,10 +30,8 @@ final List<VatFilingContribution> installedVatFilings = [
     _descriptor('DE', 'elster-ustva-v11'),
     mediaType: 'application/xml',
   ),
-  LegacyVatFilingContribution(
-    _descriptor('FR', 'edi-tva-ca3-infent'),
-    mediaType: 'application/edifact',
-  ),
+  // #3332: the French add-on lives in its own package.
+  const FrVatFilingContribution(),
   LegacyVatFilingContribution(
     _descriptor('GB', 'mtd-bridging-csv'),
     mediaType: 'text/csv',

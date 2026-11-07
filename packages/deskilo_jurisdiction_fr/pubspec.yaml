@@ -1,0 +1,18 @@
+name: deskilo_jurisdiction_fr
+description: >-
+  The French VAT filing add-on (#3332): the CA3 as an EDI-TVA (EDIFACT)
+  interchange behind the jurisdiction contract. Pure Dart; depends on the
+  contract package alone.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_jurisdiction_api:
+    path: ../deskilo_jurisdiction_api
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0
