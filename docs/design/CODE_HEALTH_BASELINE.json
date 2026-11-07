@@ -1,6 +1,6 @@
 {
-  "recordedSha": "fa24120427c278238b748c48411875a77d7d8f14",
-  "recordedDate": "2026-11-07",
+  "recordedSha": "65b12eee8d551de17f0394f743cf5b96011f0d96",
+  "recordedDate": "2026-11-06",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2473,"functions":13993,"cyclomatic>=9":1434,"cyclomatic>=25":80,"cognitive>=15":542,"cognitive>=30":73,"length>=150":51,"parameters>=5":643,"parameters>=7":155,"partOfFiles":17},
   "budgets": {
