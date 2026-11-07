@@ -176,8 +176,8 @@ select pg_temp.as_actor('uo', format($q$select public.record_book_export_v1(%L, 
 select is((select module_id || '/' || module_version || '/' || (rule_revision ->> 'status') from public.provenance_envelopes
             where result_kind = 'book_export' and artifacts ->> 'sha256' = repeat('f', 64)), 'book.export/1/unknown',
   'a forged module, version or rule is ignored: the server''s registry and tax reference decide');
-select is((select declared from public.provenance_envelopes where result_kind = 'book_export' and artifacts ->> 'sha256' = repeat('f', 64)),
-  '{"renderer": "ui/1"}'::jsonb, 'only the allowed declaration survives, as declared');
+select is((select declared ->> 'renderer' from public.provenance_envelopes where result_kind = 'book_export' and artifacts ->> 'sha256' = repeat('f', 64)),
+  'ui/1', 'the declaration is kept as declared, apart from the server''s own fields (clipping to the allowed keys is 0694)');
 
 -- ── L9: a closed period and a retention hold, whatever the state ─────────
 insert into public.book_periods (workspace_id, period_from, period_to, reason, closed_by_member_id)
