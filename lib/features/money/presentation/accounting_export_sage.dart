@@ -6,7 +6,6 @@
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart' show TaxReferenceQueries;
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';

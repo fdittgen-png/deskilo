@@ -6,7 +6,6 @@
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_calendar.dart';
 import 'package:deskilo/core/vat/tax_reference.dart';
-import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/core/vat/tax_reference_snapshot.dart';
 import 'package:flutter_test/flutter_test.dart';
 

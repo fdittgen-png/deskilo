@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import 'package:crypto/crypto.dart';
+// `cacheDigest` moved into the money kernel with the tax reference (#3401);
+// importers of this file keep reading it here until the sweep (#3403).
+export 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show cacheDigest;
 
 /// Which backend this process actually talks to.
 ///
@@ -37,22 +39,4 @@ String? cacheScope({required String? backendUrl, required String? userId}) {
   // length were constructible to collide (two UUID-shaped ids shared one
   // namespace); the store also checks the exact key it was given.
   return 's2${cacheDigest('cache-scope-v2', [backend, userId], 32)}:';
-}
-
-/// #2008 — a stable, domain-separated SHA-256 digest of [parts], as the
-/// first [hexChars] hex characters. Each part is length-prefixed so no
-/// two different lists encode alike. Not encryption, not a permission.
-String cacheDigest(String domain, List<String> parts, int hexChars) {
-  final encoded = StringBuffer(domain);
-  for (final part in parts) {
-    encoded
-      ..write('\n')
-      ..write(utf8.encode(part).length)
-      ..write(':')
-      ..write(part);
-  }
-  return sha256
-      .convert(utf8.encode(encoded.toString()))
-      .toString()
-      .substring(0, hexChars);
 }

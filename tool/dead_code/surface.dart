@@ -52,7 +52,7 @@ List<SurfaceFinding> scanPublicSurface(String root) {
   final corpus = _Corpus(root);
   final out = <SurfaceFinding>[];
   for (final s in corpus.sources.values) {
-    if (!s.path.startsWith('lib/') || s.isGenerated) continue;
+    if (!_isSurfaceScanned(s.path) || s.isGenerated) continue;
     if (s.path.startsWith('lib/l10n/')) continue;
     final production = <_Declaration>{};
     final tests = <_Declaration>{};

@@ -9,7 +9,6 @@
 // and how they total -- stays in the form's code.
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import 'vat_declaration.dart';
 import 'vat_forms.dart';
 

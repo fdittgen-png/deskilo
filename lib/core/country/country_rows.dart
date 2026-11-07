@@ -6,7 +6,6 @@
 // for is left out, never read as SEPA: a workspace is not created with
 // payment instructions of the wrong shape.
 import '../vat/tax_reference.dart';
-import '../vat/tax_reference_active.dart';
 import 'country_catalog.dart';
 
 List<Country> countriesOfReference(TaxReferenceSet set) {

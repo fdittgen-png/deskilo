@@ -20,11 +20,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/l10n_audit.dart';
 import '../../tool/l10n_audit/audit.dart';
+import '../../tool/lib_roots.dart';
 
 void main() {
   late List<Finding> findings;
 
-  setUpAll(() => findings = auditTree(['lib']));
+  setUpAll(() => findings = auditTree(['lib', ...packageLibRoots()]));
 
   test('every user-facing literal is in a file with a written reason', () {
     final unclassified = [

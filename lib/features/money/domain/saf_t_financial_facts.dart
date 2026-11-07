@@ -5,7 +5,6 @@
 import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import 'posting.dart';
 import 'saf_t_financial.dart';
 

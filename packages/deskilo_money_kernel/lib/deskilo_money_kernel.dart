@@ -11,3 +11,4 @@ export 'src/date_text.dart';
 export 'src/fiscal_year.dart';
 export 'src/json_reader.dart';
 export 'src/posting.dart';
+export 'src/stable_digest.dart';

@@ -9,7 +9,6 @@
 //
 // There is deliberately no `read(key, fallback)`: a caller never writes the
 // fallback, the registry's default is the fallback.
-import '../cache/cache_scope.dart';
 import '../data/json_reader.dart';
 import '../net/public_endpoint.dart';
 

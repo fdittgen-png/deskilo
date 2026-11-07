@@ -10,7 +10,6 @@
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import 'invoice.dart';
 import 'vat_filing_terms.dart';
 import 'vat_register_es.dart';

@@ -43,6 +43,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'layering/analysis.dart' as layering;
+import 'lib_roots.dart';
 
 /// The command every failure message prints.
 const String budgetCommand = 'dart run tool/code_health.dart --baseline';
@@ -267,7 +268,8 @@ bool _isPresentation(String path) =>
 
 final RegExp _rawSpinnerCall = RegExp(r'\bCircularProgressIndicator\(');
 
-/// Measures the tree under lib/ (run from the repository root).
+/// Measures the tree under lib/ (run from the repository root); the file
+/// lengths also read the lib/ of every package.
 BudgetActuals measureBudgetActuals() {
   final files = layering.handWrittenDartFiles('lib').toList()
     ..sort((a, b) => a.path.compareTo(b.path));
@@ -285,6 +287,13 @@ BudgetActuals measureBudgetActuals() {
       // A screen split across part files is one screen (#2386).
       final library = layering.libraryPathOf(file);
       setState[library] = (setState[library] ?? 0) + calls;
+    }
+  }
+  // #3401 -- a file that moved into a package keeps its length budget: the
+  // length ratchet reads the lib/ of every package too.
+  for (final root in packageLibRoots()) {
+    for (final file in layering.handWrittenDartFiles(root)) {
+      lines[file.path.replaceAll(r'\', '/')] = _lineCount(file);
     }
   }
   final generic = <String, int>{};
