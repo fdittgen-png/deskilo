@@ -161,7 +161,8 @@ export const CAPABILITIES = [
     "prerequisites": "Platform credentials configured by the operator.",
     "limitations": "The client handoff, channel selection and receipt interpretation are unit-tested using simulated responses. No real or sandbox transmission or acceptance by a national platform is recorded by this evidence.",
     "evidence": [
-      "unit:gated"
+      "unit:gated",
+      "local_integration:gated"
     ]
   },
   {

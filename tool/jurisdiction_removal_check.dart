@@ -5,17 +5,25 @@
 //   dart run tool/jurisdiction_removal_check.dart deskilo_jurisdiction_it
 //   dart run tool/jurisdiction_removal_check.dart <module> --facts facts.json
 //
-// facts.json carries what a source tree cannot show: `enabled_capabilities`,
-// `pending_submissions`, `needed_correction_routes` (an operator's query
-// against the instance). Without it only the source half is checked and the
-// output says so. Exit 0 = nothing found, 1 = blocked, 2 = usage.
+// facts.json is what a source tree cannot show, read from the instance:
+// `jurisdiction_removal_facts_installation_v1(provider, format)` (the operator's
+// whole-installation answer, grouped by space) or `jurisdiction_removal_facts_v1`
+// (one space under its manager). Removing a module is an installation decision,
+// so only the installation answer can make it "proven"; a one-space answer is
+// reported as not covering the other spaces.
+//
+// Exit 0 = proven (source half and the whole installation), 1 = blocked,
+// 2 = usage, 3 = nothing found but not proven (a half was not checked).
 import 'dart:convert';
 import 'dart:io';
 
 import 'jurisdiction_removal/removal_check.dart';
 
 void main(List<String> args) {
-  final positional = [for (final a in args) if (!a.startsWith('--')) a];
+  final positional = [
+    for (final a in args)
+      if (!a.startsWith('--')) a,
+  ];
   if (positional.isEmpty) {
     stderr.writeln('usage: jurisdiction_removal_check <module> [--facts file]');
     exitCode = 2;
@@ -34,14 +42,26 @@ void main(List<String> args) {
   }
   if (!report.runtime) {
     stdout.writeln(
-      'NOT CHECKED  enabled capabilities, pending submissions, correction '
-      'routes (supply --facts)',
+      'NOT CHECKED  enabled capabilities, unsettled transmissions, correction '
+      'routes of ANY space (supply --facts from '
+      'jurisdiction_removal_facts_installation_v1)',
+    );
+  } else if (!report.installation) {
+    stdout.writeln(
+      'NOT CHECKED  the other spaces: this answer is one space\'s; removing a '
+      'module is an installation decision (use '
+      'jurisdiction_removal_facts_installation_v1)',
     );
   }
-  stdout.writeln(
-    report.removable
-        ? '${report.module}: nothing found that needs it'
-        : '${report.module}: cannot be removed',
-  );
-  exitCode = report.removable ? 0 : 1;
+  if (!report.removable) {
+    stdout.writeln('${report.module}: cannot be removed');
+    exitCode = 1;
+  } else if (!report.proven) {
+    stdout.writeln(
+      '${report.module}: nothing found in what was checked -- NOT a proof',
+    );
+    exitCode = 3;
+  } else {
+    stdout.writeln('${report.module}: nothing found that needs it');
+  }
 }

@@ -2477,6 +2477,9 @@ routine public.issuing_member(p_workspace_id uuid) -> members | function | defin
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6574246b0cba
 routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8c5d5fe02470
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
+routine public.jurisdiction_removal_facts_installation_v1(p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:147ea81a7e33
+routine public.jurisdiction_removal_facts_of(p_workspace_id uuid, p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:50e9fafb2f07
+routine public.jurisdiction_removal_facts_v1(p_workspace_id uuid, p_provider text, p_format text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:089085620561
 routine public.kiosk_act(p_workspace_id uuid, p_badge_token text, p_action text, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c146e124a317
 routine public.kiosk_identify(p_workspace_id uuid, p_badge_token text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd2bf1f2625
 routine public.kpi_cost_allocation(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:09a90f083fef
