@@ -10,6 +10,7 @@
 // French file. No user-facing text lives here -- the UI maps [RefusalKind] to
 // its own words.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:meta/meta.dart';
 
 /// What a host asks an add-on to do.
 enum JurisdictionOperation { vatFiling }
@@ -64,7 +65,9 @@ class Refused extends CapabilityResolution {
   final RefusalKind kind;
 }
 
-/// The capability id every VAT filing add-on uses, per country.
+/// The capability id every VAT filing add-on uses, per country. An add-on
+/// declares it in its own descriptor; the resolver and the tests build it here.
+@visibleForTesting
 String vatFilingCapabilityId(String country) => 'vat_filing.$country';
 
 /// The country a VAT filing [contribution] files for, from its capability id.

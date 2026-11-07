@@ -48,4 +48,20 @@ void main() {
     expect(csvCell('abcdef', maxLength: 4), '"abc…"');
     expect(csvCell('-5'), "\"'-5\"");
   });
+
+  test('the Swiss UID: checksum, suffix, print form', () {
+    expect(isValidSwissUid('CHE-109.322.551 MWST'), isTrue);
+    expect(
+      isValidSwissUid('CHE-109.322.551'),
+      isFalse,
+      reason: 'suffix needed',
+    );
+    expect(isValidSwissUid('CHE-109.322.551', requireSuffix: false), isTrue);
+    expect(isValidSwissUid('CHE-109.322.552'), isFalse, reason: 'check digit');
+    expect(isValidSwissUid(''), isFalse);
+    expect(formatSwissUid('che109322551tva'), 'CHE-109.322.551 TVA');
+    expect(formatSwissUid('not a uid'), 'not a uid');
+    expect(hhmmss(DateTime.utc(2026, 3, 4, 9, 5, 3)), '09:05:03');
+    expect(hhmmss(DateTime.utc(2026, 3, 4, 9, 5, 3), separator: ''), '090503');
+  });
 }

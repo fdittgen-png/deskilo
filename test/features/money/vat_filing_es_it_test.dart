@@ -14,7 +14,7 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
+import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';

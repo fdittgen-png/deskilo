@@ -175,6 +175,8 @@ void main() {
         "$header// E2.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_it/test/i_test.dart',
         "$header// I2.\nvoid main() {}\n");
+    write('packages/deskilo_jurisdiction_ch/test/c_test.dart',
+        "$header// C2.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_fr/test/f_test.dart',
         "$header// F.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_api/test/j_test.dart',
