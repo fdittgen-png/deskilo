@@ -63,13 +63,31 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- A reservation of the owner of workspace [p_ws] starting [p_min] minutes from
 -- now (one minute long), on that workspace's first seat.
+--
+-- It is NOT booked at now() + p_min: a booking must end on the day it starts, so
+-- within about 21 minutes of the workspace's local midnight the booking RPC
+-- refused every offset that crossed it and the whole file failed for a reason
+-- that has nothing to do with the windows (#3353). The reservation is booked at
+-- tomorrow at 10:00 local, which no clock
+-- crosses, and then moved to the wanted offset from the transaction's now() with
+-- a direct update: the check-in window only ever compares starts_at to now(),
+-- and the moved row is the one every case below reads.
 create function pg_temp.book(p_user text, p_ws text, p_min numeric) returns uuid language plpgsql as $$
-declare v_s timestamptz := now() + make_interval(secs => (p_min * 60)::int);
+declare
+  v_s timestamptz := now() + make_interval(secs => (p_min * 60)::int);
+  v_tz text := (select timezone from public.workspaces where id = current_setting(p_ws)::uuid);
+  -- tomorrow 10:00 local, plus the offset so two bookings never overlap
+  v_safe timestamptz := ((date_trunc('day', now() at time zone v_tz) + interval '1 day 10 hours'
+                          + make_interval(secs => (p_min * 60)::int)) at time zone v_tz);
+  v_id uuid;
 begin
   perform pg_temp.act_as(('00000000-0000-4000-8000-00002486' || p_user)::uuid);
-  return public.create_reservation_once(gen_random_uuid(), current_setting(p_ws)::uuid,
+  v_id := public.create_reservation_once(gen_random_uuid(), current_setting(p_ws)::uuid,
     (select id from public.seats where workspace_id = current_setting(p_ws)::uuid order by id limit 1),
-    null, null, null, v_s, v_s + interval '1 minute', false);
+    null, null, null, v_safe, v_safe + interval '1 minute', false);
+  reset role;
+  update public.reservations set starts_at = v_s, ends_at = v_s + interval '1 minute' where id = v_id;
+  return v_id;
 end;
 $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
