@@ -46,7 +46,7 @@ const List<AccountingExportContribution> installedAccountingExports = [
   AccountingExportContribution('saft_at', _postedOnlyWithOpening),
   AccountingExportContribution('saft_dk', _postedOnlyWithOpening),
   AccountingExportContribution('saft_oecd_full', _postedOnlyWithOpening),
-  AccountingExportContribution('saft', _documents),
+  AccountingExportContribution('saft', _postedWhenLocalBook),
   AccountingExportContribution('accountant_csv', _documents),
   AccountingExportContribution(
     'generic_journal_csv',
