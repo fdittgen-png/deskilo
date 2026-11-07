@@ -424,6 +424,23 @@ List<FileHealth> measureTree(String root) {
   return [for (final p in paths) measureSource(p, File(p).readAsStringSync())];
 }
 
+/// The roots the ratchets measure: the application's `lib/` and the `lib/` of
+/// every package under `packages/` (#3396). Code that moves into a package
+/// must not leave the complexity, length and parameter ratchets by moving; a
+/// new package joins the scan by existing.
+List<String> measuredRoots() => [
+  'lib',
+  if (Directory('packages').existsSync())
+    for (final d in Directory('packages').listSync().whereType<Directory>())
+      if (Directory('${d.path}/lib').existsSync())
+        '${d.path.replaceAll(r'\', '/')}/lib',
+]..sort((a, b) => a == 'lib' ? -1 : b == 'lib' ? 1 : a.compareTo(b));
+
+/// Every measured file under [measuredRoots], in path order.
+List<FileHealth> measureAll() => [
+  for (final root in measuredRoots()) ...measureTree(root),
+];
+
 /// One JSON document, an entry per line: header lines, then the two lists.
 String _document(
   List<String> header,
@@ -515,7 +532,7 @@ String summaryOf(Map<String, Object?> baseline) {
     ..writeln('# Code health baseline')
     ..writeln()
     ..writeln('Checkpoint C1 of #2490 / #2491. Measured with '
-        '`dart run tool/code_health.dart`: a syntactic AST pass over `lib/` '
+        '`dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` '
         '(no type resolution), so cyclomatic and cognitive complexity are '
         'this tool\'s own approximations — a ranking and a trend. Recorded '
         'at `${baseline['recordedSha']}` on ${baseline['recordedDate']}.')
@@ -800,8 +817,7 @@ int run(List<String> args) {
     cycles().forEach(stdout.writeln);
     return 0;
   }
-  final root = rest.isNotEmpty ? rest.first : 'lib';
-  final files = measureTree(root);
+  final files = rest.isNotEmpty ? measureTree(rest.first) : measureAll();
   if (!reportErrors(files)) return 1;
 
   if (flags.contains('--check')) {

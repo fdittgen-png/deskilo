@@ -9,6 +9,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 const _path = 'docs/design/REMOVABILITY_ACCEPTANCE.md';
 
 typedef _Row = ({
@@ -51,6 +53,20 @@ void main() {
           if (!File(t).existsSync()) 'row ${r.number}: $t',
     ];
     expect(missing, isEmpty);
+  });
+
+  test('a cited script is run by a workflow, not only present', () {
+    final workflows = [
+      for (final f in filesWithExtension('.github/workflows', '.yml'))
+        f.readAsStringSync(),
+    ].join('\n');
+    final unrun = [
+      for (final r in rows)
+        for (final t in r.tests)
+          if (t.endsWith('.sh') && !workflows.contains(t))
+            'row ${r.number}: $t',
+    ];
+    expect(unrun, isEmpty, reason: 'a script no workflow runs proves nothing');
   });
 
   test('a covered row cites a test; any other row says what remains', () {
