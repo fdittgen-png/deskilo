@@ -12,26 +12,11 @@
 // 0152); a test pins the two equal, because the invoice freezes the SQL
 // rendering and the preview shows the Dart one.
 
-/// #912 — how a person asks to be addressed on a document.
-///
-/// Their own choice, never inferred: a name says nothing reliable about
-/// how its bearer wants to be greeted, and getting it wrong on a letter
-/// is worse than not greeting at all. [none] is a real answer, and the
-/// default — the name is then printed on its own.
-enum Courtesy {
-  none(''),
-  mr('mr'),
-  mrs('mrs');
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-  const Courtesy(this.wire);
-
-  /// What is stored, on `profiles.courtesy` and inside a managed
-  /// identity — a code, so each reader prints it in its own language.
-  final String wire;
-
-  static Courtesy fromWire(String? wire) =>
-      values.where((c) => c.wire == wire).firstOrNull ?? none;
-}
+// The vocabulary moved into the money kernel (#3402), where the invoice's report
+// strings read it; importers of this file keep reading it here until the sweep.
+export 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Courtesy;
 
 /// One person's identity, as documents need it.
 class PersonalInfo {
