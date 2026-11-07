@@ -89,7 +89,9 @@ jobs:
           NO_COLOR: '1'
         run: |
           set -o pipefail
-          tests=$(ls supabase/functions/*/*_test.ts 2>/dev/null || true)
+          # #3329 — at any depth: a module moved into a sub-directory keeps
+          # its tests in the run.
+          tests=$(find supabase/functions -name '*_test.ts' | sort)
           if [ -z "$tests" ] || [ ! -f supabase/functions/deskilo-mcp/index_test.ts ]; then
             echo "::error::the MCP endpoint's tests are required and none were found"
             exit 1

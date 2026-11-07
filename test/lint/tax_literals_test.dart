@@ -14,6 +14,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
 import 'literal_ratchet.dart';
 
 const _rule = 'tax_literals (#2476)';
@@ -24,7 +25,41 @@ String ratchetNote(String what, List<String> lines) =>
     'test/lint/tax_literals_allowed.txt with the reason:\n${lines.join('\n')}';
 
 /// The VAT files: money, core/vat -- the seed tool and tests are outside.
-const _dartRoots = ['lib/features/money', 'lib/core/vat'];
+const _baseDartRoots = [
+  'lib/features/money',
+  'lib/core/vat',
+  // #3329 -- code extracted into jurisdiction add-ons is still VAT code.
+  'lib/core/jurisdiction',
+];
+
+/// The package a jurisdiction add-on lives in, and nowhere else.
+const _jurisdictionPackages = 'packages';
+const _jurisdictionPrefix = 'deskilo_jurisdiction_';
+
+/// The roots scanned: the base ones and `lib/` of every jurisdiction package.
+final _dartRoots = [
+  ..._baseDartRoots,
+  for (final name in directoryNames(_jurisdictionPackages))
+    if (name.startsWith(_jurisdictionPrefix)) '$_jurisdictionPackages/$name/lib',
+];
+
+/// Every `pubspec.yaml` under the code roots that names a jurisdiction
+/// package but is not at `packages/<its name>/`: its code would escape.
+List<String> _strayJurisdictionPackages() {
+  final out = <String>[];
+  for (final root in ['lib', 'packages', 'tool', 'test', 'supabase']) {
+    for (final e in filesWithExtension(root, 'pubspec.yaml', recursive: true)) {
+      if (e.path.contains('/.dart_tool/') || e.path.contains('/build/')) continue;
+      final name = RegExp(r'^name:\s*(\S+)', multiLine: true)
+          .firstMatch(e.readAsStringSync())
+          ?.group(1);
+      if (name == null || !name.startsWith(_jurisdictionPrefix)) continue;
+      final dir = e.parent.path;
+      if (dir != '$_jurisdictionPackages/$name') out.add('$dir ($name)');
+    }
+  }
+  return out;
+}
 
 /// A migration whose number is above this one is counted too: a function
 /// body added after the store may not carry a tax literal. Earlier ones are
@@ -95,6 +130,13 @@ Map<String, ({int count, String reason})> _allowed() {
 }
 
 void main() {
+  test('a jurisdiction package lives under packages/, inside the scanned roots',
+      () {
+    expect(_strayJurisdictionPackages(), isEmpty,
+        reason: '$_rule: a package named $_jurisdictionPrefix* outside '
+            '$_jurisdictionPackages/<name>/ is not scanned for tax literals');
+  });
+
   final found = <String, int>{};
   for (final f in _findings()) {
     found.update('${f.path} :: ${f.line}', (n) => n + 1, ifAbsent: () => 1);

@@ -14,6 +14,7 @@ on:
   pull_request:
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'test/features/money/saf_t_financial_test.dart'
       - 'test/fixtures/saft/**'
       - 'tool/saft/**'
@@ -22,6 +23,7 @@ on:
     branches: [master]
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'test/fixtures/saft/**'
       - 'tool/saft/**'
   workflow_dispatch:
