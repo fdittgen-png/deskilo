@@ -8,7 +8,6 @@
 // (`test/parity/golden/exports/source_requirements.golden`), not copied here.
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
-import 'package:deskilo/features/money/domain/accounting_export_sources.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:flutter_test/flutter_test.dart';
 

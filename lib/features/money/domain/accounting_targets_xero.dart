@@ -7,7 +7,6 @@
 // manual journal, through supabase/functions/_shared/accounting_xero.ts.
 // Reached by signing in to a Xero application of the installation; the
 // sign-in binds the one organisation it authorised.
-import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// The operations every Xero region takes.

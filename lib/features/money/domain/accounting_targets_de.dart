@@ -2,7 +2,6 @@
 //
 // The German targets beside DATEV's file export: the GoBD data handover an
 // auditor reads, and DATEV's online services, decided and not reachable.
-import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// The GoBD data handover (Z3) of a fiscal year: the Beschreibungsstandard's

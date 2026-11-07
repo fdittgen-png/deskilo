@@ -137,6 +137,7 @@ void main() {
         'working-directory: packages/deskilo_task_recording\n'
         'working-directory: packages/deskilo_asset_gzip\n'
         'working-directory: packages/deskilo_money_kernel\n'
+        'working-directory: packages/deskilo_accounting_interchange\n'
         'for p in packages/deskilo_jurisdiction_*/; do\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
     // perf-bench.yml is missing: its family is a dead entry.
@@ -164,6 +165,8 @@ void main() {
         "$header// T.\nvoid main() {}\n");
     write('packages/deskilo_asset_gzip/test/g_test.dart',
         "$header// G.\nvoid main() {}\n");
+    write('packages/deskilo_accounting_interchange/test/i_test.dart',
+        "$header// I.\nvoid main() {}\n");
     write('packages/deskilo_money_kernel/test/k_test.dart',
         "$header// K.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_de/test/de_test.dart',

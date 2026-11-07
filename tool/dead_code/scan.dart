@@ -60,7 +60,7 @@ bool _isScanned(String path) =>
     scannedPackages.any((p) => path.startsWith('packages/$p/lib/'));
 
 /// The packages whose own declarations are scanned for dead code.
-const scannedPackages = ['deskilo_money_kernel'];
+const scannedPackages = ['deskilo_accounting_interchange', 'deskilo_money_kernel'];
 
 /// Scans the repository at [root] (the directory holding `lib/` and
 /// `test/`) and returns the findings sorted by path and line.
