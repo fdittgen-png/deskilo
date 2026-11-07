@@ -18,6 +18,10 @@ dependencies:
     path: ../deskilo_jurisdiction_standards
   deskilo_money_kernel:
     path: ../deskilo_money_kernel
+  deskilo_tax_reference:
+    path: ../deskilo_tax_reference
+  deskilo_vat_declaration:
+    path: ../deskilo_vat_declaration
 
 dev_dependencies:
   lints: ^6.0.0

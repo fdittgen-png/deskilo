@@ -14,6 +14,7 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
+  'lib/features/money/domain/swiss_kmu.dart',
   'lib/features/money/domain/vat_forms.dart',
   'lib/features/money/domain/vat_form_boxes.dart',
   'lib/features/money/domain/vat_form_terms.dart',
