@@ -95,3 +95,28 @@ verify_jwt = false
 
 [functions.send-push]
 verify_jwt = true
+
+# #3094 — the functions that verify a JWT at the gateway are written down too,
+# not left to the default: a plain `supabase functions deploy` keeps the value
+# the server already holds, so a function once deployed with
+# `--no-verify-jwt` stays open until something sets it. The values are the
+# builder's (tool/build_instance.dart `functionVerifyJwt`);
+# test/lint/function_verify_jwt_test.dart pins that every function directory
+# has an entry here and that it equals the builder's.
+[functions.badge-signin]
+verify_jwt = true
+
+[functions.create-payment-order]
+verify_jwt = true
+
+[functions.send-e-invoice]
+verify_jwt = true
+
+[functions.send-purchase-order]
+verify_jwt = true
+
+[functions.supplier-lookup]
+verify_jwt = true
+
+[functions.vies-check]
+verify_jwt = true
