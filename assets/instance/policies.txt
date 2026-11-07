@@ -317,6 +317,8 @@ public.profiles.mcp_delegated_deny
 public.profiles.personal_native_session
 public.profiles.profiles_select
 public.profiles.profiles_update
+public.provenance_envelopes.mcp_delegated_deny
+public.provenance_envelopes.provenance_envelopes_select
 public.provider_payouts.mcp_delegated_deny
 public.provider_payouts.provider_payouts_select
 public.public_directory_sources.mcp_delegated_deny

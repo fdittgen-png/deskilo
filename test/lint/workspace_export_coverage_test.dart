@@ -75,6 +75,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'provenance_envelopes': 'server-written evidence of how each durable result of this installation was produced (#3336): insert-only, derived from the results themselves and their producers, not portable configuration',
   'capability_states': 'the operator\'s decision to admit or stop new work of a capability on this installation (#3336): an operational state of this installation, not portable configuration — a space decides again from its feature choice',
   'invoice_transmission_artifacts': 'service-only copy of the exact e-invoice bytes prepared for a provider (#3335): a delivery fact of this installation, never client-readable, not portable configuration',
   'badge_auth_attempts': 'service-only attack signals, including token hashes and unknown tags; never disclose credential probes in a workspace workbook (#3091)',
