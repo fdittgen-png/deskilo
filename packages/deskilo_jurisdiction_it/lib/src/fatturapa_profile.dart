@@ -18,7 +18,7 @@
 import 'dart:convert' show utf8;
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
-import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
+import 'sdi_natura.dart';
 import 'package:xml/xml.dart';
 
 /// Bumped in the same commit as any change of the bytes this profile writes.

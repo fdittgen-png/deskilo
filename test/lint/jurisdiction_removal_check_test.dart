@@ -91,15 +91,19 @@ void main() {
     expect(report.removable, isTrue);
   });
 
-  test('today: the Italian add-on is removable at the source level and the '
-      'standards package is not (the fixed Natura table is shared)', () {
+  test('today: the Italian add-on is still needed by the host\'s registro IVA '
+      'and stamp duty (the Natura table), and the standards package by many', () {
     final it = removalCheck('.', 'deskilo_jurisdiction_it');
     expect(
       it.blockers.map((b) => '$b'),
-      isEmpty,
+      unorderedEquals([
+        'dependentSource: lib/features/money/domain/stamp_duty.dart',
+        'dependentSource: lib/features/money/domain/vat_register_it.dart',
+      ]),
       reason:
-          'the application reaches the Italian add-on only through its '
-          'installed_* composition lists:\n${it.blockers.join('\n')}',
+          'the host reaches the Italian add-on through its installed_* lists '
+          'and, for the Natura table, from these two files; fewer is progress, '
+          'more is a new dependency to justify',
     );
     final standards = removalCheck('.', 'deskilo_jurisdiction_standards');
     expect(
@@ -107,7 +111,7 @@ void main() {
       containsAll([
         'deskilo_jurisdiction_it',
         'deskilo_jurisdiction_fr',
-        'lib/features/money/domain/stamp_duty.dart',
+        'lib/core/text/csv.dart',
       ]),
     );
   });

@@ -5,3 +5,4 @@ library;
 
 export 'src/fatturapa_profile.dart';
 export 'src/it_vat_filing.dart';
+export 'src/sdi_natura.dart';

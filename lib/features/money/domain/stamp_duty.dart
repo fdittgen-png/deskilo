@@ -7,7 +7,7 @@
 // the duty are the `threshold` row `stamp_duty` of the seller's country, read
 // on the document's day; the FatturaPA (`DatiBollo`) and the PDF's statutory
 // line read the same answer.
-import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show fatturaPaNatura;
+import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
 
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';

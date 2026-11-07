@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3337 -- SdI's Natura codes, a fixed table of the Italian standard that the
-// FatturaPA profile, the registro IVA and the stamp duty all read: shared, so
-// the Italian add-on can be removed without the application losing it.
+// #3337 -- SdI's Natura codes: one fixed table of the Italian standard, read
+// by the FatturaPA profile, the registro IVA and the stamp duty so the three
+// give the same answer. It is Italian-only, so it lives in the Italian add-on;
+// the application's registro IVA and stamp duty import it from here, a
+// host-to-add-on dependency the removal check reports.
 
 /// Why a 0 % line carries no VAT, in SdI's codes (the FatturaPA and the
 /// registro IVA read the same one). Null for a taxed line.
