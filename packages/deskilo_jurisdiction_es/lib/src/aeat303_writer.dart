@@ -90,7 +90,7 @@ String aeat303File(FilingContext context) {
     // Nota 4 and Nota 3: '0' before the last period; on the last one a
     // space outside SII is not exonerated from the 390.
     23: last ? '2' : '0',
-    24: '1',
+    24: '0',
     // Nota 8: '0' for the quarters and January, else '2' (no fuel deliveries).
     25: period.quarter != null || period.month == 1 ? '0' : '2',
   };
