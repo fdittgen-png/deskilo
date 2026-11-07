@@ -103,7 +103,7 @@ const _eurHolders = {
       'the Swiss QR-bill standard allows exactly CHF and EUR',
   'lib/features/money/domain/vat_rate.dart':
       'a unit amount for rounding arithmetic, never printed or booked as euros',
-  'lib/features/money/domain/vat_components.dart':
+  'packages/deskilo_vat_declaration/lib/src/vat_components.dart':
       'a unit amount for rounding arithmetic, never printed or booked as euros',
   'lib/features/money/domain/fr_ereporting.dart':
       'the French e-reporting flow is euro-denominated; production passes the '
@@ -152,7 +152,11 @@ void main() {
   });
 
   test('every file that holds the euro literal is documented, with its reason', () {
-    final files = filesUnder(['lib', 'packages/deskilo_money_kernel/lib']).where((f) =>
+    final files = filesUnder([
+      'lib',
+      'packages/deskilo_money_kernel/lib',
+      'packages/deskilo_vat_declaration/lib',
+    ]).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&
         !f.path.contains('lib/core/demo/'));
@@ -166,7 +170,11 @@ void main() {
   });
 
   test('the currency fallback literal in lib/ only goes down', () {
-    final files = filesUnder(['lib', 'packages/deskilo_money_kernel/lib']).where((f) =>
+    final files = filesUnder([
+      'lib',
+      'packages/deskilo_money_kernel/lib',
+      'packages/deskilo_vat_declaration/lib',
+    ]).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&
         !f.path.contains('lib/core/demo/'));

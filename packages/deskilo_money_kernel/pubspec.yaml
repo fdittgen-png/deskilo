@@ -2,7 +2,7 @@ name: deskilo_money_kernel
 description: >-
   The pure money and data primitives the accounting model stands on (#3376 of
   #3328): the strict JSON reader, the currency minor units, the date spellings
-  and the exact accounting amount. One dependency (crypto, for the stable digest), no application type, no
+  and the exact accounting amount. Two dependencies (crypto for the stable digest, meta for annotations), no application type, no
   business behaviour.
 version: 0.1.0
 publish_to: none
@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   crypto: ^3.0.7
+  meta: ^1.16.0
 
 dev_dependencies:
   lints: ^6.0.0

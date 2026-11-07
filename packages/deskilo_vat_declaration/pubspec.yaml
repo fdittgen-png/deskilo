@@ -1,0 +1,24 @@
+name: deskilo_vat_declaration
+description: >-
+  The VAT declaration model (#3405 of #3328): the declaration and its lines,
+  the form definitions (per country and year, data), the filling of a form's
+  boxes and the machine-readable XML export. Every question about the tax
+  reference takes the set as a parameter; the installed snapshot
+  (ActiveTaxReference) stays in the application. Pure Dart.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_money_kernel:
+    path: ../deskilo_money_kernel
+  deskilo_tax_reference:
+    path: ../deskilo_tax_reference
+  meta: ^1.16.0
+  xml: ^6.6.1
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

@@ -1,0 +1,154 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2357 — the VAT return forms the app fills, per country and per year
+// they apply from. Labels are the forms' own words, in the form's own
+// language (a translated box name is the wrong box); keys are the names a
+// filing file uses for each cell.
+//
+//  * FR — CA3 (3310-CA3-SD), whole euros, half up. Sales by rate on lines
+//    08/09/9B/11/14 and by category on E1 (exports, ex-line 04) and E2
+//    (other non-taxable: intra-EU services, exempt, ex-line 05);
+//    deductible VAT on 19 (fixed assets) and 20 (other goods and
+//    services). A correction in the Treasury's favour adds to its rate
+//    line (output) or to line 15 (input VAT to pay back); one in the
+//    declarant's favour goes to line 21. Lines 16, 23, 25 and 28 total.
+//  * DE — UStVA, bases in whole euros cut in the declarant's favour, tax
+//    in cents. Kz 81/86 by rate, Kz 35/36 other rates; Kz 21 (B2B services
+//    taxed in another member state), Kz 45 (other supplies not taxable
+//    here), Kz 43 (tax-free with input-tax deduction), Kz 48 (tax-free
+//    without), Kz 66 input tax, Kz 83 the advance payment. A correction
+//    (§ 17 UStG) lands on the boxes of the period of the change.
+//  * GB — VAT100 / MTD: boxes 1–5 in pence, 6–9 in whole pounds dropped.
+//  * CH — MWST (effective method), from the 2024 rates: 200–299 turnover,
+//    303/313/343 by rate, 400/405 input tax, 500/510 due or credit.
+//  * CA — GST/HST (GST34): line 101 in whole dollars, the tax lines in
+//    cents; corrections on 104 (adds) and 107 (deducts).
+//  * ES — Modelo 303: 01–09 by rate, 28–31 deductible VAT (current, fixed
+//    assets), 27/45/46 totals, 59/60/120 by category.
+//  * IT — LIPE quadro VP: VP2–VP6.
+// Any other country gets a per-rate listing.
+//
+// A form that changes in a later year gets a second entry with that
+// year's [VatFormSpec.validFrom]; `vatFormSpecFor` picks by period.
+
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'vat_declaration.dart';
+import 'vat_form_boxes.dart';
+import 'vat_form_catalogue/ca.dart';
+import 'vat_form_catalogue/ch.dart';
+import 'vat_form_catalogue/de.dart';
+import 'vat_form_catalogue/es.dart';
+import 'vat_form_catalogue/fr.dart';
+import 'vat_form_catalogue/gb.dart';
+import 'vat_form_catalogue/it.dart';
+import 'vat_form_terms.dart';
+import 'vat_forms.dart';
+
+/// Every form's structure: its boxes, how they total, how they round. The
+/// rated boxes name their `form_box` row (label and fiscal groups); read the
+/// forms through [vatFormCatalogue] or [vatFormSpecFor], which resolve them.
+final List<VatFormSpec> _vatFormTemplates = [
+  frCa3Spec,
+  deUstvaSpec,
+  gbVat100Spec,
+  chMwstSpec,
+  caGst34Spec,
+  esModelo303Spec,
+  itLipeSpec,
+];
+
+/// Every form the app fills, oldest layout first per country, as the
+/// installed reference data words and groups them today.
+List<VatFormSpec> vatFormCatalogueOn(TaxReferenceSet reference) => [
+  for (final f in _vatFormTemplates)
+    resolveFormBoxes(f, reference, DateTime(9999)),
+];
+
+/// The annual summary [country]'s periodic returns add up to, by the name
+/// of its form; null where the periodic returns stand alone.
+String? vatAnnualSummaryName(String country) =>
+    switch (country.trim().toUpperCase()) {
+      'ES' => esAnnualSummaryName,
+      'IT' => itAnnualSummaryName,
+      _ => null,
+    };
+
+/// #2361 — Revenu Québec's FPZ-500, QST part.
+VatFormSpec get qstFormSpec => caFpz500QstSpec;
+
+/// The form [country] files for a period ending on [periodEnd]: the
+/// latest layout already in force, the earliest one for an older period;
+/// null for a country without one.
+VatFormSpec? vatFormSpecFor(
+  String country,
+  DateTime periodEnd, {
+  required TaxReferenceSet reference,
+}) {
+  final code = switch (country.trim().toUpperCase()) {
+    'UK' => 'GB',
+    final c => c,
+  };
+  final forms = [
+    for (final f in _vatFormTemplates)
+      if (f.country == code) f,
+  ]..sort((a, b) => a.validFrom.compareTo(b.validFrom));
+  if (forms.isEmpty) return null;
+  return resolveFormBoxes(
+    forms.lastWhere(
+      (f) => !f.validFrom.isAfter(periodEnd),
+      orElse: () => forms.first,
+    ),
+    reference,
+    periodEnd,
+  );
+}
+
+/// Whether the return [country] files on [on] has a box for the acquisition
+/// tax on services bought from abroad (CH 383): a `form_box` row in force
+/// that carries the category. Only there may an expense say it was bought
+/// so, since no other form declares the tax it owes; the server refuses the
+/// flag by the same rows (`expense_vat_payload`).
+bool vatFormTaxesAcquisitions(
+  String country,
+  DateTime on, {
+  required TaxReferenceSet reference,
+}) => reference
+    .on(isoDay(on))
+    .where(TaxDomain.formBox, country: country.trim().toUpperCase())
+    .any((r) => (r.value as FormBoxValue).categories.contains(vatAcquisitionCategory));
+
+/// A country without a form in the catalogue: one box per rate of the
+/// sales, and the deductible VAT.
+VatFormSpec genericVatForm(List<VatDeclarationLine> lines) {
+  final rates = {
+    for (final l in lines)
+      if (!l.isInput) l.percent,
+  }.toList()..sort((a, b) => b.compareTo(a));
+  return VatFormSpec(
+    country: '',
+    name: '',
+    validFrom: DateTime(2000),
+    boxes: [
+      for (final r in rates)
+        VatBoxSpec(
+          _pct(r),
+          r == 0 ? '0 % / out of scope' : 'Rate ${_pct(r)}',
+          base: [
+            vatSales(rates: {r}, categories: null),
+          ],
+          tax: [
+            vatSales(rates: {r}, categories: null),
+          ],
+        ),
+      VatBoxSpec('Input', 'Input VAT', base: [vatInput()], tax: [vatInput()]),
+    ],
+  );
+}
+
+String _pct(double percent) {
+  final text = percent == percent.roundToDouble()
+      ? percent.toStringAsFixed(0)
+      : percent.toString();
+  return '$text %';
+}

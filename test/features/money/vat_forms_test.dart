@@ -7,7 +7,6 @@
 // every box a coworking space fills.
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_forms.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 VatDeclarationLine _sale(

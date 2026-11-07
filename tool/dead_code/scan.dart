@@ -67,6 +67,7 @@ const surfacePackages = [
   'deskilo_accounting_interchange',
   'deskilo_money_kernel',
   'deskilo_tax_reference',
+  'deskilo_vat_declaration',
 ];
 
 bool _isSurfaceScanned(String path) =>

@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `d488869f4b0db796756de573608875872afdc536` on 2026-11-07.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7f72df63cb47fed892e763dd60f6b0e5a529110f` on 2026-11-07.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,14 +10,14 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2572 |
-| functions | 14246 |
+| files | 2587 |
+| functions | 14253 |
 | cyclomatic>=9 | 1464 |
 | cyclomatic>=25 | 84 |
 | cognitive>=15 | 556 |
 | cognitive>=30 | 76 |
 | length>=150 | 52 |
-| parameters>=5 | 649 |
+| parameters>=5 | 653 |
 | parameters>=7 | 156 |
 | partOfFiles | 18 |
 
@@ -49,5 +49,5 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 42 | 37 | 175 | 3 | `lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices` |
 | 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
 | 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
-| 40 | 19 | 55 | 2 | `lib/features/money/domain/vat_forms.dart#fillVatForm` |
+| 40 | 38 | 141 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 
