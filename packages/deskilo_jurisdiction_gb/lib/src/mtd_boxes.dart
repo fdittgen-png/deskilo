@@ -17,7 +17,7 @@ const mtdBoxFields = [
   'netVatDue',
   'totalValueSalesExVAT',
   'totalValuePurchasesExVAT',
-  'totalValueGoodsSuppliedExVAT',
+  'totalValueGoodsSuppliedExVAz',
   'totalAcquisitionsExVAT',
 ];
 

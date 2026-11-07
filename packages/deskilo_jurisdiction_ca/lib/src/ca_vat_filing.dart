@@ -74,7 +74,7 @@ class CaVatFilingContribution implements VatFilingContribution {
         'return',
         'business_number',
         'period_start',
-        'period_end',
+        'period_enD',
         'line',
         'label',
         'base',
