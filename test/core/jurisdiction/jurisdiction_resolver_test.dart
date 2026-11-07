@@ -73,6 +73,14 @@ void main() {
     );
   });
 
+  test('a VAT add-on at contract 2 still resolves beside an invoice profile '
+      '(versions are per capability, ADR 0050 §4)', () {
+    expect(jurisdictionContractVersion, '2');
+    final addOn = _fake('DE');
+    expect(addOn.descriptor.contractVersion, '2');
+    expect(_resolve('DE', [addOn]), isA<Resolved>());
+  });
+
   test('an add-on written against another contract version is refused', () {
     final r = _resolve('DE', [_fake('DE', contract: '0')]);
     expect((r as Refused).kind, RefusalKind.contractMismatch);
