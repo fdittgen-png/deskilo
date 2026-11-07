@@ -1,0 +1,23 @@
+fec | bytes
+fr_ereporting | bytes
+saft_pt | bytes
+datev | bytes
+gobd | a package of tables and a DTD: pinned by gobd_package_test
+sage50 | bytes
+ch_kmu | bytes
+banana_transactions | bytes
+saft_no | SAF-T Financial: written from the posting engine; its bytes are pinned by the SAF-T files of saf_t_financial_test
+faia_lu | FAIA: as saft_no
+saft_ro | SAF-T Financial: as saft_no
+saft_at | SAF-T Financial: as saft_no
+saft_dk | SAF-T Financial: as saft_no
+saft_oecd_full | SAF-T Financial: as saft_no
+saft | bytes
+accountant_csv | bytes
+generic_journal_csv | bytes
+general_ledger | a printed book report (PDF)
+trial_balance | a printed book report (PDF)
+journals | a printed book report (PDF)
+audit_trail | bytes
+bundle | bytes
+xero_invoice_csv | exports/xero_invoices.csv in export_bytes_golden_test

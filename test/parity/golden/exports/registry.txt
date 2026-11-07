@@ -1,0 +1,256 @@
+## AT
+datev | datev | exchange | zip | accounts=true legalId=false uncertified=false
+datev_buchungsdatenservice | -
+datev_rechnungsdatenservice | -
+datev_belegbilderservice | -
+saft_at | saft_at | exchange | xml | accounts=false legalId=false uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+sage_de | -
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## BE
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## CA
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+quickbooks_online_ca | -
+sage_business_cloud_ca | -
+sage50_ca | -
+sage_intacct | -
+xero_ca | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_ca | -
+## CH
+ch_kmu | ch_kmu | exchange | csv | accounts=true legalId=false uncertified=false
+banana_transactions | banana_transactions | exchange | txt | accounts=true legalId=false uncertified=false
+bexio_api | -
+abacus_abaconnect | -
+sage50_extra_ch | -
+infoniqa_one | -
+klara | -
+run_my_accounts | -
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+business_central_ch | -
+## DE
+datev | datev | exchange | zip | accounts=true legalId=false uncertified=false
+gobd | gobd | subset | zip | accounts=false legalId=false uncertified=false
+datev_buchungsdatenservice | -
+datev_rechnungsdatenservice | -
+datev_belegbilderservice | -
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+sage_business_cloud_de | -
+sage_de | -
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_de | -
+## DK
+denmark_registered_system | -
+saft_dk | saft_dk | exchange | xml | accounts=false legalId=true uncertified=false
+economic_api | -
+dinero_api | -
+billy_api | -
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## ES
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+sage_business_cloud_es | -
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## FR
+fec | fec | regulatory | txt | accounts=true legalId=true uncertified=false
+fr_ereporting | fr_ereporting | subset | xml | accounts=false legalId=false uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+pennylane_api | -
+cegid_quadra_ascii | -
+ebp_import | -
+sage_business_cloud_fr | -
+sage100_fr | -
+sage50_fr | -
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_fr | -
+## GB
+sage50 | sage50 | exchange | csv | accounts=true legalId=false uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+hmrc_mtd | -
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+quickbooks_online_gb | -
+sage_business_cloud_gb | -
+sage200 | -
+sage_intacct | -
+xero_gb | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_gb | -
+## IT
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## LU
+faia_lu | faia_lu | regulatory | xml | accounts=false legalId=true uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## NL
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## NO
+saft_no | saft_no | regulatory | xml | accounts=false legalId=true uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+## PT
+saft_pt | saft_pt | regulatory | xml | accounts=false legalId=true uncertified=true
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## RO
+saft_ro | saft_ro | exchange | xml | accounts=false legalId=true uncertified=false
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+xero_eu | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+## US
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+quickbooks_online_us | -
+sage_business_cloud_us | -
+sage_intacct | -
+xero_us | -
+xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_us | -
+## (none)
+saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
+saft | saft | subset | xml | accounts=false legalId=false uncertified=false
+accountant_csv | accountant_csv | exchange | csv | accounts=false legalId=false uncertified=false
+generic_journal_csv | generic_journal_csv | exchange | csv | accounts=false legalId=false uncertified=false
+general_ledger | general_ledger | exchange | pdf | accounts=false legalId=false uncertified=false
+trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false uncertified=false
+journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
+audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
+bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
