@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VATDeclaration xmlns="http://www.ech.ch/xmlns/eCH-0217/2" xmlns:eCH-0058="http://www.ech.ch/xmlns/eCH-0058/5">
+  <generalInformation>
+    <uid>CHE116281710</uid>
+    <organisationName>Raum AG</organisationName>
+    <generationTime>2026-10-02T07:00:00</generationTime>
+    <reportingPeriodFrom>2026-02-01</reportingPeriodFrom>
+    <reportingPeriodTill>2026-02-28</reportingPeriodTill>
+    <typeOfSubmission>1</typeOfSubmission>
+    <formOfReporting>1</formOfReporting>
+    <businessReferenceId>PARITY-1</businessReferenceId>
+    <sendingApplication>
+      <eCH-0058:manufacturer>DesKilo</eCH-0058:manufacturer>
+      <eCH-0058:product>DesKilo</eCH-0058:product>
+      <eCH-0058:productVersion>1.0</eCH-0058:productVersion>
+    </sendingApplication>
+  </generalInformation>
+  <turnoverComputation>
+    <totalConsideration>100.00</totalConsideration>
+  </turnoverComputation>
+  <effectiveReportingMethod>
+    <grossOrNet>1</grossOrNet>
+    <suppliesPerTaxRate>
+      <taxRate>8.10</taxRate>
+      <turnover>100.00</turnover>
+    </suppliesPerTaxRate>
+    <inputTaxMaterialAndServices>72.90</inputTaxMaterialAndServices>
+  </effectiveReportingMethod>
+  <payableTax>-64.80</payableTax>
+</VATDeclaration>

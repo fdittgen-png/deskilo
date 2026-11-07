@@ -1,0 +1,7 @@
+"return","business_number","period_start","period_end","line","label",base,tax
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","101","Sales and other revenue",100.00,
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","103","GST/HST collected or collectible",,5.00
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","105","Total GST/HST and adjustments for the period",,5.00
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","106","Input tax credits (ITCs) for the current period",,45.00
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","108","Total ITCs and adjustments",,45.00
+"GST34","123456789 RT0001","2026-02-01","2026-02-28","109","Net tax",,-40.00

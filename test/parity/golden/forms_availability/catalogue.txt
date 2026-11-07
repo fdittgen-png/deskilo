@@ -1,0 +1,84 @@
+## FR | CA3 (3310-CA3-SD) | 2024-01-01
+A1 | Ventes, prestations de services | 0979 |  | - | wholeHalfUp | cents
+E1 | Exportations hors UE | 0032 |  | - | wholeHalfUp | cents
+E2 | Autres opérations non imposables | 0033 |  | - | wholeHalfUp | cents
+08 | Taux normal 20 % | 0207 | 0207 | ca3/08 | wholeHalfUp | wholeHalfUp
+09 | Taux réduit 5,5 % | 0105 | 0105 | ca3/09 | wholeHalfUp | wholeHalfUp
+9B | Taux réduit 10 % | 0151 | 0151 | ca3/9B | wholeHalfUp | wholeHalfUp
+11 | Taux particulier 2,1 % | 0100 | 0100 | ca3/11 | wholeHalfUp | wholeHalfUp
+14 | Opérations imposables à un autre taux | 0950 | 0950 | ca3/14 | wholeHalfUp | wholeHalfUp
+15 | TVA antérieurement déduite à reverser |  | 0600 | - | cents | wholeHalfUp
+16 | Total de la TVA brute due |  |  | - | cents | cents | always
+19 | Biens constituant des immobilisations |  | 0703 | - | cents | wholeHalfUp
+20 | Autres biens et services |  | 0702 | - | cents | wholeHalfUp
+21 | Autre TVA à déduire |  | 0059 | - | cents | wholeHalfUp
+23 | Total de la TVA déductible |  |  | - | cents | cents | always
+25 | Crédit de TVA |  | 0705 | - | cents | cents | clampAtZero
+28 | TVA nette due |  | 8901 | - | cents | cents | always | clampAtZero
+## DE | UStVA | 2024-01-01
+Kz 81 | Steuerpflichtige Umsätze zum Steuersatz von 19 % | Kz81 |  | ustva/Kz 81 | wholeDown | cents
+Kz 86 | Steuerpflichtige Umsätze zum Steuersatz von 7 % | Kz86 |  | ustva/Kz 86 | wholeDown | cents
+Kz 35/36 | Umsätze, die anderen Steuersätzen unterliegen | Kz35 | Kz36 | ustva/Kz 35/36 | wholeDown | cents
+Kz 21 | Nicht steuerbare sonstige Leistungen (Leistungsort nicht im Inland) | Kz21 |  | - | wholeDown | cents
+Kz 45 | Übrige nicht steuerbare Umsätze (Leistungsort nicht im Inland) | Kz45 |  | - | wholeDown | cents
+Kz 43 | Weitere steuerfreie Umsätze mit Vorsteuerabzug | Kz43 |  | - | wholeDown | cents
+Kz 48 | Steuerfreie Umsätze ohne Vorsteuerabzug | Kz48 |  | - | wholeDown | cents
+Kz 66 | Vorsteuerbeträge aus Rechnungen von anderen Unternehmern |  | Kz66 | - | cents | cents
+Kz 83 | Verbleibende Umsatzsteuer-Vorauszahlung / Überschuss |  | Kz83 | - | cents | cents | always
+## GB | VAT100 (MTD) | 2024-01-01
+Box 1 | VAT due on sales and other outputs |  | vatDueSales | - | cents | cents | always
+Box 2 | VAT due on acquisitions from EU member states |  | vatDueAcquisitions | - | cents | cents | always
+Box 3 | Total VAT due |  | totalVatDue | - | cents | cents | always
+Box 4 | VAT reclaimed on purchases and other inputs |  | vatReclaimedCurrPeriod | - | cents | cents | always
+Box 5 | Net VAT to pay to HMRC or reclaim |  | netVatDue | - | cents | cents | always | absolute
+Box 6 | Total value of sales and all other outputs excluding VAT | totalValueSalesExVAT |  | - | wholeDown | cents | always
+Box 7 | Total value of purchases and all other inputs excluding VAT | totalValuePurchasesExVAT |  | - | wholeDown | cents | always
+Box 8 | Total value of supplies of goods to EU member states | totalValueGoodsSuppliedExVAT |  | - | cents | cents | always
+Box 9 | Total value of acquisitions of goods from EU member states | totalAcquisitionsExVAT |  | - | cents | cents | always
+## CH | MWST-Abrechnung (effektive Methode) | 2024-01-01
+200 | Total der vereinbarten bzw. vereinnahmten Entgelte | 200 |  | - | cents | cents | always
+205 | In Ziffer 200 enthaltene Entgelte aus nach Art. 21 von der Steuer ausgenommenen Leistungen, für welche nach Art. 22 optiert wird | 205 |  | mwst/205 | cents | cents
+220 | Von der Steuer befreite Leistungen (Exporte) | 220 |  | - | cents | cents
+221 | Leistungen im Ausland (Ort der Leistung im Ausland) | 221 |  | - | cents | cents
+230 | Von der Steuer ausgenommene Leistungen | 230 |  | - | cents | cents
+289 | Total Abzüge | 289 |  | - | cents | cents
+299 | Steuerbarer Gesamtumsatz | 299 |  | - | cents | cents | always
+303 | Normalsatz 8,1 % | 303 | 303 | mwst/303 | cents | cents
+313 | Reduzierter Satz 2,6 % | 313 | 313 | mwst/313 | cents | cents
+343 | Beherbergungssatz 3,8 % | 343 | 343 | mwst/343 | cents | cents
+383 | Bezugsteuer (Art. 45-49) | 383 | 383 | mwst/383 | cents | cents
+399 | Total geschuldete Steuer |  | 399 | - | cents | cents | always
+400 | Vorsteuer auf Material- und Dienstleistungsaufwand |  | 400 | - | cents | cents
+405 | Vorsteuer auf Investitionen und übrigem Betriebsaufwand |  | 405 | - | cents | cents
+479 | Total Vorsteuer |  | 479 | - | cents | cents | always
+500 | Zu bezahlender Betrag |  | 500 | - | cents | cents | always | clampAtZero
+510 | Guthaben der steuerpflichtigen Person |  | 510 | - | cents | cents | clampAtZero
+## CA | GST/HST return (GST34) | 2024-01-01
+101 | Sales and other revenue | 101 |  | - | wholeHalfUp | cents | always
+103 | GST/HST collected or collectible |  | 103 | - | cents | cents | always
+104 | Adjustments to be added to the net tax |  | 104 | - | cents | cents
+105 | Total GST/HST and adjustments for the period |  | 105 | - | cents | cents | always
+106 | Input tax credits (ITCs) for the current period |  | 106 | - | cents | cents
+107 | Adjustments to be deducted when determining the net tax |  | 107 | - | cents | cents
+108 | Total ITCs and adjustments |  | 108 | - | cents | cents | always
+109 | Net tax |  | 109 | - | cents | cents | always
+## ES | Modelo 303 | 2024-01-01
+01/03 | Régimen general 4 % | 01 | 03 | modelo303/01/03 | cents | cents
+04/06 | Régimen general 10 % | 04 | 06 | modelo303/04/06 | cents | cents
+07/09 | Régimen general 21 % | 07 | 09 | modelo303/07/09 | cents | cents
+Otros | Régimen general, otros tipos |  |  | modelo303/Otros | cents | cents
+27 | Total cuota devengada |  | 27 | - | cents | cents | always
+28/29 | Por cuotas soportadas en operaciones interiores corrientes | 28 | 29 | - | cents | cents
+30/31 | Por cuotas soportadas en operaciones interiores con bienes de inversión | 30 | 31 | - | cents | cents
+45 | Total a deducir |  | 45 | - | cents | cents | always
+46 | Resultado régimen general |  | 46 | - | cents | cents | always
+59 | Entregas intracomunitarias de bienes y servicios | 59 |  | - | cents | cents
+60 | Exportaciones y operaciones asimiladas | 60 |  | - | cents | cents
+120 | Operaciones no sujetas por reglas de localización | 120 |  | - | cents | cents
+## IT | Liquidazione periodica IVA (quadro VP) | 2024-01-01
+VP2 | Totale operazioni attive (al netto dell'IVA) | VP2 |  | - | cents | cents | always
+VP3 | Totale operazioni passive (al netto dell'IVA) | VP3 |  | - | cents | cents | always
+VP4 | IVA esigibile |  | VP4 | - | cents | cents | always
+VP5 | IVA detratta |  | VP5 | - | cents | cents | always
+VP6 col. 1 | IVA dovuta |  | VP6_1 | - | cents | cents | always | clampAtZero
+VP6 col. 2 | IVA a credito |  | VP6_2 | - | cents | cents | clampAtZero
