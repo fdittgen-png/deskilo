@@ -1,8 +1,8 @@
 {
-  "recordedSha": "50170ecf6e06fa3f1b54bb7df048917e1af3fcc9",
+  "recordedSha": "4df2bd5a4f1c9af9b6914ec8b71e25d737d1edad",
   "recordedDate": "2026-11-07",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2468,"functions":13951,"cyclomatic>=9":1429,"cyclomatic>=25":80,"cognitive>=15":539,"cognitive>=30":73,"length>=150":51,"parameters>=5":640,"parameters>=7":154,"partOfFiles":17},
+  "totals": {"files":2470,"functions":13952,"cyclomatic>=9":1429,"cyclomatic>=25":80,"cognitive>=15":539,"cognitive>=30":73,"length>=150":51,"parameters>=5":640,"parameters>=7":154,"partOfFiles":17},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -1486,7 +1486,7 @@
     {"p":"lib/features/mcp/providers/eligibility_review_form_provider.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":2,"cyc":5,"len":11,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/providers/mcp_consent_form_provider.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":2,"cyc":4,"len":14,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/providers/mcp_policy_form_provider.dart","loc":53,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":7,"len":12,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/mcp/providers/mcp_providers.dart","loc":301,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":7,"cyc":7,"len":40,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/mcp/providers/mcp_providers.dart","loc":316,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":7,"cyc":7,"len":49,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/account_favorite.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":7,"len":36,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/me_actions.dart","loc":101,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":16,"cyc":13,"len":56,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/application/me_spaces_layout.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":15,"cyc":11,"len":42,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1580,7 +1580,7 @@
     {"p":"lib/features/members/providers/directory_providers.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":31,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/providers/realtime_invalidations.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/accounting_connection_commands.dart","loc":182,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":4,"cyc":6,"len":29,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/application/accounting_export_source.dart","loc":142,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":8,"len":54,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/accounting_export_source.dart","loc":117,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":8,"len":56,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/add_service.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":15,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/asset_commands.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":8,"len":17,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/asset_valuation_commands.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":5,"len":22,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1599,6 +1599,8 @@
     {"p":"lib/features/money/application/einvoice_inbox.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":19,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/einvoice_receipt.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":14,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/einvoice_resolve.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":22,"params":7,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/money/application/export/accounting_export_contribution.dart","loc":22,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/export/installed_accounting_exports.dart","loc":61,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":3,"len":8,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/file_purchase_receipt.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":7,"len":31,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/generic_journal_export.dart","loc":322,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":22,"cyc":14,"len":58,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/guest_pass_commands.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":18,"params":7,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
