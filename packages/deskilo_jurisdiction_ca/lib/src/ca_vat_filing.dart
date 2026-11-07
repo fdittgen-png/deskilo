@@ -9,6 +9,7 @@
 import 'dart:convert';
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 
 /// Bumped when what the add-on WRITES changes: the application's parity
 /// goldens change in the same commit. 1 = the writer as it stood when it left

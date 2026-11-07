@@ -61,6 +61,9 @@ dependencies:
   # #3331 - the contract of a jurisdiction add-on for VAT filing (internal).
   deskilo_jurisdiction_api:
     path: packages/deskilo_jurisdiction_api
+  # #3333 - the pure helpers the add-ons and the application share (internal).
+  deskilo_jurisdiction_standards:
+    path: packages/deskilo_jurisdiction_standards
   # #3332 - the French VAT filing add-on (internal).
   deskilo_jurisdiction_fr:
     path: packages/deskilo_jurisdiction_fr

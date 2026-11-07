@@ -3,11 +3,7 @@
 library;
 
 export 'src/capability_descriptor.dart';
-export 'src/csv.dart';
-export 'src/date_text.dart';
 export 'src/filing_context.dart';
 export 'src/generated_artifact.dart';
-export 'src/periods.dart';
-export 'src/registration_numbers.dart';
 export 'src/validation_result.dart';
 export 'src/vat_filing_contribution.dart';

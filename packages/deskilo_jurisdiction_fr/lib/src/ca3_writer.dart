@@ -6,6 +6,7 @@
 // tax. Moved here unchanged from the application (#3332); the boxes are the
 // ones the host filled from its tax reference.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 
 /// The SIREN of a French seller: the registration number's first nine digits,
 /// else the nine after the key of an FR VAT id.

@@ -6,7 +6,7 @@
 // have before an e-invoice names it (a syntactic check; a VIES lookup
 // is #895). Reviewed against Council Directive 2006/112/EC (art. 226,
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
-import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
     show formatCanadianRegistration;
 
 import '../../../core/vat/place_of_supply.dart';
@@ -14,9 +14,9 @@ import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'vat_regime.dart';
 
-// #3333: the Canadian registration numbers live in the contract package, one
+// #3333: the Canadian registration numbers live in the standards package, one
 // copy for the application and the Canadian add-on.
-export 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+export 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
     show
         formatCanadianRegistration,
         isValidCanadianBn,

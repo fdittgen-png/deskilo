@@ -6,6 +6,7 @@
 // the person hands to bridging software and the return the app submits cannot
 // disagree. Moved here from the application (#3333).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 
 /// The HMRC field names of the nine boxes, in the order of the form.
 const mtdBoxFields = [

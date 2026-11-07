@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One CSV cell writer for every file the app exports (#2385), moved into the
-/// contract package (#3333) so the country add-ons and the application share
+/// standards package (#3333) so the country add-ons and the application share
 /// ONE copy; `lib/core/text/csv.dart` re-exports it.
 ///
 /// Before this, five writers each had a local `q()` with its own edge

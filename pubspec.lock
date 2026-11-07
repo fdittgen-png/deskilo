@@ -448,6 +448,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_jurisdiction_standards:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_jurisdiction_standards"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_push:
     dependency: "direct main"
     description:

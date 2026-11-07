@@ -3,7 +3,7 @@
 // The terms every filing file shares (see `vat_filing_files.dart`): why
 // one cannot be written, what the person is asked beyond the settings,
 // and the month or quarter a periodic return covers.
-import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
     show monthOrQuarter;
 
 import 'vat_declaration.dart';
