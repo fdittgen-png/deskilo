@@ -5,10 +5,11 @@
 //   dart run tool/jurisdiction_removal_check.dart deskilo_jurisdiction_it
 //   dart run tool/jurisdiction_removal_check.dart <module> --facts facts.json
 //
-// facts.json carries what a source tree cannot show: `enabled_capabilities`,
-// `pending_submissions`, `needed_correction_routes` (an operator's query
-// against the instance). Without it only the source half is checked and the
-// output says so. Exit 0 = nothing found, 1 = blocked, 2 = usage.
+// facts.json is the answer of `jurisdiction_removal_facts_v1(workspace,
+// provider, format)` for one space -- what a source tree cannot show:
+// `enabled_capabilities`, `unsettled_transmissions`, `needed_correction_routes`,
+// each a list of objects with ids. Without it only the source half is checked
+// and the output says so. Exit 0 = nothing found, 1 = blocked, 2 = usage.
 import 'dart:convert';
 import 'dart:io';
 

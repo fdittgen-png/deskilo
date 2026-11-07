@@ -59,33 +59,54 @@ void main() {
   test('application source importing the module blocks it', () {
     _write(root, 'lib/money.dart', "import 'package:it/it.dart';\n");
     final report = removalCheck(root, 'it');
-    expect(report.blockers.map((b) => '$b'), ['dependentSource: lib/money.dart']);
-  });
-
-  test('an enabled capability, a pending submission and a correction route '
-      'each block, and say the runtime half was checked', () {
-    final report = removalCheck(
-      root,
-      'it',
-      facts: const RemovalFacts(
-        enabledCapabilities: ['invoice_profile.fatturaPa'],
-        pendingSubmissions: 2,
-        neededCorrectionRoutes: ['linked_correction'],
-      ),
-    );
-    expect(report.runtime, isTrue);
-    expect(report.blockers.map((b) => b.kind), [
-      BlockerKind.enabledCapability,
-      BlockerKind.pendingSubmission,
-      BlockerKind.correctionRoute,
+    expect(report.blockers.map((b) => '$b'), [
+      'dependentSource: lib/money.dart',
     ]);
   });
+
+  test(
+    'the answer of the facts function blocks by id: a channel, each '
+    'unsettled transmission and each replacement that still has to leave',
+    () {
+      final report = removalCheck(
+        root,
+        'it',
+        facts: RemovalFacts.fromJson(const {
+          'enabled_capabilities': [
+            {'capability': 'einvoice_channel.it_sdi', 'provider': 'it_sdi'},
+          ],
+          'unsettled_transmissions': [
+            {'transmission_id': 'tx-1', 'invoice_id': 'inv-1', 'phase': 'sent'},
+            {
+              'transmission_id': 'tx-2',
+              'invoice_id': 'inv-2',
+              'phase': 'uncertain',
+            },
+          ],
+          'needed_correction_routes': [
+            {'invoice_id': 'inv-9', 'replaces_invoice_id': 'inv-8'},
+          ],
+        }),
+      );
+      expect(report.runtime, isTrue);
+      expect(report.blockers.map((b) => '$b'), [
+        'enabledCapability: einvoice_channel.it_sdi',
+        'pendingSubmission: tx-1',
+        'pendingSubmission: tx-2',
+        'correctionRoute: inv-9',
+      ]);
+    },
+  );
 
   test('facts with nothing outstanding leave the module removable', () {
     final report = removalCheck(
       root,
       'it',
-      facts: RemovalFacts.fromJson(const {}),
+      facts: RemovalFacts.fromJson(const {
+        'enabled_capabilities': [],
+        'unsettled_transmissions': [],
+        'needed_correction_routes': [],
+      }),
     );
     expect(report.runtime, isTrue);
     expect(report.removable, isTrue);

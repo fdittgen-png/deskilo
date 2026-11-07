@@ -17,35 +17,41 @@
 // Pure Dart over a directory tree; it reads no database and changes nothing.
 import 'dart:io';
 
-/// What no source scan can see, supplied by whoever asks (an operator query
-/// against the instance). `null` means "not checked", which is not "none".
+/// What no source scan can see, read from `jurisdiction_removal_facts_v1` (0696)
+/// for one space and handed over as its JSON. Ids, never counts: an operator
+/// can open each one. `null` facts mean "not checked", which is not "none".
 class RemovalFacts {
   const RemovalFacts({
     required this.enabledCapabilities,
-    required this.pendingSubmissions,
+    required this.unsettledTransmissions,
     required this.neededCorrectionRoutes,
   });
 
-  /// The enabled capabilities the module provides (`invoice_profile.fatturaPa`).
+  /// The enabled capabilities the module provides (`einvoice_channel.it_sdi`).
   final List<String> enabledCapabilities;
 
-  /// Submissions through the module not yet settled.
-  final int pendingSubmissions;
+  /// The ids of transmissions through the module that could still complete.
+  final List<String> unsettledTransmissions;
 
-  /// Correction routes that still need the module.
+  /// The ids of the replacement invoices that still need the module to leave.
   final List<String> neededCorrectionRoutes;
 
-  factory RemovalFacts.fromJson(Map<String, Object?> json) => RemovalFacts(
-    enabledCapabilities: [
-      for (final c in (json['enabled_capabilities'] as List? ?? const []))
-        '$c',
-    ],
-    pendingSubmissions: (json['pending_submissions'] as num? ?? 0).toInt(),
-    neededCorrectionRoutes: [
-      for (final c in (json['needed_correction_routes'] as List? ?? const []))
-        '$c',
-    ],
-  );
+  /// The function's own answer: lists of objects carrying `capability`,
+  /// `transmission_id` and `invoice_id`.
+  factory RemovalFacts.fromJson(Map<String, Object?> json) {
+    List<String> pick(String list, String key) => [
+      for (final e in (json[list] as List? ?? const []))
+        if (e is Map && e[key] != null) '${e[key]}',
+    ];
+    return RemovalFacts(
+      enabledCapabilities: pick('enabled_capabilities', 'capability'),
+      unsettledTransmissions: pick(
+        'unsettled_transmissions',
+        'transmission_id',
+      ),
+      neededCorrectionRoutes: pick('needed_correction_routes', 'invoice_id'),
+    );
+  }
 }
 
 /// Why a module cannot be removed.
@@ -83,7 +89,9 @@ class RemovalReport {
   bool get removable => blockers.isEmpty;
 }
 
-final _importRe = RegExp(r'''^\s*(?:import|export)\s+['"]package:([a-z0-9_]+)/''');
+final _importRe = RegExp(
+  r'''^\s*(?:import|export)\s+['"]package:([a-z0-9_]+)/''',
+);
 final _depRe = RegExp(r'^  ([a-z0-9_]+):\s*$');
 
 /// The packages (by name) under `<root>/packages` and the packages each
@@ -117,11 +125,7 @@ bool _isComposition(String path) =>
     RegExp(r'(^|/)installed_[a-z_]+\.dart$').hasMatch(path);
 
 /// What still needs [module] in the tree at [root].
-RemovalReport removalCheck(
-  String root,
-  String module, {
-  RemovalFacts? facts,
-}) {
+RemovalReport removalCheck(String root, String module, {RemovalFacts? facts}) {
   final blockers = <Blocker>[];
   final graph = packageGraph(root);
   for (final e in graph.entries) {
@@ -152,10 +156,8 @@ RemovalReport removalCheck(
     for (final c in facts.enabledCapabilities) {
       blockers.add(Blocker(BlockerKind.enabledCapability, c));
     }
-    if (facts.pendingSubmissions > 0) {
-      blockers.add(
-        Blocker(BlockerKind.pendingSubmission, '${facts.pendingSubmissions}'),
-      );
+    for (final t in facts.unsettledTransmissions) {
+      blockers.add(Blocker(BlockerKind.pendingSubmission, t));
     }
     for (final r in facts.neededCorrectionRoutes) {
       blockers.add(Blocker(BlockerKind.correctionRoute, r));
