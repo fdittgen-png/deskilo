@@ -8,7 +8,6 @@
 // export format ids (`book_exports.format_id` is free text).
 import 'package:meta/meta.dart';
 
-import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// Every export format, once, in the order the targets registry lists them.

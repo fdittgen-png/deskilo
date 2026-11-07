@@ -4,7 +4,6 @@
 // layout, bexio through its API, and the other products a Swiss fiduciary
 // runs, catalogued with how far each is qualified. Where a product's own
 // import is not specified yet, the Swiss journal is the working route.
-import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// The booking journal of a Swiss local book: its postings on the KMU

@@ -10,7 +10,6 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import '../domain/accounting_format.dart';
-import '../domain/accounting_interchange.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';

@@ -14,6 +14,9 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
+  'lib/features/money/domain/accounting_interchange.dart',
+  'lib/features/money/domain/accounting_export_sources.dart',
+  'lib/features/money/domain/accounting_format_model.dart',
   'lib/core/data/json_reader.dart',
   'lib/core/i18n/currencies.dart',
   'lib/core/time/date_text.dart',
@@ -53,9 +56,9 @@ void main() {
     expect(text, isNot(contains(RegExp(r'^dependencies:', multiLine: true))));
   });
 
-  test('a shim only re-exports the kernel', () {
+  test('a shim only re-exports the kernel or the interchange contract', () {
     final exportRe = RegExp(
-      r"^export 'package:deskilo_money_kernel/deskilo_money_kernel\.dart';$",
+      r"^export 'package:deskilo_(money_kernel|accounting_interchange)/deskilo_\1\.dart';$",
     );
     for (final path in _shims) {
       final code = File(path)
@@ -74,7 +77,7 @@ void main() {
           .readAsLinesSync()
           .where((l) => l.trim().isNotEmpty && !l.trimLeft().startsWith('//'))
           .toList();
-      if (code.length == 1 && code.single.contains('deskilo_money_kernel')) {
+      if (code.length == 1 && RegExp(r"^export 'package:deskilo_(money_kernel|accounting_interchange)/").hasMatch(code.single)) {
         found.add(f.path);
       }
     }

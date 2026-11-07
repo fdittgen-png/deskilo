@@ -64,6 +64,9 @@ dependencies:
   # #3376 - the pure money and data primitives under the accounting model.
   deskilo_money_kernel:
     path: packages/deskilo_money_kernel
+  # #3376 - the accounting interchange envelope and the format declaration.
+  deskilo_accounting_interchange:
+    path: packages/deskilo_accounting_interchange
   # #3333 - the pure helpers the add-ons and the application share (internal).
   deskilo_jurisdiction_standards:
     path: packages/deskilo_jurisdiction_standards
