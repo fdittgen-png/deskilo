@@ -7,6 +7,7 @@ import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../auth/domain/identity_binding.dart' show DatabaseCapabilities;
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/active_target_client.dart';
@@ -234,9 +235,31 @@ Future<McpAccessStatus> mcpAccessStatus(Ref ref, McpContextRef context) async {
         if (e is McpContextSuperseded) throw e;
         return null;
       });
+  // #3377 -- "what this database lets the account do" is ONE fact: the
+  // eligibility section of the same screen already watches it. For the backend
+  // this app talks to, the status takes that read instead of making its own
+  // (the answer still goes through the context's supersession guard); a
+  // context on another installation reads its own.
+  final activeTarget = ref.watch(activeMcpTargetProvider.future);
+  Future<DatabaseCapabilities>? shared;
+  try {
+    final active = await activeTarget;
+    if (context.instance == active.instance) {
+      // read, not watched (nothing is watched after an await): every change
+      // invalidates both providers together.
+      shared = ref.read(myDatabaseCapabilitiesProvider.future);
+    }
+  } on Object catch (e, st) {
+    // the active target could not be told: the context reads its own
+    TraceLogger.instance.warn(
+      'mcp',
+      'shared capabilities read skipped: $e\n$st',
+    );
+    shared = null;
+  }
   final results = await (
     maybe((r) => r.identity.status()),
-    maybe((r) => r.identity.databaseCapabilities()),
+    maybe((r) => shared ?? r.identity.databaseCapabilities()),
     maybe((r) => r.admin.policy(context.workspaceId)),
     maybe((r) => r.connections.options()),
     maybe((r) => r.connections.connections()),
