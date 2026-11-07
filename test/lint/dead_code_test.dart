@@ -47,8 +47,6 @@ const Map<String, String> _allowed = {
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
 
   // Domain rules the app was meant to use and does not yet.
-  'lib/features/money/domain/accounting_amount.dart::settleForeign':
-      '#2365 — the accounting engine',
   'lib/features/money/domain/accounting_tax.dart::projectTax':
       '#2365 — the accounting engine',
   'lib/features/money/domain/accounting_tax.dart::splitDeductible':

@@ -91,7 +91,7 @@ const _allowed = <String, String>{
 /// not a business default. A display fallback reads the platform default; an
 /// exporter either writes the workspace's currency or refuses (#3184).
 const _eurHolders = {
-  'lib/core/i18n/currencies.dart':
+  'packages/deskilo_money_kernel/lib/src/currencies.dart':
       'the list of currencies the picker offers: data, not a default',
   'lib/features/money/domain/euro_format.dart':
       'the one place the euro file formats (FEC, DATEV) name their currency; '
@@ -152,7 +152,7 @@ void main() {
   });
 
   test('every file that holds the euro literal is documented, with its reason', () {
-    final files = filesUnder(['lib']).where((f) =>
+    final files = filesUnder(['lib', 'packages/deskilo_money_kernel/lib']).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&
         !f.path.contains('lib/core/demo/'));
@@ -166,7 +166,7 @@ void main() {
   });
 
   test('the currency fallback literal in lib/ only goes down', () {
-    final files = filesUnder(['lib']).where((f) =>
+    final files = filesUnder(['lib', 'packages/deskilo_money_kernel/lib']).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&
         !f.path.contains('lib/core/demo/'));

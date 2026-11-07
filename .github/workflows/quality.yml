@@ -167,6 +167,13 @@ jobs:
         run: dart pub get && dart analyze --fatal-infos && dart test
         working-directory: packages/deskilo_asset_gzip
 
+      # #3376 — the pure primitives under the accounting model: analyzed and
+      # tested on their own, since nothing in the application can break them
+      # silently any more.
+      - name: Tests of the money kernel package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_money_kernel
+
       # #3329 — every jurisdiction add-on package that has tests is
       # analyzed and tested with coverage, without a step of its own to
       # remember. test/lint/package_quality_test.dart pins that every
