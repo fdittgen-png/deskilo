@@ -16,7 +16,7 @@ Manifest `2026-11-05.1`. Four things are kept apart: whether the code is **shipp
 | [payments.wero](#paymentswero) | shipped | gated | gated | — | — | — |
 | [accounting.export](#accountingexport) | shipped | gated | gated | — | — | — |
 | [einvoice.generate](#einvoicegenerate) | shipped | gated | — | — | — | — |
-| [einvoice.transmit](#einvoicetransmit) | shipped | gated | — | — | — | — |
+| [einvoice.transmit](#einvoicetransmit) | shipped | gated | gated | — | — | — |
 | [recovery.database_restore](#recoverydatabase_restore) | shipped | — | gated | — | — | — |
 | [recovery.storage_auth](#recoverystorage_auth) | shipped | gated | — | — | — | — |
 | [demo](#demo) | shipped | gated | — | — | — | — |
@@ -191,6 +191,7 @@ With a platform configured, the app selects the supported document and destinati
 - **Feature flags:** `einvoiceCustomerDelivery`
 - `unit` · **gated** · [`test/features/money/einvoice_send_test.dart`](../../test/features/money/einvoice_send_test.dart)
 - `unit` · **gated** · [`test/features/money/einvoice_receipts_test.dart`](../../test/features/money/einvoice_receipts_test.dart)
+- `local_integration` · **gated** · [`supabase/tests/database/373_jurisdiction_removal_facts.sql`](../../supabase/tests/database/373_jurisdiction_removal_facts.sql)
 
 ## recovery.database_restore
 
