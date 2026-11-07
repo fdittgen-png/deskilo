@@ -9,11 +9,19 @@
 // accounting_deliveries); this is what it answers.
 //
 // Pure Dart.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
+    show FileDocument;
+
 import '../../../core/data/json_reader.dart';
 import 'accounting_delivery_run.dart';
 import 'accounting_target.dart';
 import 'capability_state.dart';
 import 'remote_revocation.dart';
+
+// Moved into the interchange contract (#3376); importers of this file keep
+// reading it here until the sweep (#3403).
+export 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
+    show FileDocument;
 
 export 'accounting_systems_scope.dart';
 export 'capability_state.dart';
@@ -349,23 +357,6 @@ class AccountingTransfers {
 
   final List<TransferFile> files;
   final List<AccountingDelivery> deliveries;
-}
-
-/// One document a file carried, as the file delivery records it.
-class FileDocument {
-  const FileDocument({
-    required this.kind,
-    required this.id,
-    required this.number,
-    required this.date,
-    required this.sha256,
-  });
-
-  final String kind;
-  final String id;
-  final String number;
-  final DateTime date;
-  final String sha256;
 }
 
 /// What a file delivery became, per document.
