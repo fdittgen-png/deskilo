@@ -26,6 +26,8 @@ const _shims = {
   'lib/features/money/domain/vat_form_catalogue/it.dart',
 
   'lib/core/data/system_columns.dart',
+  'lib/features/money/domain/generic_journal_csv.dart',
+  'lib/features/money/domain/swiss_kmu.dart',
   'lib/core/vat/tax_domain.dart',
   'lib/core/vat/tax_value.dart',
   'lib/core/vat/rate_component.dart',
