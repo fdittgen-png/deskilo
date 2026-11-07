@@ -863,7 +863,7 @@ final class McpAccessStatusProvider
   }
 }
 
-String _$mcpAccessStatusHash() => r'8162ddac3992ffdedf11fd9a354a4c610fd7928b';
+String _$mcpAccessStatusHash() => r'567631c2914da7c9d0b994046f2481e04bb71972';
 
 /// #1625 — the six separate facts for one person on one workspace.
 
