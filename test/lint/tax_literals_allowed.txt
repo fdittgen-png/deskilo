@@ -22,8 +22,6 @@ lib/features/money/domain/vat_compliance.dart :: 'AE' => 'VATEX-EU-AE', :: 1 :: 
 lib/features/money/domain/vat_compliance.dart :: 'AE' => reverseChargeMention(sellerCountry, asOf: asOf), :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code
 lib/features/money/domain/vat_filing_files.dart :: 'CH' => 'CH', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
 lib/features/money/domain/vat_filing_files.dart :: 'CH' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
-lib/features/money/domain/vat_filing_files.dart :: 'IT' => 'IT', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
-lib/features/money/domain/vat_filing_files.dart :: 'IT' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
 lib/features/money/domain/vat_form_catalogue.dart :: r == 0 ? '0 % / out of scope' : 'Rate ${_pct(r)}', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
 lib/features/money/domain/vat_form_catalogue.dart :: 'UK' => 'GB', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
 lib/features/money/presentation/report_sample_data.dart :: 'vat_rate': '20 %', :: 2 :: sample data of the report designer's preview, not a rate in force
