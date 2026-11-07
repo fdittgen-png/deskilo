@@ -108,4 +108,3 @@ genericError lib/features/money/presentation/invoice_einvoice_actions.dart // #2
 genericError lib/features/money/presentation/invoice_followup_actions.dart // #2494 moved unchanged from invoice_actions_part1/2.dart (one library became several); the same refusals and sizes as before the split
 genericError lib/features/money/presentation/invoice_pdf_actions.dart // #2494 moved unchanged from invoice_actions_part1.dart (one library became several); the same refusals and sizes as before the split
 genericError lib/features/money/presentation/widgets/invoice_template_editor_actions.dart // #2494 moved unchanged from invoice_template_sheet_part1.dart (one library became several); the same refusals and sizes as before the split
-fileLength packages/deskilo_task_recording/lib/task_recording_decoder.dart // #3407: 578 lines when the length ratchet reached the packages (#3401); a decoder for the recording format, to be split by concern

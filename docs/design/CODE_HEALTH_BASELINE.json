@@ -1,8 +1,8 @@
 {
-  "recordedSha": "1638021109c7e791f406a7b97943f05a0db1646b",
+  "recordedSha": "7f734a99c1e9df89dc82fc8d7df0a37990b59799",
   "recordedDate": "2026-11-07",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2589,"functions":14253,"cyclomatic>=9":1464,"cyclomatic>=25":84,"cognitive>=15":556,"cognitive>=30":76,"length>=150":52,"parameters>=5":653,"parameters>=7":156,"partOfFiles":18},
+  "totals": {"files":2590,"functions":14253,"cyclomatic>=9":1464,"cyclomatic>=25":84,"cognitive>=15":556,"cognitive>=30":76,"length>=150":52,"parameters>=5":653,"parameters>=7":156,"partOfFiles":19},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -97,8 +97,6 @@
       "lib/features/workspace/presentation/widgets/template_gallery.dart": 559,
 
       "lib/features/workspace/providers/workspace_providers.dart": 667,
-
-      "packages/deskilo_task_recording/lib/task_recording_decoder.dart": 578,
 
       "packages/deskilo_tax_reference/lib/src/tax_value.dart": 545
     },
@@ -3237,8 +3235,9 @@
     {"p":"packages/deskilo_task_recording/lib/step_values.dart","loc":165,"part":false,"setState":0,"repositoryReads":0,"fn":24,"cog":9,"cyc":11,"len":23,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_task_recording/lib/task_guide.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":8,"cyc":5,"len":18,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_task_recording/lib/task_recording.dart","loc":267,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":9,"cyc":19,"len":21,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"packages/deskilo_task_recording/lib/task_recording_codec.dart","loc":156,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":14,"cyc":15,"len":22,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"packages/deskilo_task_recording/lib/task_recording_decoder.dart","loc":529,"part":true,"setState":0,"repositoryReads":0,"fn":14,"cog":34,"cyc":30,"len":120,"params":6,"nest":3,"over":{"cog":1,"cyc":3,"len":0,"params":0}},
+    {"p":"packages/deskilo_task_recording/lib/task_recording_codec.dart","loc":157,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":14,"cyc":15,"len":22,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"packages/deskilo_task_recording/lib/task_recording_decoder.dart","loc":215,"part":true,"setState":0,"repositoryReads":0,"fn":9,"cog":23,"cyc":25,"len":86,"params":5,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
+    {"p":"packages/deskilo_task_recording/lib/task_recording_steps.dart","loc":317,"part":true,"setState":0,"repositoryReads":0,"fn":5,"cog":34,"cyc":30,"len":120,"params":6,"nest":3,"over":{"cog":1,"cyc":2,"len":0,"params":0}},
     {"p":"packages/deskilo_tax_reference/lib/deskilo_tax_reference.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_tax_reference/lib/src/rate_component.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_tax_reference/lib/src/sales_tax_component.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -3553,8 +3552,8 @@
     {"id":"packages/deskilo_document_pdf/lib/report_flow_page.dart#reportFlowPage({required pw.PageTheme pageTheme,required String documentTitle,required String pageLabel,required pw.BuildListCallback body,required pw.BuildListCallback firstHeader,required pw.BuildListCallback footer,pw.BuildListCallback? continuation,bool numberFirstPage})","cog":2,"cyc":3,"len":29,"params":8},
     {"id":"packages/deskilo_task_recording/lib/action_catalogue.dart#ActionRegistry.problems(Set<String> knownPayloadFields)","cog":31,"cyc":15,"len":45,"params":1},
     {"id":"packages/deskilo_task_recording/lib/task_recording_decoder.dart#_Decoder.root(Object? json)","cog":23,"cyc":25,"len":86,"params":1},
-    {"id":"packages/deskilo_task_recording/lib/task_recording_decoder.dart#_Decoder._step(Object? raw,String path,int segmentCount,Map<String, String> attempts,Set<String> answered)","cog":34,"cyc":30,"len":120,"params":5},
-    {"id":"packages/deskilo_task_recording/lib/task_recording_decoder.dart#_Decoder._action(Map<Object?, Object?> raw,String path,_Build build,Map<String, String> attempts,bool Function(Set<String>) only)","cog":28,"cyc":29,"len":99,"params":5},
+    {"id":"packages/deskilo_task_recording/lib/task_recording_steps.dart#_StepDecoding._step(Object? raw,String path,int segmentCount,Map<String, String> attempts,Set<String> answered)","cog":34,"cyc":30,"len":120,"params":5},
+    {"id":"packages/deskilo_task_recording/lib/task_recording_steps.dart#_StepDecoding._action(Map<Object?, Object?> raw,String path,_Build build,Map<String, String> attempts,bool Function(Set<String>) only)","cog":28,"cyc":29,"len":99,"params":5},
     {"id":"packages/deskilo_vat_declaration/lib/src/vat_forms.dart#fillVatForm(VatFormSpec spec,List<VatDeclarationLine> lines,{required TaxReferenceSet reference})","cog":40,"cyc":19,"len":59,"params":3}
   ]
 }

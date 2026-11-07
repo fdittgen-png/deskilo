@@ -28,6 +28,7 @@ import 'step_values.dart';
 import 'task_recording.dart';
 
 part 'task_recording_decoder.dart';
+part 'task_recording_steps.dart';
 
 /// Why a recording was refused or degraded.
 enum RecordingIssueCode {
