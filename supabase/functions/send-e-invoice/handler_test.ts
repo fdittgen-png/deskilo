@@ -848,3 +848,79 @@ Deno.test("#3338: an installed provider's config carries no error", async () => 
   );
   assertEquals(config.body.error, undefined);
 });
+
+// ── #3338 row 7: the previous client against the upgraded function ─────────
+// The requests and the readers below are pinned to what the client of 010b6df
+// (before the transmission lifecycle) sent and decoded; they must keep
+// working against today's handler. Nothing here is generated from the new
+// code: the field lists are the old ones.
+
+/** The fields the client of 010b6df put in a send request, and no other. */
+const oldSendBody = (extra: Record<string, unknown> = {}) => ({
+  workspace_id: WS,
+  invoice_id: INV,
+  content_base64: btoa("<xml>one</xml>"),
+  file_name: "F-1.pdf",
+  mime_type: "application/pdf",
+  format: "facturX",
+  environment: "prod",
+  destination: "government",
+  ...extra,
+});
+
+Deno.test("#3338/7: the previous client's send request still works and its answer carries the keys it decoded", async () => {
+  const s = new FakeStore();
+  const p = provider(() => ok("X-OLD"));
+  const r = await read(await call(s, p.fetchImpl, oldSendBody()));
+  assertEquals(r.status, 200);
+  // the old decoder read exactly: status (one of three), external_id, detail
+  assertEquals(
+    ["accepted", "rejected", "failed"].includes(r.body.status),
+    true,
+  );
+  assertEquals(typeof r.body.external_id, "string");
+  assertEquals(typeof (r.body.detail ?? r.body.error ?? ""), "string");
+  assertEquals(p.posts.length, 1);
+});
+
+Deno.test("#3338/7: the previous client's config reader finds every key it decoded", async () => {
+  const s = new FakeStore();
+  const p = provider(() => ok());
+  const r = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "config" }),
+  );
+  const b = r.body;
+  assertEquals(typeof b.configured, "boolean");
+  assertEquals(typeof b.provider, "string");
+  assertEquals(Array.isArray(b.missing), true);
+  for (const v of Object.values(b.environments as Record<string, unknown>)) {
+    assertEquals(typeof v, "boolean");
+  }
+  for (
+    const d of Object.values(
+      b.destinations as Record<
+        string,
+        { configured: unknown; missing: unknown; environments: unknown }
+      >,
+    )
+  ) {
+    assertEquals(typeof d.configured, "boolean");
+    assertEquals(Array.isArray(d.missing), true);
+    assertEquals(typeof d.environments, "object");
+  }
+});
+
+Deno.test("#3338/7: an old client's retry of an unresolved send cannot bypass the server's fencing", async () => {
+  const s = new FakeStore();
+  const p = provider(() => {
+    throw new Error("socket reset");
+  });
+  const first = await read(await call(s, p.fetchImpl, oldSendBody()));
+  assertEquals(first.body.status, "failed"); // what the old decoder reads
+  assertEquals(p.posts.length, 1);
+  // the old client retries the identical request: nothing leaves again
+  const retry = await read(await call(s, p.fetchImpl, oldSendBody()));
+  assertEquals(retry.body.status, "failed");
+  assertEquals(p.posts.length, 1, "no second upload");
+  assertEquals(s.rows.size, 1, "and no second logical transmission");
+});
