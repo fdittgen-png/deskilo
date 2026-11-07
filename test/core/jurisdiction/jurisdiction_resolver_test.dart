@@ -7,9 +7,10 @@
 // Norway.
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
-import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'support/fake_vat_filing.dart';
 
 CapabilityResolution _resolve(
   String? country, [
@@ -20,19 +21,10 @@ CapabilityResolution _resolve(
   installed ?? installedVatFilings,
 );
 
-LegacyVatFilingContribution _fake(
+FakeVatFilingContribution _fake(
   String country, {
   String contract = jurisdictionContractVersion,
-}) => LegacyVatFilingContribution(
-  CapabilityDescriptor(
-    moduleId: 'fake.$country',
-    implementationVersion: '1',
-    contractVersion: contract,
-    formatVersion: 'x',
-    capabilityId: vatFilingCapabilityId(country),
-  ),
-  mediaType: 'text/plain',
-);
+}) => FakeVatFilingContribution(country, contractVersion: contract);
 
 void main() {
   test('each installed country resolves to its own add-on', () {

@@ -74,6 +74,8 @@ dependencies:
     path: packages/deskilo_jurisdiction_gb
   deskilo_jurisdiction_ca:
     path: packages/deskilo_jurisdiction_ca
+  deskilo_jurisdiction_ch:
+    path: packages/deskilo_jurisdiction_ch
   deskilo_jurisdiction_es:
     path: packages/deskilo_jurisdiction_es
   deskilo_jurisdiction_it:

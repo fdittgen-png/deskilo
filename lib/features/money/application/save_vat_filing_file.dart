@@ -10,8 +10,8 @@ import '../../../core/files/file_saver.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
+import 'jurisdiction/filing_context_builder.dart';
 import 'jurisdiction/installed_vat_filings.dart';
-import 'jurisdiction/legacy_vat_filing_contribution.dart';
 
 class SaveVatFilingFile {
   SaveVatFilingFile(

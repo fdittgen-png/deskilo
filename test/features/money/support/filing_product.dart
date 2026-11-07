@@ -7,8 +7,8 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
+import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
-import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 

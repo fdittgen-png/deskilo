@@ -1,10 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// The Swiss VAT return as eCH-0217 version 2.0 XML. Moved here unchanged from
+// the application (#3333): the lines of the context carry what the standard's
+// turnover computation needs (rate, category, direction, opted supplies).
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/time/date_text.dart';
-import 'vat_compliance.dart';
-import 'vat_declaration.dart';
-import 'vat_filing_files.dart';
+/// Why the file cannot be written: the stable code the host words.
+class Ech0217Refusal implements Exception {
+  const Ech0217Refusal(this.code);
+
+  final String code;
+
+  @override
+  String toString() => 'Ech0217Refusal: $code';
+}
+
+/// The category the server gives the acquisition tax on services bought from
+/// abroad (CH 383).
+const _acquisitionCategory = 'acquisition';
+
+/// The nine digits of a valid Swiss UID, with or without dots and suffix, or
+/// null: the checksum of the ninth digit is checked.
+String? swissUidDigits(String uid) {
+  final id = uid.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  final m = RegExp(r'^CHE([1-9]\d{8})(MWST|TVA|IVA)?$').firstMatch(id);
+  if (m == null || !isValidSwissUid(uid, requireSuffix: false)) return null;
+  return m.group(1);
+}
 
 /// The MWST-Abrechnung as eCH-0217 version 2.0 (`VATDeclaration`), the XML
 /// the ESTV ePortal takes for upload (#2360): the effective method, turnover
@@ -21,29 +45,24 @@ import 'vat_filing_files.dart';
 /// funds (9xx). A first filing is declared (`typeOfSubmission` 1); a
 /// rectification is another file. Validated against the published XSD
 /// `eCH-0217-2-0-0.xsd` (tool/vat_filing/validate.sh).
-String ech0217Xml({
-  required VatDeclaration declaration,
-  required String uid,
-  required String organisationName,
-  required bool onReceipts,
-  required DateTime generatedAt,
-}) {
-  final id = uid.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
-  final m = RegExp(r'^CHE([1-9]\d{8})(MWST|TVA|IVA)?$').firstMatch(id);
-  if (m == null || !isValidSwissUid(uid, requireSuffix: false)) {
-    throw const VatFilingFileException(VatFilingFileProblem.uid);
-  }
+String ech0217Xml(FilingContext context) {
+  final uid = context.party.vatId;
+  final organisationName = context.party.name;
+  final onReceipts = context.party.onReceipts;
+  final generatedAt = context.generatedAt;
+  final m = swissUidDigits(uid);
+  if (m == null) throw const Ech0217Refusal('uid');
   var total = 0, abroad = 0, toForeign = 0, exempt = 0, opted = 0;
   var materials = 0, investments = 0;
   final turnoverByRate = <double, int>{};
   final acquiredByRate = <double, int>{};
-  for (final line in declaration.lines) {
-    if (line.isAcquisition) {
+  for (final line in context.lines) {
+    if (line.category == _acquisitionCategory) {
       acquiredByRate[line.percent] =
           (acquiredByRate[line.percent] ?? 0) + line.netCents;
       continue;
     }
-    if (line.isInput) {
+    if (line.direction == 'input') {
       if (line.category == 'asset') {
         investments += line.vatCents;
       } else {
@@ -53,7 +72,9 @@ String ech0217Xml({
     }
     total += line.netCents;
     opted += line.optedNetCents;
-    switch (line.category.isEmpty ? (line.percent > 0 ? 'S' : 'O') : line.category) {
+    switch (line.category.isEmpty
+        ? (line.percent > 0 ? 'S' : 'O')
+        : line.category) {
       case 'Z' || 'G':
         toForeign += line.netCents;
       case 'AE' || 'O':
@@ -61,7 +82,8 @@ String ech0217Xml({
       case 'E':
         exempt += line.netCents;
       default:
-        turnoverByRate[line.percent] = (turnoverByRate[line.percent] ?? 0) + line.netCents;
+        turnoverByRate[line.percent] =
+            (turnoverByRate[line.percent] ?? 0) + line.netCents;
     }
   }
   // payableTax: the sum of rate x turnover in hundredths of a centime
@@ -107,14 +129,20 @@ String ech0217Xml({
         'generalInformation',
         nest: () {
           b
-            ..element('uid', nest: 'CHE${m.group(1)}')
+            ..element('uid', nest: 'CHE$m')
             ..element('organisationName', nest: organisationName.trim())
             ..element('generationTime', nest: _dateTimeUtc(generatedAt))
-            ..element('reportingPeriodFrom', nest: isoDay(declaration.periodStart))
-            ..element('reportingPeriodTill', nest: isoDay(declaration.periodEnd))
+            ..element(
+              'reportingPeriodFrom',
+              nest: ymd(context.periodStart, separator: '-'),
+            )
+            ..element(
+              'reportingPeriodTill',
+              nest: ymd(context.periodEnd, separator: '-'),
+            )
             ..element('typeOfSubmission', nest: '1')
             ..element('formOfReporting', nest: onReceipts ? '2' : '1')
-            ..element('businessReferenceId', nest: _reference50(declaration));
+            ..element('businessReferenceId', nest: _reference50(context));
           b.element(
             'sendingApplication',
             nest: () {
@@ -158,18 +186,17 @@ const _ech0058 = 'http://www.ech.ch/xmlns/eCH-0058/5';
 /// `2026-10-13T08:05:09`, in UTC, as the standard asks.
 String _dateTimeUtc(DateTime at) {
   final u = at.toUtc();
-  return '${isoDay(u)}T${hhmmss(u)}';
+  return '${ymd(u, separator: '-')}T${hhmmss(u)}';
 }
 
 /// The file reference of the return, at most 50 characters.
-String _reference50(VatDeclaration declaration) {
-  final number = declaration.number.trim();
+String _reference50(FilingContext context) {
+  final number = context.number.trim();
   final text = number.isNotEmpty
       ? number
-      : 'MWST-${isoDay(declaration.periodStart)}';
+      : 'MWST-${ymd(context.periodStart, separator: '-')}';
   return text.length > 50 ? text.substring(0, 50) : text;
 }
-
 
 /// Francs with centimes and a dot, as the standard reads amounts: `-12.05`.
 String _francs(int cents) {

@@ -15,9 +15,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
-import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
-import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
 import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
@@ -385,64 +382,5 @@ void main() {
       },
       bytes: {for (final e in files.entries) '${e.key}.golden': e.value},
     );
-  });
-
-  // #3331 -- the same cases through the jurisdiction resolver and the
-  // contract are the same bytes, the same names and the same refusals: the
-  // adapters change nothing the goldens pin.
-  test('the resolver path writes what the dispatcher writes, or refuses with '
-      'the same problem (for the countries the dispatcher still serves)', () {
-    for (final c in _cases()) {
-      // These countries left the dispatcher for their own packages (#3332,
-      // #3333): their bytes are pinned by the goldens above, through the
-      // product path.
-      if (const {'FR', 'DE', 'GB', 'CA', 'ES', 'IT'}.contains(c.country)) continue;
-      final resolution = resolveCapability(
-        JurisdictionOperation.vatFiling,
-        LegalContext(countryCode: c.party.countryCode),
-        installedVatFilings,
-      );
-      List<int>? direct;
-      String? directName;
-      VatFilingFileProblem? directProblem;
-      try {
-        final f = vatFilingFile(
-          declaration: c.declaration,
-          party: c.party,
-          now: _now,
-          facts: c.facts,
-        );
-        direct = f.encoding.encode(f.text);
-        directName = f.fileName;
-      } on VatFilingFileException catch (e) {
-        directProblem = e.problem;
-      } on UnsupportedError {
-        expect(resolution, isA<Refused>(), reason: c.name);
-        continue;
-      }
-      final contribution = (resolution as Resolved).contribution;
-      final checked = contribution.validate(
-        filingContextOf(
-          declaration: c.declaration,
-          party: c.party,
-          now: _now,
-          facts: c.facts,
-        ),
-      );
-      if (directProblem != null) {
-        expect(checked.filing, isNull, reason: c.name);
-        expect(checked.result.codes, [directProblem.name], reason: c.name);
-        continue;
-      }
-      final artifact = contribution.build(checked.filing!);
-      expect(artifact.bytes, direct, reason: c.name);
-      expect(artifact.fileName, directName, reason: c.name);
-      expect(artifact.sha256, hasLength(64), reason: c.name);
-      expect(
-        artifact.provenance['capability_id'],
-        'vat_filing.${c.party.countryCode}',
-        reason: c.name,
-      );
-    }
   });
 }
