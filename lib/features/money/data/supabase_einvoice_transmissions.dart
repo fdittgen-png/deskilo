@@ -8,14 +8,23 @@ import '../../../core/data/paged_fetch.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/einvoice_transmissions.dart';
 import '../domain/payment_provider.dart';
+import '../domain/renderer_declaration.dart';
 
 /// #2591 — e-invoice transmission and its channel credentials, with its own
 /// client. The bodies are the ones that lived in the money repository and its
 /// part files.
 class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
-  SupabaseEInvoiceTransmissions(this._client);
+  SupabaseEInvoiceTransmissions(
+    this._client, {
+    Future<String> Function()? appVersion,
+  }) : _appVersion = appVersion ?? _unknownVersion;
 
   final SupabaseClient _client;
+
+  /// The one source of the app version (#3336); '' when it cannot be told.
+  final Future<String> Function() _appVersion;
+
+  static Future<String> _unknownVersion() async => '';
 
   @override
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) async {
@@ -131,6 +140,11 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
       'content_base64': base64Encode(bytes),
       'environment': environment,
       'destination': destination,
+      // #3336 — declared, never proof: the server keeps it apart
+      'declared': RendererDeclaration(
+        renderer: format,
+        appVersion: await _appVersion(),
+      ).toJson(),
     });
     if (data == null) {
       return const EInvoiceSubmission(

@@ -52,6 +52,9 @@ export interface PrepareInput {
   receiverScheme: string;
   receiverId: string;
   bytes: Uint8Array<ArrayBuffer>;
+  /** What the client says about its renderer, already clipped (see
+   * clipDeclared in handler.ts); kept apart from what the server knows. */
+  declared: Record<string, string>;
 }
 
 export interface PrepareResult {
@@ -234,6 +237,7 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
         p_receiver_scheme: i.receiverScheme,
         p_receiver_id: i.receiverId,
         p_bytes: toHex(i.bytes),
+        p_declared: i.declared,
       });
     },
     async artifact(id) {

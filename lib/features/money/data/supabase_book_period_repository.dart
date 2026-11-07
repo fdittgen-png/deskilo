@@ -3,11 +3,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/date_text.dart';
 import '../domain/book_period.dart';
+import '../domain/renderer_declaration.dart';
 
 /// The book periods, the export log and their RPCs (0504). Reading checks
 /// the right on the server; every write derives actor and rights there.
 class SupabaseBookPeriodRepository implements BookPeriodRepository {
-  const SupabaseBookPeriodRepository(this._client);
+  SupabaseBookPeriodRepository(
+    this._client, {
+    Future<String> Function()? appVersion,
+  }) : _appVersion = appVersion ?? _unknownVersion;
+
+  /// The one source of the app version (#3336); '' when it cannot be told.
+  final Future<String> Function() _appVersion;
+
+  static Future<String> _unknownVersion() async => '';
 
   final SupabaseClient _client;
 
@@ -62,6 +71,11 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
         'p_bytes': record.bytes,
         'p_rows': record.rows,
         'p_documents': record.documents,
+        // #3336 — declared, never proof: the server keeps it apart
+        'p_declared': RendererDeclaration(
+          renderer: record.formatId,
+          appVersion: await _appVersion(),
+        ).toJson(),
       },
     );
     return logged is Map && logged['logged'] == true ? '${logged['id']}' : null;

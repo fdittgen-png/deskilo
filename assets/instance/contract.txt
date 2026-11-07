@@ -2453,7 +2453,7 @@ routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_p
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:95f5c0930826
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
-routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:4dfef5b1710d
+routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
 routine public.invoice_transmissions_sync_phase() -> trigger | function | invoker | volatile | exec:service_role | body:3f7ae01ba028
@@ -2839,7 +2839,7 @@ routine public.posting_parties(p_workspace_id uuid, p_document_ids uuid[]) -> js
 routine public.posting_rate_group(p_country text, p_percent numeric, p_category text, p_day date) -> text | function | definer | stable | exec:service_role | body:851fb12021ea
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:4ceaa1e215ca
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
-routine public.prepare_einvoice_v1(p_workspace_id uuid, p_invoice_id uuid, p_provider text, p_destination text, p_environment text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_receiver_scheme text, p_receiver_id text, p_bytes bytea) -> jsonb | function | definer | volatile | exec:service_role | body:85c258df97b2
+routine public.prepare_einvoice_v1(p_workspace_id uuid, p_invoice_id uuid, p_provider text, p_destination text, p_environment text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_receiver_scheme text, p_receiver_id text, p_bytes bytea, p_declared jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e515fbc2c686
 routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8
 routine public.preview_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | stable | exec:authenticated,service_role | body:e360ad9d105a
@@ -2863,6 +2863,7 @@ routine public.protect_federation_history() -> trigger | function | invoker | vo
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
 routine public.protect_membership_fact() -> trigger | function | invoker | volatile | exec: | body:5c839ff452c2
+routine public.provenance_clip_declared(p_declared jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:af9380507c7a
 routine public.provenance_envelope_v1(p_workspace_id uuid, p_kind text, p_result_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:eb9468570257
 routine public.provenance_envelopes_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:2b9925871c78
 routine public.provenance_modules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d66e5856ed0a
@@ -2936,7 +2937,7 @@ routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | d
 routine public.record_member_reimbursement_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6903fd94329d
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:e81915235895
 routine public.record_privacy_incident(p_workspace_id uuid, p_kind text, p_note text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:9601cdaa88e2
-routine public.record_provenance(p_workspace_id uuid, p_kind text, p_result_id uuid, p_issuer jsonb, p_declared jsonb, p_artifacts jsonb, p_rule_revision jsonb) -> void | function | definer | volatile | exec:service_role | body:7f2239b8427c
+routine public.record_provenance(p_workspace_id uuid, p_kind text, p_result_id uuid, p_issuer jsonb, p_declared jsonb, p_artifacts jsonb, p_rule_revision jsonb) -> void | function | definer | volatile | exec:service_role | body:82d54feb6444
 routine public.record_provider_fee_v1(p_provider text, p_order_id text, p_fee_cents bigint, p_net_cents bigint, p_currency text, p_transaction_id text) -> payment_intents | function | definer | volatile | exec:service_role | body:b9431b4bc2d6
 routine public.record_provider_payout_v1(p_workspace_id uuid, p_provider text, p_payout_id text, p_amount_cents bigint, p_currency text, p_arrival_date date, p_status text, p_transaction_ids text[]) -> jsonb | function | definer | volatile | exec:service_role | body:7476ddb349ef
 routine public.record_purchase_exchange_rate_v1(p_workspace_id uuid, p_purchase_id uuid, p_rate numeric, p_rate_date date, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:26191bc1ab28
