@@ -1,8 +1,8 @@
 {
-  "recordedSha": "2bdd887276c29d4097371fb0affe35de7e1b8ab2",
-  "recordedDate": "2026-11-07",
+  "recordedSha": "c5f46acbd2a1d46366272183abcc5918df2b0d05",
+  "recordedDate": "2026-11-06",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2469,"functions":13977,"cyclomatic>=9":1435,"cyclomatic>=25":80,"cognitive>=15":542,"cognitive>=30":73,"length>=150":50,"parameters>=5":643,"parameters>=7":156,"partOfFiles":17},
+  "totals": {"files":2469,"functions":13978,"cyclomatic>=9":1435,"cyclomatic>=25":80,"cognitive>=15":542,"cognitive>=30":73,"length>=150":51,"parameters>=5":643,"parameters>=7":156,"partOfFiles":17},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -812,7 +812,7 @@
     {"p":"lib/core/data/system_columns.dart","loc":84,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":5,"cyc":7,"len":30,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/accessory_repository.dart","loc":124,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":6,"cyc":7,"len":30,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/account_activity_repository.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":6,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/data/accounting_connection_repository.dart","loc":351,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":15,"cyc":12,"len":49,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/data/accounting_connection_repository.dart","loc":357,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":15,"cyc":13,"len":49,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/action_confirmation_repository.dart","loc":27,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":4,"len":19,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/asset_valuation_repository.dart","loc":143,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":15,"cyc":18,"len":51,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/auth_repository.dart","loc":183,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":3,"cyc":5,"len":15,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -921,7 +921,7 @@
     {"p":"lib/core/demo/data/workspace_repository_part4.dart","loc":289,"part":true,"setState":0,"repositoryReads":0,"fn":27,"cog":10,"cyc":8,"len":40,"params":8,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/core/demo/data/workspace_roles_repository.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":7,"cyc":6,"len":25,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/data/workspace_status_computation.dart","loc":95,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":10,"cyc":16,"len":91,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/demo_city_commerce_overrides.dart","loc":411,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":15,"len":148,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/demo_city_commerce_overrides.dart","loc":421,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":15,"len":159,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/core/demo/demo_clock.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":9,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_dataset.dart","loc":355,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":25,"cyc":18,"len":60,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/core/demo/demo_entry.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":6,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -3179,6 +3179,7 @@
     {"id":"lib/core/demo/data/workspace_repository_part1.dart#_FakeWorkspaceRepositoryPart1._createWorkspaceImpl({required String name,required String countryCode,required String currencyCode,required String timezone,WorkspaceEnvironment environment,bool withTwin,String? requestId,String? templateId})","cog":4,"cyc":5,"len":34,"params":8},
     {"id":"lib/core/demo/data/workspace_repository_part2.dart#_FakeWorkspaceRepositoryPart2._setLegalIdentityImpl(String workspaceId,{required String vatRegime,required String vatId,required String legalId,required String taxExemptionReason,required String street,required String city,required String postalCode,required String vatAccount,required Map<String, Object?> invoiceLegal})","cog":1,"cyc":2,"len":29,"params":10},
     {"id":"lib/core/demo/data/workspace_repository_part4.dart#_FakeWorkspaceRepositoryPart4._saveWorkspaceAsTemplateImpl(String workspaceId,{required String key,required String name,String description,TemplateVisibility visibility,List<String> tags,List<String>? groups,String? requestId})","cog":10,"cyc":8,"len":37,"params":8},
+    {"id":"lib/core/demo/demo_city_commerce_overrides.dart#demoCityCommerceOverrides(DemoFixture fixture,DemoPurchasing purchasing,FakeBookProfileRepository mainBooks,FakePremisesLeaseRepository mainLease,FakeWorkspaceAssetRepository mainAssets)","cog":2,"cyc":6,"len":159,"params":5},
     {"id":"lib/core/demo/demo_dataset.dart#_demoInvoice({required String id,required String memberId,required String memberName,required String number,required DateTime issuedAt,required String period,required int totalCents})","cog":0,"cyc":1,"len":32,"params":7},
     {"id":"lib/core/demo/demo_fixture.dart#DemoFixture.new.build({DateTime? now})","cog":1,"cyc":5,"len":161,"params":1},
     {"id":"lib/core/demo/demo_purchasing_overrides.dart#demoPurchasingOverrides(DemoPurchasing purchasing,{DemoPurchasing? london,DemoPurchasing? newYork,DemoPurchasing? twin})","cog":8,"cyc":30,"len":64,"params":4},

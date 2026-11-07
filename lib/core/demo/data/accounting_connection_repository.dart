@@ -100,6 +100,11 @@ class FakeAccountingConnectionRepository
     kind: CapabilityStateKind.active,
   );
 
+  /// Whether the person using the Demo owns the space (the server asks
+  /// `is_owner_of`); the Demo wires the real answer, a test leaves the owner.
+  bool Function() isOwner = _always;
+  static bool _always() => true;
+
   @override
   Future<CapabilityState> fetchCapabilityState(String workspaceId) async =>
       _state;
@@ -116,7 +121,11 @@ class FakeAccountingConnectionRepository
   ) async {
     final from = _state.kind;
     if (from == to) return _state;
-    final allowed = capabilityMoves(from, owner: true);
+    if ((from == CapabilityStateKind.retired || to == CapabilityStateKind.retired) &&
+        !isOwner()) {
+      throw StateError('only the owner retires or reopens a capability');
+    }
+    final allowed = capabilityMoves(from, owner: isOwner());
     if (!allowed.contains(to)) {
       throw StateError('a capability goes from $from to $to only through servicing');
     }

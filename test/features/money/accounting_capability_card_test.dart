@@ -192,4 +192,20 @@ void main() {
     await _tap(tester, 'acct-state-confirm');
     expect(_chip(tester), startsWith('Retired'));
   });
+
+  test('the Demo applies the owner rule like the server', () async {
+    final repo = _repo()..isOwner = () => false;
+    await repo.setCapabilityState('ws-1', CapabilityStateKind.servicing, '');
+    await expectLater(
+      repo.setCapabilityState('ws-1', CapabilityStateKind.retired, 'closing'),
+      throwsA(isA<StateError>()),
+    );
+    repo.isOwner = () => true;
+    final retired = await repo.setCapabilityState(
+      'ws-1',
+      CapabilityStateKind.retired,
+      'closing',
+    );
+    expect(retired.kind, CapabilityStateKind.retired);
+  });
 }
