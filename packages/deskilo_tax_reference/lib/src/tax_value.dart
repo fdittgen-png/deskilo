@@ -1,0 +1,525 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2477/#2478/#2479 -- the typed VALUES of the tax reference store: the
+// domains and, for each, the shape of its `value` (validated in SQL by
+// `tax_reference_valid` and read here through [JsonReader]). A new domain
+// adds a case to [TaxDomain] and a class to [TaxValue]; every exhaustive
+// `switch` over either must be revisited. `tax_reference.dart` re-exports
+// this file.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'rate_component.dart';
+import 'sales_tax_component.dart';
+import 'tax_domain.dart';
+
+export 'rate_component.dart';
+export 'sales_tax_component.dart';
+export 'tax_domain.dart';
+
+/// The country every country shares: a row for `*` applies where the
+/// country has no row of its own for the same key.
+const String taxReferenceAnyCountry = '*';
+
+/// One typed `value` of a row. Sealed: a new domain adds a case, and every
+/// exhaustive `switch` over it must be revisited.
+sealed class TaxValue {
+  const TaxValue();
+
+  TaxDomain get domain;
+
+  Map<String, Object?> toJson();
+
+  /// Reads [raw] as the value of [domain]; a wrong shape throws a
+  /// [JsonShapeException] naming the row and the field.
+  static TaxValue parse(TaxDomain domain, JsonReader r) {
+    return switch (domain) {
+      TaxDomain.rate => RateValue(
+          label: r.string('label'),
+          percent: r.number('percent'),
+          group: r.string('group'),
+          category: r.string('category'),
+          exemptionReason: r.stringOr('exemption_reason'),
+          position: r.intOrNull('position') ?? 0,
+        ),
+      TaxDomain.euMember => EuMemberValue(aliasOf: r.stringOr('alias_of')),
+      TaxDomain.mention => ExemptionTextValue(
+          regime: r.string('regime'),
+          text: r.string('text'),
+        ),
+      TaxDomain.vatIdPattern => VatIdPatternValue(pattern: r.string('pattern')),
+      TaxDomain.catalogueNote => CatalogueNoteValue(text: r.string('text')),
+      TaxDomain.groupExample => GroupExampleValue(
+          group: r.string('group'),
+          text: r.string('text'),
+          position: r.intOrNull('position') ?? 0,
+        ),
+      TaxDomain.threshold => ThresholdValue(
+          cents: r.integer('cents'),
+          effect: r.string('effect'),
+          currency: r.string('currency'),
+          chargeCents: r.intOrNull('charge_cents') ?? 0,
+        ),
+      TaxDomain.taxPoint => TaxPointValue(
+          standard: r.string('standard'),
+          invoiceOption: r.boolOr('invoice_option', fallback: false),
+          cashOption: r.boolOr('cash_option', fallback: true),
+          cashBackstop: r.stringOr('cash_backstop', 'none'),
+        ),
+      TaxDomain.mandate => MandateValue(
+          duty: r.string('duty'),
+          from: r.string('from'),
+        ),
+      TaxDomain.issuingGate => IssuingGateValue(
+          supported: r.boolOr('supported', fallback: false),
+          requiresTaxNumber: r.boolOr('requires_tax_number', fallback: false),
+          nationalChannelRequired: r.boolOr('national_channel_required', fallback: false),
+          currency: r.stringOr('currency'),
+          taxSystem: r.stringOr('tax_system', 'vat'),
+          outsideVatPostalCodes: r.strings('outside_vat_postal_codes'),
+        ),
+      TaxDomain.formBox => FormBoxValue(
+          label: r.string('label'),
+          groups: r.strings('groups'),
+          excludeGroups: r.strings('exclude_groups'),
+          categories: r.strings('categories'),
+        ),
+      TaxDomain.accountMap => AccountMapValue(
+          format: r.string('format'),
+          role: r.string('role'),
+          account: r.stringOr('account'),
+          taxCode: r.stringOr('tax_code'),
+          label: r.stringOr('label'),
+        ),
+      TaxDomain.salesTax => SalesTaxValue(
+          state: r.string('state'),
+          components: r.objects('components', SalesTaxComponent.fromReader),
+        ),
+      TaxDomain.taxability => TaxabilityValue(status: r.string('status')),
+      TaxDomain.rateComponent => RateComponentValue(
+          percent: r.number('percent'),
+          components: r.objects('components', RateComponent.fromReader),
+        ),
+      TaxDomain.retention => RetentionValue(years: r.integer('years'), from: r.string('from')),
+      TaxDomain.country => CountryValue(
+          currency: r.string('currency'),
+          timeZone: r.string('time_zone'),
+          bankingScheme: r.string('banking_scheme'),
+          position: r.intOrNull('position') ?? 0,
+        ),
+    };
+  }
+}
+
+/// `rate`: {label, percent, group, category, exemption_reason?, position?}.
+/// [group] is the fiscal group's wire name (`VatGroup.wire`), [category]
+/// the EN 16931 code the group carries; [position] orders a country's rates
+/// (the first one is the default a workspace starts on).
+class RateValue extends TaxValue {
+  const RateValue({
+    required this.label,
+    required this.percent,
+    required this.group,
+    required this.category,
+    this.exemptionReason = '',
+    this.position = 0,
+  });
+
+  final String label;
+  final double percent;
+  final String group;
+  final String category;
+  final String exemptionReason;
+  final int position;
+
+  @override
+  TaxDomain get domain => TaxDomain.rate;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'label': label,
+        'percent': percent,
+        'group': group,
+        'category': category,
+        if (exemptionReason.isNotEmpty) 'exemption_reason': exemptionReason,
+        'position': position,
+      };
+}
+
+/// `eu_member`: {} — the row's country is a member state; or
+/// {alias_of} — the row's code is another spelling of that member
+/// (Greece's VAT prefix `EL` is `GR`), not a member of its own.
+class EuMemberValue extends TaxValue {
+  const EuMemberValue({this.aliasOf = ''});
+
+  final String aliasOf;
+
+  bool get isAlias => aliasOf.isNotEmpty;
+
+  @override
+  TaxDomain get domain => TaxDomain.euMember;
+
+  @override
+  Map<String, Object?> toJson() => isAlias ? {'alias_of': aliasOf} : const {};
+}
+
+/// `exemption_text`: {regime, text} — the key names the regime too.
+class ExemptionTextValue extends TaxValue {
+  const ExemptionTextValue({required this.regime, required this.text});
+
+  final String regime;
+  final String text;
+
+  @override
+  TaxDomain get domain => TaxDomain.mention;
+
+  @override
+  Map<String, Object?> toJson() => {'regime': regime, 'text': text};
+}
+
+/// `vat_id_pattern`: {pattern} — the identifier body after the prefix.
+class VatIdPatternValue extends TaxValue {
+  const VatIdPatternValue({required this.pattern});
+
+  final String pattern;
+
+  @override
+  TaxDomain get domain => TaxDomain.vatIdPattern;
+
+  @override
+  Map<String, Object?> toJson() => {'pattern': pattern};
+}
+
+/// `catalogue_note`: {text} — the caveat of a country's rate catalogue.
+class CatalogueNoteValue extends TaxValue {
+  const CatalogueNoteValue({required this.text});
+
+  final String text;
+
+  @override
+  TaxDomain get domain => TaxDomain.catalogueNote;
+
+  @override
+  Map<String, Object?> toJson() => {'text': text};
+}
+
+/// `group_example`: {group, text, position?} — what falls in a fiscal
+/// group; [position] orders a country's examples.
+class GroupExampleValue extends TaxValue {
+  const GroupExampleValue({
+    required this.group,
+    required this.text,
+    this.position = 0,
+  });
+
+  final String group;
+  final String text;
+  final int position;
+
+  @override
+  TaxDomain get domain => TaxDomain.groupExample;
+
+  @override
+  Map<String, Object?> toJson() =>
+      {'group': group, 'text': text, 'position': position};
+}
+
+/// `threshold`: {cents, effect, currency, charge_cents?} -- a line in minor
+/// units and what crossing it does (`threshold_effects.dart`); a
+/// `stamp_duty` row charges [chargeCents].
+class ThresholdValue extends TaxValue {
+  const ThresholdValue({
+    required this.cents,
+    required this.effect,
+    required this.currency,
+    this.chargeCents = 0,
+  });
+
+  final int cents;
+  final String effect;
+  final String currency;
+
+  final int chargeCents;
+
+  @override
+  TaxDomain get domain => TaxDomain.threshold;
+
+  @override
+  Map<String, Object?> toJson() => {'cents': cents, 'effect': effect,
+        'currency': currency, if (chargeCents != 0) 'charge_cents': chargeCents};
+}
+
+/// `tax_point`: {standard, invoice_option, cash_option, cash_backstop} --
+/// [standard] is `invoice`, `receipt`, `service_period` or `earlier_of`;
+/// [cashBackstop] `none`, `end_of_following_year` or `one_year_after_issue`.
+class TaxPointValue extends TaxValue {
+  const TaxPointValue({
+    required this.standard,
+    this.invoiceOption = false,
+    this.cashOption = true,
+    this.cashBackstop = 'none',
+  });
+
+  final String standard;
+  final bool invoiceOption;
+  final bool cashOption;
+  final String cashBackstop;
+
+  @override
+  TaxDomain get domain => TaxDomain.taxPoint;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'standard': standard,
+        'invoice_option': invoiceOption,
+        'cash_option': cashOption,
+        'cash_backstop': cashBackstop,
+      };
+}
+
+/// `mandate`: {duty, from} -- the key names the duty; [from] is the first
+/// day (`YYYY-MM-DD`) the duty applies.
+class MandateValue extends TaxValue {
+  const MandateValue({required this.duty, required this.from});
+
+  final String duty;
+  final String from;
+
+  @override
+  TaxDomain get domain => TaxDomain.mandate;
+
+  @override
+  Map<String, Object?> toJson() => {'duty': duty, 'from': from};
+}
+
+/// `issuing_gate`: {supported, requires_tax_number, national_channel_required,
+/// currency} -- the terms on which a seller of the row's country may issue.
+/// A country without a row is refused; [nationalChannelRequired] refuses
+/// whatever [supported] says (the app does not speak that channel yet): the
+/// row is an input to the gate, never an override of it.
+class IssuingGateValue extends TaxValue {
+  const IssuingGateValue({
+    required this.supported,
+    this.requiresTaxNumber = false,
+    this.nationalChannelRequired = false,
+    this.currency = '',
+    this.taxSystem = 'vat',
+    this.outsideVatPostalCodes = const [],
+  });
+
+  final bool supported;
+  final bool requiresTaxNumber;
+  final bool nationalChannelRequired;
+
+  /// The currency the VAT must be stated in; '' where any will do.
+  final String currency;
+
+  /// `vat` (the tax is inside the price) or `sales_tax` (added to a net
+  /// price, per jurisdiction): how a seller of this country issues.
+  final String taxSystem;
+
+  /// Postal-code prefixes of sites outside the country's VAT (refused).
+  final List<String> outsideVatPostalCodes;
+
+  /// Whether the seller issues in sales-tax mode.
+  bool get salesTaxMode => taxSystem == salesTaxSystem;
+
+  /// Whether the app issues for this country: supported and no national
+  /// channel it does not speak.
+  bool get issues => supported && !nationalChannelRequired;
+
+  @override
+  TaxDomain get domain => TaxDomain.issuingGate;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'supported': supported,
+        'requires_tax_number': requiresTaxNumber,
+        'national_channel_required': nationalChannelRequired,
+        if (currency.isNotEmpty) 'currency': currency,
+        if (taxSystem != 'vat') 'tax_system': taxSystem,
+        if (outsideVatPostalCodes.isNotEmpty)
+          'outside_vat_postal_codes': outsideVatPostalCodes,
+      };
+}
+
+/// The `tax_system` of an issuing gate whose sellers add the tax to a net price.
+const String salesTaxSystem = 'sales_tax';
+
+/// `sales_tax`: {state, components} -- the tax a postal code carries (the key
+/// is its five digits, the country `US`). A ZIP code only approximates a
+/// jurisdiction; the row's source says how it was checked. Rates change by
+/// jurisdiction constantly: none is shipped, the platform owner enters them.
+class SalesTaxValue extends TaxValue {
+  const SalesTaxValue({required this.state, required this.components});
+
+  final String state;
+  final List<SalesTaxComponent> components;
+
+  /// The combined percent of every component.
+  double get percent => components.fold(0, (sum, c) => sum + c.percent);
+
+  @override
+  TaxDomain get domain => TaxDomain.salesTax;
+
+  @override
+  Map<String, Object?> toJson() => {
+    'state': state,
+    'components': [for (final c in components) c.toJson()],
+  };
+}
+
+/// The three answers about a kind of line in a state.
+const List<String> taxabilityStatuses = ['taxable', 'exempt', 'not_applicable'];
+
+/// `taxability`: {status} -- whether a kind of line is taxed in a state (the
+/// key is `<STATE>:<kind>` or `<STATE>:<supply>`, the country `US`). No row for
+/// anything but a licence to occupy space means nobody has said: such an
+/// invoice is refused, never guessed.
+class TaxabilityValue extends TaxValue {
+  const TaxabilityValue({required this.status});
+
+  final String status;
+
+  @override
+  TaxDomain get domain => TaxDomain.taxability;
+
+  @override
+  Map<String, Object?> toJson() => {'status': status};
+}
+
+/// `form_box` (key `<form>/<box code>`, e.g. `ustva/Kz 81`): the [label] a rated box prints, in the
+/// form's language, and the fiscal groups (`VatGroup.wire`) of the taxed lines it adds up -- [groups],
+/// or for a catch-all box every group but [excludeGroups], never a percent -- plus the [categories] of
+/// other lines it takes (CH 383: `acquisition`). Which boxes exist and how they total stays in code.
+class FormBoxValue extends TaxValue {
+  const FormBoxValue({
+    required this.label,
+    this.groups = const [],
+    this.excludeGroups = const [],
+    this.categories = const [],
+  });
+
+  final String label;
+  final List<String> groups;
+  final List<String> excludeGroups;
+  final List<String> categories;
+
+  @override
+  TaxDomain get domain => TaxDomain.formBox;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'label': label,
+        for (final (k, v) in [('groups', groups), ('exclude_groups', excludeGroups), ('categories', categories)])
+          if (v.isNotEmpty) k: v,
+      };
+}
+
+/// `account_map`: {format, role, account?, tax_code?, label?} -- a default an
+/// accounting export or the chart-of-accounts preview proposes. [format] is
+/// `coa` (the country's suggested chart: [role] is `chart` for its code and
+/// name, else the account's role, the key's number orders them), `fec`,
+/// `datev`, `sage` or `saf_t` (what that file asks for beyond the chart).
+/// #2379 `saf_t/<role>`: [account] the standard code, [label] Norway's GroupingCategory;
+/// `saf_t/tax:<output|input>:<group>`: [taxCode] the standard VAT code.
+/// The workspace's own chart stays its `book_profile`; the accountant's
+/// correction at export time always wins over these.
+class AccountMapValue extends TaxValue {
+  const AccountMapValue({
+    required this.format,
+    required this.role,
+    this.account = '',
+    this.taxCode = '',
+    this.label = '',
+  });
+
+  final String format;
+  final String role;
+
+  /// The account number (or, for the `chart` role, the chart's code).
+  final String account;
+
+  /// The export's own tax code (`T1`).
+  final String taxCode;
+
+  /// The account's name in the chart's own language.
+  final String label;
+
+  @override
+  TaxDomain get domain => TaxDomain.accountMap;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'format': format,
+        'role': role,
+        if (account.isNotEmpty) 'account': account,
+        if (taxCode.isNotEmpty) 'tax_code': taxCode,
+        if (label.isNotEmpty) 'label': label,
+      };
+}
+
+/// `rate_component`: {percent, components} -- the taxes a combined [percent]
+/// is made of (the key is the percent as text, the country the seller's); SQL
+/// (`tax_reference_valid`) refuses components that do not add up to it.
+class RateComponentValue extends TaxValue {
+  const RateComponentValue({required this.percent, required this.components});
+
+  final double percent;
+  final List<RateComponent> components;
+
+  @override
+  TaxDomain get domain => TaxDomain.rateComponent;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'percent': percent,
+        'components': [for (final c in components) c.toJson()],
+      };
+}
+
+/// `retention`: {years, from}; the key is the class, [from] where the clock starts.
+class RetentionValue extends TaxValue {
+  const RetentionValue({required this.years, required this.from});
+
+  final int years;
+  final String from;
+
+  @override
+  TaxDomain get domain => TaxDomain.retention;
+
+  @override
+  Map<String, Object?> toJson() => {'years': years, 'from': from};
+}
+
+/// `country`: {currency, time_zone, banking_scheme}; the key is `catalogue`
+/// and the row's country is the ISO 3166-1 code (#2488).
+class CountryValue extends TaxValue {
+  const CountryValue({
+    required this.currency,
+    required this.timeZone,
+    required this.bankingScheme,
+    this.position = 0,
+  });
+
+  /// ISO 4217: what a workspace here bills in by default.
+  final String currency;
+
+  /// IANA: the zone a workspace here keeps time in by default.
+  final String timeZone;
+
+  /// `sepa`, `uk`, `us`, `ca` or `ch`: the shape of the payment instructions.
+  final String bankingScheme;
+
+  /// Where the country stands in the lists a workspace is created from.
+  final int position;
+
+  @override
+  TaxDomain get domain => TaxDomain.country;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'currency': currency,
+        'time_zone': timeZone,
+        'banking_scheme': bankingScheme,
+        'position': position,
+      };
+}

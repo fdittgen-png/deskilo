@@ -14,6 +14,11 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
+  'lib/core/vat/tax_domain.dart',
+  'lib/core/vat/tax_value.dart',
+  'lib/core/vat/rate_component.dart',
+  'lib/core/vat/sales_tax_component.dart',
+  'lib/core/vat/tax_reference.dart',
   'lib/features/money/domain/accounting_interchange.dart',
   'lib/features/money/domain/accounting_export_sources.dart',
   'lib/features/money/domain/accounting_format_model.dart',
@@ -28,7 +33,7 @@ const _shims = {
 };
 
 void main() {
-  test('the kernel imports core Dart and its own files only', () {
+  test('the kernel imports core Dart, crypto and its own files only', () {
     final bad = <String>[];
     final importRe = RegExp(r'''^\s*(?:import|export)\s+['"]([^'"]+)['"]''');
     final sources = filesWithExtension('$_root/lib', '.dart', recursive: true);
@@ -39,7 +44,7 @@ void main() {
         if (m == null) continue;
         final uri = m.group(1)!;
         final own = !uri.contains(':') && !uri.contains('..');
-        if (!uri.startsWith('dart:') && !own) bad.add('${f.path}:${i + 1}: $uri');
+        if (!uri.startsWith('dart:') && !uri.startsWith('package:crypto/') && !own) bad.add('${f.path}:${i + 1}: $uri');
       }
     }
     expect(
@@ -51,14 +56,21 @@ void main() {
     );
   });
 
-  test('the kernel depends on nothing', () {
+  test('the kernel depends on crypto alone', () {
     final text = File('$_root/pubspec.yaml').readAsStringSync();
-    expect(text, isNot(contains(RegExp(r'^dependencies:', multiLine: true))));
+    final deps = RegExp(r'^dependencies:\n((?:  .+\n?)+)', multiLine: true)
+        .firstMatch(text)!
+        .group(1)!
+        .split('\n')
+        .where((l) => RegExp(r'^  [a-z_]+:').hasMatch(l))
+        .map((l) => l.trim().split(':').first)
+        .toList();
+    expect(deps, ['crypto']);
   });
 
-  test('a shim only re-exports the kernel or the interchange contract', () {
+  test('a shim only re-exports a package', () {
     final exportRe = RegExp(
-      r"^export 'package:deskilo_(money_kernel|accounting_interchange)/deskilo_\1\.dart';$",
+      r"^export 'package:deskilo_(money_kernel|accounting_interchange|tax_reference)/deskilo_\1\.dart';$",
     );
     for (final path in _shims) {
       final code = File(path)
@@ -77,7 +89,7 @@ void main() {
           .readAsLinesSync()
           .where((l) => l.trim().isNotEmpty && !l.trimLeft().startsWith('//'))
           .toList();
-      if (code.length == 1 && RegExp(r"^export 'package:deskilo_(money_kernel|accounting_interchange)/").hasMatch(code.single)) {
+      if (code.length == 1 && RegExp(r"^export 'package:deskilo_(money_kernel|accounting_interchange|tax_reference)/").hasMatch(code.single)) {
         found.add(f.path);
       }
     }

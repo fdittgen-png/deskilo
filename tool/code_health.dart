@@ -39,6 +39,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 
 import 'code_health_budgets.dart';
 import 'layering/analysis.dart' as layering;
+import 'lib_roots.dart';
 
 /// The limits a function must stay under (the baseline header repeats them).
 const int cognitiveLimit = 30;
@@ -428,13 +429,7 @@ List<FileHealth> measureTree(String root) {
 /// every package under `packages/` (#3396). Code that moves into a package
 /// must not leave the complexity, length and parameter ratchets by moving; a
 /// new package joins the scan by existing.
-List<String> measuredRoots() => [
-  'lib',
-  if (Directory('packages').existsSync())
-    for (final d in Directory('packages').listSync().whereType<Directory>())
-      if (Directory('${d.path}/lib').existsSync())
-        '${d.path.replaceAll(r'\', '/')}/lib',
-]..sort((a, b) => a == 'lib' ? -1 : b == 'lib' ? 1 : a.compareTo(b));
+List<String> measuredRoots() => ['lib', ...packageLibRoots()];
 
 /// Every measured file under [measuredRoots], in path order.
 List<FileHealth> measureAll() => [

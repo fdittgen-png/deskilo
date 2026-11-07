@@ -8,7 +8,6 @@
 // on a server, and is keyed by the person at their personal home, so two
 // accounts on one device never see each other's saved places and the
 // same person keeps theirs whichever workspace they open.
-import '../../../core/cache/cache_scope.dart';
 import '../../../core/data/json_reader.dart';
 import 'public_workspace.dart';
 

@@ -39,6 +39,10 @@ const _jurisdictionPrefix = 'deskilo_jurisdiction_';
 /// The roots scanned: the base ones and `lib/` of every jurisdiction package.
 final _dartRoots = [
   ..._baseDartRoots,
+  // #3401 -- the packages the money model moved into are still VAT code.
+  'packages/deskilo_tax_reference/lib',
+  'packages/deskilo_money_kernel/lib',
+  'packages/deskilo_accounting_interchange/lib',
   for (final name in directoryNames(_jurisdictionPackages))
     if (name.startsWith(_jurisdictionPrefix)) '$_jurisdictionPackages/$name/lib',
 ];
