@@ -1041,6 +1041,8 @@ jobs:
           bash scripts/einvoice_claim_race.sh "$DB_URL"
           # #3336 — admission of new work and a capability state change serialise.
           bash scripts/capability_state_race.sh "$DB_URL"
+          # #3336 L10 — one receipted command fired twice is one invoice, one envelope.
+          bash scripts/receipted_replay_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
