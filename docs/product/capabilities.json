@@ -181,7 +181,8 @@
       "limitations": "The client handoff, channel selection and receipt interpretation are unit-tested using simulated responses. No real or sandbox transmission or acceptance by a national platform is recorded by this evidence.",
       "evidence": [
         {"scope": "unit", "ref": "test/features/money/einvoice_send_test.dart"},
-        {"scope": "unit", "ref": "test/features/money/einvoice_receipts_test.dart"}
+        {"scope": "unit", "ref": "test/features/money/einvoice_receipts_test.dart"},
+        {"scope": "local_integration", "ref": "supabase/tests/database/373_jurisdiction_removal_facts.sql"}
       ]
     },
     {
