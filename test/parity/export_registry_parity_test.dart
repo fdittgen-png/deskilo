@@ -234,7 +234,7 @@ void main() {
       dir: _dir,
       text: {
         'registry.txt': registry.toString(),
-        'source_requirements.txt': source.toString(),
+        'source_requirements.golden': source.toString(),
         'byte_coverage.txt': coverage.toString(),
       },
     );
