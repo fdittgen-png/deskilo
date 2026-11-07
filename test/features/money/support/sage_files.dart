@@ -25,11 +25,8 @@ String sageOfInvoices(
       sellerCountry: country,
     ),
     baseCurrency: currency,
-    groupOf: (t) => ActiveTaxReference.current.groupOfRate(
-      country,
-      t.percent,
-      t.category,
-    ),
+    groupOf: (t) =>
+        ActiveTaxReference.current.groupOfRate(country, t.percent, t.category),
   );
   expect(trail.blockers, isEmpty);
   return sageFile(trail.rows);

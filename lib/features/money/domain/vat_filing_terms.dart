@@ -3,6 +3,9 @@
 // The terms every filing file shares (see `vat_filing_files.dart`): why
 // one cannot be written, what the person is asked beyond the settings,
 // and the month or quarter a periodic return covers.
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
+    show monthOrQuarter;
+
 import 'vat_declaration.dart';
 
 /// Why a filing file cannot be written for a declaration.
@@ -89,15 +92,9 @@ class VatFilingFacts {
 /// The calendar month (1-12) or quarter (1-4) a return covers; anything
 /// else is not the period of a monthly or quarterly return.
 ({int? month, int? quarter}) monthOrQuarterOf(VatDeclaration declaration) {
-  final start = declaration.periodStart;
-  final end = declaration.periodEnd;
-  final months = (end.year - start.year) * 12 + end.month - start.month + 1;
-  if (start.day != 1 || end != DateTime(end.year, end.month + 1, 0)) {
+  final period = monthOrQuarter(declaration.periodStart, declaration.periodEnd);
+  if (period == null) {
     throw const VatFilingFileException(VatFilingFileProblem.period);
   }
-  if (months == 1) return (month: start.month, quarter: null);
-  if (months == 3 && (start.month - 1) % 3 == 0) {
-    return (month: null, quarter: 1 + (start.month - 1) ~/ 3);
-  }
-  throw const VatFilingFileException(VatFilingFileProblem.period);
+  return period;
 }

@@ -6,9 +6,10 @@
 // server's split (migration 0425, pgTAP 182) is read from the line; a line
 // without it is split here with the same arithmetic.
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_filing_ca.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'support/filing_product.dart';
 
 Map<String, dynamic> _line(
   double percent,
@@ -107,10 +108,7 @@ void main() {
   });
 
   test('the file: GST34 lines then FPZ-500, the business number formatted', () {
-    final csv = gstQstReturnCsv(
-      declaration: _declaration(),
-      businessNumber: '123456789rt0001',
-    );
+    final csv = _caFile('123456789rt0001');
     final rows = csv.trim().split('\r\n');
     expect(rows.first, startsWith('"return","business_number"'));
     expect(rows.where((r) => r.startsWith('"GST34"')), isNotEmpty);
@@ -118,18 +116,15 @@ void main() {
     expect(csv, contains('"123456789 RT0001"'));
     expect(csv, contains('"209","Net QST",,49.88'));
     expect(
-      () => gstQstReturnCsv(
-        declaration: _declaration(),
-        businessNumber: '123456789',
-      ),
+      () => _caFile('123456789'),
       throwsA(isA<VatFilingFileException>()),
     );
   });
 
   test('a Canadian space has a file; the filename carries the period', () {
-    final file = vatFilingFile(
-      declaration: _declaration(),
-      party: const VatFilingParty(
+    final file = productFile(
+      _declaration(),
+      const VatFilingParty(
         countryCode: 'CA',
         name: 'Espace',
         street: '',
@@ -143,3 +138,16 @@ void main() {
     expect(file.fileName, 'gst-hst-qst-return-2026-07-01.csv');
   });
 }
+
+String _caFile(String businessNumber) => productFile(
+  _declaration(),
+  VatFilingParty(
+    countryCode: 'CA',
+    name: 'Espace',
+    street: '',
+    postalCode: '',
+    city: '',
+    vatId: businessNumber,
+    legalId: '',
+  ),
+).text;

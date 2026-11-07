@@ -22,6 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/filing_product.dart';
+
 final _en = AppLocalizationsEn();
 
 VatDeclaration _declaration() => VatDeclaration(
@@ -144,7 +146,7 @@ void main() {
   testWidgets('the sheet shows the nine boxes the bridging CSV writes, and sends exactly those', (tester) async {
     final fake = await _pump(tester);
     final declaration = _declaration();
-    final csv = mtdBridgingCsv(declaration: declaration, vatId: 'GB123456789').trim().split('\r\n');
+    final csv = productFile(declaration, const VatFilingParty(countryCode: 'GB', name: 'x', street: '', postalCode: '', city: '', vatId: 'GB123456789', legalId: '')).text.trim().split('\r\n');
     final header = csv[0].split(',');
     final row = csv[1].split(',');
     for (final field in mtdBoxFields) {

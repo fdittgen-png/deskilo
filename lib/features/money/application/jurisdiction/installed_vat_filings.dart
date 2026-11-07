@@ -4,7 +4,10 @@
 // list, compiled in (no downloadable plugin). One entry per country the
 // dispatcher served before, with the same file names, encodings and bytes.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_ca/deskilo_jurisdiction_ca.dart';
+import 'package:deskilo_jurisdiction_de/deskilo_jurisdiction_de.dart';
 import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
+import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import 'legacy_vat_filing_contribution.dart';
@@ -26,23 +29,15 @@ CapabilityDescriptor _descriptor(String country, String formatVersion) =>
 /// Every installed VAT filing add-on. `formatVersion` names the profile the
 /// writer follows: bumped when the authority's schema or layout year changes.
 final List<VatFilingContribution> installedVatFilings = [
-  LegacyVatFilingContribution(
-    _descriptor('DE', 'elster-ustva-v11'),
-    mediaType: 'application/xml',
-  ),
   // #3332: the French add-on lives in its own package.
   const FrVatFilingContribution(),
-  LegacyVatFilingContribution(
-    _descriptor('GB', 'mtd-bridging-csv'),
-    mediaType: 'text/csv',
-  ),
+  // #3333: the German, British and Canadian add-ons likewise.
+  const DeVatFilingContribution(),
+  const GbVatFilingContribution(),
+  const CaVatFilingContribution(),
   LegacyVatFilingContribution(
     _descriptor('CH', 'ech-0217-2'),
     mediaType: 'application/xml',
-  ),
-  LegacyVatFilingContribution(
-    _descriptor('CA', 'gst34-fpz500-csv'),
-    mediaType: 'text/csv',
   ),
   LegacyVatFilingContribution(
     _descriptor('ES', 'aeat-303-2026'),

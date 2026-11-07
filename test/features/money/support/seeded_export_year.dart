@@ -242,28 +242,29 @@ class SeededExportYear {
   /// The settlement regrouping INV-4 and INV-5 (#831): a management
   /// document, transparent to every export; its payment is allocated to
   /// its sources.
-  static final settlement = _inv(
-    'S-1',
-    DateTime(2026, 8, 3),
-    [
-      for (final source in [inv4, inv5])
-        for (final line in source.lines)
-          line.copyWith(sourceNumber: source.number),
-    ],
-    16220,
-    [_vt(20, 12000, 10000, 2000), _vt(5.5, 4220, 4000, 220)],
-  ).copyWith(
-    kind: InvoiceKind.settlement,
-    settles: [
-      for (final source in [inv4, inv5])
-        SettledSource(
-          invoiceId: source.id,
-          number: source.number,
-          totalCents: source.totalCents,
-          lines: source.lines,
-        ),
-    ],
-  );
+  static final settlement =
+      _inv(
+        'S-1',
+        DateTime(2026, 8, 3),
+        [
+          for (final source in [inv4, inv5])
+            for (final line in source.lines)
+              line.copyWith(sourceNumber: source.number),
+        ],
+        16220,
+        [_vt(20, 12000, 10000, 2000), _vt(5.5, 4220, 4000, 220)],
+      ).copyWith(
+        kind: InvoiceKind.settlement,
+        settles: [
+          for (final source in [inv4, inv5])
+            SettledSource(
+              invoiceId: source.id,
+              number: source.number,
+              totalCents: source.totalCents,
+              lines: source.lines,
+            ),
+        ],
+      );
 
   /// The acceptance year's documents, in issue order.
   static List<Invoice> get acceptanceInvoices => [

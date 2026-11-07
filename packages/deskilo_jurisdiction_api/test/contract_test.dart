@@ -141,12 +141,36 @@ void main() {
     expect(() => context.boxes.clear(), throwsUnsupportedError);
   });
 
-  test('the shared date spellings', () {
-    final d = DateTime.utc(2026, 3, 4, 9, 5);
-    expect(ymd(d), '20260304');
-    expect(ymd(d, separator: '-'), '2026-03-04');
-    expect(hhmm(d), '09:05');
-    expect(hhmm(d, separator: ''), '0905');
-    expect(ymd(DateTime.utc(7, 1, 2)), '00070102');
+  test('the extra boxes of a context are read-only too', () {
+    final extra = {
+      'FPZ-500': [
+        const FilingBox(code: '203', label: 'x', netCents: 1, vatCents: 2),
+      ],
+    };
+    final context = FilingContext(
+      periodStart: DateTime.utc(2026),
+      periodEnd: DateTime.utc(2026, 1, 31),
+      currency: 'CAD',
+      lines: const [],
+      extraBoxes: extra,
+      generatedAt: DateTime.utc(2026, 2),
+      party: const FilingParty(
+        countryCode: 'CA',
+        name: 'n',
+        street: 's',
+        postalCode: 'p',
+        city: 'c',
+        vatId: 'v',
+        legalId: 'l',
+      ),
+    );
+    extra['FPZ-500']!.clear();
+    extra.clear();
+    expect(context.extraBoxes['FPZ-500'], hasLength(1));
+    expect(() => context.extraBoxes['x'] = [], throwsUnsupportedError);
+    expect(
+      () => context.extraBoxes['FPZ-500']!.clear(),
+      throwsUnsupportedError,
+    );
   });
 }

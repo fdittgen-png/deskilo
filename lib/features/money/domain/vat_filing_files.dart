@@ -43,13 +43,8 @@
 // never disagree.
 import 'dart:convert' show Encoding, latin1, utf8;
 
-import 'package:meta/meta.dart';
-import 'package:xml/xml.dart';
-
 import '../../../core/time/date_text.dart';
-import 'mtd_boxes.dart';
 import 'vat_declaration.dart';
-import 'vat_filing_ca.dart';
 import 'vat_filing_ech0217.dart';
 import 'vat_filing_es.dart';
 import 'vat_filing_it.dart';
@@ -84,13 +79,11 @@ class VatFilingParty {
   /// Swiss return says `formOfReporting` 2), not on the invoice.
   final bool onReceipts;
 
-  /// The country whose file exists here: `DE`, `FR`, else null.
+  /// The country whose file this dispatcher still writes: `CH`, `ES`, `IT`,
+  /// else null. The others have their own packages (#3332, #3333) and are
+  /// chosen by the resolver, not here.
   String? get fileCountry => switch (countryCode.trim().toUpperCase()) {
-    'DE' => 'DE',
-    'FR' => 'FR',
-    'GB' || 'UK' => 'GB',
     'CH' => 'CH',
-    'CA' => 'CA',
     'ES' => 'ES',
     'IT' => 'IT',
     _ => null,
@@ -110,26 +103,7 @@ class VatFilingParty {
   VatFilingFacts facts = const VatFilingFacts(),
 }) {
   final start = isoDay(declaration.periodStart);
-  final taxNumber = facts.taxNumber;
   return switch (party.fileCountry) {
-    'DE' => (
-      encoding: utf8,
-      fileName: 'ustva-$start.xml',
-      text: elsterUstvaXml(
-        declaration: declaration,
-        taxNumber: taxNumber,
-        name: party.name,
-        street: party.street,
-        postalCode: party.postalCode,
-        city: party.city,
-        createdOn: now,
-      ),
-    ),
-    'GB' => (
-      encoding: utf8,
-      fileName: 'mtd-vat-return-$start.csv',
-      text: mtdBridgingCsv(declaration: declaration, vatId: party.vatId),
-    ),
     'CH' => (
       encoding: utf8,
       fileName: 'mwst-abrechnung-$start.xml',
@@ -140,11 +114,6 @@ class VatFilingParty {
         onReceipts: party.onReceipts,
         generatedAt: now,
       ),
-    ),
-    'CA' => (
-      encoding: utf8,
-      fileName: 'gst-hst-qst-return-$start.csv',
-      text: gstQstReturnCsv(declaration: declaration, businessNumber: party.vatId),
     ),
     // The Sede reads the 303 file as ISO-8859-1, one byte a position.
     'ES' => (
@@ -170,171 +139,4 @@ class VatFilingParty {
     ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),
   };
-}
-
-/// The nine boxes of the UK return as one CSV row for MTD bridging
-/// software (#2359). [vatId] is the registration number; the row names its
-/// nine digits as `vrn`.
-@visibleForTesting
-String mtdBridgingCsv({
-  required VatDeclaration declaration,
-  required String vatId,
-}) {
-  final upper = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
-  final digits = _digits(upper.startsWith('GB') || upper.startsWith('XI') ? upper.substring(2) : upper);
-  if (digits.length < 9) {
-    throw const VatFilingFileException(VatFilingFileProblem.vatNumber);
-  }
-  final cents = mtdBoxCents(declaration);
-  final header = ['vrn', 'periodStart', 'periodEnd', ...mtdBoxFields];
-  final row = [
-    digits.substring(0, 9),
-    isoDay(declaration.periodStart),
-    isoDay(declaration.periodEnd),
-    for (final field in mtdBoxFields) mtdBoxText(field, cents[field]!),
-  ];
-  return '${header.join(',')}\r\n${row.join(',')}\r\n';
-}
-
-/// The ELSTER Zeitraum of [declaration]: `01`..`12` for a month, `41`..`44`
-/// for a quarter; anything else is not a UStVA period.
-String _elsterPeriod(VatDeclaration declaration) {
-  final start = declaration.periodStart;
-  final end = declaration.periodEnd;
-  final months = (end.year - start.year) * 12 + end.month - start.month + 1;
-  if (start.day != 1 || end != DateTime(end.year, end.month + 1, 0)) {
-    throw const VatFilingFileException(VatFilingFileProblem.period);
-  }
-  if (months == 1) return twoDigits(start.month);
-  if (months == 3 && (start.month - 1) % 3 == 0) {
-    return '${41 + (start.month - 1) ~/ 3}';
-  }
-  // The annual return (Umsatzsteuererklärung) is another form.
-  throw const VatFilingFileException(VatFilingFileProblem.period);
-}
-
-/// The UStVA of [declaration] as ELSTER XML.
-@visibleForTesting
-String elsterUstvaXml({
-  required VatDeclaration declaration,
-  required String taxNumber,
-  required String name,
-  required String street,
-  required String postalCode,
-  required String city,
-  required DateTime createdOn,
-}) {
-  final zeitraum = _elsterPeriod(declaration);
-  if (_digits(taxNumber).length < 10) {
-    throw const VatFilingFileException(VatFilingFileProblem.taxNumber);
-  }
-  final kz = <String, String>{};
-  for (final box in vatFormBoxes(
-    'DE',
-    declaration.lines,
-    periodEnd: declaration.periodEnd,
-  )) {
-    if (box.hasBase && box.baseKey.isNotEmpty) {
-      kz[box.baseKey] = (box.netCents ~/ 100).toString();
-    }
-    if (box.hasTax && box.taxKey.isNotEmpty) {
-      kz[box.taxKey] = _euros(box.vatCents);
-    }
-  }
-  final keys = kz.keys.toList()
-    ..sort(
-      (a, b) => int.parse(a.substring(2)).compareTo(int.parse(b.substring(2))),
-    );
-  final b = XmlBuilder()..processing('xml', 'version="1.0" encoding="UTF-8"');
-  b.element(
-    'Elster',
-    namespaces: {'http://www.elster.de/elsterxml/schema/v11': null},
-    nest: () {
-      b.element(
-        'TransferHeader',
-        attributes: {'version': '11'},
-        nest: () {
-          b
-            ..element('Verfahren', nest: 'ElsterAnmeldung')
-            ..element('DatenArt', nest: 'UStVA')
-            ..element('Vorgang', nest: 'send-Auth');
-        },
-      );
-      b.element(
-        'DatenTeil',
-        nest: () {
-          b.element(
-            'Nutzdatenblock',
-            nest: () {
-              b.element(
-                'NutzdatenHeader',
-                attributes: {'version': '11'},
-                nest: () {
-                  b.element('NutzdatenTicket', nest: '1');
-                },
-              );
-              b.element(
-                'Nutzdaten',
-                nest: () {
-                  b.element(
-                    'Anmeldungssteuern',
-                    attributes: {
-                      'art': 'UStVA',
-                      'version': '${declaration.periodEnd.year}_01',
-                    },
-                    nest: () {
-                      b.element(
-                        'DatenLieferant',
-                        nest: () {
-                          b
-                            ..element('Name', nest: name)
-                            ..element('Strasse', nest: street)
-                            ..element('PLZ', nest: postalCode)
-                            ..element('Ort', nest: city);
-                        },
-                      );
-                      b.element('Erstellungsdatum', nest: ymd(createdOn));
-                      b.element(
-                        'Steuerfall',
-                        nest: () {
-                          b.element(
-                            'Umsatzsteuervoranmeldung',
-                            nest: () {
-                              b
-                                ..element(
-                                  'Jahr',
-                                  nest: '${declaration.periodStart.year}',
-                                )
-                                ..element('Zeitraum', nest: zeitraum)
-                                ..element(
-                                  'Steuernummer',
-                                  nest: _digits(taxNumber),
-                                );
-                              for (final k in keys) {
-                                b.element(k, nest: kz[k]);
-                              }
-                            },
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              );
-            },
-          );
-        },
-      );
-    },
-  );
-  return b.buildDocument().toXmlString(pretty: true, indent: '  ');
-}
-
-String _digits(String text) => text.replaceAll(RegExp('[^0-9]'), '');
-
-/// Euros with cents and a dot, as ELSTER reads amounts: `-12.05`.
-String _euros(int cents) {
-  final sign = cents < 0 ? '-' : '';
-  final abs = cents.abs();
-  return '$sign${abs ~/ 100}.${twoDigits(abs % 100)}';
 }

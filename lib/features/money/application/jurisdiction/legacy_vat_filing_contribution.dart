@@ -171,6 +171,13 @@ FilingContext filingContextOf({
   required VatFilingFacts facts,
   TaxReferenceSet? reference,
 }) => FilingContext(
+  extraBoxes: {
+    // the Quebec form is filed beside the federal one (the Canadian add-on)
+    if (LegalContext(countryCode: party.countryCode).normalized == 'CA')
+      'FPZ-500': [
+        for (final b in vatQstFormBoxes(declaration.lines)) _boxOf(b),
+      ],
+  },
   boxes: [
     for (final b in vatFormBoxes(
       LegalContext(countryCode: party.countryCode).normalized,
@@ -178,16 +185,7 @@ FilingContext filingContextOf({
       periodEnd: declaration.periodEnd,
       reference: reference,
     ))
-      FilingBox(
-        code: b.code,
-        label: b.label,
-        netCents: b.netCents,
-        vatCents: b.vatCents,
-        hasBase: b.hasBase,
-        hasTax: b.hasTax,
-        baseKey: b.baseKey,
-        taxKey: b.taxKey,
-      ),
+      _boxOf(b),
   ],
   periodStart: declaration.periodStart,
   periodEnd: declaration.periodEnd,
@@ -240,4 +238,15 @@ FilingContext filingContextOf({
     immediateSupply: facts.immediateSupply,
     cashCriterionRecipient: facts.cashCriterionRecipient,
   ),
+);
+
+FilingBox _boxOf(VatFormBox b) => FilingBox(
+  code: b.code,
+  label: b.label,
+  netCents: b.netCents,
+  vatCents: b.vatCents,
+  hasBase: b.hasBase,
+  hasTax: b.hasTax,
+  baseKey: b.baseKey,
+  taxKey: b.taxKey,
 );

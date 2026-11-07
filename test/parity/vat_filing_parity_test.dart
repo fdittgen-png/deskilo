@@ -393,9 +393,10 @@ void main() {
   test('the resolver path writes what the dispatcher writes, or refuses with '
       'the same problem (for the countries the dispatcher still serves)', () {
     for (final c in _cases()) {
-      // France left the dispatcher for its own package (#3332): its bytes are
-      // pinned by the goldens above, through the product path.
-      if (c.country == 'FR') continue;
+      // These countries left the dispatcher for their own packages (#3332,
+      // #3333): their bytes are pinned by the goldens above, through the
+      // product path.
+      if (const {'FR', 'DE', 'GB', 'CA'}.contains(c.country)) continue;
       final resolution = resolveCapability(
         JurisdictionOperation.vatFiling,
         LegalContext(countryCode: c.party.countryCode),

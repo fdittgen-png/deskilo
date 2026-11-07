@@ -163,6 +163,14 @@ void main() {
         "$header// T.\nvoid main() {}\n");
     write('packages/deskilo_asset_gzip/test/g_test.dart',
         "$header// G.\nvoid main() {}\n");
+    write('packages/deskilo_jurisdiction_de/test/de_test.dart',
+        "$header// D2.\nvoid main() {}\n");
+    write('packages/deskilo_jurisdiction_gb/test/gb_test.dart',
+        "$header// G2.\nvoid main() {}\n");
+    write('packages/deskilo_jurisdiction_ca/test/ca_test.dart',
+        "$header// C2.\nvoid main() {}\n");
+    write('packages/deskilo_jurisdiction_standards/test/s_test.dart',
+        "$header// S.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_fr/test/f_test.dart',
         "$header// F.\nvoid main() {}\n");
     write('packages/deskilo_jurisdiction_api/test/j_test.dart',

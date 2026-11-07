@@ -1,0 +1,18 @@
+name: deskilo_jurisdiction_ca
+description: >-
+  The Canadian VAT filing add-on (#3333): the GST34 and FPZ-500 lines as one CSV. Pure Dart; depends on the contract package alone.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_jurisdiction_api:
+    path: ../deskilo_jurisdiction_api
+  deskilo_jurisdiction_standards:
+    path: ../deskilo_jurisdiction_standards
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0
