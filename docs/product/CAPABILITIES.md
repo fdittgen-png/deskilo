@@ -177,6 +177,9 @@ An invoice becomes a UBL 2.1, Factur-X (CII), FatturaPA or KSeF FA(3) document w
 - `unit` · **gated** · [`test/features/money/invoice_fatturapa_test.dart`](../../test/features/money/invoice_fatturapa_test.dart)
 - `unit` · **gated** · [`test/features/money/invoice_ksef_fa3_test.dart`](../../test/features/money/invoice_ksef_fa3_test.dart)
 - `unit` · **gated** · [`test/features/money/einvoice_channels_test.dart`](../../test/features/money/einvoice_channels_test.dart)
+- `unit` · **gated** · [`test/parity/fatturapa_parity_test.dart`](../../test/parity/fatturapa_parity_test.dart)
+- `unit` · **gated** · [`test/core/jurisdiction/invoice_profile_resolver_test.dart`](../../test/core/jurisdiction/invoice_profile_resolver_test.dart)
+- `unit` · **gated** · [`test/core/jurisdiction/retired_italy_test.dart`](../../test/core/jurisdiction/retired_italy_test.dart)
 
 ## einvoice.transmit
 

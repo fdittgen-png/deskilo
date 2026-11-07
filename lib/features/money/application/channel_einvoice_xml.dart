@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert' show utf8;
 
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../domain/einvoice_format.dart';
 import '../domain/einvoice_input.dart';
@@ -19,15 +21,25 @@ import 'jurisdiction/invoice_document_context_builder.dart';
 ///
 /// [EInvoiceFormat.facturX] is a PDF, built by the PDF pipeline; asking
 /// for it here is a programming error.
-String buildChannelEInvoiceXml(EInvoiceFormat format, EInvoiceInput input) =>
-    switch (format) {
+String buildChannelEInvoiceXml(
+  EInvoiceFormat format,
+  EInvoiceInput input, {
+
+  /// The installed invoice profiles; a test passes a composition without one
+  /// (a retired country) to prove the rest keeps working (#3338).
+  List<InvoiceProfileContribution>? profiles,
+}) => switch (format) {
   EInvoiceFormat.facturX => throw ArgumentError.value(
     format,
     'format',
     'Factur-X is a PDF',
   ),
   EInvoiceFormat.en16931Cii => buildInvoiceCii(input),
-  EInvoiceFormat.fatturaPa => _viaProfile(format, input),
+  EInvoiceFormat.fatturaPa => _viaProfile(
+    format,
+    input,
+    profiles ?? installedInvoiceProfiles,
+  ),
   EInvoiceFormat.ksefFa3 => buildInvoiceKsefFa3(input),
   EInvoiceFormat.en16931Ubl ||
   EInvoiceFormat.peppolBis ||
@@ -42,8 +54,12 @@ String buildChannelEInvoiceXml(EInvoiceFormat format, EInvoiceInput input) =>
 /// it: the same bytes the builder in the application wrote before it moved.
 /// A format with no profile is a programming error here (the composition is
 /// compiled in), never a fallback.
-String _viaProfile(EInvoiceFormat format, EInvoiceInput input) {
-  final resolution = resolveInvoiceProfile(format.name, installedInvoiceProfiles);
+String _viaProfile(
+  EInvoiceFormat format,
+  EInvoiceInput input,
+  List<InvoiceProfileContribution> installed,
+) {
+  final resolution = resolveInvoiceProfile(format.name, installed);
   final profile = switch (resolution) {
     ResolvedProfile(:final profile) => profile,
     RefusedProfile(:final kind) => throw StateError(

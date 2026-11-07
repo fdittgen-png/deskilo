@@ -18,6 +18,7 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { CORS, preflight } from "../_shared/cors.ts";
 import {
+  isProvider,
   requiredFields,
   status as askStatus,
   type Submission,
@@ -257,8 +258,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   if (payload.action === "config") {
     const govCfg = configForDestination(fullCfg, "government");
     const govProvider = credentials?.provider ?? "generic";
+    // a provider whose connector was retired cannot send: say so (#3338)
+    const installed = isProvider(govProvider);
     return json({
-      configured: missingFor(govCfg, "prod", govProvider).length === 0,
+      configured: installed &&
+        missingFor(govCfg, "prod", govProvider).length === 0,
+      ...(installed ? {} : { error: "provider_not_installed" }),
       provider: govProvider,
       missing: missingFor(govCfg, "prod", govProvider),
       environments: Object.fromEntries(

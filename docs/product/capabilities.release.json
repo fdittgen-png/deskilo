@@ -474,6 +474,21 @@
           "scope": "unit",
           "ref": "test/features/money/einvoice_channels_test.dart",
           "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/parity/fatturapa_parity_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/core/jurisdiction/invoice_profile_resolver_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/core/jurisdiction/retired_italy_test.dart",
+          "standing": "gated"
         }
       ]
     },
