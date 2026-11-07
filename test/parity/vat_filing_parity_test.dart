@@ -13,10 +13,12 @@
 // `UPDATE_PARITY_GOLDENS=1` -- never under CI -- and the change is a
 // reviewer-visible diff of the files.
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
+import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -332,31 +334,46 @@ List<_Case> _cases() {
   return cases;
 }
 
-String _encodingName(Encoding e) => e.name;
+/// The encoding the country's channel reads: the Sede reads the Spanish 303
+/// as ISO-8859-1, every other file is UTF-8.
+Encoding _encodingOf(String country) => country == 'ES' ? latin1 : utf8;
 
 void main() {
-  test('the filing file of every case is byte-for-byte what it was', () {
+  test('the filing file of every case is byte-for-byte what it was', () async {
     final manifest = <String>[];
     final refusals = <String>[];
     final files = <String, List<int>>{};
     for (final c in _cases()) {
+      // The product path: the seam the screen calls, which resolves the
+      // installed add-on of the country (#3332: France is in its own package).
+      final saved = <({List<int> bytes, String fileName})>[];
+      final save = SaveVatFilingFile(
+        ({required Uint8List bytes, required String fileName}) async {
+          saved.add((bytes: bytes, fileName: fileName));
+          return fileName;
+        },
+        () => _now,
+        party: c.party,
+      );
       try {
-        final file = vatFilingFile(
-          declaration: c.declaration,
-          party: c.party,
-          now: _now,
-          facts: c.facts,
+        await save(c.declaration, facts: c.facts);
+        final file = saved.single;
+        final encoding = _encodingOf(c.country);
+        expect(
+          encoding.decode(file.bytes),
+          isNotEmpty,
+          reason: '${c.name}: the bytes are in the encoding its channel reads',
         );
-        final bytes = file.encoding.encode(file.text);
-        files[c.name] = bytes;
+        files[c.name] = file.bytes;
         manifest.add(
-          '${c.name} | ${file.fileName} | ${_encodingName(file.encoding)} | '
-          '${bytes.length}',
+          '${c.name} | ${file.fileName} | ${encoding.name} | '
+          '${file.bytes.length}',
         );
       } on VatFilingFileException catch (e) {
         refusals.add('${c.name} | VatFilingFileException | ${e.problem.name}');
       } on UnsupportedError catch (e) {
         refusals.add('${c.name} | UnsupportedError | ${e.message}');
+        expect(saved, isEmpty, reason: '${c.name}: a refusal saves nothing');
       }
     }
     final problems = VatFilingFileProblem.values.map((p) => p.name).join(',');
@@ -374,8 +391,11 @@ void main() {
   // contract are the same bytes, the same names and the same refusals: the
   // adapters change nothing the goldens pin.
   test('the resolver path writes what the dispatcher writes, or refuses with '
-      'the same problem', () {
+      'the same problem (for the countries the dispatcher still serves)', () {
     for (final c in _cases()) {
+      // France left the dispatcher for its own package (#3332): its bytes are
+      // pinned by the goldens above, through the product path.
+      if (c.country == 'FR') continue;
       final resolution = resolveCapability(
         JurisdictionOperation.vatFiling,
         LegalContext(countryCode: c.party.countryCode),

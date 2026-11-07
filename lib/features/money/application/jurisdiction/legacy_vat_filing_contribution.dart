@@ -14,6 +14,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/vat/tax_reference.dart';
 import '../../domain/vat_components.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_filing_files.dart';
@@ -159,12 +160,35 @@ VatFilingFacts _factsOf(FilingFacts f) => VatFilingFacts(
 
 /// The contract's context from the application's types: the host's side of
 /// the conversion.
+///
+/// The form boxes are filled HERE, from [reference] (the application's
+/// installed tax reference by default), and travel in the context: an
+/// extracted add-on reads them, never a global (#3332).
 FilingContext filingContextOf({
   required VatDeclaration declaration,
   required VatFilingParty party,
   required DateTime now,
   required VatFilingFacts facts,
+  TaxReferenceSet? reference,
 }) => FilingContext(
+  boxes: [
+    for (final b in vatFormBoxes(
+      LegalContext(countryCode: party.countryCode).normalized,
+      declaration.lines,
+      periodEnd: declaration.periodEnd,
+      reference: reference,
+    ))
+      FilingBox(
+        code: b.code,
+        label: b.label,
+        netCents: b.netCents,
+        vatCents: b.vatCents,
+        hasBase: b.hasBase,
+        hasTax: b.hasTax,
+        baseKey: b.baseKey,
+        taxKey: b.taxKey,
+      ),
+  ],
   periodStart: declaration.periodStart,
   periodEnd: declaration.periodEnd,
   currency: declaration.currency,

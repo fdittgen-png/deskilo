@@ -125,20 +125,6 @@ class VatFilingParty {
         createdOn: now,
       ),
     ),
-    'FR' => (
-      encoding: utf8,
-      fileName: 'edi-tva-ca3-$start.edi',
-      text: ediTvaCa3(
-        declaration: declaration,
-        siren: frenchSiren(legalId: party.legalId, vatId: party.vatId),
-        vatId: party.vatId,
-        name: party.name,
-        street: party.street,
-        postalCode: party.postalCode,
-        city: party.city,
-        createdAt: now,
-      ),
-    ),
     'GB' => (
       encoding: utf8,
       fileName: 'mtd-vat-return-$start.csv',
@@ -208,16 +194,6 @@ String mtdBridgingCsv({
     for (final field in mtdBoxFields) mtdBoxText(field, cents[field]!),
   ];
   return '${header.join(',')}\r\n${row.join(',')}\r\n';
-}
-
-/// The SIREN of a French seller: the registration number's first nine
-/// digits, else the nine after the key of an FR VAT id.
-@visibleForTesting
-String frenchSiren({required String legalId, required String vatId}) {
-  final legal = _digits(legalId);
-  if (legal.length >= 9) return legal.substring(0, 9);
-  final vat = _digits(vatId);
-  return vat.length == 11 ? vat.substring(2) : '';
 }
 
 /// The ELSTER Zeitraum of [declaration]: `01`..`12` for a month, `41`..`44`
@@ -352,98 +328,6 @@ String elsterUstvaXml({
     },
   );
   return b.buildDocument().toXmlString(pretty: true, indent: '  ');
-}
-
-/// The CA3 of [declaration] as an EDIFACT interchange for an EDI partner.
-@visibleForTesting
-String ediTvaCa3({
-  required VatDeclaration declaration,
-  required String siren,
-  required String vatId,
-  required String name,
-  required String street,
-  required String postalCode,
-  required String city,
-  required DateTime createdAt,
-}) {
-  final id = _digits(siren);
-  if (id.length < 9) {
-    throw const VatFilingFileException(VatFilingFileProblem.taxNumber);
-  }
-  final declarant = id.substring(0, 9);
-  final reference = _reference(declaration);
-  final segments = <String>[
-    _seg(['UNH', '1', 'INFENT:D:00A:UN:TVA']),
-    _seg(['BGM', '3310CA3::DGF', reference, '9']),
-    _seg(['DTM', '137:${ymd(createdAt)}:102']),
-    _seg(['DTM', '194:${ymd(declaration.periodStart)}:102']),
-    _seg(['DTM', '206:${ymd(declaration.periodEnd)}:102']),
-    _seg([
-      'NAD',
-      'FR',
-      '$declarant::107',
-      '',
-      _escape(name),
-      _escape(street),
-      _escape(city),
-      '',
-      _escape(postalCode),
-      'FR',
-    ]),
-    if (vatId.trim().isNotEmpty) _seg(['RFF', 'VA:${_escape(vatId.trim())}']),
-  ];
-  var n = 0;
-  for (final box in vatFormBoxes(
-    'FR',
-    declaration.lines,
-    periodEnd: declaration.periodEnd,
-  )) {
-    final key = box.baseKey.isNotEmpty ? box.baseKey : box.taxKey;
-    if (key.isEmpty) continue;
-    n++;
-    segments.add(_seg(['LIN', '$n', '', '${_escape(box.code)}:$key:ZZ']));
-    if (box.hasBase) {
-      segments.add(_seg(['MOA', '125:${box.netCents ~/ 100}']));
-    }
-    if (box.hasTax) {
-      segments.add(_seg(['MOA', '124:${box.vatCents ~/ 100}']));
-    }
-  }
-  segments.add(_seg(['UNT', '${segments.length + 1}', '1']));
-  final stamp = createdAt.toUtc();
-  return [
-    "UNA:+.? '",
-    _seg([
-      'UNB',
-      'UNOC:3',
-      '$declarant:ZZ',
-      'DGFIP:ZZ',
-      '${ymd(stamp).substring(2)}:${hhmm(stamp, separator: '')}',
-      reference,
-    ]),
-    ...segments,
-    _seg(['UNZ', '1', reference]),
-  ].join('\n');
-}
-
-/// A segment: its elements joined by `+`, closed by `'`.
-String _seg(List<String> elements) {
-  var end = elements.length;
-  while (end > 1 && elements[end - 1].isEmpty) {
-    end--;
-  }
-  return "${elements.sublist(0, end).join('+')}'";
-}
-
-/// EDIFACT release: `?` before each of `? + : '`.
-String _escape(String text) =>
-    text.replaceAllMapped(RegExp(r"[?+:']"), (m) => '?${m[0]}');
-
-/// The interchange reference: the DECL- number, else the period.
-String _reference(VatDeclaration declaration) {
-  final number = declaration.number.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  final ref = number.isNotEmpty ? number : 'CA3${ymd(declaration.periodStart)}';
-  return ref.length > 14 ? ref.substring(ref.length - 14) : ref;
 }
 
 String _digits(String text) => text.replaceAll(RegExp('[^0-9]'), '');

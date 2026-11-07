@@ -98,4 +98,74 @@ void main() {
       reason: 'CountryCatalog.byCode answers France for an unknown code',
     );
   });
+
+  // #3332 -- a country add-on is the same kind of package: it imports core
+  // Dart, the contract and itself, depends on the contract alone and reads no
+  // clock or environment. A package added later is held to this by its name.
+  test('every country add-on package depends on the contract alone', () {
+    final countries = [
+      for (final n in directoryNames('packages'))
+        if (n.startsWith('deskilo_jurisdiction_') &&
+            n != 'deskilo_jurisdiction_api')
+          n,
+    ];
+    expect(countries, isNotEmpty, reason: 'the French add-on at least');
+    final importRe = RegExp(r'''^\s*(?:import|export)\s+['"]([^'"]+)['"]''');
+    final bad = <String>[];
+    for (final name in countries) {
+      final root = 'packages/$name';
+      final pubspec = File('$root/pubspec.yaml').readAsStringSync();
+      final deps = RegExp(r'^dependencies:\n((?:  .+\n?)+)', multiLine: true)
+          .firstMatch(pubspec)!
+          .group(1)!
+          .split('\n')
+          .where(
+            (l) =>
+                l.startsWith('  ') &&
+                !l.startsWith('    ') &&
+                l.trim().isNotEmpty,
+          )
+          .map((l) => l.trim().split(':').first)
+          .toList();
+      if (deps.join(',') != 'deskilo_jurisdiction_api') {
+        bad.add('$root/pubspec.yaml: dependencies are $deps');
+      }
+      for (final f in filesWithExtension(
+        '$root/lib',
+        '.dart',
+        recursive: true,
+      )) {
+        final lines = f.readAsLinesSync();
+        for (final (i, line) in lines.indexed) {
+          final m = importRe.firstMatch(line);
+          final uri = m?.group(1);
+          if (uri != null &&
+              !(uri == 'dart:typed_data' ||
+                  uri == 'dart:convert' ||
+                  uri.startsWith('package:deskilo_jurisdiction_api/') ||
+                  uri.startsWith('package:$name/') ||
+                  (!uri.contains(':') && !uri.contains('..')))) {
+            bad.add('${f.path}:${i + 1}: $uri');
+          }
+          final code = line.trimLeft();
+          if (!code.startsWith('//')) {
+            for (final needle in [
+              'DateTime.now',
+              'Platform.',
+              'HttpClient',
+              'Process.',
+            ]) {
+              if (code.contains(needle)) bad.add('${f.path}:${i + 1}: $needle');
+            }
+          }
+        }
+      }
+    }
+    expect(
+      bad,
+      isEmpty,
+      reason:
+          'a country add-on may reach the contract only:\n${bad.join('\n')}',
+    );
+  });
 }

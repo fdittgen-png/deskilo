@@ -3,6 +3,7 @@
 library;
 
 export 'src/capability_descriptor.dart';
+export 'src/date_text.dart';
 export 'src/filing_context.dart';
 export 'src/generated_artifact.dart';
 export 'src/validation_result.dart';

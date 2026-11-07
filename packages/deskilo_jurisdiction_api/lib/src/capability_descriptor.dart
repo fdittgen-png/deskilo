@@ -3,7 +3,10 @@
 /// The version of THIS contract. An implementation declares the one it was
 /// written against; the host refuses (and a lint pins) a mismatch. Bumped
 /// when a type of this package changes in a way an implementation can see.
-const String jurisdictionContractVersion = '1';
+///
+/// 2 (#3332): the context carries the filled form boxes, which an extracted
+/// add-on reads instead of reaching for the tax reference of the application.
+const String jurisdictionContractVersion = '2';
 
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.

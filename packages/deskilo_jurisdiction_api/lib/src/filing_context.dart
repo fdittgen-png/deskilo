@@ -64,6 +64,32 @@ class FilingComponent {
   final String level;
 }
 
+/// One filled box of the return form, as the host's tax reference fills it for
+/// the country: the add-on writes boxes, it does not compute them.
+class FilingBox {
+  const FilingBox({
+    required this.code,
+    required this.label,
+    required this.netCents,
+    required this.vatCents,
+    this.hasBase = true,
+    this.hasTax = true,
+    this.baseKey = '',
+    this.taxKey = '',
+  });
+
+  final String code;
+  final String label;
+  final int netCents;
+  final int vatCents;
+  final bool hasBase;
+  final bool hasTax;
+
+  /// The cell's name in a filing file (a CA3 EDI code, an ELSTER Kennzahl).
+  final String baseKey;
+  final String taxKey;
+}
+
 /// Who files: the space as its settings describe it.
 class FilingParty {
   const FilingParty({
@@ -116,11 +142,13 @@ class FilingContext {
     required this.periodEnd,
     required this.currency,
     required List<FilingLine> lines,
+    List<FilingBox> boxes = const [],
     required this.party,
     required this.generatedAt,
     this.facts = const FilingFacts(),
     this.number = '',
-  }) : lines = List.unmodifiable(lines);
+  }) : lines = List.unmodifiable(lines),
+       boxes = List.unmodifiable(boxes);
 
   final DateTime periodStart;
   final DateTime periodEnd;
@@ -128,6 +156,9 @@ class FilingContext {
 
   /// The return's lines; not modifiable.
   final List<FilingLine> lines;
+
+  /// The form's filled boxes, in the form's order; not modifiable.
+  final List<FilingBox> boxes;
   final FilingParty party;
   final FilingFacts facts;
 
