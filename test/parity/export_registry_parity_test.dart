@@ -67,7 +67,7 @@ final _localBook = BookProfile(
   fiscalYearStartMonth: 1,
   fiscalYearStartDay: 1,
   basis: AccountingBasis.accrual,
-  effectiveFrom: DateTime(2020),
+  effectiveFrom: DateTime.utc(2020),
   revision: 1,
 );
 
