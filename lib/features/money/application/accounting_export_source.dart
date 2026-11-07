@@ -8,14 +8,14 @@
 // No format reads anything else for the period: what the file says, it
 // says about one moment.
 import '../../../core/trace/trace_logger.dart';
-import '../domain/accounting_format.dart';
 import '../domain/accounting_source_queries.dart';
 import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/export_year.dart';
 import '../domain/invoice.dart';
-import '../domain/saf_t_financial.dart';
+import 'export/accounting_export_contribution.dart';
+import 'export/installed_accounting_exports.dart';
 import 'generic_journal_export.dart';
 
 /// The books of one fiscal year as the accounting export holds them: ONE
@@ -79,48 +79,6 @@ typedef AccountingExportInput = ({
   List<GenericJournal> archiveYears,
 });
 
-/// The formats written from the posting engine when the issuer keeps a
-/// local book (the archive for its FEC); the generic journal has no other
-/// source.
-const Set<String> _postedWhenLocalBook = {
-  'fec',
-  _datevFormat,
-  'saft',
-  _sageFormat,
-  _archiveFormat,
-  ...bookReportFormats,
-};
-
-/// The posted formats that name the accounts and the parties: the FEC,
-/// #2376 the books printed from the postings, #2377 the Swiss journal,
-/// whose rows name their customer or supplier.
-/// #2379 — and the SAF-T Financial files, which also state the accounts'
-/// opening balances: the book's postings before the year are read with it.
-final Set<String> _postedFec = {
-  'fec',
-  // #2375 — DATEV books the suppliers' Kreditor from the purchases entries.
-  _datevFormat,
-  // #2373 — Sage 50 keys each row to its customer or supplier.
-  _sageFormat,
-  _archiveFormat,
-  ...bookReportFormats,
-  ...safTFinancialFormats,
-  ..._swissJournalFormats,
-};
-
-/// The formats that have no source but the posting engine.
-final Set<String> _postedOnlyFormats = {
-  'generic_journal_csv',
-  ...safTFinancialFormats,
-  ..._swissJournalFormats,
-};
-
-/// #2377 — the Swiss journal in its two layouts.
-const Set<String> _swissJournalFormats = {'ch_kmu', 'banana_transactions'};
-const String _archiveFormat = 'bundle';
-const String _sageFormat = 'sage50';
-const String _datevFormat = 'datev';
-
 /// #2376 — the day of the latest document the person exports, on the same
 /// clock the export year is taken from: the posted formats read the fiscal
 /// year that holds it.
@@ -159,10 +117,12 @@ class AccountingExportSource {
       loaded: invoices,
     );
     if (books == null) return null;
+    // #3334 -- what the format declares, from the registry; not a set here.
+    final need = requirementsOf(formatId);
     final posted =
-        _postedOnlyFormats.contains(formatId) ||
-        (_postedWhenLocalBook.contains(formatId) &&
-            (formatId != _archiveFormat || archiveCarriesFec(country)) &&
+        need.posting == ExportPosting.only ||
+        (need.posting == ExportPosting.whenLocalBook &&
+            (!need.archive || archiveCarriesFec(country)) &&
             localBookOf(books.bookProfiles, year) != null);
     if (!posted) {
       return (
@@ -172,7 +132,7 @@ class AccountingExportSource {
       );
     }
     final asOf = _latestDay(invoices);
-    if (formatId == _archiveFormat) {
+    if (need.archive) {
       final years = await _journal().readArchiveYears(
         workspaceId,
         books.bookProfiles,
@@ -187,8 +147,8 @@ class AccountingExportSource {
         workspaceId,
         books.bookProfiles,
         year,
-        named: _postedFec.contains(formatId),
-        withOpening: safTFinancialFormats.contains(formatId),
+        named: need.named,
+        withOpening: need.withOpening,
         asOf: asOf,
       ),
       archiveYears: const <GenericJournal>[],
