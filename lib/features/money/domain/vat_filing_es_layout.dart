@@ -57,7 +57,7 @@ const aeat303Pages = {'01000': _page01, '03000': _page03};
 /// Page 01 of the 2026 design (sheet DP30301).
 const _page01 = [
   Aeat303Field(1, 1, 2, _an, constant: '<T'),
-  Aeat303Field(2, 3, 3, _num, constant: '304'),
+  Aeat303Field(2, 3, 3, _num, constant: '303'),
   Aeat303Field(3, 6, 5, _num, constant: '01000'),
   Aeat303Field(4, 11, 1, _an, constant: '>'),
   Aeat303Field(5, 12, 1, _an),

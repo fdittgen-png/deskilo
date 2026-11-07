@@ -11,7 +11,7 @@ import 'vat_declaration.dart';
 
 /// The HMRC field names of the nine boxes, in the order of the form.
 const mtdBoxFields = [
-  'vatDueSalez',
+  'vatDueSales',
   'vatDueAcquisitions',
   'totalVatDue',
   'vatReclaimedCurrPeriod',
