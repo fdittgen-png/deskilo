@@ -40,3 +40,11 @@ final accountingTransfersProvider = FutureProvider.autoDispose
           .watch(accountingConnectionRepositoryProvider)
           .fetchTransfers(key.workspaceId, key.from, key.to),
     );
+
+/// #3336 — whether the connectors admit new work in one workspace.
+final capabilityStateProvider = FutureProvider.autoDispose
+    .family<CapabilityState, String>(
+      (ref, workspaceId) => ref
+          .watch(accountingConnectionCommandProvider)
+          .capabilityState(workspaceId),
+    );

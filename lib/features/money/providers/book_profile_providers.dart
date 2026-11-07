@@ -89,6 +89,7 @@ final accountingSystemsScopeProvider = Provider.autoDispose<AccountingSystemsSco
     },
     permissions: {for (final p in ref.watch(myPermissionsProvider)) p.wireName},
     memberNames: ref.watch(memberNamesProvider).value ?? const {},
+    owner: ref.watch(myMemberProvider).value?.isOwner ?? false,
   ),
 );
 

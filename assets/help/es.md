@@ -5394,6 +5394,27 @@ Entrega a su gestor las facturas y los pagos del año.
 
 **Véase también:** [Cuenta de IVA](help:user.money.vat.account) · [El registro de facturas](help:user.invoicing.register)
 
+### Detener el trabajo contable nuevo
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que sus conectores contables dejen de aceptar trabajo nuevo, por ejemplo al cambiar de gestor, sin perder lo que ya se envió.
+
+**Pasos**
+
+1. Abra **Sistemas contables** y lea la tarjeta **Nuevo trabajo contable**: indica si los conectores están **Activo**, **En mantenimiento** o **Retirado**.
+2. Para pausar, pulse **Detener el trabajo nuevo**. Para admitir trabajo de nuevo, pulse **Reanudar el trabajo nuevo**.
+3. El propietario puede pulsar **Retirar los conectores** desde mantenimiento y **Reabrir para mantenimiento** desde retirado. Ambos piden un **Motivo**.
+
+**Conviene saber**
+
+- Mientras no se admita nada nuevo, puede seguir leyendo el historial, revocar una conexión y terminar los envíos ya empezados.
+- Retirar se rechaza mientras haya envíos en curso; termínelos o resuélvalos antes.
+- La tarjeta solo la ven quienes gestionan los conectores; solo el propietario ve las acciones de retirar y reabrir.
+- Sin una decisión propia, la tarjeta sigue el ajuste de los conectores contables.
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export)
+
 ### Análisis de negocio
 
 **Público:** Propietario · Administrador/a de facturación

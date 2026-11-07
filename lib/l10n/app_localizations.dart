@@ -1034,6 +1034,132 @@ abstract class AppLocalizations {
   /// **'Deliver again'**
   String get acctRedeliver;
 
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen for servicing'**
+  String get acctStateActionReopen;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Resume new work'**
+  String get acctStateActionResume;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Retire the connectors'**
+  String get acctStateActionRetire;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Stop new work'**
+  String get acctStateActionStop;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Active — new connections, mappings and deliveries are admitted'**
+  String get acctStateActive;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'The state was changed.'**
+  String get acctStateChanged;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen the connectors for servicing? New work stays refused.'**
+  String get acctStateConfirmReopen;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Admit new accounting work again?'**
+  String get acctStateConfirmResume;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Retire the accounting connectors? Only the owner can reopen them, and only for servicing.'**
+  String get acctStateConfirmRetire;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Stop admitting new accounting work? Reading, revoking and finishing what was started stay possible.'**
+  String get acctStateConfirmStop;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Follows the accounting connectors setting; nobody has decided otherwise.'**
+  String get acctStateDerived;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'The state could not be changed.'**
+  String get acctStateFailed;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get acctStateReasonLabel;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Say why.'**
+  String get acctStateReasonRequired;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'The accounting connectors are switched off in this space.'**
+  String get acctStateRefusedOff;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner retires or reopens the connectors.'**
+  String get acctStateRefusedOwner;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Deliveries are still in progress. Finish or settle them before retiring.'**
+  String get acctStateRefusedUnresolved;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Retired — no new work; the history stays readable'**
+  String get acctStateRetired;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Servicing — no new work; history, revoking and unfinished deliveries continue'**
+  String get acctStateServicing;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get acctStateSubmit;
+
+  /// #3336 - the state of the accounting connectors (active / servicing / retired)
+  ///
+  /// In en, this message translates to:
+  /// **'New accounting work'**
+  String get acctStateTitle;
+
   /// #2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet.
   ///
   /// In en, this message translates to:

@@ -582,6 +582,79 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acctRedeliver => 'Enviar de nuevo';
 
   @override
+  String get acctStateActionReopen => 'Reabrir para mantenimiento';
+
+  @override
+  String get acctStateActionResume => 'Reanudar el trabajo nuevo';
+
+  @override
+  String get acctStateActionRetire => 'Retirar los conectores';
+
+  @override
+  String get acctStateActionStop => 'Detener el trabajo nuevo';
+
+  @override
+  String get acctStateActive =>
+      'Activo — se admiten nuevas conexiones, correspondencias y envíos';
+
+  @override
+  String get acctStateChanged => 'Se cambió el estado.';
+
+  @override
+  String get acctStateConfirmReopen =>
+      '¿Reabrir los conectores para mantenimiento? El trabajo nuevo sigue rechazado.';
+
+  @override
+  String get acctStateConfirmResume => '¿Admitir de nuevo trabajo contable?';
+
+  @override
+  String get acctStateConfirmRetire =>
+      '¿Retirar los conectores contables? Solo el propietario puede reabrirlos, y solo para mantenimiento.';
+
+  @override
+  String get acctStateConfirmStop =>
+      '¿Dejar de admitir trabajo contable nuevo? Leer, revocar y terminar lo empezado siguen siendo posibles.';
+
+  @override
+  String get acctStateDerived =>
+      'Sigue el ajuste de los conectores contables; nadie ha decidido otra cosa.';
+
+  @override
+  String get acctStateFailed => 'No se pudo cambiar el estado.';
+
+  @override
+  String get acctStateReasonLabel => 'Motivo';
+
+  @override
+  String get acctStateReasonRequired => 'Diga por qué.';
+
+  @override
+  String get acctStateRefusedOff =>
+      'Los conectores contables están desactivados en este espacio.';
+
+  @override
+  String get acctStateRefusedOwner =>
+      'Solo el propietario retira o reabre los conectores.';
+
+  @override
+  String get acctStateRefusedUnresolved =>
+      'Aún hay envíos en curso. Termínelos o resuélvalos antes de retirar.';
+
+  @override
+  String get acctStateRetired =>
+      'Retirado — sin trabajo nuevo; el historial sigue legible';
+
+  @override
+  String get acctStateServicing =>
+      'En mantenimiento — sin trabajo nuevo; el historial, la revocación y los envíos sin terminar continúan';
+
+  @override
+  String get acctStateSubmit => 'Confirmar';
+
+  @override
+  String get acctStateTitle => 'Nuevo trabajo contable';
+
+  @override
   String get acctTargetNotDeliveredYet =>
       'Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.';
 

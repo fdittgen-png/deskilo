@@ -5394,6 +5394,27 @@ You hand the year's invoices and payments to your accountant.
 
 **See also:** [VAT account](help:user.money.vat.account) · [The invoice register](help:user.invoicing.register)
 
+### Stopping new accounting work
+
+**Audience:** Owner · Billing administrator
+
+You want your accounting connectors to stop taking on new work, for example when you change accountant, without losing what was already sent.
+
+**Steps**
+
+1. Open **Accounting systems** and read the card **New accounting work**: it says whether the connectors are **Active**, in **Servicing** or **Retired**.
+2. To pause, tap **Stop new work**. To admit work again, tap **Resume new work**.
+3. The owner can tap **Retire the connectors** from servicing, and **Reopen for servicing** from retired. Both ask for a **Reason**.
+
+**Good to know**
+
+- While nothing new is admitted you can still read the history, revoke a connection and finish deliveries that were already started.
+- Retiring is refused while deliveries are still in progress; finish or settle them first.
+- The card is shown only to people who manage the connectors; only the owner sees the retire and reopen actions.
+- Without a decision of its own the card follows the accounting connectors setting.
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export)
+
 ### Business analytics
 
 **Audience:** Owner · Billing administrator

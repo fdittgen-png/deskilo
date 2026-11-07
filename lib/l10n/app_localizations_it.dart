@@ -582,6 +582,79 @@ class AppLocalizationsIt extends AppLocalizations {
   String get acctRedeliver => 'Invia di nuovo';
 
   @override
+  String get acctStateActionReopen => 'Riapri per la manutenzione';
+
+  @override
+  String get acctStateActionResume => 'Riprendi il nuovo lavoro';
+
+  @override
+  String get acctStateActionRetire => 'Ritira i connettori';
+
+  @override
+  String get acctStateActionStop => 'Ferma il nuovo lavoro';
+
+  @override
+  String get acctStateActive =>
+      'Attivo — sono ammesse nuove connessioni, corrispondenze e consegne';
+
+  @override
+  String get acctStateChanged => 'Lo stato è stato modificato.';
+
+  @override
+  String get acctStateConfirmReopen =>
+      'Riaprire i connettori per la manutenzione? Il nuovo lavoro resta rifiutato.';
+
+  @override
+  String get acctStateConfirmResume => 'Ammettere di nuovo lavoro contabile?';
+
+  @override
+  String get acctStateConfirmRetire =>
+      'Ritirare i connettori contabili? Solo il proprietario può riaprirli, e solo per la manutenzione.';
+
+  @override
+  String get acctStateConfirmStop =>
+      'Smettere di ammettere nuovo lavoro contabile? Leggere, revocare e concludere ciò che è iniziato restano possibili.';
+
+  @override
+  String get acctStateDerived =>
+      'Segue l\'impostazione dei connettori contabili; nessuno ha deciso diversamente.';
+
+  @override
+  String get acctStateFailed => 'Non è stato possibile modificare lo stato.';
+
+  @override
+  String get acctStateReasonLabel => 'Motivo';
+
+  @override
+  String get acctStateReasonRequired => 'Indichi il motivo.';
+
+  @override
+  String get acctStateRefusedOff =>
+      'I connettori contabili sono disattivati in questo spazio.';
+
+  @override
+  String get acctStateRefusedOwner =>
+      'Solo il proprietario ritira o riapre i connettori.';
+
+  @override
+  String get acctStateRefusedUnresolved =>
+      'Ci sono ancora consegne in corso. Le concluda o le regoli prima di ritirare.';
+
+  @override
+  String get acctStateRetired =>
+      'Ritirato — nessun nuovo lavoro; lo storico resta leggibile';
+
+  @override
+  String get acctStateServicing =>
+      'In manutenzione — nessun nuovo lavoro; storico, revoca e consegne non concluse proseguono';
+
+  @override
+  String get acctStateSubmit => 'Conferma';
+
+  @override
+  String get acctStateTitle => 'Nuovo lavoro contabile';
+
+  @override
   String get acctTargetNotDeliveredYet =>
       'Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l\'invio, che per esso non è ancora attivo.';
 

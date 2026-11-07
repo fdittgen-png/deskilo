@@ -5657,6 +5657,28 @@ Sie übergeben Ihrer Buchhaltung die Rechnungen und Zahlungen des Jahres.
 
 **Siehe auch:** [Steuerkonto](#steuerkonto) · [Das Rechnungsregister](#das-rechnungsregister)
 
+<!-- anchor: user.invoicing.accounting-state -->
+### Neue Buchhaltungsarbeit stoppen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten, dass Ihre Buchhaltungsanbindungen keine neue Arbeit mehr annehmen, zum Beispiel beim Wechsel der Buchhaltung, ohne zu verlieren, was bereits gesendet wurde.
+
+**Schritte**
+
+1. Öffnen Sie **Buchhaltungssysteme** und lesen Sie die Karte **Neue Buchhaltungsarbeit**: Sie zeigt, ob die Anbindungen **Aktiv**, in **Wartung** oder **Stillgelegt** sind.
+2. Zum Pausieren tippen Sie auf **Neue Arbeit stoppen**. Um wieder Arbeit anzunehmen, tippen Sie auf **Neue Arbeit wieder zulassen**.
+3. Die Inhaberin oder der Inhaber kann aus der Wartung **Anbindungen stilllegen** und aus dem stillgelegten Zustand **Für die Wartung wieder öffnen** wählen. Beides verlangt einen **Grund**.
+
+**Gut zu wissen**
+
+- Solange nichts Neues angenommen wird, können Sie den Verlauf weiter lesen, eine Verbindung widerrufen und bereits begonnene Lieferungen beenden.
+- Das Stilllegen wird abgelehnt, solange Lieferungen laufen; beenden oder klären Sie sie zuerst.
+- Die Karte sehen nur Personen, die die Anbindungen verwalten; nur die Inhaberin oder der Inhaber sieht Stilllegen und Wiedereröffnen.
+- Ohne eigene Entscheidung folgt die Karte der Einstellung der Buchhaltungsanbindungen.
+
+**Siehe auch:** [Buchhaltungsexporte](#buchhaltungsexporte)
+
 <!-- anchor: user.invoicing.bi -->
 ### Business-Analysen
 
