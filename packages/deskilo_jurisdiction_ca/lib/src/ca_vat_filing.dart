@@ -95,7 +95,7 @@ class CaVatFilingContribution implements VatFilingContribution {
       }
     }
 
-    section('GST34', context.boxes);
+    section('GST35', context.boxes);
     section('FPZ-500', context.extraBoxes[caQstFormName] ?? const []);
     final text = rows
         .map(

@@ -9,7 +9,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
 /// The HMRC field names of the nine boxes, in the order of the form.
 const mtdBoxFields = [
-  'vatDueSales',
+  'vatDueSalez',
   'vatDueAcquisitions',
   'totalVatDue',
   'vatReclaimedCurrPeriod',
