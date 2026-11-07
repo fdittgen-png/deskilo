@@ -14,6 +14,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   join,
@@ -112,3 +113,16 @@ export async function statusItSdi(
     notifications,
   });
 }
+
+/** The it_sdi connector record (#3337). */
+export const itSdiConnector: Connector = {
+  id: "it_sdi",
+  requiredFields: ["base_url", "login_url", "username", "password"],
+  acceptedFormats: ["fatturaPa"],
+  sandbox: {
+    base_url: "https://api-sandbox.acubeapi.com",
+    login_url: "https://common-sandbox.api.acubeapi.com/login",
+  },
+  submit: submitItSdi,
+  status: statusItSdi,
+};

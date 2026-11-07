@@ -18,6 +18,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   fromBase64,
@@ -307,3 +308,13 @@ export async function statusPlKsef(
   }
   return accepted(externalId, text, receipt);
 }
+
+/** The pl_ksef connector record (#3337). */
+export const plKsefConnector: Connector = {
+  id: "pl_ksef",
+  requiredFields: ["base_url", "nip", "ksef_token"],
+  acceptedFormats: ["ksefFa3"],
+  sandbox: { base_url: "https://ksef-test.mf.gov.pl/api/v2" },
+  submit: submitPlKsef,
+  status: statusPlKsef,
+};

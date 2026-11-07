@@ -9,6 +9,7 @@
 import {
   accepted,
   Config,
+  Connector,
   ConnectorDocument,
   Fetch,
   refused,
@@ -48,3 +49,12 @@ export async function submitGeneric(
   }
   return accepted(externalId, text);
 }
+
+/** The generic connector record (#3337). */
+export const genericConnector: Connector = {
+  id: "generic",
+  requiredFields: ["endpoint", "auth_value"],
+  acceptedFormats: [],
+  sandbox: {},
+  submit: submitGeneric,
+};
