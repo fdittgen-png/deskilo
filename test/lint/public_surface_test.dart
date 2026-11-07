@@ -17,6 +17,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/core/jurisdiction/jurisdiction_resolver.dart::ResolvedProfile':
+      '#3337 — the caller arrives with slice B (FatturaPA as a profile)',
+  'lib/core/jurisdiction/jurisdiction_resolver.dart::RefusedProfile':
+      '#3337 — the caller arrives with slice B (FatturaPA as a profile)',
 };
 
 void main() {

@@ -42,6 +42,12 @@ enum RefusalKind {
 
   /// The add-on was written against another version of the contract.
   contractMismatch,
+
+  /// No installed add-on provides the invoice profile of that format.
+  unknownProfile,
+
+  /// More than one installed add-on claims the invoice profile.
+  conflictingProfile,
 }
 
 sealed class CapabilityResolution {
@@ -99,4 +105,51 @@ CapabilityResolution resolveCapability(
     return const Refused(RefusalKind.contractMismatch);
   }
   return Resolved(matches.single);
+}
+
+/// The capability id of the invoice profile that renders [formatId] (the
+/// EXISTING name of the format: `EInvoiceFormat.fatturaPa.name`).
+@visibleForTesting
+String invoiceProfileCapabilityId(String formatId) =>
+    'invoice_profile.$formatId';
+
+sealed class ProfileResolution {
+  const ProfileResolution();
+}
+
+/// The invoice profile to use.
+class ResolvedProfile extends ProfileResolution {
+  const ResolvedProfile(this.profile);
+
+  final InvoiceProfileContribution profile;
+}
+
+/// No invoice profile, and why.
+class RefusedProfile extends ProfileResolution {
+  const RefusedProfile(this.kind);
+
+  final RefusalKind kind;
+}
+
+/// The installed invoice profile that renders [formatId], or the reason there
+/// is none. The format is chosen by the channel, never by a country switch
+/// here; an unknown format is an explicit refusal, never a default.
+ProfileResolution resolveInvoiceProfile(
+  String formatId,
+  List<InvoiceProfileContribution> installed,
+) {
+  final id = invoiceProfileCapabilityId(formatId);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return const RefusedProfile(RefusalKind.unknownProfile);
+  if (matches.length > 1) {
+    return const RefusedProfile(RefusalKind.conflictingProfile);
+  }
+  if (matches.single.descriptor.contractVersion !=
+      jurisdictionContractVersion) {
+    return const RefusedProfile(RefusalKind.contractMismatch);
+  }
+  return ResolvedProfile(matches.single);
 }
