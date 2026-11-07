@@ -34,8 +34,8 @@
 // figures; `vat_return_parity_test.dart` pins both to one fixture.
 import 'package:meta/meta.dart';
 import '../../../core/time/workspace_time.dart';
-import 'billing_rules.dart';
 import 'invoice.dart';
+import 'invoice_kind.dart';
 import 'vat_declaration.dart';
 import 'vat_rate.dart';
 import 'vat_tax_point_policy.dart';

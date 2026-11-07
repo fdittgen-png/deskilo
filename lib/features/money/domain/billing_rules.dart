@@ -3,42 +3,16 @@ import '../../../core/data/json_reader.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/calendar_days.dart';
 
+// The kind moved to its own file (#3402), where the invoice model reads it;
+// importers of this file keep reading it here until the sweep.
+export 'invoice_kind.dart';
+
 /// What an invoice CHARGES FOR (#802, migration 0142).
 ///
 /// A subscription is paid in advance, so its invoice has to exist before
 /// the month it covers; what the month actually cost — overage,
 /// accessories, services, packages, adjustments — cannot be known until
 /// the month ends. One document could never be both, so there are two.
-enum InvoiceKind {
-  /// The historical whole-month document: every pre-0142 invoice, and
-  /// still what issuing by hand produces.
-  full,
-
-  /// The monthly fee, issued AHEAD of the period it covers.
-  subscription,
-
-  /// Everything the month actually cost, issued once it is over.
-  usage,
-
-  /// Several invoices regrouped into one (#803).
-  settlement;
-
-  static InvoiceKind fromWire(String? raw) =>
-      InvoiceKind.values.asNameMap()[raw ?? ''] ?? InvoiceKind.full;
-
-  /// Whether this document charges the fee for a month still to come.
-  /// The reader needs telling: an invoice dated 28 August for September
-  /// otherwise looks like a mistake.
-  bool get isInAdvance => this == InvoiceKind.subscription;
-}
-
-/// When the two automatic invoice runs happen, stored in
-/// `workspaces.billing_rules` (migration 0142).
-///
-/// Every field is a decision an owner can defend to their members, which
-/// is why none of them is hard-coded: when the subscription invoice
-/// arrives, whether the end-of-month one is raised at all, and whether a
-/// member who owes nothing extra still gets the document that says so.
 class BillingRules {
   const BillingRules({
     this.subscriptionAuto = true,
