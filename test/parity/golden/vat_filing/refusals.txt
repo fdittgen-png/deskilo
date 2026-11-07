@@ -1,0 +1,18 @@
+de_year_refused | VatFilingFileException | period
+de_unidentified_refused | VatFilingFileException | taxNumber
+fr_unidentified_refused | VatFilingFileException | taxNumber
+gb_unidentified_refused | VatFilingFileException | vatNumber
+ch_unidentified_refused | VatFilingFileException | uid
+ca_unidentified_refused | VatFilingFileException | businessNumber
+es_year_refused | VatFilingFileException | period
+es_unidentified_refused | VatFilingFileException | vatNumber
+it_year_refused | VatFilingFileException | period
+it_unidentified_refused | VatFilingFileException | vatNumber
+it_no_fiscal_code_refused | VatFilingFileException | fiscalCode
+it_unfinished_declarant_refused | VatFilingFileException | declarant
+ch_bad_uid_refused | VatFilingFileException | uid
+ca_bad_business_number_refused | VatFilingFileException | businessNumber
+gb_bad_vrn_refused | VatFilingFileException | vatNumber
+zz_unsupported_refused | UnsupportedError | no filing file for ZZ
+
+problems: period,taxNumber,vatNumber,uid,businessNumber,fiscalCode,declarant,unmappedBox,negativeAmount,annualVolume,exoneratedBySii

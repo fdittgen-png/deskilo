@@ -1,0 +1,2 @@
+vrn,periodStart,periodEnd,vatDueSales,vatDueAcquisitions,totalVatDue,vatReclaimedCurrPeriod,netVatDue,totalValueSalesExVAT,totalValuePurchasesExVAT,totalValueGoodsSuppliedExVAT,totalAcquisitionsExVAT
+123456789,2026-01-01,2026-12-31,260.00,0.00,260.00,80.00,180.00,2500,400,0,0

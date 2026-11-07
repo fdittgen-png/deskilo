@@ -1,0 +1,6 @@
+"return","business_number","period_start","period_end","line","label",base,tax
+"GST34","123456789 RT0001","2026-04-01","2026-04-30","101","Sales and other revenue",0.00,
+"GST34","123456789 RT0001","2026-04-01","2026-04-30","103","GST/HST collected or collectible",,0.00
+"GST34","123456789 RT0001","2026-04-01","2026-04-30","105","Total GST/HST and adjustments for the period",,0.00
+"GST34","123456789 RT0001","2026-04-01","2026-04-30","108","Total ITCs and adjustments",,0.00
+"GST34","123456789 RT0001","2026-04-01","2026-04-30","109","Net tax",,0.00

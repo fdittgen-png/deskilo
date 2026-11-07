@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iv:Fornitura xmlns:iv="urn:www.agenziaentrate.gov.it:specificheTecniche:sco:ivp">
+  <iv:Intestazione>
+    <iv:CodiceFornitura>IVP18</iv:CodiceFornitura>
+  </iv:Intestazione>
+  <iv:Comunicazione identificativo="00001">
+    <iv:Frontespizio>
+      <iv:CodiceFiscale>12345678903</iv:CodiceFiscale>
+      <iv:AnnoImposta>2026</iv:AnnoImposta>
+      <iv:PartitaIVA>12345678903</iv:PartitaIVA>
+      <iv:FirmaDichiarazione>1</iv:FirmaDichiarazione>
+    </iv:Frontespizio>
+    <iv:DatiContabili>
+      <iv:Modulo>
+        <iv:NumeroModulo>1</iv:NumeroModulo>
+        <iv:Mese>2</iv:Mese>
+        <iv:TotaleOperazioniAttive>100,00</iv:TotaleOperazioniAttive>
+        <iv:TotaleOperazioniPassive>900,00</iv:TotaleOperazioniPassive>
+        <iv:IvaEsigibile>22,00</iv:IvaEsigibile>
+        <iv:IvaDetratta>198,00</iv:IvaDetratta>
+        <iv:IvaDovuta>0,00</iv:IvaDovuta>
+        <iv:IvaCredito>176,00</iv:IvaCredito>
+        <iv:ImportoACredito>176,00</iv:ImportoACredito>
+      </iv:Modulo>
+    </iv:DatiContabili>
+  </iv:Comunicazione>
+</iv:Fornitura>
