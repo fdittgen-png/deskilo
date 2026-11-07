@@ -8,7 +8,7 @@
 -- space's rows never appear; the owner and a manager may ask, a plain member,
 -- a stranger and an assistant may not.
 begin;
-select plan(16);
+select plan(23);
 
 create or replace function pg_temp.v(p text) returns text language sql as $$
   select current_setting('rf.' || p)
@@ -105,6 +105,12 @@ select pg_temp.tx('06', '06', 'sent', 'peppol', 'peppolBis');
 select pg_temp.tx('07', '07', 'sent', 'it_sdi', 'fatturaPa', 'ws2');
 select pg_temp.tx('08', '08', 'accepted');
 select pg_temp.tx('13', '13', 'accepted');
+-- the second space also has Italian, Peppol and Romanian work (installation scope, below)
+select pg_temp.inv('21', null, 'ws2'); select pg_temp.inv('22', null, 'ws2');
+select pg_temp.tx('21', '21', 'uncertain', 'it_sdi', 'fatturaPa', 'ws2');
+select pg_temp.tx('22', '22', 'sent', 'peppol', 'peppolBis', 'ws2');
+select pg_temp.inv('23', null, 'ws2');
+select pg_temp.tx('23', '23', 'sent', 'ro_efactura', 'ciusRo', 'ws2');
 
 -- the owner and a manager may ask
 select is(pg_temp.ids(pg_temp.facts('o'), 'unsettled_transmissions', 'transmission_id'),
@@ -134,7 +140,8 @@ select is(pg_temp.ids(pg_temp.facts('o', null), 'unsettled_transmissions', 'tran
 -- another space never appears
 select is(position(pg_temp.id('07') in pg_temp.facts('o')) , 0,
   'a transmission of another space is not listed');
-select is(pg_temp.ids(pg_temp.facts('x', 'it_sdi', null, 'ws2'), 'unsettled_transmissions', 'transmission_id'), pg_temp.id('07'),
+select is(pg_temp.ids(pg_temp.facts('x', 'it_sdi', null, 'ws2'), 'unsettled_transmissions', 'transmission_id'),
+  pg_temp.id('07') || ',' || pg_temp.id('21'),
   'and that space reads only its own');
 
 -- the channel and the correction routes
@@ -149,6 +156,25 @@ select is(pg_temp.ids(pg_temp.facts('o'), 'needed_correction_routes', 'invoice_i
 select is(pg_temp.facts('p'), '42501', 'a plain member may not ask');
 select is(pg_temp.facts('x'), '42501', 'a member of another space may not ask');
 select is(pg_temp.facts('o', 'it_sdi', null, 'ws', true), '42501', 'an assistant (delegated token) may not ask, even as the owner');
+
+-- installation scope (0697): removing a module is not one space's decision
+select is(has_function_privilege('authenticated', 'public.jurisdiction_removal_facts_installation_v1(text, text)', 'execute'), false,
+  'no member may ask for the whole installation');
+select is(has_function_privilege('anon', 'public.jurisdiction_removal_facts_installation_v1(text, text)', 'execute'), false,
+  'nor an anonymous caller');
+select is(has_function_privilege('service_role', 'public.jurisdiction_removal_facts_installation_v1(text, text)', 'execute'), true,
+  'the operator (service role) may');
+select is(has_function_privilege('authenticated', 'public.jurisdiction_removal_facts_of(uuid, text, text)', 'execute'), false,
+  'the shared per-space function has no caller of its own');
+select is(pg_temp.ids(pg_temp.facts('o', 'peppol'), 'unsettled_transmissions', 'transmission_id'), pg_temp.id('06'),
+  'a space sees only its own work: the first space is blind to the second space''s peppol transmission');
+select is(pg_temp.ids(pg_temp.facts('o', 'ro_efactura'), 'unsettled_transmissions', 'transmission_id'), '',
+  'the first space, asked alone, is clean for a provider only the second space uses: its answer is NOT the installation''s');
+select is((select string_agg(w ->> 'workspace_id', ',')
+             from jsonb_array_elements(public.jurisdiction_removal_facts_installation_v1('ro_efactura', 'ciusRo') -> 'workspaces') w
+            where w ->> 'workspace_id' in (pg_temp.v('ws'), pg_temp.v('ws2'))),
+  pg_temp.v('ws2'),
+  'the installation answer names the second space, and only it, with its ids');
 
 select * from finish();
 rollback;

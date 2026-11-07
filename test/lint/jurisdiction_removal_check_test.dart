@@ -3,6 +3,7 @@
 // #3337 (of #3328) -- the physical removal check can say no. A fixture tree
 // proves each blocker; the real tree pins what is true today: the Italian
 // add-on is removable at the source level, the standards package is not.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -103,9 +104,9 @@ void main() {
       root,
       'it',
       facts: RemovalFacts.fromJson(const {
-        'enabled_capabilities': [],
-        'unsettled_transmissions': [],
-        'needed_correction_routes': [],
+        'enabled_capabilities': <Object?>[],
+        'unsettled_transmissions': <Object?>[],
+        'needed_correction_routes': <Object?>[],
       }),
     );
     expect(report.runtime, isTrue);
@@ -135,5 +136,96 @@ void main() {
         'lib/core/text/csv.dart',
       ]),
     );
+  });
+
+  group('installation scope', () {
+    const clean = {
+      'scope': 'installation',
+      'workspaces_checked': 3,
+      'workspaces': <Object?>[],
+    };
+    const secondSpaceDirty = {
+      'scope': 'installation',
+      'workspaces_checked': 2,
+      'workspaces': [
+        {
+          'workspace_id': 'ws-2',
+          'enabled_capabilities': <Object?>[],
+          'unsettled_transmissions': [
+            {'transmission_id': 'tx-21', 'phase': 'uncertain'},
+          ],
+          'needed_correction_routes': <Object?>[],
+        },
+      ],
+    };
+    // one space's clean answer; the dirty work is in ANOTHER space
+    const oneSpaceClean = {
+      'enabled_capabilities': <Object?>[],
+      'unsettled_transmissions': <Object?>[],
+      'needed_correction_routes': <Object?>[],
+    };
+
+    test('a one-space clean answer is not a proof for the installation', () {
+      final report = removalCheck(
+        root,
+        'it',
+        facts: RemovalFacts.fromJson(oneSpaceClean),
+      );
+      expect(
+        report.removable,
+        isTrue,
+        reason: 'nothing found in what was asked',
+      );
+      expect(report.proven, isFalse, reason: 'the other spaces were not asked');
+    });
+
+    test('the installation answer names the dirty space and the attempt', () {
+      final report = removalCheck(
+        root,
+        'it',
+        facts: RemovalFacts.fromJson(secondSpaceDirty),
+      );
+      expect(report.blockers.map((b) => '$b'), [
+        'pendingSubmission: tx-21 (space ws-2)',
+      ]);
+      expect(report.proven, isFalse);
+    });
+
+    test('a clean installation answer over a clean source proves it', () {
+      final report = removalCheck(
+        root,
+        'it',
+        facts: RemovalFacts.fromJson(clean),
+      );
+      expect(report.proven, isTrue);
+    });
+
+    // the command line, on a module the real tree can lose today
+    const module = 'deskilo_jurisdiction_ch';
+    Future<ProcessResult> cli(Map<String, Object?>? facts) async {
+      final args = ['run', 'tool/jurisdiction_removal_check.dart', module];
+      if (facts != null) {
+        final dir = createTemporaryFixture('removal_cli').directory.path;
+        final file = File('$dir/facts.json')
+          ..writeAsStringSync(jsonEncode(facts));
+        args.addAll(['--facts', file.path]);
+      }
+      return Process.run('dart', args);
+    }
+
+    test('the command line: no facts, or a one-space answer, exits 3 '
+        '("not a proof"); a dirty space exits 1 naming it; a clean '
+        'installation exits 0', () async {
+      final none = await cli(null);
+      expect(none.exitCode, 3, reason: '${none.stdout}${none.stderr}');
+      final oneSpace = await cli(oneSpaceClean);
+      expect(oneSpace.exitCode, 3);
+      expect('${oneSpace.stdout}', contains('NOT CHECKED  the other spaces'));
+      final dirty = await cli(secondSpaceDirty);
+      expect(dirty.exitCode, 1);
+      expect('${dirty.stdout}', contains('tx-21 (space ws-2)'));
+      final proven = await cli(clean);
+      expect(proven.exitCode, 0, reason: '${proven.stdout}${proven.stderr}');
+    });
   });
 }
