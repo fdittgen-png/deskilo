@@ -6,7 +6,10 @@
 ///
 /// 2 (#3332): the context carries the filled form boxes, which an extracted
 /// add-on reads instead of reaching for the tax reference of the application.
-const String jurisdictionContractVersion = '2';
+///
+/// 3 (#3337): national invoice profiles (`InvoiceProfileContribution`) and the
+/// neutral `InvoiceDocumentContext` they render from.
+const String jurisdictionContractVersion = '3';
 
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.

@@ -18,6 +18,13 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The invoice profile seam of #3337: slice A lands the contract, the
+  // resolver and the adapter with a fake-country proof; slice B moves
+  // FatturaPA behind them and channel_einvoice_xml becomes the caller.
+  'lib/core/jurisdiction/jurisdiction_resolver.dart::resolveInvoiceProfile':
+      '#3337 — called by channel_einvoice_xml once FatturaPA is a profile',
+  'lib/features/money/application/jurisdiction/invoice_document_context_builder.dart::invoiceDocumentContextOf':
+      '#3337 — called by channel_einvoice_xml once FatturaPA is a profile',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
