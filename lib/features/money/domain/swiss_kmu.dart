@@ -24,7 +24,6 @@ import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_amount.dart';
-import 'book_chart.dart';
 import 'posting.dart';
 import 'vat_form_catalogue/ch.dart';
 import 'vat_form_terms.dart';

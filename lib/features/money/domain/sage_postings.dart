@@ -15,7 +15,6 @@
 // blocked never reaches it. Output tax waiting for its tax point
 // (`vat_pending`) and an amount in another currency than the book's stop
 // the file, named; so does a party with no number Sage can key it to.
-import 'book_chart.dart';
 import 'invoice.dart';
 import 'posting.dart';
 import 'sage.dart';

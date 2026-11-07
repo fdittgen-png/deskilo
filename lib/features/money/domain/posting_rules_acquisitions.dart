@@ -14,7 +14,6 @@
 // books where it books (a member's receipt; nothing for a plain expense).
 // The server engine (`compute_postings`, 0622) is held to this unit.
 import 'accounting_amount.dart';
-import 'book_chart.dart';
 import 'posting.dart';
 import 'posting_rules.dart';
 

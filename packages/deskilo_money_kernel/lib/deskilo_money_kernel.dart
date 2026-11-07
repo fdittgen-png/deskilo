@@ -3,6 +3,11 @@
 library;
 
 export 'src/accounting_amount.dart';
+export 'src/book_period.dart';
+export 'src/book_profile.dart';
+export 'src/book_role.dart';
 export 'src/currencies.dart';
 export 'src/date_text.dart';
+export 'src/fiscal_year.dart';
 export 'src/json_reader.dart';
+export 'src/posting.dart';

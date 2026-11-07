@@ -18,7 +18,6 @@ import 'package:deskilo/core/i18n/currencies.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/application/purchase_commands.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/fec_postings.dart';

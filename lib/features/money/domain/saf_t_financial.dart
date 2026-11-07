@@ -20,7 +20,6 @@
 // data lacks, or an identifier longer than the schema allows stops the file,
 // and each one is named.
 import '../../../core/vat/tax_reference.dart';
-import 'book_chart.dart';
 import 'fiscal_year.dart';
 import 'invoice.dart';
 import 'jpk_kr_pd_facts.dart';

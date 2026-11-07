@@ -9,7 +9,6 @@ import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_amount.dart';
-import 'book_chart.dart';
 import 'posting.dart';
 import 'saf_t_financial.dart';
 import 'saf_t_financial_facts.dart';

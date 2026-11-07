@@ -12,7 +12,6 @@ import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/archive_fec.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_period.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/posting.dart';

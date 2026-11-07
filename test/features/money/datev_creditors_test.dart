@@ -8,7 +8,6 @@
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/datev_creditors.dart';
 import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/datev_problem.dart';
