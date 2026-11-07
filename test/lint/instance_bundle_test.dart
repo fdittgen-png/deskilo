@@ -36,6 +36,7 @@ void main() {
     final decoded = jsonDecode(
         File('assets/instance/bundle.json').readAsStringSync()) as Map;
     final shared = filesWithExtension('supabase/functions/_shared', '.ts')
+        .where((f) => !f.path.endsWith('_test.ts'))
         .map((f) => '_shared/${f.uri.pathSegments.last}')
         .toSet();
     expect(shared, isNotEmpty, reason: 'money.ts lives there');
@@ -46,6 +47,62 @@ void main() {
           reason: '$slug: the entrypoint is path-named under its slug');
       expect(names.containsAll(shared), isTrue,
           reason: '$slug must carry _shared/* or its imports fail on deploy');
+    }
+  });
+
+  test('#3329 — nested modules reach the bundle and every relative import '
+      'of a bundled file resolves inside it', () {
+    final fixture = createTemporaryFixture('bundle_nested');
+    final tmp = fixture.directory;
+    addTearDown(() => tmp.deleteSync(recursive: true));
+    void put(String path, String body) {
+      File('${tmp.path}/$path')
+        ..createSync(recursive: true)
+        ..writeAsStringSync(body);
+    }
+
+    put('supabase/migrations/0001_x.sql', 'select 1;');
+    put('supabase/functions/_shared/jurisdiction/fr/rules.ts', 'export {};');
+    put('supabase/functions/_shared/money.ts',
+        "import './jurisdiction/fr/rules.ts';");
+    put('supabase/functions/demo/index.ts',
+        "import './parts/deep/part.ts';\nimport '../_shared/money.ts';");
+    put('supabase/functions/demo/parts/deep/part.ts', 'export {};');
+    put('supabase/functions/demo/parts/deep/part_test.ts', 'export {};');
+
+    final fn =
+        (buildInstanceBundle(tmp.path)['functions'] as List).single as Map;
+    final names = {for (final x in fn['files'] as List) (x as Map)['name']};
+    expect(
+        names,
+        containsAll([
+          'demo/index.ts',
+          'demo/parts/deep/part.ts',
+          '_shared/money.ts',
+          '_shared/jurisdiction/fr/rules.ts',
+        ]));
+    expect(names, isNot(contains('demo/parts/deep/part_test.ts')));
+    put('supabase/functions/_shared/money_test.ts', 'export {};');
+    expect(
+        [
+          for (final x in (buildInstanceBundle(tmp.path)['functions'] as List)
+              .cast<Map<String, Object?>>()
+              .single['files'] as List)
+            (x as Map)['name'] as String
+        ],
+        isNot(contains('_shared/money_test.ts')));
+    expect(_unresolvedImports([fn]), isEmpty);
+  });
+
+  test('#3329 — the real bundle resolves every relative import too', () {
+    final decoded = jsonDecode(
+        File('assets/instance/bundle.json').readAsStringSync()) as Map;
+    expect(_unresolvedImports(decoded['functions'] as List), isEmpty);
+    for (final fn in decoded['functions'] as List) {
+      for (final x in (fn as Map)['files'] as List) {
+        expect((x as Map)['name'] as String, isNot(endsWith('_test.ts')),
+            reason: 'tests never deploy: ${fn['slug']}');
+      }
     }
   });
 
@@ -79,4 +136,34 @@ void main() {
             'run inside a transaction needs its own request, recorded in a '
             'second one.');
   });
+}
+
+final _importRe = RegExp(
+    r'''(?:import|export)\s+(?:[^'";]*?from\s+)?['"](\.[^'"]+)['"]''');
+
+/// `slug: file -> import` for every relative import a bundled file makes
+/// that no file of the same function's bundle answers.
+List<String> _unresolvedImports(List<Object?> functions) {
+  final missing = <String>[];
+  for (final fn in functions) {
+    final files = (fn as Map)['files'] as List;
+    final names = {for (final x in files) (x as Map)['name']};
+    for (final f in files) {
+      final from = (f as Map)['name'] as String;
+      for (final m in _importRe.allMatches(f['content'] as String)) {
+        final parts = from.split('/')..removeLast();
+        for (final seg in m.group(1)!.split('/')) {
+          if (seg == '..') {
+            parts.removeLast();
+          } else if (seg != '.') {
+            parts.add(seg);
+          }
+        }
+        if (!names.contains(parts.join('/'))) {
+          missing.add('${fn['slug']}: $from -> ${m.group(1)}');
+        }
+      }
+    }
+  }
+  return missing;
 }

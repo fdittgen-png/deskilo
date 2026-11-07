@@ -19,6 +19,7 @@ on:
   pull_request:
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'test/features/money/einvoice_samples_test.dart'
       - 'tool/einvoice/**'
       - '.github/workflows/einvoice-validate.yml'
@@ -26,6 +27,7 @@ on:
     branches: [master]
     paths:
       - 'lib/features/money/domain/**'
+      - 'packages/deskilo_jurisdiction_*/**'
       - 'tool/einvoice/**'
   workflow_dispatch:
 
