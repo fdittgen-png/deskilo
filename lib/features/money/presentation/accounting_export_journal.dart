@@ -13,6 +13,7 @@ import '../application/generic_journal_export.dart';
 import '../domain/fec_postings.dart';
 import '../providers/accounting_connection_providers.dart';
 import 'accounting_export_run.dart';
+import 'saft_gap_text.dart';
 
 export '../application/generic_journal_export.dart'
     show
@@ -77,7 +78,7 @@ Future<void> exportGenericJournal(
       AppSnack.error(
         context,
         l10n.journalSafTRefused(
-          gaps.map((g) => l10n.saftGap(g.kind.name, g.subject)).join('; '),
+          gaps.map((g) => safTGapText(l10n, g)).join('; '),
         ),
       );
     case JournalSageRefused(:final blockers):

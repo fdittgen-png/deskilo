@@ -9331,6 +9331,33 @@
   "journeyTimelineTitle": "Cronologia",
   "journeyValidatorsMatch": "Pagamento abbinato — in attesa della decisione dei validatori",
   "journeyValidatorsWriteoff": "Richiesta cancellazione del residuo — in attesa dei validatori",
+  "jpkKrPdField": "{field, select, nip{NIP} legalName{ragione sociale} voivodeship{voivodato} county{distretto (powiat)} municipality{comune} buildingNumber{numero civico} city{località} postalCode{codice postale} street{via} taxOfficeCode{codice dell’ufficio delle imposte} accountName{nome del conto} accountParent{conto padre} accountMarker{indicatore polacco del conto} journalNumber{numero di giornale} journalName{nome del giornale} documentNumber{numero di documento} documentType{tipo di documento} responsiblePerson{persona responsabile} journalDescription{descrizione del giornale} accountIdentifier{identificativo o nome del conto} journalText{testo del giornale} counterpartyCode{codice della controparte} other{}}",
+  "@jpkKrPdField": {
+    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGap": "{code, select, currencyNotPln{la valuta funzionale deve essere PLN} noPostings{il giornale richiede registrazioni contabilizzate} invalidYear{l’esercizio dichiarato non è valido} sectionEntity{l’entità polacca e il suo indirizzo} sectionOffice{l’ufficio delle imposte e la finalità dell’invio} sectionAccounts{i conti padre, gli indicatori polacchi e i saldi di origine} sectionJournal{la sequenza del giornale e la persona responsabile} sectionSource{le date di documento e di registrazione, gli importi e il dettaglio delle righe} sectionKsef{l’applicabilità e l’identificativo KSeF} sectionReconciliation{la riconciliazione dell’imposta sul reddito K_1–K_8} journalSequenceUnverified{la sequenza del giornale di origine non è verificata} taxYear{l’anno d’imposta non è valido} entityCategory{questa categoria di soggetto dichiarante polacco non è supportata} addressCountry{il paese dell’indirizzo dell’entità deve essere la Polonia} nipFormat{il NIP deve avere 10 cifre valide} missing{manca {field}{subject}} tooLong{{field}{subject} supera {limit} caratteri} invalidOffice{il codice dell’ufficio delle imposte è sconosciuto} purpose{la finalità dell’invio deve essere 1 o 2} reconciliation{la riconciliazione K_1–K_8 richiede otto importi in PLN} openingOutside{la registrazione di apertura{subject} è datata nel periodo dichiarato} unbalanced{la registrazione{subject} non è bilanciata} invalidDebitCredit{la registrazione{subject} ha un dare o avere non valido} foreignLine{la registrazione{subject} contiene una riga in valuta estera} postingCurrency{la registrazione{subject} non è in PLN} accountBalances{i saldi del conto{subject} non sono validi} openingMismatch{il saldo di apertura del conto{subject} non corrisponde alle registrazioni} closingMismatch{il saldo di chiusura del conto{subject} non corrisponde alle registrazioni} invalidMarker{l’indicatore polacco del conto{subject} non è valido} journalEvidence{ogni registrazione richiede la sua evidenza di giornale} turnoverPrecision{il movimento del conto{subject} supera la precisione dello schema} totalsPrecision{i totali del giornale superano la precisione dello schema} documentTotalPrecision{il totale dei documenti supera la precisione dello schema} unreferencedCounterparty{la controparte{subject} non è usata da nessuna registrazione} invalidCounterpartyCountry{il paese della controparte{subject} non è valido} invalidCounterpartyTaxId{l’identificativo fiscale della controparte{subject} non è valido} counterpartyCodeInvalid{un codice di controparte manca o è duplicato} journalSourceMismatch{la registrazione di giornale{subject} non corrisponde al documento di origine} postingOutside{la registrazione{subject} è datata fuori dall’esercizio dichiarato} bookingOutside{la registrazione contabile{subject} è datata fuori dall’esercizio dichiarato} documentAmount{l’importo del documento{subject} non è in PLN} chronology{la registrazione{subject} rompe l’ordine cronologico del giornale} duplicateJournalNumber{il numero di giornale{subject} è usato due volte} lineDescriptions{registrazione{subject}: descrizioni di riga mancanti o non corrispondenti alle righe} lineNumbers{registrazione{subject}: numeri di riga mancanti, duplicati o non corrispondenti alle righe} counterpartyCode{la registrazione{subject} richiede un codice di controparte} counterpartySourceMissing{la registrazione{subject} indica una controparte che il documento di origine non ha} counterpartySourceMismatch{la controparte della registrazione{subject} non corrisponde al documento di origine} counterpartyUnknown{la controparte{subject} non è nell’elenco delle controparti} invalidKsef{l’identificativo KSeF della registrazione{subject} non è valido} duplicateLineNumber{il numero di riga{subject} è usato due volte in un giornale} ksefMissing{la registrazione{subject} richiede il suo identificativo KSeF} other{}}",
+  "@jpkKrPdGap": {
+    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "field": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "kioskBadgeConfirm": "Conferma",
   "kioskBadgeFieldLabel": "Codice badge",
   "kioskBadgeHint": "Scansioni il QR del badge o digiti il suo codice.",

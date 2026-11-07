@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ce01238da7dc8474e2b4b4c001c9cf4b61604e61` on 2026-11-07.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `95fd895e2de3449ad7de8d0a6ae83d79068f9ec8` on 2026-11-07.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,8 +10,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2471 |
-| functions | 13953 |
+| files | 2474 |
+| functions | 13959 |
 | cyclomatic>=9 | 1429 |
 | cyclomatic>=25 | 80 |
 | cognitive>=15 | 539 |
@@ -25,7 +25,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
-| 163 | 109 | 312 | 1 | `lib/features/money/domain/jpk_kr_pd_validation.dart#jpkKrPdGaps` |
+| 157 | 104 | 284 | 1 | `lib/features/money/domain/jpk_kr_pd_validation.dart#jpkKrPdGaps` |
 | 80 | 17 | 104 | 0 | `lib/features/money/domain/saf_t_financial_at.dart#SafTAustriaXml.generalLedger` |
 | 64 | 21 | 221 | 1 | `lib/features/money/domain/jpk_kr_pd_writer.dart#buildJpkKrPd` |
 | 51 | 54 | 105 | 4 | `lib/core/public_network/public_network_codec.dart#_decodeValue` |
