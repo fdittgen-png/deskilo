@@ -55,7 +55,7 @@ const Map<String, String> _allowed = {
       '#2365 — input VAT, the deductible share',
   'lib/features/money/domain/accounting_tax.dart::taxDueOn':
       '#2365 — the accounting engine',
-  'lib/features/money/domain/book_profile.dart::authorityOn':
+  'packages/deskilo_money_kernel/lib/src/book_profile.dart::authorityOn':
       '#2365 — the book chart wired in',
   'lib/features/money/domain/posting_preview.dart::previewInvoicePosting':
       '#2365 — the server-side posting engine',

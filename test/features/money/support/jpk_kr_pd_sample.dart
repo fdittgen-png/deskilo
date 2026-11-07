@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic Polish fixture facts; never real taxpayer data.
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_facts.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_validation.dart';

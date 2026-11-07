@@ -16,7 +16,6 @@ import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/accounting_target.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
 import 'package:deskilo/features/money/domain/posting.dart';

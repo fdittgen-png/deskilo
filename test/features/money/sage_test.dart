@@ -10,7 +10,6 @@
 // seeded_year_goldens_test.dart's.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
-import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/sage.dart';

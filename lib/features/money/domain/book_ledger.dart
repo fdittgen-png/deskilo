@@ -5,7 +5,6 @@
 // line with its running balance, per journal. The entry numbers, the
 // accounts and the auxiliary accounts are the FEC's own (fec_postings.dart).
 import 'accounting_format.dart';
-import 'book_chart.dart';
 import 'fec_postings.dart';
 import 'fiscal_year.dart';
 import 'posting.dart';

@@ -18,6 +18,10 @@ const _shims = {
   'lib/core/i18n/currencies.dart',
   'lib/core/time/date_text.dart',
   'lib/features/money/domain/accounting_amount.dart',
+  'lib/features/money/domain/book_period.dart',
+  'lib/features/money/domain/book_profile.dart',
+  'lib/features/money/domain/fiscal_year.dart',
+  'lib/features/money/domain/posting.dart',
 };
 
 void main() {

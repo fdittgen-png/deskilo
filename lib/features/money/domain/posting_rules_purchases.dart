@@ -26,7 +26,6 @@
 // rate the bill and its payments block, named `reference (currency)`.
 
 import 'accounting_amount.dart';
-import 'book_chart.dart';
 import 'posting.dart';
 import 'posting_fx.dart';
 import 'posting_rules.dart';

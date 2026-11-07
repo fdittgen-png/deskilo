@@ -34,7 +34,6 @@ import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
 import 'accounting_target.dart';
-import 'book_chart.dart';
 import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';

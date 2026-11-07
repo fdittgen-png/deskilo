@@ -10,7 +10,6 @@
 // accounts. DATEV keeps open items per Kreditor.
 import 'package:meta/meta.dart';
 
-import 'book_chart.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';

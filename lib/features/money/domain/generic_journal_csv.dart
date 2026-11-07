@@ -18,7 +18,6 @@ import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
 import 'accounting_connection.dart';
 import 'accounting_interchange.dart';
-import 'book_chart.dart';
 import 'posting.dart';
 
 const _header = [
