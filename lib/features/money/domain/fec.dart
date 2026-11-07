@@ -169,6 +169,6 @@ class FecRequest {
 
 /// #2365 — [rows] as an FEC file: the columns, then one line per row.
 String fecText(Iterable<List<String>> rows) => [
-  fecColumns.join(' '),
+  fecColumns.join('\t'),
   for (final row in rows) row.join('\t'),
 ].join('\r\n');
