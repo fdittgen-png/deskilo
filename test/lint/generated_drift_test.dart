@@ -35,6 +35,12 @@ late Directory _dir;
   return (code: r.exitCode, out: '${r.stdout}${r.stderr}');
 }
 
+void _put(String rel, String text) {
+  File('${_dir.path}/$rel')
+    ..createSync(recursive: true)
+    ..writeAsStringSync(text);
+}
+
 void _git(List<String> args) {
   final r = Process.runSync('git',
       ['-c', 'user.name=t', '-c', 'user.email=t@t', ...args],
@@ -109,11 +115,9 @@ void main() {
 
     test('a package that declares a generator is generated too, '
         'and a drifted file there is red', () {
-      Directory('${_dir.path}/packages/p').createSync(recursive: true);
-      File('${_dir.path}/packages/p/pubspec.yaml').writeAsStringSync(
+      _put('packages/p/pubspec.yaml',
           'name: p\ndev_dependencies:\n  build_runner: ^2.4.15\n');
-      File('${_dir.path}/packages/p/m.freezed.dart')
-          .writeAsStringSync('m\n');
+      _put('packages/p/m.freezed.dart', 'm\n');
       _git(['add', '.']);
       _git(['commit', '-q', '-m', 'package']);
       final env = {'GENERATED_DRIFT_PUB_GET': 'true'};
@@ -129,9 +133,8 @@ void main() {
     });
 
     test('a package without a generator is left alone', () {
-      Directory('${_dir.path}/packages/q').createSync(recursive: true);
-      File('${_dir.path}/packages/q/pubspec.yaml')
-          .writeAsStringSync('name: q\ndependencies:\n  freezed_annotation: ^3.0.0\n');
+      _put('packages/q/pubspec.yaml',
+          'name: q\ndependencies:\n  freezed_annotation: ^3.0.0\n');
       final r = _run(['true', '--', '*.freezed.dart'],
           {'GENERATED_DRIFT_PUB_GET': 'false'});
       expect(r.code, 0, reason: r.out);
@@ -139,9 +142,8 @@ void main() {
     });
 
     test('a package generator that dies: exit 2', () {
-      Directory('${_dir.path}/packages/p').createSync(recursive: true);
-      File('${_dir.path}/packages/p/build.yaml').writeAsStringSync('');
-      File('${_dir.path}/packages/p/pubspec.yaml').writeAsStringSync('name: p\n');
+      _put('packages/p/build.yaml', '');
+      _put('packages/p/pubspec.yaml', 'name: p\n');
       final r = _run(['true', '--', '*.freezed.dart'],
           {'GENERATED_DRIFT_PUB_GET': 'false'});
       expect(r.code, 2, reason: r.out);
