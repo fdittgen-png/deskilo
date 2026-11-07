@@ -13,6 +13,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// PostScript points per millimetre.
 const double _mm = 72 / 25.4;
 
+/// The lowest top-edge an aperture still shows: the field drawn below this
+/// is hidden, so it is a bound this conformance test asserts (#3407).
+const double addressWindowTopLimit = 50 * _mm;
+
 void main() {
   test('the address field matches the DL window-envelope spec', () {
     expect(addressWindowTop / _mm, closeTo(45, 0.001));
