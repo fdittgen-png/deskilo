@@ -174,6 +174,12 @@ jobs:
         run: dart pub get && dart analyze --fatal-infos && dart test
         working-directory: packages/deskilo_money_kernel
 
+      # #3376 — the accounting interchange contract and the formats written
+      # against it: analyzed and tested on their own.
+      - name: Tests of the accounting interchange package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_accounting_interchange
+
       # #3329 — every jurisdiction add-on package that has tests is
       # analyzed and tested with coverage, without a step of its own to
       # remember. test/lint/package_quality_test.dart pins that every

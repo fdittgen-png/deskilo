@@ -385,6 +385,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.14"
+  deskilo_accounting_interchange:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_accounting_interchange"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_asset_gzip:
     dependency: "direct main"
     description:

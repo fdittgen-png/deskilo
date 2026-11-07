@@ -5,7 +5,6 @@
 // D406 in saf_t_financial_ro.dart), and
 // Denmark's routes, where the duty is a registered bookkeeping system
 // rather than a file.
-import 'accounting_export_sources.dart';
 import 'accounting_format.dart';
 
 /// Skatteetaten's SAF-T Financial 1.30. Regulatory: written to the
