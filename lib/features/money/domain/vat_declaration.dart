@@ -5,12 +5,10 @@ import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
-import 'invoice.dart';
 import 'vat_components.dart';
 import 'vat_form_boxes.dart';
 import 'vat_form_catalogue.dart';
 import 'vat_forms.dart';
-import 'vat_tax_point.dart';
 
 export 'vat_forms.dart' show VatFormBox;
 
@@ -226,21 +224,6 @@ class VatDeclaration implements SystemStamped {
         number: row['number'] as String? ?? '',
       );
 }
-
-/// Aggregates a period's ISSUED invoices into declaration lines — the
-/// tax-point engine on the invoice-date rule (`vat_tax_point.dart`),
-/// with the EXACT arithmetic the invoices were built with: per-line
-/// `vatSplit`, summed per rate, so the lines match every issued document
-/// to the cent. Voided invoices and settlements are excluded; credit
-/// notes count with their sign. A declaration on another basis reads
-/// [vatDeclarationLinesOf] over [vatTaxPointLedger] with that basis.
-List<VatDeclarationLine> computeVatDeclarationLines(
-  Iterable<Invoice> invoices,
-  DateTime periodStart,
-  DateTime periodEnd,
-) =>
-    vatDeclarationLinesOf(
-        vatTaxPointLedger(invoices), periodStart, periodEnd);
 
 /// Maps declaration lines onto the country's official form boxes, so the
 /// owner copies numbers straight onto the EFI/ELSTER screen (or the file
