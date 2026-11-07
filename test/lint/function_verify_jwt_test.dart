@@ -13,7 +13,8 @@ import '../../tool/build_instance.dart' show functionVerifyJwt;
 import 'lint_sources.dart';
 
 void main() {
-  test('config.toml and the instance builder agree on verify_jwt', () {
+  test('config.toml and the instance builder agree on verify_jwt, for every '
+      'function, true or false', () {
     final toml = File('supabase/config.toml').readAsStringSync();
     final declared = <String, bool>{
       for (final m in RegExp(
@@ -22,19 +23,22 @@ void main() {
       ).allMatches(toml))
         m.group(1)!: m.group(2) == 'true',
     };
-    final off = {
-      for (final e in functionVerifyJwt.entries)
-        if (!e.value) e.key,
-    };
     expect(
-      {
-        for (final e in declared.entries)
-          if (!e.value) e.key,
-      },
-      off,
-      reason: 'every function the builder deploys without a JWT check needs '
-          'its [functions.<slug>] verify_jwt = false in supabase/config.toml, '
-          'and nothing else may be listed false there',
+      declared,
+      functionVerifyJwt,
+      reason: 'every function needs an explicit [functions.<slug>] verify_jwt '
+          'in supabase/config.toml equal to the builder\'s value: a plain '
+          '`supabase functions deploy` keeps whatever the server holds, so an '
+          'unwritten value can stay flipped (a function once deployed with '
+          '--no-verify-jwt stays open)',
+    );
+    final directories = directoryNames('supabase/functions')
+        .where((n) => !n.startsWith('_'))
+        .where((n) => File('supabase/functions/$n/index.ts').existsSync());
+    expect(
+      directories.toSet().difference(declared.keys.toSet()),
+      isEmpty,
+      reason: 'a function directory without an explicit verify_jwt entry',
     );
     for (final slug in functionVerifyJwt.keys) {
       expect(
