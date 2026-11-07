@@ -17,6 +17,8 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/export/accounting_export_contribution.dart';
+import '../application/export/installed_accounting_exports.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_connection.dart';
@@ -201,43 +203,38 @@ class AccountingExportRun {
 }
 
   Future<void> _perform() async {
-    switch (format.id) {
-      case 'fec':
+    // #3334 -- the writer family the format is registered with, not its id.
+    switch (contributionOf(format.id)?.kind) {
+      case ExportKind.fec:
         await _fec();
-      case 'datev': await datevExport();
-      case 'sage50': await sageExport();
-      case 'xero_invoice_csv': await xeroInvoiceFileExport();
-      case 'ch_kmu':
+      case ExportKind.datev: await datevExport();
+      case ExportKind.sage: await sageExport();
+      case ExportKind.xeroInvoices: await xeroInvoiceFileExport();
+      case ExportKind.swissKmu:
         await swissJournalExport(SwissJournalLayout.kmu, stem: 'mwst buchungen');
-      case 'banana_transactions':
+      case ExportKind.swissBanana:
         await swissJournalExport(SwissJournalLayout.banana, stem: 'banana');
-      case 'saft_pt':
-      case 'saft':
-        await _safT();
-      case 'accountant_csv':
+      case ExportKind.saftPortugal: await _safT(portugal: true);
+      case ExportKind.saft: await _safT(portugal: false);
+      case ExportKind.accountantCsv:
         await _accountantCsv();
-      case 'bundle':
+      case ExportKind.archiveBundle:
         await _bundle();
-      case 'gobd':
+      case ExportKind.gobd:
         await gobdExport();
-      case 'fr_ereporting':
+      case ExportKind.frEReporting:
         await _frEReporting();
-      case 'audit_trail':
+      case ExportKind.auditTrail:
         await _auditTrail();
-      case 'general_ledger':
-      case 'trial_balance':
-      case 'journals':
+      case ExportKind.bookReport:
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
-      case 'saft_no':
-      case 'saft_dk':
-      case 'saft_ro':
-      case 'saft_at':
-      case 'faia_lu':
-      case 'saft_oecd_full':
+      case ExportKind.saftFinancial:
         await safTFinancialExport();
-      case 'generic_journal_csv':
+      case ExportKind.genericJournal:
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
+      case null:
+        break;
     }
   }
 
@@ -300,8 +297,7 @@ class AccountingExportRun {
     );
   }
 
-  Future<void> _safT() async {
-    final portugal = format.id == 'saft_pt';
+  Future<void> _safT({required bool portugal}) async {
     // #669 — the generic file can carry derived postings, which is
     // what makes it importable rather than merely readable. Offered,
     // never assumed: it needs an account mapping, and inventing one

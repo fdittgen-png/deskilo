@@ -32,39 +32,97 @@ const _postedOnlyWithOpening = SourceRequirements(
 /// export run read the list itself.
 @visibleForTesting
 const List<AccountingExportContribution> installedAccountingExports = [
-  AccountingExportContribution('fec', _namedWhenLocalBook),
-  AccountingExportContribution('fr_ereporting', _documents),
-  AccountingExportContribution('saft_pt', _documents),
-  AccountingExportContribution('datev', _namedWhenLocalBook),
-  AccountingExportContribution('gobd', _documents),
-  AccountingExportContribution('sage50', _namedWhenLocalBook),
-  AccountingExportContribution('ch_kmu', _postedOnlyNamed),
-  AccountingExportContribution('banana_transactions', _postedOnlyNamed),
-  AccountingExportContribution('saft_no', _postedOnlyWithOpening),
-  AccountingExportContribution('faia_lu', _postedOnlyWithOpening),
-  AccountingExportContribution('saft_ro', _postedOnlyWithOpening),
-  AccountingExportContribution('saft_at', _postedOnlyWithOpening),
-  AccountingExportContribution('saft_dk', _postedOnlyWithOpening),
-  AccountingExportContribution('saft_oecd_full', _postedOnlyWithOpening),
-  AccountingExportContribution('saft', _postedWhenLocalBook),
-  AccountingExportContribution('accountant_csv', _documents),
+  AccountingExportContribution('fec', ExportKind.fec, _namedWhenLocalBook),
+  AccountingExportContribution(
+    'fr_ereporting',
+    ExportKind.frEReporting,
+    _documents,
+  ),
+  AccountingExportContribution('saft_pt', ExportKind.saftPortugal, _documents),
+  AccountingExportContribution('datev', ExportKind.datev, _namedWhenLocalBook),
+  AccountingExportContribution('gobd', ExportKind.gobd, _documents),
+  AccountingExportContribution('sage50', ExportKind.sage, _namedWhenLocalBook),
+  AccountingExportContribution('ch_kmu', ExportKind.swissKmu, _postedOnlyNamed),
+  AccountingExportContribution(
+    'banana_transactions',
+    ExportKind.swissBanana,
+    _postedOnlyNamed,
+  ),
+  AccountingExportContribution(
+    'saft_no',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution(
+    'faia_lu',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution(
+    'saft_ro',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution(
+    'saft_at',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution(
+    'saft_dk',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution(
+    'saft_oecd_full',
+    ExportKind.saftFinancial,
+    _postedOnlyWithOpening,
+  ),
+  AccountingExportContribution('saft', ExportKind.saft, _postedWhenLocalBook),
+  AccountingExportContribution(
+    'accountant_csv',
+    ExportKind.accountantCsv,
+    _documents,
+  ),
   AccountingExportContribution(
     'generic_journal_csv',
+    ExportKind.genericJournal,
     SourceRequirements(posting: ExportPosting.only),
   ),
-  AccountingExportContribution('general_ledger', _namedWhenLocalBook),
-  AccountingExportContribution('trial_balance', _namedWhenLocalBook),
-  AccountingExportContribution('journals', _namedWhenLocalBook),
-  AccountingExportContribution('audit_trail', _documents),
+  AccountingExportContribution(
+    'general_ledger',
+    ExportKind.bookReport,
+    _namedWhenLocalBook,
+  ),
+  AccountingExportContribution(
+    'trial_balance',
+    ExportKind.bookReport,
+    _namedWhenLocalBook,
+  ),
+  AccountingExportContribution(
+    'journals',
+    ExportKind.bookReport,
+    _namedWhenLocalBook,
+  ),
+  AccountingExportContribution(
+    'audit_trail',
+    ExportKind.auditTrail,
+    _documents,
+  ),
   AccountingExportContribution(
     'bundle',
+    ExportKind.archiveBundle,
     SourceRequirements(
       posting: ExportPosting.whenLocalBook,
       named: true,
       archive: true,
     ),
   ),
-  AccountingExportContribution('xero_invoice_csv', _documents),
+  AccountingExportContribution(
+    'xero_invoice_csv',
+    ExportKind.xeroInvoices,
+    _documents,
+  ),
 ];
 
 /// The requirements [formatId] declares; a format that declares none reads the
@@ -74,4 +132,13 @@ SourceRequirements requirementsOf(String formatId) {
     if (c.formatId == formatId) return c.requirements;
   }
   return const SourceRequirements();
+}
+
+/// The contribution registered for [formatId], or null for an id the registry
+/// does not know.
+AccountingExportContribution? contributionOf(String formatId) {
+  for (final c in installedAccountingExports) {
+    if (c.formatId == formatId) return c;
+  }
+  return null;
 }
