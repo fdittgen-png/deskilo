@@ -111,7 +111,7 @@ const _datevFormat = AccountingFormat(
 const _sageFormat = AccountingFormat(
   id: 'sage50',
   kind: ExportKind.sage,
-  sources: SourceRequirements.postedOnlyNamed,
+  sources: SourceRequirements.namedWhenLocalBook,
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,
