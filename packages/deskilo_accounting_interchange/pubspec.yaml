@@ -4,7 +4,8 @@ description: >-
   AccountingInterchangeV1 envelope a fiscal period of a book hands an
   accounting system, and the declaration an export format makes about itself
   (its writer family and the sources it reads). The formats are written against
-  this package and the money kernel only. Pure Dart.
+  this package, the money kernel, the shared standards (the CSV cell writer)
+  and crypto (a digest). Pure Dart.
 version: 0.1.0
 publish_to: none
 
@@ -12,8 +13,15 @@ environment:
   sdk: ^3.12.0
 
 dependencies:
+  crypto: ^3.0.0
+  deskilo_jurisdiction_standards:
+    path: ../deskilo_jurisdiction_standards
   deskilo_money_kernel:
     path: ../deskilo_money_kernel
+  deskilo_tax_reference:
+    path: ../deskilo_tax_reference
+  deskilo_vat_declaration:
+    path: ../deskilo_vat_declaration
 
 dev_dependencies:
   lints: ^6.0.0

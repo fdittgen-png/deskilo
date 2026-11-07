@@ -2,8 +2,9 @@
 //
 // #3376 (of #3328) -- the accounting interchange package is the contract the
 // export formats are written against, and the formats that live in it import
-// the money kernel and nothing else: not the application, Flutter, Supabase,
-// Riverpod, a platform library, the tax reference, or another package.
+// the money kernel, the shared standards (the CSV cell writer) and crypto (a
+// digest), and nothing else: not the application, Flutter, Supabase, Riverpod,
+// a platform library, the tax reference, or another package.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +14,7 @@ import 'lint_sources.dart';
 const _root = 'packages/deskilo_accounting_interchange';
 
 void main() {
-  test('the package imports core Dart, the money kernel and its own files', () {
+  test('the package imports core Dart, the kernel, the standards, crypto, the tax reference, the VAT declaration and its own files', () {
     final bad = <String>[];
     final importRe = RegExp(r'''^\s*(?:import|export)\s+['"]([^'"]+)['"]''');
     final sources = filesWithExtension('$_root/lib', '.dart', recursive: true);
@@ -27,6 +28,10 @@ void main() {
         final ok =
             uri.startsWith('dart:') ||
             uri.startsWith('package:deskilo_money_kernel/') ||
+            uri.startsWith('package:deskilo_jurisdiction_standards/') ||
+            uri.startsWith('package:crypto/') ||
+            uri.startsWith('package:deskilo_tax_reference/') ||
+            uri.startsWith('package:deskilo_vat_declaration/') ||
             uri.startsWith('package:deskilo_accounting_interchange/') ||
             own;
         if (!ok) bad.add('${f.path}:${i + 1}: $uri');
@@ -41,7 +46,7 @@ void main() {
     );
   });
 
-  test('the package depends on the money kernel alone', () {
+  test('the package depends on the kernel, the standards and crypto alone', () {
     final text = File('$_root/pubspec.yaml').readAsStringSync();
     final deps = RegExp(r'^dependencies:\n((?:  .+\n?)+)', multiLine: true)
         .firstMatch(text)!
@@ -50,6 +55,12 @@ void main() {
         .where((l) => RegExp(r'^  [a-z_]+:').hasMatch(l))
         .map((l) => l.trim().split(':').first)
         .toList();
-    expect(deps, ['deskilo_money_kernel']);
+    expect(deps, [
+      'crypto',
+      'deskilo_jurisdiction_standards',
+      'deskilo_money_kernel',
+      'deskilo_tax_reference',
+      'deskilo_vat_declaration',
+    ]);
   });
 }
