@@ -86,7 +86,6 @@ const Set<String> _postedWhenLocalBook = {
   'fec',
   _datevFormat,
   'saft',
-  _sageFormat,
   _archiveFormat,
   ...bookReportFormats,
 };

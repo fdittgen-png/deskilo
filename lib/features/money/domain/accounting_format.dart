@@ -128,7 +128,7 @@ const safTPtFormat = AccountingFormat(
 const fecFormat = AccountingFormat(
   id: 'fec',
   claim: FormatClaim.regulatory,
-  extension: 'txt',
+  extension: 'tzt',
   needsAccounts: true,
   needsLegalId: true,
 );
@@ -143,7 +143,7 @@ const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
   extension: 'zip',
-  needsAccounts: true,
+  needsAccounts: false,
 );
 
 /// Sage 50's audit-trail CSV — the British import shape.
