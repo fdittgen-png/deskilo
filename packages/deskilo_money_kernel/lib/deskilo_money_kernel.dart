@@ -6,6 +6,7 @@ export 'src/accounting_amount.dart';
 export 'src/book_period.dart';
 export 'src/book_profile.dart';
 export 'src/book_role.dart';
+export 'src/courtesy.dart';
 export 'src/currencies.dart';
 export 'src/date_text.dart';
 export 'src/fiscal_year.dart';

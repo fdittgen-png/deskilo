@@ -275,7 +275,7 @@
 
       "money -> plan": 14,
 
-      "money -> profile": 10,
+      "money -> profile": 9,
 
       "money -> workspace": 146,
 
@@ -2388,7 +2388,7 @@
     {"p":"lib/features/profile/data/supabase_personal_preferences_repository.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":6,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/data/supabase_profile_repository.dart","loc":315,"part":false,"setState":0,"repositoryReads":0,"fn":25,"cog":6,"cyc":6,"len":26,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/domain/member_monogram.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":22,"cyc":13,"len":61,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/profile/domain/personal_info.dart","loc":221,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":3,"cyc":13,"len":47,"params":12,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":2}},
+    {"p":"lib/features/profile/domain/personal_info.dart","loc":214,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":3,"cyc":13,"len":47,"params":12,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":2}},
     {"p":"lib/features/profile/domain/personal_preferences.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":3,"len":16,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/domain/privacy_notice.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":23,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/domain/profile.dart","loc":178,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":3,"cyc":14,"len":35,"params":13,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -3206,11 +3206,12 @@
     {"p":"packages/deskilo_jurisdiction_standards/lib/src/date_text.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":0,"cyc":1,"len":3,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_standards/lib/src/periods.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":6,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_standards/lib/src/registration_numbers.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"packages/deskilo_money_kernel/lib/deskilo_money_kernel.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"packages/deskilo_money_kernel/lib/deskilo_money_kernel.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/accounting_amount.dart","loc":293,"part":false,"setState":0,"repositoryReads":0,"fn":30,"cog":11,"cyc":10,"len":38,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/book_period.dart","loc":131,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":3,"len":16,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/book_profile.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":8,"cyc":8,"len":25,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/book_role.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"packages/deskilo_money_kernel/lib/src/courtesy.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":2,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/currencies.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":4,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/date_text.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":0,"cyc":1,"len":3,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/fiscal_year.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":3,"len":13,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
