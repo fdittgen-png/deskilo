@@ -14,12 +14,12 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/features/money/application/jurisdiction/legacy_vat_filing_contribution.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_filing_es.dart';
-import 'package:deskilo/features/money/domain/vat_filing_es_layout.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/money/domain/vat_filing_it.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +28,7 @@ import 'package:xml/xml.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import 'support/filing_product.dart';
 
 VatDeclarationLine _line(
   double percent,
@@ -163,13 +164,19 @@ void main() {
       VatDeclaration d, {
       VatFilingFacts facts = const VatFilingFacts(),
       String vatId = 'ESB12345678',
-    }) => aeat303File(
-      declaration: d,
-      vatId: vatId,
-      name: 'Espacio Coworking Peñíscola, S.L.',
-      onReceipts: false,
+    }) => productFile(
+      d,
+      VatFilingParty(
+        countryCode: 'ES',
+        name: 'Espacio Coworking Peñíscola, S.L.',
+        street: '',
+        postalCode: '',
+        city: '',
+        vatId: vatId,
+        legalId: '',
+      ),
       facts: facts,
-    );
+    ).text;
     String at(String text, int position, int length) =>
         text.substring(position - 1, position - 1 + length);
 
@@ -261,8 +268,9 @@ void main() {
       );
     });
 
-    test('the dispatcher writes it as ISO-8859-1', () {
-      final f = vatFilingFile(
+    test('the add-on writes it as ISO-8859-1, one byte a position', () {
+      const add = EsVatFilingContribution();
+      final context = filingContextOf(
         declaration: quarter,
         party: const VatFilingParty(
           countryCode: 'ES',
@@ -274,9 +282,12 @@ void main() {
           legalId: '',
         ),
         now: DateTime(2026, 10, 2),
+        facts: const VatFilingFacts(),
       );
-      expect(f.fileName, 'modelo-303-2026-07-01.txt');
-      expect(f.encoding.name, 'iso-8859-1');
+      final artifact = add.build(add.validate(context).filing!);
+      expect(artifact.fileName, 'modelo-303-2026-07-01.txt');
+      expect(artifact.mediaType, contains('iso-8859-1'));
+      expect(latin1.decode(artifact.bytes), hasLength(artifact.bytes.length));
     });
   });
 
