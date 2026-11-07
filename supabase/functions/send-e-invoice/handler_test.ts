@@ -826,3 +826,25 @@ Deno.test("#3336: a send without a declaration (an older client) records none", 
   assertEquals(r.status, 200);
   assertEquals([...s.rows.values()][0].declared, {});
 });
+
+Deno.test("#3338: the config of a provider with no installed connector says provider_not_installed and is not configured", async () => {
+  const s = new FakeStore();
+  s.provider = "retired_sdi";
+  s.config = { endpoint: "https://example.test", auth_value: "x" };
+  const p = provider(() => new Response("{}"));
+  const config = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "config" }),
+  );
+  assertEquals(config.body.configured, false);
+  assertEquals(config.body.error, "provider_not_installed");
+  assertEquals(config.body.provider, "retired_sdi");
+});
+
+Deno.test("#3338: an installed provider's config carries no error", async () => {
+  const s = new FakeStore();
+  const p = provider(() => new Response("{}"));
+  const config = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "config" }),
+  );
+  assertEquals(config.body.error, undefined);
+});
