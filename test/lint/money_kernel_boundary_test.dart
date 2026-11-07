@@ -14,15 +14,12 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
-<<<<<<< HEAD
   'lib/features/money/domain/generic_journal_csv.dart',
-=======
   'lib/core/vat/tax_domain.dart',
   'lib/core/vat/tax_value.dart',
   'lib/core/vat/rate_component.dart',
   'lib/core/vat/sales_tax_component.dart',
   'lib/core/vat/tax_reference.dart',
->>>>>>> origin/master
   'lib/features/money/domain/accounting_interchange.dart',
   'lib/features/money/domain/accounting_export_sources.dart',
   'lib/features/money/domain/accounting_format_model.dart',
