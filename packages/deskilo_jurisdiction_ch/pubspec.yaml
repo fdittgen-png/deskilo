@@ -1,0 +1,21 @@
+name: deskilo_jurisdiction_ch
+description: >-
+  The Swiss VAT filing add-on (#3333): the MWST-Abrechnung as eCH-0217 XML
+  behind the jurisdiction contract. Pure Dart; depends on the contract, the
+  standards package and xml.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_jurisdiction_api:
+    path: ../deskilo_jurisdiction_api
+  deskilo_jurisdiction_standards:
+    path: ../deskilo_jurisdiction_standards
+  xml: ^6.6.1
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

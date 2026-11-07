@@ -427,6 +427,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_jurisdiction_ch:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_jurisdiction_ch"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_jurisdiction_de:
     dependency: "direct main"
     description:

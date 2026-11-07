@@ -14,7 +14,6 @@ import 'dart:io';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_filing_ech0217.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,6 +84,25 @@ final _german = [
   _line(20, 69468, 13199, direction: 'input'),
 ];
 
+String _swiss(
+  VatDeclaration d, {
+  required String uid,
+  bool onReceipts = false,
+}) => productFile(
+  d,
+  VatFilingParty(
+    countryCode: 'CH',
+    name: 'Cowork AG',
+    street: '',
+    postalCode: '',
+    city: '',
+    vatId: uid,
+    legalId: '',
+    onReceipts: onReceipts,
+  ),
+  now: DateTime.utc(2026, 10, 13, 8, 5, 9),
+).text;
+
 String _elster(VatDeclaration d, {String taxNumber = '21/815/08150'}) =>
     productFile(
       d,
@@ -127,13 +145,7 @@ void main() {
     String text({
       bool onReceipts = false,
       String uid = 'CHE-109.322.551 MWST',
-    }) => ech0217Xml(
-      declaration: d,
-      uid: uid,
-      organisationName: 'Cowork AG',
-      onReceipts: onReceipts,
-      generatedAt: DateTime.utc(2026, 10, 13, 8, 5, 9),
-    );
+    }) => _swiss(d, uid: uid, onReceipts: onReceipts);
 
     test('the declaration: header, turnover, the rates, the tax to pay', () {
       _writeSample('ch_mwst.xml', text());
@@ -190,17 +202,14 @@ void main() {
 
     test('205 is `opted` and 383 one `acquisitionTax` per rate, its tax in '
         'payableTax; an acquisition is no consideration', () {
-      final xml = ech0217Xml(
-        declaration: _declaration(DateTime(2026, 7), DateTime(2026, 9, 30), [
+      final xml = _swiss(
+        _declaration(DateTime(2026, 7), DateTime(2026, 9, 30), [
           _line(8.1, 1600000, 129600, opted: 1000000),
           _line(8.1, 120000, 9720, category: vatAcquisitionCategory),
           _line(2.6, 10000, 260, category: vatAcquisitionCategory),
           _line(8.1, 120000, 8910, direction: 'input'),
         ]),
         uid: 'CHE-109.322.551 MWST',
-        organisationName: 'Cowork AG',
-        onReceipts: false,
-        generatedAt: DateTime.utc(2026, 10, 13, 8, 5, 9),
       );
       _writeSample('ch_mwst_opted_acquisition.xml', xml);
       final root = XmlDocument.parse(xml).rootElement;

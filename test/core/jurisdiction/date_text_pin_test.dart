@@ -36,6 +36,12 @@ void main() {
         );
       }
     }
+    for (final d in instants) {
+      for (final sep in [':', '', '.']) {
+        expect(api.hhmmss(d, separator: sep), core.hhmmss(d, separator: sep),
+            reason: '$d "$sep"');
+      }
+    }
     for (var n = 0; n < 120; n++) {
       expect(api.twoDigits(n), core.twoDigits(n));
     }

@@ -16,3 +16,7 @@ String ymd(DateTime d, {String separator = ''}) =>
 /// `09:30`, or `0930` with `separator: ''`.
 String hhmm(DateTime d, {String separator = ':'}) =>
     '${twoDigits(d.hour)}$separator${twoDigits(d.minute)}';
+
+/// `09:30:05`, or `093005` with `separator: ''`.
+String hhmmss(DateTime d, {String separator = ':'}) =>
+    '${hhmm(d, separator: separator)}$separator${twoDigits(d.second)}';

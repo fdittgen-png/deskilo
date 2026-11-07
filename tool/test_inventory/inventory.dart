@@ -260,6 +260,16 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'jurisdiction CH package',
+    root: 'packages/deskilo_jurisdiction_ch/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test (with coverage) in every '
+        'packages/deskilo_jurisdiction_* (#3329 loop)',
+    workflow: 'quality.yml',
+    command: 'packages/deskilo_jurisdiction_*/',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'asset gzip package',
     root: 'packages/deskilo_asset_gzip/test',
     suffix: '_test.dart',
