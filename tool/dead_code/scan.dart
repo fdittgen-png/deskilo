@@ -51,16 +51,27 @@ class DeadCodeFinding {
 const productionRoots = ['lib', 'tool', 'integration_test', 'packages', 'bin'];
 
 /// Whether [path] is a source whose public declarations are checked: the
-/// application's `lib/`, and the `lib/` of the packages code was extracted
-/// into (#3376: moving code out of `lib/` must not take it out of the scan).
-/// A package joins this list when extracted code lands in it; references from
-/// `lib/`, `tool/`, every package and `bin/` all count as use.
+/// application's `lib/` and the `lib/` of EVERY package (#3376, #3401: code
+/// that moves out of `lib/` must not leave the scan). References from `lib/`,
+/// `tool/`, every package and `bin/` all count as use.
 bool _isScanned(String path) =>
     path.startsWith('lib/') ||
-    scannedPackages.any((p) => path.startsWith('packages/$p/lib/'));
+    RegExp(r'^packages/[^/]+/lib/').hasMatch(path);
 
-/// The packages whose own declarations are scanned for dead code.
-const scannedPackages = ['deskilo_accounting_interchange', 'deskilo_money_kernel'];
+/// The packages whose API only the application consumes (the accounting
+/// model's building blocks): a public declaration used only in its own file
+/// is over-exposed there too (the public-surface check). The jurisdiction and
+/// document add-ons export versions and entry points by design; they are
+/// checked for dead code, not for exposure.
+const surfacePackages = [
+  'deskilo_accounting_interchange',
+  'deskilo_money_kernel',
+  'deskilo_tax_reference',
+];
+
+bool _isSurfaceScanned(String path) =>
+    path.startsWith('lib/') ||
+    surfacePackages.any((p) => path.startsWith('packages/$p/lib/'));
 
 /// Scans the repository at [root] (the directory holding `lib/` and
 /// `test/`) and returns the findings sorted by path and line.

@@ -18,6 +18,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/lib_roots.dart';
 import 'lint_sources.dart';
 
 /// Files allowed to read the wall clock, each for a stated reason.
@@ -63,7 +64,7 @@ void main() {
   test('no wall-clock reads outside the exempt list', () {
     final violations = <String>[];
 
-    final files = handWrittenDartFilesIn(['lib', 'test'])
+    final files = handWrittenDartFilesIn(['lib', 'test', ...packageLibRoots()])
         // These files necessarily name the pattern they forbid.
         .where((f) => f.path != 'test/lint/no_wall_clock_test.dart')
         .where((f) => f.path != 'test/lint/lint_sources.dart')

@@ -10,7 +10,6 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';

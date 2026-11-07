@@ -7,12 +7,13 @@
 import 'dart:io';
 
 import 'l10n_audit/audit.dart';
+import 'lib_roots.dart';
 
 const output = 'docs/testing/L10N_AUDIT.md';
 
 /// The inventory, as the file's exact text.
 String buildAudit() {
-  final findings = auditTree(['lib']);
+  final findings = auditTree(['lib', ...packageLibRoots()]);
   final byFile = <String, List<Finding>>{};
   for (final f in findings) {
     (byFile[f.path] ??= []).add(f);
