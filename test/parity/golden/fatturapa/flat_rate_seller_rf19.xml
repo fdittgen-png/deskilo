@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:FatturaElettronica xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" versione="FPR12">
+  <FatturaElettronicaHeader>
+    <DatiTrasmissione>
+      <IdTrasmittente>
+        <IdPaese>IT</IdPaese>
+        <IdCodice>01234567897</IdCodice>
+      </IdTrasmittente>
+      <ProgressivoInvio>IT20260042</ProgressivoInvio>
+      <FormatoTrasmissione>FPR12</FormatoTrasmissione>
+      <CodiceDestinatario>KRRH6B9</CodiceDestinatario>
+    </DatiTrasmissione>
+    <CedentePrestatore>
+      <DatiAnagrafici>
+        <IdFiscaleIVA>
+          <IdPaese>IT</IdPaese>
+          <IdCodice>01234567897</IdCodice>
+        </IdFiscaleIVA>
+        <CodiceFiscale>RSSMRA80A01H501U</CodiceFiscale>
+        <Anagrafica>
+          <Denominazione>Ditta Forfettaria</Denominazione>
+        </Anagrafica>
+        <RegimeFiscale>RF19</RegimeFiscale>
+      </DatiAnagrafici>
+      <Sede>
+        <Indirizzo>Via Po 3</Indirizzo>
+        <CAP>10121</CAP>
+        <Comune>Torino</Comune>
+        <Provincia>TO</Provincia>
+        <Nazione>IT</Nazione>
+      </Sede>
+    </CedentePrestatore>
+    <CessionarioCommittente>
+      <DatiAnagrafici>
+        <IdFiscaleIVA>
+          <IdPaese>IT</IdPaese>
+          <IdCodice>09876543217</IdCodice>
+        </IdFiscaleIVA>
+        <Anagrafica>
+          <Denominazione>Studio Nord S.r.l.</Denominazione>
+        </Anagrafica>
+      </DatiAnagrafici>
+      <Sede>
+        <Indirizzo>Corso Italia 10</Indirizzo>
+        <CAP>10121</CAP>
+        <Comune>Torino</Comune>
+        <Nazione>IT</Nazione>
+      </Sede>
+    </CessionarioCommittente>
+  </FatturaElettronicaHeader>
+  <FatturaElettronicaBody>
+    <DatiGenerali>
+      <DatiGeneraliDocumento>
+        <TipoDocumento>TD01</TipoDocumento>
+        <Divisa>EUR</Divisa>
+        <Data>2026-09-30</Data>
+        <Numero>IT-2026/0042</Numero>
+        <DatiBollo>
+          <BolloVirtuale>SI</BolloVirtuale>
+          <ImportoBollo>2.00</ImportoBollo>
+        </DatiBollo>
+        <ImportoTotaleDocumento>100.00</ImportoTotaleDocumento>
+      </DatiGeneraliDocumento>
+    </DatiGenerali>
+    <DatiBeniServizi>
+      <DettaglioLinee>
+        <NumeroLinea>1</NumeroLinea>
+        <Descrizione>Subscription 50%</Descrizione>
+        <PrezzoUnitario>100.00</PrezzoUnitario>
+        <PrezzoTotale>100.00</PrezzoTotale>
+        <AliquotaIVA>0.00</AliquotaIVA>
+        <Natura>N2.2</Natura>
+      </DettaglioLinee>
+      <DatiRiepilogo>
+        <AliquotaIVA>0.00</AliquotaIVA>
+        <Natura>N2.2</Natura>
+        <ImponibileImporto>100.00</ImponibileImporto>
+        <Imposta>0.00</Imposta>
+      </DatiRiepilogo>
+    </DatiBeniServizi>
+    <DatiPagamento>
+      <CondizioniPagamento>TP02</CondizioniPagamento>
+      <DettaglioPagamento>
+        <ModalitaPagamento>MP05</ModalitaPagamento>
+        <ImportoPagamento>100.00</ImportoPagamento>
+      </DettaglioPagamento>
+    </DatiPagamento>
+  </FatturaElettronicaBody>
+</p:FatturaElettronica>

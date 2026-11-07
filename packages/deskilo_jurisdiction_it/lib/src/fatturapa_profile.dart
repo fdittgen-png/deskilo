@@ -1,68 +1,82 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3337 (of #3328) -- the Italian invoice as FatturaPA XML (schema FPR12/FPA12,
+// version 1.2.3), the only document the Sistema di Interscambio accepts, as an
+// invoice profile behind the jurisdiction contract. It moved here from the
+// application with its bytes unchanged (the sample validators and the unit
+// tests are the proof).
+//
+// Italy's mandate is not EN 16931: since 2019 every invoice between Italian
+// parties clears through SdI in this national syntax, so an Italian seller
+// holding only the UBL or the Factur-X has no valid invoice at all.
+//
+// The figures come from the host's context -- the totals rule the UBL and CII
+// documents read -- so the renderings of one invoice cannot disagree. A credit
+// note is TD04 with every amount stated as what is credited (positive), the
+// same convention as the UBL credit note. Element order follows the XSD
+// sequences: SdI rejects a schema-invalid file before any of its own checks.
 import 'dart:convert' show utf8;
 
-import 'package:crypto/crypto.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/money/money_text.dart';
-import 'e_invoice_totals.dart';
-import 'einvoice_input.dart';
-import 'invoice.dart';
-import 'stamp_duty.dart';
-import 'vat_rate.dart';
-import 'vat_regime.dart';
+/// Bumped in the same commit as any change of the bytes this profile writes.
+const itFatturaPaImplementationVersion = '1';
 
-/// #2358 — the Italian invoice as FatturaPA XML (schema FPR12/FPA12,
-/// version 1.2.3), the only document the Sistema di Interscambio
-/// accepts. Italy's mandate is not EN 16931: since 2019 every invoice
-/// between Italian parties clears through SdI in this national syntax,
-/// so an Italian seller holding only the UBL or the Factur-X has no
-/// valid invoice at all.
-///
-/// The figures come from [eInvoiceTotalsOf] — the rule the UBL and CII
-/// documents read — so the three renderings of one invoice cannot
-/// disagree. Prices are VAT-inclusive in the app; FatturaPA, like the
-/// norm, states lines tax-exclusive, so each line is split with
-/// [vatSplit] exactly as the UBL does.
-///
-/// A credit note is TD04 with every amount stated as what is credited
-/// (positive), the same convention as the UBL credit note.
-///
-/// Element order follows the XSD sequences: SdI rejects a schema-invalid
-/// file before any of its own checks run.
-String buildInvoiceFatturaPa(
-  EInvoiceInput input, {
+/// The FatturaPA schema version the profile follows.
+const itFatturaPaFormatVersion = '1.2.3';
 
-  /// The intermediary that transmits the file ('IT01234567890'); the
-  /// seller itself when it sends directly.
-  String transmitterId = '',
+/// The id of the format, as `EInvoiceFormat.fatturaPa.name` spells it.
+const fatturaPaFormatId = 'fatturaPa';
 
-  /// ProgressivoInvio — the sender's own unique id for this file.
-  String progressive = '',
-}) => _FatturaPaWriter(input, transmitterId, progressive).write();
+/// The FatturaPA invoice profile of Italy. Refuses nothing today: the writer
+/// never refused, and the bytes are pinned (SdI's own checks follow).
+class ItFatturaPaProfile implements InvoiceProfileContribution {
+  const ItFatturaPaProfile();
+
+  @override
+  CapabilityDescriptor get descriptor => const CapabilityDescriptor(
+    moduleId: 'it.invoice_profile.fatturapa',
+    implementationVersion: itFatturaPaImplementationVersion,
+    contractVersion: invoiceProfileContractVersion,
+    formatVersion: itFatturaPaFormatVersion,
+    capabilityId: 'invoice_profile.$fatturaPaFormatId',
+  );
+
+  @override
+  ({ValidatedInvoiceDocument? document, ValidationResult result}) validate(
+    InvoiceDocumentContext context,
+  ) => (
+    document: ValidatedInvoiceDocument(context),
+    result: const ValidationResult.ok(),
+  );
+
+  @override
+  GeneratedArtifact build(ValidatedInvoiceDocument document) {
+    final context = document.context;
+    if (!validate(context).result.isOk) {
+      throw StateError('a document this profile would refuse');
+    }
+    return GeneratedArtifact(
+      bytes: utf8.encode(_FatturaPaWriter(context).write()),
+      mediaType: 'application/xml',
+      fileName: '${context.progressive}.xml',
+      provenance: descriptor.toProvenance(),
+    );
+  }
+}
 
 /// The FatturaPA document, one method per section of it.
 class _FatturaPaWriter {
-  _FatturaPaWriter(this.input, this.transmitterId, this.progressive)
-    : totals = eInvoiceTotalsOf(
-        invoice: input.invoice,
-        seller: input.seller,
-        buyer: input.buyer,
-      );
+  _FatturaPaWriter(this.c);
 
-  final EInvoiceInput input;
-  final String transmitterId;
-  final String progressive;
-  final EInvoiceTotals totals;
+  final InvoiceDocumentContext c;
   final XmlBuilder builder = XmlBuilder();
 
-  Invoice get invoice => input.invoice;
-  InvoiceParty get seller => input.seller;
-  InvoiceParty get buyer => input.buyer;
-  List<InvoiceVatTotal> get supplyBreakdown => totals.supplyBreakdown;
-  int get taxCents =>
-      supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
-  bool get creditNote => invoice.isCreditNote;
+  DocumentParty get seller => c.seller;
+  DocumentParty get buyer => c.buyer;
+  List<DocumentVatTotal> get supplyBreakdown => c.vatBreakdown;
+  bool get creditNote => c.creditNote;
   int get sign => creditNote ? -1 : 1;
   bool get publicBuyer =>
       buyer.endpointScheme == 'IT:IPA' ||
@@ -70,10 +84,9 @@ class _FatturaPaWriter {
   String get format => publicBuyer ? 'FPA12' : 'FPR12';
   int get grossCents =>
       sign *
-      supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netCents + t.vatCents);
+      supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netMinor + t.vatMinor);
 
-  String amount(int minor) =>
-      _twoDecimals(minorToText(minor, invoice.currency));
+  String amount(int minor) => _twoDecimals(_decimal(minor, c.currencyExponent));
 
   void el(String name, String text) =>
       builder.element(name, nest: () => builder.text(text));
@@ -122,7 +135,7 @@ class _FatturaPaWriter {
     );
   }
 
-  void sede(InvoiceParty p) {
+  void sede(DocumentParty p) {
     final italian = p.country.toUpperCase() == 'IT';
     builder.element(
       'Sede',
@@ -150,14 +163,14 @@ class _FatturaPaWriter {
       nest: () {
         idFiscale(
           'IdTrasmittente',
-          transmitterId.isNotEmpty
-              ? transmitterId
+          c.transmitterId.isNotEmpty
+              ? c.transmitterId
               : seller.vatId.isNotEmpty
               ? seller.vatId
               : seller.legalId,
           seller.country,
         );
-        el('ProgressivoInvio', _progressive(progressive, invoice.number));
+        el('ProgressivoInvio', c.progressive);
         el('FormatoTrasmissione', format);
         final pec = buyer.endpointId.contains('@');
         el('CodiceDestinatario', _recipientCode(buyer, publicBuyer: publicBuyer));
@@ -191,7 +204,7 @@ class _FatturaPaWriter {
             // Italian reading of a seller that charges no VAT.
             el(
               'RegimeFiscale',
-              totals.regime == VatRegime.vatRegistered ? 'RF01' : 'RF19',
+              c.sellerVatRegistered ? 'RF01' : 'RF19',
             );
           },
         );
@@ -234,20 +247,12 @@ class _FatturaPaWriter {
           'DatiGeneraliDocumento',
           nest: () {
             el('TipoDocumento', creditNote ? 'TD04' : 'TD01');
-            el('Divisa', invoice.currency);
-            el('Data', _date(invoice.issuedAt));
-            el('Numero', _basic(invoice.number, 20));
+            el('Divisa', c.currency);
+            el('Data', _date(c.issuedAt));
+            el('Numero', _basic(c.number, 20));
             // Stamp duty on a document that carries no VAT because its
             // operation is exempt or outside the scope (`stamp_duty.dart`).
-            if (stampDutyCents((
-                  country: seller.country,
-                  currency: invoice.currency,
-                  day: invoice.issuedAt,
-                  totals: supplyBreakdown,
-                  grossCents: grossCents,
-                  buyerCountry: buyer.country,
-                ))
-                case final duty?) {
+            if (c.stampDutyMinor case final duty?) {
               builder.element(
                 'DatiBollo',
                 nest: () {
@@ -259,11 +264,11 @@ class _FatturaPaWriter {
             el('ImportoTotaleDocumento', amount(grossCents));
           },
         );
-        if (invoice.replacesNumber.isNotEmpty) {
+        if (c.replacesNumber.isNotEmpty) {
           builder.element(
             'DatiFattureCollegate',
             nest: () {
-              el('IdDocumento', _basic(invoice.replacesNumber, 20));
+              el('IdDocumento', _basic(c.replacesNumber, 20));
             },
           );
         }
@@ -275,7 +280,7 @@ class _FatturaPaWriter {
     builder.element(
       'DatiBeniServizi',
       nest: () {
-        for (final (i, line) in totals.supplies.indexed) {
+        for (final (i, line) in c.lines.indexed) {
           detailLine(i, line);
         }
         for (final total in supplyBreakdown) {
@@ -285,8 +290,8 @@ class _FatturaPaWriter {
     );
   }
 
-  void detailLine(int index, InvoiceLine line) {
-    final lineNet = sign * vatSplit(line.amountCents, line.vatPercent).netCents;
+  void detailLine(int index, DocumentLine line) {
+    final lineNet = sign * line.netMinor;
     // The same divisibility rule as the UBL: quantity × price must
     // be the line total SdI recomputes.
     final units = line.quantity > 1 && lineNet.abs() % line.quantity == 0
@@ -296,12 +301,12 @@ class _FatturaPaWriter {
         ? line.vatCategory
         : line.vatPercent > 0
         ? 'S'
-        : totals.category;
+        : c.category;
     builder.element(
       'DettaglioLinee',
       nest: () {
         el('NumeroLinea', '${index + 1}');
-        el('Descrizione', _latin(input.lineText(line), 1000, '-'));
+        el('Descrizione', _latin(line.text, 1000, '-'));
         if (units > 1) el('Quantita', '$units.00');
         el('PrezzoUnitario', amount(lineNet ~/ units));
         el('PrezzoTotale', amount(lineNet));
@@ -313,7 +318,7 @@ class _FatturaPaWriter {
     );
   }
 
-  void vatSummary(InvoiceVatTotal total) {
+  void vatSummary(DocumentVatTotal total) {
     final natura = total.percent == 0
         ? fatturaPaNatura(total.category, buyerCountry: buyer.country) ?? 'N2.2'
         : null;
@@ -322,11 +327,11 @@ class _FatturaPaWriter {
       nest: () {
         el('AliquotaIVA', _rate(total.percent));
         if (natura != null) el('Natura', natura);
-        el('ImponibileImporto', amount(sign * total.netCents));
-        el('Imposta', amount(sign * total.vatCents));
+        el('ImponibileImporto', amount(sign * total.netMinor));
+        el('Imposta', amount(sign * total.vatMinor));
         if (natura == null) el('EsigibilitaIVA', 'I');
-        if (natura != null && totals.exemptionText.isNotEmpty) {
-          el('RiferimentoNormativo', _latin(totals.exemptionText, 100, '-'));
+        if (natura != null && c.exemptionText.isNotEmpty) {
+          el('RiferimentoNormativo', _latin(c.exemptionText, 100, '-'));
         }
       },
     );
@@ -334,7 +339,7 @@ class _FatturaPaWriter {
 
   /// Only an invoice is paid; a credit note settles by refund.
   void payment() {
-    final payable = invoice.totalCents;
+    final payable = c.payableMinor;
     if (payable <= 0) return;
     builder.element(
       'DatiPagamento',
@@ -345,12 +350,12 @@ class _FatturaPaWriter {
           'DettaglioPagamento',
           nest: () {
             el('ModalitaPagamento', 'MP05');
-            final dueDate = input.dueDate;
+            final dueDate = c.dueDate;
             if (dueDate != null) {
               el('DataScadenzaPagamento', _date(dueDate));
             }
             el('ImportoPagamento', amount(payable));
-            final account = input.iban.replaceAll(' ', '').toUpperCase();
+            final account = c.iban.replaceAll(' ', '').toUpperCase();
             if (RegExp(r'^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$').hasMatch(account)) {
               el('IBAN', account);
             }
@@ -375,7 +380,7 @@ String? fatturaPaNatura(String category, {required String buyerCountry}) => swit
 
 /// SdI's routing code: the recipient's own code, '0000000' when it is
 /// reached by PEC or through its fiscal drawer, 'XXXXXXX' abroad.
-String _recipientCode(InvoiceParty buyer, {required bool publicBuyer}) {
+String _recipientCode(DocumentParty buyer, {required bool publicBuyer}) {
   final code = buyer.endpointId.trim().toUpperCase();
   if (publicBuyer) return code;
   if (buyer.country.toUpperCase() != 'IT') return 'XXXXXXX';
@@ -399,21 +404,16 @@ String? _fiscalCode(String legalId) {
   return RegExp(r'^[A-Z0-9]{11,16}$').hasMatch(id) ? id : null;
 }
 
-/// ProgressivoInvio: at most ten basic-latin characters, unique per
-/// sender. The invoice number already is unique; a long one is hashed.
-String _progressive(String given, String number) {
-  final clean = (given.isNotEmpty ? given : number).replaceAll(
-    RegExp(r'[^A-Za-z0-9]'),
-    '',
-  );
-  if (clean.isNotEmpty && clean.length <= 10) return clean;
-  // The SHA-256 of the number: stable across runs and identical on the
-  // web, where integers above 2^53 do not exist.
-  return sha256
-      .convert(utf8.encode(number))
-      .toString()
-      .substring(0, 10)
-      .toUpperCase();
+String _decimal(int minor, int exponent) {
+  final sign = minor < 0 ? '-' : '';
+  final abs = minor.abs();
+  if (exponent == 0) return '$sign$abs';
+  var per = 1;
+  for (var i = 0; i < exponent; i++) {
+    per *= 10;
+  }
+  final fraction = (abs % per).toString().padLeft(exponent, '0');
+  return '$sign${abs ~/ per}.$fraction';
 }
 
 String _date(DateTime value) => value.toIso8601String().split('T').first;

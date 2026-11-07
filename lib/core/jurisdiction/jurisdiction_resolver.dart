@@ -148,7 +148,7 @@ ProfileResolution resolveInvoiceProfile(
     return const RefusedProfile(RefusalKind.conflictingProfile);
   }
   if (matches.single.descriptor.contractVersion !=
-      jurisdictionContractVersion) {
+      invoiceProfileContractVersion) {
     return const RefusedProfile(RefusalKind.contractMismatch);
   }
   return ResolvedProfile(matches.single);

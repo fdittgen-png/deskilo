@@ -14,7 +14,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 class FakeInvoiceProfile implements InvoiceProfileContribution {
   const FakeInvoiceProfile(
     this.formatId, {
-    this.contractVersion = jurisdictionContractVersion,
+    this.contractVersion = invoiceProfileContractVersion,
   });
 
   final String formatId;

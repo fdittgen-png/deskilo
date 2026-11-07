@@ -80,9 +80,13 @@ EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(
 );
 
 void main() {
-  test('the contract is version 3 and every installed profile declares it', () {
-    expect(jurisdictionContractVersion, '3');
-    expect(const FakeInvoiceProfile('fakeXx').descriptor.contractVersion, '3');
+  test('the invoice profile contract is versioned apart from the VAT one', () {
+    expect(invoiceProfileContractVersion, '1');
+    expect(jurisdictionContractVersion, '2', reason: 'additive: VAT unchanged');
+    expect(
+      const FakeInvoiceProfile('fakeXx').descriptor.contractVersion,
+      invoiceProfileContractVersion,
+    );
   });
 
   test('the adapter hands the profile the figures, computed once', () {
@@ -121,7 +125,7 @@ void main() {
       'FAKE|fakeXx|IT-2026/0042|EUR|24400|22.0:S:20000:4400',
     );
     expect(artifact.provenance['capability_id'], 'invoice_profile.fakeXx');
-    expect(artifact.provenance['contract_version'], '3');
+    expect(artifact.provenance['contract_version'], '1');
   });
 
   test('a refused document gets stable codes and cannot be built', () {
@@ -153,7 +157,7 @@ void main() {
 
   test('a profile written against another contract version is refused', () {
     final resolution = resolveInvoiceProfile('fakeXx', const [
-      FakeInvoiceProfile('fakeXx', contractVersion: '2'),
+      FakeInvoiceProfile('fakeXx', contractVersion: '0'),
     ]);
     expect((resolution as RefusedProfile).kind, RefusalKind.contractMismatch);
   });

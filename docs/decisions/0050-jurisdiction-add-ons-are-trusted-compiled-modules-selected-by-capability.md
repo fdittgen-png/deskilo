@@ -1,6 +1,6 @@
 # ADR 0050 — Jurisdiction add-ons are trusted compiled modules selected by capability
 
-**Status:** accepted · **Date:** 2026-11-07 · **Refs:** #3328, #3331, #3332, #3333, ADR 0043, ADR 0049
+**Status:** accepted · **Date:** 2026-11-07 · **Refs:** #3328, #3331, #3332, #3333, #3337, ADR 0043, ADR 0049
 
 ## Context
 Country-specific VAT filing code was spread through `lib/features/money` as
@@ -28,8 +28,12 @@ permissions, financial records, document history and delivery state.
    A lint pins both surfaces and the dependency rules: an add-on depends on the
    contract and the standards package (and `xml` where it writes XML), nothing
    else, and reads no clock, network or repository.
-4. **Four version dimensions, each data.** The *contract version* (breaking
-   changes to the contract types, ADR 0049), the *implementation version* (what
+4. **Four version dimensions, each data.** The *contract version*, kept PER
+   CAPABILITY (`jurisdictionContractVersion` for VAT filing,
+   `invoiceProfileContractVersion` for invoice profiles; it moves for breaking
+   changes to that capability's contract types only, ADR 0049, so a new
+   capability is additive and leaves the compatible add-ons of another one
+   alone), the *implementation version* (what
    the add-on writes: bumped in the same commit as the parity goldens), the
    *format version* (the authority's schema or layout year) and the *rule
    revision* (the tax-reference snapshot the host fills the boxes from; it is an
@@ -40,7 +44,16 @@ permissions, financial records, document history and delivery state.
    refusals and their order are pinned by golden files outside the code that
    moved (`test/parity/`): a one-character change to any writer fails the suite,
    and an extraction ships with no golden diff.
-6. **The host keeps what is not the add-on's.** Source loading, authorization,
+6. **Invoice profiles are a second capability of the same kind (#3337).** A
+   national invoice document (FatturaPA first) is an `InvoiceProfileContribution`
+   selected by the format's own name (`invoice_profile.<EInvoiceFormat.name>`),
+   installed in `installedInvoiceProfiles`. It renders from the neutral
+   `InvoiceDocumentContext`: the host computes the figures once (totals, each
+   line's net, the stamp duty, the routing id) and the profile never sees the
+   invoice model or the tax reference, so the syntaxes of one invoice cannot
+   disagree. Its bytes are unchanged by the move, pinned by the sample
+   validators and the unit tests.
+7. **The host keeps what is not the add-on's.** Source loading, authorization,
    dialogs, file saving, tracing and export logging stay in the application. The
    add-on validates and writes.
 

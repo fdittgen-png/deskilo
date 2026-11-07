@@ -174,8 +174,9 @@ void main() {
     );
   });
 
-  test('the contract is version 3 and the document context is read-only', () {
-    expect(jurisdictionContractVersion, '3');
+  test('the versions are per capability and the document context is read-only', () {
+    expect(jurisdictionContractVersion, '2');
+    expect(invoiceProfileContractVersion, '1');
     final context = InvoiceDocumentContext(
       number: 'N-1',
       issuedAt: DateTime.utc(2026, 1, 2),
@@ -185,7 +186,7 @@ void main() {
       seller: const DocumentParty(country: 'IT'),
       buyer: const DocumentParty(country: 'IT'),
       lines: [
-        const DocumentLine(text: 'x', quantity: 1, grossMinor: 122, vatPercent: 22),
+        const DocumentLine(text: 'x', quantity: 1, grossMinor: 122, netMinor: 100, vatPercent: 22),
       ],
       vatBreakdown: [
         const DocumentVatTotal(percent: 22, category: 'S', netMinor: 100, vatMinor: 22),

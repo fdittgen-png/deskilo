@@ -41,6 +41,7 @@ class DocumentLine {
     required this.text,
     required this.quantity,
     required this.grossMinor,
+    required this.netMinor,
     required this.vatPercent,
     this.vatCategory = '',
   });
@@ -52,6 +53,10 @@ class DocumentLine {
   /// The position's total in minor units, VAT included (negative on a
   /// reversal).
   final int grossMinor;
+
+  /// The same total without VAT, split by the host's own exact rule so every
+  /// syntax states the same net.
+  final int netMinor;
   final double vatPercent;
 
   /// The UNCL5305 category frozen on the line; '' when none.
@@ -139,6 +144,6 @@ class InvoiceDocumentContext {
   /// The intermediary that transmits the file; '' when the seller sends.
   final String transmitterId;
 
-  /// The sender's own unique id for the file; '' to derive one.
+  /// The sender's own unique id for the file, already resolved by the host.
   final String progressive;
 }

@@ -10,11 +10,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_fatturapa.dart';
 import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
@@ -314,7 +314,7 @@ Future<Map<String, Uint8List>> _samples() async {
     colorProfile: File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
     baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
     boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
-  final fatturaPa = buildInvoiceFatturaPa(EInvoiceInput(invoice: _nationalInvoice(
+  final fatturaPa = buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(invoice: _nationalInvoice(
       currency: 'EUR',
       percent: 22,
       gross: 24400,

@@ -5,6 +5,9 @@
 // ONCE here (the totals rule UBL and CII read as well), so a profile that
 // moves into a jurisdiction package neither sees the invoice model nor the tax
 // reference, and the renderings of one invoice cannot disagree.
+import 'dart:convert' show utf8;
+
+import 'package:crypto/crypto.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
 import '../../../../core/i18n/currencies.dart';
@@ -12,6 +15,7 @@ import '../../domain/e_invoice_totals.dart';
 import '../../domain/einvoice_input.dart';
 import '../../domain/invoice.dart';
 import '../../domain/stamp_duty.dart';
+import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 
 DocumentParty _party(InvoiceParty p) => DocumentParty(
@@ -62,6 +66,7 @@ InvoiceDocumentContext invoiceDocumentContextOf(
           text: input.lineText(line),
           quantity: line.quantity,
           grossMinor: line.amountCents,
+          netMinor: vatSplit(line.amountCents, line.vatPercent).netCents,
           vatPercent: line.vatPercent,
           vatCategory: line.vatCategory,
         ),
@@ -90,6 +95,23 @@ InvoiceDocumentContext invoiceDocumentContextOf(
       buyerCountry: input.buyer.country,
     )),
     transmitterId: transmitterId,
-    progressive: progressive,
+    progressive: _progressive(progressive, invoice.number),
   );
+}
+
+/// The sender's unique id for the file: at most ten basic-latin characters.
+/// The invoice number already is unique; a long one is hashed.
+String _progressive(String given, String number) {
+  final clean = (given.isNotEmpty ? given : number).replaceAll(
+    RegExp(r'[^A-Za-z0-9]'),
+    '',
+  );
+  if (clean.isNotEmpty && clean.length <= 10) return clean;
+  // The SHA-256 of the number: stable across runs and identical on the
+  // web, where integers above 2^53 do not exist.
+  return sha256
+      .convert(utf8.encode(number))
+      .toString()
+      .substring(0, 10)
+      .toUpperCase();
 }
