@@ -4,9 +4,10 @@
 // is checked in CI (einvoice_samples_test + the official XSD); these
 // pin the Italian rules the schema cannot see — why a 0 % line carries
 // no VAT (Natura), the stamp duty, the routing code, a credit note.
+import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
+import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_fatturapa.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -87,7 +88,7 @@ XmlDocument _doc({
   InvoiceParty seller = _seller,
   InvoiceParty buyer = _buyer,
 }) => XmlDocument.parse(
-  buildInvoiceFatturaPa(EInvoiceInput(invoice: invoice ?? _invoice(),
+  buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(invoice: invoice ?? _invoice(),
     seller: seller,
     buyer: buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line))),

@@ -21,7 +21,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/channel_einvoice_xml.dart';
+import '../application/channel_einvoice_xml.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_format.dart';

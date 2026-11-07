@@ -173,4 +173,33 @@ void main() {
       throwsUnsupportedError,
     );
   });
+
+  test('the versions are per capability and the document context is read-only', () {
+    expect(jurisdictionContractVersion, '2');
+    expect(invoiceProfileContractVersion, '1');
+    final context = InvoiceDocumentContext(
+      number: 'N-1',
+      issuedAt: DateTime.utc(2026, 1, 2),
+      currency: 'EUR',
+      currencyExponent: 2,
+      creditNote: false,
+      seller: const DocumentParty(country: 'IT'),
+      buyer: const DocumentParty(country: 'IT'),
+      lines: [
+        const DocumentLine(text: 'x', quantity: 1, grossMinor: 122, netMinor: 100, vatPercent: 22),
+      ],
+      vatBreakdown: [
+        const DocumentVatTotal(percent: 22, category: 'S', netMinor: 100, vatMinor: 22),
+      ],
+      payableMinor: 122,
+    );
+    expect(
+      () => context.lines.add(context.lines.first),
+      throwsUnsupportedError,
+    );
+    expect(
+      () => context.vatBreakdown.clear(),
+      throwsUnsupportedError,
+    );
+  });
 }

@@ -4,12 +4,13 @@
 // art. 23 DPR 633/1972) as a CSV: for each document in the order of its
 // number, the date, the customer and their partita IVA or codice fiscale,
 // and per rate the taxable amount, the rate and the tax; a 0 % line names
-// its Natura, the same code the FatturaPA carries (`invoice_fatturapa.dart`).
+// its Natura, the same code the FatturaPA carries (`fatturapa_profile.dart`).
+import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import 'invoice.dart';
-import 'invoice_fatturapa.dart';
 import 'vat_register_es.dart' show buyerNameOf, registerDocuments;
 
 /// The register's columns, in the words of the art. 23 register.
