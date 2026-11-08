@@ -19,7 +19,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart' show workspaceTaxReference;
+import '../invoice_actions.dart' show watchWorkspaceTaxReference, workspaceTaxReference;
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
 import '../widgets/canada_tax_fields.dart';
@@ -70,6 +70,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // Saving the screen records the choice, so a space that never chose
   // stops being one.
   VatTaxPointOption _taxPoint = VatTaxPointOption.standard;
+  // Loaded before the workspace's tax context was ready: the country's
+  // default is stated once it is, unless the owner chose meanwhile.
+  bool _taxPointPending = false;
   // #2357 — how often the return is filed; null until the owner chooses.
   VatDeclarationPeriod? _declarationPeriod;
 
@@ -172,6 +175,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _customerCapacity = legal.customerCapacity;
       _reverseCharge = legal.reverseCharge;
       final reference = workspaceTaxReference(ref);
+      _taxPointPending = reference == null;
       _taxPoint = reference == null
           ? (legal.vatTaxPoint ?? VatTaxPointOption.standard)
           : vatTaxPointPolicy(workspace.countryCode, reference: reference)
@@ -250,7 +254,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                     ref.watch(currentWorkspaceProvider).value?.countryCode ??
                         '',
                 value: _taxPoint,
-                onChanged: (v) => setState(() => _taxPoint = v),
+                onChanged: (v) => setState(() {
+                  _taxPointPending = false;
+                  _taxPoint = v;
+                }),
               ),
             ),
           // #2357 — how often the return is filed.
@@ -411,6 +418,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       );
     }
     if (!_loaded) _load();
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference != null && _taxPointPending) {
+      _taxPointPending = false;
+      _taxPoint = vatTaxPointPolicy(workspace.countryCode, reference: reference)
+          .effective(InvoiceLegal.fromJson(workspace.invoiceLegal).vatTaxPoint);
+    }
 
     return Scaffold(
       appBar: AppBar(
