@@ -13,14 +13,11 @@
 import 'dart:convert';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/jurisdiction/installed_archives.dart';
 import 'gobd_package.dart';
 import 'gobd_tables.dart';
 import 'records_location.dart';
-
-/// The countries whose archive carries the readable handover: those that
-/// prescribe no national audit file and ask for readable electronic
-/// records in English (GB, IE, US) or English or French (CA).
-const Set<String> _readableHandoverCountries = {'GB', 'IE', 'CA', 'US'};
 
 /// Where the tables and their README sit in the archive.
 const String _handoverFolder = 'tables';
@@ -28,8 +25,12 @@ const String _handoverFolder = 'tables';
 /// The README's name in the archive.
 const String _readmePath = '$_handoverFolder/README.txt';
 
+/// Whether the archive of [countryCode] carries the readable handover: the
+/// countries that prescribe no national audit file and ask for readable
+/// electronic records in English (GB, IE, US) or English or French (CA) say so
+/// in their archive add-on.
 bool archiveCarriesReadableHandover(String countryCode) =>
-    _readableHandoverCountries.contains(countryCode.toUpperCase());
+    archiveOf(countryCode)?.readableHandover ?? false;
 
 /// One table's English description and its columns', by column name.
 typedef _English = ({String table, Map<String, String> columns});

@@ -19,6 +19,11 @@ const String invoiceProfileContractVersion = '1';
 /// reason: a new capability is additive (ADR 0050 §4).
 const String invoiceMentionsContractVersion = '1';
 
+/// The version of the archive contract (`ArchiveContribution`): what a
+/// country's yearly archive must carry. Its own capability, so it is versioned
+/// apart (ADR 0050 §4).
+const String archiveContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {
