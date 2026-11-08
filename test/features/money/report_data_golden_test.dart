@@ -15,11 +15,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

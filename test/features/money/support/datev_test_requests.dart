@@ -3,7 +3,7 @@
 // The seeded year at German rates as a DATEV request, and a parser for the
 // files the DATEV package writes: shared by the DATEV package tests.
 import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'seeded_export_year.dart';

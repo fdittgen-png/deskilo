@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../l10n/app_localizations.dart';
-import '../domain/invoice.dart';
 import '../domain/swiss_qr_bill_invoice.dart';
 import '../domain/swiss_qr_bill_pdf.dart';
 

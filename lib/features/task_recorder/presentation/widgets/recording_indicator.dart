@@ -20,6 +20,7 @@
 
 import 'dart:async';
 
+import 'package:deskilo_task_recording/task_recording.dart' show RecordingEndReason;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +31,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../application/recorder_controller.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
 import '../../domain/recording_reference.dart';
-import '../../domain/task_recording.dart' show RecordingEndReason;
 import '../../guide/guide_session.dart';
 import '../../providers/recorder_providers.dart';
 import '../guide_host/guide_host.dart';

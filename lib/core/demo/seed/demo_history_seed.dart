@@ -10,12 +10,12 @@
 // Placed relative to the seeded instant, never a literal date. Today and
 // tomorrow are left to the hand-written story (demo_booking_seed.dart),
 // so the plan a visitor lands on still has a free seat.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/expense_schedule.dart';
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/closure_day.dart';

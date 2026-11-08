@@ -3,6 +3,7 @@
 // The filing-ready file of a prepared VAT return, where the workspace's
 // country has one (see `vat_filing_files.dart`). The owner hands it to the
 // channel that files it; nothing here transmits.
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
@@ -12,7 +13,6 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/save_vat_filing_file.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import 'vat_filing_facts_dialogs.dart';
 

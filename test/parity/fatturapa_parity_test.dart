@@ -7,12 +7,8 @@
 // Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
-import 'package:deskilo/features/money/domain/einvoice_format.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'parity_golden.dart';

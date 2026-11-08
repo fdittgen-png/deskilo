@@ -4,12 +4,12 @@
 // organisation's sales account, the name of each tax rate the documents
 // carry, and the order the organisation writes dates in. Nothing is
 // proposed: every Xero organisation names its own.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../domain/vat_rate.dart';
 import '../../domain/xero_invoice_csv.dart';
 
 /// Asks for the Xero settings of [rates]; null when the person backs out.

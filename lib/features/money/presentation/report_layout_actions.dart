@@ -10,6 +10,7 @@
 // invoice_actions.dart, which is at its budget and about the invoice.
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/layout_units.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -18,7 +19,6 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/report_layout/layout_render.dart';
-import '../domain/report_layout/layout_units.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
 import 'report_layout_defaults.dart';

@@ -8,10 +8,11 @@
 // own messages. The first one is booking a place — the task the recorder
 // was first instrumented for — with its refusal path.
 
+import 'package:deskilo_task_recording/task_guide.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
 import 'guide_compiler.dart';
-import 'task_guide.dart';
 
 /// The built-in guides, by id.
 enum BuiltinGuide { bookAPlace }

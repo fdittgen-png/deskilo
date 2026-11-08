@@ -6,15 +6,15 @@
 // (migration 0423, pgTAP 180); the values below are the same ones.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_components.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Quebec: CAD 1 000.00 -> GST 50.00, QST 99.75, total 1 149.75', () {
     final split = vatSplit(114975, 14.975);
     expect((split.netCents, split.vatCents), (100000, 14975));
-    final parts = vatComponentsOf('CA', 14.975, split.netCents, split.vatCents);
+    final parts = vatComponentsOf('CA', 14.975, split.netCents, split.vatCents, reference: ActiveTaxReference.current);
     expect(parts.map((c) => c.scheme), ['GST', 'QST']);
     expect(parts.map((c) => c.taxCents), [5000, 9975]);
     expect(parts.map((c) => c.authority), ['CA', 'CA-QC']);
@@ -26,23 +26,23 @@ void main() {
     for (final gross in [3333, 100001, 7, 99999, 1]) {
       for (final percent in [14.975, 12.0, 11.0]) {
         final s = vatSplit(gross, percent);
-        final parts = vatComponentsOf('CA', percent, s.netCents, s.vatCents);
+        final parts = vatComponentsOf('CA', percent, s.netCents, s.vatCents, reference: ActiveTaxReference.current);
         expect(parts.fold<int>(0, (a, c) => a + c.taxCents), s.vatCents,
             reason: '$gross at $percent');
       }
     }
     // The values the pgTAP file pins on the server.
     final odd = vatSplit(3333, 14.975);
-    expect(vatComponentsOf('CA', 14.975, odd.netCents, odd.vatCents)
+    expect(vatComponentsOf('CA', 14.975, odd.netCents, odd.vatCents, reference: ActiveTaxReference.current)
         .map((c) => c.taxCents), [145, 289]);
   });
 
   test('the other provinces and countries', () {
     List<String> schemes(String cc, double p) =>
-        vatComponentsOf(cc, p, 10000, 1000).map((c) => c.scheme).toList();
+        vatComponentsOf(cc, p, 10000, 1000, reference: ActiveTaxReference.current).map((c) => c.scheme).toList();
     expect(schemes('CA', 5), ['GST']);
     for (final hst in [13.0, 14.0, 15.0]) {
-      final parts = vatComponentsOf('ca', hst, 10000, 1300);
+      final parts = vatComponentsOf('ca', hst, 10000, 1300, reference: ActiveTaxReference.current);
       expect(parts.single.scheme, 'HST');
       expect(parts.single.percent, hst);
     }
@@ -50,7 +50,7 @@ void main() {
     expect(schemes('CA', 7.5), isEmpty);
     for (final cc in ['DE', 'FR', 'GB', 'CH', 'US', '']) {
       expect(schemes(cc, 5), isEmpty, reason: cc);
-      expect(vatComponentsOf(cc, 14.975, 100000, 14975), isEmpty, reason: cc);
+      expect(vatComponentsOf(cc, 14.975, 100000, 14975, reference: ActiveTaxReference.current), isEmpty, reason: cc);
     }
   });
 
@@ -90,7 +90,7 @@ void main() {
     expect(rates.first.label, contains('BC'));
     // Every catalogue rate is either a plain tax or splits into its parts.
     for (final r in rates) {
-      final parts = vatComponentsOf('CA', r.percent, 100000, 1);
+      final parts = vatComponentsOf('CA', r.percent, 100000, 1, reference: ActiveTaxReference.current);
       expect(parts, isNotEmpty, reason: r.label);
       expect(parts.fold<double>(0, (a, c) => a + c.percent), closeTo(r.percent, 1e-9));
     }

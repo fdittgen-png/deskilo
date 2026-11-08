@@ -14,8 +14,8 @@ import 'dart:io';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 

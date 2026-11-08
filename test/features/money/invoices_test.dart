@@ -9,8 +9,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/core/share/file_sharer.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_test/flutter_test.dart';

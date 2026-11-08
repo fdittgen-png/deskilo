@@ -7,7 +7,7 @@
 // versioned from a date, and a local book cannot start before its
 // required roles are mapped. Expectations written by hand.
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 BookAccount account(

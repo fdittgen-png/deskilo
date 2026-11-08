@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
 import 'fec_lettering.dart';
-import 'invoice.dart';
-import 'invoice_line_cash.dart';
 import 'ledger_entry.dart';
 
 const _salesJournal = 'VE';

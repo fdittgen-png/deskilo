@@ -5,7 +5,7 @@
 // contact data: such a field is recorded as redacted, with only the length
 // of what was typed. The validator refuses anything the recorder would not
 // have kept.
-import 'package:deskilo/features/task_recorder/domain/step_values.dart';
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

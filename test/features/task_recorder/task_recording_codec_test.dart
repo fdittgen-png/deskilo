@@ -8,8 +8,8 @@
 // completeness than a stopped recording earns.
 import 'dart:convert';
 
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fixtures/recording_fixtures.dart';

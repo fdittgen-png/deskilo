@@ -9,6 +9,7 @@
 // conditions the letter recalls, when each level falls due and who sends
 // it. The first level waits for the payment term the rules freeze on every
 // invoice at issue; the next ones wait from the previous reminder.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +26,6 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/save_dunning_rules.dart';
 import '../../domain/dunning.dart';
-import '../../domain/invoice_legal.dart';
 import '../../domain/report_data_sample.dart';
 import '../../providers/money_providers.dart';
 import 'dunning_rules_dialog.dart';

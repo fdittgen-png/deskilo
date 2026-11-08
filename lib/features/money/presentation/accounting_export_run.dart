@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
@@ -37,7 +38,6 @@ import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/report_data.dart';
 import '../domain/vat_account.dart';
-import '../domain/vat_tax_point.dart';
 import '../providers/accounting_connection_providers.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';

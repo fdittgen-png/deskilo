@@ -7,8 +7,8 @@
 // total carries GST and QST printing them on two rows.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_components.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _quebec() => Invoice(
@@ -34,7 +34,7 @@ Invoice _quebec() => Invoice(
       grossCents: 114975,
       netCents: 100000,
       vatCents: 14975,
-      components: vatComponentsOf('CA', 14.975, 100000, 14975),
+      components: vatComponentsOf('CA', 14.975, 100000, 14975, reference: ActiveTaxReference.current),
     ),
   ],
   sellerParty: InvoiceParty.fromSnapshot(const {

@@ -13,17 +13,17 @@
 // complete general ledger.
 import 'dart:convert';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';
 import 'expense_repartition.dart';
 import 'gobd_dtd.dart';
 import 'gobd_tables.dart';
-import 'invoice.dart';
 import 'ledger_entry.dart';
 import 'number_sequence.dart';
-import 'vat_tax_point.dart';
 
 /// How a column is typed in the index.
 enum GobdType { text, amount, number, percent, date }

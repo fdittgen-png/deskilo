@@ -13,9 +13,9 @@ import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
 import 'package:deskilo/features/money/presentation/export_year_books.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';

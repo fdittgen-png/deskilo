@@ -18,6 +18,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +39,6 @@ import '../../guide/guide_codec.dart';
 import '../../guide/guide_compiler.dart';
 import '../../guide/guide_destination.dart';
 import '../../guide/guide_session.dart';
-import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
 import '../recorder_pages.dart';

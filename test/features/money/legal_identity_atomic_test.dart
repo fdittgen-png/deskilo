@@ -20,9 +20,8 @@
 // window saved without the identity is a cosmetic choice the next Save
 // repeats.
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _id = 'ws-1';

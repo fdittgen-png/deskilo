@@ -6,7 +6,7 @@
 // accountant's files book the sale at its gross and its tax.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/invoice_line_cash.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';

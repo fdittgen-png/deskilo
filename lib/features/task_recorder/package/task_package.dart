@@ -37,9 +37,9 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 
 import '../../../core/trace/trace_logger.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'storyboard_review.dart';
 import 'task_package_inflate.dart';

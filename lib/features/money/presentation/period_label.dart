@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/widgets.dart';
 
-import '../domain/invoice.dart';
 import '../domain/period_label.dart';
 
 export '../domain/period_label.dart';

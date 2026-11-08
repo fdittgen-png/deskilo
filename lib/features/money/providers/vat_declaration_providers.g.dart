@@ -107,7 +107,7 @@ final class SaveVatFilingFileProvider
   }
 }
 
-String _$saveVatFilingFileHash() => r'34982fc36b853ed3a2e9229eacc603db8cda92fa';
+String _$saveVatFilingFileHash() => r'670b6fb4647049d106970c619c360040968a7373';
 
 /// The registers and the annual summary of a Spanish or an Italian space,
 /// read from the issued documents and the returns when a file is asked for.

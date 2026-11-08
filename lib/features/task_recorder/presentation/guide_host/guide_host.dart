@@ -19,6 +19,7 @@
 
 import 'dart:async';
 
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +33,6 @@ import '../../domain/action_registry.dart';
 import '../../domain/recording_reference.dart';
 import '../../guide/guide_runner.dart';
 import '../../guide/guide_session.dart';
-import '../../guide/task_guide.dart';
 import '../ui_capture.dart';
 import 'guide_attention.dart';
 import 'guide_bubble.dart';

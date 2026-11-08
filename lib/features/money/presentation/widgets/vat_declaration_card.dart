@@ -3,6 +3,7 @@
 // #2494 — one saved VAT declaration: its period and stage, its lines, its
 // totals and balance, the filing reference, and the actions the screen
 // passes in. Moved whole from vat_declarations_screen.dart.
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,7 +11,6 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../application/vat_declaration_rows.dart';
-import '../../domain/vat_declaration.dart';
 import '../vat_tax_point_labels.dart';
 
 class VatDeclarationCard extends StatelessWidget {

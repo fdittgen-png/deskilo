@@ -2,8 +2,8 @@
 // Invariant: every city booking and invoice refers to its own people and
 // space, no person or seat is double-booked, and invoice lines and VAT add up.
 import 'package:deskilo/core/demo/demo_fixture.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

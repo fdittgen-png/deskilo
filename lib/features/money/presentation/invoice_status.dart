@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
@@ -6,7 +7,6 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/billing_rules.dart';
-import '../domain/invoice.dart';
 
 /// Where an invoice stands in the 0067 lifecycle. Derived from the
 /// document plus its match — ONE definition, used by the archive rows,

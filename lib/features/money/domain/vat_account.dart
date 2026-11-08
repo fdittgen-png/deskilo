@@ -7,11 +7,11 @@
 // account and the return can never disagree: its output total is box 1
 // and its input total box 4 of the VAT100.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/text/csv.dart';
 import 'archive_bundle.dart';
-import 'vat_declaration.dart';
 
 /// One period of the VAT account.
 @visibleForTesting

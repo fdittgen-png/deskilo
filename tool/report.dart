@@ -20,12 +20,12 @@ import 'dart:typed_data';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_conformance.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_model.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_units.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_xml.dart';
 import 'package:deskilo/features/money/domain/report_layout/pdf_geometry.dart';
 import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/layout_xml.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<void> main(List<String> argv) async {

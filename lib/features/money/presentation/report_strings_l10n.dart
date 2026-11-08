@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
-import '../domain/report_strings.dart';
 
 /// #1061 — the ONE place a document's words are read out of the ARB.
 /// Every value here is exactly the `l10n?.x ?? 'default'` the builders

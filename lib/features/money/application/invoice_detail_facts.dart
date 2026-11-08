@@ -3,8 +3,9 @@
 // #2494 — what an invoice's detail sheet says beyond the figures: which
 // notes the issuer sees, who the document is billed to, and which trail
 // sections apply. The sheet maps over these values; it decides nothing.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../domain/billing_rules.dart';
-import '../domain/invoice.dart';
 
 class InvoiceDetailFacts {
   const InvoiceDetailFacts({

@@ -6,7 +6,7 @@
 // on one account would be taxed at the wrong rate. A document of one
 // account is one booking, as before. Expectations by hand.
 import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';

@@ -14,7 +14,6 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/export/docx_output_generator.dart';
 import 'package:deskilo/features/task_recorder/export/output_registry.dart';
@@ -23,6 +22,7 @@ import 'package:deskilo/features/task_recorder/package/task_output.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard_builder.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

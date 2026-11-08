@@ -19,8 +19,7 @@ import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

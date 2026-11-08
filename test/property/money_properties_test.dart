@@ -18,7 +18,7 @@ import 'dart:math';
 import 'package:deskilo/core/format/cents.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// One fixed seed, so a failure here is a failure for everybody.

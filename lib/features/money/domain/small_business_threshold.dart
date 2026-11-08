@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/vat/tax_reference_active.dart';
-import 'invoice.dart';
 
 /// #2440 — when the turnover of an exempt (small-business) seller leaves
 /// the exemption.

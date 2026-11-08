@@ -16,7 +16,6 @@ import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/task_recorder/application/workbench_import.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/package/task_output.dart';
 import 'package:deskilo/features/task_recorder/package/task_package.dart';
@@ -25,6 +24,7 @@ import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart
 import 'package:deskilo/features/task_recorder/storyboard/storyboard.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard_preview.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

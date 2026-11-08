@@ -2,7 +2,9 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,14 +27,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/vat_declaration_rows.dart';
-import '../../domain/invoice_legal.dart';
-import '../../domain/vat_declaration.dart';
-import '../../domain/vat_declaration_period.dart';
 import '../../domain/vat_declaration_report.dart';
-import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
-import '../invoice_actions.dart' show requireWorkspaceTaxReference, watchWorkspaceTaxReference;
+import '../invoice_actions.dart' show requireWorkspaceTaxReference, watchWorkspaceTaxReference, workspaceTaxReference;
 import '../invoice_documents.dart';
 import '../recapitulative_actions.dart';
 import '../report_actions.dart';
@@ -108,12 +106,14 @@ class _VatDeclarationsScreenState
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final dateFormat = DateFormat.yMMMd(l10n.localeName);
+    final reference = requireWorkspaceTaxReference(ref);
     return vatDeclarationReportData(
       declaration: declaration,
+      reference: reference,
       workspaceName: workspace?.name ?? '',
       vatId: workspace?.vatId ?? '',
       countryCode: workspace?.countryCode ?? '',
-      disclaimer: '${_basisNote(l10n, requireWorkspaceTaxReference(ref))} '
+      disclaimer: '${_basisNote(l10n, reference)} '
           '${l10n.vatDeclDisclaimer}',
       statusLabel: _statusLabel(l10n, declaration),
       rate: (value) => '${NumberFormat.decimalPattern(l10n.localeName).format(value)} %',
@@ -141,6 +141,12 @@ class _VatDeclarationsScreenState
   Future<void> _exportXml(VatDeclaration declaration) async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
+    // Read once, before the guarded action: the export states this reference.
+    final reference = workspaceTaxReference(ref);
+    if (reference == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
+    }
     await runGuarded(
       context,
       domain: 'money',
@@ -152,6 +158,7 @@ class _VatDeclarationsScreenState
           workspaceName: workspace?.name ?? '',
           vatId: workspace?.vatId ?? '',
           countryCode: workspace?.countryCode ?? '',
+          reference: reference,
         );
         final start =
             declaration.periodStart.toIso8601String().substring(0, 10);

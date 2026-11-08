@@ -4,6 +4,7 @@
 // a form that creates a NEW version of a value (never edits one) and the
 // history of a value. One typed form per domain; the server validates the
 // shape again.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import '../../../../core/vat/threshold_effects.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/einvoice_mandates.dart';
-import '../../domain/vat_rate.dart';
 import 'tax_reference_component_fields.dart';
 import 'tax_reference_gate_fields.dart';
 import 'tax_reference_labels.dart';

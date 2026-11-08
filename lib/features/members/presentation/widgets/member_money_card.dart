@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,6 @@ import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../money/domain/invoice.dart';
 import '../../../money/domain/ledger_entry.dart';
 import '../../../money/domain/member_account.dart';
 import '../../../money/presentation/widgets/account_card.dart';

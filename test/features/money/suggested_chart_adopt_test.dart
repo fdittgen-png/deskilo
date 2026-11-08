@@ -6,7 +6,7 @@
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/features/money/application/save_book_profile.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

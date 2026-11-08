@@ -6,7 +6,6 @@
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
@@ -14,9 +13,9 @@ import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_evidence_providers.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

@@ -9,8 +9,10 @@
 // BuildContext, no WidgetRef, no Flutter. The gatherers that fill the
 // facts from the providers are presentation/report_facts_of.dart; the
 // widget boundary for the words is presentation/report_strings_l10n.dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
@@ -18,14 +20,10 @@ import '../../../core/i18n/money_format.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
-import 'invoice_clauses.dart';
-import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
 import 'invoice_sales_tax.dart';
 import 'period_label.dart';
 import 'stamp_duty.dart';
-import 'vat_compliance.dart';
-import 'vat_components.dart';
 
 /// The LEGAL mention variables (#480) shared by every document's data
 /// model: the seller's statutory lines and the payment clauses. Which

@@ -27,11 +27,10 @@
 // the DGFiP external specification's flows 10.1-10.4; the field names a
 // given plateforme agréée maps from it are its own, and the live
 // round-trip waits on a PA sandbox.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:xml/xml.dart';
-
-import 'vat_tax_point.dart';
 
 /// Who bought, as e-reporting sorts it.
 enum _Kind {

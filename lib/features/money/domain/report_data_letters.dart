@@ -6,6 +6,7 @@
 // `ReportStrings`, their facts and what they describe — no BuildContext,
 // no WidgetRef, no Flutter. The invoice builders and the legal mentions
 // they share are report_data.dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
@@ -16,13 +17,10 @@ import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
 import 'fee_band.dart';
-import 'invoice.dart';
-import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
 import 'ledger_entry.dart';
 import 'report_data.dart';
 import 'report_facts.dart';
-import 'report_strings.dart';
 import 'statement.dart';
 
 /// The statement data model (#476): the member's monthly summary as

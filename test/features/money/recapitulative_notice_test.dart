@@ -9,10 +9,9 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/presentation/widgets/recapitulative_notice.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

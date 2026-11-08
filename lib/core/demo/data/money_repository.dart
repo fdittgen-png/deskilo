@@ -24,9 +24,9 @@ import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../features/money/domain/reminder_evidence.dart';
 import 'event_repository.dart';

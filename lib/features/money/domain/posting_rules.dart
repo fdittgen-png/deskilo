@@ -26,13 +26,11 @@
 // A qualified role resolves first and falls back to its base; a base with
 // no mapping blocks with the role named. Nothing is guessed.
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'accounting_view.dart';
 import 'book_chart.dart';
-import 'invoice.dart';
-import 'invoice_line_cash.dart';
-import 'vat_rate.dart';
-import 'vat_tax_point.dart';
 
 /// The issuer's chart a posting resolves on.
 class PostingBook {

@@ -11,6 +11,8 @@
 // Outputs (Word, storyboard, video) come from the generator registry
 // and are offered only where the platform can make them.
 
+import 'package:deskilo_task_recording/recording_edit.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,8 +25,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
-import '../../domain/recording_edit.dart';
-import '../../domain/task_recording.dart';
 import '../../export/task_document.dart' show recordingRevision;
 import '../../guide/guide_compiler.dart';
 import '../../offline/offline_card.dart';

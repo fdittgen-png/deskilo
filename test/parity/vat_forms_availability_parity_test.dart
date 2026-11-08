@@ -6,9 +6,10 @@
 // of the boxes is pinned by `vat_form_boxes_golden`), which form a country
 // files for a period, and which features ADR 0043 makes available in which
 // country. Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
-import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'parity_golden.dart';
@@ -32,7 +33,7 @@ void main() {
   test('the form catalogue, the form a country files and the features by '
       'country are what they were', () {
     final catalogue = StringBuffer();
-    for (final f in vatFormCatalogue) {
+    for (final f in vatFormCatalogueOn(ActiveTaxReference.current)) {
       catalogue.writeln('## ${f.country} | ${f.name} | ${isoDay(f.validFrom)}');
       for (final b in f.boxes) {
         catalogue.writeln(_box(b));
@@ -57,7 +58,7 @@ void main() {
         DateTime(2024, 12, 31),
         DateTime(2026, 3, 31),
       ]) {
-        final spec = vatFormSpecFor(country, end);
+        final spec = vatFormSpecFor(country, end, reference: ActiveTaxReference.current);
         picked.writeln(
           '${country.isEmpty ? '(none)' : country} | ${isoDay(end)} | '
           '${spec == null ? '-' : '${spec.country} ${spec.name} ${isoDay(spec.validFrom)}'}',

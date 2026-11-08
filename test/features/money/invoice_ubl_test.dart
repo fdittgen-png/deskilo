@@ -8,12 +8,8 @@
 // tax id and no rate outside the scope of VAT), BR-E-02/05/10 (VAT id,
 // zero rate and an exemption reason when exempt).
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

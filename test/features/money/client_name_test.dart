@@ -11,8 +11,8 @@
 // payment"). The company was frozen beside it the whole time.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice({

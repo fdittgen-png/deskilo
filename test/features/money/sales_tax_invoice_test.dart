@@ -11,14 +11,12 @@ import 'dart:typed_data';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_sales_tax.dart';
 import 'package:deskilo/features/money/domain/invoice_sales_tax.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 

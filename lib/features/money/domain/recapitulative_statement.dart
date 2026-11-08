@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import '../../../core/vat/place_of_supply.dart';
 
 /// #2354 — one line of the recapitulative statement (EU sales list):
 /// the services a seller reverse-charged (category AE, Directive art. 196)

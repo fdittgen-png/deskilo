@@ -8,13 +8,13 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../core/files/xlsx.dart';
-import '../domain/invoice.dart';
 import '../domain/vat_annual_summary.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import '../domain/vat_register_es.dart';
 import '../domain/vat_register_es_347.dart';
@@ -159,9 +159,16 @@ class VatRegisterFiles {
     required int year,
     required List<String> header,
   }) async {
+    final data = reference;
+    if (data == null) return null;
     final party = _party;
     final returns = await declarations();
-    final summary = vatAnnualSummary(party.countryCode, year, returns);
+    final summary = vatAnnualSummary(
+      party.countryCode,
+      year,
+      returns,
+      reference: data,
+    );
     if (summary == null) return null;
     return (
       fileName: 'vat-annual-summary-$year.xlsx',

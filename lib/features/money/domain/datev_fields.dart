@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'datev.dart';
-import 'invoice.dart';
 
 /// #2365 — DATEV's field limits: `Belegfeld 1` holds 36 characters and
 /// `Buchungstext` 60. The importer rejects the row, or the whole stack,

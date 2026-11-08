@@ -27,7 +27,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/vat_input.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _receipts = {'seller_country': 'FR', 'vat_exigibility': 'payment'};

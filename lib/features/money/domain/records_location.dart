@@ -11,12 +11,12 @@
 // EU member state (§ 146 Abs. 2a AO), elsewhere only with the tax office's
 // permission (Abs. 2b); membership is the tax reference store's.
 // Pure Dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show isEuCountry;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
-import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 
 /// The platform setting the operator declares the hosting country in.
 const String _hostingCountryKey = 'records.hosting_country';

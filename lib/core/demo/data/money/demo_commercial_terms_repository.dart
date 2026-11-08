@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/domain/commercial_terms_repository.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../money_repository.dart';
 

@@ -7,6 +7,7 @@
 
 import 'dart:typed_data';
 
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/task_recording.dart';
 import '../../package/task_output.dart';
 import '../../providers/recorder_providers.dart';
 import '../../storyboard/storyboard.dart';

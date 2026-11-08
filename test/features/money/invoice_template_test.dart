@@ -370,9 +370,9 @@ void main() {
 
   testWidgets('the e-invoice XML builders take no template — structural '
       'guarantee the XML stays untouched (#454)', (tester) async {
-    final cii = File('lib/features/money/domain/invoice_cii.dart')
+    final cii = File('packages/deskilo_invoice_model/lib/src/invoice_cii.dart')
         .readAsStringSync();
-    final ubl = File('lib/features/money/domain/invoice_ubl.dart')
+    final ubl = File('packages/deskilo_invoice_model/lib/src/invoice_ubl.dart')
         .readAsStringSync();
     expect(cii, isNot(contains('InvoicePdfTemplate')));
     expect(ubl, isNot(contains('InvoicePdfTemplate')));

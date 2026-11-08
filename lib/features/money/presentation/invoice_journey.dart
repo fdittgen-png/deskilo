@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/time/calendar_days.dart';
 import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
-import '../domain/invoice.dart';
 import 'invoice_status.dart';
 
 /// #812 — the four steps every invoice walks through, in order. The same

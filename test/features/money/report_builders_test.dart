@@ -7,11 +7,9 @@
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/domain/report_facts.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
@@ -19,6 +17,7 @@ import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 

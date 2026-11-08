@@ -3,6 +3,7 @@
 // #1061 slice two — the ONLY place the document facts are read from the
 // providers. Each gatherer is the `ref.read` prelude its builder used to
 // carry, moved out unchanged, so the builder is a pure function.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/time/clock.dart';
@@ -20,10 +21,8 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/fee_band.dart';
-import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/package.dart';
-import '../domain/payment_terms.dart';
 import '../domain/report_data_sample.dart';
 import '../domain/report_facts.dart';
 import '../domain/service_item.dart';

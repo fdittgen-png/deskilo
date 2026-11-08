@@ -15,13 +15,13 @@
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/storyboard/png_safety.dart';
 import 'package:deskilo/features/task_recorder/storyboard/safe_scene.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard_builder.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

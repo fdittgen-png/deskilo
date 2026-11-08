@@ -13,10 +13,9 @@
 // hand-worked tests over them keep their figures.
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 const seededCompany = InvoiceParty(

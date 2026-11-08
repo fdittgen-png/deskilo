@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/files/file_saver.dart';
@@ -6,8 +8,6 @@ import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_vat_filing_file.dart';
 import '../application/vat_register_files.dart';
-import '../domain/invoice_legal.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import 'money_providers.dart';
 
@@ -33,6 +33,7 @@ SaveVatFilingFile saveVatFilingFile(Ref ref) {
   return SaveVatFilingFile(
     ref.watch(fileSaverProvider),
     clock.now,
+    reference: reference,
     // No party until the workspace's own tax reference is ready: the basis
     // the file is stated on comes from it.
     party: w == null || reference == null

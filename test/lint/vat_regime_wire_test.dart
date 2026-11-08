@@ -6,7 +6,7 @@
 // and the app read as "not subject" (#2331). This pins all three together.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/setup/page_sources.dart';

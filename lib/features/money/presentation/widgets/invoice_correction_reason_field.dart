@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/vat_compliance.dart';
 
 /// #2440 — RD 1619/2012 art. 15: the reason (R1-R5) a Spanish seller gives
 /// for a correcting invoice. The issue form shows it only when the server's

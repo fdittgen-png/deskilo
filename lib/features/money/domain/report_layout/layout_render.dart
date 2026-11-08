@@ -15,6 +15,9 @@
 // recipient read from the invoice data map, and the band-markup bridge.
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/layout_xml.dart';
 import 'package:deskilo_document_pdf/deskilo_document_pdf.dart' as doc;
 import 'package:liquify/liquify.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -22,9 +25,6 @@ import 'package:pdf/widgets.dart' as pw;
 import '../invoice_pdf_template.dart';
 import '../invoice_report.dart';
 import '../report_block_widgets.dart';
-import 'layout_model.dart';
-import 'layout_units.dart';
-import 'layout_xml.dart';
 
 export 'package:deskilo_document_pdf/deskilo_document_pdf.dart'
     show layoutImageNames;

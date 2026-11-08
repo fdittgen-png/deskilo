@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
-import '../domain/invoice.dart';
 
 /// Glue between the workspace's editable legal identity and the frozen
 /// party an e-invoice needs — the domain stays free of workspace types.

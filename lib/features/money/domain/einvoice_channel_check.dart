@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'einvoice_format.dart';
-import 'invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// #2358 — one thing a CHANNEL needs that the bare EN 16931 file does
 /// not: the download stays valid without it, but the network refuses the

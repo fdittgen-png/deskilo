@@ -8,7 +8,6 @@
 import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/sales_kpi_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/room_rental.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
@@ -19,6 +18,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/bi_module_section.dart';
 import 'package:deskilo/features/workspace/providers/bi_sales_reader.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _ids = [

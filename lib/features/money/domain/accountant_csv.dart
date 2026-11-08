@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/text/csv.dart';
 import 'billing_rules.dart';
-import 'invoice.dart';
-import 'vat_components.dart';
-import 'vat_rate.dart';
 
 /// A plain, self-describing CSV of the period's invoices and settlements
 /// (#669) — for the ten supported countries that mandate no particular

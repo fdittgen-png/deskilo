@@ -8,10 +8,11 @@
 // field"), or the screen seam's own action. Never raw text that is not
 // an app message, never a recorded value.
 
+import 'package:deskilo_task_recording/task_guide.dart';
+
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/action_registry.dart';
 import '../../domain/recording_reference.dart';
-import '../../guide/task_guide.dart';
 import '../recorder_labels.dart';
 import '../ui_labels.g.dart';
 

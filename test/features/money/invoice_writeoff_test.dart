@@ -4,8 +4,8 @@
 // tab — the remainder is owed — until the outstanding amount is
 // cancelled through the VALIDATION framework. Only the validated
 // write-off archives it.
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -5,11 +5,11 @@
 // remains usable, and an already-open form is preserved when highlighting.
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
-import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
 import 'package:deskilo/features/task_recorder/presentation/guide_host/guide_host.dart';
 import 'package:deskilo/features/task_recorder/presentation/guide_host/guide_step_text.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -4,10 +4,9 @@
 // was a function of `vat_declaration.dart`; split out so the declaration model
 // (lines, boxes, forms, XML) no longer imports the invoice model and can move
 // into a package of its own.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
-
-import 'vat_declaration.dart';
-import 'vat_tax_point.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 /// Aggregates a period's ISSUED invoices into declaration lines — the
 /// tax-point engine on the invoice-date rule (`vat_tax_point.dart`),

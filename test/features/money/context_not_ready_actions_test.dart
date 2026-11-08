@@ -8,7 +8,6 @@ import 'dart:async';
 
 import 'package:deskilo/core/trace/guarded.dart';
 import 'package:deskilo/core/trace/workspace_context_not_ready.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_pdf_actions.dart';
 import 'package:deskilo/features/money/presentation/invoice_proforma.dart';
 import 'package:deskilo/features/money/presentation/recapitulative_actions.dart';
@@ -17,6 +16,7 @@ import 'package:deskilo/features/money/presentation/widgets/template_live_data.d
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #2494 — the money, booking, customer and billing rows and the quick actions
 // of the member profile. Split out of member_page (was a part file).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/vat/vat_treatment.dart';
+
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/member_billing_tiles.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';

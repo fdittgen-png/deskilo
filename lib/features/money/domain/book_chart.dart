@@ -14,10 +14,10 @@
 // bank are mapped for its first day. The server enforces the same rules
 // (0338).
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/vat/tax_reference_active.dart';
-import 'vat_regime.dart';
 
 // The vocabulary moved into the kernel (#3376); importers of this file keep
 // reading it here until the sweep rewrites them.

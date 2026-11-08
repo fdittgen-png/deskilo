@@ -10,7 +10,7 @@
 // rows.
 import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice({

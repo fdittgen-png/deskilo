@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../../../features/money/domain/bank/bank_file.dart';
 import '../../../features/money/domain/bank/bank_match.dart';
 import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
-import '../../../features/money/domain/swiss_qr_bill.dart';
 import 'bank_reconciliation_fixture.dart';
 import 'bank_statement_repository.dart';
 import 'money_repository.dart';

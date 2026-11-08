@@ -14,11 +14,12 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -281,8 +282,7 @@ void main() {
           legalId: '',
         ),
         now: DateTime(2026, 10, 2),
-        facts: const VatFilingFacts(),
-      );
+        facts: const VatFilingFacts(), reference: ActiveTaxReference.current,);
       final artifact = add.build(add.validate(context).filing!);
       expect(artifact.fileName, 'modelo-303-2026-07-01.txt');
       expect(artifact.mediaType, contains('iso-8859-1'));

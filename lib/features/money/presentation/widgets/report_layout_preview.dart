@@ -15,11 +15,11 @@
 // strip separately rather than paginating, which the PDF does.
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/layout_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/address_window.dart';
 import '../../domain/invoice_report.dart';
-import '../../domain/report_layout/layout_model.dart';
 import 'report_page_style.dart';
 import 'report_preview.dart';
 

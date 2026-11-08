@@ -5,11 +5,11 @@
 // same effect when none applies. The payment's part of the match goes (the
 // whole match when it was the last payment), the payment credit stays, the
 // undoing is a record on the timeline and is not a payment.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/bank/bank_records.dart';
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import 'money_repository.dart';
 

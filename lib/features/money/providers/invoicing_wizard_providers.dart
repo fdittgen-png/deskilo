@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/invoice.dart';
 import '../domain/invoicing_wizard.dart';
 import 'money_providers.dart';
 

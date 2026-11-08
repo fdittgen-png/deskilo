@@ -7,12 +7,12 @@
 // rows per file, dates in the organisation's order. Xero imports the file
 // as draft invoices, which the export says. Credit notes have a template
 // of their own in Xero and are not written here; the export names them.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/text/csv.dart';
-import 'invoice.dart';
 
 /// The columns of Xero's sales-invoice import template as Xero documents
 /// them, in their order (Import customer invoices). Xero asks that the

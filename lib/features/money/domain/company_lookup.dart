@@ -11,10 +11,10 @@
 //
 // A registry's own response shape never reaches this file: the edge
 // function's adapter speaks it and answers in these terms.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
-import '../../../core/vat/place_of_supply.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
 /// What kind of identifier a person typed.

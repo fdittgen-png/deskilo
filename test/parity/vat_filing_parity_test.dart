@@ -15,9 +15,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'parity_golden.dart';
@@ -350,8 +351,7 @@ void main() {
           return fileName;
         },
         () => _now,
-        party: c.party,
-      );
+        party: c.party, reference: ActiveTaxReference.current,);
       try {
         await save(c.declaration, facts: c.facts);
         final file = saved.single;

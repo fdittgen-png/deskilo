@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_task_recording/task_guide.dart';
+
 import '../domain/action_registry.dart';
 import '../domain/recording_reference.dart';
-import 'task_guide.dart';
 
 export '../domain/recording_reference.dart';
 

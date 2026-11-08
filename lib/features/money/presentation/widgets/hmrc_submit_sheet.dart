@@ -6,6 +6,7 @@
 // receipt from HMRC files the return; an unconfirmed answer files nothing.
 // Web builds only (HMRC's connection method WEB_APP_VIA_SERVER); other builds
 // say to use the web app.
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,9 +19,9 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/hmrc_submission.dart';
 import '../../domain/mtd_boxes.dart';
-import '../../domain/vat_declaration.dart';
 import '../../providers/hmrc_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference, watchWorkspaceTaxReference;
 
 /// The sheet's button on a prepared UK return.
 Widget hmrcSubmitButton(
@@ -121,6 +122,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
           declaration: widget.declaration,
           connection: connection,
           client: client,
+          reference: requireWorkspaceTaxReference(ref),
           recoveryMarker: marker,
         ),
         // The port never throws; if something still does, the post may have
@@ -141,7 +143,9 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
       }
     });
     final state = ref.watch(hmrcStateProvider(workspaceId));
-    final cents = mtdBoxCents(widget.declaration);
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const SizedBox.shrink();
+    final cents = mtdBoxCents(widget.declaration, reference: reference);
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(

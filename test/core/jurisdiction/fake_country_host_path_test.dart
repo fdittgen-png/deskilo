@@ -10,10 +10,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/fake_vat_filing.dart';
@@ -69,8 +70,7 @@ SaveVatFilingFile _save(_Saver saver, {bool withFake = false}) =>
       party: _party,
       installed: withFake
           ? [...installedVatFilings, const FakeVatFilingContribution('ZZ')]
-          : null,
-    );
+          : null, reference: ActiveTaxReference.current,);
 
 void main() {
   test('a country registered only in a test composition is saved through the '

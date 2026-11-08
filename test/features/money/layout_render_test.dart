@@ -13,9 +13,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/address_window.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_model.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_units.dart';
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 

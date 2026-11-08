@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,15 +26,10 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/channel_einvoice_xml.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
-import '../domain/einvoice_format.dart';
 import '../domain/einvoice_gateway.dart';
-import '../domain/einvoice_input.dart';
 import '../domain/einvoice_mandates.dart';
 import '../domain/einvoice_validation.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
-import '../domain/invoice_ubl.dart';
-import '../domain/invoice_ubl_check.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart'

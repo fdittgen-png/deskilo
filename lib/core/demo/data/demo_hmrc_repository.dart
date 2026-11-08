@@ -11,12 +11,13 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../features/money/domain/hmrc_submission.dart';
 import '../../../features/money/domain/mtd_boxes.dart';
-import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../seed/demo_london_seed.dart';
+import 'book_profile_repository.dart' show demoTaxReference;
 import 'money_repository.dart';
 import 'workspace_repository.dart';
 
@@ -142,7 +143,7 @@ class DemoHmrcRepository implements HmrcRepository {
     if (declaration.lines.any((l) => l.isAcquisition)) {
       return const HmrcRefused(HmrcRefusal.acquisitionNotSupported);
     }
-    final server = mtdBoxCents(declaration);
+    final server = mtdBoxCents(declaration, reference: demoTaxReference());
     for (final field in mtdBoxFields) {
       final s = sent[field];
       if (s == null || (s * 100).round() != server[field]) {

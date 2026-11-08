@@ -4,11 +4,11 @@
 // country's legal rule first, then only the options that country's law
 // allows (France's debits, a cash scheme elsewhere). It decides which
 // period a declaration covers, and it is printed on every invoice.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../domain/vat_tax_point.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 

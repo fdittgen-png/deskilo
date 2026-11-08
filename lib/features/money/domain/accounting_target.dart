@@ -11,9 +11,9 @@
 // [AccountingCapability], keyed by the target id.
 
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show isEuCountry;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 
-import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
 

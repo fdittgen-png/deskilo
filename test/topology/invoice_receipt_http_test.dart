@@ -17,7 +17,7 @@ import 'package:deskilo/features/money/data/supabase_invoice_commands.dart';
 import 'package:deskilo/features/money/data/supabase_invoice_queries.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';

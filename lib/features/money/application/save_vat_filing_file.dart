@@ -5,10 +5,11 @@
 // form boxes and saved where the device keeps downloads. Nothing is
 // transmitted; the owner hands the file to the channel that files it.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../core/files/file_saver.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import 'jurisdiction/filing_context_builder.dart';
 import 'jurisdiction/installed_vat_filings.dart';
@@ -18,6 +19,7 @@ class SaveVatFilingFile {
     this._save,
     this._now, {
     required this.party,
+    required this.reference,
     List<VatFilingContribution>? installed,
   }) : _installed = installed ?? installedVatFilings;
 
@@ -28,6 +30,10 @@ class SaveVatFilingFile {
 
   /// The space that files, or null before it is loaded.
   final VatFilingParty? party;
+
+  /// The workspace's tax reference the file is stated on, or null while its
+  /// context is not ready.
+  final TaxReferenceSet? reference;
 
   /// The country whose file this space can save, else null: the add-on the
   /// resolver chooses for the space's country (never a fallback country).
@@ -53,7 +59,10 @@ class SaveVatFilingFile {
     VatFilingFacts facts = const VatFilingFacts(),
   }) {
     final party = this.party;
-    if (party == null) throw StateError('no workspace loaded');
+    final reference = this.reference;
+    if (party == null || reference == null) {
+      throw StateError('no workspace loaded');
+    }
     final resolution = _resolve(party);
     if (resolution is! Resolved) {
       throw UnsupportedError('no filing file for ${party.countryCode}');
@@ -65,6 +74,7 @@ class SaveVatFilingFile {
         party: party,
         now: _now(),
         facts: facts,
+        reference: reference,
       ),
     );
     final filing = checked.filing;

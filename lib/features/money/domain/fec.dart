@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
@@ -8,9 +9,8 @@ import 'euro_format.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
 import 'fec_writer.dart';
-import 'invoice.dart';
 import 'ledger_entry.dart';
-import 'vat_tax_point.dart';
+
 export 'fec_accounts.dart';
 
 /// Journal codes and labels. Two journals are enough for an invoicing-only

@@ -14,6 +14,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +26,6 @@ import '../../domain/action_registry.dart' show uiRoutes;
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_destination.dart';
 import '../../guide/guide_session.dart';
-import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
 import '../guide_host/guide_step_text.dart'
     show guideDestinationLabel, guideStepText;

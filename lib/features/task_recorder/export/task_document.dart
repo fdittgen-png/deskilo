@@ -15,9 +15,10 @@
 // A note is the one place a person's own words can appear. It is left
 // out unless the export explicitly includes notes, and when included it
 // is labelled as that person's words.
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import '../storyboard/storyboard.dart';
 import '../storyboard/storyboard_pictures.dart';

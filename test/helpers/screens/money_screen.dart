@@ -7,6 +7,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../fake_event_repository.dart';
@@ -18,6 +19,7 @@ Future<FakeMoneyRepository> pumpMoney(
   FakeMoneyRepository? money,
   FakeEventRepository? events,
   FakeWorkspaceRepository? workspace,
+  List<Override> extraOverrides = const [],
 }) async {
   // Portrait viewport (#284 idiom): the 800×600 default is LANDSCAPE and
   // would engage the money split; feature tests exercise the column.
@@ -38,7 +40,7 @@ Future<FakeMoneyRepository> pumpMoney(
         money: money,
         events: events,
         workspace: workspace,
-      ),
+      ).followedBy(extraOverrides).toList(),
       child: const DeskiloApp(),
     ),
   );

@@ -9,15 +9,15 @@
 // rather than showing a blank page.
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../domain/report_layout/layout_model.dart';
 import '../../domain/report_layout/layout_render.dart';
-import '../../domain/report_layout/layout_units.dart';
 import '../../providers/money_providers.dart';
 import 'report_layout_preview.dart';
 import 'report_page_style.dart';

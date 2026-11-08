@@ -7,7 +7,7 @@ import 'package:archive/archive.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _inv(String number, DateTime at, int total, {String replaces = ''}) => Invoice(

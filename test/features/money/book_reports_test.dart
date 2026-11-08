@@ -15,11 +15,11 @@ import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/book_report_actions.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/vat_report_actions.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

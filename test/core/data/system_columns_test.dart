@@ -3,8 +3,8 @@
 // #992 — the six system columns as one value: read tolerantly, equal by
 // value, never written by the client, and a breach of the server's
 // invariant reported rather than trusted.
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

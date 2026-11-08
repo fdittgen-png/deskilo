@@ -8,11 +8,12 @@
 // this build does not know becomes the localized "cannot describe"
 // label, never the identifier itself, so an imported recording cannot
 // put its own text into the document through an id.
+import 'package:deskilo_task_recording/step_values.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
 import '../domain/safe_payload.dart';
-import '../domain/step_values.dart';
-import '../domain/task_recording.dart';
 
 /// Localized labels for one recording export.
 class TaskExportLabels {

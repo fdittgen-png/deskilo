@@ -5,12 +5,11 @@
 // accountant's view beside the declaration. Nothing is re-aggregated
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/text/csv.dart';
-import 'invoice.dart';
-import 'vat_tax_point.dart';
 
 /// One invoice × one rate.
 class VatReportPosition {

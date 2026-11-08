@@ -15,8 +15,8 @@
 // (`vat_return_entries`, written by each filing — including the
 // corrections it carried, so a change is corrected once).
 // `vat_return_parity_test.dart` pins both to one fixture.
-import 'vat_declaration.dart';
-import 'vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 /// A filed return's period: the tax points inside it are locked.
 class VatPeriodLock {

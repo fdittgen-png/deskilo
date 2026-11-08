@@ -7,8 +7,8 @@
 // or a sample the script never runs, would make the claim a decoration.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_validation.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/einvoice_samples.dart';

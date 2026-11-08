@@ -17,11 +17,12 @@
 // one-active-invoice-per-member-and-month rule (0067) is what makes the
 // archive an answer. A change of the selected workspace or account since
 // does not move the look: it reads the captured workspace, or nothing.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';

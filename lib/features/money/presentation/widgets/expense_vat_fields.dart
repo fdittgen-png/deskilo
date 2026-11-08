@@ -8,6 +8,8 @@
 // Where the return has a box for it (the Swiss 383), also whether it was
 // bought from a supplier abroad: its amount is then the base, and the space
 // owes the acquisition tax on it.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -21,16 +23,14 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
-import '../../domain/vat_form_catalogue.dart';
 import '../../domain/vat_input.dart';
-import '../../domain/vat_rate.dart';
-import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 
 /// What the person chose; [share] is the deductible share as typed.
 class ExpenseVatChoice {
-  ExpenseVatChoice(this.share, {this.acquisitionOffered = false});
+  ExpenseVatChoice(this.share, {this.countryCode = ''});
 
   /// #2360 — the choice for an expense of a space in [countryCode]: an
   /// acquisition from
@@ -40,18 +40,14 @@ class ExpenseVatChoice {
     WidgetRef ref,
     String countryCode,
     TextEditingController share,
-  ) => ExpenseVatChoice(
-    share,
-    acquisitionOffered: vatFormTaxesAcquisitions(
-      countryCode,
-      ref.read(clockProvider).now(),
-    ),
-  );
+  ) => ExpenseVatChoice(share, countryCode: countryCode);
 
   final TextEditingController share;
 
-  /// Whether the space may say the expense was bought from abroad.
-  final bool acquisitionOffered;
+  /// The country of the space the expense is for; whether the acquisition is
+  /// offered is asked of the workspace's tax reference WHEN DRAWN, so a sheet
+  /// opened before the context was ready shows it once it is.
+  final String countryCode;
   double? percent;
   bool asset = false;
 
@@ -194,18 +190,32 @@ List<Widget> _flagSwitches(
       refresh();
     },
   ),
-  if (choice.acquisitionOffered)
-    SwitchListTile(
-      key: ValueKey('$keyPrefix-vat-acquisition'),
-      contentPadding: EdgeInsets.zero,
-      title: Text(words.expenseVatAcquisition),
-      subtitle: Text(words.expenseVatAcquisitionHint),
-      value: choice.acquisition,
-      onChanged: (v) {
-        choice.acquisition = v;
-        refresh();
-      },
-    ),
+  Consumer(
+    builder: (context, ref, _) {
+      // Offered only once the workspace's own tax reference is ready, and
+      // where today's return has a box for the tax it then owes.
+      final reference = watchWorkspaceTaxReference(ref);
+      if (reference == null ||
+          !vatFormTaxesAcquisitions(
+            choice.countryCode,
+            ref.read(clockProvider).now(),
+            reference: reference,
+          )) {
+        return const SizedBox.shrink();
+      }
+      return SwitchListTile(
+        key: ValueKey('$keyPrefix-vat-acquisition'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(words.expenseVatAcquisition),
+        subtitle: Text(words.expenseVatAcquisitionHint),
+        value: choice.acquisition,
+        onChanged: (v) {
+          choice.acquisition = v;
+          refresh();
+        },
+      );
+    },
+  ),
 ];
 
 /// « 20 % », in the reader's number format.

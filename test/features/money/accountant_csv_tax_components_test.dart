@@ -8,12 +8,12 @@
 // frozen at issue.
 import 'dart:convert';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accountant_handoff.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_components.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice(
@@ -51,7 +51,7 @@ InvoiceVatTotal _total(double percent, int net, int vat, {String country = ''}) 
       netCents: net,
       vatCents: vat,
       components:
-          country.isEmpty ? const [] : vatComponentsOf(country, percent, net, vat),
+          country.isEmpty ? const [] : vatComponentsOf(country, percent, net, vat, reference: ActiveTaxReference.current),
     );
 
 /// A Texas total: the state's 6.25 % and a city's 2 % of [net].

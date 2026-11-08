@@ -9,9 +9,10 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/submit_expense.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -186,7 +187,7 @@ void main() {
   });
 
   test('the deductible VAT has its own box, apart from the rates', () {
-    final fr = vatFormBoxes('FR', const [_sale, _input]);
+    final fr = vatFormBoxes('FR', const [_sale, _input], reference: ActiveTaxReference.current);
     expect(fr.singleWhere((b) => b.code == '08').vatCents, 2000);
     expect(fr.singleWhere((b) => b.code == '20').vatCents, 3000);
     final de = vatFormBoxes('DE', const [
@@ -198,13 +199,12 @@ void main() {
         invoiceCount: 1,
       ),
       _input,
-    ]);
+    ], reference: ActiveTaxReference.current);
     expect(de.singleWhere((b) => b.code == 'Kz 81').vatCents, 1900);
     expect(de.singleWhere((b) => b.code == 'Kz 66').vatCents, 3000);
     int vat(String country, String code) => vatFormBoxes(
       country,
-      const [_input],
-    ).singleWhere((b) => b.code == code).vatCents;
+      const [_input], reference: ActiveTaxReference.current,).singleWhere((b) => b.code == code).vatCents;
     expect(vat('GB', 'Box 4'), 3000);
     expect(vat('CH', '400'), 3000);
     expect(vat('CA', '106'), 3000);

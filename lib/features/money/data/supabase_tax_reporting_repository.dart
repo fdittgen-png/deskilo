@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/tax_reporting_repository.dart';
-import '../domain/vat_declaration.dart';
-import '../domain/vat_rate.dart';
 
 /// #2591 C3 — VAT rates and returns, with their own client. The bodies are
 /// the ones that lived in the money repository's part files.

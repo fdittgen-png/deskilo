@@ -4,8 +4,8 @@
 // for the tests that read its rows: each member keyed by its id as its
 // number, the rate groups of [country], nothing refused.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String sageOfInvoices(

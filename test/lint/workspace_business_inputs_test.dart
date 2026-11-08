@@ -66,7 +66,9 @@ const _calendarBudget = 55;
 /// `buildSafTFile` join the one wrapper file.
 /// 2026-11-08 (#3402): 18 -> 17, `invoice_ksef_fa3.dart` stops reading it.
 /// 2026-11-08 (#3403): 17 -> 16, the wrapper file is gone.
-const _taxBudget = 16;
+/// 2026-11-08 (#3403): 16 -> 13, the VAT-form wrappers (`vat_declaration`,
+/// `vat_form_catalogue`, `vat_components`) go: callers state the reference.
+const _taxBudget = 13;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');

@@ -19,6 +19,7 @@
 // ([GuideEvents.sink]), recording or not: a guide follows the real
 // action and outcome, never a guess. No guide, no work.
 
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -26,7 +27,6 @@ import '../../../core/validation/pending_validation.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../domain/action_registry.dart';
-import '../domain/step_values.dart';
 import '../guide/guide_session.dart';
 import '../providers/recorder_providers.dart';
 

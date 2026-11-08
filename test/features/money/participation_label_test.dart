@@ -6,11 +6,9 @@
 // association into the VAT-liable trading sector; a non-profit collects
 // a "participation". The owner of the pilot association asked for this
 // in as many words, and the risk is real, so the choice is pinned here.
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/presentation/period_label.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -11,6 +11,7 @@
 // (#2869), through the frame the guide hands in. Every invoice keeps the
 // VAT regime it is issued with, so a new regime is confirmed before it is
 // saved.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,10 +26,8 @@ import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/invoice_legal.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_facts.dart';
-import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 import '../report_facts_of.dart';
 import 'legal_identity_sections.dart';

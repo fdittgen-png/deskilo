@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/tax_reporting_repository.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../book_profile_repository.dart' show demoDayOf, demoTaxReference;
 import '../money_repository.dart';

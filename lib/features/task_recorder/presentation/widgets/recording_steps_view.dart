@@ -4,6 +4,8 @@
 // "leave out" toggle per step. One widget for the private review and the
 // workbench, so a step reads the same wherever it is shown.
 
+import 'package:deskilo_task_recording/task_guide.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,10 +13,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/action_registry.dart';
-import '../../domain/task_recording.dart';
 import '../../guide/guide_compiler.dart';
 import '../../guide/guide_session.dart';
-import '../../guide/task_guide.dart';
 import '../guide_host/guide_step_text.dart' show guideDestinationLabel;
 import '../recorder_labels.dart';
 

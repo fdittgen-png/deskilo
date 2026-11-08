@@ -20,10 +20,11 @@
 
 import 'dart:convert';
 
+import 'package:deskilo_task_recording/task_guide.dart';
+
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
 import 'guide_destination.dart';
-import 'task_guide.dart';
 
 enum GuideIssueCode {
   tooLarge,

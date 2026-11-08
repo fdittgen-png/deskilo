@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'invoice.dart';
-import 'vat_tax_point.dart';
 
 /// One `invoice_matches` row as the app holds it. The same reading for the
 /// invoice list's matches and for the matches of the one fiscal source of an

@@ -8,8 +8,7 @@
 // settled movement is suggested nothing.
 import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/swiss_qr_bill.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice(

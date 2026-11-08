@@ -28,8 +28,6 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/invoice_clauses.dart';
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -40,6 +38,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../tool/setup/page_sources.dart';

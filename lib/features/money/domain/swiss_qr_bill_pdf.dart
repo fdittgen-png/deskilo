@@ -6,10 +6,9 @@
 // and the Swiss cross of 7 x 7 mm in its middle. Sizes and type sizes are
 // those of the SIX guidelines: titles 11 pt, headings 6 pt (receipt) and
 // 8 pt (payment part), values 8 pt and 10 pt, further information 7 pt.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
-import 'swiss_qr_bill.dart';
 
 /// The words of the bill, in the language of the document (the guidelines
 /// define German, French, Italian and English).

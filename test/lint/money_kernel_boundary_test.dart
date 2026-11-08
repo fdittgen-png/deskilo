@@ -12,19 +12,11 @@ import 'lint_sources.dart';
 
 const _root = 'packages/deskilo_money_kernel';
 
-/// The old paths, kept as re-exports until every importer is rewritten.
-const _shims = {
-  'lib/features/money/domain/vat_forms.dart',
-  'lib/features/money/domain/vat_form_boxes.dart',
-  'lib/features/money/domain/vat_form_terms.dart',
-  'lib/features/money/domain/vat_form_catalogue/ca.dart',
-  'lib/features/money/domain/vat_form_catalogue/ch.dart',
-  'lib/features/money/domain/vat_form_catalogue/de.dart',
-  'lib/features/money/domain/vat_form_catalogue/es.dart',
-  'lib/features/money/domain/vat_form_catalogue/fr.dart',
-  'lib/features/money/domain/vat_form_catalogue/gb.dart',
-  'lib/features/money/domain/vat_form_catalogue/it.dart',
-
+/// The one file that only re-exports a package on purpose: the FOSS seam of
+/// push (the app's build picks `deskilo_push` or `deskilo_push_foss` behind it).
+const _exempt = {
+  'lib/core/push/push_connector.dart':
+      'the FOSS seam: the build swaps the package behind one app path',
 };
 
 void main() {
@@ -78,38 +70,43 @@ void main() {
           .map((l) => l.trim())
           .join(' ');
 
-  const package =
-      r'(money_kernel|accounting_interchange|tax_reference|vat_declaration)';
+  // Any package of the app (`deskilo_*`), a barrel or a sub-library, with or
+  // without a `show`/`hide` list, and nothing else in the file.
+  final onlyReExports = RegExp(
+    r"^(?:export 'package:deskilo_\w+/[\w/]+\.dart'"
+    r'(?: (?:show|hide) [\w, ]+)?;\s*)+$',
+  );
 
-  test('a shim only re-exports a package (a hide list names the wrapped functions)', () {
-    final exportRe = RegExp(
-      "^export 'package:deskilo_$package/deskilo_\\1\\.dart'"
-      r'(?: hide [\w, ]+)?;$',
-    );
-    for (final path in _shims) {
-      final code = codeOf(path);
-      expect(
-        exportRe.hasMatch(code),
-        isTrue,
-        reason: '$path holds more than a re-export: $code',
-      );
+  test('the matcher sees every shape of package re-export', () {
+    for (final code in [
+      "export 'package:deskilo_invoice_model/deskilo_invoice_model.dart';",
+      "export 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' hide X;",
+      "export 'package:deskilo_push/deskilo_push.dart' show A, B;",
+      "export 'package:deskilo_task_recording/step_values.dart';",
+      "export 'package:deskilo_a/deskilo_a.dart'; export 'package:deskilo_b/deskilo_b.dart';",
+    ]) {
+      expect(onlyReExports.hasMatch(code), isTrue, reason: code);
+    }
+    for (final code in [
+      "export 'local.dart';",
+      "export 'package:flutter/material.dart';",
+      "export 'package:deskilo_a/deskilo_a.dart'; void f() {}",
+    ]) {
+      expect(onlyReExports.hasMatch(code), isFalse, reason: code);
     }
   });
 
-  test('no other file in lib only re-exports a package', () {
+  test('no file in lib only re-exports a package (#3403)', () {
     final found = <String>{};
-    final exportRe = RegExp(
-      "^export 'package:deskilo_$package/deskilo_\\1\\.dart'"
-      r'(?: hide [\w, ]+)?;$',
-    );
     for (final f in handWrittenDartFiles('lib')) {
-      if (exportRe.hasMatch(codeOf(f.path))) found.add(f.path);
+      if (onlyReExports.hasMatch(codeOf(f.path))) found.add(f.path);
     }
     expect(
       found,
-      _shims,
+      _exempt.keys.toSet(),
       reason:
-          'a new shim is a new dependency to justify; the list only shrinks',
+          'callers import the package; a new shim is a new dependency to '
+          'justify here, with its reason',
     );
   });
 }

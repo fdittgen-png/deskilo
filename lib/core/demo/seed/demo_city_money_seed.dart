@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic monthly invoices and matched payments for city demos.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/invoice_pdf_template.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
-import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../data/money_repository.dart';

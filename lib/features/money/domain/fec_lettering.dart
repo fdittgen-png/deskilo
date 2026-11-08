@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import 'fec_accounts.dart';
-import 'invoice.dart';
-import 'invoice_line_cash.dart';
 
 /// The bank journal's code and name.
 const fecBankJournal = 'BQ';

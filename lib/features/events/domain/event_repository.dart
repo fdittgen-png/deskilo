@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../money/domain/payment_terms.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import 'event_decision.dart';
 import 'validation_policy.dart';
 import 'workspace_event.dart';

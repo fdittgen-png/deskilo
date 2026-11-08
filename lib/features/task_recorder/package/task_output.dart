@@ -16,7 +16,8 @@
 import 'dart:typed_data';
 import 'dart:ui' show Brightness;
 
-import '../domain/task_recording.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../storyboard/storyboard.dart';
 
 /// What an output is, so the workbench can name it in five languages.

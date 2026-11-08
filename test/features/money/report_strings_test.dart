@@ -6,13 +6,12 @@
 // the app renders), and `reportStringsOf` reads every field from the
 // bundle it is given (so a localized document does not silently fall
 // back to English for one field).
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

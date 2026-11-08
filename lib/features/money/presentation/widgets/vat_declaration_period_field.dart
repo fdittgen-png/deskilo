@@ -3,6 +3,7 @@
 // #2357 — how often the workspace files its VAT return, asked on the
 // legal identity beside the tax point, and the words the declarations
 // screen uses for a period of that length.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +12,6 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/vat_declaration_period.dart';
 import '../vat_tax_point_labels.dart';
 
 /// The period's length, as an owner reads it.

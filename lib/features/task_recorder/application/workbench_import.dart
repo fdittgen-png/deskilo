@@ -12,7 +12,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../domain/task_recording.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../domain/task_recording_codec.dart';
 import '../package/storyboard_review.dart';
 import '../package/task_package.dart';

@@ -11,8 +11,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _goldenPath = 'test/features/money/golden/vat_form_boxes_golden.json';
@@ -104,7 +104,7 @@ Map<String, Object?> _capture() {
     for (final p in periods.entries) {
       for (final l in ledgers.entries) {
         golden['$country|${p.key}|${l.key}'] = [
-          for (final b in vatFormBoxes(country, l.value, periodEnd: p.value))
+          for (final b in vatFormBoxes(country, l.value, periodEnd: p.value, reference: ActiveTaxReference.current))
             [
               b.code,
               b.label,

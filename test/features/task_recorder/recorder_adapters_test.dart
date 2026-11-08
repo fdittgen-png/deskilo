@@ -13,10 +13,10 @@ import 'package:deskilo/features/reservations/application/booking_outcome_observ
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/task_recorder/application/booking_observation.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/recording_edit.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/presentation/route_classification.dart';
+import 'package:deskilo_task_recording/recording_edit.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fixtures/recording_fixtures.dart';

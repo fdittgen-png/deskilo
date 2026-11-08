@@ -8,6 +8,7 @@
 // one tap away. The preview splits a sample line into net, VAT and total
 // with the app's own arithmetic (`vatSplit`), at the rate an issued
 // invoice would charge.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,8 +28,6 @@ import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/save_vat_rates.dart';
 import '../../domain/report_data_sample.dart';
 import '../../domain/vat_catalogue.dart';
-import '../../domain/vat_rate.dart';
-import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
 class SetupVatStep extends ConsumerWidget {

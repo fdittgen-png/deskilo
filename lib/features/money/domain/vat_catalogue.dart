@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/vat/tax_reference_active.dart';
-import 'vat_rate.dart';
 
 // #2478 (C2 of #2476) — the rates a country actually charges, so a
 // workspace can start from its own reality instead of typing percentages

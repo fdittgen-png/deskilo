@@ -20,10 +20,11 @@
 // Both lived in a widget. The eligibility rule is pure and now testable
 // as such; the write and its look-up are a class behind a provider, so
 // the sheet resolves no repository.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/trace/trace_logger.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_queries.dart';
 import 'command_failure.dart';

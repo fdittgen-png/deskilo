@@ -2,7 +2,7 @@
 //
 // #2362 -- how an invoice of a seller in the United States reads: prices are
 // quoted net and the tax is stated apart, per jurisdiction, with no VAT wording.
-import 'invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 extension InvoiceSalesTax on Invoice {
   /// Priced by a sales tax: some total carries a jurisdiction.

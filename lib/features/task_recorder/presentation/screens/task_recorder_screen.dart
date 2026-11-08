@@ -11,6 +11,7 @@
 
 import 'dart:async';
 
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +24,6 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/recorder_controller.dart';
 import '../../domain/stored_recording.dart';
-import '../../domain/task_recording.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
 import '../recorder_pages.dart';

@@ -4,8 +4,8 @@
 // postings; missing journal, tax and mapping evidence refuses with names.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';

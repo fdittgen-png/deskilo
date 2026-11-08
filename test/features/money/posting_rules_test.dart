@@ -9,8 +9,7 @@
 // mapped and its base elsewhere; a missing base blocks with its name.
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

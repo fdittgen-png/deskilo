@@ -29,11 +29,12 @@
 /// at exactly that.
 library;
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
-import 'invoice.dart';
 import 'ledger_entry.dart';
 
 /// The export log's format id of the fiscal-year archive.

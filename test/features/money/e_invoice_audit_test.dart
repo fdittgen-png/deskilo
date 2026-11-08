@@ -5,10 +5,7 @@
 // payment terms and due date (BT-20 / BT-9, BR-CO-25), and the
 // readiness gap for a French business buyer without a SIREN.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

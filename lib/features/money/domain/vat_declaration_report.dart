@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // VAT preparation sheets use the same editable report engine as invoices.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
+
 import 'invoice_pdf_template.dart';
-import 'vat_declaration.dart';
 
 /// The localized labels the declaration PDF prints (#534) — passed in so
 /// the domain builder stays l10n-free like the other PDF seams.
@@ -53,6 +55,7 @@ ReportBands defaultVatDeclarationBands(
 
 Map<String, Object?> vatDeclarationReportData({
   required VatDeclaration declaration,
+  required TaxReferenceSet reference,
   required String workspaceName,
   required String vatId,
   required String countryCode,
@@ -93,6 +96,7 @@ Map<String, Object?> vatDeclarationReportData({
       countryCode,
       declaration.lines,
       periodEnd: declaration.periodEnd,
+      reference: reference,
     ))
       {
         'code': box.code,

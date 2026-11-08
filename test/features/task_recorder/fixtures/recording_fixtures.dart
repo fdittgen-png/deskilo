@@ -19,9 +19,10 @@ import 'dart:io';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/recording_sink.dart';
 import 'package:deskilo/features/task_recorder/domain/safe_payload.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
+import 'package:deskilo_task_recording/recording_sink.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../helpers/memory_recorder_log_backend.dart';
 
 /// Synthetic private values. None of them may ever leave the capture

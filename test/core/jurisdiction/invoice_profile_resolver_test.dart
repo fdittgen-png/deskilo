@@ -9,11 +9,8 @@ import 'dart:convert';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/invoice_document_context_builder.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 

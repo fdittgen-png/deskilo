@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2360 — the QR-bill of an invoice: where a Swiss seller's customer pays.
-import 'invoice.dart';
-import 'swiss_qr_bill.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// The QR-bill of [invoice], or null where none applies: the seller is not
 /// Swiss, the document is a proforma, a credit note or voided, the

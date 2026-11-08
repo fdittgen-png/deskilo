@@ -23,12 +23,11 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
-import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
 import 'package:deskilo/features/money/presentation/vat_filing_file_actions.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _now = DateTime.utc(2026, 10, 2, 12);
@@ -98,7 +97,7 @@ class _Saver {
 }
 
 SaveVatFilingFile _save(_Saver saver, VatFilingParty? party) =>
-    SaveVatFilingFile(saver.call, () => _now, party: party);
+    SaveVatFilingFile(saver.call, () => _now, party: party, reference: ActiveTaxReference.current);
 
 CapabilityResolution resolveFor(VatFilingParty party) => resolveCapability(
   JurisdictionOperation.vatFiling,
@@ -225,8 +224,7 @@ void main() {
         declaration: d,
         party: party,
         now: _now,
-        facts: facts,
-      );
+        facts: facts, reference: ActiveTaxReference.current,);
       final artifact = contribution.build(
         contribution.validate(context).filing!,
       );
@@ -299,7 +297,7 @@ void main() {
       final d = _month(country == 'FR' ? 20 : 19);
       final contribution = (resolveFor(party) as Resolved).contribution;
       final checked = contribution.validate(
-        filingContextOf(declaration: d, party: party, now: _now, facts: facts),
+        filingContextOf(declaration: d, party: party, now: _now, facts: facts, reference: ActiveTaxReference.current),
       );
       return contribution.build(checked.filing!).bytes;
     }
