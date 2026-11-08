@@ -127,6 +127,20 @@ void main() {
             legalId: '1234567890TQ0001',
           ),
           'registered, qst but no number': _mentions('CA', vatId: '1', qst: true),
+          'qst charged, legal id, blank vat id (QST only)': _mentions(
+            'CA',
+            legalId: '1234567890TQ0001',
+            qst: true,
+          ),
+          'qst charged, vat id, blank legal id (GST only)': _mentions(
+            'CA',
+            vatId: '123456789rt0001',
+            qst: true,
+          ),
+          'qst not charged, legal id, blank vat id (nothing)': _mentions(
+            'CA',
+            legalId: '1234567890TQ0001',
+          ),
           'registered, no numbers': _mentions('CA'),
           'blank numbers': _mentions('CA', vatId: '  ', legalId: ' ', qst: true),
           'not a number': _mentions('CA', vatId: 'not a number'),
