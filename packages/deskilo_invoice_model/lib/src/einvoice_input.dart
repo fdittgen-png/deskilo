@@ -16,7 +16,7 @@ class EInvoiceInput {
     this.iban = '',
     this.dueDate,
     this.paymentTerms = '',
-    this.reference,
+    required this.reference,
   });
 
   final Invoice invoice;
@@ -35,24 +35,6 @@ class EInvoiceInput {
   /// BT-20 — on what terms the money is due.
   final String paymentTerms;
 
-  /// The tax reference the document is built on. The package has no installed
-  /// snapshot: the application's builders fill it in when null.
-  final TaxReferenceSet? reference;
-
-  /// [reference], or a refusal: a builder without one cannot state the
-  /// exemption mentions or a buyer's EU prefix.
-  TaxReferenceSet get taxReference =>
-      reference ?? (throw const TaxReferenceUnavailable('no tax reference given'));
-
-  /// The same input on [reference].
-  EInvoiceInput withReference(TaxReferenceSet reference) => EInvoiceInput(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    lineText: lineText,
-    iban: iban,
-    dueDate: dueDate,
-    paymentTerms: paymentTerms,
-    reference: reference,
-  );
+  /// The tax reference the document is built on: the workspace's own.
+  final TaxReferenceSet reference;
 }

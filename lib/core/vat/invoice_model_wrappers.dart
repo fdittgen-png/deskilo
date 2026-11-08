@@ -18,12 +18,7 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
     as interchange
     show SafTRequest, SageAccounts, buildSafTFile;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
-    hide buildInvoiceCii,
-    buildInvoiceKsefFa3,
-    buildInvoiceUbl,
-    checkEInvoiceReadiness,
-    defaultExemptionMention,
-    eInvoiceTotalsOf,
+    hide defaultExemptionMention,
     euCountryCode,
     exemptionMentionFor,
     exigibilityMention,
@@ -42,7 +37,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     vatTaxPointPolicy,
     vatTotalsOf;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
-    show LegalClauseSnapshot, buildInvoiceCii, buildInvoiceKsefFa3, buildInvoiceUbl, checkEInvoiceReadiness, defaultExemptionMention, eInvoiceTotalsOf, euCountryCode, euMemberStatesOf, exemptionMentionFor, exigibilityMention, exigibilityOf, exportMention, frozenTaxPointBasis, isEuCountry, legalProfileOf, looksLikeEuVatId, nationalInvoiceMentions, qualifyClauses, reverseChargeMention, supplyVatCategory, taxPointBasisOf, taxPointsOf, vatBreakdownOf, vatTaxPointBasis, vatTaxPointLedger, vatTaxPointPolicy, vatTotalsOf;
+    show LegalClauseSnapshot, defaultExemptionMention, euCountryCode, euMemberStatesOf, exemptionMentionFor, exigibilityMention, exigibilityOf, exportMention, frozenTaxPointBasis, isEuCountry, legalProfileOf, looksLikeEuVatId, nationalInvoiceMentions, qualifyClauses, reverseChargeMention, supplyVatCategory, taxPointBasisOf, taxPointsOf, vatBreakdownOf, vatTaxPointBasis, vatTaxPointLedger, vatTaxPointPolicy, vatTotalsOf;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
@@ -321,55 +316,3 @@ String buildSafTFile(interchange.SafTRequest request) =>
     interchange.buildSafTFile(
       request.withReference(request.reference ?? ActiveTaxReference.current),
     );
-
-/// #3402 -- the document builders: the input carries the reference; when it
-/// carries none, the installed snapshot is filled in.
-String buildInvoiceUbl(
-  EInvoiceInput input, {
-  UblProfile profile = UblProfile.en16931,
-}) => model.buildInvoiceUbl(
-  input.withReference(input.reference ?? ActiveTaxReference.current),
-  profile: profile,
-);
-
-String buildInvoiceCii(EInvoiceInput input) => model.buildInvoiceCii(
-  input.withReference(input.reference ?? ActiveTaxReference.current),
-);
-
-String buildInvoiceKsefFa3(
-  EInvoiceInput input, {
-  DateTime? generatedAt,
-  String systemInfo = 'DesKilo',
-  DateTime? correctedIssuedAt,
-}) => model.buildInvoiceKsefFa3(
-  input.withReference(input.reference ?? ActiveTaxReference.current),
-  generatedAt: generatedAt,
-  systemInfo: systemInfo,
-  correctedIssuedAt: correctedIssuedAt,
-);
-
-EInvoiceTotals eInvoiceTotalsOf({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-}) => model.eInvoiceTotalsOf(
-  invoice: invoice,
-  seller: seller,
-  buyer: buyer,
-  reference: ActiveTaxReference.current,
-);
-
-EInvoiceReadiness checkEInvoiceReadiness({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  String destination = '',
-  String iban = '',
-}) => model.checkEInvoiceReadiness(
-  invoice: invoice,
-  seller: seller,
-  buyer: buyer,
-  destination: destination,
-  iban: iban,
-  reference: ActiveTaxReference.current,
-);
