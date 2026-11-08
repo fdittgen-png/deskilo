@@ -14,6 +14,8 @@ environment:
 
 dependencies:
   crypto: ^3.0.0
+  deskilo_invoice_model:
+    path: ../deskilo_invoice_model
   deskilo_jurisdiction_standards:
     path: ../deskilo_jurisdiction_standards
   deskilo_money_kernel:
@@ -22,6 +24,7 @@ dependencies:
     path: ../deskilo_tax_reference
   deskilo_vat_declaration:
     path: ../deskilo_vat_declaration
+  meta: ^1.16.0
 
 dev_dependencies:
   lints: ^6.0.0

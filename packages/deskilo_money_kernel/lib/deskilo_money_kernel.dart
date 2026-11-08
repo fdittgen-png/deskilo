@@ -11,6 +11,7 @@ export 'src/currencies.dart';
 export 'src/date_text.dart';
 export 'src/fiscal_year.dart';
 export 'src/json_reader.dart';
+export 'src/money_text.dart';
 export 'src/posting.dart';
 export 'src/stable_digest.dart';
 export 'src/system_columns.dart';
