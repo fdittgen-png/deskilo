@@ -25,6 +25,7 @@ dependencies:
   deskilo_vat_declaration:
     path: ../deskilo_vat_declaration
   meta: ^1.16.0
+  xml: ^6.6.1
 
 dev_dependencies:
   lints: ^6.0.0

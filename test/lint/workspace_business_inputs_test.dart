@@ -62,7 +62,9 @@ const _calendarBudget = 55;
 /// context with them.
 /// 2026-11-08 (#3402): 22 -> 19, the invoice model's wrappers collapse into ONE
 /// file (`core/vat/invoice_model_wrappers.dart`) that deletes at the sweep.
-const _taxBudget = 19;
+/// 2026-11-08 (#3376): 19 -> 18, `sage.dart` stops reading it: its subclass and
+/// `buildSafTFile` join the one wrapper file.
+const _taxBudget = 18;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');

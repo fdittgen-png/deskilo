@@ -22,7 +22,6 @@ import '../domain/euro_format.dart';
 import '../domain/fec.dart';
 import '../domain/fec_import_contract.dart';
 import '../domain/fiscal_year.dart';
-import '../domain/saf_t_financial.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';
 import 'book_report_actions.dart';

@@ -1,0 +1,126 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'saf_t_ledger.dart';
+import 'saf_t_writer.dart';
+
+export 'saf_t_ledger.dart' show SafTLedgerAccounts;
+export 'saf_t_writer.dart' show SafTProfile;
+
+/// The app version SAF-T records as the producing software
+/// (`SoftwareVersion`). Cross-pinned to `pubspec.yaml` by test — an audit
+/// file that names the wrong version is a lie about its own provenance.
+const String safTSoftwareVersion = '1.0.3';
+
+/// SAF-T — **Standard Audit File for Tax**, the OECD's XML for handing a
+/// period of accounting data to an accountant or a tax administration.
+/// Every national variant (PT, NO, PL, RO, LT, AT, LU…) is a restriction
+/// of this same tree, so an importer that speaks any of them recognises
+/// this file's shape.
+///
+/// What it contains is the INVOICING SUBSET — `Header`, `MasterFiles`
+/// (customers + the tax table) and `SourceDocuments` (sales invoices and
+/// the payments that settled them). That is deliberate, and it is the same
+/// subset Portugal's billing SAF-T defines:
+///
+///  * `GeneralLedgerEntries` is **omitted**. Double entry needs account
+///    numbers, and a chart of accounts belongs to the accountant, not to a
+///    coworking app. Inventing '411'/'706' would look complete and create
+///    work — every wrong code has to be unbooked by hand.
+///  * `Customer/AccountID` is omitted for the same reason.
+///
+/// Amounts are the invoice's own snapshot: charges as lines, the month's
+/// payments as `Payments`, and the solde as the invoice's `GrossTotal`.
+/// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
+/// VAT-inclusive prices that means the extracted net, and the tax sits
+/// beside it in `TaxInformation` (0072).
+String buildSafTFile(SafTRequest request) => SafTWriter(
+  invoices: request.invoices,
+  matches: request.matches,
+  company: request.company,
+  currency: request.currency,
+  softwareVersion: request.softwareVersion,
+  createdAt: request.createdAt,
+  lineText: request.lineText,
+  fallbackDescription: request.fallbackDescription,
+  profile: request.profile,
+  ledgerAccounts: request.ledgerAccounts,
+  bookPostings: request.bookPostings,
+  reference:
+      request.reference ??
+      (throw const TaxReferenceUnavailable('no tax reference given')),
+).write();
+
+/// #2492 — what one SAF-T file is built from.
+class SafTRequest {
+  const SafTRequest({
+    required this.invoices,
+    required this.matches,
+    required this.company,
+    required this.currency,
+    required this.softwareVersion,
+    required this.createdAt,
+    required this.lineText,
+    this.fallbackDescription = 'Coworking',
+    this.profile = SafTProfile.generic,
+    this.ledgerAccounts,
+    this.bookPostings,
+    this.reference,
+  });
+
+  final List<Invoice> invoices;
+  final Map<String, InvoiceMatch> matches;
+  final InvoiceParty company;
+  final String currency;
+  final String softwareVersion;
+  final DateTime createdAt;
+  final String Function(InvoiceLine line) lineText;
+
+  /// The word for a position with no better description.
+  final String fallbackDescription;
+  final SafTProfile profile;
+
+  /// #669 — when given, the file carries `GeneralLedgerEntries` derived
+  /// from the same postings the FEC has produced since 0074: invoice ->
+  /// debit customers / credit revenue + VAT, settlement -> debit bank /
+  /// credit customers.
+  ///
+  /// WHAT THIS IS AND IS NOT. The postings are real double entry and
+  /// they balance. They are NOT the entity's books: this app sees the
+  /// sales cycle and nothing else — no rent, no salaries, no bank
+  /// charges, no equipment. A national SAF-T that mandates
+  /// `GeneralLedgerEntries` is asking for the complete books, and this
+  /// section does not answer that. It answers the smaller, useful
+  /// question an accountant's software actually asks: give me postings I
+  /// can import instead of documents I have to key in.
+  ///
+  /// Null omits the section entirely, which is the honest default —
+  /// there is no account mapping to invent one from.
+  final SafTLedgerAccounts? ledgerAccounts;
+
+  /// #2365 — a local book's postings: the ledger section is the book's own
+  /// entries, every journal, and [ledgerAccounts] is not asked for.
+  final List<Posting>? bookPostings;
+
+  /// The tax reference the file is built on. The package has no installed
+  /// snapshot: the application's `buildSafTFile` fills it in when null.
+  final TaxReferenceSet? reference;
+
+  /// The same request on [reference].
+  SafTRequest withReference(TaxReferenceSet reference) => SafTRequest(
+    invoices: invoices,
+    matches: matches,
+    company: company,
+    currency: currency,
+    softwareVersion: softwareVersion,
+    createdAt: createdAt,
+    lineText: lineText,
+    fallbackDescription: fallbackDescription,
+    profile: profile,
+    ledgerAccounts: ledgerAccounts,
+    bookPostings: bookPostings,
+    reference: reference,
+  );
+}
