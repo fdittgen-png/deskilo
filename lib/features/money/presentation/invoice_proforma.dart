@@ -22,7 +22,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
-import 'invoice_actions.dart' show requireWorkspaceTaxReference;
+import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
@@ -43,6 +43,12 @@ Future<void> shareProforma(
       context,
       l10n.invoiceProformaNothing,
     );
+    return;
+  }
+  // The workspace's own reference states the mentions: without it the person
+  // is told, not left with a dead tap.
+  if (workspaceTaxReference(ref) == null) {
+    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
     return;
   }
   // #514 — quick view / save / share, like every report exit.

@@ -10,7 +10,7 @@ import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';
 import '../../domain/report_kind.dart';
 import '../../providers/money_providers.dart';
-import '../invoice_actions.dart' show requireWorkspaceTaxReference;
+import '../invoice_actions.dart' show workspaceTaxReference;
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 
@@ -20,17 +20,20 @@ import '../report_strings_l10n.dart';
 /// previewed against.
 Map<String, Object?>? liveReportData(
     BuildContext context, WidgetRef ref, String doc) {
+  // No reference yet: no live data, the preview falls back to the sample.
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) return null;
   final invoices = ref.read(invoicesProvider).value ?? const [];
   final liveWorkspace = ref.read(currentWorkspaceProvider).value;
   switch (doc) {
     case 'invoice':
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
-          proforma: false, copy: false, workspace: liveWorkspace, reference: requireWorkspaceTaxReference(ref));
+          proforma: false, copy: false, workspace: liveWorkspace, reference: reference);
     case 'proforma':
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
-          proforma: true, copy: false, workspace: liveWorkspace, reference: requireWorkspaceTaxReference(ref));
+          proforma: true, copy: false, workspace: liveWorkspace, reference: reference);
     case 'statement':
       final now = ref.read(clockProvider).now();
       final period =
@@ -48,7 +51,7 @@ Map<String, Object?>? liveReportData(
         memberName: names[me?.id] ?? '',
         periodLabel: statement.period,
         currencyCode: workspace.currencyCode,
-        workspace: workspace, reference: requireWorkspaceTaxReference(ref),
+        workspace: workspace, reference: reference,
       );
     case 'agreement':
       final me = ref.read(myMemberProvider).value;
@@ -57,7 +60,7 @@ Map<String, Object?>? liveReportData(
       return agreementReportData(
           reportStringsFor(context), agreementFactsOf(ref),
           memberName: names[me.id] ?? '',
-          subscriptionPct: me.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
+          subscriptionPct: me.subscriptionPct, reference: reference);
     case 'payments':
       final me = ref.read(myMemberProvider).value;
       final names = ref.read(memberNamesProvider).value ?? const {};
@@ -67,17 +70,17 @@ Map<String, Object?>? liveReportData(
       if (me == null) return null;
       return paymentsReportData(
           reportStringsFor(context), paymentsFactsOf(ref, period),
-          period: period, memberName: names[me.id] ?? '', reference: requireWorkspaceTaxReference(ref));
+          period: period, memberName: names[me.id] ?? '', reference: reference);
     case 'workspace':
       return workspaceReportData(reportStringsFor(context),
-          workspaceFactsOf(ref, context.l10n), reference: requireWorkspaceTaxReference(ref));
+          workspaceFactsOf(ref, context.l10n), reference: reference);
     case 'status':
       return null; // #934 — sample data; the live view prints from its screen.
     default:
       if (!_previewsReminder(doc, invoices)) return null;
       return reminderReportData(
           reportStringsFor(context), reminderFactsOf(ref, invoices.first),
-          invoices.first, level: int.tryParse(doc.substring(1)) ?? 1, reference: requireWorkspaceTaxReference(ref));
+          invoices.first, level: int.tryParse(doc.substring(1)) ?? 1, reference: reference);
   }
 }
 

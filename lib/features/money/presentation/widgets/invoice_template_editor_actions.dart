@@ -332,6 +332,10 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
       );
       return;
     }
+    if (workspaceTaxReference(ref) == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady, replace: true);
+      return;
+    }
     editorUpdate(() => editorBusy = true);
     try {
       final l10nSync = context.l10n;

@@ -7,6 +7,8 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/trace/workspace_context_not_ready.dart';
+
 import 'operation_context_providers.dart';
 
 /// The tax reference the selected workspace's context captured from its own
@@ -24,4 +26,4 @@ TaxReferenceSet? watchWorkspaceTaxReference(WidgetRef ref) =>
 /// answers with its generic message instead of a document built on a guess.
 TaxReferenceSet requireWorkspaceTaxReference(WidgetRef ref) =>
     workspaceTaxReference(ref) ??
-    (throw StateError('workspace context not ready'));
+    (throw const WorkspaceContextNotReady());

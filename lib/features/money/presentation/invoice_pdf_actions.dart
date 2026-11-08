@@ -21,7 +21,7 @@ import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
-import 'invoice_actions.dart' show requireWorkspaceTaxReference;
+import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
@@ -149,6 +149,11 @@ Future<void> quickViewInvoice(
   bool proforma = false,
 }) async {
   final l10n = context.l10n;
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
+    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+    return;
+  }
   final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
@@ -159,7 +164,8 @@ Future<void> quickViewInvoice(
       memberTerms: memberTermsFor(ref, invoice.memberId),
       proforma: proforma,
       copy: rendersCopy(ref),
-      workspace: ref.read(currentWorkspaceProvider).value, reference: requireWorkspaceTaxReference(ref),
+      workspace: ref.read(currentWorkspaceProvider).value,
+      reference: reference,
     ),
     template.texts,
   );
@@ -190,7 +196,8 @@ Future<void> quickViewInvoice(
           memberTerms: memberTermsFor(ref, source.memberId),
           proforma: false,
           copy: rendersCopy(ref),
-          workspace: ref.read(currentWorkspaceProvider).value, reference: requireWorkspaceTaxReference(ref),
+          workspace: ref.read(currentWorkspaceProvider).value,
+          reference: reference,
         ),
         template.texts,
       ),
