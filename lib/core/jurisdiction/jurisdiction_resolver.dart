@@ -51,6 +51,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the mentions of that country.
   conflictingMentions,
+
+  /// More than one installed add-on claims the archive of that country.
+  conflictingArchive,
 }
 
 sealed class CapabilityResolution {
@@ -208,4 +211,31 @@ MentionsResolution resolveInvoiceMentions(
     return const RefusedMentions(RefusalKind.contractMismatch);
   }
   return ResolvedMentions(matches.single);
+}
+
+String _archiveCapabilityId(String country) => 'archive.$country';
+
+/// The installed archive add-on of [context]'s country: null when the country
+/// asks nothing of its archive (not a fault, and never another country's), or
+/// the composition's fault as a [StateError] (two claimants, a wrong contract
+/// version) -- the composition is compiled in, so this is a programming error.
+ArchiveContribution? resolveArchive(
+  LegalContext context,
+  List<ArchiveContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return null;
+  final id = _archiveCapabilityId(country);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return null;
+  if (matches.length > 1) {
+    throw StateError('archive of $country: ${RefusalKind.conflictingArchive.name}');
+  }
+  if (matches.single.descriptor.contractVersion != archiveContractVersion) {
+    throw StateError('archive of $country: ${RefusalKind.contractMismatch.name}');
+  }
+  return matches.single;
 }

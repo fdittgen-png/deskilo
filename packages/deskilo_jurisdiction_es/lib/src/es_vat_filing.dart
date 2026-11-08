@@ -17,7 +17,7 @@ const String esFormatVersion = 'aeat-303-2026';
 
 /// The Spanish VAT filing: the Modelo 303 in the AEAT's "diseño de registro",
 /// ISO-8859-1 bytes, one per position (the Sede reads it so).
-class EsVatFilingContribution implements VatFilingContribution {
+class EsVatFilingContribution extends VatFilingContribution {
   const EsVatFilingContribution();
 
   @override

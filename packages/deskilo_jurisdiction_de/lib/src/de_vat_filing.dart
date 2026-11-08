@@ -15,7 +15,7 @@ const String deImplementationVersion = '1';
 const String deFormatVersion = 'elster-ustva-v11';
 
 /// The German VAT filing: the UStVA as ELSTER XML.
-class DeVatFilingContribution implements VatFilingContribution {
+class DeVatFilingContribution extends VatFilingContribution {
   const DeVatFilingContribution();
 
   @override

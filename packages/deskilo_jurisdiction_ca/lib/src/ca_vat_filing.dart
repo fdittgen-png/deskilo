@@ -23,7 +23,7 @@ const String caFormatVersion = 'gst34-fpz500-csv';
 const String caQstFormName = 'FPZ-500';
 
 /// The Canadian VAT filing: GST/HST and QST as one CSV.
-class CaVatFilingContribution implements VatFilingContribution {
+class CaVatFilingContribution extends VatFilingContribution {
   const CaVatFilingContribution();
 
   @override
@@ -34,6 +34,9 @@ class CaVatFilingContribution implements VatFilingContribution {
     formatVersion: caFormatVersion,
     capabilityId: 'vat_filing.CA',
   );
+
+  @override
+  Set<String> get extraForms => const {caQstFormName};
 
   @override
   Set<FilingSource> get requiredSources => const {

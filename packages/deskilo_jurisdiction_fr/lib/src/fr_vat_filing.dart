@@ -16,7 +16,7 @@ const String frImplementationVersion = '1';
 const String frFormatVersion = 'edi-tva-ca3-infent';
 
 /// The French VAT filing: the CA3 as EDI-TVA.
-class FrVatFilingContribution implements VatFilingContribution {
+class FrVatFilingContribution extends VatFilingContribution {
   const FrVatFilingContribution();
 
   @override
