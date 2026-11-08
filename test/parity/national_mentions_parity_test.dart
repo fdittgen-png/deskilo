@@ -7,9 +7,10 @@
 // and compared byte for byte: the move must change none of them. Rewrite only
 // with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show VatRegime;
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/national_mentions.dart';
 import 'parity_golden.dart';
 
 List<String> _mentions(

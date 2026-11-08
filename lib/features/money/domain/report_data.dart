@@ -21,6 +21,7 @@ import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
 import 'invoice_line_text.dart';
+import 'invoice_national_mentions.dart';
 import 'invoice_sales_tax.dart';
 import 'period_label.dart';
 import 'stamp_duty.dart';
@@ -305,22 +306,13 @@ Map<String, Object?> invoiceReportData(
       memberTerms: memberTerms, memberCapacity: memberCapacity);
   // #2356 — what the seller's own law adds (IT stamp duty, ES correcting
   // invoice, FR category of the operation), after the owner's mentions.
-  final national = nationalInvoiceMentions(
-    sellerCountry: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
-    regime: vatRegimeFromWire(
-        invoice.sellerParty?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
-    currency: invoice.currency,
-    untaxedCents: invoice.vatTotals
-        .where((t) => t.vatCents == 0 && t.category != 'AE')
-        .fold(0, (sum, t) => sum + t.grossCents),
-    correction: invoice.isCreditNote || invoice.replacesNumber.isNotEmpty,
-    rectifies: invoice.replacesNumber,
-    correctionReason: invoice.correctionReason,
-    sellerVatId: invoice.sellerParty?.vatId ?? workspace?.vatId ?? '',
-    sellerLegalId: invoice.sellerParty?.legalId ?? workspace?.legalId ?? '',
-    qstCharged: invoice.vatTotals.any(
-        (t) => t.components.any((c) => c.scheme == 'QST' && c.taxCents != 0)),
-    reference: reference,
+  final national = nationalMentionsOf(
+    invoice,
+    reference,
+    workspaceCountry: workspace?.countryCode ?? '',
+    workspaceVatRegime: workspace?.vatRegime ?? 'not_subject',
+    workspaceVatId: workspace?.vatId ?? '',
+    workspaceLegalId: workspace?.legalId ?? '',
   );
   return <String, Object?>{
     'workspace': invoice.workspaceName,

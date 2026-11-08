@@ -158,8 +158,7 @@ ProfileResolution resolveInvoiceProfile(
 }
 
 /// The capability id of the national invoice mentions of [country].
-@visibleForTesting
-String invoiceMentionsCapabilityId(String country) =>
+String _invoiceMentionsCapabilityId(String country) =>
     'invoice_mentions.$country';
 
 sealed class MentionsResolution {
@@ -167,7 +166,6 @@ sealed class MentionsResolution {
 }
 
 /// The country's own law adds lines, and the add-on that states them.
-@visibleForTesting
 class ResolvedMentions extends MentionsResolution {
   const ResolvedMentions(this.contribution);
 
@@ -177,13 +175,11 @@ class ResolvedMentions extends MentionsResolution {
 /// No installed add-on states mentions for the country. That is NOT a fault
 /// (most countries add nothing): it is the empty answer, never a fallback to
 /// another country's lines.
-@visibleForTesting
 class NoMentions extends MentionsResolution {
   const NoMentions();
 }
 
 /// An installed composition that cannot answer, and why.
-@visibleForTesting
 class RefusedMentions extends MentionsResolution {
   const RefusedMentions(this.kind);
 
@@ -191,16 +187,14 @@ class RefusedMentions extends MentionsResolution {
 }
 
 /// The installed mentions add-on of [context]'s country, none, or the reason
-/// the composition is wrong. Test-only until the add-ons implement the
-/// contract and `report_data.dart` asks it (#3429, the next change).
-@visibleForTesting
+/// the composition is wrong.
 MentionsResolution resolveInvoiceMentions(
   LegalContext context,
   List<InvoiceMentionsContribution> installed,
 ) {
   final country = context.normalized;
   if (country.isEmpty) return const NoMentions();
-  final id = invoiceMentionsCapabilityId(country);
+  final id = _invoiceMentionsCapabilityId(country);
   final matches = [
     for (final c in installed)
       if (c.descriptor.capabilityId == id) c,

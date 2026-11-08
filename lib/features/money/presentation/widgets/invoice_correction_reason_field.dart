@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart'
+    show spanishCorrectionReasonCodes;
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';

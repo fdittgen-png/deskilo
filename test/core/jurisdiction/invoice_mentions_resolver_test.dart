@@ -1,51 +1,76 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3429 -- the national invoice mentions behind a contract: a country that
-// exists only in a test states its lines through the resolver; a country with
-// no add-on states none (never another country's); two claimants and a wrong
-// contract version are explicit refusals; the country is the registry's
+// #3429 -- the national invoice mentions behind a contract, through the
+// installed add-ons: a country with an add-on states its lines, a country
+// without one states none (never another country's), two claimants and a wrong
+// contract version are explicit refusals, and the country is the registry's
 // spelling.
+import 'package:deskilo/core/jurisdiction/installed_invoice_mentions.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'support/fake_invoice_mentions.dart';
 
 const _context = InvoiceMentionContext(
   sellerVatRegistered: true,
   currency: 'EUR',
   untaxedMinor: 9000,
-  correction: true,
-  rectifies: 'F-7',
+  correction: false,
 );
 
+/// An add-on written against another version of the contract.
+class _OtherVersion implements InvoiceMentionsContribution {
+  const _OtherVersion();
+
+  @override
+  CapabilityDescriptor get descriptor => const CapabilityDescriptor(
+    moduleId: 'other.invoice_mentions',
+    implementationVersion: '1',
+    contractVersion: '0',
+    formatVersion: 'x',
+    capabilityId: 'invoice_mentions.IT',
+  );
+
+  @override
+  List<String> mentions(InvoiceMentionContext context) => const ['x'];
+}
+
 void main() {
-  test('the mentions contract is versioned apart from the other two', () {
-    expect(invoiceMentionsContractVersion, '1');
-    expect(
-      const FakeInvoiceMentions('XX').descriptor.contractVersion,
-      invoiceMentionsContractVersion,
-    );
+  test('every installed add-on declares the current contract and a country', () {
+    final ids = <String>{};
+    for (final c in installedInvoiceMentions) {
+      final d = c.descriptor;
+      expect(d.contractVersion, invoiceMentionsContractVersion, reason: d.moduleId);
+      expect(d.implementationVersion, isNotEmpty);
+      expect(d.capabilityId, startsWith('invoice_mentions.'));
+      expect(ids.add(d.capabilityId), isTrue, reason: 'one add-on per country');
+    }
+    expect(ids, {
+      'invoice_mentions.CA',
+      'invoice_mentions.ES',
+      'invoice_mentions.FR',
+      'invoice_mentions.IT',
+    });
   });
 
-  test('a country that exists only in a test states its lines', () {
+  test('a country with an add-on states its lines', () {
     final resolution = resolveInvoiceMentions(
-      const LegalContext(countryCode: 'xx'),
-      const [FakeInvoiceMentions('XX'), FakeInvoiceMentions('YY')],
+      const LegalContext(countryCode: 'it'),
+      installedInvoiceMentions,
     );
     expect(resolution, isA<ResolvedMentions>());
-    expect((resolution as ResolvedMentions).contribution.mentions(_context), [
-      'FAKE 9000',
-      'FAKE correction of F-7',
-    ]);
+    expect(
+      (resolution as ResolvedMentions).contribution.mentions(_context).single,
+      contains('642/1972'),
+    );
   });
 
   test('a country with no add-on states none, and never another country\'s', () {
-    for (final code in ['DE', '', null, '  ']) {
+    for (final code in ['DE', 'CH', '', null, '  ']) {
       expect(
         resolveInvoiceMentions(
           LegalContext(countryCode: code),
-          const [FakeInvoiceMentions('XX')],
+          installedInvoiceMentions,
         ),
         isA<NoMentions>(),
         reason: '$code',
@@ -55,8 +80,8 @@ void main() {
 
   test('two add-ons for one country are refused, not guessed', () {
     final resolution = resolveInvoiceMentions(
-      const LegalContext(countryCode: 'XX'),
-      const [FakeInvoiceMentions('XX'), FakeInvoiceMentions('XX')],
+      const LegalContext(countryCode: 'IT'),
+      const [ItInvoiceMentions(), ItInvoiceMentions()],
     );
     expect(resolution, isA<RefusedMentions>());
     expect(
@@ -67,20 +92,10 @@ void main() {
 
   test('an add-on written against another contract version is refused', () {
     final resolution = resolveInvoiceMentions(
-      const LegalContext(countryCode: 'XX'),
-      const [FakeInvoiceMentions('XX', contractVersion: '0')],
+      const LegalContext(countryCode: 'IT'),
+      const [_OtherVersion()],
     );
     expect(resolution, isA<RefusedMentions>());
     expect((resolution as RefusedMentions).kind, RefusalKind.contractMismatch);
-  });
-
-  test('UK is GB, as everywhere else in the registry', () {
-    expect(
-      resolveInvoiceMentions(
-        const LegalContext(countryCode: 'UK'),
-        const [FakeInvoiceMentions('GB')],
-      ),
-      isA<ResolvedMentions>(),
-    );
   });
 }
