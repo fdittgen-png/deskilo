@@ -3,6 +3,7 @@
 // #2577 -- the software an external book is kept in, picked from the
 // accounting targets offered in the space's country; "Other…" for one the
 // catalogue does not know.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -13,6 +14,7 @@ import '../../domain/accounting_format.dart' show accountingTargets;
 class BookSoftwareField extends StatelessWidget {
   const BookSoftwareField({
     required this.country,
+    required this.reference,
     super.key,
     required this.value,
     required this.other,
@@ -20,6 +22,7 @@ class BookSoftwareField extends StatelessWidget {
   });
 
   final String country;
+  final TaxReferenceSet reference;
   final String value;
   final bool other;
   final ValueChanged<String?> onChanged;
@@ -29,12 +32,15 @@ class BookSoftwareField extends StatelessWidget {
 
   /// Whether [value] is one of the software names offered in [country]: a
   /// stored name outside the list is "Other…" with its text field.
-  static bool isListed(String country, String value) =>
-      _softwareChoices(country).contains(value);
+  static bool isListed(
+    String country,
+    String value, {
+    required TaxReferenceSet reference,
+  }) => _softwareChoices(country, reference).contains(value);
 
   @override
   Widget build(BuildContext context) {
-    final choices = _softwareChoices(country);
+    final choices = _softwareChoices(country, reference);
     final selected = other
         ? _otherChoice
         : choices.contains(value) ? value : null;
@@ -61,10 +67,11 @@ class BookSoftwareField extends StatelessWidget {
 /// the targets know in the space's country, by name (the app's own exports
 /// and the authorities' file formats are no software). A stored name the
 /// list does not carry is "Other…" with its text field, never an item.
-List<String> _softwareChoices(String country) {
+List<String> _softwareChoices(String country, TaxReferenceSet reference) {
   final names = <String>{
     for (final t in accountingTargets)
-      if (t.isSoftware && t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
+      if (t.isSoftware && t.offeredIn(country, reference: reference))
+        '${t.vendor} ${t.product}'.trim(),
   };
   return names.toList()..sort();
 }

@@ -17,6 +17,7 @@ import '../../domain/invoice.dart';
 import '../../domain/register_period.dart';
 import '../../providers/money_providers.dart';
 import '../accounting_export.dart';
+import '../invoice_actions.dart' show workspaceIsEu;
 import '../invoice_status.dart';
 import '../period_label.dart';
 import '../widgets/invoice_detail_sheet.dart';
@@ -422,7 +423,7 @@ class _InvoiceRegisterScreenState
         invoice: invoice,
         match: match,
         canIssue: canIssue,
-        isEu: isEuCountry(countryCode),
+        isEu: workspaceIsEu(ref, countryCode),
         reminder: reminder,
         showMemberName: showMemberName,
         transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],

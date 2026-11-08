@@ -12,12 +12,15 @@ import 'dart:io';
 
 import 'package:deskilo/core/settings/active_settings.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/records_location.dart';
 import 'package:deskilo/features/money/presentation/widgets/records_location_tile.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/test_workspace_context.dart';
 
 /// The shipped registry with [values] in force.
 SettingsSet _settings([Map<String, Object> values = const {}]) {
@@ -34,7 +37,7 @@ const _hosting = 'records.hosting_country';
 const _cra = 'records.cra_authorisation_reference';
 
 RecordsLocation _of(String country, [Map<String, Object> values = const {}]) =>
-    RecordsLocation.fromSettings(_settings(values), issuerCountry: country);
+    RecordsLocation.fromSettings(_settings(values), issuerCountry: country, reference: ActiveTaxReference.current);
 
 void main() {
   group('the declaration', () {
@@ -68,12 +71,11 @@ void main() {
     test('an older registry without the keys declares nothing', () {
       final l = RecordsLocation.fromSettings(
         SettingsSet(const {}, const {}),
-        issuerCountry: 'CA',
-      );
+        issuerCountry: 'CA', reference: ActiveTaxReference.current,);
       expect(l.hostingCountry, isNull);
       expect(l.craNotice, isTrue);
       expect(
-        RecordsLocation.fromSettings(null, issuerCountry: 'CA').hostingCountry,
+        RecordsLocation.fromSettings(null, issuerCountry: 'CA', reference: ActiveTaxReference.current).hostingCountry,
         isNull,
       );
     });
@@ -150,6 +152,9 @@ void main() {
       l10n = await AppLocalizations.delegate.load(const Locale('en'));
     });
 
+    var contextReady = true;
+    setUp(() => contextReady = true);
+
     Future<String> shown(
       WidgetTester tester,
       String? country, [
@@ -159,6 +164,7 @@ void main() {
         ProviderScope(
           overrides: [
             activeSettingsProvider.overrideWithValue(_settings(values)),
+            if (contextReady) testReadyWorkspaceContext(),
           ],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -170,6 +176,14 @@ void main() {
       final text = find.byKey(const ValueKey('records-location-text'));
       return text.evaluate().isEmpty ? '' : tester.widget<Text>(text).data!;
     }
+
+    testWidgets('nothing is drawn while the workspace context is not ready', (
+      tester,
+    ) async {
+      contextReady = false;
+      final text = await shown(tester, 'CA', {_hosting: 'DE'});
+      expect(text, isEmpty);
+    });
 
     testWidgets(
       'a Canadian space on an EU-hosted installation sees the notice',

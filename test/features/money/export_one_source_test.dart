@@ -10,6 +10,7 @@
 // cannot quietly add a read of its own (matches, instalments, ledger).
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
@@ -219,7 +220,7 @@ void main() {
       'IT',
       'US',
     ]) {
-      expect(formats, containsAll(formatsFor(country).map((f) => f.id)));
+      expect(formats, containsAll(formatsFor(country, reference: ActiveTaxReference.current).map((f) => f.id)));
     }
   });
 

@@ -13,7 +13,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
-import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/domain/money_face.dart';
 import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_face_controller.dart';
@@ -21,6 +20,7 @@ import '../../../money/providers/money_focus_controller.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../domain/member_note_refs.dart';
 import '../../providers/workspace_providers.dart';
+import '../../providers/workspace_tax_reference.dart' show workspaceIsEu;
 import '../screens/inbox_screen.dart';
 
 /// The icon a reference of [kind] wears, in the body and in the picker.
@@ -76,7 +76,7 @@ Future<void> openRecordById(
           invoice: invoice,
           match: matches[invoice.id],
           canIssue: mayIssueInvoices(ref),
-          isEu: isEuCountry(country),
+          isEu: workspaceIsEu(ref, country),
         ),
       );
   }

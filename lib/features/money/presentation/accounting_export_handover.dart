@@ -50,6 +50,7 @@ extension ReadableHandoverExport on AccountingExportRun {
       RecordsLocation.fromSettings(
         ref.read(activeSettingsProvider),
         issuerCountry: country,
+        reference: taxReference,
       ),
     );
   }

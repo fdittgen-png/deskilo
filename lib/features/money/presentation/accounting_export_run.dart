@@ -148,16 +148,16 @@ class AccountingExportRun {
       .reduce((a, b) => a > b ? a : b);
   company = sellerOf(invoices.last, workspace);
   country = workspace.countryCode.toUpperCase();
-
+  // Read once, before the sheet: every format and step states this reference.
+  if (refusedForMissingReference()) return;
   final chosen = await showAccountingExportSheet(
     context,
-    formats: exportFormatsOf(ref, country),
-    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', ')),
-        ...importNotices(l10n, country)],
+    formats: exportFormatsOf(ref, country, reference: taxReference),
+    notices: [if (registeredSystemsFor(country, reference: taxReference) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', ')),
+        ...importNotices(l10n, country, reference: taxReference)],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
-  if (refusedForMissingReference()) return;
 
   // Refused BEFORE anything is built. A file the authority rejects on
   // its name alone wastes the owner's time in the worst possible place:

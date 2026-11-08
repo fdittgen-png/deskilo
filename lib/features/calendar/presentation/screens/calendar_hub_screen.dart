@@ -19,8 +19,8 @@ import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/calendar_decisions.dart';
-import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/domain/money_face.dart';
+import '../../../money/presentation/invoice_actions.dart' show workspaceIsEu;
 import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
@@ -245,7 +245,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             invoice: invoice,
             match: matches[invoice.id],
             canIssue: mayIssueInvoices(ref),
-            isEu: isEuCountry(country),
+            isEu: workspaceIsEu(ref, country),
           ),
         );
       case null:

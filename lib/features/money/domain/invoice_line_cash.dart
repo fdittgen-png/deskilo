@@ -4,7 +4,6 @@
 // sweep PR (#3403) rewrites the importers and deletes it.
 export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide frozenTaxPointBasis,
-    isEuCountry,
     taxPointsOf,
     vatTaxPointLedger;
 export '../../../core/vat/invoice_model_wrappers.dart';

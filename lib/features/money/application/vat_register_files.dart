@@ -56,6 +56,8 @@ class VatRegisterFiles {
     required DateTime end,
     required String activity,
   }) async {
+    final data = reference;
+    if (data == null) return null;
     final party = _party;
     final docs = registerDocuments(
       await invoices(),
@@ -70,7 +72,12 @@ class VatRegisterFiles {
           '${end.year}${nif.startsWith('ES') ? nif.substring(2) : nif}E'
           '${party.name.replaceAll(RegExp(r'[\\/:*?"<>|]'), ' ')}.xlsx',
       bytes: buildXlsx([
-        esLibroExpedidas(docs, activity: activity, monthly: monthly),
+        esLibroExpedidas(
+          docs,
+          activity: activity,
+          monthly: monthly,
+          reference: data,
+        ),
       ]),
     );
   }
@@ -81,6 +88,8 @@ class VatRegisterFiles {
     required DateTime start,
     required DateTime end,
   }) async {
+    final data = reference;
+    if (data == null) return null;
     final party = _party;
     final docs = registerDocuments(
       await invoices(),
@@ -92,6 +101,7 @@ class VatRegisterFiles {
       docs,
       vatId: party.vatId,
       name: party.name,
+      reference: data,
     );
     return (
       fileName: 'sii-facturas-emitidas-${isoDay(start)}.xml',

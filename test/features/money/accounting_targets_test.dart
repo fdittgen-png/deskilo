@@ -6,6 +6,7 @@
 import 'dart:io';
 
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -61,8 +62,8 @@ void main() {
 
   test('the sheet offers the file targets of the country, in order', () {
     for (final country in ['FR', 'DE', 'GB', 'ZZ']) {
-      expect(formatsFor(country).map((f) => f.id), [
-        for (final t in targetsFor(country))
+      expect(formatsFor(country, reference: ActiveTaxReference.current).map((f) => f.id), [
+        for (final t in targetsFor(country, reference: ActiveTaxReference.current))
           if (t.transport == AccountingTransport.file && t.format != null)
             t.id,
       ], reason: country);
@@ -72,22 +73,22 @@ void main() {
   test('no supported country is offered nothing at all', () {
     final uncovered = [
       for (final country in CountryCatalog.countries)
-        if (targetsFor(country.code).isEmpty) country.code,
+        if (targetsFor(country.code, reference: ActiveTaxReference.current).isEmpty) country.code,
     ];
     expect(uncovered, isEmpty);
   });
 
   test('a national target is offered at home only', () {
-    expect(targetsFor('DE').map((t) => t.id), contains('datev'));
-    expect(targetsFor('FR').map((t) => t.id), isNot(contains('datev')));
-    expect(targetsFor('ZZ').map((t) => t.id), contains('generic_journal_csv'));
+    expect(targetsFor('DE', reference: ActiveTaxReference.current).map((t) => t.id), contains('datev'));
+    expect(targetsFor('FR', reference: ActiveTaxReference.current).map((t) => t.id), isNot(contains('datev')));
+    expect(targetsFor('ZZ', reference: ActiveTaxReference.current).map((t) => t.id), contains('generic_journal_csv'));
   });
 
   // #2376 — the French platforms: Pennylane through its API, Cegid Quadra
   // and EBP named with the FEC as their working route until their own
   // import formats are specified.
   test('the French platforms are decided targets', () {
-    final fr = {for (final t in targetsFor('FR')) t.id: t};
+    final fr = {for (final t in targetsFor('FR', reference: ActiveTaxReference.current)) t.id: t};
     expect(fr['pennylane_api']!.transport, AccountingTransport.api);
     expect(fr['pennylane_api']!.format, isNull);
     expect(fr['pennylane_api']!.capability.producible, isTrue);
@@ -98,8 +99,8 @@ void main() {
         reason: id,
       );
     }
-    expect(formatsFor('FR').map((f) => f.id), isNot(contains('pennylane_api')));
-    expect(formatsFor('DE').map((f) => f.id), isNot(contains('ebp_import')));
+    expect(formatsFor('FR', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('pennylane_api')));
+    expect(formatsFor('DE', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('ebp_import')));
   });
 
   // The descriptor says which targets take a sign-in; the edge function's

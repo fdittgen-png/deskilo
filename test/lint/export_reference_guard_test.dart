@@ -11,11 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 void main() {
-  test('only the start-of-run check reads the workspace tax reference', () {
+  test('only the start-of-run check reads (or requires) the workspace tax reference', () {
     final reading = {
       for (final f in handWrittenDartFiles('lib/features/money/presentation'))
         if (f.uri.pathSegments.last.startsWith('accounting_export_') &&
-            RegExp(r'(?<!watch|require)workspaceTaxReference\(', caseSensitive: false)
+            RegExp(r'(?<!watch)workspaceTaxReference\(', caseSensitive: false)
                 .hasMatch(f.readAsStringSync()))
           f.uri.pathSegments.last,
     };

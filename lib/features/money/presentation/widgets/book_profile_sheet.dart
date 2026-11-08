@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
 import '../../domain/book_chart.dart';
 import '../../providers/book_profile_providers.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import 'book_chart_sheet.dart';
 import 'book_software_field.dart';
 import 'records_location_tile.dart';
@@ -76,9 +78,13 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   /// A stored software the list does not offer in this country (kept from
   /// an earlier choice or another country) is shown as "Other…" with its
   /// name in the text field, never appended to the list.
-  bool _unlisted(String country) =>
+  bool _unlisted(String country, TaxReferenceSet reference) =>
       _external.text.isNotEmpty &&
-      !BookSoftwareField.isListed(country, _external.text);
+      !BookSoftwareField.isListed(
+        country,
+        _external.text,
+        reference: reference,
+      );
 
   /// The software picked from the list, or null for "Other…", which
   /// starts the typed field empty; typing into it keeps the choice.
@@ -90,22 +96,27 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
 
   /// The external book's software: the list, and the typed field after
   /// "Other…".
-  List<Widget> _softwareFields(AppLocalizations l10n, String country) => [
+  List<Widget> _softwareFields(AppLocalizations l10n, String country) {
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const [];
+    return [
         BookSoftwareField(
           key: const ValueKey('book-external-field'),
           country: country,
+          reference: reference,
           value: _external.text,
-          other: _otherSoftware || _unlisted(country),
+          other: _otherSoftware || _unlisted(country, reference),
           onChanged: _software,
         ),
-        if (_otherSoftware || _unlisted(country))
+        if (_otherSoftware || _unlisted(country, reference))
           AppTextField(
             key: const ValueKey('book-external-other'),
             controller: _external,
             label: l10n.bookExternalSystem,
             onChanged: (_) => _software(null),
           ),
-      ];
+    ];
+  }
   final _currency = TextEditingController();
   var _month = 1;
   var _day = 1;

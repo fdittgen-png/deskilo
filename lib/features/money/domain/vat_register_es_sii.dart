@@ -7,6 +7,7 @@
 // certificate, which the app does not hold. A space that keeps its books
 // through SII hands the file to its SII software or adviser.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
@@ -35,6 +36,7 @@ String siiFacturasEmitidasXml(
   List<Invoice> documents, {
   required String vatId,
   required String name,
+  required TaxReferenceSet reference,
 }) {
   var nif = vatId.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
   if (nif.startsWith('ES')) nif = nif.substring(2);
@@ -62,7 +64,7 @@ String siiFacturasEmitidasXml(
         },
       );
       for (final invoice in documents) {
-        _Record(b, invoice, nif).write();
+        _Record(b, invoice, nif, reference).write();
       }
     },
   );
@@ -71,13 +73,14 @@ String siiFacturasEmitidasXml(
 
 /// One invoice's record, element by element in the schema's order.
 class _Record {
-  _Record(this.b, this.invoice, this.nif)
-    : buyer = esBuyerIdOf(invoice),
+  _Record(this.b, this.invoice, this.nif, this.reference)
+    : buyer = esBuyerIdOf(invoice, reference: reference),
       country = invoice.buyerParty?.country ?? '';
 
   final XmlBuilder b;
   final Invoice invoice;
   final String nif;
+  final TaxReferenceSet reference;
   final ({String type, String country, String id}) buyer;
   final String country;
 
@@ -114,7 +117,7 @@ class _Record {
   }
 
   void _invoice() {
-    final type = esInvoiceTypeOf(invoice);
+    final type = esInvoiceTypeOf(invoice, reference: reference);
     el('TipoFactura', type);
     // A credit note of this app states the difference (por diferencias).
     if (type.startsWith('R')) el('TipoRectificativa', 'I');

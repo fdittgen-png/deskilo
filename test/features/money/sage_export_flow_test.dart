@@ -93,9 +93,9 @@ Future<List<({String name, String body})>> _export(
   await tapInvoicingTool(tester, 'invoice-register-button');
   await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('accounting-export-sage50')));
-  await tester.pumpAndSettle();
   if (contextReady) {
+    await tester.tap(find.byKey(const ValueKey('accounting-export-sage50')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('sage-accounts-confirm')));
     await tester.pumpAndSettle();
   }
@@ -107,6 +107,8 @@ void main() {
       'a refusal, opens no dialog and saves nothing (#3403)', (tester) async {
     final saved = await _export(tester, contextReady: false);
     expect(saved, isEmpty);
+    // The refusal fires at the export tap, before any chooser opens.
+    expect(find.byKey(const ValueKey('accounting-export-sage50')), findsNothing);
     expect(find.byKey(const ValueKey('sage-accounts-confirm')), findsNothing);
     final snack = tester.widget<SnackBar>(find.byType(SnackBar));
     expect(

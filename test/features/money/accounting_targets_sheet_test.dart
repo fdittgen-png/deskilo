@@ -28,6 +28,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_workspace_context.dart';
+
 final _today = DateTime(2026, 10, 25, 9);
 
 const _workspace = Workspace(
@@ -58,6 +60,7 @@ Future<void> _open(
       sitesProvider.overrideWith((ref) async => const [_studio]),
       memberNamesProvider.overrideWith((ref) async => const {'m-e': 'Eve Exporter'}),
       clockProvider.overrideWithValue(FixedClock(_today)),
+      testReadyWorkspaceContext(),
     ],
     child: const MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

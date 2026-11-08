@@ -14,6 +14,7 @@ import '../../domain/invoice.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show workspaceIsEu;
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
@@ -210,7 +211,7 @@ class MyInvoicesList extends ConsumerWidget {
         settledByNumber: settledByNumberOf(
             invoice, ref.read(invoicesProvider).value ?? const []),
         canIssue: mayIssueInvoices(ref),
-        isEu: isEuCountry(country),
+        isEu: workspaceIsEu(ref, country),
         reminder: reminder,
         journey: readInvoiceJourney(
           ref,

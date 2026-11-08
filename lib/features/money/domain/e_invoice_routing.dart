@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+
 import 'invoice_ubl.dart' show isEuCountry;
 
 /// How a structured invoice TRAVELS — the question an XML export leaves
@@ -147,7 +149,10 @@ const Map<String, EInvoiceRoute> _routes = {
 
 /// Where [countryCode]'s e-invoices must travel — null outside the EU,
 /// where no such obligation applies and the app shows no XML affordance.
-EInvoiceRoute? eInvoiceRouteFor(String countryCode) {
-  if (!isEuCountry(countryCode)) return null;
+EInvoiceRoute? eInvoiceRouteFor(
+  String countryCode, {
+  required TaxReferenceSet reference,
+}) {
+  if (!isEuCountry(countryCode, reference: reference)) return null;
   return _routes[countryCode.toUpperCase()] ?? _euDefault;
 }

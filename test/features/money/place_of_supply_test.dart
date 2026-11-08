@@ -18,6 +18,8 @@ import 'package:deskilo/core/vat/place_of_supply.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 final _case = RegExp(
   r"supply_vat_category\('([a-z_]*)','([a-z]*)','([a-z_]*)','([A-Za-z]*)',"
   r"'([A-Za-z]*)','([a-z]*)',(true|false)\), '([A-Z]*)'",
@@ -75,7 +77,7 @@ void main() {
 
   test('EL is accepted on input and normalised to GR', () {
     expect(euCountryCode(' el ', reference: ActiveTaxReference.current), 'GR');
-    expect(isEuCountry('EL'), isTrue);
-    expect(isEuCountry('gb'), isFalse);
+    expect(isEuCountry('EL', reference: ActiveTaxReference.current), isTrue);
+    expect(isEuCountry('gb', reference: ActiveTaxReference.current), isFalse);
   });
 }

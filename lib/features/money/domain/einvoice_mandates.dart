@@ -82,23 +82,29 @@ List<EInvoiceMandate> mandatesFor(
 /// national channel DesKilo does not speak yet: their sellers stay refused
 /// at issue (`seller_country_unsupported`, the `issuing_gate` rows the SQL
 /// gate reads too) until it exists.
-Set<String> get nationalChannelRequired =>
-    ActiveTaxReference.current.nationalChannelCountries();
+Set<String> nationalChannelRequiredOn(TaxReferenceSet reference) =>
+    reference.nationalChannelCountries();
 
 /// The countries whose sellers DesKilo lets issue — every member state of
 /// the Union (#2356) but [nationalChannelRequired] — and so warns, with
 /// dates, about what the mandate asks next.
 @visibleForTesting
-Set<String> get mandateWarningCountries => {
-  for (final c in euMemberStates)
-    if (!nationalChannelRequired.contains(c)) c,
+Set<String> mandateWarningCountriesOn(TaxReferenceSet reference) => {
+  for (final c in euMemberStatesOf(reference))
+    if (!nationalChannelRequiredOn(reference).contains(c)) c,
 };
 
 /// The dated warning an FR or DE seller sees: every duty still ahead on
 /// [today], and the ones that came into force in the last year (the
 /// space may not be ready for them yet). Empty elsewhere.
-List<EInvoiceMandate> mandateWarnings(String country, DateTime today) {
-  if (!mandateWarningCountries.contains(country.trim().toUpperCase())) {
+List<EInvoiceMandate> mandateWarnings(
+  String country,
+  DateTime today, {
+  required TaxReferenceSet reference,
+}) {
+  if (!mandateWarningCountriesOn(
+    reference,
+  ).contains(country.trim().toUpperCase())) {
     return const [];
   }
   final lastYear = DateTime(today.year - 1, today.month, today.day);
