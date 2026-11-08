@@ -245,11 +245,14 @@ case "$v" in
 esac
 
 if [ -n "$STAGE_AT" ]; then
-  # A migration that drops the pending attempt and blanks the receipt. Applied
+  # A migration that drops the pending attempt (and, replica mode skipping the
+  # cascade, its bytes), blanks the receipt and moves the accepted row's phase. Applied
   # as the platform admin (the user triggers are not what is under test); the
   # comparison has to name exactly those rows.
   asql -d "$DB" -q -v ON_ERROR_STOP=1 -c "set session_replication_role = replica;
-    update public.invoice_transmissions set receipt = '{}'::jsonb, receipt_at = null where id = '$TX_ACC';
+    update public.invoice_transmissions set receipt = '{}'::jsonb, receipt_at = null,
+      phase = 'uncertain' where id = '$TX_ACC';
+    delete from public.invoice_transmission_artifacts where transmission_id = '$TX_PREP';
     delete from public.invoice_transmissions where id = '$TX_PREP'" \
     || fail "could not apply the transmissions control"
   snapshot > report/archive-control-tx.txt
@@ -259,6 +262,7 @@ if [ -n "$STAGE_AT" ]; then
   grep -q "^-transmission $TX_PREP" report/archive-control-tx-diff.txt \
     && grep -q "^[-+]transmission $TX_ACC" report/archive-control-tx-diff.txt \
     && grep -q "^-artifact $TX_PREP" report/archive-control-tx-diff.txt \
+    && grep -q "^+transmission $TX_ACC.* | uncertain | " report/archive-control-tx-diff.txt \
     || fail "the control's diff does not name the pending attempt, its bytes and the receipt"
   say "the control dropped the prepared attempt and blanked the receipt -- exactly what the comparison refuses"
 fi
