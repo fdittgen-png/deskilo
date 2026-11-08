@@ -55,4 +55,15 @@ void main() {
     expect(archiveCarriesProcedures('ch'), isTrue);
     expect(archiveCarriesProcedures('Ch'), isTrue);
   });
+
+  // INTENDED behaviour change of the move (#3455): the archive add-on is
+  // asked through `LegalContext.normalized` like every other capability, so a
+  // padded code is trimmed and `UK` is `GB`. Before the move neither was
+  // accepted here; no caller passes one today.
+  test('intended: harmonised with LegalContext.normalized (trim, UK is GB)', () {
+    expect(archiveCarriesReadableHandover('UK'), isTrue);
+    expect(archiveCarriesProcedures(' CH '), isTrue);
+    expect(archiveCarriesFec(' fr '), isTrue);
+    expect(archiveCarriesReadableHandover(' ie'), isTrue);
+  });
 }
