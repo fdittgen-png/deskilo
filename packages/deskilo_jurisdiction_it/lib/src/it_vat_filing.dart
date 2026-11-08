@@ -16,7 +16,7 @@ const String itImplementationVersion = '1';
 const String itFormatVersion = 'lipe-ivp18';
 
 /// The Italian VAT filing: the LIPE as the XML of the fornitura IVP18.
-class ItVatFilingContribution implements VatFilingContribution {
+class ItVatFilingContribution extends VatFilingContribution {
   const ItVatFilingContribution();
 
   @override

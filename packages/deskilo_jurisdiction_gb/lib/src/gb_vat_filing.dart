@@ -17,7 +17,7 @@ const String gbFormatVersion = 'mtd-bridging-csv';
 /// The British VAT filing: the nine boxes as one CSV row for MTD bridging
 /// software (#2359). The row names the registration number's nine digits as
 /// `vrn`.
-class GbVatFilingContribution implements VatFilingContribution {
+class GbVatFilingContribution extends VatFilingContribution {
   const GbVatFilingContribution();
 
   @override
