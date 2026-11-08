@@ -14,6 +14,7 @@ import 'package:crypto/crypto.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/jurisdiction/installed_archives.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/vat/retention.dart';
 
@@ -72,14 +73,16 @@ Uint8List zipBundle(Map<String, List<int>> files) {
 /// accountant's tools read.
 List<int> textBytes(String text) => utf8.encode(text);
 
-/// #2365 — the FEC is the French regulatory file: only a French workspace's
-/// archive carries one.
-bool archiveCarriesFec(String countryCode) => countryCode.toUpperCase() == 'FR';
+/// #2365 — the FEC is the French regulatory file: the archive of a country
+/// whose add-on declares the `fec` member carries one.
+bool archiveCarriesFec(String countryCode) =>
+    archiveOf(countryCode)?.archiveMembers.contains('fec') ?? false;
 
 /// #2377 — the record-keeping ordinance (GeBüV art. 4) asks for the
-/// documentation of the procedures: a Swiss workspace's archive carries it.
+/// documentation of the procedures: the archive of a country whose add-on
+/// declares the `procedures` member carries it.
 bool archiveCarriesProcedures(String countryCode) =>
-    countryCode.toUpperCase() == 'CH';
+    archiveOf(countryCode)?.archiveMembers.contains('procedures') ?? false;
 
 /// Adds the FEC [members] (the file under its own name and its manifest,
 /// #2376) to [files] when the archive of [countryCode] carries a FEC.
