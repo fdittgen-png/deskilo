@@ -14,6 +14,11 @@ on:
     paths:
       - 'lib/features/money/domain/**'
       - 'packages/deskilo_jurisdiction_*/**'
+      - 'packages/deskilo_accounting_interchange/**'
+      - 'packages/deskilo_invoice_model/**'
+      - 'packages/deskilo_money_kernel/**'
+      - 'packages/deskilo_tax_reference/**'
+      - 'packages/deskilo_vat_declaration/**'
       - 'test/features/money/vat_filing_es_it_test.dart'
       - 'test/features/money/vat_registers_es_it_test.dart'
       - 'test/features/money/vat_filing_files_test.dart'
@@ -25,6 +30,11 @@ on:
     paths:
       - 'lib/features/money/domain/**'
       - 'packages/deskilo_jurisdiction_*/**'
+      - 'packages/deskilo_accounting_interchange/**'
+      - 'packages/deskilo_invoice_model/**'
+      - 'packages/deskilo_money_kernel/**'
+      - 'packages/deskilo_tax_reference/**'
+      - 'packages/deskilo_vat_declaration/**'
       - 'test/fixtures/vat_filing/**'
       - 'tool/vat_filing/**'
   workflow_dispatch:

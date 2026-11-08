@@ -20,6 +20,11 @@ on:
     paths:
       - 'lib/features/money/domain/**'
       - 'packages/deskilo_jurisdiction_*/**'
+      - 'packages/deskilo_accounting_interchange/**'
+      - 'packages/deskilo_invoice_model/**'
+      - 'packages/deskilo_money_kernel/**'
+      - 'packages/deskilo_tax_reference/**'
+      - 'packages/deskilo_vat_declaration/**'
       - 'test/features/money/einvoice_samples_test.dart'
       - 'tool/einvoice/**'
       - '.github/workflows/einvoice-validate.yml'
@@ -28,6 +33,11 @@ on:
     paths:
       - 'lib/features/money/domain/**'
       - 'packages/deskilo_jurisdiction_*/**'
+      - 'packages/deskilo_accounting_interchange/**'
+      - 'packages/deskilo_invoice_model/**'
+      - 'packages/deskilo_money_kernel/**'
+      - 'packages/deskilo_tax_reference/**'
+      - 'packages/deskilo_vat_declaration/**'
       - 'tool/einvoice/**'
   workflow_dispatch:
 
