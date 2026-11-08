@@ -29,6 +29,9 @@ class ItVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  Set<String> get registers => const {'itRegistro'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
