@@ -36,6 +36,9 @@ class EsVatFilingContribution extends VatFilingContribution {
   Set<String> get factsAsked => const {'spanishFacts'};
 
   @override
+  Set<String> get registers => const {'esLibro', 'esSii', 'es347'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,

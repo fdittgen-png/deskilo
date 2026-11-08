@@ -17,7 +17,6 @@ lib/features/money/domain/swiss_qr_bill_pdf.dart :: 1 :: #3429 Invoice clauses a
 lib/features/money/domain/vat_register_es.dart :: 5 :: #3429 Spanish register (ES)
 lib/features/money/domain/vat_register_es_347.dart :: 1 :: checklist: the Spanish register (with es_347)
 lib/features/money/domain/vat_register_es_sii.dart :: 2 :: #3429 Spanish register (SII)
-lib/features/money/domain/vat_registers.dart :: 2 :: #3429 VAT registers: the country switch
 lib/features/money/domain/verifactu.dart :: 4 :: #3429 Spanish register (verifactu)
 lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429 Presentation: GB/CH/CA fields
 lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD

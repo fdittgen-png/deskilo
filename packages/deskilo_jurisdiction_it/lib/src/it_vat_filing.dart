@@ -35,6 +35,9 @@ class ItVatFilingContribution extends VatFilingContribution {
   Set<String> get factsAsked => const {'italianDeclarant'};
 
   @override
+  Set<String> get registers => const {'itRegistro'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
