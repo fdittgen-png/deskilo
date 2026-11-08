@@ -49,7 +49,7 @@ class RecordsLocation {
   factory RecordsLocation.fromSettings(
     SettingsSet? settings, {
     required String issuerCountry,
-    TaxReferenceSet? reference,
+    required TaxReferenceSet reference,
   }) {
     String read(String key, String fallback) =>
         settings != null && settings.definitions.containsKey(key)

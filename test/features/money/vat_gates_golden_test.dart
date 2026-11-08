@@ -26,6 +26,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
+import '../../helpers/installed_reference_shims.dart';
 import '../../helpers/mock_providers.dart';
 
 TaxReferenceRow _row(String domain, String country, String key, String from,
@@ -109,7 +110,7 @@ void main() {
     }
     for (final MapEntry(key: k, value: want) in (golden['warnings'] as Map<String, dynamic>).entries) {
       final [country, day] = k.split('/');
-      expect([for (final m in mandateWarnings(country, DateTime.parse(day))) '${m.duty.name}|${m.from.toIso8601String()}'],
+      expect([for (final m in mandateWarnings(country, DateTime.parse(day), reference: ActiveTaxReference.current)) '${m.duty.name}|${m.from.toIso8601String()}'],
           want, reason: k);
     }
     expect(nationalChannelRequired.toList()..sort(), golden['nationalChannelRequired']);

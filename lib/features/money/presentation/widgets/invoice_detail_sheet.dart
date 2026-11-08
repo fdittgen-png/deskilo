@@ -140,7 +140,14 @@ class _InvoiceDetailBody extends ConsumerWidget {
   Invoice get invoice => view.invoice;
   InvoiceMatch? get match => view.match;
   bool get canIssue => view.canIssue;
-  bool get isEu => view.isEu;
+
+  /// The sheet answers from the live context alone (false while it is not
+  /// ready); the view's value is only what the opening surface knew.
+  bool _liveIsEu(WidgetRef ref) =>
+      watchWorkspaceIsEu(
+        ref,
+        ref.watch(currentWorkspaceProvider).value?.countryCode ?? '',
+      );
   ({int count, DateTime last})? get reminder => view.reminder;
   String get replacedByNumber => view.replacedByNumber;
   bool get showMemberName => view.showMemberName;
@@ -153,6 +160,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
     InvoiceLifecycle status,
     InvoiceAction expected,
     String? heldReason,
+    bool isEu,
   ) {
     final l10n = context.l10n;
           final actions = InvoiceSheetActions(
@@ -205,6 +213,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
         showMemberName: showMemberName,
         heldReason: heldReason);
     final status = invoiceLifecycleOf(invoice, match);
+    final isEu = _liveIsEu(ref);
 
     final sections = InvoiceDetailSections(
       invoice: invoice,
@@ -256,7 +265,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // Every permitted action, spelled out. #812 — the one the
               // journey expects from the issuer comes FIRST and filled;
               // otherwise the PDF keeps its historical place.
-              ..._actions(context, status, _expected, heldReason),
+              ..._actions(context, status, _expected, heldReason, isEu),
             ],
           ),
         ),

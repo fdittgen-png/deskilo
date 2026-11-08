@@ -6,11 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/invoice_ubl.dart';
 import '../../domain/money_face.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show workspaceIsEu;
 import 'invoice_detail_sheet.dart';
 
 /// Consumes [focus] when [workspaceId] (the space on screen) is the invoice's
@@ -37,7 +37,7 @@ Future<void> openFocusedInvoice(
       invoice: invoice,
       match: matches[invoice.id],
       canIssue: false,
-      isEu: isEuCountry(countryCode),
+      isEu: workspaceIsEu(ref, countryCode),
     ),
   );
 }

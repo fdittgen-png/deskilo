@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/active_settings.dart';
 import '../../domain/records_location.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 
 /// #2378 -- where this space's records are kept, as the operator of the
 /// installation declared it (never inferred), and for a Canadian space
@@ -23,10 +24,13 @@ class RecordsLocationTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final country = this.country;
     if (country == null) return const SizedBox.shrink();
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const SizedBox.shrink();
     final l10n = context.l10n;
     final location = RecordsLocation.fromSettings(
       ref.watch(activeSettingsProvider),
       issuerCountry: country,
+      reference: reference,
     );
     final lines = [
       switch (location.hostingCountry) {

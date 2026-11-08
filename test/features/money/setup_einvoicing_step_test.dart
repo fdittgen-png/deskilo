@@ -24,6 +24,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../helpers/fake_money_repository.dart';
+import '../../helpers/installed_reference_shims.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 

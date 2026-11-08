@@ -6,6 +6,7 @@
 // are not all closed is provisional, which the person is told and the
 // archive's manifest states, never the file itself.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,14 +38,18 @@ typedef FecExportScope = ({
 /// The formats of [country] the space may choose: the books printed from
 /// the postings, and #2379 the SAF-T Financial files written from them,
 /// only where the space keeps a book.
-List<AccountingFormat> exportFormatsOf(WidgetRef ref, String country) {
+List<AccountingFormat> exportFormatsOf(
+  WidgetRef ref,
+  String country, {
+  required TaxReferenceSet reference,
+}) {
   final book = featureOn(
     ref.read(enabledFeatureKeysProvider),
     accountingBookKey,
     byDefault: false,
   );
   return [
-    for (final f in formatsFor(country))
+    for (final f in formatsFor(country, reference: reference))
       if (book ||
           !(bookReportFormats.contains(f.id) ||
               safTFinancialFormats.contains(f.id)))

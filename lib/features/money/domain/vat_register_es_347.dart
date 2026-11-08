@@ -53,7 +53,7 @@ const _elsewhere = {'E2', 'E5'};
     to: DateTime(year + 1),
   )) {
     if (invoice.currency != line.currency) continue;
-    final buyer = esBuyerIdOf(invoice);
+    final buyer = esBuyerIdOf(invoice, reference: reference);
     if (buyer.id.isEmpty || buyer.type.isNotEmpty) continue;
     final country = invoice.buyerParty?.country ?? '';
     final cents = invoice.vatTotals

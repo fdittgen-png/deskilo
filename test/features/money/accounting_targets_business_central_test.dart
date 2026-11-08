@@ -9,6 +9,7 @@
 // dispatches every localisation to the adapter.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -89,7 +90,7 @@ void main() {
 
   test('each localisation is offered in its own country only', () {
     String? bcIn(String country) =>
-        targetsFor(country)
+        targetsFor(country, reference: ActiveTaxReference.current)
             .where((t) => t.id.startsWith('business_central_'))
             .singleOrNull
             ?.id;

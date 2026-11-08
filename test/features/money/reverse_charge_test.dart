@@ -15,6 +15,8 @@ import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 const _seller = InvoiceParty(
   name: 'Demo SARL',
   street: '4 avenue de Castelnau',
@@ -111,11 +113,11 @@ void main() {
     });
 
     test('the member states, Greece under both its codes', () {
-      expect(isEuCountry('el'), isTrue);
-      expect(isEuCountry('GR'), isTrue);
+      expect(isEuCountry('el', reference: ActiveTaxReference.current), isTrue);
+      expect(isEuCountry('GR', reference: ActiveTaxReference.current), isTrue);
       expect(euCountryCode(' el ', reference: ActiveTaxReference.current), 'GR');
       expect(euMemberStates, isNot(contains('EL')));
-      expect(isEuCountry('NO'), isFalse);
+      expect(isEuCountry('NO', reference: ActiveTaxReference.current), isFalse);
     });
 
     test('the mention speaks the seller\'s language and cites art. 196', () {

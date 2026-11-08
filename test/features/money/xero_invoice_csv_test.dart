@@ -13,6 +13,8 @@ import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/xero_invoice_csv.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 const _golden = 'test/features/money/goldens/exports/xero_invoices.csv';
 
@@ -159,9 +161,9 @@ void main() {
     expect(target.payload, AccountingPayload.documents);
     expect(target.format?.needsAccounts, isTrue, reason: 'nothing is proposed for the account or the tax rates');
     for (final country in ['GB', 'CA', 'US', ...euMemberStates]) {
-      expect(formatsFor(country).map((f) => f.id), contains('xero_invoice_csv'), reason: country);
+      expect(formatsFor(country, reference: ActiveTaxReference.current).map((f) => f.id), contains('xero_invoice_csv'), reason: country);
     }
-    expect(formatsFor('CH').map((f) => f.id), isNot(contains('xero_invoice_csv')));
+    expect(formatsFor('CH', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('xero_invoice_csv')));
   });
 
   test('the recorded VAT travels per row, so Xero does not round it again '

@@ -90,6 +90,8 @@ Future<void> sendEInvoice(
         // download uses.
         final words = reportStringsOf(l10n);
         final association = ref.read(sellerIsAssociationProvider);
+        // Read once, before the first await.
+        final reference = requireWorkspaceTaxReference(ref);
         // A correction states the issue date of the invoice it corrects.
         final correctedIssuedAt = correctedIssuedAtOf(
           invoice,
@@ -103,7 +105,7 @@ Future<void> sendEInvoice(
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
-          reference: requireWorkspaceTaxReference(ref),
+          reference: reference,
         ), correctedIssuedAt: correctedIssuedAt);
         file = (
           bytes: utf8.encode(xml),
@@ -181,17 +183,17 @@ Future<void> exportEInvoice(
   Invoice invoice, {
   required String countryCode,
 }) async {
-  final route = eInvoiceRouteFor(countryCode);
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (route == null || workspace == null) return;
-  // Read before the sheet opens: without the workspace's own reference the
-  // readiness verdict cannot be given, so the person is told (a snack)
-  // instead of tapping into silence (#3403).
+  // Read once, before the sheet opens: the readiness verdict and the route
+  // state this reference; without it the person is told, not left with a
+  // dead tap (#3403).
   final reference = workspaceTaxReference(ref);
   if (reference == null) {
     AppSnack.error(context, context.l10n.accountingExportContextNotReady);
     return;
   }
+  final route = eInvoiceRouteFor(countryCode, reference: reference);
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  if (route == null || workspace == null) return;
   // The invoice's own snapshot, or the live workspace identity for
   // pre-0069 documents (see sellerOf).
   final subject = (
@@ -343,7 +345,11 @@ class _EInvoiceExportRun {
           '',
       sendChannel: route.businessChannel,
       sendGaps: sendGaps,
-      mandates: mandateWarnings(s.seller.country, ref.read(clockProvider).now()),
+      mandates: mandateWarnings(
+        s.seller.country,
+        ref.read(clockProvider).now(),
+        reference: reference,
+      ),
       today: ref.read(clockProvider).now(),
       canFixIdentity: roles.owner,
       identityFixedSince: identityFixedSince,

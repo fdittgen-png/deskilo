@@ -4,11 +4,11 @@
 // The packages take the reference as a parameter; the screens and the actions
 // pass the one their workspace's context captured (never the process-wide
 // static).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show isEuCountry;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/workspace_context_not_ready.dart';
-
 import 'operation_context_providers.dart';
 
 /// The tax reference the selected workspace's context captured from its own
@@ -20,6 +20,21 @@ TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
 /// when the context becomes ready; null (draw nothing) until then.
 TaxReferenceSet? watchWorkspaceTaxReference(WidgetRef ref) =>
     ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
+
+/// Whether [country] is an EU member state by the workspace's own tax
+/// reference; false while that is not ready (the e-invoice affordance that
+/// hangs on it then waits for the context).
+bool workspaceIsEu(WidgetRef ref, String country) {
+  final reference = workspaceTaxReference(ref);
+  return reference != null && isEuCountry(country, reference: reference);
+}
+
+/// [workspaceIsEu] for a `build`: it watches, so the widget answers again when
+/// the context becomes ready (a `build` never takes the read form).
+bool watchWorkspaceIsEu(WidgetRef ref, String country) {
+  final reference = watchWorkspaceTaxReference(ref);
+  return reference != null && isEuCountry(country, reference: reference);
+}
 
 /// [workspaceTaxReference], or a refusal for a flow that cannot go on without
 /// it (the document builders): thrown inside the guarded action, which

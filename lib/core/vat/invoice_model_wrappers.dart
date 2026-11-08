@@ -11,24 +11,14 @@
 // a plain shim delete.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide frozenTaxPointBasis,
-    isEuCountry,
     taxPointsOf,
     vatTaxPointLedger;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
-    show euMemberStatesOf, frozenTaxPointBasis, isEuCountry, taxPointsOf, vatTaxPointLedger;
-import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+    show frozenTaxPointBasis, taxPointsOf, vatTaxPointLedger;
 import 'package:meta/meta.dart';
 
 import '../time/workspace_time.dart';
 import 'tax_reference_active.dart';
-
-/// #2354 -- the member states, ONE set for the whole app (the rows of the
-/// `eu_member` domain of the installed tax reference).
-Set<String> get euMemberStates =>
-    model.euMemberStatesOf(ActiveTaxReference.current);
-
-bool isEuCountry(String code, {TaxReferenceSet? reference}) =>
-    model.isEuCountry(code, reference: reference ?? ActiveTaxReference.current);
 
 @visibleForTesting
 List<VatTaxPointAmount> taxPointsOf(

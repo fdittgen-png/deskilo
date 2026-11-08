@@ -11,6 +11,8 @@ import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 const _seller = InvoiceParty(
   name: 'Test Space',
   country: 'DE',
@@ -200,7 +202,7 @@ void main() {
     });
 
     test('a French seller is warned of what is due and what is new', () {
-      final warnings = mandateWarnings('fr', today);
+      final warnings = mandateWarnings('fr', today, reference: ActiveTaxReference.current);
       expect(warnings.map((m) => m.duty), [
         MandateDuty.receiveAll,
         MandateDuty.issueLarge,
@@ -215,7 +217,7 @@ void main() {
     });
 
     test('a German seller is warned of 2027 and 2028, not of 2025', () {
-      expect(mandateWarnings('DE', today).map((m) => m.duty), [
+      expect(mandateWarnings('DE', today, reference: ActiveTaxReference.current).map((m) => m.duty), [
         MandateDuty.issueLarge,
         MandateDuty.issueAll,
       ]);
@@ -223,7 +225,7 @@ void main() {
 
     test('IT, ES, PL and RO sellers stay refused at issue', () {
       for (final country in ['IT', 'ES', 'PL', 'RO']) {
-        expect(mandateWarnings(country, today), isEmpty, reason: country);
+        expect(mandateWarnings(country, today, reference: ActiveTaxReference.current), isEmpty, reason: country);
         expect(
           legalProfileOf(LegalClauseSnapshot(sellerCountry: country), reference: ActiveTaxReference.current),
           LegalProfile.unsupported,

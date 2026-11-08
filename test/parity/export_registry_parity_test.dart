@@ -20,6 +20,7 @@
 // Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -178,7 +179,7 @@ void main() {
     final registry = StringBuffer();
     for (final c in _countries) {
       registry.writeln('## ${c.isEmpty ? '(none)' : c}');
-      for (final t in targetsFor(c)) {
+      for (final t in targetsFor(c, reference: ActiveTaxReference.current)) {
         final f = t.format;
         registry.writeln(
           f == null

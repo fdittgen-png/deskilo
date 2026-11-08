@@ -38,7 +38,6 @@ class _Log implements BookPeriodRepository {
 Future<List<String>> _tapFormat(
   WidgetTester tester, {
   required String country,
-  required String formatId,
 }) async {
   final money = FakeMoneyRepository();
   await money.createInvoice(
@@ -84,28 +83,17 @@ Future<List<String>> _tapFormat(
   await tapInvoicingTool(tester, 'invoice-register-button');
   await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('accounting-export-$formatId')));
-  await tester.pumpAndSettle();
   return saved;
 }
 
 void main() {
-  const cases = [
-    ('CH', 'ch_kmu'),
-    ('CH', 'banana_transactions'),
-    ('DE', 'gobd'),
-    ('PT', 'saft_pt'),
-    ('FR', 'bundle'),
-    ('FR', 'fec'),
-    ('FR', 'accountant_csv'),
-  ];
-  for (final (country, formatId) in cases) {
-    testWidgets('$formatId ($country): the workspace context not ready is '
-        'answered, not swallowed (#3432)', (tester) async {
+  const countries = ['CH', 'DE', 'PT', 'FR'];
+  for (final country in countries) {
+    testWidgets('$country: the workspace context not ready is answered before '
+        'any format is offered (#3432)', (tester) async {
       final saved = await _tapFormat(
         tester,
         country: country,
-        formatId: formatId,
       );
       expect(saved, isEmpty);
       final snack = tester.widget<SnackBar>(find.byType(SnackBar));

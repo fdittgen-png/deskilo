@@ -467,7 +467,7 @@ void main() {
       // Warsaw opens the export sheet and finds it empty.
       final uncovered = [
         for (final country in CountryCatalog.countries)
-          if (formatsFor(country.code).isEmpty) country.code,
+          if (formatsFor(country.code, reference: ActiveTaxReference.current).isEmpty) country.code,
       ];
       expect(uncovered, isEmpty,
           reason: 'these countries have no accounting export: $uncovered');
@@ -480,7 +480,7 @@ void main() {
       // has to take a tax filing instead. The generic exchange formats
       // exist for that and are offered everywhere; this pins it.
       for (final country in CountryCatalog.countries) {
-        final exchange = formatsFor(country.code)
+        final exchange = formatsFor(country.code, reference: ActiveTaxReference.current)
             .where((f) => f.claim == FormatClaim.exchange);
         expect(exchange, isNotEmpty,
             reason: '${country.code} has no exchange format');

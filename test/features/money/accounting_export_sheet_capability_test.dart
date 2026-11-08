@@ -2,6 +2,7 @@
 //
 // #1868 — the export picker states, beside the FEC, that it is not the
 // entity's complete books; the generic formats carry no such note.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_export_sheet.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ void main() {
           builder: (context) => TextButton(
             onPressed: () => showAccountingExportSheet(
               context,
-              formats: formatsFor('FR'),
+              formats: formatsFor('FR', reference: ActiveTaxReference.current),
             ),
             child: const Text('open'),
           ),
@@ -45,7 +46,7 @@ void main() {
           builder: (context) => TextButton(
             onPressed: () => showAccountingExportSheet(
               context,
-              formats: formatsFor('BE'),
+              formats: formatsFor('BE', reference: ActiveTaxReference.current),
             ),
             child: const Text('open'),
           ),

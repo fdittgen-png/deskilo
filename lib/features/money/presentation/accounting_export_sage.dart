@@ -6,6 +6,7 @@
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
@@ -18,11 +19,17 @@ import 'widgets/export_accounts_dialogs.dart';
 /// #2373 — what the export sheet says of the products of [country] that
 /// import one of its files (Sage 100 France the FEC, Sage 50 Germany
 /// DATEV): the products and the file to choose.
-List<String> importNotices(AppLocalizations l10n, String country) {
-  final offered = {for (final f in formatsFor(country)) f.id};
+List<String> importNotices(
+  AppLocalizations l10n,
+  String country, {
+  required TaxReferenceSet reference,
+}) {
+  final offered = {
+    for (final f in formatsFor(country, reference: reference)) f.id,
+  };
   return [
     for (final MapEntry(key: via, value: products)
-        in importRoutesFor(country).entries)
+        in importRoutesFor(country, reference: reference).entries)
       if (offered.contains(via))
         l10n.exportImportedVia(
           products.map((t) => t.product).join(', '),
