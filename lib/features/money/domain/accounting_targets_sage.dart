@@ -29,7 +29,7 @@ const Set<AccountingOperation> _operations = {
 
 /// A Sage Business Cloud contact reference holds at most eight characters
 /// (accounting_sage.ts `CONTACT_REFERENCE_LENGTH`).
-const _contactReference = sageAccountReferenceRule;
+const _contactReference = CustomerIdRule(maxLength: 8);
 
 /// The Sage targets, in the order the sheet lists them.
 const List<AccountingTarget> sageAccountingTargets = [

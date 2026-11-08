@@ -10,6 +10,7 @@
 // seeded_year_goldens_test.dart's.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
+import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
@@ -340,6 +341,23 @@ void main() {
       expect(rows.map((r) => r.type), ['JD', 'JC']);
       expect(rows.map((r) => r.account), ['', '']);
       expect(rows.map((r) => r.taxCode).toSet(), {const SageAccounts().noTax});
+    });
+  });
+
+  group('the Account Reference rule (#3376)', () {
+    test('the Sage 50 target reads the writer\'s rule: one definition', () {
+      final target = accountingTargets.firstWhere((t) => t.id == 'sage50');
+      expect(target.customerIdRule, same(sageAccountReferenceRule));
+      expect(sageAccountReferenceRule.maxLength, 8);
+      expect(sageAccountReferenceRule.charset, r'[A-Z0-9]+');
+    });
+
+    test('it normalises to capitals and digits and refuses what cannot fit', () {
+      expect(sageAccountReferenceRule.admit('ab-12'), 'AB12');
+      expect(sageAccountReferenceRule.admit('m 0042'), 'M0042');
+      expect(sageAccountReferenceRule.admit('ABCDEFGHI'), isNull);
+      expect(sageAccountReferenceRule.admit('--'), isNull);
+      expect(sageAccountReferenceRule.admit(''), isNull);
     });
   });
 }

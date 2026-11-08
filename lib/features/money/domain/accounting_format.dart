@@ -304,7 +304,7 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
     taxCodeModel: TaxCodeModel.perRate,
     format: _sageFormat,
-    customerIdRule: CustomerIdRule(maxLength: 8, charset: r'[A-Z0-9]+'),
+    customerIdRule: sageAccountReferenceRule,
   ),
   ...swissAccountingTargets,
   ...safTFinancialTargets,

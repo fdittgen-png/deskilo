@@ -172,7 +172,10 @@ const List<String> sageColumns = [
 
 /// The Account Reference rule of the Sage 50 target (at most eight
 /// capitals and digits).
-const CustomerIdRule sageAccountReferenceRule = CustomerIdRule(maxLength: 8);
+const CustomerIdRule sageAccountReferenceRule = CustomerIdRule(
+  maxLength: 8,
+  charset: r'[A-Z0-9]+',
+);
 
 /// One transaction of the audit trail. Amounts are positive minor units
 /// of the base currency (the exchange rate is 1).
