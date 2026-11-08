@@ -55,4 +55,22 @@ void main() {
       expect(rules(c, 99).where((r) => r.$3), isEmpty, reason: c);
     }
   });
+
+  test('the boundary: a period equal to a US rule\'s own extends nothing, one '
+      'more extends it (> not >=)', () {
+    final own = {
+      for (final r in retentionRules('US')) r.docClass: r.years,
+    };
+    expect(own, isNotEmpty);
+    for (final e in own.entries) {
+      final equal = retentionRules('US', usYears: e.value)
+          .firstWhere((r) => r.docClass == e.key);
+      expect(equal.bySetting, isFalse, reason: '${e.key}: N = ${e.value}');
+      expect(equal.years, e.value);
+      final more = retentionRules('US', usYears: e.value + 1)
+          .firstWhere((r) => r.docClass == e.key);
+      expect(more.bySetting, isTrue, reason: '${e.key}: N + 1');
+      expect(more.years, e.value + 1);
+    }
+  });
 }
