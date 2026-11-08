@@ -10,14 +10,14 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2623 |
-| functions | 14282 |
+| files | 2642 |
+| functions | 14289 |
 | cyclomatic>=9 | 1464 |
 | cyclomatic>=25 | 84 |
 | cognitive>=15 | 556 |
 | cognitive>=30 | 76 |
 | length>=150 | 52 |
-| parameters>=5 | 661 |
+| parameters>=5 | 662 |
 | parameters>=7 | 159 |
 | partOfFiles | 18 |
 

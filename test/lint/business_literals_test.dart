@@ -99,7 +99,7 @@ const _eurHolders = {
   'packages/deskilo_invoice_model/lib/src/vat_compliance.dart':
       'the Italian stamp-duty rule is defined in euro (DPR 642/72 threshold): '
           'it applies to euro invoices only',
-  'lib/features/money/domain/swiss_qr_bill.dart':
+  'packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart':
       'the Swiss QR-bill standard allows exactly CHF and EUR',
   'packages/deskilo_invoice_model/lib/src/vat_rate.dart':
       'a unit amount for rounding arithmetic, never printed or booked as euros',

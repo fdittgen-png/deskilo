@@ -7,8 +7,6 @@ import 'dart:io';
 
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart'
-    show buildInvoiceUbl;
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:flutter_test/flutter_test.dart';

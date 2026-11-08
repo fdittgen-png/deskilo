@@ -1,0 +1,207 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
+import 'invoice.dart';
+import 'swiss_qr_bill.dart';
+import 'vat_compliance.dart';
+import 'vat_regime.dart';
+
+/// One thing standing between this invoice and a VALID EN 16931 file.
+///
+/// The norm's fatal rules are named where they apply: a validator would
+/// reject the document with exactly these codes, so the app says it first
+/// — in its own words, before the file leaves the phone. Exporting an XML
+/// that a platform silently rejects is worse than not exporting at all.
+enum EInvoiceGap {
+  /// The workspace charges VAT but the invoice carries NO breakdown —
+  /// either it was issued before VAT management (0072) or no rate was
+  /// configured when it was. Declaring a zero tax the seller does owe is
+  /// worse than refusing, so this blocks; adding the rates and issuing a
+  /// replacement clears it.
+  vatNotSupported,
+
+  /// Category `E` or `S` without the seller VAT identifier (BR-E-02 /
+  /// BR-S-02).
+  missingVatId,
+
+  /// Category `O` without a company registration number — nothing would
+  /// identify the seller (BR-CO-26), and BR-O-02 forbids the VAT id.
+  missingLegalId,
+
+  /// Category `E` with neither a VATEX code nor a written reason
+  /// (BR-E-10).
+  missingExemptionReason,
+
+  /// BR-09 — the seller's country.
+  missingSellerCountry,
+
+  /// BR-11 — the customer's country.
+  missingBuyerCountry,
+
+  /// BR-16 — an invoice has at least one line. A month whose payments
+  /// cover everything has only credits, which the norm carries as a
+  /// prepaid amount, not as lines: there is no invoice to send. (#1919 —
+  /// a rated reversal IS a line: a pure avoir is a credit note to send.)
+  noChargeLines,
+
+  /// #1919 — a credit note that also nets payments (lines with no rate):
+  /// an EN 16931 credit note has no truthful place for money already
+  /// moved, so the document is refused rather than mis-stated.
+  creditNoteWithPayments,
+
+  /// #2380 — the payment account is a Swiss QR-IBAN but the invoice has no
+  /// QR reference frozen at issue: such an account refuses a payment
+  /// without one, and the reference derived from the number is ambiguous.
+  qrIbanWithoutReference,
+
+  /// Not fatal for the norm, but national profiles (XRechnung, Peppol
+  /// BIS) require the seller's city…
+  missingSellerCity,
+
+  /// …and post code.
+  missingSellerPostalCode,
+
+  /// #878 — the customer's VAT id does not have its member state's
+  /// shape (a typo an e-invoice platform will bounce). Not blocking:
+  /// the id may be right and the table wrong.
+  buyerVatIdFormat,
+
+  /// #895 — a reverse-charged supply must name the customer's VAT
+  /// identifier (BT-48): it is what proves the tax is theirs.
+  missingBuyerVatId,
+
+  /// #922 — bound for a GOVERNMENT platform with neither a purchase-order
+  /// reference (BT-13, the engagement number) nor a buyer reference
+  /// (BT-10, the service code). The norm does not require them; Chorus
+  /// Pro does, for most public entities. A warning, not a refusal.
+  missingPublicSectorReferences,
+
+  /// #941 — a French business buyer without a SIREN, from a VAT-
+  /// registered French seller: the 2026 B2B e-invoicing reform makes
+  /// BT-47 mandatory between French businesses and a platform refuses
+  /// the document without it. The member's own data, not a setting.
+  missingBuyerLegalId,
+
+  /// #972 — the same missing SIREN, but the seller is NOT subject to
+  /// VAT (an association, a franchise): the reform does not bind it and
+  /// EN 16931 never required BT-47, so no validator refuses the file.
+  /// The platform still routes by the SIREN — worth entering, never a
+  /// refusal.
+  buyerLegalIdAdvisable,
+
+  /// #947 — BR-O-11: a not-subject line (a refundable deposit, an
+  /// out-of-scope item) beside taxed lines. EN 16931 refuses the mix;
+  /// the deposit must be issued on its own document.
+  mixedNotSubjectLines,
+}
+
+extension EInvoiceGapKind on EInvoiceGap {
+  /// Whether the export must refuse (as opposed to warn).
+  bool get isBlocking => switch (this) {
+        EInvoiceGap.missingSellerCity ||
+        EInvoiceGap.missingSellerPostalCode ||
+        EInvoiceGap.buyerVatIdFormat ||
+        EInvoiceGap.missingPublicSectorReferences ||
+        EInvoiceGap.buyerLegalIdAdvisable =>
+          false,
+        _ => true,
+      };
+
+  /// Whether the owner can clear it in the legal-identity screen.
+  bool get fixableInSettings => switch (this) {
+        EInvoiceGap.missingVatId ||
+        EInvoiceGap.missingLegalId ||
+        EInvoiceGap.missingExemptionReason ||
+        EInvoiceGap.missingSellerCity ||
+        EInvoiceGap.missingSellerPostalCode ||
+        EInvoiceGap.vatNotSupported =>
+          true,
+        _ => false,
+      };
+}
+
+/// What the e-invoice export can honestly claim about [invoice].
+class EInvoiceReadiness {
+  const EInvoiceReadiness(this.gaps);
+
+  final List<EInvoiceGap> gaps;
+
+  List<EInvoiceGap> get blocking =>
+      gaps.where((g) => g.isBlocking).toList(growable: false);
+
+  List<EInvoiceGap> get warnings =>
+      gaps.where((g) => !g.isBlocking).toList(growable: false);
+
+  /// No fatal rule is violated — the file can be exported.
+  bool get ready => blocking.isEmpty;
+
+  /// Valid AND complete enough for the strict national profiles.
+  bool get clean => gaps.isEmpty;
+}
+
+/// Pre-flight check of the fatal EN 16931 rules the app can decide
+/// locally. [seller] and [buyer] are the invoice's own snapshot (or, for
+/// pre-0069 documents, the live workspace identity — the exporter decides
+/// that, this only judges what it is handed).
+EInvoiceReadiness checkEInvoiceReadiness({
+  required Invoice invoice,
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  /// #922 — where the document is bound: 'government' asks for the
+  /// public-sector references. Anything else does not.
+  String destination = '',
+  /// #2380 — the account the document names (BT-84); '' = none.
+  String iban = '',
+  required TaxReferenceSet reference,
+}) {
+  final regime = vatRegimeFromWire(seller.vatRegime);
+  final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
+      regime.exemptionReasonCode(seller.country).isNotEmpty;
+  return EInvoiceReadiness([
+    // A VAT-charging seller must show tax. With the breakdown present the
+    // document is as valid as any other — that is the whole point of 0072.
+    if (regime == VatRegime.vatRegistered && invoice.vatCents == 0)
+      EInvoiceGap.vatNotSupported,
+    if (regime.requiresVatId && seller.vatId.isEmpty)
+      EInvoiceGap.missingVatId,
+    if (regime.forbidsVatId && seller.legalId.isEmpty)
+      EInvoiceGap.missingLegalId,
+    if (regime == VatRegime.exempt && !hasExemptionReason)
+      EInvoiceGap.missingExemptionReason,
+    if (seller.country.isEmpty) EInvoiceGap.missingSellerCountry,
+    if (buyer.country.isEmpty) EInvoiceGap.missingBuyerCountry,
+    if (buyer.vatId.isNotEmpty && !looksLikeEuVatId(buyer.vatId, reference: reference))
+      EInvoiceGap.buyerVatIdFormat,
+    if (invoice.isReverseCharged && buyer.vatId.trim().isEmpty)
+      EInvoiceGap.missingBuyerVatId,
+    if (!invoice.lines
+        .any((l) => l.amountCents > 0 || (l.amountCents < 0 && l.vatPercent > 0)))
+      EInvoiceGap.noChargeLines,
+    if (invoice.isCreditNote &&
+        invoice.lines.any((l) => l.amountCents < 0 && l.vatPercent == 0))
+      EInvoiceGap.creditNoteWithPayments,
+    if (qrIbanWithoutReference(
+      account: iban,
+      creditNote: invoice.totalCents < 0,
+      legalSnapshot: invoice.legalSnapshot,
+    ))
+      EInvoiceGap.qrIbanWithoutReference,
+    if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
+    if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,
+    if (destination == 'government' &&
+        buyer.reference.trim().isEmpty &&
+        buyer.orderReference.trim().isEmpty)
+      EInvoiceGap.missingPublicSectorReferences,
+    // #972 — the buyer's SIREN: a refusal between two VAT-registered
+    // French businesses (the reform), advice from a seller the reform
+    // does not bind (EN 16931 never required BT-47).
+    if (seller.country.trim().toUpperCase() == 'FR' &&
+        buyer.country.trim().toUpperCase() == 'FR' &&
+        buyer.company.trim().isNotEmpty &&
+        buyer.legalId.trim().isEmpty)
+      if (regime == VatRegime.vatRegistered) EInvoiceGap.missingBuyerLegalId else EInvoiceGap.buyerLegalIdAdvisable,
+    if (invoice.vatTotals.any((t) => t.category == 'O') &&
+        invoice.vatTotals.any((t) => t.category != 'O'))
+      EInvoiceGap.mixedNotSubjectLines,
+  ]);
+}
