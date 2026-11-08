@@ -65,9 +65,9 @@ const Map<String, String> _allowed = {
       '#2357 — the Dart side of the VAT return',
   'lib/features/money/domain/vat_declaration_build.dart::computeVatDeclarationLines':
       '#2357 — the VAT return',
-  'lib/features/money/domain/vat_rate.dart::vatPercentAt':
+  'packages/deskilo_invoice_model/lib/src/vat_rate.dart::vatPercentAt':
       '#2356 — dated rates, the twin of vat_rate_percent_at',
-  'lib/features/money/domain/vat_rate.dart::vatGroupForPercent':
+  'packages/deskilo_invoice_model/lib/src/vat_rate.dart::vatGroupForPercent':
       '#2356 — Z/E categories',
 
   // Contracts the tests are the reader of: a bound, a measured table, a

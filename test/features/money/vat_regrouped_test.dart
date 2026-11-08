@@ -16,8 +16,6 @@
 //      settlement carries them" — but its only caller hands it the view,
 //      from which the settlement has already been removed.
 import 'package:deskilo/features/money/domain/accounting_view.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -64,6 +64,9 @@ dependencies:
   # #3376 - the pure money and data primitives under the accounting model.
   deskilo_money_kernel:
     path: packages/deskilo_money_kernel
+  # #3402 - the invoice model (the installed snapshot stays in the app).
+  deskilo_invoice_model:
+    path: packages/deskilo_invoice_model
   # #3405 - the VAT declaration model (the installed snapshot stays in the app).
   deskilo_vat_declaration:
     path: packages/deskilo_vat_declaration

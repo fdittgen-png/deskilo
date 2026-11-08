@@ -14,7 +14,6 @@ import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/invoice.dart';
-import '../../domain/invoice_ubl.dart';
 import '../../domain/register_period.dart';
 import '../../providers/money_providers.dart';
 import '../accounting_export.dart';

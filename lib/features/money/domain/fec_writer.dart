@@ -9,8 +9,6 @@ import 'fec_lettering.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
 import 'ledger_entry.dart';
-import 'vat_regime.dart';
-import 'vat_tax_point.dart';
 
 const _salesJournal = 'VE';
 const _salesJournalLabel = 'Ventes';

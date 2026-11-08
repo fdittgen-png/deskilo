@@ -258,6 +258,15 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'invoice model package',
+    root: 'packages/deskilo_invoice_model/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test in packages/deskilo_invoice_model (#3402)',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_invoice_model',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'VAT declaration package',
     root: 'packages/deskilo_vat_declaration/test',
     suffix: '_test.dart',

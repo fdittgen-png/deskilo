@@ -5,16 +5,12 @@
 // catalogue's explicit groups, and the e-invoice categories G and E.
 import 'dart:io';
 
-import 'package:deskilo/core/vat/vat_treatment.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart'
     show buildInvoiceUbl;
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

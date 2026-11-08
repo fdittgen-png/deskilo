@@ -10,13 +10,9 @@
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';

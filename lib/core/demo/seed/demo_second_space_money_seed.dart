@@ -7,7 +7,6 @@
 // for two more half-days, waiting for Jonas.
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/workspace_event.dart';
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/money/domain/vat_rate.dart';

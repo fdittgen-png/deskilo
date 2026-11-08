@@ -96,12 +96,12 @@ const _eurHolders = {
   'lib/features/money/domain/euro_format.dart':
       'the one place the euro file formats (FEC, DATEV) name their currency; '
           'a workspace in another currency is refused, never written as euros',
-  'lib/features/money/domain/vat_compliance.dart':
+  'packages/deskilo_invoice_model/lib/src/vat_compliance.dart':
       'the Italian stamp-duty rule is defined in euro (DPR 642/72 threshold): '
           'it applies to euro invoices only',
   'lib/features/money/domain/swiss_qr_bill.dart':
       'the Swiss QR-bill standard allows exactly CHF and EUR',
-  'lib/features/money/domain/vat_rate.dart':
+  'packages/deskilo_invoice_model/lib/src/vat_rate.dart':
       'a unit amount for rounding arithmetic, never printed or booked as euros',
   'packages/deskilo_vat_declaration/lib/src/vat_components.dart':
       'a unit amount for rounding arithmetic, never printed or booked as euros',
@@ -156,6 +156,7 @@ void main() {
       'lib',
       'packages/deskilo_money_kernel/lib',
       'packages/deskilo_vat_declaration/lib',
+      'packages/deskilo_invoice_model/lib',
     ]).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&
@@ -174,6 +175,7 @@ void main() {
       'lib',
       'packages/deskilo_money_kernel/lib',
       'packages/deskilo_vat_declaration/lib',
+      'packages/deskilo_invoice_model/lib',
     ]).where((f) =>
         !f.path.endsWith('.g.dart') &&
         !f.path.contains('/l10n/') &&

@@ -5,7 +5,6 @@
 // rate line on the nominal codes asked for at export time, its receipts and
 // refunds, and a write-off journalled to the bad-debt nominal. The rows and
 // the file are `sage.dart`'s.
-import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'billing_rules.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';

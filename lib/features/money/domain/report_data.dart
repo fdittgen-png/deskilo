@@ -17,19 +17,14 @@ import '../../../core/time/date_text.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
-import 'invoice.dart';
 import 'invoice_clauses.dart';
 import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
 import 'invoice_sales_tax.dart';
-import 'payment_terms.dart';
 import 'period_label.dart';
-import 'report_strings.dart';
 import 'stamp_duty.dart';
 import 'vat_compliance.dart';
 import 'vat_components.dart';
-import 'vat_rate.dart';
-import 'vat_regime.dart';
 
 /// The LEGAL mention variables (#480) shared by every document's data
 /// model: the seller's statutory lines and the payment clauses. Which
@@ -74,7 +69,7 @@ Map<String, Object?> legalMentionData(
       : legacy
           ? legacyClauses(legal, terms, strings)
           : qualifyClauses(
-              LegalClauseSnapshot.live(
+              legalClauseSnapshotLive(
                 legal: legal,
                 sellerCountry: sellerCountry,
                 buyerCountry: buyer?.country ?? '',

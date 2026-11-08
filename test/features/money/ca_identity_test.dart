@@ -5,14 +5,9 @@
 // number (server twin: migration 0424, pgTAP 181), the bilingual mentions,
 // the small supplier's wording, the quick-method flag, and an invoice whose
 // total carries GST and QST printing them on two rows.
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_components.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _quebec() => Invoice(

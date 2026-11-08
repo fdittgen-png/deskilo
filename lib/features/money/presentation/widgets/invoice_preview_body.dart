@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/invoice.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../report_strings_l10n.dart';

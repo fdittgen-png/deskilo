@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `44b9783ed9865c783f0a2bacf3fde2bc0b4c4b6a` on 2026-11-07.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7144d199e126a47f1d170e301a1cc662ec1af8e7` on 2026-11-07.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,15 +10,15 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2592 |
-| functions | 14254 |
+| files | 2610 |
+| functions | 14276 |
 | cyclomatic>=9 | 1464 |
 | cyclomatic>=25 | 84 |
 | cognitive>=15 | 556 |
 | cognitive>=30 | 76 |
 | length>=150 | 52 |
-| parameters>=5 | 653 |
-| parameters>=7 | 156 |
+| parameters>=5 | 661 |
+| parameters>=7 | 159 |
 | partOfFiles | 18 |
 
 ## Worst functions by cognitive complexity (baseline)
@@ -47,7 +47,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 43 | 31 | 71 | 5 | `lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction` |
 | 43 | 26 | 161 | 1 | `lib/features/workspace/presentation/widgets/save_template_sheet.dart#_SaveTemplateSheetState.build` |
 | 42 | 37 | 175 | 3 | `lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices` |
-| 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
 | 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
+| 41 | 25 | 58 | 6 | `packages/deskilo_invoice_model/lib/src/vat_tax_point.dart#_portions` |
 | 40 | 38 | 141 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 

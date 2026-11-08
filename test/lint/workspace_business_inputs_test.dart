@@ -60,7 +60,9 @@ const _calendarBudget = 55;
 /// stamp duty is decided inside the FatturaPA writer and the invoice report
 /// data, neither of which receives the workspace context yet; it moves to the
 /// context with them.
-const _taxBudget = 22;
+/// 2026-11-08 (#3402): 22 -> 19, the invoice model's wrappers collapse into ONE
+/// file (`core/vat/invoice_model_wrappers.dart`) that deletes at the sweep.
+const _taxBudget = 19;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');

@@ -2,7 +2,6 @@
 import 'invoice.dart';
 import 'vat_compliance.dart';
 import 'vat_rate.dart';
-import 'vat_regime.dart';
 
 /// #1154 — the figures a structured e-invoice states, computed ONCE.
 ///

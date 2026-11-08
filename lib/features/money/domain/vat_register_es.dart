@@ -13,8 +13,6 @@ import '../../../core/files/xlsx.dart';
 import '../../../core/i18n/currencies.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/place_of_supply.dart';
-import 'invoice.dart';
-import 'vat_rate.dart';
 
 /// What the AEAT's keys say of one rate of an issued document: the
 /// calificación (S1 taxed, S2 reverse-charged, N1/N2 not subject), the

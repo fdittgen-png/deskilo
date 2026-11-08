@@ -179,6 +179,11 @@ jobs:
         run: dart pub get && dart analyze --fatal-infos && dart test
         working-directory: packages/deskilo_vat_declaration
 
+      # #3402 — the invoice model: analyzed and tested on its own.
+      - name: Tests of the invoice model package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_invoice_model
+
       # #3401 — the tax reference data model: analyzed and tested on its own.
       - name: Tests of the tax reference package
         run: dart pub get && dart analyze --fatal-infos && dart test

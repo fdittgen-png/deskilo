@@ -9,9 +9,6 @@ import 'dart:io';
 
 import 'package:deskilo/core/vat/place_of_supply.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/xero_invoice_csv.dart';
 import 'package:flutter_test/flutter_test.dart';
 

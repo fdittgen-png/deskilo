@@ -10,7 +10,6 @@
 // document; a credit note is due on its own date and never re-opens the
 // period of the invoice it corrects.
 import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';

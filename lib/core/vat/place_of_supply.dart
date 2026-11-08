@@ -1,66 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'supply_class.dart';
-import 'tax_reference.dart';
-import 'tax_reference_active.dart';
-import 'vat_treatment.dart';
-
-/// #2354 — the member states, ONE set for the whole app. #2478: the rows of
-/// the `eu_member` domain of the tax reference store, no list in code; the
-/// SQL `public.is_eu_country` reads the same rows. Greece is `GR` here, as
-/// ISO says; `EL` is only its VAT-number prefix, an alias row accepted on
-/// input and normalised by [euCountryCode].
-Set<String> get euMemberStates => ActiveTaxReference.current.euMembers();
-
-/// The canonical code for [code]: trimmed, upper case, an alias row
-/// resolved (`EL` → `GR`, `public.eu_country_code`).
-String euCountryCode(String code, {TaxReferenceSet? reference}) =>
-    (reference ?? ActiveTaxReference.current).euCode(code);
-
-bool isEuCountry(String code, {TaxReferenceSet? reference}) =>
-    (reference ?? ActiveTaxReference.current).isEu(code);
-
-/// #2354 — the VAT category a line takes from WHERE it is supplied, the
-/// twin of `public.supply_vat_category` (pinned case by case against
-/// the pgTAP file by `place_of_supply_test`). '' means the seller's own
-/// regime decides (domestic VAT: S at a rate, else its zero category).
-///
-/// A desk, an office or a room is a service connected with immovable
-/// property: taxed where the building stands, for every customer
-/// (Directive 2006/112/EC art. 47; Reg. 282/2011 art. 31a). Only a
-/// [SupplyClass.general] line follows the customer: AE for a business in
-/// another member state (art. 44/196), G for a business outside the EU
-/// (art. 44). A consumer, wherever they live, pays the seller's VAT on a
-/// general service too (art. 45). The capacity is the STATED one
-/// (`members.customer_capacity`, else the workspace default) — never
-/// inferred from a VAT number. An explicit [VatTreatment] other than
-/// automatic decides every line, as the owner chose it.
-String supplyVatCategory({
-  required VatTreatment treatment,
-  required SupplyClass supply,
-  required bool sellerVatRegistered,
-  required String sellerCountry,
-  required String buyerCountry,
-  required String buyerCapacity,
-  bool reverseChargeOn = true,
-}) {
-  switch (treatment) {
-    case VatTreatment.export:
-      return 'G';
-    case VatTreatment.exempt:
-      return 'E';
-    case VatTreatment.reverseCharge:
-      return 'AE';
-    case VatTreatment.domestic:
-      return '';
-    case VatTreatment.auto:
-      break;
-  }
-  if (supply != SupplyClass.general) return '';
-  if (!sellerVatRegistered) return '';
-  if (!isEuCountry(sellerCountry)) return '';
-  if (buyerCapacity != 'business') return '';
-  if (buyerCountry.trim().isEmpty) return '';
-  if (euCountryCode(buyerCountry) == euCountryCode(sellerCountry)) return '';
-  if (isEuCountry(buyerCountry)) return reverseChargeOn ? 'AE' : '';
-  return 'G';
-}
+//
+// #3402 -- moved to deskilo_invoice_model; this path re-exports it (and the
+// wrappers that keep the old signatures) until the sweep PR (#3403).
+export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
+export 'invoice_model_wrappers.dart';

@@ -17,7 +17,6 @@
 // **Filed** is what the owner records after filing with the authority,
 // with the receipt it gave: no upload marks a return filed.
 import 'package:meta/meta.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/tax_reporting_repository.dart';
 import '../domain/vat_declaration.dart';

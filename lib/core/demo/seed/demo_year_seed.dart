@@ -8,7 +8,6 @@
 // the space itself pays every month. Everything is placed relative to the
 // seeded instant (ADR 0028).
 import '../../../features/money/domain/expense_schedule.dart';
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';

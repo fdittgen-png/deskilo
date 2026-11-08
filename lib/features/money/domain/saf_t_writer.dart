@@ -6,8 +6,6 @@ import '../../../core/text/number_text.dart';
 import 'invoice.dart';
 import 'posting.dart';
 import 'saf_t_ledger.dart';
-import 'vat_rate.dart';
-import 'vat_regime.dart';
 
 /// Which national declaration the file makes about itself (#669).
 ///
