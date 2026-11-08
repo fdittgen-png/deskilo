@@ -46,9 +46,16 @@ class InvoiceMentionContext {
 /// same context gives the same lines; it reads no clock, network or
 /// repository. The country is the one in the capability id
 /// (`invoice_mentions.IT`).
-abstract interface class InvoiceMentionsContribution {
+abstract class InvoiceMentionsContribution {
+  const InvoiceMentionsContribution();
+
   CapabilityDescriptor get descriptor;
 
   /// The lines for [context], in print order; empty when the law adds none.
   List<String> mentions(InvoiceMentionContext context);
+
+  /// The correction reason codes the country's law asks a correcting invoice
+  /// to carry, in the order they are offered (Spain: R1-R5); empty when it
+  /// asks none. Additive: the contract stays at version 1.
+  List<String> get correctionReasonCodes => const [];
 }

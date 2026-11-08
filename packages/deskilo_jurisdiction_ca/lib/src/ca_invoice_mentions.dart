@@ -12,7 +12,7 @@ import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.da
 const caInvoiceMentionsImplementationVersion = '1';
 
 /// The Canadian invoice mentions.
-class CaInvoiceMentions implements InvoiceMentionsContribution {
+class CaInvoiceMentions extends InvoiceMentionsContribution {
   const CaInvoiceMentions();
 
   @override

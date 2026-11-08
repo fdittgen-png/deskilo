@@ -19,7 +19,7 @@ const _context = InvoiceMentionContext(
 );
 
 /// An add-on written against another version of the contract.
-class _OtherVersion implements InvoiceMentionsContribution {
+class _OtherVersion extends InvoiceMentionsContribution {
   const _OtherVersion();
 
   @override

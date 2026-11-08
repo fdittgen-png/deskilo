@@ -9,7 +9,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 const frInvoiceMentionsImplementationVersion = '1';
 
 /// The French invoice mentions.
-class FrInvoiceMentions implements InvoiceMentionsContribution {
+class FrInvoiceMentions extends InvoiceMentionsContribution {
   const FrInvoiceMentions();
 
   @override

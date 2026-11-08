@@ -25,7 +25,7 @@ String _reasonText(String code) => switch (code.trim().toUpperCase()) {
 };
 
 /// The Spanish invoice mentions.
-class EsInvoiceMentions implements InvoiceMentionsContribution {
+class EsInvoiceMentions extends InvoiceMentionsContribution {
   const EsInvoiceMentions();
 
   @override
@@ -36,6 +36,9 @@ class EsInvoiceMentions implements InvoiceMentionsContribution {
     formatVersion: 'rd-1619-2012-art-15',
     capabilityId: 'invoice_mentions.ES',
   );
+
+  @override
+  List<String> get correctionReasonCodes => spanishCorrectionReasonCodes;
 
   @override
   List<String> mentions(InvoiceMentionContext context) {
