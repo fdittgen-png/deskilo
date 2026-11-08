@@ -17,7 +17,7 @@ const _expected = <String, ({bool fec, bool procedures, bool handover})>{
   'IT': (fec: false, procedures: false, handover: false),
   'ES': (fec: false, procedures: false, handover: false),
   'GB': (fec: false, procedures: false, handover: true),
-  'IE': (fec: false, procedures: false, handover: false),
+  'IE': (fec: false, procedures: false, handover: true),
   'CA': (fec: false, procedures: false, handover: true),
   'US': (fec: false, procedures: false, handover: true),
   'PL': (fec: false, procedures: false, handover: false),
