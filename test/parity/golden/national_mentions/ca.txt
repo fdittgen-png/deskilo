@@ -1,0 +1,9 @@
+registered, vat number => GST/HST No. · N° de TPS/TVH : 123456789 RT0001
+registered, both numbers, qst => GST/HST No. · N° de TPS/TVH : 123456789 RT0001 | QST No. · N° de TVQ : 1234567890 TQ0001
+registered, qst not charged => GST/HST No. · N° de TPS/TVH : 123456789 RT0001
+registered, qst but no number => GST/HST No. · N° de TPS/TVH : 1
+registered, no numbers => 
+blank numbers => 
+not a number => GST/HST No. · N° de TPS/TVH : not a number
+exempt => 
+lowercase country => GST/HST No. · N° de TPS/TVH : 123456789 RT0001
