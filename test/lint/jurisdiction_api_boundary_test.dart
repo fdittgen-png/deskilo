@@ -209,6 +209,7 @@ void main() {
         'src/filing_context.dart',
         'src/generated_artifact.dart',
         'src/invoice_document_context.dart',
+        'src/invoice_mentions_contribution.dart',
         'src/invoice_profile_contribution.dart',
         'src/validation_result.dart',
         'src/vat_filing_contribution.dart',

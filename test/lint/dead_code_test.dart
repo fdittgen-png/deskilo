@@ -18,6 +18,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The mentions resolver ships before its first consumer (the add-ons and
+  // report_data follow in the next change of the same item).
+  'lib/core/jurisdiction/jurisdiction_resolver.dart::resolveInvoiceMentions':
+      '#3429 — the add-ons implement the contract and report_data asks it next',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

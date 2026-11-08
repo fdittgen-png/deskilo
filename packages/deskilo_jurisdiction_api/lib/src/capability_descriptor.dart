@@ -14,6 +14,11 @@ const String jurisdictionContractVersion = '2';
 /// refuse (ADR 0050 §4: a version moves for breaking changes only).
 const String invoiceProfileContractVersion = '1';
 
+/// The version of the invoice mentions contract (`InvoiceMentionsContribution`,
+/// `InvoiceMentionContext`), versioned apart from the others for the same
+/// reason: a new capability is additive (ADR 0050 §4).
+const String invoiceMentionsContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {
