@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../domain/supplier.dart';
 
 /// #2567 — the suppliers and their RPCs (0457). The supplier row carries no
 /// bank data; the revisions are a separate table only managers can read.

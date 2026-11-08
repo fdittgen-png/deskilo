@@ -6,12 +6,12 @@
 import 'package:deskilo/core/demo/data/einvoice_inbox_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
-import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/presentation/widgets/einvoice_inbox_section.dart';
 import 'package:deskilo/features/money/presentation/widgets/suppliers_sheet.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';

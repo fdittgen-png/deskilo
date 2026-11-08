@@ -7,9 +7,10 @@
 // keeping a local book then reads its postings once (`compute_postings`).
 // No format reads anything else for the period: what the file says, it
 // says about one moment.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_export_formats.dart';
-import '../domain/accounting_export_sources.dart';
 import '../domain/accounting_source_queries.dart';
 import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';

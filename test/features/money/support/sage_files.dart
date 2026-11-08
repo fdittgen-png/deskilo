@@ -5,21 +5,20 @@
 // number, the rate groups of [country], nothing refused.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
-import 'package:deskilo/features/money/domain/sage_documents.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String sageOfInvoices(
   List<Invoice> invoices,
   Map<String, InvoiceMatch> matches, {
-  SageAccounts accounts = const SageAccounts(),
+  SageAccounts? accounts,
   String country = 'GB',
   String currency = 'EUR',
 }) {
   final trail = sageRowsOfInvoices(
     invoices: invoices,
     matches: matches,
-    accounts: accounts,
+    accounts: accounts ?? SageAccounts(reference: ActiveTaxReference.current),
     customers: SageCustomers(
       memberNumbers: {for (final i in invoices) i.memberId: i.memberId},
       sellerCountry: country,

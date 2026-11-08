@@ -14,26 +14,9 @@ const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
 const _shims = {
-  'lib/features/money/domain/swiss_kmu.dart',
   'lib/features/money/domain/vat_forms.dart',
   'lib/features/money/domain/vat_form_boxes.dart',
   'lib/features/money/domain/vat_form_terms.dart',
-  'lib/features/money/domain/jpk_kr_pd_countries.dart',
-  'lib/features/money/domain/jpk_kr_pd_facts.dart',
-  'lib/features/money/domain/jpk_kr_pd_gap.dart',
-  'lib/features/money/domain/jpk_kr_pd_limits.dart',
-  'lib/features/money/domain/jpk_kr_pd_markers.dart',
-  'lib/features/money/domain/jpk_kr_pd_offices.dart',
-  'lib/features/money/domain/jpk_kr_pd_validation.dart',
-  'lib/features/money/domain/jpk_kr_pd_writer.dart',
-  'lib/features/money/domain/saf_t_ledger.dart',
-  'lib/features/money/domain/saf_t_writer.dart',
-  'lib/features/money/domain/saf_t_financial.dart',
-  'lib/features/money/domain/saf_t_financial_at.dart',
-  'lib/features/money/domain/saf_t_financial_facts.dart',
-  'lib/features/money/domain/saf_t_financial_ro.dart',
-  'lib/features/money/domain/saf_t_financial_xml.dart',
-  'lib/features/money/domain/supplier.dart',
   'lib/features/money/domain/vat_form_catalogue/ca.dart',
   'lib/features/money/domain/vat_form_catalogue/ch.dart',
   'lib/features/money/domain/vat_form_catalogue/de.dart',
@@ -42,10 +25,6 @@ const _shims = {
   'lib/features/money/domain/vat_form_catalogue/gb.dart',
   'lib/features/money/domain/vat_form_catalogue/it.dart',
 
-  'lib/features/money/domain/generic_journal_csv.dart',
-  'lib/features/money/domain/accounting_interchange.dart',
-  'lib/features/money/domain/accounting_export_sources.dart',
-  'lib/features/money/domain/accounting_format_model.dart',
 };
 
 void main() {

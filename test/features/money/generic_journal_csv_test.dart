@@ -5,12 +5,11 @@
 // journal, amounts in major units, the rate group as the tax code of a tax
 // line, every entry balanced in the file as in the postings.
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
-import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

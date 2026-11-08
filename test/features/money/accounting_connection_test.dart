@@ -13,9 +13,8 @@ import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/features/money/application/accounting_connection_commands.dart';
 import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
-import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/accounting_target.dart';
-import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

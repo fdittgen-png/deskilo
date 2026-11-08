@@ -180,7 +180,7 @@ class _Entry {
           type,
           account: account,
           document: document,
-          euCountry: document == null ? '' : customers.euCountryOf(document, reference: accounts.taxReference),
+          euCountry: document == null ? '' : customers.euCountryOf(document, reference: accounts.reference),
         );
     }
   }

@@ -4,6 +4,7 @@
 // save step (supplier_save_step.dart), which saves while the form is open.
 import 'dart:async';
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
@@ -12,7 +13,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/company_lookup.dart';
-import '../../domain/supplier.dart';
 import '../../domain/supplier_prefill.dart';
 import 'supplier_lookup_dialog.dart';
 import 'supplier_save_step.dart';

@@ -7,16 +7,8 @@
 // required parameters; these keep the old signatures and pass the globals.
 // The old paths (invoice.dart, vat_compliance.dart, ...) re-export this file.
 //
-// It also holds the interchange family's two (#3376): `SageAccounts` (the
-// package class reads the reference it is given; this subclass falls back to
-// the installed snapshot, as the class always did) and `buildSafTFile` (fills
-// the installed snapshot into a request that carries none).
-//
 // #3403 sweep: callers switch to WorkspaceContext, then THIS FILE goes -- not
 // a plain shim delete.
-import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
-    as interchange
-    show SafTRequest, SageAccounts, buildSafTFile;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide defaultExemptionMention,
     euCountryCode,
@@ -298,21 +290,3 @@ extension InvoiceVatBreakdown on Invoice {
         reference: ActiveTaxReference.current,
       );
 }
-
-class SageAccounts extends interchange.SageAccounts {
-  const SageAccounts({
-    super.debtors,
-    super.sales,
-    super.bank,
-    super.taxCode,
-    super.reference,
-  });
-
-  @override
-  TaxReferenceSet get installedReference => ActiveTaxReference.current;
-}
-
-String buildSafTFile(interchange.SafTRequest request) =>
-    interchange.buildSafTFile(
-      request.withReference(request.reference ?? ActiveTaxReference.current),
-    );

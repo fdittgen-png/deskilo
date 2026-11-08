@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic Polish fixture facts; never real taxpayer data.
-import 'package:deskilo/features/money/domain/jpk_kr_pd_facts.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_validation.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 final jpkSampleDay = DateTime.utc(2026);

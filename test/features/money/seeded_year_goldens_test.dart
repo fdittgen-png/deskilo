@@ -52,10 +52,6 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
-import 'package:deskilo/features/money/domain/sage_documents.dart';
-import 'package:deskilo/features/money/domain/sage_postings.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
 import 'package:deskilo/features/money/presentation/posting_kind_labels.dart';
@@ -63,6 +59,7 @@ import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/money/presentation/vat_report_actions.dart';
 import 'package:deskilo/features/money/presentation/vat_tax_point_labels.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -443,7 +440,7 @@ String _safT(
     fallbackDescription: _l10n.invoicesTitle,
     profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
     ledgerAccounts: accounts,
-    bookPostings: posted,
+    bookPostings: posted, reference: ActiveTaxReference.current,
   ),
 );
 
@@ -512,7 +509,7 @@ final Map<String, Future<String> Function()> _files = {
     final trail = sageRowsOfInvoices(
       invoices: b.invoices,
       matches: b.matches,
-      accounts: const SageAccounts(),
+      accounts: SageAccounts(reference: ActiveTaxReference.current),
       customers: const SageCustomers(
         memberNumbers: {'m1': _memberNumber},
         sellerCountry: 'FR',
@@ -530,7 +527,7 @@ final Map<String, Future<String> Function()> _files = {
     final trail = sageRowsOfPostings(
       journal.postings,
       book: (
-        accounts: const SageAccounts(),
+        accounts: SageAccounts(reference: ActiveTaxReference.current),
         customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'FR'),
         baseCurrency: journal.functionalCurrency!,
       ),
@@ -806,10 +803,10 @@ void main() {
     expect(types('CN-1'), ['SC', 'SP']);
     expect(types('INV-3'), containsAllInOrder(['SI', 'SR', 'JD', 'JD', 'JC']));
     final bill = rows.where((r) => r[5] == '"B-1"' && r[0] == 'PI').single;
-    expect(bill[8], const SageAccounts().taxCode);
+    expect(bill[8], SageAccounts(reference: ActiveTaxReference.current).taxCode);
     expect(
       [for (final r in rows) if (r[5] == '"INV-1"' && r[0] == 'SI') r[8]],
-      [const SageAccounts().taxCode, const SageAccounts().codeOf('reduced', 'S')!],
+      [SageAccounts(reference: ActiveTaxReference.current).taxCode, SageAccounts(reference: ActiveTaxReference.current).codeOf('reduced', 'S')!],
     );
     for (final r in rows) {
       final account = r[1].replaceAll('"', '');

@@ -6,7 +6,7 @@
 // not name a format by its id. A new format is a registration, not an edit to
 // the run.
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
-import 'package:deskilo/features/money/domain/accounting_export_sources.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';

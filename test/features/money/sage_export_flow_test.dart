@@ -10,6 +10,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
+import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,6 +40,7 @@ final _log = _Log();
 Future<List<({String name, String body})>> _export(
   WidgetTester tester, {
   String number = '',
+  bool contextReady = true,
 }) async {
   final money = FakeMoneyRepository();
   await money.createInvoice(
@@ -67,6 +69,8 @@ Future<List<({String name, String body})>> _export(
       overrides: [
         ...standardTestOverrides(money: money, workspace: workspace),
         bookPeriodRepositoryProvider.overrideWithValue(_log),
+        if (!contextReady)
+          readyWorkspaceContextProvider.overrideWith((ref) => null),
         typedFileSaverProvider.overrideWithValue(
           ({required bytes, required fileName}) async {
             saved.add((name: fileName, body: utf8.decode(bytes)));
@@ -91,12 +95,26 @@ Future<List<({String name, String body})>> _export(
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('accounting-export-sage50')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('sage-accounts-confirm')));
-  await tester.pumpAndSettle();
+  if (contextReady) {
+    await tester.tap(find.byKey(const ValueKey('sage-accounts-confirm')));
+    await tester.pumpAndSettle();
+  }
   return saved;
 }
 
 void main() {
+  testWidgets('without the workspace\'s own tax reference the tap answers with '
+      'a refusal, opens no dialog and saves nothing (#3403)', (tester) async {
+    final saved = await _export(tester, contextReady: false);
+    expect(saved, isEmpty);
+    expect(find.byKey(const ValueKey('sage-accounts-confirm')), findsNothing);
+    final snack = tester.widget<SnackBar>(find.byType(SnackBar));
+    expect(
+      (snack.content as Text).data,
+      startsWith('The workspace is still loading its tax settings'),
+    );
+  });
+
   testWidgets('a member with no number Sage can key stops the file, named, '
       'and nothing is saved', (tester) async {
     final saved = await _export(tester);

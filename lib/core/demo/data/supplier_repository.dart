@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../features/money/domain/supplier.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
 /// #2567 — suppliers in memory. The server verifies an identifier against
 /// its jurisdiction's pattern; the demo only checks the prefix-and-body

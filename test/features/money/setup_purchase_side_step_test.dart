@@ -11,12 +11,12 @@ import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/features/money/domain/premises_lease.dart';
-import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

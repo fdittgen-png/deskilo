@@ -10,13 +10,13 @@
 // whose e-mail may be on its way is frozen. A delivery
 // follows 0684: only a sent or partly received order at its revision, no
 // line beyond what was ordered, never dated after today.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../../../features/money/domain/service_item.dart';
-import '../../../features/money/domain/supplier.dart';
 
 class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   FakePurchaseOrderRepository({

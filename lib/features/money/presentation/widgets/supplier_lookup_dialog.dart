@@ -7,6 +7,7 @@
 // asking again can help, change the input, or go on by hand.
 import 'dart:async';
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,6 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/lookup_company.dart';
 import '../../domain/company_lookup.dart';
-import '../../domain/supplier.dart';
 import '../../domain/supplier_prefill.dart';
 import '../../providers/company_lookup_providers.dart';
 

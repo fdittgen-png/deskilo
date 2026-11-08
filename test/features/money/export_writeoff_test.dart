@@ -5,11 +5,11 @@
 // day, lettered with the invoice so the group closes, at the gross amount
 // (the VAT regularisation is the accountant's). Seeded year: INV-3 of
 // 100.00 was paid 60.00 and the remaining 40.00 written off on 25 May.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
@@ -136,7 +136,7 @@ void main() {
     test('the written-off rest is journalled from the debtors to the bad-debt nominal, without tax', () {
       final rows = sage().where((l) => l.contains('Write-off INV-3')).toList();
       expect(rows, hasLength(2));
-      const accounts = SageAccounts();
+      final accounts = SageAccounts(reference: ActiveTaxReference.current);
       final debit = rows.first.split(',');
       final credit = rows.last.split(',');
       expect([debit[0], credit[0]], ['JD', 'JC']);
@@ -182,7 +182,7 @@ void main() {
         bank: '512',
         vat: '4457',
         writeOff: writeOff,
-      ),
+      ), reference: ActiveTaxReference.current,
     ));
 
     test('the written-off rest is a balanced transaction in the sales journal', () {

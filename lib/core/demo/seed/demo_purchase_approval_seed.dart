@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/purchase.dart';
-import '../../../features/money/domain/supplier.dart';
 import '../data/purchase_repository.dart';
 
 /// A bill sent by another Demo member, available for the approval journey.
