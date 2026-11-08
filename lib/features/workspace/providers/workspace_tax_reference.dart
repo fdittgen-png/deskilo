@@ -14,6 +14,11 @@ import 'operation_context_providers.dart';
 TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
     ref.read(readyWorkspaceContextProvider)?.taxReference.set;
 
+/// [workspaceTaxReference] for a `build`: it watches, so the widget rebuilds
+/// when the context becomes ready; null (draw nothing) until then.
+TaxReferenceSet? watchWorkspaceTaxReference(WidgetRef ref) =>
+    ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
+
 /// [workspaceTaxReference], or a refusal for a flow that cannot go on without
 /// it (the document builders): thrown inside the guarded action, which
 /// answers with its generic message instead of a document built on a guess.

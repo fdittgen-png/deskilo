@@ -190,14 +190,19 @@ class _DocumentsPageState extends ConsumerState<_DocumentsPage> {
       ),
       preview: ValueListenableBuilder<String?>(
         valueListenable: _look,
-        builder: (context, id, _) => SetupSampleSheet(
-          key: const ValueKey('setup-documents-preview'),
-          report: setupSampleReport(
+        builder: (context, id, _) {
+          final report = setupSampleReport(
             context,
             ref,
             look: looks.where((l) => l.id == id).firstOrNull?.bands,
-          ),
-        ),
+          );
+          return report == null
+              ? const SizedBox.shrink()
+              : SetupSampleSheet(
+                  key: const ValueKey('setup-documents-preview'),
+                  report: report,
+                );
+        },
       ),
     );
   }

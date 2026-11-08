@@ -20,6 +20,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/test_workspace_context.dart';
 
 Invoice _ae(DateTime issued) => Invoice(
   id: 'inv-ae',
@@ -62,10 +63,13 @@ Future<void> _pump(
   final money = FakeMoneyRepository()..invoices.addAll(invoices);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
-        money: money,
-        workspace: FakeWorkspaceRepository.withWorkspace(),
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          money: money,
+          workspace: FakeWorkspaceRepository.withWorkspace(),
+        ),
+        testReadyWorkspaceContext(),
+      ],
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -112,6 +116,7 @@ void main() {
       ProviderScope(
         overrides: [
           ...standardTestOverrides(money: money, workspace: workspace),
+          testReadyWorkspaceContext(),
           typedFileSaverProvider.overrideWithValue(({
             required bytes,
             required fileName,

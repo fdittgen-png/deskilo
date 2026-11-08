@@ -175,8 +175,9 @@ class _SetupLegalIdentityStepState
   }
 
   /// The header band of the sample invoice: the seller's block as it prints.
-  InvoiceReport _top(BuildContext context) {
+  InvoiceReport? _top(BuildContext context) {
     final report = setupSampleReport(context, ref, seller: _draft);
+    if (report == null) return null;
     return InvoiceReport(
       header: report.header,
       body: const [],
@@ -301,7 +302,7 @@ class _SetupLegalIdentityStepState
           children: [
             Text(l10n.setupGrowLegalPreviewNote),
             const FormGap.small(),
-            SetupSampleSheet(report: _top(context)),
+            if (_top(context) case final top?) SetupSampleSheet(report: top),
           ],
         ),
       ),

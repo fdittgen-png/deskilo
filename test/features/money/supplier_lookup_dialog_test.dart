@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/test_workspace_context.dart';
 
 const _add = ValueKey('supplier-add');
 const _findDetails = ValueKey('supplier-find-details');
@@ -46,7 +47,7 @@ class _World {
   ];
 
   Widget app({Locale? locale}) => ProviderScope(
-    overrides: overrides,
+    overrides: [...overrides, testReadyWorkspaceContext()],
     child: MaterialApp(
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

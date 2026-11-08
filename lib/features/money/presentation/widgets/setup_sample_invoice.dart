@@ -16,7 +16,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_data_sample.dart';
 import '../../domain/report_facts.dart';
-import '../invoice_actions.dart' show requireWorkspaceTaxReference;
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../invoice_documents.dart' show invoicePdfTemplateFor;
 import '../report_defaults.dart';
 import '../report_facts_of.dart';
@@ -28,12 +28,16 @@ import 'report_preview.dart';
 /// The sample invoice through [look], or through the workspace's own
 /// invoice design; a design that does not render falls back to the
 /// built-in one, as the PDF does. [seller] is an identity being typed.
-InvoiceReport setupSampleReport(
+InvoiceReport? setupSampleReport(
   BuildContext context,
   WidgetRef ref, {
   SellerDraft? seller,
   ReportBands? look,
 }) {
+  // Until the workspace's context is ready there is no reference to state
+  // the mentions on: no sample is drawn rather than one built on a guess.
+  final reference = watchWorkspaceTaxReference(ref);
+  if (reference == null) return null;
   final l10n = context.l10n;
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(
@@ -44,7 +48,8 @@ InvoiceReport setupSampleReport(
         number: l10n.setupGrowSampleNumber,
         member: l10n.setupGrowSampleMember,
         line: l10n.setupGrowSampleLine,
-      ), reference: requireWorkspaceTaxReference(ref),
+      ),
+      reference: reference,
     ),
     template.texts,
   );
