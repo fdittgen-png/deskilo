@@ -1,5 +1,5 @@
 {
-  "recordedSha": "53853909ed11a23533d17a21e17e086e0ec59ada",
+  "recordedSha": "09b0d8558277db4667f82a5cc3827edbcd72bf97",
   "recordedDate": "2026-11-08",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":2604,"functions":14264,"cyclomatic>=9":1463,"cyclomatic>=25":84,"cognitive>=15":557,"cognitive>=30":76,"length>=150":52,"parameters>=5":660,"parameters>=7":158,"partOfFiles":18},
@@ -2104,7 +2104,7 @@
     {"p":"lib/features/money/presentation/widgets/invoice_archive_tab.dart","loc":413,"part":false,"setState":5,"repositoryReads":0,"fn":9,"cog":40,"cyc":38,"len":141,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sections.dart","loc":292,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":17,"cyc":20,"len":83,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":275,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":8,"cyc":7,"len":70,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":274,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":8,"cyc":7,"len":70,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":387,"part":false,"setState":7,"repositoryReads":0,"fn":13,"cog":9,"cyc":14,"len":112,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

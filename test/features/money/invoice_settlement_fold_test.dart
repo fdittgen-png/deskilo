@@ -242,13 +242,67 @@ void main() {
       tester.element(find.byKey(const ValueKey('open'))),
     );
     container.read(testContextReady.notifier).set(ready: false);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('open')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('invoice-einvoice-action')),
         findsNothing);
     container.read(testContextReady.notifier).set(ready: true);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
+        findsOneWidget);
+  });
+
+  testWidgets('an open sheet follows the workspace context: visible, hidden '
+      'while it is unavailable, visible again (the captured flag is true)', (tester) async {
+    final s = await _settledMoney();
+    final invoice = s.money.invoices.firstWhere((i) => i.id == s.settlement);
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        ...standardTestOverrides(
+            workspace: FakeWorkspaceRepository.withWorkspace(), money: s.money),
+        testSwitchableReadyWorkspaceContext(),
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          body: Consumer(
+            builder: (context, ref, _) => FilledButton(
+              key: const ValueKey('open'),
+              onPressed: () => showInvoiceDetailSheet(
+                context,
+                ref: ref,
+                view: InvoiceDetailView(
+                  invoice: invoice,
+                  match: null,
+                  canIssue: true,
+                  isEu: true,
+                ),
+              ),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    ));
+    final container = ProviderScope.containerOf(
+      tester.element(find.byKey(const ValueKey('open'))),
+    );
+    await tester.tap(find.byKey(const ValueKey('open')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
+        findsOneWidget);
+    container.read(testContextReady.notifier).set(ready: false);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
+        findsNothing);
+    container.read(testContextReady.notifier).set(ready: true);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('invoice-einvoice-action')),
         findsOneWidget);
   });

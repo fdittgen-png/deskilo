@@ -141,10 +141,9 @@ class _InvoiceDetailBody extends ConsumerWidget {
   InvoiceMatch? get match => view.match;
   bool get canIssue => view.canIssue;
 
-  /// The view's value is the one at opening; the sheet answers again when
-  /// the workspace's tax context becomes ready after it.
+  /// The sheet answers from the live context alone (false while it is not
+  /// ready); the view's value is only what the opening surface knew.
   bool _liveIsEu(WidgetRef ref) =>
-      view.isEu ||
       watchWorkspaceIsEu(
         ref,
         ref.watch(currentWorkspaceProvider).value?.countryCode ?? '',
