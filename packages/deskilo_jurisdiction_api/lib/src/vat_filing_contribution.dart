@@ -32,6 +32,12 @@ abstract class VatFilingContribution {
   /// contract stays at the same version.
   Set<String> get extraForms => const {};
 
+  /// The registers of issued invoices the country's law asks for beside the
+  /// return, by the id the host's register kind carries (Spain's `esLibro`,
+  /// `esSii`, `es347`); the host offers exactly these. Additive: none by
+  /// default, the contract stays at the same version.
+  Set<String> get registers => const {};
+
   /// What the host loads before calling [validate].
   Set<FilingSource> get requiredSources;
 
