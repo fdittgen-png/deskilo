@@ -29,6 +29,9 @@ class FrVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  String get fileButtonId => 'ediTva';
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,

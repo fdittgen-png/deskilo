@@ -35,6 +35,17 @@ abstract class VatFilingContribution {
   /// What the host loads before calling [validate].
   Set<FilingSource> get requiredSources;
 
+  /// The id of the label of this filing's button on the declarations screen
+  /// (`elster`, `ediTva`, `mtdCsv`, `mwstXml`, `gstQstCsv`, `aeat303`,
+  /// `lipeXml`); the host maps it to its words. '' says the filing has none.
+  /// Additive: the contract stays at the same version.
+  String get fileButtonId => '';
+
+  /// What the filing still asks the person before it is written, by id
+  /// (`taxNumber`: the Steuernummer; `spanishFacts`; `italianDeclarant`); the
+  /// host maps each to its dialog. None by default. Additive.
+  Set<String> get factsAsked => const {};
+
   /// Whether [context] can be filed here, as stable issue codes.
   ///
   /// Returns the validated filing, or null with the issues in [result]. The

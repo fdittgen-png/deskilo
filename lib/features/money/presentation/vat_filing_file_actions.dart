@@ -3,31 +3,51 @@
 // The filing-ready file of a prepared VAT return, where the workspace's
 // country has one (see `vat_filing_files.dart`). The owner hands it to the
 // channel that files it; nothing here transmits.
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show VatFilingContribution;
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/jurisdiction/installed_vat_filings.dart';
 import '../application/save_vat_filing_file.dart';
 import '../domain/vat_filing_files.dart';
 import 'vat_filing_facts_dialogs.dart';
 
+/// The words of each file button, by the id the add-on declares
+/// (`VatFilingContribution.fileButtonId`): the add-on says which button, the
+/// host says it in the reader's language.
+final Map<String, String Function(AppLocalizations)> _fileButtonLabels = {
+  'elster': (l10n) => l10n.vatDeclElster,
+  'ediTva': (l10n) => l10n.vatDeclEdiTva,
+  'mtdCsv': (l10n) => l10n.vatDeclMtdCsv,
+  'mwstXml': (l10n) => l10n.vatDeclMwstXml,
+  'gstQstCsv': (l10n) => l10n.vatDeclGstQstCsv,
+  'aeat303': (l10n) => l10n.vatDeclAeat303,
+  'lipeXml': (l10n) => l10n.vatDeclLipeXml,
+};
+
+/// The installed VAT filing add-on of [country], or null where there is none.
+VatFilingContribution? _filingOf(String? country) {
+  final resolution = resolveCapability(
+    JurisdictionOperation.vatFiling,
+    LegalContext(countryCode: country),
+    installedVatFilings,
+  );
+  return resolution is Resolved ? resolution.contribution : null;
+}
+
 /// The button's label for [country], or null where no file exists.
-String? vatFilingFileLabel(AppLocalizations l10n, String? country) =>
-    switch (country) {
-      'DE' => l10n.vatDeclElster,
-      'FR' => l10n.vatDeclEdiTva,
-      'GB' => l10n.vatDeclMtdCsv,
-      'CH' => l10n.vatDeclMwstXml,
-      'CA' => l10n.vatDeclGstQstCsv,
-      'ES' => l10n.vatDeclAeat303,
-      'IT' => l10n.vatDeclLipeXml,
-      _ => null,
-    };
+String? vatFilingFileLabel(AppLocalizations l10n, String? country) {
+  final id = _filingOf(country)?.fileButtonId ?? '';
+  return _fileButtonLabels[id]?.call(l10n);
+}
 
 /// Asks what the file still needs, then lets [save] write it.
 Future<void> exportVatFilingFile(
@@ -79,21 +99,28 @@ String vatFilingProblemText(AppLocalizations l10n, VatFilingFileProblem p) =>
       VatFilingFileProblem.exoneratedBySii => l10n.vatRegister347Sii,
     };
 
-/// What the file of [save]'s country asks beyond the settings; null when
-/// the person cancelled.
+/// What the file of [save]'s country asks beyond the settings (the add-on
+/// declares which facts, the host asks them); null when the person cancelled.
 Future<VatFilingFacts?> _askFacts(
   BuildContext context,
   AppLocalizations l10n,
   SaveVatFilingFile save,
-) => switch (save.country) {
-  // The Steuernummer is not the VAT id a registered space keeps.
-  'DE' => _askTaxNumber(context, l10n, save.party?.legalId ?? '').then(
-    (number) => number == null ? null : VatFilingFacts(taxNumber: number),
-  ),
-  'ES' => askSpanishFilingFacts(context, l10n),
-  'IT' => askItalianDeclarant(context, l10n),
-  _ => Future.value(const VatFilingFacts()),
-};
+) {
+  final asked = _filingOf(save.country)?.factsAsked ?? const <String>{};
+  if (asked.contains('taxNumber')) {
+    // The Steuernummer is not the VAT id a registered space keeps.
+    return _askTaxNumber(context, l10n, save.party?.legalId ?? '').then(
+      (number) => number == null ? null : VatFilingFacts(taxNumber: number),
+    );
+  }
+  if (asked.contains('spanishFacts')) {
+    return askSpanishFilingFacts(context, l10n);
+  }
+  if (asked.contains('italianDeclarant')) {
+    return askItalianDeclarant(context, l10n);
+  }
+  return Future.value(const VatFilingFacts());
+}
 
 /// Asks the Steuernummer the ELSTER file names; null when cancelled.
 Future<String?> _askTaxNumber(

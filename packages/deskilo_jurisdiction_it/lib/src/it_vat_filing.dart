@@ -29,6 +29,12 @@ class ItVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  String get fileButtonId => 'lipeXml';
+
+  @override
+  Set<String> get factsAsked => const {'italianDeclarant'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
