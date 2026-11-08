@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:xml/xml.dart';
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:meta/meta.dart';
+import 'package:xml/xml.dart';
+
 import 'vat_components.dart';
 import 'vat_form_boxes.dart';
 import 'vat_form_catalogue.dart';
@@ -248,6 +249,7 @@ List<VatFormBox> vatFormBoxes(
 
 /// #2361 — the QST part of Revenu Québec's FPZ-500, for a Canadian
 /// declaration that charged or claimed the QST; empty otherwise.
+@visibleForTesting
 List<VatFormBox> vatQstFormBoxes(
   List<VatDeclarationLine> lines, {
   required TaxReferenceSet reference,
@@ -359,3 +361,15 @@ void _boxXml(XmlBuilder builder, VatFormBox box) {
     }
   });
 }
+
+/// #3429 -- the boxes of a form filed beside the main return, by the form's
+/// own name (what a country add-on lists in its `extraForms`); null for a form
+/// this package does not fill. The host fills them, the add-on writes them.
+List<VatFormBox>? vatExtraFormBoxes(
+  String formName,
+  List<VatDeclarationLine> lines, {
+  required TaxReferenceSet reference,
+}) => switch (formName) {
+  'FPZ-500' => vatQstFormBoxes(lines, reference: reference),
+  _ => null,
+};

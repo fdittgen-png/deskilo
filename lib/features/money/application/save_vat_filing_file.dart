@@ -75,6 +75,7 @@ class SaveVatFilingFile {
         now: _now(),
         facts: facts,
         reference: reference,
+        extraForms: contribution.extraForms,
       ),
     );
     final filing = checked.filing;

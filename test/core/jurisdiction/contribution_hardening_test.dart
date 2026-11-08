@@ -52,7 +52,7 @@ FilingContext _context(VatDeclaration d, {VatFilingParty party = _party}) =>
       facts: const VatFilingFacts(taxNumber: '21/815/08150'), reference: ActiveTaxReference.current,);
 
 /// A contribution that refuses with a code of its own.
-class _Refusing implements VatFilingContribution {
+class _Refusing extends VatFilingContribution {
   _Refusing(this.code);
   final String code;
 
