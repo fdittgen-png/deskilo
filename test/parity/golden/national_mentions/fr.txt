@@ -1,0 +1,4 @@
+registered => Catégorie de l'opération : prestation de services.
+exempt => 
+not subject => 
+lowercase country => Catégorie de l'opération : prestation de services.

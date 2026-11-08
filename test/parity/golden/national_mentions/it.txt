@@ -1,0 +1,8 @@
+at the threshold => 
+above the threshold => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
+far above => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
+above, in dollars => 
+above, lowercase euro => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
+above, exempt seller => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
+lowercase country => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
+padded country => Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.
