@@ -104,7 +104,11 @@ class InvoiceDocumentContext {
     this.stampDutyMinor,
     this.transmitterId = '',
     this.progressive = '',
-  }) : lines = List.unmodifiable(lines),
+    this.period = '',
+    this.correctedIssuedAt,
+    Set<String> euMemberStates = const {},
+  }) : euMemberStates = Set.unmodifiable(euMemberStates),
+       lines = List.unmodifiable(lines),
        vatBreakdown = List.unmodifiable(vatBreakdown);
 
   final String number;
@@ -146,4 +150,17 @@ class InvoiceDocumentContext {
 
   /// The sender's own unique id for the file, already resolved by the host.
   final String progressive;
+
+  /// The billing period the document covers as the host states it
+  /// ('yyyy-MM'), '' when none.
+  final String period;
+
+  /// The issue date of the document this one corrects, when the host knows it
+  /// (a correction states it); null otherwise.
+  final DateTime? correctedIssuedAt;
+
+  /// The ISO codes of the EU member states of the workspace's tax reference,
+  /// so a profile that files a buyer's VAT number as an EU one need not read
+  /// the reference itself.
+  final Set<String> euMemberStates;
 }
