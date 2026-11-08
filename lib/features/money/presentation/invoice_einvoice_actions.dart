@@ -90,7 +90,8 @@ Future<void> sendEInvoice(
         // download uses.
         final words = reportStringsOf(l10n);
         final association = ref.read(sellerIsAssociationProvider);
-        final xml = buildChannelEInvoiceXml(format, EInvoiceInput(
+        // Every input is read BEFORE the first await.
+        final input = EInvoiceInput(
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
           lineText: (line) => invoiceLineText(words, line,
               association: association, period: invoice.period),
@@ -99,7 +100,16 @@ Future<void> sendEInvoice(
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
           reference: requireWorkspaceTaxReference(ref),
-        ));
+        );
+        final xml = buildChannelEInvoiceXml(
+          format,
+          input,
+          correctedIssuedAt: await correctedIssuedAtForSend(
+            format,
+            invoice,
+            () => ref.read(invoicesProvider.future),
+          ),
+        );
         file = (
           bytes: utf8.encode(xml),
           fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',

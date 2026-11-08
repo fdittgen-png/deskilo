@@ -212,4 +212,65 @@ void main() {
       expect(doc.all('Platnosc'), isEmpty);
     },
   );
+  test('a correction states the issue date of the invoice it corrects, found '
+      'by its technical reference (#3429)', () {
+    final original = _invoice().copyWith(
+      id: 'orig-1',
+      issuedAt: DateTime(2026, 8, 31),
+    );
+    final correction = _invoice(gross: -24600, replacesNumber: 'FV/2026/08/7')
+        .copyWith(replacesInvoiceId: 'orig-1');
+    final date = correctedIssuedAtOf(correction, [original, correction]);
+    expect(date, DateTime(2026, 8, 31));
+    expect(correctedIssuedAtOf(correction, [correction]), isNull);
+    expect(correctedIssuedAtOf(original, [original]), isNull);
+    expect(
+      _doc(invoice: correction, correctedIssuedAt: date)
+          .one('DataWystFaKorygowanej'),
+      '2026-08-31',
+    );
+  });
+
+  test('only a KSeF correction asks the archive; any other send never '
+      'waits for it, even when it fails (#3429)', () async {
+    var asked = 0;
+    Future<List<Invoice>> broken() async {
+      asked++;
+      throw StateError('archive unavailable');
+    }
+
+    final original = _invoice().copyWith(
+      id: 'orig-1',
+      issuedAt: DateTime(2026, 8, 31),
+    );
+    final correction = _invoice(gross: -24600, replacesNumber: 'FV/2026/08/7')
+        .copyWith(replacesInvoiceId: 'orig-1');
+    for (final format in [
+      EInvoiceFormat.en16931Ubl,
+      EInvoiceFormat.en16931Cii,
+      EInvoiceFormat.fatturaPa,
+    ]) {
+      expect(await correctedIssuedAtForSend(format, correction, broken), isNull);
+    }
+    expect(
+      await correctedIssuedAtForSend(EInvoiceFormat.ksefFa3, original, broken),
+      isNull,
+      reason: 'an ordinary KSeF invoice corrects nothing',
+    );
+    expect(asked, 0);
+    expect(
+      await correctedIssuedAtForSend(
+        EInvoiceFormat.ksefFa3,
+        correction,
+        () async => [original],
+      ),
+      DateTime(2026, 8, 31),
+    );
+    await expectLater(
+      correctedIssuedAtForSend(EInvoiceFormat.ksefFa3, correction, broken),
+      throwsStateError,
+      reason: 'a KOR is never filed with a guessed date',
+    );
+  });
+
 }

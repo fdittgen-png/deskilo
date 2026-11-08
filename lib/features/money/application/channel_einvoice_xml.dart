@@ -2,6 +2,7 @@
 import 'dart:convert' show utf8;
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../domain/einvoice_format.dart';
@@ -86,4 +87,32 @@ String _viaProfile(
     );
   }
   return utf8.decode(profile.build(document).bytes);
+}
+
+/// The issue date of the invoice [invoice] corrects, found among [all] by the
+/// technical reference it carries; null when it corrects none or the original
+/// is not among them (a profile then states the correction's own date).
+@visibleForTesting
+DateTime? correctedIssuedAtOf(Invoice invoice, Iterable<Invoice> all) {
+  final corrected = invoice.replacesInvoiceId;
+  if (corrected == null) return null;
+  for (final candidate in all) {
+    if (candidate.id == corrected) return candidate.issuedAt;
+  }
+  return null;
+}
+
+/// [correctedIssuedAtOf] for a send: only a KSeF correction states the date
+/// of the invoice it corrects, so only then is the [archive] asked. Any other
+/// send never waits for it (an archive still loading, or failing, must not
+/// hold back an ordinary UBL, CII or FatturaPA file).
+Future<DateTime?> correctedIssuedAtForSend(
+  EInvoiceFormat format,
+  Invoice invoice,
+  Future<List<Invoice>> Function() archive,
+) async {
+  if (format != EInvoiceFormat.ksefFa3 || invoice.replacesInvoiceId == null) {
+    return null;
+  }
+  return correctedIssuedAtOf(invoice, await archive());
 }
