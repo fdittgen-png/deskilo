@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/real_async.dart';
 
 const _said = 'The workspace is still loading its tax settings';
 
@@ -135,7 +136,7 @@ void main() {
     });
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('go')));
-      await Future<void>.delayed(const Duration(milliseconds: 50));
+      await untilReal(() => asked, what: 'the live-data question');
     });
     expect(asked, isTrue);
     expect(data, isNull);
