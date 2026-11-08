@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2380 — a payment credit booked on the wrong member, moved to the right
 /// one (0688): the original stays, the wrong member gets a reversal and the

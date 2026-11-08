@@ -7,12 +7,13 @@
 // full, paid in part, written off and refunded, and the rent and the utilities
 // the space itself pays every month. Everything is placed relative to the
 // seeded instant (ADR 0028).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/expense_schedule.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/site.dart';
-import '../../time/date_text.dart';
 import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
 import '../data/reservation_repository.dart';

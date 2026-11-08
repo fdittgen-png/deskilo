@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The server-owned purpose of an Auth authorization, never a query parameter.
 enum OAuthConsentPurpose { identityFederation, mcp }

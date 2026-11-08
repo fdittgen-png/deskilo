@@ -12,7 +12,7 @@
 // changes until someone narrows it. `can_manage_managed_profile` (0161)
 // is the same rule in SQL and is what actually decides; this mirror
 // exists so the app can show and edit it, never so it can grant.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 class ManagedAccess {
   const ManagedAccess({

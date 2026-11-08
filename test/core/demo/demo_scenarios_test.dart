@@ -49,7 +49,6 @@ import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
@@ -59,6 +58,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_free_seat.dart';

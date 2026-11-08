@@ -6,9 +6,9 @@
 // from the lines of the returns themselves (`compute_vat_return`), so the
 // account and the return can never disagree: its output total is box 1
 // and its input total box 4 of the VAT100.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import 'archive_bundle.dart';
 import 'vat_declaration.dart';

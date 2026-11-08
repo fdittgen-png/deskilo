@@ -9,6 +9,7 @@
 // year it gives, when income counts, the currency, and the accounts a
 // local book still waits for. With no version the answer is
 // pre-accounting, as the server reads it.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,6 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/book_chart.dart';
-import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'accounting_targets_sheet.dart';
 import 'book_chart_sheet.dart';

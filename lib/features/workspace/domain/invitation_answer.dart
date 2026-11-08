@@ -3,7 +3,7 @@
 // #1652 — what the server said about one invitation (0309): a preview
 // before Join, and the typed result after it. Parsed defensively: a state
 // this build does not know is `unknown`, never a success.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'invite_uri.dart';
 import 'member.dart';
 

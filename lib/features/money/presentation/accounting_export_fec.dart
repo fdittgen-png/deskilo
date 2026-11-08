@@ -5,23 +5,21 @@
 // the book profile and named after its closing day; a year whose periods
 // are not all closed is provisional, which the person is told and the
 // archive's manifest states, never the file itself.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/archive_fec.dart';
-import '../domain/book_period.dart';
 import '../domain/euro_format.dart';
 import '../domain/fec.dart';
 import '../domain/fec_import_contract.dart';
-import '../domain/fiscal_year.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';
 import 'book_report_actions.dart';

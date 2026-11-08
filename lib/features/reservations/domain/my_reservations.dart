@@ -8,9 +8,9 @@
 // a missing or mistyped field is a shape error, an unknown field is ignored;
 // nothing is defaulted silently, because a silent default here would draw a
 // person's booking as absent or as the wrong one.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/data/json_reader.dart';
 import 'reservation.dart';
 
 /// The one schema this reader understands.

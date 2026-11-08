@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/backend/connected_installations.dart';
-import '../../../core/data/system_columns.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/linked_me_repository.dart';
 import '../domain/my_spaces.dart';

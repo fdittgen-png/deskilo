@@ -4,10 +4,10 @@
 // the book reports read them: per account, per third party, per account
 // line with its running balance, per journal. The entry numbers, the
 // accounts and the auxiliary accounts are the FEC's own (fec_postings.dart).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'accounting_format.dart';
 import 'fec_postings.dart';
-import 'fiscal_year.dart';
-import 'posting.dart';
 
 /// One account's totals over the period.
 class BookAccountTotal {

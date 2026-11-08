@@ -4,7 +4,7 @@
 // installation's, and the space's own supplement. What a recipient's
 // region or transfer mechanism is may be `unknown`; the app says so
 // rather than filling it in.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One recipient of personal data named by a notice.
 class PrivacyRecipient {

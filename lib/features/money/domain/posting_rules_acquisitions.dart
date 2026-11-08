@@ -13,8 +13,7 @@
 // so the VAT accounts reconcile to the return. The expense's amount itself
 // books where it books (a member's receipt; nothing for a plain expense).
 // The server engine (`compute_postings`, 0622) is held to this unit.
-import 'accounting_amount.dart';
-import 'posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'posting_rules.dart';
 
 /// One expense bought abroad, as the return reads it.

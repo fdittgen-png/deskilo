@@ -13,7 +13,7 @@ import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/business_central_connection.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _ids = {

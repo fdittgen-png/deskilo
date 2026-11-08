@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2631 — the plug of a charging station, persisted by name — never
 /// rename (the `connector` check of migration 0446).

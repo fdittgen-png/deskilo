@@ -3,7 +3,7 @@
 // What a purchase draft sends to `save_purchase_draft_v1`: its lines, each
 // with its tax as the document states it and the place its cost belongs to.
 // The server derives the actor, the state and the totals; none is sent.
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'purchase.dart';
 import 'vat_input.dart';
 

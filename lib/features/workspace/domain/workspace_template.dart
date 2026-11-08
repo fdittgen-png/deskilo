@@ -7,8 +7,7 @@
 // for everyone signed in, private for the owning workspace's owners,
 // shared for them plus the addresses the owner invited. The client never
 // decides who may see a template; it shows what the server returned.
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// Who may see a template. Wire values by name.
 enum TemplateVisibility {

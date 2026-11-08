@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/money/money_text.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';

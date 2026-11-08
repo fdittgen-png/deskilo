@@ -4,18 +4,15 @@
 // what a Danish space is told, and the one extra postings read that gives
 // the opening balances.
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/accounting_targets_saft.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/fiscal_year.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_journal.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_export_sheet.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

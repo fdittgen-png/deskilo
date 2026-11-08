@@ -7,14 +7,12 @@
 // and is named. The files are parsed field by field.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/datev_creditors.dart';
 import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/datev_problem.dart';
 import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
-import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_test_requests.dart';

@@ -8,10 +8,10 @@ import 'dart:io';
 
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
-import 'package:deskilo/core/i18n/currencies.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/i18n/time_zones.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;

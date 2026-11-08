@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1823 — "My spaces", from every server this account is linked to.
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../workspace/domain/workspace.dart';
 
 /// Where I stand in a space.

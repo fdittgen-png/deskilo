@@ -6,7 +6,7 @@
 // owner sees the account ids needed to withdraw a delegation; the server
 // decides that, this only reads what it sent.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What the signed-in person is for the installation.
 enum InstanceRole { owner, delegate }

@@ -7,10 +7,11 @@
 // payment was reported paid by its due date; a bill's lag runs from the
 // supplier's date to the received date. Another currency in scope leaves
 // every amount unknown, never summed.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_vendors.dart';
-import '../../time/date_text.dart';
 import 'purchase_repository.dart';
 
 class DemoVendorKpiRepository implements VendorKpiRepository {

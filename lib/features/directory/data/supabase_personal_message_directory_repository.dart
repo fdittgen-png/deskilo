@@ -6,9 +6,9 @@
 // purpose comes back typed; a missing reader (an older personal home) is
 // `unsupported`, the one answer that lets the screen use the per-server
 // directory it had before.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../domain/personal_message_directory.dart';
 
 /// A typed refusal or any answer of the home itself is final; only a

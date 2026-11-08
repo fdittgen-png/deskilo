@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 
 import '../settings/setting_defaults.g.dart';
-import 'currencies.dart';
 
 /// A currency formatter that knows its code (#711).
 ///

@@ -5,9 +5,9 @@
 // screen's own import path makes. Not the settings form's whole Save: that
 // payload also carries the invitation templates, the address and the new
 // member defaults, which this step neither shows nor may send back.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_identity_repository.dart';
 import '../providers/workspace_providers.dart';

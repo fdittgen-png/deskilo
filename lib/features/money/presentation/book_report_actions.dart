@@ -3,6 +3,7 @@
 // #2376 — the book reports as user actions: the general ledger, the trial
 // balance and the journals of the posted year, printed through the
 // workspace template like every document (quick view / save / share).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,6 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';

@@ -4,10 +4,11 @@
 // kinds waiting for a validator, a history of settled ones (confirmed
 // and refused, with who decided), and the validation rules behind them.
 // Dov's request to join stays the first one (demo_dataset.dart).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/validation_policy.dart';
 import '../../../features/events/domain/workspace_event.dart';
-import '../../time/date_text.dart';
 import '../data/event_repository.dart';
 
 void seedDemoDecisions(FakeEventRepository events, DateTime now) {

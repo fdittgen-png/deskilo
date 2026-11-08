@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/premises_lease.dart';
-import '../../time/date_text.dart';
 
 /// #2569 — the lease in memory, with the server's rules that the screen
 /// shows: a term supersedes the one in force of its kind the day before it

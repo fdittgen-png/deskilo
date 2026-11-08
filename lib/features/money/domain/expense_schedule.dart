@@ -9,7 +9,7 @@
 /// expense validation, and a reject hands it back for a resend.
 library;
 
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 enum ScheduleUnit {
   day,

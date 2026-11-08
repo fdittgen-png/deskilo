@@ -3,7 +3,7 @@
 // #1619 — a high-impact action an assistant asked for, waiting for its
 // human in the Deskilo app. The id in a link is not an authorisation: the
 // server answers only the bound human, only from a native session.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'mcp_context.dart';
 
 enum ConfirmationStatus {

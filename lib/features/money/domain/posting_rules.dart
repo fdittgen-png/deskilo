@@ -26,12 +26,11 @@
 // A qualified role resolves first and falls back to its base; a base with
 // no mapping blocks with the role named. Nothing is guessed.
 
-import 'accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_view.dart';
 import 'book_chart.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
-import 'posting.dart';
 import 'vat_rate.dart';
 import 'vat_tax_point.dart';
 

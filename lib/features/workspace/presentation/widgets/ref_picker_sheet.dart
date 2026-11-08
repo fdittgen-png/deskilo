@@ -14,12 +14,12 @@
 // person, month, amount, workspace): the sheet then offers one-tap chips for
 // the main one, an advanced panel for the rest, a sort, and groups the rows
 // by month. A list without facets behaves exactly as before.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';

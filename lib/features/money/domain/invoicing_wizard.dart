@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/time/date_text.dart';
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';

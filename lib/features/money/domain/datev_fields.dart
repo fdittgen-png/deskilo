@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import '../../../core/time/date_text.dart';
-import 'book_profile.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'datev.dart';
 import 'invoice.dart';
 

@@ -3,9 +3,10 @@
 // #2569 — the premises lease the demo space holds as tenant: the nine-year
 // commercial lease of the premises in Pézenas, its rent and its service
 // charge advance. The rent matches the scheduled expense of the demo year.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/premises_lease.dart';
-import '../../time/date_text.dart';
 import '../data/lease_commitment_repository.dart';
 import '../data/premises_lease_repository.dart';
 

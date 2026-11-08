@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2575 — what a member is told about a room the space rents (the answer of
 /// `room_offer_v1`, 0496): until when it is rented and what one use costs

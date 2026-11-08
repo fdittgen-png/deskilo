@@ -7,7 +7,7 @@
 // them out, and setup_levels_web_test drives the page through every
 // answer). Legal obligations are not asked: they come from the tax
 // reference data (`setup_obligations.dart`).
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'setup_levels.dart';
 
 /// The plain questions, in the order they are asked. Each is a fact the

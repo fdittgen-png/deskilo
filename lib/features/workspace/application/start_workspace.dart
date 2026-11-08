@@ -14,8 +14,9 @@
 // and `if (code.isEmpty) return;` — both silent. A whole pasted
 // invitation with no code in it looked exactly like a button that had
 // not been pressed.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/backend/backend_settings.dart';
-import '../../../core/i18n/currencies.dart';
 import '../../../core/i18n/time_zones.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/invite_uri.dart';

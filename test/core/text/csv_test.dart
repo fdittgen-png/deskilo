@@ -5,7 +5,7 @@
 // for the audit trail, Sage, DATEV and the registers as they did for the
 // accountant CSV alone.
 import 'package:deskilo/core/text/csv.dart';
-import 'package:deskilo/core/text/number_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

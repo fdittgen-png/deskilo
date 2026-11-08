@@ -7,8 +7,7 @@
 // a release the way the #1137 webhooks once did.
 import 'dart:io';
 
-import 'package:deskilo/core/i18n/currencies.dart';
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _ts = File('supabase/functions/_shared/money.ts').readAsStringSync();

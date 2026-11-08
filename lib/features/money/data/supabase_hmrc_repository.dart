@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../../../core/trace/trace_logger.dart';
-
 import '../domain/hmrc_submission.dart';
 
 /// #2470 — the HMRC submission over `hmrc_connection_v1` (0649) and the

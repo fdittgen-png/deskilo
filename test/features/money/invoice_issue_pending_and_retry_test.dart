@@ -3,10 +3,10 @@
 // A decision still pending is not an issued invoice, and an answer that is
 // lost after the commit is retried under the SAME request id, so the retry
 // returns the invoice already made instead of making a second one.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

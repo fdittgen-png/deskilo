@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../money_repository.dart';
 import 'demo_member_statement.dart';

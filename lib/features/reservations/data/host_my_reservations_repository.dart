@@ -10,12 +10,12 @@
 // workspaces read from the same host, or a refusal the page can name.
 // The limits are the personal home's own platform settings: no selected
 // workspace decides how many hosts are read, how long, or how far.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
-import '../../../core/data/json_reader.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/my_reservations.dart';

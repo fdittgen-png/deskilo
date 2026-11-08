@@ -6,7 +6,7 @@
 // who moved it and why; these are the transitions the screen offers, the same
 // as the contract's, so it never offers a move the server would refuse.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 enum CapabilityStateKind {
   active('active'),

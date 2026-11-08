@@ -3,11 +3,11 @@
 // The advanced panel of the reference picker: every facet as chips with the
 // count each would leave, a person search when there are many, an amount
 // range, and a button that says how many results the choices give.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import 'ref_picker_filter.dart';

@@ -6,9 +6,9 @@
 // The client never compares configurations itself: the server's
 // change-set is the one the apply will perform, so a preview drawn from
 // anything else could promise a change that does not happen.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/data/json_reader.dart';
 import 'workspace_feature.dart';
 
 /// The groups a template is applied by — the only vocabulary the UI shows

@@ -3,9 +3,9 @@
 // A reservation's details explain why it is not an upcoming booking:
 // recorded after its period ended, completed with its check-out time, or
 // over without a check-in — and say nothing for an ordinary booking.
-import 'package:deskilo/core/data/system_columns.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_note.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

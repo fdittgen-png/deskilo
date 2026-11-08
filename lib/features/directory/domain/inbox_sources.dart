@@ -8,9 +8,8 @@
 // hides the others. Pure Dart: what a page may say, and what a slot is.
 library;
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
-
-import '../../../core/data/json_reader.dart';
 
 /// One inbox row, in the shape `my_inbox` answers (InboxEntry.fromRow).
 typedef InboxRow = Map<String, Object?>;

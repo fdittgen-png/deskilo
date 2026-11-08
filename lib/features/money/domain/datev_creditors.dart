@@ -8,6 +8,7 @@
 // supplier's payable is booked against the supplier's Kreditor in place of
 // the collective payable, on the engine's own accounts and per-rate tax
 // accounts. DATEV keeps open items per Kreditor.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import 'datev.dart';
@@ -15,7 +16,6 @@ import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'euro_format.dart';
 import 'invoice.dart';
-import 'posting.dart';
 
 /// The Kreditor of the supplier number [number]: [base] plus its counter,
 /// as long as the number is a counter and the sum falls in DATEV's Kreditor

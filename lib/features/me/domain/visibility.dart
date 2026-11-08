@@ -8,7 +8,7 @@
 // defaults; this is its vocabulary, pure Dart, with the defaults the
 // server applies to an account that never chose.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// A part of my account someone else might see.
 enum VisibilityField {

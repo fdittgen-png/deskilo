@@ -8,7 +8,7 @@
 // a timeout or an empty answer is UNCONFIRMED: nothing is filed, no receipt is
 // invented, and nothing is retried automatically.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The state of the workspace's HMRC sign-in.
 enum HmrcLink { pending, connected, expired, error }

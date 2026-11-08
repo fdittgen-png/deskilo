@@ -16,9 +16,9 @@
 // ADR 0024's shape (`WordingTerms`, `WorkspaceColours`): pure Dart, the
 // repository handed in, so the rules below are exercised without a
 // screen.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/time/date_text.dart';
 import '../domain/member_account_commands.dart';
 import '../domain/payment_method.dart';
 

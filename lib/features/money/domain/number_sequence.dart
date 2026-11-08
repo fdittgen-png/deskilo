@@ -5,7 +5,7 @@
 // 0164) inside the transaction that issues the document — gapless, O(1),
 // and serialised only against writers of the same series. This is the
 // owner's view of the format and the counter, never a way to take one.
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 enum NumberDatePart { none, year, yearMonth }
 

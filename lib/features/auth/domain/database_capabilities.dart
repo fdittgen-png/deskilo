@@ -5,7 +5,7 @@
 // administrators, and whether MCP eligibility was approved for them. None
 // of it is a workspace role, a membership or a consent.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 enum McpEligibility {
   eligible,

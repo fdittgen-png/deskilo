@@ -12,7 +12,7 @@
 // meaning is the English description below, one per name.
 import 'dart:convert';
 
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'gobd_package.dart';
 import 'gobd_tables.dart';
 import 'records_location.dart';

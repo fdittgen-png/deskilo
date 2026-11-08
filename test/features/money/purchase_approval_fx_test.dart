@@ -4,13 +4,13 @@
 import 'package:deskilo/core/demo/data/purchase_approval_reads.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/features/enabled_feature_keys.dart';
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

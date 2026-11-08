@@ -2,8 +2,8 @@
 //
 // #3070 — Payable page decoding retains explicit continuation and rejects broken cursors.
 
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/supplier_payables_page.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

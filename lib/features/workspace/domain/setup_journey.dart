@@ -7,9 +7,9 @@
 // what applying the levels wrote; the journey only remembers why. Every
 // write is made against the version it read. A file web/setup.html wrote
 // carries the same answers and levels as its `<profile>`.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/data/json_reader.dart';
 import 'setup_levels.dart';
 
 /// The level of each process in [levels] (process name → level id) that

@@ -5,7 +5,7 @@
 // a workspace process and lives there. Amounts are minor units, each in its
 // own currency — pages and currencies are never summed together.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'account_activity.dart';
 import 'finance_hosts.dart';
 

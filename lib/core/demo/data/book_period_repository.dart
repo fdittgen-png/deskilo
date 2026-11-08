@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../features/money/domain/book_period.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2365 — the book periods in memory, with the server's rules the screen
 /// shows: a period closes once, never overlaps another closed one, ends no

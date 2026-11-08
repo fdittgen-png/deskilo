@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../domain/book_profile.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../domain/datev.dart';
 import '../domain/datev_fields.dart';
 

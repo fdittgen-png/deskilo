@@ -9,7 +9,7 @@
 // Pure Dart: the ledger is a value, the store a string, the scope a pair
 // of ids. Nothing here knows how the sheet looks or how the RPC is named.
 import 'dart:convert';
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 
 /// Where an intent is valid: one account on one server. An intent made

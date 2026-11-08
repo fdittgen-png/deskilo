@@ -11,13 +11,13 @@
 // and paid through it, CN-1 refunded to the member, and B-1 a supplier bill
 // with recoverable input VAT, paid. The members above are unchanged, so the
 // hand-worked tests over them keep their figures.
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 const seededCompany = InvoiceParty(
   name: 'Cowork',

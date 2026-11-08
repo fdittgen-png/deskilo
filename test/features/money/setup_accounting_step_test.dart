@@ -10,10 +10,10 @@
 // accounts a local book still waits for. One column on a phone.
 import 'package:deskilo/app/routes/setup_grow_pages.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

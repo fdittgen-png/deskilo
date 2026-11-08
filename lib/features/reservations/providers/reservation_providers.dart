@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +14,6 @@ import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/roles/audience_roles.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/time/date_text.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';

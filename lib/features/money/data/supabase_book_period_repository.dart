@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/time/date_text.dart';
-import '../domain/book_period.dart';
 import '../domain/renderer_declaration.dart';
 
 /// The book periods, the export log and their RPCs (0504). Reading checks

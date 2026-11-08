@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,7 +12,6 @@ import '../data/supabase_book_profile_repository.dart';
 import '../data/supabase_retention_hold_repository.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/book_chart.dart';
-import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
 import '../domain/retention_hold.dart';
 import 'credit_providers.dart';

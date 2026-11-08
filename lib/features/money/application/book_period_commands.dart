@@ -2,10 +2,9 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/trace/trace_logger.dart';
-import '../domain/book_period.dart';
-import '../domain/fiscal_year.dart';
 
 /// #2365 — what is sent for the book periods. A command sends nothing when
 /// the entry cannot be right (the server decides again on every write); null

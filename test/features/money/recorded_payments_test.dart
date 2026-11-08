@@ -5,13 +5,13 @@
 // repository makes, the typed refusals, and the demo read's paging.
 import 'dart:convert';
 
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/money/data/supabase_recorded_payments_repository.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';

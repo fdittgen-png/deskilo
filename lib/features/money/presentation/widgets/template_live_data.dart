@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';

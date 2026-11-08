@@ -27,9 +27,8 @@
 //   * accounts — every CompteNum is known to the chart, when one is given.
 import 'dart:convert';
 
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'fec.dart';
-import 'fiscal_year.dart';
 
 /// One rule of the import contract.
 enum FecRule {

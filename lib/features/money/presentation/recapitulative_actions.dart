@@ -2,12 +2,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/i18n/currencies.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/recapitulative_statement.dart';
 import '../providers/money_providers.dart';

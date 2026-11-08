@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../../workspace/domain/overage_policy.dart';
 
 part 'statement.freezed.dart';

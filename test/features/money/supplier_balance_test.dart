@@ -2,8 +2,8 @@
 //
 // #3070 — Supplier balance decoding preserves currencies and rejects missing amounts.
 
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/supplier_balance.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

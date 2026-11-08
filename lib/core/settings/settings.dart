@@ -9,7 +9,7 @@
 //
 // There is deliberately no `read(key, fallback)`: a caller never writes the
 // fallback, the registry's default is the fallback.
-import '../data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../net/public_endpoint.dart';
 
 /// The kinds of value a setting holds. A duration is a whole number of its

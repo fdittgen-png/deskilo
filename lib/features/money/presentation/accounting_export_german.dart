@@ -4,6 +4,8 @@
 // Buchungsstapel per month and journal, the Stammdaten, the vouchers the
 // rows link) and the GoBD data handover with its Verfahrensdokumentation.
 // Both read the run's one snapshot; nothing here reads the period again.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -12,7 +14,6 @@ import '../../../core/vat/tax_reference.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
-import '../domain/book_period.dart';
 import '../domain/datev.dart';
 import '../domain/datev_fields.dart';
 import '../domain/datev_package.dart';

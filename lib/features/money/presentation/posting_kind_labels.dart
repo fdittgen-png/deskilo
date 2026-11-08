@@ -2,8 +2,9 @@
 //
 // The words of a posting's event, as the transfers list and the Swiss
 // journal's Text column name it.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../l10n/app_localizations.dart';
-import '../domain/posting.dart';
 
 /// The words of [kind].
 String postingKindLabel(AppLocalizations l10n, PostingKind kind) =>

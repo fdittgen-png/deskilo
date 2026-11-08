@@ -19,7 +19,7 @@
 // `kpi_overdue_receivables`, 0536; `kpi_pending_actions_current`). Pure Dart: no Flutter, no l10n.
 library;
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'kpi_contract.dart';
 
 const _activeMembershipsKpi = KpiDefinition(

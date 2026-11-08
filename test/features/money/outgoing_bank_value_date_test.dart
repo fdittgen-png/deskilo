@@ -11,7 +11,7 @@ import 'package:deskilo/features/money/domain/datev_creditors.dart';
 import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/fec_postings.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_test_requests.dart';

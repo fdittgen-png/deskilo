@@ -2,8 +2,8 @@
 //
 // #2585 — preview_invoice is decoded strictly: no fabricated empty invoice,
 // zero total, or truncated money.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/data/invoice_preview_decoder.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

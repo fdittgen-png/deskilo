@@ -4,11 +4,12 @@
 // purchase documents and invoices: what a server's `kpi_costs_summary` reads,
 // reduced to what the Demo holds. A figure the Demo has no source for (book
 // depreciation, what a contract still expects) is null and says why, never 0.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_purchases.dart';
-import '../../time/date_text.dart';
 import 'purchase_repository.dart';
 
 class DemoCostKpiRepository implements CostKpiRepository {

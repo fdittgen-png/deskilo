@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2575 — what a lease still expects, and the bills that replaced it
 /// (`purchase_commitment_page_v1`, 0479). An occurrence of a lease is an

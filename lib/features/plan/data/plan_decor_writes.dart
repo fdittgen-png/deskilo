@@ -3,9 +3,9 @@
 // #3074 — the server side of the plan's drawn symbols: a symbol is a
 // `plan_images` row with a `kind` and no storage object (0607), so it
 // follows the photos' rect, RLS and cleanup unchanged.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/system_columns.dart';
 import '../../../core/ids/request_id.dart';
 import '../domain/grid_geometry.dart';
 import '../domain/plan_image.dart';

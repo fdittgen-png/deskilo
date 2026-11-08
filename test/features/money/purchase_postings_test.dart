@@ -7,10 +7,10 @@
 // account and reimbursed on 20 March (0524); a draft bill (nothing until
 // approved).
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 BookAccount _account(String code, AccountType type) => BookAccount(

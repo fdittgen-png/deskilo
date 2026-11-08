@@ -11,7 +11,7 @@
 /// of 0 are valid; a negative amount (a credit) is valid.
 library;
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../domain/invoice.dart';
 
 const _context = 'preview_invoice';

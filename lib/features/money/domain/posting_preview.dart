@@ -9,13 +9,13 @@
 //
 // Pure Dart; every amount is an [AccountingAmount], never a double.
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
-import 'accounting_amount.dart';
+
 import 'accounting_tax.dart';
 import 'book_chart.dart';
-import 'posting.dart';
 
-export 'posting.dart' show PostingBlock, PostingBlocker, PostingLine;
+export 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show PostingBlock, PostingBlocker, PostingLine;
 
 @visibleForTesting
 class PostingPreview {

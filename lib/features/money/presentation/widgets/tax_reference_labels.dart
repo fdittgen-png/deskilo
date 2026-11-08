@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2477 -- how the tax reference screen names a value and a domain.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/text/number_text.dart';
 import '../../../../core/vat/tax_reference.dart';
 import 'tax_reference_component_fields.dart';
 

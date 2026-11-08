@@ -11,10 +11,10 @@
 // * Leaving a space goes to the workspace-access repository, never to the
 //   personal one, and a host that cannot be verified leaves nothing.
 import 'package:deskilo/core/backend/context_clients.dart';
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/me/application/me_actions.dart';
 import 'package:deskilo/features/me/data/host_workspace_access_repository.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

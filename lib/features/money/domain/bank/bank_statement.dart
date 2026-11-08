@@ -7,9 +7,8 @@
 // reference or an ISO 11649 `RF` creditor reference), the end-to-end id and
 // the free remittance text. Nothing here is trusted: a file is read whole or
 // refused with the reason named, never kept in part. Pure Dart.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
-
-import '../../../../core/time/date_text.dart';
 
 /// The file formats a statement is read from.
 enum BankFileFormat {

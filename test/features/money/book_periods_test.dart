@@ -7,10 +7,10 @@
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/features/money/application/book_period_commands.dart';
-import 'package:deskilo/features/money/domain/book_period.dart';
 import 'package:deskilo/features/money/presentation/widgets/book_periods_sheet.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';

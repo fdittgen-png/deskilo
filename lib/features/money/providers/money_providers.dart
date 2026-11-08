@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/trace/traced.dart';
 import '../../workspace/domain/member.dart';

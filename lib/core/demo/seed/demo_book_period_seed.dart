@@ -2,9 +2,10 @@
 //
 // #2365 — the demo space's books: last year closed by its owner and exported
 // once to the accountant; #2370 the studio connected to Pennylane.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/accounting_connection.dart';
 import '../../../features/money/domain/accounting_target.dart';
-import '../../../features/money/domain/book_period.dart';
 import '../data/accounting_connection_repository.dart';
 import '../data/book_period_repository.dart';
 

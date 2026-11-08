@@ -3,12 +3,12 @@
 // #2370 — what a delivery to a connection answers, read as the server
 // writes it, and a year asked month by month: the months up to today, the
 // first refusal of a whole month ending the run.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/features/money/application/accounting_connection_commands.dart';
 import 'package:deskilo/features/money/domain/accounting_delivery_run.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _today = DateTime(2026, 3, 9);

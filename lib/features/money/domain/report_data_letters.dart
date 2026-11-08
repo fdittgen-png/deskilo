@@ -6,11 +6,11 @@
 // `ReportStrings`, their facts and what they describe — no BuildContext,
 // no WidgetRef, no Flutter. The invoice builders and the legal mentions
 // they share are report_data.dart.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
 import '../../../core/settings/setting_defaults.g.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';

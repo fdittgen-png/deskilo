@@ -6,7 +6,6 @@
 // generic failure that invites issuing again); "Check again" only READS the
 // archive of the attempt's own workspace and, when the invoice exists, hands
 // back the ORIGINAL invoice id.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -14,6 +13,7 @@ import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

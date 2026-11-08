@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Completed fictional bookings produce the same usage facts as check-out.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/usage_record.dart';
 import '../../../features/reservations/domain/reservation.dart';
-import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 
 void seedCityUsage(FakeMoneyRepository money, Iterable<Reservation> bookings) {

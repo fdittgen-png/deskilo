@@ -12,7 +12,7 @@
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
     show FileDocument;
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_delivery_run.dart';
 import 'accounting_target.dart';
 import 'capability_state.dart';

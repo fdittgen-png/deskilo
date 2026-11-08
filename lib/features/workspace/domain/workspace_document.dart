@@ -1,4 +1,4 @@
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One entry of the workspace document library (#500, 0099): a LINK to

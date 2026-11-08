@@ -4,8 +4,8 @@
 // form: it never reads as an empty month or a total of 0, and nothing can be
 // issued from it. The decoder's own refusals are pinned in
 // invoice_preview_decoding_test.dart; this is the screen that shows them.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

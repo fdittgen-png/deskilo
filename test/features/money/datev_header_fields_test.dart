@@ -2,10 +2,10 @@
 //
 // #2365 fix 6 — DATEV: the field limits, the SKR in the header and the
 // fiscal-year start from the book profile.
-import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/datev_fields.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';

@@ -3,7 +3,7 @@
 // Running a workspace group (0383): its description, whether only admins
 // post, and who a message reached.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 class ConversationDetails {
   const ConversationDetails({this.description = '', this.announceOnly = false});

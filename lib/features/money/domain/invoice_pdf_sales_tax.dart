@@ -4,11 +4,11 @@
 // States): the subtotal at net prices, then each jurisdiction's tax on its
 // own line under its own name -- no VAT wording -- the customer's exemption
 // certificate when one took lines out of the tax, the payments and the total.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../../core/text/number_text.dart';
 import 'invoice.dart';
 import 'invoice_pdf.dart' show InvoicePdfStrings;
 import 'vat_rate.dart';

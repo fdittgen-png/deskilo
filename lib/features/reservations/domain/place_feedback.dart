@@ -2,7 +2,7 @@
 //
 // #2185 — a member's favourite mark and 0-5 star rating of a bookable place
 // (a seat, a desk, an office or a level), and the place's average.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What a mark or a rating is about: any resource but a person — a seat, a
 /// desk, an office, a level, a service, an accessory, or a whole workspace.

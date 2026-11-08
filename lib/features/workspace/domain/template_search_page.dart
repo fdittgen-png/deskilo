@@ -2,7 +2,7 @@
 //
 // #1659 — a page of the server's template search (0283): compact cards
 // the caller may read, and the cursor for the next page.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'workspace_template.dart';
 
 class TemplateSearchPage {

@@ -5,6 +5,8 @@
 // payments behind them, VAT rates, a recurring expense with its due
 // occurrence and the usage the bookings counted. Every date follows the
 // seeded instant.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/einvoice_gateway.dart';
 import '../../../features/money/domain/expense_schedule.dart';
 import '../../../features/money/domain/invoice.dart';
@@ -12,7 +14,6 @@ import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/usage_record.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
-import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 import 'demo_history_seed.dart';
 import 'demo_people_seed.dart';

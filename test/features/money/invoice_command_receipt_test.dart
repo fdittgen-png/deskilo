@@ -4,13 +4,13 @@
 // recovered by reading THAT request's receipt: the original invoice id comes
 // back, nothing is written again, and an invoice that merely looks like the
 // attempt (same member and month) is never taken for it.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/data/command_receipt_decoder.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';

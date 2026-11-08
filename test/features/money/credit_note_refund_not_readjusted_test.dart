@@ -5,10 +5,10 @@
 // on the member's next invoice, and never a section of the next bill.
 // (The SQL side is pinned by pgTAP 191.)
 import 'package:deskilo/core/demo/data/fixture_clock.dart';
-import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
 import 'package:deskilo/features/money/domain/invoice_line_cash.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/invoices.dart' show seededMoney;

@@ -5,6 +5,7 @@
 // every document delivered to a connection, with what the target answered.
 // The digital link from these books to the accounting system, as a VAT
 // inspection asks to see it.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +14,6 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_connection.dart';
-import '../../domain/posting.dart';
 import '../../providers/accounting_connection_providers.dart';
 import '../posting_kind_labels.dart';
 import 'accounting_delivery_actions.dart';

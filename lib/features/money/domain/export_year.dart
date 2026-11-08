@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'accounting_source_snapshot.dart';
-import 'book_profile.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';

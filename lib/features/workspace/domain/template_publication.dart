@@ -2,7 +2,7 @@
 //
 // #1280 S3 — what publishing this workspace as a template would carry, as
 // the server's allow-list decides it (`template_publication_preview`, 0231).
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'template_preview.dart';
 
 /// An entity the chosen groups would publish, and the keys removed from it.

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic accounting authority and landlord for the city demos.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/accounting_connection.dart';
 import '../../../features/money/domain/accounting_target.dart';
 import '../../../features/money/domain/book_chart.dart';
-import '../../../features/money/domain/book_profile.dart';
 import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/premises_lease.dart';
 import '../../../features/money/domain/workspace_asset.dart';
-import '../../time/date_text.dart';
 import '../data/accounting_connection_repository.dart';
 import '../data/book_period_repository.dart';
 import '../data/book_profile_repository.dart';

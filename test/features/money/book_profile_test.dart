@@ -5,7 +5,7 @@
 // issuer keeps one whatever its sites; the fiscal year may span two
 // calendar years; and the profile in force on a day is the latest one
 // effective by then. Expectations are written out by hand.
-import 'package:deskilo/features/money/domain/book_profile.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 BookProfile profile({

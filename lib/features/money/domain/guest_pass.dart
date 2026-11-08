@@ -5,8 +5,7 @@
 // The server prices the pass and books, charges and invoices it
 // (sell_guest_pass, 0685); these rules only keep a draft from being sent
 // that the server would refuse for a reason the form can name.
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What a pass is counted in.
 enum GuestPassUnit {

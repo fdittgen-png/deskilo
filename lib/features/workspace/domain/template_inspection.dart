@@ -5,9 +5,9 @@
 // the client never re-derives any of it: values are scalars or lists of
 // scalars (a map is a shape, never copied), and an unknown wire word lands
 // on `unknown`, never on a usable value.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/data/json_reader.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 

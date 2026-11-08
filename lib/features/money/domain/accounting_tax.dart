@@ -10,8 +10,8 @@
 // This projects; it does not determine. Which treatment applies to a
 // supply is #1917's question, answered elsewhere and handed in.
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
-import 'accounting_amount.dart';
 
 enum TaxTreatment {
   /// Taxed at a positive rate (standard or reduced).

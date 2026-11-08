@@ -10,7 +10,6 @@
 // cannot quietly add a read of its own (matches, instalments, ledger).
 import 'dart:io';
 
-import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
@@ -18,11 +17,10 @@ import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';

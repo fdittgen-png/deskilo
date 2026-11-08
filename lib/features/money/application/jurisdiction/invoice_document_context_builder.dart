@@ -10,7 +10,7 @@ import 'dart:convert' show utf8;
 import 'package:crypto/crypto.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
-import '../../../../core/i18n/currencies.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../domain/e_invoice_totals.dart';
 import '../../domain/einvoice_input.dart';
 import '../../domain/invoice.dart';

@@ -6,10 +6,10 @@
 // stays the match day: it decides the row's Buchungsstapel. The facts come
 // from the accounting source's match rows (0641); a row without them is
 // byte-identical to what it was. Expectations by hand.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_match_row.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';

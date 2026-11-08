@@ -7,9 +7,8 @@
 // its Natura, the same code the FatturaPA carries (`fatturapa_profile.dart`).
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
 
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/csv.dart';
-import '../../../core/time/date_text.dart';
 import 'invoice.dart';
 import 'vat_register_es.dart' show buyerNameOf, registerDocuments;
 

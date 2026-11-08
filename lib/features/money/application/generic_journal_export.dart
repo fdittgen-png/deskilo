@@ -7,17 +7,15 @@
 // stops the file and is named.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import '../domain/accounting_format.dart';
 import '../domain/book_chart.dart';
-import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
 import '../domain/datev_creditors.dart';
 import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';
-import '../domain/fiscal_year.dart';
-import '../domain/posting.dart';
 
 /// What a year's journal is.
 sealed class GenericJournal {

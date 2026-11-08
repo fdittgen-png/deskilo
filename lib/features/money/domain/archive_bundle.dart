@@ -12,7 +12,7 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/vat/retention.dart';
 import 'invoice.dart';

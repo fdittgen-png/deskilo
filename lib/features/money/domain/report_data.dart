@@ -9,11 +9,11 @@
 // BuildContext, no WidgetRef, no Flutter. The gatherers that fill the
 // facts from the providers are presentation/report_facts_of.dart; the
 // widget boundary for the words is presentation/report_strings_l10n.dart.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/i18n/money_format.dart';
-import '../../../core/time/date_text.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';

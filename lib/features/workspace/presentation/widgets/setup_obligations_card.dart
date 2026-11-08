@@ -5,6 +5,7 @@
 // with its date, each small-business VAT limit, the law each row cites,
 // and "ask your accountant" for a row nobody confirmed or a country the
 // data does not cover. It explains; it never sets an answer or a level.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +15,6 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/setup_obligations.dart';
 import '../../providers/workspace_providers.dart';

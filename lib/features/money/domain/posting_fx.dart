@@ -6,8 +6,7 @@
 // from; the cents the rounding leaves go to the largest line of the side
 // that is short, so the entry stays balanced. The server's engine
 // (`compute_postings`, `posting_at_rate`) converts by the same rule.
-import 'accounting_amount.dart';
-import 'posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// [p] in [rate]'s quote currency; every line carries its original amount.
 /// A refusal when [rate] is not from [p]'s currency.

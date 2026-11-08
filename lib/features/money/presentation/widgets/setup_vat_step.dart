@@ -8,6 +8,7 @@
 // one tap away. The preview splits a sample line into net, VAT and total
 // with the app's own arithmetic (`vatSplit`), at the rate an issued
 // invoice would charge.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +16,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/text/number_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
