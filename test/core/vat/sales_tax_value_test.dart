@@ -5,9 +5,9 @@
 // typed value and writes back the same JSON the server validates, a gate
 // names its tax system, and a line of jurisdictions that is not
 // `level, name, percent` is refused rather than guessed.
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_sales_fields.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 TaxValue _read(TaxDomain domain, Map<String, Object?> json) =>

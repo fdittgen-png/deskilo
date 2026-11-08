@@ -4,10 +4,10 @@
 // #2360 — a Swiss seller's UID has the MWST suffix and a valid check digit
 // (server twin `swiss_uid_valid`, pgTAP 177), prints as CHE-123.456.789
 // MWST, and the 2028 rates wait for the vote of 2026-11-29.
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

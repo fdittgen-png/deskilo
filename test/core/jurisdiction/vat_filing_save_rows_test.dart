@@ -19,7 +19,6 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
@@ -29,6 +28,7 @@ import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
 import 'package:deskilo/features/money/presentation/vat_filing_file_actions.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _now = DateTime.utc(2026, 10, 2, 12);

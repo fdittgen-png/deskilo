@@ -3,6 +3,7 @@
 // #2477 -- the platform owner's editor of the tax reference store: values
 // by domain and country with their validity, source and `confirmed` badge;
 // a change is a new version (never an edit); every value has a history.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +13,6 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../providers/tax_reference_providers.dart';
 import '../widgets/tax_reference_history_sheet.dart';
 import '../widgets/tax_reference_sheets.dart';

@@ -5,10 +5,10 @@
 // of the tax reference store (server twin `vat_percent_components`, pgTAP 180
 // and 201), not a table in Dart. The bundled copy answers what the code
 // answered before; a row added or withdrawn changes the answer.
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_components.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_component_fields.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _split(String country, double percent, {TaxReferenceSet? reference}) =>

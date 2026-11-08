@@ -10,7 +10,6 @@
 // compared with the builder's own strings; and an export DATEV would refuse
 // or misbook is not written at all.
 import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/datev_debtors.dart';
@@ -19,6 +18,7 @@ import 'package:deskilo/features/money/domain/datev_problem.dart';
 import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_test_requests.dart';

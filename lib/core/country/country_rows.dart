@@ -5,7 +5,7 @@
 // `position` order. A row whose banking scheme the app has no payment form
 // for is left out, never read as SEPA: a workspace is not created with
 // payment instructions of the wrong shape.
-import '../vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'country_catalog.dart';
 
 List<Country> countriesOfReference(TaxReferenceSet set) {

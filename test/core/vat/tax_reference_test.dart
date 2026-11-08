@@ -5,8 +5,8 @@
 // the bundled copy stands in for an unreachable installation, and a past
 // date keeps answering what it answered before a change (history is frozen).
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 TaxReferenceRow _rate(String from, double percent, {String? to}) =>

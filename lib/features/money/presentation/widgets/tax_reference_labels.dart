@@ -2,10 +2,10 @@
 //
 // #2477 -- how the tax reference screen names a value and a domain.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/vat/tax_reference.dart';
 import 'tax_reference_component_fields.dart';
 
 /// A one-line reading of a value, for lists.

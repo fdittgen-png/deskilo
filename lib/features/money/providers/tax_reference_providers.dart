@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/tax_reference_bundle_asset.dart';
-import '../../../core/vat/tax_reference.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/tax_reference_commands.dart';
 import '../data/supabase_tax_reference_repository.dart';

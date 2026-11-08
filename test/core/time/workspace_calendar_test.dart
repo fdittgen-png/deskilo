@@ -5,8 +5,8 @@
 // device clock or an empty answer), immutable, and compared by revision.
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_calendar.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_snapshot.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 WorkspaceCalendar _calendar({

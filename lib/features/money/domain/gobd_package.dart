@@ -14,7 +14,7 @@
 import 'dart:convert';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';
 import 'expense_repartition.dart';

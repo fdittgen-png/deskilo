@@ -27,7 +27,6 @@ import 'package:deskilo/core/realtime/realtime_wiring.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/core/time/workspace_calendar.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -41,6 +40,7 @@ import 'package:deskilo/features/reservations/providers/reservation_providers.da
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;

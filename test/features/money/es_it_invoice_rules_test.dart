@@ -7,7 +7,6 @@
 // quarter and province; a small-business alert never reads another kind of
 // threshold; the threshold's charge and the gate's outside-VAT postal codes
 // survive the store's JSON and the editor's fields.
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -19,6 +18,7 @@ import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_register_es_347.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_gate_fields.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice(

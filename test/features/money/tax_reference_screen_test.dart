@@ -7,11 +7,11 @@
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/instance/tax_reference_bundle_asset.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/presentation/screens/tax_reference_screen.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

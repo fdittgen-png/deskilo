@@ -4,8 +4,8 @@
 // for the same rule and document; the expected days are the ones pgTAP 223
 // and the dev harness produced, written by hand from the statute rows.
 import 'package:deskilo/core/vat/retention.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

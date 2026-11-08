@@ -9,7 +9,7 @@
 // nothing applies. The answers never change because of these rows; they
 // explain the questions they belong to. `web/setup.html` shows the same
 // rows, written out from the bundled copy by `tool/build_setup_l10n.dart`.
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
 enum SetupObligationKind {

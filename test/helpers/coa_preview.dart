@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 /// #2365 — moved here when the book chart started reading the rows itself:
 /// the per-country goldens still read the charts through it.

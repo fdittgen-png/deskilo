@@ -9,7 +9,7 @@
 // rows the app ships.
 import 'dart:io';
 
-import 'package:deskilo/core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/tax_reference/seed.dart';

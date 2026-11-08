@@ -8,10 +8,10 @@
 // EU", never as the configuration failure it is.
 import 'dart:convert';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
 import '../cache/cache_scope.dart';
-import 'tax_reference.dart';
 
 @immutable
 class TaxReferenceSnapshot {

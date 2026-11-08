@@ -5,7 +5,7 @@
 // book's chart, or the year's documents on the nominal codes the person
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';

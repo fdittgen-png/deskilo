@@ -10,9 +10,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _goldenPath = 'test/features/money/golden/vat_form_boxes_golden.json';

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/time/workspace_time.dart';
-import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';

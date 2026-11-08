@@ -3,10 +3,10 @@
 // #2539 -- the `rate_component` rows of the tax reference editor: the taxes
 // inside a combined rate typed one per line as `scheme, authority, percent`.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The taxes typed in [text], or null when a line is not of the form
