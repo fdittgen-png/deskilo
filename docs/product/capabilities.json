@@ -154,7 +154,7 @@
       "outcome": "An invoice becomes a UBL 2.1, Factur-X (CII), FatturaPA or KSeF FA(3) document with channel-specific references and readiness checks.",
       "status": "shipped",
       "features": ["invoicing", "vatManagement"],
-      "component": ["lib/features/money/domain/invoice_ubl.dart", "lib/features/money/domain/invoice_ubl_check.dart", "lib/features/money/domain/e_invoice_routing.dart", "lib/features/money/domain/e_invoice_totals.dart", "lib/features/money/domain/invoice_cii.dart", "packages/deskilo_jurisdiction_it/lib/src/fatturapa_profile.dart", "lib/features/money/domain/invoice_ksef_fa3.dart", "lib/features/money/domain/einvoice_channel_check.dart"],
+      "component": ["lib/features/money/domain/invoice_ubl.dart", "lib/features/money/domain/invoice_ubl_check.dart", "lib/features/money/domain/e_invoice_routing.dart", "lib/features/money/domain/e_invoice_totals.dart", "lib/features/money/domain/invoice_cii.dart", "packages/deskilo_jurisdiction_it/lib/src/fatturapa_profile.dart", "packages/deskilo_jurisdiction_pl/lib/src/ksef_fa3_profile.dart", "lib/features/money/domain/einvoice_channel_check.dart"],
       "prerequisites": "A complete legal identity for the workspace; VAT configured.",
       "limitations": "Arithmetic, document structure and channel-specific prerequisites have local checks. Generated samples and national connector code do not establish acceptance by a destination platform or authority, and unsupported issuance routes remain refused.",
       "evidence": [
@@ -167,6 +167,7 @@
         {"scope": "unit", "ref": "test/features/money/invoice_ksef_fa3_test.dart"},
         {"scope": "unit", "ref": "test/features/money/einvoice_channels_test.dart"},
         {"scope": "unit", "ref": "test/parity/fatturapa_parity_test.dart"},
+        {"scope": "unit", "ref": "test/parity/ksef_fa3_parity_test.dart"},
         {"scope": "unit", "ref": "test/core/jurisdiction/invoice_profile_resolver_test.dart"},
         {"scope": "unit", "ref": "test/core/jurisdiction/retired_italy_test.dart"}
       ]

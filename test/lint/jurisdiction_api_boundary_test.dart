@@ -28,6 +28,7 @@ const _xmlPackages = {
   'deskilo_jurisdiction_de',
   'deskilo_jurisdiction_ch',
   'deskilo_jurisdiction_it',
+  'deskilo_jurisdiction_pl',
 };
 
 void main() {

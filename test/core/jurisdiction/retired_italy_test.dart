@@ -9,6 +9,7 @@
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
+import 'package:deskilo/features/money/application/jurisdiction/installed_invoice_profiles.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
@@ -83,6 +84,12 @@ EInvoiceInput get _input => EInvoiceInput(
   lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
 );
 
+/// The installed composition with the Italian profile retired.
+final _withoutItaly = [
+  for (final p in installedInvoiceProfiles)
+    if (p.descriptor.moduleId != 'it.invoice_profile.fatturapa') p,
+];
+
 void main() {
   test(
     'without the Italian invoice profile, every other syntax is still built',
@@ -95,12 +102,45 @@ void main() {
         EInvoiceFormat.en16931Cii,
         EInvoiceFormat.ksefFa3,
       ]) {
-        final xml = buildChannelEInvoiceXml(format, _input, profiles: const []);
+        final xml = buildChannelEInvoiceXml(
+          format,
+          _input,
+          profiles: _withoutItaly,
+        );
         expect(xml, startsWith('<?xml'), reason: format.name);
         expect(xml, contains('FR-2026/0001'), reason: format.name);
       }
     },
   );
+
+  test('a KSeF request without the Polish profile is refused while FatturaPA '
+      'and the EN 16931 syntaxes are still built (#3429)', () {
+    final withoutPoland = [
+      for (final p in installedInvoiceProfiles)
+        if (p.descriptor.moduleId != 'pl.invoice_profile.ksef_fa3') p,
+    ];
+    expect(
+      () => buildChannelEInvoiceXml(
+        EInvoiceFormat.ksefFa3,
+        _input,
+        profiles: withoutPoland,
+      ),
+      throwsA(
+        isA<StateError>().having(
+          (e) => e.message,
+          'message',
+          'no invoice profile for ksefFa3: unknownProfile',
+        ),
+      ),
+    );
+    for (final format in [EInvoiceFormat.fatturaPa, EInvoiceFormat.en16931Ubl]) {
+      expect(
+        buildChannelEInvoiceXml(format, _input, profiles: withoutPoland),
+        startsWith('<?xml'),
+        reason: format.name,
+      );
+    }
+  });
 
   test('a FatturaPA request without its profile is refused, not rendered in '
       'another syntax', () {
