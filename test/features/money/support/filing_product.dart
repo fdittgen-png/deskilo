@@ -36,7 +36,8 @@ import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
       declaration: declaration,
       party: party,
       now: now ?? DateTime.utc(2026, 10, 2, 12),
-      facts: facts, reference: ActiveTaxReference.current,),
+      facts: facts, reference: ActiveTaxReference.current,
+      extraForms: contribution.extraForms),
   );
   final filing = checked.filing;
   if (filing == null) {

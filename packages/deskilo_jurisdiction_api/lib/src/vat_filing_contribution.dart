@@ -22,7 +22,15 @@ class ValidatedFiling {
 /// The VAT filing of one jurisdiction. Pure: the same context gives the same
 /// bytes; it reads no clock, network or repository.
 abstract class VatFilingContribution {
+  const VatFilingContribution();
+
   CapabilityDescriptor get descriptor;
+
+  /// The forms filed beside the main return that the host fills boxes for
+  /// (the Quebec `FPZ-500` beside the federal return), by the form's own name;
+  /// they arrive in `FilingContext.extraBoxes`. Additive: none by default, the
+  /// contract stays at the same version.
+  Set<String> get extraForms => const {};
 
   /// What the host loads before calling [validate].
   Set<FilingSource> get requiredSources;

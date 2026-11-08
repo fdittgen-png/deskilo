@@ -188,6 +188,50 @@ List<VatDeclarationLine> _credit(List<double> rates) => [
   ),
 ];
 
+/// A Quebec return: lines that carry explicit GST and QST components, so the
+/// QST form (FPZ-500) is filled beside the federal one.
+List<VatDeclarationLine> _quebec() => [
+  for (final l in [
+    {
+      'percent': 14.975,
+      'category': 'S',
+      'gross_cents': 114975,
+      'net_cents': 100000,
+      'vat_cents': 14975,
+      'invoice_count': 1,
+      'components': [
+        {'scheme': 'GST', 'authority': 'CA', 'percent': 5.0, 'base_cents': 100000, 'tax_cents': 5000},
+        {'scheme': 'QST', 'authority': 'CA-QC', 'percent': 9.975, 'base_cents': 100000, 'tax_cents': 9975},
+      ],
+    },
+    {
+      'percent': 5.0,
+      'category': 'S',
+      'gross_cents': 10500,
+      'net_cents': 10000,
+      'vat_cents': 500,
+      'invoice_count': 1,
+      'components': [
+        {'scheme': 'GST', 'authority': 'CA', 'percent': 5.0, 'base_cents': 10000, 'tax_cents': 500},
+      ],
+    },
+    {
+      'percent': 14.975,
+      'category': 'S',
+      'gross_cents': 57487,
+      'net_cents': 50000,
+      'vat_cents': 7487,
+      'invoice_count': 1,
+      'direction': 'input',
+      'components': [
+        {'scheme': 'GST', 'authority': 'CA', 'percent': 5.0, 'base_cents': 50000, 'tax_cents': 2500},
+        {'scheme': 'QST', 'authority': 'CA-QC', 'percent': 9.975, 'base_cents': 50000, 'tax_cents': 4987},
+      ],
+    },
+  ])
+    VatDeclarationLine.fromJson(l),
+];
+
 typedef _Case = ({
   String name,
   String country,
@@ -291,6 +335,17 @@ List<_Case> _cases() {
       country: 'CH',
       declaration: quarter,
       party: with_(_countries['CH']!.party, vatId: 'CHE-123.456.789'),
+      facts: const VatFilingFacts(),
+    ),
+    (
+      name: 'ca_quebec_qst',
+      country: 'CA',
+      declaration: _declaration(
+        DateTime(2026, 7),
+        DateTime(2026, 9, 30),
+        _quebec(),
+      ),
+      party: _countries['CA']!.party,
       facts: const VatFilingFacts(),
     ),
     (

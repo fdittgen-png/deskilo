@@ -1,0 +1,12 @@
+"return","business_number","period_start","period_end","line","label",base,tax
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","101","Sales and other revenue",1100.00,
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","103","GST/HST collected or collectible",,55.00
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","105","Total GST/HST and adjustments for the period",,55.00
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","106","Input tax credits (ITCs) for the current period",,25.00
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","108","Total ITCs and adjustments",,25.00
+"GST34","123456789 RT0001","2026-07-01","2026-09-30","109","Net tax",,30.00
+"FPZ-500","123456789 RT0001","2026-07-01","2026-09-30","203","QST collected or collectible",,99.75
+"FPZ-500","123456789 RT0001","2026-07-01","2026-09-30","205","Total QST and adjustments for the period",,99.75
+"FPZ-500","123456789 RT0001","2026-07-01","2026-09-30","206","Input tax refunds (ITRs) for the current period",,49.87
+"FPZ-500","123456789 RT0001","2026-07-01","2026-09-30","208","Total ITRs and adjustments",,49.87
+"FPZ-500","123456789 RT0001","2026-07-01","2026-09-30","209","Net QST",,49.88

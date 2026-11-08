@@ -16,7 +16,7 @@ const String chImplementationVersion = '1';
 const String chFormatVersion = 'ech-0217-2';
 
 /// The Swiss VAT filing: the MWST-Abrechnung as eCH-0217 XML.
-class ChVatFilingContribution implements VatFilingContribution {
+class ChVatFilingContribution extends VatFilingContribution {
   const ChVatFilingContribution();
 
   @override

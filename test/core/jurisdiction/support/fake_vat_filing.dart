@@ -13,7 +13,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 /// A VAT filing add-on for [country] that writes one text line (the word FAKE,
 /// the country, the period start, the number of lines and the tax number);
 /// refuses a filing without a tax number as `taxNumber`.
-class FakeVatFilingContribution implements VatFilingContribution {
+class FakeVatFilingContribution extends VatFilingContribution {
   const FakeVatFilingContribution(
     this.country, {
     this.contractVersion = jurisdictionContractVersion,

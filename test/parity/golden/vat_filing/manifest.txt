@@ -30,3 +30,4 @@ it_month | lipe-2026-03-01.xml | utf-8 | 1043
 it_quarter | lipe-2026-07-01.xml | utf-8 | 1053
 it_credit | lipe-2026-02-01.xml | utf-8 | 1084
 it_empty | lipe-2026-04-01.xml | utf-8 | 1031
+ca_quebec_qst | gst-hst-qst-return-2026-07-01.csv | utf-8 | 1189

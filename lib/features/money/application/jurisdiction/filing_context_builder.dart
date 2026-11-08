@@ -25,12 +25,18 @@ FilingContext filingContextOf({
   required DateTime now,
   required VatFilingFacts facts,
   required TaxReferenceSet reference,
+
+  /// The forms the add-on of the party's country files beside the main one
+  /// (`VatFilingContribution.extraForms`): the host fills their boxes.
+  Set<String> extraForms = const {},
 }) => FilingContext(
   extraBoxes: {
-    // the Quebec form is filed beside the federal one (the Canadian add-on)
-    if (LegalContext(countryCode: party.countryCode).normalized == 'CA')
-      'FPZ-500': [
-        for (final b in vatQstFormBoxes(declaration.lines, reference: reference)) _boxOf(b),
+    for (final form in extraForms)
+      form: [
+        for (final b
+            in vatExtraFormBoxes(form, declaration.lines, reference: reference) ??
+                (throw StateError('no host fill for the form $form')))
+          _boxOf(b),
       ],
   },
   boxes: [
