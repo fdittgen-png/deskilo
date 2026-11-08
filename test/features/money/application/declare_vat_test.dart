@@ -4,6 +4,8 @@
 // only how much. The count printed on the form is counted on the same
 // date as the money, and the rule used to live inside a closure on the
 // declarations screen.
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/declare_vat.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
@@ -54,11 +56,14 @@ VatDeclarationDraft _draft(
     vatDeclarationDraft(
       invoices: invoices,
       matches: matches,
-      periodStart: _start,
-      periodEnd: _end,
+      period: (start: _start, end: _end),
       basis: onPaymentBasis
           ? VatTaxPointBasis.receipt
           : VatTaxPointBasis.invoiceDate,
+      workspace: (
+        reference: ActiveTaxReference.current,
+        dayOf: WorkspaceTime.dateOf,
+      ),
     );
 
 void main() {

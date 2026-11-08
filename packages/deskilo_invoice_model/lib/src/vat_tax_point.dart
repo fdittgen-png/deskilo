@@ -82,6 +82,7 @@ class VatTaxPointAmount {
 /// A voided document and a settlement declare nothing: the settlement's
 /// sources carry the VAT, and their payments arrive through
 /// `accountingView`'s allocation.
+@visibleForTesting
 List<VatTaxPointAmount> taxPointsOf(
   Invoice invoice,
   List<TaxPointPayment> payments, {
@@ -118,6 +119,7 @@ List<VatTaxPointAmount> taxPointsOf(
 /// the money although the workspace has since opted for the invoice
 /// date, and one that said « on the debits » is due when issued. The
 /// SQL twin (`vat_return_amounts`, 0402) applies the same rule.
+@visibleForTesting
 VatTaxPointBasis frozenTaxPointBasis(
   Invoice invoice,
   VatTaxPointBasis basis, {

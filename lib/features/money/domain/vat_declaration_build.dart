@@ -4,6 +4,8 @@
 // was a function of `vat_declaration.dart`; split out so the declaration model
 // (lines, boxes, forms, XML) no longer imports the invoice model and can move
 // into a package of its own.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+
 import 'vat_declaration.dart';
 import 'vat_tax_point.dart';
 
@@ -17,7 +19,11 @@ import 'vat_tax_point.dart';
 List<VatDeclarationLine> computeVatDeclarationLines(
   Iterable<Invoice> invoices,
   DateTime periodStart,
-  DateTime periodEnd,
-) =>
+  DateTime periodEnd, {
+  required TaxReferenceSet reference,
+  required DateTime Function(DateTime instant) dayOf,
+}) =>
     vatDeclarationLinesOf(
-        vatTaxPointLedger(invoices), periodStart, periodEnd);
+        vatTaxPointLedger(invoices, reference: reference, dayOf: dayOf),
+        periodStart,
+        periodEnd);

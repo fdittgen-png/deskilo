@@ -5,8 +5,8 @@
 // jurisdiction standards, freezed_annotation, meta and itself, and it NEVER
 // names the installed snapshot or the workspace clock. Every tax-reference
 // question takes the set, and the tax-point engine takes the day-of function;
-// the one wrapper file in the application (lib/core/vat/invoice_model_wrappers)
-// is the only code that passes the globals.
+// the application's wrapper file is gone (#3403): callers state both from the
+// workspace context.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -76,12 +76,12 @@ void main() {
     expect(named, isEmpty, reason: 'the globals stay in the application');
   });
 
-  test('the application reads the globals for the model in ONE file', () {
-    final readers = [
-      for (final f in filesWithExtension('lib/features/money/domain', '.dart'))
+  test('the application keeps no wrapper file for the model (#3403)', () {
+    expect(File('lib/core/vat/invoice_model_wrappers.dart').existsSync(), isFalse);
+    final naming = [
+      for (final f in handWrittenDartFiles('lib'))
         if (f.readAsStringSync().contains('invoice_model_wrappers')) f.path,
     ];
-    expect(readers, isNotEmpty);
-    expect(File('lib/core/vat/invoice_model_wrappers.dart').existsSync(), isTrue);
+    expect(naming, isEmpty, reason: 'callers state the reference and the day');
   });
 }

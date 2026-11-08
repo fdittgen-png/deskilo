@@ -89,8 +89,7 @@ void main() {
     [invoice],
     matches: matches,
     instalments: instalments,
-    basis: basis,
-  );
+    basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
 
   String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(
       currency: 'EUR',
@@ -125,7 +124,7 @@ void main() {
     });
 
     test('an unpaid part stays pending', () {
-      final unpaid = vatTaxPointLedger([invoice], basis: basis);
+      final unpaid = vatTaxPointLedger([invoice], basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       final rows = _fecRows(fec(taxPoints: unpaid));
       expect(rows.where((r) => r['JournalCode'] == 'OD'), isEmpty);
       expect(rows.where((r) => r['CompteNum'] == '445710'), isEmpty);
@@ -150,9 +149,12 @@ void main() {
         invoices: [invoice],
         matches: matches,
         instalments: instalments,
-        periodStart: start,
-        periodEnd: end,
+        period: (start: start, end: end),
         basis: basis,
+        workspace: (
+          reference: ActiveTaxReference.current,
+          dayOf: WorkspaceTime.dateOf,
+        ),
       ).totalVatCents;
       final reported = buildVatReport(
         [invoice],
@@ -161,8 +163,7 @@ void main() {
         zeroCategory: 'S',
         matches: matches,
         instalments: instalments,
-        basis: basis, reference: ActiveTaxReference.current,
-      ).vatCents;
+        basis: basis, reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,).vatCents;
       final prefix = '2026${month.toString().padLeft(2, '0')}';
       final booked = rows
           .where(
@@ -207,7 +208,7 @@ void main() {
       );
       final points = vatTaxPointLedger([
         september,
-      ], basis: const VatTaxPointBasis(VatTaxPointRule.servicePeriod));
+      ], basis: const VatTaxPointBasis(VatTaxPointRule.servicePeriod), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       final row = rowsOf(datev([september], points)).single;
       expect(row[9], '2508', reason: 'the Belegdatum stays the document\'s');
       expect(row[115], '30092026');
@@ -221,8 +222,7 @@ void main() {
         instalments: {
           'id-INV-1': [TaxPointPayment(_on(2026, 9, 5), 6000)],
         },
-        basis: basis,
-      );
+        basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
       final sale = rowsOf(datev([invoice], points))
           .where((r) => r[13].contains('Rechnung'))
           .toList();
@@ -233,7 +233,7 @@ void main() {
     });
 
     test('a sale due on its issue day carries no tax date', () {
-      final points = vatTaxPointLedger([invoice]);
+      final points = vatTaxPointLedger([invoice], dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(rowsOf(datev([invoice], points)).single[115], '');
     });
   });

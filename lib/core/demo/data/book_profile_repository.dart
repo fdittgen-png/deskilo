@@ -14,6 +14,7 @@ import '../../../features/money/domain/posting_rules_purchases.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/retention_hold.dart';
 import '../../../features/money/domain/vat_input.dart';
+import '../../time/workspace_time.dart';
 import '../../vat/retention.dart';
 import '../../vat/tax_reference_active.dart';
 import 'money_repository.dart';
@@ -25,6 +26,10 @@ import 'purchase_repository.dart';
 /// The tax reference the demo data is stated on: the installation's own (the
 /// demo has no workspace context to read it from while it is seeded).
 TaxReferenceSet demoTaxReference() => ActiveTaxReference.current;
+
+/// The day the demo data is stated on: the installed workspace zone's, as
+/// for the tax reference there is no context to read it from while seeding.
+DateTime demoDayOf(DateTime instant) => WorkspaceTime.dateOf(instant);
 
 class FakeBookProfileRepository implements BookProfileRepository {
   FakeBookProfileRepository({this.money, this.purchases, this.country = 'FR'});

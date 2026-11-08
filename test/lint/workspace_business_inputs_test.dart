@@ -65,7 +65,8 @@ const _calendarBudget = 55;
 /// 2026-11-08 (#3376): 19 -> 18, `sage.dart` stops reading it: its subclass and
 /// `buildSafTFile` join the one wrapper file.
 /// 2026-11-08 (#3402): 18 -> 17, `invoice_ksef_fa3.dart` stops reading it.
-const _taxBudget = 17;
+/// 2026-11-08 (#3403): 17 -> 16, the wrapper file is gone.
+const _taxBudget = 16;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');
