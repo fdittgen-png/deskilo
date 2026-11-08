@@ -129,6 +129,13 @@ sql "insert into public.payment_credentials (workspace_id, provider, config)
 
 intents() { sql "select count(*) from public.payment_intents where workspace_id = '$WS'"; }
 BODY="{\"workspace_id\":\"$WS\",\"provider\":\"stripe\",\"member_id\":\"$MEMBER\",\"amount_cents\":2500,\"period\":\"2026-09\",\"currency\":\"EUR\"}"
+# The body with its amount replaced: the FIELD is mutated, never the first
+# "2500" anywhere (a random id containing 2500 would be corrupted instead, #3440).
+with_amount() { printf '%s' "${1/\"amount_cents\":2500/\"amount_cents\":$2}"; }
+# Regression: ids that contain 2500 keep their text, only the amount changes.
+_probe='{"workspace_id":"00002500-0000-4000-8000-000000000001","member_id":"2500abcd","amount_cents":2500}'
+[ "$(with_amount "$_probe" 25.5)" = '{"workspace_id":"00002500-0000-4000-8000-000000000001","member_id":"2500abcd","amount_cents":25.5}' ] \
+  || fail "the amount substitution touched something besides amount_cents"
 call() { curl -s -o "$WORK/out" -w '%{http_code}' -X POST "$FN" -H 'Content-Type: application/json' "$@" -d "$BODY"; }
 
 # 1. The service role alone cannot open an intent: the guard needs a caller.
@@ -155,7 +162,7 @@ echo "no token: 401; someone else's bill: 403; no intent, no provider call"
 code=$(BODY="${BODY/\"currency\":\"EUR\"/\"currency\":\"USD\"}" call -H "Authorization: Bearer $PAYER_JWT")
 [ "$code" = "400" ] && grep -q currency_mismatch "$WORK/out" \
   || fail "a body in USD on an EUR workspace answered $code: $(cat "$WORK/out")"
-code=$(BODY="${BODY/2500/25.5}" call -H "Authorization: Bearer $PAYER_JWT")
+code=$(BODY="$(with_amount "$BODY" 25.5)" call -H "Authorization: Bearer $PAYER_JWT")
 [ "$code" = "400" ] || fail "a fractional amount answered $code: $(cat "$WORK/out")"
 [ "$(intents)" = "0" ] || fail "a refused body left an intent"
 [ ! -s "$WORK/hits" ] || fail "a refused body reached the provider"
