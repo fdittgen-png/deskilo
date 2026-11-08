@@ -894,6 +894,10 @@
   "@fecMissingSiren": {
     "description": "Refusal: the FEC file name is built from the SIREN, which is not set"
   },
+  "accountingExportContextNotReady": "The workspace is still loading its tax settings. Try the export again in a moment.",
+  "@accountingExportContextNotReady": {
+    "description": "Refusal: an accounting export needs the workspace's own tax reference, which its context has not loaded yet (#3403)"
+  },
   "invoiceEInvoiceStaleIdentity": "Your legal identity is complete now, but this invoice was signed before it and keeps what it was issued with. Mark it erroneous and issue a replacement to carry the new identity.",
   "@invoiceEInvoiceStaleIdentity": {
     "description": "Explains that the invoice snapshot predates the completed legal identity"
