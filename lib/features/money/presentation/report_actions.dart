@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/workspace_context_not_ready.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/invoice_report.dart';
@@ -64,7 +65,13 @@ Future<void> runReportActions(
   );
   if (choice == null || !context.mounted) return;
   if (choice == 'quick') {
-    final report = render!();
+    final InvoiceReport? report;
+    try {
+      report = render!();
+    } on WorkspaceContextNotReady {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
+    }
     if (report == null) {
       AppSnack.error(
         context,

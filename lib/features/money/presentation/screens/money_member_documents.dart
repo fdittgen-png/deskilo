@@ -31,6 +31,7 @@ import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
 import '../../providers/usage_read_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../invoice_documents.dart';
 import '../period_label.dart';
 import '../report_actions.dart';
@@ -132,7 +133,7 @@ class MoneyMemberDocuments {
             reportStringsFor(_context, l10n: docL10n, localeName: language),
             agreementFactsOf(_ref),
             memberName: who.name,
-            subscriptionPct: who.pct),
+            subscriptionPct: who.pct, reference: requireWorkspaceTaxReference(_ref)),
         'usage' => usageReportData(_context, _ref,
             period: period,
             memberId: who.id,
@@ -143,7 +144,7 @@ class MoneyMemberDocuments {
             reportStringsFor(_context, l10n: docL10n, localeName: language),
             paymentsFactsOf(_ref, period),
             period: period,
-            memberName: who.name),
+            memberName: who.name, reference: requireWorkspaceTaxReference(_ref)),
       };
 
   /// Renders the visible period's bill as a PDF — the exact sections
@@ -239,7 +240,7 @@ class MoneyMemberDocuments {
       memberName: document.memberName,
       periodLabel: document.periodLabel,
       currencyCode: workspace.currencyCode,
-      workspace: workspace,
+      workspace: workspace, reference: requireWorkspaceTaxReference(_ref),
     );
     final template = _ref
             .read(enabledFeaturesSyncProvider)

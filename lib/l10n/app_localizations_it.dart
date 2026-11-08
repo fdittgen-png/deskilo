@@ -31877,6 +31877,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceSettingsTitle => 'Spazio di coworking';
 
   @override
+  String get workspaceTaxContextNotReady =>
+      'Lo spazio sta ancora caricando le sue impostazioni fiscali. Riprova tra un momento.';
+
+  @override
   String get workspaceTimezoneHint => 'Europe/Rome';
 
   @override

@@ -22,6 +22,7 @@ import '../domain/overage_policy.dart';
 import '../domain/site.dart';
 import '../providers/workspace_application_providers.dart';
 import '../providers/workspace_providers.dart';
+import '../providers/workspace_tax_reference.dart' show requireWorkspaceTaxReference;
 import 'widgets/application_comment_dialog.dart';
 import 'widgets/badge_manager_dialog.dart';
 
@@ -144,7 +145,7 @@ Future<void> sendMemberAgreement(
           reportStringsFor(context, l10n: docL10n, localeName: language),
           agreementFactsOf(ref),
           memberName: name,
-          subscriptionPct: member.subscriptionPct);
+          subscriptionPct: member.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
       final report = renderLetterDoc(context, ref,
           docId: 'agreement', data: data, language: language);
       final pdf = await letterDocPdf(context, ref,

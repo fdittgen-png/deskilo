@@ -5,6 +5,7 @@
 // capacity, frozen at issue; never by the reader's language or the
 // seller's legal form.
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -158,13 +159,13 @@ void main() {
       () {
         final de = legalMentionData(
           _en,
-          _workspace('DE', const {'customer_capacity': 'business'}),
+          _workspace('DE', const {'customer_capacity': 'business'}), reference: ActiveTaxReference.current,
         );
         expect(de['late_penalty'], '');
         expect(de['recovery_indemnity'], '');
         final fr = legalMentionData(
           _en,
-          _workspace('FR', const {'customer_capacity': 'business'}),
+          _workspace('FR', const {'customer_capacity': 'business'}), reference: ActiveTaxReference.current,
         );
         expect(fr['late_penalty'], _en.latePenaltyDefault);
       },
@@ -203,7 +204,7 @@ void main() {
       final data = legalMentionData(
         _en,
         _workspace('FR', const {'seller_kind': 'association'}),
-        memberCapacity: 'business',
+        memberCapacity: 'business', reference: ActiveTaxReference.current,
       );
       expect(data['recovery_indemnity'], _en.recoveryDefault);
     });
@@ -213,7 +214,7 @@ void main() {
         _en,
         _workspace('FR'),
         memberTerms: _ownerTerms,
-        memberCapacity: 'consumer',
+        memberCapacity: 'consumer', reference: ActiveTaxReference.current,
       );
       expect(data['recovery_indemnity'], '');
     });
@@ -224,7 +225,7 @@ void main() {
         _en,
         _workspace('FR'),
         buyer: const InvoiceParty(name: 'Jean Dupont'),
-        memberCapacity: 'business',
+        memberCapacity: 'business', reference: ActiveTaxReference.current,
       );
       expect(soleTrader['recovery_indemnity'], _en.recoveryDefault);
       final consumerWithVat = legalMentionData(
@@ -235,7 +236,7 @@ void main() {
           vatId: 'FR12345678901',
           company: 'JD',
         ),
-        memberCapacity: 'consumer',
+        memberCapacity: 'consumer', reference: ActiveTaxReference.current,
       );
       expect(consumerWithVat['recovery_indemnity'], '');
       final unstated = qualifyClauses(
@@ -296,7 +297,7 @@ void main() {
         proforma: false,
         copy: false,
         workspace: changed,
-        memberCapacity: 'consumer',
+        memberCapacity: 'consumer', reference: ActiveTaxReference.current,
       );
       expect(data['payment_terms'], 'Payment within 30 days.');
       expect(data['late_penalty'], _en.latePenaltyDefault);
@@ -324,7 +325,7 @@ void main() {
         _invoice(),
         proforma: false,
         copy: false,
-        workspace: _workspace('FR'),
+        workspace: _workspace('FR'), reference: ActiveTaxReference.current,
       );
       expect(data['late_penalty'], _en.latePenaltyDefault);
       final association = invoiceReportData(
@@ -332,7 +333,7 @@ void main() {
         _invoice(),
         proforma: false,
         copy: false,
-        workspace: _workspace('FR', const {'seller_kind': 'association'}),
+        workspace: _workspace('FR', const {'seller_kind': 'association'}), reference: ActiveTaxReference.current,
       );
       expect(association['late_penalty'], '');
     });
@@ -366,7 +367,7 @@ void main() {
           _en,
           ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
           invoice,
-          level: level,
+          level: level, reference: ActiveTaxReference.current,
         );
         expect(data['recovery_indemnity'], _en.recoveryDefault);
         final text = letter(data, kind);
@@ -392,7 +393,7 @@ void main() {
         _en,
         ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
         invoice,
-        level: 2,
+        level: 2, reference: ActiveTaxReference.current,
       );
       expect(data['recovery_indemnity'], '');
       expect(letter(data, 'r2'), isNot(contains('€40')));

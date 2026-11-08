@@ -9,6 +9,7 @@
 // one column at phone width; the keyboard submits; the verdicts are text.
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/core/ui/inline_banner.dart';
 import 'package:deskilo/features/money/domain/company_lookup.dart';
 import 'package:deskilo/features/money/presentation/widgets/suppliers_sheet.dart';
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/test_workspace_context.dart';
 
 const _add = ValueKey('supplier-add');
 const _findDetails = ValueKey('supplier-find-details');
@@ -46,7 +48,7 @@ class _World {
   ];
 
   Widget app({Locale? locale}) => ProviderScope(
-    overrides: overrides,
+    overrides: [...overrides, testSwitchableReadyWorkspaceContext()],
     child: MaterialApp(
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -90,6 +92,28 @@ String? _helperOf(WidgetTester tester, String key) =>
     _textField(tester, ValueKey('supplier-$key')).decoration?.helperText;
 
 void main() {
+  testWidgets(
+    'when the workspace context goes away while the lookup is open, Find '
+    'says so in the dialog instead of throwing (#3403)',
+    (tester) async {
+      final world = _World();
+      await tester.pumpWidget(world.app());
+      await _settle(tester);
+      await _openLookup(tester);
+      ProviderScope.containerOf(
+        tester.element(find.byType(SuppliersView)),
+      ).read(testContextReady.notifier).set(ready: false);
+      await tester.pump();
+      await tester.enterText(find.byKey(_identifier), 'FR12345678901');
+      await tester.tap(find.byKey(_find));
+      await tester.pump();
+      expect(
+        tester.widget<InlineBanner>(find.byKey(_problem)).text,
+        startsWith('The workspace is still loading its tax settings'),
+      );
+    },
+  );
+
   testWidgets(
     'the form offers the lookup beside the fields when the flag is on, '
     'the lookup offers the manual path, and the flag off hides it',

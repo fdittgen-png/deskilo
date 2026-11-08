@@ -71,18 +71,18 @@ void main() {
     final expected = golden['mentions'] as Map<String, dynamic>;
     for (final c in countries) {
       expect({
-        'exempt': defaultExemptionMention(c, VatRegime.exempt),
-        'exempt_ex': defaultExemptionMention(c, VatRegime.exempt, vatId: 'FR12345678901EX'),
-        'not_subject': defaultExemptionMention(c, VatRegime.notSubject),
-        'registered': defaultExemptionMention(c, VatRegime.vatRegistered),
-        'reverse_charge': reverseChargeMention(c),
-        'export': exportMention(c),
+        'exempt': defaultExemptionMention(c, VatRegime.exempt, reference: ActiveTaxReference.current),
+        'exempt_ex': defaultExemptionMention(c, VatRegime.exempt, vatId: 'FR12345678901EX', reference: ActiveTaxReference.current),
+        'not_subject': defaultExemptionMention(c, VatRegime.notSubject, reference: ActiveTaxReference.current),
+        'registered': defaultExemptionMention(c, VatRegime.vatRegistered, reference: ActiveTaxReference.current),
+        'reverse_charge': reverseChargeMention(c, reference: ActiveTaxReference.current),
+        'export': exportMention(c, reference: ActiveTaxReference.current),
         'receipts': exigibilityMention(
-            regime: VatRegime.vatRegistered, sellerCountry: c, onPaymentBasis: true),
+            regime: VatRegime.vatRegistered, sellerCountry: c, onPaymentBasis: true, reference: ActiveTaxReference.current),
         'invoices': exigibilityMention(
-            regime: VatRegime.vatRegistered, sellerCountry: c, onPaymentBasis: false),
+            regime: VatRegime.vatRegistered, sellerCountry: c, onPaymentBasis: false, reference: ActiveTaxReference.current),
         'exigibility_exempt': exigibilityMention(
-            regime: VatRegime.exempt, sellerCountry: c, onPaymentBasis: true),
+            regime: VatRegime.exempt, sellerCountry: c, onPaymentBasis: true, reference: ActiveTaxReference.current),
       }, expected[c], reason: c);
     }
   });
@@ -93,13 +93,13 @@ void main() {
       expect(isEuCountry(code), eu, reason: "isEuCountry('$code')");
     }
     for (final MapEntry(key: code, value: want) in (golden['euCode'] as Map<String, dynamic>).entries) {
-      expect(euCountryCode(code), want, reason: "euCountryCode('$code')");
+      expect(euCountryCode(code, reference: ActiveTaxReference.current), want, reason: "euCountryCode('$code')");
     }
     for (final MapEntry(key: prefix, value: body) in (golden['idBodies'] as Map<String, dynamic>).entries) {
       expect(ActiveTaxReference.current.vatIdBody(prefix), body as String, reason: prefix);
     }
     for (final MapEntry(key: id, value: ok) in (golden['idChecks'] as Map<String, dynamic>).entries) {
-      expect(looksLikeEuVatId(id), ok, reason: "looksLikeEuVatId('$id')");
+      expect(looksLikeEuVatId(id, reference: ActiveTaxReference.current), ok, reason: "looksLikeEuVatId('$id')");
     }
   });
 
@@ -147,7 +147,7 @@ void main() {
     test('a statutory text changed later never reaches an invoice issued before', () {
       final set = changed('exemption_text', 'DE', 'exempt', '2027-01-01',
           {'regime': 'exempt', 'text': 'A new wording.'});
-      final before = defaultExemptionMention('DE', VatRegime.exempt);
+      final before = defaultExemptionMention('DE', VatRegime.exempt, reference: ActiveTaxReference.current);
       expect(defaultExemptionMention('DE', VatRegime.exempt, asOf: '2026-12-31', reference: set), before);
       expect(defaultExemptionMention('DE', VatRegime.exempt, asOf: '2027-01-01', reference: set),
           'A new wording.');
@@ -170,8 +170,8 @@ void main() {
             rateExemptionReasons: const <String>[],
             frozen: null,
           );
-      expect(statutoryMentionData(input(), asOf: '2026-12-31')['exemption_reason'], before);
-      expect(statutoryMentionData(input(), asOf: '2027-02-01')['exemption_reason'],
+      expect(statutoryMentionData(input(), asOf: '2026-12-31', reference: ActiveTaxReference.current)['exemption_reason'], before);
+      expect(statutoryMentionData(input(), asOf: '2027-02-01', reference: ActiveTaxReference.current)['exemption_reason'],
           'A new wording.');
     });
 

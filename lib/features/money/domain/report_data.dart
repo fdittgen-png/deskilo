@@ -10,6 +10,7 @@
 // facts from the providers are presentation/report_facts_of.dart; the
 // widget boundary for the words is presentation/report_strings_l10n.dart.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
@@ -39,6 +40,7 @@ import 'vat_components.dart';
 Map<String, Object?> legalMentionData(
   ReportStrings strings,
   Workspace? workspace, {
+  required TaxReferenceSet reference,
   InvoiceParty? seller,
   InvoiceParty? buyer,
   String clientAddress = '',
@@ -114,7 +116,7 @@ Map<String, Object?> legalMentionData(
         : seller?.legalId ?? workspace?.legalId ?? '',
     // #878/#895/#896 — the statutory mentions: why no tax is charged and
     // when it falls due (#2478: the texts are reference data).
-    ...statutoryMentionData((
+    ...statutoryMentionData(reference: reference, (
       workspace: workspace,
       seller: seller,
       buyer: buyer,
@@ -185,6 +187,7 @@ Map<String, Object?> _invoiceLegalMentionData(
   ReportStrings strings,
   Invoice invoice,
   Workspace? workspace, {
+  required TaxReferenceSet reference,
   PaymentTerms? memberTerms,
   String? memberCapacity,
 }) {
@@ -192,7 +195,7 @@ Map<String, Object?> _invoiceLegalMentionData(
     for (final t in invoice.vatTotals)
       if (t.exemptionReason.isNotEmpty) t.exemptionReason,
   }.toList();
-  final statutory = statutoryMentionData((
+  final statutory = statutoryMentionData(reference: reference, (
     workspace: workspace,
     seller: invoice.sellerParty,
     buyer: invoice.buyerParty,
@@ -207,6 +210,7 @@ Map<String, Object?> _invoiceLegalMentionData(
     ...legalMentionData(
       strings,
       workspace,
+      reference: reference,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
       clientAddress: clientAddressOf(invoice, workspace, strings),
@@ -275,6 +279,7 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
 Map<String, Object?> invoiceReportData(
   ReportStrings strings,
   Invoice invoice, {
+  required TaxReferenceSet reference,
   required bool proforma,
   required bool copy,
   Workspace? workspace,
@@ -296,6 +301,7 @@ Map<String, Object?> invoiceReportData(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
   final legalData = _invoiceLegalMentionData(strings, invoice, workspace,
+      reference: reference,
       memberTerms: memberTerms, memberCapacity: memberCapacity);
   // #2356 — what the seller's own law adds (IT stamp duty, ES correcting
   // invoice, FR category of the operation), after the owner's mentions.
@@ -314,6 +320,7 @@ Map<String, Object?> invoiceReportData(
     sellerLegalId: invoice.sellerParty?.legalId ?? workspace?.legalId ?? '',
     qstCharged: invoice.vatTotals.any(
         (t) => t.components.any((c) => c.scheme == 'QST' && c.taxCents != 0)),
+    reference: reference,
   );
   return <String, Object?>{
     'workspace': invoice.workspaceName,
@@ -439,7 +446,11 @@ typedef StatutoryMentionInput = ({
 
 /// `vat_exigibility_mention` and `exemption_reason` of a document.
 @visibleForTesting
-Map<String, Object?> statutoryMentionData(StatutoryMentionInput c, {String? asOf}) {
+Map<String, Object?> statutoryMentionData(
+  StatutoryMentionInput c, {
+  required TaxReferenceSet reference,
+  String? asOf,
+}) {
   final country = c.seller?.country ?? c.workspace?.countryCode ?? '';
   final regime = vatRegimeFromWire(
       c.seller?.vatRegime ?? c.workspace?.vatRegime ?? 'not_subject');
@@ -449,9 +460,9 @@ Map<String, Object?> statutoryMentionData(StatutoryMentionInput c, {String? asOf
   final buyerReason = c.buyer?.taxExemptionReason.trim() ?? '';
   final own = (c.seller?.taxExemptionReason ?? c.workspace?.taxExemptionReason ?? '').trim();
   final reason = c.reverseCharged
-      ? reverseChargeMention(country, asOf: asOf)
+      ? reverseChargeMention(country, asOf: asOf, reference: reference)
       : c.counterpartyCategory == 'G'
-          ? exportMention(country, asOf: asOf)
+          ? exportMention(country, asOf: asOf, reference: reference)
           : c.counterpartyCategory == 'E' && buyerReason.isNotEmpty
               ? buyerReason
               // #2440 — BT-120 per VAT category: each exempt subtotal
@@ -465,6 +476,7 @@ Map<String, Object?> statutoryMentionData(StatutoryMentionInput c, {String? asOf
                           regime,
                           vatId: c.seller?.vatId ?? c.workspace?.vatId ?? '',
                           asOf: asOf,
+                          reference: reference,
                         );
   return {
     // #896 — WHEN the tax falls due, said on the document.
@@ -474,6 +486,7 @@ Map<String, Object?> statutoryMentionData(StatutoryMentionInput c, {String? asOf
       onPaymentBasis:
           c.frozen?.onPaymentBasis ?? legal.taxPointBasis(country).onReceipts,
       asOf: asOf,
+      reference: reference,
     ),
     'exemption_reason': reason,
   };

@@ -24,6 +24,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/test_workspace_context.dart';
 
 const _phone = Size(360, 3200);
 
@@ -55,12 +56,15 @@ Future<void> _open(WidgetTester tester, _Space space, String step) async {
       growPages: setupGrowPages,
     ),
     size: _phone,
-    overrides: standardTestOverrides(
-      workspace: space.workspace,
-      money: space.money,
-      directory: space.directory,
-      localSetup: space.server,
-    ),
+    overrides: [
+      ...standardTestOverrides(
+        workspace: space.workspace,
+        money: space.money,
+        directory: space.directory,
+        localSetup: space.server,
+      ),
+      testReadyWorkspaceContext(),
+    ],
   );
   await tester.pumpAndSettle();
 }

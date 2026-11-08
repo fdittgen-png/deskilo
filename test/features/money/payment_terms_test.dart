@@ -4,6 +4,7 @@
 // keys on top; printed as the effective ones; changed only by a
 // validated request from an authorised admin, read-only for the member.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
@@ -53,11 +54,11 @@ void main() {
       timezone: 'Europe/Paris',
       invoiceLegal: {'payment_terms': 'Payment on receipt.', 'escompte': 'None.'},
     );
-    final inherited = legalMentionData(const ReportStrings(), ws);
+    final inherited = legalMentionData(const ReportStrings(), ws, reference: ActiveTaxReference.current);
     expect(inherited['payment_terms'], 'Payment on receipt.');
     expect(inherited['payment_terms_source'], 'workspace');
     final own = legalMentionData(const ReportStrings(), ws,
-        memberTerms: const PaymentTerms(paymentTerms: 'Payment at 45 days.'));
+        memberTerms: const PaymentTerms(paymentTerms: 'Payment at 45 days.'), reference: ActiveTaxReference.current);
     expect(own['payment_terms'], 'Payment at 45 days.');
     expect(own['escompte'], 'None.', reason: 'untouched keys stay the workspace\'s');
     expect(own['payment_terms_source'], 'member');

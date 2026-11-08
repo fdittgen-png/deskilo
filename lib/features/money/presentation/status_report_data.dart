@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/report_data.dart';
 import '../domain/workspace_status.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'report_strings_l10n.dart';
 
 Map<String, Object?> workspaceStatusReportData(
@@ -76,6 +77,6 @@ Map<String, Object?> workspaceStatusReportData(
           'paid': currency.formatMinor(m.paidCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
   };
 }

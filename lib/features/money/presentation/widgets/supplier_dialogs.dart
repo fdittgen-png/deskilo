@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
@@ -46,6 +47,7 @@ Future<SupplierDialogResult?> showSupplierDialog(
   BuildContext context,
   Supplier? supplier, {
   required Future<String?> Function(SupplierDraft draft) onSave,
+  required TaxReferenceSet reference,
   String? lookupWorkspaceId,
   List<Supplier> existing = const [],
 }) => showDialog<SupplierDialogResult>(
@@ -55,6 +57,7 @@ Future<SupplierDialogResult?> showSupplierDialog(
     onSave: onSave,
     lookupWorkspaceId: lookupWorkspaceId,
     existing: existing,
+    reference: reference,
   ),
 );
 
@@ -77,12 +80,14 @@ class _SupplierDialog extends StatefulWidget {
     required this.onSave,
     required this.lookupWorkspaceId,
     required this.existing,
+    required this.reference,
   });
 
   final Supplier? supplier;
   final Future<String?> Function(SupplierDraft draft) onSave;
   final String? lookupWorkspaceId;
   final List<Supplier> existing;
+  final TaxReferenceSet reference;
 
   @override
   State<_SupplierDialog> createState() => _SupplierDialogState();
@@ -117,6 +122,7 @@ class _SupplierDialogState extends State<_SupplierDialog> {
   late final SupplierSaveStep _step = SupplierSaveStep(
     existing: widget.existing,
     onSave: widget.onSave,
+    reference: widget.reference,
   );
 
   /// Where the save step's words are, scrolled into view when they change.

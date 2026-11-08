@@ -147,7 +147,7 @@ void main() {
         untaxedCents: 0,
         correction: true,
         rectifies: 'F-2026-0007',
-        correctionReason: code,
+        correctionReason: code, reference: ActiveTaxReference.current,
       );
       expect(
         mention('r3').single,
@@ -168,7 +168,7 @@ void main() {
       const ReportStrings(),
       null,
       seller: _seller,
-      rateExemptionReasons: const [_reason, 'Art. 262 CGI'],
+      rateExemptionReasons: const [_reason, 'Art. 262 CGI'], reference: ActiveTaxReference.current,
     );
     expect(data['exemption_reason'], '$_reason\nArt. 262 CGI');
   });

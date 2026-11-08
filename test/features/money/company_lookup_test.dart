@@ -8,6 +8,7 @@
 // same question the same way, offline.
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/fixture_clock.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/lookup_company.dart';
 import 'package:deskilo/features/money/data/supabase_company_lookup_repository.dart';
 import 'package:deskilo/features/money/domain/company_lookup.dart';
@@ -17,13 +18,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 CompanyLookupRequest _request(String raw, {String country = ''}) =>
     CompanyLookupRequest(
-      identifier: normalizeCompanyIdentifier(raw, country: country)!,
+      identifier: normalizeCompanyIdentifier(raw, country: country, reference: ActiveTaxReference.current)!,
     );
 
 void main() {
   group('identifier normalisation', () {
     test('separators, case and a typed prefix', () {
-      final id = normalizeCompanyIdentifier(' fr 12.345-678/901 ')!;
+      final id = normalizeCompanyIdentifier(' fr 12.345-678/901 ', reference: ActiveTaxReference.current)!;
       expect(id.prefix, 'FR');
       expect(id.countryCode, 'FR');
       expect(id.body, '12345678901');
@@ -32,16 +33,16 @@ void main() {
     });
 
     test('a missing prefix comes from the country, and is shown', () {
-      final id = normalizeCompanyIdentifier('123456789', country: 'de')!;
+      final id = normalizeCompanyIdentifier('123456789', country: 'de', reference: ActiveTaxReference.current)!;
       expect(id.canonical, 'DE123456789');
       expect(id.display, 'DE 123456789');
     });
 
     test('Greece is asked for as EL and kept as GR', () {
-      final typed = normalizeCompanyIdentifier('EL123456789')!;
+      final typed = normalizeCompanyIdentifier('EL123456789', reference: ActiveTaxReference.current)!;
       expect(typed.countryCode, 'GR');
       expect(typed.prefix, 'EL');
-      final inferred = normalizeCompanyIdentifier('123456789', country: 'GR')!;
+      final inferred = normalizeCompanyIdentifier('123456789', country: 'GR', reference: ActiveTaxReference.current)!;
       expect(inferred.prefix, 'EL');
       expect(inferred.canonical, 'EL123456789');
     });
@@ -49,14 +50,14 @@ void main() {
     test(
       'empty, malformed, bodiless and unprefixed-without-country are null',
       () {
-        expect(normalizeCompanyIdentifier(''), isNull);
-        expect(normalizeCompanyIdentifier('  . - '), isNull);
-        expect(normalizeCompanyIdentifier('FR12;DROP', country: 'FR'), isNull);
-        expect(normalizeCompanyIdentifier('FR'), isNull, reason: 'no body');
-        expect(normalizeCompanyIdentifier('FR1'), isNull, reason: 'too short');
-        expect(normalizeCompanyIdentifier('FR${'1' * 21}'), isNull);
+        expect(normalizeCompanyIdentifier('', reference: ActiveTaxReference.current), isNull);
+        expect(normalizeCompanyIdentifier('  . - ', reference: ActiveTaxReference.current), isNull);
+        expect(normalizeCompanyIdentifier('FR12;DROP', country: 'FR', reference: ActiveTaxReference.current), isNull);
+        expect(normalizeCompanyIdentifier('FR', reference: ActiveTaxReference.current), isNull, reason: 'no body');
+        expect(normalizeCompanyIdentifier('FR1', reference: ActiveTaxReference.current), isNull, reason: 'too short');
+        expect(normalizeCompanyIdentifier('FR${'1' * 21}', reference: ActiveTaxReference.current), isNull);
         expect(
-          normalizeCompanyIdentifier('123456789'),
+          normalizeCompanyIdentifier('123456789', reference: ActiveTaxReference.current),
           isNull,
           reason: 'no prefix and no country: the country must be explicit',
         );
@@ -88,7 +89,7 @@ void main() {
           selectCompanyLookupProvider(
             providers,
             CompanyLookupRequest(
-              identifier: normalizeCompanyIdentifier('FR12345678901')!,
+              identifier: normalizeCompanyIdentifier('FR12345678901', reference: ActiveTaxReference.current)!,
               kind: CompanyIdentifierKind.registration,
             ),
           ),
@@ -98,7 +99,7 @@ void main() {
           selectCompanyLookupProvider(
             providers,
             CompanyLookupRequest(
-              identifier: normalizeCompanyIdentifier('FR12345678901')!,
+              identifier: normalizeCompanyIdentifier('FR12345678901', reference: ActiveTaxReference.current)!,
               mode: CompanyLookupMode.companyName,
             ),
           ),
@@ -314,14 +315,14 @@ void main() {
       expect(
         supplierWithIdentifier(
           existing,
-          normalizeCompanyIdentifier('FR-12345678901')!,
+          normalizeCompanyIdentifier('FR-12345678901', reference: ActiveTaxReference.current)!,
         )?.id,
         's1',
       );
       expect(
         supplierWithIdentifier(
           existing,
-          normalizeCompanyIdentifier('123456789', country: 'DE')!,
+          normalizeCompanyIdentifier('123456789', country: 'DE', reference: ActiveTaxReference.current)!,
         )?.id,
         's2',
         reason: 'the typed text counts when the server verified nothing',
@@ -332,7 +333,7 @@ void main() {
       expect(
         supplierWithIdentifier(
           existing,
-          normalizeCompanyIdentifier('FR99999999999')!,
+          normalizeCompanyIdentifier('FR99999999999', reference: ActiveTaxReference.current)!,
         ),
         isNull,
         reason: 'ACME exists, but with another identifier',
@@ -340,7 +341,7 @@ void main() {
       expect(
         supplierWithIdentifier(
           existing,
-          normalizeCompanyIdentifier('NL123456789B01')!,
+          normalizeCompanyIdentifier('NL123456789B01', reference: ActiveTaxReference.current)!,
         ),
         isNull,
         reason: 'a group identifier is shared by several parties',

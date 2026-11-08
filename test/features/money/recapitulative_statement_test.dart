@@ -3,6 +3,7 @@
 // #2354 — the recapitulative statement (EU sales list) sums, per month and
 // customer VAT number, only what was reverse-charged (category AE) on
 // issued, not voided documents; desks at domestic VAT never appear.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/recapitulative_statement.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -81,7 +82,7 @@ void main() {
         _invoice('5', DateTime(2026, 10), vat: const [_ae1500]),
       ],
       from: from,
-      to: to,
+      to: to, reference: ActiveTaxReference.current,
     );
     expect(lines, hasLength(1));
     expect(lines.single.period, '2026-09');
@@ -104,7 +105,7 @@ void main() {
         ),
       ],
       from: from,
-      to: to,
+      to: to, reference: ActiveTaxReference.current,
     );
     expect(lines.single.country, 'EL');
   });

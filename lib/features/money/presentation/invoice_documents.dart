@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -184,6 +185,7 @@ String developmentMark(BuildContext context, WidgetRef ref) =>
 /// What [buildInvoicePdfFile] renders besides the invoice itself.
 class InvoicePdfFileOptions {
   const InvoicePdfFileOptions({
+    required this.reference,
     this.proforma = false,
     this.copy = false,
     this.facturXml = '',
@@ -198,6 +200,8 @@ class InvoicePdfFileOptions {
     this.memberCapacity,
   });
 
+  /// The workspace's own tax reference the document's mentions are stated on.
+  final TaxReferenceSet reference;
   final bool proforma;
   final bool copy;
   final String facturXml;
@@ -273,9 +277,9 @@ Future<pw.Font> _asset(String asset) async =>
 
 Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   BuildContext context,
-  Invoice invoice, [
-  InvoicePdfFileOptions options = const InvoicePdfFileOptions(),
-]) async {
+  Invoice invoice,
+  InvoicePdfFileOptions options,
+) async {
   final l10n = context.l10n;
   final proforma = options.proforma;
   final template = options.template;
@@ -290,6 +294,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     workspace: workspace,
     dueAt: options.dueAt,
     memberCapacity: options.memberCapacity,
+    reference: options.reference,
   );
   // #476: a proforma renders its OWN bands when the owner set them —
   // else the invoice's, as it always did.
@@ -423,13 +428,11 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
       seller: seller, buyer: buyer, iban: iban);
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
-  if (!context.mounted) {
-    return (bytes: const <int>[], fileName: '');
-  }
+  if (!context.mounted) return (bytes: const <int>[], fileName: '');
   final pdf = await buildInvoicePdfFile(
     context,
     invoice,
-    InvoicePdfFileOptions(
+    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
       // #920 — through layoutImage, so the shipped layouts' `logo`
       // resolves to whatever the owner actually called theirs.
       reportImage: (String name) => layoutImage(ref, name),
@@ -499,7 +502,7 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
         l10n: l10n, localeName: language.isEmpty ? null : language),
     reminderFactsOf(ref, invoice),
     invoice,
-    level: level,
+    level: level, reference: requireWorkspaceTaxReference(ref),
   );
   final template = invoicePdfTemplateFor(ref).forLocale(language);
   final bands = draftBands ?? template.reminderBands(level);

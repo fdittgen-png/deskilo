@@ -6,6 +6,7 @@ import '../ui/app_snack.dart';
 import '../validation/pending_validation.dart';
 import 'refusal_text.dart';
 import 'trace_logger.dart';
+import 'workspace_context_not_ready.dart';
 
 /// #2142 — told about each guarded command while something listens: the
 /// task recorder, while it records, sets it and clears it again. With
@@ -73,6 +74,12 @@ Future<bool> runGuarded(
     if (watched != null) watcher?.ended(watched, error: e);
     debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);
+    if (e is WorkspaceContextNotReady && context.mounted) {
+      // #3403 -- the reference an action needs is not ready: say so, with or
+      // without a caller-supplied text.
+      AppSnack.error(context, context.l10n.workspaceTaxContextNotReady);
+      return false;
+    }
     if (errorText != null && context.mounted) {
       // #1241 — "Something went wrong. Please try again." is the wrong
       // sentence for a dropped connection. It reads as a fault in the

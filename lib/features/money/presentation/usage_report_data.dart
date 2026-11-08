@@ -20,6 +20,7 @@ import '../domain/report_data.dart';
 import '../domain/usage_record.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'report_strings_l10n.dart';
 
 Map<String, Object?> usageReportData(
@@ -116,6 +117,6 @@ Map<String, Object?> usageReportData(
           'corrected': r.isCorrected,
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
   };
 }

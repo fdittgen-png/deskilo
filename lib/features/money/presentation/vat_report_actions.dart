@@ -15,6 +15,7 @@ import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
 import '../domain/invoice_legal.dart';
@@ -141,7 +142,7 @@ Map<String, Object?> _vatReportData(
           'gross': currency.formatMinor(t.grossCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
   };
 }
 
@@ -157,6 +158,10 @@ Future<void> showVatReport(
   required DateTime end,
 }) async {
   final l10n = context.l10n;
+  if (workspaceTaxReference(ref) == null) {
+    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+    return;
+  }
   final report = await _loadVatReport(ref, start: start, end: end);
   if (!context.mounted) return;
   final data = _vatReportData(context, ref, report);

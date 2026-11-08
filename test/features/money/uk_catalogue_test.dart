@@ -4,6 +4,7 @@
 // #2359 — a UK workspace starts from HMRC's rates, and the registration
 // number is checked against HMRC's shape (the server twin is
 // `invoice_essentials_missing`, pgTAP 174).
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,10 +37,10 @@ void main() {
       'GBHA599',
       'XI123456789',
     ]) {
-      expect(looksLikeEuVatId(ok), isTrue, reason: ok);
+      expect(looksLikeEuVatId(ok, reference: ActiveTaxReference.current), isTrue, reason: ok);
     }
     for (final bad in ['GB12345', 'GB1234567890', 'GBGD0011', 'GB12345678A']) {
-      expect(looksLikeEuVatId(bad), isFalse, reason: bad);
+      expect(looksLikeEuVatId(bad, reference: ActiveTaxReference.current), isFalse, reason: bad);
     }
   });
 }

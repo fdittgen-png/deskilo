@@ -39,6 +39,7 @@ import '../../domain/workspace_permission.dart';
 import '../../providers/data_report_sources.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../../providers/workspace_tax_reference.dart' show requireWorkspaceTaxReference;
 import '../config_feature_groups.dart';
 import '../config_pdf_lines.dart';
 import '../excel_export.dart';
@@ -105,7 +106,7 @@ class WorkspaceSettingsReports {
         final docL10n = l10nForLanguage(language);
         final data = workspaceReportData(
             reportStringsFor(context, l10n: docL10n, localeName: language),
-            workspaceFactsOf(ref, docL10n));
+            workspaceFactsOf(ref, docL10n), reference: requireWorkspaceTaxReference(ref));
         final report = renderLetterDoc(context, ref,
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,

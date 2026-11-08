@@ -13,9 +13,11 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show workspaceTaxReference;
 import '../invoice_documents.dart';
 import '../report_actions.dart';
 import '../report_layout_actions.dart';
@@ -59,6 +61,10 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
 
   Future<void> _print(WorkspaceStatus status) async {
     final l10n = context.l10n;
+    if (workspaceTaxReference(ref) == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
+    }
     final data = workspaceStatusReportData(context, ref, status);
     final report = renderLetterDoc(context, ref, docId: 'status', data: data);
     final title = l10n.reportDocStatus;

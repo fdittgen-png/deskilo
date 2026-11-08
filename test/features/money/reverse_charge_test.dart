@@ -77,7 +77,7 @@ void main() {
           sellerCountry: seller,
           buyerCountry: buyer,
           buyerCapacity: capacity,
-          reverseChargeOn: reverseChargeOn,
+          reverseChargeOn: reverseChargeOn, reference: ActiveTaxReference.current,
         );
 
     test('a desk is taxed where the building stands, for every customer',
@@ -113,17 +113,17 @@ void main() {
     test('the member states, Greece under both its codes', () {
       expect(isEuCountry('el'), isTrue);
       expect(isEuCountry('GR'), isTrue);
-      expect(euCountryCode(' el '), 'GR');
+      expect(euCountryCode(' el ', reference: ActiveTaxReference.current), 'GR');
       expect(euMemberStates, isNot(contains('EL')));
       expect(isEuCountry('NO'), isFalse);
     });
 
     test('the mention speaks the seller\'s language and cites art. 196', () {
-      expect(reverseChargeMention('FR'), contains('Autoliquidation'));
-      expect(reverseChargeMention('DE'), contains('Steuerschuldnerschaft'));
-      expect(reverseChargeMention('PL'), contains('Reverse charge'));
+      expect(reverseChargeMention('FR', reference: ActiveTaxReference.current), contains('Autoliquidation'));
+      expect(reverseChargeMention('DE', reference: ActiveTaxReference.current), contains('Steuerschuldnerschaft'));
+      expect(reverseChargeMention('PL', reference: ActiveTaxReference.current), contains('Reverse charge'));
       for (final country in ['FR', 'DE', 'ES', 'IT', 'NL', 'PT', 'PL']) {
-        expect(reverseChargeMention(country), contains('196'), reason: country);
+        expect(reverseChargeMention(country, reference: ActiveTaxReference.current), contains('196'), reason: country);
       }
     });
 
@@ -149,14 +149,14 @@ void main() {
       );
       final data = legalMentionData(const ReportStrings(), workspace,
           seller: _seller, buyer: const InvoiceParty(country: 'DE'),
-          reverseCharged: true);
+          reverseCharged: true, reference: ActiveTaxReference.current);
       expect(data['exemption_reason'], contains('Autoliquidation'));
       // Without the reverse charge a VAT-charging seller states no
       // exemption at all; the workspace's own text is what a document
       // with no frozen seller falls back to.
-      final ordinary = legalMentionData(const ReportStrings(), workspace, seller: _seller);
+      final ordinary = legalMentionData(const ReportStrings(), workspace, seller: _seller, reference: ActiveTaxReference.current);
       expect(ordinary['exemption_reason'], '');
-      expect(legalMentionData(const ReportStrings(), workspace)['exemption_reason'],
+      expect(legalMentionData(const ReportStrings(), workspace, reference: ActiveTaxReference.current)['exemption_reason'],
           'Ma mention à moi');
     });
 
@@ -170,7 +170,7 @@ void main() {
         vatRegime: 'vat_registered',
       );
       final data = invoiceReportData(const ReportStrings(), invoice,
-          proforma: false, copy: false, workspace: workspace);
+          proforma: false, copy: false, workspace: workspace, reference: ActiveTaxReference.current);
       expect(data['exemption_reason'], '');
       expect('$data', isNot(contains('Autoliquidation')));
       expect('$data', isNot(contains('196')));

@@ -31912,6 +31912,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceSettingsTitle => 'Workspace';
 
   @override
+  String get workspaceTaxContextNotReady =>
+      'Der Bereich lädt seine Steuereinstellungen noch. Versuchen Sie es gleich noch einmal.';
+
+  @override
   String get workspaceTimezoneHint => 'Europe/Berlin';
 
   @override

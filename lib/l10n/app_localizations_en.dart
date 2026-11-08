@@ -31564,6 +31564,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceSettingsTitle => 'Workspace';
 
   @override
+  String get workspaceTaxContextNotReady =>
+      'The workspace is still loading its tax settings. Try again in a moment.';
+
+  @override
   String get workspaceTimezoneHint => 'Europe/London';
 
   @override

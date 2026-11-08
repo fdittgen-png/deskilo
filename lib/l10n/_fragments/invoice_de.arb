@@ -401,6 +401,7 @@
     }
   },
   "accountingExportContextNotReady": "Der Bereich lädt seine Steuereinstellungen noch. Starten Sie den Export gleich noch einmal.",
+  "workspaceTaxContextNotReady": "Der Bereich lädt seine Steuereinstellungen noch. Versuchen Sie es gleich noch einmal.",
   "einvoiceTestEnvsTitle": "Testumgebungen (UAT / Dev)",
   "einvoiceTestEnvsHelp": "Eigene Endpunkte und Token für Proben. Die Auswahl erscheint beim Senden nur bei aktivem Entwicklermodus.",
   "einvoiceUatEndpoint": "UAT-Upload-URL",

@@ -61,17 +61,17 @@ void main() {
   group('statutory mentions', () {
     test('an exempt seller gets its member state\'s wording; a VAT-charging '
         'one nothing', () {
-      expect(defaultExemptionMention('FR', VatRegime.exempt),
+      expect(defaultExemptionMention('FR', VatRegime.exempt, reference: ActiveTaxReference.current),
           contains('293 B'));
-      expect(defaultExemptionMention('de', VatRegime.exempt),
+      expect(defaultExemptionMention('de', VatRegime.exempt, reference: ActiveTaxReference.current),
           'Steuerbefreiung für Kleinunternehmer, § 19 UStG.');
-      expect(defaultExemptionMention('IT', VatRegime.exempt),
+      expect(defaultExemptionMention('IT', VatRegime.exempt, reference: ActiveTaxReference.current),
           contains('190/2014'));
-      expect(defaultExemptionMention('PL', VatRegime.exempt),
+      expect(defaultExemptionMention('PL', VatRegime.exempt, reference: ActiveTaxReference.current),
           contains('2006/112/EC'));
-      expect(defaultExemptionMention('FR', VatRegime.notSubject),
+      expect(defaultExemptionMention('FR', VatRegime.notSubject, reference: ActiveTaxReference.current),
           contains('256 B'));
-      expect(defaultExemptionMention('FR', VatRegime.vatRegistered), '');
+      expect(defaultExemptionMention('FR', VatRegime.vatRegistered, reference: ActiveTaxReference.current), '');
     });
 
     test('the document prints it only when the owner wrote nothing', () {
@@ -79,11 +79,11 @@ void main() {
         id: 'ws-1', name: 'Asso', countryCode: 'FR', currencyCode: 'EUR',
         timezone: 'Europe/Paris', inviteCode: 'CODE', vatRegime: 'exempt',
       );
-      expect(legalMentionData(const ReportStrings(), exempt)['exemption_reason'],
+      expect(legalMentionData(const ReportStrings(), exempt, reference: ActiveTaxReference.current)['exemption_reason'],
           contains('293 B'));
       expect(
         legalMentionData(const ReportStrings(),
-            exempt.copyWith(taxExemptionReason: 'Franchise en base'))
+            exempt.copyWith(taxExemptionReason: 'Franchise en base'), reference: ActiveTaxReference.current)
             ['exemption_reason'],
         'Franchise en base',
       );
@@ -92,20 +92,20 @@ void main() {
         timezone: 'Europe/Paris', inviteCode: 'CODE',
         vatRegime: 'vat_registered',
       );
-      expect(legalMentionData(const ReportStrings(), registered)['exemption_reason'], '');
+      expect(legalMentionData(const ReportStrings(), registered, reference: ActiveTaxReference.current)['exemption_reason'], '');
     });
   });
 
   group('VAT ids', () {
     test('the VIES shapes, punctuation ignored; unknown prefixes pass', () {
-      expect(looksLikeEuVatId('FR 79 849 149 108'), isTrue);
-      expect(looksLikeEuVatId('DE123456789'), isTrue);
-      expect(looksLikeEuVatId('NL123456789B01'), isTrue);
-      expect(looksLikeEuVatId('ATU12345678'), isTrue);
-      expect(looksLikeEuVatId('DE12345678'), isFalse, reason: '8 digits');
-      expect(looksLikeEuVatId('FR849149108'), isFalse, reason: 'no key');
-      expect(looksLikeEuVatId('US123'), isTrue, reason: 'not in the table');
-      expect(looksLikeEuVatId(''), isFalse);
+      expect(looksLikeEuVatId('FR 79 849 149 108', reference: ActiveTaxReference.current), isTrue);
+      expect(looksLikeEuVatId('DE123456789', reference: ActiveTaxReference.current), isTrue);
+      expect(looksLikeEuVatId('NL123456789B01', reference: ActiveTaxReference.current), isTrue);
+      expect(looksLikeEuVatId('ATU12345678', reference: ActiveTaxReference.current), isTrue);
+      expect(looksLikeEuVatId('DE12345678', reference: ActiveTaxReference.current), isFalse, reason: '8 digits');
+      expect(looksLikeEuVatId('FR849149108', reference: ActiveTaxReference.current), isFalse, reason: 'no key');
+      expect(looksLikeEuVatId('US123', reference: ActiveTaxReference.current), isTrue, reason: 'not in the table');
+      expect(looksLikeEuVatId('', reference: ActiveTaxReference.current), isFalse);
     });
 
     test('a malformed buyer id is a WARNING, never a blocker', () {

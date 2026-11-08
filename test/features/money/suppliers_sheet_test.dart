@@ -16,9 +16,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/test_workspace_context.dart';
 
-Widget _app(Widget body, List<Override> overrides) => ProviderScope(
-  overrides: overrides,
+Widget _app(
+  Widget body,
+  List<Override> overrides, {
+  bool contextReady = true,
+}) => ProviderScope(
+  overrides: [...overrides, if (contextReady) testReadyWorkspaceContext()],
   child: MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
@@ -44,6 +49,27 @@ void main() {
     expect(s.isActive, isFalse);
     expect(s.bankRevision, 3);
   });
+
+  testWidgets(
+    'without the workspace\'s own tax reference Add answers with a refusal '
+    'and opens no dialog (#3403)',
+    (tester) async {
+      await tester.pumpWidget(
+        _app(const SuppliersView(workspaceId: 'ws'), [
+          supplierRepositoryProvider.overrideWithValue(FakeSupplierRepository()),
+        ], contextReady: false),
+      );
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(find.byKey(const ValueKey('supplier-add')));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.byKey(const ValueKey('supplier-name')), findsNothing);
+      final snack = tester.widget<SnackBar>(find.byType(SnackBar));
+      expect(
+        (snack.content as Text).data,
+        startsWith('The workspace is still loading its tax settings'),
+      );
+    },
+  );
 
   test(
     'the demo twin numbers, refuses a taken identifier and keeps history',

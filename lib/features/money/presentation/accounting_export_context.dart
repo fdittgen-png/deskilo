@@ -17,6 +17,7 @@ const _needsWorkspaceReference = {
   ExportKind.saftPortugal,
   ExportKind.saftFinancial,
   ExportKind.archiveBundle,
+  ExportKind.bookReport,
   ExportKind.gobd,
 };
 

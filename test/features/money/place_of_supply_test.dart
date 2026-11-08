@@ -15,6 +15,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/place_of_supply.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _case = RegExp(
@@ -55,7 +56,7 @@ void main() {
         sellerCountry: m.group(4)!,
         buyerCountry: m.group(5)!,
         buyerCapacity: m.group(6)!,
-        reverseChargeOn: m.group(7) == 'true',
+        reverseChargeOn: m.group(7) == 'true', reference: ActiveTaxReference.current,
       );
       expect(got, m.group(8), reason: m.group(0));
     }
@@ -73,7 +74,7 @@ void main() {
   });
 
   test('EL is accepted on input and normalised to GR', () {
-    expect(euCountryCode(' el '), 'GR');
+    expect(euCountryCode(' el ', reference: ActiveTaxReference.current), 'GR');
     expect(isEuCountry('EL'), isTrue);
     expect(isEuCountry('gb'), isFalse);
   });

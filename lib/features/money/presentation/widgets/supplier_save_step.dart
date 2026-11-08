@@ -6,6 +6,7 @@
 // named before any attempt (the server refuses the same duplicate), and
 // one with the same name is a caution that never blocks.
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -44,7 +45,11 @@ class SupplierSaveState {
 /// The save step's state and its two decisions: what an edit changes, and
 /// what an attempt to save does.
 class SupplierSaveStep extends ValueNotifier<SupplierSaveState> {
-  SupplierSaveStep({required this.existing, required this.onSave})
+  SupplierSaveStep({
+    required this.existing,
+    required this.onSave,
+    required this.reference,
+  })
     : super(const SupplierSaveState());
 
   /// The workspace's suppliers, which the duplicate checks read.
@@ -52,6 +57,9 @@ class SupplierSaveStep extends ValueNotifier<SupplierSaveState> {
 
   /// Saves a draft: the id saved, or null when nothing was sent.
   final Future<String?> Function(SupplierDraft draft) onSave;
+
+  /// The workspace's own tax reference, for the duplicate check.
+  final TaxReferenceSet reference;
 
   /// After an edit: the caution follows the name, and a name error stays
   /// only while the name is empty.
@@ -94,7 +102,7 @@ class SupplierSaveStep extends ValueNotifier<SupplierSaveState> {
       show(nameError: l10n.supplierNameMissing);
       return null;
     }
-    final duplicate = supplierDuplicateOf(existing, draft);
+    final duplicate = supplierDuplicateOf(existing, draft, reference: reference);
     if (duplicate != null) {
       show(
         problem: l10n.supplierLookupDuplicate(

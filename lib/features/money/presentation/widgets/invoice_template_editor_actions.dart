@@ -332,6 +332,10 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
       );
       return;
     }
+    if (workspaceTaxReference(ref) == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady, replace: true);
+      return;
+    }
     editorUpdate(() => editorBusy = true);
     try {
       final l10nSync = context.l10n;
@@ -339,7 +343,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
       if (editorDoc == 'invoice' || editorDoc == 'proforma') {
         final invoicePdf = await buildInvoicePdfFile(
           context,
-          invoices.first, InvoicePdfFileOptions(proforma: editorDoc == 'proforma',
+          invoices.first, InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref), proforma: editorDoc == 'proforma',
           copy: true,
           template: editorDoc == 'proforma'
               ? InvoicePdfTemplate(proforma: editorCurrentBands)

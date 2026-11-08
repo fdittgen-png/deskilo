@@ -6,6 +6,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
@@ -61,7 +62,7 @@ void main() {
             memberName: 'Ana Martin',
             periodLabel: 'July 2026',
             currencyCode: 'EUR',
-            workspace: _workspace,
+            workspace: _workspace, reference: ActiveTaxReference.current,
           );
           return const SizedBox();
         }),

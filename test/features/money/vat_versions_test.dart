@@ -152,7 +152,7 @@ void main() {
           lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(cii, contains('<ram:CategoryCode>G</ram:CategoryCode>'));
       expect(cii, contains('VATEX-EU-G'));
-      expect(cii, contains(exportMention('FR')));
+      expect(cii, contains(exportMention('FR', reference: ActiveTaxReference.current)));
       final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
@@ -183,7 +183,7 @@ void main() {
               sellerCountry: 'FR',
               sellerReason: 'x',
               buyerReason: 'y',
-              regime: VatRegime.vatRegistered),
+              regime: VatRegime.vatRegistered, reference: ActiveTaxReference.current),
           'x');
     });
   });

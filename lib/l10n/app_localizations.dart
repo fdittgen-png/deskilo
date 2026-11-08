@@ -52425,6 +52425,12 @@ abstract class AppLocalizations {
   /// **'Workspace'**
   String get workspaceSettingsTitle;
 
+  /// Refusal: an action needs the workspace's own tax reference, which its context has not loaded yet (#3403)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is still loading its tax settings. Try again in a moment.'**
+  String get workspaceTaxContextNotReady;
+
   /// Example IANA zone shown in the time-zone search field. The identifiers are not translated; the EXAMPLE is localized, so a reader is shown a city they recognise.
   ///
   /// In en, this message translates to:

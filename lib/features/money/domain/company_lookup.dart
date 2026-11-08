@@ -201,7 +201,7 @@ const int _maxBodyLength = 20;
 CompanyIdentifier? normalizeCompanyIdentifier(
   String raw, {
   String country = '',
-  TaxReferenceSet? reference,
+  required TaxReferenceSet reference,
 }) {
   final typed = raw.trim();
   var compact = compactIdentifier(typed);

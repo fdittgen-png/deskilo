@@ -4,6 +4,7 @@
 // and why (so the review step can say it), and whether the identifier
 // already names a supplier of the workspace (so no second one is made).
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'company_lookup.dart';
 
@@ -125,12 +126,14 @@ Supplier? supplierWithIdentifier(
 /// refuses the same duplicate on save; this names it before the attempt.
 Supplier? supplierDuplicateOf(
   Iterable<Supplier> suppliers,
-  SupplierDraft draft,
-) {
+  SupplierDraft draft, {
+  required TaxReferenceSet reference,
+}) {
   if (draft.taxIdKind != SupplierIdKind.vat) return null;
   final identifier = normalizeCompanyIdentifier(
     draft.taxId,
     country: draft.countryCode,
+    reference: reference,
   );
   if (identifier == null) return null;
   return supplierWithIdentifier(suppliers, identifier, exceptId: draft.id);

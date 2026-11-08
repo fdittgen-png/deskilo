@@ -5,6 +5,7 @@
 // number (server twin: migration 0424, pgTAP 181), the bilingual mentions,
 // the small supplier's wording, the quick-method flag, and an invoice whose
 // total carries GST and QST printing them on two rows.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_components.dart';
@@ -74,7 +75,7 @@ void main() {
           correction: false,
           sellerVatId: '123456789rt0001',
           sellerLegalId: '1234567890TQ0001',
-          qstCharged: qst,
+          qstCharged: qst, reference: ActiveTaxReference.current,
         );
     expect(mentions(), ['GST/HST No. · N° de TPS/TVH : 123456789 RT0001']);
     expect(mentions(qst: true), [
@@ -85,16 +86,16 @@ void main() {
     expect(
       nationalInvoiceMentions(
         sellerCountry: 'CH', regime: VatRegime.vatRegistered, currency: 'CHF',
-        untaxedCents: 0, correction: false, sellerVatId: '123456789rt0001'),
+        untaxedCents: 0, correction: false, sellerVatId: '123456789rt0001', reference: ActiveTaxReference.current),
       isEmpty,
     );
   });
 
   test('a small supplier says so, in both languages', () {
-    final text = defaultExemptionMention('CA', VatRegime.exempt);
+    final text = defaultExemptionMention('CA', VatRegime.exempt, reference: ActiveTaxReference.current);
     expect(text, contains('Small supplier'));
     expect(text, contains('Petit fournisseur'));
-    expect(defaultExemptionMention('CA', VatRegime.vatRegistered), isEmpty);
+    expect(defaultExemptionMention('CA', VatRegime.vatRegistered, reference: ActiveTaxReference.current), isEmpty);
   });
 
   test('a Quebec invoice prints GST and QST on two rows, on the same base', () {
@@ -102,7 +103,7 @@ void main() {
       const ReportStrings(),
       _quebec(),
       proforma: false,
-      copy: false,
+      copy: false, reference: ActiveTaxReference.current,
     );
     final rows = (data['vat']! as List).cast<Map<String, Object?>>();
     expect(rows.length, 2);
@@ -117,7 +118,7 @@ void main() {
       const ReportStrings(localeName: 'fr'),
       _quebec(),
       proforma: false,
-      copy: false,
+      copy: false, reference: ActiveTaxReference.current,
     );
     final frRows = (french['vat']! as List).cast<Map<String, Object?>>();
     expect(frRows[0]['rate'].toString(), startsWith('TPS '));
