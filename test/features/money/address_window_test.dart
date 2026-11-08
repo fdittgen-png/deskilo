@@ -20,7 +20,9 @@ const double addressWindowTopLimit = 50 * _mm;
 void main() {
   test('the address field matches the DL window-envelope spec', () {
     expect(addressWindowTop / _mm, closeTo(45, 0.001));
-    expect(addressWindowTopLimit / _mm, closeTo(50, 0.001));
+    // The package's field must not start below the lowest top-edge an
+    // aperture still shows (the spec's 50 mm).
+    expect(addressWindowTop, lessThanOrEqualTo(addressWindowTopLimit));
     expect(addressWindowWidth / _mm, closeTo(85, 0.001));
     expect(addressWindowHeight / _mm, closeTo(40, 0.001));
     // Content resumes below BOTH the field and the tolerance band.
