@@ -5,6 +5,7 @@
 // catalogue's explicit groups, and the e-invoice categories G and E.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
@@ -148,14 +149,14 @@ void main() {
       final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
-          lineText: (l) => l.label));
+          lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(cii, contains('<ram:CategoryCode>G</ram:CategoryCode>'));
       expect(cii, contains('VATEX-EU-G'));
       expect(cii, contains(exportMention('FR')));
       final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
-          lineText: (l) => l.label));
+          lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(ubl, contains('<cbc:ID>G</cbc:ID>'));
       expect(ubl, contains('VATEX-EU-G'));
     });
@@ -169,7 +170,7 @@ void main() {
               name: 'Ambassade',
               country: 'FR',
               taxExemptionReason: 'Exonération art. 261 CGI'),
-          lineText: (l) => l.label));
+          lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(cii, contains('<ram:CategoryCode>E</ram:CategoryCode>'));
       expect(cii, contains('Exonération art. 261 CGI'));
     });

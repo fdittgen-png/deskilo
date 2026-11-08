@@ -19,6 +19,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
@@ -34,6 +35,7 @@ import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 import 'support/sage_files.dart';
 
@@ -224,13 +226,13 @@ Map<String, String Function()> _files() => {
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
-    iban: 'FR7630006000011234567890189')),
+    iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current)),
   'invoice_cii.xml': () => buildInvoiceCii(EInvoiceInput(invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
     iban: 'FR7630006000011234567890189',
-    dueDate: DateTime.utc(2026, 4, 3))),
+    dueDate: DateTime.utc(2026, 4, 3), reference: ActiveTaxReference.current)),
   'vat_report.csv': () => vatReportCsv(
     buildVatReport(
       _invoices,

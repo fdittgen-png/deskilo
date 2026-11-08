@@ -35,6 +35,7 @@ import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart';
 import 'report_strings_l10n.dart';
@@ -95,6 +96,7 @@ Future<void> sendEInvoice(
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
+          reference: requireWorkspaceTaxReference(ref),
         ));
         file = (
           bytes: utf8.encode(xml),
@@ -275,6 +277,7 @@ class _EInvoiceExportRun {
     required EInvoiceGatewayConfig gateway,
     required ({bool owner, bool issuer}) roles,
   }) {
+    final reference = requireWorkspaceTaxReference(ref);
     final readiness = checkEInvoiceReadiness(
       invoice: s.invoice,
       seller: s.seller,
@@ -283,6 +286,7 @@ class _EInvoiceExportRun {
       // public-sector references are asked for there, as a warning.
       destination: 'government',
       iban: s.iban,
+      reference: reference,
     );
     // The same judgement against the LIVE identity: if that one passes, the
     // owner is not missing anything — the document is simply older than the
@@ -295,6 +299,7 @@ class _EInvoiceExportRun {
           seller: s.liveSeller,
           buyer: s.buyer,
           iban: s.iban,
+          reference: reference,
         ).ready;
     // #2358 — what the configured channel receives, what it still needs,
     // and which official validator that format passes.
@@ -427,6 +432,7 @@ class _EInvoiceExportRun {
           iban: s.iban,
           lineText: (line) => invoiceLineText(words, line,
               association: association, period: s.invoice.period),
+          reference: requireWorkspaceTaxReference(ref),
         ));
         final bytes = Uint8List.fromList(utf8.encode(xml));
         final fileName = '${safeFileSlug(s.invoice.number)}.xml';

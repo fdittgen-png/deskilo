@@ -7,6 +7,7 @@
 // category: BR-CO-26 (a seller identifier exists at all), BR-O-02/05 (no
 // tax id and no rate outside the scope of VAT), BR-E-02/05/10 (VAT id,
 // zero rate and an exemption reason when exempt).
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -72,7 +73,7 @@ String _xml({
       seller: seller,
       buyer: buyer,
       iban: iban,
-      lineText: (line) => invoiceLineText(const ReportStrings(), line)));
+      lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current));
 
 extension on XmlDocument {
   String one(String name) => findAllElements('cbc:$name').first.innerText;
@@ -263,7 +264,7 @@ void main() {
         checkEInvoiceReadiness(
           invoice: invoice ?? _invoice(),
           seller: seller,
-          buyer: buyer,
+          buyer: buyer, reference: ActiveTaxReference.current,
         );
 
     test('a complete category-O identity is ready and clean', () {

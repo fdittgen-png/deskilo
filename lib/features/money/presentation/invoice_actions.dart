@@ -144,6 +144,13 @@ bool salesTaxModeOn(WidgetRef ref) => salesTaxWorkspace(ref) != null;
 TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
     ref.read(readyWorkspaceContextProvider)?.taxReference.set;
 
+/// [workspaceTaxReference], or a refusal for a flow that cannot go on without
+/// it (the document builders): thrown inside the guarded action, which
+/// answers with its generic message instead of a document built on a guess.
+TaxReferenceSet requireWorkspaceTaxReference(WidgetRef ref) =>
+    workspaceTaxReference(ref) ??
+    (throw StateError('workspace context not ready'));
+
 /// Runs what the detail sheet decided on, with the SCREEN's context — the
 /// sheet is already gone by then.
 Future<void> runInvoiceAction(

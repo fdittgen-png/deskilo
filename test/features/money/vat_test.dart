@@ -5,6 +5,7 @@
 // member owes — the tax is extracted from the price and shown. These tests
 // pin that arithmetic and check that every document says the same thing.
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -267,7 +268,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller,
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.gaps, isEmpty);
@@ -278,7 +279,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(vatTotals: const []),
         seller: _seller,
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.blocking, contains(EInvoiceGap.vatNotSupported),
@@ -290,7 +291,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller.copyWith(vatId: ''),
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.blocking, contains(EInvoiceGap.missingVatId));
@@ -303,7 +304,7 @@ void main() {
     XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText)));
+          lineText: _lineText, reference: ActiveTaxReference.current)));
 
     String text(XmlElement parent, String name) =>
         parent.findElements(name).single.innerText;
@@ -406,7 +407,7 @@ void main() {
     XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText)));
+          lineText: _lineText, reference: ActiveTaxReference.current)));
 
     test('the settlement summation ties net + tax = gross', () {
       final summation = doc()
