@@ -238,8 +238,7 @@ Map<String, String Function()> _files() => {
       _invoices,
       start: DateTime.utc(2026, 3),
       end: DateTime.utc(2026, 4),
-      zeroCategory: 'O', reference: ActiveTaxReference.current,
-    ),
+      zeroCategory: 'O', reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,),
     currency: 'EUR',
   ),
   'invoice_register.csv': () =>

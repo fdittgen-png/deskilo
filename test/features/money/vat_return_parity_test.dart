@@ -193,8 +193,7 @@ void main() {
         view.invoices,
         matches: view.matches,
         instalments: _instalments,
-        basis: vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current),
-      );
+        basis: vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
     }
 
     test('September: the same lines compute_vat_return returns', () {
@@ -290,8 +289,7 @@ void main() {
           'D-1': _paid('D-1', 12000, _at(9, 2)),
           'D-2': _paid('D-2', 12000, _at(8, 20)),
         },
-        basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current),
-      );
+        basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
     }
 
     test('paid 2 September: September; unpaid: the end of the month', () {
@@ -332,8 +330,7 @@ void main() {
     List<VatTaxPointAmount> ledger({bool voided = false}) => vatTaxPointLedger(
       invoices(voided: voided),
       matches: {'D-1': _paid('D-1', 12000, _at(9, 2))},
-      basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current),
-    );
+      basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
     final september = VatPeriodLock(
       declarationId: 'SEP',
       start: DateTime(2026, 9),
@@ -490,7 +487,7 @@ void main() {
     test('printed on receipts, it waits for the money on an invoice-date '
         'basis', () {
       expect(
-        frozenTaxPointBasis(unpaid, VatTaxPointBasis.invoiceDate),
+        frozenTaxPointBasis(unpaid, VatTaxPointBasis.invoiceDate, reference: ActiveTaxReference.current),
         VatTaxPointBasis.receipt,
       );
     });
@@ -499,8 +496,7 @@ void main() {
       expect(
         frozenTaxPointBasis(
           unpaid.copyWith(legalSnapshot: _debits),
-          VatTaxPointBasis.receipt,
-        ),
+          VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,),
         VatTaxPointBasis.invoiceDate,
       );
     });
@@ -514,8 +510,7 @@ void main() {
               'vat_exigibility': 'payment',
             },
           ),
-          const VatTaxPointBasis(VatTaxPointRule.servicePeriod),
-        ),
+          const VatTaxPointBasis(VatTaxPointRule.servicePeriod), reference: ActiveTaxReference.current,),
         const VatTaxPointBasis(
           VatTaxPointRule.receipt,
           VatCashBackstop.endOfFollowingYear,
@@ -527,8 +522,7 @@ void main() {
       expect(
         frozenTaxPointBasis(
           unpaid.copyWith(legalSnapshot: null),
-          VatTaxPointBasis.invoiceDate,
-        ),
+          VatTaxPointBasis.invoiceDate, reference: ActiveTaxReference.current,),
         VatTaxPointBasis.invoiceDate,
       );
     });

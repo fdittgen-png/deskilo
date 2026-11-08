@@ -12,7 +12,7 @@ import '../../../features/money/domain/price_negotiation.dart';
 import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/money/domain/vat_period_lock.dart';
 import '../../../features/money/domain/vat_tax_point.dart';
-import '../data/book_profile_repository.dart' show demoTaxReference;
+import '../data/book_profile_repository.dart' show demoDayOf, demoTaxReference;
 import '../data/credit_repository.dart';
 import '../data/money_repository.dart';
 
@@ -74,6 +74,8 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
     matches: view.matches,
     instalments: money.invoiceInstalmentsStore,
     basis: money.vatReturnBasis,
+    reference: demoTaxReference(),
+    dayOf: demoDayOf,
   );
   final quarter = (now.month - 1) ~/ 3;
   final thisQuarter = DateTime(now.year, quarter * 3 + 1);

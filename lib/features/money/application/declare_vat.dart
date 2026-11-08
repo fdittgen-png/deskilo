@@ -44,22 +44,29 @@ class VatDeclarationDraft {
   final int invoiceCount;
 }
 
-/// The draft for [periodStart]..[periodEnd], on the declared [basis]
-/// (#2355: the country's tax point, or the option the workspace chose).
-/// [instalments] are the payments recorded one by one per invoice.
+/// The draft for [period], on the declared [basis] (#2355: the country's tax
+/// point, or the option the workspace chose), on the [workspace]'s own tax
+/// reference and day. [instalments] are the payments recorded one by one per
+/// invoice.
 VatDeclarationDraft vatDeclarationDraft({
   required Iterable<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   Map<String, List<TaxPointPayment>> instalments = const {},
-  required DateTime periodStart,
-  required DateTime periodEnd,
+  required ({DateTime start, DateTime end}) period,
   required VatTaxPointBasis basis,
+  required ({TaxReferenceSet reference, DateTime Function(DateTime) dayOf})
+  workspace,
 }) {
+  final periodStart = period.start;
+  final periodEnd = period.end;
+  final (:reference, :dayOf) = workspace;
   final amounts = vatTaxPointLedger(
     invoices,
     matches: matches,
     instalments: instalments,
     basis: basis,
+    reference: reference,
+    dayOf: dayOf,
   );
   final lines = vatDeclarationLinesOf(amounts, periodStart, periodEnd);
   var net = 0;
@@ -110,10 +117,12 @@ class VatDeclarations {
     required String zeroCategory,
     required VatTaxPointBasis basis,
     required TaxReferenceSet reference,
+    required DateTime Function(DateTime instant) dayOf,
   }) async =>
       buildVatReport(
         invoices,
         reference: reference,
+        dayOf: dayOf,
         start: start,
         end: end,
         zeroCategory: zeroCategory,

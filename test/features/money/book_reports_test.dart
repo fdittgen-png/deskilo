@@ -200,8 +200,7 @@ void main() {
           TaxPointPayment(DateTime(2026, 4, 20), 12000),
         ],
       },
-      basis: workspaceTaxPointBasis(_debits, 'FR', reference: ActiveTaxReference.current),
-    ).where((a) => books.year.contains(a.on));
+      basis: workspaceTaxPointBasis(_debits, 'FR', reference: ActiveTaxReference.current), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,).where((a) => books.year.contains(a.on));
     // The return's taxed bases: the 0 % lines an invoice nets (a payment,
     // an expense refund) are no sale and post to no revenue account.
     final taxed = points.where((a) => a.percent > 0);

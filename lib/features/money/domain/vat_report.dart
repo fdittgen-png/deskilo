@@ -101,6 +101,7 @@ VatReport buildVatReport(
   required DateTime end,
   required String zeroCategory,
   required TaxReferenceSet reference,
+  required DateTime Function(DateTime instant) dayOf,
   Map<String, InvoiceMatch> matches = const {},
   Map<String, List<TaxPointPayment>> instalments = const {},
   VatTaxPointBasis basis = VatTaxPointBasis.invoiceDate,
@@ -116,6 +117,8 @@ VatReport buildVatReport(
     matches: matches,
     instalments: instalments,
     basis: basis,
+    reference: reference,
+    dayOf: dayOf,
   );
   final categories = <String, Map<double, String>>{};
   for (final amount in amounts) {

@@ -15,6 +15,7 @@
 //   2. `buildVatReport` skipped `isFolded` on the assumption that "the
 //      settlement carries them" — but its only caller hands it the view,
 //      from which the settlement has already been removed.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
@@ -90,7 +91,7 @@ void main() {
     final view = accountingView([a, b, s], rawMatches);
     final lines = vatDeclarationLinesOf(
       vatTaxPointLedger(view.invoices,
-          matches: view.matches, basis: VatTaxPointBasis.receipt),
+          matches: view.matches, basis: VatTaxPointBasis.receipt, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current),
       start,
       end,
     );
@@ -107,8 +108,7 @@ void main() {
       end: end,
       zeroCategory: 'Z',
       matches: view.matches,
-      basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
-    );
+      basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,);
     expect(onPayment.positions, hasLength(2));
     expect(
       onPayment.positions.fold<int>(0, (sum, p) => sum + p.vatCents),
@@ -120,8 +120,7 @@ void main() {
       view.invoices,
       start: DateTime.utc(2026, 8),
       end: DateTime.utc(2026, 8, 31),
-      zeroCategory: 'Z', reference: ActiveTaxReference.current,
-    );
+      zeroCategory: 'Z', reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,);
     expect(onIssue.positions, hasLength(2));
     expect(
       onIssue.positions.fold<int>(0, (sum, p) => sum + p.vatCents),

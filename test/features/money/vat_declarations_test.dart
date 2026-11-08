@@ -9,6 +9,8 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -119,7 +121,7 @@ void main() {
         ]),
       ];
       final lines = computeVatDeclarationLines(
-          invoices, DateTime(2026, 8), DateTime(2026, 8, 31));
+          invoices, DateTime(2026, 8), DateTime(2026, 8, 31), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(lines, hasLength(2));
       final at20 = lines.singleWhere((l) => l.percent == 20);
       expect(at20.grossCents, 24000);

@@ -12,6 +12,7 @@
 // the same apportionment feeds the accountant's report, so the two can
 // never disagree; and the choice is printed on every invoice, because it
 // is a statutory mention where it is asked for.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -22,6 +23,7 @@ import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../../helpers/installed_reference_shims.dart';
 
 Invoice _invoice(
@@ -62,7 +64,7 @@ final _september = (DateTime(2026, 9), DateTime(2026, 9, 30));
 Map<double, int> _shares(Invoice invoice, int paidCents) => {
       for (final a in taxPointsOf(
           invoice, [TaxPointPayment(DateTime(2026, 9), paidCents)],
-          basis: VatTaxPointBasis.receipt))
+          basis: VatTaxPointBasis.receipt, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current))
         a.percent: a.grossCents,
     };
 
@@ -75,7 +77,7 @@ List<VatDeclarationLine> _onPayment({
 }) =>
     vatDeclarationLinesOf(
         vatTaxPointLedger(invoices,
-            matches: matches, basis: VatTaxPointBasis.receipt),
+            matches: matches, basis: VatTaxPointBasis.receipt, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current),
         periodStart,
         periodEnd);
 
@@ -246,13 +248,13 @@ void main() {
 
     test('on the invoice basis the tax is due in the month of issue', () {
       expect(
-        computeVatDeclarationLines([invoice], _august.$1, _august.$2)
+        computeVatDeclarationLines([invoice], _august.$1, _august.$2, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current)
             .single
             .grossCents,
         12000,
       );
       expect(
-        computeVatDeclarationLines([invoice], _september.$1, _september.$2),
+        computeVatDeclarationLines([invoice], _september.$1, _september.$2, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current),
         isEmpty,
       );
     });
@@ -334,8 +336,7 @@ void main() {
         end: _september.$2,
         zeroCategory: 'S',
         matches: matches,
-        basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
-      );
+        basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,);
       expect(report.positions, hasLength(1));
       expect(report.positions.single.issuedAt, DateTime(2026, 9, 3));
       expect(report.positions.single.number, 'INV-a');
@@ -352,8 +353,7 @@ void main() {
           end: period.$2,
           zeroCategory: 'S',
           matches: matches,
-          basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
-        );
+          basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,);
         final declared = _onPayment(
           invoices: [invoice],
           matches: matches,
@@ -370,8 +370,7 @@ void main() {
         [invoice],
         start: _august.$1,
         end: _august.$2,
-        zeroCategory: 'S', reference: ActiveTaxReference.current,
-      );
+        zeroCategory: 'S', reference: ActiveTaxReference.current, dayOf: WorkspaceTime.dateOf,);
       expect(report.positions.single.issuedAt, DateTime(2026, 8, 10));
     });
   });
