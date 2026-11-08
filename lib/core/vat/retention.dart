@@ -3,9 +3,9 @@
 // #2571 -- the retention clock. The rules are `retention` rows of the tax
 // reference store (one per country and document class); this is the Dart twin
 // of `retention_until` (0480): the first day a record may go.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../time/date_text.dart';
 import 'tax_reference.dart';
 import 'tax_reference_active.dart';
 

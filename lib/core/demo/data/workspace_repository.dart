@@ -39,9 +39,9 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../time/date_text.dart';
 import 'conversation_visibility.dart';
 import 'fixture_clock.dart';
 

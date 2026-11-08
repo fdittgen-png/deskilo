@@ -9,9 +9,10 @@
 // month (last month's already indexed), paid on its due day, and the three
 // equipment bills, approved and paid — so every reference resolves and the
 // books post what the lease and the register show.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/vat_rate.dart';
-import '../../time/date_text.dart';
 import '../data/purchase_repository.dart';
 
 /// The month the Demo's equipment came into use: the last March not after

@@ -5,7 +5,7 @@
 // delivered at all. The server owns every rule; this is what it says.
 //
 // Pure Dart.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What one document event became in a run.
 enum DeliveryRunStatus {

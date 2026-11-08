@@ -3,7 +3,7 @@
 // What the server's retention assessment says about records that would go:
 // keep them, have a person review the rule, or the period has ended. It is
 // never a permission to delete; the server decides, this only reads it.
-import '../data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What may become of a set of records under retention.
 enum RetentionDisposition {

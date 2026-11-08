@@ -8,8 +8,9 @@
 // format reads by column position and leaves the later ones empty. Payment
 // terms are not written: DATEV's Zahlungsbedingung is a key into the
 // accountant's own terms, which DesKilo does not hold.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/text/csv.dart';
-import '../../../core/time/date_text.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'invoice.dart';

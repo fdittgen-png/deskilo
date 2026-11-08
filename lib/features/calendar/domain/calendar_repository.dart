@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/calendar/calendar_item.dart';
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
 
 /// One entry in the access log (#719): who read what about whom, when.
 class DataAccessEntry implements SystemStamped {

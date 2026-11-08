@@ -3,7 +3,7 @@
 // A legal or audit hold over a space's records (`retention_holds`): it keeps
 // them past every retention clock, with no end date, until someone releases
 // it with a reason. A released hold stays readable.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The permission whose holder places and releases a hold, by its wire
 /// name: the server checks the same one.

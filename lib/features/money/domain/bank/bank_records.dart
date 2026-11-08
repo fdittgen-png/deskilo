@@ -9,9 +9,9 @@
 // reconciled (money out, with the payment reported as made). Pure Dart.
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../core/data/json_reader.dart';
 import 'bank_statement.dart';
 
 /// The private original could not be found or accessed. Storage intentionally

@@ -11,6 +11,7 @@
 // Everything is placed relative to [DemoFixture.seededAt], never to a
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import '../../features/events/domain/workspace_event.dart';
@@ -20,7 +21,6 @@ import '../../features/plan/domain/seat.dart';
 import '../../features/profile/domain/profile.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
-import '../time/date_text.dart';
 import 'data/event_repository.dart';
 import 'data/fixture_clock.dart';
 import 'data/floor_plan_repository.dart';

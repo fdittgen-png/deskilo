@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/money/money_text.dart';
-import '../../../core/text/number_text.dart';
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';

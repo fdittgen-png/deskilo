@@ -6,7 +6,7 @@
 // an approved rate. Every expected value below is written out by hand.
 import 'dart:convert';
 
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 AccountingAmount eur(String major) => AccountingAmount.parse('EUR', major);

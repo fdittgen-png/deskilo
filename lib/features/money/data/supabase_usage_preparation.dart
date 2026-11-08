@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../domain/usage_record.dart';
 
 /// `prepare_usage_period_v1` (0477): the explicit business command around the

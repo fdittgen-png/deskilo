@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +12,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../domain/book_period.dart';
 import '../../providers/book_period_providers.dart';
 import 'premises_lease_dialogs.dart';
 

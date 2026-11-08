@@ -8,8 +8,9 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/files/xlsx.dart';
-import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../domain/invoice.dart';
 import '../domain/vat_annual_summary.dart';

@@ -2,7 +2,7 @@
 //
 // #2385 — the one plain money formatter of the exports: the currency's
 // grain, integer arithmetic, a chosen separator.
-import 'package:deskilo/core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

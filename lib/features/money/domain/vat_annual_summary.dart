@@ -6,8 +6,9 @@
 // returns, their lines put together and read through the same boxes as the
 // periodic form, which the owner or the adviser transcribes into the
 // annual form (whose own numbering differs).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/files/xlsx.dart';
-import '../../../core/i18n/currencies.dart';
 import 'vat_declaration.dart';
 
 /// The returns of [year] that count: one per period, the filed one where

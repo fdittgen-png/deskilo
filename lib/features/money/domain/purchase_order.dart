@@ -9,8 +9,7 @@
 // Pure Dart: no Flutter, no l10n.
 library;
 
-import '../../../core/data/json_reader.dart';
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'purchase_order_receipt.dart';
 
 /// Where an order stands. Only a draft is edited; received and cancelled

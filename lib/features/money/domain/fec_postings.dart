@@ -30,14 +30,11 @@
 //     book's currency at the document's recorded rate, the original amount
 //     in Montantdevise / Idevise. Without a recorded rate the file is not
 //     written.
-import '../../../core/money/money_text.dart';
-import '../../../core/time/date_text.dart';
-import 'accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_target.dart';
 import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
-import 'posting.dart';
 import 'posting_fx.dart';
 
 const _journalLabels = {

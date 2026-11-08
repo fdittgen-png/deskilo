@@ -6,9 +6,7 @@
 // source from the reference list `exchange_rate_sources`). The books, the
 // FEC and every other posted export read the document at this rate; a
 // document without one is refused, named. Pure Dart.
-import '../../../core/data/json_reader.dart';
-import '../../../core/time/date_text.dart';
-import 'accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The most decimals a rate may carry (the server stores the same scale).
 const int _scale = 10;

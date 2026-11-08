@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Producible targets whose external specification nobody has named yet.

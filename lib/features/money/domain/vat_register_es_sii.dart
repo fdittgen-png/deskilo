@@ -6,10 +6,9 @@
 // submission is a web service authenticated with the seller's qualified
 // certificate, which the app does not hold. A space that keeps its books
 // through SII hands the file to its SII software or adviser.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/money/money_text.dart';
-import '../../../core/time/date_text.dart';
 import 'invoice.dart';
 import 'vat_filing_terms.dart';
 import 'vat_rate.dart';

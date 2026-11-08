@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
@@ -6,7 +7,6 @@ import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
 import '../../../core/data/sweep_throttle.dart';
-import '../../../core/data/system_columns.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';

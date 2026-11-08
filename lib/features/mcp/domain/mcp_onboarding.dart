@@ -7,7 +7,7 @@
 // operator receives. Every parser is fail-safe: a value this build does
 // not know reads as unknown, never as approved.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The operator's decision on an assistant's OAuth client.
 enum McpClientApproval {

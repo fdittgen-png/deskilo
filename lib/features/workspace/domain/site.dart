@@ -1,4 +1,4 @@
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #945 — a site: the unit of address. Levels belong to a site, a member

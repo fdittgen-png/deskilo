@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert' show base64Encode;
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/einvoice_transmissions.dart';

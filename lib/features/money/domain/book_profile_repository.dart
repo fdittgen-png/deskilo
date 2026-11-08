@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'book_chart.dart';
-import 'book_profile.dart';
-import 'posting.dart';
 
 /// #1869 — where book profiles are read and saved: `book_profiles` and
 /// `save_book_profile` (0335) on a server, a map in the demo and tests.

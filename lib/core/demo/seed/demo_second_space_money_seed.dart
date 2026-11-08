@@ -5,12 +5,13 @@
 // transfers that paid them, Ada's bill of this month still open — the one
 // Me › Home names beside what she owes nobody at home — and her request
 // for two more half-days, waiting for Jonas.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/money/domain/vat_rate.dart';
-import '../../time/date_text.dart';
 import '../data/event_repository.dart';
 import '../data/money_repository.dart';
 import 'demo_second_space_seed.dart';

@@ -6,7 +6,7 @@
 // milestone first, then what that milestone still needs, then what waits,
 // what was set aside, what more the space could use, and what is done.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// A time as the guide says it: a range, never a promise.
 typedef SetupEstimate = ({int low, int high});

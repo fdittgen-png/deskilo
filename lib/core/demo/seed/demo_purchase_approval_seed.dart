@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import '../../../features/money/domain/accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/supplier.dart';
 import '../data/purchase_repository.dart';

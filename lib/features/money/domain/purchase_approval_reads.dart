@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'purchase.dart';
 
 /// The keyset continuation is an ordering key, not a cross-request snapshot.

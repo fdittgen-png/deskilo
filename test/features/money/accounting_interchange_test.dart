@@ -7,12 +7,10 @@
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/book_profile.dart';
-import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';

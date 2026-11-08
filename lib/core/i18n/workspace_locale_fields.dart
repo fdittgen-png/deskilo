@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/context_l10n.dart';
 import '../time/clock.dart';
-import 'currencies.dart';
 import 'money_format.dart';
 import 'time_zone_picker.dart';
 import 'time_zones.dart';

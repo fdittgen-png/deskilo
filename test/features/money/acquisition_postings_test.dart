@@ -7,9 +7,9 @@
 // The entry is on the expense's tax point, in the purchases journal, and
 // balances. pgTAP 318 holds the server engine to the same entries.
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_acquisitions.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 BookAccount _account(String code, AccountType type) => BookAccount(

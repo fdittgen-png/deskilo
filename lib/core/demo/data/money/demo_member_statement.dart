@@ -8,11 +8,11 @@
 // their credits not consumed by an invoice match, less their charges. The
 // Demo prices no supplements, so those stay 0. A month fully before the
 // membership owes nothing.
-import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 

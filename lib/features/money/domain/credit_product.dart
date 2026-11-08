@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1279 — a carnet a workspace sells (0236 `credit_products`).
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// Prepaid half-days, spent across months when a member books beyond their
 /// subscription; charged once, at the sale.

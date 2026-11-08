@@ -7,7 +7,7 @@
 // reachability, hidden names); this side only types the answer. The
 // decoding is strict: a malformed page is a shape error, never an empty
 // list, and a person is always an account of the personal home.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The three sections the reader answers.
 enum DirectorySection { workspaces, people, groups }

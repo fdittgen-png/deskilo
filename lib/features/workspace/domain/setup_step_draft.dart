@@ -5,7 +5,7 @@
 // who configures the space, and never configuration — the step's own
 // command applies what the owner confirms, and readiness is computed from
 // what was applied. Every write is made against the version it read.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The draft the server holds for one step.
 class SetupStepDraft {

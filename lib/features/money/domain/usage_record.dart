@@ -1,5 +1,4 @@
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #833 — what a check-out leaves behind.

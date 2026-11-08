@@ -3,12 +3,12 @@
 // #2585 C2 — void and refund carry a request id. The act is sent once; a lost
 // answer is read back by THAT id (never by "the newest invoice"), and nothing
 // here ever sends it a second time.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/invoice_action.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';

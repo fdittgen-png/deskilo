@@ -4,10 +4,10 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/files/xlsx.dart';
-import '../../../core/i18n/currencies.dart';
 import '../../../core/time/workspace_time.dart';
 import 'workspace_export_labels.dart';
 

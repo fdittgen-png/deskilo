@@ -3,11 +3,11 @@
 // #3308 — the pass part of a guest pass sale, shown inside THE identity
 // form (PersonalInfoForm.extraSection) so one Save sends the guest and
 // the pass together. The host keeps the draft; this only edits it.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/guest_pass.dart';

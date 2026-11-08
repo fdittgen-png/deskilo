@@ -4,8 +4,7 @@
 // (`workspace_recorded_payments_v1`, 0643): one row per payment a match
 // consumed, in the window on the workspace clock, newest match first, one
 // bounded page at a time. The same rows `finance.collected` sums.
-import '../../../core/data/json_reader.dart';
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One payment a match consumed.
 class RecordedPayment {

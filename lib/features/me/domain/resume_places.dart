@@ -11,9 +11,8 @@
 // another shape, another version or another owner decodes to nothing.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
-
-import '../../../core/data/json_reader.dart';
 
 /// Which side the account was on last.
 enum ResumeSide { personal, workspace }

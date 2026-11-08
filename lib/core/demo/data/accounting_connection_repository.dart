@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/accounting_connection.dart';
 import '../../../features/money/domain/accounting_delivery_run.dart';
 import '../../../features/money/domain/accounting_target.dart';
-import '../../../features/money/domain/book_period.dart';
 import '../../../features/money/domain/remote_revocation.dart';
 import 'book_period_repository.dart';
 

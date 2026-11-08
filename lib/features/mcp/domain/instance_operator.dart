@@ -10,7 +10,7 @@
 // self-grant), whether the operator may grant, the Google session and the
 // latest endpoint probe.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'mcp_onboarding.dart';
 
 class InstanceMember {

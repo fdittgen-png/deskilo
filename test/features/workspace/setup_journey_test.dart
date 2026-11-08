@@ -6,11 +6,11 @@
 // well-formed data, and the obligations shown beside the questions are the
 // reference rows of the country — dated, sourced, confirmed or not —
 // never a claim the data does not make.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/workspace/domain/setup_journey.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_obligations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 TaxReferenceRow _mandate(

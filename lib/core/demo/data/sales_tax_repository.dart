@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/money/domain/sales_tax_repository.dart';
 import '../../../features/money/domain/sales_tax_return.dart';
 import '../../../features/money/domain/tax_exemption_certificate.dart';

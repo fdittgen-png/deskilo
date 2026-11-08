@@ -7,7 +7,7 @@
 // the province of their postal code. Clave B: supplies and services the
 // space made. What the modelo 349 lists (intra-EU), exports and operations
 // not subject here are left out, as the order says.
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'invoice.dart';

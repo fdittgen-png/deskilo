@@ -7,7 +7,7 @@ import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 
-import '../../time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'money_repository.dart';
 
 WorkspaceStatus demoWorkspaceStatus(

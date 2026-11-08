@@ -4,9 +4,9 @@
 // (`deskilo_jurisdiction_standards`) are the application's own
 // (`lib/core/time/date_text.dart`) for every instant and separator the filing
 // files use: the two cannot drift apart without this failing.
-import 'package:deskilo/core/time/date_text.dart' as core;
 import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
     as api;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' as core;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

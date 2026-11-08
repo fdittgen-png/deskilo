@@ -8,9 +8,8 @@
 // Debitoren-Stammdaten that name them. Nothing is written while anything
 // would make DATEV refuse or misbook a row: the problems are returned
 // instead.
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'billing_rules.dart';
-import 'book_profile.dart';
 import 'datev.dart';
 import 'datev_creditors.dart';
 import 'datev_debtors.dart';

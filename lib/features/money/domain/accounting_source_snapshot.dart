@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/data/read_provenance.dart';
-import '../../../core/data/system_columns.dart';
-import 'book_profile.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'invoice_match_row.dart';

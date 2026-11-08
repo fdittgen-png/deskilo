@@ -5,6 +5,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,17 +25,14 @@ import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
-import '../domain/book_profile.dart';
 import '../domain/document_numbering.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/export_year.dart';
 import '../domain/fec.dart';
-import '../domain/fiscal_year.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
-import '../domain/posting.dart';
 import '../domain/report_data.dart';
 import '../domain/saf_t.dart';
 import '../domain/vat_account.dart';

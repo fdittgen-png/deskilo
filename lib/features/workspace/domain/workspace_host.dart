@@ -12,7 +12,7 @@
 // installation, is unverified. Each refusal is typed, and none of them
 // falls back to another server.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// What the personal home says about one enrolled host.
 enum WorkspaceHostState {

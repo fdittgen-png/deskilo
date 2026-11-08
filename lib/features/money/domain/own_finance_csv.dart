@@ -14,10 +14,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/files/file_names.dart';
-import '../../../core/i18n/currencies.dart';
 import '../../../core/text/csv.dart';
-import '../../../core/time/date_text.dart';
 import 'account_activity.dart';
 import 'finance_overview.dart';
 import 'finance_sources.dart';

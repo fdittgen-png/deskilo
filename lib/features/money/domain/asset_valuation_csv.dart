@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
-import '../../../core/time/date_text.dart';
 import 'asset_valuation_types.dart';
 
 /// #2576 (C2) — the documented UTF-8 CSV of the accountant's valuations,

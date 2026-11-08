@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/data/system_columns.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../workspace/domain/booking_granularity.dart';

@@ -3,11 +3,10 @@
 // #2387 — the money rows as the RPCs and tables send them. A full row
 // decodes; a row missing a non-null column fails naming the source, the
 // key and the expected type.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Matcher _missing(String source, String key, String expected) => throwsA(

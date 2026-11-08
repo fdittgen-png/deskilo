@@ -8,6 +8,8 @@
 // minus its rent falling due or its cost per use. The Demo prices a
 // booking by the room's general fees, the cheapest unit, a half day being
 // four hours (at most two a day): it keeps no charge record of its own.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/money/domain/billing_rules.dart';
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/room_rental.dart';
@@ -15,7 +17,6 @@ import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_sales.dart';
-import '../../time/date_text.dart';
 import 'room_rental_repository.dart';
 
 class DemoSalesKpiRepository implements SalesKpiRepository {

@@ -13,7 +13,7 @@
 /// decision, so it lives here and is tested without a widget.
 library;
 
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The context a conversation belongs to, on the wire `my_inbox` speaks.
 enum MessageContextKind {

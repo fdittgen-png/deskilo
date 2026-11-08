@@ -5,7 +5,7 @@ import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 
-import '../../time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'money_repository.dart';
 import 'workspace_repository.dart';
 

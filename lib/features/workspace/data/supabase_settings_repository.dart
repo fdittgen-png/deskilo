@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
-import '../../../core/data/json_reader.dart';
 import '../../../core/settings/settings.dart';
 
 /// #2484 -- the settings registry through its definer functions (0428).

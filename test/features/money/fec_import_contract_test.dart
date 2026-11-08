@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/fec_import_contract.dart';
-import 'package:deskilo/features/money/domain/fiscal_year.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _dir = 'test/features/money/goldens/seeded_year';

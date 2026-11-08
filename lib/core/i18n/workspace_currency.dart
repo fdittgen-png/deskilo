@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../settings/setting_defaults.g.dart';
-import 'currencies.dart';
 
 /// The active workspace's currency GRAIN — how many minor units make one
 /// major unit (#1077).

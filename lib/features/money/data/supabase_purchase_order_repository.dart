@@ -2,9 +2,9 @@
 //
 // #3307 — the purchase orders over Supabase: read by RLS (managePurchases
 // or viewFinances), written only through the RPCs of 0681, 0683 and 0684.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/time/date_text.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_receipt.dart';
 

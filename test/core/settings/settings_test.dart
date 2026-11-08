@@ -4,9 +4,9 @@
 // effective values (no caller-side fallback), the definition's own check of
 // type, bounds and security floor, the bundled-registry fallback, and the
 // in-memory store's precedence workspace > platform > default.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _days = SettingDefinition(

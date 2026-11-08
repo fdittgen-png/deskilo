@@ -8,7 +8,7 @@
 // one reader of that map; nothing else parses a hex string. Pure Dart:
 // colours are ARGB integers here, `Color` is the presentation's.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'workspace.dart';
 import 'workspace_feature.dart';
 

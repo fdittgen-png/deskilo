@@ -13,7 +13,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 
-import '../../time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'floor_plan_repository.dart';
 import 'purchase_repository.dart';
 import 'reservation_repository.dart';

@@ -7,7 +7,7 @@
 // them over the whole instance and answers a range per step, the median to
 // the 80th percentile, only from five sessions on. Nothing leaves the
 // instance; below five the guide widens the catalogue's figure instead.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'setup_status.dart';
 
 /// One finished session on a step, as the app reports it.

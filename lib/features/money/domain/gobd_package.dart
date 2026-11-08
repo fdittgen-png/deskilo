@@ -13,7 +13,7 @@
 // complete general ledger.
 import 'dart:convert';
 
-import '../../../core/time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';

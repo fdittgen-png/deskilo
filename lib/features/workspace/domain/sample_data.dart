@@ -4,7 +4,7 @@
 // at a time: what the server generated, counted by table, until it is
 // cleared. The server alone decides what a batch holds and removes exactly
 // that; the app only shows the counts and asks.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One generation batch of sample data, as `create_sample_data` and
 /// `sample_data_status` answer it.

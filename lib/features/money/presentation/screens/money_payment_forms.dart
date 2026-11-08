@@ -3,12 +3,12 @@
 
 
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bill_sections.dart';

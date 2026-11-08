@@ -3,10 +3,10 @@
 // #1870 — the posting preview: how an invoice or a payment WOULD post on
 // the issuer's chart, exactly, and what blocks it. Expected values are
 // written by hand (GST 5 % + QST 9.975 % on CAD 1000.00 = 1149.75).
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_tax.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting_preview.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const site = 'site-1';

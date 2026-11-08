@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #3070: approval read decoding preserves count, continuation and action limits.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/money/domain/purchase_approval_reads.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

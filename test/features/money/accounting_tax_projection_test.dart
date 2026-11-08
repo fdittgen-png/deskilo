@@ -5,8 +5,8 @@
 // an unclassified treatment that blocks, and purchase tax split into
 // what may and may not be deducted. The Quebec figures are Revenu
 // Québec's own two-step example on CAD 1000.00 (assumed taxable).
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_tax.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 AccountingAmount cad(String major) => AccountingAmount.parse('CAD', major);

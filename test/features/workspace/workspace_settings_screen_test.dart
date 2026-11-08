@@ -6,10 +6,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/data/system_columns.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -5,7 +5,7 @@
 // sweep, for what amount) and its append-only attempts. A status is a
 // statement about delivery, never about payment.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One delivery attempt of a reminder, as appended on the server.
 class ReminderAttempt {

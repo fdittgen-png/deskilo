@@ -3,9 +3,8 @@
 // #2492 — the EXTF Buchungsstapel of `datev.dart`, one method per section:
 // the header, the column line, the sales, the purchases side and the file.
 // The format notes live on `buildDatevFile`.
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/csv.dart';
-import '../../../core/time/date_text.dart';
 import 'billing_rules.dart';
 import 'datev.dart';
 import 'datev_fields.dart';

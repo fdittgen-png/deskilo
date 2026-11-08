@@ -3,7 +3,7 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/mcp/mcp_operations.dart';
 import 'instance_operator.dart';
 import 'mcp_context.dart';

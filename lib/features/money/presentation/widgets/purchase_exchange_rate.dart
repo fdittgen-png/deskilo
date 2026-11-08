@@ -6,11 +6,11 @@
 // captures or approves it may correct until it is approved. The books read
 // the document in the space's currency at this rate; the server refuses a
 // bill in another currency without one.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
-import '../../../../core/i18n/currencies.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';

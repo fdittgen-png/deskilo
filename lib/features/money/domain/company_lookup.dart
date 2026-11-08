@@ -11,7 +11,7 @@
 //
 // A registry's own response shape never reaches this file: the edge
 // function's adapter speaks it and answers in these terms.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/vat/place_of_supply.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';

@@ -2,7 +2,7 @@
 //
 // What a thread draws besides the words (0382): the reactions on each
 // message, my own stars, and which messages were corrected after sending.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One emoji on one message: how many people chose it, and whether I did.
 class ReactionCount {

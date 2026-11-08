@@ -9,7 +9,7 @@
 /// one enum away.
 library;
 
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 enum ConversationKind {
   /// Exactly two people, no name, no photo, created the moment someone

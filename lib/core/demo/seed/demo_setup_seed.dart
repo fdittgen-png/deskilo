@@ -5,7 +5,7 @@
 // the profile of the books it keeps. The setup guide reads each of them as
 // the evidence of its step (`data/demo_setup_repository.dart`), so Pézenas
 // holds every step that applies to it.
-import '../../../features/money/domain/book_profile.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/money/domain/dunning.dart';
 import '../../../features/money/domain/invoice_pdf_template.dart';
 import '../data/money_repository.dart';

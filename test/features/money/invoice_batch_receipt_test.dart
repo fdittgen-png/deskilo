@@ -4,12 +4,12 @@
 // request id per constituent. A constituent that committed and lost its
 // answer is recovered by its own id; "issue again" with that id replays it,
 // it neither fails on "already invoiced" nor issues a second document.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';

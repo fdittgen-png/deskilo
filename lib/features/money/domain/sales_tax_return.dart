@@ -7,11 +7,8 @@
 // The server states them (`sales_tax_return`, migration 0439: pgTAP 191) from
 // the jurisdictions frozen on the issued invoices; the worksheet CSV below
 // writes them for the owner.
-import '../../../core/data/json_reader.dart';
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/csv.dart';
-import '../../../core/text/number_text.dart';
-import '../../../core/time/date_text.dart';
 
 /// What a row of the summary states.
 enum SalesTaxLine {

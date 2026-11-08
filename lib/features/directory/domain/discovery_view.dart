@@ -10,7 +10,7 @@
 // from another one asks again. The preference is kept on the device under
 // the same namespace as saved places, the person at their personal home;
 // while nobody is signed in it lives only as long as the screen.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/net/public_endpoint.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';

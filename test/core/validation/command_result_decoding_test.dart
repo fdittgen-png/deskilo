@@ -3,8 +3,8 @@
 // #2585 — a command answer is decoded by its discriminator: pending needs an
 // event id, applied needs the promised result id, and a missing id never
 // becomes ''.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

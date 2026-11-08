@@ -11,9 +11,7 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_reports.dart';
-import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
@@ -22,6 +20,7 @@ import 'package:deskilo/features/money/presentation/book_report_actions.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/vat_report_actions.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';

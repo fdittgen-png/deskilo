@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/time/date_text.dart';
 import '../domain/book_chart.dart';
-import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
-import '../domain/posting.dart';
 
 /// #1869 — book profiles through their two definer functions (0335).
 class SupabaseBookProfileRepository implements BookProfileRepository {

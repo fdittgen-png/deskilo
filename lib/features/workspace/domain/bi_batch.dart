@@ -8,7 +8,7 @@
 // Pure Dart.
 library;
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'kpi_contract.dart';
 
 /// One figure asked for. A capacity figure has a window `[from, to)` and an

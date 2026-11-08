@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,6 @@ import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/server_choice_app.dart';
 import 'core/cache/read_retry.dart';
-import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
 import 'core/instance/tax_reference_bundle_asset.dart';
 import 'core/notifications/deferred_notification_service.dart';

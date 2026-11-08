@@ -7,12 +7,12 @@
 // The ambient `WorkspaceTime` / `WorkHours` statics stay a legacy adapter
 // fed from this value while #2564 moves their readers; new code takes the
 // calendar from the context.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' as date_text;
 import 'package:meta/meta.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../data/system_columns.dart';
-import 'date_text.dart' as date_text;
 import 'work_hours.dart';
 
 /// The workspace's calendar cannot be built from what its installation

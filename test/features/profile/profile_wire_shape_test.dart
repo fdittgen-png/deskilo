@@ -3,11 +3,11 @@
 // #2387 — the profile rows as the RPCs send them. A full row decodes; a
 // row missing a non-null column fails naming the RPC, the key and the
 // expected type, so a column rename fails here and not on a phone.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/features/directory/domain/message_marks.dart';
 import 'package:deskilo/features/profile/domain/privacy_notice.dart';
 import 'package:deskilo/features/profile/domain/rights_request.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _rightsRow = {

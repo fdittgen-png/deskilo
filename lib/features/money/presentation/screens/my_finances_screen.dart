@@ -6,6 +6,7 @@
 // screen never shows another member's document.
 import 'dart:async';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +20,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';

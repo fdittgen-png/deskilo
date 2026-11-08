@@ -36,9 +36,9 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/time/date_text.dart';
 import 'reservation.dart';
 
 /// The two statuses a booking can export as. There is no `TENTATIVE`:

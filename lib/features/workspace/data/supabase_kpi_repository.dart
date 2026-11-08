@@ -2,9 +2,9 @@
 //
 // #1918 — the KPI reads, one definer RPC each. The server checks the
 // permission and the flag; this class only asks.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_purchases.dart';

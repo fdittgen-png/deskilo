@@ -1,5 +1,4 @@
-import '../data/json_reader.dart';
-import '../data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// The kinds of dated fact the calendar hub shows (#718). Wire names

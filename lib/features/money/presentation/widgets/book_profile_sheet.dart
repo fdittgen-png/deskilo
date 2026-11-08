@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,6 @@ import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
 import '../../domain/book_chart.dart';
-import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
 import 'book_software_field.dart';

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -6,7 +7,6 @@ import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/date_text.dart';
 import 'calendar_item_row.dart';
 
 /// #818 — the month as a SELECTOR with a glance: one compact cell per

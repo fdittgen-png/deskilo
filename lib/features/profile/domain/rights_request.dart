@@ -4,8 +4,7 @@
 // received, by when the space answers (one calendar month, or the
 // extended date with its reason), and what happened, store by store.
 // And, before erasing, what goes and what stays.
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/vat/retention_assessment.dart';
 
 /// #3278 (0666) — the incidents a privacy admin can record.

@@ -4,13 +4,13 @@
 // strict decode of a claim and of a detail, the To-pay tab (a member claim
 // open and one applied to an invoice, the supplier group empty), and the
 // claim in the document's detail.
-import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';

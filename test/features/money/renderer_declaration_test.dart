@@ -9,8 +9,8 @@ import 'dart:convert';
 
 import 'package:deskilo/features/money/data/supabase_book_period_repository.dart';
 import 'package:deskilo/features/money/data/supabase_einvoice_transmissions.dart';
-import 'package:deskilo/features/money/domain/book_period.dart';
 import 'package:deskilo/features/money/domain/renderer_declaration.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';

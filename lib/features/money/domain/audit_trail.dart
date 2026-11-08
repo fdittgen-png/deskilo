@@ -29,11 +29,10 @@
 /// at exactly that.
 library;
 
-import '../../../core/money/money_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
-import 'book_period.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
 

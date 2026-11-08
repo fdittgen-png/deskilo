@@ -5,7 +5,7 @@
 // making a payment. It never carries a secret, only a mode per provider,
 // and nothing is charged or written while it is read. Whether the
 // provider accepts the keys and confirms a payment back is beyond it.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'payment_provider.dart';
 
 /// What a provider's stored key says about the money it moves.

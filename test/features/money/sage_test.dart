@@ -9,14 +9,13 @@
 // for, a reference longer than its column. The seeded year's goldens are
 // seeded_year_goldens_test.dart's.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/sage_documents.dart';
 import 'package:deskilo/features/money/domain/sage_postings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _gbp = 'GBP';

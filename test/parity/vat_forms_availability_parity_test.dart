@@ -6,9 +6,9 @@
 // of the boxes is pinned by `vat_form_boxes_golden`), which form a country
 // files for a period, and which features ADR 0043 makes available in which
 // country. Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
-import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'parity_golden.dart';

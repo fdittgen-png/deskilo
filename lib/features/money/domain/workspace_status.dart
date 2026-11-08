@@ -4,8 +4,7 @@
 // `workspace_status` (0167) returns it: what was invoiced, collected,
 // reimbursed and shared out, and the same per member. Computed in the
 // database so the screen and the printed report read one set of numbers.
-import '../../../core/data/json_reader.dart';
-import 'accounting_amount.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'expense_repartition.dart';
 
 class WorkspaceStatus {

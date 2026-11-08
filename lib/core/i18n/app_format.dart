@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 
 import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
-import 'currencies.dart';
 import 'format_prefs.dart';
 
 /// THE formatting seam (#711): every number, amount, date and time a

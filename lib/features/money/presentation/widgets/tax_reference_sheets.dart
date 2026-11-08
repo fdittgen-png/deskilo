@@ -4,10 +4,10 @@
 // a form that creates a NEW version of a value (never edits one) and the
 // history of a value. One typed form per domain; the server validates the
 // shape again.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/text/number_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';

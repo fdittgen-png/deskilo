@@ -11,6 +11,7 @@
 // prepared return is made by the same engine every demo space uses
 // (`saveVatDeclaration`), so its nine boxes come from the invoices and not
 // from a number typed here.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import '../../../features/money/domain/invoice.dart';
@@ -20,7 +21,6 @@ import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
-import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';

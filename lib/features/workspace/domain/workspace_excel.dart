@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/files/xlsx.dart';
-import '../../../core/i18n/currencies.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../money/domain/invoice.dart';

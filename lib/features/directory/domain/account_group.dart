@@ -2,7 +2,7 @@
 //
 // Groups of people (0384): members of one workspace, several, or none.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 class AccountGroupInfo {
   const AccountGroupInfo({

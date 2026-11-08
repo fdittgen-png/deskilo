@@ -4,13 +4,13 @@
 // sample amount, as a member reads them under the locale, currency and
 // time zone on the form, through the app's own formatter. The member's own
 // clock preference stays; only what the space decides changes.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/currencies.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/time_zones.dart';
 import '../../../../core/l10n/context_l10n.dart';

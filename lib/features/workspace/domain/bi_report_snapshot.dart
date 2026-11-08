@@ -14,7 +14,7 @@
 // Pure Dart.
 library;
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'bi_batch.dart';
 import 'bi_query.dart';
 import 'bi_report_definition.dart';

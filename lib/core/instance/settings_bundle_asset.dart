@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/json_reader.dart';
 import '../settings/settings.dart';
 
 part 'settings_bundle_asset.g.dart';

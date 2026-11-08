@@ -4,7 +4,7 @@
 // may offer it (per workspace, per operation), and the connections that
 // exist. The assistant never widens its own consent: every call here runs
 // from the app's own session.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'mcp_admin.dart' show mcpKnownOptionalFields;
 import 'mcp_context.dart';
 import 'mcp_usage.dart';

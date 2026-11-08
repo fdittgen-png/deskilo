@@ -1,4 +1,4 @@
-import '../../../core/data/system_columns.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #937 — what the PLATFORM owner sees of a workspace they are not in:

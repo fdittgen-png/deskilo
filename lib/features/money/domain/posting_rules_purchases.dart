@@ -25,8 +25,7 @@
 // (`postingAtRate`); each line keeps its original amount. Without a recorded
 // rate the bill and its payments block, named `reference (currency)`.
 
-import 'accounting_amount.dart';
-import 'posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'posting_fx.dart';
 import 'posting_rules.dart';
 import 'purchase.dart';

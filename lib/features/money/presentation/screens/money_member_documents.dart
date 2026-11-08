@@ -3,6 +3,7 @@
 
 
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,6 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
-import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';

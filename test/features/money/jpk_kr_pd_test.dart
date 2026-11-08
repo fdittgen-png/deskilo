@@ -12,8 +12,8 @@ import 'package:deskilo/features/money/domain/jpk_kr_pd_gap.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_markers.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_offices.dart';
 import 'package:deskilo/features/money/domain/jpk_kr_pd_writer.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/saf_t_financial.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

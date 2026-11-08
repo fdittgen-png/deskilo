@@ -10,7 +10,7 @@ import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
 
-import '../../time/date_text.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'money_repository.dart';
 
 /// An invoice falling due in the months, in its cohort.

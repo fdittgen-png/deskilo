@@ -6,7 +6,7 @@
 // it took lines out of cites it. Written through `set_tax_exemption_certificate`
 // and ended through `end_tax_exemption_certificate` (migration 0434): a
 // certificate is never deleted, an issued invoice cites it.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// The kinds the server accepts.
 const List<String> taxExemptionKinds = [

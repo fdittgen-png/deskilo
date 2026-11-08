@@ -12,10 +12,8 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 
-import '../../../core/time/date_text.dart';
-import 'book_period.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'fec_import_contract.dart';
-import 'fiscal_year.dart';
 
 /// The format id a final FEC is logged under.
 const String archiveFecFormatId = 'fec';

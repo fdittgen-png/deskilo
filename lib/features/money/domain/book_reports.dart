@@ -9,8 +9,9 @@
 //
 // Pure Dart: amounts are integer minor units in the book's currency; the
 // caller formats money and dates and passes the words.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'book_ledger.dart';
-import 'posting.dart';
 
 export 'book_ledger.dart';
 

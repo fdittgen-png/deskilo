@@ -4,7 +4,7 @@
 // (0300): a person's own assistants today, and a workspace's last 30 days
 // for its owner. No argument, result or member identity ever reaches here.
 
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// Counts for one slice of usage: every answered call, the refused ones
 /// (denied, invalid or over a limit), the mutations that applied, and the

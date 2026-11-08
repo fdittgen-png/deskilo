@@ -11,7 +11,7 @@
 // "verification unavailable" without one. It never carries a
 // role or a permission. The decoding is strict (#2585): a malformed
 // reference, status or freshness is a shape error, never an empty list.
-import '../../../core/data/json_reader.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// `installation-uuid:workspace-uuid`, lower-case, as 0559 stamps it.
 final RegExp _networkId = RegExp(

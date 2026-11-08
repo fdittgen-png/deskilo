@@ -7,7 +7,7 @@
 // derived from another. A posting with no statement line is byte-identical
 // to what it was. Expectations by hand.
 import 'package:deskilo/features/money/domain/fec_postings.dart';
-import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, Object?> _receipt(

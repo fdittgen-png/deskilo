@@ -3,9 +3,9 @@
 // #3308 — the space's guest passes and their sale, over this server
 // (guest_pass_offers under its select policy; save_guest_pass_offer and
 // sell_guest_pass, 0685).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/json_reader.dart';
 import '../domain/guest_pass.dart';
 
 class SupabaseGuestPassRepository implements GuestPassRepository {

@@ -18,7 +18,6 @@ const _shims = {
   'lib/features/money/domain/vat_forms.dart',
   'lib/features/money/domain/vat_form_boxes.dart',
   'lib/features/money/domain/vat_form_terms.dart',
-  'lib/core/money/money_text.dart',
   'lib/features/money/domain/jpk_kr_pd_countries.dart',
   'lib/features/money/domain/jpk_kr_pd_facts.dart',
   'lib/features/money/domain/jpk_kr_pd_gap.dart',
@@ -35,7 +34,6 @@ const _shims = {
   'lib/features/money/domain/saf_t_financial_ro.dart',
   'lib/features/money/domain/saf_t_financial_xml.dart',
   'lib/features/money/domain/supplier.dart',
-  'lib/core/text/number_text.dart',
   'lib/features/money/domain/vat_form_catalogue/ca.dart',
   'lib/features/money/domain/vat_form_catalogue/ch.dart',
   'lib/features/money/domain/vat_form_catalogue/de.dart',
@@ -44,7 +42,6 @@ const _shims = {
   'lib/features/money/domain/vat_form_catalogue/gb.dart',
   'lib/features/money/domain/vat_form_catalogue/it.dart',
 
-  'lib/core/data/system_columns.dart',
   'lib/features/money/domain/generic_journal_csv.dart',
   'lib/core/vat/tax_domain.dart',
   'lib/core/vat/tax_value.dart',
@@ -54,14 +51,6 @@ const _shims = {
   'lib/features/money/domain/accounting_interchange.dart',
   'lib/features/money/domain/accounting_export_sources.dart',
   'lib/features/money/domain/accounting_format_model.dart',
-  'lib/core/data/json_reader.dart',
-  'lib/core/i18n/currencies.dart',
-  'lib/core/time/date_text.dart',
-  'lib/features/money/domain/accounting_amount.dart',
-  'lib/features/money/domain/book_period.dart',
-  'lib/features/money/domain/book_profile.dart',
-  'lib/features/money/domain/fiscal_year.dart',
-  'lib/features/money/domain/posting.dart',
 };
 
 void main() {
