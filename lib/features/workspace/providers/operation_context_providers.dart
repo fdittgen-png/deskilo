@@ -8,6 +8,7 @@
 // selected workspace at all.
 import 'dart:async';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,7 +20,6 @@ import '../../../core/backend/operation_context.dart';
 import '../../../core/instance/data/installation_tax_reference.dart';
 import '../../../core/session/session_source.dart';
 import '../../../core/time/workspace_calendar.dart';
-import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_snapshot.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_rules_repository.dart';

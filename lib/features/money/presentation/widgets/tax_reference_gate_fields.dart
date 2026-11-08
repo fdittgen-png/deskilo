@@ -3,9 +3,10 @@
 // The tax reference editor's closed-list choices, and the two fields a
 // threshold's charge (the Italian stamp duty) and an issuing gate's
 // outside-VAT postal codes (the Canary Islands, Ceuta, Melilla) are typed in.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../../core/i18n/time_zones.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_mandates.dart';
 

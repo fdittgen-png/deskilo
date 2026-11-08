@@ -25,11 +25,6 @@ const _shims = {
   'lib/features/money/domain/vat_form_catalogue/gb.dart',
   'lib/features/money/domain/vat_form_catalogue/it.dart',
 
-  'lib/core/vat/tax_domain.dart',
-  'lib/core/vat/tax_value.dart',
-  'lib/core/vat/rate_component.dart',
-  'lib/core/vat/sales_tax_component.dart',
-  'lib/core/vat/tax_reference.dart',
 };
 
 void main() {

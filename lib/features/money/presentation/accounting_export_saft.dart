@@ -6,8 +6,7 @@
 // reference store, the parties' addresses from the documents and the
 // supplier register, and the contact person asked at export.
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
-
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../application/generic_journal_export.dart';
 import '../providers/supplier_providers.dart';
 import 'accounting_export_journal.dart';

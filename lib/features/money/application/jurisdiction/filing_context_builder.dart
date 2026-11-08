@@ -7,9 +7,9 @@
 // into the contract's.
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_filing_files.dart';
 

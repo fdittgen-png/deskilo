@@ -36,7 +36,7 @@ and the site.
    every table; every `create table` from now on calls it in the same
    migration, and a lint refuses one that forgets.
 4. **The app reads them as one value object.** `SystemColumns`
-   (`lib/core/data/system_columns.dart`): immutable, equal by value,
+   (`packages/deskilo_money_kernel/lib/src/system_columns.dart`): immutable, equal by value,
    with a Null Object for unstamped rows and a tolerant factory that
    never fails a read. Every entity mapped from a row implements
    `SystemStamped` and receives `system: SystemColumns.fromRow(row)`;

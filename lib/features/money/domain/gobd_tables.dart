@@ -4,7 +4,7 @@
 // file, its described columns (the key columns first), its rows and the
 // joins it declares. The names and descriptions are German, the language of
 // the auditor who reads the index.
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'gobd_package.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';

@@ -10,7 +10,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -18,6 +17,7 @@ import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

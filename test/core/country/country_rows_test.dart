@@ -10,7 +10,7 @@ import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/country/country_rows.dart';
 import 'package:deskilo/core/country/country_seed.g.dart';
 import 'package:deskilo/core/locale/device_locale.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

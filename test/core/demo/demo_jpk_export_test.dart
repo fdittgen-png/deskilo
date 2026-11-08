@@ -7,11 +7,11 @@ import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_seed.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

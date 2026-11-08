@@ -8,8 +8,9 @@
 // space made. What the modelo 349 lists (intra-EU), exports and operations
 // not subject here are left out, as the order says.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/text/csv.dart';
-import '../../../core/vat/tax_reference.dart';
 import 'invoice.dart';
 import 'vat_filing_terms.dart';
 import 'vat_register_es.dart';

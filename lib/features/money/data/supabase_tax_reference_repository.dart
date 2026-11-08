@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/data/installation_tax_reference.dart';
-import '../../../core/vat/tax_reference.dart';
 
 /// #2477 — the tax reference store through its definer functions (0427).
 ///

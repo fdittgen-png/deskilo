@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'fixture_clock.dart';
 
 /// #2477 — the tax reference store in memory, with the server's versioning

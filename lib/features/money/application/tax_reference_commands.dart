@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 /// What the form of a new version can get wrong, found before anything is sent.
 enum TaxVersionProblem { country, key, date, source, percent }

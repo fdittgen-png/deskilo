@@ -10,7 +10,7 @@
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import '../../../core/vat/tax_reference.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
