@@ -10,9 +10,11 @@
 // document; a credit note is due on its own date and never re-opens the
 // period of the invoice it corrects.
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 Invoice _invoice(
   String id, {
@@ -67,23 +69,23 @@ void main() {
 
   group('the country decides the default', () {
     test('per-country legal rules and the options each allows', () {
-      final fr = vatTaxPointPolicy('fr');
+      final fr = vatTaxPointPolicy('fr', reference: ActiveTaxReference.current);
       expect(fr.standard, VatTaxPointRule.receipt);
       expect(fr.options, [
         VatTaxPointOption.standard,
         VatTaxPointOption.invoice,
       ]);
-      expect(vatTaxPointPolicy('DE').standard, VatTaxPointRule.servicePeriod);
-      expect(vatTaxPointPolicy('ES').standard, VatTaxPointRule.servicePeriod);
-      expect(vatTaxPointPolicy('IT').standard, VatTaxPointRule.earlierOf);
-      expect(vatTaxPointPolicy('GB').standard, VatTaxPointRule.earlierOf);
-      expect(vatTaxPointPolicy('CH').standard, VatTaxPointRule.invoiceDate);
-      final ca = vatTaxPointPolicy('CA');
+      expect(vatTaxPointPolicy('DE', reference: ActiveTaxReference.current).standard, VatTaxPointRule.servicePeriod);
+      expect(vatTaxPointPolicy('ES', reference: ActiveTaxReference.current).standard, VatTaxPointRule.servicePeriod);
+      expect(vatTaxPointPolicy('IT', reference: ActiveTaxReference.current).standard, VatTaxPointRule.earlierOf);
+      expect(vatTaxPointPolicy('GB', reference: ActiveTaxReference.current).standard, VatTaxPointRule.earlierOf);
+      expect(vatTaxPointPolicy('CH', reference: ActiveTaxReference.current).standard, VatTaxPointRule.invoiceDate);
+      final ca = vatTaxPointPolicy('CA', reference: ActiveTaxReference.current);
       expect(ca.standard, VatTaxPointRule.earlierOf);
       expect(ca.options, [
         VatTaxPointOption.standard,
       ], reason: 'Canada has no cash option');
-      expect(vatTaxPointPolicy('NO').standard, VatTaxPointRule.invoiceDate);
+      expect(vatTaxPointPolicy('NO', reference: ActiveTaxReference.current).standard, VatTaxPointRule.invoiceDate);
     });
 
     test('a workspace that never chose is on its country\'s default — '
@@ -467,5 +469,5 @@ List<VatTaxPointAmount> _taxPointOf(
 }) => taxPointsOf(
   invoice,
   payments,
-  basis: vatTaxPointBasis(country, option),
+  basis: vatTaxPointBasis(country, option, reference: ActiveTaxReference.current),
 );

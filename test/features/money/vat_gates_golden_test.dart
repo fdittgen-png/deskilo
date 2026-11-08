@@ -64,7 +64,7 @@ void main() {
   test('the tax point policy and basis equal the old switch for every country', () {
     final expected = golden['taxPoint'] as Map<String, dynamic>;
     for (final c in countries) {
-      final p = vatTaxPointPolicy(c);
+      final p = vatTaxPointPolicy(c, reference: ActiveTaxReference.current);
       expect({
         'standard': p.standard.name,
         'invoiceOption': p.invoiceOption,
@@ -72,7 +72,7 @@ void main() {
         'cashBackstop': p.cashBackstop.name,
         'basis': {
           for (final o in [null, ...VatTaxPointOption.values])
-            '${o?.name}': '${vatTaxPointBasis(c, o).rule.name}/${vatTaxPointBasis(c, o).backstop.name}',
+            '${o?.name}': '${vatTaxPointBasis(c, o, reference: ActiveTaxReference.current).rule.name}/${vatTaxPointBasis(c, o, reference: ActiveTaxReference.current).backstop.name}',
         },
         'options': [for (final o in p.options) o.name],
       }, expected[c], reason: c);
@@ -123,7 +123,7 @@ void main() {
         legalProfileOf(LegalClauseSnapshot(
           sellerCountry: country,
           buyerCapacity: CustomerCapacity.values.byName(capacity),
-        )).name,
+        ), reference: ActiveTaxReference.current).name,
         want,
         reason: k,
       );

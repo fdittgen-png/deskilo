@@ -4,6 +4,7 @@
 // requires in an audit (art. L47 A-I du LPF, arrêté du 29 juillet 2013).
 // Not XML: a tab-separated flat file of accounting ENTRIES, which is why —
 // unlike SAF-T — it cannot avoid account numbers.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -66,7 +67,7 @@ List<Map<String, String>> _rows({
     matches: matches,
     company: _company,
     accounts: accounts,
-    lineText: (line) => invoiceLineText(const ReportStrings(), line),
+    lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
   ));
   final lines = file.split('\r\n');
   final header = lines.first.split('\t');
@@ -85,7 +86,7 @@ void main() {
       matches: const {},
       company: _company,
       accounts: const FecAccounts(),
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
     ));
 
     expect(file.split('\r\n').first.split('\t'), fecColumns);
@@ -266,7 +267,7 @@ void main() {
           matches: const {},
           company: _company,
           accounts: const FecAccounts(),
-          lineText: (line) => invoiceLineText(const ReportStrings(), line),
+          lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
         )),
         throwsA(isA<ArgumentError>().having((e) => e.invalidValue, 'currency', currency)),
       );

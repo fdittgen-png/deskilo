@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/book_chart.dart';
@@ -21,6 +22,10 @@ import 'purchase_repository.dart';
 
 /// #1869 — book profiles in memory, with the server's revision rule:
 /// a save names the revision it read (0 for a new version).
+/// The tax reference the demo data is stated on: the installation's own (the
+/// demo has no workspace context to read it from while it is seeded).
+TaxReferenceSet demoTaxReference() => ActiveTaxReference.current;
+
 class FakeBookProfileRepository implements BookProfileRepository {
   FakeBookProfileRepository({this.money, this.purchases, this.country = 'FR'});
 

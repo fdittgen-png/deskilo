@@ -13,10 +13,16 @@ import 'widgets/xero_invoice_dialog.dart';
 extension XeroAccountingExports on AccountingExportRun {
   Future<void> xeroInvoiceFileExport() async {
     final zero = vatRegimeFromWire(workspace.vatRegime).taxCategoryCode;
-    final rates = xeroRatesOf(exported, zeroCategory: zero);
+    final reference = taxReference;
+    final rates = xeroRatesOf(exported, zeroCategory: zero, reference: reference);
     final settings = await showXeroInvoiceDialog(context, rates: rates);
     if (settings == null || !context.mounted) return;
-    final export = xeroInvoiceExport(invoices: exported, settings: settings, zeroCategory: zero);
+    final export = xeroInvoiceExport(
+      invoices: exported,
+      settings: settings,
+      zeroCategory: zero,
+      reference: reference,
+    );
     if (export.blockers.isNotEmpty) {
       final first = export.blockers.first;
       AppSnack.error(

@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../report_strings_l10n.dart';
 
 /// The derived positions of the issue form -- read-only by design (0062).
 /// A preview that could not be read ([failed]) is unavailable: it is neither
 /// an empty month nor a total.
-class InvoicePreviewBody extends StatelessWidget {
+class InvoicePreviewBody extends ConsumerWidget {
   const InvoicePreviewBody({
     super.key,
     required this.memberPicked,
@@ -34,7 +36,7 @@ class InvoicePreviewBody extends StatelessWidget {
   final String period;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final preview = this.preview;
     if (!memberPicked) {
       return _Note(l10n.invoicePickMember, 'invoice-pick-member', small: true);
@@ -60,7 +62,7 @@ class InvoicePreviewBody extends StatelessWidget {
       children: [
         for (final (i, line) in preview.lines.indexed) _lineRow(i, line),
         const Divider(),
-        ..._vatRows(context, preview.lines),
+        ..._vatRows(context, ref, preview.lines),
         _totalRow(context, preview.totalCents),
       ],
     );
@@ -89,13 +91,21 @@ class InvoicePreviewBody extends StatelessWidget {
   // The VAT the document will carry (0072) -- computed here exactly as the
   // server computes it at issue time. Only taxed rates are shown, so the zero
   // category never reaches the screen.
-  List<Widget> _vatRows(BuildContext context, List<InvoiceLine> lines) {
+  List<Widget> _vatRows(
+    BuildContext context,
+    WidgetRef ref,
+    List<InvoiceLine> lines,
+  ) {
+    // The VAT lines state rates of the workspace's own tax reference: none
+    // are drawn until its context is ready.
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const [];
     final hint = TextStyle(color: Theme.of(context).hintColor);
     return [
       for (final total in vatTotalsOf([
         for (final line in lines)
           (amountCents: line.amountCents, vatPercent: line.vatPercent),
-      ], zeroCategory: 'O'))
+      ], zeroCategory: 'O', reference: reference))
         if (total.vatCents > 0)
           Padding(
             key: ValueKey('invoice-preview-vat-${total.percent}'),

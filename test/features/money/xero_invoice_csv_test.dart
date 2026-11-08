@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:deskilo/core/vat/place_of_supply.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/xero_invoice_csv.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -63,7 +64,7 @@ List<List<String>> _rows(String file) =>
 void main() {
   test('the file opens with Xero\'s documented header, and the two-rate invoice is '
       'two rows under one number, tax-exclusive (golden)', () {
-    final export = xeroInvoiceExport(invoices: [_invoice('1')], settings: _settings, zeroCategory: 'Z');
+    final export = xeroInvoiceExport(invoices: [_invoice('1')], settings: _settings, zeroCategory: 'Z', reference: ActiveTaxReference.current);
     expect(export.blockers, isEmpty);
     final file = export.files.single;
     if (_write) File(_golden).writeAsStringSync(file);
@@ -96,7 +97,7 @@ void main() {
         _invoice('4', totals: const [], total: -1200),
       ],
       settings: _settings,
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     );
     final numbers = _rows(export.files.single).map((r) => r[xeroInvoiceColumns.indexOf('*InvoiceNumber')]).toSet();
     expect(numbers, {'"INV-1"'});
@@ -108,7 +109,7 @@ void main() {
     final noAccount = xeroInvoiceExport(
       invoices: [_invoice('1')],
       settings: const XeroInvoiceSettings(accountCode: ' ', taxTypes: {'20.0|S': 'a', '5.0|S': 'b'}),
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     );
     expect(noAccount.files, isEmpty);
     expect(noAccount.blockers, {const XeroInvoiceBlocker(XeroInvoiceBlock.accountCode, '')});
@@ -116,20 +117,20 @@ void main() {
     final noRate = xeroInvoiceExport(
       invoices: [_invoice('1')],
       settings: const XeroInvoiceSettings(accountCode: '200', taxTypes: {'20.0|S': 'a'}),
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     );
     expect(noRate.files, isEmpty);
     expect(noRate.blockers, {const XeroInvoiceBlocker(XeroInvoiceBlock.taxType, '5 % S')});
   });
 
   test('the rates to name are the documents\' own, once each', () {
-    final rates = xeroRatesOf([_invoice('1'), _invoice('2', totals: const [_standard])], zeroCategory: 'Z');
+    final rates = xeroRatesOf([_invoice('1'), _invoice('2', totals: const [_standard])], zeroCategory: 'Z', reference: ActiveTaxReference.current);
     expect(rates.map(xeroRateKey), ['20.0|S', '5.0|S']);
   });
 
   test('at most 500 rows per file, and an invoice never spans two', () {
     final invoices = [for (var i = 0; i < 251; i++) _invoice('$i')];
-    final export = xeroInvoiceExport(invoices: invoices, settings: _settings, zeroCategory: 'Z');
+    final export = xeroInvoiceExport(invoices: invoices, settings: _settings, zeroCategory: 'Z', reference: ActiveTaxReference.current);
     expect(export.files, hasLength(2));
     expect(_rows(export.files.first), hasLength(xeroInvoiceRowsPerFile));
     expect(_rows(export.files.last), hasLength(2));
@@ -141,12 +142,12 @@ void main() {
   test('dates follow the organisation\'s order', () {
     final day = xeroInvoiceColumns.indexOf('*InvoiceDate');
     final due = xeroInvoiceColumns.indexOf('*DueDate');
-    final dayFirst = _rows(xeroInvoiceExport(invoices: [_invoice('1')], settings: _settings, zeroCategory: 'Z').files.single);
+    final dayFirst = _rows(xeroInvoiceExport(invoices: [_invoice('1')], settings: _settings, zeroCategory: 'Z', reference: ActiveTaxReference.current).files.single);
     expect([dayFirst.first[day], dayFirst.first[due]], ['04/03/2026', '03/04/2026']);
     final monthFirst = _rows(xeroInvoiceExport(
       invoices: [_invoice('1')],
       settings: XeroInvoiceSettings(accountCode: '200', taxTypes: _settings.taxTypes, dateOrder: XeroDateOrder.monthFirst),
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     ).files.single);
     expect([monthFirst.first[day], monthFirst.first[due]], ['03/04/2026', '04/03/2026']);
   });
@@ -171,7 +172,7 @@ void main() {
     final row = _rows(xeroInvoiceExport(
       invoices: [_invoice('1', totals: const [tiny])],
       settings: _settings,
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     ).files.single).single;
     expect(row[xeroInvoiceColumns.indexOf('*UnitAmount')], '0.09');
     expect(row[xeroInvoiceColumns.indexOf('TaxAmount')], '0.03');
@@ -179,7 +180,7 @@ void main() {
 
   test('an invoice without a due date leaves the column blank; Xero applies '
       'the contact\'s terms', () {
-    final row = _rows(xeroInvoiceExport(invoices: [_invoice('1', due: false)], settings: _settings, zeroCategory: 'Z')
+    final row = _rows(xeroInvoiceExport(invoices: [_invoice('1', due: false)], settings: _settings, zeroCategory: 'Z', reference: ActiveTaxReference.current)
         .files.single).first;
     expect(row[xeroInvoiceColumns.indexOf('*DueDate')], '');
     expect(row[xeroInvoiceColumns.indexOf('*InvoiceDate')], '04/03/2026');

@@ -132,8 +132,7 @@ extension GermanAccountingExports on AccountingExportRun {
       action: () async {
         // The rates and clocks of this workspace's own installation; an
         // export never states another's.
-        final reference = workspaceTaxReference(ref);
-        if (reference == null) throw StateError('workspace context not ready');
+        final reference = taxReference;
         final sequences = await repo.fetchNumberSequences(workspace.id);
         int? schema;
         try {
@@ -158,6 +157,7 @@ extension GermanAccountingExports on AccountingExportRun {
                   ref,
                   i,
                   seller: sellerOf(i, workspace),
+                  reference: taxReference,
                   buyer: buyerOf(i, workspace),
                   iban: workspaceIban(workspace),
                 ),

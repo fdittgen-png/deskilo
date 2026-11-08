@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
@@ -29,6 +30,7 @@ class FecWriter {
     required this.company,
     required this.accounts,
     required this.lineText,
+    required this.reference,
     this.customersLabel = 'Clients',
     this.revenueLabel = 'Prestations de services',
     this.bankLabel = 'Banques',
@@ -48,6 +50,8 @@ class FecWriter {
   final InvoiceParty company;
   final FecAccounts accounts;
   final String Function(InvoiceLine line) lineText;
+  final TaxReferenceSet reference;
+  List<InvoiceVatTotal> _breakdown(Invoice i, String z) => vatBreakdownOf(i, zeroCategory: z, reference: reference);
   final String customersLabel;
   final String revenueLabel;
   final String bankLabel;
@@ -184,7 +188,7 @@ class FecWriter {
     // charges nothing, so it comes back empty and the whole note is one
     // revenue reversal. When it does carry slices (mixed documents),
     // each slice is reversed on its own.
-    final slices = invoice.vatBreakdown(zeroCategory: zeroCategory)
+    final slices = _breakdown(invoice, zeroCategory)
         .where((s) => s.netCents != 0 || s.vatCents != 0)
         .toList();
     final pending = deferred(invoice, [
@@ -271,7 +275,7 @@ class FecWriter {
     final zeroCategory =
         vatRegimeFromWire(invoice.sellerParty?.vatRegime ?? company.vatRegime)
             .taxCategoryCode;
-    final breakdown = invoice.vatBreakdown(zeroCategory: zeroCategory);
+    final breakdown = _breakdown(invoice, zeroCategory);
     final manyRates = breakdown.length > 1;
     final pending = deferred(invoice, [
       for (final total in breakdown)

@@ -18,6 +18,7 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -26,6 +27,7 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 
 const _company = InvoiceParty(
@@ -193,7 +195,7 @@ String _fec({List<Invoice>? invoices}) => buildFecFile(FecRequest(
       matches: _matches(),
       company: _company,
       accounts: const FecAccounts(),
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
     ));
 
 List<Map<String, String>> _fecRows([String? file]) {

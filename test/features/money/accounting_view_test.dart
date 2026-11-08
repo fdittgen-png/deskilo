@@ -4,6 +4,7 @@
 // allocated to the sources it regroups — exact, partial oldest-first,
 // nothing while pending, nothing for a voided settlement — and every
 // export receives that view.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -134,7 +135,7 @@ void main() {
       matches: view.matches,
       company: const InvoiceParty(name: 'ws'),
       accounts: const FecAccounts(),
-      lineText: (l) => l.label,
+      lineText: (l) => l.label, reference: ActiveTaxReference.current,
     ));
     expect(fec, isNot(contains(settlement.number)));
     for (final id in [x, y]) {

@@ -24,6 +24,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -42,6 +43,7 @@ import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../tool/setup/page_sources.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 /// The page's export in [mode] (see the harness) — or null when node is
 /// missing (same bargain as setup_runs_test).
@@ -425,7 +427,7 @@ void main() {
       ];
       for (final c in countries) {
         final issues =
-            legalProfileOf(LegalClauseSnapshot(sellerCountry: c)) !=
+            legalProfileOf(LegalClauseSnapshot(sellerCountry: c), reference: ActiveTaxReference.current) !=
             LegalProfile.unsupported;
         expect(marked.contains(c), issues, reason: c);
       }

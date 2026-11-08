@@ -19,6 +19,7 @@ import '../../domain/address_window.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_tax_point.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show workspaceTaxReference;
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
 import '../widgets/canada_tax_fields.dart';
@@ -170,8 +171,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _sellerKind = legal.sellerKind;
       _customerCapacity = legal.customerCapacity;
       _reverseCharge = legal.reverseCharge;
-      _taxPoint = vatTaxPointPolicy(workspace.countryCode)
-          .effective(legal.vatTaxPoint);
+      final reference = workspaceTaxReference(ref);
+      _taxPoint = reference == null
+          ? (legal.vatTaxPoint ?? VatTaxPointOption.standard)
+          : vatTaxPointPolicy(workspace.countryCode, reference: reference)
+              .effective(legal.vatTaxPoint);
       _declarationPeriod = legal.declarationPeriod;
       _mentions.load(legal);
       _einvoice.load(legal);

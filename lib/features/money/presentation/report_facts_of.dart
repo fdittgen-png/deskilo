@@ -23,11 +23,11 @@ import '../domain/fee_band.dart';
 import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/package.dart';
+import '../domain/payment_terms.dart';
 import '../domain/report_data_sample.dart';
 import '../domain/report_facts.dart';
 import '../domain/service_item.dart';
 import '../providers/money_providers.dart';
-import 'invoice_documents.dart' show memberTermsFor;
 
 AgreementFacts agreementFactsOf(WidgetRef ref) {
   final levels = ref.read(levelsProvider).value ?? const <Level>[];
@@ -110,3 +110,21 @@ SampleInvoiceFacts sampleInvoiceFactsOf(WidgetRef ref, {SellerDraft? seller}) {
     ),
   );
 }
+
+/// #881 — the member's own payment conditions, from the members list
+/// already loaded; null when they inherit the workspace's.
+/// #1916 — the member's stated customer capacity (wire), null when not
+/// stated or unknown here.
+String? memberCapacityFor(WidgetRef ref, String memberId) => ref
+    .read(workspaceMembersProvider)
+    .value
+    ?.where((m) => m.id == memberId)
+    .firstOrNull
+    ?.customerCapacity;
+
+PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
+    .read(workspaceMembersProvider)
+    .value
+    ?.where((m) => m.id == memberId)
+    .firstOrNull
+    ?.paymentTerms;

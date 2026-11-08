@@ -1,48 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3432 -- an export file that reads the workspace's tax reference is covered
-// by the "context not ready" check of `AccountingExportRun.start()`
-// (`_needsWorkspaceReference` in accounting_export_context.dart). That list
-// is kept by hand, so this pins which export files read the reference: a new
-// one fails here until the person adding it has put its format kind in the
-// list (and added its refusal case to accounting_export_context_not_ready_test).
-import 'dart:io';
-
+// #3432/#3403 -- an accounting export reads the workspace's tax reference ONCE,
+// at the start of the run (`AccountingExportRun.taxReference`, set by the
+// "context not ready" check in `accounting_export_context.dart`), and every
+// later step states that reference. An export file that reads
+// `workspaceTaxReference(` itself would read it again after an await, where
+// the context may already be gone.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-const _covered = {
-  'accounting_export_context.dart',
-  'accounting_export_german.dart', // gobd, datev
-  'accounting_export_handover.dart', // archiveBundle, gobd
-  'accounting_export_run.dart', // saft, saftPortugal
-  'accounting_export_saft.dart', // saftFinancial
-  'accounting_export_sage.dart', // sage
-  'accounting_export_swiss.dart', // swissKmu, swissBanana, archiveBundle
-};
-
 void main() {
-  test('only the covered export files read the workspace tax reference', () {
+  test('only the start-of-run check reads the workspace tax reference', () {
     final reading = {
       for (final f in handWrittenDartFiles('lib/features/money/presentation'))
         if (f.uri.pathSegments.last.startsWith('accounting_export_') &&
-            f.readAsStringSync().contains('workspaceTaxReference('))
+            RegExp(r'(?<!watch|require)workspaceTaxReference\(', caseSensitive: false)
+                .hasMatch(f.readAsStringSync()))
           f.uri.pathSegments.last,
     };
     expect(
-      reading.difference(_covered),
-      isEmpty,
+      reading,
+      {'accounting_export_context.dart'},
       reason:
-          'an export file reads the workspace reference: add its format kind '
-          'to _needsWorkspaceReference and a refusal case, then list the file',
+          'read the reference through AccountingExportRun.taxReference, never '
+          'again after an await',
     );
-    expect(
-      _covered.difference(reading),
-      isEmpty,
-      reason: 'these no longer read it: delete them from the list',
-    );
-    expect(File('lib/features/money/presentation/accounting_export_context.dart')
-        .existsSync(), isTrue);
   });
 }

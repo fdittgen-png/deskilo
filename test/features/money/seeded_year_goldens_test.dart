@@ -301,7 +301,7 @@ List<VatTaxPointAmount> _taxPoints(AccountingExportInput input) =>
       input.books.invoices,
       matches: input.books.matches,
       instalments: input.books.instalments,
-      basis: workspaceTaxPointBasis(_invoiceLegal, 'FR'),
+      basis: workspaceTaxPointBasis(_invoiceLegal, 'FR', reference: ActiveTaxReference.current),
     );
 
 /// The posted FEC's file, as the run saves it.
@@ -335,7 +335,7 @@ String _fec(AccountingExportInput input) {
       repartitions: b.repartitions,
       expensesLabel: _l10n.fecAccountExpenses,
       taxPoints: _taxPoints(input),
-      vatPendingLabel: vatWords(_l10n).fecAccountVatPending,
+      vatPendingLabel: vatWords(_l10n).fecAccountVatPending, reference: ActiveTaxReference.current,
     ),
   );
 }
@@ -600,7 +600,7 @@ final Map<String, Future<String> Function()> _files = {
       end: DateTime(month.year, month.month + 1, 0),
       matches: b.matches,
       instalments: b.instalments,
-      onReceipts: workspaceTaxPointBasis(_invoiceLegal, 'FR').onReceipts,
+      onReceipts: workspaceTaxPointBasis(_invoiceLegal, 'FR', reference: ActiveTaxReference.current).onReceipts,
     ).toXml();
   },
   for (final name in [

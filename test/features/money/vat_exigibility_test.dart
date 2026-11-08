@@ -22,6 +22,7 @@ import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 Invoice _invoice(
   String id,
@@ -333,7 +334,7 @@ void main() {
         end: _september.$2,
         zeroCategory: 'S',
         matches: matches,
-        basis: VatTaxPointBasis.receipt,
+        basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
       );
       expect(report.positions, hasLength(1));
       expect(report.positions.single.issuedAt, DateTime(2026, 9, 3));
@@ -351,7 +352,7 @@ void main() {
           end: period.$2,
           zeroCategory: 'S',
           matches: matches,
-          basis: VatTaxPointBasis.receipt,
+          basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
         );
         final declared = _onPayment(
           invoices: [invoice],
@@ -369,7 +370,7 @@ void main() {
         [invoice],
         start: _august.$1,
         end: _august.$2,
-        zeroCategory: 'S',
+        zeroCategory: 'S', reference: ActiveTaxReference.current,
       );
       expect(report.positions.single.issuedAt, DateTime(2026, 8, 10));
     });

@@ -2,6 +2,7 @@
 //
 // #936 — the exports carry the purchases side, book credit notes, and
 // mark a development workspace's books.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -10,6 +11,7 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 
 const _company = InvoiceParty(
@@ -57,7 +59,7 @@ void main() {
       currency: 'EUR',
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -25000, replaces: 'INV-2026-0001')],
         matches: const {}, company: _company, accounts: const FecAccounts(),
-        lineText: (line) => invoiceLineText(const ReportStrings(), line),
+        lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
       ));
       final cn = _rows(file).where((r) => r['PieceRef'] == 'CN-2026-0001').toList();
       num money(String? s) => num.parse((s ?? '0').replaceAll(',', '.'));
@@ -76,7 +78,7 @@ void main() {
       currency: 'EUR',
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
-        ledger: [_reimbursement], memberNames: const {'member-1': 'Ana Martin'},
+        ledger: [_reimbursement], memberNames: const {'member-1': 'Ana Martin'}, reference: ActiveTaxReference.current,
       ));
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
       expect(ha, hasLength(2));
@@ -91,7 +93,7 @@ void main() {
       currency: 'EUR',
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
-        repartitions: [_rent],
+        repartitions: [_rent], reference: ActiveTaxReference.current,
       ));
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
       expect(ha.singleWhere((r) => r['CompteNum'] == '606000')['Debit'], '600,00');
@@ -103,7 +105,7 @@ void main() {
       currency: 'EUR',
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -1000)],
         matches: const {}, company: _company, accounts: const FecAccounts(),
-        lineText: (line) => invoiceLineText(const ReportStrings(), line),
+        lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
       ));
       expect(_rows(file).where((r) => r['CompteNum'] == '445710'), isEmpty);
     });

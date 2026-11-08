@@ -8,6 +8,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -115,7 +116,7 @@ void main() {
         );
         // #2357 — the server reads the French default (receipts); the
         // fake stands in for it with the same engine.
-        money.vatReturnBasis = vatTaxPointBasis('FR', null);
+        money.vatReturnBasis = vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current);
         // Half last month, half this month: this month declares half.
         money.invoiceInstalmentsStore['a'] = [
           TaxPointPayment(DateTime(now.year, now.month - 1, 20, 12), 6000),

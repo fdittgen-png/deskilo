@@ -26,7 +26,7 @@ List<Map<String, String>> _fec({Map<String, InvoiceMatch>? matches}) {
     company: seededCompany,
     accounts: const FecAccounts(),
     lineText: (l) => l.label,
-    ledger: SeededExportYear.ledger,
+    ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
   ));
   final lines = file.split('\r\n');
   final head = lines.first.split('\t');

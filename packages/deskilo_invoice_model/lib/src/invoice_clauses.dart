@@ -38,6 +38,8 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:meta/meta.dart';
+
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
@@ -278,6 +280,7 @@ class LegalClauseSnapshot {
 /// The profile [snapshot] falls under: the seller's country (where the
 /// supply is made from — the transaction law this bounded set knows) and
 /// the buyer's stated capacity.
+@visibleForTesting
 LegalProfile legalProfileOf(
   LegalClauseSnapshot snapshot, {
   required TaxReferenceSet reference,

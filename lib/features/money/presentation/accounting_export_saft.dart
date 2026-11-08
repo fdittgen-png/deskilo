@@ -12,7 +12,6 @@ import '../providers/supplier_providers.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'e_invoice_identity.dart' show workspaceIban;
-import 'invoice_actions.dart';
 import 'widgets/saft_contact_dialog.dart';
 import 'widgets/saft_standard_accounts_dialog.dart';
 
@@ -74,8 +73,7 @@ extension SafTFinancialExports on AccountingExportRun {
     Map<String, SafTParty> parties, [
     Map<String, AccountMapValue> confirmed = const {},
   ]) {
-    final reference = workspaceTaxReference(ref);
-    if (reference == null) throw StateError('workspace context not ready');
+    final reference = taxReference;
     return SafTFinancialRequest(
       profile: SafTFinancialProfile.ofFormat(format.id)!,
       period: books.year,

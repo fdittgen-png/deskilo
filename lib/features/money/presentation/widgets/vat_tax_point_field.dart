@@ -5,12 +5,14 @@
 // allows (France's debits, a cash scheme elsewhere). It decides which
 // period a declaration covers, and it is printed on every invoice.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/vat_tax_point.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 
-class VatTaxPointField extends StatelessWidget {
+class VatTaxPointField extends ConsumerWidget {
   const VatTaxPointField({
     super.key,
     required this.country,
@@ -24,9 +26,11 @@ class VatTaxPointField extends StatelessWidget {
   final ValueChanged<VatTaxPointOption> onChanged;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final policy = vatTaxPointPolicy(country);
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const SizedBox.shrink();
+    final policy = vatTaxPointPolicy(country, reference: reference);
     return DropdownButtonFormField<VatTaxPointOption>(
       key: const ValueKey('legal-identity-exigibility'),
       initialValue: policy.effective(value),

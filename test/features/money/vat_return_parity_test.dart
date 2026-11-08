@@ -23,6 +23,7 @@
 // share of an expense, rounded as the server rounds them; and the
 // acquisition tax of a service bought abroad (`0605_ch_mwst_205_383.sql`).
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/vat_input.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
@@ -192,7 +193,7 @@ void main() {
         view.invoices,
         matches: view.matches,
         instalments: _instalments,
-        basis: vatTaxPointBasis('FR', null),
+        basis: vatTaxPointBasis('FR', null, reference: ActiveTaxReference.current),
       );
     }
 
@@ -289,7 +290,7 @@ void main() {
           'D-1': _paid('D-1', 12000, _at(9, 2)),
           'D-2': _paid('D-2', 12000, _at(8, 20)),
         },
-        basis: vatTaxPointBasis('DE', null),
+        basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current),
       );
     }
 
@@ -331,7 +332,7 @@ void main() {
     List<VatTaxPointAmount> ledger({bool voided = false}) => vatTaxPointLedger(
       invoices(voided: voided),
       matches: {'D-1': _paid('D-1', 12000, _at(9, 2))},
-      basis: vatTaxPointBasis('DE', null),
+      basis: vatTaxPointBasis('DE', null, reference: ActiveTaxReference.current),
     );
     final september = VatPeriodLock(
       declarationId: 'SEP',

@@ -28,11 +28,14 @@ Future<List<VatDeclaration>> vatDeclarations(Ref ref) async {
 @riverpod
 SaveVatFilingFile saveVatFilingFile(Ref ref) {
   final w = ref.watch(currentWorkspaceProvider).value;
+  final reference = ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
   final clock = ref.watch(clockProvider);
   return SaveVatFilingFile(
     ref.watch(fileSaverProvider),
     clock.now,
-    party: w == null
+    // No party until the workspace's own tax reference is ready: the basis
+    // the file is stated on comes from it.
+    party: w == null || reference == null
         ? null
         : VatFilingParty(
             countryCode: w.countryCode,
@@ -42,9 +45,11 @@ SaveVatFilingFile saveVatFilingFile(Ref ref) {
             city: w.city,
             vatId: w.vatId,
             legalId: w.legalId,
-            onReceipts: InvoiceLegal.fromJson(w.invoiceLegal)
-                .taxPointBasis(w.countryCode)
-                .onReceipts,
+            onReceipts: taxPointBasisOf(
+              InvoiceLegal.fromJson(w.invoiceLegal),
+              w.countryCode,
+              reference: reference,
+            ).onReceipts,
           ),
   );
 }

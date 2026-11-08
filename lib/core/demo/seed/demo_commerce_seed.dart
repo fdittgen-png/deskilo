@@ -5,12 +5,14 @@
 // carnets with a balance to spend, and the VAT declarations of the last
 // two quarters — one submitted, one a draft — computed from the bills the
 // session actually holds.
+
 import '../../../features/money/domain/accounting_view.dart';
 import '../../../features/money/domain/credit_product.dart';
 import '../../../features/money/domain/price_negotiation.dart';
 import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/money/domain/vat_period_lock.dart';
 import '../../../features/money/domain/vat_tax_point.dart';
+import '../data/book_profile_repository.dart' show demoTaxReference;
 import '../data/credit_repository.dart';
 import '../data/money_repository.dart';
 
@@ -61,7 +63,11 @@ void seedDemoCarnets(FakeCreditRepository credits) {
 void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
   // French service VAT is due on receipts unless the issuer opted for
   // debits. Keep seeded returns and subsequent preparations on that basis.
-  money.vatReturnBasis = vatTaxPointBasis('FR', null);
+  money.vatReturnBasis = vatTaxPointBasis(
+    'FR',
+    null,
+    reference: demoTaxReference(),
+  );
   final view = accountingView(money.invoices, money.invoiceMatchesStore);
   final ledger = vatTaxPointLedger(
     view.invoices,

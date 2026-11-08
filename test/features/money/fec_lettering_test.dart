@@ -2,6 +2,7 @@
 //
 // #2365 fix 5 — FEC: DateLet accompanies every EcritureLet, and ValidDate of
 // a recorded movement is the day it was recorded, not the day it happened.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -17,7 +18,7 @@ List<Map<String, String>> _rows(List<LedgerEntry> ledger) {
     company: seededCompany,
     accounts: const FecAccounts(),
     lineText: (l) => l.label,
-    ledger: ledger,
+    ledger: ledger, reference: ActiveTaxReference.current,
   )).split('\r\n');
   final head = lines.first.split('\t');
   return [

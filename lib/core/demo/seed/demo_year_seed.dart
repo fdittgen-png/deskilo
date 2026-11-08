@@ -14,6 +14,7 @@ import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/site.dart';
+import '../data/book_profile_repository.dart' show demoTaxReference;
 import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
 import '../data/reservation_repository.dart';
@@ -470,6 +471,7 @@ void applyDemoVat(FakeMoneyRepository money) {
             (amountCents: l.amountCents, vatPercent: l.vatPercent),
         ],
         zeroCategory: 'E',
+        reference: demoTaxReference(),
         sellerCountry: 'FR',
       ).map(stated).toList(),
     );

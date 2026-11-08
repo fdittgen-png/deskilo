@@ -17,6 +17,7 @@ import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 const _seller = InvoiceParty(
   name: 'pezenas1',
@@ -134,7 +135,7 @@ void main() {
           // line that names one is a reversal and does count).
           (amountCents: -5000, vatPercent: 0),
         ],
-        zeroCategory: 'O',
+        zeroCategory: 'O', reference: ActiveTaxReference.current,
       );
 
       expect(totals.map((t) => t.percent), [20, 5.5]);
@@ -153,7 +154,7 @@ void main() {
           (amountCents: 5, vatPercent: 20),
           (amountCents: 5, vatPercent: 20),
         ],
-        zeroCategory: 'O',
+        zeroCategory: 'O', reference: ActiveTaxReference.current,
       );
 
       expect(totals.single.netCents, 8);
@@ -168,7 +169,7 @@ void main() {
         (amountCents: -2000, vatPercent: 20),
         // Money moving carries no rate and must not touch the tax.
         (amountCents: -5000, vatPercent: 0),
-      ], zeroCategory: 'O');
+      ], zeroCategory: 'O', reference: ActiveTaxReference.current);
       expect(totals, hasLength(1), reason: 'one rate on the document');
       expect(totals.single.percent, 20);
       expect(totals.single.grossCents, 10000);
@@ -179,7 +180,7 @@ void main() {
     test('#894 — a document that only gives back carries NEGATIVE tax', () {
       final totals = vatTotalsOf(const [
         (amountCents: -12000, vatPercent: 20),
-      ], zeroCategory: 'O');
+      ], zeroCategory: 'O', reference: ActiveTaxReference.current);
       expect(totals.single.grossCents, -12000);
       expect(totals.single.netCents, -10000);
       expect(totals.single.vatCents, -2000);
@@ -188,7 +189,7 @@ void main() {
     test('a zero rate takes its CATEGORY from the workspace regime', () {
       expect(
         vatTotalsOf(const [(amountCents: 1000, vatPercent: 0)],
-                zeroCategory: 'E')
+                zeroCategory: 'E', reference: ActiveTaxReference.current)
             .single
             .category,
         'E',
@@ -519,7 +520,7 @@ void main() {
         matches: const {},
         company: _seller,
         accounts: accounts,
-        lineText: _lineText,
+        lineText: _lineText, reference: ActiveTaxReference.current,
       ));
       final lines = file.split('\r\n');
       final header = lines.first.split('\t');

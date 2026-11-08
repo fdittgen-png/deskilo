@@ -6,6 +6,8 @@
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/text/csv.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';
@@ -98,6 +100,7 @@ VatReport buildVatReport(
   required DateTime start,
   required DateTime end,
   required String zeroCategory,
+  required TaxReferenceSet reference,
   Map<String, InvoiceMatch> matches = const {},
   Map<String, List<TaxPointPayment>> instalments = const {},
   VatTaxPointBasis basis = VatTaxPointBasis.invoiceDate,
@@ -122,7 +125,7 @@ VatReport buildVatReport(
     // reverse-charged or exempt supply keeps saying why it bears no tax
     // whenever its tax point falls.
     final frozen = categories.putIfAbsent(invoice.id, () => {
-          for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
+          for (final total in vatBreakdownOf(invoice, zeroCategory: zeroCategory, reference: reference))
             total.percent: total.category,
         });
     positions.add(VatReportPosition(

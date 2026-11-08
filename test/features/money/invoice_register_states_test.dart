@@ -21,6 +21,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/read_probe.dart';
+import '../../helpers/test_workspace_context.dart';
 
 final _en = AppLocalizationsEn();
 const _failure = ValueKey('read-failure');
@@ -76,6 +77,7 @@ Future<ReadProbe<List<Invoice>>> _pump(
     overrides: [
       ...standardTestOverrides(workspace: FakeWorkspaceRepository.withWorkspace()),
       invoicesProvider.overrideWith((ref) => probe()),
+      testReadyWorkspaceContext(),
       if (source != null) accountingExportSourceProvider.overrideWithValue(source),
     ],
   );

@@ -5,8 +5,10 @@
 // invoice_actions_part1/2); same behaviour.
 import 'dart:async';
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/i18n/money_format.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -24,6 +26,7 @@ import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
 import '../providers/credit_move_providers.dart';
 import '../providers/money_providers.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_journey.dart' show invoiceRemainingCents;
 import 'widgets/invoice_receipt_action_runner.dart';
@@ -190,6 +193,7 @@ Future<void> remindInvoice(
         ref,
         invoice,
         level: level,
+        reference: requireWorkspaceTaxReference(ref),
       );
       // The ORDER is the decision, so it lives in the command (#1532):
       // the letter goes out, and the level is recorded only if it did.
