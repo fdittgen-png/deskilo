@@ -20,5 +20,5 @@ class IeArchive extends ArchiveContribution {
   );
 
   @override
-  bool get readableHandover => true;
+  bool get readableHandover => false;
 }
