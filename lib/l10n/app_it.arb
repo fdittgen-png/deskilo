@@ -178,6 +178,7 @@
       }
     }
   },
+  "accountingExportContextNotReady": "Lo spazio sta ancora caricando le sue impostazioni fiscali. Riprova l'esportazione tra un momento.",
   "accountingExportDevelopment": "Spazio di sviluppo: il file è contrassegnato DEV e non è la contabilità reale.",
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"

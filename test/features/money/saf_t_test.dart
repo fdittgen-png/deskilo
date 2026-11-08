@@ -7,10 +7,11 @@
 // accounts, because every wrong account code has to be unbooked by hand.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -90,7 +91,7 @@ XmlDocument _file({
       currency: 'EUR',
       softwareVersion: safTSoftwareVersion,
       createdAt: DateTime(2026, 7, 27),
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
+      lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
     )));
 
 String _text(XmlElement parent, String name) =>

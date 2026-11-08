@@ -5,13 +5,7 @@
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_countries.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_facts.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_gap.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_markers.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_offices.dart';
-import 'package:deskilo/features/money/domain/jpk_kr_pd_writer.dart';
-import 'package:deskilo/features/money/domain/saf_t_financial.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';

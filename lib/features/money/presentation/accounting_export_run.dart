@@ -5,6 +5,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +35,6 @@ import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/report_data.dart';
-import '../domain/saf_t.dart';
 import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/accounting_connection_providers.dart';
@@ -303,7 +303,9 @@ class AccountingExportRun {
           lineText: (line) => invoiceLineText(words, line, association: association),
           fallbackDescription: l10n.invoicesTitle,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
-          ledgerAccounts: accounts, bookPostings: posted));
+          ledgerAccounts: accounts, bookPostings: posted,
+          reference: workspaceTaxReference(ref) ??
+              (throw StateError('workspace context not ready'))));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
     if (posted case final journal?) {
       return exportGenericJournal(context,

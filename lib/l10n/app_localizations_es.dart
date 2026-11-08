@@ -231,6 +231,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get accountingExportContextNotReady =>
+      'El espacio aún carga su configuración fiscal. Vuelva a lanzar la exportación en unos instantes.';
+
+  @override
   String get accountingExportDevelopment =>
       'Espacio de desarrollo: el archivo lleva la marca DEV y no es la contabilidad real.';
 

@@ -4,10 +4,11 @@
 // (customers debited, bank credited), Sage as a payment (SP) and not a
 // receipt (SR), SAF-T's ledger the same way round; and Sage carries the
 // payments an invoice netted.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
@@ -127,7 +128,7 @@ void main() {
         revenue: '706',
         bank: '512',
         vat: '4457',
-      ),
+      ), reference: ActiveTaxReference.current,
     ));
     final start = xml.indexOf('<TransactionID>CN-1-P</TransactionID>');
     expect(start, greaterThan(0));

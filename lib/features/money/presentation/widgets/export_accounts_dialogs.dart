@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -6,7 +7,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../domain/datev.dart';
 import '../../domain/datev_problem.dart';
 import '../../domain/fec.dart';
-import '../../domain/sage.dart';
 
 /// The account dialogs for the three mapped exports (#669).
 ///
@@ -261,7 +261,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
 /// exist and the accountant is the one who checks.
 Future<SageAccounts?> showSageAccountsDialog(
   BuildContext context, {
-  SageAccounts initial = const SageAccounts(),
+  required SageAccounts initial,
 }) {
   final l10n = context.l10n;
   final debtors = TextEditingController(text: initial.debtors);

@@ -10,7 +10,7 @@ import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_report.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
-import 'package:deskilo/features/money/domain/supplier.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 

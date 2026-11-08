@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
-import '../../domain/supplier.dart';
 import '../../domain/supplier_standing.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';

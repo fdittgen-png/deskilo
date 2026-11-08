@@ -400,6 +400,7 @@
       }
     }
   },
+  "accountingExportContextNotReady": "El espacio aún carga su configuración fiscal. Vuelva a lanzar la exportación en unos instantes.",
   "einvoiceTestEnvsTitle": "Entornos de prueba (UAT / Dev)",
   "einvoiceTestEnvsHelp": "Endpoints y tokens separados para ensayos. La opción aparece al enviar solo con el modo desarrollador activo.",
   "einvoiceUatEndpoint": "URL de subida UAT",

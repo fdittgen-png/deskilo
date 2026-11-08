@@ -11,9 +11,6 @@
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
-import 'package:deskilo/features/money/domain/sage_documents.dart';
-import 'package:deskilo/features/money/domain/sage_postings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -66,7 +63,7 @@ InvoiceVatTotal _untaxed(String category, int net) => InvoiceVatTotal(
 SageAuditTrail _documents(List<Invoice> invoices) => sageRowsOfInvoices(
   invoices: invoices,
   matches: const {},
-  accounts: const SageAccounts(),
+  accounts: SageAccounts(reference: ActiveTaxReference.current),
   customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'GB'),
   baseCurrency: _gbp,
   groupOf: (t) =>
@@ -136,7 +133,7 @@ SageAuditTrail _posted(
 }) => sageRowsOfPostings(
   postings,
   book: (
-    accounts: const SageAccounts(),
+    accounts: SageAccounts(reference: ActiveTaxReference.current),
     customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'GB'),
     baseCurrency: _gbp,
   ),
@@ -174,10 +171,10 @@ void main() {
     expect(trail.blockers, isEmpty);
     final cells = trail.rows.map(_cells).toList();
     expect(cells.map((c) => c[8]), [
-      const SageAccounts().codeOf('', 'AE', euCustomer: true),
-      const SageAccounts().codeOf('zero', 'Z'),
-      const SageAccounts().codeOf('exempt', 'E'),
-      const SageAccounts().noTax,
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('', 'AE', euCustomer: true),
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('zero', 'Z'),
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('exempt', 'E'),
+      SageAccounts(reference: ActiveTaxReference.current).noTax,
     ]);
     expect(cells.map((c) => c[8]).toSet(), hasLength(4));
     // The EU customer's member state goes in Country of VAT; nobody
@@ -191,7 +188,7 @@ void main() {
     final trail = _documents([
       _invoice('rc', vat: [_untaxed('AE', 10000)]),
     ]);
-    expect(trail.rows.single.taxCode, const SageAccounts().codeOf('', 'AE'));
+    expect(trail.rows.single.taxCode, SageAccounts(reference: ActiveTaxReference.current).codeOf('', 'AE'));
     expect(trail.rows.single.countryOfVat, '');
   });
 
@@ -297,7 +294,7 @@ void main() {
         _line(BookRole.revenue, '4000', 10000, debit: false),
       ]);
       final trail = _posted([sale], documents: {'d1': eu});
-      expect(trail.rows.single.taxCode, const SageAccounts().codeOf('', 'AE', euCustomer: true));
+      expect(trail.rows.single.taxCode, SageAccounts(reference: ActiveTaxReference.current).codeOf('', 'AE', euCustomer: true));
       expect(trail.rows.single.countryOfVat, 'DE');
     });
 
@@ -339,7 +336,7 @@ void main() {
       final rows = _posted([writeOff]).rows;
       expect(rows.map((r) => r.type), ['JD', 'JC']);
       expect(rows.map((r) => r.account), ['', '']);
-      expect(rows.map((r) => r.taxCode).toSet(), {const SageAccounts().noTax});
+      expect(rows.map((r) => r.taxCode).toSet(), {SageAccounts(reference: ActiveTaxReference.current).noTax});
     });
   });
 

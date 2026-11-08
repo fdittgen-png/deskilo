@@ -230,6 +230,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get accountingExportContextNotReady =>
+      'The workspace is still loading its tax settings. Try the export again in a moment.';
+
+  @override
   String get accountingExportDevelopment =>
       'Development workspace: the file is marked DEV and is not the real books.';
 

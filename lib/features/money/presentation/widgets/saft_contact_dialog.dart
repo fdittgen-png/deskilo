@@ -9,11 +9,11 @@
 // (TaxAccountingBasis: one of the provisions of the EStG 1988) and the
 // industry code (TaxEntity, Branchenkennzahl): facts of the company the app
 // does not hold, asked here for that file.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../domain/saf_t_financial.dart';
 
 /// The provisions of the Austrian EStG 1988 a book's profit follows.
 const _austrianProfitBases = ['§ 4 Abs. 1 EStG', '§ 4 Abs. 3 EStG', '§ 5 EStG'];

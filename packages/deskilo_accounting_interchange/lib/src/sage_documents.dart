@@ -77,7 +77,7 @@ SageAuditTrail sageRowsOfInvoices({
         invoice,
         accounts,
         customer: customer,
-        euCountry: customers.euCountryOf(invoice, reference: accounts.taxReference),
+        euCountry: customers.euCountryOf(invoice, reference: accounts.reference),
         currency: baseCurrency,
       ).write(rows, blockers, matches[invoice.id], groupOf);
     }

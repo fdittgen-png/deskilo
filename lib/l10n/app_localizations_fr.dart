@@ -231,6 +231,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get accountingExportContextNotReady =>
+      'L\'espace charge encore ses réglages fiscaux. Relancez l\'export dans un instant.';
+
+  @override
   String get accountingExportDevelopment =>
       'Espace de développement : le fichier est marqué DEV et n\'est pas la comptabilité réelle.';
 

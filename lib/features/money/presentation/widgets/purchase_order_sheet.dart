@@ -7,6 +7,7 @@
 // under its field; the server decides the rest, and a refusal keeps the
 // sheet open with every entry. A retry of the same entries sends the same
 // request id, so it never saves twice.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +21,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase_order.dart';
 import '../../domain/service_item.dart';
-import '../../domain/supplier.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/supplier_providers.dart';
 

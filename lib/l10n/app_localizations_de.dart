@@ -230,6 +230,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get accountingExportContextNotReady =>
+      'Der Bereich lädt seine Steuereinstellungen noch. Starten Sie den Export gleich noch einmal.';
+
+  @override
   String get accountingExportDevelopment =>
       'Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.';
 

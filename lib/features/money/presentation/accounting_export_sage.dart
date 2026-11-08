@@ -6,12 +6,10 @@
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
-import '../domain/sage.dart';
-import '../domain/sage_documents.dart';
-import '../domain/sage_postings.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart';
@@ -41,13 +39,6 @@ GenericJournal _written(SageAuditTrail trail) => trail.blockers.isEmpty
     : JournalSageRefused(trail.blockers);
 
 extension SageAccountingExports on AccountingExportRun {
-  /// The codes and rate groups of this workspace's own installation;
-  /// refused, never guessed, while its context is not ready: called inside
-  /// the guarded builder, which says so.
-  TaxReferenceSet _reference() =>
-      workspaceTaxReference(ref) ??
-      (throw StateError('workspace context not ready'));
-
   Future<void> sageExport() async {
     final customers = SageCustomers(
       memberNumbers: await memberNumbers(),
@@ -55,6 +46,14 @@ extension SageAccountingExports on AccountingExportRun {
     );
     if (!context.mounted) return;
     final name = sageFileName(year, invoices.last.issuedAt.month);
+    // Read before anything opens: without the workspace's own reference no
+    // nominal code can be proposed or checked, so the person is told (a snack)
+    // instead of tapping into silence (#3403).
+    final reference = workspaceTaxReference(ref);
+    if (reference == null) {
+      AppSnack.error(context, l10n.accountingExportContextNotReady);
+      return;
+    }
     final journal = posted;
     if (journal != null) {
       final documents = {for (final i in exported) i.id: i};
@@ -65,7 +64,7 @@ extension SageAccountingExports on AccountingExportRun {
                 sageRowsOfPostings(
                   journal.postings,
                   book: (
-                    accounts: SageAccounts(reference: _reference()),
+                    accounts: SageAccounts(reference: reference),
                     customers: customers,
                     baseCurrency:
                         journal.functionalCurrency ?? workspace.currencyCode,
@@ -83,13 +82,12 @@ extension SageAccountingExports on AccountingExportRun {
     // ready; the builder refuses the file otherwise.
     final accounts = await showSageAccountsDialog(
       context,
-      initial: SageAccounts(reference: workspaceTaxReference(ref)),
+      initial: SageAccounts(reference: reference),
     );
     if (accounts == null || !context.mounted) return;
     await exportGenericJournal(
       context,
       () async {
-        final reference = _reference();
         return _written(
           sageRowsOfInvoices(
             invoices: exported,

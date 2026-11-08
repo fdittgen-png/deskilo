@@ -3,7 +3,8 @@
 // #2365 fix 3 — the SAF-T postings of a credit note balance (they used to
 // emit a zero credit to the customers and a negative revenue credit with no
 // VAT line), and the cash an invoice netted is posted.
-import 'package:deskilo/features/money/domain/saf_t.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
@@ -21,7 +22,7 @@ String _build() => buildSafTFile(SafTRequest(
     revenue: '706',
     bank: '512',
     vat: '4457',
-  ),
+  ), reference: ActiveTaxReference.current,
 ));
 
 int _sum(String xml, String tag) =>

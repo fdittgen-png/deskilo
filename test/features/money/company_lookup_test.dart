@@ -11,8 +11,8 @@ import 'package:deskilo/core/demo/data/fixture_clock.dart';
 import 'package:deskilo/features/money/application/lookup_company.dart';
 import 'package:deskilo/features/money/data/supabase_company_lookup_repository.dart';
 import 'package:deskilo/features/money/domain/company_lookup.dart';
-import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/domain/supplier_prefill.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 CompanyLookupRequest _request(String raw, {String country = ''}) =>

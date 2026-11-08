@@ -494,6 +494,12 @@ abstract class AppLocalizations {
   /// **'{minutes} minutes'**
   String accountUsageMinutes(int minutes);
 
+  /// Refusal: an accounting export needs the workspace's own tax reference, which its context has not loaded yet (#3403)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is still loading its tax settings. Try the export again in a moment.'**
+  String get accountingExportContextNotReady;
+
   /// #936 accounting exports: accountingExportDevelopment
   ///
   /// In en, this message translates to:

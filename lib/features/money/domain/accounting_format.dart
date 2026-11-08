@@ -32,11 +32,10 @@
 /// import DATEV and the French ones the FEC (`accounting_targets_sage.dart`).
 library;
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
-import 'accounting_export_sources.dart';
-import 'accounting_format_model.dart';
 import 'accounting_target.dart';
 import 'accounting_targets_business_central.dart';
 import 'accounting_targets_ch.dart';
@@ -47,7 +46,7 @@ import 'accounting_targets_saft.dart';
 import 'accounting_targets_sage.dart';
 import 'accounting_targets_xero.dart';
 
-export 'accounting_format_model.dart';
+export 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 export 'accounting_target.dart';
 
 /// SAF-T, invoicing subset — the OECD tree, ledger omitted on purpose.

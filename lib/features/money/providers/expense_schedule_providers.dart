@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/navigation/event_sources.dart';
@@ -6,7 +7,6 @@ import '../../../core/trace/traced.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/expense_schedule.dart';
-import '../domain/supplier.dart';
 import '../presentation/purchase_source_opener.dart';
 import 'money_providers.dart';
 import 'purchase_providers.dart';
