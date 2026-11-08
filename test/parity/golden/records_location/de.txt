@@ -1,0 +1,32 @@
+hosting=- cra=- craNotice=false aoNotice=true
+  Records location: not declared by the operator of this installation; this archive states no location.
+  Nothing declares these books kept in Germany or another EU member state (§ 146 Abs. 2a AO).
+hosting=- cra=CRA-12345 craNotice=false aoNotice=true
+  Records location: not declared by the operator of this installation; this archive states no location.
+  Nothing declares these books kept in Germany or another EU member state (§ 146 Abs. 2a AO).
+hosting=CA cra=- craNotice=false aoNotice=true
+  Records location: hosted in CA, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
+hosting=CA cra=CRA-12345 craNotice=false aoNotice=true
+  Records location: hosted in CA, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
+hosting=DE cra=- craNotice=false aoNotice=false
+  Records location: hosted in DE, as the operator of this installation declares it.
+hosting=DE cra=CRA-12345 craNotice=false aoNotice=false
+  Records location: hosted in DE, as the operator of this installation declares it.
+hosting=FR cra=- craNotice=false aoNotice=false
+  Records location: hosted in FR, as the operator of this installation declares it.
+hosting=FR cra=CRA-12345 craNotice=false aoNotice=false
+  Records location: hosted in FR, as the operator of this installation declares it.
+hosting=US cra=- craNotice=false aoNotice=true
+  Records location: hosted in US, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
+hosting=US cra=CRA-12345 craNotice=false aoNotice=true
+  Records location: hosted in US, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
+hosting=GB cra=- craNotice=false aoNotice=true
+  Records location: hosted in GB, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
+hosting=GB cra=CRA-12345 craNotice=false aoNotice=true
+  Records location: hosted in GB, as the operator of this installation declares it.
+  These books are kept outside the EU: this needs the tax office's permission (§ 146 Abs. 2b AO).
