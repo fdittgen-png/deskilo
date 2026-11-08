@@ -20555,6 +20555,7 @@
   "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls Ihre Community in einer anderen Währung abrechnet.",
   "workspaceSettingsSaved": "Workspace gespeichert.",
   "workspaceSettingsTitle": "Workspace",
+  "workspaceTaxContextNotReady": "Der Bereich lädt seine Steuereinstellungen noch. Versuchen Sie es gleich noch einmal.",
   "workspaceTimezoneHint": "Europe/Berlin",
   "workspaceTimezoneLabel": "Zeitzone",
   "workspaceTimezoneUnknown": "Wählen Sie eine Zeitzone aus der Liste",

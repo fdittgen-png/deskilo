@@ -7,6 +7,7 @@
 // no WidgetRef, no Flutter. The invoice builders and the legal mentions
 // they share are report_data.dart.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
@@ -35,6 +36,7 @@ Map<String, Object?> statementReportData(
   required String memberName,
   required String periodLabel,
   required String currencyCode,
+  required TaxReferenceSet reference,
   Workspace? workspace,
 }) {
   final currency = moneyFormat(currencyCode);
@@ -111,7 +113,7 @@ Map<String, Object?> statementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(strings, workspace),
+    ...legalMentionData(strings, workspace, reference: reference),
   };
 }
 
@@ -125,6 +127,7 @@ Map<String, Object?> agreementReportData(
   AgreementFacts facts, {
   required String memberName,
   required int subscriptionPct,
+  required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
@@ -194,7 +197,7 @@ Map<String, Object?> agreementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(strings, workspace),
+    ...legalMentionData(strings, workspace, reference: reference),
   };
 }
 
@@ -206,6 +209,7 @@ Map<String, Object?> paymentsReportData(
   PaymentsFacts facts, {
   required String period,
   required String memberName,
+  required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
   final me = facts.me;
@@ -280,7 +284,7 @@ Map<String, Object?> paymentsReportData(
         },
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(strings, workspace),
+    ...legalMentionData(strings, workspace, reference: reference),
   };
 }
 
@@ -288,8 +292,9 @@ Map<String, Object?> paymentsReportData(
 /// identity, floor-plan counts, availability, features, prices.
 Map<String, Object?> workspaceReportData(
   ReportStrings strings,
-  WorkspaceFacts facts,
-) {
+  WorkspaceFacts facts, {
+  required TaxReferenceSet reference,
+}) {
   final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
   final levels = facts.levels;
@@ -346,7 +351,7 @@ Map<String, Object?> workspaceReportData(
         {'label': service.name, 'amount': currency.formatMinor(service.priceCents)},
     ],
     'vat': const <Map<String, Object?>>[],
-    ...legalMentionData(strings, workspace),
+    ...legalMentionData(strings, workspace, reference: reference),
   };
 }
 
@@ -357,6 +362,7 @@ Map<String, Object?> reminderReportData(
   ReminderFacts facts,
   Invoice invoice, {
   required int level,
+  required TaxReferenceSet reference,
 }) {
   final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(strings.dateLocale);
@@ -381,6 +387,7 @@ Map<String, Object?> reminderReportData(
     ...legalMentionData(
       strings,
       workspace,
+      reference: reference,
       seller: invoice.sellerParty,
       buyer: invoice.buyerParty,
       clientAddress: clientAddressOf(invoice, workspace, strings),

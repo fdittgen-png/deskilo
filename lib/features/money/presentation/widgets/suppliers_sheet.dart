@@ -19,6 +19,7 @@ import '../../domain/purchase.dart';
 import '../../domain/supplier_standing.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'supplier_balance_line.dart';
 import 'supplier_bank_dialog.dart';
 import 'supplier_dialogs.dart';
@@ -78,6 +79,7 @@ class SuppliersView extends ConsumerWidget {
     final result = await showSupplierDialog(
       context,
       supplier,
+      reference: requireWorkspaceTaxReference(ref),
       lookupWorkspaceId: lookupOn ? workspaceId : null,
       existing: ref.read(suppliersProvider(workspaceId)).value ?? const [],
       onSave: (draft) => command.save(workspaceId, draft),

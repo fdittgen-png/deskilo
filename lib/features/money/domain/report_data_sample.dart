@@ -6,6 +6,7 @@
 // id and no number, so its clauses qualify live like any preview, and the
 // word the caller hands in stands where the number goes. Pure, like every
 // builder here: the facts come from presentation/report_facts_of.dart.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'invoice.dart';
 import 'invoice_legal.dart';
 import 'report_data.dart';
@@ -36,8 +37,9 @@ double sampleVatPercentOf(String vatRegime, List<VatRate> rates) =>
 Map<String, Object?> sampleInvoiceReportData(
   ReportStrings strings,
   SampleInvoiceFacts facts,
-  SampleInvoiceWords words,
-) {
+  SampleInvoiceWords words, {
+  required TaxReferenceSet reference,
+}) {
   final seller = facts.seller;
   final stored = facts.workspace;
   final workspace = seller == null
@@ -94,6 +96,7 @@ Map<String, Object?> sampleInvoiceReportData(
       proforma: false,
       copy: false,
       workspace: workspace,
+      reference: reference,
     ),
     'number': words.number,
   };

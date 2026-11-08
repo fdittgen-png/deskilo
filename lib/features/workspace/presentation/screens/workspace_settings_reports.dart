@@ -18,6 +18,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/report_data_letters.dart';
+import '../../../money/presentation/invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../../../money/presentation/invoice_documents.dart';
 import '../../../money/presentation/report_facts_of.dart';
 import '../../../money/presentation/report_layout_actions.dart';
@@ -105,7 +106,7 @@ class WorkspaceSettingsReports {
         final docL10n = l10nForLanguage(language);
         final data = workspaceReportData(
             reportStringsFor(context, l10n: docL10n, localeName: language),
-            workspaceFactsOf(ref, docL10n));
+            workspaceFactsOf(ref, docL10n), reference: requireWorkspaceTaxReference(ref));
         final report = renderLetterDoc(context, ref,
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,

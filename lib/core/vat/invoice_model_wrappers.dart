@@ -10,26 +10,17 @@
 // #3403 sweep: callers switch to WorkspaceContext, then THIS FILE goes -- not
 // a plain shim delete.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
-    hide defaultExemptionMention,
-    euCountryCode,
-    exemptionMentionFor,
-    exigibilityMention,
-    exportMention,
-    frozenTaxPointBasis,
+    hide frozenTaxPointBasis,
     isEuCountry,
     legalProfileOf,
-    looksLikeEuVatId,
-    nationalInvoiceMentions,
     qualifyClauses,
-    reverseChargeMention,
-    supplyVatCategory,
     taxPointsOf,
     vatTaxPointBasis,
     vatTaxPointLedger,
     vatTaxPointPolicy,
     vatTotalsOf;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
-    show LegalClauseSnapshot, defaultExemptionMention, euCountryCode, euMemberStatesOf, exemptionMentionFor, exigibilityMention, exigibilityOf, exportMention, frozenTaxPointBasis, isEuCountry, legalProfileOf, looksLikeEuVatId, nationalInvoiceMentions, qualifyClauses, reverseChargeMention, supplyVatCategory, taxPointBasisOf, taxPointsOf, vatBreakdownOf, vatTaxPointBasis, vatTaxPointLedger, vatTaxPointPolicy, vatTotalsOf;
+    show LegalClauseSnapshot, euMemberStatesOf, exigibilityOf, frozenTaxPointBasis, isEuCountry, legalProfileOf, qualifyClauses, taxPointBasisOf, taxPointsOf, vatBreakdownOf, vatTaxPointBasis, vatTaxPointLedger, vatTaxPointPolicy, vatTotalsOf;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
@@ -41,130 +32,8 @@ import 'tax_reference_active.dart';
 Set<String> get euMemberStates =>
     model.euMemberStatesOf(ActiveTaxReference.current);
 
-String euCountryCode(String code, {TaxReferenceSet? reference}) =>
-    model.euCountryCode(code, reference: reference ?? ActiveTaxReference.current);
-
 bool isEuCountry(String code, {TaxReferenceSet? reference}) =>
     model.isEuCountry(code, reference: reference ?? ActiveTaxReference.current);
-
-String supplyVatCategory({
-  required VatTreatment treatment,
-  required SupplyClass supply,
-  required bool sellerVatRegistered,
-  required String sellerCountry,
-  required String buyerCountry,
-  required String buyerCapacity,
-  bool reverseChargeOn = true,
-}) => model.supplyVatCategory(
-  treatment: treatment,
-  supply: supply,
-  sellerVatRegistered: sellerVatRegistered,
-  sellerCountry: sellerCountry,
-  buyerCountry: buyerCountry,
-  buyerCapacity: buyerCapacity,
-  reverseChargeOn: reverseChargeOn,
-  reference: ActiveTaxReference.current,
-);
-
-String defaultExemptionMention(
-  String countryCode,
-  VatRegime regime, {
-  String vatId = '',
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.defaultExemptionMention(
-  countryCode,
-  regime,
-  vatId: vatId,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-bool looksLikeEuVatId(
-  String vatId, {
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.looksLikeEuVatId(
-  vatId,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-String reverseChargeMention(
-  String sellerCountry, {
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.reverseChargeMention(
-  sellerCountry,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-String exportMention(
-  String sellerCountry, {
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.exportMention(
-  sellerCountry,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-String exemptionMentionFor({
-  required String category,
-  required String sellerCountry,
-  required String sellerReason,
-  required String buyerReason,
-  required VatRegime regime,
-  String? asOf,
-}) => model.exemptionMentionFor(
-  category: category,
-  sellerCountry: sellerCountry,
-  sellerReason: sellerReason,
-  buyerReason: buyerReason,
-  regime: regime,
-  asOf: asOf,
-  reference: ActiveTaxReference.current,
-);
-
-String exigibilityMention({
-  required VatRegime regime,
-  required String sellerCountry,
-  required bool onPaymentBasis,
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.exigibilityMention(
-  regime: regime,
-  sellerCountry: sellerCountry,
-  onPaymentBasis: onPaymentBasis,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-List<String> nationalInvoiceMentions({
-  required String sellerCountry,
-  required VatRegime regime,
-  required String currency,
-  required int untaxedCents,
-  required bool correction,
-  String rectifies = '',
-  String correctionReason = '',
-  String sellerVatId = '',
-  String sellerLegalId = '',
-  bool qstCharged = false,
-}) => model.nationalInvoiceMentions(
-  sellerCountry: sellerCountry,
-  regime: regime,
-  currency: currency,
-  untaxedCents: untaxedCents,
-  correction: correction,
-  rectifies: rectifies,
-  correctionReason: correctionReason,
-  sellerVatId: sellerVatId,
-  sellerLegalId: sellerLegalId,
-  qstCharged: qstCharged,
-  reference: ActiveTaxReference.current,
-);
 
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) =>

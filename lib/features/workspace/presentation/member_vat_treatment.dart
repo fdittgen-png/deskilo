@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,8 +8,10 @@ import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/vat/place_of_supply.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../money/presentation/invoice_actions.dart' show workspaceTaxReference;
 import '../domain/member.dart';
 import '../providers/workspace_providers.dart';
 
@@ -30,6 +33,11 @@ Future<void> pickMemberVatTreatment(
   Member member,
 ) async {
   final l10n = context.l10n;
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
+    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+    return;
+  }
   var chosen = VatTreatment.fromWire(member.vatTreatment);
   final reason = TextEditingController(text: member.vatExemptionReason);
   final ok = await showDialog<bool>(
@@ -68,7 +76,10 @@ Future<void> pickMemberVatTreatment(
             // public.supply_vat_category), for a business elsewhere in the EU.
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.md),
-              child: _TreatmentExample(treatment: chosen),
+              child: _TreatmentExample(
+                treatment: chosen,
+                reference: reference,
+              ),
             ),
             if (chosen == VatTreatment.reverseCharge) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -130,9 +141,10 @@ Future<void> pickMemberVatTreatment(
 /// #2354 — the two kinds of line under [treatment], for a business
 /// customer in another EU country of a French seller that charges VAT.
 class _TreatmentExample extends StatelessWidget {
-  const _TreatmentExample({required this.treatment});
+  const _TreatmentExample({required this.treatment, required this.reference});
 
   final VatTreatment treatment;
+  final TaxReferenceSet reference;
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +157,7 @@ class _TreatmentExample extends StatelessWidget {
           sellerCountry: 'FR',
           buyerCountry: 'DE',
           buyerCapacity: 'business',
+          reference: reference,
         )) {
           'AE' => l10n.vatTreatmentReverseCharge,
           'G' => l10n.vatTreatmentExport,

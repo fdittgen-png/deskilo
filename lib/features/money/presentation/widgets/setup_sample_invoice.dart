@@ -16,6 +16,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_data_sample.dart';
 import '../../domain/report_facts.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../invoice_documents.dart' show invoicePdfTemplateFor;
 import '../report_defaults.dart';
 import '../report_facts_of.dart';
@@ -43,7 +44,7 @@ InvoiceReport setupSampleReport(
         number: l10n.setupGrowSampleNumber,
         member: l10n.setupGrowSampleMember,
         line: l10n.setupGrowSampleLine,
-      ),
+      ), reference: requireWorkspaceTaxReference(ref),
     ),
     template.texts,
   );

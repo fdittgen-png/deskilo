@@ -22,6 +22,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
@@ -65,7 +66,7 @@ Future<void> shareProforma(
         dueAt: invoiceDueAt(ref, invoice),
             proforma: true,
             copy: false,
-            workspace: ref.read(currentWorkspaceProvider).value,
+            workspace: ref.read(currentWorkspaceProvider).value, reference: requireWorkspaceTaxReference(ref),
           ),
           template.texts,
         ),
@@ -75,7 +76,7 @@ Future<void> shareProforma(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-    InvoicePdfFileOptions(
+    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
       // #920 — through layoutImage, so the shipped layouts' `logo`
       // resolves to whatever the owner actually called theirs.
       reportImage: (String name) => layoutImage(ref, name),

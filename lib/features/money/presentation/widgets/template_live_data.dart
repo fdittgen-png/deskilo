@@ -10,6 +10,7 @@ import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';
 import '../../domain/report_kind.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 
@@ -25,11 +26,11 @@ Map<String, Object?>? liveReportData(
     case 'invoice':
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
-          proforma: false, copy: false, workspace: liveWorkspace);
+          proforma: false, copy: false, workspace: liveWorkspace, reference: requireWorkspaceTaxReference(ref));
     case 'proforma':
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
-          proforma: true, copy: false, workspace: liveWorkspace);
+          proforma: true, copy: false, workspace: liveWorkspace, reference: requireWorkspaceTaxReference(ref));
     case 'statement':
       final now = ref.read(clockProvider).now();
       final period =
@@ -47,7 +48,7 @@ Map<String, Object?>? liveReportData(
         memberName: names[me?.id] ?? '',
         periodLabel: statement.period,
         currencyCode: workspace.currencyCode,
-        workspace: workspace,
+        workspace: workspace, reference: requireWorkspaceTaxReference(ref),
       );
     case 'agreement':
       final me = ref.read(myMemberProvider).value;
@@ -56,7 +57,7 @@ Map<String, Object?>? liveReportData(
       return agreementReportData(
           reportStringsFor(context), agreementFactsOf(ref),
           memberName: names[me.id] ?? '',
-          subscriptionPct: me.subscriptionPct);
+          subscriptionPct: me.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
     case 'payments':
       final me = ref.read(myMemberProvider).value;
       final names = ref.read(memberNamesProvider).value ?? const {};
@@ -66,17 +67,17 @@ Map<String, Object?>? liveReportData(
       if (me == null) return null;
       return paymentsReportData(
           reportStringsFor(context), paymentsFactsOf(ref, period),
-          period: period, memberName: names[me.id] ?? '');
+          period: period, memberName: names[me.id] ?? '', reference: requireWorkspaceTaxReference(ref));
     case 'workspace':
       return workspaceReportData(reportStringsFor(context),
-          workspaceFactsOf(ref, context.l10n));
+          workspaceFactsOf(ref, context.l10n), reference: requireWorkspaceTaxReference(ref));
     case 'status':
       return null; // #934 — sample data; the live view prints from its screen.
     default:
       if (!_previewsReminder(doc, invoices)) return null;
       return reminderReportData(
           reportStringsFor(context), reminderFactsOf(ref, invoices.first),
-          invoices.first, level: int.tryParse(doc.substring(1)) ?? 1);
+          invoices.first, level: int.tryParse(doc.substring(1)) ?? 1, reference: requireWorkspaceTaxReference(ref));
   }
 }
 

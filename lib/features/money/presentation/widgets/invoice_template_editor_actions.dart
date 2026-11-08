@@ -339,7 +339,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
       if (editorDoc == 'invoice' || editorDoc == 'proforma') {
         final invoicePdf = await buildInvoicePdfFile(
           context,
-          invoices.first, InvoicePdfFileOptions(proforma: editorDoc == 'proforma',
+          invoices.first, InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref), proforma: editorDoc == 'proforma',
           copy: true,
           template: editorDoc == 'proforma'
               ? InvoicePdfTemplate(proforma: editorCurrentBands)

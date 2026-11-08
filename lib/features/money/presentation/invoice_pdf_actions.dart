@@ -6,8 +6,10 @@
 // behaviour.
 import 'dart:async';
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/files/file_delivery.dart';
 import '../../../core/files/file_delivery_notice.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -19,6 +21,7 @@ import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
@@ -113,7 +116,7 @@ Future<void> downloadInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-    InvoicePdfFileOptions(
+    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
       // #920 — through layoutImage, so the shipped layouts' `logo`
       // resolves to whatever the owner actually called theirs.
       reportImage: (String name) => layoutImage(ref, name),
@@ -156,7 +159,7 @@ Future<void> quickViewInvoice(
       memberTerms: memberTermsFor(ref, invoice.memberId),
       proforma: proforma,
       copy: rendersCopy(ref),
-      workspace: ref.read(currentWorkspaceProvider).value,
+      workspace: ref.read(currentWorkspaceProvider).value, reference: requireWorkspaceTaxReference(ref),
     ),
     template.texts,
   );
@@ -187,7 +190,7 @@ Future<void> quickViewInvoice(
           memberTerms: memberTermsFor(ref, source.memberId),
           proforma: false,
           copy: rendersCopy(ref),
-          workspace: ref.read(currentWorkspaceProvider).value,
+          workspace: ref.read(currentWorkspaceProvider).value, reference: requireWorkspaceTaxReference(ref),
         ),
         template.texts,
       ),
@@ -226,7 +229,7 @@ Future<void> shareInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-    InvoicePdfFileOptions(
+    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
       // #920 — through layoutImage, so the shipped layouts' `logo`
       // resolves to whatever the owner actually called theirs.
       reportImage: (String name) => layoutImage(ref, name),

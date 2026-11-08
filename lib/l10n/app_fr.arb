@@ -20555,6 +20555,7 @@
   "workspaceSettingsCurrencyHelper": "Proposée d'après le pays — modifiable si votre communauté facture dans une autre devise.",
   "workspaceSettingsSaved": "Espace enregistré.",
   "workspaceSettingsTitle": "Espace de coworking",
+  "workspaceTaxContextNotReady": "L'espace charge encore ses réglages fiscaux. Réessayez dans un instant.",
   "workspaceTimezoneHint": "Europe/Paris",
   "workspaceTimezoneLabel": "Fuseau horaire",
   "workspaceTimezoneUnknown": "Choisissez un fuseau dans la liste",

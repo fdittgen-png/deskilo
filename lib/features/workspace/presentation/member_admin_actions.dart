@@ -12,6 +12,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../events/providers/event_providers.dart';
 import '../../money/domain/report_data_letters.dart';
+import '../../money/presentation/invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_layout_actions.dart';
@@ -144,7 +145,7 @@ Future<void> sendMemberAgreement(
           reportStringsFor(context, l10n: docL10n, localeName: language),
           agreementFactsOf(ref),
           memberName: name,
-          subscriptionPct: member.subscriptionPct);
+          subscriptionPct: member.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
       final report = renderLetterDoc(context, ref,
           docId: 'agreement', data: data, language: language);
       final pdf = await letterDocPdf(context, ref,

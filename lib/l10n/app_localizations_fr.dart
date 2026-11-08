@@ -31930,6 +31930,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceSettingsTitle => 'Espace de coworking';
 
   @override
+  String get workspaceTaxContextNotReady =>
+      'L\'espace charge encore ses réglages fiscaux. Réessayez dans un instant.';
+
+  @override
   String get workspaceTimezoneHint => 'Europe/Paris';
 
   @override

@@ -220,7 +220,7 @@ class AccountingExportRun {
         await _auditTrail();
       case ExportKind.bookReport:
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
-            'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
+            'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace, reference: requireWorkspaceTaxReference(ref))});
       case ExportKind.saftFinancial:
         await safTFinancialExport();
       case ExportKind.genericJournal:

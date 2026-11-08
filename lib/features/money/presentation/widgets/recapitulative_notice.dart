@@ -8,6 +8,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/recapitulative_statement.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 
 /// #2354 — on Invoicing, while an EU sales list is due: something was
 /// reverse-charged last month or this month, and the list (DES, ZM, 349)
@@ -27,7 +28,7 @@ class RecapitulativeNotice extends ConsumerWidget {
     final lines = recapitulativeStatement(
       invoices,
       from: DateTime(now.year, now.month - 1),
-      to: DateTime(now.year, now.month + 1),
+      to: DateTime(now.year, now.month + 1), reference: requireWorkspaceTaxReference(ref),
     );
     if (lines.isEmpty) return const SizedBox.shrink();
     final l10n =

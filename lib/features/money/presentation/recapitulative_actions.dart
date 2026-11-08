@@ -26,7 +26,7 @@ Future<void> saveRecapitulativeCsv(
       context.l10n;
   final invoices = await ref.read(invoicesProvider.future);
   if (!context.mounted) return;
-  final lines = recapitulativeStatement(invoices, from: start, to: end);
+  final lines = recapitulativeStatement(invoices, from: start, to: end, reference: requireWorkspaceTaxReference(ref));
   if (lines.isEmpty) {
     AppSnack.info(context, l10n.recapEmpty);
     return;

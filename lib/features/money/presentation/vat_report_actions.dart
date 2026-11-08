@@ -141,7 +141,7 @@ Map<String, Object?> _vatReportData(
           'gross': currency.formatMinor(t.grossCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace),
+    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
   };
 }
 

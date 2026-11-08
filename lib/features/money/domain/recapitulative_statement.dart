@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/vat/place_of_supply.dart';
 
 /// #2354 — one line of the recapitulative statement (EU sales list):
@@ -37,14 +38,18 @@ class RecapitulativeLine {
 /// The customer's VAT number as the list wants it: the prefix (Greece
 /// `EL`) and the number, letters and digits only — the twin of
 /// `public.vies_vat_parts`.
-({String country, String number}) _vatNumberParts(String vatId, String country) {
+({String country, String number}) _vatNumberParts(
+  String vatId,
+  String country,
+  TaxReferenceSet reference,
+) {
   var v = vatId.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
   String prefix;
   if (RegExp('^[A-Z]{2}').hasMatch(v)) {
     prefix = v.substring(0, 2);
     v = v.substring(2);
   } else {
-    prefix = euCountryCode(country);
+    prefix = euCountryCode(country, reference: reference);
   }
   return (country: prefix == 'GR' ? 'EL' : prefix, number: v);
 }
@@ -56,6 +61,7 @@ List<RecapitulativeLine> recapitulativeStatement(
   Iterable<Invoice> invoices, {
   required DateTime from,
   required DateTime to,
+  required TaxReferenceSet reference,
 }) {
   final sums = <String, ({RecapitulativeLine line, Set<String> ids})>{};
   for (final invoice in invoices) {
@@ -68,7 +74,11 @@ List<RecapitulativeLine> recapitulativeStatement(
         .fold(0, (sum, t) => sum + t.netCents);
     if (ae == 0) continue;
     final buyer = invoice.buyerParty;
-    final parts = _vatNumberParts(buyer?.vatId ?? '', buyer?.country ?? '');
+    final parts = _vatNumberParts(
+      buyer?.vatId ?? '',
+      buyer?.country ?? '',
+      reference,
+    );
     final period = yearMonth(invoice.issuedAt.year, invoice.issuedAt.month);
     final key = '$period|${parts.country}|${parts.number}';
     final before = sums[key];

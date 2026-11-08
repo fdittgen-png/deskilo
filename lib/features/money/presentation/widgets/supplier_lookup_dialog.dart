@@ -23,6 +23,7 @@ import '../../application/lookup_company.dart';
 import '../../domain/company_lookup.dart';
 import '../../domain/supplier_prefill.dart';
 import '../../providers/company_lookup_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 
 /// What the person decided in the lookup dialog.
 sealed class SupplierLookupOutcome {
@@ -206,7 +207,7 @@ class _SupplierLookupDialogState extends ConsumerState<_SupplierLookupDialog> {
     }
     final identifier = normalizeCompanyIdentifier(
       typed,
-      country: _country ?? '',
+      country: _country ?? '', reference: requireWorkspaceTaxReference(ref),
     );
     if (identifier == null) {
       if (_country == null) {
