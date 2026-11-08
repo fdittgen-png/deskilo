@@ -7,6 +7,7 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/invoice_document_context_builder.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -76,7 +77,7 @@ EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(
   invoice: _invoice(),
   seller: _seller,
   buyer: buyer,
-  lineText: (line) => invoiceLineText(const ReportStrings(), line),
+  lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
 );
 
 void main() {

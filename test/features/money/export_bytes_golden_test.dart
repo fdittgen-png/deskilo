@@ -226,13 +226,13 @@ Map<String, String Function()> _files() => {
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
-    iban: 'FR7630006000011234567890189')),
+    iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current)),
   'invoice_cii.xml': () => buildInvoiceCii(EInvoiceInput(invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
     iban: 'FR7630006000011234567890189',
-    dueDate: DateTime.utc(2026, 4, 3))),
+    dueDate: DateTime.utc(2026, 4, 3), reference: ActiveTaxReference.current)),
   'vat_report.csv': () => vatReportCsv(
     buildVatReport(
       _invoices,

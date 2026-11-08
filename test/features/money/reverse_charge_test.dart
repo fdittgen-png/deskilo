@@ -6,6 +6,7 @@
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
 // #2354 — only for a general service: a desk is taxed where it stands.
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
@@ -181,11 +182,11 @@ void main() {
         buildInvoiceCii(EInvoiceInput(invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
-            lineText: (line) => line.label)),
+            lineText: (line) => line.label, reference: ActiveTaxReference.current)),
         buildInvoiceUbl(EInvoiceInput(invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
-            lineText: (line) => line.label)),
+            lineText: (line) => line.label, reference: ActiveTaxReference.current)),
       ]) {
         expect(xml, contains('AE'), reason: 'the category the norm wants');
         expect(xml, contains('VATEX-EU-AE'));
@@ -196,7 +197,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(vat: const [_ae], buyerVat: ''),
         seller: _seller,
-        buyer: const InvoiceParty(name: 'Kunde GmbH', country: 'DE'),
+        buyer: const InvoiceParty(name: 'Kunde GmbH', country: 'DE'), reference: ActiveTaxReference.current,
       );
       expect(readiness.gaps, contains(EInvoiceGap.missingBuyerVatId));
       expect(EInvoiceGap.missingBuyerVatId.isBlocking, isTrue);

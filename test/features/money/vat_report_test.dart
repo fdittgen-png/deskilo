@@ -4,6 +4,7 @@
 // shape of a European VAT id, the readiness warning, and the VAT
 // report built from frozen breakdowns with its CSV.
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -116,7 +117,7 @@ void main() {
         seller: const InvoiceParty(
             name: 'SARL', street: 'r', city: 'Paris', postalCode: '75001',
             country: 'FR', vatId: 'FR12345678901', vatRegime: 'vat_registered'),
-        buyer: const InvoiceParty(name: 'B', country: 'DE', vatId: 'DE1234'),
+        buyer: const InvoiceParty(name: 'B', country: 'DE', vatId: 'DE1234'), reference: ActiveTaxReference.current,
       );
       expect(readiness.gaps, contains(EInvoiceGap.buyerVatIdFormat));
       expect(EInvoiceGap.buyerVatIdFormat.isBlocking, isFalse);
