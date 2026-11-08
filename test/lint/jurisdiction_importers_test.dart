@@ -5,9 +5,14 @@
 // importing `deskilo_jurisdiction_<country>` itself: a generic file that names
 // one country's package is a file the removability proof cannot cross.
 //
-// RATCHET over comment-free source: the files outside the composition that
-// still import a country add-on may only fall. Today's three are checklist
-// items of #3429 (the GB MTD boxes, the Italian stamp duty and register).
+// RATCHET over comment-free source, matched on the whole joined code (a URI
+// split over lines, a conditional import, a country added tomorrow all count;
+// only the contract and the standards packages are exempt): the files outside
+// the composition that still import a country add-on may only fall. Today's
+// three are checklist items of #3429 (the GB MTD boxes, the Italian stamp duty
+// and register).
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -19,15 +24,46 @@ const _importers = <String, String>{
   'lib/features/money/domain/vat_register_it.dart': '#3429 VAT registers: IT',
 };
 
+/// Any country add-on package, in any import or export, wherever its URI sits.
+final _countryAddOn = RegExp(
+  r'''package:deskilo_jurisdiction_(?!api\b|standards\b)\w+/''',
+);
+
+/// The code of [path] with comments dropped, on one line.
+String _codeOf(String path) => File(path)
+    .readAsLinesSync()
+    .where((l) => l.trim().isNotEmpty && !l.trimLeft().startsWith('//'))
+    .map((l) => l.trim())
+    .join(' ');
+
 void main() {
-  test('only the compositions import a country add-on; the rest only falls', () {
-    final importRe = RegExp(
-      r'''^\s*(?:import|export)\s+['"]package:deskilo_jurisdiction_(?:ca|ch|de|es|fr|gb|it|pl)/''',
+  test('the matcher sees a new country, a split URI and a conditional URI, '
+      'and not the contract or the standards', () {
+    expect(_countryAddOn.hasMatch("import 'package:deskilo_jurisdiction_xx/a.dart';"), isTrue);
+    expect(
+      _countryAddOn.hasMatch(
+        "import\n 'package:deskilo_jurisdiction_it/\n deskilo_jurisdiction_it.dart';"
+            .replaceAll('\n', ' '),
+      ),
+      isTrue,
     );
+    expect(
+      _countryAddOn.hasMatch(
+        "import 'a_stub.dart' if (dart.library.io) "
+        "'package:deskilo_jurisdiction_pl/a.dart';",
+      ),
+      isTrue,
+    );
+    expect(_countryAddOn.hasMatch("import 'package:deskilo_jurisdiction_api/x.dart';"), isFalse);
+    expect(_countryAddOn.hasMatch("import 'package:deskilo_jurisdiction_standards/x.dart';"), isFalse);
+    expect(_countryAddOn.hasMatch("import 'package:deskilo_jurisdiction_apix/x.dart';"), isTrue);
+  });
+
+  test('only the compositions import a country add-on; the rest only falls', () {
     final found = <String>{
       for (final f in handWrittenDartFiles('lib'))
         if (!f.uri.pathSegments.last.startsWith('installed_') &&
-            f.readAsLinesSync().any(importRe.hasMatch))
+            _countryAddOn.hasMatch(_codeOf(f.path)))
           f.path.replaceFirst(RegExp(r'^.*?(?=lib/)'), ''),
     };
     expect(
