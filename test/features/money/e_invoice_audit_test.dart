@@ -4,6 +4,7 @@
 // the legal registrations with their scheme (BT-30 / BT-47), the
 // payment terms and due date (BT-20 / BT-9, BR-CO-25), and the
 // readiness gap for a French business buyer without a SIREN.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
@@ -31,7 +32,7 @@ Invoice _invoice() => Invoice(
 
 XmlDocument _xml({InvoiceParty buyer = _kaloa, DateTime? dueDate, String terms = ''}) =>
     XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: _invoice(), seller: _seller, buyer: buyer,
-      lineText: (l) => 'Abonnement 100 %', dueDate: dueDate, paymentTerms: terms)));
+      lineText: (l) => 'Abonnement 100 %', dueDate: dueDate, paymentTerms: terms, reference: ActiveTaxReference.current)));
 
 Iterable<XmlElement> _els(XmlDocument doc, String name) =>
     doc.findAllElements(name, namespace: '*');
@@ -89,7 +90,7 @@ void main() {
     test('#972 — a French business buyer without a SIREN: ADVICE from a '
         'seller the reform does not bind (an association), a REFUSAL from a '
         'VAT-registered French seller; with one it is clean', () {
-      final advice = checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: _kaloa);
+      final advice = checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: _kaloa, reference: ActiveTaxReference.current);
       expect(advice.blocking, isEmpty,
           reason: 'EN 16931 never required BT-47; the file is valid');
       expect(advice.warnings, contains(EInvoiceGap.buyerLegalIdAdvisable));
@@ -97,23 +98,23 @@ void main() {
 
       final registered = _seller.copyWith(vatRegime: 'vat_registered', vatId: 'FR12345678901');
       final refusal = checkEInvoiceReadiness(
-          invoice: _invoice(), seller: registered, buyer: _kaloa);
+          invoice: _invoice(), seller: registered, buyer: _kaloa, reference: ActiveTaxReference.current);
       expect(refusal.blocking, contains(EInvoiceGap.missingBuyerLegalId));
       expect(EInvoiceGap.missingBuyerLegalId.fixableInSettings, isFalse,
           reason: 'it is the member\'s data, not a workspace setting');
 
       final with_ = checkEInvoiceReadiness(
-          invoice: _invoice(), seller: _seller, buyer: _kaloa.copyWith(legalId: '901234567'));
+          invoice: _invoice(), seller: _seller, buyer: _kaloa.copyWith(legalId: '901234567'), reference: ActiveTaxReference.current);
       expect(with_.gaps, isNot(contains(EInvoiceGap.missingBuyerLegalId)));
       expect(with_.gaps, isNot(contains(EInvoiceGap.buyerLegalIdAdvisable)));
     });
 
     test('a private person, or a foreign buyer, is not asked for a SIREN', () {
       final person = _kaloa.copyWith(company: '', name: 'Guilhem MARTIN');
-      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: person).gaps,
+      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: person, reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingBuyerLegalId)));
       final abroad = _kaloa.copyWith(country: 'DE');
-      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: abroad).gaps,
+      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: abroad, reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingBuyerLegalId)));
     });
   });

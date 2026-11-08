@@ -5,6 +5,7 @@
 // builder that lived in the application and are compared byte for byte: a
 // one-character change to any element fails here, whatever the schema says.
 // Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
@@ -118,7 +119,7 @@ String _xml(
     buyer: buyer ?? _buyer(),
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
     iban: iban,
-    dueDate: dueDate,
+    dueDate: dueDate, reference: ActiveTaxReference.current,
   ),
 );
 

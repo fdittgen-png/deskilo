@@ -82,7 +82,7 @@ class _UblWriter {
           invoice: input.invoice,
           seller: input.seller,
           buyer: input.buyer,
-          reference: input.taxReference,
+          reference: input.reference,
         ),
         // #1919 — a negative document is a CREDIT NOTE: its own root, type
         // code and lines, every amount stated as what is credited

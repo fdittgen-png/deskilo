@@ -112,7 +112,7 @@ Map<String, List<int>> _package() {
                   invoice: i,
                   seller: seededCompany,
                   buyer: const InvoiceParty(name: 'Ana', country: 'FR'),
-                  lineText: (line) => invoiceLineText(words, line),
+                  lineText: (line) => invoiceLineText(words, line), reference: ActiveTaxReference.current,
                 ),
               ),
             ),

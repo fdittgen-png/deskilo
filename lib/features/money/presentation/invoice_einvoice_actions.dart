@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +36,8 @@ import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
+import 'invoice_actions.dart'
+    show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart';
 import 'report_strings_l10n.dart';
@@ -95,6 +98,7 @@ Future<void> sendEInvoice(
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
+          reference: requireWorkspaceTaxReference(ref),
         ));
         file = (
           bytes: utf8.encode(xml),
@@ -175,6 +179,14 @@ Future<void> exportEInvoice(
   final route = eInvoiceRouteFor(countryCode);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (route == null || workspace == null) return;
+  // Read before the sheet opens: without the workspace's own reference the
+  // readiness verdict cannot be given, so the person is told (a snack)
+  // instead of tapping into silence (#3403).
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
+    AppSnack.error(context, context.l10n.accountingExportContextNotReady);
+    return;
+  }
   // The invoice's own snapshot, or the live workspace identity for
   // pre-0069 documents (see sellerOf).
   final subject = (
@@ -190,6 +202,7 @@ Future<void> exportEInvoice(
   if (!context.mounted) return;
   final run = _EInvoiceExportRun(context, ref, subject);
   final export = await run.ask(
+    reference: reference,
     route: route,
     gateway: gateway,
     roles: roles,
@@ -271,6 +284,7 @@ class _EInvoiceExportRun {
   /// The sheet: the route, the readiness verdict, what the configured
   /// channel still needs, and which legs this member may send on.
   Future<EInvoiceExport?> ask({
+    required TaxReferenceSet reference,
     required EInvoiceRoute route,
     required EInvoiceGatewayConfig gateway,
     required ({bool owner, bool issuer}) roles,
@@ -283,6 +297,7 @@ class _EInvoiceExportRun {
       // public-sector references are asked for there, as a warning.
       destination: 'government',
       iban: s.iban,
+      reference: reference,
     );
     // The same judgement against the LIVE identity: if that one passes, the
     // owner is not missing anything — the document is simply older than the
@@ -295,6 +310,7 @@ class _EInvoiceExportRun {
           seller: s.liveSeller,
           buyer: s.buyer,
           iban: s.iban,
+          reference: reference,
         ).ready;
     // #2358 — what the configured channel receives, what it still needs,
     // and which official validator that format passes.
@@ -427,6 +443,7 @@ class _EInvoiceExportRun {
           iban: s.iban,
           lineText: (line) => invoiceLineText(words, line,
               association: association, period: s.invoice.period),
+          reference: requireWorkspaceTaxReference(ref),
         ));
         final bytes = Uint8List.fromList(utf8.encode(xml));
         final fileName = '${safeFileSlug(s.invoice.number)}.xml';

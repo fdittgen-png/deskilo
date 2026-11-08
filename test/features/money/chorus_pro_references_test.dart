@@ -7,6 +7,7 @@
 // accepted the deposit, the portal refused it, and nothing had warned.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
@@ -48,7 +49,7 @@ void main() {
     test('carries BT-10 after the currency and BT-13 before any billing '
         'reference — the schema order a validator enforces', () {
       final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
-          buyer: _mairie, lineText: (l) => l.label));
+          buyer: _mairie, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       final doc = XmlDocument.parse(xml);
       expect(doc.findAllElements('cbc:BuyerReference').single.innerText, 'SERVICE-42');
       expect(doc.findAllElements('cac:OrderReference').single
@@ -60,7 +61,7 @@ void main() {
 
     test('and says nothing for a member — a coworker is not a mairie', () {
       final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_member), seller: _seller,
-          buyer: _member, lineText: (l) => l.label));
+          buyer: _member, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(xml, isNot(contains('BuyerReference')));
       expect(xml, isNot(contains('OrderReference')));
     });
@@ -69,7 +70,7 @@ void main() {
   group('CII / Factur-X', () {
     test('BT-10 leads the trade agreement, BT-13 follows the parties', () {
       final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
-          buyer: _mairie, lineText: (l) => l.label));
+          buyer: _mairie, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       final doc = XmlDocument.parse(xml);
       final agreement = doc.findAllElements('ram:ApplicableHeaderTradeAgreement').single;
       expect(agreement.childElements.first.name.qualified, 'ram:BuyerReference');
@@ -84,7 +85,7 @@ void main() {
     test('warns — does not refuse — for a government destination with '
         'neither reference: the norm does not require them, the portal does', () {
       final r = checkEInvoiceReadiness(invoice: _invoice(_member), seller: _seller,
-          buyer: _member, destination: 'government');
+          buyer: _member, destination: 'government', reference: ActiveTaxReference.current);
       expect(r.gaps, contains(EInvoiceGap.missingPublicSectorReferences));
       expect(EInvoiceGap.missingPublicSectorReferences.isBlocking, isFalse);
       expect(r.ready, isTrue, reason: 'still exportable; the issuer is told');
@@ -92,10 +93,10 @@ void main() {
 
     test('one reference is enough, and a customer destination asks for none', () {
       expect(checkEInvoiceReadiness(invoice: _invoice(_mairie), seller: _seller,
-              buyer: _mairie, destination: 'government').gaps,
+              buyer: _mairie, destination: 'government', reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingPublicSectorReferences)));
       expect(checkEInvoiceReadiness(invoice: _invoice(_member), seller: _seller,
-              buyer: _member, destination: 'customer').gaps,
+              buyer: _member, destination: 'customer', reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingPublicSectorReferences)));
     });
   });

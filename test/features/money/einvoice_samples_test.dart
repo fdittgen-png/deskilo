@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
@@ -298,12 +299,12 @@ Future<Map<String, Uint8List>> _samples() async {
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189'));
+    iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current));
   final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189'));
+    iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current));
   final pdf = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
     strings: _pdfStrings,
     money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
@@ -324,7 +325,7 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerIt,
     lineText: _line,
     iban: 'IT60X0542811101000000123456',
-    dueDate: DateTime(2026, 10, 30)));
+    dueDate: DateTime(2026, 10, 30), reference: ActiveTaxReference.current));
   final ksef = buildInvoiceKsefFa3(EInvoiceInput(invoice: _nationalInvoice(
       currency: 'PLN',
       percent: 23,
@@ -335,7 +336,7 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerPl,
     lineText: _line,
     iban: 'PL61109010140000071219812874',
-    dueDate: DateTime(2026, 10, 30)));
+    dueDate: DateTime(2026, 10, 30), reference: ActiveTaxReference.current));
   String profiled(
     UblProfile profile,
     Invoice invoice,
@@ -348,7 +349,7 @@ Future<Map<String, Uint8List>> _samples() async {
     lineText: _line,
     iban: iban,
     dueDate: DateTime(2026, 10, 30),
-    paymentTerms: '30 days net'),
+    paymentTerms: '30 days net', reference: ActiveTaxReference.current),
     profile: profile);
   return {
     'en16931-ubl.xml': utf8.encode(ubl),

@@ -41,6 +41,7 @@ import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
 import '../providers/money_providers.dart';
+import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
@@ -406,7 +407,8 @@ String facturXmlOf(
     // #1916 — an issued invoice states the terms frozen with it.
     paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
         memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
-        ''));
+        '',
+    reference: requireWorkspaceTaxReference(ref)));
 }
 
 Future<({List<int> bytes, String fileName})> buildFacturXFile(

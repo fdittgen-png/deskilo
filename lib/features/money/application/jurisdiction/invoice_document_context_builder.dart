@@ -43,6 +43,7 @@ InvoiceDocumentContext invoiceDocumentContextOf(
     invoice: invoice,
     seller: input.seller,
     buyer: input.buyer,
+    reference: input.reference,
   );
   final sign = invoice.isCreditNote ? -1 : 1;
   final gross =

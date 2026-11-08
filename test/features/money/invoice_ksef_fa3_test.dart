@@ -4,6 +4,7 @@
 // in CI (einvoice_samples_test + the official XSD); these pin what the
 // schema leaves to the issuer — which band a rate fills, how a buyer is
 // identified, the annotations, a correction.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
@@ -88,7 +89,7 @@ XmlDocument _doc({
   buildInvoiceKsefFa3(EInvoiceInput(invoice: invoice ?? _invoice(),
     seller: _seller,
     buyer: buyer,
-    lineText: (line) => invoiceLineText(const ReportStrings(), line)),
+    lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current),
     correctedIssuedAt: correctedIssuedAt),
 );
 

@@ -268,7 +268,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller,
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.gaps, isEmpty);
@@ -279,7 +279,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(vatTotals: const []),
         seller: _seller,
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.blocking, contains(EInvoiceGap.vatNotSupported),
@@ -291,7 +291,7 @@ void main() {
       final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller.copyWith(vatId: ''),
-        buyer: _buyer,
+        buyer: _buyer, reference: ActiveTaxReference.current,
       );
 
       expect(readiness.blocking, contains(EInvoiceGap.missingVatId));
@@ -304,7 +304,7 @@ void main() {
     XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText)));
+          lineText: _lineText, reference: ActiveTaxReference.current)));
 
     String text(XmlElement parent, String name) =>
         parent.findElements(name).single.innerText;
@@ -407,7 +407,7 @@ void main() {
     XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText)));
+          lineText: _lineText, reference: ActiveTaxReference.current)));
 
     test('the settlement summation ties net + tax = gross', () {
       final summation = doc()

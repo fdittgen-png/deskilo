@@ -3,6 +3,7 @@
 // #2440 — the exemption reason of the seller's own exempt rate, per VAT
 // category (BT-120), and the Spanish correction reason (RD 1619/2012
 // art. 15, R1-R5) printed on the correcting invoice.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -104,7 +105,7 @@ void main() {
         buildInvoiceUbl(EInvoiceInput(invoice: _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: (line) => invoiceLineText(const ReportStrings(), line))),
+          lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)),
       );
       final categories = doc
           .findAllElements('cac:TaxSubtotal')
@@ -128,7 +129,7 @@ void main() {
     final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
-      lineText: (line) => invoiceLineText(const ReportStrings(), line)));
+      lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current));
     expect(RegExp(RegExp.escape(_reason)).allMatches(xml), hasLength(1));
     expect(
       xml,

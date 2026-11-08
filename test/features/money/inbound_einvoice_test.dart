@@ -3,6 +3,7 @@
 // #2358 — the supplier inbox reads UBL and CII. The round trips parse what
 // our own generators write; the hand-written documents pin the figures,
 // the credit note and every refusal.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/inbound_einvoice.dart';
@@ -93,7 +94,7 @@ void main() {
       buyer: _buyer,
       lineText: _lineText,
       dueDate: DateTime(2026, 10, 30),
-      paymentTerms: '30 days net'),
+      paymentTerms: '30 days net', reference: ActiveTaxReference.current),
       profile: UblProfile.peppolBis);
     final p = parseInboundEInvoice(xml);
     _expectOurInvoice(p, InboundEInvoiceSyntax.ubl);
@@ -106,7 +107,7 @@ void main() {
       buyer: _buyer,
       lineText: _lineText,
       dueDate: DateTime(2026, 10, 30),
-      paymentTerms: '30 days net'));
+      paymentTerms: '30 days net', reference: ActiveTaxReference.current));
     _expectOurInvoice(parseInboundEInvoice(xml), InboundEInvoiceSyntax.cii);
   });
 

@@ -48,7 +48,7 @@ class _KsefWriter {
         invoice: input.invoice,
         seller: input.seller,
         buyer: input.buyer,
-        reference: input.taxReference,
+        reference: input.reference,
       ) {
     // Band → (net, tax). Iterated in schema order below.
     for (final total in totals.supplyBreakdown) {
@@ -155,7 +155,7 @@ class _KsefWriter {
         builder.element(
           'DaneIdentyfikacyjne',
           nest: () {
-            switch (_buyerId(buyer, input.taxReference)) {
+            switch (_buyerId(buyer, input.reference)) {
               case _Nip(:final nip):
                 el('NIP', nip);
               case _EuVat(:final country, :final number):
