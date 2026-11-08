@@ -2,7 +2,6 @@
 # Both lists only fall; see test/lint/country_literals_test.dart.
 [checklist]
 lib/core/vat/retention.dart :: 1 :: checklist: Record retention (periods per country behind an add-on)
-lib/features/money/application/jurisdiction/filing_context_builder.dart :: 1 :: #3429 Filing context (CA): goes to 0 in the extraForms change
 lib/features/money/application/vat_register_files.dart :: 1 :: #3429 VAT registers / Spanish register: the register files per country
 lib/features/money/domain/archive_bundle.dart :: 2 :: #3429 Archive bundle: what a country's archive carries
 lib/features/money/domain/datev.dart :: 5 :: checklist: DATEV writer into the DE add-on
