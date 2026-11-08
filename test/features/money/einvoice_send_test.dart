@@ -9,7 +9,9 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
+import 'package:deskilo/features/money/presentation/invoice_actions.dart' show exportEInvoice;
 import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,6 +21,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../../helpers/real_async.dart';
+import '../../helpers/test_workspace_context.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
 /// refuses before any of this matters (0069).
@@ -53,12 +56,12 @@ Future<FakeMoneyRepository> _pumpArchive(
           workspace: workspace ?? _identified(),
           devMode: devMode,
         ),
-        if (!contextReady)
-          readyWorkspaceContextProvider.overrideWith((ref) => null),
+        if (!contextReady) testSwitchableReadyWorkspaceContext(),
       ],
       child: const DeskiloApp(),
     ),
   );
+  if (!contextReady) _context(tester).set(ready: false);
   await tester.pumpAndSettle();
   await tester.tap(find.text('My finances'));
   await tester.pumpAndSettle();
@@ -72,6 +75,19 @@ Future<FakeMoneyRepository> _pumpArchive(
   await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
   await tester.pumpAndSettle();
   return money;
+}
+
+/// The switch of [testSwitchableReadyWorkspaceContext] in the pumped app.
+_ContextSwitchHandle _context(WidgetTester tester) => _ContextSwitchHandle(
+  ProviderScope.containerOf(tester.element(find.byType(DeskiloApp))),
+);
+
+class _ContextSwitchHandle {
+  _ContextSwitchHandle(this._container);
+  final ProviderContainer _container;
+
+  void set({required bool ready}) =>
+      _container.read(testContextReady.notifier).set(ready: ready);
 }
 
 /// A matched (archived) invoice to act on.
@@ -100,16 +116,59 @@ Future<void> _openEInvoiceSheet(WidgetTester tester, String id) async {
 
 void main() {
   testWidgets(
-      'without the workspace\'s own tax reference the e-invoice tap answers '
-      'with a refusal and opens no sheet (#3403)', (tester) async {
+      'while the workspace context is not ready the e-invoice action is not '
+      'offered, and it appears once the context is ready (#3441)', (
+    tester,
+  ) async {
     final money = await _pumpArchive(
       tester,
       money: await _seeded(),
       contextReady: false,
     );
+    await tester.tap(find.byKey(ValueKey('invoice-${money.invoices.single.id}')));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')), findsNothing);
 
-    await _openEInvoiceSheet(tester, money.invoices.single.id);
+    _context(tester).set(ready: true);
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+      find.byKey(const ValueKey('invoice-einvoice-action')),
+      findsOneWidget,
+    );
+  });
 
+  testWidgets(
+      'the e-invoice command called while the context is not ready answers '
+      'with a refusal and opens no sheet (#3403)', (tester) async {
+    final money = await _seeded();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money, workspace: _identified()),
+          readyWorkspaceContextProvider.overrideWith((ref) => null),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) => FilledButton(
+                key: const ValueKey('go'),
+                onPressed: () => exportEInvoice(
+                  context,
+                  ref,
+                  money.invoices.single,
+                  countryCode: 'DE',
+                ),
+                child: const Text('go'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('go')));
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('invoice-facturx-download')), findsNothing);
     final snack = tester.widget<SnackBar>(find.byType(SnackBar));
     expect(

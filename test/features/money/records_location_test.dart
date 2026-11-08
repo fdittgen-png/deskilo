@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_workspace_context.dart';
+
 /// The shipped registry with [values] in force.
 SettingsSet _settings([Map<String, Object> values = const {}]) {
   final rows = jsonDecode(
@@ -150,6 +152,9 @@ void main() {
       l10n = await AppLocalizations.delegate.load(const Locale('en'));
     });
 
+    var contextReady = true;
+    setUp(() => contextReady = true);
+
     Future<String> shown(
       WidgetTester tester,
       String? country, [
@@ -159,6 +164,7 @@ void main() {
         ProviderScope(
           overrides: [
             activeSettingsProvider.overrideWithValue(_settings(values)),
+            if (contextReady) testReadyWorkspaceContext(),
           ],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -170,6 +176,14 @@ void main() {
       final text = find.byKey(const ValueKey('records-location-text'));
       return text.evaluate().isEmpty ? '' : tester.widget<Text>(text).data!;
     }
+
+    testWidgets('nothing is drawn while the workspace context is not ready', (
+      tester,
+    ) async {
+      contextReady = false;
+      final text = await shown(tester, 'CA', {_hosting: 'DE'});
+      expect(text, isEmpty);
+    });
 
     testWidgets(
       'a Canadian space on an EU-hosted installation sees the notice',

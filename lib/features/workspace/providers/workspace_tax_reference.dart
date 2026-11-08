@@ -29,6 +29,13 @@ bool workspaceIsEu(WidgetRef ref, String country) {
   return reference != null && isEuCountry(country, reference: reference);
 }
 
+/// [workspaceIsEu] for a `build`: it watches, so the widget answers again when
+/// the context becomes ready (a `build` never takes the read form).
+bool watchWorkspaceIsEu(WidgetRef ref, String country) {
+  final reference = watchWorkspaceTaxReference(ref);
+  return reference != null && isEuCountry(country, reference: reference);
+}
+
 /// [workspaceTaxReference], or a refusal for a flow that cannot go on without
 /// it (the document builders): thrown inside the guarded action, which
 /// answers with its generic message instead of a document built on a guess.

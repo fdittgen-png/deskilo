@@ -70,7 +70,7 @@ class InvoicesScreen extends ConsumerWidget {
       currencyCode: workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
       vatExempt: workspace?.vatRegime == 'exempt',
       // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
-      isEu: workspaceIsEu(ref, countryCode),
+      isEu: watchWorkspaceIsEu(ref, countryCode),
       showMemberNames: (me?.canAdminister ?? false) ||
           perms.contains(WorkspacePermission.viewFinances),
       setupGuideAvailable: perms.contains(WorkspacePermission.manageConfiguration) &&

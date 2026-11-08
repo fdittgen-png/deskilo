@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices;
+import '../../helpers/test_workspace_context.dart';
 
 /// Two open invoices of member-1 regrouped into one.
 Future<({FakeMoneyRepository money, String a, String b, String settlement})>
@@ -204,6 +205,52 @@ void main() {
     expect(find.byKey(ValueKey('invoice-remind-${s.a}')), findsNothing);
     expect(find.byKey(ValueKey('invoice-markpaid-${s.a}')), findsNothing);
     expect(find.byKey(ValueKey('invoice-void-${s.a}')), findsNothing);
+  });
+
+  testWidgets('an open sheet shows the e-invoice action once the workspace '
+      'context becomes ready, without reopening (#3441)', (tester) async {
+    final s = await _settledMoney();
+    final invoice = s.money.invoices.firstWhere((i) => i.id == s.settlement);
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        ...standardTestOverrides(
+            workspace: FakeWorkspaceRepository.withWorkspace(), money: s.money),
+        testSwitchableReadyWorkspaceContext(),
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          body: Consumer(
+            builder: (context, ref, _) => FilledButton(
+              key: const ValueKey('open'),
+              onPressed: () => showInvoiceDetailSheet(
+                context,
+                ref: ref,
+                view: InvoiceDetailView(
+                  invoice: invoice,
+                  match: null,
+                  canIssue: true,
+                  isEu: false,
+                ),
+              ),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    ));
+    final container = ProviderScope.containerOf(
+      tester.element(find.byKey(const ValueKey('open'))),
+    );
+    container.read(testContextReady.notifier).set(ready: false);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
+        findsNothing);
+    container.read(testContextReady.notifier).set(ready: true);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
+        findsOneWidget);
   });
 
 }
