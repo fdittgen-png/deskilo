@@ -6,8 +6,8 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../domain/einvoice_format.dart';
 import '../domain/einvoice_input.dart';
+import '../domain/invoice.dart';
 import '../domain/invoice_cii.dart';
-import '../domain/invoice_ksef_fa3.dart';
 import '../domain/invoice_ubl.dart';
 import 'jurisdiction/installed_invoice_profiles.dart';
 import 'jurisdiction/invoice_document_context_builder.dart';
@@ -28,6 +28,9 @@ String buildChannelEInvoiceXml(
   /// The installed invoice profiles; a test passes a composition without one
   /// (a retired country) to prove the rest keeps working (#3338).
   List<InvoiceProfileContribution>? profiles,
+
+  /// The issue date of the invoice a correction corrects (KSeF states it).
+  DateTime? correctedIssuedAt,
 }) => switch (format) {
   EInvoiceFormat.facturX => throw ArgumentError.value(
     format,
@@ -40,7 +43,12 @@ String buildChannelEInvoiceXml(
     input,
     profiles ?? installedInvoiceProfiles,
   ),
-  EInvoiceFormat.ksefFa3 => buildInvoiceKsefFa3(input),
+  EInvoiceFormat.ksefFa3 => _viaProfile(
+    format,
+    input,
+    profiles ?? installedInvoiceProfiles,
+    correctedIssuedAt: correctedIssuedAt,
+  ),
   EInvoiceFormat.en16931Ubl ||
   EInvoiceFormat.peppolBis ||
   EInvoiceFormat.xrechnung ||
@@ -57,8 +65,9 @@ String buildChannelEInvoiceXml(
 String _viaProfile(
   EInvoiceFormat format,
   EInvoiceInput input,
-  List<InvoiceProfileContribution> installed,
-) {
+  List<InvoiceProfileContribution> installed, {
+  DateTime? correctedIssuedAt,
+}) {
   final resolution = resolveInvoiceProfile(format.name, installed);
   final profile = switch (resolution) {
     ResolvedProfile(:final profile) => profile,
@@ -66,7 +75,9 @@ String _viaProfile(
       'no invoice profile for ${format.name}: ${kind.name}',
     ),
   };
-  final checked = profile.validate(invoiceDocumentContextOf(input));
+  final checked = profile.validate(
+    invoiceDocumentContextOf(input, correctedIssuedAt: correctedIssuedAt),
+  );
   final document = checked.document;
   if (document == null) {
     throw StateError(
@@ -75,4 +86,16 @@ String _viaProfile(
     );
   }
   return utf8.decode(profile.build(document).bytes);
+}
+
+/// The issue date of the invoice [invoice] corrects, found among [all] by the
+/// technical reference it carries; null when it corrects none or the original
+/// is not among them (a profile then states the correction's own date).
+DateTime? correctedIssuedAtOf(Invoice invoice, Iterable<Invoice> all) {
+  final corrected = invoice.replacesInvoiceId;
+  if (corrected == null) return null;
+  for (final candidate in all) {
+    if (candidate.id == corrected) return candidate.issuedAt;
+  }
+  return null;
 }

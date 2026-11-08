@@ -5,9 +5,10 @@
 // schema leaves to the issuer — which band a rate fills, how a buyer is
 // identified, the annotations, a correction.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
+import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -86,7 +87,7 @@ XmlDocument _doc({
   InvoiceParty buyer = _buyer,
   DateTime? correctedIssuedAt,
 }) => XmlDocument.parse(
-  buildInvoiceKsefFa3(EInvoiceInput(invoice: invoice ?? _invoice(),
+  buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(invoice: invoice ?? _invoice(),
     seller: _seller,
     buyer: buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current),
@@ -211,4 +212,23 @@ void main() {
       expect(doc.all('Platnosc'), isEmpty);
     },
   );
+  test('a correction states the issue date of the invoice it corrects, found '
+      'by its technical reference (#3429)', () {
+    final original = _invoice().copyWith(
+      id: 'orig-1',
+      issuedAt: DateTime(2026, 8, 31),
+    );
+    final correction = _invoice(gross: -24600, replacesNumber: 'FV/2026/08/7')
+        .copyWith(replacesInvoiceId: 'orig-1');
+    final date = correctedIssuedAtOf(correction, [original, correction]);
+    expect(date, DateTime(2026, 8, 31));
+    expect(correctedIssuedAtOf(correction, [correction]), isNull);
+    expect(correctedIssuedAtOf(original, [original]), isNull);
+    expect(
+      _doc(invoice: correction, correctedIssuedAt: date)
+          .one('DataWystFaKorygowanej'),
+      '2026-08-31',
+    );
+  });
+
 }

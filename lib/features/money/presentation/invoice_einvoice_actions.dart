@@ -90,6 +90,11 @@ Future<void> sendEInvoice(
         // download uses.
         final words = reportStringsOf(l10n);
         final association = ref.read(sellerIsAssociationProvider);
+        // A correction states the issue date of the invoice it corrects.
+        final correctedIssuedAt = correctedIssuedAtOf(
+          invoice,
+          await ref.read(invoicesProvider.future),
+        );
         final xml = buildChannelEInvoiceXml(format, EInvoiceInput(
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
           lineText: (line) => invoiceLineText(words, line,
@@ -99,7 +104,7 @@ Future<void> sendEInvoice(
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
           reference: requireWorkspaceTaxReference(ref),
-        ));
+        ), correctedIssuedAt: correctedIssuedAt);
         file = (
           bytes: utf8.encode(xml),
           fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
