@@ -35,6 +35,7 @@ void main() {
             uri.startsWith('package:deskilo_vat_declaration/') ||
             uri.startsWith('package:deskilo_invoice_model/') ||
             uri.startsWith('package:meta/') ||
+            uri.startsWith('package:xml/') ||
             uri.startsWith('package:deskilo_accounting_interchange/') ||
             own;
         if (!ok) bad.add('${f.path}:${i + 1}: $uri');
@@ -66,6 +67,7 @@ void main() {
       'deskilo_tax_reference',
       'deskilo_vat_declaration',
       'meta',
+      'xml',
     ]);
   });
 }

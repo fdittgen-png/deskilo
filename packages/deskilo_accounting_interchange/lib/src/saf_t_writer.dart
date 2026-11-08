@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -66,9 +65,9 @@ class SafTWriter {
   /// own entries, every journal, instead of the derived sales cycle.
   final List<Posting>? bookPostings;
 
-  /// The tax reference a document without a frozen breakdown derives its
-  /// components from.
-  final TaxReferenceSet reference;
+  final TaxReferenceSet reference; // for a document with no frozen breakdown
+  List<InvoiceVatTotal> _breakdown(Invoice i) =>
+      vatBreakdownOf(i, zeroCategory: zeroCategory, reference: reference);
 
   final XmlBuilder builder = XmlBuilder();
 
@@ -272,11 +271,7 @@ class SafTWriter {
     // rate no line carries invites the question of why it is there.
     final rates = <double>{
       for (final invoice in ordered)
-        for (final total in vatBreakdownOf(
-          invoice,
-          zeroCategory: zeroCategory,
-          reference: reference,
-        ))
+        for (final total in _breakdown(invoice))
           total.percent,
     }.toList()
       ..sort((a, b) => b.compareTo(a));
@@ -419,11 +414,7 @@ class SafTWriter {
       final charges = invoice.lines
           .where((l) => l.amountCents > 0)
           .toList(growable: false);
-      final breakdown = vatBreakdownOf(
-          invoice,
-          zeroCategory: zeroCategory,
-          reference: reference,
-        );
+      final breakdown = _breakdown(invoice);
       final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
       final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
       for (final (i, line) in charges.indexed) {

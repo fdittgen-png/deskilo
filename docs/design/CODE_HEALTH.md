@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `911b04a78c63e6e321308660d2749454f253e94c` on 2026-11-08.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `94684f4c34310e5f7d8e7bbb85cc49833730cdf6` on 2026-11-07.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,8 +10,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2616 |
-| functions | 14279 |
+| files | 2634 |
+| functions | 14282 |
 | cyclomatic>=9 | 1464 |
 | cyclomatic>=25 | 84 |
 | cognitive>=15 | 556 |
@@ -25,9 +25,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
-| 157 | 104 | 284 | 1 | `lib/features/money/domain/jpk_kr_pd_validation.dart#jpkKrPdGaps` |
-| 80 | 17 | 104 | 0 | `lib/features/money/domain/saf_t_financial_at.dart#SafTAustriaXml.generalLedger` |
-| 64 | 21 | 221 | 1 | `lib/features/money/domain/jpk_kr_pd_writer.dart#buildJpkKrPd` |
+| 157 | 104 | 284 | 1 | `packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_validation.dart#jpkKrPdGaps` |
+| 80 | 17 | 104 | 0 | `packages/deskilo_accounting_interchange/lib/src/saf_t_financial_at.dart#SafTAustriaXml.generalLedger` |
+| 64 | 21 | 221 | 1 | `packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_writer.dart#buildJpkKrPd` |
 | 63 | 25 | 80 | 2 | `packages/deskilo_document_model/lib/layout_xml.dart#_writeElement` |
 | 51 | 54 | 105 | 4 | `lib/core/public_network/public_network_codec.dart#_decodeValue` |
 | 51 | 26 | 130 | 1 | `lib/features/workspace/domain/bi_report_pdf.dart#_evolution` |
