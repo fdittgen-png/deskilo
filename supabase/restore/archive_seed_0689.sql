@@ -35,7 +35,7 @@ begin
     (tx_prep, ws, inv_a, 'peppol', 'failed', 'prepared', '',
      repeat('a', 64), '', v_at, 'Owner', 'prod', 'government', 'peppolBis',
      ws::text || '|' || inv_a::text || '|peppol|government|prod',
-     repeat('b', 64), u_owner, '{}'::jsonb, null),
+     repeat('f', 64), u_owner, '{}'::jsonb, null),
     (tx_acc, ws, inv_b, 'peppol', 'accepted', 'accepted', 'EXT-ARC-2',
      repeat('c', 64), 'Accepted by the platform', v_at + interval '1 hour',
      'Owner', 'prod', 'government', 'peppolBis',
