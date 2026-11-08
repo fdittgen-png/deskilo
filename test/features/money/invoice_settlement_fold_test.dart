@@ -8,6 +8,8 @@
 // watermark priority; exports count the originals once.
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
@@ -101,7 +103,7 @@ void main() {
       'accountant CSV skip the settlement document', () async {
     final s = await _settledMoney();
     final lines = computeVatDeclarationLines(
-        s.money.invoices, DateTime(2020), DateTime(2040));
+        s.money.invoices, DateTime(2020), DateTime(2040), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
     final settlement = s.money.invoices.firstWhere((i) => i.id == s.settlement);
     final declared = lines.fold<int>(0, (t, l) => t + l.grossCents);
     final sources = s.money.invoices

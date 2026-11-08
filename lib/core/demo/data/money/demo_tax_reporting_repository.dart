@@ -5,6 +5,7 @@ import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 
+import '../book_profile_repository.dart' show demoDayOf, demoTaxReference;
 import '../money_repository.dart';
 
 /// #2591 — the demo's VAT rates and returns, answered from one space's
@@ -28,6 +29,8 @@ class DemoTaxReporting implements TaxReportingRepository {
         matches: view.matches,
         instalments: _m.invoiceInstalmentsStore,
         basis: _m.vatReturnBasis,
+        reference: demoTaxReference(),
+        dayOf: demoDayOf,
       ),
       start: start,
       end: end,

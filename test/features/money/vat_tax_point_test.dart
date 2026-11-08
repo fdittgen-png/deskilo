@@ -14,6 +14,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../../helpers/installed_reference_shims.dart';
 
 Invoice _invoice(
@@ -171,7 +172,7 @@ void main() {
         'September, not August', () {
       final amounts = taxPointsOf(september, [
         _paid(_on(2026, 9, 2), 12000),
-      ], basis: basis);
+      ], basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(_inMonth(amounts, 2026, 8), isEmpty);
       expect(_gross(_inMonth(amounts, 2026, 9)), 12000);
       expect(_vat(_inMonth(amounts, 2026, 9)), 1916);
@@ -180,13 +181,13 @@ void main() {
     test('paid 20 August, before the service: August (Mindest-Ist)', () {
       final amounts = taxPointsOf(september, [
         _paid(_on(2026, 8, 20), 12000),
-      ], basis: basis);
+      ], basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(_gross(_inMonth(amounts, 2026, 8)), 12000);
       expect(_inMonth(amounts, 2026, 9), isEmpty);
     });
 
     test('unpaid, the tax arises at the end of the service month', () {
-      final amounts = taxPointsOf(september, const [], basis: basis);
+      final amounts = taxPointsOf(september, const [], basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(amounts.single.on, DateTime(2026, 9, 30));
     });
 
@@ -197,7 +198,7 @@ void main() {
         period: '2026-09',
       );
       expect(
-        taxPointsOf(usage, const [], basis: basis).single.on,
+        taxPointsOf(usage, const [], basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current).single.on,
         DateTime(2026, 9, 30),
       );
     });
@@ -280,7 +281,7 @@ void main() {
         _paid(_on(2026, 10, 11), 3334),
       ], country: 'FR');
       final whole = vatDeclarationLinesOf(
-        vatTaxPointLedger([mixed]),
+        vatTaxPointLedger([mixed], dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current),
         DateTime(2026, 8),
         DateTime(2026, 8, 31),
       );
@@ -398,7 +399,7 @@ void main() {
       final amounts = vatTaxPointLedger([
         original,
         credit,
-      ], basis: const VatTaxPointBasis(VatTaxPointRule.servicePeriod));
+      ], basis: const VatTaxPointBasis(VatTaxPointRule.servicePeriod), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(
         _vat(_inMonth(amounts, 2026, 8)),
         2000,
@@ -410,7 +411,7 @@ void main() {
     test('on receipts it is due when refunded', () {
       final amounts = taxPointsOf(credit, [
         _paid(_on(2026, 11, 12), 12000),
-      ], basis: VatTaxPointBasis.receipt);
+      ], basis: VatTaxPointBasis.receipt, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current);
       expect(amounts.single.on, DateTime(2026, 11, 12));
       expect(amounts.single.grossCents, -12000);
       expect(amounts.single.vatCents, -2000);
@@ -452,8 +453,7 @@ void main() {
       taxPointsOf(
         invoice.copyWith(voidedAt: _on(2026, 9, 2)),
         const [],
-        basis: VatTaxPointBasis.invoiceDate,
-      ),
+        basis: VatTaxPointBasis.invoiceDate, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,),
       isEmpty,
     );
   });
@@ -469,5 +469,4 @@ List<VatTaxPointAmount> _taxPointOf(
 }) => taxPointsOf(
   invoice,
   payments,
-  basis: vatTaxPointBasis(country, option, reference: ActiveTaxReference.current),
-);
+  basis: vatTaxPointBasis(country, option, reference: ActiveTaxReference.current), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);

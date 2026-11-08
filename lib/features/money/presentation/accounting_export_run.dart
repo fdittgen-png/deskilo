@@ -89,6 +89,7 @@ class AccountingExportRun {
 
   /// The workspace's own tax reference, read once at the start of the run.
   late final TaxReferenceSet taxReference;
+  late final DateTime Function(DateTime) workspaceDayOf; // with taxReference
   late final int year;
   late final Map<String, InvoiceMatch> matches;
   late final InvoiceParty company;
@@ -126,9 +127,6 @@ class AccountingExportRun {
               byDefault: false)
           ? ref.read(accountingConnectionCommandProvider).yearTransfers(workspace.id, year)
           : null;
-  /// The workspace's calendar day of an instant.
-  DateTime Function(DateTime instant) get workspaceDayOf =>
-      WorkspaceTime.dateOf;
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 
@@ -196,6 +194,7 @@ class AccountingExportRun {
       workspace.countryCode,
       reference: taxReference,
     ),
+    reference: taxReference, dayOf: workspaceDayOf,
   );
   memberNames =
       ref.read(memberNamesProvider).value ?? const <String, String>{};
@@ -525,6 +524,7 @@ class AccountingExportRun {
           exported,
           start: DateTime(month.year, month.month),
           end: DateTime(month.year, month.month + 1, 0),
+          reference: taxReference, dayOf: workspaceDayOf,
           matches: matches,
           instalments: books.instalments,
           onReceipts: workspaceTaxPointBasis(

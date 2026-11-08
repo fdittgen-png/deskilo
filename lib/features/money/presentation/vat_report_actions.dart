@@ -48,6 +48,7 @@ Future<VatReport> _loadVatReport(
   required DateTime start,
   required DateTime end,
   required TaxReferenceSet reference,
+  required DateTime Function(DateTime instant) dayOf,
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   // #1076 — awaited, not read synchronously: `.value` is null until
@@ -62,6 +63,7 @@ Future<VatReport> _loadVatReport(
   // basis the declaration uses: the same engine, the same payments.
   return ref.read(vatDeclarationCommandProvider).report(
         reference: reference,
+        dayOf: dayOf,
         workspaceId: workspace?.id ?? '',
         invoices: view.invoices,
         start: start,
@@ -175,7 +177,8 @@ Future<void> showVatReport(
   // Read once, here: everything below states this reference, even if the
   // context goes away while the report loads.
   final reference = workspaceTaxReference(ref);
-  if (reference == null) {
+  final dayOf = readyWorkspaceDayOf(ref);
+  if (reference == null || dayOf == null) {
     AppSnack.error(context, l10n.workspaceTaxContextNotReady);
     return;
   }
@@ -184,6 +187,7 @@ Future<void> showVatReport(
     start: start,
     end: end,
     reference: reference,
+    dayOf: dayOf,
   );
   if (!context.mounted) return;
   final data = _vatReportData(context, ref, report, reference);
@@ -215,7 +219,8 @@ Future<void> saveVatReportCsv(
   required DateTime end,
 }) async {
   final reference = workspaceTaxReference(ref);
-  if (reference == null) {
+  final dayOf = readyWorkspaceDayOf(ref);
+  if (reference == null || dayOf == null) {
     AppSnack.error(context, context.l10n.workspaceTaxContextNotReady);
     return;
   }
@@ -227,6 +232,7 @@ Future<void> saveVatReportCsv(
     start: start,
     end: end,
     reference: reference,
+    dayOf: dayOf,
   );
   if (!context.mounted) return;
   final csv = vatReportCsv(report, currency: currency);

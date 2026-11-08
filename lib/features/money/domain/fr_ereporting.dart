@@ -28,6 +28,7 @@
 // given plateforme agréée maps from it are its own, and the live
 // round-trip waits on a PA sandbox.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:xml/xml.dart';
 
 import 'vat_tax_point.dart';
@@ -233,6 +234,8 @@ FrEReport frEReport(
   Iterable<Invoice> invoices, {
   required DateTime start,
   required DateTime end,
+  required TaxReferenceSet reference,
+  required DateTime Function(DateTime instant) dayOf,
   Map<String, InvoiceMatch> matches = const {},
   Map<String, List<TaxPointPayment>> instalments = const {},
   bool onReceipts = true,
@@ -245,7 +248,7 @@ FrEReport frEReport(
       if (_Kind.of(i) != _Kind.b2bDomestic) i,
   ];
 
-  final sales = vatTaxPointLedger(reportable)
+  final sales = vatTaxPointLedger(reportable, reference: reference, dayOf: dayOf)
       .where((a) => a.within(start, end));
   final b2cSales = <(DateTime, String, double), FrTransaction>{};
   final intlSales = <FrTransaction>[];
@@ -287,6 +290,8 @@ FrEReport frEReport(
       matches: matches,
       instalments: instalments,
       basis: VatTaxPointBasis.receipt,
+      reference: reference,
+      dayOf: dayOf,
     ).where((a) => a.within(start, end));
     for (final a in receipts) {
       if (kindOf(a.invoiceId) == _Kind.b2c) {

@@ -16,6 +16,13 @@ import 'operation_context_providers.dart';
 TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
     ref.read(readyWorkspaceContextProvider)?.taxReference.set;
 
+/// The workspace's day-of function (its calendar's `dateOf`, in the
+/// workspace's own zone); null while no context is ready. Read it in the same
+/// synchronous step as [workspaceTaxReference]: both come from the one
+/// context, so they are present together.
+DateTime Function(DateTime instant)? readyWorkspaceDayOf(WidgetRef ref) =>
+    ref.read(readyWorkspaceContextProvider)?.calendar.dateOf;
+
 /// [workspaceTaxReference] for a `build`: it watches, so the widget rebuilds
 /// when the context becomes ready; null (draw nothing) until then.
 TaxReferenceSet? watchWorkspaceTaxReference(WidgetRef ref) =>
