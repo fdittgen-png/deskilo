@@ -1,0 +1,15 @@
+ordinary => 
+correction, nothing rectified => Factura rectificativa (art. 15 del RD 1619/2012).
+correction, rectifies => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007.
+rectifies is blank => Factura rectificativa (art. 15 del RD 1619/2012).
+reason 'R1' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R1, error fundado en derecho y causas del art. 80 uno, dos y seis de la Ley 37/1992.
+reason 'R2' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R2, concurso de acreedores (art. 80 tres de la Ley 37/1992).
+reason 'R3' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R3, créditos incobrables (art. 80 cuatro de la Ley 37/1992).
+reason 'R4' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R4, resto de causas.
+reason 'R5' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R5, factura simplificada.
+reason 'r3' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R3, créditos incobrables (art. 80 cuatro de la Ley 37/1992).
+reason ' R4 ' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007. Motivo: R4, resto de causas.
+reason 'R9' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007.
+reason '' => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-2026-0007.
+reason R1, nothing rectified => Factura rectificativa (art. 15 del RD 1619/2012). Motivo: R1, error fundado en derecho y causas del art. 80 uno, dos y seis de la Ley 37/1992.
+lowercase country => Factura rectificativa (art. 15 del RD 1619/2012) de la factura F-1.
