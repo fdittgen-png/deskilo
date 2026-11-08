@@ -1,403 +1,90 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2355 — the VAT TAX POINT: on which day the tax on a supply falls due,
-// per country, and for how much. One engine, read by the declaration,
-// the VAT report and the FEC/DATEV exports, so the three cannot
-// disagree about the same invoice.
+// #3402 -- moved to deskilo_invoice_model; this path re-exports it until the
+// sweep PR (#3403) rewrites the importers and deletes it.
 //
-// A coworking sells services. The law dates the tax on them differently
-// in every country the app serves:
-//
-// | country | the rule by default                                   | option        |
-// |---------|-------------------------------------------------------|---------------|
-// | FR      | each payment, when received (CGI art. 269-2-c)        | débits        |
-// | DE      | end of the month the service is performed (§ 13 UStG), | Ist (§ 20)   |
-// |         | an earlier payment when received (Mindest-Ist)        |               |
-// | ES      | the service period, prepayments when received (75 LIVA) | criterio de caja |
-// | IT      | invoice or payment, whichever comes first (art. 6)    | IVA per cassa |
-// | UK      | invoice or payment, whichever comes first (reg. 90)   | cash accounting |
-// | CH      | the invoice (vereinbarte Entgelte, art. 39 MWSTG)      | vereinnahmte  |
-// | CA      | invoice or payment, whichever comes first (ETA s. 168) | none         |
-//
-// Everywhere else the invoice date is the rule, with a cash option, which
-// is what the app did before.
-//
-// The result is a list of DATED AMOUNTS per rate: an invoice paid in two
-// instalments under a receipts rule falls into two periods, and the two
-// parts add up to the invoice to the cent. A credit note follows its OWN
-// tax point (its issue, or its refund under a receipts rule) and never
-// re-opens the period of the invoice it corrects.
-//
-// Pure Dart: the CLI and the tests read it. #2357's SQL
-// `compute_vat_return` (0402) is its twin on the server — the same rules,
-// apportionment and rounding — and the declaration stores the server's
-// figures; `vat_return_parity_test.dart` pins both to one fixture.
+// The wrapper(s) below are the only code in this file that read the installed
+// snapshot (ActiveTaxReference) or the workspace clock. #3403 sweep: callers
+// switch to WorkspaceContext, then the wrapper goes -- not a plain shim delete.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
+    show frozenTaxPointBasis, taxPointsOf, vatTaxPointLedger;
 import 'package:meta/meta.dart';
 import '../../../core/time/workspace_time.dart';
-import 'invoice.dart';
-import 'invoice_kind.dart';
-import 'vat_declaration.dart';
-import 'vat_rate.dart';
-import 'vat_tax_point_policy.dart';
+import '../../../core/vat/tax_reference_active.dart';
 
+export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
 export 'vat_tax_point_policy.dart';
 
-/// Money that settled part of a document — or, on a credit note, the
-/// refund paid out. [cents] is positive either way.
-class TaxPointPayment {
-  const TaxPointPayment(this.on, this.cents);
-  final DateTime on;
-  final int cents;
-}
-
-/// One dated amount of one invoice at one rate.
-class VatTaxPointAmount {
-  const VatTaxPointAmount({
-    required this.invoiceId,
-    required this.on,
-    required this.percent,
-    required this.grossCents,
-    required this.netCents,
-    required this.vatCents,
-  });
-
-  final String invoiceId;
-
-  /// The tax point, a date on the workspace's calendar.
-  final DateTime on;
-  final double percent;
-  final int grossCents;
-  final int netCents;
-  final int vatCents;
-
-  /// Whether [on] lies in [start]..[end], both inclusive days.
-  bool within(DateTime start, DateTime end) =>
-      !on.isBefore(DateTime(start.year, start.month, start.day)) &&
-      !on.isAfter(DateTime(end.year, end.month, end.day));
-}
-
-/// The dated amounts [invoice] declares under [basis], given the
-/// [payments] it received (or, for a credit note, the refunds paid).
-///
-/// A voided document and a settlement declare nothing: the settlement's
-/// sources carry the VAT, and their payments arrive through
-/// `accountingView`'s allocation.
 @visibleForTesting
 List<VatTaxPointAmount> taxPointsOf(
   Invoice invoice,
   List<TaxPointPayment> payments, {
   required VatTaxPointBasis basis,
   DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
-}) {
-  if (invoice.isVoided || invoice.kind == InvoiceKind.settlement) {
-    return const [];
-  }
-  final declared = frozenTaxPointBasis(invoice, basis);
-  final gross = <double, int>{};
-  final net = <double, int>{};
-  for (final line in invoice.lines) {
-    gross[line.vatPercent] = (gross[line.vatPercent] ?? 0) + line.amountCents;
-    net[line.vatPercent] =
-        (net[line.vatPercent] ?? 0) +
-        vatSplit(line.amountCents, line.vatPercent).netCents;
-  }
-  if (gross.isEmpty) return const [];
-  final total = gross.values.fold(0, (s, c) => s + c);
-  final issued = dayOf(invoice.issuedAt);
-  final portions = total == 0
-      // Settled by itself — its credits paid it before it was issued.
-      ? [(on: issued, cents: 0)]
-      : _portions(invoice, payments, declared, issued, total.abs(), dayOf);
-  return _slices(invoice.id, portions, gross, net, total);
-}
+}) => model.taxPointsOf(
+  invoice,
+  payments,
+  basis: basis,
+  reference: ActiveTaxReference.current,
+  dayOf: dayOf,
+);
 
-/// #2357 — the basis [invoice] declares on: [basis], unless the invoice
-/// froze the other side of it when it was issued (`vat_exigibility` in
-/// its legal snapshot, 0349/0401). The printed mention is what the
-/// customer was told, so an invoice that said « on receipts » waits for
-/// the money although the workspace has since opted for the invoice
-/// date, and one that said « on the debits » is due when issued. The
-/// SQL twin (`vat_return_amounts`, 0402) applies the same rule.
 @visibleForTesting
-VatTaxPointBasis frozenTaxPointBasis(
-  Invoice invoice,
-  VatTaxPointBasis basis,
-) {
-  final snapshot = invoice.legalSnapshot;
-  final frozen = snapshot?['vat_exigibility'];
-  final seller = snapshot?['seller_country'];
-  final policy = vatTaxPointPolicy(seller is String ? seller : '');
-  if (frozen == 'payment' && basis.rule != VatTaxPointRule.receipt) {
-    return VatTaxPointBasis(VatTaxPointRule.receipt, policy.cashBackstop);
-  }
-  if (frozen == 'invoice' && basis.rule == VatTaxPointRule.receipt) {
-    return VatTaxPointBasis(
-      policy.standard == VatTaxPointRule.receipt
-          ? VatTaxPointRule.invoiceDate
-          : policy.standard,
+VatTaxPointBasis frozenTaxPointBasis(Invoice invoice, VatTaxPointBasis basis) =>
+    model.frozenTaxPointBasis(
+      invoice,
+      basis,
+      reference: ActiveTaxReference.current,
     );
-  }
-  return basis;
-}
 
-/// The document's magnitude, cut into dated portions under [basis].
-List<({DateTime on, int cents})> _portions(
-  Invoice invoice,
-  List<TaxPointPayment> payments,
-  VatTaxPointBasis basis,
-  DateTime issued,
-  int magnitude,
-  DateTime Function(DateTime) dayOf,
-) {
-  final paid = [
-    for (final p in payments)
-      if (p.cents > 0) (on: dayOf(p.on), cents: p.cents),
-  ]..sort((a, b) => a.on.compareTo(b.on));
-  final out = <({DateTime on, int cents})>[];
-  var left = magnitude;
-  void put(DateTime on, int cents) {
-    if (cents <= 0) return;
-    if (out.isNotEmpty && out.last.on == on) {
-      out[out.length - 1] = (on: on, cents: out.last.cents + cents);
-    } else {
-      out.add((on: on, cents: cents));
-    }
-    left -= cents;
-  }
-
-  // A credit note has no service of its own: it is due when issued, or
-  // when refunded under a receipts rule — never in the original's period.
-  final rule = invoice.isCreditNote && basis.rule != VatTaxPointRule.receipt
-      ? VatTaxPointRule.invoiceDate
-      : basis.rule;
-  switch (rule) {
-    case VatTaxPointRule.invoiceDate:
-      put(issued, left);
-    case VatTaxPointRule.receipt:
-      final backstop = invoice.isCreditNote
-          ? null
-          : _backstop(basis.backstop, invoice, issued);
-      for (final p in paid) {
-        final on = backstop != null && p.on.isAfter(backstop) ? backstop : p.on;
-        put(on, p.cents < left ? p.cents : left);
-      }
-      if (backstop != null) put(backstop, left);
-    case VatTaxPointRule.servicePeriod:
-      final end = _serviceEnd(invoice.period) ?? issued;
-      for (final p in paid) {
-        if (!p.on.isBefore(end)) break;
-        put(p.on, p.cents < left ? p.cents : left);
-      }
-      put(end, left);
-    case VatTaxPointRule.earlierOf:
-      for (final p in paid) {
-        if (!p.on.isBefore(issued)) break;
-        put(p.on, p.cents < left ? p.cents : left);
-      }
-      put(issued, left);
-  }
-  return out;
-}
-
-/// The last day of a `YYYY-MM` service period; null when there is none.
-DateTime? _serviceEnd(String? period) {
-  final match = RegExp(r'^(\d{4})-(\d{2})').firstMatch(period ?? '');
-  if (match == null) return null;
-  final year = int.parse(match.group(1)!);
-  final month = int.parse(match.group(2)!);
-  if (month < 1 || month > 12) return null;
-  return DateTime(year, month + 1, 0);
-}
-
-DateTime? _backstop(
-  VatCashBackstop backstop,
-  Invoice invoice,
-  DateTime issued,
-) => switch (backstop) {
-  VatCashBackstop.none => null,
-  VatCashBackstop.endOfFollowingYear => DateTime(
-    (_serviceEnd(invoice.period) ?? issued).year + 1,
-    12,
-    31,
-  ),
-  VatCashBackstop.oneYearAfterIssue => DateTime(
-    issued.year + 1,
-    issued.month,
-    issued.day,
-  ),
-};
-
-/// Spreads each portion over the rates in proportion to their weight in
-/// the document, CUMULATIVELY: the share of a rate after k portions is
-/// computed from everything received so far, so the parts of a fully
-/// settled document add up to its per-line arithmetic exactly — the
-/// declaration matches the issued document to the cent, however many
-/// instalments paid it. The rounding remainder of each step goes to the
-/// widest rate.
-List<VatTaxPointAmount> _slices(
-  String invoiceId,
-  List<({DateTime on, int cents})> portions,
-  Map<double, int> gross,
-  Map<double, int> net,
-  int total,
-) {
-  final magnitude = total.abs();
-  final rates = gross.keys.toList()..sort((a, b) => b.compareTo(a));
-  final widest = rates.reduce(
-    (a, b) => gross[a]!.abs() >= gross[b]!.abs() ? a : b,
-  );
-  final prevGross = {for (final r in rates) r: 0};
-  final prevNet = {for (final r in rates) r: 0};
-  final out = <VatTaxPointAmount>[];
-  var received = 0;
-  for (final portion in portions) {
-    received += portion.cents;
-    final complete = magnitude == 0 || received >= magnitude;
-    final cumGross = <double, int>{};
-    if (complete) {
-      cumGross.addAll(gross);
-    } else {
-      var placed = 0;
-      for (final r in rates) {
-        cumGross[r] = (gross[r]! * received / magnitude).round();
-        placed += cumGross[r]!;
-      }
-      final target = (total * received / magnitude).round();
-      cumGross[widest] = cumGross[widest]! + (target - placed);
-    }
-    for (final r in rates) {
-      final cumNet = complete ? net[r]! : vatSplit(cumGross[r]!, r).netCents;
-      final g = cumGross[r]! - prevGross[r]!;
-      final n = cumNet - prevNet[r]!;
-      prevGross[r] = cumGross[r]!;
-      prevNet[r] = cumNet;
-      if (g == 0 && n == 0) continue;
-      out.add(
-        VatTaxPointAmount(
-          invoiceId: invoiceId,
-          on: portion.on,
-          percent: r,
-          grossCents: g,
-          netCents: n,
-          vatCents: g - n,
-        ),
-      );
-    }
-  }
-  return out;
-}
-
-/// The payments behind each invoice: the instalments recorded one by one
-/// (`invoice_match_payments`, 0101) when there are any, the aggregate
-/// match otherwise (a settlement's allocation, a refund, an older row).
-/// A match still awaiting validation pays nothing yet — the exports make
-/// the same exclusion — and the instalments never count for more than
-/// the confirmed aggregate.
-@visibleForTesting
-List<TaxPointPayment> paymentsOf(
-  InvoiceMatch? match,
-  List<TaxPointPayment> instalments,
-) {
-  if (match == null || match.pending) return const [];
-  if (instalments.isEmpty) {
-    return [TaxPointPayment(match.matchedAt, match.paidCents)];
-  }
-  final sorted = [...instalments]..sort((a, b) => a.on.compareTo(b.on));
-  final out = <TaxPointPayment>[];
-  var left = match.paidCents;
-  for (final p in sorted) {
-    if (left <= 0) break;
-    final take = p.cents < left ? p.cents : left;
-    out.add(TaxPointPayment(p.on, take));
-    left -= take;
-  }
-  return out;
-}
-
-/// Every invoice's tax points — what the declaration, the VAT report and
-/// the exports all read. [invoices] and [matches] are the accounting
-/// view's (`accountingView`).
 List<VatTaxPointAmount> vatTaxPointLedger(
   Iterable<Invoice> invoices, {
   Map<String, InvoiceMatch> matches = const {},
   Map<String, List<TaxPointPayment>> instalments = const {},
   VatTaxPointBasis basis = VatTaxPointBasis.invoiceDate,
   DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
-}) => [
-  for (final invoice in invoices)
-    ...taxPointsOf(
-      invoice,
-      paymentsOf(matches[invoice.id], instalments[invoice.id] ?? const []),
-      basis: basis,
-      dayOf: dayOf,
-    ),
-];
-
-/// The declaration lines of [start]..[end]: the tax points inside the
-/// period, summed per rate, with the documents behind each rate.
-List<VatDeclarationLine> vatDeclarationLinesOf(
-  Iterable<VatTaxPointAmount> amounts,
-  DateTime start,
-  DateTime end,
-) {
-  final gross = <double, int>{};
-  final net = <double, int>{};
-  final count = <double, Set<String>>{};
-  for (final a in amounts) {
-    if (!a.within(start, end)) continue;
-    gross[a.percent] = (gross[a.percent] ?? 0) + a.grossCents;
-    net[a.percent] = (net[a.percent] ?? 0) + a.netCents;
-    count.putIfAbsent(a.percent, () => <String>{}).add(a.invoiceId);
-  }
-  final percents = gross.keys.toList()..sort((a, b) => b.compareTo(a));
-  return [
-    for (final p in percents)
-      VatDeclarationLine(
-        percent: p,
-        grossCents: gross[p]!,
-        netCents: net[p]!,
-        vatCents: gross[p]! - net[p]!,
-        invoiceCount: count[p]!.length,
-      ),
-  ];
-}
-
-/// The ledger by invoice, as the exports read it (#2355): the FEC moves
-/// VAT to the collected account per tax point day, DATEV dates each part
-/// of a sale in field 116.
-class VatTaxPointIndex {
-  VatTaxPointIndex(Iterable<VatTaxPointAmount> amounts) {
-    for (final a in amounts) {
-      _byInvoice.putIfAbsent(a.invoiceId, () => []).add(a);
-    }
-  }
-
-  final _byInvoice = <String, List<VatTaxPointAmount>>{};
-
-  /// #2365 — every dated amount of [invoiceId].
-  List<VatTaxPointAmount> amountsOf(String invoiceId) =>
-      _byInvoice[invoiceId] ?? const [];
-
-  /// [invoiceId]'s amounts summed per tax point day by [of], in date
-  /// order; empty when nothing of it is due yet.
-  Map<DateTime, int> byDay(
-    String invoiceId,
-    int Function(VatTaxPointAmount amount) of,
-  ) {
-    final days = <DateTime, int>{};
-    for (final a in _byInvoice[invoiceId] ?? const <VatTaxPointAmount>[]) {
-      days[a.on] = (days[a.on] ?? 0) + of(a);
-    }
-    final ordered = days.keys.toList()..sort();
-    return {for (final day in ordered) day: days[day]!};
-  }
-
-  /// Whether the [booked] VAT of [invoiceId] is NOT exactly due on
-  /// [issued] — and so waits on a pending account until its tax points.
-  bool vatAwayFrom(String invoiceId, DateTime issued, int booked) {
-    final days = byDay(invoiceId, (a) => a.vatCents)
-      ..removeWhere((_, vat) => vat == 0);
-    return days.keys.any((day) => day != issued) ||
-        (days[issued] ?? 0) != booked;
-  }
-}
+}) => model.vatTaxPointLedger(
+  invoices,
+  matches: matches,
+  instalments: instalments,
+  basis: basis,
+  reference: ActiveTaxReference.current,
+  dayOf: dayOf,
+);

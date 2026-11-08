@@ -11,7 +11,6 @@
 // refused, a zero usage invoice needs the allowance, and the sweep runs
 // end to end. These pin the client's half of the same contract.
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

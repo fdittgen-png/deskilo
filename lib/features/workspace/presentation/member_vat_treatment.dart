@@ -8,8 +8,6 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/vat/place_of_supply.dart';
-import '../../../core/vat/supply_class.dart';
-import '../../../core/vat/vat_treatment.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/member.dart';
 import '../providers/workspace_providers.dart';

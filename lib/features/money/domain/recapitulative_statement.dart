@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/place_of_supply.dart';
-import 'invoice.dart';
 
 /// #2354 — one line of the recapitulative statement (EU sales list):
 /// the services a seller reverse-charged (category AE, Directive art. 196)

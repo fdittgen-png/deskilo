@@ -4,12 +4,9 @@
 // stamp duty, the Spanish correcting invoice, the French category of the
 // operation), the EU small-enterprise scheme's EX number, and the rates
 // that moved carried as dated versions.
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 List<String> _mentions(

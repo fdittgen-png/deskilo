@@ -1,518 +1,61 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:freezed_annotation/freezed_annotation.dart';
+//
+// #3402 -- moved to deskilo_invoice_model; this path re-exports it until the
+// sweep PR (#3403) rewrites the importers and deletes it.
+//
+// The wrapper(s) below are the only code in this file that read the installed
+// snapshot (ActiveTaxReference) or the workspace clock. #3403 sweep: callers
+// switch to WorkspaceContext, then the wrapper goes -- not a plain shim delete.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
+    show vatBreakdownOf;
+import '../../../core/vat/tax_reference_active.dart';
 
-import '../../../core/data/json_reader.dart';
-import '../../../core/data/system_columns.dart';
-import 'invoice_clauses.dart';
-import 'invoice_kind.dart';
-import 'invoice_line_snapshot.dart';
-import 'vat_rate.dart';
+export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
 
-part 'invoice.freezed.dart';
-
-/// One position of an invoice. Since 0062 positions are DERIVED from
-/// the month's tracked data — [kind] names the source (subscription |
-/// overage | accessories | level | office | desk | service | package |
-/// adjustment), [label] carries its data (the pct, the catalog
-/// description), and the client renders localized wording per kind.
-/// Legacy 0060 free-form lines have an empty [kind] and render their
-/// [label] verbatim.
-@freezed
-sealed class InvoiceLine with _$InvoiceLine {
-  const factory InvoiceLine({
-    @Default('') String kind,
-    required String label,
-    @Default(1) int quantity,
-    required int amountCents,
-
-    /// The VAT rate this position was taxed at (0072). Prices are
-    /// INCLUSIVE, so [amountCents] is the gross and the tax is extracted
-    /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
-    /// credit — money moving is not a supply).
-    @Default(0.0) double vatPercent,
-
-    /// #831 — on a settlement, the number of the source invoice this
-    /// position was carried over from; '' on every other document.
-    @Default('') String sourceNumber,
-
-    /// #2356 — the EN 16931 category the server froze on this line (S, Z,
-    /// E, O, AE, G; 0403); '' on a line issued before it, where readers
-    /// derive the category from the rate and the regime as they always did.
-    @Default('') String vatCategory,
-
-    /// #2362 — a sales-tax line: the price quoted ([amountCents] adds its
-    /// [taxCents]); null on a VAT document, where [amountCents] is quoted.
-    int? netCents,
-    @Default(0) int taxCents,
-  }) = _InvoiceLine;
-}
-
-/// One annex activity row (0064): a confirmed ledger movement of the
-/// invoiced month, with its booking date. Credits carry negative
-/// amounts.
-@freezed
-sealed class InvoiceDetailEntry with _$InvoiceDetailEntry {
-  const factory InvoiceDetailEntry({
-    required String on,
-    required String category,
-    @Default('') String label,
-    required int amountCents,
-  }) = _InvoiceDetailEntry;
-}
-
-/// One annex attendance row (0064): a reservation of the invoiced
-/// month. Timestamps are the workspace's local wall clock, snapshotted
-/// as 'yyyy-MM-ddTHH:mm'.
-@freezed
-sealed class InvoiceAttendance with _$InvoiceAttendance {
-  const factory InvoiceAttendance({
-    required String startsAt,
-    required String endsAt,
-    @Default('') String space,
-    /// #946 — the site the reservation stood at ('' for the default).
-    @Default('') String site,
-    @Default('') String status,
-  }) = _InvoiceAttendance;
-}
-
-/// An invoice's payment MATCH (0067): the lifecycle metadata beside the
-/// immutable document. `pending` while a validation quorum decides;
-/// rejects delete the match (the invoice reopens), so a loaded match is
-/// either awaiting validation or standing.
-@freezed
-sealed class InvoiceMatch with _$InvoiceMatch {
-  const factory InvoiceMatch({
-    required String invoiceId,
-    required int paidCents,
-    required String resolution,
-    @Default('') String note,
-    @Default('confirmed') String status,
-    // 0068 — the REGISTERED payment this match consumed.
-    String? paymentLedgerId,
-    required DateTime matchedAt,
-    @Default('') String byName,
-
-    /// #504 — when the outstanding remainder of an under-paid match was
-    /// written off through the validation framework. Null = the
-    /// invoice is STILL OPEN and owed.
-    DateTime? writeoffAt,
-
-    /// #841 — the event that had to be validated before this match
-    /// stood. Null on matches recorded before the column was read, and
-    /// on the ones no rule ever governed.
-    String? eventId,
-
-    /// #2380 — the value date of the reconciled bank statement line that
-    /// became the one payment this invoice consumed (0641): the day the
-    /// money moved at the bank, beside [matchedAt], which still dates the
-    /// booking. Null when no line, or more than one, explains the payment,
-    /// and on every match not read from the accounting source.
-    DateTime? valueDate,
-
-    /// #2380 — that line's reference, null when it has none.
-    String? bankReference,
-  }) = _InvoiceMatch;
-
-  const InvoiceMatch._();
-
-  bool get pending => status == 'pending';
-}
-
-/// One party of an invoice as the document FROZE it (0069) — the legal
-/// identity EN 16931 needs and the flat 0060 snapshot never carried.
-///
-/// One shape for both sides: the buyer simply leaves the seller-only
-/// fields ([legalId], [vatRegime], [taxExemptionReason]) empty. Legacy
-/// invoices carry no parties at all; the presentation layer rebuilds them
-/// from the flat snapshot plus the live workspace identity (sellerOf).
-@freezed
-sealed class InvoiceParty with _$InvoiceParty {
-  const factory InvoiceParty({
-    @Default('') String name,
-
-    /// #886 — the organisation the person is invoiced through (BT-45,
-    /// the buyer's trading name); '' for a private person.
-    @Default('') String company,
-
-    /// #912 — the title the client asked to be addressed by, as a code;
-    /// each reader prints it in its own language.
-    @Default('') String courtesy,
-
-    /// #912 — the PERSON inside the organisation, when [name] is the
-    /// company. Frozen apart so the block can name them under it.
-    @Default('') String person,
-
-    /// BT-35 — one line; legacy free-text addresses land here whole.
-    @Default('') String street,
-
-    /// BT-37.
-    @Default('') String city,
-
-    /// BT-38.
-    @Default('') String postalCode,
-
-    /// BT-40 / BT-55 — ISO 3166-1 alpha-2, mandatory on both parties.
-    @Default('') String country,
-
-    /// BT-31 (seller) / BT-48 (buyer).
-    @Default('') String vatId,
-
-    /// BT-30, the company register number — the seller identifier a
-    /// category-O invoice is allowed to carry.
-    @Default('') String legalId,
-    /// #928 — the buyer's member number ("N° adhérent"), frozen at issue.
-    @Default('') String memberNumber,
-
-    /// #946 — the site this party stands at (the seller's document site).
-    @Default('') String site,
-
-    /// #946 — whether that site is the workspace's default one; a
-    /// document at another site prints the site's name and address.
-    @Default(true) bool siteDefault,
-
-    /// Wire value of [VatRegime]; seller only.
-    @Default('not_subject') String vatRegime,
-
-    /// Free-text exemption reason (BT-120); seller only.
-    @Default('') String taxExemptionReason,
-
-    /// #886 — the contact the document is sent to (BT-43 / BT-42).
-    @Default('') String email,
-    @Default('') String phone,
-
-    /// #922 — BT-10, the buyer reference: Chorus Pro's *code service
-    /// exécutant*. Buyer only; frozen at issue.
-    @Default('') String reference,
-
-    /// #922 — BT-13, the purchase-order reference: the *numéro
-    /// d'engagement*. Buyer only; frozen at issue.
-    @Default('') String orderReference,
-
-    /// #2358 — BT-34 (seller) / BT-49 (buyer), the electronic address a
-    /// network delivers to: a Peppol participant id, the French
-    /// directory address, an SdI recipient code or PEC mailbox.
-    @Default('') String endpointId,
-
-    /// #2358 — the EAS scheme of [endpointId] ('0009' SIRET, '0225' the
-    /// French directory, '0208' a Belgian enterprise number, '9930' a
-    /// German VAT id, 'EM' an e-mail address).
-    @Default('') String endpointScheme,
-
-    /// #2358 — BT-39 / BT-54, the country subdivision: the ISO 3166-2
-    /// county a CIUS-RO address must name ('RO-B'), the Italian province.
-    @Default('') String subdivision,
-  }) = _InvoiceParty;
-
-  /// Reads one party out of the invoice's `parties` jsonb. Named away
-  /// from `fromJson` on purpose: that name would make freezed reach for
-  /// json_serializable and demand a generated part file.
-  factory InvoiceParty.fromSnapshot(Map<dynamic, dynamic> json) => InvoiceParty(
-    name: json['name'] as String? ?? '',
-    company: json['company'] as String? ?? '',
-    courtesy: json['courtesy'] as String? ?? '',
-    person: json['person'] as String? ?? '',
-    street: json['street'] as String? ?? '',
-    city: json['city'] as String? ?? '',
-    postalCode: json['postal_code'] as String? ?? '',
-    country: json['country'] as String? ?? '',
-    vatId: json['vat_id'] as String? ?? '',
-    legalId: json['legal_id'] as String? ?? '',
-    memberNumber: json['member_number'] as String? ?? '',
-    site: json['site'] as String? ?? '',
-    siteDefault: json['site_default'] as bool? ?? true,
-    reference: json['reference'] as String? ?? '',
-    orderReference: json['order'] as String? ?? '',
-    vatRegime: json['vat_regime'] as String? ?? 'not_subject',
-    taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
-    email: json['email'] as String? ?? '',
-    phone: json['phone'] as String? ?? '',
-    endpointId: JsonReader.of(json).stringOr('endpoint_id'),
-    endpointScheme: JsonReader.of(json).stringOr('endpoint_scheme'),
-    subdivision: JsonReader.of(json).stringOr('subdivision'),
-  );
-}
-
-/// One invoice folded into a settlement (#804), snapshotted when it was
-/// regrouped — number, period, kind, total AND its positions, so the
-/// settlement stays readable as a trail back to what it consolidated
-/// even if a source is corrected afterwards.
-@freezed
-sealed class SettledSource with _$SettledSource {
-  const factory SettledSource({
-    required String invoiceId,
-    required String number,
-    String? period,
-    @Default(InvoiceKind.full) InvoiceKind kind,
-    required int totalCents,
-    @Default([]) List<InvoiceLine> lines,
-  }) = _SettledSource;
-
-  factory SettledSource.fromSnapshot(Map<dynamic, dynamic> json) =>
-      SettledSource(
-        invoiceId: json['invoice_id'] as String? ?? '',
-        number: json['number'] as String? ?? '',
-        period: json['period'] as String?,
-        kind: InvoiceKind.fromWire(json['kind'] as String?),
-        totalCents: (json['total_cents'] as num?)?.toInt() ?? 0,
-        lines: [
-          for (final line in (json['lines'] as List? ?? const []))
-            invoiceLineFromSnapshot(line as Map),
-        ],
-      );
-}
-
-/// An IMMUTABLE invoice from the archive (0060): every displayed detail
-/// is a SNAPSHOT taken at issue time — names, addresses and the issuer
-/// can change later without ever rewriting an issued document. The
-/// [signature] is the server's SHA-256 fingerprint over the canonical
-/// content, printed on the PDF as the digital signature.
-///
-/// Correction (0061): a wrong invoice is tagged erroneous ([voidedAt],
-/// the sole one-way change the server permits) and re-issued as a
-/// replacement carrying [replacesInvoiceId] (technical reference) and
-/// [replacesNumber] (snapshot for display and the PDF).
-@freezed
-sealed class Invoice with _$Invoice implements SystemStamped {
-  const Invoice._();
-
-  const factory Invoice({
-    required String id,
-    required String workspaceId,
-    required String memberId,
-    required String number,
-    required DateTime issuedAt,
-    String? period,
-    required String title,
-    required List<InvoiceLine> lines,
-    required int totalCents,
-    required String currency,
-    required String memberName,
-    required String memberAddress,
-    required String workspaceName,
-    required String workspaceAddress,
-    required String issuerName,
-    required String signature,
-    DateTime? voidedAt,
-    @Default('') String voidedByName,
-    String? replacesInvoiceId,
-    @Default('') String replacesNumber,
-    // 0064 — the optional SNAPSHOTTED annex; compact invoices carry
-    // neither.
-    @Default(false) bool detailed,
-    @Default([]) List<InvoiceDetailEntry> detailLedger,
-    @Default([]) List<InvoiceAttendance> attendance,
-    // 0069 — the parties' legal identity, snapshotted for the e-invoice.
-    // Null on pre-0069 documents.
-    InvoiceParty? sellerParty,
-    InvoiceParty? buyerParty,
-
-    /// #2440 — RD 1619/2012 art. 15: why a Spanish seller corrected a
-    /// document (R1-R5), frozen with the parties; empty elsewhere.
-    @Default('') String correctionReason,
-    // 0072 — the VAT breakdown as issued, one entry per rate. Empty on
-    // pre-0072 invoices and on workspaces that charge no VAT.
-    @Default([]) List<InvoiceVatTotal> vatTotals,
-
-    /// #802 (0142) — what this document charges for: the subscription of
-    /// a month still to come, what a finished month actually cost, a
-    /// regrouping of several, or the historical whole month. Every
-    /// pre-0142 row reads [InvoiceKind.full], which is what it is.
-    @Default(InvoiceKind.full) InvoiceKind kind,
-
-    /// #804 — the settlement that now carries this invoice's balance.
-    /// The document itself is untouched: it stays exactly as issued and
-    /// simply stops being separately owed.
-    String? settledByInvoiceId,
-
-    /// #804 — on a settlement, what it consolidated.
-    @Default([]) List<SettledSource> settles,
-
-    /// #1913 (0331) — the due date frozen at issue, read from
-    /// `invoice_maturities`. Null when the server recorded none (an
-    /// invoice issued before 0331): the app then falls back to the
-    /// workspace's current term, the way such documents always printed.
-    DateTime? dueOn,
-
-    /// #1913 — on what basis [dueOn] was frozen: `document_term`,
-    /// `default_term` (the unagreed default; needs review) or `unknown`.
-    String? maturityBasis,
-
-    /// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
-    /// Null on an invoice issued before 0349: legacy, evidence unknown.
-    /// Read it through [legalClauses].
-    Map<String, Object?>? legalSnapshot,
-    /// #992 — the server's stamp on this row.
-    @Default(SystemColumns.none) SystemColumns system,
-  }) = _Invoice;
-
-  /// Sum of the positive positions — the gross the invoice charges before
-  /// its month's payments are netted off.
-  int get chargesCents => lines
-      .where((line) => line.amountCents > 0)
-      .fold(0, (sum, line) => sum + line.amountCents);
-
-  /// The tax contained in those charges. 0 when no VAT applies.
-  int get vatCents => vatTotals.fold(0, (sum, total) => sum + total.vatCents);
-
-  /// The charges without their tax.
-  int get netCents => vatTotals.isEmpty
-      ? chargesCents
-      : vatTotals.fold(0, (sum, total) => sum + total.netCents);
-
-  /// Whether this document actually carries tax — the PDF and the exports
-  /// only show a breakdown when there is one.
-  bool get hasVat => vatCents > 0;
-
-  bool get isVoided => voidedAt != null;
-
-  /// #895 — the tax is the customer's: the frozen breakdown says AE.
-  bool get isReverseCharged =>
-      vatTotals.any((total) => total.category == 'AE');
-
-  /// #985 — the category the counterparty decided, when it did: AE
-  /// (reverse charge), G (outside the EU), E (an exempt buyer). '' when
-  /// the seller's regime decides.
-  String get counterpartyCategory => vatTotals
-      .map((total) => total.category)
-      .firstWhere((c) => c == 'AE' || c == 'G' || c == 'E', orElse: () => '');
-
-  /// #894 — a document that gives money back: the month's credits
-  /// outweigh its charges (#508's avoir). EN 16931 types it 381, and
-  /// the VAT it carries is the VAT it reverses.
-  bool get isCreditNote => totalCents < 0;
-
-  /// #910 — who the document is addressed to, for every surface that
-  /// names the client.
-  ///
-  /// The frozen snapshot is read in the order it was written: the buyer
-  /// party's name, then `member_name`, then the buyer's COMPANY. That
-  /// last step is what rescues a document issued for a client with no
-  /// personal name — an admin-managed company profile — WITHOUT
-  /// touching the row: the company was always frozen alongside, only
-  /// nobody looked at it, so the invoice printed a dangling separator
-  /// where its addressee should be. An issued document never changes;
-  /// what it says about itself can still be read properly.
-  String get clientName {
-    final party = buyerParty;
-    if (party != null && party.name.trim().isNotEmpty) return party.name.trim();
-    if (memberName.trim().isNotEmpty) return memberName.trim();
-    return party?.company.trim() ?? '';
-  }
-
-  /// #1916 — the frozen legal facts, or null on a legacy invoice.
-  LegalClauseSnapshot? get legalClauses => switch (legalSnapshot) {
-        final Map<String, Object?> json => LegalClauseSnapshot.fromJson(json),
-        _ => null,
-      };
-
-  /// #831 — regrouped into a settlement and not voided: documentation
-  /// only, every operation happens on the settlement.
-  bool get isFolded => settledByInvoiceId != null && !isVoided;
-
-  /// The breakdown the documents render, one entry per rate.
-  ///
-  /// The SNAPSHOT wins whenever there is one: it is what the signature
-  /// covers. Only a pre-0072 invoice falls back to deriving it, and there
-  /// every line carries 0 %, so the fallback yields the single zero-rated
-  /// entry those documents always showed.
+/// The breakdown the documents render, one entry per rate (the snapshot wins
+/// whenever there is one): `vatBreakdownOf` with the installed reference.
+extension InvoiceVatBreakdown on Invoice {
   List<InvoiceVatTotal> vatBreakdown({required String zeroCategory}) =>
-      vatTotals.isNotEmpty
-      ? vatTotals
-      : vatTotalsOf([
-          for (final line in lines)
-            (amountCents: line.amountCents, vatPercent: line.vatPercent),
-        ], zeroCategory: zeroCategory);
-
-  factory Invoice.fromRow(Map<String, dynamic> row) => Invoice(
-    system: SystemColumns.fromRow(row),
-    id: row['id'] as String,
-    workspaceId: row['workspace_id'] as String,
-    memberId: row['member_id'] as String,
-    number: row['number'] as String,
-    issuedAt: DateTime.parse(row['issued_at'] as String).toLocal(),
-    period: row['period'] as String?,
-    title: row['title'] as String,
-    lines: [
-      for (final line in (row['lines'] as List? ?? const []))
-        invoiceLineFromSnapshot(line as Map),
-    ],
-    kind: InvoiceKind.fromWire(row['kind'] as String?),
-    settledByInvoiceId: row['settled_by_invoice_id'] as String?,
-    settles: [
-      for (final source in (row['settles'] as List? ?? const []))
-        SettledSource.fromSnapshot(source as Map),
-    ],
-    dueOn: _maturityDueOn(row['invoice_maturities']),
-    maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
-    legalSnapshot: switch (row['legal_snapshot']) {
-      final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
-      _ => null,
-    },
-    totalCents: (row['total_cents'] as num).toInt(),
-    currency: row['currency'] as String,
-    memberName: row['member_name'] as String? ?? '',
-    memberAddress: row['member_address'] as String? ?? '',
-    workspaceName: row['workspace_name'] as String? ?? '',
-    workspaceAddress: row['workspace_address'] as String? ?? '',
-    issuerName: row['issuer_name'] as String? ?? '',
-    signature: row['signature'] as String,
-    voidedAt: row['voided_at'] == null
-        ? null
-        : DateTime.parse(row['voided_at'] as String).toLocal(),
-    voidedByName: row['voided_by_name'] as String? ?? '',
-    replacesInvoiceId: row['replaces_invoice_id'] as String?,
-    replacesNumber: row['replaces_number'] as String? ?? '',
-    detailed: row['details'] != null,
-    detailLedger: [
-      for (final entry
-          in ((row['details'] as Map?)?['ledger'] as List? ?? const []))
-        InvoiceDetailEntry(
-          on: (entry as Map)['on'] as String? ?? '',
-          category: entry['category'] as String? ?? '',
-          label: entry['description'] as String? ?? '',
-          amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
-        ),
-    ],
-    vatTotals: [
-      for (final total in (row['vat_totals'] as List? ?? const []))
-        InvoiceVatTotal.fromJson(total as Map),
-    ],
-    sellerParty: switch ((row['parties'] as Map?)?['seller']) {
-      final Map<dynamic, dynamic> seller => InvoiceParty.fromSnapshot(seller),
-      _ => null,
-    },
-    buyerParty: switch ((row['parties'] as Map?)?['buyer']) {
-      final Map<dynamic, dynamic> buyer => InvoiceParty.fromSnapshot(buyer),
-      _ => null,
-    },
-    correctionReason:
-        (row['parties'] as Map?)?['correction_reason'] as String? ?? '',
-    attendance: [
-      for (final entry
-          in ((row['details'] as Map?)?['attendance'] as List? ?? const []))
-        InvoiceAttendance(
-          startsAt: (entry as Map)['starts_at'] as String? ?? '',
-          endsAt: entry['ends_at'] as String? ?? '',
-          space: entry['space'] as String? ?? '',
-          site: entry['site'] as String? ?? '',
-          status: entry['status'] as String? ?? '',
-        ),
-    ],
-  );
-}
-
-/// #1913 — the embedded `invoice_maturities` row: PostgREST returns the
-/// one-to-one relation as an object, older servers as a list or nothing.
-Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
-      final Map<Object?, Object?> map => map,
-      final List<Object?> list when list.isNotEmpty && list.first is Map =>
-        list.first! as Map<Object?, Object?>,
-      _ => null,
-    };
-
-DateTime? _maturityDueOn(Object? embedded) {
-  final raw = _maturityOf(embedded)?['due_on'] as String?;
-  if (raw == null) return null;
-  final day = DateTime.parse(raw);
-  return DateTime(day.year, day.month, day.day);
+      model.vatBreakdownOf(
+        this,
+        zeroCategory: zeroCategory,
+        reference: ActiveTaxReference.current,
+      );
 }

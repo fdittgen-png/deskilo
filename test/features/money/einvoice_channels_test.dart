@@ -7,7 +7,6 @@
 import 'package:deskilo/features/money/domain/einvoice_channel_check.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:flutter_test/flutter_test.dart';
 

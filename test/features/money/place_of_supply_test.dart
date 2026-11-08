@@ -15,8 +15,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/place_of_supply.dart';
-import 'package:deskilo/core/vat/supply_class.dart';
-import 'package:deskilo/core/vat/vat_treatment.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _case = RegExp(

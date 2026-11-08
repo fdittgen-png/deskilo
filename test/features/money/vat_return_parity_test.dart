@@ -24,11 +24,8 @@
 // acquisition tax of a service bought abroad (`0605_ch_mwst_205_383.sql`).
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_input.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
 

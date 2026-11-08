@@ -420,6 +420,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_invoice_model:
+    dependency: "direct main"
+    description:
+      path: "packages/deskilo_invoice_model"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_jurisdiction_api:
     dependency: "direct main"
     description:

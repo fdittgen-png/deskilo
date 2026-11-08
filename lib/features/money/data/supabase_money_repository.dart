@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/vat/supply_class.dart';
 import '../domain/billing_rules.dart';
 import '../domain/billing_rules_repository.dart';
 import '../domain/commercial_terms_repository.dart';
@@ -16,7 +15,6 @@ import '../domain/expense_repartition.dart';
 import '../domain/expense_repository.dart';
 import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_queries.dart';
@@ -41,8 +39,6 @@ import '../domain/subscription_levels.dart';
 import '../domain/tax_reporting_repository.dart';
 import '../domain/usage_record.dart';
 import '../domain/vat_declaration.dart';
-import '../domain/vat_rate.dart';
-import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
 import 'supabase_billing_rules_repository.dart';
 import 'supabase_commercial_terms_repository.dart';

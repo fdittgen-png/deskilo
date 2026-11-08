@@ -5,7 +5,6 @@ import '../../../core/time/date_text.dart';
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
-import 'invoice.dart';
 
 /// #827 — the invoicing wizard's pure side: which RUN the calendar
 /// calls for, which PERIOD and invoice KIND it works on, and the plan of

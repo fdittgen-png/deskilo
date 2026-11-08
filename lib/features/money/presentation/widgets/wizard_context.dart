@@ -15,7 +15,6 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/dunning.dart';
-import '../../domain/invoice.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
 import '../../providers/money_providers.dart';

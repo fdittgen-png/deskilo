@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'invoice.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_compliance.dart';
-import 'vat_regime.dart';
 
 /// One thing standing between this invoice and a VALID EN 16931 file.
 ///

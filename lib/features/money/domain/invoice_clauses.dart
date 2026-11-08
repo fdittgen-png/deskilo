@@ -1,427 +1,81 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1916 — which payment clauses an invoice prints is decided by the law
-// of the transaction and the customer's capacity, from facts frozen at
-// issue; never by the reader's language or the seller's legal form.
+// #3402 -- moved to deskilo_invoice_model; this path re-exports it until the
+// sweep PR (#3403) rewrites the importers and deletes it.
 //
-// The facts are [LegalClauseSnapshot] (`invoices.legal_snapshot`, 0349):
-// the owner's own clause texts plus the seller country and the buyer's
-// capacity. [qualifyClauses] applies a small, bounded rule set:
-//
-//   * FR, business customer — the clauses art. L441-9 / L441-10 code de
-//     commerce require on an invoice between professionals (late
-//     penalties, the €40 fixed recovery indemnity of art. D441-5, the
-//     discount conditions). The owner's text wins; without one the
-//     workspace's existing default wording prints.
-//   * DE, business customer — § 288 Abs. 2 and 5 BGB apply by law; § 14
-//     Abs. 4 UStG does not make them an invoice mention, so nothing is
-//     printed automatically. The owner's text prints.
-//   * Consumer customer (FR or DE) — no automatic clause. The €40
-//     indemnity is a claim against a business debtor only (art. L441-10
-//     II code de commerce, § 288 Abs. 5 BGB), so it is never printed to
-//     a consumer, even when typed. An owner's late penalty prints but
-//     needs review: it may not override consumer protection.
-//   * Capacity not stated — no automatic clause; the owner's texts print
-//     and are flagged for review.
-//   * Any other EU member state (#2356; Italy, Spain, Poland and Romania
-//     wait for their national e-invoicing channel, #2358) — Directive 2011/7/EU gives every
-//     member state the €40 recovery indemnity and statutory interest
-//     between businesses, by law, without making them an invoice mention:
-//     the owner's texts print, as for Germany; a consumer never gets the
-//     indemnity.
-//   * Outside the EU — no reviewed profile: nothing automatic, the owner's
-//     texts print flagged, and no EU recovery indemnity.
-//
-// Every profile is `requiresReview`: these rules are the documented
-// statutory references, not an authoritative legal review. A profile
-// becomes reviewed only when someone with that authority says so.
+// The wrapper(s) below are the only code in this file that read the installed
+// snapshot (ActiveTaxReference) or the workspace clock. #3403 sweep: callers
+// switch to WorkspaceContext, then the wrapper goes -- not a plain shim delete.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
+    show LegalClauseSnapshot, legalProfileOf, qualifyClauses;
 import 'package:meta/meta.dart';
-
-import '../../../core/data/json_reader.dart';
 import '../../../core/vat/tax_reference_active.dart';
-import 'invoice_legal.dart';
-import 'payment_terms.dart';
-import 'report_strings.dart';
-import 'vat_compliance.dart';
 
-/// Whether the customer acts as a business or as a consumer. Stated by
-/// the seller (`members.customer_capacity`, the workspace default in
-/// `invoice_legal`); never inferred from a VAT id or a company name. A
-/// sole trader acting for their trade is [business].
-enum CustomerCapacity {
-  business('business'),
-  consumer('consumer'),
-  unknown('unknown');
+export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    hide defaultExemptionMention,
+    euCountryCode,
+    exemptionMentionFor,
+    exigibilityMention,
+    exportMention,
+    frozenTaxPointBasis,
+    isEuCountry,
+    legalProfileOf,
+    looksLikeEuVatId,
+    nationalInvoiceMentions,
+    qualifyClauses,
+    reverseChargeMention,
+    supplyVatCategory,
+    taxPointsOf,
+    vatTaxPointBasis,
+    vatTaxPointLedger,
+    vatTaxPointPolicy,
+    vatTotalsOf;
 
-  const CustomerCapacity(this.wire);
-  final String wire;
-
-  static CustomerCapacity fromWire(String? wire) => switch (wire) {
-    'business' => business,
-    'consumer' => consumer,
-    _ => unknown,
-  };
-}
-
-/// The rule set the clauses were qualified under.
-enum LegalProfile {
-  frBusiness,
-  frConsumer,
-  deBusiness,
-  deConsumer,
-
-  /// #2356 — any other EU member state, under Directive 2011/7/EU.
-  euBusiness,
-  euConsumer,
-
-  /// #2359 — the United Kingdom: not in the Union, its own law (Late
-  /// Payment of Commercial Debts (Interest) Act 1998). Nothing is
-  /// automatic: the owner's own wording prints, a business customer only.
-  gbBusiness,
-  gbConsumer,
-
-  /// #2360 — Switzerland: not in the Union, its own law (the Code of
-  /// Obligations; no Directive default is invented). Nothing is automatic:
-  /// the owner's own wording prints, a business customer only.
-  chBusiness,
-  chConsumer,
-
-  /// #2361 — Canada: not in the Union, its own law (provincial; Quebec's
-  /// Charter of the French Language asks for French documents, which the
-  /// report language handles). Nothing is automatic: the owner's own
-  /// wording prints, a business customer only.
-  caBusiness,
-  caConsumer,
-
-  /// #2362 — the United States: no VAT, state law (the UCC and each state's
-  /// prompt-payment rules). Nothing is automatic: the owner's own wording
-  /// prints, a business customer only.
-  usBusiness,
-  usConsumer,
-
-  /// The seller's country has no profile here; nothing is automatic.
-  unsupported,
-
-  /// An EU seller with the capacity not stated.
-  capacityUnknown,
-}
-
-/// Why a clause prints (or not).
-enum ClauseBasis {
-  /// The owner's own text, applicable under the profile.
-  owner,
-
-  /// The workspace's default wording of a clause the profile requires.
-  statutoryDefault,
-
-  /// Printed, but the profile cannot confirm it applies (capacity not
-  /// stated, consumer late penalty, unsupported profile).
-  requiresReview,
-
-  /// Not printed: the clause does not apply to this transaction.
-  notApplicable,
-
-  /// Not printed: nothing written, nothing required.
-  none,
-}
-
-/// One qualified clause: what prints ('' = nothing) and why.
-class QualifiedClause {
-  const QualifiedClause(this.text, this.basis);
-  final String text;
-  final ClauseBasis basis;
-
-  @override
-  bool operator ==(Object other) =>
-      other is QualifiedClause && other.text == text && other.basis == basis;
-
-  @override
-  int get hashCode => Object.hash(text, basis);
-
-  @override
-  String toString() => 'QualifiedClause($basis, "$text")';
-}
-
-/// The four payment clauses of one document, qualified.
-class QualifiedClauses {
-  const QualifiedClauses({
-    required this.profile,
-    required this.paymentTerms,
-    required this.latePenalty,
-    required this.recoveryIndemnity,
-    required this.escompte,
-  });
-
-  final LegalProfile profile;
-  final QualifiedClause paymentTerms;
-  final QualifiedClause latePenalty;
-  final QualifiedClause recoveryIndemnity;
-  final QualifiedClause escompte;
-
-  /// No profile here has had an authoritative legal review.
-  bool get requiresReview => true;
-
-  /// The clauses a person should look at before relying on the document.
-  List<String> get deficiencies => [
-    if (profile == LegalProfile.capacityUnknown) 'capacity_unknown',
-    if (profile == LegalProfile.unsupported) 'profile_unsupported',
-    for (final (key, clause) in [
-      ('payment_terms', paymentTerms),
-      ('late_penalty', latePenalty),
-      ('recovery_indemnity', recoveryIndemnity),
-      ('escompte', escompte),
-    ])
-      if (clause.basis == ClauseBasis.requiresReview)
-        '${key}_review'
-      else if (clause.basis == ClauseBasis.notApplicable)
-        '${key}_not_applicable',
-  ];
-}
-
-/// The legal facts of one invoice as frozen at issue (0349, schema 1).
-class LegalClauseSnapshot {
-  const LegalClauseSnapshot({
-    this.schema = 1,
-    this.sellerKind = '',
-    this.sellerCountry = '',
-    this.buyerCountry = '',
-    this.buyerCapacity = CustomerCapacity.unknown,
-    this.capacitySource = 'none',
-    this.termsSource = 'workspace',
-    this.clauses = PaymentTerms.empty,
-    this.legalForm = '',
-    this.registration = '',
-    this.insurance = '',
-    this.specialMentions = '',
-    this.vatExigibility = 'invoice',
-    this.fingerprint = '',
-  });
-
-  final int schema;
-  final String sellerKind;
-  final String sellerCountry;
-  final String buyerCountry;
-  final CustomerCapacity buyerCapacity;
-
-  /// `member`, `workspace` or `none`.
-  final String capacitySource;
-
-  /// `member` or `workspace` — whose payment conditions were in force.
-  final String termsSource;
-
-  /// The OWNER'S texts in force at issue; '' where none was written.
-  final PaymentTerms clauses;
-  final String legalForm;
-  final String registration;
-  final String insurance;
-  final String specialMentions;
-  final String vatExigibility;
-  final String fingerprint;
-
-  bool get onPaymentBasis => vatExigibility == 'payment';
-
-  factory LegalClauseSnapshot.fromJson(Map<dynamic, dynamic> json) {
-    final r = JsonReader.of(json, context: 'legal_clause_snapshot');
-    return LegalClauseSnapshot(
-      schema: r.intOrNull('schema') ?? 1,
-      sellerKind: r.stringOr('seller_kind'),
-      sellerCountry: r.stringOr('seller_country'),
-      buyerCountry: r.stringOr('buyer_country'),
-      buyerCapacity:
-          CustomerCapacity.fromWire(r.stringOrNull('buyer_capacity')),
-      capacitySource: r.stringOr('capacity_source', 'none'),
-      termsSource: r.stringOr('terms_source', 'workspace'),
-      clauses: PaymentTerms.fromJson(r.objectOrEmpty('clauses')),
-      legalForm: r.stringOr('legal_form'),
-      registration: r.stringOr('registration'),
-      insurance: r.stringOr('insurance'),
-      specialMentions: r.stringOr('special_mentions'),
-      vatExigibility: r.stringOr('vat_exigibility', 'invoice'),
-      fingerprint: r.stringOr('fingerprint'),
-    );
-  }
-
-  /// The same facts read from the LIVE settings — for documents that are
-  /// not an issued invoice (statements, letters, previews). The member's
-  /// own capacity wins over the workspace default, as in the SQL twin.
-  factory LegalClauseSnapshot.live({
-    required InvoiceLegal legal,
-    required String sellerCountry,
-    String buyerCountry = '',
-    PaymentTerms? memberTerms,
-    String? memberCapacity,
-  }) {
-    final member = CustomerCapacity.fromWire(memberCapacity);
-    final fallback = CustomerCapacity.fromWire(legal.customerCapacity);
-    final capacity = member != CustomerCapacity.unknown ? member : fallback;
-    return LegalClauseSnapshot(
-      sellerKind: legal.sellerKind,
-      sellerCountry: sellerCountry.trim().toUpperCase(),
-      buyerCountry: buyerCountry.trim().toUpperCase(),
-      buyerCapacity: capacity,
-      capacitySource: member != CustomerCapacity.unknown
-          ? 'member'
-          : capacity == CustomerCapacity.unknown
-          ? 'none'
-          : 'workspace',
-      termsSource: memberTerms == null ? 'workspace' : 'member',
-      clauses: PaymentTerms.ofLegal(legal).mergedWith(memberTerms),
-      legalForm: legal.legalForm,
-      registration: legal.registration,
-      insurance: legal.insurance,
-      specialMentions: legal.specialMentions,
-      vatExigibility: legal.exigibilityIn(sellerCountry),
-    );
-  }
-}
-
-/// The profile [snapshot] falls under: the seller's country (where the
-/// supply is made from — the transaction law this bounded set knows) and
-/// the buyer's stated capacity.
 @visibleForTesting
-LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
-  final country = snapshot.sellerCountry.trim().toUpperCase();
-  // #2358 — a national clearance channel the app does not speak yet, or a
-  // country without an `issuing_gate` row (#2479).
-  if (!ActiveTaxReference.current.issuesFor(country)) {
-    return LegalProfile.unsupported;
-  }
-  return switch ((country, snapshot.buyerCapacity)) {
-    ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
-    ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
-    ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
-    ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
-    ('GB', CustomerCapacity.business) => LegalProfile.gbBusiness,
-    ('GB', CustomerCapacity.consumer) => LegalProfile.gbConsumer,
-    ('CH', CustomerCapacity.business) => LegalProfile.chBusiness,
-    ('CH', CustomerCapacity.consumer) => LegalProfile.chConsumer,
-    ('CA', CustomerCapacity.business) => LegalProfile.caBusiness,
-    ('CA', CustomerCapacity.consumer) => LegalProfile.caConsumer,
-    ('US', CustomerCapacity.business) => LegalProfile.usBusiness,
-    ('US', CustomerCapacity.consumer) => LegalProfile.usConsumer,
-    (_, CustomerCapacity.business) => LegalProfile.euBusiness,
-    (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
-    _ => LegalProfile.capacityUnknown,
-  };
-}
+LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) =>
+    model.legalProfileOf(snapshot, reference: ActiveTaxReference.current);
 
-/// The four payment clauses [snapshot] prints. [strings] only supplies
-/// the wording of a default in the reader's language — it never decides
-/// whether a clause applies.
 QualifiedClauses qualifyClauses(
   LegalClauseSnapshot snapshot,
   ReportStrings strings,
-) {
-  final profile = legalProfileOf(snapshot);
-  final own = snapshot.clauses;
-  QualifiedClause owned(String text, {required String orDefault}) {
-    if (text.trim().isNotEmpty) {
-      return QualifiedClause(text.trim(), ClauseBasis.owner);
-    }
-    return orDefault.isEmpty
-        ? const QualifiedClause('', ClauseBasis.none)
-        : QualifiedClause(orDefault, ClauseBasis.statutoryDefault);
-  }
+) => model.qualifyClauses(
+  snapshot,
+  strings,
+  reference: ActiveTaxReference.current,
+);
 
-  QualifiedClause review(String text) => text.trim().isEmpty
-      ? const QualifiedClause('', ClauseBasis.none)
-      : QualifiedClause(text.trim(), ClauseBasis.requiresReview);
-
-  const notApplicable = QualifiedClause('', ClauseBasis.notApplicable);
-  final businessOnlyIndemnity = own.recoveryIndemnity.trim().isEmpty
-      ? const QualifiedClause('', ClauseBasis.none)
-      : notApplicable;
-
-  // The payment terms are a contractual statement, the same in every
-  // profile: the owner's text or the workspace's default wording.
-  final terms = owned(own.paymentTerms, orDefault: strings.paymentTermsDefault);
-
-  return switch (profile) {
-    LegalProfile.frBusiness => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: owned(
-        own.latePenalty,
-        orDefault: strings.latePenaltyDefault,
-      ),
-      recoveryIndemnity: owned(
-        own.recoveryIndemnity,
-        orDefault: strings.recoveryDefault,
-      ),
-      escompte: owned(own.escompte, orDefault: strings.escompteDefault),
-    ),
-    LegalProfile.deBusiness ||
-    LegalProfile.euBusiness ||
-    LegalProfile.gbBusiness ||
-    LegalProfile.chBusiness ||
-    LegalProfile.caBusiness ||
-    LegalProfile.usBusiness => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: owned(own.latePenalty, orDefault: ''),
-      recoveryIndemnity: owned(own.recoveryIndemnity, orDefault: ''),
-      escompte: owned(own.escompte, orDefault: ''),
-    ),
-    LegalProfile.frConsumer ||
-    LegalProfile.deConsumer ||
-    LegalProfile.euConsumer ||
-    LegalProfile.gbConsumer ||
-    LegalProfile.chConsumer ||
-    LegalProfile.caConsumer ||
-    LegalProfile.usConsumer => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: review(own.latePenalty),
-      recoveryIndemnity: businessOnlyIndemnity,
-      escompte: owned(own.escompte, orDefault: ''),
-    ),
-    LegalProfile.capacityUnknown => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: review(own.latePenalty),
-      recoveryIndemnity: review(own.recoveryIndemnity),
-      escompte: review(own.escompte),
-    ),
-    LegalProfile.unsupported => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: review(own.latePenalty),
-      recoveryIndemnity: isEuCountry(snapshot.sellerCountry)
-          ? review(own.recoveryIndemnity)
-          : businessOnlyIndemnity,
-      escompte: review(own.escompte),
-    ),
-  };
-}
-
-/// #1916 — the clauses a LEGACY document (issued before 0349, no
-/// snapshot) prints: exactly the pre-0344 rule — the workspace defaults
-/// unless the seller is an association. Kept so an old invoice renders
-/// as it always did; its evidence is unknown and nothing is reissued.
-QualifiedClauses legacyClauses(
-  InvoiceLegal legal,
-  PaymentTerms terms,
-  ReportStrings strings,
-) {
-  QualifiedClause pick(String value, String fallback, {bool b2b = true}) {
-    if (value.trim().isNotEmpty) {
-      return QualifiedClause(value.trim(), ClauseBasis.owner);
-    }
-    if (b2b && legal.isAssociation) {
-      return const QualifiedClause('', ClauseBasis.none);
-    }
-    return QualifiedClause(fallback, ClauseBasis.statutoryDefault);
-  }
-
-  return QualifiedClauses(
-    profile: LegalProfile.unsupported,
-    paymentTerms: pick(
-      terms.paymentTerms,
-      strings.paymentTermsDefault,
-      b2b: false,
-    ),
-    latePenalty: pick(terms.latePenalty, strings.latePenaltyDefault),
-    recoveryIndemnity: pick(terms.recoveryIndemnity, strings.recoveryDefault),
-    escompte: pick(terms.escompte, strings.escompteDefault),
-  );
-}
+/// The same facts read from the LIVE settings (statements, letters,
+/// previews): `LegalClauseSnapshot.live` with the installed reference.
+LegalClauseSnapshot legalClauseSnapshotLive({
+  required InvoiceLegal legal,
+  required String sellerCountry,
+  String buyerCountry = '',
+  PaymentTerms? memberTerms,
+  String? memberCapacity,
+}) => model.LegalClauseSnapshot.live(
+  legal: legal,
+  sellerCountry: sellerCountry,
+  buyerCountry: buyerCountry,
+  memberTerms: memberTerms,
+  memberCapacity: memberCapacity,
+  reference: ActiveTaxReference.current,
+);

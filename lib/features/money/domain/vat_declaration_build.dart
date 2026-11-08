@@ -4,7 +4,6 @@
 // was a function of `vat_declaration.dart`; split out so the declaration model
 // (lines, boxes, forms, XML) no longer imports the invoice model and can move
 // into a package of its own.
-import 'invoice.dart';
 import 'vat_declaration.dart';
 import 'vat_tax_point.dart';
 

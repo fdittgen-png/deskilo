@@ -32,7 +32,6 @@ import 'package:xml/xml.dart';
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
-import 'invoice.dart';
 import 'vat_tax_point.dart';
 
 /// Who bought, as e-reporting sorts it.

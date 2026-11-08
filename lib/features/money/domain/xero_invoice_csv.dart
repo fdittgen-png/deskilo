@@ -13,9 +13,7 @@ import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
-import 'billing_rules.dart';
 import 'invoice.dart';
-import 'vat_rate.dart';
 
 /// The columns of Xero's sales-invoice import template as Xero documents
 /// them, in their order (Import customer invoices). Xero asks that the
