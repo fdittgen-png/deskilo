@@ -187,7 +187,7 @@ void main() {
         'F-2026-0009',
         'F-2026-0010',
       ], reason: 'issue order, the voided document left out');
-      final sheet = esLibroExpedidas(docs, activity: 'A038612');
+      final sheet = esLibroExpedidas(docs, activity: 'A038612', reference: ActiveTaxReference.current);
       expect(sheet.name, 'EXPEDIDAS');
       final lines = sheet.rows.skip(2).toList();
       expect(lines, hasLength(5));
@@ -275,8 +275,7 @@ void main() {
     final sheet = esLibroExpedidas(
       registerDocuments(q3, from: DateTime(2026), to: DateTime(2026, 10)),
       activity: '',
-      monthly: true,
-    );
+      monthly: true, reference: ActiveTaxReference.current,);
     expect(sheet.rows[2][1], '07');
     expect(sheet.rows[2].sublist(2, 5), ['', '', ''], reason: 'no activity');
   });
@@ -293,8 +292,7 @@ void main() {
         final xml = siiFacturasEmitidasXml(
           docs,
           vatId: 'ESB12345678',
-          name: 'Cowork Peñíscola SL',
-        );
+          name: 'Cowork Peñíscola SL', reference: ActiveTaxReference.current,);
         final dir = Platform.environment['VAT_FILING_SAMPLES_DIR'];
         if (dir != null && dir.isNotEmpty) {
           File('$dir/es_sii.xml')
@@ -357,7 +355,7 @@ void main() {
         vat: [for (var r = 1; r <= 7; r++) _total(r.toDouble(), 1000, 10 * r)],
       );
       expect(
-        () => siiFacturasEmitidasXml([many], vatId: 'ESB12345678', name: 'X'),
+        () => siiFacturasEmitidasXml([many], vatId: 'ESB12345678', name: 'X', reference: ActiveTaxReference.current),
         throwsA(
           isA<VatFilingFileException>().having(
             (e) => e.problem,
@@ -370,7 +368,7 @@ void main() {
 
     test('the space names its NIF', () {
       expect(
-        () => siiFacturasEmitidasXml(q3, vatId: 'ES12', name: 'X'),
+        () => siiFacturasEmitidasXml(q3, vatId: 'ES12', name: 'X', reference: ActiveTaxReference.current),
         throwsA(
           isA<VatFilingFileException>().having(
             (e) => e.problem,

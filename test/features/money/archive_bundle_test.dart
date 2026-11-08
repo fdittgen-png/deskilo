@@ -4,6 +4,7 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -49,7 +50,7 @@ void main() {
   test('the bundle is an export format offered everywhere', () {
     expect(accountingTargets.map((t) => t.format).nonNulls.map((f) => f.id), contains('bundle'));
     for (final c in ['FR', 'DE', 'ES', 'PT', 'XX']) {
-      expect(formatsFor(c).map((f) => f.id), contains('bundle'), reason: c);
+      expect(formatsFor(c, reference: ActiveTaxReference.current).map((f) => f.id), contains('bundle'), reason: c);
     }
     expect(archiveBundleFormat.extension, 'zip');
   });

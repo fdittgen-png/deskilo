@@ -5,6 +5,7 @@
 // uncertified PT file is never "certified", and nothing is labelled
 // accepted by an authority.
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -64,13 +65,13 @@ void main() {
 
   test('every catalogued country gets the generic document handoff', () {
     for (final c in CountryCatalog.countries) {
-      final offered = formatsFor(c.code).map((f) => f.id);
+      final offered = formatsFor(c.code, reference: ActiveTaxReference.current).map((f) => f.id);
       expect(offered, contains('accountant_csv'), reason: c.code);
       expect(offered, contains('audit_trail'), reason: c.code);
     }
     // An unknown country is unqualified for any national file but keeps the
     // generic route.
-    final unknown = formatsFor('ZZ').map((f) => f.id).toSet();
+    final unknown = formatsFor('ZZ', reference: ActiveTaxReference.current).map((f) => f.id).toSet();
     expect(unknown, {
       // #2379 — the OECD tree with the ledger, an exchange file.
       'saft_oecd_full',

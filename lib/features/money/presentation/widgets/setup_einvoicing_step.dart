@@ -26,6 +26,7 @@ import '../../domain/einvoice_gateway.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/einvoice_providers.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import 'e_invoice_sheet.dart';
 import 'einvoice_provider_section.dart';
 
@@ -183,9 +184,13 @@ class _Obligations extends ConsumerWidget {
     final today = ref.watch(clockProvider).now();
     final dates = DateFormat.yMMMd(Localizations.localeOf(context).toString());
     final duties = mandatesFor(countryCode);
-    final refused = nationalChannelRequired.contains(
-      countryCode.trim().toUpperCase(),
-    );
+    // Until the workspace's own tax reference is ready nothing is refused.
+    final reference = watchWorkspaceTaxReference(ref);
+    final refused =
+        reference != null &&
+        nationalChannelRequiredOn(reference).contains(
+          countryCode.trim().toUpperCase(),
+        );
     return Column(
       key: const ValueKey('setup-einvoicing-preview'),
       crossAxisAlignment: CrossAxisAlignment.stretch,

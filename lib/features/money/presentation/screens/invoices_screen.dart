@@ -12,7 +12,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_proforma.dart';
@@ -71,7 +70,7 @@ class InvoicesScreen extends ConsumerWidget {
       currencyCode: workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
       vatExempt: workspace?.vatRegime == 'exempt',
       // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
-      isEu: isEuCountry(countryCode),
+      isEu: workspaceIsEu(ref, countryCode),
       showMemberNames: (me?.canAdminister ?? false) ||
           perms.contains(WorkspacePermission.viewFinances),
       setupGuideAvailable: perms.contains(WorkspacePermission.manageConfiguration) &&

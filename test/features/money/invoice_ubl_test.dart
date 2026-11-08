@@ -17,6 +17,8 @@ import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 Invoice _invoice({String replacesNumber = '', List<InvoiceLine>? lines}) =>
     Invoice(
       id: 'inv-1',
@@ -84,10 +86,10 @@ extension on XmlDocument {
 void main() {
   test('the EU set has all 27 member states and nothing else', () {
     expect(euMemberStates, hasLength(27));
-    expect(isEuCountry('fr'), isTrue);
-    expect(isEuCountry('DE'), isTrue);
-    expect(isEuCountry('CH'), isFalse);
-    expect(isEuCountry('GB'), isFalse);
+    expect(isEuCountry('fr', reference: ActiveTaxReference.current), isTrue);
+    expect(isEuCountry('DE', reference: ActiveTaxReference.current), isTrue);
+    expect(isEuCountry('CH', reference: ActiveTaxReference.current), isFalse);
+    expect(isEuCountry('GB', reference: ActiveTaxReference.current), isFalse);
   });
 
   test(

@@ -33,6 +33,7 @@
 library;
 
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
@@ -223,8 +224,11 @@ const _frEReportingFormat = AccountingFormat(
 );
 
 /// What to offer in [countryCode], most specific first.
-List<AccountingFormat> formatsFor(String countryCode) => [
-  for (final t in targetsFor(countryCode))
+List<AccountingFormat> formatsFor(
+  String countryCode, {
+  required TaxReferenceSet reference,
+}) => [
+  for (final t in targetsFor(countryCode, reference: reference))
     ?t.format,
 ];
 
@@ -457,16 +461,22 @@ const List<AccountingTarget> accountingTargets = [
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.
-List<AccountingTarget> targetsFor(String countryCode) => [
+List<AccountingTarget> targetsFor(
+  String countryCode, {
+  required TaxReferenceSet reference,
+}) => [
   for (final t in accountingTargets)
-    if (t.offeredIn(countryCode)) t,
+    if (t.offeredIn(countryCode, reference: reference)) t,
 ];
 
 /// #2373 — the products offered in [countryCode] that import another
 /// target's file, grouped by the id of that target, in registry order.
-Map<String, List<AccountingTarget>> importRoutesFor(String countryCode) {
+Map<String, List<AccountingTarget>> importRoutesFor(
+  String countryCode, {
+  required TaxReferenceSet reference,
+}) {
   final routes = <String, List<AccountingTarget>>{};
-  for (final t in targetsFor(countryCode)) {
+  for (final t in targetsFor(countryCode, reference: reference)) {
     if (t.importsTargetId case final via?) (routes[via] ??= []).add(t);
   }
   return routes;

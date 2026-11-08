@@ -19,6 +19,8 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/installed_reference_shims.dart';
+
 void main() {
   final golden = jsonDecode(
     File('test/features/money/golden/vat_reference_golden.json').readAsStringSync(),
@@ -90,7 +92,7 @@ void main() {
   test('the EU set, its aliases and the VAT id patterns are the old ones', () {
     expect(euMemberStates.toList()..sort(), golden['eu']);
     for (final MapEntry(key: code, value: eu) in (golden['isEu'] as Map<String, dynamic>).entries) {
-      expect(isEuCountry(code), eu, reason: "isEuCountry('$code')");
+      expect(isEuCountry(code, reference: ActiveTaxReference.current), eu, reason: "isEuCountry('$code')");
     }
     for (final MapEntry(key: code, value: want) in (golden['euCode'] as Map<String, dynamic>).entries) {
       expect(euCountryCode(code, reference: ActiveTaxReference.current), want, reason: "euCountryCode('$code')");
@@ -180,7 +182,7 @@ void main() {
       // GB had no row: the changed() helper only added one from the day.
       expect(isEuCountry('GB', reference: set.on('2029-12-31')), isFalse);
       expect(isEuCountry('GB', reference: set.on('2030-01-01')), isTrue);
-      expect(isEuCountry('GB'), isFalse);
+      expect(isEuCountry('GB', reference: ActiveTaxReference.current), isFalse);
     });
   });
 }

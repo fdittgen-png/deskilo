@@ -5,6 +5,8 @@
 // D406 in saf_t_financial_ro.dart), and
 // Denmark's routes, where the duty is a registered bookkeeping system
 // rather than a file.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+
 import 'accounting_format.dart';
 
 /// Skatteetaten's SAF-T Financial 1.30. Regulatory: written to the
@@ -242,13 +244,19 @@ const List<AccountingTarget> safTFinancialTargets = [
 /// deliver to, by product name, when its law asks for a registered system
 /// rather than a file (Denmark); empty everywhere else. The export sheet
 /// says so first.
-List<String> registeredSystemsFor(String country) =>
+List<String> registeredSystemsFor(
+  String country, {
+  required TaxReferenceSet reference,
+}) =>
     safTFinancialTargets.any(
-      (t) => t.id == 'denmark_registered_system' && t.offeredIn(country),
+      (t) =>
+          t.id == 'denmark_registered_system' &&
+          t.offeredIn(country, reference: reference),
     )
     ? [
         for (final t in safTFinancialTargets)
-          if (_registeredSystems.contains(t.id) && t.offeredIn(country))
+          if (_registeredSystems.contains(t.id) &&
+              t.offeredIn(country, reference: reference))
             t.product,
       ]
     : const [];

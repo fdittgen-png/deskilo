@@ -11,6 +11,8 @@
 // [AccountingCapability], keyed by the target id.
 
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+
 import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
@@ -152,11 +154,12 @@ class AccountingTarget {
   /// choosing that target, and the export sheet says so.
   final String? importsTargetId;
 
-  bool offeredIn(String countryCode) {
+  bool offeredIn(String countryCode, {required TaxReferenceSet reference}) {
     final code = countryCode.toUpperCase();
     return countries.isEmpty ||
         countries.contains(code) ||
-        (countries.contains(accountingCountriesEu) && isEuCountry(code));
+        (countries.contains(accountingCountriesEu) &&
+            isEuCountry(code, reference: reference));
   }
 
   /// A software a space can keep its books in: neither the app's own

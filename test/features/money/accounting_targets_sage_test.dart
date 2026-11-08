@@ -8,6 +8,7 @@
 // each region by the descriptor's country.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_sage.dart';
@@ -87,30 +88,30 @@ void main() {
 
   test('Sage 100 and Sage 50 in France import the FEC, Sage in Germany '
       'and Austria DATEV; neither writes a file of its own', () {
-    expect(importRoutesFor('FR')['fec']!.map((t) => t.id), [
+    expect(importRoutesFor('FR', reference: ActiveTaxReference.current)['fec']!.map((t) => t.id), [
       'sage100_fr',
       'sage50_fr',
     ]);
     for (final country in ['DE', 'AT']) {
-      expect(importRoutesFor(country)['datev']!.map((t) => t.id), ['sage_de']);
+      expect(importRoutesFor(country, reference: ActiveTaxReference.current)['datev']!.map((t) => t.id), ['sage_de']);
     }
-    expect(importRoutesFor('GB'), isEmpty);
+    expect(importRoutesFor('GB', reference: ActiveTaxReference.current), isEmpty);
     for (final id in ['sage100_fr', 'sage50_fr', 'sage_de']) {
       expect(_target(id).format, isNull, reason: id);
-      expect(formatsFor('FR').map((f) => f.id), isNot(contains(id)));
+      expect(formatsFor('FR', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains(id)));
     }
   });
 
   test('choosing a Sage of France or Germany is told which file to take', () {
     final l10n = lookupAppLocalizations(const Locale('en'));
-    final fr = importNotices(l10n, 'FR');
+    final fr = importNotices(l10n, 'FR', reference: ActiveTaxReference.current);
     expect(fr, hasLength(1));
     expect(fr.single, contains('Sage 100 Comptabilité'));
     expect(fr.single, contains(l10n.invoiceExportFec));
-    final de = importNotices(l10n, 'DE').single;
+    final de = importNotices(l10n, 'DE', reference: ActiveTaxReference.current).single;
     expect(de, contains('Sage 50 / Sage 100'));
     expect(de, contains(l10n.invoiceExportDatev));
-    expect(importNotices(l10n, 'GB'), isEmpty);
+    expect(importNotices(l10n, 'GB', reference: ActiveTaxReference.current), isEmpty);
   });
 
   test('Sage 50 Canada, Sage 200 and Sage Intacct wait for a '
@@ -122,6 +123,6 @@ void main() {
       expect(t.format, isNull, reason: id);
       expect(t.runnerDelivers, isFalse, reason: id);
     }
-    expect(targetsFor('CA').map((t) => t.id), contains('sage50_ca'));
+    expect(targetsFor('CA', reference: ActiveTaxReference.current).map((t) => t.id), contains('sage50_ca'));
   });
 }

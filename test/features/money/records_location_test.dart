@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/settings/active_settings.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/records_location.dart';
 import 'package:deskilo/features/money/presentation/widgets/records_location_tile.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -34,7 +35,7 @@ const _hosting = 'records.hosting_country';
 const _cra = 'records.cra_authorisation_reference';
 
 RecordsLocation _of(String country, [Map<String, Object> values = const {}]) =>
-    RecordsLocation.fromSettings(_settings(values), issuerCountry: country);
+    RecordsLocation.fromSettings(_settings(values), issuerCountry: country, reference: ActiveTaxReference.current);
 
 void main() {
   group('the declaration', () {
@@ -68,12 +69,11 @@ void main() {
     test('an older registry without the keys declares nothing', () {
       final l = RecordsLocation.fromSettings(
         SettingsSet(const {}, const {}),
-        issuerCountry: 'CA',
-      );
+        issuerCountry: 'CA', reference: ActiveTaxReference.current,);
       expect(l.hostingCountry, isNull);
       expect(l.craNotice, isTrue);
       expect(
-        RecordsLocation.fromSettings(null, issuerCountry: 'CA').hostingCountry,
+        RecordsLocation.fromSettings(null, issuerCountry: 'CA', reference: ActiveTaxReference.current).hostingCountry,
         isNull,
       );
     });

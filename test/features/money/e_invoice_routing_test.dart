@@ -3,19 +3,20 @@
 // Where an EN 16931 export has to GO. The XML alone answered nothing: the
 // routing table names the channel and the syntax per country, and says
 // honestly where this file is NOT the accepted one.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/e_invoice_routing.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('outside the EU there is no route at all', () {
-    expect(eInvoiceRouteFor('CH'), isNull);
-    expect(eInvoiceRouteFor('US'), isNull);
-    expect(eInvoiceRouteFor(''), isNull);
+    expect(eInvoiceRouteFor('CH', reference: ActiveTaxReference.current), isNull);
+    expect(eInvoiceRouteFor('US', reference: ActiveTaxReference.current), isNull);
+    expect(eInvoiceRouteFor('', reference: ActiveTaxReference.current), isNull);
   });
 
   test('France routes through an accredited platform, Chorus Pro for B2G',
       () {
-    final route = eInvoiceRouteFor('fr')!;
+    final route = eInvoiceRouteFor('fr', reference: ActiveTaxReference.current)!;
     expect(route.transport, EInvoiceTransport.accredited);
     expect(route.publicChannel, contains('Chorus Pro'));
     expect(route.ublAccepted, isTrue,
@@ -23,14 +24,14 @@ void main() {
   });
 
   test('Belgium is the Peppol mandate', () {
-    final route = eInvoiceRouteFor('BE')!;
+    final route = eInvoiceRouteFor('BE', reference: ActiveTaxReference.current)!;
     expect(route.transport, EInvoiceTransport.peppol);
     expect(route.businessChannel, 'Peppol');
   });
 
   test('clearance countries take their own syntax, not this file', () {
     for (final code in ['IT', 'PL', 'RO']) {
-      final route = eInvoiceRouteFor(code)!;
+      final route = eInvoiceRouteFor(code, reference: ActiveTaxReference.current)!;
       expect(route.transport, EInvoiceTransport.clearance,
           reason: '$code puts a national platform in the path');
       expect(route.ublAccepted, isFalse,
@@ -39,14 +40,14 @@ void main() {
   });
 
   test('Germany imposes no channel but expects an EN 16931 syntax', () {
-    final route = eInvoiceRouteFor('DE')!;
+    final route = eInvoiceRouteFor('DE', reference: ActiveTaxReference.current)!;
     expect(route.transport, EInvoiceTransport.bilateral);
     expect(route.businessFormat, contains('XRechnung'));
     expect(route.ublAccepted, isTrue);
   });
 
   test('an EU country without its own mandate falls back to Peppol', () {
-    final route = eInvoiceRouteFor('IE')!;
+    final route = eInvoiceRouteFor('IE', reference: ActiveTaxReference.current)!;
     expect(route.transport, EInvoiceTransport.bilateral);
     expect(route.businessChannel, 'Peppol');
     expect(route.publicChannel, 'Peppol',

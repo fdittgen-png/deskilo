@@ -6,10 +6,12 @@
 // each target by the same countries as the descriptors.
 import 'dart:io';
 
-import 'package:deskilo/core/vat/place_of_supply.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/installed_reference_shims.dart';
 
 const _ids = {'xero_gb', 'xero_ca', 'xero_us', 'xero_eu'};
 
@@ -44,7 +46,7 @@ void main() {
 
   test('each region is offered where its organisations are', () {
     String? xeroIn(String country) =>
-        targetsFor(country)
+        targetsFor(country, reference: ActiveTaxReference.current)
             .where((t) => t.id.startsWith('xero_') && t.transport == AccountingTransport.api)
             .singleOrNull
             ?.id;

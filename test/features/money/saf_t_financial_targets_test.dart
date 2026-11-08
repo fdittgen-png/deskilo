@@ -3,6 +3,7 @@
 // #2379 — where the SAF-T Financial files are offered and what they claim,
 // what a Danish space is told, and the one extra postings read that gives
 // the opening balances.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -132,11 +133,11 @@ final _profile = BookProfile(
 void main() {
   test("Norway's and Luxembourg's files come first and claim the authority's "
       'format; the OECD tree is an exchange file everywhere', () {
-    expect(formatsFor('NO').first.id, 'saft_no');
-    expect(formatsFor('LU').first.id, 'faia_lu');
-    expect(formatsFor('NO').first.claim, FormatClaim.regulatory);
+    expect(formatsFor('NO', reference: ActiveTaxReference.current).first.id, 'saft_no');
+    expect(formatsFor('LU', reference: ActiveTaxReference.current).first.id, 'faia_lu');
+    expect(formatsFor('NO', reference: ActiveTaxReference.current).first.claim, FormatClaim.regulatory);
     for (final country in ['NO', 'LU', 'DK', 'BE']) {
-      final full = formatsFor(country)
+      final full = formatsFor(country, reference: ActiveTaxReference.current)
           .singleWhere((f) => f.id == 'saft_oecd_full');
       expect(full.claim, FormatClaim.exchange);
     }
@@ -152,10 +153,10 @@ void main() {
 
   test('Denmark is told about the registered system, and no Danish file '
       'claims to meet it', () {
-    expect(registeredSystemsFor('DK'), ['e-conomic', 'Dinero', 'Billy']);
-    expect(registeredSystemsFor('NO'), isEmpty);
+    expect(registeredSystemsFor('DK', reference: ActiveTaxReference.current), ['e-conomic', 'Dinero', 'Billy']);
+    expect(registeredSystemsFor('NO', reference: ActiveTaxReference.current), isEmpty);
     expect(
-      formatsFor('DK').where((f) => f.claim == FormatClaim.regulatory),
+      formatsFor('DK', reference: ActiveTaxReference.current).where((f) => f.claim == FormatClaim.regulatory),
       isEmpty,
     );
     // #2379 — the SAF-T DK file is written and read against the published
@@ -172,7 +173,7 @@ void main() {
       QualificationState.locallyValidated,
     );
     expect(
-      formatsFor('RO').where((f) => f.claim == FormatClaim.regulatory),
+      formatsFor('RO', reference: ActiveTaxReference.current).where((f) => f.claim == FormatClaim.regulatory),
       isEmpty,
     );
     for (final id in [
@@ -190,13 +191,13 @@ void main() {
   });
 
   test('Polish target is not offered before source coverage is established', () {
-    final target = targetsFor('PL').singleWhere((t) => t.id == 'jpk_kr_pl');
+    final target = targetsFor('PL', reference: ActiveTaxReference.current).singleWhere((t) => t.id == 'jpk_kr_pl');
     expect(target.format, isNull);
     expect(target.capability.state, QualificationState.specificationNeeded);
     expect(target.capability.obligations, containsAll([
       Obligation.completePostedBooks, Obligation.targetAcceptance,
     ]));
-    expect(formatsFor('PL').map((f) => f.id), isNot(contains('jpk_kr_pl')));
+    expect(formatsFor('PL', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('jpk_kr_pl')));
   });
 
   testWidgets('the sheet shows the notice, then the Norwegian file with its '
@@ -211,7 +212,7 @@ void main() {
             builder: (context) => TextButton(
               onPressed: () => showAccountingExportSheet(
                 context,
-                formats: formatsFor('NO'),
+                formats: formatsFor('NO', reference: ActiveTaxReference.current),
                 notices: [l10n.exportDenmarkRegisteredSystem('e-conomic')],
               ),
               child: const Text('open'),

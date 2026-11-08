@@ -23,6 +23,7 @@ import '../../domain/accounting_format.dart';
 import '../../domain/remote_revocation.dart';
 import '../../providers/accounting_connection_providers.dart';
 import '../../providers/book_profile_providers.dart';
+import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import 'accounting_capability_card.dart';
 import 'accounting_connection_dialogs.dart';
 import 'accounting_token_dialog.dart';
@@ -82,8 +83,10 @@ class AccountingTargetsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final scope = ref.watch(accountingSystemsScopeProvider);
+    final reference = watchWorkspaceTaxReference(ref);
+    if (reference == null) return const SizedBox.shrink();
     final apiTargets = [
-      for (final t in targetsFor(scope.countryCode))
+      for (final t in targetsFor(scope.countryCode, reference: reference))
         if (t.transport == AccountingTransport.api && t.capability.producible)
           t,
     ];

@@ -4,7 +4,6 @@
 // wrappers that keep the old signatures) until the sweep PR (#3403).
 export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide frozenTaxPointBasis,
-    isEuCountry,
     taxPointsOf,
     vatTaxPointLedger;
 export 'invoice_model_wrappers.dart';

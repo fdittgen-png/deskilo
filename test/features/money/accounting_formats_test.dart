@@ -141,23 +141,23 @@ void main() {
 
   group('a country is offered what it can actually use', () {
     test('France gets the FEC, Germany does not', () {
-      expect(formatsFor('FR').map((f) => f.id), contains('fec'));
-      expect(formatsFor('DE').map((f) => f.id), isNot(contains('fec')));
+      expect(formatsFor('FR', reference: ActiveTaxReference.current).map((f) => f.id), contains('fec'));
+      expect(formatsFor('DE', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('fec')));
     });
 
     test('Germany and Austria get DATEV; Switzerland does NOT', () {
       // DATEV is a German-market product. A Swiss fiduciary does not run
       // it, and offering it there is a dead end dressed as a feature.
-      expect(formatsFor('DE').map((f) => f.id), contains('datev'));
-      expect(formatsFor('AT').map((f) => f.id), contains('datev'));
-      expect(formatsFor('CH').map((f) => f.id), isNot(contains('datev')));
+      expect(formatsFor('DE', reference: ActiveTaxReference.current).map((f) => f.id), contains('datev'));
+      expect(formatsFor('AT', reference: ActiveTaxReference.current).map((f) => f.id), contains('datev'));
+      expect(formatsFor('CH', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('datev')));
     });
 
     test('Switzerland gets the KMU journal, nobody else does (#2360)', () {
-      expect(formatsFor('CH').map((f) => f.id), contains('ch_kmu'));
-      expect(formatsFor('DE').map((f) => f.id), isNot(contains('ch_kmu')));
+      expect(formatsFor('CH', reference: ActiveTaxReference.current).map((f) => f.id), contains('ch_kmu'));
+      expect(formatsFor('DE', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('ch_kmu')));
       expect(
-        formatsFor('CH').firstWhere((f) => f.id == 'ch_kmu').claim,
+        formatsFor('CH', reference: ActiveTaxReference.current).firstWhere((f) => f.id == 'ch_kmu').claim,
         FormatClaim.exchange,
         reason: 'a fiduciary reviews and posts it; no authority reads it',
       );
@@ -165,11 +165,11 @@ void main() {
 
     test('Switzerland is offered the Swiss journal, Banana and bexio, and no '
         'DATEV, FEC or Sage 50 UK (#2377)', () {
-      final files = formatsFor('CH').map((f) => f.id);
+      final files = formatsFor('CH', reference: ActiveTaxReference.current).map((f) => f.id);
       expect(files, containsAll(['ch_kmu', 'banana_transactions']));
       expect(files, isNot(anyOf(contains('datev'), contains('fec'),
           contains('sage50'))));
-      final targets = {for (final t in targetsFor('CH')) t.id: t};
+      final targets = {for (final t in targetsFor('CH', reference: ActiveTaxReference.current)) t.id: t};
       expect(targets['bexio_api']!.transport, AccountingTransport.api);
       expect(targets['bexio_api']!.capability.producible, isTrue);
       for (final id in ['datev', 'fec', 'sage50', 'pennylane_api']) {
@@ -187,15 +187,15 @@ void main() {
         expect(targets[id]!.capability.producible, isFalse, reason: id);
       }
       for (final country in ['DE', 'FR', 'GB']) {
-        expect(targetsFor(country).map((t) => t.id),
+        expect(targetsFor(country, reference: ActiveTaxReference.current).map((t) => t.id),
             isNot(anyOf(contains('banana_transactions'), contains('bexio_api'))),
             reason: country);
       }
     });
 
     test('Portugal gets its own SAF-T', () {
-      expect(formatsFor('PT').map((f) => f.id), contains('saft_pt'));
-      expect(formatsFor('FR').map((f) => f.id), isNot(contains('saft_pt')));
+      expect(formatsFor('PT', reference: ActiveTaxReference.current).map((f) => f.id), contains('saft_pt'));
+      expect(formatsFor('FR', reference: ActiveTaxReference.current).map((f) => f.id), isNot(contains('saft_pt')));
     });
 
     test('every supported country gets at least one usable export', () {
@@ -204,8 +204,8 @@ void main() {
         'FR', 'DE', 'BE', 'ES', 'IT', 'LU', 'CH', 'AT',
         'NL', 'PT', 'GB', 'NO', 'US', 'CA',
       ]) {
-        expect(formatsFor(country), isNotEmpty, reason: country);
-        expect(formatsFor(country).map((f) => f.id),
+        expect(formatsFor(country, reference: ActiveTaxReference.current), isNotEmpty, reason: country);
+        expect(formatsFor(country, reference: ActiveTaxReference.current).map((f) => f.id),
             contains('accountant_csv'),
             reason: '$country must always have the honest fallback');
       }
@@ -213,10 +213,10 @@ void main() {
 
     test('the regulatory file comes FIRST where there is one', () {
       // Someone under audit is looking for one specific file.
-      expect(formatsFor('FR').first.id, 'fec');
-      expect(formatsFor('PT').first.id, 'saft_pt');
-      expect(formatsFor('NO').first.id, 'saft_no');
-      expect(formatsFor('LU').first.id, 'faia_lu');
+      expect(formatsFor('FR', reference: ActiveTaxReference.current).first.id, 'fec');
+      expect(formatsFor('PT', reference: ActiveTaxReference.current).first.id, 'saft_pt');
+      expect(formatsFor('NO', reference: ActiveTaxReference.current).first.id, 'saft_no');
+      expect(formatsFor('LU', reference: ActiveTaxReference.current).first.id, 'faia_lu');
     });
   });
 

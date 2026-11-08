@@ -8,6 +8,7 @@
 // issued document (validation 7), the IRPF columns left empty: a separate
 // VAT book (validation 12).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
 import '../../../core/files/xlsx.dart';
@@ -56,7 +57,10 @@ List<Invoice> registerDocuments(
 /// How the buyer of [invoice] is identified: the AEAT's type (blank for a
 /// Spanish NIF, 02 an EU VAT number, 06 another document), its country and
 /// the number; all blank for a buyer without one.
-({String type, String country, String id}) esBuyerIdOf(Invoice invoice) {
+({String type, String country, String id}) esBuyerIdOf(
+  Invoice invoice, {
+  required TaxReferenceSet reference,
+}) {
   final buyer = invoice.buyerParty;
   final raw = (buyer?.vatId ?? '').toUpperCase().replaceAll(
     RegExp('[^A-Z0-9]'),
@@ -71,7 +75,7 @@ List<Invoice> registerDocuments(
       id: raw.startsWith('ES') ? raw.substring(2) : raw,
     );
   }
-  if (isEuCountry(country)) return (type: '02', country: country, id: raw);
+  if (isEuCountry(country, reference: reference)) return (type: '02', country: country, id: raw);
   return (type: '06', country: country, id: raw);
 }
 
@@ -85,8 +89,11 @@ String buyerNameOf(Invoice invoice) {
 /// The tipo de factura (validation 9): F1 with an identified buyer, F2
 /// without; a credit note takes its rectification reason (R1-R4, R5 when
 /// the buyer is not identified), R4 ("resto") where none was frozen.
-String esInvoiceTypeOf(Invoice invoice) {
-  final identified = esBuyerIdOf(invoice).id.isNotEmpty;
+String esInvoiceTypeOf(
+  Invoice invoice, {
+  required TaxReferenceSet reference,
+}) {
+  final identified = esBuyerIdOf(invoice, reference: reference).id.isNotEmpty;
   if (!invoice.isCreditNote) return identified ? 'F1' : 'F2';
   if (!identified) return 'R5';
   final reason = invoice.correctionReason.toUpperCase();
@@ -174,6 +181,7 @@ bool isEsActivity(String raw) =>
 XlsxSheet esLibroExpedidas(
   List<Invoice> documents, {
   required String activity,
+  required TaxReferenceSet reference,
   bool monthly = false,
 }) {
   final act = _activity(activity);
@@ -187,7 +195,7 @@ XlsxSheet esLibroExpedidas(
       header(esLibroColumns),
       for (final invoice in documents)
         for (final total in invoice.vatTotals)
-          _line(invoice, total, act, monthly: monthly),
+          _line(invoice, total, act, monthly: monthly, reference: reference),
     ],
   );
 }
@@ -197,9 +205,10 @@ List<Object?> _line(
   InvoiceVatTotal total,
   ({String code, String type, String heading}) act, {
   required bool monthly,
+  required TaxReferenceSet reference,
 }) {
   final day = invoice.issuedAt;
-  final buyer = esBuyerIdOf(invoice);
+  final buyer = esBuyerIdOf(invoice, reference: reference);
   final op = esOperationOf(total.category, invoice.buyerParty?.country ?? '');
   final perMajor = Currencies.minorPerMajor(invoice.currency);
   XlsxAmount amount(int cents) => XlsxAmount(cents / perMajor);
@@ -212,7 +221,7 @@ List<Object?> _line(
     act.code,
     act.type,
     act.heading,
-    esInvoiceTypeOf(invoice),
+    esInvoiceTypeOf(invoice, reference: reference),
     null, // concepto de ingreso: IRPF
     null, // ingreso computable: IRPF
     dmy(day),
