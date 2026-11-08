@@ -59,9 +59,9 @@ void main() {
           supplierRepositoryProvider.overrideWithValue(FakeSupplierRepository()),
         ], contextReady: false),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(find.byKey(const ValueKey('supplier-add')));
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 300));
       expect(find.byKey(const ValueKey('supplier-name')), findsNothing);
       final snack = tester.widget<SnackBar>(find.byType(SnackBar));
       expect(
