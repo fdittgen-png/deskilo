@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +36,8 @@ import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
-import 'invoice_actions.dart' show requireWorkspaceTaxReference;
+import 'invoice_actions.dart'
+    show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart';
 import 'report_strings_l10n.dart';
@@ -177,6 +179,14 @@ Future<void> exportEInvoice(
   final route = eInvoiceRouteFor(countryCode);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (route == null || workspace == null) return;
+  // Read before the sheet opens: without the workspace's own reference the
+  // readiness verdict cannot be given, so the person is told (a snack)
+  // instead of tapping into silence (#3403).
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
+    AppSnack.error(context, context.l10n.accountingExportContextNotReady);
+    return;
+  }
   // The invoice's own snapshot, or the live workspace identity for
   // pre-0069 documents (see sellerOf).
   final subject = (
@@ -192,6 +202,7 @@ Future<void> exportEInvoice(
   if (!context.mounted) return;
   final run = _EInvoiceExportRun(context, ref, subject);
   final export = await run.ask(
+    reference: reference,
     route: route,
     gateway: gateway,
     roles: roles,
@@ -273,11 +284,11 @@ class _EInvoiceExportRun {
   /// The sheet: the route, the readiness verdict, what the configured
   /// channel still needs, and which legs this member may send on.
   Future<EInvoiceExport?> ask({
+    required TaxReferenceSet reference,
     required EInvoiceRoute route,
     required EInvoiceGatewayConfig gateway,
     required ({bool owner, bool issuer}) roles,
   }) {
-    final reference = requireWorkspaceTaxReference(ref);
     final readiness = checkEInvoiceReadiness(
       invoice: s.invoice,
       seller: s.seller,

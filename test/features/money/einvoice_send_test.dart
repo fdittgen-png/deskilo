@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
+import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -39,17 +40,22 @@ Future<FakeMoneyRepository> _pumpArchive(
   required FakeMoneyRepository money,
   FakeWorkspaceRepository? workspace,
   bool devMode = false,
+  bool contextReady = true,
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
-        money: money,
-        workspace: workspace ?? _identified(),
-        devMode: devMode,
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          money: money,
+          workspace: workspace ?? _identified(),
+          devMode: devMode,
+        ),
+        if (!contextReady)
+          readyWorkspaceContextProvider.overrideWith((ref) => null),
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -93,6 +99,25 @@ Future<void> _openEInvoiceSheet(WidgetTester tester, String id) async {
 }
 
 void main() {
+  testWidgets(
+      'without the workspace\'s own tax reference the e-invoice tap answers '
+      'with a refusal and opens no sheet (#3403)', (tester) async {
+    final money = await _pumpArchive(
+      tester,
+      money: await _seeded(),
+      contextReady: false,
+    );
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+
+    expect(find.byKey(const ValueKey('invoice-facturx-download')), findsNothing);
+    final snack = tester.widget<SnackBar>(find.byType(SnackBar));
+    expect(
+      (snack.content as Text).data,
+      startsWith('The workspace is still loading its tax settings'),
+    );
+  });
+
   testWidgets(
       'with NO platform configured the sheet offers files only — never a '
       'Send button that cannot work', (tester) async {
