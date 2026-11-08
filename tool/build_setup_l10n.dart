@@ -28,13 +28,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/country/country_catalog.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_obligations.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 /// The locales the page offers — the app's own, English first.
 const setupLocales = ['en', 'fr', 'de', 'es', 'it'];

@@ -7,11 +7,11 @@
 // all sit on one standard account (a foreign supplier's payables are not
 // the domestic 3300). Nothing is written that nobody confirmed; an account
 // left empty refuses the file, named.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/vat/tax_reference.dart';
 
 /// One book account to confirm, with the reference's suggestion.
 typedef SafTStandardRow = ({String code, String name, AccountMapValue? suggestion});

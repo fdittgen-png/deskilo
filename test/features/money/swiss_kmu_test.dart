@@ -21,7 +21,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
@@ -42,6 +41,7 @@ import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/posting_kind_labels.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

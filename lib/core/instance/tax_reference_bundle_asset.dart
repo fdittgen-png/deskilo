@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/foundation.dart' show compute;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../vat/tax_reference.dart';
 import '../vat/tax_reference_active.dart';
 
 part 'tax_reference_bundle_asset.g.dart';

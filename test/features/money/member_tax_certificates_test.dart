@@ -5,12 +5,12 @@
 // a certificate is added through the form and shown with its validity, and
 // ending one closes it today. The server (pgTAP 190) decides what it exempts.
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/tax_exemption_certificate.dart';
 import 'package:deskilo/features/money/presentation/widgets/member_tax_certificates.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

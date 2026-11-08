@@ -3,8 +3,9 @@
 // The readable handover of an archive (readable_handover.dart): the tables
 // of the year's one export snapshot, described in English, for a country
 // whose authority reads the records with its own audit software.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/settings/active_settings.dart';
-import '../../../core/vat/tax_reference.dart';
 import '../domain/audit_trail.dart';
 import '../domain/gobd_package.dart';
 import '../domain/readable_handover.dart';

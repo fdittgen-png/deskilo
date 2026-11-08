@@ -779,7 +779,7 @@ always the server's clock and the caller, `company_id`/`site_id` are
 derived from the row's own keys, and two check constraints hold the
 invariants. **The app reads them as one value**: every entity mapped
 from a row implements `SystemStamped` and takes
-`system: SystemColumns.fromRow(row)` (`lib/core/data/system_columns.dart`);
+`system: SystemColumns.fromRow(row)` (`packages/deskilo_money_kernel/lib/src/system_columns.dart`);
 the client never names one of the six in a payload — both are lints.
 A guard that compares whole rows subtracts `system_column_names()`.
 ADR 0018 has the reasoning. The rule is not specific to DesKilo: any

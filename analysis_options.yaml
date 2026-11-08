@@ -71,7 +71,7 @@ linter:
     - use_enums
     - use_super_parameters
     # #2387 — no member is called on a `dynamic`: decode through
-    # JsonReader (lib/core/data/json_reader.dart) or cast once.
+    # JsonReader (deskilo_money_kernel) or cast once.
     - avoid_dynamic_calls
     # #2389 — the staged rules, on with their fixes; the kept positional
     # bools carry an ignore naming #2389 (test/lint/ignore_budget_test).

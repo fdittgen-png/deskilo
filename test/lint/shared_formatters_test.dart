@@ -8,12 +8,13 @@
 // reintroduction:
 //
 // - money: `minorToText` (files) or `formatMinor` (screens);
-// - CSV cells: `csvCell` (lib/core/text/csv.dart);
-// - rates: `percentText` (lib/core/text/number_text.dart);
-// - dates: lib/core/time/date_text.dart, the one place a date component
-//   is padded by hand.
+// - CSV cells: `csvCell` (deskilo_jurisdiction_standards);
+// - rates: `percentText` (deskilo_money_kernel, number_text.dart);
+// - dates: deskilo_money_kernel's date_text.dart, the one place a date
+//   component is padded by hand.
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/lib_roots.dart';
 import 'lint_sources.dart';
 
 void main() {
@@ -44,7 +45,7 @@ void main() {
       hits,
       isEmpty,
       reason:
-          'use minorToText (lib/core/money/money_text.dart): a yen '
+          'use minorToText (deskilo_money_kernel): a yen '
           'has no cents\n${hits.join('\n')}',
     );
   });
@@ -54,8 +55,9 @@ void main() {
       r"\.(day|month|hour|minute|second)\)?\.toString\(\)\.padLeft\(2, '0'\)",
     );
     final hits = scanLines(
-      handWrittenDartFiles('lib')
-          .where((f) => f.path != 'lib/core/time/date_text.dart'),
+      handWrittenDartFilesIn(['lib', ...packageLibRoots()]).where(
+        (f) => f.path != 'packages/deskilo_money_kernel/lib/src/date_text.dart',
+      ),
       padding.hasMatch,
     );
     expect(

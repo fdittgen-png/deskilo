@@ -4,9 +4,9 @@
 // reference store (one per country and document class); this is the Dart twin
 // of `retention_until` (0480): the first day a record may go.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
-import 'tax_reference.dart';
 import 'tax_reference_active.dart';
 
 /// The document classes a retention rule is kept for.

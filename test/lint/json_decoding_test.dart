@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2387 — the data layer decodes rows through ONE reader
-// (lib/core/data/json_reader.dart): a missing or mistyped column throws a
+// (JsonReader, in deskilo_money_kernel): a missing or mistyped column throws a
 // JsonShapeException naming the RPC, the key and the expected type,
 // instead of a `type 'Null' is not a subtype` from a screen.
 //
@@ -58,7 +58,7 @@ void main() {
       count,
       lessThanOrEqualTo(_rawReadBudget),
       reason:
-          'decode new rows with JsonReader (lib/core/data/json_reader.dart)',
+          'decode new rows with JsonReader (deskilo_money_kernel)',
     );
     expect(
       count,

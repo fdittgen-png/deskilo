@@ -4,6 +4,7 @@
 // owner confirms a planned version (the law passed) or withdraws it (it
 // does not come into force); a version in force is history and offers
 // neither.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -11,7 +12,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../application/tax_reference_commands.dart';
 import 'tax_reference_labels.dart';
 

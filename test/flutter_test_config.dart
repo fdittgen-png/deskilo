@@ -9,8 +9,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   ActiveTaxReference.install(TaxReferenceSet.parse(

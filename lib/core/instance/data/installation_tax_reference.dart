@@ -6,13 +6,13 @@
 // the selected workspace's host with the same read, under the context's cache
 // namespace, and falls back to the copy bundled with the app -- never to
 // another installation's rows.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../cache/cache_store.dart';
 import '../../cache/cached_fetch.dart';
 import '../../cache/target_cache_store.dart';
-import '../../vat/tax_reference.dart';
 import '../tax_reference_bundle_asset.dart';
 
 part 'installation_tax_reference.g.dart';

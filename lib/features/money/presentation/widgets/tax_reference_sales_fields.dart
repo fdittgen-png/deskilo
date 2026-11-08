@@ -3,10 +3,10 @@
 // #2362 -- the sales-tax rows of the tax reference editor: the jurisdictions of
 // a postal code typed one per line as `level, name, percent`.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/vat/tax_reference.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The jurisdictions typed in [text], or null when a line is not of the form
