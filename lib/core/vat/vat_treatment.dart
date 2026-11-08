@@ -21,3 +21,4 @@ export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     vatTaxPointLedger,
     vatTaxPointPolicy,
     vatTotalsOf;
+export 'invoice_model_wrappers.dart';

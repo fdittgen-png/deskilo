@@ -65,6 +65,7 @@ bool _isScanned(String path) =>
 /// checked for dead code, not for exposure.
 const surfacePackages = [
   'deskilo_accounting_interchange',
+  'deskilo_invoice_model',
   'deskilo_money_kernel',
   'deskilo_tax_reference',
   'deskilo_vat_declaration',

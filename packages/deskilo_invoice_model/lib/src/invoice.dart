@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
@@ -503,14 +503,9 @@ DateTime? _maturityDueOn(Object? embedded) {
   return DateTime(day.year, day.month, day.day);
 }
 
-/// The breakdown the documents render, one entry per rate.
-///
-/// The SNAPSHOT wins whenever there is one: it is what the signature
-/// covers. Only a pre-0072 invoice falls back to deriving it, and there
-/// every line carries 0 %, so the fallback yields the single zero-rated
-/// entry those documents always showed. The application reads it as
-/// `invoice.vatBreakdown(zeroCategory: ...)` (an extension at the old path
-/// that passes the installed reference).
+/// The breakdown the documents render, one entry per rate: the SNAPSHOT wins
+/// when there is one (the signature covers it); only a pre-0072 invoice derives
+/// it from its lines. The app reads `invoice.vatBreakdown` (old-path extension).
 List<InvoiceVatTotal> vatBreakdownOf(
   Invoice invoice, {
   required String zeroCategory,
@@ -518,6 +513,6 @@ List<InvoiceVatTotal> vatBreakdownOf(
 }) => invoice.vatTotals.isNotEmpty
     ? invoice.vatTotals
     : vatTotalsOf([
-        for (final line in invoice.lines)
-          (amountCents: line.amountCents, vatPercent: line.vatPercent),
+        for (final l in invoice.lines)
+          (amountCents: l.amountCents, vatPercent: l.vatPercent),
       ], zeroCategory: zeroCategory, reference: reference);
