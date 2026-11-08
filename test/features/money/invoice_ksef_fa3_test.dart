@@ -5,9 +5,10 @@
 // schema leaves to the issuer — which band a rate fills, how a buyer is
 // identified, the annotations, a correction.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
+import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -86,7 +87,7 @@ XmlDocument _doc({
   InvoiceParty buyer = _buyer,
   DateTime? correctedIssuedAt,
 }) => XmlDocument.parse(
-  buildInvoiceKsefFa3(EInvoiceInput(invoice: invoice ?? _invoice(),
+  buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(invoice: invoice ?? _invoice(),
     seller: _seller,
     buyer: buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current),

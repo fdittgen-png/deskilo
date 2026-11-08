@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3429 (of #3328) -- the KSeF FA(3) bytes, pinned before and after the
-// profile moves into `deskilo_jurisdiction_pl`. The goldens are written by
-// the builder that lives in the invoice model and are compared byte for byte:
+// profile moved into `deskilo_jurisdiction_pl`. The goldens were written by
+// the builder that lived in the invoice model and are compared byte for byte:
 // a one-character change to any element fails here, whatever the schema says.
 // Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
+import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -89,7 +90,8 @@ String _xml(
   DateTime? correctedIssuedAt,
   String iban = '',
   DateTime? dueDate,
-}) => buildInvoiceKsefFa3(
+}) => buildChannelEInvoiceXml(
+  EInvoiceFormat.ksefFa3,
   EInvoiceInput(
     invoice: invoice,
     seller: _seller,

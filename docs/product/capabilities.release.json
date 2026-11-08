@@ -482,6 +482,11 @@
         },
         {
           "scope": "unit",
+          "ref": "test/parity/ksef_fa3_parity_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
           "ref": "test/core/jurisdiction/invoice_profile_resolver_test.dart",
           "standing": "gated"
         },

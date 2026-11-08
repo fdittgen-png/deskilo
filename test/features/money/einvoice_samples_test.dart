@@ -16,7 +16,6 @@ import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
@@ -326,7 +325,7 @@ Future<Map<String, Uint8List>> _samples() async {
     lineText: _line,
     iban: 'IT60X0542811101000000123456',
     dueDate: DateTime(2026, 10, 30), reference: ActiveTaxReference.current));
-  final ksef = buildInvoiceKsefFa3(EInvoiceInput(invoice: _nationalInvoice(
+  final ksef = buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(invoice: _nationalInvoice(
       currency: 'PLN',
       percent: 23,
       gross: 24600,

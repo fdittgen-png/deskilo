@@ -1,80 +1,101 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:xml/xml.dart';
+//
+// #3429 (of #3328) -- the Polish structured invoice, FA(3), the only schema the
+// National e-Invoice System (KSeF) takes since February 2026, as an invoice
+// profile behind the jurisdiction contract. It moved here from the invoice
+// model with its bytes unchanged (the sample validators and the unit tests
+// are the proof).
+//
+// Poland's mandate is a clearance one like Italy's: an invoice exists when KSeF
+// has numbered it, so the EN 16931 files this app also writes are not a
+// substitute.
+//
+// FA(3) is not a line-by-line mirror of EN 16931. It states the tax base and
+// the tax per rate BAND in fixed fields (P_13_1/P_14_1 for the basic rate,
+// P_13_2/P_14_2 for the first reduced one...) and a 0 % or untaxed supply in
+// the field that names WHY it is untaxed. The bands are filled from the same
+// VAT breakdown the other syntaxes read, so the documents of one invoice
+// agree. A correction (KOR) states the CHANGE: its amounts stay negative,
+// unlike the UBL credit note, which states what is credited.
+import 'dart:convert' show utf8;
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'e_invoice_totals.dart';
-import 'einvoice_input.dart';
-import 'invoice.dart';
-import 'vat_rate.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:xml/xml.dart';
 
 const _namespace = 'http://crd.gov.pl/wzor/2025/06/25/13775/';
 
-/// #2358 — the Polish structured invoice, FA(3), the only schema the
-/// National e-Invoice System (KSeF) takes since February 2026. Poland's
-/// mandate is a clearance one like Italy's: an invoice exists when KSeF
-/// has numbered it, so the EN 16931 files this app also writes are not
-/// a substitute.
-///
-/// FA(3) is not a line-by-line mirror of EN 16931. It states the tax
-/// base and the tax per rate BAND in fixed fields (P_13_1/P_14_1 for the
-/// basic rate, P_13_2/P_14_2 for the first reduced one…) and a 0 % or
-/// untaxed supply in the field that names WHY it is untaxed. The bands
-/// are filled from the same VAT breakdown the UBL and CII read
-/// ([eInvoiceTotalsOf]), so the documents of one invoice agree.
-///
-/// A correction (KOR) states the CHANGE: its amounts stay negative,
-/// unlike the UBL credit note, which states what is credited.
-String buildInvoiceKsefFa3(
-  EInvoiceInput input, {
+/// Bumped in the same commit as any change of the bytes this profile writes.
+const plKsefFa3ImplementationVersion = '1';
 
-  /// DataWytworzeniaFa — when the file was produced. Defaults to the
-  /// issue date, so the same invoice always renders the same bytes.
-  DateTime? generatedAt,
-  String systemInfo = 'DesKilo',
+/// The FA(3) schema version the profile follows.
+const plKsefFa3FormatVersion = 'FA (3) 1-0E';
 
-  /// The corrected invoice's own issue date, which a KOR must state.
-  DateTime? correctedIssuedAt,
-}) => _KsefWriter(input, generatedAt, systemInfo, correctedIssuedAt).write();
+/// The id of the format, as `EInvoiceFormat.ksefFa3.name` spells it.
+const ksefFa3FormatId = 'ksefFa3';
+
+/// SystemInfo -- the producing system, as KSeF records it.
+const _systemInfo = 'DesKilo';
+
+/// The KSeF FA(3) invoice profile of Poland. Refuses nothing today: the writer
+/// never refused, and the bytes are pinned (KSeF's own checks follow).
+class PlKsefFa3Profile implements InvoiceProfileContribution {
+  const PlKsefFa3Profile();
+
+  @override
+  CapabilityDescriptor get descriptor => const CapabilityDescriptor(
+    moduleId: 'pl.invoice_profile.ksef_fa3',
+    implementationVersion: plKsefFa3ImplementationVersion,
+    contractVersion: invoiceProfileContractVersion,
+    formatVersion: plKsefFa3FormatVersion,
+    capabilityId: 'invoice_profile.$ksefFa3FormatId',
+  );
+
+  @override
+  ({ValidatedInvoiceDocument? document, ValidationResult result}) validate(
+    InvoiceDocumentContext context,
+  ) => (
+    document: ValidatedInvoiceDocument(context),
+    result: const ValidationResult.ok(),
+  );
+
+  @override
+  GeneratedArtifact build(ValidatedInvoiceDocument document) {
+    final context = document.context;
+    if (!validate(context).result.isOk) {
+      throw StateError('a document this profile would refuse');
+    }
+    return GeneratedArtifact(
+      bytes: utf8.encode(_KsefWriter(context).write()),
+      mediaType: 'application/xml',
+      fileName: '${context.progressive}.xml',
+      provenance: descriptor.toProvenance(),
+    );
+  }
+}
 
 /// The FA(3) document, one method per section of it.
 class _KsefWriter {
-  _KsefWriter(
-    this.input,
-    this.generatedAt,
-    this.systemInfo,
-    this.correctedIssuedAt,
-  ) : totals = eInvoiceTotalsOf(
-        invoice: input.invoice,
-        seller: input.seller,
-        buyer: input.buyer,
-        reference: input.reference,
-      ) {
+  _KsefWriter(this.c) {
     // Band → (net, tax). Iterated in schema order below.
-    for (final total in totals.supplyBreakdown) {
+    for (final total in c.vatBreakdown) {
       final band = _band(total.percent, total.category, buyer);
       final before = bands[band] ?? (net: 0, tax: 0);
       bands[band] = (
-        net: before.net + total.netCents,
-        tax: before.tax + total.vatCents,
+        net: before.net + total.netMinor,
+        tax: before.tax + total.vatMinor,
       );
     }
   }
 
-  final EInvoiceInput input;
-  final DateTime? generatedAt;
-  final String systemInfo;
-  final DateTime? correctedIssuedAt;
-  final EInvoiceTotals totals;
+  final InvoiceDocumentContext c;
   final XmlBuilder builder = XmlBuilder();
   final Map<String, ({int net, int tax})> bands = {};
 
-  Invoice get invoice => input.invoice;
-  InvoiceParty get seller => input.seller;
-  InvoiceParty get buyer => input.buyer;
-  bool get correction => invoice.isCreditNote;
+  DocumentParty get seller => c.seller;
+  DocumentParty get buyer => c.buyer;
+  bool get correction => c.creditNote;
 
-  String amount(int minor) => minorToText(minor, invoice.currency);
+  String amount(int minor) => _decimal(minor, c.currencyExponent);
 
   void el(String name, String text) =>
       builder.element(name, nest: () => builder.text(text));
@@ -94,7 +115,7 @@ class _KsefWriter {
     return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
   }
 
-  void address(InvoiceParty p) {
+  void address(DocumentParty p) {
     builder.element(
       'Adres',
       nest: () {
@@ -123,8 +144,8 @@ class _KsefWriter {
           },
         );
         el('WariantFormularza', '3');
-        el('DataWytworzeniaFa', _dateTime(generatedAt ?? invoice.issuedAt));
-        el('SystemInfo', _token(systemInfo, 256, 'DesKilo'));
+        el('DataWytworzeniaFa', _dateTime(c.issuedAt));
+        el('SystemInfo', _token(_systemInfo, 256, 'DesKilo'));
       },
     );
   }
@@ -155,7 +176,7 @@ class _KsefWriter {
         builder.element(
           'DaneIdentyfikacyjne',
           nest: () {
-            switch (_buyerId(buyer, input.reference)) {
+            switch (_buyerId(buyer, c)) {
               case _Nip(:final nip):
                 el('NIP', nip);
               case _EuVat(:final country, :final number):
@@ -183,15 +204,15 @@ class _KsefWriter {
     builder.element(
       'Fa',
       nest: () {
-        el('KodWaluty', invoice.currency);
-        el('P_1', _date(invoice.issuedAt));
-        el('P_2', _token(invoice.number, 256, '-'));
+        el('KodWaluty', c.currency);
+        el('P_1', _date(c.issuedAt));
+        el('P_2', _token(c.number, 256, '-'));
         billingPeriod();
         bandTotals();
         annotations();
         el('RodzajFaktury', correction ? 'KOR' : 'VAT');
         correctedInvoice();
-        for (final (i, line) in totals.supplies.indexed) {
+        for (final (i, line) in c.lines.indexed) {
           rowOf(i, line);
         }
         payment();
@@ -200,7 +221,7 @@ class _KsefWriter {
   }
 
   void billingPeriod() {
-    final period = _periodDates(invoice.period);
+    final period = _periodDates(c.period);
     if (period == null) return;
     builder.element(
       'OkresFa',
@@ -222,9 +243,9 @@ class _KsefWriter {
       final figures = bands[band];
       if (figures != null) el('P_13_$band', amount(figures.net));
     }
-    final grossCents = totals.supplyBreakdown.fold<int>(
+    final grossCents = c.vatBreakdown.fold<int>(
       0,
-      (sum, t) => sum + t.netCents + t.vatCents,
+      (sum, t) => sum + t.netMinor + t.vatMinor,
     );
     el('P_15', amount(grossCents));
   }
@@ -247,7 +268,7 @@ class _KsefWriter {
                 el('P_19', '1');
                 el(
                   'P_19A',
-                  _token(totals.exemptionText, 256, 'Art. 43 ust. 1'),
+                  _token(c.exemptionText, 256, 'Art. 43 ust. 1'),
                 );
               } else {
                 el('P_19N', '1');
@@ -272,22 +293,22 @@ class _KsefWriter {
   }
 
   void correctedInvoice() {
-    if (!correction || invoice.replacesNumber.isEmpty) return;
+    if (!correction || c.replacesNumber.isEmpty) return;
     builder.element(
       'DaneFaKorygowanej',
       nest: () {
         el(
           'DataWystFaKorygowanej',
-          _date(correctedIssuedAt ?? invoice.issuedAt),
+          _date(c.correctedIssuedAt ?? c.issuedAt),
         );
-        el('NrFaKorygowanej', _token(invoice.replacesNumber, 256, '-'));
+        el('NrFaKorygowanej', _token(c.replacesNumber, 256, '-'));
         el('NrKSeFN', '1'); // the corrected invoice had no KSeF number
       },
     );
   }
 
-  void rowOf(int index, InvoiceLine line) {
-    final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+  void rowOf(int index, DocumentLine line) {
+    final lineNet = line.netMinor;
     final units = line.quantity > 1 && lineNet.abs() % line.quantity == 0
         ? line.quantity
         : 1;
@@ -295,12 +316,12 @@ class _KsefWriter {
         ? line.vatCategory
         : line.vatPercent > 0
         ? 'S'
-        : totals.category;
+        : c.category;
     builder.element(
       'FaWiersz',
       nest: () {
         el('NrWierszaFa', '${index + 1}');
-        el('P_7', _token(input.lineText(line), 512, '-'));
+        el('P_7', _token(line.text, 512, '-'));
         el('P_8A', 'szt.');
         el('P_8B', '$units');
         el('P_9A', amount(lineNet ~/ units));
@@ -313,9 +334,9 @@ class _KsefWriter {
   }
 
   void payment() {
-    final payable = invoice.totalCents;
-    final dueDate = input.dueDate;
-    final account = input.iban.replaceAll(' ', '').toUpperCase();
+    final payable = c.payableMinor;
+    final dueDate = c.dueDate;
+    final account = c.iban.replaceAll(' ', '').toUpperCase();
     if (payable <= 0 || (dueDate == null && account.isEmpty)) return;
     builder.element(
       'Platnosc',
@@ -344,7 +365,7 @@ class _KsefWriter {
 
 /// Which FA(3) field carries a breakdown entry: the rate bands 1–4 for
 /// taxed supplies, otherwise the field that says why there is no tax.
-String _band(double percent, String category, InvoiceParty buyer) {
+String _band(double percent, String category, DocumentParty buyer) {
   if (percent > 0) {
     return switch (percent) {
       >= 22 => '1',
@@ -365,7 +386,7 @@ String _band(double percent, String category, InvoiceParty buyer) {
 
 /// P_12 — the line's rate, or the code for why it carries none. Null for
 /// a rate the enumeration does not know.
-String? _rateCode(double percent, String category, InvoiceParty buyer) {
+String? _rateCode(double percent, String category, DocumentParty buyer) {
   if (percent > 0) {
     final whole = percent.round();
     const known = {23, 22, 8, 7, 5, 4, 3};
@@ -407,13 +428,15 @@ class _NoId extends _BuyerId {}
 const _northernIreland = 'XI';
 
 /// Whether KSeF files [code] as an EU VAT prefix: a member state of the
-/// installed reference data (Greece's `EL` included) or Northern Ireland.
-bool _isEuPrefix(String code, TaxReferenceSet reference) =>
-    code == _northernIreland || reference.isEu(code);
+/// reference data in the context, an alias row of it resolved (Greece's `EL`
+/// included), or Northern Ireland.
+bool _isEuPrefix(String code, InvoiceDocumentContext c) =>
+    code == _northernIreland ||
+    c.euMemberStates.contains(c.euCodeAliases[code] ?? code);
 
 /// A Polish buyer is identified by its NIP, another EU business by its
 /// VAT number, anyone else by what they have — or BrakID.
-_BuyerId _buyerId(InvoiceParty buyer, TaxReferenceSet reference) {
+_BuyerId _buyerId(DocumentParty buyer, InvoiceDocumentContext c) {
   final country = buyer.country.toUpperCase();
   final vat = buyer.vatId.replaceAll(RegExp(r'[\s.\-]'), '').toUpperCase();
   if (country == 'PL') {
@@ -425,7 +448,7 @@ _BuyerId _buyerId(InvoiceParty buyer, TaxReferenceSet reference) {
   if (vat.isNotEmpty) {
     final match = RegExp(r'^([A-Z]{2})([0-9A-Z+*]{1,12})$').firstMatch(vat);
     final code = match?.group(1) == 'GR' ? 'EL' : match?.group(1);
-    if (match != null && code != null && _isEuPrefix(code, reference)) {
+    if (match != null && code != null && _isEuPrefix(code, c)) {
       return _EuVat(code, match.group(2)!);
     }
     return _Foreign(country, vat.length > 50 ? vat.substring(0, 50) : vat);
@@ -461,4 +484,17 @@ String _token(String text, int max, String empty) {
   final line = text.replaceAll(RegExp(r'\s+'), ' ').trim();
   if (line.isEmpty) return empty;
   return line.length > max ? line.substring(0, max) : line;
+}
+
+/// [minor] in a currency of [exponent] decimals, as the schema writes it.
+String _decimal(int minor, int exponent) {
+  final sign = minor < 0 ? '-' : '';
+  final abs = minor.abs();
+  if (exponent == 0) return '$sign$abs';
+  var per = 1;
+  for (var i = 0; i < exponent; i++) {
+    per *= 10;
+  }
+  final fraction = (abs % per).toString().padLeft(exponent, '0');
+  return '$sign${abs ~/ per}.$fraction';
 }
