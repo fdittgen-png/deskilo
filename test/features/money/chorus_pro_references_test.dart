@@ -10,7 +10,6 @@ import 'dart:io';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart' show buildInvoiceUbl;
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';

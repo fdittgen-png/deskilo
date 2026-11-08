@@ -38,6 +38,7 @@ void main() {
             uri.startsWith('package:deskilo_invoice_model/') ||
             uri.startsWith('package:freezed_annotation/') ||
             uri.startsWith('package:meta/') ||
+            uri.startsWith('package:xml/') ||
             own;
         if (!ok) bad.add('${f.path}:${i + 1}: $uri');
       }
@@ -45,7 +46,7 @@ void main() {
     expect(bad, isEmpty, reason: 'the invoice model reaches nothing else:\n${bad.join('\n')}');
   });
 
-  test('the package depends on its five packages and meta', () {
+  test('the package depends on its five packages, meta and xml', () {
     final text = File('$_root/pubspec.yaml').readAsStringSync();
     final deps = RegExp(r'^dependencies:\n((?:  .+\n?)+)', multiLine: true)
         .firstMatch(text)!
@@ -61,6 +62,7 @@ void main() {
       'deskilo_vat_declaration',
       'freezed_annotation',
       'meta',
+      'xml',
     ]);
   });
 
