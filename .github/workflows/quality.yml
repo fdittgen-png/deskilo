@@ -1230,7 +1230,11 @@ jobs:
         id: archive
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
-        run: bash scripts/populated_upgrade_check.sh
+        run: |
+          bash scripts/populated_upgrade_check.sh
+          # #3338 row 8 -- the same archive carried to 0689, with in-flight
+          # e-invoice work seeded there, then 0690..tip over it.
+          STAGE_AT=0689 bash scripts/populated_upgrade_check.sh
 
       # #2561 C2 — the physical topology, in this job and not beside it:
       # the job's replayed stack is W-A; P and W-B are two more stacks of
@@ -1352,7 +1356,7 @@ jobs:
               "${{ steps.topology.outcome }}"
             printf 'MCP coverage evidence|%s|every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit\n' \
               "${{ steps.mcp_coverage.outcome }}"
-            printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
+            printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught; and again staged at 0689 with a prepared e-invoice attempt and an accepted one with its receipt in flight: both read as seeded after 0690..tip, a destructive control over them is caught\n' \
               "${{ steps.archive.outcome }}"
           } > report/database.psv
           cat report/database.psv

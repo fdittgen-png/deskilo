@@ -144,7 +144,7 @@ The normal stack starts once. `supabase start` replays the migrations from an em
 | Restore drill | Seed, dump, restore into a fresh database, compare counts, and reconcile |
 | MCP races | Concurrent booking, void, subscription, and member decisions preserve their idempotency and authorization rules |
 | Instance lifecycle | Empty installation, interruption/resume, upgrade, foreign-table refusal, migration markers, and doctor isolation |
-| Archive preservation | Upgrade a populated historical instance while preserving signed fields, hashes, postings, and the unverifiable state of legacy material; catch a destructive control |
+| Archive preservation | Upgrade a populated historical instance while preserving signed fields, hashes, postings, and the unverifiable state of legacy material; catch a destructive control. A second run stages the archive at 0689 with a prepared e-invoice attempt and an accepted one with its receipt in flight, and upgrades 0690..tip over them (#3338 row 8) |
 | Physical topology | Real P, W-A, and W-B instances exercise account/profile and workspace paths over signed HTTP, including outages and late answers |
 | MCP coverage evidence | Required pgTAP files actually ran and passed for this candidate, according to the MCP evidence map |
 

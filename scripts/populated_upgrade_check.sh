@@ -36,12 +36,26 @@
 # Baseline: 0226, the first schema that writes its own version marker.
 # It is a parameter (BASELINE=NNNN) so a second supported baseline is a
 # variable, not a second script.
+#
+# Second case (#3338 row 8): STAGE_AT=0689 carries the SAME archive to the
+# schema of 0689 first -- the first with a durable `prepared` e-invoice
+# attempt -- seeds the in-flight work of `archive_seed_0689.sql` there (a
+# prepared transmission with its stored bytes, an accepted one with its upload
+# receipt), and only then runs 0690..latest over it (0694's envelope, 0696 and
+# 0697's removal facts all touch `invoice_transmissions`). The snapshot gains
+# those rows, the destructive control is applied across them, and their state
+# is also asserted against literals, so a change of the seeded pending state is
+# a red job, not a quiet before/after agreement.
 set -uo pipefail
 
 BASELINE="${BASELINE:-0226}"
 TEMPLATE="${TEMPLATE:-deskilo_lifecycle_empty}"
 DB="deskilo_archive"
 SEED=supabase/restore/archive_seed.sql
+STAGE_AT="${STAGE_AT:-}"
+STAGE_SEED="${STAGE_SEED:-supabase/restore/archive_seed_0689.sql}"
+TX_PREP=00000000-0000-4000-8000-0000000a0401
+TX_ACC=00000000-0000-4000-8000-0000000a0402
 CONTROL=supabase/restore/destructive_control.sql
 OWNER_ID=00000000-0000-4000-8000-0000000a0001
 WS=00000000-0000-4000-8000-0000000a0002
@@ -87,6 +101,21 @@ say "$before migrations installed, marker $((10#$BASELINE))"
 apply "$SEED"
 say "archive seeded: 3 invoices, 2 postings, 1 match, 3 captured intents"
 
+# Second case: carry the archive to STAGE_AT and seed the in-flight e-invoice
+# work there, so the upgrade below starts from a populated schema at that point.
+staged=0
+upgrade_from="$((10#$BASELINE))"
+if [ -n "$STAGE_AT" ]; then
+  for f in supabase/migrations/*.sql; do
+    v="$(version_of "$f")"
+    if [ "$v" -gt "$((10#$BASELINE))" ] && [ "$v" -le "$((10#$STAGE_AT))" ]; then apply "$f"; staged=$((staged + 1)); fi
+  done
+  [ "$(marker)" = "$((10#$STAGE_AT))" ] || fail "after staging the marker reads '$(marker)', not $((10#$STAGE_AT))"
+  apply "$STAGE_SEED"
+  upgrade_from="$((10#$STAGE_AT))"
+  say "$staged migrations carried the archive to $((10#$STAGE_AT)); in-flight e-invoice work seeded: 1 prepared, 1 accepted with receipt"
+fi
+
 # Everything the archive is made of, keyed by fixed ids; nothing a later
 # migration may legitimately add (new columns) and nothing that moves on
 # its own (the system columns).
@@ -112,7 +141,33 @@ select 'intent ' || concat_ws(' | ', id::text, order_id, coalesce(capture_id, ''
          status, amount_cents::text, period)
   from public.payment_intents where workspace_id = '$WS'
 order by 1"
-snapshot() { psq -At -c "$SNAPSHOT_SQL"; }
+# What the staged case adds: the in-flight transmissions and the stored bytes,
+# by columns that exist at 0689 and are never rewritten by a later migration.
+TX_SNAPSHOT_SQL="
+select 'transmission ' || concat_ws(' | ', id::text, invoice_id::text, provider, status,
+         phase, external_id, document_hash, detail, sent_at::text, by_name, environment,
+         destination, format, coalesce(business_key, ''), coalesce(binding_hash, ''),
+         generation::text, coalesce(requested_by::text, ''), md5(verdict::text),
+         md5(receipt::text), coalesce(receipt_at::text, ''), query_error)
+  from public.invoice_transmissions where workspace_id = '$WS'
+union all
+select 'artifact ' || concat_ws(' | ', transmission_id::text, sha256, file_name, mime_type,
+         receiver_scheme, receiver_id, md5(bytes::text))
+  from public.invoice_transmission_artifacts where workspace_id = '$WS'
+order by 1"
+snapshot() {
+  if [ -n "$STAGE_AT" ]; then
+    psq -At -c "select * from ($SNAPSHOT_SQL) a union all select * from ($TX_SNAPSHOT_SQL) b order by 1"
+  else
+    psq -At -c "$SNAPSHOT_SQL"
+  fi
+}
+# The staged case's literals: the pending attempt and the receipt as seeded.
+transmissions_state() {
+  psq -At -c "select string_agg(id::text || '=' || phase || '/' || status || '/' || generation::text
+      || '/' || coalesce(business_key, '') || '/' || binding_hash || '/' || receipt::text, E'\\n' order by id)
+    from public.invoice_transmissions where workspace_id = '$WS'"
+}
 
 # As the owner, the way the app asks.
 AS_OWNER="select set_config('request.jwt.claims',
@@ -125,7 +180,8 @@ verify() {
 
 mkdir -p report
 snapshot > report/archive-before.txt || fail "could not read the archive before the upgrade"
-[ "$(grep -c '' report/archive-before.txt)" = 9 ] || fail "the snapshot has $(grep -c '' report/archive-before.txt) rows, not 9"
+want_rows=9; [ -n "$STAGE_AT" ] && want_rows=12
+[ "$(grep -c '' report/archive-before.txt)" = "$want_rows" ] || fail "the snapshot has $(grep -c '' report/archive-before.txt) rows, not $want_rows"
 v="$(verify)"
 [ "$v" = "ARC-1=verified ARC-2=unverifiable ARC-3=verified" ] \
   || fail "before the upgrade the signatures read [$v]: the seed is not what it claims"
@@ -133,10 +189,21 @@ say "before: ARC-1 verified, ARC-2 unverifiable, ARC-3 verified"
 
 echo "--- the upgrade"
 for f in supabase/migrations/*.sql; do
-  if [ "$(version_of "$f")" -gt "$((10#$BASELINE))" ]; then apply "$f"; after=$((after + 1)); fi
+  if [ "$(version_of "$f")" -gt "$upgrade_from" ]; then apply "$f"; after=$((after + 1)); fi
 done
 [ "$(marker)" = "$latest" ] || fail "after the upgrade the marker reads '$(marker)', not $latest"
 say "$after migrations ran over the populated schema, marker $latest"
+if [ -n "$STAGE_AT" ]; then
+  # Literals, not a comparison with a snapshot taken after the same seed: a
+  # changed seed or a changed migration must turn this red.
+  want="$TX_PREP=prepared/failed/0/$WS|00000000-0000-4000-8000-0000000a0101|peppol|government|prod/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/{}
+$TX_ACC=accepted/accepted/0/$WS|00000000-0000-4000-8000-0000000a0102|peppol|government|prod/dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd/{\"received\": \"2026-01-15T11:00:00Z\", \"platform_id\": \"EXT-ARC-2\"}"
+  got="$(transmissions_state)"
+  [ "$got" = "$want" ] || fail "the in-flight e-invoice work changed across 0690..$latest: [$got]"
+  [ "$(psq -At -c "select sha256 || '/' || length(bytes)::text from public.invoice_transmission_artifacts where transmission_id = '$TX_PREP'")" = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/4" ] \
+    || fail "the stored bytes of the prepared attempt changed"
+  say "the prepared attempt (with its bytes) and the accepted one (with its receipt) read as seeded after $latest"
+fi
 
 snapshot > report/archive-after.txt || fail "could not read the archive after the upgrade"
 if ! diff -u report/archive-before.txt report/archive-after.txt > report/archive-diff.txt; then
@@ -177,6 +244,29 @@ case "$v" in
   *) fail "the control did not do what a destructive migration does: [$v]" ;;
 esac
 
+if [ -n "$STAGE_AT" ]; then
+  # A migration that drops the pending attempt (and, replica mode skipping the
+  # cascade, its bytes), blanks the receipt and moves the accepted row's phase. Applied
+  # as the platform admin (the user triggers are not what is under test); the
+  # comparison has to name exactly those rows.
+  asql -d "$DB" -q -v ON_ERROR_STOP=1 -c "set session_replication_role = replica;
+    update public.invoice_transmissions set receipt = '{}'::jsonb, receipt_at = null,
+      phase = 'uncertain' where id = '$TX_ACC';
+    delete from public.invoice_transmission_artifacts where transmission_id = '$TX_PREP';
+    delete from public.invoice_transmissions where id = '$TX_PREP'" \
+    || fail "could not apply the transmissions control"
+  snapshot > report/archive-control-tx.txt
+  if diff -u report/archive-before.txt report/archive-control-tx.txt > report/archive-control-tx-diff.txt; then
+    fail "the transmissions control dropped the pending attempt and the receipt and the comparison did not notice"
+  fi
+  grep -q "^-transmission $TX_PREP" report/archive-control-tx-diff.txt \
+    && grep -q "^[-+]transmission $TX_ACC" report/archive-control-tx-diff.txt \
+    && grep -q "^-artifact $TX_PREP" report/archive-control-tx-diff.txt \
+    && grep -q "^+transmission $TX_ACC.* | uncertain | " report/archive-control-tx-diff.txt \
+    || fail "the control's diff does not name the pending attempt, its bytes and the receipt"
+  say "the control dropped the prepared attempt and blanked the receipt -- exactly what the comparison refuses"
+fi
+
 echo "--- the transitions, on the upgraded schema"
 psq -q -c "update public.invoices set voided_at = now(), voided_by_name = 'Owner'
   where id = '00000000-0000-4000-8000-0000000a0103'" || fail "voiding ARC-3 was refused"
@@ -199,4 +289,4 @@ v="$(verify)"
 case "$v" in *"ARC-1=altered"*) ;; *) fail "a synthetic alteration of ARC-1 was not detected: [$v]" ;; esac
 say "a synthetic alteration behind the guard reads altered"
 
-echo "populated upgrade: $before + $after migrations, the archive unchanged, the control caught ($((SECONDS - started))s)"
+echo "populated upgrade${STAGE_AT:+ (staged at $STAGE_AT)}: $before + $staged + $after migrations, the archive unchanged, the control caught ($((SECONDS - started))s)"
