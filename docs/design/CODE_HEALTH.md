@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `2511f13fd168707a8724bb93c5a970dd61c9b4c2` on 2026-11-08.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` and the `lib/` of every package under `packages/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `22b2ecb5264b36cd6dbfcfa45bfa1706a1f1dbb8` on 2026-11-08.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,15 +10,15 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2555 |
-| functions | 14263 |
+| files | 2562 |
+| functions | 14275 |
 | cyclomatic>=9 | 1464 |
-| cyclomatic>=25 | 84 |
-| cognitive>=15 | 557 |
+| cyclomatic>=25 | 83 |
+| cognitive>=15 | 555 |
 | cognitive>=30 | 76 |
 | length>=150 | 52 |
 | parameters>=5 | 660 |
-| parameters>=7 | 158 |
+| parameters>=7 | 157 |
 | partOfFiles | 18 |
 
 ## Worst functions by cognitive complexity (baseline)

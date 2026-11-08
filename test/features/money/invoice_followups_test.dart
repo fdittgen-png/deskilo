@@ -7,8 +7,11 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart' show spanishCorrectionReasonCodes;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
+
+import '../../helpers/national_mentions.dart';
 
 const _reason = 'Formation professionnelle (art. 261 CGI)';
 

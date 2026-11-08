@@ -11,32 +11,45 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/invoices.dart';
 
+Future<FakeMoneyRepository> _openForm(
+  WidgetTester tester, {
+  required String country,
+}) async {
+  final money = FakeMoneyRepository()..invoiceMissing = ['correction_reason'];
+  money.ledger.add(
+    LedgerEntry(
+      id: 'ledger-1',
+      memberId: 'member-1',
+      kind: LedgerKind.charge,
+      category: LedgerCategory.service,
+      amountCents: 450,
+      description: 'Coffee x3',
+      period: currentTestPeriod(),
+      createdAt: kTestNow,
+    ),
+  );
+  // The codes are the workspace country's own (Spain's R1-R5).
+  final workspace = FakeWorkspaceRepository.withWorkspace();
+  workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+    countryCode: country,
+  );
+  await pumpInvoices(tester, money: money, workspace: workspace);
+  await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Flo').last);
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
+  await tester.pumpAndSettle();
+  return money;
+}
+
 void main() {
   testWidgets('the form asks for the correction reason and sends it', (
     tester,
   ) async {
-    final money = FakeMoneyRepository()..invoiceMissing = ['correction_reason'];
-    money.ledger.add(
-      LedgerEntry(
-        id: 'ledger-1',
-        memberId: 'member-1',
-        kind: LedgerKind.charge,
-        category: LedgerCategory.service,
-        amountCents: 450,
-        description: 'Coffee x3',
-        period: currentTestPeriod(),
-        createdAt: kTestNow,
-      ),
-    );
-    await pumpInvoices(tester, money: money);
-    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Flo').last);
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
-    await tester.pumpAndSettle();
+    final money = await _openForm(tester, country: 'ES');
 
     expect(
       find.byKey(const ValueKey('invoice-correction-reason')),
@@ -62,5 +75,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(money.invoices, hasLength(1));
     expect(money.lastCorrectionReason, 'R2');
+  });
+
+  testWidgets('a country whose law asks no correction reason is not offered '
+      'one, whatever the server lists as missing', (tester) async {
+    await _openForm(tester, country: 'DE');
+    expect(
+      find.byKey(const ValueKey('invoice-correction-reason')),
+      findsNothing,
+    );
   });
 }

@@ -48,6 +48,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the invoice profile.
   conflictingProfile,
+
+  /// More than one installed add-on claims the mentions of that country.
+  conflictingMentions,
 }
 
 sealed class CapabilityResolution {
@@ -152,4 +155,57 @@ ProfileResolution resolveInvoiceProfile(
     return const RefusedProfile(RefusalKind.contractMismatch);
   }
   return ResolvedProfile(matches.single);
+}
+
+/// The capability id of the national invoice mentions of [country].
+String _invoiceMentionsCapabilityId(String country) =>
+    'invoice_mentions.$country';
+
+sealed class MentionsResolution {
+  const MentionsResolution();
+}
+
+/// The country's own law adds lines, and the add-on that states them.
+class ResolvedMentions extends MentionsResolution {
+  const ResolvedMentions(this.contribution);
+
+  final InvoiceMentionsContribution contribution;
+}
+
+/// No installed add-on states mentions for the country. That is NOT a fault
+/// (most countries add nothing): it is the empty answer, never a fallback to
+/// another country's lines.
+class NoMentions extends MentionsResolution {
+  const NoMentions();
+}
+
+/// An installed composition that cannot answer, and why.
+class RefusedMentions extends MentionsResolution {
+  const RefusedMentions(this.kind);
+
+  final RefusalKind kind;
+}
+
+/// The installed mentions add-on of [context]'s country, none, or the reason
+/// the composition is wrong.
+MentionsResolution resolveInvoiceMentions(
+  LegalContext context,
+  List<InvoiceMentionsContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return const NoMentions();
+  final id = _invoiceMentionsCapabilityId(country);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return const NoMentions();
+  if (matches.length > 1) {
+    return const RefusedMentions(RefusalKind.conflictingMentions);
+  }
+  if (matches.single.descriptor.contractVersion !=
+      invoiceMentionsContractVersion) {
+    return const RefusedMentions(RefusalKind.contractMismatch);
+  }
+  return ResolvedMentions(matches.single);
 }

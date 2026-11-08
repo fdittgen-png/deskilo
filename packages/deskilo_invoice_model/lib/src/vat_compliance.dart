@@ -6,11 +6,8 @@
 // have before an e-invoice names it (a syntactic check; a VIES lookup
 // is #895). Reviewed against Council Directive 2006/112/EC (art. 226,
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
-import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
-    show formatCanadianRegistration;
-
-import 'place_of_supply.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import 'vat_regime.dart';
 
 // #3333: the Canadian registration numbers live in the standards package, one
@@ -159,71 +156,3 @@ String exigibilityMention({
       ) ??
       '';
 }
-
-/// #2356 — what a member state's own law adds to an invoice beyond the
-/// Directive's list (art. 226), in the seller's language:
-///  * Italy — the € 2 stamp duty on an invoice whose amount not subject to
-///    VAT exceeds € 77.47 (D.P.R. 642/1972, tariff art. 13);
-///  * Spain — a correcting invoice says it is one and names the invoice it
-///    rectifies (RD 1619/2012 art. 15);
-///  * France — the category of the operation (CGI ann. II art. 242
-///    nonies A, since the 2026 e-invoicing reform): a workspace supplies
-///    services.
-/// [untaxedCents] is the gross of the supplies that carry no VAT other
-/// than a reverse charge; [correction] a credit note or a replacement.
-List<String> nationalInvoiceMentions({
-  required String sellerCountry,
-  required VatRegime regime,
-  required String currency,
-  required int untaxedCents,
-  required bool correction,
-  String rectifies = '',
-  String correctionReason = '',
-  String sellerVatId = '',
-  String sellerLegalId = '',
-  bool qstCharged = false,
-  required TaxReferenceSet reference,
-}) {
-  final country = euCountryCode(sellerCountry, reference: reference);
-  final reason = _spanishCorrectionReasonText(correctionReason);
-  return [
-    if (country == 'IT' && currency.toUpperCase() == 'EUR' && untaxedCents > 7747)
-      'Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.',
-    if (country == 'ES' && correction && rectifies.trim().isEmpty)
-      'Factura rectificativa (art. 15 del RD 1619/2012)'
-          '${reason.isEmpty ? '.' : '. Motivo: $reason.'}'
-    else if (country == 'ES' && correction)
-      'Factura rectificativa (art. 15 del RD 1619/2012) de la factura '
-          '${rectifies.trim()}${reason.isEmpty ? '.' : '. Motivo: $reason.'}',
-    if (country == 'FR' && regime == VatRegime.vatRegistered)
-      "Catégorie de l'opération : prestation de services.",
-    // #2361 — a Canadian invoice states the registrant's numbers (ETA s.
-    // 169(4); the Act respecting the QST, s. 425), in both languages: the
-    // customer's decides which is read, the law asks for the number.
-    if (country == 'CA' &&
-        regime == VatRegime.vatRegistered &&
-        sellerVatId.trim().isNotEmpty)
-      'GST/HST No. · N° de TPS/TVH : '
-          '${formatCanadianRegistration(sellerVatId)}',
-    if (country == 'CA' &&
-        regime == VatRegime.vatRegistered &&
-        qstCharged &&
-        sellerLegalId.trim().isNotEmpty)
-      'QST No. · N° de TVQ : ${formatCanadianRegistration(sellerLegalId)}',
-  ];
-}
-
-/// #2440 — the correction codes of RD 1619/2012 art. 15 (AEAT TipoFactura
-/// R1-R5), as the Spanish mention words them. Empty for anything else.
-const spanishCorrectionReasonCodes = ['R1', 'R2', 'R3', 'R4', 'R5'];
-
-String _spanishCorrectionReasonText(String code) =>
-    switch (code.trim().toUpperCase()) {
-      'R1' => 'R1, error fundado en derecho y causas del art. 80 uno, dos '
-          'y seis de la Ley 37/1992',
-      'R2' => 'R2, concurso de acreedores (art. 80 tres de la Ley 37/1992)',
-      'R3' => 'R3, créditos incobrables (art. 80 cuatro de la Ley 37/1992)',
-      'R4' => 'R4, resto de causas',
-      'R5' => 'R5, factura simplificada',
-      _ => '',
-    };

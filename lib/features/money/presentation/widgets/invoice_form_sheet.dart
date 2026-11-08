@@ -63,6 +63,7 @@ Future<void> showInvoiceIssueSheet(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
+      countryCode: workspace.countryCode,
       association: ref.read(sellerIsAssociationProvider),
       now: now,
       l10n: l10n,
@@ -126,6 +127,7 @@ Future<void> showInvoiceIssueSheet(
 /// no way to type a position — that is the point.
 class _InvoiceForm extends StatefulWidget {
   const _InvoiceForm({
+    required this.countryCode,
     required this.association,
     required this.l10n,
     required this.members,
@@ -138,6 +140,9 @@ class _InvoiceForm extends StatefulWidget {
     this.initialDetailed = false,
     this.replacesNumber,
   });
+
+  /// The workspace's country (its law's own correction reason codes).
+  final String countryCode;
 
   /// #870 — an association collects a participation.
   final bool association;
@@ -442,6 +447,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         if (_readiness(lines).asksCorrectionReason)
           InvoiceCorrectionReasonField(
             key: const ValueKey('invoice-correction-reason-field'),
+            country: widget.countryCode,
             value: _correctionReason,
             onChanged: _setCorrectionReason,
           ),
