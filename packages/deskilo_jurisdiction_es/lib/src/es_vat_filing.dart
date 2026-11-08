@@ -30,7 +30,7 @@ class EsVatFilingContribution extends VatFilingContribution {
   );
 
   @override
-  Set<String> get registers => const {'esLibro', 'esSii'};
+  Set<String> get registers => const {'esLibro', 'esSii', 'es347'};
 
   @override
   Set<FilingSource> get requiredSources => const {
