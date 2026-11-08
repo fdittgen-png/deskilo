@@ -18,6 +18,7 @@ const _shims = {
   'lib/features/money/domain/vat_forms.dart',
   'lib/features/money/domain/vat_form_boxes.dart',
   'lib/features/money/domain/vat_form_terms.dart',
+  'lib/core/money/money_text.dart',
   'lib/features/money/domain/vat_form_catalogue/ca.dart',
   'lib/features/money/domain/vat_form_catalogue/ch.dart',
   'lib/features/money/domain/vat_form_catalogue/de.dart',

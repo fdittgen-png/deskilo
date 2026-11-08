@@ -10,9 +10,13 @@
 // read the same descriptor. The qualification stays the existing
 // [AccountingCapability], keyed by the target id.
 
+
 import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
+
+export 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
+    show CustomerIdRule;
 
 /// A member of [AccountingTarget.countries] that stands for every EU member
 /// state, resolved against the `eu_member` rows of the tax reference: the
@@ -67,28 +71,6 @@ enum AccountingTokenShape {
 /// How the target codes tax: a code per rate, per tax component (a US or
 /// Canadian component), or not at all (the account carries the rate).
 enum TaxCodeModel { perRate, perComponent, none }
-
-/// What a customer id may look like in the target; null fields are free.
-class CustomerIdRule {
-  const CustomerIdRule({this.maxLength, this.charset});
-
-  final int? maxLength;
-
-  /// A regular expression every id must match in full.
-  final String? charset;
-
-  /// [number] as the target's id: in capitals without separators, when the
-  /// rule admits it; null otherwise (empty, too long, another charset).
-  String? admit(String number) {
-    final code = number.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
-    if (code.isEmpty) return null;
-    if (maxLength case final max? when code.length > max) return null;
-    if (charset case final c? when !RegExp('^(?:$c)\$').hasMatch(code)) {
-      return null;
-    }
-    return code;
-  }
-}
 
 /// The volume a target takes; null is unbounded or unknown.
 class TargetLimits {
