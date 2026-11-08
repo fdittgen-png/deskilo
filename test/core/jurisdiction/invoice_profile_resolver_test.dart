@@ -114,6 +114,20 @@ void main() {
     );
   });
 
+  test('the context states the period, the corrected date and the EU '
+      'member states, so a profile reads no reference of its own', () {
+    final context = invoiceDocumentContextOf(
+      _input(),
+      correctedIssuedAt: DateTime(2026, 8, 31),
+    );
+    expect(context.period, '2026-09');
+    expect(context.correctedIssuedAt, DateTime(2026, 8, 31));
+    expect(context.euMemberStates, containsAll(['DE', 'FR', 'PL', 'IT']));
+    expect(context.euMemberStates, isNot(contains('CH')));
+    expect(() => context.euMemberStates.add('XX'), throwsUnsupportedError);
+    expect(invoiceDocumentContextOf(_input()).correctedIssuedAt, isNull);
+  });
+
   test('a country that exists only in a test renders an invoice', () {
     const installed = [FakeInvoiceProfile('fakeXx')];
     final resolution = resolveInvoiceProfile('fakeXx', installed);

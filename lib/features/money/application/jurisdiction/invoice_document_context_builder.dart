@@ -11,6 +11,7 @@ import 'package:crypto/crypto.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceQueries;
 import '../../domain/e_invoice_totals.dart';
 import '../../domain/einvoice_input.dart';
 import '../../domain/invoice.dart';
@@ -37,6 +38,7 @@ InvoiceDocumentContext invoiceDocumentContextOf(
   EInvoiceInput input, {
   String transmitterId = '',
   String progressive = '',
+  DateTime? correctedIssuedAt,
 }) {
   final invoice = input.invoice;
   final totals = eInvoiceTotalsOf(
@@ -97,6 +99,9 @@ InvoiceDocumentContext invoiceDocumentContextOf(
     )),
     transmitterId: transmitterId,
     progressive: _progressive(progressive, invoice.number),
+    period: invoice.period ?? '',
+    correctedIssuedAt: correctedIssuedAt,
+    euMemberStates: input.reference.euMembers(),
   );
 }
 
