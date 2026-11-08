@@ -4,6 +4,7 @@
 // needs before Send is offered, and the dated mandate warnings: FR and DE
 // sellers are told what comes next, and every seller whose national
 // channel does not exist yet stays refused at issue.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_channel_check.dart';
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
@@ -224,7 +225,7 @@ void main() {
       for (final country in ['IT', 'ES', 'PL', 'RO']) {
         expect(mandateWarnings(country, today), isEmpty, reason: country);
         expect(
-          legalProfileOf(LegalClauseSnapshot(sellerCountry: country)),
+          legalProfileOf(LegalClauseSnapshot(sellerCountry: country), reference: ActiveTaxReference.current),
           LegalProfile.unsupported,
           reason:
               '$country is refused (seller_country_unsupported) until '
@@ -236,7 +237,7 @@ void main() {
     test('the warned countries are exactly the ones allowed to issue', () {
       for (final country in mandateWarningCountries) {
         expect(
-          legalProfileOf(LegalClauseSnapshot(sellerCountry: country)),
+          legalProfileOf(LegalClauseSnapshot(sellerCountry: country), reference: ActiveTaxReference.current),
           isNot(LegalProfile.unsupported),
           reason: country,
         );

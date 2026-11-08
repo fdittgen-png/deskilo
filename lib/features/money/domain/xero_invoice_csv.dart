@@ -8,6 +8,7 @@
 // as draft invoices, which the export says. Credit notes have a template
 // of their own in Xero and are not written here; the export names them.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/text/csv.dart';
@@ -120,10 +121,14 @@ bool _isSale(Invoice i) => !i.isVoided && i.kind != InvoiceKind.settlement && !i
 
 /// The VAT rates [invoices] carry, once each, in the order first met: the
 /// rows the person names a tax rate for.
-List<InvoiceVatTotal> xeroRatesOf(List<Invoice> invoices, {required String zeroCategory}) {
+List<InvoiceVatTotal> xeroRatesOf(
+  List<Invoice> invoices, {
+  required String zeroCategory,
+  required TaxReferenceSet reference,
+}) {
   final seen = <String, InvoiceVatTotal>{};
   for (final invoice in invoices.where(_isSale)) {
-    for (final t in invoice.vatBreakdown(zeroCategory: zeroCategory)) {
+    for (final t in vatBreakdownOf(invoice, zeroCategory: zeroCategory, reference: reference)) {
       seen.putIfAbsent(xeroRateKey(t), () => t);
     }
   }
@@ -136,6 +141,7 @@ XeroInvoiceExport xeroInvoiceExport({
   required List<Invoice> invoices,
   required XeroInvoiceSettings settings,
   required String zeroCategory,
+  required TaxReferenceSet reference,
 }) {
   final blockers = <XeroInvoiceBlocker>{
     if (settings.accountCode.trim().isEmpty) const XeroInvoiceBlocker(XeroInvoiceBlock.accountCode, ''),
@@ -143,7 +149,7 @@ XeroInvoiceExport xeroInvoiceExport({
   final perInvoice = <List<String>>[];
   for (final invoice in invoices.where(_isSale)) {
     final rows = <String>[];
-    for (final t in invoice.vatBreakdown(zeroCategory: zeroCategory)) {
+    for (final t in vatBreakdownOf(invoice, zeroCategory: zeroCategory, reference: reference)) {
       final taxType = settings.taxTypes[xeroRateKey(t)]?.trim() ?? '';
       if (taxType.isEmpty) {
         blockers.add(XeroInvoiceBlocker(XeroInvoiceBlock.taxType, xeroRateLabel(t)));

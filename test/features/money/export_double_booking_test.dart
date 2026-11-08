@@ -3,6 +3,7 @@
 // #2365 fix 1 — a ledger expense credit netted on an invoice is booked ONCE
 // (the purchases journal). It used to be booked a second time as money in
 // on the bank, and a goodwill adjustment credit as cash too.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,7 +22,7 @@ void main() {
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
-      ledger: SeededExportYear.ledger,
+      ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     ));
     final lines = file.split('\r\n');
     final head = lines.first.split('\t');

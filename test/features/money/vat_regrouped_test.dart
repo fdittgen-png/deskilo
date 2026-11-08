@@ -15,6 +15,7 @@
 //   2. `buildVatReport` skipped `isFolded` on the assumption that "the
 //      settlement carries them" — but its only caller hands it the view,
 //      from which the settlement has already been removed.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
@@ -106,7 +107,7 @@ void main() {
       end: end,
       zeroCategory: 'Z',
       matches: view.matches,
-      basis: VatTaxPointBasis.receipt,
+      basis: VatTaxPointBasis.receipt, reference: ActiveTaxReference.current,
     );
     expect(onPayment.positions, hasLength(2));
     expect(
@@ -119,7 +120,7 @@ void main() {
       view.invoices,
       start: DateTime.utc(2026, 8),
       end: DateTime.utc(2026, 8, 31),
-      zeroCategory: 'Z',
+      zeroCategory: 'Z', reference: ActiveTaxReference.current,
     );
     expect(onIssue.positions, hasLength(2));
     expect(

@@ -6,13 +6,11 @@
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
-import 'invoice_actions.dart';
 import 'posting_kind_labels.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
@@ -46,14 +44,8 @@ extension SageAccountingExports on AccountingExportRun {
     );
     if (!context.mounted) return;
     final name = sageFileName(year, invoices.last.issuedAt.month);
-    // Read before anything opens: without the workspace's own reference no
-    // nominal code can be proposed or checked, so the person is told (a snack)
-    // instead of tapping into silence (#3403).
-    final reference = workspaceTaxReference(ref);
-    if (reference == null) {
-      AppSnack.error(context, l10n.accountingExportContextNotReady);
-      return;
-    }
+    // The workspace's reference was read once at the start of the run.
+    final reference = taxReference;
     final journal = posted;
     if (journal != null) {
       final documents = {for (final i in exported) i.id: i};

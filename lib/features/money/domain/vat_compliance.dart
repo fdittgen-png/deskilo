@@ -5,12 +5,7 @@
 export 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide frozenTaxPointBasis,
     isEuCountry,
-    legalProfileOf,
-    qualifyClauses,
     taxPointsOf,
-    vatTaxPointBasis,
-    vatTaxPointLedger,
-    vatTaxPointPolicy,
-    vatTotalsOf;
+    vatTaxPointLedger;
 export '../../../core/vat/invoice_model_wrappers.dart';
 export '../../../core/vat/place_of_supply.dart';

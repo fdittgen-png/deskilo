@@ -2,6 +2,7 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +32,7 @@ import '../../domain/vat_declaration_report.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
+import '../invoice_actions.dart' show requireWorkspaceTaxReference, watchWorkspaceTaxReference;
 import '../invoice_documents.dart';
 import '../recapitulative_actions.dart';
 import '../report_actions.dart';
@@ -90,12 +92,16 @@ class _VatDeclarationsScreenState
   }
 
   /// #896 — one sentence naming the basis this workspace declares on.
-  String _basisNote(AppLocalizations l10n) {
+  String _basisNote(AppLocalizations l10n, TaxReferenceSet reference) {
     final workspace = ref.read(currentWorkspaceProvider).value;
     return vatTaxPointBasisNote(
-        l10n,
-        workspaceTaxPointBasis(
-            workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''));
+      l10n,
+      workspaceTaxPointBasis(
+        workspace?.invoiceLegal ?? const {},
+        workspace?.countryCode ?? '',
+        reference: reference,
+      ),
+    );
   }
 
   Map<String, Object?> _reportData(VatDeclaration declaration) {
@@ -107,7 +113,7 @@ class _VatDeclarationsScreenState
       workspaceName: workspace?.name ?? '',
       vatId: workspace?.vatId ?? '',
       countryCode: workspace?.countryCode ?? '',
-      disclaimer: '${_basisNote(l10n)} '
+      disclaimer: '${_basisNote(l10n, requireWorkspaceTaxReference(ref))} '
           '${l10n.vatDeclDisclaimer}',
       statusLabel: _statusLabel(l10n, declaration),
       rate: (value) => '${NumberFormat.decimalPattern(l10n.localeName).format(value)} %',
@@ -411,11 +417,12 @@ class _VatDeclarationsScreenState
               children: [
                 // #896 — which period a declaration covers depends on
                 // the basis, so the basis is said before it is used.
-                InlineBanner(
-                  key: const ValueKey('vat-decl-basis'),
-                  icon: Icons.event_available_outlined,
-                  text: _basisNote(l10n),
-                ),
+                if (watchWorkspaceTaxReference(ref) case final reference?)
+                  InlineBanner(
+                    key: const ValueKey('vat-decl-basis'),
+                    icon: Icons.event_available_outlined,
+                    text: _basisNote(l10n, reference),
+                  ),
                 VatTaxPointNotice(
                   eligible: workspace != null &&
                       needsVatTaxPointNotice(

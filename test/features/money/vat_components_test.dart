@@ -4,6 +4,7 @@
 // #2361 — GST 5 % + QST 9.975 % on the price without the GST: CAD 1 000.00
 // -> 50.00 + 99.75 -> 1 149.75. Server twin `vat_components_entry`
 // (migration 0423, pgTAP 180); the values below are the same ones.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_components.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -57,7 +58,7 @@ void main() {
     final totals = vatTotalsOf(
       const [(amountCents: 114975, vatPercent: 14.975)],
       zeroCategory: 'O',
-      sellerCountry: 'CA',
+      sellerCountry: 'CA', reference: ActiveTaxReference.current,
     );
     expect(totals.single.components.map((c) => c.taxCents), [5000, 9975]);
     final frozen = InvoiceVatTotal.fromJson(<String, Object?>{
@@ -76,7 +77,7 @@ void main() {
     // Without a seller country nothing is split (EU, UK, CH: unchanged).
     expect(
       vatTotalsOf(const [(amountCents: 114975, vatPercent: 14.975)],
-          zeroCategory: 'O').single.components,
+          zeroCategory: 'O', reference: ActiveTaxReference.current).single.components,
       isEmpty,
     );
   });

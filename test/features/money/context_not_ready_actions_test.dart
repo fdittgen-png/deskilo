@@ -4,8 +4,11 @@
 // run on a guess and does not go silent: with the workspace context not ready
 // a tap answers with a snack (or, for a preview, no live data), and a guarded
 // action that meets the typed refusal answers the same way.
+import 'dart:async';
+
 import 'package:deskilo/core/trace/guarded.dart';
 import 'package:deskilo/core/trace/workspace_context_not_ready.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_pdf_actions.dart';
 import 'package:deskilo/features/money/presentation/invoice_proforma.dart';
 import 'package:deskilo/features/money/presentation/recapitulative_actions.dart';
@@ -21,6 +24,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/real_async.dart';
+import '../../helpers/test_workspace_context.dart';
 
 const _said = 'The workspace is still loading its tax settings';
 
@@ -124,6 +128,19 @@ void main() {
     await _tapAndExpectSnack(tester);
   });
 
+  testWidgets('the VAT report CSV answers instead of throwing', (tester) async {
+    await _pump(
+      tester,
+      (context, ref) => saveVatReportCsv(
+        context,
+        ref,
+        start: DateTime(2026, 6),
+        end: DateTime(2026, 7),
+      ),
+    );
+    await _tapAndExpectSnack(tester);
+  });
+
   testWidgets('the designer\'s live preview has no data, so it falls back to '
       'the sample', (tester) async {
     Map<String, Object?>? data = const {'sentinel': 1};
@@ -154,5 +171,51 @@ void main() {
       ),
     );
     await _tapAndExpectSnack(tester);
+  });
+
+  testWidgets('the VAT report keeps the reference it started with when the '
+      'context goes away while it loads: no uncaught error', (tester) async {
+    final gate = Completer<Map<String, InvoiceMatch>>();
+    final money = FakeMoneyRepository();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(
+            money: money,
+            workspace: FakeWorkspaceRepository.withWorkspace(),
+          ),
+          testSwitchableReadyWorkspaceContext(),
+          invoiceMatchesProvider.overrideWith((ref) => gate.future),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) => TextButton(
+                key: const ValueKey('go'),
+                onPressed: () => showVatReport(
+                  context,
+                  ref,
+                  start: DateTime(2026, 6),
+                  end: DateTime(2026, 7),
+                ),
+                child: const Text('go'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('go')));
+    await tester.pump();
+    ProviderScope.containerOf(tester.element(find.byKey(const ValueKey('go'))))
+        .read(testContextReady.notifier)
+        .set(ready: false);
+    await tester.pump();
+    gate.complete(const {});
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(tester.takeException(), isNull);
   });
 }

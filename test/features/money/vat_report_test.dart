@@ -153,7 +153,7 @@ void main() {
         'entry', () {
       final report = buildVatReport(invoices,
           start: DateTime(2026, 9), end: DateTime(2026, 9, 30),
-          zeroCategory: 'E');
+          zeroCategory: 'E', reference: ActiveTaxReference.current);
       expect(report.positions.map((p) => '${p.number}@${p.percent}'),
           ['INV-1@20.0', 'INV-2@20.0', 'INV-2@5.5', 'INV-4@20.0',
            'INV-0@0.0']);
@@ -170,7 +170,7 @@ void main() {
     test('the CSV is one semicolon row per position, decimal comma', () {
       final report = buildVatReport(invoices.take(1),
           start: DateTime(2026, 9), end: DateTime(2026, 9, 30),
-          zeroCategory: 'E');
+          zeroCategory: 'E', reference: ActiveTaxReference.current);
       final csv = vatReportCsv(report, currency: 'EUR');
       expect(csv.split('\n').first,
           'number;date;customer;rate;category;net;vat;gross;currency;reverses');

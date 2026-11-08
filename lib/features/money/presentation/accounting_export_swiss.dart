@@ -19,7 +19,6 @@ import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'e_invoice_identity.dart';
 import 'gobd_procedure_document.dart';
-import 'invoice_actions.dart';
 import 'posting_kind_labels.dart';
 import 'swiss_procedure_document.dart';
 
@@ -46,11 +45,9 @@ extension SwissAccountingExports on AccountingExportRun {
 
     GenericJournal written(GenericJournal read) {
       if (read is! JournalPosted) return read;
-      // The codes of this workspace's own installation; refused, never
-      // guessed, while its context is not ready (runGuarded says so).
-      final reference =
-          workspaceTaxReference(ref) ??
-          (throw StateError('workspace context not ready'));
+      // The codes of this workspace's own installation, read once at the
+      // start of the run (`taxReference`).
+      final reference = taxReference;
       final journal = swissJournalOf(
         read.postings,
         reference: reference,
@@ -84,8 +81,7 @@ extension SwissAccountingExports on AccountingExportRun {
       AppSnack.error(context, l10n.archiveSwissNeedsExportLog);
       return null;
     }
-    final reference = workspaceTaxReference(ref);
-    if (reference == null) throw StateError('workspace context not ready');
+    final reference = taxReference;
     final sequences = await repo.fetchNumberSequences(workspace.id);
     int? schema;
     try {

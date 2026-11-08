@@ -1,35 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3432 -- the writer families that state the workspace's own tax reference
-// (codes, rates, clocks) do not run on a guess: with the workspace context
-// not ready the person is told before anything is built, instead of the tap
-// doing nothing.
+// #3432/#3403 -- every accounting export states the workspace's own tax
+// reference (the tax-point basis of its ledger, the codes and rates of its
+// writer): with the workspace context not ready the person is told before
+// anything is built, instead of the tap doing nothing.
 import '../../../core/ui/app_snack.dart';
-import '../domain/accounting_format.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart' show workspaceTaxReference;
 
-const _needsWorkspaceReference = {
-  ExportKind.sage,
-  ExportKind.swissKmu,
-  ExportKind.swissBanana,
-  ExportKind.saft,
-  ExportKind.saftPortugal,
-  ExportKind.saftFinancial,
-  ExportKind.archiveBundle,
-  ExportKind.bookReport,
-  ExportKind.gobd,
-};
-
 extension AccountingExportContext on AccountingExportRun {
-  /// Whether the chosen format needs the workspace's reference and it is not
-  /// ready: the snack is shown and the export stops.
+  /// Whether the workspace's reference is not ready: the snack is shown and
+  /// the export stops.
   bool refusedForMissingReference() {
-    if (!_needsWorkspaceReference.contains(format.kind) ||
-        workspaceTaxReference(ref) != null) {
-      return false;
+    final ready = workspaceTaxReference(ref);
+    if (ready == null) {
+      AppSnack.error(context, l10n.accountingExportContextNotReady);
+      return true;
     }
-    AppSnack.error(context, l10n.accountingExportContextNotReady);
-    return true;
+    // Read once: every later step of this run states this reference, even if
+    // the context goes away while the books load.
+    taxReference = ready;
+    return false;
   }
 }

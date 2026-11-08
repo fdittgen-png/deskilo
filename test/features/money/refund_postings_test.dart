@@ -36,7 +36,7 @@ void main() {
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
-      ledger: SeededExportYear.ledger,
+      ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     )).split('\r\n');
     final head = lines.first.split('\t');
     final rows = [
@@ -62,7 +62,7 @@ void main() {
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
-      ledger: SeededExportYear.ledger,
+      ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     ));
     expect(file, isNot(contains('BQ-CN-1-R')));
   });

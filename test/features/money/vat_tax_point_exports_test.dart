@@ -8,6 +8,7 @@
 // Zuord. Steuerperiode`). Without the engine's ledger both files book
 // every VAT on the issue day, as before.
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/declare_vat.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -15,6 +16,7 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 
 DateTime _on(int year, int month, int day) =>
@@ -97,7 +99,7 @@ void main() {
     company: _company,
     accounts: const FecAccounts(),
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    taxPoints: taxPoints,
+    taxPoints: taxPoints, reference: ActiveTaxReference.current,
   ));
 
   group('the FEC', () {
@@ -159,7 +161,7 @@ void main() {
         zeroCategory: 'S',
         matches: matches,
         instalments: instalments,
-        basis: basis,
+        basis: basis, reference: ActiveTaxReference.current,
       ).vatCents;
       final prefix = '2026${month.toString().padLeft(2, '0')}';
       final booked = rows

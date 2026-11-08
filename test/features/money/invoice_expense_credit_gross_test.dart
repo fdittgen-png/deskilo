@@ -4,6 +4,7 @@
 // the invoice, never a reduction of what was sold: the gross charged and the
 // tax it contains stay as issued, the credit is no cash received, and the
 // accountant's files book the sale at its gross and its tax.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_cash.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,7 +42,7 @@ void main() {
           accounts: const FecAccounts(),
           lineText: (l) => l.label,
           ledger: SeededExportYear.ledger,
-          currency: 'EUR',
+          currency: 'EUR', reference: ActiveTaxReference.current,
         ),
       ).split('\r\n');
       final head = lines.first.split('\t');

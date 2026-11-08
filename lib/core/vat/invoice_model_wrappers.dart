@@ -12,15 +12,10 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     hide frozenTaxPointBasis,
     isEuCountry,
-    legalProfileOf,
-    qualifyClauses,
     taxPointsOf,
-    vatTaxPointBasis,
-    vatTaxPointLedger,
-    vatTaxPointPolicy,
-    vatTotalsOf;
+    vatTaxPointLedger;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' as model
-    show LegalClauseSnapshot, euMemberStatesOf, exigibilityOf, frozenTaxPointBasis, isEuCountry, legalProfileOf, qualifyClauses, taxPointBasisOf, taxPointsOf, vatBreakdownOf, vatTaxPointBasis, vatTaxPointLedger, vatTaxPointPolicy, vatTotalsOf;
+    show euMemberStatesOf, frozenTaxPointBasis, isEuCountry, taxPointsOf, vatTaxPointLedger;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
@@ -34,54 +29,6 @@ Set<String> get euMemberStates =>
 
 bool isEuCountry(String code, {TaxReferenceSet? reference}) =>
     model.isEuCountry(code, reference: reference ?? ActiveTaxReference.current);
-
-@visibleForTesting
-LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) =>
-    model.legalProfileOf(snapshot, reference: ActiveTaxReference.current);
-
-QualifiedClauses qualifyClauses(
-  LegalClauseSnapshot snapshot,
-  ReportStrings strings,
-) => model.qualifyClauses(
-  snapshot,
-  strings,
-  reference: ActiveTaxReference.current,
-);
-
-/// The same facts read from the LIVE settings (statements, letters,
-/// previews): `LegalClauseSnapshot.live` with the installed reference.
-LegalClauseSnapshot legalClauseSnapshotLive({
-  required InvoiceLegal legal,
-  required String sellerCountry,
-  String buyerCountry = '',
-  PaymentTerms? memberTerms,
-  String? memberCapacity,
-}) => model.LegalClauseSnapshot.live(
-  legal: legal,
-  sellerCountry: sellerCountry,
-  buyerCountry: buyerCountry,
-  memberTerms: memberTerms,
-  memberCapacity: memberCapacity,
-  reference: ActiveTaxReference.current,
-);
-
-VatTaxPointPolicy vatTaxPointPolicy(
-  String country, {
-  String? asOf,
-  TaxReferenceSet? reference,
-}) => model.vatTaxPointPolicy(
-  country,
-  asOf: asOf,
-  reference: reference ?? ActiveTaxReference.current,
-);
-
-/// The basis of a seller in [country] whose stored choice is [option].
-VatTaxPointBasis vatTaxPointBasis(String country, VatTaxPointOption? option) =>
-    model.vatTaxPointBasis(
-      country,
-      option,
-      reference: ActiveTaxReference.current,
-    );
 
 @visibleForTesting
 List<VatTaxPointAmount> taxPointsOf(
@@ -119,43 +66,3 @@ List<VatTaxPointAmount> vatTaxPointLedger(
   reference: ActiveTaxReference.current,
   dayOf: dayOf,
 );
-
-List<InvoiceVatTotal> vatTotalsOf(
-  Iterable<({int amountCents, double vatPercent})> lines, {
-  required String zeroCategory,
-  String sellerCountry = '',
-}) => model.vatTotalsOf(
-  lines,
-  zeroCategory: zeroCategory,
-  sellerCountry: sellerCountry,
-  reference: ActiveTaxReference.current,
-);
-
-/// The reference-reading forms of the tax-point questions on [InvoiceLegal].
-extension InvoiceLegalTaxPoint on InvoiceLegal {
-  /// The basis a seller in [country] declares on.
-  VatTaxPointBasis taxPointBasis(String country) => model.taxPointBasisOf(
-    this,
-    country,
-    reference: ActiveTaxReference.current,
-  );
-
-  /// The #896 two-value key for [country]: `payment` when the tax waits
-  /// for the money, `invoice` otherwise -- what the printed mention reads.
-  String exigibilityIn(String country) => model.exigibilityOf(
-    this,
-    country,
-    reference: ActiveTaxReference.current,
-  );
-}
-
-/// The breakdown the documents render, one entry per rate (the snapshot wins
-/// whenever there is one): `vatBreakdownOf` with the installed reference.
-extension InvoiceVatBreakdown on Invoice {
-  List<InvoiceVatTotal> vatBreakdown({required String zeroCategory}) =>
-      model.vatBreakdownOf(
-        this,
-        zeroCategory: zeroCategory,
-        reference: ActiveTaxReference.current,
-      );
-}

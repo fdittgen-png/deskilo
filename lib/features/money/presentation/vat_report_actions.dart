@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -33,15 +34,20 @@ import 'vat_tax_point_labels.dart';
 /// the option its owner chose in [invoiceLegal].
 VatTaxPointBasis workspaceTaxPointBasis(
   Map<dynamic, dynamic> invoiceLegal,
-  String country,
-) =>
-    InvoiceLegal.fromJson(invoiceLegal).taxPointBasis(country);
+  String country, {
+  required TaxReferenceSet reference,
+}) => taxPointBasisOf(
+  InvoiceLegal.fromJson(invoiceLegal),
+  country,
+  reference: reference,
+);
 
 /// The period's report from the invoices already loaded for the hub.
 Future<VatReport> _loadVatReport(
   WidgetRef ref, {
   required DateTime start,
   required DateTime end,
+  required TaxReferenceSet reference,
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   // #1076 — awaited, not read synchronously: `.value` is null until
@@ -55,6 +61,7 @@ Future<VatReport> _loadVatReport(
   // #2355 — the period holds the tax points that fall inside it, on the
   // basis the declaration uses: the same engine, the same payments.
   return ref.read(vatDeclarationCommandProvider).report(
+        reference: reference,
         workspaceId: workspace?.id ?? '',
         invoices: view.invoices,
         start: start,
@@ -65,7 +72,10 @@ Future<VatReport> _loadVatReport(
         // payment has been ALLOCATED to the sources that carry the VAT.
         matches: view.matches,
         basis: workspaceTaxPointBasis(
-            workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''),
+          workspace?.invoiceLegal ?? const {},
+          workspace?.countryCode ?? '',
+          reference: reference,
+        ),
       );
 }
 
@@ -75,6 +85,7 @@ Map<String, Object?> _vatReportData(
   BuildContext context,
   WidgetRef ref,
   VatReport report,
+  TaxReferenceSet reference,
 ) {
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
@@ -112,8 +123,11 @@ Map<String, Object?> _vatReportData(
     'vat_basis_note':
         vatTaxPointBasisNote(
             l10n,
-            workspaceTaxPointBasis(workspace?.invoiceLegal ?? const {},
-                workspace?.countryCode ?? '')),
+            workspaceTaxPointBasis(
+              workspace?.invoiceLegal ?? const {},
+              workspace?.countryCode ?? '',
+              reference: reference,
+            )),
     'vat_period_net': currency.formatMinor(report.netCents),
     'vat_period_vat': currency.formatMinor(report.vatCents),
     'vat_period_gross': currency.formatMinor(report.grossCents),
@@ -142,7 +156,7 @@ Map<String, Object?> _vatReportData(
           'gross': currency.formatMinor(t.grossCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
+    ...legalMentionData(reportStringsOf(l10n), workspace, reference: reference),
   };
 }
 
@@ -158,13 +172,21 @@ Future<void> showVatReport(
   required DateTime end,
 }) async {
   final l10n = context.l10n;
-  if (workspaceTaxReference(ref) == null) {
+  // Read once, here: everything below states this reference, even if the
+  // context goes away while the report loads.
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
     AppSnack.error(context, l10n.workspaceTaxContextNotReady);
     return;
   }
-  final report = await _loadVatReport(ref, start: start, end: end);
+  final report = await _loadVatReport(
+    ref,
+    start: start,
+    end: end,
+    reference: reference,
+  );
   if (!context.mounted) return;
-  final data = _vatReportData(context, ref, report);
+  final data = _vatReportData(context, ref, report, reference);
   final rendered =
       renderLetterDoc(context, ref, docId: 'vat', data: data);
   final title = l10n.reportDocVat;
@@ -192,10 +214,20 @@ Future<void> saveVatReportCsv(
   required DateTime start,
   required DateTime end,
 }) async {
+  final reference = workspaceTaxReference(ref);
+  if (reference == null) {
+    AppSnack.error(context, context.l10n.workspaceTaxContextNotReady);
+    return;
+  }
   // An export is never in a currency nobody chose (#2488): no workspace, no file.
   final currency = ref.read(currentWorkspaceProvider).value?.currencyCode;
   if (currency == null) return;
-  final report = await _loadVatReport(ref, start: start, end: end);
+  final report = await _loadVatReport(
+    ref,
+    start: start,
+    end: end,
+    reference: reference,
+  );
   if (!context.mounted) return;
   final csv = vatReportCsv(report, currency: currency);
   await savePdfToDownloads(context, ref,

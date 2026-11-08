@@ -79,13 +79,13 @@ void main() {
               clauses: owner,
             );
         final business =
-            qualifyClauses(snap(CustomerCapacity.business), const ReportStrings());
+            qualifyClauses(snap(CustomerCapacity.business), const ReportStrings(), reference: ActiveTaxReference.current);
         expect(business.profile, isNot(LegalProfile.unsupported));
         expect(business.deficiencies, isNot(contains('profile_unsupported')));
         // Directive 2011/7/EU: the indemnity is a business debtor's.
         expect(business.recoveryIndemnity.text, isNotEmpty);
         final consumer =
-            qualifyClauses(snap(CustomerCapacity.consumer), const ReportStrings());
+            qualifyClauses(snap(CustomerCapacity.consumer), const ReportStrings(), reference: ActiveTaxReference.current);
         expect(consumer.recoveryIndemnity.text, isEmpty);
         // The statutory mentions: the small-business exemption, outside
         // the scope, and the reverse charge (art. 226(11) and (11a)).
@@ -102,7 +102,7 @@ void main() {
           legalProfileOf(LegalClauseSnapshot(
             sellerCountry: country,
             buyerCapacity: CustomerCapacity.business,
-          )),
+          ), reference: ActiveTaxReference.current),
           LegalProfile.unsupported,
           reason: country,
         );
@@ -122,12 +122,12 @@ void main() {
         clauses: const PaymentTerms(recoveryIndemnity: 'CHF 40'),
       );
       expect(
-        legalProfileOf(snap),
+        legalProfileOf(snap, reference: ActiveTaxReference.current),
         capacity == CustomerCapacity.business
             ? LegalProfile.chBusiness
             : LegalProfile.chConsumer,
       );
-      final q = qualifyClauses(snap, const ReportStrings());
+      final q = qualifyClauses(snap, const ReportStrings(), reference: ActiveTaxReference.current);
       expect(q.latePenalty.text, isEmpty);
       expect(
         q.recoveryIndemnity.text,
@@ -144,12 +144,12 @@ void main() {
         clauses: const PaymentTerms(recoveryIndemnity: 'GBP 40 fixed sum'),
       );
       expect(
-        legalProfileOf(snap),
+        legalProfileOf(snap, reference: ActiveTaxReference.current),
         capacity == CustomerCapacity.business
             ? LegalProfile.gbBusiness
             : LegalProfile.gbConsumer,
       );
-      final q = qualifyClauses(snap, const ReportStrings());
+      final q = qualifyClauses(snap, const ReportStrings(), reference: ActiveTaxReference.current);
       expect(q.latePenalty.text, isEmpty);
       expect(
         q.recoveryIndemnity.text,

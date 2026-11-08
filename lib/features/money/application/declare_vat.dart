@@ -16,7 +16,9 @@
 //
 // **Filed** is what the owner records after filing with the authority,
 // with the receipt it gave: no upload marks a return filed.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
+
 import '../domain/invoice_queries.dart';
 import '../domain/tax_reporting_repository.dart';
 import '../domain/vat_declaration.dart';
@@ -107,9 +109,11 @@ class VatDeclarations {
     required DateTime end,
     required String zeroCategory,
     required VatTaxPointBasis basis,
+    required TaxReferenceSet reference,
   }) async =>
       buildVatReport(
         invoices,
+        reference: reference,
         start: start,
         end: end,
         zeroCategory: zeroCategory,

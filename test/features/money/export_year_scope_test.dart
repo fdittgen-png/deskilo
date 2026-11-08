@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2365 fix 2 — a file for one fiscal year carries that year's books only.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/export_year.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -69,7 +70,7 @@ void main() {
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
       ledger: scope.ledger,
-      repartitions: scope.repartitions,
+      repartitions: scope.repartitions, reference: ActiveTaxReference.current,
     ));
     expect(file, isNot(contains('L-exp-2024')));
     expect(file, isNot(contains('R-2025')));

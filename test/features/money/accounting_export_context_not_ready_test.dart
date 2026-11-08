@@ -96,6 +96,8 @@ void main() {
     ('DE', 'gobd'),
     ('PT', 'saft_pt'),
     ('FR', 'bundle'),
+    ('FR', 'fec'),
+    ('FR', 'accountant_csv'),
   ];
   for (final (country, formatId) in cases) {
     testWidgets('$formatId ($country): the workspace context not ready is '

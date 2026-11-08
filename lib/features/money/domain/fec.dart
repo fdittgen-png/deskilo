@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/time/workspace_time.dart';
 import 'euro_format.dart';
 import 'expense_repartition.dart';
@@ -102,6 +104,7 @@ String buildFecFile(FecRequest request) {
     company: request.company,
     accounts: request.accounts,
     lineText: request.lineText,
+    reference: request.reference,
     customersLabel: request.customersLabel,
     revenueLabel: request.revenueLabel,
     bankLabel: request.bankLabel,
@@ -129,6 +132,7 @@ class FecRequest {
     required this.company,
     required this.accounts,
     required this.lineText,
+    required this.reference,
     this.customersLabel = 'Clients',
     this.revenueLabel = 'Prestations de services',
     this.bankLabel = 'Banques',
@@ -141,6 +145,9 @@ class FecRequest {
     this.vatPendingLabel = "TVA collectée en attente d'exigibilité",
     this.dayOf = WorkspaceTime.dateOf,
   });
+
+  /// The tax reference the file is stated on: the workspace's own.
+  final TaxReferenceSet reference;
 
   /// The currency the workspace books in; only the euro is written.
   final String currency;

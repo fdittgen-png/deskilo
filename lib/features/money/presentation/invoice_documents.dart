@@ -55,6 +55,7 @@ import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
 export 'letter_doc_pdf.dart';
+export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
@@ -398,6 +399,7 @@ String facturXmlOf(
   required InvoiceParty seller,
   required InvoiceParty buyer,
   required String iban,
+  required TaxReferenceSet reference,
 }) {
   final association = ref.read(sellerIsAssociationProvider);
   final words = reportStringsOf(context.l10n);
@@ -413,7 +415,7 @@ String facturXmlOf(
     paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
         memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
         '',
-    reference: requireWorkspaceTaxReference(ref)));
+    reference: reference));
 }
 
 Future<({List<int> bytes, String fileName})> buildFacturXFile(
@@ -424,15 +426,18 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   required InvoiceParty buyer,
   required String iban,
 }) async {
+  // Read once: the XML and the PDF both state this reference, whatever
+  // happens to the context while the PDF is built.
+  final reference = requireWorkspaceTaxReference(ref);
   final xml = facturXmlOf(context, ref, invoice,
-      seller: seller, buyer: buyer, iban: iban);
+      seller: seller, buyer: buyer, iban: iban, reference: reference);
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
   if (!context.mounted) return (bytes: const <int>[], fileName: '');
   final pdf = await buildInvoicePdfFile(
     context,
     invoice,
-    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
+    InvoicePdfFileOptions(reference: reference,
       // #920 — through layoutImage, so the shipped layouts' `logo`
       // resolves to whatever the owner actually called theirs.
       reportImage: (String name) => layoutImage(ref, name),
@@ -471,6 +476,7 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   WidgetRef ref,
   Invoice invoice, {
   required int level,
+  required TaxReferenceSet reference,
   ReportBands? draftBands,
 }) async {
   // #496 — the reminder letter prints in the MEMBER's language (their
@@ -502,7 +508,8 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
         l10n: l10n, localeName: language.isEmpty ? null : language),
     reminderFactsOf(ref, invoice),
     invoice,
-    level: level, reference: requireWorkspaceTaxReference(ref),
+    level: level,
+    reference: reference,
   );
   final template = invoicePdfTemplateFor(ref).forLocale(language);
   final bands = draftBands ?? template.reminderBands(level);
@@ -554,21 +561,3 @@ List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
       ...all.where((i) => i.id == source.invoiceId),
   ];
 }
-
-/// #881 — the member's own payment conditions, from the members list
-/// already loaded; null when they inherit the workspace's.
-/// #1916 — the member's stated customer capacity (wire), null when not
-/// stated or unknown here.
-String? memberCapacityFor(WidgetRef ref, String memberId) => ref
-    .read(workspaceMembersProvider)
-    .value
-    ?.where((m) => m.id == memberId)
-    .firstOrNull
-    ?.customerCapacity;
-
-PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
-    .read(workspaceMembersProvider)
-    .value
-    ?.where((m) => m.id == memberId)
-    .firstOrNull
-    ?.paymentTerms;

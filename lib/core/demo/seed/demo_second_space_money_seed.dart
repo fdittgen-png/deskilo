@@ -12,6 +12,7 @@ import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/money/domain/vat_rate.dart';
+import '../data/book_profile_repository.dart' show demoTaxReference;
 import '../data/event_repository.dart';
 import '../data/money_repository.dart';
 import 'demo_second_space_seed.dart';
@@ -107,6 +108,7 @@ Invoice _invoice(
     vatTotals: vatTotalsOf(
       [for (final l in lines) (amountCents: l.amountCents, vatPercent: l.vatPercent)],
       zeroCategory: 'O',
+      reference: demoTaxReference(),
     ),
     currency: 'EUR',
     memberName: _nameOf(member),

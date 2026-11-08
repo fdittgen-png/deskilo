@@ -14,6 +14,7 @@ import 'package:deskilo/features/money/domain/report_facts.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 const _en = ReportStrings();
 
@@ -82,7 +83,7 @@ Invoice _invoice({
 void main() {
   group('the same reader language, four transactions', () {
     test('FR business: the L441-10 clauses print, defaulted when empty', () {
-      final q = qualifyClauses(_snap('FR', CustomerCapacity.business), _en);
+      final q = qualifyClauses(_snap('FR', CustomerCapacity.business), _en, reference: ActiveTaxReference.current);
       expect(q.profile, LegalProfile.frBusiness);
       expect(q.latePenalty.basis, ClauseBasis.statutoryDefault);
       expect(q.latePenalty.text, _en.latePenaltyDefault);
@@ -94,7 +95,7 @@ void main() {
         'even when the owner typed it', () {
       final q = qualifyClauses(
         _snap('FR', CustomerCapacity.consumer, clauses: _ownerTerms),
-        _en,
+        _en, reference: ActiveTaxReference.current,
       );
       expect(q.profile, LegalProfile.frConsumer);
       expect(q.recoveryIndemnity.text, isEmpty);
@@ -106,7 +107,7 @@ void main() {
       );
       expect(q.deficiencies, contains('recovery_indemnity_not_applicable'));
 
-      final none = qualifyClauses(_snap('FR', CustomerCapacity.consumer), _en);
+      final none = qualifyClauses(_snap('FR', CustomerCapacity.consumer), _en, reference: ActiveTaxReference.current);
       expect(none.latePenalty.text, isEmpty);
       expect(none.recoveryIndemnity.text, isEmpty);
       expect(none.escompte.text, isEmpty);
@@ -114,14 +115,14 @@ void main() {
 
     test('DE business: German law makes no invoice mention of it, so '
         'nothing is printed automatically — and never the French rule', () {
-      final q = qualifyClauses(_snap('DE', CustomerCapacity.business), _en);
+      final q = qualifyClauses(_snap('DE', CustomerCapacity.business), _en, reference: ActiveTaxReference.current);
       expect(q.profile, LegalProfile.deBusiness);
       expect(q.latePenalty.text, isEmpty);
       expect(q.recoveryIndemnity.text, isEmpty);
       expect(q.escompte.text, isEmpty);
       final owned = qualifyClauses(
         _snap('DE', CustomerCapacity.business, clauses: _ownerTerms),
-        _en,
+        _en, reference: ActiveTaxReference.current,
       );
       expect(
         owned.recoveryIndemnity,
@@ -136,19 +137,19 @@ void main() {
       for (final capacity in [CustomerCapacity.business, CustomerCapacity.consumer]) {
         final q = qualifyClauses(
           _snap('US', capacity, clauses: _ownerTerms),
-          _en,
+          _en, reference: ActiveTaxReference.current,
         );
         expect(q.profile, capacity == CustomerCapacity.business
             ? LegalProfile.usBusiness
             : LegalProfile.usConsumer);
         expect(q.deficiencies, isNot(contains('profile_unsupported')));
       }
-      final bare = qualifyClauses(_snap('US', CustomerCapacity.business), _en);
+      final bare = qualifyClauses(_snap('US', CustomerCapacity.business), _en, reference: ActiveTaxReference.current);
       expect(bare.latePenalty.text, isEmpty);
       expect(bare.recoveryIndemnity.text, isEmpty);
       expect(bare.escompte.text, isEmpty);
       // a country the data holds no row for is still unsupported
-      final jp = qualifyClauses(_snap('JP', CustomerCapacity.business, clauses: _ownerTerms), _en);
+      final jp = qualifyClauses(_snap('JP', CustomerCapacity.business, clauses: _ownerTerms), _en, reference: ActiveTaxReference.current);
       expect(jp.profile, LegalProfile.unsupported);
       expect(jp.deficiencies, contains('profile_unsupported'));
     });
@@ -175,8 +176,8 @@ void main() {
         'clauses apply', () {
       for (final country in ['FR', 'DE', 'US']) {
         for (final capacity in CustomerCapacity.values) {
-          final en = qualifyClauses(_snap(country, capacity), _en);
-          final fr = qualifyClauses(_snap(country, capacity), _fr);
+          final en = qualifyClauses(_snap(country, capacity), _en, reference: ActiveTaxReference.current);
+          final fr = qualifyClauses(_snap(country, capacity), _fr, reference: ActiveTaxReference.current);
           for (final (a, b) in [
             (en.latePenalty, fr.latePenalty),
             (en.recoveryIndemnity, fr.recoveryIndemnity),
@@ -198,7 +199,7 @@ void main() {
     test('an association selling to a business prints the B2B clauses', () {
       final q = qualifyClauses(
         _snap('FR', CustomerCapacity.business, kind: 'association'),
-        _en,
+        _en, reference: ActiveTaxReference.current,
       );
       expect(q.recoveryIndemnity.basis, ClauseBasis.statutoryDefault);
       final data = legalMentionData(
@@ -244,7 +245,7 @@ void main() {
           legal: const InvoiceLegal(),
           sellerCountry: 'FR',
         ),
-        _en,
+        _en, reference: ActiveTaxReference.current,
       );
       expect(unstated.profile, LegalProfile.capacityUnknown);
       expect(

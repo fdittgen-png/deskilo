@@ -11,7 +11,6 @@ import '../domain/gobd_package.dart';
 import '../domain/readable_handover.dart';
 import '../domain/records_location.dart';
 import 'accounting_export_run.dart';
-import 'invoice_actions.dart';
 
 extension ReadableHandoverExport on AccountingExportRun {
   /// The handover's files for the archive of [year], or none outside the
@@ -24,8 +23,7 @@ extension ReadableHandoverExport on AccountingExportRun {
     if (!archiveCarriesReadableHandover(country)) return const {};
     // The rates of this workspace's own installation; an archive never
     // states another's.
-    final reference = workspaceTaxReference(ref);
-    if (reference == null) throw StateError('workspace context not ready');
+    final reference = taxReference;
     final sequences = await repo.fetchNumberSequences(workspace.id);
     return readableHandoverFiles(
       GobdRequest(

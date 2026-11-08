@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/installed_reference_shims.dart';
 
 void main() {
   test('every group carries its category and base rule; the wire round-trips', () {

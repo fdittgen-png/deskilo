@@ -7,6 +7,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +86,9 @@ class AccountingExportRun {
 
   late final workspace = ref.read(currentWorkspaceProvider).value!;
   late final AccountingFormat format;
+
+  /// The workspace's own tax reference, read once at the start of the run.
+  late final TaxReferenceSet taxReference;
   late final int year;
   late final Map<String, InvoiceMatch> matches;
   late final InvoiceParty company;
@@ -187,7 +191,11 @@ class AccountingExportRun {
     exported,
     matches: matches,
     instalments: books.instalments,
-    basis: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode),
+    basis: workspaceTaxPointBasis(
+      workspace.invoiceLegal,
+      workspace.countryCode,
+      reference: taxReference,
+    ),
   );
   memberNames =
       ref.read(memberNamesProvider).value ?? const <String, String>{};
@@ -222,7 +230,7 @@ class AccountingExportRun {
         await _auditTrail();
       case ExportKind.bookReport:
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
-            'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace, reference: requireWorkspaceTaxReference(ref))});
+            'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace, reference: taxReference)});
       case ExportKind.saftFinancial:
         await safTFinancialExport();
       case ExportKind.genericJournal:
@@ -265,6 +273,7 @@ class AccountingExportRun {
       errorText: l10n.workspaceGenericError,
       action: () => save(
         buildFecFile(FecRequest(
+          reference: taxReference,
           currency: workspace.currencyCode,
           invoices: exported,
           matches: matches,
@@ -306,8 +315,7 @@ class AccountingExportRun {
           fallbackDescription: l10n.invoicesTitle,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
           ledgerAccounts: accounts, bookPostings: posted,
-          reference: workspaceTaxReference(ref) ??
-              (throw StateError('workspace context not ready'))));
+          reference: taxReference));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
     if (posted case final journal?) {
       return exportGenericJournal(context,
@@ -470,6 +478,7 @@ class AccountingExportRun {
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
         if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
+          reference: taxReference,
           currency: workspace.currencyCode, invoices: yearInvoices,
           matches: matches,
           company: company,
@@ -521,6 +530,7 @@ class AccountingExportRun {
           onReceipts: workspaceTaxPointBasis(
             workspace.invoiceLegal,
             workspace.countryCode,
+            reference: taxReference,
           ).onReceipts,
           currency: workspace.currencyCode,
         ).toXml(),
