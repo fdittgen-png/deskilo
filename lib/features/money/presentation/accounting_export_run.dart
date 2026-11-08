@@ -42,6 +42,7 @@ import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
 import '../providers/vat_declaration_providers.dart';
+import 'accounting_export_context.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_handover.dart';
@@ -152,6 +153,7 @@ class AccountingExportRun {
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
+  if (refusedForMissingReference()) return;
 
   // Refused BEFORE anything is built. A file the authority rejects on
   // its name alone wastes the owner's time in the worst possible place:
