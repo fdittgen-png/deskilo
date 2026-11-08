@@ -1,55 +1,94 @@
-# path :: comparisons by ISO country code, outside the add-ons (#3429).
-# A #3429 item takes its files to 0 and deletes their lines.
-lib/core/demo/seed/demo_city_books_seed.dart :: 1
-lib/core/demo/seed/demo_city_people_seed.dart :: 2
-lib/core/demo/seed/demo_city_purchase_seed.dart :: 1
-lib/core/instance/instance_builder.dart :: 10
-lib/core/locale/report_language.dart :: 21
-lib/features/money/application/jurisdiction/filing_context_builder.dart :: 1
-lib/features/money/application/vat_register_files.dart :: 1
-lib/features/money/domain/accounting_format.dart :: 9
-lib/features/money/domain/accounting_targets_business_central.dart :: 6
-lib/features/money/domain/accounting_targets_ch.dart :: 8
-lib/features/money/domain/accounting_targets_de.dart :: 7
-lib/features/money/domain/accounting_targets_hmrc.dart :: 1
-lib/features/money/domain/accounting_targets_quickbooks.dart :: 3
-lib/features/money/domain/accounting_targets_saft.dart :: 10
-lib/features/money/domain/accounting_targets_sage.dart :: 17
-lib/features/money/domain/accounting_targets_xero.dart :: 3
-lib/features/money/domain/archive_bundle.dart :: 2
-lib/features/money/domain/e_invoice_routing.dart :: 10
-lib/features/money/domain/einvoice_channel_check.dart :: 1
-lib/features/money/domain/fr_ereporting.dart :: 3
-lib/features/money/domain/inbound_einvoice.dart :: 1
-lib/features/money/domain/readable_handover.dart :: 4
-lib/features/money/domain/recapitulative_statement.dart :: 2
-lib/features/money/domain/report_data.dart :: 3
-lib/features/money/domain/swiss_qr_bill_invoice.dart :: 2
-lib/features/money/domain/swiss_qr_bill_pdf.dart :: 1
-lib/features/money/domain/vat_register_es.dart :: 5
-lib/features/money/domain/vat_register_es_sii.dart :: 1
-lib/features/money/domain/vat_registers.dart :: 2
-lib/features/money/domain/verifactu.dart :: 2
-lib/features/money/presentation/screens/legal_identity_screen.dart :: 3
-lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1
-lib/features/money/presentation/vat_filing_file_actions.dart :: 10
-lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1
-lib/features/workspace/domain/feature_manifest_part3.dart :: 1
-lib/features/workspace/domain/holiday_import.dart :: 32
-lib/features/workspace/presentation/member_vat_treatment.dart :: 1
-packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_validation.dart :: 1
-packages/deskilo_accounting_interchange/lib/src/saf_t_financial_xml.dart :: 1
-packages/deskilo_accounting_interchange/lib/src/sage.dart :: 1
-packages/deskilo_accounting_interchange/lib/src/sage_documents.dart :: 1
-packages/deskilo_accounting_interchange/lib/src/sage_postings.dart :: 1
-packages/deskilo_invoice_model/lib/src/invoice.dart :: 1
-packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 2
-packages/deskilo_invoice_model/lib/src/invoice_clauses.dart :: 12
-packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart :: 2
-packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 1
-packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart :: 4
-packages/deskilo_invoice_model/lib/src/vat_compliance.dart :: 2
-packages/deskilo_invoice_model/lib/src/vat_regime.dart :: 1
-packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 3
-packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/de.dart :: 1
-packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/es.dart :: 1
+# path :: comparisons by ISO country code outside the add-ons :: note (#3429).
+# Both lists only fall; see test/lint/country_literals_test.dart.
+[checklist]
+lib/features/money/application/jurisdiction/filing_context_builder.dart :: 1 :: #3429 Filing context (CA): goes to 0 in the extraForms change
+lib/features/money/application/vat_register_files.dart :: 1 :: #3429 VAT registers / Spanish register: the register files per country
+lib/features/money/domain/archive_bundle.dart :: 2 :: #3429 Archive bundle: what a country's archive carries
+lib/features/money/domain/fr_ereporting.dart :: 2 :: #3429 E-invoice builders FR: the French e-reporting
+lib/features/money/domain/readable_handover.dart :: 4 :: #3429 Archive bundle: the readable-handover countries
+lib/features/money/domain/report_data.dart :: 3 :: #3429 Invoice clauses and print data: CH/CA seller ids
+lib/features/money/domain/swiss_qr_bill_invoice.dart :: 2 :: #3429 Invoice clauses and print data: the Swiss QR bill
+lib/features/money/domain/swiss_qr_bill_pdf.dart :: 1 :: #3429 Invoice clauses and print data: swiss_qr_bill_pdf (CH)
+lib/features/money/domain/vat_register_es.dart :: 5 :: #3429 Spanish register (ES)
+lib/features/money/domain/vat_register_es_sii.dart :: 2 :: #3429 Spanish register (SII)
+lib/features/money/domain/vat_registers.dart :: 2 :: #3429 VAT registers: the country switch
+lib/features/money/domain/verifactu.dart :: 4 :: #3429 Spanish register (verifactu)
+lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429 Presentation: GB/CH/CA fields
+lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD
+lib/features/money/presentation/vat_filing_file_actions.dart :: 10 :: #3429 Presentation: country switch x2
+lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1 :: #3429 Presentation: FR notice
+packages/deskilo_invoice_model/lib/src/invoice_clauses.dart :: 12 :: #3429 Invoice clauses and print data: country x capacity switch
+packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart :: 2 :: #3429 E-invoice builders FR: FR B2B check
+packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart :: 6 :: #3429 Invoice clauses and print data: the Swiss QR bill
+packages/deskilo_invoice_model/lib/src/vat_compliance.dart :: 2 :: #3429 Invoice validity rules (remaining literals)
+packages/deskilo_invoice_model/lib/src/vat_regime.dart :: 1 :: #3429 E-invoice builders FR: VATEX
+lib/features/money/domain/mtd_boxes.dart :: 1 :: #3429 checklist item
+[allowed]
+lib/core/demo/data/book_profile_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/data/company_lookup_repository.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/data/workspace_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/data/workspace_repository_part1.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/demo_dataset.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/demo_fixture.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_city_books_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_city_people_seed.dart :: 4 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_city_purchase_seed.dart :: 3 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_commerce_seed.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_london_seed.dart :: 5 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_new_york_seed.dart :: 6 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_people_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_purchase_seed.dart :: 7 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_second_space_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_year_seed.dart :: 3 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/instance/instance_builder.dart :: 24 :: the instance wizard's hosting-region choice per country: setup configuration data, outside the invoice/VAT scope of #3429
+lib/core/instance/mcp_auth_checks.dart :: 1 :: a check on the MCP auth setup, not a country rule (a two-letter literal that is not a country decision)
+lib/core/locale/device_locale.dart :: 7 :: the device language to default-country mapping: locale data
+lib/core/locale/report_language.dart :: 21 :: the country to report-language mapping: locale data
+lib/core/vat/retention.dart :: 1 :: the record-retention periods per country read through one lookup (reference-data key); candidate for a retention contribution, not a #3429 item yet
+lib/features/money/domain/accounting_format.dart :: 9 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_business_central.dart :: 6 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_ch.dart :: 8 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_de.dart :: 7 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_hmrc.dart :: 1 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_quickbooks.dart :: 3 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_saft.dart :: 10 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_sage.dart :: 17 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/accounting_targets_xero.dart :: 6 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
+lib/features/money/domain/datev.dart :: 5 :: a national accounting format's own country key into the tax reference rows (DATEV/FEC): data lookups, not a decision
+lib/features/money/domain/datev_revenue.dart :: 3 :: a national accounting format's own country key into the tax reference rows (DATEV/FEC): data lookups, not a decision
+lib/features/money/domain/e_invoice_routing.dart :: 10 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/einvoice_channel_check.dart :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/fec_accounts.dart :: 1 :: a national accounting format's own country key into the tax reference rows (DATEV/FEC): data lookups, not a decision
+lib/features/money/domain/fec_lettering.dart :: 1 :: a national accounting format's own country key into the tax reference rows (DATEV/FEC): data lookups, not a decision
+lib/features/money/domain/fec_writer.dart :: 1 :: a national accounting format's own country key into the tax reference rows (DATEV/FEC): data lookups, not a decision
+lib/features/money/domain/inbound_einvoice.dart :: 4 :: scheme and country identifiers read from received e-invoices (EAS scheme ids such as VA), not a country decision
+lib/features/money/domain/invoice_national_mentions.dart :: 1 :: the UNCL5305 category 'AE' (reverse charge), not a country
+lib/features/money/domain/recapitulative_statement.dart :: 3 :: the Union's VAT-number prefix spelling (Greece is EL) and the AE category: standards, not a rule
+lib/features/money/domain/records_location.dart :: 2 :: where records may be kept per country (the Canadian and German rules of the records-location notice): reference constants; candidate for an add-on notice
+lib/features/money/domain/report_letter_layouts.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
+lib/features/money/domain/vat_register_es_347.dart :: 1 :: the modelo 347 threshold row key for Spain in the tax reference (data lookup); moves with the Spanish register item if it does not hold
+lib/features/money/presentation/report_layout_defaults.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
+lib/features/money/presentation/report_sample_data.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
+lib/features/workspace/domain/feature_manifest_part3.dart :: 1 :: where a feature is available (availableIn): feature catalogue data
+lib/features/workspace/domain/holiday_import.dart :: 32 :: public-holiday calendar data per country: calendar data, not a rule
+lib/features/workspace/presentation/member_vat_treatment.dart :: 3 :: the UNCL5305 category 'AE' (reverse charge) in the treatment labels, not a country
+packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_validation.dart :: 1 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/saf_t_financial.dart :: 8 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/saf_t_financial_xml.dart :: 2 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/saf_t_writer.dart :: 2 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/sage.dart :: 3 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/sage_documents.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
+packages/deskilo_accounting_interchange/lib/src/sage_postings.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
+packages/deskilo_invoice_model/lib/src/invoice.dart :: 2 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 7 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_invoice_model/lib/src/invoice_ubl.dart :: 10 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 2 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_money_kernel/lib/src/posting.dart :: 2 :: an account-role key table of the posting engine, not a country decision
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 4 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/ca.dart :: 1 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/ch.dart :: 2 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/de.dart :: 2 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/es.dart :: 2 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/fr.dart :: 2 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/gb.dart :: 1 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
+packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/it.dart :: 1 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
