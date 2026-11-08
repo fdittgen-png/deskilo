@@ -93,10 +93,14 @@ dependencies:
     path: packages/deskilo_jurisdiction_ch
   deskilo_jurisdiction_es:
     path: packages/deskilo_jurisdiction_es
+  deskilo_jurisdiction_ie:
+    path: packages/deskilo_jurisdiction_ie
   deskilo_jurisdiction_it:
     path: packages/deskilo_jurisdiction_it
   deskilo_jurisdiction_pl:
     path: packages/deskilo_jurisdiction_pl
+  deskilo_jurisdiction_us:
+    path: packages/deskilo_jurisdiction_us
   deskilo_document_pdf:
     path: packages/deskilo_document_pdf
   # #2592 C2 - the editing primitives of the report editor (internal).
