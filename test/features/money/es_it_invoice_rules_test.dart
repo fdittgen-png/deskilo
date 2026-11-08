@@ -123,7 +123,7 @@ void main() {
         const ReportStrings(),
         _invoice('FT-1', day, vat: [_total(0, 9000, 0, c: 'E')]),
         proforma: false,
-        copy: false,
+        copy: false, reference: ActiveTaxReference.current,
       );
       expect(
         data['exemption_reason'],
@@ -136,7 +136,7 @@ void main() {
         const ReportStrings(),
         _invoice('FT-2', day, vat: [_total(22, 10000, 2200)]),
         proforma: false,
-        copy: false,
+        copy: false, reference: ActiveTaxReference.current,
       );
       expect(taxed['exemption_reason'], isNot(contains('bollo')));
     });

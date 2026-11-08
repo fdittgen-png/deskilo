@@ -15,6 +15,7 @@ import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/settings/active_settings.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/lookup_company.dart';
 import 'package:deskilo/features/money/domain/company_lookup.dart';
 import 'package:deskilo/features/money/domain/supplier_prefill.dart';
@@ -349,18 +350,18 @@ void main() {
           name: 'x',
           taxId: '12.345.678.901',
           countryCode: 'fr',
-        ),
+        ), reference: ActiveTaxReference.current,
       )?.id,
       's1',
     );
     expect(
-      supplierDuplicateOf([acme], const SupplierDraft(name: 'ACME')),
+      supplierDuplicateOf([acme], const SupplierDraft(name: 'ACME'), reference: ActiveTaxReference.current),
       isNull,
     );
     expect(
       supplierDuplicateOf([
         acme,
-      ], const SupplierDraft(id: 's1', name: 'ACME', taxId: 'FR12345678901')),
+      ], const SupplierDraft(id: 's1', name: 'ACME', taxId: 'FR12345678901'), reference: ActiveTaxReference.current),
       isNull,
     );
     expect(
@@ -370,7 +371,7 @@ void main() {
           name: 'x',
           taxId: 'FR12345678901',
           taxIdKind: SupplierIdKind.vatGroup,
-        ),
+        ), reference: ActiveTaxReference.current,
       ),
       isNull,
     );

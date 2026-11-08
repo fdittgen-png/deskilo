@@ -5,6 +5,7 @@
 // their own presets, self-service on the Money tab, sendable per member
 // and exportable from workspace settings.
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
@@ -56,7 +57,7 @@ Future<List<Map<String, Object?>>> agreementLines(
               reportStringsFor(context, localeName: 'en'),
               agreementFactsOf(ref),
               memberName: 'Flo',
-              subscriptionPct: 100,
+              subscriptionPct: 100, reference: ActiveTaxReference.current,
             )['lines'] as List)
                 .cast<Map<String, Object?>>();
             return const SizedBox.shrink();

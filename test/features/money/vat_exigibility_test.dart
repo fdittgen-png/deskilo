@@ -12,6 +12,7 @@
 // the same apportionment feeds the accountant's report, so the two can
 // never disagree; and the choice is printed on every invoice, because it
 // is a statutory mention where it is asked for.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
@@ -109,7 +110,7 @@ void main() {
         exigibilityMention(
           regime: VatRegime.vatRegistered,
           sellerCountry: 'fr',
-          onPaymentBasis: true,
+          onPaymentBasis: true, reference: ActiveTaxReference.current,
         ),
         'TVA acquittée sur les encaissements.',
       );
@@ -117,7 +118,7 @@ void main() {
         exigibilityMention(
           regime: VatRegime.vatRegistered,
           sellerCountry: 'FR',
-          onPaymentBasis: false,
+          onPaymentBasis: false, reference: ActiveTaxReference.current,
         ),
         "Option pour le paiement de la taxe d'après les débits.",
         reason: 'CGI art. 242 nonies A, I-13°: the option is stated in '
@@ -132,7 +133,7 @@ void main() {
           exigibilityMention(
             regime: regime,
             sellerCountry: 'FR',
-            onPaymentBasis: true,
+            onPaymentBasis: true, reference: ActiveTaxReference.current,
           ),
           '',
         );
@@ -144,7 +145,7 @@ void main() {
         exigibilityMention(
           regime: VatRegime.vatRegistered,
           sellerCountry: 'NO',
-          onPaymentBasis: true,
+          onPaymentBasis: true, reference: ActiveTaxReference.current,
         ),
         contains('cash'),
       );
@@ -165,14 +166,14 @@ void main() {
 
     test('a cash-basis seller prints the encaissements mention', () {
       expect(
-        legalMentionData(const ReportStrings(), ws('payment'))['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), ws('payment'), reference: ActiveTaxReference.current)['vat_exigibility_mention'],
         'TVA acquittée sur les encaissements.',
       );
     });
 
     test('and a seller that opted for the debits says so', () {
       expect(
-        legalMentionData(const ReportStrings(), ws('invoice'))['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), ws('invoice'), reference: ActiveTaxReference.current)['vat_exigibility_mention'],
         "Option pour le paiement de la taxe d'après les débits.",
       );
     });
@@ -180,7 +181,7 @@ void main() {
     test('a French seller that never chose is on receipts — the legal rule '
         'for services — and its documents say so (#2355)', () {
       expect(
-        legalMentionData(const ReportStrings(), ws(null))['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), ws(null), reference: ActiveTaxReference.current)['vat_exigibility_mention'],
         'TVA acquittée sur les encaissements.',
       );
     });
@@ -188,7 +189,7 @@ void main() {
     test('a workspace outside the scope of VAT prints nothing', () {
       final outside = ws('payment').copyWith(vatRegime: 'not_subject');
       expect(
-        legalMentionData(const ReportStrings(), outside)['vat_exigibility_mention'],
+        legalMentionData(const ReportStrings(), outside, reference: ActiveTaxReference.current)['vat_exigibility_mention'],
         '',
       );
     });

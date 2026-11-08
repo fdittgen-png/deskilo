@@ -8,6 +8,7 @@
 // modalités de règlement, mentions particulières).
 
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
@@ -88,10 +89,10 @@ void main() {
         expect(consumer.recoveryIndemnity.text, isEmpty);
         // The statutory mentions: the small-business exemption, outside
         // the scope, and the reverse charge (art. 226(11) and (11a)).
-        expect(defaultExemptionMention(country, VatRegime.exempt), isNotEmpty);
-        expect(defaultExemptionMention(country, VatRegime.notSubject), isNotEmpty);
-        expect(defaultExemptionMention(country, VatRegime.vatRegistered), isEmpty);
-        expect(reverseChargeMention(country), contains('196'));
+        expect(defaultExemptionMention(country, VatRegime.exempt, reference: ActiveTaxReference.current), isNotEmpty);
+        expect(defaultExemptionMention(country, VatRegime.notSubject, reference: ActiveTaxReference.current), isNotEmpty);
+        expect(defaultExemptionMention(country, VatRegime.vatRegistered, reference: ActiveTaxReference.current), isEmpty);
+        expect(reverseChargeMention(country, reference: ActiveTaxReference.current), contains('196'));
       });
     }
     test('outside the Union, and where a national e-invoicing channel is '
@@ -317,7 +318,7 @@ Client SARL
     test('a French workspace whose customers are businesses gets the four '
         'statutory clause defaults (#1916: capacity, not seller kind)', () {
       final data = legalMentionData(const ReportStrings(),
-          _workspace(const {'customer_capacity': 'business'}));
+          _workspace(const {'customer_capacity': 'business'}), reference: ActiveTaxReference.current);
       expect(data['payment_terms'], 'Payment on receipt.');
       expect(data['late_penalty'], isNot(''));
       expect(data['recovery_indemnity'], isNot(''));
@@ -327,7 +328,7 @@ Client SARL
     test('an association suppresses the B2B-only clause defaults — '
         'payment terms stay, explicit text still prints', () {
       final data = legalMentionData(
-        const ReportStrings(), _workspace(const {'seller_kind': 'association'}));
+        const ReportStrings(), _workspace(const {'seller_kind': 'association'}), reference: ActiveTaxReference.current);
       expect(data['payment_terms'], 'Payment on receipt.');
       expect(data['late_penalty'], '');
       expect(data['recovery_indemnity'], '');
@@ -338,14 +339,14 @@ Client SARL
           _workspace(const {
             'seller_kind': 'association',
             'late_penalty': 'Pénalités selon nos CGV',
-          }));
+          }), reference: ActiveTaxReference.current);
       expect(explicit['late_penalty'], 'Pénalités selon nos CGV');
     });
 
     test('suppressed clauses VANISH from the rendered document — no '
         'empty bullet lines', () {
       final association = legalMentionData(
-        const ReportStrings(), _workspace(const {'seller_kind': 'association'}));
+        const ReportStrings(), _workspace(const {'seller_kind': 'association'}), reference: ActiveTaxReference.current);
       final report = renderReportBands(
         bands: defaultBandsForDoc('invoice', englishL10n),
         data: {...sampleReportData(englishL10n), ...association},

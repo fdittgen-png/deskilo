@@ -12,7 +12,6 @@ import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../events/providers/event_providers.dart';
 import '../../money/domain/report_data_letters.dart';
-import '../../money/presentation/invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_layout_actions.dart';
@@ -23,6 +22,7 @@ import '../domain/overage_policy.dart';
 import '../domain/site.dart';
 import '../providers/workspace_application_providers.dart';
 import '../providers/workspace_providers.dart';
+import '../providers/workspace_tax_reference.dart' show requireWorkspaceTaxReference;
 import 'widgets/application_comment_dialog.dart';
 import 'widgets/badge_manager_dialog.dart';
 

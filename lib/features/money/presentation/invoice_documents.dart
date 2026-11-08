@@ -428,9 +428,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
       seller: seller, buyer: buyer, iban: iban);
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
-  if (!context.mounted) {
-    return (bytes: const <int>[], fileName: '');
-  }
+  if (!context.mounted) return (bytes: const <int>[], fileName: '');
   final pdf = await buildInvoicePdfFile(
     context,
     invoice,

@@ -11,9 +11,9 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/vat/place_of_supply.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../money/presentation/invoice_actions.dart' show workspaceTaxReference;
 import '../domain/member.dart';
 import '../providers/workspace_providers.dart';
+import '../providers/workspace_tax_reference.dart' show workspaceTaxReference;
 
 /// #985 — the counterparty dimension of VAT: who [member] is for tax.
 String vatTreatmentName(AppLocalizations l10n, VatTreatment t) => switch (t) {

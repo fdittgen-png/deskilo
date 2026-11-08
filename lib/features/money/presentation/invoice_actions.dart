@@ -27,6 +27,8 @@ import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoice_receipt_action_runner.dart';
 
+export '../../workspace/providers/workspace_tax_reference.dart';
+
 export 'invoice_einvoice_actions.dart';
 export 'invoice_followup_actions.dart';
 export 'invoice_pdf_actions.dart';
@@ -138,18 +140,6 @@ Future<void> settleCreditInvoiceDialog(
 }
 
 bool salesTaxModeOn(WidgetRef ref) => salesTaxWorkspace(ref) != null;
-
-/// The tax reference the selected workspace's context captured from its own
-/// installation; null while none is ready.
-TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
-    ref.read(readyWorkspaceContextProvider)?.taxReference.set;
-
-/// [workspaceTaxReference], or a refusal for a flow that cannot go on without
-/// it (the document builders): thrown inside the guarded action, which
-/// answers with its generic message instead of a document built on a guess.
-TaxReferenceSet requireWorkspaceTaxReference(WidgetRef ref) =>
-    workspaceTaxReference(ref) ??
-    (throw StateError('workspace context not ready'));
 
 /// Runs what the detail sheet decided on, with the SCREEN's context — the
 /// sheet is already gone by then.

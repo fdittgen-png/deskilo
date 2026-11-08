@@ -4,6 +4,7 @@
 // ReportStrings and their facts: no widget pump, no ProviderScope, no
 // BuildContext. This is the acceptance the plan (#1048 task 3.1) asked
 // for — "the builders are unit-tested with no widget pump".
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -56,7 +57,7 @@ void main() {
     test('prices the member\'s band, the extra half-day and the catalogue',
         () {
       final data = agreementReportData(const ReportStrings(), facts,
-          memberName: 'Ana', subscriptionPct: 50);
+          memberName: 'Ana', subscriptionPct: 50, reference: ActiveTaxReference.current);
       final lines = (data['lines'] as List).cast<Map<String, Object?>>();
       expect(lines.map((l) => l['label']),
           ['Subscription 50%', 'Extra half-day', 'Coffee']);
@@ -67,7 +68,7 @@ void main() {
     test('speaks the reader\'s language, dates included', () {
       final data = agreementReportData(
           reportStringsOf(AppLocalizationsFr(), dateLocale: 'fr'), facts,
-          memberName: 'Ana', subscriptionPct: 50);
+          memberName: 'Ana', subscriptionPct: 50, reference: ActiveTaxReference.current);
       final lines = (data['lines'] as List).cast<Map<String, Object?>>();
       expect(lines[1]['label'], AppLocalizationsFr().agreementExtraHalfDay);
       expect(data['issued'], '31 juil. 2026');
@@ -75,7 +76,7 @@ void main() {
     test('an unbanded percentage lists only the catalogue', () {
       final data = agreementReportData(const ReportStrings(),
           AgreementFacts(now: _now, services: const [_service]),
-          memberName: 'Ana', subscriptionPct: 50);
+          memberName: 'Ana', subscriptionPct: 50, reference: ActiveTaxReference.current);
       expect((data['lines'] as List).length, 1);
       expect(data['total'], '');
     });
@@ -110,7 +111,7 @@ void main() {
     );
     test('keeps the period\'s credits and the pending submissions', () {
       final data = paymentsReportData(const ReportStrings(), facts,
-          period: '2026-07', memberName: 'Ana');
+          period: '2026-07', memberName: 'Ana', reference: ActiveTaxReference.current);
       final lines = (data['lines'] as List).cast<Map<String, Object?>>();
       expect(lines.length, 2, reason: 'June stays out');
       expect(lines[0]['label'], endsWith(' · Payments & credits'));
@@ -132,7 +133,7 @@ void main() {
           bands: const [_band],
           services: const [_service],
           openDays: const [1, 5],
-        ),
+        ), reference: ActiveTaxReference.current,
       );
       expect(data['members_count'], 7);
       expect(data['open_days'], 'Mon, Fri');
@@ -155,7 +156,7 @@ void main() {
     test('the level, the letter date and the days open', () {
       final data = reminderReportData(const ReportStrings(),
           ReminderFacts(now: _now, workspace: _workspace), invoice,
-          level: 2);
+          level: 2, reference: ActiveTaxReference.current);
       expect(data['reminder_level'], 2);
       expect(data['days_open'], 30);
       expect(data['reminder_date'], 'Jul 31, 2026');
@@ -174,7 +175,7 @@ void main() {
       final data = statementReportData(const ReportStrings(),
           statement: statement, workspaceName: 'Test Space',
           memberName: 'Ana', periodLabel: 'July 2026', currencyCode: 'EUR',
-          workspace: _workspace);
+          workspace: _workspace, reference: ActiveTaxReference.current);
       final lines = (data['lines'] as List).cast<Map<String, Object?>>();
       expect(lines.map((l) => l['label']), [
         'Subscription 50%', '3 extra half-days', 'Desk reservations',

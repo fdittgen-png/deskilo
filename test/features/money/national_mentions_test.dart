@@ -4,6 +4,7 @@
 // stamp duty, the Spanish correcting invoice, the French category of the
 // operation), the EU small-enterprise scheme's EX number, and the rates
 // that moved carried as dated versions.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
@@ -22,7 +23,7 @@ List<String> _mentions(
   currency: currency,
   untaxedCents: untaxed,
   correction: correction,
-  rectifies: rectifies,
+  rectifies: rectifies, reference: ActiveTaxReference.current,
 );
 
 void main() {
@@ -49,17 +50,17 @@ void main() {
   });
 
   test('the EX number of the EU small-enterprise scheme', () {
-    expect(looksLikeEuVatId('ATU12345678EX'), isTrue);
-    expect(looksLikeEuVatId('ATU1234EX'), isFalse);
+    expect(looksLikeEuVatId('ATU12345678EX', reference: ActiveTaxReference.current), isTrue);
+    expect(looksLikeEuVatId('ATU1234EX', reference: ActiveTaxReference.current), isFalse);
     final mention = defaultExemptionMention(
       'DE',
       VatRegime.exempt,
-      vatId: 'ATU12345678EX',
+      vatId: 'ATU12345678EX', reference: ActiveTaxReference.current,
     );
     expect(mention, contains('art. 284'));
     expect(mention, contains('ATU12345678EX'));
     expect(
-      defaultExemptionMention('DE', VatRegime.exempt),
+      defaultExemptionMention('DE', VatRegime.exempt, reference: ActiveTaxReference.current),
       'Steuerbefreiung für Kleinunternehmer, § 19 UStG.',
     );
   });
@@ -113,7 +114,7 @@ void main() {
       const ReportStrings(),
       invoice,
       proforma: false,
-      copy: false,
+      copy: false, reference: ActiveTaxReference.current,
     );
     expect('${data['special_mentions']}', contains('Imposta di bollo'));
   });

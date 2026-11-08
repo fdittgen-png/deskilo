@@ -1040,6 +1040,7 @@ Map<String, _Getter> _part2() => {
   'workbookWide': (l) => l.workbookWide,
   'workspaceConfigColRole': (l) => l.workspaceConfigColRole,
   'workspaceLanguageLabel': (l) => l.workspaceLanguageLabel,
+  'workspaceTaxContextNotReady': (l) => l.workspaceTaxContextNotReady,
   'xeroInvoiceAccountCode': (l) => l.xeroInvoiceAccountCode,
   'xeroInvoiceAccountsIntro': (l) => l.xeroInvoiceAccountsIntro,
 };

@@ -9,6 +9,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -302,7 +303,7 @@ void reportDataTests() {
       const ReportStrings(),
       invoice,
       proforma: false,
-      copy: false,
+      copy: false, reference: ActiveTaxReference.current,
     );
     final lines = data['lines']! as List<Object?>;
     expect((lines.first! as Map)['amount'], '\$100.00');

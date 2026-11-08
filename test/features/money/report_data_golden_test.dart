@@ -14,6 +14,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
@@ -113,7 +114,7 @@ Future<Map<String, Object?>> _build(
         proforma: proforma,
         copy: false,
         workspace: _workspace,
-        dueAt: DateTime(2026, 8, 30),
+        dueAt: DateTime(2026, 8, 30), reference: ActiveTaxReference.current,
       );
       return const SizedBox();
     }),
