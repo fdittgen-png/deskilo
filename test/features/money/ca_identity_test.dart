@@ -11,6 +11,8 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/national_mentions.dart';
+
 Invoice _quebec() => Invoice(
   id: 'inv-1',
   workspaceId: 'ws-1',

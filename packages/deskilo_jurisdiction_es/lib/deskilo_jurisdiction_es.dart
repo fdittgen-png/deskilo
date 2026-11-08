@@ -4,3 +4,4 @@ library;
 
 export 'src/aeat303_layout.dart';
 export 'src/es_vat_filing.dart';
+export 'src/es_invoice_mentions.dart';

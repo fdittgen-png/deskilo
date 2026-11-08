@@ -96,9 +96,6 @@ const _eurHolders = {
   'lib/features/money/domain/euro_format.dart':
       'the one place the euro file formats (FEC, DATEV) name their currency; '
           'a workspace in another currency is refused, never written as euros',
-  'packages/deskilo_invoice_model/lib/src/vat_compliance.dart':
-      'the Italian stamp-duty rule is defined in euro (DPR 642/72 threshold): '
-          'it applies to euro invoices only',
   'packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart':
       'the Swiss QR-bill standard allows exactly CHF and EUR',
   'packages/deskilo_invoice_model/lib/src/vat_rate.dart':
@@ -110,7 +107,7 @@ const _eurHolders = {
           "workspace's currency",
 };
 
-const _eurCeiling = 7; // 60 -> 11 -> 7 (#3184: FEC, DATEV and the accountant CSV left the file-format list; the one euro-format constant remains) (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
+const _eurCeiling = 6; // 60 -> 11 -> 7 -> 6 (#3429: the Italian stamp-duty rule, euro only, is the Italian add-on's now) (#3184: FEC, DATEV and the accountant CSV left the file-format list; the one euro-format constant remains) (#2488: display fallbacks read the registry default currency, exports and payments refuse without a workspace currency, the audit trail uses the workspace's; the 11 left are classified in _allowed)
 
 int _count(String file, String pattern) {
   final f = File(file);

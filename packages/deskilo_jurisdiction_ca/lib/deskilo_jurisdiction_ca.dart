@@ -3,3 +3,4 @@
 library;
 
 export 'src/ca_vat_filing.dart';
+export 'src/ca_invoice_mentions.dart';

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/jurisdiction/installed_invoice_mentions.dart';
+import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -11,9 +12,13 @@ import '../../../../l10n/app_localizations.dart';
 class InvoiceCorrectionReasonField extends StatelessWidget {
   const InvoiceCorrectionReasonField({
     super.key,
+    required this.country,
     required this.value,
     required this.onChanged,
   });
+
+  /// The workspace's country: the codes are its law's own.
+  final String country;
 
   /// The chosen code; '' = none yet.
   final String value;
@@ -22,12 +27,23 @@ class InvoiceCorrectionReasonField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    // The codes are the country's own, asked of its mentions add-on: no
+    // country is named here.
+    final codes = switch (resolveInvoiceMentions(
+      LegalContext(countryCode: country),
+      installedInvoiceMentions,
+    )) {
+      ResolvedMentions(:final contribution) =>
+        contribution.correctionReasonCodes,
+      _ => const <String>[],
+    };
+    if (codes.isEmpty) return const SizedBox.shrink();
     return DropdownButtonFormField<String>(
       key: const ValueKey('invoice-correction-reason'),
       initialValue: value.isEmpty ? null : value,
       isExpanded: true,
       items: [
-        for (final code in spanishCorrectionReasonCodes)
+        for (final code in codes)
           DropdownMenuItem(
             value: code,
             child: Text(_label(l10n, code), overflow: TextOverflow.ellipsis),

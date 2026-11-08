@@ -10,6 +10,8 @@ import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/national_mentions.dart';
+
 List<String> _mentions(
   String country, {
   VatRegime regime = VatRegime.vatRegistered,
