@@ -5,11 +5,11 @@
 // rental saves as its audience, and the room is then not open to everyone.
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/core/roles/audience_roles.dart';
-import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/presentation/widgets/rented_rooms_sheet.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

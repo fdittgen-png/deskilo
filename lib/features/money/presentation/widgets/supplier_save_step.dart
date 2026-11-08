@@ -5,6 +5,7 @@
 // cannot run twice at once; a supplier already carrying the identifier is
 // named before any attempt (the server refuses the same duplicate), and
 // one with the same name is a caution that never blocks.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -12,7 +13,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/supplier.dart';
 import '../../domain/supplier_prefill.dart';
 
 /// What the save step shows, as one value: a change replaces it whole.

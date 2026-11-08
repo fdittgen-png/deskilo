@@ -5,13 +5,13 @@
 // connect and map, exportData to log, the accountingConnectors flag for
 // all) and holds every secret; this refuses only what cannot be right, so
 // a form names the field before anything is sent.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/accounting_delivery_run.dart';
-import '../domain/generic_journal_csv.dart';
 
 
 /// Why a mapping cannot be saved as typed.

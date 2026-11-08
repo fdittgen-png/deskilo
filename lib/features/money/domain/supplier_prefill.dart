@@ -3,8 +3,9 @@
 // From a registry's answer to the supplier form: which field holds what
 // and why (so the review step can say it), and whether the identifier
 // already names a supplier of the workspace (so no second one is made).
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import 'company_lookup.dart';
-import 'supplier.dart';
 
 /// Why a field of the review step holds what it holds.
 enum FieldProvenance {

@@ -4,10 +4,11 @@
 // postings, every journal the engine booked, on its accounts; the totals the
 // section states are the sums of its lines, every transaction balances, and
 // the header says what the section is. Expectations by hand.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -67,7 +68,7 @@ void main() {
       softwareVersion: '1',
       createdAt: DateTime(2027, 1, 5),
       lineText: (l) => l.label,
-      bookPostings: postings,
+      bookPostings: postings, reference: ActiveTaxReference.current,
     )),
   );
   final ledger = doc.findAllElements('GeneralLedgerEntries').single;

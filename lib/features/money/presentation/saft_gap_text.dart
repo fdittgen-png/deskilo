@@ -3,8 +3,9 @@
 // #3380 — the words of a SAF-T refusal. A Polish gap is structured data
 // (code, field, subject, limit); every sentence comes from the ARB catalogue,
 // so no English clause reaches a translated message.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import '../../../l10n/app_localizations.dart';
-import '../domain/saf_t_financial.dart';
 
 /// One refusal reason of [gap], in the language of [l10n].
 String safTGapText(AppLocalizations l10n, SafTGap gap) {

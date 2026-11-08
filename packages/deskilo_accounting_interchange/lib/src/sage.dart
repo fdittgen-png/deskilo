@@ -40,30 +40,21 @@ class SageAccounts {
     String? sales,
     String? bank,
     String? taxCode,
-    this.reference,
+    required this.reference,
   }) : _givenDebtors = debtors,
        _givenSales = sales,
        _givenBank = bank,
        _givenTaxCode = taxCode;
 
   /// #2481 -- the snapshot the defaults and codes are read from (the `sage`
-  /// rows); the installed one when null.
-  final TaxReferenceSet? reference;
+  /// rows): the workspace's own.
+  final TaxReferenceSet reference;
   final String? _givenDebtors;
   final String? _givenSales;
   final String? _givenBank;
   final String? _givenTaxCode;
 
-  /// The set used when [reference] is null. The package has none: the
-  /// application's subclass answers with the installed snapshot (#3403 sweep).
-  @protected
-  TaxReferenceSet get installedReference =>
-      throw const TaxReferenceUnavailable('no tax reference given');
-
-  /// The set the codes are read from: [reference], else the installed one.
-  TaxReferenceSet get taxReference => reference ?? installedReference;
-
-  TaxReferenceSet get _data => taxReference;
+  TaxReferenceSet get _data => reference;
 
   String _account(String role) => _data.accountOf('sage', role, 'GB');
 

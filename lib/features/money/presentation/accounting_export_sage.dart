@@ -5,13 +5,11 @@
 // book's chart, or the year's documents on the nominal codes the person
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
+
 import '../../../core/vat/tax_reference.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
-import '../domain/sage.dart';
-import '../domain/sage_documents.dart';
-import '../domain/sage_postings.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart';
@@ -83,7 +81,7 @@ extension SageAccountingExports on AccountingExportRun {
     // ready; the builder refuses the file otherwise.
     final accounts = await showSageAccountsDialog(
       context,
-      initial: SageAccounts(reference: workspaceTaxReference(ref)),
+      initial: SageAccounts(reference: _reference()),
     );
     if (accounts == null || !context.mounted) return;
     await exportGenericJournal(

@@ -5,15 +5,16 @@
 // member owes — the tax is extracted from the price and shown. These tests
 // pin that arithmetic and check that every document says the same thing.
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -472,7 +473,7 @@ void main() {
           currency: 'EUR',
           softwareVersion: safTSoftwareVersion,
           createdAt: DateTime(2026, 7, 27),
-          lineText: _lineText,
+          lineText: _lineText, reference: ActiveTaxReference.current,
         )));
 
     test('the tax table declares the rates the file actually uses', () {

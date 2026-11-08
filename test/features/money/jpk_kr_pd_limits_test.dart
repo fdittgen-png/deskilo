@@ -5,7 +5,7 @@
 // from the schema is red.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/jpk_kr_pd_limits.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _dir = 'test/fixtures/saft/jpk_kr_pl';

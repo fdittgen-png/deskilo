@@ -15,6 +15,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/coa_preview.dart';
@@ -59,7 +60,7 @@ Map<String, Object?> _capture() {
   }
   const fec = FecAccounts();
   const datev = DatevAccounts();
-  const sage = SageAccounts();
+  final sage = SageAccounts(reference: ActiveTaxReference.current);
   out['defaults'] = {
     'fec': [
       fec.customers,
@@ -77,10 +78,10 @@ Map<String, Object?> _capture() {
     ],
     'sage': [sage.debtors, sage.sales, sage.bank, sage.taxCode],
     'sageCodes': [
-      const SageAccounts().codeOf('zero', 'Z')!,
-      const SageAccounts().codeOf('exempt', 'E')!,
-      const SageAccounts().codeOf('reduced', 'S')!,
-      const SageAccounts().noTax,
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('zero', 'Z')!,
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('exempt', 'E')!,
+      SageAccounts(reference: ActiveTaxReference.current).codeOf('reduced', 'S')!,
+      SageAccounts(reference: ActiveTaxReference.current).noTax,
     ],
   };
   return out;

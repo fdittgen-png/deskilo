@@ -5,6 +5,8 @@
 // Banana's transactions import. The MWST codes come from the tax reference
 // the workspace's context holds, the QR reference of each invoice from the
 // QR-bill the invoice carries; nothing here reads the period again.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import '../../../core/backend/schema_version.dart';
 import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -12,7 +14,6 @@ import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/datev_fields.dart';
-import '../domain/swiss_kmu.dart';
 import '../domain/swiss_qr_bill_invoice.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';

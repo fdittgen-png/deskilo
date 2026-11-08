@@ -48,9 +48,7 @@ String buildSafTFile(SafTRequest request) => SafTWriter(
   profile: request.profile,
   ledgerAccounts: request.ledgerAccounts,
   bookPostings: request.bookPostings,
-  reference:
-      request.reference ??
-      (throw const TaxReferenceUnavailable('no tax reference given')),
+  reference: request.reference,
 ).write();
 
 /// #2492 — what one SAF-T file is built from.
@@ -67,7 +65,7 @@ class SafTRequest {
     this.profile = SafTProfile.generic,
     this.ledgerAccounts,
     this.bookPostings,
-    this.reference,
+    required this.reference,
   });
 
   final List<Invoice> invoices;
@@ -104,23 +102,6 @@ class SafTRequest {
   /// entries, every journal, and [ledgerAccounts] is not asked for.
   final List<Posting>? bookPostings;
 
-  /// The tax reference the file is built on. The package has no installed
-  /// snapshot: the application's `buildSafTFile` fills it in when null.
-  final TaxReferenceSet? reference;
-
-  /// The same request on [reference].
-  SafTRequest withReference(TaxReferenceSet reference) => SafTRequest(
-    invoices: invoices,
-    matches: matches,
-    company: company,
-    currency: currency,
-    softwareVersion: softwareVersion,
-    createdAt: createdAt,
-    lineText: lineText,
-    fallbackDescription: fallbackDescription,
-    profile: profile,
-    ledgerAccounts: ledgerAccounts,
-    bookPostings: bookPostings,
-    reference: reference,
-  );
+  /// The tax reference the file is built on: the workspace's own.
+  final TaxReferenceSet reference;
 }

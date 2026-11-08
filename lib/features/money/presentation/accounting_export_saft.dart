@@ -5,11 +5,10 @@
 // it, for the opening balances), the profile's chart map from the tax
 // reference store, the parties' addresses from the documents and the
 // supplier register, and the contact person asked at export.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import '../../../core/vat/tax_reference.dart';
 import '../application/generic_journal_export.dart';
-import '../domain/saf_t.dart';
-import '../domain/saf_t_financial.dart';
-import '../domain/saf_t_financial_facts.dart';
 import '../providers/supplier_providers.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';

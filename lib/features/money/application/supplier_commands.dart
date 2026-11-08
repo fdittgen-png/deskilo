@@ -3,7 +3,7 @@
 // #2567 — the one door for supplier master data. The server decides who may
 // (manageBilling, supplyExpenses on) and what is a duplicate; this refuses
 // only what cannot be a supplier at all.
-import '../domain/supplier.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
 class SupplierCommands {
   const SupplierCommands(this._repository);

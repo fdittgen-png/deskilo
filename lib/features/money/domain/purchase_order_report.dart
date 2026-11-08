@@ -5,8 +5,9 @@
 // the order's currency. Pure: the words and the formats come in.
 library;
 
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import 'purchase_order.dart';
-import 'supplier.dart';
 
 /// How the document writes an amount (minor units of the order's
 /// currency), a day and a quantity, in the reader's locale.

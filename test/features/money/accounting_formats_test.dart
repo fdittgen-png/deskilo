@@ -13,6 +13,7 @@
 // shipped, and that is now a test rather than a hope.
 import 'dart:io';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
@@ -20,10 +21,9 @@ import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 import 'support/sage_files.dart';
 
@@ -362,14 +362,14 @@ void main() {
 
     test('a receipt carries NO tax, or the VAT return doubles it', () {
       final receipt = build(vat: _vat20).trim().split('\r\n')[2];
-      expect(receipt, contains(const SageAccounts().noTax));
+      expect(receipt, contains(SageAccounts(reference: ActiveTaxReference.current).noTax));
       expect(receipt.split(',')[9], '0.00');
     });
 
     test('an untaxed invoice is out of scope (T9), not zero-rated (T0)', () {
       // A zero-RATED supply still belongs on the VAT return; an
       // out-of-scope one does not.
-      expect(build(), contains(const SageAccounts().noTax));
+      expect(build(), contains(SageAccounts(reference: ActiveTaxReference.current).noTax));
       expect(build(), isNot(contains(',T0,')));
     });
   });
@@ -525,7 +525,7 @@ void main() {
           softwareVersion: '1.0.0',
           createdAt: DateTime(2026, 5),
           lineText: (line) => line.label,
-          ledgerAccounts: ledger,
+          ledgerAccounts: ledger, reference: ActiveTaxReference.current,
         ));
 
     test('no mapping means NO section — never invented numbers', () {

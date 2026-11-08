@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2567 — suppliers.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/supplier_commands.dart';
 import '../data/supabase_supplier_repository.dart';
-import '../domain/supplier.dart';
 import 'credit_providers.dart';
 
 final supplierRepositoryProvider = Provider<SupplierRepository>(

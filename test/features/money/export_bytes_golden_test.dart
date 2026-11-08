@@ -19,6 +19,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
@@ -30,10 +31,11 @@ import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'support/datev_collective.dart';
 import 'support/sage_files.dart';
 
@@ -218,7 +220,7 @@ Map<String, String Function()> _files() => {
     currency: 'EUR',
     softwareVersion: '1.0.0',
     createdAt: DateTime.utc(2026, 5, 1, 9),
-    lineText: _lineText,
+    lineText: _lineText, reference: ActiveTaxReference.current,
   )),
   'invoice_ubl.xml': () => buildInvoiceUbl(EInvoiceInput(invoice: _invoices.first,
     seller: _seller,

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic purchases; no vendor is contacted.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/purchase.dart';
-import '../../../features/money/domain/supplier.dart';
 import '../data/einvoice_inbox_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';

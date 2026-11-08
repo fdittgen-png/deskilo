@@ -5,11 +5,10 @@
 // file when it is inconsistent (one rule per case, one thing varied), and
 // the generic journal written from it.
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
-import 'package:deskilo/features/money/domain/accounting_interchange.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/generic_journal_csv.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
