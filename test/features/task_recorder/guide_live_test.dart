@@ -8,11 +8,11 @@
 // its control, and a command completes only on its real outcome.
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/domain/safe_payload.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_codec.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_compiler.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_runner.dart';
-import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
+import 'package:deskilo_task_recording/task_guide.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final String _key = uiKeys.first;

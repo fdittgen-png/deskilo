@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
-
-import 'invoice.dart';
 
 // #1061 — the period words with the locale as DATA, so the document
 // builders (and the CLI) call them without a BuildContext. The context

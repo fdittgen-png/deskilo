@@ -3,6 +3,7 @@
 // #804/#831 — regroup a member's open invoices into ONE settlement
 // document. #872 — runs as an assistant: choose, then a summary, then
 // Finish — the same shape as the month-close wizard.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +19,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/settle_invoices.dart';
 import '../../domain/billing_rules.dart';
-import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';

@@ -45,13 +45,13 @@
 
 import 'dart:convert';
 
+import 'package:deskilo_task_recording/recording_sink.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../domain/recording_sink.dart';
 import '../domain/stored_recording.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 
 export '../domain/stored_recording.dart';

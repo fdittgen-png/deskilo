@@ -4,7 +4,7 @@
 // fiscal-year start from the book profile.
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/datev_fields.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

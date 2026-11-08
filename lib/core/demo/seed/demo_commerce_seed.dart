@@ -6,12 +6,13 @@
 // two quarters — one submitted, one a draft — computed from the bills the
 // session actually holds.
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
+
 import '../../../features/money/domain/accounting_view.dart';
 import '../../../features/money/domain/credit_product.dart';
 import '../../../features/money/domain/price_negotiation.dart';
-import '../../../features/money/domain/vat_declaration.dart';
 import '../../../features/money/domain/vat_period_lock.dart';
-import '../../../features/money/domain/vat_tax_point.dart';
 import '../data/book_profile_repository.dart' show demoDayOf, demoTaxReference;
 import '../data/credit_repository.dart';
 import '../data/money_repository.dart';

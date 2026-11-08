@@ -6,6 +6,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
-import '../domain/invoice_legal.dart';
 import '../domain/report_data.dart';
 import '../domain/vat_report.dart';
 import '../providers/money_providers.dart';

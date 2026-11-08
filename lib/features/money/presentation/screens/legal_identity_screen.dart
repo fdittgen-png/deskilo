@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +18,6 @@ import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_pdf_template.dart';
-import '../../domain/vat_tax_point.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show workspaceTaxReference;
 import '../widgets/address_window_field.dart';

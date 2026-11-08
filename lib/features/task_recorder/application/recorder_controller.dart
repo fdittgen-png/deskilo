@@ -40,15 +40,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:deskilo_task_recording/recording_sink.dart';
+import 'package:deskilo_task_recording/step_values.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 
 import '../../../core/cache/cache_scope.dart' show cacheDigest;
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
 import '../domain/recording_reference.dart';
-import '../domain/recording_sink.dart';
 import '../domain/safe_payload.dart';
-import '../domain/step_values.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart' show encodeStep;
 
 part 'recorder_persistence.dart';

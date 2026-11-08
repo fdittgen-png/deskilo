@@ -6,8 +6,8 @@
 // month's own ledger arithmetic (charges − credits of that period)
 // would read "outstanding" forever on an invoiced-and-paid month.
 
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -19,7 +19,7 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/bank/csv_statement.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _settings = BankImportSettings();

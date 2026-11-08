@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import 'billing_rules.dart';
-import 'invoice.dart';
 
 /// #831 — the ACCOUNTING view of the invoices: what the accountant's
 /// software must receive, as opposed to what the app shows.

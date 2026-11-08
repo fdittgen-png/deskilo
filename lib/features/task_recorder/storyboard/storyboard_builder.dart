@@ -8,9 +8,10 @@
 // recreated scene (safe_scene.dart) up to the illustration bound; a
 // protected surface gets an exclusion card; everything else, a text
 // slide. Nothing is approved yet: approval is a person's act.
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
-import '../domain/task_recording.dart';
 import '../export/step_narrative.dart';
 import '../export/task_document.dart';
 import '../export/task_export_labels.dart';

@@ -9,10 +9,9 @@
 // space's window before the movement. A suggestion is only ever a
 // suggestion: a person confirms it, and the server checks it again. Pure
 // Dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
-import '../invoice.dart';
-import '../swiss_qr_bill.dart';
 import 'bank_records.dart';
 import 'structured_reference.dart';
 

@@ -16,9 +16,9 @@ import 'package:deskilo/features/task_recorder/application/calendar_observation.
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

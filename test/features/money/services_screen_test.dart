@@ -5,10 +5,9 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

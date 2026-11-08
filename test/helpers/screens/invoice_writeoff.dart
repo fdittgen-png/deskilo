@@ -3,7 +3,7 @@
 // Shared pump/fixtures that used to live in invoice_writeoff_test.dart and were borrowed by
 // importing that test file (#2601). Moved verbatim.
 
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../test_clock.dart';
 

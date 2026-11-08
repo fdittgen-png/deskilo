@@ -6,14 +6,14 @@
 // and 201), not a table in Dart. The bundled copy answers what the code
 // answered before; a row added or withdrawn changes the answer.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/vat_components.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_component_fields.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _split(String country, double percent, {TaxReferenceSet? reference}) =>
     vatComponentsOf(country, percent, 100000, (100000 * percent / 100).round(),
-            reference: reference)
+            reference: reference ?? ActiveTaxReference.current)
         .map((c) => '${c.scheme}:${c.authority}:${c.percent}')
         .join(' ');
 
@@ -47,7 +47,7 @@ void main() {
   });
 
   test('the amounts still add up to the cent: GST 50.00 + QST 99.75 on 1 000.00', () {
-    final parts = vatComponentsOf('CA', 14.975, 100000, 14975);
+    final parts = vatComponentsOf('CA', 14.975, 100000, 14975, reference: ActiveTaxReference.current);
     expect(parts.map((c) => c.taxCents), [5000, 9975]);
     expect(parts.every((c) => c.baseCents == 100000), isTrue);
   });

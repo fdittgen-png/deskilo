@@ -8,6 +8,8 @@
 // Where the return has a box for it (the Swiss 383), also whether it was
 // bought from a supplier abroad: its amount is then the base, and the space
 // owes the acquisition tax on it.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -21,11 +23,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
-import '../../domain/vat_form_catalogue.dart';
 import '../../domain/vat_input.dart';
-import '../../domain/vat_rate.dart';
-import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart' show workspaceTaxReference;
 import '../vat_tax_point_labels.dart';
 
 /// What the person chose; [share] is the deductible share as typed.
@@ -42,10 +42,15 @@ class ExpenseVatChoice {
     TextEditingController share,
   ) => ExpenseVatChoice(
     share,
-    acquisitionOffered: vatFormTaxesAcquisitions(
-      countryCode,
-      ref.read(clockProvider).now(),
-    ),
+    // Offered only once the workspace's own tax reference is ready.
+    acquisitionOffered: switch (workspaceTaxReference(ref)) {
+      final reference? => vatFormTaxesAcquisitions(
+        countryCode,
+        ref.read(clockProvider).now(),
+        reference: reference,
+      ),
+      _ => false,
+    },
   );
 
   final TextEditingController share;

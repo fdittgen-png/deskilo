@@ -13,9 +13,9 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/package/task_package.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fixtures/recording_fixtures.dart';

@@ -5,8 +5,9 @@
 // plus CAD 100.00 at 5 %, and an expense with 14.975 % input tax. The
 // server's split (migration 0425, pgTAP 182) is read from the line; a line
 // without it is split here with the same arithmetic.
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/filing_product.dart';
@@ -80,11 +81,11 @@ void main() {
   for (final split in [true, false]) {
     test('GST34 holds GST only and FPZ-500 the QST (server split: $split)', () {
       final d = _declaration(split: split);
-      final gst = _tax(vatFormBoxes('CA', d.lines, periodEnd: d.periodEnd));
+      final gst = _tax(vatFormBoxes('CA', d.lines, periodEnd: d.periodEnd, reference: ActiveTaxReference.current));
       expect(gst['103'], 5500, reason: 'GST on both sales lines, not the QST');
       expect(gst['106'], 2500);
       expect(gst['109'], 3000);
-      final qst = _tax(vatQstFormBoxes(d.lines));
+      final qst = _tax(vatQstFormBoxes(d.lines, reference: ActiveTaxReference.current));
       expect(qst['203'], 9975);
       expect(qst['205'], 9975);
       expect(qst['206'], 4987);
@@ -97,14 +98,13 @@ void main() {
     final box = vatFormBoxes(
       'CA',
       d.lines,
-      periodEnd: d.periodEnd,
-    ).firstWhere((b) => b.code == '101');
+      periodEnd: d.periodEnd, reference: ActiveTaxReference.current,).firstWhere((b) => b.code == '101');
     expect(box.netCents, 110000);
   });
 
   test('no QST charged or claimed: no FPZ-500 part', () {
     final lines = [VatDeclarationLine.fromJson(_line(13, 10000, 1300))];
-    expect(vatQstFormBoxes(lines), isEmpty);
+    expect(vatQstFormBoxes(lines, reference: ActiveTaxReference.current), isEmpty);
   });
 
   test('the file: GST34 lines then FPZ-500, the business number formatted', () {

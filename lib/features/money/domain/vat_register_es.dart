@@ -7,12 +7,12 @@
 // under test/fixtures/vat_filing/es_libro/). One line per rate of each
 // issued document (validation 7), the IRPF columns left empty: a separate
 // VAT book (validation 12).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:meta/meta.dart';
 
 import '../../../core/files/xlsx.dart';
-import '../../../core/vat/place_of_supply.dart';
 
 /// What the AEAT's keys say of one rate of an issued document: the
 /// calificación (S1 taxed, S2 reverse-charged, N1/N2 not subject), the

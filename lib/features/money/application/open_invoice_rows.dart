@@ -3,9 +3,10 @@
 // #2494 — what the Open tab shows for each issued, still-open invoice:
 // where it stands, which actions it offers and whether a reminder is due.
 // The widgets map over these values; they decide nothing.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
-import '../domain/invoice.dart';
 
 /// One open invoice, as the Open tab lists it (`OpenInvoiceEntry`).
 typedef OpenInvoiceFacts = ({Invoice invoice, InvoiceMatch? pendingMatch});

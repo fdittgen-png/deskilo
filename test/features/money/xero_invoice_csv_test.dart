@@ -7,10 +7,10 @@
 // --dart-define=WRITE_GOLDEN=true after a deliberate change.
 import 'dart:io';
 
-import 'package:deskilo/core/vat/place_of_supply.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/xero_invoice_csv.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';

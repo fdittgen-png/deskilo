@@ -8,9 +8,9 @@
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
-import '../../domain/vat_declaration.dart';
 import '../../domain/vat_filing_files.dart';
 
 /// The contract's context from the application's types: the host's side of
@@ -24,13 +24,13 @@ FilingContext filingContextOf({
   required VatFilingParty party,
   required DateTime now,
   required VatFilingFacts facts,
-  TaxReferenceSet? reference,
+  required TaxReferenceSet reference,
 }) => FilingContext(
   extraBoxes: {
     // the Quebec form is filed beside the federal one (the Canadian add-on)
     if (LegalContext(countryCode: party.countryCode).normalized == 'CA')
       'FPZ-500': [
-        for (final b in vatQstFormBoxes(declaration.lines)) _boxOf(b),
+        for (final b in vatQstFormBoxes(declaration.lines, reference: reference)) _boxOf(b),
       ],
   },
   boxes: [

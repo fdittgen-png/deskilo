@@ -4,7 +4,6 @@
 // of their own: the expense commands are built with a fake of that port
 // alone, and the composed repository hands every call to the port it was
 // given.
-import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/application/submit_expense.dart';
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/commercial_terms_repository.dart';
@@ -16,6 +15,7 @@ import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

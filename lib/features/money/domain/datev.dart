@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/time/workspace_time.dart';
@@ -8,9 +9,7 @@ import 'datev_problem.dart';
 import 'datev_revenue.dart';
 import 'datev_writer.dart';
 import 'expense_repartition.dart';
-import 'invoice.dart';
 import 'ledger_entry.dart';
-import 'vat_tax_point.dart';
 
 /// DATEV-Format **EXTF Buchungsstapel** (#669) — the file a German or
 /// Austrian *Steuerberater* imports into DATEV Rechnungswesen. It is an

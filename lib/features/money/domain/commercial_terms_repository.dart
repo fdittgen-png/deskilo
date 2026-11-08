@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/vat/supply_class.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import 'fee_band.dart';
 import 'package.dart';
 import 'price_negotiation.dart';

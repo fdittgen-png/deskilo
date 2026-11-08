@@ -12,6 +12,8 @@
 // changes, the live recording ends before anything of the new scope can
 // enter it.
 
+import 'package:deskilo_task_recording/recording_sink.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
@@ -25,9 +27,7 @@ import '../application/recorder_controller.dart';
 import '../data/guide_store.dart';
 import '../data/recorder_log_backends.dart';
 import '../data/recorder_store.dart';
-import '../domain/recording_sink.dart';
 import '../domain/stored_guide.dart';
-import '../domain/task_recording.dart';
 import '../export/output_registry.dart';
 import '../guide/guide_replay.dart';
 import '../package/task_output.dart';

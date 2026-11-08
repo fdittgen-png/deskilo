@@ -5,6 +5,7 @@
 // them and cannot change them; an admin holding paymentTermsEdit
 // REQUESTS a change, which validators decide (payment_terms_change) —
 // the override is written on confirm, never here.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,8 +18,6 @@ import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/invoice_legal.dart';
-import '../../domain/payment_terms.dart';
 
 class PaymentTermsCard extends ConsumerWidget {
   const PaymentTermsCard({super.key, required this.member, required this.isSelf});

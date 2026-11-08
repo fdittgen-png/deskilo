@@ -10,6 +10,7 @@ import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -58,7 +59,7 @@ void main() {
     await tester.tap(_mtd(declaration.id));
     await tester.pumpAndSettle();
     // The nine boxes of the prepared return, derived from the invoices.
-    final cents = mtdBoxCents(declaration);
+    final cents = mtdBoxCents(declaration, reference: ActiveTaxReference.current);
     for (final field in mtdBoxFields) {
       expect(
         find.descendant(of: find.byKey(ValueKey('hmrc-box-$field')), matching: find.text(mtdBoxText(field, cents[field]!))),

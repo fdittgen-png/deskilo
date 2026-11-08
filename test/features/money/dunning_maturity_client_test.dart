@@ -4,8 +4,8 @@
 // amount that is still owed, so the journey, the printed document and the
 // reminder never disagree with `invoice_dunning_state`.
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, dynamic> _row(Map<String, dynamic> extra) => {

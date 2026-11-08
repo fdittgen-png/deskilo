@@ -8,15 +8,13 @@
 // threshold; the threshold's charge and the gate's outside-VAT postal codes
 // survive the store's JSON and the editor's fields.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/small_business_threshold.dart';
 import 'package:deskilo/features/money/domain/stamp_duty.dart';
 import 'package:deskilo/features/money/domain/vat_filing_terms.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_register_es_347.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_gate_fields.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';

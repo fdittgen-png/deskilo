@@ -9,6 +9,7 @@
 // and the only callers are on the invoices screen.
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +18,6 @@ import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';

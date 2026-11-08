@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
-import '../domain/invoice.dart';
 import '../domain/invoice_match_row.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/reminder_evidence.dart';
-import '../domain/vat_tax_point.dart';
 import 'command_receipt_decoder.dart';
 import 'invoice_preview_decoder.dart';
 import 'invoice_reminder_fold.dart';

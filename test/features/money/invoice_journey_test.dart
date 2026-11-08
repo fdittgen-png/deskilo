@@ -9,12 +9,12 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

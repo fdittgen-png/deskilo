@@ -11,8 +11,8 @@
 import 'package:deskilo/app/routes/setup_grow_pages.dart';
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/features/money/domain/report_data_sample.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -13,19 +13,7 @@ import 'lint_sources.dart';
 const _root = 'packages/deskilo_money_kernel';
 
 /// The old paths, kept as re-exports until every importer is rewritten.
-const _shims = {
-  'lib/features/money/domain/vat_forms.dart',
-  'lib/features/money/domain/vat_form_boxes.dart',
-  'lib/features/money/domain/vat_form_terms.dart',
-  'lib/features/money/domain/vat_form_catalogue/ca.dart',
-  'lib/features/money/domain/vat_form_catalogue/ch.dart',
-  'lib/features/money/domain/vat_form_catalogue/de.dart',
-  'lib/features/money/domain/vat_form_catalogue/es.dart',
-  'lib/features/money/domain/vat_form_catalogue/fr.dart',
-  'lib/features/money/domain/vat_form_catalogue/gb.dart',
-  'lib/features/money/domain/vat_form_catalogue/it.dart',
-
-};
+const _shims = <String>{};
 
 void main() {
   test('the kernel imports core Dart, crypto and its own files only', () {

@@ -5,6 +5,8 @@
 // `ReportStrings`, nothing else: pure functions of their inputs, so a
 // test hands them facts and a CLI could too. The gatherers that fill
 // them from the providers live in presentation/report_facts_of.dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/time/work_hours.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../plan/domain/accessory.dart';
@@ -17,7 +19,6 @@ import '../../workspace/domain/workspace.dart';
 import 'fee_band.dart';
 import 'ledger_entry.dart';
 import 'package.dart';
-import 'payment_terms.dart';
 import 'service_item.dart';
 import 'statement.dart';
 

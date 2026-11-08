@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'einvoice_format.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// #2358 — the formats an OFFICIAL validator accepts, and which one.
 ///

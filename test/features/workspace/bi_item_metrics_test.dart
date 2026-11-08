@@ -7,7 +7,6 @@
 import 'package:deskilo/core/demo/data/item_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
@@ -17,6 +16,7 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/bi_module_section.dart';
 import 'package:deskilo/features/workspace/providers/bi_item_reader.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _ids = [

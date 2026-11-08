@@ -6,14 +6,11 @@
 // id and no number, so its clauses qualify live like any preview, and the
 // word the caller hands in stands where the number goes. Pure, like every
 // builder here: the facts come from presentation/report_facts_of.dart.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'invoice.dart';
-import 'invoice_legal.dart';
+
 import 'report_data.dart';
 import 'report_facts.dart';
-import 'report_strings.dart';
-import 'vat_rate.dart';
-import 'vat_regime.dart';
 
 /// The words a sample invoice prints where a real one prints a number, a
 /// member and a position.

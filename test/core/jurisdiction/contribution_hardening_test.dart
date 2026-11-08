@@ -7,12 +7,13 @@
 // enum lookup.
 import 'dart:typed_data';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/application/save_vat_filing_file.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 VatFilingContribution _of(String country) => installedVatFilings.firstWhere(
@@ -48,8 +49,7 @@ FilingContext _context(VatDeclaration d, {VatFilingParty party = _party}) =>
       declaration: d,
       party: party,
       now: DateTime.utc(2026, 10, 2, 12),
-      facts: const VatFilingFacts(taxNumber: '21/815/08150'),
-    );
+      facts: const VatFilingFacts(taxNumber: '21/815/08150'), reference: ActiveTaxReference.current,);
 
 /// A contribution that refuses with a code of its own.
 class _Refusing implements VatFilingContribution {
@@ -101,16 +101,14 @@ void main() {
         ({required Uint8List bytes, required String fileName}) async => 'x',
         () => DateTime.utc(2026, 10, 2),
         party: _party,
-        installed: [_Refusing('somethingNew')],
-      );
+        installed: [_Refusing('somethingNew')], reference: ActiveTaxReference.current,);
       final d = _declaration(DateTime(2026, 3), DateTime(2026, 3, 31));
       expect(() => save(d), throwsStateError);
       final known = SaveVatFilingFile(
         ({required Uint8List bytes, required String fileName}) async => 'x',
         () => DateTime.utc(2026, 10, 2),
         party: _party,
-        installed: [_Refusing('taxNumber')],
-      );
+        installed: [_Refusing('taxNumber')], reference: ActiveTaxReference.current,);
       expect(
         () => known(d),
         throwsA(

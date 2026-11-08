@@ -8,6 +8,7 @@
 // hold answers its event, pending.
 import 'dart:async';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/trace/trace_logger.dart';
@@ -15,7 +16,6 @@ import '../core/validation/pending_validation.dart';
 import '../features/events/providers/event_providers.dart';
 import '../features/money/application/issue_invoice.dart';
 import '../features/money/domain/billing_rules.dart';
-import '../features/money/domain/invoice.dart';
 import '../features/money/domain/invoice_commands.dart';
 import '../features/money/providers/money_providers.dart';
 import '../features/workspace/application/set_member_subscription.dart';

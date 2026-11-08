@@ -5,12 +5,11 @@
 // validated request from an authorised admin, read-only for the member.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/payment_terms.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/presentation/screens/my_payment_terms_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

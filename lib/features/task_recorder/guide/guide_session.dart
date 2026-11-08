@@ -18,6 +18,7 @@
 
 import 'package:deskilo_task_recording/deskilo_task_recording.dart'
     show ReplayCoordinator, ReplayRefusal, ReplayRequest, ReplayTicket;
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/help/help_arbiter.dart';
@@ -27,7 +28,6 @@ import '../providers/recorder_providers.dart';
 import 'guide_destination.dart';
 import 'guide_replay.dart';
 import 'guide_runner.dart';
-import 'task_guide.dart';
 
 part 'guide_session.g.dart';
 

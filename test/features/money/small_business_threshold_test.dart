@@ -4,11 +4,10 @@
 // turnover of the year nears or passes the limit that ends it: the rows
 // (DE § 19 UStG: 25 000 next year, 100 000 at once; FR CGI art. 293 B,
 // unconfirmed for 2026), the turnover the year counts, and the notice.
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/small_business_threshold.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/presentation/widgets/small_business_notice.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

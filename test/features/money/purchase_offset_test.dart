@@ -5,7 +5,6 @@
 // dialog from the To-pay row to the claim that fell.
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/features/money/application/purchase_commands.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchase_offset_dialog.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
@@ -13,6 +12,7 @@ import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';

@@ -16,14 +16,14 @@
 //
 // **Filed** is what the owner records after filing with the authority,
 // with the receipt it gave: no upload marks a return filed.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:meta/meta.dart';
 
 import '../domain/invoice_queries.dart';
 import '../domain/tax_reporting_repository.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/vat_report.dart';
-import '../domain/vat_tax_point.dart';
 
 /// The numbers one filing period declares.
 @visibleForTesting

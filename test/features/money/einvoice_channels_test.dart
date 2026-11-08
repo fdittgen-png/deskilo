@@ -6,9 +6,8 @@
 // channel does not exist yet stays refused at issue.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_channel_check.dart';
-import 'package:deskilo/features/money/domain/einvoice_format.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
-import 'package:deskilo/features/money/domain/invoice_clauses.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';

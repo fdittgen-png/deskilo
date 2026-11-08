@@ -8,6 +8,7 @@
 // No format reads anything else for the period: what the file says, it
 // says about one moment.
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_export_formats.dart';
@@ -16,7 +17,6 @@ import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/export_year.dart';
-import '../domain/invoice.dart';
 import 'generic_journal_export.dart';
 
 /// The books of one fiscal year as the accounting export holds them: ONE

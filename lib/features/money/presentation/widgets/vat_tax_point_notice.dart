@@ -8,6 +8,7 @@
 // are stored figures and are not touched. Dismissed for good through the
 // help-hint dismissal store; choosing an option under the legal identity
 // ends it as well, since the space has then chosen.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,8 +16,6 @@ import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../domain/invoice_legal.dart';
-import '../../domain/vat_regime.dart';
 import '../vat_tax_point_labels.dart';
 
 /// The id the dismissal is stored under.

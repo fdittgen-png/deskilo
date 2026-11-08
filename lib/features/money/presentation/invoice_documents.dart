@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -30,15 +31,10 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/address_window.dart';
 import '../domain/dunning.dart';
-import '../domain/einvoice_input.dart';
-import '../domain/invoice.dart';
-import '../domain/invoice_cii.dart';
-import '../domain/invoice_legal.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
-import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
 import '../providers/money_providers.dart';

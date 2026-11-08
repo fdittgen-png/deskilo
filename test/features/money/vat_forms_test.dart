@@ -5,8 +5,8 @@
 // rate, category, direction and correction, totals add the rounded boxes,
 // and each form rounds as the authority does. One fixture per form pins
 // every box a coworking space fills.
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_form_catalogue.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 VatDeclarationLine _sale(
@@ -47,8 +47,7 @@ Map<String, (int, int)> _form(String country, List<VatDeclarationLine> lines) =>
       for (final b in vatFormBoxes(
         country,
         lines,
-        periodEnd: DateTime(2026, 9, 30),
-      ))
+        periodEnd: DateTime(2026, 9, 30), reference: ActiveTaxReference.current,))
         b.code: (b.netCents, b.vatCents),
     };
 
@@ -231,8 +230,7 @@ void main() {
         for (final b in vatFormBoxes(
           'CH',
           lines,
-          periodEnd: DateTime(2026, 9, 30),
-        ))
+          periodEnd: DateTime(2026, 9, 30), reference: ActiveTaxReference.current,))
           b.code: b.label,
       };
       expect(boxes['205'], startsWith('In Ziffer 200 enthaltene Entgelte'));
@@ -244,9 +242,9 @@ void main() {
       final fr = _form('FR', lines.take(2).toList());
       expect(fr['A1']!.$1, 1600000, reason: 'the French form sums the sale');
       expect(fr['16']!.$2, 129600);
-      expect(vatFormTaxesAcquisitions('CH', DateTime(2026, 9, 30)), isTrue);
-      expect(vatFormTaxesAcquisitions('FR', DateTime(2026, 9, 30)), isFalse);
-      expect(vatFormTaxesAcquisitions('NO', DateTime(2026, 9, 30)), isFalse);
+      expect(vatFormTaxesAcquisitions('CH', DateTime(2026, 9, 30), reference: ActiveTaxReference.current), isTrue);
+      expect(vatFormTaxesAcquisitions('FR', DateTime(2026, 9, 30), reference: ActiveTaxReference.current), isFalse);
+      expect(vatFormTaxesAcquisitions('NO', DateTime(2026, 9, 30), reference: ActiveTaxReference.current), isFalse);
     });
   });
 
@@ -295,16 +293,16 @@ void main() {
   group('the catalogue', () {
     test('a form per country, the layout in force for the period', () {
       expect(
-        vatFormSpecFor('fr', DateTime(2026, 9, 30))!.name,
+        vatFormSpecFor('fr', DateTime(2026, 9, 30), reference: ActiveTaxReference.current)!.name,
         contains('CA3'),
       );
-      expect(vatFormSpecFor('UK', DateTime(2026))!.country, 'GB');
+      expect(vatFormSpecFor('UK', DateTime(2026), reference: ActiveTaxReference.current)!.country, 'GB');
       expect(
-        vatFormSpecFor('DE', DateTime(2019))!.validFrom,
+        vatFormSpecFor('DE', DateTime(2019), reference: ActiveTaxReference.current)!.validFrom,
         DateTime(2024),
         reason: 'an older period reads the earliest layout',
       );
-      expect(vatFormSpecFor('NO', DateTime(2026)), isNull);
+      expect(vatFormSpecFor('NO', DateTime(2026), reference: ActiveTaxReference.current), isNull);
     });
 
     test('a country without a form gets one box per rate', () {
@@ -313,7 +311,7 @@ void main() {
     });
 
     test('every box of every form has a code and a label, unique per form', () {
-      for (final spec in vatFormCatalogue) {
+      for (final spec in vatFormCatalogueOn(ActiveTaxReference.current)) {
         final codes = [for (final b in spec.boxes) b.code];
         expect(codes.toSet(), hasLength(codes.length), reason: spec.name);
         for (final b in spec.boxes) {
@@ -328,7 +326,7 @@ void main() {
     });
 
     test('a total names only boxes that come before it', () {
-      for (final spec in vatFormCatalogue) {
+      for (final spec in vatFormCatalogueOn(ActiveTaxReference.current)) {
         final seen = <String>{};
         for (final b in spec.boxes) {
           for (final t in [...b.base, ...b.tax]) {

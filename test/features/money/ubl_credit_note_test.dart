@@ -8,12 +8,8 @@
 // received (PrepaidAmount). Expected figures are worked out by hand
 // below, not read back from the generator.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

@@ -6,7 +6,7 @@
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/application/open_invoice_rows.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';

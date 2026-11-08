@@ -7,9 +7,10 @@
 // periodic form, which the owner or the adviser transcribes into the
 // annual form (whose own numbering differs).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../core/files/xlsx.dart';
-import 'vat_declaration.dart';
 
 /// The returns of [year] that count: one per period, the filed one where
 /// there is one, else the latest prepared; drafts never.
@@ -37,8 +38,9 @@ List<VatDeclaration> _returnsOfYear(
 ({String title, List<VatFormBox> boxes, String currency})? vatAnnualSummary(
   String country,
   int year,
-  Iterable<VatDeclaration> declarations,
-) {
+  Iterable<VatDeclaration> declarations, {
+  required TaxReferenceSet reference,
+}) {
   final title = vatAnnualSummaryName(country);
   if (title == null) return null;
   final returns = _returnsOfYear(declarations, year);
@@ -47,7 +49,7 @@ List<VatDeclaration> _returnsOfYear(
     title: title,
     boxes: vatFormBoxes(country, [
       for (final d in returns) ...d.lines,
-    ], periodEnd: DateTime(year, 12, 31)),
+    ], periodEnd: DateTime(year, 12, 31), reference: reference),
     currency: returns.first.currency,
   );
 }

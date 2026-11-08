@@ -18,11 +18,9 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
-
-import 'invoice.dart';
-import 'vat_rate.dart';
 
 /// The legend a Verifactu invoice prints. It is fixed by the Order, in
 /// Spanish, whatever language the reader uses, so it is not an l10n string.

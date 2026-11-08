@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert' show utf8;
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
-import '../domain/einvoice_format.dart';
-import '../domain/einvoice_input.dart';
-import '../domain/invoice.dart';
-import '../domain/invoice_cii.dart';
-import '../domain/invoice_ubl.dart';
 import 'jurisdiction/installed_invoice_profiles.dart';
 import 'jurisdiction/invoice_document_context_builder.dart';
 

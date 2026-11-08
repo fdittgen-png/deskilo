@@ -4,10 +4,10 @@
 // deactivated but never deleted; plain members get no entry.
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/presentation/screens/accessories_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

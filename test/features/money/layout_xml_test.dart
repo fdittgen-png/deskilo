@@ -7,9 +7,9 @@
 // mistake are the contract — pinned here, element by element, before
 // any of it reaches paper.
 import 'package:deskilo/features/money/domain/address_window.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_model.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_units.dart';
-import 'package:deskilo/features/money/domain/report_layout/layout_xml.dart';
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/layout_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

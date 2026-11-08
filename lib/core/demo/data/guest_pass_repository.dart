@@ -7,11 +7,11 @@
 // and issues its own invoice to the guest, and files the payment as a
 // pending request when the money was taken. The same request id never
 // sells twice. Nothing leaves the visitor's session: no money moves.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/guest_pass.dart';
-import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/plan/domain/seat.dart';
 import '../../../features/workspace/domain/member.dart';

@@ -8,12 +8,12 @@
 // format reads by column position and leaves the later ones empty. Payment
 // terms are not written: DATEV's Zahlungsbedingung is a key into the
 // accountant's own terms, which DesKilo does not hold.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/text/csv.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
-import 'invoice.dart';
 
 /// The Stammdaten file name; DATEV keys on the header, not the name.
 const String datevStammdatenFileName = 'EXTF_Debitoren_Kreditoren.csv';

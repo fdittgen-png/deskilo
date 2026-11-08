@@ -8,16 +8,12 @@
 import 'dart:convert' show utf8;
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceQueries;
-import '../../domain/e_invoice_totals.dart';
-import '../../domain/einvoice_input.dart';
-import '../../domain/invoice.dart';
+
 import '../../domain/stamp_duty.dart';
-import '../../domain/vat_rate.dart';
-import '../../domain/vat_regime.dart';
 
 DocumentParty _party(InvoiceParty p) => DocumentParty(
   name: p.name,

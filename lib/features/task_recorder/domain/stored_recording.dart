@@ -3,7 +3,8 @@
 // #1865 — a private recording as the store reads it back: the recording,
 // or why there is none, and whether a crash left its mark.
 
-import 'task_recording.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import 'task_recording_codec.dart';
 
 /// How a stored recording reads back.

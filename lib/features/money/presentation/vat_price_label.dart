@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../domain/vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// The VAT annotation a GROSS price should carry on catalogue surfaces
 /// (#537): "· TVA 20 % incl." — resolved from the item's own rate, or

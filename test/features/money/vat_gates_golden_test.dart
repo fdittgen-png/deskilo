@@ -15,11 +15,10 @@ import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
-import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/small_business_threshold.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/widgets/small_business_notice.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

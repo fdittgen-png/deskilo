@@ -6,6 +6,9 @@
 // German on another device, and nothing the person typed is ever shown
 // as if the recorder had observed it.
 
+import 'package:deskilo_task_recording/step_values.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/calendar/calendar_kind_labels.dart';
 import '../../../l10n/app_localizations.dart';
@@ -17,8 +20,6 @@ import '../../workspace/presentation/feature_names.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart'
     show permissionLabel;
 import '../domain/action_registry.dart';
-import '../domain/step_values.dart';
-import '../domain/task_recording.dart';
 import 'ui_labels.g.dart';
 
 /// The sentence for a registered action; null for one this build does

@@ -4,10 +4,10 @@
 // the attendance rows read the site from the frozen snapshot, the
 // placeholders reach the template.
 
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _flat(List<ReportBlock> blocks) => blocks

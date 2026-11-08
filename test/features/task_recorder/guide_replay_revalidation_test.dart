@@ -10,10 +10,10 @@ import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_replay.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_runner.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
-import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:deskilo_task_recording/deskilo_task_recording.dart'
     show ReplayRefusal, ReplayRequest, ReplayVerdict;
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

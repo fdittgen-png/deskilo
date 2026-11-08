@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +13,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/e_invoice_routing.dart';
 import '../../domain/einvoice_channel_check.dart';
 import '../../domain/einvoice_mandates.dart';
-import '../../domain/invoice_ubl_check.dart';
 
 /// What to do with the generated XML.
 enum EInvoiceExport {

@@ -8,11 +8,11 @@ import 'dart:io';
 
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/screens/invoice_register_screen.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

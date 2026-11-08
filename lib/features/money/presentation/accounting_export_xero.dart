@@ -4,8 +4,9 @@
 // the year's invoices on the sales account and the tax rates the person
 // names, one file per 500 rows. Xero imports them as drafts; credit notes
 // have their own template and are named, not written.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/ui/app_snack.dart';
-import '../domain/vat_regime.dart';
 import '../domain/xero_invoice_csv.dart';
 import 'accounting_export_run.dart';
 import 'widgets/xero_invoice_dialog.dart';

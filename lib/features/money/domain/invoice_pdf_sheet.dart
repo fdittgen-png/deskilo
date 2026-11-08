@@ -2,19 +2,18 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_page_footer.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
-import 'invoice.dart';
 import 'invoice_pdf.dart';
 import 'invoice_pdf_body.dart';
 import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
 import 'invoice_sales_tax.dart';
 import 'report_block_widgets.dart';
-import 'report_page_footer.dart';
-import 'vat_rate.dart';
 
 /// #837 — ONE invoice's sheets. Used for the document itself and then once
 /// per appended reference, so every annex starts on a fresh page and can

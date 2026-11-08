@@ -8,15 +8,13 @@ import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_action_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo/features/money/domain/tax_reporting_repository.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

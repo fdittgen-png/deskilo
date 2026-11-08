@@ -6,17 +6,13 @@
 // pin that arithmetic and check that every document says the same thing.
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
+
 import '../../helpers/installed_reference_shims.dart';
 
 const _seller = InvoiceParty(

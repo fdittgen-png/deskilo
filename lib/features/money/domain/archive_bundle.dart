@@ -11,11 +11,11 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
-
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/text/csv.dart';
 import '../../../core/vat/retention.dart';
-import 'invoice.dart';
 
 /// `<SIREN>-<year>-archive.zip`, `DEV-` first for a development workspace.
 String archiveBundleFileName(String legalId, int year, {bool development = false}) {

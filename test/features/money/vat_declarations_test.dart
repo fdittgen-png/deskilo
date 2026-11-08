@@ -13,11 +13,10 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_declaration_build.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -148,7 +147,7 @@ void main() {
             vatCents: 550,
             invoiceCount: 1),
       ];
-      final fr = vatFormBoxes('FR', lines);
+      final fr = vatFormBoxes('FR', lines, reference: ActiveTaxReference.current);
       expect(fr.singleWhere((b) => b.code == '08').vatCents, 4000);
       // #2357 — 3310-CA3-SD: 09 is the 5,5 % rate, 9B the 10 % rate.
       expect(fr.singleWhere((b) => b.code == '09').netCents, 10000);
@@ -160,7 +159,7 @@ void main() {
             netCents: 10000,
             vatCents: 1000,
             invoiceCount: 1),
-      ]);
+      ], reference: ActiveTaxReference.current);
       expect(ten.where((b) => b.code == '9B'), hasLength(1));
       expect(ten.where((b) => b.code == '09'), isEmpty);
 
@@ -172,11 +171,11 @@ void main() {
             vatCents: 1900,
             invoiceCount: 1),
       ];
-      final de = vatFormBoxes('DE', german);
+      final de = vatFormBoxes('DE', german, reference: ActiveTaxReference.current);
       expect(de.singleWhere((b) => b.code == 'Kz 81').netCents, 10000);
 
       // Anywhere else: generic per-rate boxes.
-      final generic = vatFormBoxes('NO', lines);
+      final generic = vatFormBoxes('NO', lines, reference: ActiveTaxReference.current);
       expect(generic, hasLength(2));
     });
 
@@ -205,8 +204,7 @@ void main() {
         declaration: declaration,
         workspaceName: 'pezenas1',
         vatId: 'FR123',
-        countryCode: 'FR',
-      );
+        countryCode: 'FR', reference: ActiveTaxReference.current,);
       expect(xml, contains('deskilo-vat-1'));
       expect(xml, contains('<vat-id>FR123</vat-id>'));
       expect(xml, contains('percent="20.0"'));
@@ -252,7 +250,7 @@ void main() {
         vatCents: 2000,
         invoiceCount: 1,
       );
-      final boxes = vatFormBoxes('FR', const [own, _correction, due]);
+      final boxes = vatFormBoxes('FR', const [own, _correction, due], reference: ActiveTaxReference.current);
       expect(boxes.singleWhere((b) => b.code == '08').vatCents, 2200,
           reason: 'VAT under-declared earlier is taxed on its rate line');
       expect(boxes.where((b) => b.code == '15'), isEmpty,
@@ -274,7 +272,7 @@ void main() {
             vatCents: -950,
             invoiceCount: 1,
             corrects: 'sep'),
-      ]);
+      ], reference: ActiveTaxReference.current);
       expect(de.singleWhere((b) => b.code == 'Kz 81').vatCents, 950);
     });
 
@@ -300,8 +298,7 @@ void main() {
         ),
         workspaceName: 'pezenas1',
         vatId: 'FR123',
-        countryCode: 'FR',
-      );
+        countryCode: 'FR', reference: ActiveTaxReference.current,);
       expect(xml, contains('correction="true"'));
       expect(xml, contains('corrects="sep"'));
       expect(xml, contains('corrects-start="2026-09-01"'));

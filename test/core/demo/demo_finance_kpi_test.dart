@@ -9,8 +9,8 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _invoice(

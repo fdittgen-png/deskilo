@@ -3,10 +3,9 @@
 // The on/off controls the generic recorder layer cannot see as taps: a
 // switch, a checkbox, a choice or filter chip. While a recording captures
 // values their tap is noted, with the state it left them in (step_values.dart).
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import '../domain/step_values.dart';
 
 bool _isToggle(Widget w) =>
     w is Switch ||

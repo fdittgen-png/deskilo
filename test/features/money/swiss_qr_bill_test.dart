@@ -5,7 +5,7 @@
 // (version 0200): header, account, creditor, amount, debtor, reference,
 // information, EPD. Vectors: the SIX documentation's QR-IBAN and QRR, the
 // ISO 11649 specimen.
-import 'package:deskilo/features/money/domain/swiss_qr_bill.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _creditor = SwissQrAddress(

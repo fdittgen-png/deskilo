@@ -12,9 +12,10 @@
 // avatar, member name, plan drawing or typed value can reach it,
 // because nothing here can hold one. Desks are named A1…B4 whatever the
 // real workspace calls them.
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
-import '../domain/task_recording.dart';
 import 'storyboard.dart';
 
 /// The screens a scene can stand for.

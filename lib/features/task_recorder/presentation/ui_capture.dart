@@ -25,6 +25,7 @@
 // what this layer already understands, and writes nothing anywhere.
 import 'dart:async';
 
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -35,7 +36,6 @@ import '../../../l10n/app_localizations.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
 import '../domain/action_registry.dart';
-import '../domain/step_values.dart';
 import '../guide/guide_session.dart';
 import 'guided_command.dart';
 import 'toggle_capture.dart';

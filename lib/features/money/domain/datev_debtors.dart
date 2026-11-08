@@ -5,10 +5,10 @@
 // sequence `member`) above the accountant's first Debitor, never invented. DATEV keeps open items per Debitor; one
 // collective account would leave the accountant to split every customer
 // by hand.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
 import 'datev_problem.dart';
-import 'invoice.dart';
 import 'ledger_entry.dart';
 import 'number_sequence.dart';
 

@@ -13,6 +13,7 @@
 // network, account or business command is involved.
 import 'dart:typed_data';
 
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,7 +22,6 @@ import '../../../core/files/file_names.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import '../storyboard/storyboard.dart';
 import '../storyboard/storyboard_pictures.dart';

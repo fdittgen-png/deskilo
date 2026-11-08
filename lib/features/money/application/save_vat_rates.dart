@@ -3,10 +3,10 @@
 // The workspace's VAT rates are written as one set: `set_vat_rates`
 // replaces them whole, with exactly one default among them. The VAT screen
 // and the setup guide's VAT step save through this one class.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/tax_reporting_repository.dart';
-import '../domain/vat_rate.dart';
 import '../providers/money_queries_providers.dart';
 
 part 'save_vat_rates.g.dart';

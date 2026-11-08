@@ -6,13 +6,10 @@
 // country; a not-subject line beside taxed lines is refused (BR-O-11).
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/einvoice_input.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../../helpers/installed_reference_shims.dart';
 
 void main() {

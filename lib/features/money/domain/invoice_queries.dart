@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import 'billing_rules.dart';
 import 'command_receipt.dart';
-import 'invoice.dart';
 import 'reminder_evidence.dart';
-import 'vat_tax_point.dart';
 
 /// #2591 C1 — the read side of the invoice archive and the invoice
 /// lifecycle: the register, the preview, the readiness check, the matches,

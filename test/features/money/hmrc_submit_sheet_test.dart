@@ -12,16 +12,17 @@ import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/money/data/supabase_hmrc_repository.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/money/presentation/widgets/hmrc_submit_sheet.dart';
 import 'package:deskilo/features/money/providers/hmrc_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_workspace_context.dart';
 import 'support/filing_product.dart';
 
 final _en = AppLocalizationsEn();
@@ -114,6 +115,7 @@ Future<_FakeHmrc> _pump(
     ProviderScope(
       key: UniqueKey(),
       overrides: [
+        testReadyWorkspaceContext(),
         hmrcRepositoryProvider.overrideWithValue(fake),
         hmrcClientValuesProvider.overrideWith((ref) async => client),
         linkLauncherProvider.overrideWithValue((uri) async {

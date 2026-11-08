@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/billing_rules.dart';
@@ -38,7 +39,6 @@ import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/tax_reporting_repository.dart';
 import '../domain/usage_record.dart';
-import '../domain/vat_declaration.dart';
 import '../domain/workspace_status.dart';
 import 'supabase_billing_rules_repository.dart';
 import 'supabase_commercial_terms_repository.dart';

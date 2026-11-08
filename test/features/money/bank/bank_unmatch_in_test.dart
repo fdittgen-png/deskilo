@@ -29,7 +29,7 @@ import 'package:deskilo/features/money/application/bank_import_commands.dart';
 import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 

@@ -5,8 +5,9 @@
 // VAT report say before their figures, so a reader knows WHICH dates a
 // period holds.
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../l10n/app_localizations.dart';
-import '../domain/vat_tax_point.dart';
 
 /// [l10n], or English when there is no localization in scope.
 AppLocalizations vatWords(AppLocalizations l10n) =>

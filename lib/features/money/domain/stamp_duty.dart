@@ -7,13 +7,12 @@
 // the duty are the `threshold` row `stamp_duty` of the seller's country, read
 // on the document's day; the FatturaPA (`DatiBollo`) and the PDF's statutory
 // line read the same answer.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import '../../../core/vat/tax_reference_active.dart';
-import 'invoice.dart';
-import 'vat_rate.dart';
 
 /// The Natura codes stamp duty applies to: exempt or outside-scope
 /// operations, not exports (N3.1), intra-EU supplies (N3.2) or a reverse

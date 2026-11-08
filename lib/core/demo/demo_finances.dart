@@ -4,9 +4,10 @@
 // invoices in every space, read from the same in-memory money the
 // workspace's Money pages read, so the two never disagree (the demo used to answer an empty
 // overview while Money showed the member's invoices and payments).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../features/money/domain/billing_rules.dart';
 import '../../features/money/domain/finance_overview.dart';
-import '../../features/money/domain/invoice.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
 

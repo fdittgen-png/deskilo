@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../domain/invoice_legal.dart';
 
 /// #2359 — the United Kingdom treats land as exempt unless the owner opted
 /// to tax the building (VAT Notice 742). The choice is a workspace setting:

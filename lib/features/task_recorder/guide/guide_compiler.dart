@@ -18,11 +18,12 @@
 // not a target: that step requires manual acknowledgement. A
 // screen seam's own steps keep matching their action as before.
 
+import 'package:deskilo_task_recording/task_guide.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../domain/action_registry.dart';
-import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'guide_destination.dart';
-import 'task_guide.dart';
 
 /// The outcomes of [action] that complete a guided command step.
 Set<String> successOutcomes(

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/calendar_days.dart';
 
 // The kind moved to its own file (#3402), where the invoice model reads it;
 // importers of this file keep reading it here until the sweep.
-export 'invoice_kind.dart';
+export 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// When the two automatic invoice runs happen, stored in
 /// `workspaces.billing_rules` (migration 0142).

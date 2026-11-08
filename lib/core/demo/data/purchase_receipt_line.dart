@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../features/money/domain/purchase.dart';
-import '../../../features/money/domain/vat_rate.dart';
 import 'floor_plan_repository.dart';
 import 'workspace_repository.dart';
 

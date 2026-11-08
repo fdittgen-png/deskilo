@@ -10,7 +10,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _order = [
@@ -54,7 +55,7 @@ final _cases = <String, List<Map<String, Object?>>>{
 Map<String, num> _boxesOf(List<Map<String, Object?>> raw) {
   final lines = [for (final l in raw) VatDeclarationLine.fromJson(l)];
   final values = <String, num>{};
-  for (final box in vatFormBoxes('GB', lines, periodEnd: DateTime(2026, 3, 31))) {
+  for (final box in vatFormBoxes('GB', lines, periodEnd: DateTime(2026, 3, 31), reference: ActiveTaxReference.current)) {
     if (box.hasBase && box.baseKey.isNotEmpty) values[box.baseKey] = box.netCents ~/ 100;
     if (box.hasTax && box.taxKey.isNotEmpty) values[box.taxKey] = box.vatCents / 100;
   }

@@ -7,10 +7,11 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/filing_context_builder.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 /// The file of [declaration] for [party]; throws [VatFilingFileException] with
 /// the stable problem when the add-on refuses it, [UnsupportedError] when no
@@ -35,8 +36,7 @@ import 'package:deskilo/features/money/domain/vat_filing_files.dart';
       declaration: declaration,
       party: party,
       now: now ?? DateTime.utc(2026, 10, 2, 12),
-      facts: facts,
-    ),
+      facts: facts, reference: ActiveTaxReference.current,),
   );
   final filing = checked.filing;
   if (filing == null) {

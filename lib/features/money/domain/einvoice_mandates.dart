@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/vat/place_of_supply.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
 /// #2358 — what a national e-invoicing mandate obliges a business to do.

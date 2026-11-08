@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../guide/task_guide.dart';
+import 'package:deskilo_task_recording/task_guide.dart';
 
 /// One guide of the library.
 class StoredGuide {

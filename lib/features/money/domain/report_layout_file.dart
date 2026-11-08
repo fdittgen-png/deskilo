@@ -8,14 +8,14 @@
 // in XML. The how-to block is GENERATED from the constants the reader
 // itself accepts, so the documentation can never list an element, a
 // unit or a placeholder the engine would refuse.
+import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/layout_xml.dart';
 import 'package:xml/xml.dart';
 
 import 'invoice_pdf_template.dart';
 import 'report_design_file.dart' show ReportDesignError, ReportDesignException;
 import 'report_kind.dart';
-import 'report_layout/layout_model.dart';
-import 'report_layout/layout_units.dart';
-import 'report_layout/layout_xml.dart';
 
 /// The envelope around a `<report-layout>`.
 abstract final class _ReportLayoutSchema {

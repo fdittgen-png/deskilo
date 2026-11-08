@@ -15,7 +15,7 @@ import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart'
 import 'package:deskilo/features/task_recorder/guide/guide_codec.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_compiler.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_runner.dart';
-import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
+import 'package:deskilo_task_recording/task_guide.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fixtures/recording_fixtures.dart';

@@ -10,12 +10,13 @@ import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,7 +31,7 @@ const _client = HmrcClientValues(
 
 VatDeclaration _prepared(DemoFixture f) => f.london.money.vatDeclarations.single;
 
-Map<String, num> _boxes(VatDeclaration d) => mtdBoxPounds(d);
+Map<String, num> _boxes(VatDeclaration d) => mtdBoxPounds(d, reference: ActiveTaxReference.current);
 
 Future<HmrcConnection> _connect(DemoFixture f) async {
   final hmrc = f.london.hmrc;
@@ -55,7 +56,7 @@ void main() {
     final net = lines.fold<int>(0, (sum, line) => sum +
         (line.amountCents / (1 + line.vatPercent / 100)).round());
     final gross = lines.fold<int>(0, (sum, line) => sum + line.amountCents);
-    final cents = mtdBoxCents(d);
+    final cents = mtdBoxCents(d, reference: ActiveTaxReference.current);
     expect(lines.length, greaterThan(100));
     expect(cents['vatDueSales'], gross - net);
     expect(cents['totalValueSalesExVAT'], (net ~/ 100) * 100);

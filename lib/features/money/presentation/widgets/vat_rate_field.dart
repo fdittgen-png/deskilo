@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/vat/supply_class.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/vat_rate.dart';
-import '../../domain/vat_regime.dart';
 
 /// Which VAT rate a catalogue entry is taxed at (0072).
 ///

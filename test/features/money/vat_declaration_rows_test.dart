@@ -4,7 +4,7 @@
 // whether it can be marked filed, corrections and deductible VAT, the
 // balance, the filing reference and the rate label.
 import 'package:deskilo/features/money/application/vat_declaration_rows.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';

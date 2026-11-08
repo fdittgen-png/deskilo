@@ -6,6 +6,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,6 @@ import '../application/credit_move_commands.dart';
 import '../application/invoice_action.dart';
 import '../application/send_reminder.dart';
 import '../domain/dunning.dart';
-import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
 import '../providers/credit_move_providers.dart';
 import '../providers/money_providers.dart';

@@ -4,9 +4,9 @@
 // to tax the building. The choice is stored with the legal identity (the
 // server reads it in `workspace_taxes_land`, pgTAP 175); this file pins the
 // stored shape and the settings fields that edit it.
-import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/presentation/widgets/uk_land_taxation_fields.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

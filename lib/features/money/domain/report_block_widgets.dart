@@ -10,10 +10,10 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_style.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'invoice_report.dart';
-import 'report_style.dart';
 
 List<pw.Widget> reportBlockWidgets(
   List<ReportBlock> blocks, {

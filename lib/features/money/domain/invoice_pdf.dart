@@ -2,16 +2,16 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_flow_page.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
-import 'invoice.dart';
 import 'invoice_pdf_sheet.dart';
 import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
 import 'report_block_widgets.dart';
-import 'report_flow_page.dart';
 
 
 

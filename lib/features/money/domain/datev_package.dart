@@ -8,7 +8,9 @@
 // Debitoren-Stammdaten that name them. Nothing is written while anything
 // would make DATEV refuse or misbook a row: the problems are returned
 // instead.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'billing_rules.dart';
 import 'datev.dart';
 import 'datev_creditors.dart';
@@ -18,7 +20,6 @@ import 'datev_problem.dart';
 import 'datev_stammdaten.dart';
 import 'datev_writer.dart';
 import 'euro_format.dart';
-import 'invoice.dart';
 import 'number_sequence.dart';
 
 /// What one DATEV export is built from: the request of the year with the

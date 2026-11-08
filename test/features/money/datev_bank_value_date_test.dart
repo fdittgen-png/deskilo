@@ -7,8 +7,8 @@
 // from the accounting source's match rows (0641); a row without them is
 // byte-identical to what it was. Expectations by hand.
 import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_match_row.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

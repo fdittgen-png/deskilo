@@ -8,9 +8,10 @@
 // stated as recorded, a command nobody answered says so, an authored step
 // says it was not observed, and a note appears only when notes are
 // explicitly included, labelled as the person's own words.
+import 'package:deskilo_task_recording/task_recording.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
-import '../domain/task_recording.dart';
 import 'task_export_labels.dart';
 
 /// What one recorded step says.

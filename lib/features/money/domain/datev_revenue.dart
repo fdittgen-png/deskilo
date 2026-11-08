@@ -4,8 +4,8 @@
 // rate books to its own automatic account (SKR03 8400 for 19 %, 8300 for
 // 7 %; SKR04 4400 and 4300), never the gross of two rates on one. The
 // SKR04 plan's defaults are rows of their own (`datev/<role>@SKR04`).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'invoice.dart';
 
 /// The automatic revenue account of the rate [percent] in [reference]'s
 /// German [chart]: [base] for the standard rate and wherever the chart names

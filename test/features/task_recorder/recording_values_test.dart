@@ -13,9 +13,9 @@ import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/step_values.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:deskilo/features/task_recorder/presentation/recorder_labels.dart';
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/memory_recorder_log_backend.dart';

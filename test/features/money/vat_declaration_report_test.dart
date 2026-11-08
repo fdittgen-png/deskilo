@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // The editable VAT preparation report retains the persisted declaration's
 // exact amounts and status; rendering neither files nor recalculates it.
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_declaration_report.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -40,8 +41,7 @@ void main() {
       statusLabel: 'Brouillon',
       money: (cents) => '$cents minor EUR',
       date: (date) => date.toIso8601String(),
-      rate: (rate) => '$rate %',
-    );
+      rate: (rate) => '$rate %', reference: ActiveTaxReference.current,);
     expect(data['vat_period_net'], '10000 minor EUR');
     expect(data['vat_period_vat'], '2000 minor EUR');
     expect(data['declaration_status'], 'Brouillon');
@@ -107,8 +107,7 @@ void main() {
       money: (cents) => '$cents',
       date: (date) => date.toIso8601String(),
       rate: (rate) => '$rate %',
-      lineNote: (line) => line.isAcquisition ? 'Acquisition tax' : '',
-    );
+      lineNote: (line) => line.isAcquisition ? 'Acquisition tax' : '', reference: ActiveTaxReference.current,);
     final rates = [
       for (final row in data['vat_rate_totals']! as List)
         (row as Map<String, Object?>)['rate'],

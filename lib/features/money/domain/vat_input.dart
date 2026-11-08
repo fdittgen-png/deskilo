@@ -14,7 +14,7 @@
 //
 // The SQL twin is `vat_input_split` (0408), read by `vat_input_amounts`;
 // `vat_return_parity_test.dart` pins both to the figures of pgTAP 170.
-import 'vat_rate.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// What an expense of [grossCents] at [percent], of which [deductiblePct]
 /// percent of the VAT may be deducted, puts on the return: its base

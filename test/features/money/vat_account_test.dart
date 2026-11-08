@@ -7,8 +7,9 @@
 // of the VAT100 for the same quarter.
 import 'dart:convert';
 
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_account.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 VatDeclarationLine _line(
@@ -67,7 +68,7 @@ void main() {
 
   test('the VAT account of Q1 equals boxes 1 and 4 of its return', () {
     final period = buildVatAccount([q1]).single;
-    final boxes = vatFormBoxes('GB', q1Lines, periodEnd: q1.periodEnd);
+    final boxes = vatFormBoxes('GB', q1Lines, periodEnd: q1.periodEnd, reference: ActiveTaxReference.current);
     expect(period.payableCents, _box(boxes, 'Box 1'));
     expect(period.allowableCents, _box(boxes, 'Box 4'));
     expect(period.netCents, _box(boxes, 'Box 1') - _box(boxes, 'Box 4'));

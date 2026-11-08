@@ -14,11 +14,11 @@
 import 'dart:async';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_task_recording/step_values.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/trace/trace_logger.dart' show isTransientNetworkFailure;
 import '../domain/action_registry.dart';
-import '../domain/step_values.dart';
 
 /// One observation to hand to the recorder.
 typedef Observation = ({String outcome, Map<String, Object?> payload});

@@ -4,10 +4,10 @@
 // file, its described columns (the key columns first), its rows and the
 // joins it declares. The names and descriptions are German, the language of
 // the auditor who reads the index.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import 'gobd_package.dart';
-import 'invoice.dart';
-import 'vat_tax_point.dart';
 
 const _invoices = 'rechnungen';
 const _customers = 'kunden';

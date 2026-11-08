@@ -4,7 +4,7 @@
 // rate label of each line, whether corrections or deductible VAT appear,
 // the balance left to pay or to claim back, and the filing reference.
 // The card maps over these values; it decides nothing.
-import '../domain/vat_declaration.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 /// Where a declaration stands.
 enum VatDeclarationStage { draft, prepared, filed }

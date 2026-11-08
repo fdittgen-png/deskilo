@@ -12,10 +12,8 @@
 // hand-stated amounts of the invoice it pays.
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// What [money] received in [start]..[end] on its taxable invoices, read from

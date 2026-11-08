@@ -2,16 +2,15 @@
 //
 // #2492 — the body of an invoice sheet without a report design: billed-to,
 // positions, totals and the annex, one method per section.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'invoice.dart';
 import 'invoice_pdf.dart';
 import 'invoice_pdf_sales_tax.dart';
 import 'invoice_pdf_sheet.dart';
 import 'invoice_pdf_style.dart';
 import 'invoice_sales_tax.dart';
-import 'vat_rate.dart';
 
 /// The sections [InvoiceSheet] lays out under its identification.
 class InvoiceSheetBody {

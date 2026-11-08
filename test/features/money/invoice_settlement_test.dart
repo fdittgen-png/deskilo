@@ -14,7 +14,7 @@
 // settled, that another member's invoice cannot be folded in, and that
 // the document's CONTENT is still immutable. These pin the client's half.
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';

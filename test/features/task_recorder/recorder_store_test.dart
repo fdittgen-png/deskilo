@@ -13,7 +13,7 @@ import 'package:deskilo/features/task_recorder/application/recorder_controller.d
 import 'package:deskilo/features/task_recorder/data/recorder_log_backends.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
+import 'package:deskilo_task_recording/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

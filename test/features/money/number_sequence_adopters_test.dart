@@ -5,10 +5,10 @@
 // references. The Dart side reads them; the SQL twin (0165) draws them.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -12,10 +12,10 @@ import 'package:deskilo/features/money/application/bank_reconciliation_reader.da
 import 'package:deskilo/features/money/domain/bank/bank_import_settings.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/bank/reconciliation_report.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/bank_reconciliation_archive.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

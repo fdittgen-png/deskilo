@@ -15,10 +15,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_task_recording/task_guide.dart';
 
 import '../domain/stored_guide.dart';
 import '../guide/guide_codec.dart';
-import '../guide/task_guide.dart';
 import 'recorder_store.dart';
 
 class GuideStore {

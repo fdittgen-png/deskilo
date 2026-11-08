@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show isEuCountry;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
-
-import 'invoice_ubl.dart' show isEuCountry;
 
 /// How a structured invoice TRAVELS — the question an XML export leaves
 /// open ("fine, but where do I send this?").

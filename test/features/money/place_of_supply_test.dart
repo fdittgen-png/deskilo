@@ -14,8 +14,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:deskilo/core/vat/place_of_supply.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';

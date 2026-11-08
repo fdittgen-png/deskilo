@@ -4,7 +4,7 @@
 // Swiss QR reference (27 digits, recursive modulus 10) and the ISO 11649
 // creditor reference (`RF`, modulus 97). A string is one only when its
 // check digits hold; anything else is free text. Pure Dart.
-import '../swiss_qr_bill.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 /// [text] upper-cased without spaces: how a reference is stored and
 /// compared.

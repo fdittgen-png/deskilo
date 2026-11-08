@@ -4,7 +4,7 @@
 // wrong person, insolvency) and release the hold; while it holds, the
 // sheet says so and no reminder goes out by hand. An invoice whose due
 // date was never agreed says that reminders wait for a review.
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

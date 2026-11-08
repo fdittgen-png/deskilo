@@ -6,11 +6,11 @@
 // never by the match; amounts in the space's currency, another currency
 // leaving them unknown; names only for a reader of personal data.
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
-
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'money_repository.dart';
 
 /// An invoice falling due in the months, in its cohort.

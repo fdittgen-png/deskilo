@@ -4,6 +4,7 @@
 // or an Italian space beside its returns (`application/vat_register_files.dart`
 // writes them). Each is a file for the owner or the adviser; nothing here
 // transmits.
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,6 @@ import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/vat_register_files.dart';
 import '../domain/vat_filing_terms.dart';
-import '../domain/vat_form_catalogue.dart';
 import '../domain/vat_register_es.dart' show isEsActivity;
 import '../domain/vat_registers.dart';
 import '../providers/vat_declaration_providers.dart';

@@ -14,6 +14,7 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +22,6 @@ import 'accountant_csv.dart';
 import 'accounting_connection.dart';
 import 'archive_bundle.dart' show kZipEntryTime;
 import 'billing_rules.dart';
-import 'invoice.dart';
 
 /// A sum of documents in one currency and one lifecycle.
 class HandoffTotals {
