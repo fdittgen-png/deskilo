@@ -36,7 +36,7 @@ class CaVatFilingContribution extends VatFilingContribution {
   );
 
   @override
-  Set<String> get extraForms => const {caQstFormName};
+  Set<String> get extraForms => const {};
 
   @override
   Set<FilingSource> get requiredSources => const {
