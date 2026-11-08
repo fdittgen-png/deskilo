@@ -46,6 +46,14 @@ extension TaxReferenceQueries on TaxReferenceSet {
           if (!(row.value as EuMemberValue).isAlias) row.country,
       };
 
+  /// The alias rows of the EU domain, alias -> canonical code (`EL` -> `GR`):
+  /// the codes a VAT-number prefix may carry that are not ISO member codes.
+  Map<String, String> euAliases({String? asOf}) => {
+        for (final row in resolved(asOf).where(TaxDomain.euMember))
+          if ((row.value as EuMemberValue).isAlias)
+            row.country: (row.value as EuMemberValue).aliasOf,
+      };
+
   /// The canonical code for [code]: trimmed, upper case, an alias row
   /// (`EL` -> `GR`) resolved.
   String euCode(String code, {String? asOf}) {

@@ -102,6 +102,7 @@ InvoiceDocumentContext invoiceDocumentContextOf(
     period: invoice.period ?? '',
     correctedIssuedAt: correctedIssuedAt,
     euMemberStates: input.reference.euMembers(),
+    euCodeAliases: input.reference.euAliases(),
   );
 }
 

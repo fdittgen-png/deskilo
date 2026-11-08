@@ -124,7 +124,9 @@ void main() {
     expect(context.correctedIssuedAt, DateTime(2026, 8, 31));
     expect(context.euMemberStates, containsAll(['DE', 'FR', 'PL', 'IT']));
     expect(context.euMemberStates, isNot(contains('CH')));
+    expect(context.euCodeAliases['EL'], 'GR');
     expect(() => context.euMemberStates.add('XX'), throwsUnsupportedError);
+    expect(() => context.euCodeAliases['XX'] = 'DE', throwsUnsupportedError);
     expect(invoiceDocumentContextOf(_input()).correctedIssuedAt, isNull);
   });
 

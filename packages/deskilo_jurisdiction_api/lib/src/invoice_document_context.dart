@@ -107,7 +107,9 @@ class InvoiceDocumentContext {
     this.period = '',
     this.correctedIssuedAt,
     Set<String> euMemberStates = const {},
+    Map<String, String> euCodeAliases = const {},
   }) : euMemberStates = Set.unmodifiable(euMemberStates),
+       euCodeAliases = Map.unmodifiable(euCodeAliases),
        lines = List.unmodifiable(lines),
        vatBreakdown = List.unmodifiable(vatBreakdown);
 
@@ -163,4 +165,9 @@ class InvoiceDocumentContext {
   /// so a profile that files a buyer's VAT number as an EU one need not read
   /// the reference itself.
   final Set<String> euMemberStates;
+
+  /// The alias codes the reference accepts for a member state, alias ->
+  /// canonical (`EL` -> `GR`): a VAT-number prefix is resolved through this
+  /// before it is looked up in [euMemberStates].
+  final Map<String, String> euCodeAliases;
 }
