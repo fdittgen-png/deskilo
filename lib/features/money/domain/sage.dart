@@ -17,7 +17,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart'
 import '../../../core/vat/tax_reference_active.dart';
 
 export 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
-    hide SageAccounts;
+    hide SageAccounts, buildSafTFile;
 
 class SageAccounts extends model.SageAccounts {
   const SageAccounts({

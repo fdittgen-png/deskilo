@@ -18,7 +18,6 @@ import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';
 import '../domain/fiscal_year.dart';
 import '../domain/posting.dart';
-import '../domain/saf_t_financial.dart';
 
 /// What a year's journal is.
 sealed class GenericJournal {

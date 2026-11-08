@@ -13,7 +13,6 @@ import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
-import 'package:deskilo/features/money/domain/saf_t_financial.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_journal.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_export_sheet.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
