@@ -205,6 +205,7 @@ void main() {
     expect(
       barrel,
       {
+        'src/archive_contribution.dart',
         'src/capability_descriptor.dart',
         'src/filing_context.dart',
         'src/generated_artifact.dart',
