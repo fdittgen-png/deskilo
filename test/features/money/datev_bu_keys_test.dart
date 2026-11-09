@@ -11,7 +11,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String? _key(String group) =>
-    datevGroupTaxKey(ActiveTaxReference.current, group, country: 'DE');
+    datevGroupTaxKey(ActiveTaxReference.current, group);
 
 void main() {
   test('every German rate resolves to its group\'s BU-Schlüssel', () {

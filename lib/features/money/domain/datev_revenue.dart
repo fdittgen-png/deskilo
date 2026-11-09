@@ -7,6 +7,12 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import '../../../core/jurisdiction/installed_accounting_formats.dart';
+
+/// #3429 -- the country whose chart DATEV posts to: what the installed DATEV
+/// format declares, unless a caller names one.
+String _datevChartCountry() => accountingFormatOf('datev').chartCountry;
+
 /// The automatic revenue account of the rate [percent] in [reference]'s
 /// German [chart]: [base] for the standard rate and wherever the chart names
 /// no account for the rate's group.
@@ -14,12 +20,13 @@ String datevRevenueAt(
   TaxReferenceSet reference,
   double percent,
   String base, {
-  required String country,
+  String? country,
   String chart = 'SKR03',
 }) {
-  final group = reference.groupOfRate(country, percent, 'S');
+  final home = country ?? _datevChartCountry();
+  final group = reference.groupOfRate(home, percent, 'S');
   if (group.isEmpty || group == 'standard') return base;
-  return datevChartAccount(reference, chart, 'revenue:$group', country: country) ?? base;
+  return datevChartAccount(reference, chart, 'revenue:$group', country: home) ?? base;
 }
 
 /// The DATEV row of [role] in [chart]: `datev/<role>@SKR04` in the SKR04
@@ -28,14 +35,14 @@ String? datevChartAccount(
   TaxReferenceSet reference,
   String chart,
   String role, {
-  required String country,
+  String? country,
 }) {
   final skr04 = chart.trim().toUpperCase() == 'SKR04';
   final row = reference
       .resolved(null)
       .lookup(
         TaxDomain.accountMap,
-        country,
+        country ?? _datevChartCountry(),
         skr04 ? 'datev/$role@SKR04' : 'datev/$role',
       );
   return (row?.value as AccountMapValue?)?.account;
@@ -50,7 +57,7 @@ String? datevAutomaticRevenue(
   String chart,
   String group,
   String standard, {
-  required String country,
+  String? country,
 }) => group.isEmpty || group == 'standard'
     ? standard
     : datevChartAccount(reference, chart, 'revenue:$group', country: country);
@@ -60,11 +67,15 @@ String? datevAutomaticRevenue(
 String? datevGroupTaxKey(
   TaxReferenceSet reference,
   String group, {
-  required String country,
+  String? country,
 }) {
   final row = reference
       .resolved(null)
-      .lookup(TaxDomain.accountMap, country, 'datev/tax:$group');
+      .lookup(
+        TaxDomain.accountMap,
+        country ?? _datevChartCountry(),
+        'datev/tax:$group',
+      );
   final code = (row?.value as AccountMapValue?)?.taxCode ?? '';
   return code.isEmpty ? null : code;
 }
