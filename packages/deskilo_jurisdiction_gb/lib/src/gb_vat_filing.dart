@@ -30,6 +30,9 @@ class GbVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  String get fileButtonId => 'mtdCsv';
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
