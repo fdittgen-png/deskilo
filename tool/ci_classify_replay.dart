@@ -40,10 +40,11 @@ void main(List<String> args) {
     return;
   }
   final scratch = Directory.systemTemp.createTempSync('ci_replay');
-  stdout.writeln(
-    '| diff | files | database verdict | reason | recorded full database job |',
-  );
-  stdout.writeln('|---|---|---|---|---|');
+  stdout
+    ..writeln(
+      '| diff | files | database verdict | reason | recorded full database job |',
+    )
+    ..writeln('|---|---|---|---|---|');
   var scoped = 0, full = 0;
   for (final line in File(args.first).readAsLinesSync()) {
     final f = line.trim().split(RegExp(r'\s+'));

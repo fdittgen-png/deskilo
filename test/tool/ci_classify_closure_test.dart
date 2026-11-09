@@ -208,6 +208,15 @@ class X {}
       expect(databaseClosure(_tmp.path).problem, isNotNull);
     });
 
+    test('a file that is not valid UTF-8 is a doubt, never a crash', () {
+      _repo();
+      File('${_tmp.path}/lib/core/c.dart')
+          .writeAsBytesSync([0xff, 0xfe, 0x80, 0x00]);
+      final c = databaseClosure(_tmp.path);
+      expect(c.proven, isFalse);
+      expect(c.problem, contains('lib/core/c.dart cannot be read'));
+    });
+
     test('an import of a non-Dart file is a problem', () {
       _repo();
       _write('lib/core/c.dart', "export 'data.json';\n");
@@ -272,6 +281,17 @@ class X {}
         expect(v.reason, contains('gone.dart'));
       },
     );
+
+    test('a closure computation that throws runs the full job and says so', () {
+      final v = _db(
+        _pr([
+          'lib/features/money/domain/unrelated.dart',
+        ], closure: () => throw StateError('boom')),
+      );
+      expect(v.required, isTrue);
+      expect(v.reason, contains('the closure computation failed'));
+      expect(v.reason, contains('boom'));
+    });
 
     test('no closure at all (a unit test of the path rules) never stands a Dart file down', () {
       expect(

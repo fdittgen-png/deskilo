@@ -165,6 +165,15 @@ bool _webRelevant(String path) =>
     path == 'pubspec.lock' ||
     path == '.github/workflows/web.yml';
 
+/// The closure, where a failure of the proof itself is a doubt, not a crash.
+DbClosure _closureOf(DbClosure Function() compute) {
+  try {
+    return compute();
+  } on Object catch (e) {
+    return DbClosure(const {}, 'the closure computation failed: $e');
+  }
+}
+
 /// Whether the import closure can decide [path]: a Dart source of the app or
 /// its packages, or a test. The topology prefixes keep selecting either way
 /// (the hand-kept list of v5 stays a floor under the proof).
@@ -248,7 +257,7 @@ List<Verdict> classify(ChangeSet change) {
     // independent (a provider or a core file the topology tests import), and
     // outside it the job stands down even where the v5 list knew nothing.
     if (_closureApplies(p) && change.closure != null) {
-      closure ??= change.closure!();
+      closure ??= _closureOf(change.closure!);
       if (!closure.proven) {
         closureDoubt ??= closure.problem;
         dbTouching.add(p);
