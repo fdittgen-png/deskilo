@@ -7,11 +7,7 @@
 import 'dart:async';
 import 'dart:typed_data' show Uint8List;
 
-import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
-import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
-import 'package:deskilo/features/workspace/domain/booking_policies.dart';
-import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/feature_flags_write.dart';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
@@ -21,13 +17,11 @@ import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
-import 'package:deskilo/features/workspace/domain/public_holidays.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
-import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
@@ -37,9 +31,9 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import 'fake_booking_rules.dart';
 import 'fake_conversations.dart';
 import 'fixture_clock.dart';
 
@@ -49,7 +43,7 @@ part 'workspace_repository_part3.dart';
 part 'workspace_repository_part4.dart';
 
 /// In-memory [WorkspaceRepository] for tests.
-class FakeWorkspaceRepository with FakeConversations implements WorkspaceRepository {
+class FakeWorkspaceRepository with FakeConversations, FakeBookingRules implements WorkspaceRepository {
   FakeWorkspaceRepository({List<Workspace>? workspaces}) : workspaces = workspaces ?? [];
 
   /// One seeded workspace; [featureFlags] seeds its feature overrides
@@ -104,7 +98,8 @@ class FakeWorkspaceRepository with FakeConversations implements WorkspaceReposit
 
   var _nextInviteCode = 1;
 
-  var _nextId = 1;
+  @override
+  int nextId = 1;
 
   /// #1650 — when set, [fetchMyWorkspaces] throws it: a server that could
   /// not answer, as opposed to one that answered "none".
@@ -213,21 +208,16 @@ class FakeWorkspaceRepository with FakeConversations implements WorkspaceReposit
   /// that a toggle writes only what it changes).
   final List<Map<String, bool>> flagWrites = [];
 
-  /// ISO open weekdays (1=Mon..7=Sun) per workspace; Mon–Fri when unseeded.
-  final Map<String, List<int>> openWeekdays = {};
+  
 
-  /// Booking granularity per workspace (#200); flexible when unseeded —
-  /// stored beside [openWeekdays] like the separate booking_rules keys.
-  final Map<String, BookingGranularity> bookingGranularities = {};
+  
 
-  /// The #600 policy switches per workspace; all OFF when unseeded.
-  final Map<String, BookingPolicies> bookingPolicies = {};
+  
 
   /// #1294 — what each workspace says a new member starts with.
   final Map<String, NewMemberDefaults> newMemberDefaults = {};
 
-  /// #1294 — the workspace's fallback default period, by workspace.
-  final Map<String, String?> workspaceDefaultPeriods = {};
+  
 
   /// #1277 — workspaceId -> locale -> key -> the workspace's word.
   /// #1289 — branding as the server would store it, by workspace id.
@@ -239,34 +229,22 @@ class FakeWorkspaceRepository with FakeConversations implements WorkspaceReposit
 
   final Map<String, Map<String, Map<String, String>>> lexicons = {};
 
-  /// Working day per workspace (#446); defaults like the real repo.
-  final Map<String, WorkHours> workHours = {};
+  
 
 
   /// Server-side default workspace (#458).
   String? serverDefaultWorkspaceId;
 
-  /// #1307 S4 — provenance per workspace; unset reads as the product default.
-  final workHoursProvenance = <String, WorkHoursProvenance>{};
-  final workHoursResets = <String>[];
+  
+  
 
-  /// One-off closure days across workspaces (#127).
-  final List<ClosureDay> closureDays = [];
+  
 
-  /// #1274 — what `generate_closure_days` hands back. Tests seed this;
-  /// the fake never recomputes the calendar.
-  HolidayGeneration holidayGeneration = HolidayGeneration.empty;
+  
 
-  /// Every generate call, in order, so a test can prove a preview did
-  /// not write and an apply did.
-  final holidayCalls =
-      <({String country, int year, bool apply})>[];
+  
 
-  /// #2051 — months the fake treats as invoiced (`2026-07`), and every
-  /// import call in order, so a test can prove which days were sent.
-  final Set<String> invoicedMonths = {};
-  final holidayImportCalls =
-      <({List<({DateTime day, String name})> days, bool apply})>[];
+  
 
   /// Workspace ids passed to [resetWorkspace], for assertions.
   final resetWorkspaceCalls = <String>[];
@@ -403,12 +381,12 @@ class FakeWorkspaceRepository with FakeConversations implements WorkspaceReposit
   @override Future<void> requestRoleChange(String workspaceId, {required String memberId, required bool makeAdmin}) => _requestRoleChangeImpl(workspaceId, memberId: memberId, makeAdmin: makeAdmin);
   @override Future<String> setWorkspaceCode(String workspaceId, String code) => _setWorkspaceCodeImpl(workspaceId, code);
   @override Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags, {Map<String, bool>? expected}) => _setFeatureFlagsImpl(workspaceId, flags, expected: expected);
-  @override Future<List<int>> fetchOpenWeekdays(String workspaceId) => _fetchOpenWeekdaysImpl(workspaceId);
-  @override Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) => _setOpenWeekdaysImpl(workspaceId, weekdays);
-  @override Future<BookingGranularity> fetchBookingGranularity(String workspaceId) => _fetchBookingGranularityImpl(workspaceId);
-  @override Future<void> setBookingGranularity(String workspaceId, BookingGranularity granularity) => _setBookingGranularityImpl(workspaceId, granularity);
-  @override Future<String?> fetchDefaultPeriod(String workspaceId) => _fetchDefaultPeriodImpl(workspaceId);
-  @override Future<void> setDefaultPeriod(String workspaceId, String? wire) => _setDefaultPeriodImpl(workspaceId, wire);
+  
+  
+  
+  
+  
+  
   @override Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) => _fetchNewMemberDefaultsImpl(workspaceId);
   @override Future<void> setNewMemberDefaults(String workspaceId, NewMemberDefaults defaults) => _setNewMemberDefaultsImpl(workspaceId, defaults);
   @override Future<void> setWorkspaceEmblem(String workspaceId, Uint8List png) => _setWorkspaceEmblemImpl(workspaceId, png);
@@ -417,23 +395,17 @@ class FakeWorkspaceRepository with FakeConversations implements WorkspaceReposit
   @override Future<Map<String, dynamic>> setWorkspaceBranding(String workspaceId, Map<String, dynamic> delta) => _setWorkspaceBrandingImpl(workspaceId, delta);
   @override Future<Map<String, dynamic>> fetchLexicon(String workspaceId) => _fetchLexiconImpl(workspaceId);
   @override Future<void> setLexiconTerm(String workspaceId, String locale, String key, String? text) => _setLexiconTermImpl(workspaceId, locale, key, text);
-  @override Future<BookingPolicies> fetchBookingPolicies(String workspaceId) => _fetchBookingPoliciesImpl(workspaceId);
-  @override Future<void> setBookingPolicy(String workspaceId, String key, {required bool enabled}) => _setBookingPolicyImpl(workspaceId, key, enabled: enabled);
-  @override Future<void> setSimultaneousReservations(String workspaceId, int value) => _setSimultaneousReservationsImpl(workspaceId, value);
-  @override Future<void> setBookingLimit(String workspaceId, String key, int value) => _setBookingLimitImpl(workspaceId, key, value);
-  @override Future<void> setLegendProfile(String workspaceId, LegendProfile profile) => _setLegendProfileImpl(workspaceId, profile);
-  @override Future<void> setOutsideHoursMode(String workspaceId, OutsideHoursMode mode) => _setOutsideHoursModeImpl(workspaceId, mode);
   @override Future<String?> fetchDefaultWorkspaceId() => _fetchDefaultWorkspaceIdImpl();
   @override Future<void> setDefaultWorkspaceId(String? workspaceId) => _setDefaultWorkspaceIdImpl(workspaceId);
-  @override Future<WorkHours> fetchWorkHours(String workspaceId) => _fetchWorkHoursImpl(workspaceId);
-  @override Future<void> setWorkHours(String workspaceId, WorkHours hours) => _setWorkHoursImpl(workspaceId, hours);
-  @override Future<WorkHoursProvenance> fetchWorkHoursProvenance(String workspaceId) => _fetchWorkHoursProvenanceImpl(workspaceId);
-  @override Future<void> resetWorkHoursToDefault(String workspaceId) => _resetWorkHoursToDefaultImpl(workspaceId);
-  @override Future<List<ClosureDay>> fetchClosureDays(String workspaceId) => _fetchClosureDaysImpl(workspaceId);
-  @override Future<HolidayGeneration> generateClosureDays(String workspaceId, {required String country, required int year, bool apply = false}) => _generateClosureDaysImpl(workspaceId, country: country, year: year, apply: apply);
-  @override Future<HolidayGeneration> importClosureDays(String workspaceId, {required List<({DateTime day, String name})> days, bool apply = false}) => _importClosureDaysImpl(workspaceId, days: days, apply: apply);
-  @override Future<ClosureDay> addClosureDay(String workspaceId, DateTime day, String reason) => _addClosureDayImpl(workspaceId, day, reason);
-  @override Future<void> removeClosureDay(String closureDayId) => _removeClosureDayImpl(closureDayId);
+  
+  
+  
+  
+  
+  
+  
+  
+  
   @override Future<void> resetWorkspace(String workspaceId) => _resetWorkspaceImpl(workspaceId);
   @override Future<Workspace> saveWorkspaceSettings(String workspaceId, WorkspaceSettingsSave save) => _saveWorkspaceSettingsImpl(workspaceId, save);
   @override Future<void> setDeskOpacity(String workspaceId, int opacity) => _setDeskOpacityImpl(workspaceId, opacity);

@@ -58,64 +58,16 @@ extension _FakeWorkspaceRepositoryPart3 on FakeWorkspaceRepository {
     }
   }
 
-  Future<BookingPolicies> _fetchBookingPoliciesImpl(String workspaceId) async =>
-      bookingPolicies[workspaceId] ?? const BookingPolicies();
+  
 
-  Future<void> _setBookingPolicyImpl(
-    String workspaceId,
-    String key, {
-    required bool enabled,
-  }) async {
-    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
-    bookingPolicies[workspaceId] = switch (key) {
-      BookingPolicies.allowPastBookingsKey =>
-        p.copyWith(allowPastBookings: enabled),
-      // #634: grid_within_hours is read-only legacy — no writer.
-      BookingPolicies.adminCheckOutKey => p.copyWith(adminCheckOut: enabled),
-      _ => p,
-    };
-  }
+  
 
-  Future<void> _setSimultaneousReservationsImpl(
-    String workspaceId,
-    int value,
-  ) async {
-    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
-    bookingPolicies[workspaceId] =
-        p.copyWith(simultaneousReservations: value);
-  }
+  
 
-  Future<void> _setBookingLimitImpl(
-    String workspaceId,
-    String key,
-    int value,
-  ) async {
-    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
-    bookingPolicies[workspaceId] = switch (key) {
-      BookingPolicies.advanceHorizonDaysKey =>
-        p.copyWith(advanceHorizonDays: value),
-      BookingPolicies.minDurationMinutesKey =>
-        p.copyWith(minDurationMinutes: value),
-      BookingPolicies.maxDurationMinutesKey =>
-        p.copyWith(maxDurationMinutes: value),
-      _ => p,
-    };
-  }
+  
 
-  Future<void> _setLegendProfileImpl(
-    String workspaceId,
-    LegendProfile profile,
-  ) async {
-    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
-    bookingPolicies[workspaceId] = p.copyWith(legendProfile: profile);
-  }
+  
 
-  Future<void> _setOutsideHoursModeImpl(
-    String workspaceId,
-    OutsideHoursMode mode,
-  ) async {
-    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
-    bookingPolicies[workspaceId] = p.copyWith(outsideHoursMode: mode);
-  }
+  
 
 }
