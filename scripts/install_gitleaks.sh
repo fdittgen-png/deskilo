@@ -33,10 +33,11 @@ obtain_archive() {
   fi
 }
 
-main() {
-  local dest=${1:?destination directory required}
-  local cache=${2:-}
-  local version=8.30.1 platform expected
+version=8.30.1
+
+# pin_for_platform: sets `platform` and `expected` (the pinned SHA-256 of that
+# platform's archive); a test of the whole flow replaces it with a fixture.
+pin_for_platform() {
   case "$(uname -s)/$(uname -m)" in
     Linux/x86_64)
       platform=linux_x64
@@ -46,9 +47,17 @@ main() {
       expected=b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5 ;;
     *) echo "Unsupported secret-scanner platform" >&2; exit 2 ;;
   esac
+}
+
+main() {
+  local dest=${1:?destination directory required}
+  local cache=${2:-}
+  pin_for_platform
   local scratch
   scratch=$(mktemp -d)
-  trap 'rm -rf "$scratch"' EXIT
+  # the value is expanded NOW: an EXIT trap runs after main returns, when a
+  # local `scratch` no longer exists (and set -u would fail the job)
+  trap "rm -rf '$scratch'" EXIT
   local archive="$scratch/gitleaks.tar.gz"
   local cached="${cache:+$cache/gitleaks_${version}_${platform}.tar.gz}"
   obtain_archive "https://github.com/gitleaks/gitleaks/releases/download/v$version/gitleaks_${version}_${platform}.tar.gz" "$cached" "$expected" "$archive"

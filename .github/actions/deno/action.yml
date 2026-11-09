@@ -4,7 +4,7 @@
 # runner tool cache before it downloads, so the tool-cache directory is what is
 # cached; an exact version avoids the newest-release lookup on dl.deno.land, and the
 # binary is checked against a pinned SHA-256 whether it was downloaded or
-# restored; a cached copy that fails it is cleared and downloaded again, never
+# restored; a cache that is not exactly the pinned binary is cleared and downloaded again, never
 # fatal (a cache key is immutable). Bump the version, the cache key and the
 # digest (scripts/verify_cached_deno.sh) together.
 name: pinned Deno
@@ -26,4 +26,4 @@ runs:
         deno-version: 2.9.8
     - name: Verify the Deno binary
       shell: bash
-      run: bash scripts/verify_cached_deno.sh check "$(command -v deno)"
+      run: bash scripts/verify_cached_deno.sh check "${{ runner.tool_cache }}/deno"
