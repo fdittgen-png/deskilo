@@ -165,9 +165,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
-      regime
-          .exemptionReasonCode(seller.country, rules: account.national)
-          .isNotEmpty;
+      regime.exemptionReasonCode(seller.country, rules: account.national).isNotEmpty;
   return EInvoiceReadiness([
     // A VAT-charging seller must show tax. With the breakdown present the
     // document is as valid as any other — that is the whole point of 0072.
