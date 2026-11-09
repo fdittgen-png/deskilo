@@ -158,6 +158,29 @@ void main() {
     expect(form.containsKey('510'), isFalse);
   });
 
+  test('Switzerland — a quarter at the three rates: 303/313/343 and the total '
+      '399, the payable 500 after the input tax, in centimes and never '
+      'rounded to francs (#2360)', () {
+    final form = _form('CH', [
+      _sale(8.1, 100049, 8104),
+      _sale(2.6, 20000, 520),
+      _sale(3.8, 30010, 1140),
+      _input(6000, 489),
+    ]);
+    expect(form['303'], (100049, 8104));
+    expect(form['313'], (20000, 520));
+    expect(form['343'], (30010, 1140));
+    expect(form['399']!.$2, 8104 + 520 + 1140);
+    expect(form['400']!.$2, 489);
+    expect(form['500']!.$2, 8104 + 520 + 1140 - 489);
+    expect(
+      [form['303']!.$2, form['313']!.$2, form['343']!.$2, form['399']!.$2]
+          .any((c) => c % 100 == 0),
+      isFalse,
+      reason: 'the sheet states centimes: nothing is rounded to francs',
+    );
+  });
+
   test(
     'Switzerland — exports on 220, abroad on 221, every amount to the centime',
     () {
