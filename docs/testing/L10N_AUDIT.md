@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-48 literal(s) in 11 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+52 literal(s) in 12 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -58,9 +58,14 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/instance/instance_builder.dart:24` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:25` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
+| `packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart:32` | label | Ventes | deskilo_jurisdiction_fr/lib | KEEP_NON_UI_LITERAL |
+| `packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart:33` | label | Banque | deskilo_jurisdiction_fr/lib | KEEP_NON_UI_LITERAL |
+| `packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart:34` | label | Achats | deskilo_jurisdiction_fr/lib | KEEP_NON_UI_LITERAL |
+| `packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart:35` | label | Opérations diverses | deskilo_jurisdiction_fr/lib | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
 
+- **`packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart`** (4) — the FEC journal labels (Ventes, Banque, Achats, Opérations diverses): statutory French names written into the file
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_second_space_seed.dart`** (2) — demo records: the German space's document titles as it stores them

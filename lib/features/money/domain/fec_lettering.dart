@@ -4,10 +4,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import 'fec_accounts.dart';
 
-/// The bank journal's code and name.
-const fecBankJournal = 'BQ';
-const fecBankJournalLabel = 'Banque';
-
 /// #2365 — `DateLet` (column index 14) is mandatory whenever `EcritureLet`
 /// (index 13) is filled: it is the date the lettering was made, i.e. the
 /// date of the last entry that took part in it. The builders write the
@@ -79,9 +75,9 @@ void bookFecRefund(
     (accounts.bank, bankLabel, false),
   ]) {
     write(
-      journal: fecBankJournal,
-      journalLabel: fecBankJournalLabel,
-      number: '$fecBankJournal-${invoice.number}-R',
+      journal: accounts.journals.bank.code,
+      journalLabel: accounts.journals.bank.label,
+      number: '${accounts.journals.bank.code}-${invoice.number}-R',
       date: on,
       account: account,
       accountLabel: accountLabel,
@@ -115,7 +111,7 @@ void bookFecWriteOff(
   if (match == null || match.pending || writtenOff == null) return;
   final owed = invoice.totalCents - match.paidCents;
   if (owed <= 0) return;
-  final entry = 'OD-${invoice.number}-W';
+  final entry = '${accounts.journals.misc.code}-${invoice.number}-W';
   final label = 'Créance irrécouvrable ${invoice.number}';
   final day = dayOf(writtenOff);
   for (final (account, accountLabel, aux, debit) in [
@@ -123,7 +119,7 @@ void bookFecWriteOff(
     (accounts.customers, customersLabel, true, false),
   ]) {
     write(
-      journal: 'OD', journalLabel: 'Opérations diverses',
+      journal: accounts.journals.misc.code, journalLabel: accounts.journals.misc.label,
       number: entry, date: day,
       account: account, accountLabel: accountLabel,
       auxNumber: aux ? invoice.memberId : '',
