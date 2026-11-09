@@ -214,6 +214,42 @@
   indemnity=requiresReview:"EUR 40"
   escompte=requiresReview:"No discount"
   deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[AT / business / none] euBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[AT / business / owner] euBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[AT / consumer / none] euConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[AT / consumer / owner] euConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[AT / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[AT / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
 [IT / business / none] unsupported
   terms=statutoryDefault:"Payment on receipt."
   late=none:""

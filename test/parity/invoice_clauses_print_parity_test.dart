@@ -39,6 +39,7 @@ String _clauses() {
     'CH',
     'CA',
     'US',
+    'AT',
     'IT',
     'ES',
     'PL',
