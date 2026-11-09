@@ -12,7 +12,7 @@
 // PostgREST returns 204 with no body for an update it matched nothing
 // with, so the client cannot tell it apart from a success. Asking for
 // the row back (`.select('id')`) is what makes the difference visible,
-// and `_updateWorkspaceRow` is the one place that does it.
+// and `updateWorkspaceRow` is the one place that does it.
 //
 // This is a source lint rather than a behaviour test because the
 // behaviour only exists against a real Postgres with RLS on: the fake
@@ -21,19 +21,24 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+
 import 'lint_sources.dart';
 
 /// The repository that owns the `workspaces` row.
 const _repository =
-    'lib/features/workspace/data/supabase_workspace_repository.dart';
+    'lib/features/workspace/data/supabase_workspace_rows.dart';
+
+/// #2597 -- the mixins that may write a `workspaces` row.
+final _writers = handWrittenDartFiles('lib/features/workspace/data').toList();
 
 /// The helper every row write must go through.
-const _helper = '_updateWorkspaceRow';
+const _helper = 'updateWorkspaceRow';
 
 void main() {
   test('every workspaces-row write goes through the verifying helper', () {
-    final lines = File(_repository).readAsLinesSync();
     final offenders = <String>[];
+    for (final file in _writers) {
+    final lines = file.readAsLinesSync();
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
       if (line.trimLeft().startsWith('//')) continue;
@@ -48,7 +53,8 @@ void main() {
       if (!statement.contains('.update(')) continue;
       // The helper itself is the one place allowed to say it.
       if (statement.contains(".select('id')")) continue;
-      offenders.add('$_repository:${i + 1}: ${line.trim()}');
+      offenders.add('${file.path}:${i + 1}: ${line.trim()}');
+    }
     }
     expect(
       offenders,
@@ -62,7 +68,7 @@ void main() {
   });
 
   test('the helper actually checks what came back', () {
-    final source = readLibrary(File(_repository)); // #2386 — with its parts
+    final source = File(_repository).readAsStringSync();
     final at = source.indexOf('Future<void> $_helper(');
     expect(at, greaterThan(0), reason: '$_helper is gone — so is the guard');
     final body = source.substring(at, source.indexOf('\n  }', at));
