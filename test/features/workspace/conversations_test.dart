@@ -128,7 +128,7 @@ void main() {
     test('the real query is a PREFIX search on the 0125 index', () {
       // Nobody finishes a word before expecting results, and the config
       // must match the index or the search silently sequential-scans.
-      final source = File('lib/features/workspace/data/conversation_api.dart')
+      final source = File('lib/features/workspace/data/supabase_conversations.dart')
           .readAsStringSync();
       expect(source, contains("config: 'simple'"));
       expect(source, contains(r"'$word:*'"));

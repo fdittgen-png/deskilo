@@ -4,7 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
 
-/// The conversation half of the workspace repository (#687).
+/// The conversation half of the workspace repository (#687, #2597 W1): a
+/// mixin composed into `SupabaseWorkspaceRepository`.
 ///
 /// A mixin rather than a second repository, because it is not a second
 /// repository: these are workspace methods that happen to be about
@@ -13,7 +14,7 @@ import '../domain/member_note.dart';
 /// FILE because supabase_workspace_repository.dart was at its length
 /// budget, and "everything about conversations" is a real boundary
 /// rather than an arbitrary cut.
-mixin ConversationApi {
+mixin SupabaseConversations {
   /// The client, provided by the class this is mixed into.
   ///
   /// A mixin cannot see a private field of its host, so the host exposes
