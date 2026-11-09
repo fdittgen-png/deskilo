@@ -18,6 +18,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
@@ -33,7 +34,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
 import 'support/sage_files.dart';
-
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 const _dir = 'test/features/money/goldens/exports';
 
@@ -217,12 +217,12 @@ Map<String, String Function()> _files() => {
     createdAt: DateTime.utc(2026, 5, 1, 9),
     lineText: _lineText, reference: ActiveTaxReference.current,
   )),
-  'invoice_ubl.xml': () => buildInvoiceUbl(EInvoiceInput(invoice: _invoices.first,
+  'invoice_ubl.xml': () => buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
     iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current)),
-  'invoice_cii.xml': () => buildInvoiceCii(EInvoiceInput(invoice: _invoices.first,
+  'invoice_cii.xml': () => buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,

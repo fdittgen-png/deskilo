@@ -4,11 +4,11 @@
 // the legal registrations with their scheme (BT-30 / BT-47), the
 // payment terms and due date (BT-20 / BT-9, BR-CO-25), and the
 // readiness gap for a French business buyer without a SIREN.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 const _seller = InvoiceParty(
   name: 'COWORKONTI', street: '4 avenue de Castelnau', city: 'Pézenas',
   postalCode: '34120', country: 'FR', legalId: '10825191900016', taxExemptionReason: 'TVA non applicable, article 293 B du CGI',
@@ -28,7 +28,7 @@ Invoice _invoice() => Invoice(
     );
 
 XmlDocument _xml({InvoiceParty buyer = _kaloa, DateTime? dueDate, String terms = ''}) =>
-    XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: _invoice(), seller: _seller, buyer: buyer,
+    XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(), seller: _seller, buyer: buyer,
       lineText: (l) => 'Abonnement 100 %', dueDate: dueDate, paymentTerms: terms, reference: ActiveTaxReference.current)));
 
 Iterable<XmlElement> _els(XmlDocument doc, String name) =>

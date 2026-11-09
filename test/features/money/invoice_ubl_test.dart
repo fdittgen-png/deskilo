@@ -7,6 +7,7 @@
 // category: BR-CO-26 (a seller identifier exists at all), BR-O-02/05 (no
 // tax id and no rate outside the scope of VAT), BR-E-02/05/10 (VAT id,
 // zero rate and an exemption reason when exempt).
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
 import '../../helpers/installed_reference_shims.dart';
-
 Invoice _invoice({String replacesNumber = '', List<InvoiceLine>? lines}) =>
     Invoice(
       id: 'inv-1',
@@ -67,7 +67,7 @@ String _xml({
   InvoiceParty buyer = _buyer,
   String iban = '',
 }) =>
-    buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
+    buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
       seller: seller,
       buyer: buyer,
       iban: iban,

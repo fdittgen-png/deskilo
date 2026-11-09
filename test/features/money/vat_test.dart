@@ -5,6 +5,7 @@
 // member owes — the tax is extracted from the price and shown. These tests
 // pin that arithmetic and check that every document says the same thing.
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
 import '../../helpers/installed_reference_shims.dart';
-
 const _seller = InvoiceParty(
   name: 'pezenas1',
   street: '2 Place du Marché',
@@ -298,7 +298,7 @@ void main() {
   });
 
   group('UBL', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
           lineText: _lineText, reference: ActiveTaxReference.current)));
@@ -401,7 +401,7 @@ void main() {
   });
 
   group('CII', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
           lineText: _lineText, reference: ActiveTaxReference.current)));

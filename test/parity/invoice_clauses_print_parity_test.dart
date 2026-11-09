@@ -21,6 +21,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../features/money/clause_rules_support.dart';
 import 'parity_golden.dart';
 
+
 final _reference = ActiveTaxReference.current;
 
 String _clause(QualifiedClause c) => '${c.basis.name}:"${c.text}"';
@@ -216,7 +217,7 @@ String _ibans() {
     ('DE', 'DE89 3704 0044 0532 0130 00'),
     ('too short', 'CH44 3199'),
   ]) {
-    out.writeln('[$label] qr=${isQrIban(iban)} swiss=${isSwissIban(iban)}');
+    out.writeln('[$label] qr=${isQrIban(iban, rules: installedPaymentReferenceRules)} swiss=${isSwissIban(iban, rules: installedPaymentReferenceRules)}');
   }
   return out.toString();
 }
@@ -272,7 +273,7 @@ Future<String> _pdfAddresses() async {
   for (final (label, debtor) in [
     (
       'CH debtor',
-      const SwissQrAddress(
+      const SwissQrAddress(country: 'CH',
         name: 'Kunde',
         street: 'Hauptstrasse',
         houseNumber: '3',
@@ -294,9 +295,8 @@ Future<String> _pdfAddresses() async {
     ('no debtor', null),
   ]) {
     final bill = SwissQrBill.forInvoice(
-      iban: 'CH93 0076 2011 6238 5295 7',
-      qrIban: 'CH44 3199 9123 0008 8901 2',
-      creditor: const SwissQrAddress(
+      account: PaymentAccount(rules: installedPaymentReferenceRules, iban: 'CH93 0076 2011 6238 5295 7', qrIban: 'CH44 3199 9123 0008 8901 2'),
+      creditor: const SwissQrAddress(country: 'CH',
         name: 'Cowork AG',
         street: 'Rue du Lac',
         houseNumber: '1',

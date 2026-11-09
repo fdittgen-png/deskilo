@@ -3,12 +3,12 @@
 // #2358 — the supplier inbox reads UBL and CII. The round trips parse what
 // our own generators write; the hand-written documents pin the figures,
 // the credit note and every refusal.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/inbound_einvoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 final _invoice = Invoice(
   id: 'inv-1',
   workspaceId: 'ws-1',
@@ -83,7 +83,7 @@ void _expectOurInvoice(InboundEInvoice p, InboundEInvoiceSyntax syntax) {
 
 void main() {
   test('reads the UBL our generator writes', () {
-    final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice,
+    final xml = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice,
       seller: _seller,
       buyer: _buyer,
       lineText: _lineText,
@@ -96,7 +96,7 @@ void main() {
   });
 
   test('reads the CII our generator writes', () {
-    final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice,
+    final xml = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice,
       seller: _seller,
       buyer: _buyer,
       lineText: _lineText,

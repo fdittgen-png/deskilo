@@ -7,11 +7,11 @@
 // accepted the deposit, the portal refused it, and nothing had warned.
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 const _seller = InvoiceParty(
   name: 'COWORKONTI', street: '4 avenue de Castelnau', city: 'Pézenas',
   postalCode: '34120', country: 'FR', legalId: '10825191900016', taxExemptionReason: 'Hors champ',
@@ -45,7 +45,7 @@ void main() {
   group('UBL', () {
     test('carries BT-10 after the currency and BT-13 before any billing '
         'reference — the schema order a validator enforces', () {
-      final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
+      final xml = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_mairie), seller: _seller,
           buyer: _mairie, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       final doc = XmlDocument.parse(xml);
       expect(doc.findAllElements('cbc:BuyerReference').single.innerText, 'SERVICE-42');
@@ -57,7 +57,7 @@ void main() {
     });
 
     test('and says nothing for a member — a coworker is not a mairie', () {
-      final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_member), seller: _seller,
+      final xml = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_member), seller: _seller,
           buyer: _member, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(xml, isNot(contains('BuyerReference')));
       expect(xml, isNot(contains('OrderReference')));
@@ -66,7 +66,7 @@ void main() {
 
   group('CII / Factur-X', () {
     test('BT-10 leads the trade agreement, BT-13 follows the parties', () {
-      final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
+      final xml = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_mairie), seller: _seller,
           buyer: _mairie, lineText: (l) => l.label, reference: ActiveTaxReference.current));
       final doc = XmlDocument.parse(xml);
       final agreement = doc.findAllElements('ram:ApplicableHeaderTradeAgreement').single;

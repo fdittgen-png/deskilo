@@ -11,6 +11,8 @@ import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+const _rules = PaymentReferenceRules(accountCountries: {'CH', 'LI'});
+
 Invoice _invoice(
   String number, {
   int total = 12000,
@@ -277,9 +279,8 @@ void main() {
 
     test('the QR-bill prints the frozen reference', () {
       final bill = SwissQrBill.forInvoice(
-        iban: '',
-        qrIban: 'CH44 3199 9123 0008 8901 2',
-        creditor: SwissQrAddress.fromLines(
+      account: const PaymentAccount(rules: _rules, qrIban: 'CH44 3199 9123 0008 8901 2'),
+        creditor: SwissQrAddress.fromLines(country: 'CH',
           name: 'Space',
           streetLine: 'Rue 1',
           postalCode: '1000',

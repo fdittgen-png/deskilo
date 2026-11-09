@@ -138,6 +138,19 @@ void main() {
     );
   });
 
+  test('retiring the Swiss add-on leaves bank matching and the RF/SCOR '
+      'reference working: nothing in the host source needs it', () {
+    final ch = removalCheck('.', 'deskilo_jurisdiction_ch');
+    expect(
+      ch.blockers.where((b) => b.toString().startsWith('dependentSource')),
+      isEmpty,
+      reason:
+          'the QR bill, the QR-IBAN rule and the slip are the add-on\'s; the '
+          'QRR mod-10 and ISO 11649 SCOR stay shared standards, so bank '
+          'matching names an invoice by either reference without it',
+    );
+  });
+
   group('installation scope', () {
     const clean = {
       'scope': 'installation',

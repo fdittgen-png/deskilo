@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
-
 /// EN 16931 as UN/CEFACT **CII** (Cross Industry Invoice, D16B) — the
 /// syntax Factur-X embeds inside the PDF. Same semantics as the UBL
 /// builder, different grammar: France, Germany and every hybrid workflow
@@ -41,6 +40,7 @@ void _refuseQrIbanWithoutReference(EInvoiceInput input) {
     account: input.iban,
     creditNote: input.invoice.totalCents < 0,
     legalSnapshot: input.invoice.legalSnapshot,
+    rules: input.paymentReferenceRules,
   )) {
     throw ArgumentError('a QR-IBAN payment needs the QR reference frozen at issue');
   }
@@ -288,6 +288,7 @@ class _CiiWriter {
           invoiceNumber: invoice.number,
           creditNote: invoice.totalCents < 0,
           legalSnapshot: invoice.legalSnapshot,
+          rules: input.paymentReferenceRules,
         );
         if (reference.isNotEmpty) ram('PaymentReference', reference);
       }

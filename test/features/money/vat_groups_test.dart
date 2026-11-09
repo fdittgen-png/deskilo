@@ -5,13 +5,13 @@
 // the database back-filled; the catalogue proposes the legal groups per
 // country; a not-subject line beside taxed lines is refused (BR-O-11).
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';
-
 void main() {
   test('every group carries its category and base rule; the wire round-trips', () {
     expect(VatGroup.standard.category, 'S');
@@ -102,14 +102,14 @@ void main() {
     expect(invoice.vatBreakdown(zeroCategory: 'O').map((t) => t.category), ['S', 'E', 'Z']);
     const seller = InvoiceParty(name: 'W', country: 'FR', legalId: '123456789', vatId: 'FR12123456789', vatRegime: 'vat_registered', street: '1 rue', city: 'Pézenas', postalCode: '34120');
     const buyer = InvoiceParty(name: 'B', country: 'FR', street: '2 rue', city: 'Pézenas', postalCode: '34120');
-    final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label, reference: ActiveTaxReference.current));
+    final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label, reference: ActiveTaxReference.current));
     final lineIds = RegExp(r'<cac:ClassifiedTaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
         .allMatches(ubl).map((m) => m.group(1)).toList();
     expect(lineIds, ['S', 'Z', 'E']);
     final subtotalIds = RegExp(r'<cac:TaxSubtotal>[\s\S]*?<cac:TaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
         .allMatches(ubl).map((m) => m.group(1)).toList();
     expect(subtotalIds, ['S', 'E', 'Z']);
-    final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label, reference: ActiveTaxReference.current));
+    final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label, reference: ActiveTaxReference.current));
     final ciiLines = RegExp(r'<ram:IncludedSupplyChainTradeLineItem>[\s\S]*?<ram:CategoryCode>(\w+)</ram:CategoryCode>')
         .allMatches(cii).map((m) => m.group(1)).toList();
     expect(ciiLines, ['S', 'Z', 'E']);

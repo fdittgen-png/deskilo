@@ -5,11 +5,11 @@
 // catalogue's explicit groups, and the e-invoice categories G and E.
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 void main() {
   const old = VatRate(
       id: 'r-20', label: 'Standard 20 %', percent: 20, validTo: '2026-09-01');
@@ -144,14 +144,14 @@ void main() {
       expect(invoice.counterpartyCategory, 'G');
       expect(exemptionCodeForCategory('G', 'FR', VatRegime.vatRegistered),
           'VATEX-EU-G');
-      final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
           lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(cii, contains('<ram:CategoryCode>G</ram:CategoryCode>'));
       expect(cii, contains('VATEX-EU-G'));
       expect(cii, contains(exportMention('FR', reference: ActiveTaxReference.current)));
-      final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
+      final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
           lineText: (l) => l.label, reference: ActiveTaxReference.current));
@@ -162,7 +162,7 @@ void main() {
     test('E from an exempt buyer prints the BUYER\'s reason', () {
       final invoice = doc('E');
       expect(invoice.counterpartyCategory, 'E');
-      final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(
               name: 'Ambassade',

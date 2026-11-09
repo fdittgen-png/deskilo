@@ -4,13 +4,13 @@
 // is checked in CI (einvoice_samples_test + the official XSD); these
 // pin the Italian rules the schema cannot see — why a 0 % line carries
 // no VAT (Natura), the stamp duty, the routing code, a credit note.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 Invoice _invoice({
   int gross = 24400,
   double percent = 22,
@@ -85,7 +85,7 @@ XmlDocument _doc({
   InvoiceParty seller = _seller,
   InvoiceParty buyer = _buyer,
 }) => XmlDocument.parse(
-  buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(invoice: invoice ?? _invoice(),
+  buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
     seller: seller,
     buyer: buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)),

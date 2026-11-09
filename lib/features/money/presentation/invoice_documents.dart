@@ -18,6 +18,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -53,7 +54,6 @@ import 'swiss_qr_page.dart';
 export 'letter_doc_pdf.dart';
 export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
-
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
 /// The active workspace's PDF template (#454) — empty when the
@@ -399,7 +399,7 @@ String facturXmlOf(
 }) {
   final association = ref.read(sellerIsAssociationProvider);
   final words = reportStringsOf(context.l10n);
-  return buildInvoiceCii(EInvoiceInput(invoice: invoice,
+  return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
