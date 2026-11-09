@@ -15,7 +15,11 @@ import 'vendor_kpi_providers.dart';
 
 /// The two vendor figures that are counts or days: another currency in
 /// scope leaves them exact.
-const _countModules = {'vendors.payment_punctuality', 'vendors.billing_lag'};
+const _countModules = {
+  'vendors.payment_punctuality',
+  'vendors.billing_lag',
+  'vendors.delivery',
+};
 
 /// The figure [moduleId] shows of [k], as numerator and denominator; a
 /// null numerator is unknown, never 0.
@@ -28,6 +32,10 @@ const _countModules = {'vendors.payment_punctuality', 'vendors.billing_lag'};
     denominator: k.completedCount,
   ),
   'vendors.billing_lag' => (numerator: k.lagDays, denominator: k.lagDocuments),
+  'vendors.delivery' => (
+    numerator: k.deliveryOnTimeCount,
+    denominator: k.deliveryCompletedCount,
+  ),
   _ => (numerator: k.costMinor, denominator: null),
 };
 
@@ -103,6 +111,16 @@ List<BiRow> vendorRows(VendorQualityKpi k, String moduleId) {
         for (final c in PayableCohort.values)
           if (k.cohorts[c] case final f? when f.count > 0)
             BiRow(key: c.wire, label: null, current: _row(k, f.count, due)),
+      ];
+    case 'vendors.delivery':
+      return [
+        for (final c in DeliveryCohort.values)
+          if ((k.deliveryCohorts[c] ?? 0) > 0)
+            BiRow(
+              key: c.wire,
+              label: null,
+              current: _row(k, k.deliveryCohorts[c], k.deliveryOrders),
+            ),
       ];
     case 'vendors.billing_lag':
       return [

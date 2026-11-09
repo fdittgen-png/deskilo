@@ -12,16 +12,23 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_vendors.dart';
+import 'purchase_order_repository.dart';
 import 'purchase_repository.dart';
+import 'vendor_delivery_figure.dart';
 
 class DemoVendorKpiRepository implements VendorKpiRepository {
   DemoVendorKpiRepository({
     required this.purchases,
     required this.now,
     this.currency = 'EUR',
+    this.orders,
   });
 
   final FakePurchaseRepository purchases;
+
+  /// The space's purchase orders and their goods receipts (#3294 step 5);
+  /// null for a space that orders nothing.
+  final FakePurchaseOrderRepository? orders;
   final DateTime now;
 
   /// The space's currency: a US space does not read in euros.
@@ -78,6 +85,12 @@ class DemoVendorKpiRepository implements VendorKpiRepository {
     final spend = _spend(c, docs, money);
     final lag = _lag(c, docs);
     final payment = _payment(c, due, money, mixed: mixed);
+    final delivery = demoVendorDelivery(
+      orders: orders,
+      fromMonth: fromMonth,
+      toMonth: toMonth,
+      now: now,
+    );
     return VendorQualityKpi(
       fromMonth: fromMonth,
       toMonth: toMonth,
@@ -111,6 +124,13 @@ class DemoVendorKpiRepository implements VendorKpiRepository {
       },
       reasons: [if (mixed) 'currency_mix', if (partial) 'period_not_over'],
       computedAt: now,
+      deliveryOrders: delivery.orders,
+      deliveryCohorts: delivery.cohorts,
+      deliveryMedianLeadDays: delivery.medianLead,
+      deliveryP90LeadDays: delivery.p90Lead,
+      deliveryMedianDelayDays: delivery.medianDelay,
+      deliveryP90DelayDays: delivery.p90Delay,
+      deliveries: delivery.rows,
     );
   }
 

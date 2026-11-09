@@ -22,6 +22,9 @@ library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'kpi_contract.dart';
+import 'kpi_vendor_delivery.dart';
+
+export 'kpi_vendor_delivery.dart' show DeliveryCohort, VendorDelivery;
 
 const _spendKpi = KpiDefinition(
   id: 'vendors.spend',
@@ -102,72 +105,14 @@ const _billingLagKpi = KpiDefinition(
   minCohort: null,
 );
 
-// #3294 step 5 -- the purchase orders sent in the months, by whether their
-// goods reached the space by the expected date: purchase orders and goods
-// receipts (#3307, 0681, 0684). The order is a document dated by the day it
-// was SENT; a received order is on time when its last receipt is on or before
-// the expected date.
-const _deliveryKpi = KpiDefinition(
-  id: 'vendors.delivery',
-  version: 1,
-  unit: 'percent',
-  timeBasis:
-      'the purchase orders sent in whole months [from, to] on the workspace '
-      'calendar: the share of the received ones whose last goods receipt is '
-      'on or before the expected date',
-  dateBasis: KpiDateBasis.documentDate,
-  coverage: KpiCoverage.currentRecords,
-  dimensions: [],
-  numerator: 'on_time_count',
-  denominator: 'completed_count',
-  aggregation: KpiAggregation.ratioOfSums,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: ['purchase orders', 'the expected date', 'goods receipts'],
-  minCohort: null,
-);
-
 /// The vendor figures, in catalogue order.
 const vendorKpis = <KpiDefinition>[
   _spendKpi,
   _categorySpendKpi,
   _paymentPunctualityKpi,
   _billingLagKpi,
-  _deliveryKpi,
+  deliveryKpi,
 ];
-
-/// The cohorts a purchase order sent in the months lands in, in display
-/// order. Each order is in exactly one.
-enum DeliveryCohort {
-  onTime('on_time'),
-  late('late'),
-
-  /// Received, but the order named no expected date: neither on time nor
-  /// late.
-  unknownExpected('unknown_expected'),
-
-  /// Part of it received; the rest still awaited.
-  partial('partial'),
-
-  /// Nothing received, and the expected date has passed.
-  overdue('overdue'),
-
-  /// Nothing received yet, and it is not overdue.
-  open('open');
-
-  const DeliveryCohort(this.wire);
-  final String wire;
-}
-
-/// How reliably one supplier delivered.
-typedef VendorDelivery = ({
-  String supplierId,
-  String name,
-  int orders,
-  int onTime,
-  int late,
-  int? medianLeadDays,
-});
 
 /// The cohorts a supplier payable falling due lands in, in display order.
 /// Each payable is in exactly one.
@@ -443,21 +388,7 @@ VendorQualityKpi vendorQualityFromJson(Map<String, Object?> json) {
       medianDays: row.intOrNull('median_days'),
     ),
   );
-  final delivery = r.objectOrNull('delivery');
-  final deliveryCohortRow = delivery?.objectOrNull('cohorts');
-  final deliveries = delivery == null
-      ? const <VendorDelivery>[]
-      : delivery.objects(
-          'rows',
-          (row) => (
-            supplierId: row.string('supplier_id'),
-            name: row.stringOr('name'),
-            orders: _count(row, 'orders'),
-            onTime: _count(row, 'on_time'),
-            late: _count(row, 'late'),
-            medianLeadDays: row.intOrNull('median_lead_days'),
-          ),
-        );
+  final delivery = parseVendorDelivery(r.objectOrNull('delivery'));
   final costMinor = minor(spend, 'cost_minor');
   final creditedMinor = minor(spend, 'credited_minor');
   final unassignedMinor = minor(spend, 'unassigned_minor');
@@ -497,16 +428,13 @@ VendorQualityKpi vendorQualityFromJson(Map<String, Object?> json) {
     },
     reasons: [...r.strings('reasons'), if (inexact) 'amount_not_exact'],
     computedAt: r.dateTime('computed_at'),
-    deliveryOrders: delivery == null ? 0 : _count(delivery, 'orders'),
-    deliveryCohorts: {
-      for (final c in DeliveryCohort.values)
-        c: deliveryCohortRow?.intOrNull(c.wire) ?? 0,
-    },
-    deliveryMedianLeadDays: delivery?.intOrNull('median_lead_days'),
-    deliveryP90LeadDays: delivery?.intOrNull('p90_lead_days'),
-    deliveryMedianDelayDays: delivery?.intOrNull('median_delay_days'),
-    deliveryP90DelayDays: delivery?.intOrNull('p90_delay_days'),
-    deliveries: deliveries,
+    deliveryOrders: delivery.orders,
+    deliveryCohorts: delivery.cohorts,
+    deliveryMedianLeadDays: delivery.medianLead,
+    deliveryP90LeadDays: delivery.p90Lead,
+    deliveryMedianDelayDays: delivery.medianDelay,
+    deliveryP90DelayDays: delivery.p90Delay,
+    deliveries: delivery.rows,
   );
 }
 

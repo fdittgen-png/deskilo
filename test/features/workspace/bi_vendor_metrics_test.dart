@@ -23,6 +23,7 @@ const _ids = [
   'vendors.category_spend',
   'vendors.payment_punctuality',
   'vendors.billing_lag',
+  'vendors.delivery',
 ];
 
 const _alpha = '00000000-0000-4000-8000-0000032942f1';
@@ -148,6 +149,48 @@ Map<String, Object?> _row({bool mixed = false, Object? costMinor = '25000'}) {
           'documents': 2,
           'lag_days': 1,
           'median_days': 0,
+        },
+      ],
+    },
+    // pgTAP 375's March: six orders sent, 1 on time of 2 with a date.
+    'delivery': {
+      'orders': 6,
+      'cohorts': {
+        'on_time': 1,
+        'late': 1,
+        'unknown_expected': 1,
+        'partial': 1,
+        'overdue': 1,
+        'open': 1,
+      },
+      'median_lead_days': 13,
+      'p90_lead_days': 19,
+      'median_delay_days': -2,
+      'p90_delay_days': 10,
+      'rows': [
+        {
+          'supplier_id': _alpha,
+          'name': 'Alpha',
+          'orders': 2,
+          'on_time': 1,
+          'late': 1,
+          'median_lead_days': 13,
+        },
+        {
+          'supplier_id': _beta,
+          'name': 'Beta',
+          'orders': 2,
+          'on_time': 0,
+          'late': 0,
+          'median_lead_days': null,
+        },
+        {
+          'supplier_id': _gamma,
+          'name': 'Gamma',
+          'orders': 2,
+          'on_time': 0,
+          'late': 0,
+          'median_lead_days': 5,
         },
       ],
     },
@@ -349,6 +392,85 @@ void main() {
         (7, 18, 2, 10),
       );
       expect(k.quality, isEmpty);
+    });
+
+    test('the delivery figure parses what pgTAP 375 proves', () {
+      final k = vendorQualityFromJson(_row());
+      expect(k.deliveryOrders, 6);
+      expect({for (final e in k.deliveryCohorts.entries) e.key.wire: e.value}, {
+        'on_time': 1,
+        'late': 1,
+        'unknown_expected': 1,
+        'partial': 1,
+        'overdue': 1,
+        'open': 1,
+      });
+      expect((k.deliveryOnTimeCount, k.deliveryCompletedCount), (1, 2));
+      expect(
+        (
+          k.deliveryMedianLeadDays,
+          k.deliveryP90LeadDays,
+          k.deliveryMedianDelayDays,
+          k.deliveryP90DelayDays,
+        ),
+        (13, 19, -2, 10),
+      );
+      expect(k.deliveries.map((d) => (d.name, d.orders, d.onTime, d.late)), [
+        ('Alpha', 2, 1, 1),
+        ('Beta', 2, 0, 0),
+        ('Gamma', 2, 0, 0),
+      ]);
+      // A server older than 0699 sends no delivery: nothing is invented.
+      final old = vendorQualityFromJson({..._row()}..remove('delivery'));
+      expect(old.deliveryOrders, 0);
+      expect(old.deliveryCohorts.values.every((n) => n == 0), isTrue);
+    });
+
+    test('the delivery card: the share on time, the cohorts by name, the '
+        'switched-off note, and the counts surviving a currency mix', () {
+      final k = vendorQualityFromJson(_row());
+      final m = vendorMeasure(k, 'vendors.delivery');
+      expect((m.numerator, m.denominator), (1, 2));
+      expect(m.unknown, isFalse);
+      final view = biModuleViews['vendors.delivery']!;
+      expect(view.title(l10n), 'Suppliers delivering on time');
+      expect(
+        view.basis(m, l10n, 'en'),
+        '1 of 2 received orders arrived by the expected date',
+      );
+      final details = view.details(m, l10n, 'en');
+      expect(details, contains('Received on time: 1 orders'));
+      expect(details, contains('Awaited, overdue: 1 orders'));
+      expect(
+        details,
+        contains('Alpha: 1 on time, 1 late, of 2 orders'),
+      );
+      expect(
+        vendorRows(k, 'vendors.delivery').map((r) => r.key),
+        ['on_time', 'late', 'unknown_expected', 'partial', 'overdue', 'open'],
+      );
+      expect(
+        view.rowLabel(
+          vendorRows(k, 'vendors.delivery').first,
+          l10n,
+          'en',
+        ),
+        'Received on time',
+      );
+      final off = vendorQualityFromJson({
+        ..._row(),
+        'reasons': ['purchase_orders_off'],
+      });
+      expect(
+        view.notes(vendorMeasure(off, 'vendors.delivery'), l10n, 'en'),
+        contains('Purchase orders are switched off: no delivery is measured.'),
+      );
+      final mixed = vendorMeasure(
+        vendorQualityFromJson(_row(mixed: true)),
+        'vendors.delivery',
+      );
+      expect(mixed.unknown, isFalse);
+      expect((mixed.numerator, mixed.denominator), (1, 2));
     });
 
     test('an amount that cannot travel exactly is unknown, never 0', () {

@@ -4013,6 +4013,65 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String biVendorDeliveryBasis(String onTime, String completed) {
+    return '$onTime of $completed received orders arrived by the expected date';
+  }
+
+  @override
+  String biVendorDeliveryCohortLine(String cohort, String count) {
+    return '$cohort: $count orders';
+  }
+
+  @override
+  String get biVendorDeliveryDefinition =>
+      'The purchase orders sent in the period. A received order is on time when its last goods receipt is on or before the expected date. An order with no expected date, or one still awaited, is neither on time nor late.';
+
+  @override
+  String biVendorDeliveryDelay(String median, String p90) {
+    return 'Against the expected date (negative = early): median $median, 90th percentile $p90';
+  }
+
+  @override
+  String get biVendorDeliveryLate => 'Received late';
+
+  @override
+  String biVendorDeliveryLead(String median, String p90) {
+    return 'Days from sending to the last receipt: median $median, 90th percentile $p90';
+  }
+
+  @override
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  ) {
+    return '$name: $onTime on time, $late late, of $orders orders';
+  }
+
+  @override
+  String get biVendorDeliveryOff =>
+      'Purchase orders are switched off: no delivery is measured.';
+
+  @override
+  String get biVendorDeliveryOnTime => 'Received on time';
+
+  @override
+  String get biVendorDeliveryOpen => 'Awaited';
+
+  @override
+  String get biVendorDeliveryOverdue => 'Awaited, overdue';
+
+  @override
+  String get biVendorDeliveryPartial => 'Partly received';
+
+  @override
+  String get biVendorDeliveryTitle => 'Suppliers delivering on time';
+
+  @override
+  String get biVendorDeliveryUnknownExpected => 'Received, no expected date';
+
+  @override
   String biVendorLagBasis(String documents, String median, String p90) {
     return '$documents bills; median $median days, 90th percentile $p90';
   }

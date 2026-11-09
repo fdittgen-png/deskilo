@@ -65,6 +65,19 @@ void main() {
         expect(k.lagDays, greaterThan(0));
         expect(k.medianDays, lessThan(0), reason: 'most bills are paid early');
       }
+      // #3294 step 5 -- the orders the space sent, by whether their goods
+      // arrived by the expected date: each order in exactly one cohort,
+      // from that space's own orders and receipts.
+      expect(
+        k.deliveryCohorts.values.fold<int>(0, (s, n) => s + n),
+        k.deliveryOrders,
+        reason: 'each order is in exactly one cohort',
+      );
+      expect(k.deliveryOrders, greaterThan(0), reason: '$name sent orders');
+      expect(
+        k.deliveries.fold<int>(0, (s, d) => s + d.orders),
+        k.deliveryOrders,
+      );
     });
   }
 }

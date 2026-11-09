@@ -16,7 +16,16 @@ import 'seed/demo_purchase_order_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
-List<Override> demoPurchaseOrderOverrides(
+/// The purchase orders of each Demo space (#3307), kept so the vendor figures
+/// (#3294 step 5) read the same orders and receipts the screens show.
+typedef DemoPurchaseOrderSpaces = ({
+  FakePurchaseOrderRepository home,
+  FakePurchaseOrderRepository london,
+  FakePurchaseOrderRepository newYork,
+  FakePurchaseOrderRepository leipzig,
+});
+
+DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
   DemoFixture fixture,
   DemoPurchasing home, {
   required DemoPurchasing london,
@@ -38,26 +47,27 @@ List<Override> demoPurchaseOrderOverrides(
     return repo;
   }
 
-  final homeOrders = space(home, () => fixture.money.services, 'EUR');
-  final londonOrders = space(
-    london,
-    () => fixture.london.money.services,
-    'GBP',
+  return (
+    home: space(home, () => fixture.money.services, 'EUR'),
+    london: space(london, () => fixture.london.money.services, 'GBP'),
+    newYork: space(newYork, () => fixture.newYork.money.services, 'USD'),
+    leipzig: space(
+      home,
+      () => fixture.secondSpace.money.services,
+      'EUR',
+      seeded: false,
+    ),
   );
-  final nyOrders = space(newYork, () => fixture.newYork.money.services, 'USD');
-  final leipzigOrders = space(
-    home,
-    () => fixture.secondSpace.money.services,
-    'EUR',
-    seeded: false,
-  );
+}
+
+List<Override> demoPurchaseOrderOverrides(DemoPurchaseOrderSpaces spaces) {
   return [
     purchaseOrderRepositoryProvider.overrideWith(
       (ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoLondonSpaceId => londonOrders,
-        demoNewYorkSpaceId => nyOrders,
-        demoSecondSpaceId => leipzigOrders,
-        _ => homeOrders,
+        demoLondonSpaceId => spaces.london,
+        demoNewYorkSpaceId => spaces.newYork,
+        demoSecondSpaceId => spaces.leipzig,
+        _ => spaces.home,
       },
     ),
   ];
