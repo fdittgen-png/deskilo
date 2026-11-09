@@ -1,8 +1,8 @@
 {
-  "recordedSha": "a9f5b4b16831a0a1c60e0751a54c950e41bbf6e9",
+  "recordedSha": "0599d5b7f6352700b36832f7a4bbc13db3ea2356",
   "recordedDate": "2026-11-08",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2572,"functions":14308,"cyclomatic>=9":1463,"cyclomatic>=25":83,"cognitive>=15":555,"cognitive>=30":76,"length>=150":52,"parameters>=5":660,"parameters>=7":157,"partOfFiles":18},
+  "totals": {"files":2572,"functions":14310,"cyclomatic>=9":1463,"cyclomatic>=25":83,"cognitive>=15":555,"cognitive>=30":76,"length>=150":52,"parameters>=5":660,"parameters>=7":157,"partOfFiles":18},
   "budgets": {
     "partOfFiles": 17,
     "fileLength": {
@@ -1193,7 +1193,7 @@
     {"p":"lib/core/ui/wizard_progress.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":19,"cyc":16,"len":42,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/ui/wizard_scaffold.dart","loc":165,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":43,"cyc":21,"len":118,"params":1,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/validation/pending_validation.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":5,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/vat/retention.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":8,"cyc":6,"len":31,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/vat/retention.dart","loc":104,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":8,"cyc":6,"len":31,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/vat/retention_assessment.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":13,"cyc":12,"len":23,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/vat/tax_reference_active.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":2,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/vat/tax_reference_snapshot.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":2,"len":5,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -3132,7 +3132,7 @@
     {"p":"packages/deskilo_invoice_model/lib/src/vat_tax_point_policy.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":2,"cyc":10,"len":29,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_invoice_model/lib/src/vat_treatment.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":2,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_api/lib/deskilo_jurisdiction_api.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"packages/deskilo_jurisdiction_api/lib/src/archive_contribution.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":5,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"packages/deskilo_jurisdiction_api/lib/src/archive_contribution.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":5,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_api/lib/src/capability_descriptor.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":8,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_api/lib/src/filing_context.dart","loc":130,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_api/lib/src/generated_artifact.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -3182,7 +3182,7 @@
     {"p":"packages/deskilo_jurisdiction_standards/lib/src/periods.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":6,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_standards/lib/src/registration_numbers.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_jurisdiction_us/lib/deskilo_jurisdiction_us.dart","loc":2,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"packages/deskilo_jurisdiction_us/lib/src/us_archive.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":8,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"packages/deskilo_jurisdiction_us/lib/src/us_archive.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":8,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/deskilo_money_kernel.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/accounting_amount.dart","loc":293,"part":false,"setState":0,"repositoryReads":0,"fn":30,"cog":11,"cyc":10,"len":38,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"packages/deskilo_money_kernel/lib/src/book_period.dart","loc":131,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":3,"len":16,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

@@ -16,6 +16,11 @@ abstract class ArchiveContribution {
   /// country asks none.
   Set<String> get archiveMembers => const {};
 
+  /// Whether a space of this country may extend its record-retention rules
+  /// with its own longer period (`retention.us_years`: the American setting).
+  /// Additive: the contract stays at version 1.
+  bool get retentionExtendsBySetting => false;
+
   /// Whether the archive carries the readable handover: the tables and their
   /// README in English, for countries that prescribe no national audit file.
   bool get readableHandover => false;
