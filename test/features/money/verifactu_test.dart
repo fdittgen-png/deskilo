@@ -5,10 +5,11 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:deskilo/features/money/domain/verifactu.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
+
+import './es_register_support.dart';
 
 const _seller = InvoiceParty(
   name: 'Espacio Test SL',

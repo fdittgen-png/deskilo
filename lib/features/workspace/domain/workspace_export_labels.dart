@@ -7,7 +7,7 @@
 // names and headers in the reader's words, a key without a translation in
 // readable form, and an "About this export" sheet first. Pure Dart: the
 // words come in through [ExportLabels].
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 
 /// The words the workbook is written in.
 class ExportLabels {

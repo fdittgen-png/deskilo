@@ -57,6 +57,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the accounting format.
   conflictingAccountingFormat,
+
+  /// More than one installed add-on claims the registers of that country.
+  conflictingRegisters,
 }
 
 sealed class CapabilityResolution {
@@ -254,6 +257,19 @@ AccountingFormatContribution? resolveAccountingFormat(
   List<AccountingFormatContribution> installed,
 ) {
   final id = _accountingFormatCapabilityId(formatId);
+
+String _registersCapabilityId(String country) => 'registers.$country';
+
+/// The installed registers add-on of [context]'s country: null when the
+/// country asks no register of issued invoices (not a fault, and never
+/// another country's), or the composition's fault as a [StateError].
+RegisterContribution? resolveRegisters(
+  LegalContext context,
+  List<RegisterContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return null;
+  final id = _registersCapabilityId(country);
   final matches = [
     for (final c in installed)
       if (c.descriptor.capabilityId == id) c,
@@ -268,6 +284,13 @@ AccountingFormatContribution? resolveAccountingFormat(
       accountingFormatContractVersion) {
     throw StateError(
       'accounting format $formatId: ${RefusalKind.contractMismatch.name}',
+
+      'registers of $country: ${RefusalKind.conflictingRegisters.name}',
+    );
+  }
+  if (matches.single.descriptor.contractVersion != registersContractVersion) {
+    throw StateError(
+      'registers of $country: ${RefusalKind.contractMismatch.name}',
     );
   }
   return matches.single;

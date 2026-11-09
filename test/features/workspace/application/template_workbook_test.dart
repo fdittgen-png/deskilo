@@ -7,13 +7,13 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart';
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/workspace/application/template_workbook.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/presentation/workbook_labels.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

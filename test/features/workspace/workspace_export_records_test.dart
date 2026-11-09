@@ -3,8 +3,8 @@
 // #2860 — the tables `export_workspace_records` (0540) answers become one
 // sheet each: the column names first, then the rows, a nested value as its
 // JSON text.
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

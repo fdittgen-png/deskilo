@@ -2,7 +2,7 @@
 //
 // #1866 — the smallest genuine WordprocessingML package the task
 // document needs, written with the `archive` + XML-text pattern of
-// lib/core/files/xlsx.dart rather than a DOCX library or the reports
+// packages/deskilo_xlsx rather than a DOCX library or the reports
 // engine: the document is "a title, headings, numbered steps and a
 // footer", not a word processor.
 //

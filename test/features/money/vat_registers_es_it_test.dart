@@ -13,16 +13,14 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/vat_register_files.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
-import 'package:deskilo/features/money/domain/vat_register_es.dart';
-import 'package:deskilo/features/money/domain/vat_register_es_sii.dart';
 import 'package:deskilo/features/money/domain/vat_register_it.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,6 +29,7 @@ import 'package:xml/xml.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import 'es_register_support.dart';
 
 Invoice _invoice(
   String number,

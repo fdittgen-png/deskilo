@@ -10,7 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 
 /// The returns of [year] that count: one per period, the filed one where
 /// there is one, else the latest prepared; drafts never.

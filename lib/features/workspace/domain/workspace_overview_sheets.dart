@@ -5,7 +5,7 @@
 // with whether it is on (Features) instead of one cell of stored keys. The
 // stable keys stay in the cells; the workbook's localisation pass turns the
 // field, process and feature keys into the reader's words.
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'workspace.dart';
 import 'workspace_process.dart';
 

@@ -18,7 +18,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
@@ -93,7 +93,7 @@ class VerifactuRecord {
   final String buyerNif;
 
   /// One entry per VAT rate of the invoice.
-  final List<InvoiceVatTotal> breakdown;
+  final List<RegisterVatLine> breakdown;
 
   bool get isFirst => previousHuella.isEmpty;
 
@@ -201,9 +201,9 @@ String _nif(String id) {
 /// diferencias": its amounts carry the sign of what it changes, so a
 /// credit note's are negative. A buyer without any tax id makes it an F2.
 VerifactuRecord verifactuRecordFor({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
+  required RegisterDocument invoice,
+  required RegisterParty seller,
+  required RegisterParty buyer,
   required String previousHuella,
   required DateTime generatedAt,
   String previousNumber = '',

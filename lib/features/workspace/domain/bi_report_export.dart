@@ -17,9 +17,9 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/files/xlsx.dart';
 import '../../../core/text/csv.dart';
 import 'bi_report_snapshot.dart';
 import 'bi_result.dart';
