@@ -11,9 +11,10 @@
 // answer for a recorded one.
 //
 // Who: the caller's own token decides (`has_permission` manageBilling, and the
-// `onlinePayments` flag on); the key is the workspace's own (payment_credentials
-// first, the installation's MOLLIE_API_KEY second) and is read by the service
-// role only. A 4xx from Mollie is permanent (422, nothing recorded); 429, 5xx
+// `onlinePayments` flag on); the key is the workspace's OWN (payment_credentials) and is read by the
+// service role only. There is no installation-wide fallback: /v2/settlements
+// lists a whole Mollie account, so another tenant's key would import another
+// tenant's payouts and costs; a workspace without a key gets 409. A 4xx from Mollie is permanent (422, nothing recorded); 429, 5xx
 // and the network are transient (502).
 //
 // spec: docs.mollie.com "List settlements" / "Get settlement" — field names as
@@ -127,7 +128,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     .eq("workspace_id", workspaceId).eq("provider", "mollie").maybeSingle();
   if (cred.error) return json({ error: "credential_lookup_failed" }, 500);
   const stored = (cred.data?.config ?? {}) as Record<string, string>;
-  const key = stored.api_key || deps.env("MOLLIE_API_KEY") || "";
+  const key = stored.api_key || "";
   if (!key) return json({ error: "mollie_not_configured" }, 409);
 
   let imported = 0;

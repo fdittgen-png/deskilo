@@ -127,6 +127,23 @@ Deno.test("no key, a failed credential read, and a refused record", async () => 
   assertEquals(refused.status, 500);
 });
 
+Deno.test("no workspace key + an installation MOLLIE_API_KEY → 409, Mollie is never called", async () => {
+  const f = fakes({ config: { data: null, error: null } });
+  let fetched = 0;
+  const res = await handle(
+    new Request("http://x", { method: "POST", body: JSON.stringify({ workspace_id: WS }), headers: { Authorization: "Bearer tok" } }),
+    {
+      // deno-lint-ignore no-explicit-any
+      caller: () => f.caller as any, service: () => f.service as any,
+      env: (k: string) => (k === "MOLLIE_API_KEY" ? "test_installation_key" : undefined),
+      fetch: () => { fetched++; return Promise.resolve(page([settlement()])); },
+    },
+  );
+  assertEquals(res.status, 409);
+  assertEquals((await res.json()).error, "mollie_not_configured");
+  assertEquals(fetched, 0);
+});
+
 Deno.test("what is not a paid or failed settlement, or is malformed, is not recorded", () => {
   assertEquals(settlementOf({ id: "stl_x", status: "pending", amount: { currency: "EUR", value: "1.00" } }), null);
   assertEquals(settlementOf({ id: "stl_x", status: "paidout", amount: { currency: "EUR", value: "oops" } }), null);
