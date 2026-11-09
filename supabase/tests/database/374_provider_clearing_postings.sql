@@ -12,7 +12,7 @@
 -- a payout without a fee, and the reverse charge absent where the country has
 -- no standard rate. Rolled back.
 begin;
-select plan(17);
+select plan(16);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 values ('00000000-0000-4000-8000-0000069800a1','00000000-0000-0000-0000-000000000000','authenticated','authenticated','a1@clearing.test','',now(),now(),now());
