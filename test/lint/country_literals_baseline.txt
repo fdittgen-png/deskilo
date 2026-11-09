@@ -10,7 +10,6 @@ lib/features/money/domain/fec_lettering.dart :: 1 :: checklist: FEC writer into 
 lib/features/money/domain/fec_writer.dart :: 1 :: checklist: FEC writer into the FR add-on
 lib/features/money/domain/fr_ereporting.dart :: 2 :: #3429 E-invoice builders FR: the French e-reporting
 lib/features/money/domain/mtd_boxes.dart :: 1 :: #3429 checklist item
-lib/features/money/domain/records_location.dart :: 2 :: checklist: Records location (the notice moves into the country add-ons)
 lib/features/money/domain/report_data.dart :: 3 :: #3429 Invoice clauses and print data: CH/CA seller ids
 lib/features/money/domain/swiss_qr_bill_invoice.dart :: 2 :: #3429 Invoice clauses and print data: the Swiss QR bill
 lib/features/money/domain/swiss_qr_bill_pdf.dart :: 1 :: #3429 Invoice clauses and print data: swiss_qr_bill_pdf (CH)

@@ -6,6 +6,7 @@
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_ca/deskilo_jurisdiction_ca.dart';
 import 'package:deskilo_jurisdiction_ch/deskilo_jurisdiction_ch.dart';
+import 'package:deskilo_jurisdiction_de/deskilo_jurisdiction_de.dart';
 import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
 import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart';
 import 'package:deskilo_jurisdiction_ie/deskilo_jurisdiction_ie.dart';
@@ -19,6 +20,7 @@ import 'jurisdiction_resolver.dart';
 const List<ArchiveContribution> installedArchives = [
   CaArchive(),
   ChArchive(),
+  DeArchive(),
   FrArchive(),
   GbArchive(),
   IeArchive(),
