@@ -84,6 +84,9 @@ void main() {
       'journals',
       'audit_trail',
       'bundle',
+      // #2374 — the Business Central journal workbook names no localisation:
+      // offered wherever a local book is kept, the unknown country included.
+      'business_central_journal_xlsx',
     });
   });
 }
