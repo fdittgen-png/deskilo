@@ -6,6 +6,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_invoice.dart';
@@ -37,6 +38,9 @@ const _strings = InvoicePdfStrings(
   page: 'Seite',
 );
 
+String _prefix(String country) =>
+    paymentSlipOf('CH')!.addressCountryPrefix(country);
+
 const _words = SwissQrBillStrings(
   receipt: 'Empfangsschein',
   paymentPart: 'Zahlteil',
@@ -49,6 +53,7 @@ const _words = SwissQrBillStrings(
   amount: 'Betrag',
   acceptancePoint: 'Annahmestelle',
   separate: 'Vor der Einzahlung abzutrennen',
+  addressCountryPrefix: _prefix,
 );
 
 Invoice _invoice({

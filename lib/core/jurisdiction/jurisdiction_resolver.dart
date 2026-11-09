@@ -60,6 +60,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the accounting format.
   conflictingAccountingFormat,
+
+  /// More than one installed add-on claims the payment slip of that country.
+  conflictingPaymentSlip,
 }
 
 sealed class CapabilityResolution {
@@ -301,6 +304,36 @@ AccountingFormatContribution? resolveAccountingFormat(
       accountingFormatContractVersion) {
     throw StateError(
       'accounting format $formatId: ${RefusalKind.contractMismatch.name}',
+    );
+  }
+  return matches.single;
+}
+
+String _paymentSlipCapabilityId(String country) => 'payment_slip.$country';
+
+/// The installed payment slip add-on of [context]'s country: null when the
+/// country has no slip (not a fault, and never another country's), or the
+/// composition's fault as a [StateError].
+PaymentSlipContribution? resolvePaymentSlip(
+  LegalContext context,
+  List<PaymentSlipContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return null;
+  final id = _paymentSlipCapabilityId(country);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return null;
+  if (matches.length > 1) {
+    throw StateError(
+      'payment slip of $country: ${RefusalKind.conflictingPaymentSlip.name}',
+    );
+  }
+  if (matches.single.descriptor.contractVersion != paymentSlipContractVersion) {
+    throw StateError(
+      'payment slip of $country: ${RefusalKind.contractMismatch.name}',
     );
   }
   return matches.single;
