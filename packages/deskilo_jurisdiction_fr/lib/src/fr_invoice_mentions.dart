@@ -30,7 +30,6 @@ class FrInvoiceMentions extends InvoiceMentionsContribution {
   @override
   Set<String> get automaticClauses => const {
     'latePenalty',
-    'recoveryIndemnity',
     'escompte',
   };
 
