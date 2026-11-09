@@ -6,6 +6,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_invoice.dart';
@@ -164,6 +165,7 @@ void main() {
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
       qrBillPage: withBill
           ? swissQrBillPage(
+              addressCountryPrefix: paymentSlipOf('CH')!.addressCountryPrefix,
               bill: bill,
               strings: _words,
               baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),

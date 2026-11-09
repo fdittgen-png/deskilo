@@ -35,6 +35,11 @@ const String accountingFormatContractVersion = '1';
 /// capability, so it is versioned apart (ADR 0050 §4).
 const String registersContractVersion = '1';
 
+/// The version of the payment slip contract (`PaymentSlipContribution`): the
+/// slip a country's invoice carries (Switzerland's QR bill). Its own
+/// capability, so it is versioned apart (ADR 0050 §4).
+const String paymentSlipContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {

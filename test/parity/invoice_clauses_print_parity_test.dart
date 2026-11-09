@@ -10,6 +10,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_invoice.dart';
@@ -19,7 +20,6 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../features/money/clause_rules_support.dart';
 import 'parity_golden.dart';
-
 
 final _reference = ActiveTaxReference.current;
 
@@ -310,6 +310,7 @@ Future<String> _pdfAddresses() async {
     final doc = pw.Document(compress: false)
       ..addPage(
         swissQrBillPage(
+          addressCountryPrefix: paymentSlipOf('CH')!.addressCountryPrefix,
           bill: bill,
           strings: words,
           baseFont: font,

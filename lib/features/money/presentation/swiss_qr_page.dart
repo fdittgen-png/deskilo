@@ -23,8 +23,10 @@ Future<pw.Page?> swissQrPageFor(
     workspaceCountry: workspaceCountry,
     proforma: proforma,
   );
-  if (bill == null) return null;
+  final slip = paymentSlipFor(invoice, workspaceCountry);
+  if (bill == null || slip == null) return null;
   return swissQrBillPage(
+    addressCountryPrefix: slip.addressCountryPrefix,
     bill: bill,
     strings: SwissQrBillStrings(
       receipt: l10n.qrBillReceipt,
