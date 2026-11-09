@@ -1,3 +1,4 @@
 nif;nombre;provincia;clave;importe_anual;importe_1T;importe_2T;importe_3T;importe_4T
 "A11111111";"Otro Cliente SA";"";B;3630.00;0.00;0.00;3630.00;0.00
-"B98765432";"Cliente SL";"";B;6415.00;1938.00;-121.00;3025.00;1573.00
+"B00000003";"Encima SL";"";B;3005.07;0.00;0.00;3005.07;0.00
+"B98765432";"Cliente SL";"";B;6354.50;1938.00;-121.00;3025.00;1512.50

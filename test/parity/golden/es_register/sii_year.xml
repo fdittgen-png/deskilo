@@ -242,6 +242,130 @@
   <siiLR:RegistroLRFacturasEmitidas>
     <sii:PeriodoLiquidacion>
       <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>05</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0012</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>06-05-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>02</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>600.00</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Cliente SL</sii:NombreRazon>
+        <sii:IDOtro>
+          <sii:CodigoPais>US</sii:CodigoPais>
+          <sii:IDType>06</sii:IDType>
+          <sii:ID>987654321</sii:ID>
+        </sii:IDOtro>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseTipoOperacion>
+          <sii:PrestacionServicios>
+            <sii:Sujeta>
+              <sii:Exenta>
+                <sii:DetalleExenta>
+                  <sii:CausaExencion>E2</sii:CausaExencion>
+                  <sii:BaseImponible>600.00</sii:BaseImponible>
+                </sii:DetalleExenta>
+              </sii:Exenta>
+            </sii:Sujeta>
+          </sii:PrestacionServicios>
+        </sii:DesgloseTipoOperacion>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>05</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0013</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>20-05-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>450.00</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Obras SL</sii:NombreRazon>
+        <sii:NIF>B55555555</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S2</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>0.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>450.00</sii:BaseImponible>
+                  <sii:CuotaRepercutida>0.00</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>06</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0014</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>04-06-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>321.00</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Mixta SL</sii:NombreRazon>
+        <sii:NIF>B66666666</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S3</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>100.00</sii:BaseImponible>
+                  <sii:CuotaRepercutida>21.00</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>0.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>200.00</sii:BaseImponible>
+                  <sii:CuotaRepercutida>0.00</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
       <sii:Periodo>07</sii:Periodo>
     </sii:PeriodoLiquidacion>
     <siiLR:IDFactura>
@@ -320,6 +444,123 @@
   <siiLR:RegistroLRFacturasEmitidas>
     <sii:PeriodoLiquidacion>
       <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>08</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0017</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>03-08-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>3005.05</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Bajo SL</sii:NombreRazon>
+        <sii:NIF>B00000001</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S1</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>2483.51</sii:BaseImponible>
+                  <sii:CuotaRepercutida>521.54</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>08</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0018</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>04-08-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>3005.06</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Igual SL</sii:NombreRazon>
+        <sii:NIF>B00000002</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S1</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>2483.52</sii:BaseImponible>
+                  <sii:CuotaRepercutida>521.54</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>08</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0019</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>05-08-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>F1</sii:TipoFactura>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>3005.07</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Encima SL</sii:NombreRazon>
+        <sii:NIF>B00000003</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S1</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>2483.53</sii:BaseImponible>
+                  <sii:CuotaRepercutida>521.54</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
       <sii:Periodo>10</sii:Periodo>
     </sii:PeriodoLiquidacion>
     <siiLR:IDFactura>
@@ -348,6 +589,82 @@
                   <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
                   <sii:BaseImponible>900.00</sii:BaseImponible>
                   <sii:CuotaRepercutida>189.00</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>11</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0015</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>03-11-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>R4</sii:TipoFactura>
+      <sii:TipoRectificativa>I</sii:TipoRectificativa>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>-60.50</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:Contraparte>
+        <sii:NombreRazon>Cliente SL</sii:NombreRazon>
+        <sii:NIF>B98765432</sii:NIF>
+      </sii:Contraparte>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S1</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>-50.00</sii:BaseImponible>
+                  <sii:CuotaRepercutida>-10.50</sii:CuotaRepercutida>
+                </sii:DetalleIVA>
+              </sii:DesgloseIVA>
+            </sii:NoExenta>
+          </sii:Sujeta>
+        </sii:DesgloseFactura>
+      </sii:TipoDesglose>
+    </siiLR:FacturaExpedida>
+  </siiLR:RegistroLRFacturasEmitidas>
+  <siiLR:RegistroLRFacturasEmitidas>
+    <sii:PeriodoLiquidacion>
+      <sii:Ejercicio>2026</sii:Ejercicio>
+      <sii:Periodo>11</sii:Periodo>
+    </sii:PeriodoLiquidacion>
+    <siiLR:IDFactura>
+      <sii:IDEmisorFactura>
+        <sii:NIF>B12345678</sii:NIF>
+      </sii:IDEmisorFactura>
+      <sii:NumSerieFacturaEmisor>F-2026-0016</sii:NumSerieFacturaEmisor>
+      <sii:FechaExpedicionFacturaEmisor>10-11-2026</sii:FechaExpedicionFacturaEmisor>
+    </siiLR:IDFactura>
+    <siiLR:FacturaExpedida>
+      <sii:TipoFactura>R5</sii:TipoFactura>
+      <sii:TipoRectificativa>I</sii:TipoRectificativa>
+      <sii:ClaveRegimenEspecialOTrascendencia>01</sii:ClaveRegimenEspecialOTrascendencia>
+      <sii:ImporteTotal>-24.20</sii:ImporteTotal>
+      <sii:DescripcionOperacion>Puesto fijo</sii:DescripcionOperacion>
+      <sii:TipoDesglose>
+        <sii:DesgloseFactura>
+          <sii:Sujeta>
+            <sii:NoExenta>
+              <sii:TipoNoExenta>S1</sii:TipoNoExenta>
+              <sii:DesgloseIVA>
+                <sii:DetalleIVA>
+                  <sii:TipoImpositivo>21.00</sii:TipoImpositivo>
+                  <sii:BaseImponible>-20.00</sii:BaseImponible>
+                  <sii:CuotaRepercutida>-4.20</sii:CuotaRepercutida>
                 </sii:DetalleIVA>
               </sii:DesgloseIVA>
             </sii:NoExenta>
