@@ -29,6 +29,9 @@ class ChVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  String get fileButtonId => 'mwstXml';
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,

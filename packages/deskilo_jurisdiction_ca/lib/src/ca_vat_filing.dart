@@ -39,6 +39,9 @@ class CaVatFilingContribution extends VatFilingContribution {
   Set<String> get extraForms => const {caQstFormName};
 
   @override
+  String get fileButtonId => 'gstQstCsv';
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,

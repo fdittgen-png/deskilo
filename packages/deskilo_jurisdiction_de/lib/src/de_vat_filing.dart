@@ -28,6 +28,12 @@ class DeVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  String get fileButtonId => 'elster';
+
+  @override
+  Set<String> get factsAsked => const {'taxNumber'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
