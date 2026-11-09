@@ -9,17 +9,18 @@ import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
+
+import '../../../core/jurisdiction/installed_registers.dart';
 import '../domain/vat_annual_summary.dart';
 import '../domain/vat_filing_files.dart';
-import '../domain/vat_register_es.dart';
-import '../domain/vat_register_es_347.dart';
-import '../domain/vat_register_es_sii.dart';
 import '../domain/vat_register_it.dart';
+import 'jurisdiction/register_context_builder.dart';
 
 typedef VatRegisterFile = ({String fileName, Uint8List bytes});
 
@@ -49,93 +50,82 @@ class VatRegisterFiles {
   VatFilingParty get _party =>
       party ?? (throw StateError('no workspace loaded'));
 
+  /// Whether [raw] is an activity code the space's country writes into its
+  /// libro (empty is allowed); true where the country has no register.
+  bool acceptsActivity(String raw) =>
+      registersOf(_party.countryCode)?.acceptsActivity(raw) ?? true;
+
   /// The libro of the year up to [end] (its last day included): Pre303
   /// reads the book of the year so far, never one quarter. [activity] is
   /// the AEAT's code, type and IAE heading of the lines.
   Future<VatRegisterFile?> esLibro({
     required DateTime end,
     required String activity,
-  }) async {
-    final data = reference;
-    if (data == null) return null;
-    final party = _party;
-    final docs = registerDocuments(
-      await invoices(),
-      from: DateTime(end.year),
-      to: _after(end),
-    );
-    if (docs.isEmpty) return null;
-    final nif = party.vatId.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
-    return (
-      // The AEAT's name: exercise, NIF, the book's type (E), the holder.
-      fileName:
-          '${end.year}${nif.startsWith('ES') ? nif.substring(2) : nif}E'
-          '${party.name.replaceAll(RegExp(r'[\\/:*?"<>|]'), ' ')}.xlsx',
-      bytes: buildXlsx([
-        esLibroExpedidas(
-          docs,
-          activity: activity,
-          monthly: monthly,
-          reference: data,
-        ),
-      ]),
-    );
-  }
+  }) => _register(
+    'esLibro',
+    start: DateTime(end.year),
+    end: end,
+    activity: activity,
+  );
 
   /// The SII message of the documents of `[start, end]`. Throws
   /// [VatFilingFileException] when the space's NIF is not one.
   Future<VatRegisterFile?> esSii({
     required DateTime start,
     required DateTime end,
-  }) async {
-    final data = reference;
-    if (data == null) return null;
-    final party = _party;
-    final docs = registerDocuments(
-      await invoices(),
-      from: start,
-      to: _after(end),
-    );
-    if (docs.isEmpty) return null;
-    final xml = siiFacturasEmitidasXml(
-      docs,
-      vatId: party.vatId,
-      name: party.name,
-      reference: data,
-    );
-    return (
-      fileName: 'sii-facturas-emitidas-${isoDay(start)}.xml',
-      bytes: Uint8List.fromList(utf8.encode(xml)),
-    );
-  }
+  }) => _register('esSii', start: start, end: end);
 
   /// The modelo 347 list of [year]: the customers above the line. Throws
   /// [VatFilingFileException] for a space in SII ([immediateSupply]).
   Future<VatRegisterFile?> es347({
     required int year,
     required bool immediateSupply,
+  }) => _register(
+    'es347',
+    start: DateTime(year),
+    end: DateTime(year, 12, 31),
+    immediateSupply: immediateSupply,
+  );
+
+  /// One register of the space's country, written by its registers add-on from
+  /// a neutral context; a refusal of the add-on is the filing file's own.
+  Future<VatRegisterFile?> _register(
+    String kind, {
+    required DateTime start,
+    required DateTime end,
+    String activity = '',
+    bool immediateSupply = false,
   }) async {
-    final all = await invoices();
-    final docs = registerDocuments(
-      all,
-      from: DateTime(year),
-      to: DateTime(year + 1),
-    );
     final data = reference;
     if (data == null) return null;
-    final list = modelo347Lines(
-      docs,
-      year: year,
+    final party = _party;
+    final add = registersOf(party.countryCode);
+    if (add == null || !add.kinds.contains(kind)) return null;
+    final context = registerContextOf(
+      await invoices(),
       reference: data,
+      party: party,
+      from: start,
+      to: _after(end),
+      thresholdKey: add.thresholdKey(kind),
+      activity: activity,
+      monthly: monthly,
       immediateSupply: immediateSupply,
     );
-    if (list == null || list.lines.isEmpty) return null;
-    return (
-      fileName: 'modelo-347-$year.csv',
-      bytes: Uint8List.fromList(
-        utf8.encode(modelo347Csv(list.lines, currency: list.currency)),
-      ),
-    );
+    try {
+      final file = add.generate(kind, context);
+      return file == null ? null : (fileName: file.fileName, bytes: file.bytes);
+    } on RegisterRefusal catch (e, st) {
+      Error.throwWithStackTrace(
+        VatFilingFileException(switch (e.problem) {
+          RegisterProblem.vatNumber => VatFilingFileProblem.vatNumber,
+          RegisterProblem.unmappedAmount => VatFilingFileProblem.unmappedBox,
+          RegisterProblem.exoneratedByImmediateSupply =>
+            VatFilingFileProblem.exoneratedBySii,
+        }),
+        st,
+      );
+    }
   }
 
   /// The registro fatture emesse of `[start, end]`.
@@ -145,7 +135,7 @@ class VatRegisterFiles {
   }) async {
     final all = await invoices();
     final to = _after(end);
-    if (registerDocuments(all, from: start, to: to).isEmpty) return null;
+    if (registeredInvoices(all, from: start, to: to).isEmpty) return null;
     return (
       fileName: 'registro-fatture-emesse-${isoDay(start)}.csv',
       bytes: Uint8List.fromList(

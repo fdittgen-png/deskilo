@@ -2,10 +2,10 @@
 //
 // #2861 — the person-facing workbook is in the reader's language; the
 // CSV machine copy keeps the stable keys whatever the language.
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_labels.dart';
 import 'package:deskilo/features/workspace/presentation/workspace_export_words.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

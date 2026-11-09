@@ -7,12 +7,10 @@
 // the province of their postal code. Clave B: supplies and services the
 // space made. What the modelo 349 lists (intra-EU), exports and operations
 // not subject here are left out, as the order says.
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
-import '../../../core/text/csv.dart';
-import 'vat_filing_terms.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show csvCell;
 import 'vat_register_es.dart';
 
 /// One customer of the list.
@@ -33,19 +31,15 @@ const _elsewhere = {'E2', 'E5'};
 /// has no row. Throws [VatFilingFileException] for a space that keeps its
 /// books through SII ([immediateSupply]), which files no 347.
 ({String currency, List<Modelo347Line> lines})? modelo347Lines(
-  Iterable<Invoice> invoices, {
+  Iterable<RegisterDocument> invoices, {
   required int year,
-  required TaxReferenceSet reference,
-  required bool immediateSupply,
-}) {
-  if (immediateSupply) {
-    throw const VatFilingFileException(VatFilingFileProblem.exoneratedBySii);
+  required RegisterContext context,
+  }) {
+  if (context.immediateSupply) {
+    throw const RegisterRefusal(RegisterProblem.exoneratedByImmediateSupply);
   }
-  final row = reference
-      .resolved('$year-12-31')
-      .lookup(TaxDomain.threshold, 'ES', 'modelo347');
-  final line = row?.value;
-  if (line is! ThresholdValue) return null;
+  final line = context.threshold;
+  if (line == null) return null;
   final byNif = <String, Modelo347Line>{};
   for (final invoice in registerDocuments(
     invoices,
@@ -53,7 +47,7 @@ const _elsewhere = {'E2', 'E5'};
     to: DateTime(year + 1),
   )) {
     if (invoice.currency != line.currency) continue;
-    final buyer = esBuyerIdOf(invoice, reference: reference);
+    final buyer = esBuyerIdOf(invoice, context: context);
     if (buyer.id.isEmpty || buyer.type.isNotEmpty) continue;
     final country = invoice.buyerParty?.country ?? '';
     final cents = invoice.vatTotals

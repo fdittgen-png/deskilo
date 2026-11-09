@@ -6,12 +6,12 @@
 // PDF's): they get referenced by formulas and importers, so they must
 // not rename themselves with the phone's language.
 
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_sources.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';

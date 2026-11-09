@@ -10,7 +10,6 @@ import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fattu
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/text/csv.dart';
-import 'vat_register_es.dart' show buyerNameOf, registerDocuments;
 
 /// The register's columns, in the words of the art. 23 register.
 const _header = [
@@ -34,7 +33,7 @@ String registroFattureEmesseCsv(
   required DateTime to,
 }) {
   final rows = <String>[_header.join(';')];
-  for (final invoice in registerDocuments(invoices, from: from, to: to)) {
+  for (final invoice in registeredInvoices(invoices, from: from, to: to)) {
     final buyer = invoice.buyerParty;
     final id = (buyer?.vatId ?? '').isNotEmpty
         ? buyer!.vatId
@@ -44,7 +43,7 @@ String registroFattureEmesseCsv(
         [
           csvCell(invoice.number, quoteEmpty: true),
           isoDay(invoice.issuedAt),
-          csvCell(buyerNameOf(invoice), quoteEmpty: true),
+          csvCell(_buyerName(invoice), quoteEmpty: true),
           csvCell(id, quoteEmpty: true),
           minorToText(t.netCents, invoice.currency),
           t.percent.toStringAsFixed(2),
@@ -61,4 +60,22 @@ String registroFattureEmesseCsv(
     }
   }
   return '${rows.join('\r\n')}\r\n';
+}
+
+/// The documents a register lists for `[from, to)`: issued, not voided (an
+/// erroneous document is replaced, and the return counts the replacement), in
+/// issue order.
+List<Invoice> registeredInvoices(
+  Iterable<Invoice> invoices, {
+  required DateTime from,
+  required DateTime to,
+}) => [
+  for (final i in invoices)
+    if (!i.isVoided && !i.issuedAt.isBefore(from) && i.issuedAt.isBefore(to)) i,
+]..sort((a, b) => a.issuedAt.compareTo(b.issuedAt));
+
+String _buyerName(Invoice invoice) {
+  final buyer = invoice.buyerParty;
+  if (buyer == null) return invoice.memberName;
+  return buyer.company.isNotEmpty ? buyer.company : buyer.name;
 }

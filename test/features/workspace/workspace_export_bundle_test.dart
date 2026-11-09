@@ -9,8 +9,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,8 +1,10 @@
 name: deskilo_jurisdiction_es
 description: >-
-  The Spanish VAT filing add-on (#3333): the Modelo 303 as the AEAT's
-  fixed-width "diseño de registro" behind the jurisdiction contract. Pure Dart;
-  depends on the contract and the standards packages.
+  The Spanish add-on (#3333, #3429): the Modelo 303 as the AEAT's fixed-width
+  "diseño de registro", the mentions of an invoice and the registers of issued
+  invoices (libro, SII, modelo 347, Verifactu) behind the jurisdiction
+  contract. Pure Dart; depends on the contract, the standards, the money
+  kernel, the XLSX writer, crypto and xml.
 version: 0.1.0
 publish_to: none
 
@@ -14,6 +16,13 @@ dependencies:
     path: ../deskilo_jurisdiction_api
   deskilo_jurisdiction_standards:
     path: ../deskilo_jurisdiction_standards
+  deskilo_money_kernel:
+    path: ../deskilo_money_kernel
+  deskilo_xlsx:
+    path: ../deskilo_xlsx
+  crypto: ^3.0.7
+  meta: ^1.16.0
+  xml: ^6.6.1
 
 dev_dependencies:
   lints: ^6.0.0

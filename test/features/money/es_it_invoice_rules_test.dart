@@ -12,12 +12,13 @@ import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/small_business_threshold.dart';
 import 'package:deskilo/features/money/domain/stamp_duty.dart';
 import 'package:deskilo/features/money/domain/vat_filing_terms.dart';
-import 'package:deskilo/features/money/domain/vat_register_es_347.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_gate_fields.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import './es_register_support.dart';
 
 Invoice _invoice(
   String number,

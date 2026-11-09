@@ -29,6 +29,21 @@ const _xmlPackages = {
   'deskilo_jurisdiction_ch',
   'deskilo_jurisdiction_it',
   'deskilo_jurisdiction_pl',
+  'deskilo_jurisdiction_es',
+};
+
+/// Packages beyond the contract and the standards a country add-on may use,
+/// each with its reason (a new one is a reviewed addition here). Spain's
+/// registers write a spreadsheet (`deskilo_xlsx`), format minor units
+/// (`deskilo_money_kernel`) and chain Verifactu records by a SHA-256 digest
+/// (`crypto`); `meta` carries `@visibleForTesting`.
+const _extraDeps = {
+  'deskilo_jurisdiction_es': {
+    'deskilo_money_kernel',
+    'deskilo_xlsx',
+    'crypto',
+    'meta',
+  },
 };
 
 void main() {
@@ -144,6 +159,7 @@ void main() {
         'deskilo_jurisdiction_api',
         'deskilo_jurisdiction_standards',
         if (wantsXml) 'xml',
+        ...?_extraDeps[name],
       };
       if (!deps.contains('deskilo_jurisdiction_api') ||
           !allowedDeps.containsAll(deps)) {
@@ -167,6 +183,9 @@ void main() {
                   uri.startsWith('package:deskilo_jurisdiction_api/') ||
                   uri.startsWith('package:deskilo_jurisdiction_standards/') ||
                   (wantsXml && uri.startsWith('package:xml/')) ||
+                  (_extraDeps[name] ?? const <String>{}).any(
+                    (d) => uri.startsWith('package:$d/'),
+                  ) ||
                   uri.startsWith('package:$name/') ||
                   (!uri.contains(':') && !uri.contains('..')))) {
             bad.add('${f.path}:${i + 1}: $uri');
@@ -212,6 +231,7 @@ void main() {
         'src/invoice_document_context.dart',
         'src/invoice_mentions_contribution.dart',
         'src/invoice_profile_contribution.dart',
+        'src/register_contribution.dart',
         'src/validation_result.dart',
         'src/vat_filing_contribution.dart',
       },

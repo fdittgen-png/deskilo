@@ -13,7 +13,6 @@ import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_layout/pdf_geometry.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
@@ -29,6 +28,7 @@ import 'package:deskilo/features/workspace/domain/workspace_data_report_pdf.dart
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter/material.dart' show ColorScheme;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
