@@ -4,6 +4,7 @@
 /// Every tax reference question takes the set.
 library;
 
+
 export 'src/e_invoice_totals.dart';
 export 'src/einvoice_format.dart';
 export 'src/einvoice_input.dart';
@@ -16,6 +17,7 @@ export 'src/invoice_line_cash.dart';
 export 'src/invoice_line_snapshot.dart';
 export 'src/invoice_ubl.dart';
 export 'src/invoice_ubl_check.dart';
+export 'src/payment_reference_rules.dart';
 export 'src/payment_terms.dart';
 export 'src/place_of_supply.dart';
 export 'src/report_strings.dart';

@@ -24,7 +24,10 @@ class _OtherVersion extends PaymentSlipContribution {
   );
 
   @override
-  String get debtorDefaultCountry => 'XX';
+  String get homeCountry => 'XX';
+
+  @override
+  Set<String> get accountCountries => const {};
 
   @override
   String addressCountryPrefix(String country) => '';
@@ -56,7 +59,8 @@ void main() {
   test('Switzerland has a slip, in its own words', () {
     final ch = paymentSlipOf('CH')!;
     expect(paymentSlipOf(' ch '), same(ch));
-    expect(ch.debtorDefaultCountry, 'CH');
+    expect(ch.homeCountry, 'CH');
+    expect(ch.accountCountries, {'CH', 'LI'});
     expect(ch.addressCountryPrefix('CH'), '');
     expect(ch.addressCountryPrefix('DE'), 'DE-');
     expect(ch.addressCountryPrefix('LI'), 'LI-');

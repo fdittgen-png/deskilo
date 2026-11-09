@@ -7,12 +7,14 @@
 // frozen one the export is refused; none for a credit note — in UBL as `cac:PaymentMeans/cbc:PaymentID` before the
 // payee account, in CII as `ram:PaymentReference` before the invoice currency.
 // The expected references are stated by hand from the standards.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+const _rules = PaymentReferenceRules(accountCountries: {'CH', 'LI'});
 const _iban = 'FR76 3000 6000 0112 3456 7890 189';
 // A QR-IBAN of the Swiss implementation guidelines' examples (IID 31999).
 const _qrIban = 'CH44 3199 9123 0008 8901 2';
@@ -55,7 +57,7 @@ Invoice _invoice({
       signature: 'f' * 64,
     );
 
-EInvoiceInput _input(Invoice invoice, String iban) => EInvoiceInput(
+EInvoiceInput _input(Invoice invoice, String iban) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
   invoice: invoice,
   seller: const InvoiceParty(
     name: 'Test Space',
@@ -86,7 +88,7 @@ void main() {
     test('an ordinary IBAN: the ISO 11649 creditor reference of the number', () {
       // "INV20260001RF00", letters as A = 10 … Z = 35, is 82 modulo 97:
       // the check digits are 98 − 82 = 16.
-      final r = paymentReferenceFor(
+      final r = paymentReferenceFor(rules: _rules,
         account: _iban,
         invoiceNumber: 'INV-2026-0001',
         creditNote: false,
@@ -97,7 +99,7 @@ void main() {
 
     test('a QR-IBAN: only the QRR frozen at issue, never the derived one', () {
       expect(
-        paymentReferenceFor(
+        paymentReferenceFor(rules: _rules,
           account: _qrIban,
           invoiceNumber: 'F-2026-0402',
           creditNote: false,
@@ -108,7 +110,7 @@ void main() {
       // No frozen reference (or a malformed one): nothing is published.
       for (final snapshot in [null, const {'qrr': '123'}]) {
         expect(
-          paymentReferenceFor(
+          paymentReferenceFor(rules: _rules,
             account: _qrIban,
             invoiceNumber: 'F-2026-0402',
             creditNote: false,
@@ -122,11 +124,11 @@ void main() {
 
     test('a credit note asks for no payment, and no account takes none', () {
       expect(
-        paymentReferenceFor(account: _iban, invoiceNumber: 'AV-1', creditNote: true),
+        paymentReferenceFor(rules: _rules, account: _iban, invoiceNumber: 'AV-1', creditNote: true),
         '',
       );
       expect(
-        paymentReferenceFor(account: '', invoiceNumber: 'INV-1', creditNote: false),
+        paymentReferenceFor(rules: _rules, account: '', invoiceNumber: 'INV-1', creditNote: false),
         '',
       );
     });
@@ -190,7 +192,7 @@ void main() {
   group('a QR-IBAN invoice with no frozen reference is refused, never sent '
       'without one', () {
     test('the readiness check refuses it, with its own reason', () {
-      final r = checkEInvoiceReadiness(
+      final r = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
         invoice: _invoice(),
         seller: _input(_invoice(), _qrIban).seller,
         buyer: _input(_invoice(), _qrIban).buyer,
@@ -203,7 +205,7 @@ void main() {
         (_invoice(), _iban),
       ]) {
         expect(
-          checkEInvoiceReadiness(
+          checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
             invoice: invoice,
             seller: _input(invoice, iban).seller,
             buyer: _input(invoice, iban).buyer,

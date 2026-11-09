@@ -13,6 +13,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
@@ -32,7 +33,6 @@ import 'package:xml/xml.dart';
 
 import 'support/dtd_validator.dart';
 import 'support/seeded_export_year.dart';
-
 final _de = lookupAppLocalizations(const Locale('de'));
 final _from = DateTime(2026);
 final _to = DateTime(2026, 12, 31);
@@ -105,7 +105,7 @@ Map<String, List<int>> _package() {
           i.id: {
             'belege/${i.id}.xml': utf8.encode(
               buildInvoiceCii(
-                EInvoiceInput(
+                EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
                   invoice: i,
                   seller: seededCompany,
                   buyer: const InvoiceParty(name: 'Ana', country: 'FR'),

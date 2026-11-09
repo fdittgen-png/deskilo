@@ -10,12 +10,12 @@
 // A strict EN 16931 validator rejects that (BR-CO-… line arithmetic),
 // and since #568 the same XML also goes straight to the customer, so a
 // malformed document reaches two audiences.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 /// Gross 1000 divides by 4; its net (833) does not. Exactly the shape
 /// that produced 2.08 × 4 ≠ 8.33.
 const _awkward = InvoiceLine(
@@ -75,7 +75,7 @@ void expectConsistent(String quantity, String unitPrice, String lineNet) {
 
 void main() {
   test('UBL: quantity × unit price equals the line net', () {
-    final doc = XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: _invoice(),
+    final doc = XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
       lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)));
@@ -92,7 +92,7 @@ void main() {
   });
 
   test('CII: quantity × unit price equals the line net', () {
-    final doc = XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: _invoice(),
+    final doc = XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
       lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)));

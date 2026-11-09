@@ -7,7 +7,6 @@ lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429
 lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD
 lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1 :: #3429 Presentation: FR notice
 packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart :: 2 :: #3429 VAT filing / e-invoice FR + GB
-packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart :: 6 :: #3429 Invoice clauses and print data: the Swiss QR bill
 packages/deskilo_invoice_model/lib/src/vat_regime.dart :: 1 :: #3429 VAT filing / e-invoice FR + GB
 [allowed]
 lib/core/country/country_catalog.dart :: 2 :: the catalogue of the countries the app knows (name, currency, default locale): data the registry serves, not a rule

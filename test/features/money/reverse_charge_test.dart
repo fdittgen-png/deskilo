@@ -6,6 +6,7 @@
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
 // #2354 — only for a general service: a desk is taxed where it stands.
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -13,7 +14,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';
-
 const _seller = InvoiceParty(
   name: 'Demo SARL',
   street: '4 avenue de Castelnau',
@@ -178,11 +178,11 @@ void main() {
     test('exports as category AE with VATEX-EU-AE, in CII and UBL', () {
       final invoice = _invoice(vat: const [_ae]);
       for (final xml in [
-        buildInvoiceCii(EInvoiceInput(invoice: invoice,
+        buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
             lineText: (line) => line.label, reference: ActiveTaxReference.current)),
-        buildInvoiceUbl(EInvoiceInput(invoice: invoice,
+        buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
             lineText: (line) => line.label, reference: ActiveTaxReference.current)),
@@ -193,7 +193,7 @@ void main() {
     });
 
     test('refuses to leave without the customer\'s VAT id', () {
-      final readiness = checkEInvoiceReadiness(
+      final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
         invoice: _invoice(vat: const [_ae], buyerVat: ''),
         seller: _seller,
         buyer: const InvoiceParty(name: 'Kunde GmbH', country: 'DE'), reference: ActiveTaxReference.current,

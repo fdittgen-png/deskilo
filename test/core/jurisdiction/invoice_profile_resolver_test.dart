@@ -6,6 +6,7 @@
 // test renders an invoice without the host knowing it.
 import 'dart:convert';
 
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/jurisdiction/invoice_document_context_builder.dart';
@@ -15,7 +16,6 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/fake_invoice_profile.dart';
-
 const _seller = InvoiceParty(
   name: 'Spazio Prova S.r.l.',
   street: 'Via Roma 1',
@@ -70,7 +70,7 @@ Invoice _invoice() => Invoice(
   signature: 'f' * 64,
 );
 
-EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(
+EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
   invoice: _invoice(),
   seller: _seller,
   buyer: buyer,

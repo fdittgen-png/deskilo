@@ -6,7 +6,6 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
     show PaymentSlipContribution;
 
 import '../../../core/jurisdiction/installed_payment_slips.dart';
-
 /// #3429 -- the payment slip of the country [invoice]'s seller sells from (the
 /// seller party's, else [workspaceCountry]), from the installed add-on; null
 /// where that country has none.
@@ -46,6 +45,7 @@ SwissQrBill? swissQrBillOf(
     streetLine: seller?.street ?? '',
     postalCode: seller?.postalCode ?? '',
     city: seller?.city ?? '',
+    country: slip.homeCountry,
   );
   final buyer = invoice.buyerParty;
   final debtor = buyer == null || buyer.postalCode.isEmpty || buyer.city.isEmpty
@@ -55,7 +55,7 @@ SwissQrBill? swissQrBillOf(
           streetLine: buyer.street,
           postalCode: buyer.postalCode,
           city: buyer.city,
-          country: buyer.country.isEmpty ? slip.debtorDefaultCountry : buyer.country,
+          country: buyer.country.isEmpty ? slip.homeCountry : buyer.country,
         );
   return SwissQrBill.forInvoice(
     iban: iban,
@@ -67,5 +67,6 @@ SwissQrBill? swissQrBillOf(
     invoiceNumber: invoice.number,
     additionalInfo: invoice.number,
     frozenQrr: invoiceQrrOf(invoice.number, invoice.legalSnapshot),
+    rules: paymentReferenceRulesOf(slip),
   );
 }

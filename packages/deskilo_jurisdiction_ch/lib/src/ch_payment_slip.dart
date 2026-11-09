@@ -4,7 +4,6 @@
 // implementation guidelines): its existence is the gate, and it declares the
 // country its addresses are written in.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
-
 /// Bumped in the same commit as any change of what this declares.
 const chPaymentSlipImplementationVersion = '1';
 
@@ -22,7 +21,11 @@ class ChPaymentSlip extends PaymentSlipContribution {
   );
 
   @override
-  String get debtorDefaultCountry => 'CH';
+  String get homeCountry => 'CH';
+
+  /// The guidelines accept a Swiss or a Liechtenstein IBAN.
+  @override
+  Set<String> get accountCountries => const {'CH', 'LI'};
 
   /// A Swiss address has no country prefix; a foreign one is `DE-10115 Berlin`.
   @override

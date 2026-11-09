@@ -7,12 +7,12 @@
 // line, with its VAT), and only a line with no rate is money already
 // received (PrepaidAmount). Expected figures are worked out by hand
 // below, not read back from the generator.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 const _seller = InvoiceParty(
   name: 'pezenas1',
   street: '2 Place du Marché',
@@ -53,7 +53,7 @@ Invoice _doc(List<InvoiceLine> lines, {String replacesNumber = ''}) => Invoice(
 );
 
 XmlDocument _ubl(Invoice invoice) => XmlDocument.parse(
-  buildInvoiceUbl(EInvoiceInput(invoice: invoice,
+  buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)),
@@ -189,7 +189,7 @@ void main() {
 
   test('readiness: a pure avoir is a document to send; one that nets '
       'payments is refused', () {
-    EInvoiceReadiness check(List<InvoiceLine> lines) => checkEInvoiceReadiness(
+    EInvoiceReadiness check(List<InvoiceLine> lines) => checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
       invoice: _doc(lines),
       seller: _seller,
       buyer: _buyer, reference: ActiveTaxReference.current,

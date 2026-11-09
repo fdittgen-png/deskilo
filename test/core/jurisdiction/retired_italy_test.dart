@@ -6,6 +6,7 @@
 // syntaxes are still built, a FatturaPA request is an explicit refusal (never
 // another syntax, never a fallback), and what was already issued, sent and
 // received through Italy is still readable.
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
@@ -15,7 +16,6 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 const _seller = InvoiceParty(
   name: 'Atelier Nord',
   street: '1 rue de Paris',
@@ -73,7 +73,7 @@ Invoice _invoice() => Invoice(
   signature: 'f' * 64,
 );
 
-EInvoiceInput get _input => EInvoiceInput(
+EInvoiceInput get _input => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
   invoice: _invoice(),
   seller: _seller,
   buyer: _buyer,

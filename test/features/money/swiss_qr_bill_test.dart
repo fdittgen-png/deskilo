@@ -8,14 +8,16 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const _creditor = SwissQrAddress(
+const _rules = PaymentReferenceRules(accountCountries: {'CH', 'LI'});
+
+const _creditor = SwissQrAddress(country: 'CH',
   name: 'Robert Schneider AG',
   street: 'Rue du Lac',
   houseNumber: '1268',
   postalCode: '2501',
   city: 'Biel',
 );
-const _debtor = SwissQrAddress(
+const _debtor = SwissQrAddress(country: 'CH',
   name: 'Pia-Maria Rutschmann-Schnyder',
   street: 'Grosse Marktgasse',
   houseNumber: '28',
@@ -25,12 +27,12 @@ const _debtor = SwissQrAddress(
 
 void main() {
   test('IBAN checks: Swiss, QR-IBAN, checksum', () {
-    expect(isSwissIban('CH44 3199 9123 0008 8901 2'), isTrue);
-    expect(isQrIban('CH44 3199 9123 0008 8901 2'), isTrue);
-    expect(isSwissIban('CH93 0076 2011 6238 5295 7'), isTrue);
-    expect(isQrIban('CH93 0076 2011 6238 5295 7'), isFalse);
-    expect(isSwissIban('CH93 0076 2011 6238 5295 8'), isFalse);
-    expect(isSwissIban('DE89 3704 0044 0532 0130 00'), isFalse);
+    expect(isSwissIban('CH44 3199 9123 0008 8901 2', rules: _rules), isTrue);
+    expect(isQrIban('CH44 3199 9123 0008 8901 2', rules: _rules), isTrue);
+    expect(isSwissIban('CH93 0076 2011 6238 5295 7', rules: _rules), isTrue);
+    expect(isQrIban('CH93 0076 2011 6238 5295 7', rules: _rules), isFalse);
+    expect(isSwissIban('CH93 0076 2011 6238 5295 8', rules: _rules), isFalse);
+    expect(isSwissIban('DE89 3704 0044 0532 0130 00', rules: _rules), isFalse);
   });
 
   test('QRR: 26 digits and the recursive modulus-10 check digit', () {
@@ -51,7 +53,7 @@ void main() {
   });
 
   test('the payload: header, account, creditor, amount, reference, EPD', () {
-    const bill = SwissQrBill(
+    const bill = SwissQrBill(rules: _rules,
       iban: 'CH44 3199 9123 0008 8901 2',
       creditor: _creditor,
       amountCents: 194975,
@@ -101,7 +103,7 @@ void main() {
   });
 
   test('the reference type and the account must agree', () {
-    SwissQrBill with_(String iban, String type, String ref) => SwissQrBill(
+    SwissQrBill with_(String iban, String type, String ref) => SwissQrBill(rules: _rules,
       iban: iban,
       creditor: _creditor,
       amountCents: 1000,
@@ -129,12 +131,12 @@ void main() {
   });
 
   test('currency, amount, lengths and the Latin character set', () {
-    const long = SwissQrAddress(
+    const long = SwissQrAddress(country: 'CH',
       name: 'x',
       postalCode: '1',
       city: 'a very long town name that exceeds thirty-five characters',
     );
-    const bill = SwissQrBill(
+    const bill = SwissQrBill(rules: _rules,
       iban: 'CH93 0076 2011 6238 5295 7',
       creditor: long,
       amountCents: 0,
@@ -145,7 +147,7 @@ void main() {
   });
 
   test('forInvoice: QR-IBAN takes QRR, a plain IBAN SCOR, else none', () {
-    final qr = SwissQrBill.forInvoice(
+    final qr = SwissQrBill.forInvoice(rules: _rules,
       iban: 'CH93 0076 2011 6238 5295 7',
       qrIban: 'CH44 3199 9123 0008 8901 2',
       creditor: _creditor,
@@ -156,7 +158,7 @@ void main() {
     )!;
     expect(qr.referenceType, 'QRR');
     expect(qr.account, 'CH4431999123000889012');
-    final plain = SwissQrBill.forInvoice(
+    final plain = SwissQrBill.forInvoice(rules: _rules,
       iban: 'CH93 0076 2011 6238 5295 7',
       qrIban: '',
       creditor: _creditor,
@@ -171,7 +173,7 @@ void main() {
       String iban = '',
       String qrIban = '',
       int total = 100,
-    }) => SwissQrBill.forInvoice(
+    }) => SwissQrBill.forInvoice(rules: _rules,
       iban: iban,
       qrIban: qrIban,
       creditor: _creditor,
@@ -188,11 +190,11 @@ void main() {
       reason: 'a credit note is not paid in',
     );
     // A debtor the guidelines refuse is left out; the bill stands.
-    final noDebtor = SwissQrBill.forInvoice(
+    final noDebtor = SwissQrBill.forInvoice(rules: _rules,
       iban: 'CH93 0076 2011 6238 5295 7',
       qrIban: '',
       creditor: _creditor,
-      debtor: const SwissQrAddress(name: '', postalCode: '', city: ''),
+      debtor: const SwissQrAddress(country: 'CH', name: '', postalCode: '', city: ''),
       totalCents: 100,
       currency: 'CHF',
       invoiceNumber: '42',
@@ -201,14 +203,14 @@ void main() {
   });
 
   test('a street line is split into street and house number', () {
-    final a = SwissQrAddress.fromLines(
+    final a = SwissQrAddress.fromLines(country: 'CH',
       name: 'n',
       streetLine: 'Bahnhofstrasse 12a',
       postalCode: '8001',
       city: 'Zürich',
     );
     expect((a.street, a.houseNumber), ('Bahnhofstrasse', '12a'));
-    final b = SwissQrAddress.fromLines(
+    final b = SwissQrAddress.fromLines(country: 'CH',
       name: 'n',
       streetLine: 'Rue du Lac',
       postalCode: '2501',

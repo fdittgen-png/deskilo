@@ -2,7 +2,7 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'invoice.dart';
-
+import 'payment_reference_rules.dart';
 /// What every invoice-document builder (UBL, CII, FatturaPA) renders from:
 /// the invoice with its SNAPSHOT parties, the localized position wording and
 /// the payment details. One object instead of a growing argument list — a
@@ -17,6 +17,7 @@ class EInvoiceInput {
     this.dueDate,
     this.paymentTerms = '',
     required this.reference,
+    required this.paymentReferenceRules,
   });
 
   final Invoice invoice;
@@ -37,4 +38,8 @@ class EInvoiceInput {
 
   /// The tax reference the document is built on: the workspace's own.
   final TaxReferenceSet reference;
+
+  /// #3429 -- the countries whose IBANs a payment slip accepts (QR-IBAN
+  /// detection), from the installed payment slip add-ons.
+  final PaymentReferenceRules paymentReferenceRules;
 }

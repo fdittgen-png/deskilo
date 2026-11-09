@@ -19,6 +19,7 @@
 // those of the guidelines, applied here before a document is drawn.
 import 'package:meta/meta.dart';
 
+import 'payment_reference_rules.dart';
 /// A party of the bill: structured address.
 @immutable
 class SwissQrAddress {
@@ -28,7 +29,7 @@ class SwissQrAddress {
     this.houseNumber = '',
     required this.postalCode,
     required this.city,
-    this.country = 'CH',
+    required this.country,
   });
 
   final String name;
@@ -45,7 +46,7 @@ class SwissQrAddress {
     required String streetLine,
     required String postalCode,
     required String city,
-    String country = 'CH',
+    required String country,
   }) {
     final m = RegExp(r'^(.*?)[\s,]+(\d+[A-Za-z]?(?:[-/]\d+[A-Za-z]?)?)$')
         .firstMatch(streetLine.trim());
@@ -109,9 +110,9 @@ bool _ibanChecksumOk(String iban) {
 /// Whether [iban] is a QR-IBAN: a Swiss or Liechtenstein IBAN whose
 /// institution identifier (positions 5–9) lies in 30000–31999.
 @visibleForTesting
-bool isQrIban(String iban) {
+bool isQrIban(String iban, {required PaymentReferenceRules rules}) {
   final s = iban.replaceAll(' ', '').toUpperCase();
-  if (s.length != 21 || !(s.startsWith('CH') || s.startsWith('LI'))) {
+  if (s.length != 21 || !rules.accountCountries.any(s.startsWith)) {
     return false;
   }
   final iid = int.tryParse(s.substring(4, 9));
@@ -120,10 +121,10 @@ bool isQrIban(String iban) {
 
 /// A CH or LI IBAN with a valid checksum (21 characters).
 @visibleForTesting
-bool isSwissIban(String iban) {
+bool isSwissIban(String iban, {required PaymentReferenceRules rules}) {
   final s = iban.replaceAll(' ', '').toUpperCase();
   return s.length == 21 &&
-      (s.startsWith('CH') || s.startsWith('LI')) &&
+      rules.accountCountries.any(s.startsWith) &&
       _ibanChecksumOk(s);
 }
 
@@ -185,9 +186,10 @@ String paymentReferenceFor({
   required String invoiceNumber,
   required bool creditNote,
   Map<String, Object?>? legalSnapshot,
+  required PaymentReferenceRules rules,
 }) {
   if (creditNote || account.trim().isEmpty) return '';
-  if (isQrIban(account)) return _frozenQrrOf(legalSnapshot) ?? '';
+  if (isQrIban(account, rules: rules)) return _frozenQrrOf(legalSnapshot) ?? '';
   return scorReferenceOf(invoiceNumber) ?? '';
 }
 
@@ -204,8 +206,11 @@ bool qrIbanWithoutReference({
   required String account,
   required bool creditNote,
   Map<String, Object?>? legalSnapshot,
+  required PaymentReferenceRules rules,
 }) =>
-    !creditNote && isQrIban(account) && _frozenQrrOf(legalSnapshot) == null;
+    !creditNote &&
+    isQrIban(account, rules: rules) &&
+    _frozenQrrOf(legalSnapshot) == null;
 
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
@@ -231,10 +236,14 @@ class SwissQrBill {
     required this.amountCents,
     required this.currency,
     this.debtor,
+    required this.rules,
     this.referenceType = 'NON',
     this.reference = '',
     this.additionalInfo = '',
   });
+
+  /// The countries whose IBANs this bill accepts (the slip's).
+  final PaymentReferenceRules rules;
 
   /// The creditor's account, spaces ignored.
   final String iban;
@@ -256,9 +265,11 @@ class SwissQrBill {
 
   /// Everything that stops this bill being a valid one; empty when valid.
   List<String> get problems => [
-    if (!isSwissIban(account)) 'iban',
-    if (isQrIban(account) && referenceType != 'QRR') 'qrIbanNeedsQrr',
-    if (!isQrIban(account) && referenceType == 'QRR') 'qrrNeedsQrIban',
+    if (!isSwissIban(account, rules: rules)) 'iban',
+    if (isQrIban(account, rules: rules) && referenceType != 'QRR')
+      'qrIbanNeedsQrr',
+    if (!isQrIban(account, rules: rules) && referenceType == 'QRR')
+      'qrrNeedsQrIban',
     if (referenceType == 'QRR' && !isValidQrr(reference)) 'reference',
     if (referenceType == 'SCOR' && !isValidScor(reference)) 'reference',
     if (referenceType == 'NON' && reference.isNotEmpty) 'reference',
@@ -341,6 +352,7 @@ class SwissQrBill {
     required String invoiceNumber,
     String additionalInfo = '',
     String? frozenQrr,
+    required PaymentReferenceRules rules,
   }) {
     final qr = qrIban.replaceAll(' ', '');
     final plain = iban.replaceAll(' ', '');
@@ -351,7 +363,7 @@ class SwissQrBill {
               ? frozenQrr
               : qrrReferenceOf(invoiceNumber));
     SwissQrBill bill;
-    if (qrRef != null && isQrIban(qr)) {
+    if (qrRef != null && isQrIban(qr, rules: rules)) {
       bill = _make(
         qr,
         'QRR',
@@ -361,8 +373,9 @@ class SwissQrBill {
         totalCents,
         currency,
         additionalInfo,
+        rules,
       );
-    } else if (plain.isNotEmpty && !isQrIban(plain)) {
+    } else if (plain.isNotEmpty && !isQrIban(plain, rules: rules)) {
       final scor = scorReferenceOf(invoiceNumber);
       bill = _make(
         plain,
@@ -373,6 +386,7 @@ class SwissQrBill {
         totalCents,
         currency,
         additionalInfo,
+        rules,
       );
     } else {
       return null;
@@ -389,6 +403,7 @@ class SwissQrBill {
         totalCents,
         currency,
         additionalInfo,
+        rules,
       );
     }
     return bill.problems.isEmpty ? bill : null;
@@ -403,7 +418,9 @@ class SwissQrBill {
     int totalCents,
     String currency,
     String info,
+    PaymentReferenceRules rules,
   ) => SwissQrBill(
+    rules: rules,
     iban: account,
     creditor: creditor,
     amountCents: totalCents,

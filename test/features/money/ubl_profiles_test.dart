@@ -4,12 +4,12 @@
 // XRechnung or CIUS-RO, each adding only what it makes mandatory. The
 // bare EN 16931 document stays exactly what it was; the official
 // validators run on one sample of each in CI (einvoice_samples_test).
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
-
 final _invoice = Invoice(
   id: 'inv-1',
   workspaceId: 'ws-1',
@@ -72,7 +72,7 @@ const _buyer = InvoiceParty(
 );
 
 XmlDocument _doc(UblProfile profile) => XmlDocument.parse(
-  buildInvoiceUbl(EInvoiceInput(invoice: _invoice,
+  buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line),

@@ -2,10 +2,10 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'invoice.dart';
+import 'payment_reference_rules.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_compliance.dart';
 import 'vat_regime.dart';
-
 /// One thing standing between this invoice and a VALID EN 16931 file.
 ///
 /// The norm's fatal rules are named where they apply: a validator would
@@ -153,6 +153,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
   /// #2380 — the account the document names (BT-84); '' = none.
   String iban = '',
   required TaxReferenceSet reference,
+  required PaymentReferenceRules paymentReferenceRules,
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
@@ -184,6 +185,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
       account: iban,
       creditNote: invoice.totalCents < 0,
       legalSnapshot: invoice.legalSnapshot,
+      rules: paymentReferenceRules,
     ))
       EInvoiceGap.qrIbanWithoutReference,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,

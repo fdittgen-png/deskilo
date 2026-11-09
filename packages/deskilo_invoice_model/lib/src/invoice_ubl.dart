@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
@@ -9,7 +9,6 @@ import 'invoice.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
-
 // #2354 — the 27 member states live once, in vat_compliance.dart; the
 // e-invoice affordance shows only for workspaces established in one.
 
@@ -70,6 +69,7 @@ void _refuseQrIbanWithoutReference(EInvoiceInput input) {
     account: input.iban,
     creditNote: input.invoice.totalCents < 0,
     legalSnapshot: input.invoice.legalSnapshot,
+    rules: input.paymentReferenceRules,
   )) {
     throw ArgumentError('a QR-IBAN payment needs the QR reference frozen at issue');
   }
@@ -268,6 +268,7 @@ class _UblWriter {
           invoiceNumber: invoice.number,
           creditNote: invoice.totalCents < 0,
           legalSnapshot: invoice.legalSnapshot,
+          rules: input.paymentReferenceRules,
         );
         if (reference.isNotEmpty) cbc('PaymentID', reference);
         builder.element('cac:PayeeFinancialAccount', nest: () {
