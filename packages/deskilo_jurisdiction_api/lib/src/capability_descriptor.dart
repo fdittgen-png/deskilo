@@ -24,6 +24,12 @@ const String invoiceMentionsContractVersion = '1';
 /// apart (ADR 0050 §4).
 const String archiveContractVersion = '1';
 
+/// The version of the accounting format contract
+/// (`AccountingFormatContribution`): what a country's accounting export format
+/// declares about itself (its chart's country, its journal codes). Its own
+/// capability, so it is versioned apart (ADR 0050 §4).
+const String accountingFormatContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {

@@ -56,9 +56,9 @@ void main() {
       );
     for (final group in ['standard', 'reduced', 'unknown', '']) {
       text.writeln(
-        'tax key $group: ${datevGroupTaxKey(reference, group)} '
-        'revenue SKR03=${datevAutomaticRevenue(reference, 'SKR03', group, 'base')} '
-        'SKR04=${datevAutomaticRevenue(reference, 'SKR04', group, 'base')}',
+        'tax key $group: ${datevGroupTaxKey(reference, group, country: 'DE')} '
+        'revenue SKR03=${datevAutomaticRevenue(reference, 'SKR03', group, 'base', country: 'DE')} '
+        'SKR04=${datevAutomaticRevenue(reference, 'SKR04', group, 'base', country: 'DE')}',
       );
     }
     text

@@ -9,17 +9,6 @@ import 'fec_accounts.dart';
 import 'fec_lettering.dart';
 import 'ledger_entry.dart';
 
-const _salesJournal = 'VE';
-const _salesJournalLabel = 'Ventes';
-const _bankJournal = fecBankJournal;
-const _bankJournalLabel = fecBankJournalLabel;
-// #936 — purchases: what the workspace paid or owes, not what it sold.
-const _purchasesJournal = 'HA';
-const _purchasesJournalLabel = 'Achats';
-// #2355 — the VAT moving from pending to due on its tax point.
-const _miscJournal = 'OD';
-const _miscJournalLabel = 'Opérations diverses';
-
 /// Writes the FEC rows: the sales journal, the bank journal, the purchases
 /// journal and the tax-point entries, then sorts them as the arrêté reads.
 class FecWriter {
@@ -42,7 +31,21 @@ class FecWriter {
     this.taxPoints,
     this.vatPendingLabel = "TVA collectée en attente d'exigibilité",
     this.dayOf = WorkspaceTime.dateOf,
-  });
+    FecJournals? journals,
+  }) : journals = journals ?? FecJournals.installed();
+
+  /// #3429 -- the journals (code and label per role) the installed FEC format
+  /// declares.
+  final FecJournals journals;
+
+  String get _salesJournal => journals.sales.code;
+  String get _salesJournalLabel => journals.sales.label;
+  String get _bankJournal => journals.bank.code;
+  String get _bankJournalLabel => journals.bank.label;
+  String get _purchasesJournal => journals.purchases.code;
+  String get _purchasesJournalLabel => journals.purchases.label;
+  String get _miscJournal => journals.misc.code;
+  String get _miscJournalLabel => journals.misc.label;
 
   final String currency;
   final List<Invoice> invoices;
@@ -239,7 +242,7 @@ class FecWriter {
       letter: letter, validDate: invoice.issuedAt,
     );
     if (pending) releaseVat(invoice, label);
-    bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel);
+    bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel, journals);
   }
 
   /// An invoice: the receivable, its revenue and VAT rate by rate, the
@@ -331,7 +334,7 @@ class FecWriter {
     bookCredits(invoice);
     final match = matches[invoice.id];
     bookSettlement(invoice, match);
-    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
+    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf, journals);
   }
 
   void bookCredits(Invoice invoice) {

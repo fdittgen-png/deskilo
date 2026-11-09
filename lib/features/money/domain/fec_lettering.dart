@@ -1,12 +1,42 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show AccountingJournal;
+
+import '../../../core/jurisdiction/installed_accounting_formats.dart';
 
 import 'fec_accounts.dart';
 
-/// The bank journal's code and name.
-const fecBankJournal = 'BQ';
-const fecBankJournalLabel = 'Banque';
+/// #3429 -- the journals a FEC writes, as the installed FEC format declares
+/// them (`AccountingFormatContribution.journals`): code and label per role.
+class FecJournals {
+  const FecJournals({
+    required this.sales,
+    required this.bank,
+    required this.purchases,
+    required this.misc,
+  });
+
+  /// The journals of the installed FEC declaration.
+  factory FecJournals.installed() {
+    final declared = accountingFormatOf('fec').journals;
+    AccountingJournal of(String role) =>
+        declared[role] ??
+        (throw StateError('the FEC declaration has no $role journal'));
+    return FecJournals(
+      sales: of('sales'),
+      bank: of('bank'),
+      purchases: of('purchases'),
+      misc: of('misc'),
+    );
+  }
+
+  final AccountingJournal sales;
+  final AccountingJournal bank;
+  final AccountingJournal purchases;
+  final AccountingJournal misc;
+}
 
 /// #2365 — `DateLet` (column index 14) is mandatory whenever `EcritureLet`
 /// (index 13) is filled: it is the date the lettering was made, i.e. the
@@ -66,6 +96,7 @@ void bookFecRefund(
   FecAccounts accounts,
   String customersLabel,
   String bankLabel,
+  FecJournals journals,
 ) {
   final refund = refundedCents(invoice, match);
   if (refund == 0) return;
@@ -79,9 +110,9 @@ void bookFecRefund(
     (accounts.bank, bankLabel, false),
   ]) {
     write(
-      journal: fecBankJournal,
-      journalLabel: fecBankJournalLabel,
-      number: '$fecBankJournal-${invoice.number}-R',
+      journal: journals.bank.code,
+      journalLabel: journals.bank.label,
+      number: '${journals.bank.code}-${invoice.number}-R',
       date: on,
       account: account,
       accountLabel: accountLabel,
@@ -110,12 +141,13 @@ void bookFecWriteOff(
   FecAccounts accounts,
   String customersLabel,
   DateTime Function(DateTime instant) dayOf,
+  FecJournals journals,
 ) {
   final writtenOff = match?.writeoffAt;
   if (match == null || match.pending || writtenOff == null) return;
   final owed = invoice.totalCents - match.paidCents;
   if (owed <= 0) return;
-  final entry = 'OD-${invoice.number}-W';
+  final entry = '${journals.misc.code}-${invoice.number}-W';
   final label = 'Créance irrécouvrable ${invoice.number}';
   final day = dayOf(writtenOff);
   for (final (account, accountLabel, aux, debit) in [
@@ -123,7 +155,7 @@ void bookFecWriteOff(
     (accounts.customers, customersLabel, true, false),
   ]) {
     write(
-      journal: 'OD', journalLabel: 'Opérations diverses',
+      journal: journals.misc.code, journalLabel: journals.misc.label,
       number: entry, date: day,
       account: account, accountLabel: accountLabel,
       auxNumber: aux ? invoice.memberId : '',

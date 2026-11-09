@@ -14,11 +14,12 @@ String datevRevenueAt(
   TaxReferenceSet reference,
   double percent,
   String base, {
+  required String country,
   String chart = 'SKR03',
 }) {
-  final group = reference.groupOfRate('DE', percent, 'S');
+  final group = reference.groupOfRate(country, percent, 'S');
   if (group.isEmpty || group == 'standard') return base;
-  return datevChartAccount(reference, chart, 'revenue:$group') ?? base;
+  return datevChartAccount(reference, chart, 'revenue:$group', country: country) ?? base;
 }
 
 /// The DATEV row of [role] in [chart]: `datev/<role>@SKR04` in the SKR04
@@ -26,14 +27,15 @@ String datevRevenueAt(
 String? datevChartAccount(
   TaxReferenceSet reference,
   String chart,
-  String role,
-) {
+  String role, {
+  required String country,
+}) {
   final skr04 = chart.trim().toUpperCase() == 'SKR04';
   final row = reference
       .resolved(null)
       .lookup(
         TaxDomain.accountMap,
-        'DE',
+        country,
         skr04 ? 'datev/$role@SKR04' : 'datev/$role',
       );
   return (row?.value as AccountMapValue?)?.account;
@@ -47,17 +49,22 @@ String? datevAutomaticRevenue(
   TaxReferenceSet reference,
   String chart,
   String group,
-  String standard,
-) => group.isEmpty || group == 'standard'
+  String standard, {
+  required String country,
+}) => group.isEmpty || group == 'standard'
     ? standard
-    : datevChartAccount(reference, chart, 'revenue:$group');
+    : datevChartAccount(reference, chart, 'revenue:$group', country: country);
 
 /// The BU-Schlüssel of the rate group [group]: the `datev/tax:<group>` row's
 /// tax code; null where the reference holds none.
-String? datevGroupTaxKey(TaxReferenceSet reference, String group) {
+String? datevGroupTaxKey(
+  TaxReferenceSet reference,
+  String group, {
+  required String country,
+}) {
   final row = reference
       .resolved(null)
-      .lookup(TaxDomain.accountMap, 'DE', 'datev/tax:$group');
+      .lookup(TaxDomain.accountMap, country, 'datev/tax:$group');
   final code = (row?.value as AccountMapValue?)?.taxCode ?? '';
   return code.isEmpty ? null : code;
 }

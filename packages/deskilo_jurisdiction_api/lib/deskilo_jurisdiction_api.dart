@@ -3,6 +3,7 @@
 /// invoice profiles (#3337) and national invoice mentions (#3429).
 library;
 
+export 'src/accounting_format_contribution.dart';
 export 'src/archive_contribution.dart';
 export 'src/capability_descriptor.dart';
 export 'src/filing_context.dart';
