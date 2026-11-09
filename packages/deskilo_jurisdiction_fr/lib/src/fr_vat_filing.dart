@@ -35,7 +35,7 @@ class FrVatFilingContribution extends VatFilingContribution {
   String get fileButtonId => 'ediTva';
 
   @override
-  bool get taxPointOnReceiptsByDefault => true;
+  bool get taxPointOnReceiptsByDefault => false;
 
   @override
   Set<FilingSource> get requiredSources => const {
