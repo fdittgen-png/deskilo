@@ -38,6 +38,9 @@ const _strings = InvoicePdfStrings(
   page: 'Seite',
 );
 
+String _prefix(String country) =>
+    paymentSlipOf('CH')!.addressCountryPrefix(country);
+
 const _words = SwissQrBillStrings(
   receipt: 'Empfangsschein',
   paymentPart: 'Zahlteil',
@@ -50,6 +53,7 @@ const _words = SwissQrBillStrings(
   amount: 'Betrag',
   acceptancePoint: 'Annahmestelle',
   separate: 'Vor der Einzahlung abzutrennen',
+  addressCountryPrefix: _prefix,
 );
 
 Invoice _invoice({
@@ -165,7 +169,6 @@ void main() {
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
       qrBillPage: withBill
           ? swissQrBillPage(
-              addressCountryPrefix: paymentSlipOf('CH')!.addressCountryPrefix,
               bill: bill,
               strings: _words,
               baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),

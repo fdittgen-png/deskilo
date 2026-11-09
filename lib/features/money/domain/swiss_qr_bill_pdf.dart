@@ -25,6 +25,7 @@ class SwissQrBillStrings {
     required this.amount,
     required this.acceptancePoint,
     required this.separate,
+    required this.addressCountryPrefix,
   });
 
   final String receipt;
@@ -38,6 +39,10 @@ class SwissQrBillStrings {
   final String amount;
   final String acceptancePoint;
   final String separate;
+
+  /// What an address of a country is prefixed with before its postal code (the
+  /// slip's add-on decides: none for its own country).
+  final String Function(String country) addressCountryPrefix;
 }
 
 const double _mm = PdfPageFormat.mm;
@@ -101,14 +106,10 @@ pw.Page swissQrBillPage({
   required SwissQrBillStrings strings,
   required pw.Font baseFont,
   required pw.Font boldFont,
-
-  /// What an address of a country is prefixed with before its postal code (the
-  /// slip's add-on decides: none for its own country).
-  required String Function(String country) addressCountryPrefix,
 }) {
   final debtor = bill.debtor;
   final reference = bill.referenceGrouped;
-  final creditorLines = _addressLines(bill.creditor, addressCountryPrefix);
+  final creditorLines = _addressLines(bill.creditor, strings.addressCountryPrefix);
 
   pw.Widget payableBy({
     required double head,
@@ -123,8 +124,7 @@ pw.Page swissQrBillPage({
         head,
       ),
       if (debtor != null)
-        for (final line in _addressLines(debtor, addressCountryPrefix))
-          _value(line, body)
+        for (final line in _addressLines(debtor, strings.addressCountryPrefix)) _value(line, body)
       else
         pw.Container(
           width: boxW * _mm,

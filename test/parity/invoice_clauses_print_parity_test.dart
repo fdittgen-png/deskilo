@@ -254,7 +254,7 @@ Future<String> _pdfAddresses() async {
       File('assets/fonts/Roboto-Regular.ttf').readAsBytesSync(),
     ),
   );
-  const words = SwissQrBillStrings(
+  final words = SwissQrBillStrings(
     receipt: 'Receipt',
     paymentPart: 'Payment',
     account: 'Account',
@@ -266,6 +266,7 @@ Future<String> _pdfAddresses() async {
     amount: 'Amount',
     acceptancePoint: 'Point',
     separate: 'Separate',
+    addressCountryPrefix: paymentSlipOf('CH')!.addressCountryPrefix,
   );
   final out = StringBuffer();
   for (final (label, debtor) in [
@@ -310,7 +311,6 @@ Future<String> _pdfAddresses() async {
     final doc = pw.Document(compress: false)
       ..addPage(
         swissQrBillPage(
-          addressCountryPrefix: paymentSlipOf('CH')!.addressCountryPrefix,
           bill: bill,
           strings: words,
           baseFont: font,

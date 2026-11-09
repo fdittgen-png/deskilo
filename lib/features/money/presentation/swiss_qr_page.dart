@@ -26,7 +26,6 @@ Future<pw.Page?> swissQrPageFor(
   final slip = paymentSlipFor(invoice, workspaceCountry);
   if (bill == null || slip == null) return null;
   return swissQrBillPage(
-    addressCountryPrefix: slip.addressCountryPrefix,
     bill: bill,
     strings: SwissQrBillStrings(
       receipt: l10n.qrBillReceipt,
@@ -40,6 +39,7 @@ Future<pw.Page?> swissQrPageFor(
       amount: l10n.qrBillAmount,
       acceptancePoint: l10n.qrBillAcceptancePoint,
       separate: l10n.qrBillSeparate,
+      addressCountryPrefix: slip.addressCountryPrefix,
     ),
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
