@@ -42,6 +42,7 @@ const _checklistFiles = <String>{
   'packages/deskilo_invoice_model/lib/src/vat_compliance.dart',
   'packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart',
   'packages/deskilo_invoice_model/lib/src/vat_regime.dart',
+  'lib/features/money/application/vat_register_files.dart',
   'packages/deskilo_invoice_model/lib/src/invoice_clauses.dart',
   'lib/features/money/domain/report_data.dart',
   'lib/features/money/domain/swiss_qr_bill_pdf.dart',
