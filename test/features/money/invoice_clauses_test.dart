@@ -12,10 +12,11 @@ import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/domain/report_facts.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';
+import 'clause_rules_support.dart';
+
 
 const _en = ReportStrings();
 

@@ -5,4 +5,5 @@ library;
 export 'src/de_vat_filing.dart';
 export 'src/elster_writer.dart' show elsterPeriod;
 export 'src/de_archive.dart';
+export 'src/de_invoice_mentions.dart';
 export 'src/de_datev_format.dart';

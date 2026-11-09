@@ -66,10 +66,10 @@ Map<String, Object?> legalMentionData(
   final terms = PaymentTerms.ofLegal(legal).mergedWith(memberTerms);
   final sellerCountry = seller?.country ?? workspace?.countryCode ?? '';
   final clauses = frozen != null
-      ? qualifyClauses(frozen, strings, reference: reference)
+      ? qualifyWithRules(frozen, strings, reference: reference)
       : legacy
           ? legacyClauses(legal, terms, strings)
-          : qualifyClauses(
+          : qualifyWithRules(
               LegalClauseSnapshot.live(
                 legal: legal,
                 reference: reference,

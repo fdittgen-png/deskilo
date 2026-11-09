@@ -7,10 +7,10 @@
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/einvoice_channel_check.dart';
 import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/installed_reference_shims.dart';
+import 'clause_rules_support.dart';
 
 const _seller = InvoiceParty(
   name: 'Test Space',

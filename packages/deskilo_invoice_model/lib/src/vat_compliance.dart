@@ -8,6 +8,7 @@
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import 'place_of_supply.dart' show uncl5305ReverseCharge;
 import 'vat_regime.dart';
 
 // #3333: the Canadian registration numbers live in the standards package, one
@@ -96,7 +97,7 @@ String exemptionCodeForCategory(
   VatRegime regime,
 ) =>
     switch (category) {
-      'AE' => 'VATEX-EU-AE',
+      uncl5305ReverseCharge => 'VATEX-EU-AE',
       // #985 — outside the EU.
       'G' => 'VATEX-EU-G',
       _ => regime.exemptionReasonCode(sellerCountry),
@@ -124,7 +125,7 @@ String exemptionMentionFor({
   String? asOf,
 }) =>
     switch (category) {
-      'AE' => reverseChargeMention(sellerCountry, asOf: asOf, reference: reference),
+      uncl5305ReverseCharge => reverseChargeMention(sellerCountry, asOf: asOf, reference: reference),
       'G' => exportMention(sellerCountry, asOf: asOf, reference: reference),
       'E' when regime == VatRegime.vatRegistered &&
               buyerReason.trim().isNotEmpty =>

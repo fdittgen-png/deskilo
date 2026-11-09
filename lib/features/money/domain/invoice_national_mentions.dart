@@ -11,6 +11,9 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/jurisdiction/installed_invoice_mentions.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 
+/// The payment clauses of a document under its seller's country's rules.
+export 'clause_rules.dart' show qualifyWithRules;
+
 /// #3429 -- what the seller's own law adds, from the installed add-on of the seller's
 /// country (none for a country with no add-on).
 List<String> nationalMentionsOf(

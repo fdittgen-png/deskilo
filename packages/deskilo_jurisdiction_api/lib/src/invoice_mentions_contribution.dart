@@ -58,4 +58,18 @@ abstract class InvoiceMentionsContribution {
   /// to carry, in the order they are offered (Spain: R1-R5); empty when it
   /// asks none. Additive: the contract stays at version 1.
   List<String> get correctionReasonCodes => const [];
+
+  /// The family of the payment-clause rules the country's law gives an
+  /// invoice (`fr`, `de`, `gb`, `ch`, `ca`, `us`: the name the host's legal
+  /// profile carries, followed by `Business` or `Consumer`); empty when the
+  /// country has no family of its own and the host's fallback applies.
+  /// Additive: the contract stays at version 1.
+  String get profileFamily => '';
+
+  /// The payment clauses a BUSINESS customer's invoice prints in the host's
+  /// default wording when the owner wrote none, by clause id
+  /// (`latePenalty`, `recoveryIndemnity`, `escompte`); empty when the law
+  /// makes none automatic. The wording stays the host's, in the reader's
+  /// language. Additive: the contract stays at version 1.
+  Set<String> get automaticClauses => const {};
 }

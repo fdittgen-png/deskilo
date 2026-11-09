@@ -7,6 +7,7 @@
 // spelling.
 import 'package:deskilo/core/jurisdiction/installed_invoice_mentions.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LegalProfile;
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,22 +37,37 @@ class _OtherVersion extends InvoiceMentionsContribution {
 }
 
 void main() {
-  test('every installed add-on declares the current contract and a country', () {
-    final ids = <String>{};
-    for (final c in installedInvoiceMentions) {
-      final d = c.descriptor;
-      expect(d.contractVersion, invoiceMentionsContractVersion, reason: d.moduleId);
-      expect(d.implementationVersion, isNotEmpty);
-      expect(d.capabilityId, startsWith('invoice_mentions.'));
-      expect(ids.add(d.capabilityId), isTrue, reason: 'one add-on per country');
-    }
-    expect(ids, {
-      'invoice_mentions.CA',
-      'invoice_mentions.ES',
-      'invoice_mentions.FR',
-      'invoice_mentions.IT',
-    });
-  });
+  test(
+    'every installed add-on declares the current contract and a country',
+    () {
+      final ids = <String>{};
+      for (final c in installedInvoiceMentions) {
+        final d = c.descriptor;
+        expect(
+          d.contractVersion,
+          invoiceMentionsContractVersion,
+          reason: d.moduleId,
+        );
+        expect(d.implementationVersion, isNotEmpty);
+        expect(d.capabilityId, startsWith('invoice_mentions.'));
+        expect(
+          ids.add(d.capabilityId),
+          isTrue,
+          reason: 'one add-on per country',
+        );
+      }
+      expect(ids, {
+        'invoice_mentions.CA',
+        'invoice_mentions.CH',
+        'invoice_mentions.DE',
+        'invoice_mentions.ES',
+        'invoice_mentions.FR',
+        'invoice_mentions.GB',
+        'invoice_mentions.IT',
+        'invoice_mentions.US',
+      });
+    },
+  );
 
   test('a country with an add-on states its lines', () {
     final resolution = resolveInvoiceMentions(
@@ -65,16 +81,64 @@ void main() {
     );
   });
 
-  test('a country with no add-on states none, and never another country\'s', () {
-    for (final code in ['DE', 'CH', '', null, '  ']) {
-      expect(
-        resolveInvoiceMentions(
-          LegalContext(countryCode: code),
-          installedInvoiceMentions,
-        ),
-        isA<NoMentions>(),
-        reason: '$code',
+  test(
+    'a country with no add-on states none, and never another country\'s',
+    () {
+      for (final code in ['AT', 'PL', '', null, '  ']) {
+        expect(
+          resolveInvoiceMentions(
+            LegalContext(countryCode: code),
+            installedInvoiceMentions,
+          ),
+          isA<NoMentions>(),
+          reason: '$code',
+        );
+      }
+    },
+  );
+
+  test('a country whose law adds no line still declares its clause family', () {
+    String family(String code) {
+      final r = resolveInvoiceMentions(
+        LegalContext(countryCode: code),
+        installedInvoiceMentions,
       );
+      return (r as ResolvedMentions).contribution.profileFamily;
+    }
+
+    expect(
+      {
+        for (final c in ['FR', 'DE', 'GB', 'CH', 'CA', 'US']) c: family(c),
+      },
+      {'FR': 'fr', 'DE': 'de', 'GB': 'gb', 'CH': 'ch', 'CA': 'ca', 'US': 'us'},
+    );
+    // ES and IT add lines but have no clause family of their own
+    expect(family('ES'), isEmpty);
+    expect(family('IT'), isEmpty);
+    // only the French law makes clauses automatic
+    for (final c in installedInvoiceMentions) {
+      expect(
+        c.automaticClauses,
+        c.descriptor.capabilityId == 'invoice_mentions.FR'
+            ? {'latePenalty', 'recoveryIndemnity', 'escompte'}
+            : isEmpty,
+        reason: c.descriptor.capabilityId,
+      );
+    }
+  });
+
+  test('every installed clause family names both of its legal profiles', () {
+    final profiles = LegalProfile.values.asNameMap();
+    for (final c in installedInvoiceMentions) {
+      final family = c.profileFamily;
+      if (family.isEmpty) continue;
+      for (final capacity in ['Business', 'Consumer']) {
+        expect(
+          profiles.containsKey('$family$capacity'),
+          isTrue,
+          reason: '${c.descriptor.capabilityId}: $family$capacity',
+        );
+      }
     }
   });
 

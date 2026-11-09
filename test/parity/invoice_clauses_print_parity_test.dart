@@ -14,11 +14,12 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_invoice.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_pdf.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../features/money/clause_rules_support.dart';
 import 'parity_golden.dart';
+
 
 final _reference = ActiveTaxReference.current;
 
