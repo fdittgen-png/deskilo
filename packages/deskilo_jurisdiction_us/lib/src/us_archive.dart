@@ -21,4 +21,7 @@ class UsArchive extends ArchiveContribution {
 
   @override
   bool get readableHandover => true;
+
+  @override
+  bool get retentionExtendsBySetting => true;
 }
