@@ -31,12 +31,10 @@ class FecWriter {
     this.taxPoints,
     this.vatPendingLabel = "TVA collectée en attente d'exigibilité",
     this.dayOf = WorkspaceTime.dateOf,
-    FecJournals? journals,
-  }) : journals = journals ?? FecJournals.installed();
+  });
 
-  /// #3429 -- the journals (code and label per role) the installed FEC format
-  /// declares.
-  final FecJournals journals;
+  /// #3429 -- the journals (code and label per role) the accounts carry.
+  FecJournals get journals => accounts.journals;
 
   final String currency;
   final List<Invoice> invoices;
@@ -233,7 +231,7 @@ class FecWriter {
       letter: letter, validDate: invoice.issuedAt,
     );
     if (pending) releaseVat(invoice, label);
-    bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel, journals);
+    bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel);
   }
 
   /// An invoice: the receivable, its revenue and VAT rate by rate, the
@@ -325,7 +323,7 @@ class FecWriter {
     bookCredits(invoice);
     final match = matches[invoice.id];
     bookSettlement(invoice, match);
-    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf, journals);
+    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
   }
 
   void bookCredits(Invoice invoice) {
