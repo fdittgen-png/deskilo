@@ -6,6 +6,7 @@
 // syntaxes are still built, a FatturaPA request is an explicit refusal (never
 // another syntax, never a fallback), and what was already issued, sent and
 // received through Italy is still readable.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
@@ -73,7 +74,7 @@ Invoice _invoice() => Invoice(
   signature: 'f' * 64,
 );
 
-EInvoiceInput get _input => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+EInvoiceInput get _input => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
   invoice: _invoice(),
   seller: _seller,
   buyer: _buyer,

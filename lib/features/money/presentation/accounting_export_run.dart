@@ -21,6 +21,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/jurisdiction/installed_vat_filings.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_connection.dart';
@@ -511,9 +512,7 @@ class AccountingExportRun {
     // #2358 — the month of the latest invoice: transactions on the
     // invoice date, payments on receipts (the French default) unless
     // the workspace opted for the débits.
-    final last = invoices.map((i) => i.issuedAt).reduce(
-          (a, b) => a.isAfter(b) ? a : b,
-        );
+    final last = invoices.map((i) => i.issuedAt).reduce((a, b) => a.isAfter(b) ? a : b);
     final month = WorkspaceTime.dateOf(last);
     await runGuarded(
       context,
@@ -527,11 +526,8 @@ class AccountingExportRun {
           reference: taxReference, dayOf: workspaceDayOf,
           matches: matches,
           instalments: books.instalments,
-          onReceipts: workspaceTaxPointBasis(
-            workspace.invoiceLegal,
-            workspace.countryCode,
-            reference: taxReference,
-          ).onReceipts,
+          basis: EReportingBasis(homeCountry: eReportingCountry,
+            onReceipts: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode, reference: taxReference).onReceipts),
           currency: workspace.currencyCode,
         ).toXml(),
         named('e-reporting'),

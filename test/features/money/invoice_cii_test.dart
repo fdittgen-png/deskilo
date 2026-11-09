@@ -4,6 +4,7 @@
 // semantics as the UBL builder, different grammar, and every group is an
 // XSD *sequence*: an element out of order is rejected before a single
 // business rule is read.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -59,7 +60,7 @@ XmlDocument _doc({
   InvoiceParty buyer = _buyer,
   String iban = '',
 }) =>
-    XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
+    XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice ?? _invoice(),
       seller: seller,
       buyer: buyer,
       iban: iban,

@@ -37,20 +37,22 @@ enum _Kind {
   /// A private person, in France or abroad: reported per day, aggregated.
   b2c,
 
-  /// A business with a VAT id outside France: reported per invoice.
+  /// A business with a VAT id outside the reporting country: reported per
+  /// invoice.
   b2bInternational,
 
-  /// A French business: its e-invoice reports it, nothing here.
+  /// A business of the reporting country: its e-invoice reports it, nothing
+  /// here.
   b2bDomestic;
 
   /// The kind of the sale [invoice] made.
-  static _Kind of(Invoice invoice) {
+  static _Kind of(Invoice invoice, String homeCountry) {
     final buyer = invoice.buyerParty;
     final vatId = (buyer?.vatId ?? '').trim();
     if (vatId.isEmpty) return b2c;
     final country = (buyer?.country ?? '').trim().toUpperCase();
     final prefix = vatId.length >= 2 ? vatId.substring(0, 2).toUpperCase() : '';
-    final abroad = country.isNotEmpty ? country != 'FR' : prefix != 'FR';
+    final abroad = country.isNotEmpty ? country != homeCountry : prefix != homeCountry;
     return abroad ? b2bInternational : b2bDomestic;
   }
 }
@@ -106,6 +108,16 @@ class FrPayment {
   final String invoiceNumber;
   final String buyerCountry;
   final String buyerVatId;
+}
+
+/// What the reporting is judged by: the country whose businesses an
+/// e-invoice already reports (from the installed VAT filing add-on) and
+/// whether the seller's VAT on services falls due on receipts.
+class EReportingBasis {
+  const EReportingBasis({required this.homeCountry, this.onReceipts = true});
+
+  final String homeCountry;
+  final bool onReceipts;
 }
 
 /// The e-reporting of one period.
@@ -226,7 +238,7 @@ class FrEReport {
 /// seller, from the accounting view's [invoices], [matches] and
 /// [instalments] — the arguments of [vatTaxPointLedger].
 ///
-/// [onReceipts] is whether the seller's VAT on services falls due on
+/// [basis].onReceipts is whether the seller's VAT on services falls due on
 /// receipt (the French default; false after the option for the débits),
 /// which is what makes the payment data owed.
 FrEReport frEReport(
@@ -237,14 +249,14 @@ FrEReport frEReport(
   required DateTime Function(DateTime instant) dayOf,
   Map<String, InvoiceMatch> matches = const {},
   Map<String, List<TaxPointPayment>> instalments = const {},
-  bool onReceipts = true,
+  required EReportingBasis basis,
   String currency = 'EUR',
 }) {
   final byId = {for (final i in invoices) i.id: i};
-  _Kind kindOf(String id) => _Kind.of(byId[id]!);
+  _Kind kindOf(String id) => _Kind.of(byId[id]!, basis.homeCountry);
   final reportable = [
     for (final i in invoices)
-      if (_Kind.of(i) != _Kind.b2bDomestic) i,
+      if (_Kind.of(i, basis.homeCountry) != _Kind.b2bDomestic) i,
   ];
 
   final sales = vatTaxPointLedger(reportable, reference: reference, dayOf: dayOf)
@@ -283,7 +295,7 @@ FrEReport frEReport(
 
   final b2cMoney = <(DateTime, double), FrPayment>{};
   final intlMoney = <FrPayment>[];
-  if (onReceipts) {
+  if (basis.onReceipts) {
     final receipts = vatTaxPointLedger(
       reportable,
       matches: matches,

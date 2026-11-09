@@ -11,7 +11,7 @@ import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
     show FilingBox;
 import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart'
     as gb
-    show mtdBoxCentsOf, mtdBoxIsWhole;
+    show mtdBoxCentsOf, mtdBoxIsWhole, mtdFormCountry;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
@@ -27,7 +27,7 @@ Map<String, int> mtdBoxCents(
   required TaxReferenceSet reference,
 }) => gb.mtdBoxCentsOf([
   for (final box in vatFormBoxes(
-    'GB',
+    gb.mtdFormCountry,
     declaration.lines,
     periodEnd: declaration.periodEnd,
     reference: reference,

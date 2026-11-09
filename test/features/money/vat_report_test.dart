@@ -3,6 +3,7 @@
 // #878 — the VAT review as code: statutory mentions per country, the
 // shape of a European VAT id, the readiness warning, and the VAT
 // report built from frozen breakdowns with its CSV.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
@@ -108,7 +109,7 @@ void main() {
     });
 
     test('a malformed buyer id is a WARNING, never a blocker', () {
-      final readiness = checkEInvoiceReadiness(
+      final readiness = checkEInvoiceReadiness(account: installedInvoiceAccount(), 
         invoice: _invoice('INV-1',
             issuedAt: DateTime(2026, 9, 3),
             lines: const [InvoiceLine(kind: 'subscription', label: 'x', amountCents: 12000, vatPercent: 20)],

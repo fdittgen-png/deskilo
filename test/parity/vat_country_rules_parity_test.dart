@@ -19,8 +19,10 @@
 //                          company set|blank x legal id set|blank x regime
 //   exemption_codes.txt    each regime x FR|fr| fr |DE|blank
 //   mtd_boxes.txt          one declaration, the nine HMRC boxes in cents
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -63,7 +65,7 @@ String _flow(String country, String vatId) {
     end: DateTime(2026, 9, 30),
     reference: ActiveTaxReference.current,
     dayOf: (instant) => DateTime(instant.year, instant.month, instant.day),
-    onReceipts: false,
+    basis: EReportingBasis(homeCountry: eReportingCountry, onReceipts: false),
   );
   if (report.internationalTransactions.isNotEmpty) return 'international';
   if (report.b2cTransactions.isNotEmpty) return 'b2c';
@@ -115,6 +117,7 @@ String _sirenGaps() {
               legalId: legalId,
             );
             final readiness = checkEInvoiceReadiness(
+              account: installedInvoiceAccount(),
               invoice: _invoice(buyerParty, seller: sellerParty),
               seller: sellerParty,
               buyer: buyerParty,
@@ -144,7 +147,7 @@ String _exemptionCodes() => [
   for (final regime in VatRegime.values)
     for (final country in ['FR', 'fr', ' fr ', 'DE', 'GB', ''])
       "${regime.name} country='$country' -> "
-          "'${regime.exemptionReasonCode(country)}'",
+          "'${regime.exemptionReasonCode(country, rules: installedNationalInvoiceRules)}'",
 ].join('\n');
 
 String _mtdBoxes() {
@@ -202,6 +205,18 @@ void main() {
         'exemption_codes.txt': '${_exemptionCodes()}\n',
         'mtd_boxes.txt': '${_mtdBoxes()}\n',
       },
+    );
+  });
+
+  test('INTENDED NORMALISATION: an exempt seller whose country is written '
+      "' fr ' names the French franchise code, as 'FR' and 'fr' did (the "
+      'country is trimmed and upper-cased like every other rule)', () {
+    expect(
+      VatRegime.exempt.exemptionReasonCode(
+        ' fr ',
+        rules: installedNationalInvoiceRules,
+      ),
+      'VATEX-FR-FRANCHISE',
     );
   });
 }

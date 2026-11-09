@@ -68,6 +68,9 @@ class CapabilityDescriptor {
   /// (`vat_filing.FR`): never a new name for something already named.
   final String capabilityId;
 
+  /// The country the capability id names (`vat_filing.FR` -> `FR`).
+  String get country => capabilityId.substring(capabilityId.lastIndexOf('.') + 1);
+
   /// The facts a [GeneratedArtifact] records about its producer.
   Map<String, String> toProvenance() => {
     'module_id': moduleId,

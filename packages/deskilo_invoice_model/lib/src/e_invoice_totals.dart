@@ -5,6 +5,7 @@ import 'invoice.dart';
 import 'vat_compliance.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
+import 'national_invoice_rules.dart';
 
 /// #1154 — the figures a structured e-invoice states, computed ONCE.
 ///
@@ -71,6 +72,7 @@ EInvoiceTotals eInvoiceTotalsOf({
   required InvoiceParty seller,
   required InvoiceParty buyer,
   required TaxReferenceSet reference,
+  required NationalInvoiceRules rules,
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final category = invoice.counterpartyCategory.isNotEmpty
@@ -91,7 +93,7 @@ EInvoiceTotals eInvoiceTotalsOf({
   return EInvoiceTotals(
     regime: regime,
     category: category,
-    exemptionCode: exemptionCodeForCategory(category, seller.country, regime),
+    exemptionCode: exemptionCodeForCategory(category, seller.country, regime, rules),
     exemptionText: exemptionMentionFor(
       category: category,
       sellerCountry: seller.country,

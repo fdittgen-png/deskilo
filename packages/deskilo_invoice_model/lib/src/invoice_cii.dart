@@ -55,6 +55,7 @@ class _CiiWriter {
           seller: input.seller,
           buyer: input.buyer,
           reference: input.reference,
+          rules: input.nationalRules,
         );
 
   final EInvoiceInput input;

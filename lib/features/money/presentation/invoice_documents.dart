@@ -18,6 +18,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
@@ -399,7 +400,7 @@ String facturXmlOf(
 }) {
   final association = ref.read(sellerIsAssociationProvider);
   final words = reportStringsOf(context.l10n);
-  return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+  return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
