@@ -88,6 +88,11 @@ Map<String, Object?> legalMentionData(
   final pay = PaymentInstructions.fromDb(
     workspace?.paymentInstructions ?? const {},
   );
+  final identity = sellerIdentityOf(
+    sellerCountry,
+    vatId: seller?.vatId ?? workspace?.vatId ?? '',
+    legalId: seller?.legalId ?? workspace?.legalId ?? '',
+  );
   return <String, Object?>{
     'iban': pay.iban,
     'bic': pay.bic,
@@ -100,21 +105,10 @@ Map<String, Object?> legalMentionData(
     'payment_reference': pay.reference,
     'seller_legal_form': frozen?.legalForm ?? legal.legalForm,
     'seller_registration': frozen?.registration ?? legal.registration,
-    // #2360 — a Swiss UID prints the way art. 26 MWSTG shows it.
-    'seller_vat_id': sellerCountry.trim().toUpperCase() == 'CH' &&
-            isValidSwissUid(seller?.vatId ?? workspace?.vatId ?? '',
-                requireSuffix: false)
-        ? formatSwissUid(seller?.vatId ?? workspace?.vatId ?? '')
-        // #2361 — a Canadian business number prints as 123456789 RT0001.
-        : sellerCountry.trim().toUpperCase() == 'CA' &&
-                isValidCanadianBn(seller?.vatId ?? workspace?.vatId ?? '')
-            ? formatCanadianRegistration(seller?.vatId ?? workspace?.vatId ?? '')
-            : seller?.vatId ?? workspace?.vatId ?? '',
-    // #2361 — and Revenu Québec's number, kept here, as 1234567890 TQ0001.
-    'seller_legal_id': sellerCountry.trim().toUpperCase() == 'CA' &&
-            isValidQstNumber(seller?.legalId ?? workspace?.legalId ?? '')
-        ? formatCanadianRegistration(seller?.legalId ?? workspace?.legalId ?? '')
-        : seller?.legalId ?? workspace?.legalId ?? '',
+    // #2360/#2361 -- a Swiss UID, a Canadian business number and the Quebec
+    // number print the way their country shows them (the add-on formats).
+    'seller_vat_id': identity.vatId,
+    'seller_legal_id': identity.legalId,
     // #878/#895/#896 — the statutory mentions: why no tax is charged and
     // when it falls due (#2478: the texts are reference data).
     ...statutoryMentionData(reference: reference, (

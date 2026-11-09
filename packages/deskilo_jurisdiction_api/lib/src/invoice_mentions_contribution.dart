@@ -72,4 +72,14 @@ abstract class InvoiceMentionsContribution {
   /// makes none automatic. The wording stays the host's, in the reader's
   /// language. Additive: the contract stays at version 1.
   Set<String> get automaticClauses => const {};
+
+  /// The seller's VAT or tax registration number as the country prints it on
+  /// an invoice (a Swiss UID as `CHE-123.456.789`, a Canadian business number
+  /// as `123456789 RT0001`); [id] unchanged when it is not one the country
+  /// knows how to format. Additive: the contract stays at version 1.
+  String formatSellerVatId(String id) => id;
+
+  /// The seller's second registration number (the Quebec sales tax number)
+  /// as the country prints it; [id] unchanged when it is not one. Additive.
+  String formatSellerLegalId(String id) => id;
 }

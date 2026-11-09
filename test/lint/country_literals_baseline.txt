@@ -3,7 +3,6 @@
 [checklist]
 lib/features/money/domain/fr_ereporting.dart :: 2 :: #3429 VAT filing / e-invoice FR + GB
 lib/features/money/domain/mtd_boxes.dart :: 1 :: #3429 VAT filing / e-invoice FR + GB
-lib/features/money/domain/report_data.dart :: 3 :: #3429 Invoice clauses and print data: CH/CA seller ids
 lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429 Presentation: GB/CH/CA fields
 lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD
 lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1 :: #3429 Presentation: FR notice
