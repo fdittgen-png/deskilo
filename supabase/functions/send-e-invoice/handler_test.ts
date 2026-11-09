@@ -924,3 +924,79 @@ Deno.test("#3338/7: an old client's retry of an unresolved send cannot bypass th
   assertEquals(p.posts.length, 1, "no second upload");
   assertEquals(s.rows.size, 1, "and no second logical transmission");
 });
+
+// #2358 (carried from #2379) — the Peppol access point, mocked: one BIS
+// Billing 3.0 document per invoice to the configured participant id, the
+// message-level response read back and stored as the acknowledgement, and a
+// second delivery that sends nothing. A live sandbox round trip stays
+// owner-blocked; this proves the handler's side of it.
+Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, a second delivery sends nothing", async () => {
+  const s = new FakeStore();
+  s.provider = "peppol";
+  s.config = {
+    base_url: "https://ap.test",
+    api_key: "k",
+    legal_entity_id: "7",
+  };
+  const sent: { url: string; body: Record<string, unknown> }[] = [];
+  const asked: string[] = [];
+  const fetchImpl = ((input: string | URL | Request, init?: RequestInit) => {
+    const url = String(input instanceof Request ? input.url : input);
+    if ((init?.method ?? "GET") === "POST") {
+      sent.push({ url, body: JSON.parse(String(init?.body)) });
+      return Promise.resolve(
+        new Response(JSON.stringify({ guid: "G-7" }), { status: 200 }),
+      );
+    }
+    asked.push(url);
+    return Promise.resolve(
+      new Response(
+        JSON.stringify({ messageLevelResponse: "AP", status: "ACKNOWLEDGED" }),
+        { status: 200 },
+      ),
+    );
+  }) as typeof fetch;
+  const body = bodyOf({
+    format: "peppolBis",
+    receiver_scheme: "0208",
+    receiver_id: "0202239951",
+  });
+
+  const first = await read(await call(s, fetchImpl, body));
+  assertEquals(first.body.phase, "accepted");
+  assertEquals(first.body.external_id, "G-7");
+  // exactly one document left, to the configured participant id
+  assertEquals(sent.length, 1);
+  assertEquals(sent[0].url, "https://ap.test/api/v2/document_submissions");
+  const routed = sent[0].body.routing as {
+    eIdentifiers: { scheme: string; id: string }[];
+  };
+  assertEquals(routed.eIdentifiers, [{ scheme: "BE:EN", id: "0202239951" }]);
+  const doc = sent[0].body.document as {
+    rawDocumentData: { parseStrategy: string };
+  };
+  assertEquals(doc.rawDocumentData.parseStrategy, "ubl");
+
+  // the message-level response is read back and stored beside the upload
+  const row = [...s.rows.values()][0];
+  const status = await read(
+    await call(s, fetchImpl, {
+      workspace_id: WS,
+      action: "status",
+      transmission_id: row.id,
+    }),
+  );
+  assertEquals(status.body.document_status, "accepted");
+  assertEquals(asked, [
+    "https://ap.test/api/v2/document_submissions/G-7/evidence/sending",
+  ]);
+  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  assertEquals(row.phase, "accepted");
+
+  // a second delivery of the same invoice sends nothing
+  const again = await read(await call(s, fetchImpl, body));
+  assertEquals(again.body.phase, "accepted");
+  assertEquals(again.body.external_id, "G-7");
+  assertEquals(sent.length, 1);
+  assertEquals(s.rows.size, 1);
+});
