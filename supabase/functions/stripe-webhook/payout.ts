@@ -95,16 +95,24 @@ export async function handlePayout(
     console.error("stripe payout: credential lookup failed");
     return new Response("not_ready", { status: 500 });
   }
-  let workspaceId = "";
-  let key = "";
+  // EVERY workspace whose own secret signed the event: two spaces sharing one
+  // Stripe account (a dev/test twin, one company's spaces) share its secret, and
+  // a payout cannot be attributed to either of them by the signature alone.
+  const signed: Array<{ workspaceId: string; key: string }> = [];
   for (const row of (data ?? []) as Array<{ workspace_id: string; config: Row | null }>) {
     const config = (row.config ?? {}) as Record<string, string>;
     if (config.webhook_secret && (await verify(config.webhook_secret))) {
-      workspaceId = row.workspace_id;
-      key = config.secret_key ?? "";
-      break;
+      signed.push({ workspaceId: row.workspace_id, key: config.secret_key ?? "" });
     }
   }
+  if (signed.length > 1) {
+    console.error("stripe payout: signed by several workspaces' secrets, booking nothing", {
+      workspaces: signed.length,
+    });
+    return new Response("ok", { status: 200 });
+  }
+  const workspaceId = signed[0]?.workspaceId ?? "";
+  const key = signed[0]?.key ?? "";
   if (!workspaceId) {
     // Not signed by any workspace's own secret: another account's event, or
     // the installation's secret, which names no workspace. Never an error for

@@ -162,3 +162,20 @@ Deno.test("a credential lookup failure is a 500 and a payout with no key or no a
   assertEquals((await run(malformed, payoutEvent("payout.paid", { amount: "x" }), () => Promise.resolve(page([])))).status, 200);
   assertEquals(malformed.calls, []);
 });
+
+Deno.test("two workspaces sharing one Stripe secret: the payout is attributed to neither", async () => {
+  const fake = fakeAdmin({
+    credentials: {
+      data: [
+        { workspace_id: "ws-prod", config: { webhook_secret: SECRET, secret_key: "sk_a" } },
+        { workspace_id: "ws-twin", config: { webhook_secret: SECRET, secret_key: "sk_a" } },
+      ],
+      error: null,
+    },
+  });
+  let called = false;
+  const res = await run(fake, payoutEvent(), () => { called = true; return Promise.resolve(page(["txn_1"])); });
+  assertEquals(res.status, 200);
+  assertEquals(called, false);
+  assertEquals(fake.calls, []);
+});
