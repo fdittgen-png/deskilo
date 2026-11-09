@@ -74,7 +74,7 @@ const _elsewhere = {'E2', 'E5'};
     currency: line.currency,
     lines: [
       for (final l in byNif.values)
-        if (l.quarters.fold(0, (a, b) => a + b) >= line.cents) l,
+        if (l.quarters.fold(0, (a, b) => a + b) > line.cents) l,
     ]..sort((a, b) => a.nif.compareTo(b.nif)),
   );
 }
