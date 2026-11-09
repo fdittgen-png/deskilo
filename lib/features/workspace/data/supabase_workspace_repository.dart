@@ -6,12 +6,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/enum_wire.dart';
-import '../../../core/time/work_hours.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../../profile/domain/personal_info.dart';
-import '../domain/booking_granularity.dart';
-import '../domain/booking_policies.dart';
-import '../domain/closure_day.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/managed_access.dart';
@@ -20,7 +16,6 @@ import '../domain/member_badge.dart';
 import '../domain/new_member_defaults.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
-import '../domain/public_holidays.dart';
 import '../domain/site.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_branding.dart';
@@ -30,6 +25,7 @@ import '../domain/workspace_overview.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_settings_save.dart';
 import 'conversation_api.dart';
+import 'supabase_booking_rules.dart';
 import 'supabase_workspace_provenance.dart';
 import 'supabase_workspace_templates.dart';
 
@@ -38,7 +34,7 @@ part 'supabase_workspace_repository_part2.dart';
 part 'supabase_workspace_repository_part3.dart';
 
 class SupabaseWorkspaceRepository
-    with ConversationApi, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
+    with ConversationApi, SupabaseBookingRules, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
     implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
 
@@ -120,14 +116,6 @@ class SupabaseWorkspaceRepository
   @override Future<List<Member>> fetchMyMembers() => _fetchMyMembersImpl();
   @override Future<void> requestRoleChange(String workspaceId, {required String memberId, required bool makeAdmin}) => _requestRoleChangeImpl(workspaceId, memberId: memberId, makeAdmin: makeAdmin);
   @override Future<String> setWorkspaceCode(String workspaceId, String code) => _setWorkspaceCodeImpl(workspaceId, code);
-  @override Future<List<int>> fetchOpenWeekdays(String workspaceId) => _fetchOpenWeekdaysImpl(workspaceId);
-  @override Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) => _setOpenWeekdaysImpl(workspaceId, weekdays);
-  @override Future<String?> fetchDefaultPeriod(String workspaceId) => _fetchDefaultPeriodImpl(workspaceId);
-  @override Future<void> setDefaultPeriod(String workspaceId, String? wire) => _setDefaultPeriodImpl(workspaceId, wire);
-  @override Future<BookingGranularity> fetchBookingGranularity(String workspaceId) => _fetchBookingGranularityImpl(workspaceId);
-  @override Future<void> setBookingGranularity(String workspaceId, BookingGranularity granularity) => _setBookingGranularityImpl(workspaceId, granularity);
-  @override Future<WorkHours> fetchWorkHours(String workspaceId) => _fetchWorkHoursImpl(workspaceId);
-  @override Future<BookingPolicies> fetchBookingPolicies(String workspaceId) => _fetchBookingPoliciesImpl(workspaceId);
   @override Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) => _fetchNewMemberDefaultsImpl(workspaceId);
   @override Future<void> setNewMemberDefaults(String workspaceId, NewMemberDefaults defaults) => _setNewMemberDefaultsImpl(workspaceId, defaults);
   @override Future<Map<String, dynamic>> fetchLexicon(String workspaceId) => _fetchLexiconImpl(workspaceId);
@@ -136,19 +124,8 @@ class SupabaseWorkspaceRepository
   @override Future<Uint8List?> fetchWorkspaceEmblem(String workspaceId) => _fetchWorkspaceEmblemImpl(workspaceId);
   @override Future<void> clearWorkspaceEmblem(String workspaceId) => _clearWorkspaceEmblemImpl(workspaceId);
   @override Future<Map<String, dynamic>> setWorkspaceBranding(String workspaceId, Map<String, dynamic> delta) => _setWorkspaceBrandingImpl(workspaceId, delta);
-  @override Future<void> setBookingPolicy(String workspaceId, String key, {required bool enabled}) => _setBookingPolicyImpl(workspaceId, key, enabled: enabled);
-  @override Future<void> setLegendProfile(String workspaceId, LegendProfile profile) => _setLegendProfileImpl(workspaceId, profile);
-  @override Future<void> setOutsideHoursMode(String workspaceId, OutsideHoursMode mode) => _setOutsideHoursModeImpl(workspaceId, mode);
-  @override Future<void> setSimultaneousReservations(String workspaceId, int value) => _setSimultaneousReservationsImpl(workspaceId, value);
-  @override Future<void> setBookingLimit(String workspaceId, String key, int value) => _setBookingLimitImpl(workspaceId, key, value);
-  @override Future<void> setWorkHours(String workspaceId, WorkHours hours) => _setWorkHoursImpl(workspaceId, hours);
   @override Future<String?> fetchDefaultWorkspaceId() => _fetchDefaultWorkspaceIdImpl();
   @override Future<void> setDefaultWorkspaceId(String? workspaceId) => _setDefaultWorkspaceIdImpl(workspaceId);
-  @override Future<List<ClosureDay>> fetchClosureDays(String workspaceId) => _fetchClosureDaysImpl(workspaceId);
-  @override Future<HolidayGeneration> generateClosureDays(String workspaceId, {required String country, required int year, bool apply = false}) => _generateClosureDaysImpl(workspaceId, country: country, year: year, apply: apply);
-  @override Future<HolidayGeneration> importClosureDays(String workspaceId, {required List<({DateTime day, String name})> days, bool apply = false}) => _importClosureDaysImpl(workspaceId, days: days, apply: apply);
-  @override Future<ClosureDay> addClosureDay(String workspaceId, DateTime day, String reason) => _addClosureDayImpl(workspaceId, day, reason);
-  @override Future<void> removeClosureDay(String closureDayId) => _removeClosureDayImpl(closureDayId);
   @override Future<Workspace> saveWorkspaceSettings(String workspaceId, WorkspaceSettingsSave save) => _saveWorkspaceSettingsImpl(workspaceId, save);
   @override Future<void> setDeskOpacity(String workspaceId, int opacity) => _setDeskOpacityImpl(workspaceId, opacity);
   @override Future<void> resetWorkspace(String workspaceId) => _resetWorkspaceImpl(workspaceId);

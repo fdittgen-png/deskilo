@@ -12,116 +12,23 @@ extension _FakeWorkspaceRepositoryPart4 on FakeWorkspaceRepository {
     serverDefaultWorkspaceId = workspaceId;
   }
 
-  Future<WorkHours> _fetchWorkHoursImpl(String workspaceId) async =>
-      workHours[workspaceId] ?? WorkHours.defaults;
+  
 
-  Future<void> _setWorkHoursImpl(String workspaceId, WorkHours hours) async {
-    workHours[workspaceId] = hours;
-  }
+  
 
-  Future<WorkHoursProvenance> _fetchWorkHoursProvenanceImpl(String workspaceId) async =>
-      workHoursProvenance[workspaceId] ?? WorkHoursProvenance.productDefault;
+  
 
-  Future<void> _resetWorkHoursToDefaultImpl(String workspaceId) async {
-    workHoursResets.add(workspaceId);
-    workHours.remove(workspaceId);
-    workHoursProvenance[workspaceId] = WorkHoursProvenance.productDefault;
-  }
+  
 
-  Future<List<ClosureDay>> _fetchClosureDaysImpl(String workspaceId) async =>
-      closureDays.where((c) => c.workspaceId == workspaceId).toList()
-        ..sort((a, b) => a.day.compareTo(b.day));
+  
 
-  Future<HolidayGeneration> _generateClosureDaysImpl(
-    String workspaceId, {
-    required String country,
-    required int year,
-    bool apply = false,
-  }) async {
-    holidayCalls.add((country: country, year: year, apply: apply));
-    if (!apply) {
-      return HolidayGeneration(
-        days: holidayGeneration.days,
-        lockedMonths: holidayGeneration.lockedMonths,
-        created: 0,
-      );
-    }
-    var created = 0;
-    for (final d in holidayGeneration.creatable) {
-      closureDays.add(ClosureDay(
-        id: 'closure-${_nextId++}',
-        workspaceId: workspaceId,
-        day: d.day,
-        reason: d.key,
-      ));
-      created++;
-    }
-    return HolidayGeneration(
-      days: holidayGeneration.days,
-      lockedMonths: holidayGeneration.lockedMonths,
-      created: created,
-    );
-  }
+  
 
-  Future<HolidayGeneration> _importClosureDaysImpl(
-    String workspaceId, {
-    required List<({DateTime day, String name})> days,
-    bool apply = false,
-  }) async {
-    holidayImportCalls.add((days: List.of(days), apply: apply));
-    String month(DateTime d) => yearMonth(d.year, d.month);
-    bool present(DateTime d) => closureDays.any(
-        (c) => c.workspaceId == workspaceId && c.day == d);
-    final answer = [
-      for (final d in days)
-        (
-          day: d.day,
-          key: d.name,
-          locked: invoicedMonths.contains(month(d.day)),
-          present: present(d.day),
-        ),
-    ];
-    var created = 0;
-    if (apply) {
-      for (final d in answer.where((d) => !d.locked && !d.present)) {
-        closureDays.add(ClosureDay(
-          id: 'closure-${_nextId++}',
-          workspaceId: workspaceId,
-          day: d.day,
-          reason: d.key,
-        ));
-        created++;
-      }
-    }
-    return HolidayGeneration(
-      days: answer,
-      lockedMonths: {
-        for (final d in answer)
-          if (d.locked) month(d.day),
-      }.toList()
-        ..sort(),
-      created: created,
-    );
-  }
+  
 
-  Future<ClosureDay> _addClosureDayImpl(
-    String workspaceId,
-    DateTime day,
-    String reason,
-  ) async {
-    final closure = ClosureDay(
-      id: 'closure-${_nextId++}',
-      workspaceId: workspaceId,
-      day: DateTime(day.year, day.month, day.day),
-      reason: reason,
-    );
-    closureDays.add(closure);
-    return closure;
-  }
+  
 
-  Future<void> _removeClosureDayImpl(String closureDayId) async {
-    closureDays.removeWhere((c) => c.id == closureDayId);
-  }
+  
 
   Future<void> _resetWorkspaceImpl(String workspaceId) async {
     resetWorkspaceCalls.add(workspaceId);

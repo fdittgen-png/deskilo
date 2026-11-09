@@ -115,13 +115,13 @@ extension _FakeWorkspaceRepositoryPart1 on FakeWorkspaceRepository {
       throw failure;
     }
     final workspace = Workspace(
-      id: 'ws-created-${_nextId++}',
+      id: 'ws-created-${nextId++}',
       rolePermissions: everydayMatrix(),
       name: name,
       countryCode: countryCode,
       currencyCode: currencyCode,
       timezone: timezone,
-      inviteCode: 'NEWCODE$_nextId',
+      inviteCode: 'NEWCODE$nextId',
       // #917 — what the server's default does, mirrored here.
       environment: environment.wire,
     );
@@ -194,7 +194,7 @@ extension _FakeWorkspaceRepositoryPart1 on FakeWorkspaceRepository {
       throw StateError('invalid invite code');
     }
     final workspace = Workspace(
-      id: 'ws-joined-${_nextId++}',
+      id: 'ws-joined-${nextId++}',
       rolePermissions: everydayMatrix(),
       name: 'Joined Space',
       countryCode: 'DE',

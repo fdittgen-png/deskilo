@@ -388,31 +388,17 @@ extension _FakeWorkspaceRepositoryPart2 on FakeWorkspaceRepository {
     );
   }
 
-  Future<List<int>> _fetchOpenWeekdaysImpl(String workspaceId) async =>
-      List.of(openWeekdays[workspaceId] ?? const [1, 2, 3, 4, 5]);
+  
 
-  Future<void> _setOpenWeekdaysImpl(String workspaceId, List<int> weekdays) async {
-    openWeekdays[workspaceId] = List.of(weekdays);
-  }
+  
 
-  Future<BookingGranularity> _fetchBookingGranularityImpl(
-    String workspaceId,
-  ) async =>
-      bookingGranularities[workspaceId] ?? BookingGranularity.flexible;
+  
 
-  Future<void> _setBookingGranularityImpl(
-    String workspaceId,
-    BookingGranularity granularity,
-  ) async {
-    bookingGranularities[workspaceId] = granularity;
-  }
+  
 
-  Future<String?> _fetchDefaultPeriodImpl(String workspaceId) async =>
-      workspaceDefaultPeriods[workspaceId];
+  
 
-  Future<void> _setDefaultPeriodImpl(String workspaceId, String? wire) async {
-    workspaceDefaultPeriods[workspaceId] = (wire ?? '').isEmpty ? null : wire;
-  }
+  
 
   Future<NewMemberDefaults> _fetchNewMemberDefaultsImpl(String workspaceId) async =>
       newMemberDefaults[workspaceId] ?? const NewMemberDefaults();
