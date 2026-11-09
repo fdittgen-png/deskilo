@@ -27,5 +27,5 @@ class ChPaymentSlip extends PaymentSlipContribution {
   /// A Swiss address has no country prefix; a foreign one is `DE-10115 Berlin`.
   @override
   String addressCountryPrefix(String country) =>
-      country == 'CH' ? '' : '$country-';
+      '';
 }
