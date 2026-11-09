@@ -7,6 +7,7 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
+import { handlePayout, isPayoutEvent } from "./payout.ts";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -169,6 +170,17 @@ export async function handle(
   const object = ((event.data as Record<string, unknown>)?.object ??
     {}) as Record<string, unknown>;
   const sessionId = String(object.id ?? "");
+
+  // #2380 -- a payout event names no checkout session: the workspace is the
+  // one whose own webhook secret signed it (payout.ts).
+  if (isPayoutEvent(event.type)) {
+    return await handlePayout(
+      event,
+      (secret) =>
+        validSignature(payload, req.headers.get("stripe-signature") ?? "", secret, deps.nowS()),
+      { admin: deps.admin, env: deps.env, fetch: deps.fetch ?? fetch },
+    );
+  }
 
   const admin = deps.admin();
   // #2014 — every answer below is TRUE: 2xx only when the event was
