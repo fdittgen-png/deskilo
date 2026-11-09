@@ -25,6 +25,7 @@ class SwissQrBillStrings {
     required this.amount,
     required this.acceptancePoint,
     required this.separate,
+    required this.addressCountryPrefix,
   });
 
   final String receipt;
@@ -38,6 +39,10 @@ class SwissQrBillStrings {
   final String amount;
   final String acceptancePoint;
   final String separate;
+
+  /// What an address of a country is prefixed with before its postal code (the
+  /// slip's add-on decides: none for its own country).
+  final String Function(String country) addressCountryPrefix;
 }
 
 const double _mm = PdfPageFormat.mm;
@@ -50,10 +55,13 @@ pw.Widget _heading(String text, double size) => pw.Text(
 pw.Widget _value(String text, double size) =>
     pw.Text(text, style: pw.TextStyle(fontSize: size, lineSpacing: 1));
 
-List<String> _addressLines(SwissQrAddress a) => [
+List<String> _addressLines(
+  SwissQrAddress a,
+  String Function(String country) countryPrefix,
+) => [
   a.name,
   [a.street, a.houseNumber].where((p) => p.isNotEmpty).join(' '),
-  '${a.country == 'CH' ? '' : '${a.country}-'}${a.postalCode} ${a.city}',
+  '${countryPrefix(a.country)}${a.postalCode} ${a.city}',
 ].where((l) => l.trim().isNotEmpty).toList();
 
 /// The Swiss cross: a black square with a white cross, framed in white.
@@ -101,7 +109,7 @@ pw.Page swissQrBillPage({
 }) {
   final debtor = bill.debtor;
   final reference = bill.referenceGrouped;
-  final creditorLines = _addressLines(bill.creditor);
+  final creditorLines = _addressLines(bill.creditor, strings.addressCountryPrefix);
 
   pw.Widget payableBy({
     required double head,
@@ -116,7 +124,7 @@ pw.Page swissQrBillPage({
         head,
       ),
       if (debtor != null)
-        for (final line in _addressLines(debtor)) _value(line, body)
+        for (final line in _addressLines(debtor, strings.addressCountryPrefix)) _value(line, body)
       else
         pw.Container(
           width: boxW * _mm,

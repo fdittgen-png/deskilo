@@ -2,6 +2,23 @@
 //
 // #2360 — the QR-bill of an invoice: where a Swiss seller's customer pays.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show PaymentSlipContribution;
+
+import '../../../core/jurisdiction/installed_payment_slips.dart';
+
+/// #3429 -- the payment slip of the country [invoice]'s seller sells from (the
+/// seller party's, else [workspaceCountry]), from the installed add-on; null
+/// where that country has none.
+PaymentSlipContribution? paymentSlipFor(
+  Invoice invoice,
+  String workspaceCountry,
+) {
+  final seller = invoice.sellerParty;
+  return paymentSlipOf(
+    (seller?.country.isNotEmpty ?? false) ? seller!.country : workspaceCountry,
+  );
+}
 
 /// The QR-bill of [invoice], or null where none applies: the seller is not
 /// Swiss, the document is a proforma, a credit note or voided, the
@@ -16,10 +33,9 @@ SwissQrBill? swissQrBillOf(
   bool proforma = false,
 }) {
   final seller = invoice.sellerParty;
-  final country = (seller?.country.isNotEmpty ?? false)
-      ? seller!.country
-      : workspaceCountry;
-  if (country.trim().toUpperCase() != 'CH' ||
+  // the seller's country has a payment slip, or the invoice carries none
+  final slip = paymentSlipFor(invoice, workspaceCountry);
+  if (slip == null ||
       proforma ||
       invoice.isVoided ||
       invoice.totalCents <= 0) {
@@ -39,7 +55,7 @@ SwissQrBill? swissQrBillOf(
           streetLine: buyer.street,
           postalCode: buyer.postalCode,
           city: buyer.city,
-          country: buyer.country.isEmpty ? 'CH' : buyer.country,
+          country: buyer.country.isEmpty ? slip.debtorDefaultCountry : buyer.country,
         );
   return SwissQrBill.forInvoice(
     iban: iban,
