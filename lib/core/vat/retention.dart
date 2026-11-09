@@ -7,6 +7,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
+import '../jurisdiction/installed_archives.dart';
 import 'tax_reference_active.dart';
 
 /// The document classes a retention rule is kept for.
@@ -81,12 +82,10 @@ typedef RetentionRule = ({
   bool bySetting,
 });
 
-/// The country whose spaces may extend the rule with `retention.us_years`.
-const _usYearsCountry = 'US';
-
 /// True when a space of [country] may extend its rules with its own
-/// `retention.us_years`.
-bool retentionExtendsBySetting(String country) => country.trim().toUpperCase() == _usYearsCountry;
+/// `retention.us_years`: the country's archive add-on says so.
+bool retentionExtendsBySetting(String country) =>
+    archiveOf(country)?.retentionExtendsBySetting ?? false;
 
 /// The rules in force for [country] (the shared rule where it has none),
 /// one per document class that has one, in class order. A US space's
