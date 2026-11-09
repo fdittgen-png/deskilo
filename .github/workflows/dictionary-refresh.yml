@@ -58,13 +58,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: master
-      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1
-        with:
-          # The version quality.yml pins: the replay must be the same one.
-          version: 2.118.0
-      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
-        with:
-          deno-version: v2.x
+      # The versions quality.yml pins: the replay must be the same one.
+      - uses: ./.github/actions/supabase-cli
+      - uses: ./.github/actions/deno
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}

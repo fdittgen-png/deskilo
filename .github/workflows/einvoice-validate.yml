@@ -78,9 +78,16 @@ jobs:
         env:
           EINVOICE_SAMPLES_DIR: ${{ runner.temp }}/einvoice-samples
         run: flutter test test/features/money/einvoice_samples_test.dart
+      # #3473 -- the validators and schemas are checksum-pinned downloads;
+      # kept under their digest, a warm cache asks no server.
+      - name: Restore the pinned validator downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deskilo-toolchain/einvoice
+          key: toolchain-einvoice-${{ hashFiles('tool/einvoice/validate.sh') }}
       - name: Run the official validators
         run: |
-          bash tool/einvoice/validate.sh \
+          EINVOICE_DL_CACHE="$HOME/.cache/deskilo-toolchain/einvoice" bash tool/einvoice/validate.sh \
             "${{ runner.temp }}/einvoice-samples" \
             "${{ runner.temp }}/einvoice-validators"
       - name: Summary

@@ -35,17 +35,30 @@ sha() {
   else shasum -a 256 "$1" | cut -d' ' -f1; fi
 }
 
+# #3473 -- EINVOICE_DL_CACHE (optional) is a directory the workflow caches:
+# a download is kept there under its pinned digest, so a warm cache asks no
+# server (a release 504 or a slow national site cannot red the job), and the
+# digest is checked on the cached copy as well.
+cache=${EINVOICE_DL_CACHE:-}
+
 # fetch <url> <file> <sha256>
 fetch() {
   local url=$1 out=$2 want=$3
+  if [ ! -f "$out" ] && [ -n "$cache" ] && [ -f "$cache/$want" ]; then
+    cp "$cache/$want" "$out"
+  fi
   if [ ! -f "$out" ]; then
-    curl -fsSL --retry 3 --max-time 120 -o "$out" "$url"
+    curl -fsSL --retry 5 --retry-delay 5 --retry-all-errors --max-time 120 -o "$out" "$url"
   fi
   local got
   got=$(sha "$out")
   if [ "$got" != "$want" ]; then
     echo "::error::$url changed: sha256 $got, pinned $want" >&2
     exit 1
+  fi
+  if [ -n "$cache" ] && [ ! -f "$cache/$want" ]; then
+    mkdir -p "$cache"
+    cp "$out" "$cache/$want"
   fi
 }
 

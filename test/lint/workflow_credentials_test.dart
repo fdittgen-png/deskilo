@@ -97,22 +97,48 @@ void main() {
     expect(run, isNot(contains('2>&1')));
   });
 
-  test('the Edge deployment CLI has the same fixed version as replay', () {
+  test('the Edge deployment CLI is the replay\'s: one pinned, cached install', () {
     final setup = _step(
       'edge-functions',
       'functions',
       'Install the pinned deployment CLI',
     );
     expect(setup['if'], "steps.gate.outputs.ready == 'true'");
-    expect(setup['uses'], matches(r'^supabase/setup-cli@[0-9a-f]{40}$'));
+    // #3473 -- both go through the one composite (cache first, checksum
+    // verified), never a download of their own
+    expect(setup['uses'], './.github/actions/supabase-cli');
     final replay = _steps('quality', 'database').singleWhere(
-      (step) =>
-          (step['uses'] as String? ?? '').startsWith('supabase/setup-cli@'),
+      (step) => step['uses'] == './.github/actions/supabase-cli',
     );
-    expect(_mapAt(setup, 'with')['version'], _mapAt(replay, 'with')['version']);
+    expect(replay['if'], "env.DB_REQUIRED == 'true'");
+    for (final step in [..._steps('quality', 'database')]) {
+      expect(
+        (step['uses'] as String? ?? '').startsWith('supabase/setup-cli@'),
+        isFalse,
+      );
+    }
     final deploy =
         _step('edge-functions', 'functions', 'Deploy')['run'] as String;
     expect(deploy, isNot(contains('releases/latest')));
+  });
+
+  test('the toolchain installs are pinned, cached and checksum-verified', () {
+    final cli = File('scripts/install_supabase_cli.sh').readAsStringSync();
+    expect(cli, contains('version=2.118.0'));
+    expect(cli, matches(RegExp(r'archive_sha=[0-9a-f]{64}')));
+    expect(cli, matches(RegExp(r'binary_sha=[0-9a-f]{64}')));
+    final cliAction = File('.github/actions/supabase-cli/action.yml')
+        .readAsStringSync();
+    expect(cliAction, contains('actions/cache@v4'));
+    expect(cliAction, contains('toolchain-supabase-cli-2.118.0-'));
+    final denoAction =
+        File('.github/actions/deno/action.yml').readAsStringSync();
+    expect(denoAction, contains('actions/cache@v4'));
+    expect(denoAction, contains('deno-version: 2.9.8'));
+    expect(denoAction, isNot(contains('v2.x')));
+    expect(denoAction, contains('sha256sum -c'));
+    final gitleaks = File('scripts/install_gitleaks.sh').readAsStringSync();
+    expect(gitleaks, contains('checksum mismatch'));
   });
 
   test(
