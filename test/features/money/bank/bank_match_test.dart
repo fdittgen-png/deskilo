@@ -278,9 +278,8 @@ void main() {
     });
 
     test('the QR-bill prints the frozen reference', () {
-      final bill = SwissQrBill.forInvoice(rules: _rules,
-        iban: '',
-        qrIban: 'CH44 3199 9123 0008 8901 2',
+      final bill = SwissQrBill.forInvoice(
+      account: const PaymentAccount(rules: _rules, qrIban: 'CH44 3199 9123 0008 8901 2'),
         creditor: SwissQrAddress.fromLines(country: 'CH',
           name: 'Space',
           streetLine: 'Rue 1',

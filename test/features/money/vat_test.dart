@@ -262,7 +262,7 @@ void main() {
   group('e-invoice readiness', () {
     test('a VAT-charging seller WITH a breakdown is ready — that is the '
         'point of 0072', () {
-      final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller,
         buyer: _buyer, reference: ActiveTaxReference.current,
@@ -273,7 +273,7 @@ void main() {
     });
 
     test('a VAT-charging seller with NO breakdown is still refused', () {
-      final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final readiness = checkEInvoiceReadiness(
         invoice: _invoice(vatTotals: const []),
         seller: _seller,
         buyer: _buyer, reference: ActiveTaxReference.current,
@@ -285,7 +285,7 @@ void main() {
     });
 
     test('BR-S-02: a VAT-charging seller needs its VAT identifier', () {
-      final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final readiness = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _seller.copyWith(vatId: ''),
         buyer: _buyer, reference: ActiveTaxReference.current,

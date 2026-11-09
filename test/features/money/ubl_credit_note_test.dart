@@ -189,7 +189,7 @@ void main() {
 
   test('readiness: a pure avoir is a document to send; one that nets '
       'payments is refused', () {
-    EInvoiceReadiness check(List<InvoiceLine> lines) => checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+    EInvoiceReadiness check(List<InvoiceLine> lines) => checkEInvoiceReadiness(
       invoice: _doc(lines),
       seller: _seller,
       buyer: _buyer, reference: ActiveTaxReference.current,

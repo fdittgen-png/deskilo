@@ -192,11 +192,11 @@ void main() {
   group('a QR-IBAN invoice with no frozen reference is refused, never sent '
       'without one', () {
     test('the readiness check refuses it, with its own reason', () {
-      final r = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final r = checkEInvoiceReadiness(
         invoice: _invoice(),
         seller: _input(_invoice(), _qrIban).seller,
         buyer: _input(_invoice(), _qrIban).buyer,
-        iban: _qrIban, reference: ActiveTaxReference.current,
+        account: PaymentAccount(iban: _qrIban, rules: installedPaymentReferenceRules), reference: ActiveTaxReference.current,
       );
       expect(r.blocking, contains(EInvoiceGap.qrIbanWithoutReference));
       // With a frozen reference, or paid to an ordinary IBAN, it passes.
@@ -205,11 +205,11 @@ void main() {
         (_invoice(), _iban),
       ]) {
         expect(
-          checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+          checkEInvoiceReadiness(
             invoice: invoice,
             seller: _input(invoice, iban).seller,
             buyer: _input(invoice, iban).buyer,
-            iban: iban, reference: ActiveTaxReference.current,
+            account: PaymentAccount(iban: iban, rules: installedPaymentReferenceRules), reference: ActiveTaxReference.current,
           ).gaps,
           isNot(contains(EInvoiceGap.qrIbanWithoutReference)),
         );

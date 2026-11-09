@@ -58,8 +58,11 @@ SwissQrBill? swissQrBillOf(
           country: buyer.country.isEmpty ? slip.homeCountry : buyer.country,
         );
   return SwissQrBill.forInvoice(
-    iban: iban,
-    qrIban: qrIban,
+    account: PaymentAccount(
+      iban: iban,
+      qrIban: qrIban,
+      rules: paymentReferenceRulesOf(slip),
+    ),
     creditor: creditor,
     debtor: debtor,
     totalCents: invoice.totalCents,
@@ -67,6 +70,5 @@ SwissQrBill? swissQrBillOf(
     invoiceNumber: invoice.number,
     additionalInfo: invoice.number,
     frozenQrr: invoiceQrrOf(invoice.number, invoice.legalSnapshot),
-    rules: paymentReferenceRulesOf(slip),
   );
 }

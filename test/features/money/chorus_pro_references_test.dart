@@ -81,7 +81,7 @@ void main() {
   group('the pre-flight check', () {
     test('warns — does not refuse — for a government destination with '
         'neither reference: the norm does not require them, the portal does', () {
-      final r = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_member), seller: _seller,
+      final r = checkEInvoiceReadiness(invoice: _invoice(_member), seller: _seller,
           buyer: _member, destination: 'government', reference: ActiveTaxReference.current);
       expect(r.gaps, contains(EInvoiceGap.missingPublicSectorReferences));
       expect(EInvoiceGap.missingPublicSectorReferences.isBlocking, isFalse);
@@ -89,10 +89,10 @@ void main() {
     });
 
     test('one reference is enough, and a customer destination asks for none', () {
-      expect(checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_mairie), seller: _seller,
+      expect(checkEInvoiceReadiness(invoice: _invoice(_mairie), seller: _seller,
               buyer: _mairie, destination: 'government', reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingPublicSectorReferences)));
-      expect(checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(_member), seller: _seller,
+      expect(checkEInvoiceReadiness(invoice: _invoice(_member), seller: _seller,
               buyer: _member, destination: 'customer', reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingPublicSectorReferences)));
     });

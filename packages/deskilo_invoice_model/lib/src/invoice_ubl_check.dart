@@ -143,6 +143,15 @@ class EInvoiceReadiness {
 /// locally. [seller] and [buyer] are the invoice's own snapshot (or, for
 /// pre-0069 documents, the live workspace identity — the exporter decides
 /// that, this only judges what it is handed).
+bool _qrIbanGap(PaymentAccount? account, Invoice invoice) =>
+    account != null &&
+    qrIbanWithoutReference(
+      account: account.iban,
+      creditNote: invoice.totalCents < 0,
+      legalSnapshot: invoice.legalSnapshot,
+      rules: account.rules,
+    );
+
 EInvoiceReadiness checkEInvoiceReadiness({
   required Invoice invoice,
   required InvoiceParty seller,
@@ -151,9 +160,8 @@ EInvoiceReadiness checkEInvoiceReadiness({
   /// public-sector references. Anything else does not.
   String destination = '',
   /// #2380 — the account the document names (BT-84); '' = none.
-  String iban = '',
+  PaymentAccount? account,
   required TaxReferenceSet reference,
-  required PaymentReferenceRules paymentReferenceRules,
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
@@ -181,12 +189,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
     if (invoice.isCreditNote &&
         invoice.lines.any((l) => l.amountCents < 0 && l.vatPercent == 0))
       EInvoiceGap.creditNoteWithPayments,
-    if (qrIbanWithoutReference(
-      account: iban,
-      creditNote: invoice.totalCents < 0,
-      legalSnapshot: invoice.legalSnapshot,
-      rules: paymentReferenceRules,
-    ))
+    if (_qrIbanGap(account, invoice))
       EInvoiceGap.qrIbanWithoutReference,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
     if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,

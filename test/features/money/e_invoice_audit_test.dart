@@ -87,20 +87,20 @@ void main() {
     test('#972 — a French business buyer without a SIREN: ADVICE from a '
         'seller the reform does not bind (an association), a REFUSAL from a '
         'VAT-registered French seller; with one it is clean', () {
-      final advice = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(), seller: _seller, buyer: _kaloa, reference: ActiveTaxReference.current);
+      final advice = checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: _kaloa, reference: ActiveTaxReference.current);
       expect(advice.blocking, isEmpty,
           reason: 'EN 16931 never required BT-47; the file is valid');
       expect(advice.warnings, contains(EInvoiceGap.buyerLegalIdAdvisable));
       expect(advice.ready, isTrue);
 
       final registered = _seller.copyWith(vatRegime: 'vat_registered', vatId: 'FR12345678901');
-      final refusal = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final refusal = checkEInvoiceReadiness(
           invoice: _invoice(), seller: registered, buyer: _kaloa, reference: ActiveTaxReference.current);
       expect(refusal.blocking, contains(EInvoiceGap.missingBuyerLegalId));
       expect(EInvoiceGap.missingBuyerLegalId.fixableInSettings, isFalse,
           reason: 'it is the member\'s data, not a workspace setting');
 
-      final with_ = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final with_ = checkEInvoiceReadiness(
           invoice: _invoice(), seller: _seller, buyer: _kaloa.copyWith(legalId: '901234567'), reference: ActiveTaxReference.current);
       expect(with_.gaps, isNot(contains(EInvoiceGap.missingBuyerLegalId)));
       expect(with_.gaps, isNot(contains(EInvoiceGap.buyerLegalIdAdvisable)));
@@ -108,10 +108,10 @@ void main() {
 
     test('a private person, or a foreign buyer, is not asked for a SIREN', () {
       final person = _kaloa.copyWith(company: '', name: 'Guilhem MARTIN');
-      expect(checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(), seller: _seller, buyer: person, reference: ActiveTaxReference.current).gaps,
+      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: person, reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingBuyerLegalId)));
       final abroad = _kaloa.copyWith(country: 'DE');
-      expect(checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(), seller: _seller, buyer: abroad, reference: ActiveTaxReference.current).gaps,
+      expect(checkEInvoiceReadiness(invoice: _invoice(), seller: _seller, buyer: abroad, reference: ActiveTaxReference.current).gaps,
           isNot(contains(EInvoiceGap.missingBuyerLegalId)));
     });
   });

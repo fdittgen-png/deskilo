@@ -193,7 +193,7 @@ void main() {
     });
 
     test('refuses to leave without the customer\'s VAT id', () {
-      final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+      final readiness = checkEInvoiceReadiness(
         invoice: _invoice(vat: const [_ae], buyerVat: ''),
         seller: _seller,
         buyer: const InvoiceParty(name: 'Kunde GmbH', country: 'DE'), reference: ActiveTaxReference.current,

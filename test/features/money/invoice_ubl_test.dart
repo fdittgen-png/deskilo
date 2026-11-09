@@ -259,7 +259,7 @@ void main() {
       InvoiceParty buyer = _buyer,
       Invoice? invoice,
     }) =>
-        checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+        checkEInvoiceReadiness(
           invoice: invoice ?? _invoice(),
           seller: seller,
           buyer: buyer, reference: ActiveTaxReference.current,

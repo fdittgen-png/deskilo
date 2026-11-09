@@ -147,9 +147,8 @@ void main() {
   });
 
   test('forInvoice: QR-IBAN takes QRR, a plain IBAN SCOR, else none', () {
-    final qr = SwissQrBill.forInvoice(rules: _rules,
-      iban: 'CH93 0076 2011 6238 5295 7',
-      qrIban: 'CH44 3199 9123 0008 8901 2',
+    final qr = SwissQrBill.forInvoice(
+      account: const PaymentAccount(rules: _rules, iban: 'CH93 0076 2011 6238 5295 7', qrIban: 'CH44 3199 9123 0008 8901 2'),
       creditor: _creditor,
       debtor: _debtor,
       totalCents: 10810,
@@ -158,9 +157,8 @@ void main() {
     )!;
     expect(qr.referenceType, 'QRR');
     expect(qr.account, 'CH4431999123000889012');
-    final plain = SwissQrBill.forInvoice(rules: _rules,
-      iban: 'CH93 0076 2011 6238 5295 7',
-      qrIban: '',
+    final plain = SwissQrBill.forInvoice(
+      account: const PaymentAccount(rules: _rules, iban: 'CH93 0076 2011 6238 5295 7'),
       creditor: _creditor,
       debtor: null,
       totalCents: 10810,
@@ -173,9 +171,8 @@ void main() {
       String iban = '',
       String qrIban = '',
       int total = 100,
-    }) => SwissQrBill.forInvoice(rules: _rules,
-      iban: iban,
-      qrIban: qrIban,
+    }) => SwissQrBill.forInvoice(
+      account: PaymentAccount(rules: _rules, iban: iban, qrIban: qrIban),
       creditor: _creditor,
       debtor: null,
       totalCents: total,
@@ -190,9 +187,8 @@ void main() {
       reason: 'a credit note is not paid in',
     );
     // A debtor the guidelines refuse is left out; the bill stands.
-    final noDebtor = SwissQrBill.forInvoice(rules: _rules,
-      iban: 'CH93 0076 2011 6238 5295 7',
-      qrIban: '',
+    final noDebtor = SwissQrBill.forInvoice(
+      account: const PaymentAccount(rules: _rules, iban: 'CH93 0076 2011 6238 5295 7'),
       creditor: _creditor,
       debtor: const SwissQrAddress(country: 'CH', name: '', postalCode: '', city: ''),
       totalCents: 100,

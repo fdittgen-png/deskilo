@@ -15,3 +15,18 @@ class PaymentReferenceRules {
   /// Upper-case ISO country codes.
   final Set<String> accountCountries;
 }
+
+/// The account a document names (and the QR-IBAN a Swiss bill may use) with
+/// the rules it is judged by: one argument instead of an account plus its
+/// rules, so a caller cannot pass the one without the other.
+class PaymentAccount {
+  const PaymentAccount({
+    required this.rules,
+    this.iban = '',
+    this.qrIban = '',
+  });
+
+  final PaymentReferenceRules rules;
+  final String iban;
+  final String qrIban;
+}

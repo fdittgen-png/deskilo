@@ -343,8 +343,7 @@ class SwissQrBill {
   /// an address the guidelines refuse). A QR-IBAN takes a QRR reference
   /// built from [invoiceNumber]; an ordinary IBAN takes the SCOR.
   static SwissQrBill? forInvoice({
-    required String iban,
-    required String qrIban,
+    required PaymentAccount account,
     required SwissQrAddress creditor,
     required SwissQrAddress? debtor,
     required int totalCents,
@@ -352,10 +351,26 @@ class SwissQrBill {
     required String invoiceNumber,
     String additionalInfo = '',
     String? frozenQrr,
-    required PaymentReferenceRules rules,
   }) {
-    final qr = qrIban.replaceAll(' ', '');
-    final plain = iban.replaceAll(' ', '');
+    final rules = account.rules;
+    final qr = account.qrIban.replaceAll(' ', '');
+    final plain = account.iban.replaceAll(' ', '');
+    SwissQrBill make(
+      String iban,
+      String type,
+      String reference,
+      SwissQrAddress? payer,
+    ) => SwissQrBill(
+      rules: rules,
+      iban: iban,
+      creditor: creditor,
+      amountCents: totalCents,
+      currency: currency,
+      debtor: payer,
+      referenceType: type,
+      reference: reference,
+      additionalInfo: additionalInfo,
+    );
     // #2380 — the reference frozen at issue, when the invoice has one.
     final qrRef = qr.isEmpty
         ? null
@@ -364,70 +379,18 @@ class SwissQrBill {
               : qrrReferenceOf(invoiceNumber));
     SwissQrBill bill;
     if (qrRef != null && isQrIban(qr, rules: rules)) {
-      bill = _make(
-        qr,
-        'QRR',
-        qrRef,
-        creditor,
-        debtor,
-        totalCents,
-        currency,
-        additionalInfo,
-        rules,
-      );
+      bill = make(qr, 'QRR', qrRef, debtor);
     } else if (plain.isNotEmpty && !isQrIban(plain, rules: rules)) {
       final scor = scorReferenceOf(invoiceNumber);
-      bill = _make(
-        plain,
-        scor == null ? 'NON' : 'SCOR',
-        scor ?? '',
-        creditor,
-        debtor,
-        totalCents,
-        currency,
-        additionalInfo,
-        rules,
-      );
+      bill = make(plain, scor == null ? 'NON' : 'SCOR', scor ?? '', debtor);
     } else {
       return null;
     }
     // A debtor the guidelines refuse is left out (the payer writes it in);
     // the creditor, the account and the amount cannot be.
     if (bill.debtor != null && bill.debtor!.problems.isNotEmpty) {
-      bill = _make(
-        bill.account,
-        bill.referenceType,
-        bill.reference,
-        creditor,
-        null,
-        totalCents,
-        currency,
-        additionalInfo,
-        rules,
-      );
+      bill = make(bill.account, bill.referenceType, bill.reference, null);
     }
     return bill.problems.isEmpty ? bill : null;
   }
-
-  static SwissQrBill _make(
-    String account,
-    String type,
-    String reference,
-    SwissQrAddress creditor,
-    SwissQrAddress? debtor,
-    int totalCents,
-    String currency,
-    String info,
-    PaymentReferenceRules rules,
-  ) => SwissQrBill(
-    rules: rules,
-    iban: account,
-    creditor: creditor,
-    amountCents: totalCents,
-    currency: currency,
-    debtor: debtor,
-    referenceType: type,
-    reference: reference,
-    additionalInfo: info,
-  );
 }

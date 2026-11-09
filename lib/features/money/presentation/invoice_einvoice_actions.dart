@@ -295,14 +295,17 @@ class _EInvoiceExportRun {
     required EInvoiceGatewayConfig gateway,
     required ({bool owner, bool issuer}) roles,
   }) {
-    final readiness = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+    final readiness = checkEInvoiceReadiness(
       invoice: s.invoice,
       seller: s.seller,
       buyer: s.buyer,
       // #922 — the sheet's default leg is the government platform; the
       // public-sector references are asked for there, as a warning.
       destination: 'government',
-      iban: s.iban,
+      account: PaymentAccount(
+        iban: s.iban,
+        rules: installedPaymentReferenceRules,
+      ),
       reference: reference,
     );
     // The same judgement against the LIVE identity: if that one passes, the
@@ -311,11 +314,14 @@ class _EInvoiceExportRun {
     final identityFixedSince =
         s.invoice.sellerParty != null &&
         !readiness.ready &&
-        checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+        checkEInvoiceReadiness(
           invoice: s.invoice,
           seller: s.liveSeller,
           buyer: s.buyer,
-          iban: s.iban,
+          account: PaymentAccount(
+            iban: s.iban,
+            rules: installedPaymentReferenceRules,
+          ),
           reference: reference,
         ).ready;
     // #2358 — what the configured channel receives, what it still needs,

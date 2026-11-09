@@ -66,12 +66,12 @@ void main() {
         );
     const seller = InvoiceParty(name: 'W', country: 'FR', legalId: '123456789', vatId: 'FR12123456789', vatRegime: 'vat_registered');
     const buyer = InvoiceParty(name: 'B', country: 'FR');
-    final mixed = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+    final mixed = checkEInvoiceReadiness(
       invoice: inv(const [InvoiceVatTotal(percent: 20, category: 'S', netCents: 800, vatCents: 160, grossCents: 960), InvoiceVatTotal(percent: 0, category: 'O', netCents: 40, vatCents: 0, grossCents: 40)]),
       seller: seller, buyer: buyer, reference: ActiveTaxReference.current,
     );
     expect(mixed.blocking, contains(EInvoiceGap.mixedNotSubjectLines));
-    final association = checkEInvoiceReadiness(paymentReferenceRules: installedPaymentReferenceRules, 
+    final association = checkEInvoiceReadiness(
       invoice: inv(const [InvoiceVatTotal(percent: 0, category: 'O', netCents: 1000, vatCents: 0, grossCents: 1000)]),
       seller: seller.copyWith(vatRegime: 'not_subject', vatId: '', taxExemptionReason: 'art. 293 B'), buyer: buyer, reference: ActiveTaxReference.current,
     );
