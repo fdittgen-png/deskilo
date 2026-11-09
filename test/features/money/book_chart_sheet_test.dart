@@ -108,6 +108,12 @@ void main() {
       '606000',
       '401000',
       '654000',
+      '517100',
+      '517101',
+      '517102',
+      '627800',
+      '627801',
+      '627802',
     ]);
     expect(
       books.accounts.every((a) => a.origin == AccountOrigin.suggested),
@@ -127,6 +133,9 @@ void main() {
         BookRole.expenses: '606000',
         BookRole.suppliers: '401000',
         BookRole.writeOff: '654000',
+        // The first provider's rows (the map keeps one per role).
+        BookRole.clearing: '517100',
+        BookRole.fees: '627800',
       },
     );
 
