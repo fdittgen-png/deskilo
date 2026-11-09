@@ -7,6 +7,7 @@
 // spelling.
 import 'package:deskilo/core/jurisdiction/installed_invoice_mentions.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LegalProfile;
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -123,6 +124,21 @@ void main() {
             : isEmpty,
         reason: c.descriptor.capabilityId,
       );
+    }
+  });
+
+  test('every installed clause family names both of its legal profiles', () {
+    final profiles = LegalProfile.values.asNameMap();
+    for (final c in installedInvoiceMentions) {
+      final family = c.profileFamily;
+      if (family.isEmpty) continue;
+      for (final capacity in ['Business', 'Consumer']) {
+        expect(
+          profiles.containsKey('$family$capacity'),
+          isTrue,
+          reason: '${c.descriptor.capabilityId}: $family$capacity',
+        );
+      }
     }
   });
 

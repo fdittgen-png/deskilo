@@ -6,6 +6,7 @@
 // add-on has none (the EU fallback applies); an ambiguous composition is a
 // programming error.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/jurisdiction/installed_invoice_mentions.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
@@ -28,3 +29,16 @@ ClauseRules? clauseRulesOf(String sellerCountry) {
     ),
   };
 }
+
+/// The payment clauses [snapshot] prints, under the rules of its seller's
+/// country (from the installed add-on).
+QualifiedClauses qualifyWithRules(
+  LegalClauseSnapshot snapshot,
+  ReportStrings strings, {
+  required TaxReferenceSet reference,
+}) => qualifyClauses(
+  snapshot,
+  strings,
+  reference: reference,
+  rules: clauseRulesOf(snapshot.sellerCountry),
+);

@@ -67,15 +67,10 @@ Map<String, Object?> legalMentionData(
   final terms = PaymentTerms.ofLegal(legal).mergedWith(memberTerms);
   final sellerCountry = seller?.country ?? workspace?.countryCode ?? '';
   final clauses = frozen != null
-      ? qualifyClauses(
-          frozen,
-          strings,
-          reference: reference,
-          rules: clauseRulesOf(frozen.sellerCountry),
-        )
+      ? qualifyWithRules(frozen, strings, reference: reference)
       : legacy
           ? legacyClauses(legal, terms, strings)
-          : qualifyClauses(
+          : qualifyWithRules(
               LegalClauseSnapshot.live(
                 legal: legal,
                 reference: reference,
@@ -85,8 +80,7 @@ Map<String, Object?> legalMentionData(
                 memberCapacity: memberCapacity,
               ),
               strings,
-              reference: reference,
-              rules: clauseRulesOf(sellerCountry));
+              reference: reference);
   // #871 — the bank block. A French (and German) invoice carries the
   // account it is to be paid into, and until now a designed report
   // could not print one: the details were stored but no placeholder

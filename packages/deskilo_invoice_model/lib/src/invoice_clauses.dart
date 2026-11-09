@@ -301,7 +301,7 @@ class ClauseRules {
 LegalProfile legalProfileOf(
   LegalClauseSnapshot snapshot, {
   required TaxReferenceSet reference,
-  ClauseRules? rules,
+  required ClauseRules? rules,
 }) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
   // #2358 -- a national clearance channel the app does not speak yet, or a
@@ -310,8 +310,12 @@ LegalProfile legalProfileOf(
     return LegalProfile.unsupported;
   }
   final family = rules?.family ?? '';
-  LegalProfile? own(String capacity) =>
-      family.isEmpty ? null : LegalProfile.values.asNameMap()['$family$capacity'];
+  // A family the add-on declares must name a profile: a typo is a fault, not
+  // a silent fall to the EU rules.
+  LegalProfile? own(String capacity) => family.isEmpty
+      ? null
+      : LegalProfile.values.asNameMap()['$family$capacity'] ??
+            (throw StateError('no legal profile for the clause family $family'));
   return switch (snapshot.buyerCapacity) {
     CustomerCapacity.business => own('Business') ?? LegalProfile.euBusiness,
     CustomerCapacity.consumer => own('Consumer') ?? LegalProfile.euConsumer,
@@ -326,7 +330,7 @@ QualifiedClauses qualifyClauses(
   LegalClauseSnapshot snapshot,
   ReportStrings strings, {
   required TaxReferenceSet reference,
-  ClauseRules? rules,
+  required ClauseRules? rules,
 }) {
   final profile = legalProfileOf(snapshot, reference: reference, rules: rules);
   final automatic = rules?.automaticClauses ?? const <String>{};
