@@ -25,7 +25,7 @@ class ChPaymentSlip extends PaymentSlipContribution {
 
   /// The guidelines accept a Swiss or a Liechtenstein IBAN.
   @override
-  Set<String> get accountCountries => const {'CH'};
+  Set<String> get accountCountries => const {'CH', 'LI'};
 
   /// A Swiss address has no country prefix; a foreign one is `DE-10115 Berlin`.
   @override
