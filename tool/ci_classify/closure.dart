@@ -143,8 +143,10 @@ DbClosure computeClosure(String repo, List<String> entries) {
         );
       }
       source = file.readAsStringSync();
-    } on FileSystemException catch (e) {
-      return DbClosure(seen, '$path cannot be read: ${e.message}');
+    } on Object catch (e) {
+      // not only a FileSystemException: a file that is not valid UTF-8 throws a
+      // FormatException, and a crash here would turn every check red
+      return DbClosure(seen, '$path cannot be read: $e');
     }
     for (final uri in directiveUris(source)) {
       final r = resolveUri(repo, path, uri);
