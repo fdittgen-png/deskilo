@@ -1,7 +1,6 @@
 # path :: comparisons by ISO country code outside the add-ons :: note (#3429).
 # Both lists only fall; see test/lint/country_literals_test.dart.
 [checklist]
-lib/core/vat/retention.dart :: 1 :: checklist: Record retention (periods per country behind an add-on)
 lib/features/money/application/vat_register_files.dart :: 1 :: #3429 VAT registers / Spanish register: the register files per country
 lib/features/money/domain/datev.dart :: 5 :: checklist: DATEV writer into the DE add-on
 lib/features/money/domain/datev_revenue.dart :: 3 :: checklist: DATEV writer into the DE add-on
