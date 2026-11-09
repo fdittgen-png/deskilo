@@ -36,6 +36,15 @@ abstract interface class PaymentGatewayRepository {
     Map<String, String> config,
   );
 
+  /// #3504 -- reads the provider's settlements ON DEMAND (Mollie reports its
+  /// payouts and costs on settlements) and records each paid one as a payout
+  /// with its period costs. Answers how many settlements were recorded and how
+  /// many were not paid yet. Billing managers only, with online payments on.
+  Future<({int imported, int skipped})> fetchProviderSettlements(
+    String workspaceId,
+    PaymentProvider provider,
+  );
+
   /// Owner-only: remove a provider's server credentials entirely.
   Future<void> clearPaymentProvider(
     String workspaceId,

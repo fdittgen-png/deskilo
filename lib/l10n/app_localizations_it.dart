@@ -18659,6 +18659,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigSecretSet => 'Impostato — lasci vuoto per mantenere';
 
   @override
+  String get payConfigSettlementsFetch => 'Recupera i pagamenti';
+
+  @override
+  String payConfigSettlementsFetched(String count) {
+    return '$count pagamenti registrati';
+  }
+
+  @override
   String get payConfigTitle => 'Pagamenti online';
 
   @override

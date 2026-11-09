@@ -30,6 +30,14 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     String workspaceId,
   ) async => Map.of(_m.paymentStatus);
 
+  /// #3504 -- the Demo has no provider to read: it says one settlement was
+  /// recorded, so the action can be rehearsed.
+  @override
+  Future<({int imported, int skipped})> fetchProviderSettlements(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async => (imported: 1, skipped: 0);
+
   /// The demo is a rehearsal: it opens no payment, and its keys are the
   /// installation's, which the test cannot read.
   @override

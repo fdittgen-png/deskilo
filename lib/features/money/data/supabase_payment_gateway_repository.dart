@@ -162,6 +162,41 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
     );
   }
 
+  @override
+  Future<({int imported, int skipped})> fetchProviderSettlements(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async {
+    if (provider != PaymentProvider.mollie) {
+      throw PaymentGatewayException(
+        400,
+        '${provider.wireName} has no settlements to fetch',
+      );
+    }
+    try {
+      final response = await _client.functions.invoke(
+        'mollie-settlements',
+        body: {'workspace_id': workspaceId},
+      );
+      final data = response.data;
+      final map = data is Map ? data : const <Object?, Object?>{};
+      return (
+        imported: (map['imported'] as num?)?.toInt() ?? 0,
+        skipped: (map['skipped'] as num?)?.toInt() ?? 0,
+      );
+    } on FunctionException catch (e, st) {
+      // trace-exempt: not silent — rethrown as PaymentGatewayException via
+      // throwWithStackTrace; the caller's runGuarded traces it.
+      Error.throwWithStackTrace(
+        PaymentGatewayException(
+          e.status,
+          e.details?.toString() ?? e.reasonPhrase ?? 'function error',
+        ),
+        st,
+      );
+    }
+  }
+
   /// Invokes the payment Edge Function, mapping an undeployed function
   /// (404) to a recognisable state instead of a crash.
   Future<Map<String, dynamic>?> _invokePayments(

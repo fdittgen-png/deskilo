@@ -1,0 +1,4 @@
+{
+  "payConfigSettlementsFetch": "Auszahlungen abrufen",
+  "payConfigSettlementsFetched": "{count} Auszahlungen erfasst"
+}

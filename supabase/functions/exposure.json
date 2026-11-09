@@ -17,6 +17,10 @@
       "class": "user_facing",
       "authority": "a workspace admin's native session"
     },
+    "mollie-settlements": {
+      "class": "user_facing",
+      "authority": "a billing manager's native session, checked by has_permission (manageBilling) and the onlinePayments flag; the key read by the service role only"
+    },
     "send-purchase-order": {
       "class": "user_facing",
       "authority": "a buyer's native session, checked by begin_purchase_order_send_v1 (managePurchases, purchaseOrders); the key read by the service role only"

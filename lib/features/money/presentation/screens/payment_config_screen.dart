@@ -185,6 +185,27 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
     await widget.onChanged();
   }
 
+  /// #3504 -- reads the provider's settlements on demand and says how many
+  /// payouts were recorded.
+  Future<void> _fetchSettlements() async {
+    final l10n = context.l10n;
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    ({int imported, int skipped})? result;
+    if (!await runGuarded(
+      context,
+      domain: 'payments',
+      message: 'payment settlements fetch failed',
+      action: () async => result = await ref
+          .read(paymentGatewayRepositoryProvider)
+          .fetchProviderSettlements(workspace.id, widget.provider),
+    )) {
+      return;
+    }
+    if (!mounted) return;
+    AppSnack.success(context, l10n.payConfigSettlementsFetched('${result?.imported ?? 0}'));
+  }
+
   Future<void> _remove() async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -295,6 +316,13 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                     key: const ValueKey('payment-config-pay-config-remove'),
                     onPressed: _remove,
                     child: Text(l10n.payConfigRemove),
+                  ),
+                if (widget.provider == PaymentProvider.mollie &&
+                    widget.status.configured)
+                  OutlinedButton(
+                    key: const ValueKey('payment-fetch-settlements'),
+                    onPressed: _fetchSettlements,
+                    child: Text(l10n.payConfigSettlementsFetch),
                   ),
                 const Spacer(),
                 FilledButton(

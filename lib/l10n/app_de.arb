@@ -11764,6 +11764,8 @@
   "payConfigRemoved": "Entfernt.",
   "payConfigSaved": "Gespeichert.",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",
+  "payConfigSettlementsFetch": "Auszahlungen abrufen",
+  "payConfigSettlementsFetched": "{count} Auszahlungen erfasst",
   "payConfigTitle": "Online-Zahlungen",
   "payFieldApiKey": "API-Schlüssel",
   "payFieldClientId": "Client-ID",

@@ -32,6 +32,8 @@ const Map<String, bool> functionVerifyJwt = {
   // HMAC is the authority, checked by federation_inbox_accept.
   'federation-inbox': false,
   'create-payment-order': true,
+  // #3504 — a manager's own session; the function checks manageBilling.
+  'mollie-settlements': true,
   'mollie-webhook': false,
   'paypal-webhook': false,
   'send-e-invoice': true,
