@@ -220,6 +220,11 @@ jobs:
         # Direct Dart analysis waits for analyzer plugins to finish.
         run: dart analyze --fatal-infos
 
+      # #3415 -- the code-health summary is derived from this tree and the
+      # committed baseline and shown on every run; nothing of it is committed.
+      - name: Code health summary
+        run: dart run tool/code_health.dart --summary="$GITHUB_STEP_SUMMARY"
+
       # #2600 — this shard's files come from tool/quality_shard.dart, the
       # same walk of test/ the aggregate job proves the plan against; the
       # list is never typed in this file. The exit code is captured as the
