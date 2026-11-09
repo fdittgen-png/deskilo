@@ -1,9 +1,6 @@
 # path :: comparisons by ISO country code outside the add-ons :: note (#3429).
 # Both lists only fall; see test/lint/country_literals_test.dart.
 [checklist]
-lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429 Presentation: GB/CH/CA fields
-lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD
-lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1 :: #3429 Presentation: FR notice
 [allowed]
 lib/core/country/country_catalog.dart :: 2 :: the catalogue of the countries the app knows (name, currency, default locale): data the registry serves, not a rule
 lib/core/demo/data/book_profile_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule

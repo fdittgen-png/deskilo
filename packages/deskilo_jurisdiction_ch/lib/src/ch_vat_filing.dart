@@ -32,6 +32,9 @@ class ChVatFilingContribution extends VatFilingContribution {
   String get fileButtonId => 'mwstXml';
 
   @override
+  Set<String> get legalIdentityFields => const {'swissLetting'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,
