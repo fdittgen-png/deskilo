@@ -126,8 +126,10 @@ other into timeouts. Docs-only changes need only the lint/doc tests.
 (cognitive and cyclomatic complexity, length, parameters) from the syntax
 tree; `--hotspots` joins that with the commits since a date; `--cycles`
 lists the features that import each other; `--baseline` rewrites
-`docs/design/CODE_HEALTH_BASELINE.json` and `CODE_HEALTH.md`. A file the
-parser rejects is a failure, not a smaller measurement.
+`docs/design/CODE_HEALTH_BASELINE.json` (limits, budgets and the held
+functions only; the totals and the summary are derived with `--summary` and
+shown on every CI run, never committed, #3415). A file the parser rejects is a
+failure, not a smaller measurement.
 
 `flutter test test/lint` (`code_health_test`, `file_length_test`,
 `part_of_test`) holds the result. The baseline names the functions at or
