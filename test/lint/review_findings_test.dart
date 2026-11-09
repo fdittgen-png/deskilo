@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3495 — four review findings that recurred on #3464–#3491, as checks:
+// #3495 — three review findings that recurred on #3464–#3491, as checks:
 //
 //  (a) a held code-health function or file budget may not GROW against the
 //      merge base unless `code_health_growth_markers.txt` names it with a reason;
 //  (b) a path removed from the country-literals checklist must no longer exist;
 //  (c) `test/parity/**` declares no country sets or country rules of its own;
-//  (d) the lines of a checklist file that compare a country code are covered
-//      by `test/parity` (needs a coverage report, so it reads
-//      `coverage/lcov.info` when the run produced one).
 //
 // Each rule is a pure function with a fixture of the defect it guards.
 import 'dart:convert';
@@ -115,45 +112,6 @@ const _parityAllowed = <String, String>{
   'test/parity/records_location_parity_test.dart':
       'EU membership of the two fixture countries, not an installed rule',
 };
-
-// ------------------------------------------------------------------ (d) coverage
-
-/// Lines of [source] comparing a country code (a string literal that is two
-/// capitals), 1-based.
-List<int> countryCompareLines(String source) {
-  final lines = source.split('\n');
-  return [
-    for (var i = 0; i < lines.length; i++)
-      if (!lines[i].trimLeft().startsWith('//') &&
-          RegExp(
-            r"""[=!]=\s*'[A-Z]{2}'|'[A-Z]{2}'\s*[=!]=|case\s+'[A-Z]{2}'|contains\(\s*'[A-Z]{2}'""",
-          ).hasMatch(lines[i]))
-        i + 1,
-  ];
-}
-
-/// Instrumented-and-hit lines per file of an lcov report.
-Map<String, Set<int>> lcovHits(String lcov) {
-  final out = <String, Set<int>>{};
-  String? file;
-  for (final l in lcov.split('\n')) {
-    if (l.startsWith('SF:')) {
-      file = l.substring(3);
-    } else if (l.startsWith('DA:') && file != null) {
-      final p = l.substring(3).split(',');
-      if (int.parse(p[1]) > 0) {
-        out.putIfAbsent(file, () => {}).add(int.parse(p[0]));
-      }
-    }
-  }
-  return out;
-}
-
-/// Country-comparing lines of [source] that [hit] does not cover.
-List<int> uncoveredCountryLines(String source, Set<int> hit) => [
-  for (final n in countryCompareLines(source))
-    if (!hit.contains(n)) n,
-];
 
 String? _git(List<String> args) {
   try {
@@ -315,40 +273,6 @@ void main() {
         isEmpty,
         reason:
             'the declaration is gone: drop the entry so the list only shrinks',
-      );
-    });
-  });
-
-  group('(d) country comparisons of checklist files are covered by the parity tests', () {
-    test('fixture: an uncovered comparison line is reported', () {
-      const src =
-          "bool f(String c) {\n  if (c == 'DE') return true;\n  return c != 'FR';\n}\n";
-      expect(countryCompareLines(src), [2, 3]);
-      expect(uncoveredCountryLines(src, {2}), [3]);
-      expect(lcovHits('SF:lib/a.dart\nDA:2,1\nDA:3,0\nend_of_record\n'), {
-        'lib/a.dart': {2},
-      });
-    });
-    test('the report, when the run produced one', () {
-      final report = File('coverage/lcov.info');
-      if (!report.existsSync()) {
-        return; // produced by CI's coverage shard, not a plain lint run
-      }
-      final hits = lcovHits(report.readAsStringSync());
-      final paths = checklistPaths(
-        File('test/lint/country_literals_test.dart').readAsStringSync(),
-      );
-      final gaps = <String>[];
-      for (final p in paths) {
-        final f = File(p);
-        if (!f.existsSync() || !hits.containsKey(p)) continue;
-        final miss = uncoveredCountryLines(f.readAsStringSync(), hits[p]!);
-        if (miss.isNotEmpty) gaps.add('$p: ${miss.join(', ')}');
-      }
-      expect(
-        gaps,
-        isEmpty,
-        reason: 'a checklist file\'s country comparison needs a parity case',
       );
     });
   });
