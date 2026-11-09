@@ -32,6 +32,6 @@ class FrFecFormat extends AccountingFormatContribution {
     'sales': AccountingJournal(code: 'VE', label: 'Ventes'),
     'bank': AccountingJournal(code: 'BQ', label: 'Banque'),
     'purchases': AccountingJournal(code: 'HA', label: 'Achats'),
-    'misc': AccountingJournal(code: 'OD', label: 'Opérations diverses'),
+    'misc': AccountingJournal(code: 'OX', label: 'Opérations diverses'),
   };
 }
