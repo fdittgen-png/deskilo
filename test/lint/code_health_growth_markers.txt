@@ -1,0 +1,5 @@
+# Reviewed growth of a held code-health function or file budget (#3495).
+#
+#   <function id or file path> :: <reason, at least 15 characters>
+#
+# Nothing is listed today; a line is a reviewed decision.
