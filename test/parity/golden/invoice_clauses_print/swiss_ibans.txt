@@ -1,0 +1,9 @@
+[CH QR-IBAN] qr=true swiss=true
+[CH plain] qr=false swiss=true
+[CH bad checksum] qr=false swiss=false
+[LI QR-IBAN] qr=true swiss=true
+[LI plain] qr=false swiss=true
+[LI bad checksum] qr=false swiss=false
+[li lower case] qr=false swiss=true
+[DE] qr=false swiss=false
+[too short] qr=false swiss=false

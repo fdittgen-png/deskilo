@@ -1,0 +1,12 @@
+[CH seller] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF|S|Kunde GmbH|Hauptstrasse|3|8000|Zürich|CH|QRR|000000000000000000202600013|INV-2026-0001|EPD
+[seller ch lower case] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF|S|Kunde GmbH|Hauptstrasse|3|8000|Zürich|CH|QRR|000000000000000000202600013|INV-2026-0001|EPD
+[DE seller] none
+[no seller country, workspace CH] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF|S|Kunde GmbH|Hauptstrasse|3|8000|Zürich|CH|QRR|000000000000000000202600013|INV-2026-0001|EPD
+[no seller country, workspace DE] none
+[proforma] none
+[voided] none
+[credit note] none
+[zero] none
+[buyer without country defaults to CH] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF|S|Kunde GmbH|Hauptstrasse|3|8000|Zürich|CH|QRR|000000000000000000202600013|INV-2026-0001|EPD
+[buyer in DE] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF|S|Kunde GmbH|Hauptstrasse|3|10115|Berlin|DE|QRR|000000000000000000202600013|INV-2026-0001|EPD
+[buyer without postal code] SPC|0200|1|CH4431999123000889012|S|Space AG|Bahnhofstrasse|12a|8001|Zürich|CH||||||||123.45|CHF||||||||QRR|000000000000000000202600013|INV-2026-0001|EPD
