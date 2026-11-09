@@ -3,3 +3,4 @@
 library;
 
 export 'src/us_archive.dart';
+export 'src/us_invoice_mentions.dart';

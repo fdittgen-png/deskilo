@@ -5,3 +5,4 @@ library;
 export 'src/gb_vat_filing.dart';
 export 'src/mtd_boxes.dart';
 export 'src/gb_archive.dart';
+export 'src/gb_invoice_mentions.dart';

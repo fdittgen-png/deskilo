@@ -25,6 +25,9 @@ class CaInvoiceMentions extends InvoiceMentionsContribution {
   );
 
   @override
+  String get profileFamily => 'ca';
+
+  @override
   List<String> mentions(InvoiceMentionContext context) => [
     // The two numbers are independent: the QST one needs its own number and
     // the tax charged, never the GST/HST one.

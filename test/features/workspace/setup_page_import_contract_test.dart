@@ -38,11 +38,12 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../tool/setup/page_sources.dart';
 import '../../helpers/installed_reference_shims.dart';
+import '../money/clause_rules_support.dart';
+
 
 /// The page's export in [mode] (see the harness) — or null when node is
 /// missing (same bargain as setup_runs_test).

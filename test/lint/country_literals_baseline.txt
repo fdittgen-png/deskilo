@@ -14,10 +14,8 @@ lib/features/money/domain/swiss_qr_bill_pdf.dart :: 1 :: #3429 Invoice clauses a
 lib/features/money/presentation/screens/legal_identity_screen.dart :: 3 :: #3429 Presentation: GB/CH/CA fields
 lib/features/money/presentation/screens/vat_declarations_screen.dart :: 1 :: #3429 Presentation: GB MTD
 lib/features/money/presentation/widgets/vat_tax_point_notice.dart :: 1 :: #3429 Presentation: FR notice
-packages/deskilo_invoice_model/lib/src/invoice_clauses.dart :: 12 :: #3429 Invoice clauses and print data: country x capacity switch
 packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart :: 2 :: #3429 E-invoice builders FR: FR B2B check
 packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart :: 6 :: #3429 Invoice clauses and print data: the Swiss QR bill
-packages/deskilo_invoice_model/lib/src/vat_compliance.dart :: 2 :: #3429 Invoice validity rules (remaining literals)
 packages/deskilo_invoice_model/lib/src/vat_regime.dart :: 1 :: #3429 E-invoice builders FR: VATEX
 [allowed]
 lib/core/country/country_catalog.dart :: 2 :: the catalogue of the countries the app knows (name, currency, default locale): data the registry serves, not a rule
@@ -74,7 +72,7 @@ packages/deskilo_accounting_interchange/lib/src/sage_postings.dart :: 4 :: the S
 packages/deskilo_invoice_model/lib/src/invoice.dart :: 2 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 7 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_invoice_model/lib/src/invoice_ubl.dart :: 10 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
-packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 2 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 1 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_money_kernel/lib/src/posting.dart :: 2 :: an account-role key table of the posting engine, not a country decision
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 4 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/ca.dart :: 1 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)

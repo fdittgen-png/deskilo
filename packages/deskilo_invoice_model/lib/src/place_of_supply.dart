@@ -3,6 +3,10 @@ import 'supply_class.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'vat_treatment.dart';
 
+/// UNCL5305 category code AE: VAT reverse charge. The one place the code is
+/// written; the builders and the exemption texts match on this constant.
+const uncl5305ReverseCharge = 'AE';
+
 /// #2354 — the member states, ONE set for the whole app. #2478: the rows of
 /// the `eu_member` domain of the tax reference store, no list in code; the
 /// SQL `public.is_eu_country` reads the same rows. Greece is `GR` here, as
@@ -50,7 +54,7 @@ String supplyVatCategory({
     case VatTreatment.exempt:
       return 'E';
     case VatTreatment.reverseCharge:
-      return 'AE';
+      return uncl5305ReverseCharge;
     case VatTreatment.domestic:
       return '';
     case VatTreatment.auto:
@@ -66,7 +70,7 @@ String supplyVatCategory({
     return '';
   }
   if (isEuCountry(buyerCountry, reference: reference)) {
-    return reverseChargeOn ? 'AE' : '';
+    return reverseChargeOn ? uncl5305ReverseCharge : '';
   }
   return 'G';
 }

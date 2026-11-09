@@ -20,6 +20,7 @@ import '../../../core/i18n/money_format.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
+import 'clause_rules.dart';
 import 'invoice_line_text.dart';
 import 'invoice_national_mentions.dart';
 import 'invoice_sales_tax.dart';
@@ -66,7 +67,12 @@ Map<String, Object?> legalMentionData(
   final terms = PaymentTerms.ofLegal(legal).mergedWith(memberTerms);
   final sellerCountry = seller?.country ?? workspace?.countryCode ?? '';
   final clauses = frozen != null
-      ? qualifyClauses(frozen, strings, reference: reference)
+      ? qualifyClauses(
+          frozen,
+          strings,
+          reference: reference,
+          rules: clauseRulesOf(frozen.sellerCountry),
+        )
       : legacy
           ? legacyClauses(legal, terms, strings)
           : qualifyClauses(
@@ -79,7 +85,8 @@ Map<String, Object?> legalMentionData(
                 memberCapacity: memberCapacity,
               ),
               strings,
-              reference: reference);
+              reference: reference,
+              rules: clauseRulesOf(sellerCountry));
   // #871 — the bank block. A French (and German) invoice carries the
   // account it is to be paid into, and until now a designed report
   // could not print one: the details were stored but no placeholder

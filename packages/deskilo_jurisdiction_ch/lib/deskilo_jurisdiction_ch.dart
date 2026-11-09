@@ -4,3 +4,4 @@ library;
 
 export 'src/ch_vat_filing.dart';
 export 'src/ch_archive.dart';
+export 'src/ch_invoice_mentions.dart';

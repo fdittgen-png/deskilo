@@ -277,36 +277,45 @@ class LegalClauseSnapshot {
   }
 }
 
+/// #3429 -- the payment-clause rules of the seller's country, as its add-on
+/// declares them (`InvoiceMentionsContribution.profileFamily` and
+/// `automaticClauses`), handed in by the host: this package knows no country.
+class ClauseRules {
+  const ClauseRules({required this.family, this.automaticClauses = const {}});
+
+  /// The profile family (`fr`, `de`, ...): the prefix of [LegalProfile]'s
+  /// `<family>Business` and `<family>Consumer`; '' for none.
+  final String family;
+
+  /// The clauses a business customer's invoice prints in the host's default
+  /// wording when the owner wrote none (`latePenalty`, `recoveryIndemnity`,
+  /// `escompte`).
+  final Set<String> automaticClauses;
+}
+
 /// The profile [snapshot] falls under: the seller's country (where the
-/// supply is made from — the transaction law this bounded set knows) and
-/// the buyer's stated capacity.
+/// supply is made from -- the transaction law this bounded set knows, through
+/// its [rules]) and the buyer's stated capacity. A seller whose country has no
+/// rules of its own falls under the EU profiles.
 @visibleForTesting
 LegalProfile legalProfileOf(
   LegalClauseSnapshot snapshot, {
   required TaxReferenceSet reference,
+  ClauseRules? rules,
 }) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  // #2358 — a national clearance channel the app does not speak yet, or a
+  // #2358 -- a national clearance channel the app does not speak yet, or a
   // country without an `issuing_gate` row (#2479).
   if (!reference.issuesFor(country)) {
     return LegalProfile.unsupported;
   }
-  return switch ((country, snapshot.buyerCapacity)) {
-    ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
-    ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
-    ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
-    ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
-    ('GB', CustomerCapacity.business) => LegalProfile.gbBusiness,
-    ('GB', CustomerCapacity.consumer) => LegalProfile.gbConsumer,
-    ('CH', CustomerCapacity.business) => LegalProfile.chBusiness,
-    ('CH', CustomerCapacity.consumer) => LegalProfile.chConsumer,
-    ('CA', CustomerCapacity.business) => LegalProfile.caBusiness,
-    ('CA', CustomerCapacity.consumer) => LegalProfile.caConsumer,
-    ('US', CustomerCapacity.business) => LegalProfile.usBusiness,
-    ('US', CustomerCapacity.consumer) => LegalProfile.usConsumer,
-    (_, CustomerCapacity.business) => LegalProfile.euBusiness,
-    (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
-    _ => LegalProfile.capacityUnknown,
+  final family = rules?.family ?? '';
+  LegalProfile? own(String capacity) =>
+      family.isEmpty ? null : LegalProfile.values.asNameMap()['$family$capacity'];
+  return switch (snapshot.buyerCapacity) {
+    CustomerCapacity.business => own('Business') ?? LegalProfile.euBusiness,
+    CustomerCapacity.consumer => own('Consumer') ?? LegalProfile.euConsumer,
+    CustomerCapacity.unknown => LegalProfile.capacityUnknown,
   };
 }
 
@@ -317,8 +326,10 @@ QualifiedClauses qualifyClauses(
   LegalClauseSnapshot snapshot,
   ReportStrings strings, {
   required TaxReferenceSet reference,
+  ClauseRules? rules,
 }) {
-  final profile = legalProfileOf(snapshot, reference: reference);
+  final profile = legalProfileOf(snapshot, reference: reference, rules: rules);
+  final automatic = rules?.automaticClauses ?? const <String>{};
   final own = snapshot.clauses;
   QualifiedClause owned(String text, {required String orDefault}) {
     if (text.trim().isNotEmpty) {
@@ -343,19 +354,9 @@ QualifiedClauses qualifyClauses(
   final terms = owned(own.paymentTerms, orDefault: strings.paymentTermsDefault);
 
   return switch (profile) {
-    LegalProfile.frBusiness => QualifiedClauses(
-      profile: profile,
-      paymentTerms: terms,
-      latePenalty: owned(
-        own.latePenalty,
-        orDefault: strings.latePenaltyDefault,
-      ),
-      recoveryIndemnity: owned(
-        own.recoveryIndemnity,
-        orDefault: strings.recoveryDefault,
-      ),
-      escompte: owned(own.escompte, orDefault: strings.escompteDefault),
-    ),
+    // Between professionals: the owner's text wins; the clauses the seller's
+    // law makes automatic print the host's default wording without one.
+    LegalProfile.frBusiness ||
     LegalProfile.deBusiness ||
     LegalProfile.euBusiness ||
     LegalProfile.gbBusiness ||
@@ -364,9 +365,24 @@ QualifiedClauses qualifyClauses(
     LegalProfile.usBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
-      latePenalty: owned(own.latePenalty, orDefault: ''),
-      recoveryIndemnity: owned(own.recoveryIndemnity, orDefault: ''),
-      escompte: owned(own.escompte, orDefault: ''),
+      latePenalty: owned(
+        own.latePenalty,
+        orDefault: automatic.contains('latePenalty')
+            ? strings.latePenaltyDefault
+            : '',
+      ),
+      recoveryIndemnity: owned(
+        own.recoveryIndemnity,
+        orDefault: automatic.contains('recoveryIndemnity')
+            ? strings.recoveryDefault
+            : '',
+      ),
+      escompte: owned(
+        own.escompte,
+        orDefault: automatic.contains('escompte')
+            ? strings.escompteDefault
+            : '',
+      ),
     ),
     LegalProfile.frConsumer ||
     LegalProfile.deConsumer ||

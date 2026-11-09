@@ -21,6 +21,19 @@ class FrInvoiceMentions extends InvoiceMentionsContribution {
     capabilityId: 'invoice_mentions.FR',
   );
 
+  /// Art. L441-9 / L441-10 code de commerce: between professionals the late
+  /// penalties, the fixed recovery indemnity (art. D441-5) and the discount
+  /// conditions are mandatory mentions.
+  @override
+  String get profileFamily => 'fr';
+
+  @override
+  Set<String> get automaticClauses => const {
+    'latePenalty',
+    'recoveryIndemnity',
+    'escompte',
+  };
+
   @override
   List<String> mentions(InvoiceMentionContext context) => [
     if (context.sellerVatRegistered)
