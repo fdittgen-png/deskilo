@@ -224,6 +224,7 @@ void main() {
     expect(
       barrel,
       {
+        'src/accounting_format_contribution.dart',
         'src/archive_contribution.dart',
         'src/capability_descriptor.dart',
         'src/filing_context.dart',

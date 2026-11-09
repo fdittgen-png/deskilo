@@ -55,11 +55,11 @@ enum RefusalKind {
   /// More than one installed add-on claims the archive of that country.
   conflictingArchive,
 
-  /// More than one installed add-on claims the accounting format.
-  conflictingAccountingFormat,
-
   /// More than one installed add-on claims the registers of that country.
   conflictingRegisters,
+
+  /// More than one installed add-on claims the accounting format.
+  conflictingAccountingFormat,
 }
 
 sealed class CapabilityResolution {
@@ -246,18 +246,6 @@ ArchiveContribution? resolveArchive(
   return matches.single;
 }
 
-String _accountingFormatCapabilityId(String formatId) =>
-    'accounting_format.$formatId';
-
-/// The installed add-on that declares [formatId]'s accounting format (its
-/// chart's country, its journals): null when none does, or the composition's
-/// fault as a [StateError] (two claimants, a wrong contract version).
-AccountingFormatContribution? resolveAccountingFormat(
-  String formatId,
-  List<AccountingFormatContribution> installed,
-) {
-  final id = _accountingFormatCapabilityId(formatId);
-
 String _registersCapabilityId(String country) => 'registers.$country';
 
 /// The installed registers add-on of [context]'s country: null when the
@@ -277,6 +265,35 @@ RegisterContribution? resolveRegisters(
   if (matches.isEmpty) return null;
   if (matches.length > 1) {
     throw StateError(
+      'registers of $country: ${RefusalKind.conflictingRegisters.name}',
+    );
+  }
+  if (matches.single.descriptor.contractVersion != registersContractVersion) {
+    throw StateError(
+      'registers of $country: ${RefusalKind.contractMismatch.name}',
+    );
+  }
+  return matches.single;
+}
+
+String _accountingFormatCapabilityId(String formatId) =>
+    'accounting_format.$formatId';
+
+/// The installed add-on that declares [formatId]'s accounting format (its
+/// chart's country, its journals): null when none does, or the composition's
+/// fault as a [StateError] (two claimants, a wrong contract version).
+AccountingFormatContribution? resolveAccountingFormat(
+  String formatId,
+  List<AccountingFormatContribution> installed,
+) {
+  final id = _accountingFormatCapabilityId(formatId);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return null;
+  if (matches.length > 1) {
+    throw StateError(
       'accounting format $formatId: ${RefusalKind.conflictingAccountingFormat.name}',
     );
   }
@@ -284,13 +301,6 @@ RegisterContribution? resolveRegisters(
       accountingFormatContractVersion) {
     throw StateError(
       'accounting format $formatId: ${RefusalKind.contractMismatch.name}',
-
-      'registers of $country: ${RefusalKind.conflictingRegisters.name}',
-    );
-  }
-  if (matches.single.descriptor.contractVersion != registersContractVersion) {
-    throw StateError(
-      'registers of $country: ${RefusalKind.contractMismatch.name}',
     );
   }
   return matches.single;

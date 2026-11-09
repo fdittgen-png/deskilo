@@ -60,11 +60,6 @@ const _checklistFiles = <String>{
   'lib/features/money/domain/mtd_boxes.dart',
   'lib/features/money/domain/records_location.dart',
   'lib/core/vat/retention.dart',
-  'lib/features/money/domain/datev.dart',
-  'lib/features/money/domain/datev_revenue.dart',
-  'lib/features/money/domain/fec_accounts.dart',
-  'lib/features/money/domain/fec_lettering.dart',
-  'lib/features/money/domain/fec_writer.dart',
 };
 
 /// ISO 3166-1 alpha-2 codes, and `EL`/`XI`/`UK`: the VAT-number prefixes and

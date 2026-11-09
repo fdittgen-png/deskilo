@@ -38,15 +38,6 @@ class FecWriter {
   /// declares.
   final FecJournals journals;
 
-  String get _salesJournal => journals.sales.code;
-  String get _salesJournalLabel => journals.sales.label;
-  String get _bankJournal => journals.bank.code;
-  String get _bankJournalLabel => journals.bank.label;
-  String get _purchasesJournal => journals.purchases.code;
-  String get _purchasesJournalLabel => journals.purchases.label;
-  String get _miscJournal => journals.misc.code;
-  String get _miscJournalLabel => journals.misc.label;
-
   final String currency;
   final List<Invoice> invoices;
   final Map<String, InvoiceMatch> matches;
@@ -137,13 +128,13 @@ class FecWriter {
     for (final MapEntry(key: day, value: vat)
         in index!.byDay(invoice.id, (a) => a.vatCents).entries) {
       if (vat == 0) continue;
-      final number = '$_miscJournal-${invoice.number}-T${++ordinal}';
+      final number = '${journals.misc.code}-${invoice.number}-T${++ordinal}';
       for (final (account, accountLabel, debit) in [
         (accounts.vatPending, vatPendingLabel, vat > 0),
         (accounts.vat, vatLabel, vat < 0),
       ]) {
         write(
-          journal: _miscJournal, journalLabel: _miscJournalLabel,
+          journal: journals.misc.code, journalLabel: journals.misc.label,
           number: number, date: day,
           account: account, accountLabel: accountLabel,
           auxNumber: '', auxLabel: '',
@@ -177,7 +168,7 @@ class FecWriter {
   /// invoice was skipped. Booked as revenue debited / customer credited,
   /// lettered with the invoice it corrects when it names one.
   void bookCreditNote(Invoice invoice) {
-    final entry = '$_salesJournal-${invoice.number}';
+    final entry = '${journals.sales.code}-${invoice.number}';
     final label = 'Avoir ${invoice.number}'
         '${invoice.replacesNumber.isEmpty ? '' : ' sur ${invoice.replacesNumber}'}';
     final letter = invoice.replacesNumber.isEmpty
@@ -200,7 +191,7 @@ class FecWriter {
     ].fold(0, (a, b) => a + b));
     if (slices.isEmpty) {
       write(
-        journal: _salesJournal, journalLabel: _salesJournalLabel,
+        journal: journals.sales.code, journalLabel: journals.sales.label,
         number: entry, date: invoice.issuedAt,
         account: accounts.revenue, accountLabel: revenueLabel,
         auxNumber: '', auxLabel: '',
@@ -211,7 +202,7 @@ class FecWriter {
     }
     for (final slice in slices) {
       write(
-        journal: _salesJournal, journalLabel: _salesJournalLabel,
+        journal: journals.sales.code, journalLabel: journals.sales.label,
         number: entry, date: invoice.issuedAt,
         account: accounts.revenue, accountLabel: revenueLabel,
         auxNumber: '', auxLabel: '',
@@ -221,7 +212,7 @@ class FecWriter {
       );
       if (slice.vatCents < 0) {
         write(
-          journal: _salesJournal, journalLabel: _salesJournalLabel,
+          journal: journals.sales.code, journalLabel: journals.sales.label,
           number: entry, date: invoice.issuedAt,
           account: pending ? accounts.vatPending : accounts.vat,
           accountLabel: pending ? vatPendingLabel : vatLabel,
@@ -233,7 +224,7 @@ class FecWriter {
       }
     }
     write(
-      journal: _salesJournal, journalLabel: _salesJournalLabel,
+      journal: journals.sales.code, journalLabel: journals.sales.label,
       number: entry, date: invoice.issuedAt,
       account: accounts.customers, accountLabel: customersLabel,
       auxNumber: invoice.memberId, auxLabel: invoice.memberName,
@@ -252,13 +243,13 @@ class FecWriter {
         .where((line) => line.amountCents > 0)
         .fold(0, (sum, line) => sum + line.amountCents);
     if (charges == 0) return;
-    final entry = '$_salesJournal-${invoice.number}';
+    final entry = '${journals.sales.code}-${invoice.number}';
     final label = 'Facture ${invoice.number}'
         '${invoice.period == null ? '' : ' ${invoice.period}'}';
     // The receivable…
     write(
-      journal: _salesJournal,
-      journalLabel: _salesJournalLabel,
+      journal: journals.sales.code,
+      journalLabel: journals.sales.label,
       number: entry,
       date: invoice.issuedAt,
       account: accounts.customers,
@@ -292,8 +283,8 @@ class FecWriter {
           ? '$label ${percentText(total.percent, decimalSeparator: ',')} %'
           : label;
       write(
-        journal: _salesJournal,
-        journalLabel: _salesJournalLabel,
+        journal: journals.sales.code,
+        journalLabel: journals.sales.label,
         number: entry,
         date: invoice.issuedAt,
         account: accounts.revenue,
@@ -310,8 +301,8 @@ class FecWriter {
       );
       if (total.vatCents > 0) {
         write(
-          journal: _salesJournal,
-          journalLabel: _salesJournalLabel,
+          journal: journals.sales.code,
+          journalLabel: journals.sales.label,
           number: entry,
           date: invoice.issuedAt,
           account: pending ? accounts.vatPending : accounts.vat,
@@ -343,12 +334,12 @@ class FecWriter {
     for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
       // The invoice's lines are frozen, so the ordinal is stable.
       creditOrdinal++;
-      final cashEntry = '$_bankJournal-${invoice.number}-C$creditOrdinal';
+      final cashEntry = '${journals.bank.code}-${invoice.number}-C$creditOrdinal';
       final amount = -line.amountCents;
       final cashLabel = lineText(line);
       write(
-        journal: _bankJournal,
-        journalLabel: _bankJournalLabel,
+        journal: journals.bank.code,
+        journalLabel: journals.bank.label,
         number: cashEntry,
         date: invoice.issuedAt,
         account: accounts.bank,
@@ -364,8 +355,8 @@ class FecWriter {
         validDate: invoice.issuedAt,
       );
       write(
-        journal: _bankJournal,
-        journalLabel: _bankJournalLabel,
+        journal: journals.bank.code,
+        journalLabel: journals.bank.label,
         number: cashEntry,
         date: invoice.issuedAt,
         account: accounts.customers,
@@ -389,11 +380,11 @@ class FecWriter {
     // left: a solde of zero was already covered by the credits above.
     if (match != null && !match.pending && invoice.totalCents > 0) {
       // One settling match per invoice (0067): the suffix is enough.
-      final cashEntry = '$_bankJournal-${invoice.number}-P';
+      final cashEntry = '${journals.bank.code}-${invoice.number}-P';
       final label = 'Règlement ${invoice.number}';
       write(
-        journal: _bankJournal,
-        journalLabel: _bankJournalLabel,
+        journal: journals.bank.code,
+        journalLabel: journals.bank.label,
         number: cashEntry,
         date: match.matchedAt,
         account: accounts.bank,
@@ -409,8 +400,8 @@ class FecWriter {
         validDate: match.matchedAt,
       );
       write(
-        journal: _bankJournal,
-        journalLabel: _bankJournalLabel,
+        journal: journals.bank.code,
+        journalLabel: journals.bank.label,
         number: cashEntry,
         date: match.matchedAt,
         account: accounts.customers,
@@ -443,12 +434,12 @@ class FecWriter {
         entry.category != LedgerCategory.expense) {
       continue;
     }
-    final number = '$_purchasesJournal-${entry.id}';
+    final number = '${journals.purchases.code}-${entry.id}';
     final label = entry.description.isEmpty
         ? 'Remboursement de frais'
         : 'Remboursement ${entry.description}';
     write(
-      journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
+      journal: journals.purchases.code, journalLabel: journals.purchases.label,
       number: number, date: entry.on,
       account: accounts.expenses, accountLabel: expensesLabel,
       auxNumber: '', auxLabel: '',
@@ -457,7 +448,7 @@ class FecWriter {
       letter: '', validDate: entry.createdAt,
     );
     write(
-      journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
+      journal: journals.purchases.code, journalLabel: journals.purchases.label,
       number: number, date: entry.on,
       account: accounts.customers, accountLabel: customersLabel,
       auxNumber: entry.memberId, auxLabel: memberNames[entry.memberId] ?? '',
@@ -474,9 +465,9 @@ class FecWriter {
     ..sort((a, b) => (a.appliedAt ?? a.createdAt).compareTo(b.appliedAt ?? b.createdAt))) {
     if (r.status != 'confirmed' || r.amountCents <= 0) continue;
     final on = r.appliedAt ?? r.createdAt;
-    final number = '$_purchasesJournal-R-${r.id}';
+    final number = '${journals.purchases.code}-R-${r.id}';
     write(
-      journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
+      journal: journals.purchases.code, journalLabel: journals.purchases.label,
       number: number, date: on,
       account: accounts.expenses, accountLabel: expensesLabel,
       auxNumber: '', auxLabel: '',
@@ -485,7 +476,7 @@ class FecWriter {
       letter: '', validDate: r.createdAt,
     );
     write(
-      journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
+      journal: journals.purchases.code, journalLabel: journals.purchases.label,
       number: number, date: on,
       account: accounts.bank, accountLabel: bankLabel,
       auxNumber: '', auxLabel: '',
