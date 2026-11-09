@@ -4,7 +4,9 @@
 # runner tool cache before it downloads, so the tool-cache directory is what is
 # cached; an exact version avoids the newest-release lookup on dl.deno.land, and the
 # binary is checked against a pinned SHA-256 whether it was downloaded or
-# restored. Bump the version, the cache key and the digest together.
+# restored; a cached copy that fails it is cleared and downloaded again, never
+# fatal (a cache key is immutable). Bump the version, the cache key and the
+# digest (scripts/verify_cached_deno.sh) together.
 name: pinned Deno
 description: Install the pinned Deno from the cache, or from its release on a miss, and verify its digest
 
@@ -16,11 +18,12 @@ runs:
       with:
         path: ${{ runner.tool_cache }}/deno
         key: toolchain-deno-2.9.8-${{ runner.os }}-${{ runner.arch }}
+    - name: Drop a cached Deno that fails its checksum
+      shell: bash
+      run: bash scripts/verify_cached_deno.sh clear "${{ runner.tool_cache }}/deno"
     - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2
       with:
         deno-version: 2.9.8
     - name: Verify the Deno binary
       shell: bash
-      run: |
-        echo "368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7  $(command -v deno)" | sha256sum -c -
-        deno --version
+      run: bash scripts/verify_cached_deno.sh check "$(command -v deno)"

@@ -136,7 +136,12 @@ void main() {
     expect(denoAction, contains('actions/cache@v4'));
     expect(denoAction, contains('deno-version: 2.9.8'));
     expect(denoAction, isNot(contains('v2.x')));
-    expect(denoAction, contains('sha256sum -c'));
+    expect(denoAction, contains('verify_cached_deno.sh clear'));
+    expect(denoAction, contains('verify_cached_deno.sh check'));
+    expect(
+      File('scripts/verify_cached_deno.sh').readAsStringSync(),
+      matches(RegExp(r'expected=[0-9a-f]{64}')),
+    );
     final gitleaks = File('scripts/install_gitleaks.sh').readAsStringSync();
     expect(gitleaks, contains('checksum mismatch'));
   });

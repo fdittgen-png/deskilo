@@ -42,10 +42,16 @@ sha() {
 cache=${EINVOICE_DL_CACHE:-}
 
 # fetch <url> <file> <sha256>
+# A cached copy that fails its digest is deleted and downloaded again: a cache
+# key is immutable, so a corrupt entry must heal, never fail the job for good.
 fetch() {
   local url=$1 out=$2 want=$3
   if [ ! -f "$out" ] && [ -n "$cache" ] && [ -f "$cache/$want" ]; then
     cp "$cache/$want" "$out"
+    if [ "$(sha "$out")" != "$want" ]; then
+      echo "the cached download of $url failed its checksum; downloading it again" >&2
+      rm -f "$out" "$cache/$want"
+    fi
   fi
   if [ ! -f "$out" ]; then
     curl -fsSL --retry 5 --retry-delay 5 --retry-all-errors --max-time 120 -o "$out" "$url"
