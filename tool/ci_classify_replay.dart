@@ -14,6 +14,9 @@
 // so an older quality.yml that this version cannot read is a doubt, and a doubt
 // is the full run.
 //
+// REPLAY_NO_CLOSURE=1 replays the path rules alone (what v5 decided), for the
+// comparison.
+//
 // Prints a markdown table: label, files, verdict, reason, recorded outcome.
 import 'dart:io';
 
@@ -72,7 +75,9 @@ void main(List<String> args) {
           baseKnown: true,
           event: 'pull_request',
           problem: parsed.problem,
-          closure: () => databaseClosure(tree.path),
+          closure: Platform.environment['REPLAY_NO_CLOSURE'] == '1'
+              ? null
+              : () => databaseClosure(tree.path),
         ),
       );
       final v = verdicts.firstWhere((x) => x.discipline == 'database');
