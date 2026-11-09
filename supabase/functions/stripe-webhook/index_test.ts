@@ -55,6 +55,7 @@ async function call(
   fake: ReturnType<typeof fakeAdmin>,
   event: Record<string, unknown>,
   env: Record<string, string> = {},
+  fetchFn?: typeof fetch,
 ) {
   const body = JSON.stringify(event);
   const req = new Request("http://x/stripe-webhook", {
@@ -63,7 +64,7 @@ async function call(
     headers: { "stripe-signature": await signed(body) },
   });
   // deno-lint-ignore no-explicit-any
-  const res = await handle(req, { admin: () => fake.admin as any, env: (n) => env[n], nowS: () => NOW });
+  const res = await handle(req, { admin: () => fake.admin as any, env: (n) => env[n], nowS: () => NOW, fetch: fetchFn });
   return { status: res.status, text: await res.text() };
 }
 
@@ -174,4 +175,62 @@ Deno.test("the answers before verification all carry one body", async () => {
   );
   const bodies = new Set([lookup, early, credentials, unconfigured].map((r) => r.text));
   assertEquals([...bodies], ["not_ready"]);
+});
+
+// #2380 -- what Stripe kept of a paid payment is recorded once, read from the
+// balance transaction of the payment intent's latest charge (the issue's
+// fixture: gross 120.00, fee 3.78, net 116.22).
+const withKey = {
+  credentials: { data: { config: { webhook_secret: SECRET, secret_key: "sk_test_1" } }, error: null },
+};
+const balanceTransaction = {
+  id: "txn_1", object: "balance_transaction", amount: 12000, fee: 378, net: 11622, currency: "eur",
+};
+const stripeIntent = (bt: unknown) =>
+  new Response(JSON.stringify({ id: "pi_1", latest_charge: { id: "ch_1", balance_transaction: bt } }), { status: 200 });
+
+Deno.test("a paid session records the fee and net Stripe kept, once", async () => {
+  const fake = fakeAdmin(withKey);
+  const urls: string[] = [];
+  const headers: string[] = [];
+  const fetchFn: typeof fetch = (input, init) => {
+    urls.push(String(input));
+    headers.push(String((init?.headers as Record<string, string>)?.Authorization));
+    return Promise.resolve(stripeIntent(balanceTransaction));
+  };
+  assertEquals((await call(fake, paid(), {}, fetchFn)).status, 200);
+  assertEquals(fake.rpcCalls, ["settle_online_payment", "record_provider_fee_v1"]);
+  assertEquals(urls, ["https://api.stripe.com/v1/payment_intents/pi_1?expand[]=latest_charge.balance_transaction"]);
+  assertEquals(headers, ["Bearer sk_test_1"]);
+});
+
+Deno.test("a payment Stripe has no balance transaction for yet records nothing and is acknowledged", async () => {
+  const fake = fakeAdmin(withKey);
+  const res = await call(fake, paid(), {}, () => Promise.resolve(stripeIntent(null)));
+  assertEquals(res.status, 200);
+  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+});
+
+Deno.test("a failed Stripe read is a 500 after the settlement, so Stripe redelivers", async () => {
+  const fake = fakeAdmin(withKey);
+  const res = await call(fake, paid(), {}, () => Promise.resolve(new Response("{}", { status: 503 })));
+  assertEquals(res.status, 500);
+  assertEquals(res.text, "fee_read_failed");
+  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+});
+
+Deno.test("a fee the database refuses is a 500, never an ok", async () => {
+  const fake = fakeAdmin({ ...withKey, rpc: { record_provider_fee_v1: { data: null, error: { message: "the provider reported another fee" } } } });
+  const res = await call(fake, paid(), {}, () => Promise.resolve(stripeIntent(balanceTransaction)));
+  assertEquals(res.status, 500);
+  assertEquals(res.text, "fee_record_failed");
+});
+
+Deno.test("with no Stripe key the settlement stands and no fee is read", async () => {
+  const fake = fakeAdmin({});
+  let called = false;
+  const res = await call(fake, paid(), {}, () => { called = true; return Promise.resolve(stripeIntent(balanceTransaction)); });
+  assertEquals(res.status, 200);
+  assertEquals(called, false);
+  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
 });
