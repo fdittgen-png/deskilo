@@ -1,0 +1,128 @@
+seller='FR' buyer='FR' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='FR' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='FR' company='Acme SAS' legalId='' regime=vat_registered -> missingBuyerLegalId
+seller='FR' buyer='FR' company='Acme SAS' legalId='' regime=exempt -> buyerLegalIdAdvisable
+seller='FR' buyer='FR' company='' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='FR' company='' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='FR' company='' legalId='' regime=vat_registered -> 
+seller='FR' buyer='FR' company='' legalId='' regime=exempt -> 
+seller='FR' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='FR' buyer=' fr ' company='Acme SAS' legalId='' regime=vat_registered -> missingBuyerLegalId
+seller='FR' buyer=' fr ' company='Acme SAS' legalId='' regime=exempt -> buyerLegalIdAdvisable
+seller='FR' buyer=' fr ' company='' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer=' fr ' company='' legalId='123456789' regime=exempt -> 
+seller='FR' buyer=' fr ' company='' legalId='' regime=vat_registered -> 
+seller='FR' buyer=' fr ' company='' legalId='' regime=exempt -> 
+seller='FR' buyer='DE' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='DE' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='DE' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='FR' buyer='DE' company='Acme SAS' legalId='' regime=exempt -> 
+seller='FR' buyer='DE' company='' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='DE' company='' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='DE' company='' legalId='' regime=vat_registered -> 
+seller='FR' buyer='DE' company='' legalId='' regime=exempt -> 
+seller='FR' buyer='' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='FR' buyer='' company='Acme SAS' legalId='' regime=exempt -> 
+seller='FR' buyer='' company='' legalId='123456789' regime=vat_registered -> 
+seller='FR' buyer='' company='' legalId='123456789' regime=exempt -> 
+seller='FR' buyer='' company='' legalId='' regime=vat_registered -> 
+seller='FR' buyer='' company='' legalId='' regime=exempt -> 
+seller='fr' buyer='FR' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='FR' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='FR' company='Acme SAS' legalId='' regime=vat_registered -> missingBuyerLegalId
+seller='fr' buyer='FR' company='Acme SAS' legalId='' regime=exempt -> buyerLegalIdAdvisable
+seller='fr' buyer='FR' company='' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='FR' company='' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='FR' company='' legalId='' regime=vat_registered -> 
+seller='fr' buyer='FR' company='' legalId='' regime=exempt -> 
+seller='fr' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='fr' buyer=' fr ' company='Acme SAS' legalId='' regime=vat_registered -> missingBuyerLegalId
+seller='fr' buyer=' fr ' company='Acme SAS' legalId='' regime=exempt -> buyerLegalIdAdvisable
+seller='fr' buyer=' fr ' company='' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer=' fr ' company='' legalId='123456789' regime=exempt -> 
+seller='fr' buyer=' fr ' company='' legalId='' regime=vat_registered -> 
+seller='fr' buyer=' fr ' company='' legalId='' regime=exempt -> 
+seller='fr' buyer='DE' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='DE' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='DE' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='fr' buyer='DE' company='Acme SAS' legalId='' regime=exempt -> 
+seller='fr' buyer='DE' company='' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='DE' company='' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='DE' company='' legalId='' regime=vat_registered -> 
+seller='fr' buyer='DE' company='' legalId='' regime=exempt -> 
+seller='fr' buyer='' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='fr' buyer='' company='Acme SAS' legalId='' regime=exempt -> 
+seller='fr' buyer='' company='' legalId='123456789' regime=vat_registered -> 
+seller='fr' buyer='' company='' legalId='123456789' regime=exempt -> 
+seller='fr' buyer='' company='' legalId='' regime=vat_registered -> 
+seller='fr' buyer='' company='' legalId='' regime=exempt -> 
+seller='DE' buyer='FR' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='FR' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='FR' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='DE' buyer='FR' company='Acme SAS' legalId='' regime=exempt -> 
+seller='DE' buyer='FR' company='' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='FR' company='' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='FR' company='' legalId='' regime=vat_registered -> 
+seller='DE' buyer='FR' company='' legalId='' regime=exempt -> 
+seller='DE' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='DE' buyer=' fr ' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='DE' buyer=' fr ' company='Acme SAS' legalId='' regime=exempt -> 
+seller='DE' buyer=' fr ' company='' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer=' fr ' company='' legalId='123456789' regime=exempt -> 
+seller='DE' buyer=' fr ' company='' legalId='' regime=vat_registered -> 
+seller='DE' buyer=' fr ' company='' legalId='' regime=exempt -> 
+seller='DE' buyer='DE' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='DE' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='DE' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='DE' buyer='DE' company='Acme SAS' legalId='' regime=exempt -> 
+seller='DE' buyer='DE' company='' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='DE' company='' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='DE' company='' legalId='' regime=vat_registered -> 
+seller='DE' buyer='DE' company='' legalId='' regime=exempt -> 
+seller='DE' buyer='' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='DE' buyer='' company='Acme SAS' legalId='' regime=exempt -> 
+seller='DE' buyer='' company='' legalId='123456789' regime=vat_registered -> 
+seller='DE' buyer='' company='' legalId='123456789' regime=exempt -> 
+seller='DE' buyer='' company='' legalId='' regime=vat_registered -> 
+seller='DE' buyer='' company='' legalId='' regime=exempt -> 
+seller='' buyer='FR' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='FR' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='' buyer='FR' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='' buyer='FR' company='Acme SAS' legalId='' regime=exempt -> 
+seller='' buyer='FR' company='' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='FR' company='' legalId='123456789' regime=exempt -> 
+seller='' buyer='FR' company='' legalId='' regime=vat_registered -> 
+seller='' buyer='FR' company='' legalId='' regime=exempt -> 
+seller='' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='' buyer=' fr ' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='' buyer=' fr ' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='' buyer=' fr ' company='Acme SAS' legalId='' regime=exempt -> 
+seller='' buyer=' fr ' company='' legalId='123456789' regime=vat_registered -> 
+seller='' buyer=' fr ' company='' legalId='123456789' regime=exempt -> 
+seller='' buyer=' fr ' company='' legalId='' regime=vat_registered -> 
+seller='' buyer=' fr ' company='' legalId='' regime=exempt -> 
+seller='' buyer='DE' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='DE' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='' buyer='DE' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='' buyer='DE' company='Acme SAS' legalId='' regime=exempt -> 
+seller='' buyer='DE' company='' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='DE' company='' legalId='123456789' regime=exempt -> 
+seller='' buyer='DE' company='' legalId='' regime=vat_registered -> 
+seller='' buyer='DE' company='' legalId='' regime=exempt -> 
+seller='' buyer='' company='Acme SAS' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='' company='Acme SAS' legalId='123456789' regime=exempt -> 
+seller='' buyer='' company='Acme SAS' legalId='' regime=vat_registered -> 
+seller='' buyer='' company='Acme SAS' legalId='' regime=exempt -> 
+seller='' buyer='' company='' legalId='123456789' regime=vat_registered -> 
+seller='' buyer='' company='' legalId='123456789' regime=exempt -> 
+seller='' buyer='' company='' legalId='' regime=vat_registered -> 
+seller='' buyer='' company='' legalId='' regime=exempt -> 

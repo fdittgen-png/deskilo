@@ -1,0 +1,9 @@
+netVatDue=16186
+totalAcquisitionsExVAT=0
+totalValueGoodsSuppliedExVAT=0
+totalValuePurchasesExVAT=50000
+totalValueSalesExVAT=173500
+totalVatDue=24691
+vatDueAcquisitions=0
+vatDueSales=24691
+vatReclaimedCurrPeriod=8505
