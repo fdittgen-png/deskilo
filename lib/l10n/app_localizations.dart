@@ -6741,6 +6741,95 @@ abstract class AppLocalizations {
   /// **'Days from the due date to the payment: median {median}, 90th percentile {p90}, weighted by amount {weighted} (negative: early)'**
   String biVendorDelay(String median, String p90, String weighted);
 
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{onTime} of {completed} received orders arrived by the expected date'**
+  String biVendorDeliveryBasis(String onTime, String completed);
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{cohort}: {count} orders'**
+  String biVendorDeliveryCohortLine(String cohort, String count);
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase orders sent in the period. A received order is on time when its last goods receipt is on or before the expected date. An order with no expected date, or one still awaited, is neither on time nor late.'**
+  String get biVendorDeliveryDefinition;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Against the expected date (negative = early): median {median}, 90th percentile {p90}'**
+  String biVendorDeliveryDelay(String median, String p90);
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Received late'**
+  String get biVendorDeliveryLate;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Days from sending to the last receipt: median {median}, 90th percentile {p90}'**
+  String biVendorDeliveryLead(String median, String p90);
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {onTime} on time, {late} late, of {orders} orders'**
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  );
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase orders are switched off: no delivery is measured.'**
+  String get biVendorDeliveryOff;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Received on time'**
+  String get biVendorDeliveryOnTime;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Awaited'**
+  String get biVendorDeliveryOpen;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Awaited, overdue'**
+  String get biVendorDeliveryOverdue;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Partly received'**
+  String get biVendorDeliveryPartial;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers delivering on time'**
+  String get biVendorDeliveryTitle;
+
+  /// #3294 step 5 vendor delivery analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Received, no expected date'**
+  String get biVendorDeliveryUnknownExpected;
+
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:

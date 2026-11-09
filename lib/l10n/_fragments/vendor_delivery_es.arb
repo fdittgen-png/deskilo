@@ -1,0 +1,16 @@
+{
+  "biVendorDeliveryTitle": "Proveedores que entregan a tiempo",
+  "biVendorDeliveryBasis": "{onTime} de {completed} pedidos recibidos llegaron en la fecha prevista",
+  "biVendorDeliveryDefinition": "Los pedidos enviados en el periodo. Un pedido recibido llega a tiempo cuando su última recepción es en la fecha prevista o antes. Un pedido sin fecha prevista, o aún esperado, no está ni a tiempo ni con retraso.",
+  "biVendorDeliveryLead": "Días desde el envío hasta la última recepción: mediana {median}, percentil 90 {p90}",
+  "biVendorDeliveryDelay": "Respecto a la fecha prevista (negativo = antes): mediana {median}, percentil 90 {p90}",
+  "biVendorDeliveryCohortLine": "{cohort}: {count} pedidos",
+  "biVendorDeliveryLine": "{name}: {onTime} a tiempo, {late} con retraso, de {orders} pedidos",
+  "biVendorDeliveryOnTime": "Recibido a tiempo",
+  "biVendorDeliveryLate": "Recibido con retraso",
+  "biVendorDeliveryUnknownExpected": "Recibido, sin fecha prevista",
+  "biVendorDeliveryPartial": "Recibido en parte",
+  "biVendorDeliveryOverdue": "Esperado, con retraso",
+  "biVendorDeliveryOpen": "Esperado",
+  "biVendorDeliveryOff": "Los pedidos están desactivados: no se mide ninguna entrega."
+}

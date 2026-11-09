@@ -5144,6 +5144,108 @@
       }
     }
   },
+  "biVendorDeliveryBasis": "{onTime} of {completed} received orders arrived by the expected date",
+  "@biVendorDeliveryBasis": {
+    "description": "#3294 step 5 vendor delivery analytics",
+    "placeholders": {
+      "onTime": {
+        "type": "String"
+      },
+      "completed": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDeliveryCohortLine": "{cohort}: {count} orders",
+  "@biVendorDeliveryCohortLine": {
+    "description": "#3294 step 5 vendor delivery analytics",
+    "placeholders": {
+      "cohort": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDeliveryDefinition": "The purchase orders sent in the period. A received order is on time when its last goods receipt is on or before the expected date. An order with no expected date, or one still awaited, is neither on time nor late.",
+  "@biVendorDeliveryDefinition": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryDelay": "Against the expected date (negative = early): median {median}, 90th percentile {p90}",
+  "@biVendorDeliveryDelay": {
+    "description": "#3294 step 5 vendor delivery analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDeliveryLate": "Received late",
+  "@biVendorDeliveryLate": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryLead": "Days from sending to the last receipt: median {median}, 90th percentile {p90}",
+  "@biVendorDeliveryLead": {
+    "description": "#3294 step 5 vendor delivery analytics",
+    "placeholders": {
+      "median": {
+        "type": "String"
+      },
+      "p90": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDeliveryLine": "{name}: {onTime} on time, {late} late, of {orders} orders",
+  "@biVendorDeliveryLine": {
+    "description": "#3294 step 5 vendor delivery analytics",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "onTime": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "orders": {
+        "type": "String"
+      }
+    }
+  },
+  "biVendorDeliveryOff": "Purchase orders are switched off: no delivery is measured.",
+  "@biVendorDeliveryOff": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryOnTime": "Received on time",
+  "@biVendorDeliveryOnTime": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryOpen": "Awaited",
+  "@biVendorDeliveryOpen": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryOverdue": "Awaited, overdue",
+  "@biVendorDeliveryOverdue": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryPartial": "Partly received",
+  "@biVendorDeliveryPartial": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryTitle": "Suppliers delivering on time",
+  "@biVendorDeliveryTitle": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
+  "biVendorDeliveryUnknownExpected": "Received, no expected date",
+  "@biVendorDeliveryUnknownExpected": {
+    "description": "#3294 step 5 vendor delivery analytics"
+  },
   "biVendorLagBasis": "{documents} bills; median {median} days, 90th percentile {p90}",
   "@biVendorLagBasis": {
     "description": "#3294 step 2 vendor analytics",

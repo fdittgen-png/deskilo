@@ -1,0 +1,16 @@
+{
+  "biVendorDeliveryTitle": "Lieferanten, die pünktlich liefern",
+  "biVendorDeliveryBasis": "{onTime} von {completed} erhaltenen Bestellungen kamen zum erwarteten Datum",
+  "biVendorDeliveryDefinition": "Die im Zeitraum versandten Bestellungen. Eine erhaltene Bestellung ist pünktlich, wenn ihr letzter Wareneingang am oder vor dem erwarteten Datum liegt. Eine Bestellung ohne erwartetes Datum oder noch ausstehend ist weder pünktlich noch verspätet.",
+  "biVendorDeliveryLead": "Tage vom Versand bis zum letzten Wareneingang: Median {median}, 90. Perzentil {p90}",
+  "biVendorDeliveryDelay": "Gegenüber dem erwarteten Datum (negativ = früher): Median {median}, 90. Perzentil {p90}",
+  "biVendorDeliveryCohortLine": "{cohort}: {count} Bestellungen",
+  "biVendorDeliveryLine": "{name}: {onTime} pünktlich, {late} verspätet, von {orders} Bestellungen",
+  "biVendorDeliveryOnTime": "Pünktlich erhalten",
+  "biVendorDeliveryLate": "Verspätet erhalten",
+  "biVendorDeliveryUnknownExpected": "Erhalten, ohne erwartetes Datum",
+  "biVendorDeliveryPartial": "Teilweise erhalten",
+  "biVendorDeliveryOverdue": "Ausstehend, überfällig",
+  "biVendorDeliveryOpen": "Ausstehend",
+  "biVendorDeliveryOff": "Bestellungen sind ausgeschaltet: Lieferungen werden nicht gemessen."
+}

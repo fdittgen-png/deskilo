@@ -4039,6 +4039,65 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String biVendorDeliveryBasis(String onTime, String completed) {
+    return '$onTime de $completed pedidos recibidos llegaron en la fecha prevista';
+  }
+
+  @override
+  String biVendorDeliveryCohortLine(String cohort, String count) {
+    return '$cohort: $count pedidos';
+  }
+
+  @override
+  String get biVendorDeliveryDefinition =>
+      'Los pedidos enviados en el periodo. Un pedido recibido llega a tiempo cuando su última recepción es en la fecha prevista o antes. Un pedido sin fecha prevista, o aún esperado, no está ni a tiempo ni con retraso.';
+
+  @override
+  String biVendorDeliveryDelay(String median, String p90) {
+    return 'Respecto a la fecha prevista (negativo = antes): mediana $median, percentil 90 $p90';
+  }
+
+  @override
+  String get biVendorDeliveryLate => 'Recibido con retraso';
+
+  @override
+  String biVendorDeliveryLead(String median, String p90) {
+    return 'Días desde el envío hasta la última recepción: mediana $median, percentil 90 $p90';
+  }
+
+  @override
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  ) {
+    return '$name: $onTime a tiempo, $late con retraso, de $orders pedidos';
+  }
+
+  @override
+  String get biVendorDeliveryOff =>
+      'Los pedidos están desactivados: no se mide ninguna entrega.';
+
+  @override
+  String get biVendorDeliveryOnTime => 'Recibido a tiempo';
+
+  @override
+  String get biVendorDeliveryOpen => 'Esperado';
+
+  @override
+  String get biVendorDeliveryOverdue => 'Esperado, con retraso';
+
+  @override
+  String get biVendorDeliveryPartial => 'Recibido en parte';
+
+  @override
+  String get biVendorDeliveryTitle => 'Proveedores que entregan a tiempo';
+
+  @override
+  String get biVendorDeliveryUnknownExpected => 'Recibido, sin fecha prevista';
+
+  @override
   String biVendorLagBasis(String documents, String median, String p90) {
     return '$documents facturas; mediana $median días, percentil 90 $p90';
   }

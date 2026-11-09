@@ -153,7 +153,8 @@ Future<BiResult> biModuleResult(
     'vendors.spend' ||
     'vendors.category_spend' ||
     'vendors.payment_punctuality' ||
-    'vendors.billing_lag' => biVendorResult(
+    'vendors.billing_lag' ||
+    'vendors.delivery' => biVendorResult(
       ref,
       workspaceId,
       moduleId,

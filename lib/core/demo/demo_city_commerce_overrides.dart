@@ -146,6 +146,7 @@ List<Override> demoCityCommerceOverrides(
   final homeValuations = seedDemoValuations(fixture.seededAt);
   final homeCommitments = seedDemoCommitments(fixture.seededAt);
   final twin = _twinStores(fixture);
+  final orderSpaces = demoPurchaseOrderSpaces(fixture, purchasing, london: londonPurchasing, newYork: nyPurchasing);
   T choose<T>(Ref ref, T home, T london, T ny, T devTwin) =>
       switch (ref.watch(currentWorkspaceProvider).value?.id) {
         demoLondonSpaceId => london,
@@ -170,12 +171,7 @@ List<Override> demoCityCommerceOverrides(
       twin: fixture.twin.purchasing,
     ),
     // #3307 — the orders to their suppliers.
-    ...demoPurchaseOrderOverrides(
-      fixture,
-      purchasing,
-      london: londonPurchasing,
-      newYork: nyPurchasing,
-    ),
+    ...demoPurchaseOrderOverrides(orderSpaces),
     bookProfileRepositoryProvider.overrideWith(
       (ref) => choose(ref, mainBooks, londonBooks, nyBooks, twin.books),
     ),
@@ -223,7 +219,7 @@ List<Override> demoCityCommerceOverrides(
     leaseCommitmentRepositoryProvider.overrideWith(
       (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments, twin.commitments),
     ),
-    ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing),
+    ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing, orderSpaces),
   ];
 }
 
@@ -234,6 +230,7 @@ List<Override> _kpiOverrides(
   DemoPurchasing home,
   DemoPurchasing london,
   DemoPurchasing newYork,
+  DemoPurchaseOrderSpaces orderSpaces,
 ) {
   final now = fixture.seededAt;
   final purchase = (
@@ -335,16 +332,22 @@ List<Override> _kpiOverrides(
     vendorKpiRepositoryProvider.overrideWith(
       (ref) => choose<VendorKpiRepository>(
         ref,
-        DemoVendorKpiRepository(purchases: home.purchases, now: now),
+        DemoVendorKpiRepository(
+          purchases: home.purchases,
+          now: now,
+          orders: orderSpaces.home,
+        ),
         DemoVendorKpiRepository(
           purchases: london.purchases,
           now: now,
           currency: 'GBP',
+          orders: orderSpaces.london,
         ),
         DemoVendorKpiRepository(
           purchases: newYork.purchases,
           now: now,
           currency: 'USD',
+          orders: orderSpaces.newYork,
         ),
         // #3302 — the twin's own (empty) purchases.
         DemoVendorKpiRepository(

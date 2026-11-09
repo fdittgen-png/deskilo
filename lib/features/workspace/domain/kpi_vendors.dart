@@ -22,6 +22,9 @@ library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'kpi_contract.dart';
+import 'kpi_vendor_delivery.dart';
+
+export 'kpi_vendor_delivery.dart' show DeliveryCohort, VendorDelivery;
 
 const _spendKpi = KpiDefinition(
   id: 'vendors.spend',
@@ -108,6 +111,7 @@ const vendorKpis = <KpiDefinition>[
   _categorySpendKpi,
   _paymentPunctualityKpi,
   _billingLagKpi,
+  deliveryKpi,
 ];
 
 /// The cohorts a supplier payable falling due lands in, in display order.
@@ -213,6 +217,13 @@ class VendorQualityKpi {
     required this.quality,
     required this.reasons,
     required this.computedAt,
+    this.deliveryOrders = 0,
+    this.deliveryCohorts = const {},
+    this.deliveryMedianLeadDays,
+    this.deliveryP90LeadDays,
+    this.deliveryMedianDelayDays,
+    this.deliveryP90DelayDays,
+    this.deliveries = const [],
   });
 
   final String fromMonth;
@@ -272,6 +283,27 @@ class VendorQualityKpi {
   final Set<KpiQuality> quality;
   final List<String> reasons;
   final DateTime computedAt;
+
+  /// The purchase orders sent in the months (#3294 step 5), each in one
+  /// cohort; none from a server older than 0699.
+  final int deliveryOrders;
+  final Map<DeliveryCohort, int> deliveryCohorts;
+
+  /// Days from the day an order was sent to its last receipt, and from the
+  /// expected date to it (negative = early), over the received orders.
+  final int? deliveryMedianLeadDays;
+  final int? deliveryP90LeadDays;
+  final int? deliveryMedianDelayDays;
+  final int? deliveryP90DelayDays;
+
+  /// Per supplier, the one with most orders first.
+  final List<VendorDelivery> deliveries;
+
+  int get deliveryOnTimeCount => deliveryCohorts[DeliveryCohort.onTime] ?? 0;
+
+  /// The received orders that named an expected date.
+  int get deliveryCompletedCount =>
+      deliveryOnTimeCount + (deliveryCohorts[DeliveryCohort.late] ?? 0);
 
   int get onTimeCount => cohorts[PayableCohort.onTime]?.count ?? 0;
 
@@ -356,6 +388,7 @@ VendorQualityKpi vendorQualityFromJson(Map<String, Object?> json) {
       medianDays: row.intOrNull('median_days'),
     ),
   );
+  final delivery = parseVendorDelivery(r.objectOrNull('delivery'));
   final costMinor = minor(spend, 'cost_minor');
   final creditedMinor = minor(spend, 'credited_minor');
   final unassignedMinor = minor(spend, 'unassigned_minor');
@@ -395,6 +428,13 @@ VendorQualityKpi vendorQualityFromJson(Map<String, Object?> json) {
     },
     reasons: [...r.strings('reasons'), if (inexact) 'amount_not_exact'],
     computedAt: r.dateTime('computed_at'),
+    deliveryOrders: delivery.orders,
+    deliveryCohorts: delivery.cohorts,
+    deliveryMedianLeadDays: delivery.medianLead,
+    deliveryP90LeadDays: delivery.p90Lead,
+    deliveryMedianDelayDays: delivery.medianDelay,
+    deliveryP90DelayDays: delivery.p90Delay,
+    deliveries: delivery.rows,
   );
 }
 
