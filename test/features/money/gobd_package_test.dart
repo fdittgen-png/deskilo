@@ -13,6 +13,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
@@ -105,7 +106,7 @@ Map<String, List<int>> _package() {
           i.id: {
             'belege/${i.id}.xml': utf8.encode(
               buildInvoiceCii(
-                EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+                EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
                   invoice: i,
                   seller: seededCompany,
                   buyer: const InvoiceParty(name: 'Ana', country: 'FR'),

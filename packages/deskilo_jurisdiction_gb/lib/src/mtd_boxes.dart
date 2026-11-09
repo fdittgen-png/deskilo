@@ -8,6 +8,10 @@
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart';
 
+/// The country whose VAT form the nine boxes fill (the rates and boxes the tax
+/// reference holds for it).
+const mtdFormCountry = 'GB';
+
 /// The HMRC field names of the nine boxes, in the order of the form.
 const mtdBoxFields = [
   'vatDueSales',

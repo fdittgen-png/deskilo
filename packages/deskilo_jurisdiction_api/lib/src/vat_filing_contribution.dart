@@ -56,6 +56,12 @@ abstract class VatFilingContribution {
   /// version.
   bool get taxPointOnReceiptsByDefault => false;
 
+  /// Whether the country asks the electronic reporting of the sales a VAT
+  /// return does not carry (France's e-reporting flows); the host offers that
+  /// export for exactly the countries that say so. Additive: the contract stays
+  /// at the same version.
+  bool get eReporting => false;
+
   /// What the host loads before calling [validate].
   Set<FilingSource> get requiredSources;
 

@@ -10,6 +10,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -329,7 +330,7 @@ String _vatCompliance() {
       for (final country in ['FR', 'DE', 'GB', 'fr', '']) {
         out.writeln(
           '[$category / ${regime.name} / $country] '
-          'code="${exemptionCodeForCategory(category, country, regime)}" '
+          'code="${exemptionCodeForCategory(category, country, regime, installedNationalInvoiceRules)}" '
           'mention="${exemptionMentionFor(category: category, sellerCountry: country, sellerReason: 'own reason', buyerReason: 'buyer reason', regime: regime, reference: _reference)}"',
         );
       }

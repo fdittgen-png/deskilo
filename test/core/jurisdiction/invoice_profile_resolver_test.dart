@@ -6,6 +6,7 @@
 // test renders an invoice without the host knowing it.
 import 'dart:convert';
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
@@ -70,7 +71,7 @@ Invoice _invoice() => Invoice(
   signature: 'f' * 64,
 );
 
-EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+EInvoiceInput _input({InvoiceParty buyer = _buyer}) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
   invoice: _invoice(),
   seller: _seller,
   buyer: buyer,

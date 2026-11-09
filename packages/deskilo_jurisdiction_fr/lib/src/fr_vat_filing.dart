@@ -29,6 +29,9 @@ class FrVatFilingContribution extends VatFilingContribution {
   );
 
   @override
+  bool get eReporting => true;
+
+  @override
   String get fileButtonId => 'ediTva';
 
   @override

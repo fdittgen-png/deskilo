@@ -3,6 +3,7 @@
 // #2440 — the exemption reason of the seller's own exempt rate, per VAT
 // category (BT-120), and the Spanish correction reason (RD 1619/2012
 // art. 15, R1-R5) printed on the correcting invoice.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -102,7 +103,7 @@ void main() {
     'UBL: the E subtotal states the rate\'s reason, the S subtotal none',
     () {
       final doc = XmlDocument.parse(
-        buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(),
+        buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: _invoice(),
           seller: _seller,
           buyer: _buyer,
           lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current)),
@@ -126,7 +127,7 @@ void main() {
   );
 
   test('CII: the same reason on the E trade tax (BT-120)', () {
-    final xml = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _invoice(),
+    final xml = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
       lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current));

@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
@@ -288,12 +289,12 @@ const _pdfStrings = InvoicePdfStrings(
 /// format id → file name and bytes.
 Future<Map<String, Uint8List>> _samples() async {
   final invoice = _invoice();
-  final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+  final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
     iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current));
-  final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+  final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
@@ -308,7 +309,7 @@ Future<Map<String, Uint8List>> _samples() async {
     colorProfile: File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
     baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
     boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
-  final fatturaPa = buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _nationalInvoice(
+  final fatturaPa = buildChannelEInvoiceXml(EInvoiceFormat.fatturaPa, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: _nationalInvoice(
       currency: 'EUR',
       percent: 22,
       gross: 24400,
@@ -319,7 +320,7 @@ Future<Map<String, Uint8List>> _samples() async {
     lineText: _line,
     iban: 'IT60X0542811101000000123456',
     dueDate: DateTime(2026, 10, 30), reference: ActiveTaxReference.current));
-  final ksef = buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: _nationalInvoice(
+  final ksef = buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: _nationalInvoice(
       currency: 'PLN',
       percent: 23,
       gross: 24600,
@@ -336,7 +337,7 @@ Future<Map<String, Uint8List>> _samples() async {
     InvoiceParty seller,
     InvoiceParty buyer,
     String iban,
-  ) => buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+  ) => buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: seller,
     buyer: buyer,
     lineText: _line,

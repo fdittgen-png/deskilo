@@ -5,6 +5,7 @@
 // member owes — the tax is extracted from the price and shown. These tests
 // pin that arithmetic and check that every document says the same thing.
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
@@ -262,7 +263,7 @@ void main() {
   group('e-invoice readiness', () {
     test('a VAT-charging seller WITH a breakdown is ready — that is the '
         'point of 0072', () {
-      final readiness = checkEInvoiceReadiness(
+      final readiness = checkEInvoiceReadiness(account: installedInvoiceAccount(), 
         invoice: _invoice(),
         seller: _seller,
         buyer: _buyer, reference: ActiveTaxReference.current,
@@ -273,7 +274,7 @@ void main() {
     });
 
     test('a VAT-charging seller with NO breakdown is still refused', () {
-      final readiness = checkEInvoiceReadiness(
+      final readiness = checkEInvoiceReadiness(account: installedInvoiceAccount(), 
         invoice: _invoice(vatTotals: const []),
         seller: _seller,
         buyer: _buyer, reference: ActiveTaxReference.current,
@@ -285,7 +286,7 @@ void main() {
     });
 
     test('BR-S-02: a VAT-charging seller needs its VAT identifier', () {
-      final readiness = checkEInvoiceReadiness(
+      final readiness = checkEInvoiceReadiness(account: installedInvoiceAccount(), 
         invoice: _invoice(),
         seller: _seller.copyWith(vatId: ''),
         buyer: _buyer, reference: ActiveTaxReference.current,
@@ -298,7 +299,7 @@ void main() {
   });
 
   group('UBL', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
           lineText: _lineText, reference: ActiveTaxReference.current)));
@@ -401,7 +402,7 @@ void main() {
   });
 
   group('CII', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
           lineText: _lineText, reference: ActiveTaxReference.current)));

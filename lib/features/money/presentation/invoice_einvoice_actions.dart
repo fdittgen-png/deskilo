@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/files/file_names.dart';
+import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
@@ -87,7 +88,7 @@ Future<void> sendEInvoice(
         final words = reportStringsOf(l10n);
         final association = ref.read(sellerIsAssociationProvider);
         // Every input is read BEFORE the first await.
-        final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+        final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
           lineText: (line) => invoiceLineText(words, line,
               association: association, period: invoice.period),
@@ -302,10 +303,7 @@ class _EInvoiceExportRun {
       // #922 — the sheet's default leg is the government platform; the
       // public-sector references are asked for there, as a warning.
       destination: 'government',
-      account: PaymentAccount(
-        iban: s.iban,
-        rules: installedPaymentReferenceRules,
-      ),
+      account: installedInvoiceAccount(iban: s.iban),
       reference: reference,
     );
     // The same judgement against the LIVE identity: if that one passes, the
@@ -318,10 +316,7 @@ class _EInvoiceExportRun {
           invoice: s.invoice,
           seller: s.liveSeller,
           buyer: s.buyer,
-          account: PaymentAccount(
-            iban: s.iban,
-            rules: installedPaymentReferenceRules,
-          ),
+          account: installedInvoiceAccount(iban: s.iban),
           reference: reference,
         ).ready;
     // #2358 — what the configured channel receives, what it still needs,
@@ -452,7 +447,7 @@ class _EInvoiceExportRun {
       message: 'e-invoice export failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        final xml = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+        final xml = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
           invoice: s.invoice,
           seller: s.seller,
           buyer: s.buyer,

@@ -38,3 +38,11 @@ VatFilingContribution? vatFilingOf(String? country) {
   );
   return resolution is Resolved ? resolution.contribution : null;
 }
+
+/// #3429 -- the country whose e-reporting flows the host exports: the one
+/// installed VAT filing that asks for them. From the add-on, never a literal;
+/// none or several is a programming error.
+String get eReportingCountry => installedVatFilings
+    .where((f) => f.eReporting)
+    .map((f) => f.descriptor.country)
+    .single;
