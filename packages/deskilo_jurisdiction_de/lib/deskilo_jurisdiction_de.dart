@@ -4,3 +4,4 @@ library;
 
 export 'src/de_vat_filing.dart';
 export 'src/elster_writer.dart' show elsterPeriod;
+export 'src/de_archive.dart';

@@ -37,6 +37,7 @@ void main() {
     expect(ids, {
       'archive.CA',
       'archive.CH',
+      'archive.DE',
       'archive.FR',
       'archive.GB',
       'archive.IE',
@@ -63,7 +64,7 @@ void main() {
   });
 
   test('a country with no add-on asks nothing, and never another\'s', () {
-    for (final c in ['DE', '', '  ', 'XX']) {
+    for (final c in ['AT', 'PL', '', '  ', 'XX']) {
       expect(
         resolveArchive(LegalContext(countryCode: c), installedArchives),
         isNull,

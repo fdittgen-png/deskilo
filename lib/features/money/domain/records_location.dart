@@ -12,9 +12,12 @@
 // permission (Abs. 2b); membership is the tax reference store's.
 // Pure Dart.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show isEuCountry;
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show RecordsFacts, RecordsNotice;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/jurisdiction/installed_archives.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
 
@@ -23,14 +26,6 @@ const String _hostingCountryKey = 'records.hosting_country';
 
 /// The workspace setting a Canadian space states its CRA authorisation in.
 const String _craReferenceKey = 'records.cra_authorisation_reference';
-
-/// The country whose law (ETA s.286, ITA s.230) asks for the records to be
-/// kept within it unless the CRA permits otherwise.
-const String _canada = 'CA';
-
-/// The country whose fiscal code (§ 146 Abs. 2a AO) asks for the books to
-/// be kept within the EU unless the tax office permits otherwise.
-const String _germany = 'DE';
 
 /// An ISO 3166-1 alpha-2 code, as the operator types it.
 final RegExp _countryCode = RegExp(r'^[A-Z]{2}$');
@@ -85,13 +80,23 @@ class RecordsLocation {
   /// Whether the declared country is an EU member state.
   final bool hostingInEu;
 
+  /// The notice the issuer country's archive add-on adds about where the
+  /// records are kept (null when its law asks nothing of the location).
+  RecordsNotice? get notice => archiveOf(issuerCountry)?.recordsNotice(
+    RecordsFacts(
+      hostingCountry: hostingCountry,
+      hostingInEu: hostingInEu,
+      authorisationReference: craReference,
+    ),
+  );
+
   /// A Canadian business whose records are not declared to be in Canada:
   /// they may be kept elsewhere only with the CRA's authorisation.
-  bool get craNotice => issuerCountry == _canada && hostingCountry != _canada;
+  bool get craNotice => notice?.id == 'cra';
 
   /// #2375 — a German business whose books are not declared in the EU:
   /// kept elsewhere, they need the tax office's permission.
-  bool get aoNotice => issuerCountry == _germany && !hostingInEu;
+  bool get aoNotice => notice?.id == 'ao';
 
   /// The lines an archive's README states, in English.
   List<String> get archiveLines => [
@@ -103,23 +108,6 @@ class RecordsLocation {
         'Records location: not declared by the operator of this '
             'installation; this archive states no location.',
     },
-    if (craNotice) ...[
-      if (hostingCountry == null)
-        'Nothing declares these records kept in Canada (ETA s.286, '
-            'ITA s.230).'
-      else
-        'These records are kept outside Canada (ETA s.286, ITA s.230).',
-      if (craReference.isEmpty)
-        'CRA authorisation reference: none recorded.'
-      else
-        'CRA authorisation reference: $craReference.',
-    ],
-    if (aoNotice)
-      if (hostingCountry == null)
-        'Nothing declares these books kept in Germany or another EU '
-            'member state (§ 146 Abs. 2a AO).'
-      else
-        'These books are kept outside the EU: this needs the tax '
-            "office's permission (§ 146 Abs. 2b AO).",
+    ...?notice?.readmeLines,
   ];
 }
