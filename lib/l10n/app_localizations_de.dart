@@ -4043,6 +4043,66 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String biVendorDeliveryBasis(String onTime, String completed) {
+    return '$onTime von $completed erhaltenen Bestellungen kamen zum erwarteten Datum';
+  }
+
+  @override
+  String biVendorDeliveryCohortLine(String cohort, String count) {
+    return '$cohort: $count Bestellungen';
+  }
+
+  @override
+  String get biVendorDeliveryDefinition =>
+      'Die im Zeitraum versandten Bestellungen. Eine erhaltene Bestellung ist pünktlich, wenn ihr letzter Wareneingang am oder vor dem erwarteten Datum liegt. Eine Bestellung ohne erwartetes Datum oder noch ausstehend ist weder pünktlich noch verspätet.';
+
+  @override
+  String biVendorDeliveryDelay(String median, String p90) {
+    return 'Gegenüber dem erwarteten Datum (negativ = früher): Median $median, 90. Perzentil $p90';
+  }
+
+  @override
+  String get biVendorDeliveryLate => 'Verspätet erhalten';
+
+  @override
+  String biVendorDeliveryLead(String median, String p90) {
+    return 'Tage vom Versand bis zum letzten Wareneingang: Median $median, 90. Perzentil $p90';
+  }
+
+  @override
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  ) {
+    return '$name: $onTime pünktlich, $late verspätet, von $orders Bestellungen';
+  }
+
+  @override
+  String get biVendorDeliveryOff =>
+      'Bestellungen sind ausgeschaltet: Lieferungen werden nicht gemessen.';
+
+  @override
+  String get biVendorDeliveryOnTime => 'Pünktlich erhalten';
+
+  @override
+  String get biVendorDeliveryOpen => 'Ausstehend';
+
+  @override
+  String get biVendorDeliveryOverdue => 'Ausstehend, überfällig';
+
+  @override
+  String get biVendorDeliveryPartial => 'Teilweise erhalten';
+
+  @override
+  String get biVendorDeliveryTitle => 'Lieferanten, die pünktlich liefern';
+
+  @override
+  String get biVendorDeliveryUnknownExpected =>
+      'Erhalten, ohne erwartetes Datum';
+
+  @override
   String biVendorLagBasis(String documents, String median, String p90) {
     return '$documents Rechnungen; Median $median Tage, 90. Perzentil $p90';
   }

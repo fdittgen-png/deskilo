@@ -4044,6 +4044,65 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String biVendorDeliveryBasis(String onTime, String completed) {
+    return '$onTime commandes reçues sur $completed sont arrivées à la date prévue';
+  }
+
+  @override
+  String biVendorDeliveryCohortLine(String cohort, String count) {
+    return '$cohort : $count commandes';
+  }
+
+  @override
+  String get biVendorDeliveryDefinition =>
+      'Les commandes envoyées dans la période. Une commande reçue est à temps quand sa dernière réception est à la date prévue ou avant. Une commande sans date prévue, ou encore attendue, n\'est ni à temps ni en retard.';
+
+  @override
+  String biVendorDeliveryDelay(String median, String p90) {
+    return 'Par rapport à la date prévue (négatif = en avance) : médiane $median, 90e centile $p90';
+  }
+
+  @override
+  String get biVendorDeliveryLate => 'Reçue en retard';
+
+  @override
+  String biVendorDeliveryLead(String median, String p90) {
+    return 'Jours entre l\'envoi et la dernière réception : médiane $median, 90e centile $p90';
+  }
+
+  @override
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  ) {
+    return '$name : $onTime à temps, $late en retard, sur $orders commandes';
+  }
+
+  @override
+  String get biVendorDeliveryOff =>
+      'Les commandes sont désactivées : aucune livraison n\'est mesurée.';
+
+  @override
+  String get biVendorDeliveryOnTime => 'Reçue à temps';
+
+  @override
+  String get biVendorDeliveryOpen => 'Attendue';
+
+  @override
+  String get biVendorDeliveryOverdue => 'Attendue, en retard';
+
+  @override
+  String get biVendorDeliveryPartial => 'Reçue en partie';
+
+  @override
+  String get biVendorDeliveryTitle => 'Fournisseurs qui livrent à temps';
+
+  @override
+  String get biVendorDeliveryUnknownExpected => 'Reçue, sans date prévue';
+
+  @override
   String biVendorLagBasis(String documents, String median, String p90) {
     return '$documents factures ; médiane $median jours, 90e centile $p90';
   }

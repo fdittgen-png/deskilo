@@ -39,7 +39,17 @@ String _cohortName(PayableCohort c, AppLocalizations l10n) => switch (c) {
   PayableCohort.unknownDue => l10n.biVendorCohortUnknownDue,
 };
 
-/// The vendor modules' views (#3294 step 2).
+String _deliveryCohortName(DeliveryCohort c, AppLocalizations l10n) =>
+    switch (c) {
+      DeliveryCohort.onTime => l10n.biVendorDeliveryOnTime,
+      DeliveryCohort.late => l10n.biVendorDeliveryLate,
+      DeliveryCohort.unknownExpected => l10n.biVendorDeliveryUnknownExpected,
+      DeliveryCohort.partial => l10n.biVendorDeliveryPartial,
+      DeliveryCohort.overdue => l10n.biVendorDeliveryOverdue,
+      DeliveryCohort.open => l10n.biVendorDeliveryOpen,
+    };
+
+/// The vendor modules' views (#3294 steps 2 and 5).
 final vendorModuleViews = <String, BiModuleView>{
   'vendors.spend': BiModuleView(
     title: (l10n) => l10n.biVendorSpendTitle,
@@ -148,5 +158,55 @@ final vendorModuleViews = <String, BiModuleView>{
         l10n.biVendorLagUndated('${k.lagUndated}'),
     ],
     details: (m, l10n, locale) => [l10n.biVendorLagDefinition],
+  ),
+  'vendors.delivery': BiModuleView(
+    title: (l10n) => l10n.biVendorDeliveryTitle,
+    value: biPercentCell,
+    basis: (m, l10n, locale) => switch (_kpi(m)) {
+      final k? => l10n.biVendorDeliveryBasis(
+        '${k.deliveryOnTimeCount}',
+        '${k.deliveryCompletedCount}',
+      ),
+      null => '',
+    },
+    notes: (m, l10n, locale) => [
+      ..._notes(m, l10n),
+      if (m.reasons.contains('purchase_orders_off')) l10n.biVendorDeliveryOff,
+    ],
+    details: (m, l10n, locale) => switch (_kpi(m)) {
+      final k? => [
+        l10n.biVendorDeliveryDefinition,
+        if (k.deliveryMedianLeadDays != null)
+          l10n.biVendorDeliveryLead(
+            '${k.deliveryMedianLeadDays}',
+            '${k.deliveryP90LeadDays}',
+          ),
+        if (k.deliveryMedianDelayDays != null)
+          l10n.biVendorDeliveryDelay(
+            '${k.deliveryMedianDelayDays}',
+            '${k.deliveryP90DelayDays}',
+          ),
+        for (final c in DeliveryCohort.values)
+          if ((k.deliveryCohorts[c] ?? 0) > 0)
+            l10n.biVendorDeliveryCohortLine(
+              _deliveryCohortName(c, l10n),
+              '${k.deliveryCohorts[c]}',
+            ),
+        for (final v in k.deliveries)
+          l10n.biVendorDeliveryLine(
+            v.name,
+            '${v.onTime}',
+            '${v.late}',
+            '${v.orders}',
+          ),
+      ],
+      null => const [],
+    },
+    rowLabel: (row, l10n, locale) => switch (DeliveryCohort.values
+        .where((c) => c.wire == row.key)
+        .firstOrNull) {
+      final c? => _deliveryCohortName(c, l10n),
+      null => null,
+    },
   ),
 };

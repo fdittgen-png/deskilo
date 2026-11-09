@@ -54,6 +54,18 @@ const purchasingBiModules = <BiModule>[
     },
     drill: _vendorSuppliers,
   ),
+  // #3294 step 5 -- the purchase orders sent in the period, by whether their
+  // goods arrived by the expected date (0699).
+  BiModule(
+    id: 'vendors.delivery',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    drill: _vendorSuppliers,
+  ),
   // #3294 step 3 — what the space sells, by kind of line and by service,
   // and the margin each room it rents leaves (0674); each drills to the
   // invoices of its months.

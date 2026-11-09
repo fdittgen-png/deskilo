@@ -4036,6 +4036,65 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String biVendorDeliveryBasis(String onTime, String completed) {
+    return '$onTime ordini ricevuti su $completed sono arrivati entro la data prevista';
+  }
+
+  @override
+  String biVendorDeliveryCohortLine(String cohort, String count) {
+    return '$cohort: $count ordini';
+  }
+
+  @override
+  String get biVendorDeliveryDefinition =>
+      'Gli ordini inviati nel periodo. Un ordine ricevuto è in tempo quando la sua ultima ricezione è entro la data prevista. Un ordine senza data prevista, o ancora atteso, non è né in tempo né in ritardo.';
+
+  @override
+  String biVendorDeliveryDelay(String median, String p90) {
+    return 'Rispetto alla data prevista (negativo = in anticipo): mediana $median, 90° percentile $p90';
+  }
+
+  @override
+  String get biVendorDeliveryLate => 'Ricevuto in ritardo';
+
+  @override
+  String biVendorDeliveryLead(String median, String p90) {
+    return 'Giorni dall\'invio all\'ultima ricezione: mediana $median, 90° percentile $p90';
+  }
+
+  @override
+  String biVendorDeliveryLine(
+    String name,
+    String onTime,
+    String late,
+    String orders,
+  ) {
+    return '$name: $onTime in tempo, $late in ritardo, su $orders ordini';
+  }
+
+  @override
+  String get biVendorDeliveryOff =>
+      'Gli ordini sono disattivati: nessuna consegna viene misurata.';
+
+  @override
+  String get biVendorDeliveryOnTime => 'Ricevuto in tempo';
+
+  @override
+  String get biVendorDeliveryOpen => 'Atteso';
+
+  @override
+  String get biVendorDeliveryOverdue => 'Atteso, in ritardo';
+
+  @override
+  String get biVendorDeliveryPartial => 'Ricevuto in parte';
+
+  @override
+  String get biVendorDeliveryTitle => 'Fornitori che consegnano in tempo';
+
+  @override
+  String get biVendorDeliveryUnknownExpected => 'Ricevuto, senza data prevista';
+
+  @override
   String biVendorLagBasis(String documents, String median, String p90) {
     return '$documents fatture; mediana $median giorni, 90° percentile $p90';
   }
