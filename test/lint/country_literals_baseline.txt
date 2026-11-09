@@ -6,7 +6,7 @@ lib/core/country/country_catalog.dart :: 2 :: the catalogue of the countries the
 lib/core/demo/data/book_profile_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/data/company_lookup_repository.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/data/workspace_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/data/workspace_repository_part1.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/data/fake_workspace_members.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/demo_dataset.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/demo_fixture.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_city_books_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
