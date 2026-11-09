@@ -33,10 +33,10 @@ class GbVatFilingContribution extends VatFilingContribution {
   String get fileButtonId => 'mtdCsv';
 
   @override
-  bool get directSubmission => false;
+  bool get directSubmission => true;
 
   @override
-  Set<String> get legalIdentityFields => const <String>{};
+  Set<String> get legalIdentityFields => const {'ukLandTax'};
 
   @override
   Set<FilingSource> get requiredSources => const {
