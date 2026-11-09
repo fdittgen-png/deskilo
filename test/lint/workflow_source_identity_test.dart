@@ -41,11 +41,23 @@ const _cachePaths = {
   '~/.pub-cache', // packages, keyed on pubspec.lock (#1446 C3)
   '~/Library/Caches/CocoaPods', 'ios/Pods', // pods, keyed on Podfile.lock
   '~/.android/avd/*', '~/.android/adb*', // the emulator image (#93)
+  // #3473 -- the checksum-verified secret-scanner archive: restored before any
+  // release download, verified again on every run
+  '~/.cache/deskilo-toolchain/gitleaks',
+  // #3473 -- the e-invoice validators' pinned downloads, kept under their digest
+  '~/.cache/deskilo-toolchain/einvoice',
 };
 
 /// Keys that carry no lockfile hash: a toolchain image named by its own
 /// configuration. 2026-09-25: the API 34 Pixel 6 AVD snapshot (#93).
-const _toolchainKeys = {'avd-34-pixel6'};
+const _toolchainKeys = {
+  'avd-34-pixel6',
+  // 2026-11-09 #3473: a pinned toolchain archive, named by tool, version, OS
+  // and arch (a new version is a new key; the digest is pinned in the script).
+  r'toolchain-gitleaks-8.30.1-${{ runner.os }}-${{ runner.arch }}',
+  // keyed on the script that pins the digests: a new pin is a new key
+  r"toolchain-einvoice-${{ hashFiles('tool/einvoice/validate.sh') }}",
+};
 
 YamlMap _yaml(String path) => loadYaml(File(path).readAsStringSync()) as YamlMap;
 YamlMap _workflow(String file) => _yaml('.github/workflows/$file');
@@ -229,7 +241,10 @@ void main() {
     // 2026-11-02 #3166: the five-run p95 of the four shards was 18.2-20.6
     // minutes against the 18-minute bar, so two more test shards (money2 and
     // core) each restore the same lockfile-keyed pub cache: 9.
-    expect(seen, 9, reason: 'cache steps counted on 2026-11-02: pub x7, '
+    // 2026-11-09 #3473: the secret-scanner archive, keyed on its pinned
+    // version (the Supabase CLI and Deno caches live in composite actions), and
+    // the e-invoice validators' digest-keyed downloads: 11.
+    expect(seen, 11, reason: 'cache steps counted on 2026-11-02: pub x7, '
         'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }

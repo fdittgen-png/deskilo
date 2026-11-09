@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #3473 -- the pinned Supabase CLI, cache first. A GitHub release 504 reddened
+# required checks on a download, not on code; with a warm cache no release is
+# asked for, and the binary is checked against a pinned SHA-256 whether it was
+# just downloaded or restored (scripts/install_supabase_cli.sh holds the
+# version and both digests: bump them there, deliberately). The caller checks
+# the repository out first.
+name: pinned Supabase CLI
+description: Install the pinned Supabase CLI from the cache, or from a checksum-verified release archive on a miss
+
+runs:
+  using: composite
+  steps:
+    - name: Restore the pinned Supabase CLI
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/deskilo-toolchain/supabase
+        key: toolchain-supabase-cli-2.118.0-${{ runner.os }}-${{ runner.arch }}
+    - name: Install the pinned Supabase CLI (checksum-verified)
+      shell: bash
+      run: |
+        bash scripts/install_supabase_cli.sh "$HOME/.cache/deskilo-toolchain/supabase"
+        echo "$HOME/.cache/deskilo-toolchain/supabase" >> "$GITHUB_PATH"
