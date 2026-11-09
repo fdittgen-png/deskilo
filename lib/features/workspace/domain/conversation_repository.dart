@@ -4,7 +4,7 @@ import 'member_note.dart';
 
 /// Notes, conversations, participants, messages and search.
 ///
-/// A part of [WorkspaceRepository] (#2597): that interface is the sum of
+/// A part of [WorkspaceRepository] (#2597 W1): that interface is the sum of
 /// these, so no caller changes.
 abstract class ConversationRepository {
   /// Sends a member note (#456, RPC `send_member_note`): to one member,

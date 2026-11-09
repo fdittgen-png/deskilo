@@ -24,8 +24,8 @@ import '../domain/workspace_feature.dart';
 import '../domain/workspace_overview.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_settings_save.dart';
-import 'conversation_api.dart';
 import 'supabase_booking_rules.dart';
+import 'supabase_conversations.dart';
 import 'supabase_workspace_provenance.dart';
 import 'supabase_workspace_templates.dart';
 
@@ -34,7 +34,7 @@ part 'supabase_workspace_repository_part2.dart';
 part 'supabase_workspace_repository_part3.dart';
 
 class SupabaseWorkspaceRepository
-    with ConversationApi, SupabaseBookingRules, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
+    with SupabaseConversations, SupabaseBookingRules, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
     implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
 
