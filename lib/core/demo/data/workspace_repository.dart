@@ -12,14 +12,12 @@ import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
-import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/feature_flags_write.dart';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/managed_access.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
-import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
@@ -42,7 +40,7 @@ import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import 'conversation_visibility.dart';
+import 'fake_conversations.dart';
 import 'fixture_clock.dart';
 
 part 'workspace_repository_part1.dart';
@@ -51,7 +49,7 @@ part 'workspace_repository_part3.dart';
 part 'workspace_repository_part4.dart';
 
 /// In-memory [WorkspaceRepository] for tests.
-class FakeWorkspaceRepository implements WorkspaceRepository {
+class FakeWorkspaceRepository with FakeConversations implements WorkspaceRepository {
   FakeWorkspaceRepository({List<Workspace>? workspaces}) : workspaces = workspaces ?? [];
 
   /// One seeded workspace; [featureFlags] seeds its feature overrides
@@ -81,6 +79,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   final List<Workspace> workspaces;
 
   /// Membership returned by [fetchMyMember]; owner of ws-1 by default.
+  @override
   Member myMember = const Member(
     id: 'member-1',
     workspaceId: 'ws-1',
@@ -243,41 +242,6 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// Working day per workspace (#446); defaults like the real repo.
   final Map<String, WorkHours> workHours = {};
 
-  /// Sent member notes (#456), newest last; myNotes returns them
-  /// newest-first like the real query.
-  final List<MemberNote> memberNotes = [];
-
-  // ── conversations (#687) ────────────────────────────────────────────
-
-  /// Threads the fake knows about, in no particular order — the fake
-  /// SORTS on read, exactly as `my_conversations` does, so a test that
-  /// depends on ordering exercises the ordering rather than the seed
-  /// order.
-  final List<Conversation> conversations = [];
-
-  /// Messages per conversation id, oldest first.
-  final Map<String, List<MemberNote>> conversationMessages = {};
-  final Map<String, List<ConversationParticipant>> participants = {};
-
-  final List<({String conversationId, String body})> sentMessages = [];
-  final List<String> readConversations = [];
-  final List<({String conversationId, String memberId})> addedParticipants = [];
-  final List<({String conversationId, String memberId})> removedParticipants =
-      [];
-  final List<String> leftConversations = [];
-  final List<({String id, String? title, String? avatarPath})> metaWrites = [];
-
-  /// The id [createGroupConversation] hands back; tests that navigate on
-  /// it need to know it in advance.
-  String nextGroupId = 'conv-group';
-
-  /// #821 — prefs writes and unread marks, in order.
-  final List<({String id, bool? pinned, bool? muted, bool? archived})>
-      prefsWrites = [];
-  final List<String> unreadMarks = [];
-
-  /// Ids passed to [deleteMemberNote], in order (#798).
-  final List<String> deletedNotes = [];
 
   /// Server-side default workspace (#458).
   String? serverDefaultWorkspaceId;
@@ -459,24 +423,6 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override Future<void> setBookingLimit(String workspaceId, String key, int value) => _setBookingLimitImpl(workspaceId, key, value);
   @override Future<void> setLegendProfile(String workspaceId, LegendProfile profile) => _setLegendProfileImpl(workspaceId, profile);
   @override Future<void> setOutsideHoursMode(String workspaceId, OutsideHoursMode mode) => _setOutsideHoursModeImpl(workspaceId, mode);
-  @override Future<List<Conversation>> fetchConversations(String workspaceId, {bool includeArchived = false}) => _fetchConversationsImpl(workspaceId, includeArchived: includeArchived);
-  @override Future<void> setConversationPrefs(String conversationId, {bool? pinned, bool? muted, bool? archived}) => _setConversationPrefsImpl(conversationId, pinned: pinned, muted: muted, archived: archived);
-  @override Future<void> markConversationUnread(String conversationId) => _markConversationUnreadImpl(conversationId);
-  @override Future<String> openDirectConversation(String workspaceId, {required String otherMemberId}) => _openDirectConversationImpl(workspaceId, otherMemberId: otherMemberId);
-  @override Future<String> createGroupConversation(String workspaceId, {required String title, required List<String> memberIds}) => _createGroupConversationImpl(workspaceId, title: title, memberIds: memberIds);
-  @override Future<List<ConversationParticipant>> fetchParticipants(String conversationId) => _fetchParticipantsImpl(conversationId);
-  @override Future<void> addParticipant(String conversationId, String memberId) => _addParticipantImpl(conversationId, memberId);
-  @override Future<void> removeParticipant(String conversationId, String memberId) => _removeParticipantImpl(conversationId, memberId);
-  @override Future<void> leaveConversation(String conversationId) => _leaveConversationImpl(conversationId);
-  @override Future<void> setConversationMeta(String conversationId, {String? title, String? avatarPath}) => _setConversationMetaImpl(conversationId, title: title, avatarPath: avatarPath);
-  @override Future<void> sendConversationMessage(String conversationId, String body) => _sendConversationMessageImpl(conversationId, body);
-  @override Future<List<MemberNote>> fetchConversationMessages(String conversationId, {int limit = 200, DateTime? before}) => _fetchConversationMessagesImpl(conversationId, limit: limit, before: before);
-  @override Future<void> markConversationRead(String conversationId) => _markConversationReadImpl(conversationId);
-  @override Future<List<MemberNote>> searchMessages(String workspaceId, String query) => _searchMessagesImpl(workspaceId, query);
-  @override Future<void> sendMemberNote(String workspaceId, {required String? toMemberId, required String body}) => _sendMemberNoteImpl(workspaceId, toMemberId: toMemberId, body: body);
-  @override Future<List<MemberNote>> fetchMyNotes(String workspaceId) => _fetchMyNotesImpl(workspaceId);
-  @override Future<void> deleteMemberNote(String noteId) => _deleteMemberNoteImpl(noteId);
-  @override Future<void> markMyNotesRead(String workspaceId, {String? fromMemberId}) => _markMyNotesReadImpl(workspaceId, fromMemberId: fromMemberId);
   @override Future<String?> fetchDefaultWorkspaceId() => _fetchDefaultWorkspaceIdImpl();
   @override Future<void> setDefaultWorkspaceId(String? workspaceId) => _setDefaultWorkspaceIdImpl(workspaceId);
   @override Future<WorkHours> fetchWorkHours(String workspaceId) => _fetchWorkHoursImpl(workspaceId);

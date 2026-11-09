@@ -6,9 +6,9 @@
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 
-import 'workspace_repository.dart';
+import 'fake_conversations.dart';
 
-extension DemoConversationVisibility on FakeWorkspaceRepository {
+extension DemoConversationVisibility on FakeConversations {
   /// #3293 — [c] as my_conversations answers the signed-in member, or
   /// null when they are not in it now: its roster's current people (a
   /// direct thread with no roster is its two people, read off its
