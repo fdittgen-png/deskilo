@@ -7,7 +7,8 @@
 // spelling.
 import 'package:deskilo/core/jurisdiction/installed_invoice_mentions.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show LegalProfile;
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    show LegalProfile;
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -123,6 +124,42 @@ void main() {
             ? {'latePenalty', 'recoveryIndemnity', 'escompte'}
             : isEmpty,
         reason: c.descriptor.capabilityId,
+      );
+    }
+  });
+
+  test('a seller\'s registration numbers print as the country of its add-on shows them', () {
+    InvoiceMentionsContribution of(String code) => (resolveInvoiceMentions(
+      LegalContext(countryCode: code),
+      installedInvoiceMentions,
+    ) as ResolvedMentions).contribution;
+    // Switzerland: a valid UID (raw, dotted or with its suffix) is grouped,
+    // an invalid one is left as written
+    expect(of('CH').formatSellerVatId('CHE123456788'), 'CHE-123.456.788');
+    expect(
+      of('CH').formatSellerVatId('CHE-123.456.788 MWST'),
+      'CHE-123.456.788 MWST',
+    );
+    expect(of('CH').formatSellerVatId('CHE-123.456.789'), 'CHE-123.456.789');
+    expect(of('CH').formatSellerLegalId('812345678'), '812345678');
+    // Canada: the GST/HST number and the Quebec number
+    expect(of('CA').formatSellerVatId('123456789RT0001'), '123456789 RT0001');
+    expect(
+      of('CA').formatSellerLegalId('1234567890TQ0001'),
+      '1234567890 TQ0001',
+    );
+    expect(of('CA').formatSellerVatId('junk'), 'junk');
+    // every other add-on prints a number as it was written
+    for (final c in ['FR', 'DE', 'GB', 'US', 'ES', 'IT']) {
+      expect(
+        of(c).formatSellerVatId('CHE123456788'),
+        'CHE123456788',
+        reason: c,
+      );
+      expect(
+        of(c).formatSellerLegalId('1234567890TQ0001'),
+        '1234567890TQ0001',
+        reason: c,
       );
     }
   });
