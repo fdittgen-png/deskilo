@@ -5,6 +5,7 @@
 // number, the date, the customer and their partita IVA or codice fiscale,
 // and per rate the taxable amount, the rate and the tax; a 0 % line names
 // its Natura, the same code the FatturaPA carries (`fatturapa_profile.dart`).
+// (#3475 demo: a comment-only change outside the database job's import closure.)
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart' show fatturaPaNatura;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
