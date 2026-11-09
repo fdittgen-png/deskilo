@@ -1,0 +1,510 @@
+[FR / business / none] frBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=statutoryDefault:"Late-payment penalty: three times the statutory interest rate."
+  indemnity=statutoryDefault:"Fixed recovery indemnity for collection costs: €40."
+  escompte=statutoryDefault:"No discount for early payment."
+  deficiencies=
+[FR / business / owner] frBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[FR / consumer / none] frConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[FR / consumer / owner] frConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[FR / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[FR / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[DE / business / none] deBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[DE / business / owner] deBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[DE / consumer / none] deConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[DE / consumer / owner] deConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[DE / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[DE / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[GB / business / none] gbBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[GB / business / owner] gbBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[GB / consumer / none] gbConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[GB / consumer / owner] gbConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[GB / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[GB / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[CH / business / none] chBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[CH / business / owner] chBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[CH / consumer / none] chConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[CH / consumer / owner] chConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[CH / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[CH / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[CA / business / none] caBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[CA / business / owner] caBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[CA / consumer / none] caConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[CA / consumer / owner] caConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[CA / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[CA / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[US / business / none] usBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[US / business / owner] usBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[US / consumer / none] usConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[US / consumer / owner] usConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[US / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[US / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[IT / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[IT / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[IT / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[IT / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[IT / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[IT / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[ES / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[ES / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[ES / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[ES / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[ES / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[ES / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[PL / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[PL / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[PL / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[PL / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[PL / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[PL / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_review,escompte_review
+[JP / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[JP / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[JP / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[JP / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[JP / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[JP / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[fr / business / none] frBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=statutoryDefault:"Late-payment penalty: three times the statutory interest rate."
+  indemnity=statutoryDefault:"Fixed recovery indemnity for collection costs: €40."
+  escompte=statutoryDefault:"No discount for early payment."
+  deficiencies=
+[fr / business / owner] frBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[fr / consumer / none] frConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[fr / consumer / owner] frConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[fr / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[fr / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[ de  / business / none] deBusiness
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[ de  / business / owner] deBusiness
+  terms=owner:"Net 30"
+  late=owner:"Late 3x"
+  indemnity=owner:"EUR 40"
+  escompte=owner:"No discount"
+  deficiencies=
+[ de  / consumer / none] deConsumer
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=
+[ de  / consumer / owner] deConsumer
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=owner:"No discount"
+  deficiencies=late_penalty_review,recovery_indemnity_not_applicable
+[ de  / unknown / none] capacityUnknown
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=capacity_unknown
+[ de  / unknown / owner] capacityUnknown
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=requiresReview:"EUR 40"
+  escompte=requiresReview:"No discount"
+  deficiencies=capacity_unknown,late_penalty_review,recovery_indemnity_review,escompte_review
+[(blank) / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[(blank) / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[(blank) / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[(blank) / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[(blank) / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[(blank) / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[XX / business / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[XX / business / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[XX / consumer / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[XX / consumer / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[XX / unknown / none] unsupported
+  terms=statutoryDefault:"Payment on receipt."
+  late=none:""
+  indemnity=none:""
+  escompte=none:""
+  deficiencies=profile_unsupported
+[XX / unknown / owner] unsupported
+  terms=owner:"Net 30"
+  late=requiresReview:"Late 3x"
+  indemnity=notApplicable:""
+  escompte=requiresReview:"No discount"
+  deficiencies=profile_unsupported,late_penalty_review,recovery_indemnity_not_applicable,escompte_review
+[legacy association=false] unsupported
+  late=statutoryDefault:"Late-payment penalty: three times the statutory interest rate."
+  indemnity=statutoryDefault:"Fixed recovery indemnity for collection costs: €40."
+[legacy association=true] unsupported
+  late=none:""
+  indemnity=none:""
