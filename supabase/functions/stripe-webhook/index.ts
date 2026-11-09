@@ -6,6 +6,7 @@
 // webhook secret (table first, env fallback). Settlement is idempotent.
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -41,6 +42,8 @@ export interface Deps {
   admin: () => SupabaseClient;
   env: (name: string) => string | undefined;
   nowS: () => number;
+  /** The provider call of the fee read (#2380); injected so a test drives it. */
+  fetch?: typeof fetch;
 }
 
 const defaultDeps: Deps = {
@@ -51,7 +54,56 @@ const defaultDeps: Deps = {
     ),
   env: (name) => Deno.env.get(name),
   nowS: () => Date.now() / 1000,
+  fetch: (input, init) => fetch(input, init),
 };
+
+/** #2380 -- the Stripe API key of a workspace (table first, env fallback),
+ * the same lookup order as the webhook secret. */
+async function apiKey(
+  admin: SupabaseClient,
+  workspaceId: string,
+  env: (name: string) => string | undefined,
+): Promise<string> {
+  const { data, error } = await admin
+    .from("payment_credentials")
+    .select("config")
+    .eq("workspace_id", workspaceId)
+    .eq("provider", "stripe")
+    .maybeSingle();
+  if (error) throw new Error("credential lookup failed");
+  const stored = (data?.config ?? {}) as Record<string, string>;
+  return stored.secret_key ?? env("STRIPE_SECRET_KEY") ?? "";
+}
+
+/** #2380 -- what Stripe kept of a paid payment: the balance transaction of
+ * the payment intent's latest charge, read once with the workspace's own key.
+ * Null when Stripe has no balance transaction for it yet (a delayed method
+ * reports it later: the settlement events come again) or refuses the key (4xx
+ * but 429: permanent, logged). Throws on a transient failure (429, 5xx, the
+ * network), so the webhook answers 5xx and Stripe redelivers. */
+async function stripeBalanceTransaction(
+  deps: Deps,
+  key: string,
+  paymentIntent: string,
+): Promise<unknown> {
+  const res = await (deps.fetch ?? fetch)(
+    `https://api.stripe.com/v1/payment_intents/${encodeURIComponent(paymentIntent)}` +
+      "?expand[]=latest_charge.balance_transaction",
+    { headers: { Authorization: `Bearer ${key}` } },
+  );
+  // A refusal of the key (403 restricted, 404 a platform key for another
+  // account) is permanent: retrying every paid event would end with Stripe
+  // disabling this endpoint. It is logged and the fee stays unrecorded; only a
+  // transient failure (429, 5xx, the network) is retried.
+  if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+    console.error("stripe fee unavailable", { status: res.status });
+    return null;
+  }
+  if (!res.ok) throw new Error(`stripe read ${res.status}`);
+  const intent = (await res.json()) as Record<string, unknown>;
+  const charge = (intent.latest_charge ?? {}) as Record<string, unknown>;
+  return charge.balance_transaction ?? null;
+}
 
 async function validSignature(
   payload: string,
@@ -202,6 +254,38 @@ export async function handle(
       return new Response("settle_failed", { status: 500 });
     }
     console.log("stripe session settled", { session: sessionId });
+    // #2380 -- what Stripe kept of it, recorded once (0687). Settlement above
+    // is idempotent, so a failed read or record answers 5xx and Stripe
+    // redelivers; a payment Stripe has no balance transaction for yet records
+    // nothing now.
+    const paymentIntent = String(object.payment_intent ?? "");
+    if (paymentIntent) {
+      try {
+        const key = await apiKey(admin, intent.workspace_id, deps.env);
+        if (key) {
+          const fee = stripeFeeOf(
+            await stripeBalanceTransaction(deps, key, paymentIntent),
+          );
+          if (fee) {
+            const recorded = await admin.rpc("record_provider_fee_v1", {
+              p_provider: "stripe",
+              p_order_id: sessionId,
+              p_fee_cents: fee.feeCents,
+              p_net_cents: fee.netCents,
+              p_currency: fee.currency,
+              p_transaction_id: fee.transactionId,
+            });
+            if (recorded.error) {
+              console.error("stripe fee record failed", recorded.error.message);
+              return new Response("fee_record_failed", { status: 500 });
+            }
+          }
+        }
+      } catch (e) {
+        console.error("stripe fee read failed", String(e));
+        return new Response("fee_read_failed", { status: 500 });
+      }
+    }
   } else if (
     event.type === "checkout.session.expired" ||
     event.type === "checkout.session.async_payment_failed"
