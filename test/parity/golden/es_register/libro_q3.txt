@@ -1,0 +1,5 @@
+sheet=EXPEDIDAS
+Autoliquidación||Actividad|||Tipo de Factura|Concepto de Ingreso|Ingreso Computable|Fecha Expedición|Fecha Operación|Identificación de la Factura|||NIF Destinatario|||Nombre Destinatario|Clave de Operación|Calificación de la Operación|Operación Exenta|Total Factura|Base Imponible|Tipo de IVA|Cuota IVA Repercutida|Tipo de Recargo Eq.|Cuota Recargo Eq.|Cobro||||Tipo Retención del IRPF|Importe Retenido del IRPF|Registro Acuerdo Facturación|Inmueble||Referencia Externa
+Ejercicio|Periodo|Código|Tipo|Grupo o Epígrafe del IAE||||||Serie|Número|Número-Final|Tipo|Código País|Identificación|||||||||||Fecha|Importe|Medio Utilizado|Identificación Medio Utilizado||||Situación|Referencia Catastral|
+2026|3T|A|03|8612|F1|||01/07/2026|||F-2026-0008||||B98765432|Cliente SL|01|S1||3025.00|2500.00|21.0|525.00||||||||||||
+2026|3T|A|03|8612|F1|||22/07/2026|||F-2026-0009||||A11111111|Otro Cliente SA|01|S1||3630.00|3000.00|21.0|630.00||||||||||||
