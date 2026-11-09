@@ -213,6 +213,9 @@ const Map<String, String> _notExported = {
       '#2358 — the Verifactu alta and anulación records of a Spanish seller, chained '
           'by their huella: they are produced to the AEAT from this server; the '
           'invoices they record are exported themselves',
+  'provider_settlement_costs':
+      '#3504 -- the costs a payment provider kept in a settlement, as it reported them: '
+          'the provider issues and keeps them; the payout they belong to is a provider_payouts row',
   'provider_payouts':
       '#2380 — the payouts a payment provider reported: the provider issues and keeps '
           'them; the payments they carried are exported as ledger rows',

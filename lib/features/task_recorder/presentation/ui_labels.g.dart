@@ -2490,6 +2490,7 @@ Map<String, _Getter> _part7() => {
   'overviewLayoutSaved': (l) => l.overviewLayoutSaved,
   'overviewNeedsAttention': (l) => l.overviewNeedsAttention,
   'payConfigRemove': (l) => l.payConfigRemove,
+  'payConfigSettlementsFetch': (l) => l.payConfigSettlementsFetch,
   'paymentTermsFieldTerms': (l) => l.paymentTermsFieldTerms,
   'pendingApprovalTitle': (l) => l.pendingApprovalTitle,
   'pendingHelp': (l) => l.pendingHelp,

@@ -18501,6 +18501,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigSecretSet => 'Set — leave blank to keep';
 
   @override
+  String get payConfigSettlementsFetch => 'Fetch payouts';
+
+  @override
+  String payConfigSettlementsFetched(String count) {
+    return '$count payouts recorded';
+  }
+
+  @override
   String get payConfigTitle => 'Online payments';
 
   @override

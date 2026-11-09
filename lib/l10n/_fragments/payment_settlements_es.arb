@@ -1,0 +1,4 @@
+{
+  "payConfigSettlementsFetch": "Obtener los pagos",
+  "payConfigSettlementsFetched": "{count} pagos registrados"
+}

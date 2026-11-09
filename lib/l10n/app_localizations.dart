@@ -30621,6 +30621,18 @@ abstract class AppLocalizations {
   /// **'Set — leave blank to keep'**
   String get payConfigSecretSet;
 
+  /// #3504 on-demand settlements of a payment provider
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch payouts'**
+  String get payConfigSettlementsFetch;
+
+  /// #3504 on-demand settlements of a payment provider
+  ///
+  /// In en, this message translates to:
+  /// **'{count} payouts recorded'**
+  String payConfigSettlementsFetched(String count);
+
   /// Owner screen to configure online-payment providers (0047)
   ///
   /// In en, this message translates to:

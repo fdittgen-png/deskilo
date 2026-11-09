@@ -18633,6 +18633,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Definido — déjelo en blanco para conservarlo';
 
   @override
+  String get payConfigSettlementsFetch => 'Obtener los pagos';
+
+  @override
+  String payConfigSettlementsFetched(String count) {
+    return '$count pagos registrados';
+  }
+
+  @override
   String get payConfigTitle => 'Pagos en línea';
 
   @override

@@ -18685,6 +18685,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get payConfigSecretSet => 'Défini — laisser vide pour conserver';
 
   @override
+  String get payConfigSettlementsFetch => 'Récupérer les versements';
+
+  @override
+  String payConfigSettlementsFetched(String count) {
+    return '$count versements enregistrés';
+  }
+
+  @override
   String get payConfigTitle => 'Paiements en ligne';
 
   @override

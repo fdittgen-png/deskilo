@@ -1,0 +1,15 @@
+{
+  "payConfigSettlementsFetch": "Fetch payouts",
+  "@payConfigSettlementsFetch": {
+    "description": "#3504 on-demand settlements of a payment provider"
+  },
+  "payConfigSettlementsFetched": "{count} payouts recorded",
+  "@payConfigSettlementsFetched": {
+    "description": "#3504 on-demand settlements of a payment provider",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  }
+}

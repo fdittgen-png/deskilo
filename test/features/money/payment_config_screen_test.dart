@@ -138,4 +138,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(money.clearedProviders, [PaymentProvider.stripe]);
   });
+
+  testWidgets('#3504 only a configured Mollie offers "Fetch payouts", and it '
+      'reports how many settlements were recorded', (tester) async {
+    final money = FakeMoneyRepository()
+      ..paymentStatus[PaymentProvider.mollie] = const PaymentProviderStatus(
+        configured: true,
+        secretKeysSet: {'api_key'},
+      )
+      ..paymentStatus[PaymentProvider.stripe] = const PaymentProviderStatus(
+        configured: true,
+        secretKeysSet: {'secret_key'},
+      );
+    await pumpConfig(tester, money: money);
+
+    expect(
+      find.byKey(const ValueKey('payment-fetch-settlements')),
+      findsOneWidget,
+      reason: 'Mollie only: the others report fees on the payment itself',
+    );
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('payment-fetch-settlements')),
+    );
+    await tester.tap(find.byKey(const ValueKey('payment-fetch-settlements')));
+    await tester.pumpAndSettle();
+    expect(find.text('1 payouts recorded'), findsOneWidget);
+  });
 }

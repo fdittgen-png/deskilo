@@ -112,6 +112,9 @@ verify_jwt = true
 [functions.send-e-invoice]
 verify_jwt = true
 
+[functions.mollie-settlements]
+verify_jwt = true
+
 [functions.send-purchase-order]
 verify_jwt = true
 

@@ -203,6 +203,12 @@ class _Payments implements PaymentGatewayRepository {
       throw UnimplementedError();
 
   @override
+  Future<({int imported, int skipped})> fetchProviderSettlements(
+    String workspaceId,
+    PaymentProvider provider,
+  ) => throw UnimplementedError();
+
+  @override
   Future<void> setPaymentCredentials(
     String workspaceId,
     PaymentProvider provider,

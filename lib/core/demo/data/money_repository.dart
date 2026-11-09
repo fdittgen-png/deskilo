@@ -487,6 +487,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => paymentGateway.fetchPaymentConfig(workspaceId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => paymentGateway.fetchPaymentGatewayStatus(workspaceId);
   @override Future<PaymentTestCheck> testPaymentKeys(String workspaceId) => paymentGateway.testPaymentKeys(workspaceId);
+  @override Future<({int imported, int skipped})> fetchProviderSettlements(String workspaceId, PaymentProvider provider) => paymentGateway.fetchProviderSettlements(workspaceId, provider);
   @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => paymentGateway.setPaymentCredentials(workspaceId, provider, config);
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => paymentGateway.clearPaymentProvider(workspaceId, provider);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => paymentGateway.createPaymentOrder(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);

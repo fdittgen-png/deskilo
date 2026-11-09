@@ -18671,6 +18671,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get payConfigSecretSet => 'Gesetzt — leer lassen zum Behalten';
 
   @override
+  String get payConfigSettlementsFetch => 'Auszahlungen abrufen';
+
+  @override
+  String payConfigSettlementsFetched(String count) {
+    return '$count Auszahlungen erfasst';
+  }
+
+  @override
   String get payConfigTitle => 'Online-Zahlungen';
 
   @override

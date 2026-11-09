@@ -11764,6 +11764,8 @@
   "payConfigRemoved": "Supprimé.",
   "payConfigSaved": "Enregistré.",
   "payConfigSecretSet": "Défini — laisser vide pour conserver",
+  "payConfigSettlementsFetch": "Récupérer les versements",
+  "payConfigSettlementsFetched": "{count} versements enregistrés",
   "payConfigTitle": "Paiements en ligne",
   "payFieldApiKey": "Clé API",
   "payFieldClientId": "Client ID",
