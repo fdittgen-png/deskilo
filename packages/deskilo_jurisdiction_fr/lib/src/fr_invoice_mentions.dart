@@ -28,10 +28,10 @@ class FrInvoiceMentions extends InvoiceMentionsContribution {
   String get profileFamily => 'fr';
 
   @override
-  bool get requiresDomesticBuyerLegalId => false;
+  bool get requiresDomesticBuyerLegalId => true;
 
   @override
-  String get exemptionReasonCode => '';
+  String get exemptionReasonCode => 'VATEX-FR-FRANCHISE';
 
   @override
   Set<String> get automaticClauses => const {
