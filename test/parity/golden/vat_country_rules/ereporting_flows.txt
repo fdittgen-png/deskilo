@@ -1,0 +1,13 @@
+country='FR' vatId='FR12345678901' -> none
+country='fr' vatId='FR12345678901' -> none
+country=' fr ' vatId='FR12345678901' -> none
+country='' vatId='FR12345678901' -> none
+country='' vatId='fr12345678901' -> none
+country='' vatId='DE123456789' -> international
+country='' vatId='F' -> international
+country='DE' vatId='FR12345678901' -> international
+country='FR' vatId='DE123456789' -> none
+country='BE' vatId='BE0123456789' -> international
+country='FR' vatId='' -> b2c
+country='DE' vatId='' -> b2c
+country='' vatId='' -> b2c
