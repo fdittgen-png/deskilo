@@ -2,6 +2,7 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'invoice.dart';
+import 'national_invoice_rules.dart';
 import 'payment_reference_rules.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_compliance.dart';
@@ -143,8 +144,7 @@ class EInvoiceReadiness {
 /// locally. [seller] and [buyer] are the invoice's own snapshot (or, for
 /// pre-0069 documents, the live workspace identity — the exporter decides
 /// that, this only judges what it is handed).
-bool _qrIbanGap(PaymentAccount? account, Invoice invoice) =>
-    account != null &&
+bool _qrIbanGap(PaymentAccount account, Invoice invoice) =>
     qrIbanWithoutReference(
       account: account.iban,
       creditNote: invoice.totalCents < 0,
@@ -160,12 +160,14 @@ EInvoiceReadiness checkEInvoiceReadiness({
   /// public-sector references. Anything else does not.
   String destination = '',
   /// #2380 — the account the document names (BT-84); '' = none.
-  PaymentAccount? account,
+  required InvoiceAccount account,
   required TaxReferenceSet reference,
 }) {
   final regime = vatRegimeFromWire(seller.vatRegime);
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
-      regime.exemptionReasonCode(seller.country).isNotEmpty;
+      regime
+          .exemptionReasonCode(seller.country, rules: account.national)
+          .isNotEmpty;
   return EInvoiceReadiness([
     // A VAT-charging seller must show tax. With the breakdown present the
     // document is as valid as any other — that is the whole point of 0072.
@@ -189,7 +191,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
     if (invoice.isCreditNote &&
         invoice.lines.any((l) => l.amountCents < 0 && l.vatPercent == 0))
       EInvoiceGap.creditNoteWithPayments,
-    if (_qrIbanGap(account, invoice))
+    if (_qrIbanGap(account.payment, invoice))
       EInvoiceGap.qrIbanWithoutReference,
     if (seller.city.isEmpty) EInvoiceGap.missingSellerCity,
     if (seller.postalCode.isEmpty) EInvoiceGap.missingSellerPostalCode,
@@ -200,8 +202,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
     // #972 — the buyer's SIREN: a refusal between two VAT-registered
     // French businesses (the reform), advice from a seller the reform
     // does not bind (EN 16931 never required BT-47).
-    if (seller.country.trim().toUpperCase() == 'FR' &&
-        buyer.country.trim().toUpperCase() == 'FR' &&
+    if (account.national.asksBuyerLegalId(seller.country, buyer.country) &&
         buyer.company.trim().isNotEmpty &&
         buyer.legalId.trim().isEmpty)
       if (regime == VatRegime.vatRegistered) EInvoiceGap.missingBuyerLegalId else EInvoiceGap.buyerLegalIdAdvisable,

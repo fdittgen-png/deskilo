@@ -7,6 +7,7 @@
 // frozen one the export is refused; none for a credit note — in UBL as `cac:PaymentMeans/cbc:PaymentID` before the
 // payee account, in CII as `ram:PaymentReference` before the invoice currency.
 // The expected references are stated by hand from the standards.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -57,7 +58,7 @@ Invoice _invoice({
       signature: 'f' * 64,
     );
 
-EInvoiceInput _input(Invoice invoice, String iban) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+EInvoiceInput _input(Invoice invoice, String iban) => EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
   invoice: invoice,
   seller: const InvoiceParty(
     name: 'Test Space',
@@ -196,7 +197,7 @@ void main() {
         invoice: _invoice(),
         seller: _input(_invoice(), _qrIban).seller,
         buyer: _input(_invoice(), _qrIban).buyer,
-        account: PaymentAccount(iban: _qrIban, rules: installedPaymentReferenceRules), reference: ActiveTaxReference.current,
+        account: installedInvoiceAccount(iban: _qrIban), reference: ActiveTaxReference.current,
       );
       expect(r.blocking, contains(EInvoiceGap.qrIbanWithoutReference));
       // With a frozen reference, or paid to an ordinary IBAN, it passes.
@@ -209,7 +210,7 @@ void main() {
             invoice: invoice,
             seller: _input(invoice, iban).seller,
             buyer: _input(invoice, iban).buyer,
-            account: PaymentAccount(iban: iban, rules: installedPaymentReferenceRules), reference: ActiveTaxReference.current,
+            account: installedInvoiceAccount(iban: iban), reference: ActiveTaxReference.current,
           ).gaps,
           isNot(contains(EInvoiceGap.qrIbanWithoutReference)),
         );

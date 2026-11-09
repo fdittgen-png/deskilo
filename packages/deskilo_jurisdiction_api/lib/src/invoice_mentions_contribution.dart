@@ -79,6 +79,16 @@ abstract class InvoiceMentionsContribution {
   /// knows how to format. Additive: the contract stays at version 1.
   String formatSellerVatId(String id) => id;
 
+  /// Whether an e-invoice between two businesses of this country must name
+  /// the buyer's legal id (France's SIREN, from the e-invoicing reform).
+  /// Additive: the contract stays at version 1.
+  bool get requiresDomesticBuyerLegalId => false;
+
+  /// The VATEX code a seller of this country names for a VAT exemption of
+  /// category E, where the code list has a national one; '' when it has none.
+  /// Additive: the contract stays at version 1.
+  String get exemptionReasonCode => '';
+
   /// The seller's second registration number (the Quebec sales tax number)
   /// as the country prints it; [id] unchanged when it is not one. Additive.
   String formatSellerLegalId(String id) => id;

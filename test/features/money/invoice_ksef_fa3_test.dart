@@ -4,6 +4,7 @@
 // in CI (einvoice_samples_test + the official XSD); these pin what the
 // schema leaves to the issuer — which band a rate fills, how a buyer is
 // identified, the annotations, a correction.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
@@ -83,7 +84,7 @@ XmlDocument _doc({
   InvoiceParty buyer = _buyer,
   DateTime? correctedIssuedAt,
 }) => XmlDocument.parse(
-  buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice ?? _invoice(),
+  buildChannelEInvoiceXml(EInvoiceFormat.ksefFa3, EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice ?? _invoice(),
     seller: _seller,
     buyer: buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current),

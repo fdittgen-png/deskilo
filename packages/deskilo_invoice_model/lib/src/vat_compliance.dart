@@ -10,6 +10,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'place_of_supply.dart' show uncl5305ReverseCharge;
 import 'vat_regime.dart';
+import 'national_invoice_rules.dart';
 
 // #3333: the Canadian registration numbers live in the standards package, one
 // copy for the application and the Canadian add-on.
@@ -95,12 +96,13 @@ String exemptionCodeForCategory(
   String category,
   String sellerCountry,
   VatRegime regime,
+  NationalInvoiceRules rules,
 ) =>
     switch (category) {
       uncl5305ReverseCharge => 'VATEX-EU-AE',
       // #985 — outside the EU.
       'G' => 'VATEX-EU-G',
-      _ => regime.exemptionReasonCode(sellerCountry),
+      _ => regime.exemptionReasonCode(sellerCountry, rules: rules),
     };
 
 /// #985 — the mention a supply outside the EU prints. #2354: only a

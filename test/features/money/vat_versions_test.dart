@@ -5,6 +5,7 @@
 // catalogue's explicit groups, and the e-invoice categories G and E.
 import 'dart:io';
 
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
@@ -142,16 +143,16 @@ void main() {
     test('G: the CII and the UBL carry the category and VATEX-EU-G', () {
       final invoice = doc('G');
       expect(invoice.counterpartyCategory, 'G');
-      expect(exemptionCodeForCategory('G', 'FR', VatRegime.vatRegistered),
+      expect(exemptionCodeForCategory('G', 'FR', VatRegime.vatRegistered, installedNationalInvoiceRules),
           'VATEX-EU-G');
-      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
           lineText: (l) => l.label, reference: ActiveTaxReference.current));
       expect(cii, contains('<ram:CategoryCode>G</ram:CategoryCode>'));
       expect(cii, contains('VATEX-EU-G'));
       expect(cii, contains(exportMention('FR', reference: ActiveTaxReference.current)));
-      final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+      final ubl = buildInvoiceUbl(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
           lineText: (l) => l.label, reference: ActiveTaxReference.current));
@@ -162,7 +163,7 @@ void main() {
     test('E from an exempt buyer prints the BUYER\'s reason', () {
       final invoice = doc('E');
       expect(invoice.counterpartyCategory, 'E');
-      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(
               name: 'Ambassade',

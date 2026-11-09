@@ -35,6 +35,7 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
+import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
@@ -595,11 +596,11 @@ final Map<String, Future<String> Function()> _files = {
     final month = WorkspaceTime.dateOf(last);
     return frEReport(
       b.invoices,
-      start: DateTime(month.year, month.month),
+        start: DateTime(month.year, month.month),
       end: DateTime(month.year, month.month + 1, 0),
       matches: b.matches,
       instalments: b.instalments,
-      onReceipts: workspaceTaxPointBasis(_invoiceLegal, 'FR', reference: ActiveTaxReference.current).onReceipts, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,).toXml();
+      basis: EReportingBasis(homeCountry: eReportingCountry, onReceipts: workspaceTaxPointBasis(_invoiceLegal, 'FR', reference: ActiveTaxReference.current).onReceipts), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,).toXml();
   },
   for (final name in [
     'register.csv',

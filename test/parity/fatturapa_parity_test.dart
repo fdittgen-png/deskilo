@@ -5,6 +5,7 @@
 // builder that lived in the application and are compared byte for byte: a
 // one-character change to any element fails here, whatever the schema says.
 // Rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
+import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/channel_einvoice_xml.dart';
@@ -109,7 +110,7 @@ String _xml(
   DateTime? dueDate,
 }) => buildChannelEInvoiceXml(
   EInvoiceFormat.fatturaPa,
-  EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, 
+  EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
     invoice: invoice,
     seller: seller,
     buyer: buyer ?? _buyer(),

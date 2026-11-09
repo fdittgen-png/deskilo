@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -100,7 +101,7 @@ void main() {
     end: DateTime(2026, 9, 30),
     matches: matches,
     instalments: instalments,
-    onReceipts: onReceipts, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
+    basis: EReportingBasis(homeCountry: eReportingCountry, onReceipts: onReceipts), dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
 
   test('B2C sales are aggregated per day, category and rate', () {
     final t = report().b2cTransactions;
