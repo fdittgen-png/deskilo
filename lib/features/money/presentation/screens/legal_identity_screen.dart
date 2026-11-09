@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/jurisdiction/installed_vat_filings.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
@@ -383,18 +384,18 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
 
   /// The fields only one country's law asks for, then the e-invoice
   /// identity and the address window where their features are on.
-  List<Widget> _countryFields() => [
+  List<Widget> _countryFields() {
+    final country = ref.watch(currentWorkspaceProvider).value?.countryCode;
+    final own = _regime == VatRegime.vatRegistered ? vatFilingOf(country)?.legalIdentityFields ?? const <String>{} : const <String>{};
+    return [
           // #2359 — the UK treats land as exempt unless the owner opted to tax.
-          if (_regime == VatRegime.vatRegistered &&
-              ref.watch(currentWorkspaceProvider).value?.countryCode == 'GB')
+          if (own.contains('ukLandTax'))
             UkLandTaxationFields(key: const ValueKey('legal-identity-land-tax'), form: _landTax),
           // #2360 — Switzerland: a package is taxed, bare rooms are exempt unless opted.
-          if (_regime == VatRegime.vatRegistered &&
-              ref.watch(currentWorkspaceProvider).value?.countryCode == 'CH')
+          if (own.contains('swissLetting'))
             SwissLettingFields(key: const ValueKey('legal-identity-letting'), form: _landTax),
           // #2361 — Canada: the QST number beside the GST/HST number, the quick method.
-          if (_regime == VatRegime.vatRegistered &&
-              ref.watch(currentWorkspaceProvider).value?.countryCode == 'CA')
+          if (own.contains('canadaTax'))
             CanadaTaxFields(
               key: const ValueKey('legal-identity-canada'),
               form: _landTax,
@@ -402,7 +403,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
           if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
             EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
-      ];
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

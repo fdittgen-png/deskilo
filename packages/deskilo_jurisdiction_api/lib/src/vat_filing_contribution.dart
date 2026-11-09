@@ -38,6 +38,24 @@ abstract class VatFilingContribution {
   /// default, the contract stays at the same version.
   Set<String> get registers => const {};
 
+  /// Whether the country's tax authority takes the return by direct
+  /// submission from the application (the UK's Making Tax Digital); the host
+  /// offers that door for exactly the countries that say so. Additive: the
+  /// contract stays at the same version.
+  bool get directSubmission => false;
+
+  /// The fields of the legal identity form only this country's law asks of a
+  /// VAT-registered business, by id (`ukLandTax`, `swissLetting`,
+  /// `canadaTax`); the host maps each to its widget. None by default.
+  /// Additive: the contract stays at the same version.
+  Set<String> get legalIdentityFields => const {};
+
+  /// Whether a VAT-registered business that never chose when its VAT falls
+  /// due is taxed on receipts by default (France, for services); the host
+  /// tells such a space once. Additive: the contract stays at the same
+  /// version.
+  bool get taxPointOnReceiptsByDefault => false;
+
   /// What the host loads before calling [validate].
   Set<FilingSource> get requiredSources;
 

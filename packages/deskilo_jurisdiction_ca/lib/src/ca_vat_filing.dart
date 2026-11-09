@@ -42,6 +42,9 @@ class CaVatFilingContribution extends VatFilingContribution {
   String get fileButtonId => 'gstQstCsv';
 
   @override
+  Set<String> get legalIdentityFields => const {'canadaTax'};
+
+  @override
   Set<FilingSource> get requiredSources => const {
     FilingSource.declaration,
     FilingSource.party,

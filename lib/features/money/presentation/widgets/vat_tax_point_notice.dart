@@ -16,20 +16,22 @@ import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../application/jurisdiction/installed_vat_filings.dart';
 import '../vat_tax_point_labels.dart';
 
 /// The id the dismissal is stored under.
 const String _vatTaxPointNoticeId = 'vat-tax-point-fr-receipts';
 
 /// Whether a space in [country] under [vatRegime] with these
-/// [invoiceLegal] settings is a French VAT-registered space that never
+/// [invoiceLegal] settings is a VAT-registered space of a country that taxes
+/// on receipts by default (France) that never
 /// chose its tax point, and so moved to receipts with #2355.
 bool needsVatTaxPointNotice({
   required String country,
   required String vatRegime,
   required Map<dynamic, dynamic> invoiceLegal,
 }) =>
-    country.trim().toUpperCase() == 'FR' &&
+    (vatFilingOf(country)?.taxPointOnReceiptsByDefault ?? false) &&
     vatRegimeFromWire(vatRegime) == VatRegime.vatRegistered &&
     InvoiceLegal.fromJson(invoiceLegal).vatTaxPoint == null;
 

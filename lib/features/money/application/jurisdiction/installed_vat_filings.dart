@@ -12,6 +12,8 @@ import 'package:deskilo_jurisdiction_fr/deskilo_jurisdiction_fr.dart';
 import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 
+import '../../../../core/jurisdiction/jurisdiction_resolver.dart';
+
 
 /// Every installed VAT filing add-on. `formatVersion` names the profile the
 /// writer follows: bumped when the authority's schema or layout year changes.
@@ -24,3 +26,15 @@ final List<VatFilingContribution> installedVatFilings = [
   const EsVatFilingContribution(),
   const ItVatFilingContribution(),
 ];
+
+/// The installed VAT filing add-on of [country], or null where there is none:
+/// what the screens ask about a country's filing, its identity fields and its
+/// tax point (the add-on says, the screen never compares a code).
+VatFilingContribution? vatFilingOf(String? country) {
+  final resolution = resolveCapability(
+    JurisdictionOperation.vatFiling,
+    LegalContext(countryCode: country),
+    installedVatFilings,
+  );
+  return resolution is Resolved ? resolution.contribution : null;
+}

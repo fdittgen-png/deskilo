@@ -26,6 +26,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/jurisdiction/installed_vat_filings.dart';
 import '../../application/vat_declaration_rows.dart';
 import '../../domain/vat_declaration_report.dart';
 import '../../providers/money_providers.dart';
@@ -370,7 +371,7 @@ class _VatDeclarationsScreenState
       ),
     // #2470 — the same nine boxes, submitted to HMRC (web build; the sheet
     // says so elsewhere).
-    if (ref.watch(saveVatFilingFileProvider).country == 'GB' &&
+    if ((vatFilingOf(ref.watch(saveVatFilingFileProvider).country)?.directSubmission ?? false) &&
         ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.mtdSubmission) &&
         VatDeclarationRow(declaration).canMarkFiled)
       hmrcSubmitButton(context, declaration,
