@@ -16,7 +16,7 @@
 //    same change; the failure prints the line to write.
 //
 // The second group proves the rules on synthetic functions, so the gate
-// cannot rot into a presence check. The generated summary has a drift test.
+// cannot rot into a presence check. The summary is derived on demand (#3415), never committed.
 import 'dart:convert';
 import 'dart:io';
 
@@ -112,12 +112,17 @@ void main() {
       expect(header, thresholdsJson());
     });
 
-    test('docs/design/CODE_HEALTH.md is what the tool writes from the '
-        'baseline (run: dart run tool/code_health.dart --baseline)', () {
-      final text = File('docs/design/CODE_HEALTH_BASELINE.json')
-          .readAsStringSync();
-      expect(File('docs/design/CODE_HEALTH.md').readAsStringSync(),
-          summaryOf(jsonDecode(text) as Map<String, Object?>));
+    test('nothing derived is committed: the baseline holds the limits, the '
+        'budgets and the held functions, and the summary is derived on '
+        'demand (#3415)', () {
+      final doc = jsonDecode(
+              File('docs/design/CODE_HEALTH_BASELINE.json').readAsStringSync())
+          as Map<String, Object?>;
+      expect(doc.keys.toSet(), {'thresholds', 'budgets', 'functions'});
+      expect(File('docs/design/CODE_HEALTH.md').existsSync(), isFalse);
+      final summary = summaryOf(tree, doc, sha: 'abc');
+      expect(summary, contains('| files | ${tree.length} |'));
+      expect(summary, contains('`abc`'));
     });
   });
 
