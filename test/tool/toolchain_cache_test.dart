@@ -148,16 +148,57 @@ void main() {
 
   group('verify_cached_deno.sh', () {
     String deno() => '${_tmp.path}/deno';
-    Future<ProcessResult> clear() =>
-        _bash('bash scripts/verify_cached_deno.sh clear "${deno()}"');
+    Future<ProcessResult> clear({String arch = 'X64', String? sha}) => _bash(
+      // `sha` swaps the pinned digest for a fixture's (the real binary is not
+      // in the repository); without it the real pin is used
+      'source scripts/verify_cached_deno.sh; '
+      '${sha == null ? '' : 'expected=$sha; '}'
+      'main clear "${deno()}" $arch',
+    );
+    File binary(String arch, String content, {bool exec = true}) {
+      final f = File('${deno()}/2.9.8/$arch/deno')
+        ..createSync(recursive: true)
+        ..writeAsStringSync(content);
+      if (exec) Process.runSync('chmod', ['+x', f.path]);
+      return f;
+    }
+
+    String shaOf(String s) => sha256.convert(utf8.encode(s)).toString();
 
     test('a cached Deno that fails its digest is cleared', () async {
-      final dir = Directory('${deno()}/2.9.8/x64')..createSync(recursive: true);
-      File('${dir.path}/deno').writeAsStringSync('not the pinned binary');
+      binary('x64', 'not the pinned binary');
       final r = await clear();
       expect(r.exitCode, 0, reason: '${r.stderr}');
       expect(Directory(deno()).existsSync(), isFalse);
       expect('${r.stderr}', contains('not exactly the pinned'));
+    });
+
+    test('the pinned binary for this arch, executable, is KEPT', () async {
+      binary('x64', 'the pinned bytes');
+      final r = await clear(sha: shaOf('the pinned bytes'));
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(File('${deno()}/2.9.8/x64/deno').existsSync(), isTrue);
+    });
+
+    test('the right digest without the exec bit is cleared', () async {
+      binary('x64', 'the pinned bytes', exec: false);
+      final r = await clear(sha: shaOf('the pinned bytes'));
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(Directory(deno()).existsSync(), isFalse);
+    });
+
+    test('another arch\'s directory only is cleared', () async {
+      binary('arm64', 'the pinned bytes');
+      final r = await clear(sha: shaOf('the pinned bytes'));
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(Directory(deno()).existsSync(), isFalse);
+    });
+
+    test('the runner arch is matched as the tool cache names it', () async {
+      binary('arm64', 'the pinned bytes');
+      final r = await clear(arch: 'ARM64', sha: shaOf('the pinned bytes'));
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(File('${deno()}/2.9.8/arm64/deno').existsSync(), isTrue);
     });
 
     test('a .complete marker without a binary is cleared, not trusted', () async {
@@ -174,9 +215,11 @@ void main() {
       );
     });
 
-    test('a binary at another version or arch layout is cleared', () async {
-      final dir = Directory('${deno()}/2.9.7/x64')..createSync(recursive: true);
-      File('${dir.path}/deno').writeAsStringSync('old');
+    test('a binary at another version is cleared', () async {
+      final f = File('${deno()}/2.9.7/x64/deno')
+        ..createSync(recursive: true)
+        ..writeAsStringSync('old');
+      Process.runSync('chmod', ['+x', f.path]);
       final r = await clear();
       expect(r.exitCode, 0, reason: '${r.stderr}');
       expect(Directory(deno()).existsSync(), isFalse);
@@ -188,23 +231,25 @@ void main() {
       expect(Directory(deno()).existsSync(), isFalse);
     });
 
-    test('the binary at the pinned path must be the pinned one', () async {
-      final dir = Directory('${deno()}/2.9.8/x64')..createSync(recursive: true);
-      File('${dir.path}/deno').writeAsStringSync('imposter');
-      final r = await _bash(
-        'bash scripts/verify_cached_deno.sh check "${deno()}"',
-      );
-      expect(r.exitCode, isNot(0));
-      expect('${r.stderr}', contains('Deno checksum mismatch'));
-    });
+    test(
+      'check: the binary at the pinned path must be the pinned one',
+      () async {
+        binary('x64', 'imposter');
+        final r = await _bash(
+          'bash scripts/verify_cached_deno.sh check "${deno()}" X64',
+        );
+        expect(r.exitCode, isNot(0));
+        expect('${r.stderr}', contains('Deno checksum mismatch'));
+      },
+    );
 
-    test('check fails when nothing is installed at the pinned path', () async {
-      Directory(deno()).createSync();
+    test('check fails when nothing is installed for this arch', () async {
+      binary('arm64', 'whatever');
       final r = await _bash(
-        'bash scripts/verify_cached_deno.sh check "${deno()}"',
+        'bash scripts/verify_cached_deno.sh check "${deno()}" X64',
       );
       expect(r.exitCode, isNot(0));
-      expect('${r.stderr}', contains('is not installed'));
+      expect('${r.stderr}', contains('is not installed for X64'));
     });
   });
 
