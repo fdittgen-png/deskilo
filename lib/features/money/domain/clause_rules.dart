@@ -7,11 +7,13 @@
 // programming error.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/jurisdiction/installed_invoice_mentions.dart';
 import '../../../core/jurisdiction/jurisdiction_resolver.dart';
 
 /// The rules of [sellerCountry], or null when its add-on declares no family.
+@visibleForTesting
 ClauseRules? clauseRulesOf(String sellerCountry) {
   final resolution = resolveInvoiceMentions(
     LegalContext(countryCode: sellerCountry),

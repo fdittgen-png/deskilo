@@ -20,7 +20,6 @@ import '../../../core/i18n/money_format.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
-import 'clause_rules.dart';
 import 'invoice_line_text.dart';
 import 'invoice_national_mentions.dart';
 import 'invoice_sales_tax.dart';
