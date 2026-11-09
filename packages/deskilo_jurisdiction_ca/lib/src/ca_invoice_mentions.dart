@@ -6,7 +6,7 @@
 // number. Moved from the invoice model, text unchanged.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
-    show formatCanadianRegistration;
+    show formatCanadianRegistration, isValidCanadianBn, isValidQstNumber;
 
 /// Bumped in the same commit as any change of the lines this add-on states.
 const caInvoiceMentionsImplementationVersion = '1';
@@ -26,6 +26,16 @@ class CaInvoiceMentions extends InvoiceMentionsContribution {
 
   @override
   String get profileFamily => 'ca';
+
+  /// A Canadian business number prints as `123456789 RT0001`.
+  @override
+  String formatSellerVatId(String id) =>
+      isValidCanadianBn(id) ? formatCanadianRegistration(id) : id;
+
+  /// Revenu Québec's number prints as `1234567890 TQ0001`.
+  @override
+  String formatSellerLegalId(String id) =>
+      isValidQstNumber(id) ? formatCanadianRegistration(id) : id;
 
   @override
   List<String> mentions(InvoiceMentionContext context) => [
