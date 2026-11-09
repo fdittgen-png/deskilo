@@ -397,6 +397,12 @@ void main() {
         'revenue:reduced': '3401',
         'revenue:intermediate': '3401',
         'revenue:exempt': '3402',
+        'clearing:stripe': '1090',
+        'clearing:paypal': '1091',
+        'clearing:mollie': '1092',
+        'fees:stripe': '6940',
+        'fees:paypal': '6941',
+        'fees:mollie': '6942',
       },
     );
     final codes = _chart.accounts.map((a) => a.code).toList();

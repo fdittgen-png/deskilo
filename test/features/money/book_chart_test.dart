@@ -215,6 +215,12 @@ void main() {
         ('445712', AccountType.liability, BookRole.vatOutput, 'intermediate'),
         ('445713', AccountType.liability, BookRole.vatOutput, 'reduced'),
         ('445740', AccountType.liability, BookRole.vatPending, null),
+        ('517100', AccountType.asset, BookRole.clearing, 'stripe'),
+        ('517101', AccountType.asset, BookRole.clearing, 'paypal'),
+        ('517102', AccountType.asset, BookRole.clearing, 'mollie'),
+        ('627800', AccountType.expense, BookRole.fees, 'stripe'),
+        ('627801', AccountType.expense, BookRole.fees, 'paypal'),
+        ('627802', AccountType.expense, BookRole.fees, 'mollie'),
       ],
     );
     expect(
@@ -236,7 +242,7 @@ void main() {
         ))
           d.account.code,
       ],
-      ['10000', '8400', '1200', '4900', '70000', '2400', '8300'],
+      ['10000', '8400', '1200', '4900', '70000', '2400', '8300', '1360', '1361', '1362', '4970', '4971', '4972'],
       reason: 'no tax account where no VAT is charged',
     );
   });
