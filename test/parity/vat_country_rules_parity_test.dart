@@ -15,7 +15,7 @@
 //   ereporting_flows.txt   country 'FR'/'fr'/' fr ' x VAT id FR..: domestic;
 //                          blank country decided by the id prefix; a foreign
 //                          country with an FR-prefixed id: abroad; no id: b2c
-//   siren_gap.txt          seller FR|DE|blank x buyer FR|fr|DE|blank x
+//   siren_gap.txt          seller FR|fr|' fr '|DE|blank x buyer FR|fr|DE|blank x
 //                          company set|blank x legal id set|blank x regime
 //   exemption_codes.txt    each regime x FR|fr| fr |DE|blank
 //   mtd_boxes.txt          one declaration, the nine HMRC boxes in cents
@@ -94,7 +94,7 @@ String _ereportingFlows() {
 
 String _sirenGaps() {
   final out = <String>[];
-  for (final seller in ['FR', 'fr', 'DE', '']) {
+  for (final seller in ['FR', 'fr', ' fr ', 'DE', '']) {
     for (final buyer in ['FR', ' fr ', 'DE', '']) {
       for (final company in ['Acme SAS', '']) {
         for (final legalId in ['123456789', '']) {
