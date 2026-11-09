@@ -89,6 +89,14 @@ final _neverShown = RegExp(
 /// new literal in one of these files fails the lint until somebody
 /// writes down why it belongs to the same class.
 const Map<String, ({int allowed, String reason})> classifiedLiterals = {
+  // #3429 — the FEC's journal names: the regulatory file states them in
+  // French whatever language the reader uses (the DGFiP's file, not interface
+  // text), so they are not translated.
+  'packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart': (
+    allowed: 4,
+    reason: 'the FEC journal labels (Ventes, Banque, Achats, Opérations '
+        'diverses): statutory French names written into the file',
+  ),
   // #2313 — the demo session's own records: invented data stored as a
   // space would store it (a cleaning contract, its VAT rates, calendar
   // rows), never interface text; a real space's records are not

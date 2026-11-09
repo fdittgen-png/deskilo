@@ -43,6 +43,11 @@ const _checklistFiles = <String>{
   'packages/deskilo_invoice_model/lib/src/invoice_ubl_check.dart',
   'packages/deskilo_invoice_model/lib/src/vat_regime.dart',
   'lib/features/money/application/vat_register_files.dart',
+  'lib/features/money/domain/datev.dart',
+  'lib/features/money/domain/datev_revenue.dart',
+  'lib/features/money/domain/fec_accounts.dart',
+  'lib/features/money/domain/fec_lettering.dart',
+  'lib/features/money/domain/fec_writer.dart',
   'packages/deskilo_invoice_model/lib/src/invoice_clauses.dart',
   'lib/features/money/domain/report_data.dart',
   'lib/features/money/domain/swiss_qr_bill_pdf.dart',
@@ -60,11 +65,6 @@ const _checklistFiles = <String>{
   'lib/features/money/domain/mtd_boxes.dart',
   'lib/features/money/domain/records_location.dart',
   'lib/core/vat/retention.dart',
-  'lib/features/money/domain/datev.dart',
-  'lib/features/money/domain/datev_revenue.dart',
-  'lib/features/money/domain/fec_accounts.dart',
-  'lib/features/money/domain/fec_lettering.dart',
-  'lib/features/money/domain/fec_writer.dart',
 };
 
 /// ISO 3166-1 alpha-2 codes, and `EL`/`XI`/`UK`: the VAT-number prefixes and

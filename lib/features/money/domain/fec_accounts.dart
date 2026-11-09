@@ -1,6 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
+    show AccountingJournal;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import '../../../core/jurisdiction/installed_accounting_formats.dart';
 import '../../../core/vat/tax_reference_active.dart';
+
+/// #3429 -- the journals a FEC writes, as the installed FEC format declares
+/// them (`AccountingFormatContribution.journals`): code and label per role.
+class FecJournals {
+  const FecJournals({
+    required this.sales,
+    required this.bank,
+    required this.purchases,
+    required this.misc,
+  });
+
+  /// The journals of the installed FEC declaration.
+  factory FecJournals.installed() {
+    final declared = accountingFormatOf('fec').journals;
+    AccountingJournal of(String role) =>
+        declared[role] ??
+        (throw StateError('the FEC declaration has no $role journal'));
+    return FecJournals(
+      sales: of('sales'),
+      bank: of('bank'),
+      purchases: of('purchases'),
+      misc: of('misc'),
+    );
+  }
+
+  final AccountingJournal sales;
+  final AccountingJournal bank;
+  final AccountingJournal purchases;
+  final AccountingJournal misc;
+}
 
 /// The accounts a FEC cannot be written without. Defaults follow the
 /// French *plan comptable général*; an accountant using a different chart
@@ -19,6 +52,8 @@ class FecAccounts {
     String? expenses,
     String? vatPending,
     String? writeOff,
+    String? chartCountry,
+    FecJournals? journals,
     this.reference,
   }) : _givenCustomers = customers,
        _givenRevenue = revenue,
@@ -26,7 +61,9 @@ class FecAccounts {
        _givenVat = vat,
        _givenExpenses = expenses,
        _givenVatPending = vatPending,
-       _givenWriteOff = writeOff;
+       _givenWriteOff = writeOff,
+       _givenCountry = chartCountry,
+       _givenJournals = journals;
 
   final TaxReferenceSet? reference;
   final String? _givenCustomers;
@@ -36,9 +73,20 @@ class FecAccounts {
   final String? _givenExpenses;
   final String? _givenVatPending;
   final String? _givenWriteOff;
+  final String? _givenCountry;
+  final FecJournals? _givenJournals;
+
+  /// #3429 -- the journals the FEC writes: given, else the installed FEC
+  /// declaration's.
+  FecJournals get journals => _givenJournals ?? FecJournals.installed();
+
+  /// #3429 -- the country whose chart the defaults are rows of: given, else
+  /// what the installed FEC format declares (the plan comptable général).
+  String get chartCountry =>
+      _givenCountry ?? accountingFormatOf('fec').chartCountry;
 
   String _default(String format, String role) =>
-      (reference ?? ActiveTaxReference.current).accountOf(format, role, 'FR');
+      (reference ?? ActiveTaxReference.current).accountOf(format, role, chartCountry);
 
   /// PCG 411 — Clients (the receivable).
   String get customers => _givenCustomers ?? _default('coa', 'customers');

@@ -24,6 +24,12 @@ const String invoiceMentionsContractVersion = '1';
 /// apart (ADR 0050 §4).
 const String archiveContractVersion = '1';
 
+/// The version of the accounting format contract
+/// (`AccountingFormatContribution`): what a country's accounting export format
+/// declares about itself (its chart's country, its journal codes). Its own
+/// capability, so it is versioned apart (ADR 0050 §4).
+const String accountingFormatContractVersion = '1';
+
 /// The version of the registers contract (`RegisterContribution`): the
 /// registers of issued invoices a country's law asks beside the return. Its own
 /// capability, so it is versioned apart (ADR 0050 §4).
