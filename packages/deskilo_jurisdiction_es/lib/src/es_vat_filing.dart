@@ -33,7 +33,7 @@ class EsVatFilingContribution extends VatFilingContribution {
   String get fileButtonId => 'aeat303';
 
   @override
-  Set<String> get factsAsked => const {'spanishFacts'};
+  Set<String> get factsAsked => const {};
 
   @override
   Set<String> get registers => const {'esLibro', 'esSii', 'es347'};
