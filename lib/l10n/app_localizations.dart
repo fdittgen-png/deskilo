@@ -21113,6 +21113,12 @@ abstract class AppLocalizations {
   /// **'Banana Accounting+ (transactions import)'**
   String get invoiceExportBanana;
 
+  /// #2374 The Business Central General Journal workbook of a local book on the accounting export sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Central journal (Excel workbook)'**
+  String get invoiceExportBcJournal;
+
   /// #957 archive bundle: invoiceExportBundle
   ///
   /// In en, this message translates to:

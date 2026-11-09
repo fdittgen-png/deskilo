@@ -8379,6 +8379,7 @@
     "description": "#669 - accounting export formats"
   },
   "invoiceExportBanana": "Banana Buchhaltung+ (Import von Buchungen)",
+  "invoiceExportBcJournal": "Business-Central-Journal (Excel-Arbeitsmappe)",
   "invoiceExportBundle": "Jahresarchiv (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"

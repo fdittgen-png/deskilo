@@ -45,6 +45,7 @@ enum ExportKind {
   bookReport,
   saftFinancial,
   genericJournal,
+  bcJournal,
 }
 
 /// What an export format reads, declared once by the format.

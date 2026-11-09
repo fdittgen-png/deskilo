@@ -16,6 +16,7 @@ bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 sage_de | -
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## BE
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -28,6 +29,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## CA
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -45,6 +47,7 @@ sage_intacct | -
 xero_ca | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
 business_central_ca | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## CH
 ch_kmu | ch_kmu | exchange | csv | accounts=true legalId=false uncertified=false
 banana_transactions | banana_transactions | exchange | txt | accounts=true legalId=false uncertified=false
@@ -64,6 +67,7 @@ journals | journals | exchange | pdf | accounts=false legalId=false uncertified=
 audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 business_central_ch | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## DE
 datev | datev | exchange | zip | accounts=true legalId=false uncertified=false
 gobd | gobd | subset | zip | accounts=false legalId=false uncertified=false
@@ -84,6 +88,7 @@ sage_de | -
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
 business_central_de | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## DK
 denmark_registered_system | -
 saft_dk | saft_dk | exchange | xml | accounts=false legalId=true uncertified=false
@@ -101,6 +106,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## ES
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -114,6 +120,7 @@ bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 sage_business_cloud_es | -
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## FR
 fec | fec | regulatory | txt | accounts=true legalId=true uncertified=false
 fr_ereporting | fr_ereporting | subset | xml | accounts=false legalId=false uncertified=false
@@ -135,6 +142,7 @@ sage50_fr | -
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
 business_central_fr | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## GB
 sage50 | sage50 | exchange | csv | accounts=true legalId=false uncertified=false
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
@@ -154,6 +162,7 @@ sage_intacct | -
 xero_gb | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
 business_central_gb | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## IT
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -166,6 +175,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## LU
 faia_lu | faia_lu | regulatory | xml | accounts=false legalId=true uncertified=false
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
@@ -179,6 +189,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## NL
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -191,6 +202,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## NO
 saft_no | saft_no | regulatory | xml | accounts=false legalId=true uncertified=false
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
@@ -202,6 +214,7 @@ trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false un
 journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
 audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## PT
 saft_pt | saft_pt | regulatory | xml | accounts=false legalId=true uncertified=true
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
@@ -215,6 +228,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## RO
 saft_ro | saft_ro | exchange | xml | accounts=false legalId=true uncertified=false
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
@@ -228,6 +242,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 xero_eu | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## US
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -244,6 +259,7 @@ sage_intacct | -
 xero_us | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false
 business_central_us | -
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false
 ## (none)
 saft_oecd_full | saft_oecd_full | exchange | xml | accounts=false legalId=true uncertified=false
 saft | saft | subset | xml | accounts=false legalId=false uncertified=false
@@ -254,3 +270,4 @@ trial_balance | trial_balance | exchange | pdf | accounts=false legalId=false un
 journals | journals | exchange | pdf | accounts=false legalId=false uncertified=false
 audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncertified=false
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
+business_central_journal_xlsx | business_central_journal_xlsx | exchange | xlsx | accounts=false legalId=false uncertified=false

@@ -210,6 +210,14 @@ const Map<String, AccountingCapability> accountingCapabilities = {
   // #2377 — the Swiss journal's rows under Banana's column names; the MWST
   // codes must exist in the Banana file's VAT table. No Banana import of a
   // file from this app has been reported yet.
+  // #2374 -- the General Journal workbook of the local book's postings. The
+  // column set is the one the issue names; no import into a Business Central
+  // company has been reported yet.
+  'business_central_journal_xlsx': AccountingCapability(
+    formatId: 'business_central_journal_xlsx',
+    state: QualificationState.implemented,
+    specification: 'Business Central General Journal, Edit in Excel column set',
+  ),
   'banana_transactions': AccountingCapability(
     formatId: 'banana_transactions',
     state: QualificationState.implemented,

@@ -51,6 +51,8 @@ const _postedWhenLocalBook = {
   // #2377 — the Swiss journal and its Banana layout.
   'ch_kmu',
   'banana_transactions',
+  // #2374 — the Business Central journal workbook.
+  'business_central_journal_xlsx',
   // #2373 — Sage 50's audit trail of a local book.
   'sage50',
 };
@@ -84,6 +86,7 @@ final _postedOnly = {
   ...safTFinancialFormats,
   'ch_kmu',
   'banana_transactions',
+  'business_central_journal_xlsx',
 };
 
 BookProfile _localBook({int startMonth = 1}) => BookProfile(

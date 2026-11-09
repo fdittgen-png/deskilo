@@ -157,6 +157,7 @@ Map<String, _Getter> _part0() => {
   'instanceNetworkHomeNotPersonal': (l) => l.instanceNetworkHomeNotPersonal,
   'instanceStepDone': (l) => l.instanceStepDone,
   'invitationApprovalRequired': (l) => l.invitationApprovalRequired,
+  'invoiceExportBcJournal': (l) => l.invoiceExportBcJournal,
   'invoiceExportSafT': (l) => l.invoiceExportSafT,
   'invoiceGapMissingSellerCity': (l) => l.invoiceGapMissingSellerCity,
   'invoiceLegalSpecialField': (l) => l.invoiceLegalSpecialField,

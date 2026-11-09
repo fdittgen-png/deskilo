@@ -42,6 +42,7 @@ import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/archive_fec.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
+import 'package:deskilo/features/money/domain/bc_journal_xlsx.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
@@ -62,6 +63,7 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart' show XlsxAmount, XlsxDate;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -521,6 +523,23 @@ final Map<String, Future<String> Function()> _files = {
     expect(trail.blockers, isEmpty);
     return sageFile(trail.rows);
   },
+  // #2374 -- the Business Central General Journal's table, tab-separated:
+  // the workbook is these cells.
+  'bc_journal.txt': () async {
+    final journal = _posted(await _read('sage50', local: true, country: 'GB'));
+    final result = buildBcJournalXlsx(
+      journal.postings,
+      vatProductGroups: bcDefaultVatGroups(journal.postings),
+      description: (p) => '${p.documentNumber} ${p.kind.wire}',
+    );
+    final table = (result as BcJournalFile).table;
+    String cell(Object? c) => switch (c) {
+      XlsxDate(:final value) => isoDay(value),
+      XlsxAmount(:final value) => value.toStringAsFixed(2),
+      _ => '$c',
+    };
+    return '${[for (final r in table) r.map(cell).join('\t')].join('\n')}\n';
+  },
   // #2373 — a local book's audit trail, from its one postings read.
   'sage50_local_book.csv': () async {
     final journal = _posted(await _read('sage50', local: true, country: 'GB'));
@@ -789,6 +808,52 @@ void main() {
   // CN-1, SP for its refund, PI at T1 for B-1, JD/JC for INV-3's write-off,
   // SI at T1 and T5 on the two-rate INV-1, 18 columns, every Account
   // Reference a number of at most eight characters.
+  // #2374 -- the Business Central General Journal workbook of the same
+  // postings: balanced per Document No., the VAT groups mapped from the tax
+  // keys, an unmapped rate group stops the file.
+  test('the Business Central journal balances per Document No. with the VAT '
+      'groups mapped from the rate groups', () async {
+    final journal = _posted(await _read('sage50', local: true, country: 'GB'));
+    String text(Posting p) => '${p.documentNumber} ${p.kind.wire}';
+    final keys = bcDefaultVatGroups(journal.postings).keys.toSet();
+    expect(keys, isNotEmpty);
+    final result = buildBcJournalXlsx(
+      journal.postings,
+      vatProductGroups: {for (final k in keys) k: 'VAT-$k'},
+      description: text,
+    );
+    final file = result as BcJournalFile;
+    final table = file.table;
+    expect(table.first, containsAll(['Document No.', 'Amount', 'VAT Prod. Posting Group']));
+    expect(table.length - 1, [for (final p in journal.postings) ...p.lines].length);
+    final perDocument = <String, double>{};
+    for (final r in table.skip(1)) {
+      expect(r.length, table.first.length);
+      perDocument.update(
+        r[2]! as String,
+        (v) => v + (r[7]! as XlsxAmount).value,
+        ifAbsent: () => (r[7]! as XlsxAmount).value.toDouble(),
+      );
+    }
+    for (final e in perDocument.entries) {
+      expect(e.value.abs(), lessThan(0.005), reason: 'Document No. ${e.key}');
+    }
+    final groups = {
+      for (final r in table.skip(1))
+        if ((r[12]! as String).isNotEmpty) r[12]! as String,
+    };
+    expect(groups, {for (final k in keys) 'VAT-$k'});
+    final missing = buildBcJournalXlsx(
+      journal.postings,
+      vatProductGroups: const {},
+      description: text,
+    );
+    expect(
+      (missing as BcJournalUnmapped).taxKeys,
+      ([...keys]..sort()),
+    );
+  });
+
   test('the local book\'s Sage 50 file books every event of the year', () async {
     final rows = [
       for (final r in (await _files['sage50_local_book.csv']!()).split('\r\n').skip(1))

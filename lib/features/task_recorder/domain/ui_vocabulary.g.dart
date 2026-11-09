@@ -8293,6 +8293,7 @@ const Set<String> uiLabelKeys = {
   'invoiceExportAccountantCsv',
   'invoiceExportAuditTrail',
   'invoiceExportBanana',
+  'invoiceExportBcJournal',
   'invoiceExportBundle',
   'invoiceExportChoose',
   'invoiceExportDatev',

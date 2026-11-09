@@ -21,6 +21,17 @@ const Set<AccountingOperation> _operations = {
   AccountingOperation.expense,
 };
 
+/// #2374 -- the General Journal as a workbook, from the local book's
+/// postings (the "Edit in Excel" column set), for a company that is not
+/// connected to the API.
+const _journalFormat = AccountingFormat(
+  id: 'business_central_journal_xlsx',
+  kind: ExportKind.bcJournal,
+  sources: SourceRequirements.postedOnly,
+  claim: FormatClaim.exchange,
+  extension: 'xlsx',
+);
+
 /// A customer `number` is a Code[20].
 const _customerIds = CustomerIdRule(maxLength: 20);
 
@@ -124,5 +135,19 @@ const List<AccountingTarget> businessCentralAccountingTargets = [
     limits: _limits,
     connectsBy: {AccountingAuthKind.token},
     tokenShape: AccountingTokenShape.entraClientCredentials,
+  ),
+  AccountingTarget(
+    id: 'business_central_journal_xlsx',
+    vendor: 'Microsoft',
+    product: 'Dynamics 365 Business Central',
+    edition: 'General Journal workbook (Edit in Excel columns)',
+    // A workbook of the General Journal names no localisation: any company
+    // can import it, so it is offered wherever a local book is kept.
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: _operations,
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _journalFormat,
   ),
 ];

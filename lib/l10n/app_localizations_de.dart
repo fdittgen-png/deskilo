@@ -12903,6 +12903,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Banana Buchhaltung+ (Import von Buchungen)';
 
   @override
+  String get invoiceExportBcJournal =>
+      'Business-Central-Journal (Excel-Arbeitsmappe)';
+
+  @override
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
 
   @override

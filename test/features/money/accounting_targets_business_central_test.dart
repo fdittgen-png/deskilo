@@ -31,7 +31,9 @@ const _adapterPath =
 
 List<AccountingTarget> get _bc => [
   for (final t in accountingTargets)
-    if (t.id.startsWith('business_central_')) t,
+    if (t.id.startsWith('business_central_') &&
+        t.transport == AccountingTransport.api)
+      t,
 ];
 
 /// The `key: "value"` rows of the adapter's table [name].
@@ -91,7 +93,7 @@ void main() {
   test('each localisation is offered in its own country only', () {
     String? bcIn(String country) =>
         targetsFor(country, reference: ActiveTaxReference.current)
-            .where((t) => t.id.startsWith('business_central_'))
+            .where((t) => t.id.startsWith('business_central_') && t.transport == AccountingTransport.api)
             .singleOrNull
             ?.id;
     for (final c in ['DE', 'FR', 'CH', 'GB', 'US', 'CA']) {

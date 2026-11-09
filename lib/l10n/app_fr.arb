@@ -8379,6 +8379,7 @@
     "description": "#669 - accounting export formats"
   },
   "invoiceExportBanana": "Banana Comptabilité+ (import d'écritures)",
+  "invoiceExportBcJournal": "Journal Business Central (classeur Excel)",
   "invoiceExportBundle": "Archive de l'exercice (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"

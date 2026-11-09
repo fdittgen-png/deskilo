@@ -8379,6 +8379,7 @@
     "description": "#669 - accounting export formats"
   },
   "invoiceExportBanana": "Banana Contabilidad+ (importación de asientos)",
+  "invoiceExportBcJournal": "Diario de Business Central (libro de Excel)",
   "invoiceExportBundle": "Archivo del ejercicio (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"

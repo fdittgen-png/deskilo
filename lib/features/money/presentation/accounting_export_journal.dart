@@ -3,6 +3,8 @@
 // #2370 / #2365 — the generic journal export's words: the file is saved,
 // or the person is told why there is none (no local book, or the roles to
 // map first). The decision is `application/generic_journal_export.dart`.
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/features/enabled_feature_keys.dart';
@@ -32,6 +34,7 @@ Future<void> exportGenericJournal(
   BuildContext context,
   Future<GenericJournal> Function() build, {
   required Future<void> Function(String content) save,
+  Future<void> Function(Uint8List bytes)? saveBytes,
 }) async {
   GenericJournal? journal;
   final read = await runGuarded(
@@ -45,6 +48,8 @@ Future<void> exportGenericJournal(
   switch (journal) {
     case JournalFile(:final content):
       await save(content);
+    case JournalBytes(:final bytes):
+      await saveBytes!(bytes);
     case JournalNeedsLocalBook():
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):

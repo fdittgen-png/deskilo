@@ -44,6 +44,7 @@ import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
 import '../providers/vat_declaration_providers.dart';
+import 'accounting_export_bc.dart';
 import 'accounting_export_context.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
@@ -235,6 +236,8 @@ class AccountingExportRun {
         await safTFinancialExport();
       case ExportKind.genericJournal:
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
+      case ExportKind.bcJournal:
+        await bcJournalExport(stem: 'business central');
     }
   }
 

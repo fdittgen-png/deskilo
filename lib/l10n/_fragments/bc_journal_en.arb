@@ -1,0 +1,6 @@
+{
+  "invoiceExportBcJournal": "Business Central journal (Excel workbook)",
+  "@invoiceExportBcJournal": {
+    "description": "#2374 The Business Central General Journal workbook of a local book on the accounting export sheet."
+  }
+}

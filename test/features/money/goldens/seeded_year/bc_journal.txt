@@ -1,0 +1,48 @@
+Posting Date	Document Type	Document No.	External Document No.	Account Type	Account No.	Description	Amount	Bal. Account Type	Bal. Account No.	Gen. Posting Type	VAT Bus. Posting Group	VAT Prod. Posting Group	Shortcut Dimension 1 Code	Shortcut Dimension 2 Code
+2026-03-05	Invoice	INV-1	INV-1	G/L Account	411000	INV-1 invoice	225.50							
+2026-03-05	Invoice	INV-1	INV-1	G/L Account	706000	INV-1 invoice	-100.00							
+2026-03-05	Invoice	INV-1	INV-1	G/L Account	445711	INV-1 invoice	-20.00					STANDARD		
+2026-03-05	Invoice	INV-1	INV-1	G/L Account	706000	INV-1 invoice	-100.00							
+2026-03-05	Invoice	INV-1	INV-1	G/L Account	445713	INV-1 invoice	-5.50					REDUCED		
+2026-03-05	Payment	INV-1	INV-1	G/L Account	512000	INV-1 receipt	40.00							
+2026-03-05	Payment	INV-1	INV-1	G/L Account	411000	INV-1 receipt	-40.00							
+2026-03-10		B-1	B-1	G/L Account	606000	B-1 supplier_bill	100.00							
+2026-03-10		B-1	B-1	G/L Account	445660	B-1 supplier_bill	20.00					STANDARD		
+2026-03-10		B-1	B-1	G/L Account	401000	B-1 supplier_bill	-120.00							
+2026-03-20	Payment	INV-1	INV-1	G/L Account	512000	INV-1 receipt	155.50							
+2026-03-20	Payment	INV-1	INV-1	G/L Account	411000	INV-1 receipt	-155.50							
+2026-04-02		B-1	B-1	G/L Account	401000	B-1 supplier_payment	120.00							
+2026-04-02		B-1	B-1	G/L Account	512000	B-1 supplier_payment	-120.00							
+2026-04-05	Invoice	INV-2	INV-2	G/L Account	411000	INV-2 invoice	200.00							
+2026-04-05	Invoice	INV-2	INV-2	G/L Account	706000	INV-2 invoice	-166.67							
+2026-04-05	Invoice	INV-2	INV-2	G/L Account	445711	INV-2 invoice	-33.33					STANDARD		
+2026-04-20	Payment	INV-2	INV-2	G/L Account	512000	INV-2 receipt	120.00							
+2026-04-20	Payment	INV-2	INV-2	G/L Account	411000	INV-2 receipt	-120.00							
+2026-05-05	Invoice	INV-3	INV-3	G/L Account	411000	INV-3 invoice	100.00							
+2026-05-05	Invoice	INV-3	INV-3	G/L Account	706000	INV-3 invoice	-83.33							
+2026-05-05	Invoice	INV-3	INV-3	G/L Account	445711	INV-3 invoice	-16.67					STANDARD		
+2026-05-12		B-2	B-2	G/L Account	606000	B-2 supplier_bill	255.77							
+2026-05-12		B-2	B-2	G/L Account	606000	B-2 supplier_bill	13.32							
+2026-05-12		B-2	B-2	G/L Account	401000	B-2 supplier_bill	-269.09							
+2026-05-20		B-2	B-2	G/L Account	401000	B-2 supplier_payment	269.09							
+2026-05-20		B-2	B-2	G/L Account	512000	B-2 supplier_payment	-269.09							
+2026-05-20	Payment	INV-3	INV-3	G/L Account	512000	INV-3 receipt	60.00							
+2026-05-20	Payment	INV-3	INV-3	G/L Account	411000	INV-3 receipt	-60.00							
+2026-05-25		INV-3	INV-3	G/L Account	654000	INV-3 write_off	33.34							
+2026-05-25		INV-3	INV-3	G/L Account	445711	INV-3 write_off	6.66					STANDARD		
+2026-05-25		INV-3	INV-3	G/L Account	411000	INV-3 write_off	-40.00							
+2026-06-05	Credit Memo	CN-1	CN-1	G/L Account	411000	CN-1 credit_note	-50.00							
+2026-06-05	Credit Memo	CN-1	CN-1	G/L Account	706000	CN-1 credit_note	41.67							
+2026-06-05	Credit Memo	CN-1	CN-1	G/L Account	445711	CN-1 credit_note	8.33					STANDARD		
+2026-06-10	Refund	CN-1	CN-1	G/L Account	512000	CN-1 refund	-50.00							
+2026-06-10	Refund	CN-1	CN-1	G/L Account	411000	CN-1 refund	50.00							
+2026-07-06	Invoice	INV-4	INV-4	G/L Account	411000	INV-4 invoice	120.00							
+2026-07-06	Invoice	INV-4	INV-4	G/L Account	706000	INV-4 invoice	-100.00							
+2026-07-06	Invoice	INV-4	INV-4	G/L Account	445711	INV-4 invoice	-20.00					STANDARD		
+2026-07-13	Invoice	INV-5	INV-5	G/L Account	411000	INV-5 invoice	42.20							
+2026-07-13	Invoice	INV-5	INV-5	G/L Account	706000	INV-5 invoice	-40.00							
+2026-07-13	Invoice	INV-5	INV-5	G/L Account	445713	INV-5 invoice	-2.20					REDUCED		
+2026-08-10	Payment	INV-4	INV-4	G/L Account	512000	INV-4 receipt	120.00							
+2026-08-10	Payment	INV-4	INV-4	G/L Account	411000	INV-4 receipt	-120.00							
+2026-08-10	Payment	INV-5	INV-5	G/L Account	512000	INV-5 receipt	42.20							
+2026-08-10	Payment	INV-5	INV-5	G/L Account	411000	INV-5 receipt	-42.20							
