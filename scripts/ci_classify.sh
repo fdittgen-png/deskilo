@@ -49,7 +49,7 @@ if [ "$EVENT" = "pull_request" ]; then
   fi
 fi
 
-dart run "$TOOL" --event "$EVENT" --changes "$OUT/changes.nul" \
+dart run "$TOOL" --event "$EVENT" --changes "$OUT/changes.nul" --repo "$REPO" \
   ${flags[@]+"${flags[@]}"} --out "$OUT/classification.txt"
 
 # The verdict file is what every consumer reads: one line per discipline,

@@ -6,7 +6,7 @@
 //
 //   git diff --name-status -z "$BASE" "$HEAD" > changes.nul
 //   dart run tool/ci_classify.dart --event pull_request \
-//       --changes changes.nul --out report/classification.txt
+//       --changes changes.nul [--repo .] --out report/classification.txt
 //
 // Pass `--no-base` when the base commit could not be resolved, and
 // `--diff-problem "<why>"` when git could not write the change list: the
@@ -18,6 +18,7 @@
 import 'dart:io';
 
 import 'ci_classify/classify.dart';
+import 'ci_classify/closure.dart';
 
 // Dart ignores the value `main` returns: `int main() => 2` exits 0. The
 // exit code is set explicitly, or a usage error reads as a verdict.
@@ -33,9 +34,11 @@ int run(List<String> args) {
   final changes = option('changes');
   final out = option('out');
   if (out == null) {
-    stderr.writeln('usage: dart run tool/ci_classify.dart --event <event> '
-        '[--changes <name-status.nul>] [--no-base] '
-        '[--diff-problem <why>] --out <txt>');
+    stderr.writeln(
+      'usage: dart run tool/ci_classify.dart --event <event> '
+      '[--changes <name-status.nul>] [--no-base] '
+      '[--diff-problem <why>] [--repo <dir>] --out <txt>',
+    );
     return 2;
   }
   final baseKnown = !args.contains('--no-base');
@@ -51,12 +54,17 @@ int run(List<String> args) {
       problem = parsed.problem;
     }
   }
-  final verdicts = classify(ChangeSet(
-    paths: paths,
-    baseKnown: baseKnown,
-    event: event,
-    problem: problem,
-  ));
+  final repo = option('repo') ?? '.';
+  final verdicts = classify(
+    ChangeSet(
+      paths: paths,
+      baseKnown: baseKnown,
+      event: event,
+      problem: problem,
+      // #3475 -- computed lazily, from the tree being validated
+      closure: () => databaseClosure(repo),
+    ),
+  );
   File(out)
     ..parent.createSync(recursive: true)
     ..writeAsStringSync('${verdicts.map((v) => v.psv).join('\n')}\n');

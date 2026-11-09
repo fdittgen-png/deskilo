@@ -28,7 +28,18 @@
 // directory at P (test/topology/personal_directory_test.dart), so its
 // providers select the database job like its adapter already did.
 
-const String classifierVersion = '5';
+// v6 -- #3475: a changed Dart file under lib/, packages/ or test/ that is NOT
+// in the transitive import closure of the Dart the database job runs (the
+// topology consumers and the tools it invokes, read from quality.yml) cannot
+// change what that job does, so it no longer selects the job by being outside
+// the path list. The closure is a proof (tool/ci_classify/closure.dart): any
+// doubt -- an entry point the job runs that is not named, an import the proof
+// cannot follow, a file it cannot read -- selects the full run with the doubt
+// as the reason. The path rules above it are unchanged and still win.
+
+import 'closure.dart';
+
+const String classifierVersion = '6';
 
 /// Where a pull request's change came from, as the classifier sees it.
 class ChangeSet {
@@ -37,7 +48,14 @@ class ChangeSet {
     required this.baseKnown,
     required this.event,
     this.problem,
+    this.closure,
   });
+
+  /// #3475 -- the import closure of the Dart the database job runs, computed
+  /// from the tree being validated; asked for only when a changed path needs it.
+  /// Null means none is available (a unit test of the path rules): then no
+  /// path is ever stood down by the closure.
+  final DbClosure Function()? closure;
 
   /// Every changed path — a rename contributes both its names.
   final List<String> paths;
@@ -147,6 +165,16 @@ bool _webRelevant(String path) =>
     path == 'pubspec.lock' ||
     path == '.github/workflows/web.yml';
 
+/// Whether the import closure can decide [path]: a Dart source of the app or
+/// its packages, or a test. The topology prefixes keep selecting either way
+/// (the hand-kept list of v5 stays a floor under the proof).
+bool _closureApplies(String path) =>
+    path.endsWith('.dart') &&
+    !_topologyDependency(path) &&
+    (path.startsWith('lib/') ||
+        path.startsWith('packages/') ||
+        path.startsWith('test/'));
+
 /// The classifier's own inputs: a change to them selects everything.
 bool _selectsEverything(String path) =>
     path.startsWith('.github/') ||
@@ -160,14 +188,30 @@ bool _selectsEverything(String path) =>
 List<Verdict> classify(ChangeSet change) {
   if (change.event != 'pull_request') {
     return [
-      Verdict('database', true, 'not a pull request: ${change.event} runs everything'),
-      Verdict('web', true, 'not a pull request: ${change.event} runs everything'),
+      Verdict(
+        'database',
+        true,
+        'not a pull request: ${change.event} runs everything',
+      ),
+      Verdict(
+        'web',
+        true,
+        'not a pull request: ${change.event} runs everything',
+      ),
     ];
   }
   if (!change.baseKnown) {
     return const [
-      Verdict('database', true, 'the base commit is unknown: the diff cannot be trusted'),
-      Verdict('web', true, 'the base commit is unknown: the diff cannot be trusted'),
+      Verdict(
+        'database',
+        true,
+        'the base commit is unknown: the diff cannot be trusted',
+      ),
+      Verdict(
+        'web',
+        true,
+        'the base commit is unknown: the diff cannot be trusted',
+      ),
     ];
   }
   if (change.problem != null) {
@@ -176,22 +220,75 @@ List<Verdict> classify(ChangeSet change) {
   }
   if (change.paths.isEmpty) {
     return const [
-      Verdict('database', true, 'no changed path was reported: nothing proves independence'),
-      Verdict('web', true, 'no changed path was reported: nothing proves independence'),
+      Verdict(
+        'database',
+        true,
+        'no changed path was reported: nothing proves independence',
+      ),
+      Verdict(
+        'web',
+        true,
+        'no changed path was reported: nothing proves independence',
+      ),
     ];
   }
   final everything = change.paths.where(_selectsEverything).toList();
   if (everything.isNotEmpty) {
-    final why = 'a workflow, script, generator or dependency changed: ${everything.first}';
+    final why =
+        'a workflow, script, generator or dependency changed: ${everything.first}';
     return [Verdict('database', true, why), Verdict('web', true, why)];
   }
-  final dbTouching = change.paths.where((p) => !_databaseIndependent(p)).toList();
+  var outside = 0;
+  String? closureDoubt;
+  DbClosure? closure;
+  final dbTouching = <String>[];
+  for (final p in change.paths) {
+    // A Dart source the proof covers is decided by the proof, both ways: inside
+    // the closure it selects the job even where the v5 path list called it
+    // independent (a provider or a core file the topology tests import), and
+    // outside it the job stands down even where the v5 list knew nothing.
+    if (_closureApplies(p) && change.closure != null) {
+      closure ??= change.closure!();
+      if (!closure.proven) {
+        closureDoubt ??= closure.problem;
+        dbTouching.add(p);
+      } else if (closure.files.contains(p)) {
+        dbTouching.add(p);
+      } else {
+        outside++;
+      }
+      continue;
+    }
+    if (_databaseIndependent(p)) continue;
+    dbTouching.add(p);
+  }
   final webTouching = change.paths.where(_webRelevant).toList();
+  final scoped = outside == 0
+      ? ''
+      : '; $outside outside the import closure of the database job';
   return [
-    if (dbTouching.isEmpty) Verdict('database', false,
-            'every changed path is independent of the database (${change.paths.length} files, e.g. ${change.paths.first})') else Verdict('database', true, 'database-relevant: ${dbTouching.first}'),
-    if (webTouching.isEmpty) Verdict('web', false,
-            'no changed path reaches the browser build (e.g. ${change.paths.first})') else Verdict('web', true, 'browser-relevant: ${webTouching.first}'),
+    if (dbTouching.isEmpty)
+      Verdict(
+        'database',
+        false,
+        'every changed path is independent of the database (${change.paths.length} files, e.g. ${change.paths.first}$scoped)',
+      )
+    else
+      Verdict(
+        'database',
+        true,
+        closureDoubt == null
+            ? 'database-relevant: ${dbTouching.first}'
+            : 'database-relevant: ${dbTouching.first} (the import closure of the database job could not be proven: $closureDoubt)',
+      ),
+    if (webTouching.isEmpty)
+      Verdict(
+        'web',
+        false,
+        'no changed path reaches the browser build (e.g. ${change.paths.first})',
+      )
+    else
+      Verdict('web', true, 'browser-relevant: ${webTouching.first}'),
   ];
 }
 
@@ -212,13 +309,19 @@ class ParsedDiff {
 /// instead of being dropped: a truncated change list must select
 /// everything, not the part that survived.
 ParsedDiff pathsFromNameStatus(String nulSeparated) {
-  final fields = nulSeparated.split('\u0000').where((f) => f.isNotEmpty).toList();
+  final fields = nulSeparated
+      .split('\u0000')
+      .where((f) => f.isNotEmpty)
+      .toList();
   final paths = <String>[];
   var i = 0;
   while (i < fields.length) {
     final status = fields[i];
     if (!RegExp(r'^[ACDMRTUXB][0-9]*$').hasMatch(status)) {
-      return ParsedDiff(paths, 'record $i has status "$status", which git does not emit');
+      return ParsedDiff(
+        paths,
+        'record $i has status "$status", which git does not emit',
+      );
     }
     final twoPaths = status.startsWith('R') || status.startsWith('C');
     final want = twoPaths ? 2 : 1;
