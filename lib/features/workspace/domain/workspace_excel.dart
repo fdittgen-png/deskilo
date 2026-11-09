@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../money/domain/ledger_entry.dart';

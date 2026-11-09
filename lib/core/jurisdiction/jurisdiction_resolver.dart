@@ -54,6 +54,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the archive of that country.
   conflictingArchive,
+
+  /// More than one installed add-on claims the registers of that country.
+  conflictingRegisters,
 }
 
 sealed class CapabilityResolution {
@@ -236,6 +239,36 @@ ArchiveContribution? resolveArchive(
   }
   if (matches.single.descriptor.contractVersion != archiveContractVersion) {
     throw StateError('archive of $country: ${RefusalKind.contractMismatch.name}');
+  }
+  return matches.single;
+}
+
+String _registersCapabilityId(String country) => 'registers.$country';
+
+/// The installed registers add-on of [context]'s country: null when the
+/// country asks no register of issued invoices (not a fault, and never
+/// another country's), or the composition's fault as a [StateError].
+RegisterContribution? resolveRegisters(
+  LegalContext context,
+  List<RegisterContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return null;
+  final id = _registersCapabilityId(country);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return null;
+  if (matches.length > 1) {
+    throw StateError(
+      'registers of $country: ${RefusalKind.conflictingRegisters.name}',
+    );
+  }
+  if (matches.single.descriptor.contractVersion != registersContractVersion) {
+    throw StateError(
+      'registers of $country: ${RefusalKind.contractMismatch.name}',
+    );
   }
   return matches.single;
 }

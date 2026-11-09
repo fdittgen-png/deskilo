@@ -9,10 +9,10 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/files/file_types.dart';
-import '../../../core/files/xlsx.dart';
 import '../domain/template_inspection.dart';
 import '../domain/workbook_origin.dart';
 import '../domain/workspace_repository.dart';

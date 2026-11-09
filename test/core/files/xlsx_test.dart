@@ -7,7 +7,7 @@
 import 'dart:convert';
 
 import 'package:archive/archive.dart';
-import 'package:deskilo/core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Archive _unzip(List<int> bytes) => ZipDecoder().decodeBytes(bytes);

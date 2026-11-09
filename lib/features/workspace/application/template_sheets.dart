@@ -4,7 +4,7 @@
 // cell data. [templateWorkbook] checks the batch and hands it here.
 import 'dart:convert';
 
-import '../../../core/files/xlsx.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import '../domain/template_capabilities.dart';
 import '../domain/template_inspection.dart';
 import '../domain/workbook_origin.dart';

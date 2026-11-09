@@ -24,6 +24,11 @@ const String invoiceMentionsContractVersion = '1';
 /// apart (ADR 0050 §4).
 const String archiveContractVersion = '1';
 
+/// The version of the registers contract (`RegisterContribution`): the
+/// registers of issued invoices a country's law asks beside the return. Its own
+/// capability, so it is versioned apart (ADR 0050 §4).
+const String registersContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {

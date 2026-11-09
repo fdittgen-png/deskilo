@@ -6,12 +6,10 @@
 // submission is a web service authenticated with the seller's qualified
 // certificate, which the app does not hold. A space that keeps its books
 // through SII hands the file to its SII software or adviser.
-import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:xml/xml.dart';
 
-import 'vat_filing_terms.dart';
 import 'vat_register_es.dart';
 
 const _sii =
@@ -32,15 +30,15 @@ const _maxExemptions = 7;
 /// type of operation (services). Throws [VatFilingFileException] when the
 /// space's NIF is not one.
 String siiFacturasEmitidasXml(
-  List<Invoice> documents, {
+  List<RegisterDocument> documents, {
   required String vatId,
   required String name,
-  required TaxReferenceSet reference,
+  required RegisterContext context,
 }) {
   var nif = vatId.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
   if (nif.startsWith('ES')) nif = nif.substring(2);
   if (!RegExp(r'^([A-Z]\d{7}[A-Z]|\d{8}[A-Z]|[A-Z]\d{8})$').hasMatch(nif)) {
-    throw const VatFilingFileException(VatFilingFileProblem.vatNumber);
+    throw const RegisterRefusal(RegisterProblem.vatNumber);
   }
   final b = XmlBuilder()..processing('xml', 'version="1.0" encoding="UTF-8"');
   void el(String tag, String text) => b.element('sii:$tag', nest: text);
@@ -63,7 +61,7 @@ String siiFacturasEmitidasXml(
         },
       );
       for (final invoice in documents) {
-        _Record(b, invoice, nif, reference).write();
+        _Record(b, invoice, nif, context).write();
       }
     },
   );
@@ -72,20 +70,20 @@ String siiFacturasEmitidasXml(
 
 /// One invoice's record, element by element in the schema's order.
 class _Record {
-  _Record(this.b, this.invoice, this.nif, this.reference)
-    : buyer = esBuyerIdOf(invoice, reference: reference),
+  _Record(this.b, this.invoice, this.nif, this.context)
+    : buyer = esBuyerIdOf(invoice, context: context),
       country = invoice.buyerParty?.country ?? '';
 
   final XmlBuilder b;
-  final Invoice invoice;
+  final RegisterDocument invoice;
   final String nif;
-  final TaxReferenceSet reference;
+  final RegisterContext context;
   final ({String type, String country, String id}) buyer;
   final String country;
 
   void el(String tag, String text) => b.element('sii:$tag', nest: text);
   String amount(int cents) => minorToText(cents, invoice.currency);
-  EsOperation op(InvoiceVatTotal t) => esOperationOf(t.category, country);
+  EsOperation op(RegisterVatLine t) => esOperationOf(t.category, country);
 
   /// A buyer identified by a Spanish NIF.
   bool get domestic => buyer.id.isNotEmpty && buyer.type.isEmpty;
@@ -116,7 +114,7 @@ class _Record {
   }
 
   void _invoice() {
-    final type = esInvoiceTypeOf(invoice, reference: reference);
+    final type = esInvoiceTypeOf(invoice, context: context);
     el('TipoFactura', type);
     // A credit note of this app states the difference (por diferencias).
     if (type.startsWith('R')) el('TipoRectificativa', 'I');
@@ -171,7 +169,7 @@ class _Record {
         if (op(t).exemption.isEmpty && op(t).qualification.startsWith('S')) t,
     ];
     if (exempt.length > _maxExemptions || taxed.length > _maxTaxedRates) {
-      throw const VatFilingFileException(VatFilingFileProblem.unmappedBox);
+      throw const RegisterRefusal(RegisterProblem.unmappedAmount);
     }
     if (exempt.isNotEmpty || taxed.isNotEmpty) {
       b.element(
@@ -197,7 +195,7 @@ class _Record {
     );
   }
 
-  void _exempt(List<InvoiceVatTotal> totals) => b.element(
+  void _exempt(List<RegisterVatLine> totals) => b.element(
     'sii:Exenta',
     nest: () {
       for (final t in totals) {
@@ -212,7 +210,7 @@ class _Record {
     },
   );
 
-  void _taxed(List<InvoiceVatTotal> totals) {
+  void _taxed(List<RegisterVatLine> totals) {
     // S1 without a reverse charge, S2 with one, S3 both on one invoice.
     final reversed = {for (final t in totals) op(t).qualification == 'S2'};
     b.element(

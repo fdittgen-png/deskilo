@@ -29,19 +29,19 @@ const Map<String, String> _allowed = {
   // Every form the app fills, resolved against the store: the unchanged
   // vat_forms_test walks it (the field it was before 0432 was read by lib).
   // Spanish Verifactu: built and pinned before its register exists.
-  'lib/features/money/domain/verifactu.dart::verifactuLegend':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuLegend':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuMention':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuMention':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuCancellationHuella':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuCancellationHuella':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuRecordFor':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuRecordFor':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuChainHolds':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuChainHolds':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuQrUrl':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuQrUrl':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'lib/features/money/domain/verifactu.dart::verifactuRecordXml':
+  'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuRecordXml':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
 
   // Domain rules the app was meant to use and does not yet.

@@ -15,15 +15,13 @@
 // the move must change none of them. Rewrite only with
 // `UPDATE_PARITY_GOLDENS=1`, never under CI. Dates are UTC, so the files do
 // not depend on the machine's zone.
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/vat_register_es.dart';
-import 'package:deskilo/features/money/domain/vat_register_es_347.dart';
-import 'package:deskilo/features/money/domain/vat_register_es_sii.dart';
-import 'package:deskilo/features/money/domain/verifactu.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../features/money/es_register_support.dart';
 
 import 'parity_golden.dart';
 

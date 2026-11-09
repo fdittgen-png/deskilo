@@ -16,7 +16,6 @@ import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/vat_register_files.dart';
 import '../domain/vat_filing_terms.dart';
-import '../domain/vat_register_es.dart' show isEsActivity;
 import '../domain/vat_registers.dart';
 import '../providers/vat_declaration_providers.dart';
 import 'invoice_actions.dart';
@@ -122,7 +121,10 @@ class VatCountryRegisters extends ConsumerWidget {
   Future<void> _esLibro(BuildContext context, WidgetRef ref) async {
     final activity = await showDialog<String>(
       context: context,
-      builder: (context) => _ActivityDialog(l10n: context.l10n),
+      builder: (context) => _ActivityDialog(
+        l10n: context.l10n,
+        accepts: ref.read(vatRegisterFilesProvider).acceptsActivity,
+      ),
     );
     if (activity == null || !context.mounted) return;
     await _deliver(
@@ -197,9 +199,12 @@ class VatCountryRegisters extends ConsumerWidget {
 }
 
 class _ActivityDialog extends StatefulWidget {
-  const _ActivityDialog({required this.l10n});
+  const _ActivityDialog({required this.l10n, required this.accepts});
 
   final AppLocalizations l10n;
+
+  /// Whether what was typed is an activity code of the country's libro.
+  final bool Function(String raw) accepts;
 
   @override
   State<_ActivityDialog> createState() => _ActivityDialogState();
@@ -217,7 +222,7 @@ class _ActivityDialogState extends State<_ActivityDialog> {
 
   void _submit() {
     final value = _fields.text('activity');
-    if (!isEsActivity(value)) {
+    if (!widget.accepts(value)) {
       setState(() => _error = widget.l10n.vatRegisterActivityInvalid);
       return;
     }

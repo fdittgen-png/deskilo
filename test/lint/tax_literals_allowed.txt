@@ -32,7 +32,7 @@ lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: 
 lib/features/money/domain/accounting_targets_sage.dart :: countries: {'US', 'CA', 'GB'}, :: 1 :: the countries a product (Sage Intacct) is sold in, a target descriptor, not a tax value
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
-lib/features/money/domain/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
+packages/deskilo_jurisdiction_es/lib/src/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
 packages/deskilo_accounting_interchange/lib/src/sage.dart :: 'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'), :: 1 :: EN 16931 category to the role of the Sage 50 code row (sage/tax_eu_services, sage/tax_reverse_charge): the codes themselves are reference rows
 lib/features/money/domain/accounting_targets_xero.dart :: countries: {'GB', 'CA', 'US', accountingCountriesEu}, :: 1 :: the countries the Xero import file is offered in, a target descriptor, not a tax value
 lib/core/jurisdiction/jurisdiction_resolver.dart :: 'UK' => 'GB', :: 1 :: an ISO spelling alias (UK for GB): not a tax value
