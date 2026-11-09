@@ -256,3 +256,43 @@ Deno.test("with no Stripe key the settlement stands and no fee is read", async (
   assertEquals(called, false);
   assertEquals(fake.rpcCalls, ["settle_online_payment"]);
 });
+
+// #2380 -- a payout event is routed to the payout path, never to the intent
+// lookup that would ask Stripe to redeliver it for an hour.
+Deno.test("a payout event signed by a workspace's secret is recorded, not looked up as a session", async () => {
+  const rpcs: string[] = [];
+  const admin = {
+    from: () => {
+      const chain = {
+        select: () => chain,
+        eq: () => Promise.resolve({ data: [{ workspace_id: "ws-1", config: { webhook_secret: SECRET, secret_key: "sk_t" } }], error: null }),
+      };
+      return chain;
+    },
+    rpc(name: string) { rpcs.push(name); return Promise.resolve({ data: { reconciled: true }, error: null }); },
+  };
+  const body = JSON.stringify({ type: "payout.paid", data: { object: { id: "po_1", amount: 1000, currency: "eur", arrival_date: 1773532800 } } });
+  const req = new Request("http://x/stripe-webhook", { method: "POST", body, headers: { "stripe-signature": await signed(body) } });
+  const res = await handle(req, {
+    // deno-lint-ignore no-explicit-any
+    admin: () => admin as any, env: () => undefined, nowS: () => NOW,
+    fetch: () => Promise.resolve(new Response(JSON.stringify({ data: [{ id: "txn_1", type: "charge" }], has_more: false }), { status: 200 })),
+  });
+  assertEquals(res.status, 200);
+  assertEquals(rpcs, ["record_provider_payout_v1"]);
+});
+
+Deno.test("a payout event nobody's secret signed is acknowledged, not retried", async () => {
+  const admin = {
+    from: () => {
+      const chain = { select: () => chain, eq: () => Promise.resolve({ data: [], error: null }) };
+      return chain;
+    },
+    rpc: () => Promise.resolve({ data: null, error: null }),
+  };
+  const body = JSON.stringify({ type: "payout.paid", data: { object: { id: "po_1", amount: 1000, currency: "eur" } } });
+  const req = new Request("http://x/stripe-webhook", { method: "POST", body, headers: { "stripe-signature": await signed(body) } });
+  // deno-lint-ignore no-explicit-any
+  const res = await handle(req, { admin: () => admin as any, env: () => undefined, nowS: () => NOW });
+  assertEquals(res.status, 200);
+});

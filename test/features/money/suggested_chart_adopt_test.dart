@@ -43,6 +43,12 @@ void main() {
         'revenue:reduced': '8300',
         'vat_output:reduced': '1771',
         'vat_input:reduced': '1571',
+        'clearing:stripe': '1360',
+        'clearing:paypal': '1361',
+        'clearing:mollie': '1362',
+        'fees:stripe': '4970',
+        'fees:paypal': '4971',
+        'fees:mollie': '4972',
       },
     );
     expect(
