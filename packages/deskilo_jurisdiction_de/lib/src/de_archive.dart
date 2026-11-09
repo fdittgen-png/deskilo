@@ -24,7 +24,7 @@ class DeArchive extends ArchiveContribution {
 
   @override
   RecordsNotice? recordsNotice(RecordsFacts facts) {
-    if (facts.hostingInEu) return null;
+    if (!facts.hostingInEu) return null;
     return RecordsNotice(
       id: 'ao',
       readmeLines: [
