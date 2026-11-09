@@ -78,8 +78,9 @@ async function apiKey(
 /** #2380 -- what Stripe kept of a paid payment: the balance transaction of
  * the payment intent's latest charge, read once with the workspace's own key.
  * Null when Stripe has no balance transaction for it yet (a delayed method
- * reports it later: the settlement events come again). Throws when the call
- * itself fails, so the webhook answers 5xx and Stripe redelivers. */
+ * reports it later: the settlement events come again) or refuses the key (4xx
+ * but 429: permanent, logged). Throws on a transient failure (429, 5xx, the
+ * network), so the webhook answers 5xx and Stripe redelivers. */
 async function stripeBalanceTransaction(
   deps: Deps,
   key: string,
@@ -90,6 +91,14 @@ async function stripeBalanceTransaction(
       "?expand[]=latest_charge.balance_transaction",
     { headers: { Authorization: `Bearer ${key}` } },
   );
+  // A refusal of the key (403 restricted, 404 a platform key for another
+  // account) is permanent: retrying every paid event would end with Stripe
+  // disabling this endpoint. It is logged and the fee stays unrecorded; only a
+  // transient failure (429, 5xx, the network) is retried.
+  if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+    console.error("stripe fee unavailable", { status: res.status });
+    return null;
+  }
   if (!res.ok) throw new Error(`stripe read ${res.status}`);
   const intent = (await res.json()) as Record<string, unknown>;
   const charge = (intent.latest_charge ?? {}) as Record<string, unknown>;

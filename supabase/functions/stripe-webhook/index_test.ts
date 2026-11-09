@@ -219,6 +219,28 @@ Deno.test("a failed Stripe read is a 500 after the settlement, so Stripe redeliv
   assertEquals(fake.rpcCalls, ["settle_online_payment"]);
 });
 
+for (const status of [403, 404]) {
+  Deno.test(`a ${status} on the fee read (a key Stripe refuses) is logged and answered 2xx: no endless retries`, async () => {
+    const fake = fakeAdmin(withKey);
+    const res = await call(fake, paid(), {}, () => Promise.resolve(new Response("{}", { status })));
+    assertEquals(res.status, 200);
+    assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+  });
+}
+
+Deno.test("a 429 on the fee read is transient: 500, Stripe redelivers", async () => {
+  const fake = fakeAdmin(withKey);
+  const res = await call(fake, paid(), {}, () => Promise.resolve(new Response("{}", { status: 429 })));
+  assertEquals(res.status, 500);
+});
+
+Deno.test("a network failure on the fee read is transient: 500", async () => {
+  const fake = fakeAdmin(withKey);
+  const res = await call(fake, paid(), {}, () => Promise.reject(new Error("socket")));
+  assertEquals(res.status, 500);
+  assertEquals(res.text, "fee_read_failed");
+});
+
 Deno.test("a fee the database refuses is a 500, never an ok", async () => {
   const fake = fakeAdmin({ ...withKey, rpc: { record_provider_fee_v1: { data: null, error: { message: "the provider reported another fee" } } } });
   const res = await call(fake, paid(), {}, () => Promise.resolve(stripeIntent(balanceTransaction)));
