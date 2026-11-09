@@ -1,0 +1,6 @@
+JournalCode	JournalLib	EcritureNum	EcritureDate	CompteNum	CompteLib	CompAuxNum	CompAuxLib	PieceRef	PieceDate	EcritureLib	Debit	Credit	EcritureLet	DateLet	ValidDate	Montantdevise	Idevise
+VE	Ventes	VE-INV-2026-0103	20260312	411000	Clients	member-w3	Client w3	INV-2026-0103	20260312	Facture INV-2026-0103	60,00	0,00	INV-2026-0103	20260312	20260312		
+VE	Ventes	VE-INV-2026-0103	20260312	706000	Prestations de services			INV-2026-0103	20260312	Facture INV-2026-0103 20 %	0,00	50,00	INV-2026-0103	20260312	20260312		
+VE	Ventes	VE-INV-2026-0103	20260312	445740	TVA collectée en attente d'exigibilité			INV-2026-0103	20260312	Facture INV-2026-0103 20 %	0,00	10,00	INV-2026-0103	20260312	20260312		
+OD	Opérations diverses	OD-INV-2026-0103-T1	20260430	445740	TVA collectée en attente d'exigibilité			INV-2026-0103	20260312	Facture INV-2026-0103	10,00	0,00			20260430		
+OD	Opérations diverses	OD-INV-2026-0103-T1	20260430	445710	TVA collectée			INV-2026-0103	20260312	Facture INV-2026-0103	0,00	10,00			20260430		

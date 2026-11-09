@@ -1,0 +1,68 @@
+[datev default]
+chart=SKR03 skr=03
+revenue=8400 bank=1200 expenses=4900
+writeOff=2400
+rate 0.0: revenueAt=8400 target=8400/ gap=null
+rate 5.5: revenueAt=8400 target=8400/ gap=null
+rate 7.0: revenueAt=8300 target=8300/ gap=null
+rate 10.0: revenueAt=8400 target=8400/ gap=null
+rate 19.0: revenueAt=8400 target=8400/ gap=null
+rate 20.0: revenueAt=8400 target=8400/ gap=null
+rate 21.0: revenueAt=8400 target=8400/ gap=null
+[datev SKR04]
+chart=SKR04 skr=04
+revenue=4400 bank=1800 expenses=6300
+writeOff=6936
+rate 0.0: revenueAt=4400 target=4400/ gap=null
+rate 5.5: revenueAt=4400 target=4400/ gap=null
+rate 7.0: revenueAt=4300 target=4300/ gap=null
+rate 10.0: revenueAt=4400 target=4400/ gap=null
+rate 19.0: revenueAt=4400 target=4400/ gap=null
+rate 20.0: revenueAt=4400 target=4400/ gap=null
+rate 21.0: revenueAt=4400 target=4400/ gap=null
+[datev skr04 lower case]
+chart= skr04  skr=04
+revenue=4400 bank=1800 expenses=6300
+writeOff=6936
+rate 0.0: revenueAt=4400 target=4400/ gap=null
+rate 5.5: revenueAt=4400 target=4400/ gap=null
+rate 7.0: revenueAt=4300 target=4300/ gap=null
+rate 10.0: revenueAt=4400 target=4400/ gap=null
+rate 19.0: revenueAt=4400 target=4400/ gap=null
+rate 20.0: revenueAt=4400 target=4400/ gap=null
+rate 21.0: revenueAt=4400 target=4400/ gap=null
+[datev given accounts]
+chart=SKR03 skr=03
+revenue=8195 bank=1800 expenses=4999
+writeOff=2400
+rate 0.0: revenueAt=8195 target=8195/ gap=DatevTaxKeyMissing
+rate 5.5: revenueAt=8195 target=8195/ gap=DatevTaxKeyMissing
+rate 7.0: revenueAt=8300 target=8300/ gap=null
+rate 10.0: revenueAt=8195 target=8195/ gap=DatevTaxKeyMissing
+rate 19.0: revenueAt=8195 target=8195/3 gap=null
+rate 20.0: revenueAt=8195 target=8195/ gap=DatevTaxKeyMissing
+rate 21.0: revenueAt=8195 target=8195/ gap=DatevTaxKeyMissing
+[datev explicit reference]
+chart=SKR03 skr=03
+revenue=8400 bank=1200 expenses=4900
+writeOff=2400
+rate 0.0: revenueAt=8400 target=8400/ gap=null
+rate 5.5: revenueAt=8400 target=8400/ gap=null
+rate 7.0: revenueAt=8300 target=8300/ gap=null
+rate 10.0: revenueAt=8400 target=8400/ gap=null
+rate 19.0: revenueAt=8400 target=8400/ gap=null
+rate 20.0: revenueAt=8400 target=8400/ gap=null
+rate 21.0: revenueAt=8400 target=8400/ gap=null
+tax key standard: 3 revenue SKR03=base SKR04=base
+tax key reduced: 2 revenue SKR03=8300 SKR04=4300
+tax key unknown: null revenue SKR03=null SKR04=null
+tax key : null revenue SKR03=base SKR04=base
+[fec default]
+customers=411000 revenue=706000 bank=512000 vat=445710
+expenses=606000 vatPending=445740 writeOff=654000
+[fec given]
+customers=4110 revenue=7061 bank=5121 vat=445712
+expenses=6061 vatPending=445741 writeOff=6541
+[fec explicit reference]
+customers=411000 revenue=706000 bank=512000 vat=445710
+expenses=606000 vatPending=445740 writeOff=654000
