@@ -29,7 +29,7 @@ class ChInvoiceMentions extends InvoiceMentionsContribution {
   /// A valid Swiss UID prints the way art. 26 MWSTG shows it.
   @override
   String formatSellerVatId(String id) =>
-      isValidSwissUid(id) ? formatSwissUid(id) : id;
+      isValidSwissUid(id, requireSuffix: false) ? formatSwissUid(id) : id;
 
   @override
   List<String> mentions(InvoiceMentionContext context) => const [];
