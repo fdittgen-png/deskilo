@@ -12912,6 +12912,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Banana Comptabilité+ (import d\'écritures)';
 
   @override
+  String get invoiceExportBcJournal =>
+      'Journal Business Central (classeur Excel)';
+
+  @override
   String get invoiceExportBundle => 'Archive de l\'exercice (zip)';
 
   @override

@@ -12788,6 +12788,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportBanana => 'Banana Accounting+ (transactions import)';
 
   @override
+  String get invoiceExportBcJournal =>
+      'Business Central journal (Excel workbook)';
+
+  @override
   String get invoiceExportBundle => 'Year archive (zip)';
 
   @override

@@ -91,3 +91,7 @@ xero_invoice_csv | FR | cloud | no | 0 | 0
 xero_invoice_csv | FR | local | no | 0 | 0
 xero_invoice_csv | DE | cloud | no | 0 | 0
 xero_invoice_csv | DE | local | no | 0 | 0
+business_central_journal_xlsx | FR | cloud | yes | 0 | 0
+business_central_journal_xlsx | FR | local | yes | 0 | 1
+business_central_journal_xlsx | DE | cloud | yes | 0 | 0
+business_central_journal_xlsx | DE | local | yes | 0 | 1

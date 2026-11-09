@@ -15410,6 +15410,10 @@
   "@invoiceExportBanana": {
     "description": "#2377 The Swiss journal under Banana's column names, on the accounting export sheet."
   },
+  "invoiceExportBcJournal": "Business Central journal (Excel workbook)",
+  "@invoiceExportBcJournal": {
+    "description": "#2374 The Business Central General Journal workbook of a local book on the accounting export sheet."
+  },
   "invoiceExportBundle": "Year archive (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"

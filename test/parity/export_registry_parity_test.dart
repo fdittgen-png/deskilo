@@ -158,6 +158,7 @@ bool _hasBytes(String id) {
     'saft_pt': ['seeded_year/saft_pt.xml'],
     'ch_kmu': ['seeded_year/ch_kmu.csv'],
     'banana_transactions': ['seeded_year/banana_transactions.txt'],
+    'business_central_journal_xlsx': ['seeded_year/bc_journal.txt'],
     'accountant_csv': ['seeded_year/accountant.csv', 'exports/accountant.csv'],
     'audit_trail': ['seeded_year/audit_trail.csv', 'exports/audit_trail.csv'],
     'bundle': ['seeded_year/bundle'],

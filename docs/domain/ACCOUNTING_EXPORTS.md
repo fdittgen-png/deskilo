@@ -225,6 +225,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `business_central_gb` | Microsoft · Dynamics 365 Business Central · API v2.0, UK localisation | api | documents | GB | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
 | `business_central_us` | Microsoft · Dynamics 365 Business Central · API v2.0, US localisation | api | documents | US | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
 | `business_central_ca` | Microsoft · Dynamics 365 Business Central · API v2.0, Canadian localisation | api | documents | CA | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_journal_xlsx` | Microsoft · Dynamics 365 Business Central · General Journal workbook (Edit in Excel columns) | file | journal | everywhere | implemented | Business Central General Journal, Edit in Excel column set |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:

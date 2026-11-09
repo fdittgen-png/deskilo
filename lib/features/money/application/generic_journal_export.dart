@@ -6,6 +6,7 @@
 // nothing is derived around the engine. A role the engine could not resolve
 // stops the file and is named.
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
@@ -26,6 +27,12 @@ sealed class GenericJournal {
 final class JournalFile extends GenericJournal {
   const JournalFile(this.content);
   final String content;
+}
+
+/// #2374 -- a file that is not text (a workbook).
+final class JournalBytes extends GenericJournal {
+  const JournalBytes(this.bytes);
+  final Uint8List bytes;
 }
 
 /// No issuer keeps a local book in the year.
