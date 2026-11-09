@@ -149,7 +149,7 @@ void main() {
   test(
     'the required gate scans the complete PR range before package setup',
     () {
-      final steps = _steps('quality', 'gate');
+      final steps = _steps('quality', 'static');
       final checkout = steps.first;
       expect(_mapAt(checkout, 'with')['fetch-depth'], 0);
       final scan = steps.singleWhere(

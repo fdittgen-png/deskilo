@@ -94,7 +94,8 @@ void main() {
   });
 
   test('the browser startup proof is executed, checked and gates the job', () {
-    final gate = _jobs()['gate'] as YamlMap;
+    // #3475 -- it runs in the static gates job, beside the tests
+    final gate = _jobs()['static'] as YamlMap;
     final steps = (gate['steps'] as YamlList).cast<YamlMap>();
     final browser = steps.firstWhere((s) => s['id'] == 'browser_startup');
     expect(browser['continue-on-error'], isTrue);
@@ -124,9 +125,13 @@ void main() {
     final code = jobs['code'] as YamlMap;
     expect(code['name'], _required);
     expect(code['if'], 'always()');
-    expect((code['needs'] as YamlList).toSet(), _shardJobs.values.toSet());
+    // #3475 -- the static gates job is a job of the run, not a test shard
+    expect(
+      (code['needs'] as YamlList).toSet(),
+      {..._shardJobs.values, 'static'},
+    );
     final gate = _run(code).split('scripts/job_gate.sh').last;
-    for (final id in _shardJobs.values) {
+    for (final id in [..._shardJobs.values, 'static']) {
       expect(gate, contains('needs.$id.result'));
     }
     for (final step in const ['plan', 'rows', 'lcov', 'coverage']) {
@@ -142,9 +147,12 @@ void main() {
 
   test('the report job waits for the shards too, and names their results', () {
     final report = _jobs()['report'] as YamlMap;
-    expect(report['needs'] as YamlList, containsAll(_shardJobs.values));
+    expect(
+      report['needs'] as YamlList,
+      containsAll([..._shardJobs.values, 'static']),
+    );
     final gate = _run(report);
-    for (final id in _shardJobs.values) {
+    for (final id in [..._shardJobs.values, 'static']) {
       expect(gate, contains('needs.$id.result'));
     }
   });

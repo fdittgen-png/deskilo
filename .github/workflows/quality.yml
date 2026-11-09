@@ -67,14 +67,15 @@ jobs:
         with:
           artifact: quality-classification-attempt-${{ github.run_attempt }}
 
-  # #2600 — the quality suite runs as six shards (#3166) on six runners, and
-  # the required context below is the AGGREGATE of them. This is the fast
-  # gate: the preconditions (l10n, codegen, the push package, analyze) and
-  # every test outside test/features — lint, tool, i18n, ux, perf and
-  # anything a new root folder adds (core, app and a11y run in the core
-  # shard, #3166). It fails first.
-  gate:
-    name: quality · test · gates
+  # #3475 -- the static gates run beside the tests, not before them: the gate
+  # job used to run its preconditions (secret scan, l10n, codegen, the package
+  # suites, analyze, the browser startup proof) and THEN its 7 minutes of tests,
+  # which made it the critical path of the whole run (15.6 min against about
+  # 8 for each half). The checks, their order and every failure gate are the
+  # same; they now run in parallel with the tests and the required aggregates
+  # wait for both.
+  static:
+    name: quality · static gates
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -225,6 +226,60 @@ jobs:
       # verdict and written beside the stream; the envelope records it with
       # hashes of what this run produced, and nothing in between may
       # replace it.
+      # The selected file also runs in the VM shard; this separate, required
+      # browser execution proves the real deployment-base/startup behavior.
+      - name: Browser startup regression
+        id: browser_startup
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          flutter test --platform chrome --file-reporter json:shard/browser-startup.jsonl test/browser/deployment_base_web_test.dart
+          dart run tool/quality_browser_evidence.dart shard/browser-startup.jsonl
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: staticgate-attempt-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: shard/browser-startup.jsonl
+
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Browser startup=${{ steps.browser_startup.outcome }}"
+
+  # #2600 — the quality suite runs as six shards (#3166) on six runners, and
+  # the required context below is the AGGREGATE of them. This is the fast
+  # gate's tests: every test outside test/features — lint, tool, i18n, ux,
+  # perf and anything a new root folder adds (core, app and a11y run in the
+  # core shard, #3166). Its preconditions (l10n, codegen, the package suites,
+  # analyze, the secret scan, the browser startup proof) are the `static` job
+  # above, which runs beside it since #3475.
+  gate:
+    name: quality · test · gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
       - name: Select the files of this shard
         run: dart run tool/quality_shard.dart select --shard gate --out shard/files.txt
 
@@ -240,16 +295,6 @@ jobs:
           set -e
           echo "$code" > shard/tests-exit.txt
           exit "$code"
-
-      # The selected file also runs in the VM shard; this separate, required
-      # browser execution proves the real deployment-base/startup behavior.
-      - name: Browser startup regression
-        id: browser_startup
-        continue-on-error: true
-        run: |
-          mkdir -p shard
-          flutter test --platform chrome --file-reporter json:shard/browser-startup.jsonl test/browser/deployment_base_web_test.dart
-          dart run tool/quality_browser_evidence.dart shard/browser-startup.jsonl
 
       - name: Shard envelope
         id: envelope
@@ -276,7 +321,6 @@ jobs:
             shard/envelope.json
             shard/tests.jsonl
             shard/lcov.info
-            shard/browser-startup.jsonl
 
       # The job is red when its tests are, and when its envelope could not
       # be written; the aggregate additionally refuses a shard whose
@@ -286,7 +330,6 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Tests=${{ steps.tests.outcome }}" \
-            "Browser startup=${{ steps.browser_startup.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
   # #2600 — the features, in shards of similar cost. The split is a
@@ -725,7 +768,7 @@ jobs:
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [gate, money, money2, workspace, rest, core]
+    needs: [gate, static, money, money2, workspace, rest, core]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -917,6 +960,7 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Fast gate and its tests=${{ needs.gate.result }}" \
+            "Static gates=${{ needs.static.result }}" \
             "Money a-m and reservation tests=${{ needs.money.result }}" \
             "Money n-z, me and auth tests=${{ needs.money2.result }}" \
             "Workspace tests=${{ needs.workspace.result }}" \
@@ -1410,7 +1454,7 @@ jobs:
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [classify, gate, money, money2, workspace, rest, core, code, database]
+    needs: [classify, gate, static, money, money2, workspace, rest, core, code, database]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -1456,6 +1500,7 @@ jobs:
           bash scripts/job_gate.sh \
             "classify the change=${{ needs.classify.result }}" \
             "quality · test · gates=${{ needs.gate.result }}" \
+            "quality · static gates=${{ needs.static.result }}" \
             "quality · test · money a-m and reservations=${{ needs.money.result }}" \
             "quality · test · money n-z, me and auth=${{ needs.money2.result }}" \
             "quality · test · workspace=${{ needs.workspace.result }}" \

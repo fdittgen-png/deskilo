@@ -84,6 +84,7 @@ The assignment comes from [`tool/quality_rows/selection.dart`](https://github.co
 
 | Shard ID | Job name | Selection | Job timeout |
 | --- | --- | --- | --- |
+| `static` (not a test shard) | `quality · static gates` | The preconditions that used to run before the gate shard's tests: the secret scan, the l10n and codegen drift gates, the package suites, `dart analyze --fatal-infos` and the browser startup proof (#3475); the aggregate waits for it | 30 min |
 | `gate` | `quality · test · gates` | All `test/**/*_test.dart` outside `test/features/`, except `test/core/`, `test/app/` and `test/a11y/`; includes lint, tool, i18n, UX and perf tests | 30 min |
 | `money` | `quality · test · money a-m and reservations` | `test/features/money/` files whose path under it sorts before `n`, and `test/features/reservations/` | 30 min |
 | `money2` | `quality · test · money n-z, me and auth` | `test/features/money/` files from `n` on, `test/features/me/` and `auth/` | 30 min |

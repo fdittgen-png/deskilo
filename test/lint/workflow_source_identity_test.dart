@@ -244,7 +244,9 @@ void main() {
     // 2026-11-09 #3473: the secret-scanner archive, keyed on its pinned
     // version (the Supabase CLI and Deno caches live in composite actions), and
     // the e-invoice validators' digest-keyed downloads: 11.
-    expect(seen, 11, reason: 'cache steps counted on 2026-11-02: pub x7, '
+    // 2026-11-09 #3475: the static gates job beside the tests restores the same
+    // lockfile-keyed pub cache and the secret-scanner archive stays with it: 12.
+    expect(seen, 12, reason: 'cache steps counted on 2026-11-02: pub x7, '
         'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }
