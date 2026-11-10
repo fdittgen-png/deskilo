@@ -117,7 +117,7 @@ Future<void> _pump(
             : (journey: noJourneyFacts, declaration: null),
       ),
     ],
-    size: Size(width, width < 600 ? 3000 : 1600),
+    size: Size(width, width < 600 ? 5000 : 2400),
     textScale: scale,
   );
   await tester.pumpAndSettle();
