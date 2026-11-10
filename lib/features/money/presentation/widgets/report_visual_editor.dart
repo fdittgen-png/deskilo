@@ -137,14 +137,14 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
                   size: 20, color: theme.colorScheme.primary),
             ),
             IconButton(
-              tooltip: l10n.a11yMoveUp,
+              tooltip: l10n.spaceMoveUp,
               key: ValueKey('${widget.bandKey}-up-$index'),
               icon: const Icon(Icons.arrow_upward, size: 16),
               visualDensity: VisualDensity.compact,
               onPressed: () => visualMove(index, -1),
             ),
             IconButton(
-              tooltip: l10n.a11yMoveDown,
+              tooltip: l10n.spaceMoveDown,
               key: ValueKey('${widget.bandKey}-down-$index'),
               icon: const Icon(Icons.arrow_downward, size: 16),
               visualDensity: VisualDensity.compact,

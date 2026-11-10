@@ -165,7 +165,7 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
     if (!mounted) return;
     final ok = await _guarded('bank line decision failed', action);
     if (!ok || !mounted) return;
-    AppSnack.success(context, context.l10n.bankLineSaved);
+    AppSnack.success(context, context.l10n.billingSaved);
   }
 
   @override

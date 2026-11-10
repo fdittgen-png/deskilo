@@ -13,14 +13,6 @@
       }
     }
   },
-  "consumptionService": "Service",
-  "@consumptionService": {
-    "description": "Label of the service dropdown in the consumption sheet"
-  },
-  "consumptionQuantity": "Quantity",
-  "@consumptionQuantity": {
-    "description": "Label of the quantity stepper (1–999)"
-  },
   "consumptionPeriodLabel": "Billing period (YYYY-MM)",
   "@consumptionPeriodLabel": {
     "description": "Label of the billing-period input; prefilled with the current month"

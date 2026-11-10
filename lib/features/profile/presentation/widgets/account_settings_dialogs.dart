@@ -164,7 +164,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               ],
               onChanged: (value) => setState(() => _countryCode = value),
               decoration: InputDecoration(
-                labelText: l10n.addressCountryLabel,
+                labelText: l10n.workspaceCountryLabel,
               ),
             ),
             const SizedBox(height: 8),

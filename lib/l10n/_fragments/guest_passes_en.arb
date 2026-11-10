@@ -74,10 +74,6 @@
   "@guestPassSeat": {
     "description": "#3308 guest passes sold at the desk"
   },
-  "guestPassDay": "First day",
-  "@guestPassDay": {
-    "description": "#3308 guest passes sold at the desk"
-  },
   "guestPassFrom": "From",
   "@guestPassFrom": {
     "description": "#3308 guest passes sold at the desk"

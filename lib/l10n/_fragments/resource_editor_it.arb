@@ -24,21 +24,9 @@
   "@editorResourceSeat": {
     "description": "#2631 resource_editor: editorResourceSeat"
   },
-  "editorResourceRoom": "Sala riunioni",
-  "@editorResourceRoom": {
-    "description": "#2631 resource_editor: editorResourceRoom"
-  },
-  "editorRoomNameDefault": "Sala",
-  "@editorRoomNameDefault": {
-    "description": "#2631 resource_editor: editorRoomNameDefault"
-  },
   "editorParkingSlotNameDefault": "Posto",
   "@editorParkingSlotNameDefault": {
     "description": "#2631 resource_editor: editorParkingSlotNameDefault"
-  },
-  "editorRoomProperties": "Sala riunioni",
-  "@editorRoomProperties": {
-    "description": "#2631 resource_editor: editorRoomProperties"
   },
   "editorParkingSlotProperties": "Posto auto",
   "@editorParkingSlotProperties": {

@@ -1,8 +1,4 @@
 {
-  "financesTitle": "My finances",
-  "@financesTitle": {
-    "description": "Me › Finances"
-  },
   "financesOutstanding": "Outstanding",
   "@financesOutstanding": {
     "description": "Me › Finances"
@@ -11,16 +7,8 @@
   "@financesPaid": {
     "description": "Me › Finances"
   },
-  "financesPayments": "Payments",
-  "@financesPayments": {
-    "description": "Me › Finances"
-  },
   "financesReminders": "Reminders",
   "@financesReminders": {
-    "description": "Me › Finances"
-  },
-  "financesToPay": "To pay",
-  "@financesToPay": {
     "description": "Me › Finances"
   },
   "financesNothingOwed": "Nothing to pay — you are up to date.",
@@ -45,10 +33,6 @@
   },
   "financesStatePaid": "Paid",
   "@financesStatePaid": {
-    "description": "Me › Finances"
-  },
-  "financesStateRefunded": "Refunded",
-  "@financesStateRefunded": {
     "description": "Me › Finances"
   },
   "financesStateClosed": "Closed",

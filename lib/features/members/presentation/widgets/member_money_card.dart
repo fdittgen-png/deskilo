@@ -148,7 +148,7 @@ class MemberMoneyCard extends ConsumerWidget {
             ),
           ),
         if (invoices.isNotEmpty) ...[
-          label(l10n.invoicesTitle),
+          label(l10n.featureInvoicing),
           for (final invoice in invoices.take(5))
             _InvoiceRow(
               invoice: invoice,
@@ -165,7 +165,7 @@ class MemberMoneyCard extends ConsumerWidget {
             ),
         ],
         if (payments.isNotEmpty) ...[
-          label(l10n.memberPayments),
+          label(l10n.invoicePdfPayments),
           for (final payment in payments)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),

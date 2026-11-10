@@ -24,10 +24,6 @@
   "@leaseAdd": {
     "description": "#2569 premises lease"
   },
-  "leaseEdit": "Edit",
-  "@leaseEdit": {
-    "description": "#2569 premises lease"
-  },
   "leaseEmpty": "No lease recorded.",
   "@leaseEmpty": {
     "description": "#2569 premises lease"
@@ -38,10 +34,6 @@
   },
   "leaseSaved": "Saved",
   "@leaseSaved": {
-    "description": "#2569 premises lease"
-  },
-  "leaseStatusDraft": "Draft",
-  "@leaseStatusDraft": {
     "description": "#2569 premises lease"
   },
   "leaseStatusActive": "Running",
@@ -214,10 +206,6 @@
   },
   "leaseInvalid": "Choose the lessor, name the premises and set the start date.",
   "@leaseInvalid": {
-    "description": "#2569 premises lease"
-  },
-  "leaseSave": "Save",
-  "@leaseSave": {
     "description": "#2569 premises lease"
   },
   "leaseRefused": "It was not saved. Check the lessor, the dates and that the lease is not already terminated.",
@@ -558,10 +546,6 @@
   },
   "equipmentLoadFailed": "The equipment could not be loaded.",
   "@equipmentLoadFailed": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentSaved": "Saved.",
-  "@equipmentSaved": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Register equipment",

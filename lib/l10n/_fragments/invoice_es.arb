@@ -7,7 +7,6 @@
   "invoiceIssueDeclined": "La validación fue rechazada o caducó. No se emitió ninguna factura.",
   "invoiceActionUnknownBody": "La solicitud se envió pero la respuesta no llegó, así que quizá ya se aplicó. No se vuelve a enviar nada. Compruebe de nuevo para encontrarla.",
   "invoiceActionDeclined": "La validación fue rechazada o caducó. No se cambió nada.",
-  "invoicesTitle": "Facturas",
   "invoicesEmpty": "Aún no hay facturas.",
   "invoiceCreate": "Nueva factura",
   "invoiceMemberLabel": "Miembro",
@@ -47,8 +46,6 @@
   "invoiceLineAdjustment": "Ajuste",
   "invoiceFilterAllMembers": "Todos los miembros",
   "invoiceFilterAllMonths": "Todos los meses",
-  "invoiceFilterMonthLabel": "Mes",
-  "invoiceSortTooltip": "Ordenar",
   "invoiceSortNewest": "Más recientes primero",
   "invoiceSortByMember": "Por miembro",
   "invoiceSortByMonth": "Por mes",
@@ -307,12 +304,10 @@
   "legalIdentityVatId": "Número de IVA",
   "legalIdentityLegalId": "Número de registro",
   "legalIdentityExemptionReason": "Motivo por el que no se cobra IVA",
-  "legalIdentityStreet": "Calle",
   "legalIdentityCity": "Ciudad",
   "legalIdentityPostalCode": "Código postal",
   "legalIdentitySaved": "Identidad legal guardada.",
   "legalIdentityVatWarning": "Este espacio cobra IVA pero no hay ningún tipo por defecto vigente: no se puede emitir ninguna factura hasta que añada uno. Los tipos se editan con «Gestión del IVA» activada.",
-  "addressCountryLabel": "País",
   "addressVatIdLabel": "Número de IVA (si facturas como empresa)",
   "invoiceProformaAction": "Factura proforma",
   "invoicePdfProforma": "Proforma",
@@ -321,7 +316,6 @@
   "invoicePdfCopy": "Copia",
   "invoiceStatusPartiallyPaid": "Parcialmente pagada",
   "invoiceRegisterTitle": "Registro de facturas",
-  "invoiceRegisterDate": "Fecha",
   "invoiceRegisterName": "Nombre",
   "invoiceRegisterAmount": "Importe",
   "invoiceRegisterTotal": "Total",
@@ -373,7 +367,6 @@
   "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
   "invoiceAccountingExport": "Exportación contable",
   "invoiceAccountingExportEmpty": "No hay nada que exportar en este periodo.",
-  "invoiceRegisterYear": "Año",
   "invoiceRegisterAllYears": "Todos los años",
   "invoiceExportSafT": "SAF-T (XML, internacional)",
   "invoiceExportFec": "FEC (Francia, exigido en una inspección)",
@@ -382,7 +375,6 @@
   "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.",
   "fecAccountCustomers": "Clientes",
   "fecAccountRevenue": "Ventas",
-  "fecAccountBank": "Banco",
   "fecMissingSiren": "El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.",
   "invoiceEInvoiceStaleIdentity": "Su identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márquela como errónea y emita una sustitución para que lleve la nueva identidad.",
   "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
@@ -433,7 +425,6 @@
   "dunningBetweenDays": "Días entre recordatorios",
   "dunningSaved": "Reglas de recordatorio guardadas.",
   "dunningDueChip": "Recordatorio {level} pendiente",
-  "invoiceTemplateDocInvoice": "Factura",
   "invoiceTemplateDocReminder": "Recordatorio {level}",
   "reportPreviewZoomIn": "Acercar",
   "reportPreviewZoomOut": "Alejar",
@@ -593,10 +584,6 @@
   "@reportLineSection": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineText": "Texto",
-  "@reportLineText": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineSmall": "Letra pequeña",
   "@reportLineSmall": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -615,10 +602,6 @@
   },
   "reportLineSpacer": "Espaciado",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineImage": "Imagen",
-  "@reportLineImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineColumns": "Inicio/fin de columnas",
@@ -732,10 +715,6 @@
   "@invoicePdfCreditNote": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceStatusRefunded": "Reembolsada",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
-  },
   "invoiceRefundLabel": "A reembolsar",
   "@invoiceRefundLabel": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
@@ -785,7 +764,6 @@
   "journeyStateUpcoming": "Pendiente",
   "journeyStateCancelled": "Cancelado",
   "journeyStepIssued": "Emitida",
-  "journeyStepPayment": "Pago",
   "journeyStepConfirmation": "Confirmación",
   "journeyStepClosed": "Cerrada",
   "journeyIssuerMemberPays": "Esperando el pago de {name}: {amount} — vence {date}",
@@ -1044,14 +1022,9 @@
   "reportDesignerFieldsSearch": "Buscar un campo",
   "reportDesignerMoveTo": "Mover a la banda",
   "reportDesignerDrag": "Arrastrar para reordenar",
-  "reportImageSize": "Tamaño",
   "reportImageSizeSmall": "Pequeña",
   "reportImageSizeMedium": "Mediana",
   "reportImageSizeLarge": "Grande",
-  "reportImageAlign": "Alineación",
-  "reportImageAlignLeft": "Izquierda",
-  "reportImageAlignCenter": "Centro",
-  "reportImageAlignRight": "Derecha",
   "reportTemplateLangOverridden": "Plantilla propia",
   "reportTemplateLangInherits": "Hereda la predeterminada",
   "reportTemplateClearOverlay": "Usar la predeterminada para este idioma",
@@ -1063,10 +1036,8 @@
   "reportFieldGroupMoney": "Importes",
   "reportFieldGroupLegal": "Menciones legales",
   "reportFieldGroupLoops": "Bucles de líneas e IVA",
-  "reportDesignerSideBySide": "Diseño y vista previa lado a lado",
   "wizardTitle": "Asistente de facturación",
   "invoiceWizardAction": "Asistente de cierre mensual",
-  "wizardCardHint": "Emitir, enviar, recordar, registrar y validar pagos, conciliar y cerrar: un solo proceso guiado.",
   "wizardRunStart": "Inicio de mes",
   "wizardRunEnd": "Fin de mes",
   "wizardRunStartHint": "Las suscripciones pagadas por adelantado: emitirlas para el mes que viene, enviarlas, planificar los recordatorios; luego, la parte de pagos.",
@@ -1075,8 +1046,6 @@
   "wizardStepIssue": "Emitir",
   "wizardStepSend": "Enviar",
   "wizardStepRemind": "Recordar",
-  "wizardStepPayments": "Pagos",
-  "wizardStepMatch": "Conciliar",
   "wizardStepClose": "Cerrar",
   "wizardStepSummary": "Resumen",
   "wizardNext": "Siguiente",
@@ -1160,7 +1129,6 @@
     }
   },
   "wizardMatchNoCredit": "Aún no hay pago en la cuenta",
-  "wizardMatchAction": "Conciliar",
   "wizardCloseHint": "Un socio con varias facturas abiertas puede pagar UNA; a una factura pagada en parte se le puede anular el resto; una nota de crédito se reembolsa. Cada una pasa por la validación.",
   "wizardCloseNone": "Nada que reagrupar, anular o reembolsar.",
   "wizardSettle": "Reagrupar {count}",
@@ -1186,7 +1154,6 @@
   "wizardTallyNothing": "No se cambió nada.",
   "wizardTodoHeading": "Aún abierto: a quién le toca",
   "wizardTodoNone": "No queda nada abierto.",
-  "wizardWhoYou": "Usted",
   "wizardWhoValidators": "Validadores",
   "registerPaymentTitle": "Registrar un pago",
   "registerPaymentHint": "Un pago que llegó al espacio: el socio lo confirma y luego puede conciliarse con una factura.",
@@ -1194,7 +1161,6 @@
   "registerPaymentAmount": "Importe",
   "registerPaymentMethod": "Medio",
   "registerPaymentDate": "Pagado el",
-  "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registrar",
   "registerPaymentDone": "Pago registrado: el socio lo confirma por su parte.",
   "repartitionAction": "Repartir un gasto",
@@ -1347,10 +1313,6 @@
         "type": "String"
       }
     }
-  },
-  "retentionClassInvoice": "Facturas",
-  "@retentionClassInvoice": {
-    "description": "#2571 retention clocks"
   },
   "retentionClassBooks": "Libros contables",
   "@retentionClassBooks": {

@@ -248,7 +248,7 @@ class BillingNewPackageRow extends StatelessWidget {
           child: AppTextField(
             controller: price,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            label: l10n.billingPackagePrice,
+            label: l10n.servicesPrice,
             suffixText: currencySymbol,
           ),
         ),

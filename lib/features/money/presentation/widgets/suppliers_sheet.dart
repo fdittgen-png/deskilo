@@ -299,7 +299,7 @@ class SuppliersView extends ConsumerWidget {
             padding: AppSpacing.mdAll,
             children: children,
           )
-        : SheetShell(title: l10n.suppliersTitle, children: children);
+        : SheetShell(title: l10n.bookRoleSuppliers, children: children);
   }
 
   static String _taxLine(AppLocalizations l10n, Supplier s) {

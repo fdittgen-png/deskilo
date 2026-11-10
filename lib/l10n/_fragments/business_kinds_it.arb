@@ -1,0 +1,7 @@
+{
+  "settingGroupBusiness": "Attività",
+  "settingLabelBusinessKind": "Tipo di attività",
+  "settingHintBusinessKind": "Che cos'è l'attività: uno spazio di coworking, uno studio, uno studio professionale, un salone o un'altra attività di servizi. Propone le funzioni e le parole di cui ha bisogno; uno spazio di coworking resta com'era.",
+  "settingLabelBusinessMoreKinds": "Anche un tipo di attività",
+  "settingHintBusinessMoreKinds": "Altri tipi che l'attività è anche, se ce ne sono, oltre a quello principale."
+}

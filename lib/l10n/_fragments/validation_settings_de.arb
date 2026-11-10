@@ -1,6 +1,5 @@
 {
   "@@locale": "de",
-  "validationWorkflowBookings": "Buchungen",
   "validationWorkflowPeople": "Personen und Rollen",
   "validationWorkflowMoneyStake": "Bis es angenommen ist, zählt der Betrag auf keiner Abrechnung.",
   "validationWorkflowBookingsStake": "Bis es angenommen ist, bleibt der Platz, wie er war.",

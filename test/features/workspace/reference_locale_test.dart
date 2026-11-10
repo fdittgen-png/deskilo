@@ -77,7 +77,7 @@ void main() {
         await probe(tester, device: 'fr', workspaceLocale: 'en');
     expect(locale, 'en',
         reason: 'the date in the frozen label is the workspace\'s');
-    expect(strings?.noteRefPayment, 'Payment',
+    expect(strings?.eventTypePayment, 'Payment',
         reason: 'so is the translated noun beside it');
   });
 
@@ -86,7 +86,7 @@ void main() {
     final (locale, strings) =
         await probe(tester, device: 'en', workspaceLocale: 'fr');
     expect(locale, 'fr');
-    expect(strings?.noteRefPayment, isNot('Payment'));
+    expect(strings?.eventTypePayment, isNot('Payment'));
   });
 
   testWidgets('a workspace that never chose one falls back to the '
@@ -102,7 +102,7 @@ void main() {
       (tester) async {
     final (_, strings) =
         await probe(tester, device: 'en', workspaceLocale: 'pt');
-    expect(strings?.noteRefPayment, 'Payment',
+    expect(strings?.eventTypePayment, 'Payment',
         reason: 'lookupAppLocalizations throws on an unsupported locale — '
             'a workspace language the app never shipped must not take '
             'the composer down with it');

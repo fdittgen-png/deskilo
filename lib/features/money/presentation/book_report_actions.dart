@@ -31,7 +31,7 @@ BookReportWords bookReportWordsOf(AppLocalizations l10n) => BookReportWords(
   debitSide: l10n.bookReportDebitSide,
   creditSide: l10n.bookReportCreditSide,
   sales: l10n.bookReportJournalSales,
-  bank: l10n.bookReportJournalBank,
+  bank: l10n.bookRoleBank,
   purchases: l10n.bookReportJournalPurchases,
   other: l10n.bookReportJournalOther,
 );

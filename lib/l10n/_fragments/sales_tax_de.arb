@@ -128,10 +128,6 @@
   "@taxCertInvalidDate": {
     "description": "#2362 sales tax: taxCertInvalidDate"
   },
-  "taxCertRequired": "Pflichtfeld",
-  "@taxCertRequired": {
-    "description": "#2362 sales tax: taxCertRequired"
-  },
   "taxCertSave": "Bescheinigung speichern",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"

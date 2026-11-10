@@ -16,10 +16,6 @@
   "@supplierLookupIntro": {
     "description": "#2863 supplier lookup"
   },
-  "supplierLookupCountry": "Land",
-  "@supplierLookupCountry": {
-    "description": "#2863 supplier lookup"
-  },
   "supplierLookupCountryMissing": "Wählen Sie das Land des Lieferanten.",
   "@supplierLookupCountryMissing": {
     "description": "#2863 supplier lookup"

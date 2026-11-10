@@ -175,7 +175,7 @@ Widget _actionsBody(
           ListTile(
             key: const ValueKey('message-action-edit'),
             leading: const Icon(Icons.edit_outlined),
-            title: Text(l10n.messengerEdit),
+            title: Text(l10n.taskWizardEdit),
             onTap: () => Navigator.of(sheet).pop(_Action.edit),
           ),
         if (forwarding && !message.noForward)
@@ -331,7 +331,7 @@ class _MessageActionRun {
       case _Action.copy:
         await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
         if (context.mounted) {
-          AppSnack.success(context, l10n.messengerCopied,
+          AppSnack.success(context, l10n.paymentCopied,
               replace: true);
         }
       case _Action.edit:

@@ -53,10 +53,6 @@
   "@billPaymentsCredits": {
     "description": "Bill section header for confirmed credits of the period"
   },
-  "billBalance": "Balance",
-  "@billBalance": {
-    "description": "Bill footer label; the bold period total renders trailing"
-  },
   "billSettled": "Settled",
   "@billSettled": {
     "description": "Footer state when the period balance is zero or positive"

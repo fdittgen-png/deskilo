@@ -212,7 +212,7 @@ abstract final class HelpAnchor {
   static const validationAutoAdmin = 'user.validation.auto-validate-admin';
 
   /// What the library shows and a member searches by.
-  static const documentsTitle = 'user.documents.title';
+  static const featureDocuments = 'user.documents.title';
 
   /// The link, not the file.
   static const documentsUrl = 'user.documents.url';

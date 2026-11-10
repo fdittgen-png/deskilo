@@ -132,7 +132,7 @@ class SpaceWholeSection {
               // the server re-checks whatever is chosen (0065).
               onPressed: busy ? null : onReserve,
               icon: const Icon(Icons.event_available_outlined),
-              label: Text(l10n.kioskReserve),
+              label: Text(l10n.shellReserveButton),
             ),
             if (blocking != null) ...[
               const SizedBox(height: 8),

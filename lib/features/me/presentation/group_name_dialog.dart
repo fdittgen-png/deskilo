@@ -27,7 +27,7 @@ class _GroupNameDialogState extends State<GroupNameDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n.meGroupName),
+      title: Text(l10n.groupRenameTitle),
       content: TextField(
         key: const ValueKey('me-group-name-field'),
         controller: _name,

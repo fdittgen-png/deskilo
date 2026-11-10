@@ -15,9 +15,9 @@ import '../../providers/money_face_controller.dart';
 
 /// The label of a face, as the tab and the help hint call it.
 String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
-      MoneyFace.statement => l10n.moneyFaceStatement,
-      MoneyFace.payments => l10n.moneyFacePayments,
-      MoneyFace.invoices => l10n.moneyFaceInvoices,
+      MoneyFace.statement => l10n.invoiceTemplateDocStatement,
+      MoneyFace.payments => l10n.invoicePdfPayments,
+      MoneyFace.invoices => l10n.featureInvoicing,
       MoneyFace.usage => l10n.moneyFaceUsage,
       MoneyFace.documents => l10n.moneyFaceDocuments,
     };
@@ -103,7 +103,7 @@ class MoneyBalanceCard extends StatelessWidget {
         padding: AppSpacing.mdAll,
         child: Row(children: [
           Expanded(
-            child: Text(l10n.billBalance,
+            child: Text(l10n.bookReportBalance,
                 style: theme.textTheme.titleMedium),
           ),
           Text(

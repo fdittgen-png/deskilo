@@ -180,8 +180,8 @@ String wizardStepLabel(AppLocalizations l10n, WizardStep step) =>
       WizardStep.issue => l10n.wizardStepIssue,
       WizardStep.send => l10n.wizardStepSend,
       WizardStep.remind => l10n.wizardStepRemind,
-      WizardStep.payments => l10n.wizardStepPayments,
-      WizardStep.match => l10n.wizardStepMatch,
+      WizardStep.payments => l10n.invoicePdfPayments,
+      WizardStep.match => l10n.leaseMatchSave,
       WizardStep.close => l10n.wizardStepClose,
       WizardStep.summary => l10n.wizardStepSummary,
     };

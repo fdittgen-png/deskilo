@@ -40,10 +40,6 @@
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
   },
-  "personalInfoCountry": "País",
-  "@personalInfoCountry": {
-    "description": "#886 personal-information form / feature: personalInfoCountry"
-  },
   "personalInfoPhone": "Teléfono",
   "@personalInfoPhone": {
     "description": "#886 personal-information form / feature: personalInfoPhone"
@@ -71,9 +67,5 @@
   "personalInfoPreview": "En sus documentos",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
-  },
-  "personalInfoSave": "Guardar",
-  "@personalInfoSave": {
-    "description": "#886 personal-information form: save button"
   }
 }

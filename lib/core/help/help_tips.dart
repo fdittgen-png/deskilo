@@ -95,23 +95,23 @@ String helpHintTopic(AppLocalizations l10n, HelpHintId id) => switch (id) {
   HelpHintId.calendar => l10n.helpHintCalendarTopic,
   HelpHintId.events => l10n.helpHintEventsTopic,
   HelpHintId.editor => l10n.helpHintEditorTopic,
-  HelpHintId.availability => l10n.helpHintAvailabilityTopic,
+  HelpHintId.availability => l10n.availabilityTitle,
   HelpHintId.features => l10n.helpHintFeaturesTopic,
   HelpHintId.members => l10n.helpHintMembersTopic,
   HelpHintId.money => l10n.helpHintMoneyTopic,
   HelpHintId.moneyStatement =>
-    l10n.helpHintMoneyStatementTopic,
+    l10n.invoiceTemplateDocStatement,
   HelpHintId.moneyPayments =>
-    l10n.helpHintMoneyPaymentsTopic,
+    l10n.eventTypePayment,
   HelpHintId.moneyInvoices =>
-    l10n.helpHintMoneyInvoicesTopic,
+    l10n.featureInvoicing,
   HelpHintId.moneyDocuments =>
     l10n.helpHintMoneyDocumentsTopic,
   HelpHintId.validation => l10n.helpHintValidationTopic,
   HelpHintId.workspaceSettings =>
     l10n.helpHintWorkspaceTopic,
   HelpHintId.badges => l10n.helpHintBadgesTopic,
-  HelpHintId.messages => l10n.helpHintMessagesTopic,
+  HelpHintId.messages => l10n.messagesTitle,
   HelpHintId.privacy => l10n.helpHintPrivacyTopic,
 };
 
@@ -343,12 +343,12 @@ String helpTipDestination(AppLocalizations l10n, String route) {
   final t = l10n;
   return switch (Uri.parse(route).path) {
     '/accessories' => t.accessoriesTitle,
-    '/account-activity' => t.financesTitle,
+    '/account-activity' => t.tabMoney,
     '/billing' => t.billingTitle,
     '/consent' => t.consentTitle,
-    '/documents' => t.documentsTitle,
+    '/documents' => t.featureDocuments,
     '/legal-identity' => t.legalIdentityTitle,
-    '/me' => t.meTabMessages,
+    '/me' => t.messagesTitle,
     '/members/managed' => t.managedProfileTitle,
     '/money' => t.tabMoney,
     '/payment-methods' => t.paymentInstructionsTitle,

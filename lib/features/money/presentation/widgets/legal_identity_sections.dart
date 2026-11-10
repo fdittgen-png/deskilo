@@ -71,7 +71,7 @@ class LegalAddressFields extends StatelessWidget {
           key: const ValueKey('legal-identity-street'),
           controller: street,
           decoration: InputDecoration(
-            labelText: l10n.legalIdentityStreet,
+            labelText: l10n.siteStreet,
             suffixIcon: help(),
           ),
         ),

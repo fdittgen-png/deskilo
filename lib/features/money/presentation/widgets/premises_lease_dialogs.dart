@@ -264,7 +264,7 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
         FilledButton(
           key: const ValueKey('lease-save'),
           onPressed: _save,
-          child: Text(l10n.leaseSave),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

@@ -59,7 +59,6 @@
   "acctMapRemoteMissing": "Geben Sie den Code oder die Kennung an, die das System verwendet.",
   "acctMapRemoteId": "Kennung im System (optional)",
   "acctMapRemoteName": "Name im System (optional)",
-  "acctKindInvoice": "Rechnung",
   "acctKindCreditNote": "Gutschrift",
   "acctKindReceipt": "Zahlungseingang",
   "acctKindRefund": "Erstattung",

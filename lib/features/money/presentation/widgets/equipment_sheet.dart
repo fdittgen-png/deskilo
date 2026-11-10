@@ -92,7 +92,7 @@ class EquipmentView extends ConsumerWidget {
     ref
       ..invalidate(workspaceAssetsProvider(workspaceId))
       ..invalidate(assetCandidateLinesProvider(workspaceId));
-    if (context.mounted) AppSnack.success(context, context.l10n.equipmentSaved);
+    if (context.mounted) AppSnack.success(context, context.l10n.billingSaved);
   }
 
   @override

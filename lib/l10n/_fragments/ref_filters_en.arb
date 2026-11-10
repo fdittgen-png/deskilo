@@ -11,10 +11,6 @@
   "@refFilterClear": {
     "description": "Shown as the text in ref picker sheet (workspace)."
   },
-  "refFilterSort": "Sort",
-  "@refFilterSort": {
-    "description": "Shown as the tooltip in ref picker sheet (workspace)."
-  },
   "refSortNewest": "Newest first",
   "@refSortNewest": {
     "description": "Shown as the text in ref picker sheet (workspace)."
@@ -65,10 +61,6 @@
   "@refFacetPerson": {
     "description": "Shown as the text in note record choices (workspace), and 1 other place."
   },
-  "refFacetMonth": "Month",
-  "@refFacetMonth": {
-    "description": "Shown as the text in note record choices (workspace), and 2 other places."
-  },
   "refFacetType": "Type",
   "@refFacetType": {
     "description": "Shown as the text in note record choices (workspace), and 1 other place."
@@ -93,16 +85,8 @@
   "@refStatusRefunded": {
     "description": "Shown as the label in note record choices (workspace)."
   },
-  "refTypeInvoice": "Invoice",
-  "@refTypeInvoice": {
-    "description": "Shown as the label in note record choices (workspace)."
-  },
   "refTypeCreditNote": "Credit note",
   "@refTypeCreditNote": {
-    "description": "Shown as the label in note record choices (workspace)."
-  },
-  "refStatusPending": "Pending",
-  "@refStatusPending": {
     "description": "Shown as the label in note record choices (workspace)."
   },
   "refStatusDecided": "Decided",

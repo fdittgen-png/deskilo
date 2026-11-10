@@ -5,7 +5,6 @@
   "carnetsEmpty": "Noch keine Mehrfachkarte.",
   "carnetName": "Name",
   "carnetHalfDays": "Halbtage",
-  "carnetPrice": "Preis",
   "carnetValidity": "Gültig (Monate, leer = läuft nie ab)",
   "carnetAdd": "Mehrfachkarte hinzufügen",
   "carnetSummary": "{halfDays} Halbtage · {price}",

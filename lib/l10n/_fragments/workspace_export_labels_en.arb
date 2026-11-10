@@ -23,17 +23,9 @@
   "@exportSheetNameUsers": {
     "description": "#3485 exportSheetName: the label for case 'users'."
   },
-  "exportSheetNameReservations": "Bookings",
-  "@exportSheetNameReservations": {
-    "description": "#3485 exportSheetName: the label for case 'reservations'."
-  },
   "exportSheetNameCheckIns": "Attendance",
   "@exportSheetNameCheckIns": {
     "description": "#3485 exportSheetName: the label for case 'check_ins'."
-  },
-  "exportSheetNamePayments": "Payments",
-  "@exportSheetNamePayments": {
-    "description": "#3485 exportSheetName: the label for case 'payments'."
   },
   "exportSheetNameServices": "Services used",
   "@exportSheetNameServices": {
@@ -42,10 +34,6 @@
   "exportSheetNameServiceCatalog": "Service prices",
   "@exportSheetNameServiceCatalog": {
     "description": "#3485 exportSheetName: the label for case 'service_catalog'."
-  },
-  "exportSheetNameInvoices": "Invoices",
-  "@exportSheetNameInvoices": {
-    "description": "#3485 exportSheetName: the label for case 'invoices'."
   },
   "exportSheetNameOffices": "Rooms",
   "@exportSheetNameOffices": {
@@ -67,10 +55,6 @@
   "@exportSheetNameInvoiceLines": {
     "description": "#3485 exportSheetName: the label for case 'invoice_lines'."
   },
-  "exportSheetNameSites": "Sites",
-  "@exportSheetNameSites": {
-    "description": "#3485 exportSheetName: the label for case 'sites'."
-  },
   "exportSheetNamePlans": "Plans",
   "@exportSheetNamePlans": {
     "description": "#3485 exportSheetName: the label for case 'plans'."
@@ -78,10 +62,6 @@
   "exportSheetNameFeeBands": "Fee bands",
   "@exportSheetNameFeeBands": {
     "description": "#3485 exportSheetName: the label for case 'fee_bands'."
-  },
-  "exportSheetNamePackages": "Packages",
-  "@exportSheetNamePackages": {
-    "description": "#3485 exportSheetName: the label for case 'packages'."
   },
   "exportSheetNameCreditProducts": "Carnet types",
   "@exportSheetNameCreditProducts": {
@@ -91,25 +71,13 @@
   "@exportSheetNameVatRates": {
     "description": "#3485 exportSheetName: the label for case 'vat_rates'."
   },
-  "exportSheetNameAccessories": "Accessories",
-  "@exportSheetNameAccessories": {
-    "description": "#3485 exportSheetName: the label for case 'accessories'."
-  },
   "exportSheetNameSeatAccessories": "Place accessories",
   "@exportSheetNameSeatAccessories": {
     "description": "#3485 exportSheetName: the label for case 'seat_accessories'."
   },
-  "exportSheetNameClosureDays": "Closure days",
-  "@exportSheetNameClosureDays": {
-    "description": "#3485 exportSheetName: the label for case 'closure_days'."
-  },
   "exportSheetNameValidationPolicies": "Approval rules",
   "@exportSheetNameValidationPolicies": {
     "description": "#3485 exportSheetName: the label for case 'validation_policies'."
-  },
-  "exportSheetNameWorkspaceRoles": "Roles",
-  "@exportSheetNameWorkspaceRoles": {
-    "description": "#3485 exportSheetName: the label for case 'workspace_roles'."
   },
   "exportSheetNameWorkspaceRoleMembers": "Role holders",
   "@exportSheetNameWorkspaceRoleMembers": {
@@ -174,10 +142,6 @@
   "exportSheetNameTaxExemptionCertificates": "Exemption certificates",
   "@exportSheetNameTaxExemptionCertificates": {
     "description": "#3485 exportSheetName: the label for case 'tax_exemption_certificates'."
-  },
-  "exportSheetNameSuppliers": "Suppliers",
-  "@exportSheetNameSuppliers": {
-    "description": "#3485 exportSheetName: the label for case 'suppliers'."
   },
   "exportSheetNamePurchaseDocuments": "Purchase documents",
   "@exportSheetNamePurchaseDocuments": {
@@ -271,10 +235,6 @@
   "@exportSheetNameBookMappings": {
     "description": "#3485 exportSheetName: the label for case 'book_mappings'."
   },
-  "exportSheetNameBookPeriods": "Accounting periods",
-  "@exportSheetNameBookPeriods": {
-    "description": "#3485 exportSheetName: the label for case 'book_periods'."
-  },
   "exportSheetNameVatDeclarations": "VAT returns",
   "@exportSheetNameVatDeclarations": {
     "description": "#3485 exportSheetName: the label for case 'vat_declarations'."
@@ -343,17 +303,9 @@
   "@exportColumnNameBookableAsWhole": {
     "description": "#3485 exportColumnName: the label for case 'bookable_as_whole'."
   },
-  "exportColumnNameBySystem": "Automatic",
-  "@exportColumnNameBySystem": {
-    "description": "#3485 exportColumnName: the label for case 'by_system'."
-  },
   "exportColumnNameCapacity": "Capacity",
   "@exportColumnNameCapacity": {
     "description": "#3485 exportColumnName: the label for case 'capacity'."
-  },
-  "exportColumnNameCategory": "Category",
-  "@exportColumnNameCategory": {
-    "description": "#3485 exportColumnName: the label for case 'category'."
   },
   "exportColumnNameChair": "Chair",
   "@exportColumnNameChair": {
@@ -382,10 +334,6 @@
   "exportColumnNameCompany": "Company",
   "@exportColumnNameCompany": {
     "description": "#3485 exportColumnName: the label for case 'company'."
-  },
-  "exportColumnNameCountry": "Country",
-  "@exportColumnNameCountry": {
-    "description": "#3485 exportColumnName: the label for case 'country'."
   },
   "exportColumnNameCreatedAt": "Recorded on",
   "@exportColumnNameCreatedAt": {
@@ -463,10 +411,6 @@
   "@exportColumnNameId": {
     "description": "#3485 exportColumnName: the label for case 'id'."
   },
-  "exportColumnNameInvoice": "Invoice",
-  "@exportColumnNameInvoice": {
-    "description": "#3485 exportColumnName: the label for case 'invoice'."
-  },
   "exportColumnNameIssuedAt": "Issued on",
   "@exportColumnNameIssuedAt": {
     "description": "#3485 exportColumnName: the label for case 'issued_at'."
@@ -543,14 +487,6 @@
   "@exportColumnNameNumber": {
     "description": "#3485 exportColumnName: the label for case 'number'."
   },
-  "exportColumnNameOccurredOn": "Date",
-  "@exportColumnNameOccurredOn": {
-    "description": "#3485 exportColumnName: the label for case 'occurred_on'."
-  },
-  "exportColumnNameOffice": "Room",
-  "@exportColumnNameOffice": {
-    "description": "#3485 exportColumnName: the label for case 'office'."
-  },
   "exportColumnNameOrderId": "Order",
   "@exportColumnNameOrderId": {
     "description": "#3485 exportColumnName: the label for case 'order_id'."
@@ -587,17 +523,9 @@
   "@exportColumnNamePostalCode": {
     "description": "#3485 exportColumnName: the label for case 'postal_code'."
   },
-  "exportColumnNamePrice": "Price",
-  "@exportColumnNamePrice": {
-    "description": "#3485 exportColumnName: the label for case 'price'."
-  },
   "exportColumnNameProvider": "Provider",
   "@exportColumnNameProvider": {
     "description": "#3485 exportColumnName: the label for case 'provider'."
-  },
-  "exportColumnNameQuantity": "Quantity",
-  "@exportColumnNameQuantity": {
-    "description": "#3485 exportColumnName: the label for case 'quantity'."
   },
   "exportColumnNameRecordedAt": "Recorded on",
   "@exportColumnNameRecordedAt": {
@@ -655,10 +583,6 @@
   "@exportColumnNameStatus": {
     "description": "#3485 exportColumnName: the label for case 'status'."
   },
-  "exportColumnNameStreet": "Street",
-  "@exportColumnNameStreet": {
-    "description": "#3485 exportColumnName: the label for case 'street'."
-  },
   "exportColumnNameSubject": "Concerns",
   "@exportColumnNameSubject": {
     "description": "#3485 exportColumnName: the label for case 'subject'."
@@ -715,10 +639,6 @@
   "@exportColumnNameVoidedAt": {
     "description": "#3485 exportColumnName: the label for case 'voided_at'."
   },
-  "exportColumnNameWhatsapp": "WhatsApp",
-  "@exportColumnNameWhatsapp": {
-    "description": "#3485 exportColumnName: the label for case 'whatsapp'."
-  },
   "exportColumnNameWidth": "Width",
   "@exportColumnNameWidth": {
     "description": "#3485 exportColumnName: the label for case 'width'."
@@ -738,10 +658,6 @@
   "exportColumnNameField": "Field",
   "@exportColumnNameField": {
     "description": "#3485 exportColumnName: the label for case 'field'."
-  },
-  "exportColumnNameValue": "Value",
-  "@exportColumnNameValue": {
-    "description": "#3485 exportColumnName: the label for case 'value'."
   },
   "exportColumnNameProcess": "Process",
   "@exportColumnNameProcess": {
@@ -819,14 +735,6 @@
   "@exportValueNameActive": {
     "description": "#3485 exportValueName: the label for case 'active'."
   },
-  "exportValueNamePaused": "Paused",
-  "@exportValueNamePaused": {
-    "description": "#3485 exportValueName: the label for case 'paused'."
-  },
-  "exportValueNamePending": "Pending",
-  "@exportValueNamePending": {
-    "description": "#3485 exportValueName: the label for case 'pending'."
-  },
   "exportValueNameExited": "Left",
   "@exportValueNameExited": {
     "description": "#3485 exportValueName: the label for case 'exited'."
@@ -891,17 +799,9 @@
   "@exportValueNameExpense": {
     "description": "#3485 exportValueName: the label for case 'expense'."
   },
-  "exportValueNamePayment": "Payment",
-  "@exportValueNamePayment": {
-    "description": "#3485 exportValueName: the label for case 'payment'."
-  },
   "exportValueNameAdjustment": "Adjustment",
   "@exportValueNameAdjustment": {
     "description": "#3485 exportValueName: the label for case 'adjustment'."
-  },
-  "exportValueNameService": "Service",
-  "@exportValueNameService": {
-    "description": "#3485 exportValueName: the label for case 'service'."
   },
   "exportValueNamePackage": "Package",
   "@exportValueNamePackage": {
@@ -967,10 +867,6 @@
   "@exportValueNamePayg": {
     "description": "#3485 exportValueName: the label for case 'payg'."
   },
-  "exportValueNameNone": "No",
-  "@exportValueNameNone": {
-    "description": "#3485 exportValueName: the label for case 'none'."
-  },
   "exportValueNamePassive": "Successor",
   "@exportValueNamePassive": {
     "description": "#3485 exportValueName: the label for case 'passive'."
@@ -982,10 +878,6 @@
   "exportValueNameInvited": "Invited",
   "@exportValueNameInvited": {
     "description": "#3485 exportValueName: the label for case 'invited'."
-  },
-  "exportValueNameFull": "Invoice",
-  "@exportValueNameFull": {
-    "description": "#3485 exportValueName: the label for case 'full'."
   },
   "exportValueNameUsage": "Usage",
   "@exportValueNameUsage": {

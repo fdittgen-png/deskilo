@@ -178,7 +178,7 @@ class _CertificatesSheet extends ConsumerWidget {
         validate: () => {
           if (!RegExp(r'^([A-Za-z]{2}|\*)$').hasMatch(fields.text('state')))
             'state': l10n.taxCertInvalidState,
-          if (fields.text('number').isEmpty) 'number': l10n.taxCertRequired,
+          if (fields.text('number').isEmpty) 'number': l10n.taxRefRequired,
           if (_day(fields.text('from')) == null)
             'from': l10n.taxCertInvalidDate,
           if (fields.text('to').isNotEmpty && _day(fields.text('to')) == null)

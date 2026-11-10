@@ -445,7 +445,7 @@ class _VersionForm {
 
   List<Widget> build(AppLocalizations l10n, VoidCallback refresh) => [
         _text('country', l10n.taxRefCountry, enabled: from == null),
-        _text('key', l10n.taxRefKey, enabled: from == null),
+        _text('key', l10n.repartitionWeight, enabled: from == null),
         ..._domainFields(l10n, refresh),
         _text('valid_from', l10n.taxRefValidFrom),
         _text('source', l10n.taxRefSource),

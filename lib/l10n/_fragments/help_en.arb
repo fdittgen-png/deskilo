@@ -11,10 +11,6 @@
   "@helpHintMessages": {
     "description": "#695 - messaging help hints"
   },
-  "helpHintMessagesTopic": "Messages",
-  "@helpHintMessagesTopic": {
-    "description": "#695 - messaging help hints"
-  },
   "helpHintMessagesTip2": "Pick one person for a private chat, or several to make a group — the name field appears once there are two, and a group name is unique here, so nobody has to guess which “Team” they mean.",
   "@helpHintMessagesTip2": {
     "description": "#695 - messaging help hints"

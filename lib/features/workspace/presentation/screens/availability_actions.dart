@@ -324,7 +324,7 @@ class ReasonDialogState extends State<ReasonDialog> {
         controller: _reason,
         autofocus: true,
         maxLength: 120,
-        decoration: InputDecoration(labelText: l10n.availabilityClosureReason),
+        decoration: InputDecoration(labelText: l10n.reservationDeleteReasonLabel),
       ),
       actions: [
         TextButton(

@@ -1,13 +1,10 @@
 {
   "levelReserveButton": "Reservar la planta",
-  "levelReserveTitle": "Reservar la planta entera",
-  "levelPermissionTile": "Reservas de planta",
   "levelPermissionAllowed": "Puede reservar una mesa, oficina o planta entera",
   "levelPermissionDenied": "No puede reservar una mesa, oficina o planta entera",
   "levelBookableToggle": "Reservable en su totalidad",
   "levelBookableDesc": "La planta entera puede reservarse como una sola reserva.",
   "levelPriceLabel": "Precio por media jornada",
-  "levelAssignMember": "Para el miembro",
   "levelAssignMyself": "Yo mismo",
   "levelSupplementLabel": "Reservas de planta",
   "levelNotAllowed": "No tiene permiso para reservar una mesa, oficina o planta entera.",

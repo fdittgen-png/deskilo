@@ -84,10 +84,6 @@
   "@authToggleToSignIn": {
     "description": "Link switching the auth screen to sign-in mode"
   },
-  "authFieldRequired": "Required",
-  "@authFieldRequired": {
-    "description": "Validation message for an empty mandatory field"
-  },
   "authPasswordTooShort": "At least 8 characters",
   "@authPasswordTooShort": {
     "description": "Validation message for a too-short password"

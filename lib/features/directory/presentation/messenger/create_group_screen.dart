@@ -72,7 +72,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     final ready = _title.text.trim().isNotEmpty && _people.isNotEmpty && !_busy;
     return Scaffold(
       key: const ValueKey('create-group'),
-      appBar: AppBar(title: Text(l10n.groupNewTitle)),
+      appBar: AppBar(title: Text(l10n.meGroupAdd)),
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
@@ -86,7 +86,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
                 maxLength: 60,
                 onChanged: (_) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: l10n.groupName,
+                  labelText: l10n.groupRenameTitle,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),

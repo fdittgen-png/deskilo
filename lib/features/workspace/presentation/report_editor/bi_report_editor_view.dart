@@ -301,7 +301,7 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
         ),
         IconButton(
           key: const ValueKey('bi-editor-save'),
-          tooltip: l10n.biViewSave,
+          tooltip: l10n.commonSave,
           icon: const Icon(Icons.save_outlined),
           onPressed: s.dirty && !saving && s.save != BiEditorSave.conflict
               ? _save
@@ -472,7 +472,7 @@ Future<_LeaveChoice?> _showLeaveDialog(BuildContext context) {
         FilledButton(
           key: const ValueKey('bi-editor-leave-save'),
           onPressed: () => Navigator.of(context).pop(_LeaveChoice.save),
-          child: Text(l10n.biViewSave),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),

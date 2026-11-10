@@ -2,7 +2,6 @@
   "refFilterMore": "Filtri",
   "refFilterAll": "Tutto",
   "refFilterClear": "Cancella i filtri",
-  "refFilterSort": "Ordina",
   "refSortNewest": "Prima i più recenti",
   "refSortOldest": "Prima i più vecchi",
   "refSortAmountHigh": "Importo più alto",
@@ -27,15 +26,12 @@
   },
   "refFacetStatus": "Stato",
   "refFacetPerson": "Persona",
-  "refFacetMonth": "Mese",
   "refFacetType": "Tipo",
   "refFacetWorkspace": "Spazio",
   "refStatusOpen": "Aperta (non pagata)",
   "refStatusPaid": "Pagata",
   "refStatusCancelled": "Annullata",
   "refStatusRefunded": "Rimborsata",
-  "refTypeInvoice": "Fattura",
   "refTypeCreditNote": "Nota di credito",
-  "refStatusPending": "In attesa",
   "refStatusDecided": "Deciso"
 }

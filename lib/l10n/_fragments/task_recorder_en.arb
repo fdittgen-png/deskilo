@@ -83,10 +83,6 @@
   "@taskRecorderRecording": {
     "description": "#1865 task recorder: taskRecorderRecording"
   },
-  "taskRecorderPaused": "Paused",
-  "@taskRecorderPaused": {
-    "description": "#1865 task recorder: taskRecorderPaused"
-  },
   "taskRecorderIndicator": "{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}",
   "@taskRecorderIndicator": {
     "description": "#1865 task recorder: taskRecorderIndicator",

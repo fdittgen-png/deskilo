@@ -281,10 +281,6 @@
   "@bankMatchFailed": {
     "description": "#2380 Snack: the server refused the decision."
   },
-  "bankLineSaved": "Saved.",
-  "@bankLineSaved": {
-    "description": "#2380 Snack: the decision on a movement is saved."
-  },
   "bankReviewTitle": "Imported already?",
   "@bankReviewTitle": {
     "description": "#2380 Review dialog title."

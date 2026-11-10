@@ -3,7 +3,6 @@
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Mitgliedschaft im Bereich wartet auf Freigabe",
   "pendingApprovalBody": "Sie sind {workspace} beigetreten. Ein Admin muss Ihre Mitgliedschaft bestätigen, bevor Sie den Workspace nutzen können — Sie erhalten Zugriff, sobald sie bestätigt ist.",
-  "pendingApprovalRefresh": "Erneut prüfen",
   "memberApprove": "Mitgliedschaft bestätigen",
   "memberRejectJoin": "Mitgliedschaft ablehnen",
   "workspaceConfigInvitations": "Einladungen",

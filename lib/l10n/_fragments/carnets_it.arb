@@ -5,7 +5,6 @@
   "carnetsEmpty": "Nessun carnet per ora.",
   "carnetName": "Nome",
   "carnetHalfDays": "Mezze giornate",
-  "carnetPrice": "Prezzo",
   "carnetValidity": "Validità (mesi, vuoto = non scade mai)",
   "carnetAdd": "Aggiungi carnet",
   "carnetSummary": "{halfDays} mezze giornate · {price}",

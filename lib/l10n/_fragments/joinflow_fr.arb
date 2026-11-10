@@ -3,7 +3,6 @@
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "Adhésion à l’espace en attente d’approbation",
   "pendingApprovalBody": "Vous avez rejoint {workspace}. Un administrateur doit approuver votre adhésion avant que vous puissiez utiliser l'espace — vous aurez accès dès sa confirmation.",
-  "pendingApprovalRefresh": "Vérifier à nouveau",
   "memberApprove": "Approuver l'adhésion",
   "memberRejectJoin": "Refuser l'adhésion",
   "workspaceConfigInvitations": "Invitations",

@@ -8,10 +8,6 @@
   "@featureMultiSiteDesc": {
     "description": "#945 sites: featureMultiSiteDesc"
   },
-  "sitesTitle": "Standorte",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
-  },
   "sitesSubtitle": "Adressen, die Ebenen je Standort, und wer wo zu Hause ist",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"

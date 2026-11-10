@@ -8,10 +8,6 @@
   "@featureMultiSiteDesc": {
     "description": "#945 sites: featureMultiSiteDesc"
   },
-  "sitesTitle": "Sedes",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
-  },
   "sitesSubtitle": "Direcciones, las plantas de cada una y la sede de cada socio",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"

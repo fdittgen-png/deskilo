@@ -34,6 +34,5 @@
   "pendingLastChecked": "Última comprobación {time}",
   "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
-  "pendingSwitchWorkspace": "Cambiar de espacio",
   "pendingHelp": "Ayuda"
 }

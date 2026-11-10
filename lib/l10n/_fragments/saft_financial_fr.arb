@@ -19,8 +19,6 @@
   "saftTaxNumberLabel": "Numéro fiscal (Steuernummer)",
   "saftTaxNumberHelper": "Le numéro que l'administration fiscale autrichienne attribue à l'entreprise, pas son numéro au registre du commerce.",
   "saftSmallBusinessLabel": "Petite entreprise (§ 6 (1) Z 27 UStG)",
-  "saftSmallBusinessYes": "Oui",
-  "saftSmallBusinessNo": "Non",
   "saftSmallBusinessHelper": "Si l'entreprise est une petite entreprise au sens du § 6 (1) Z 27 UStG, comme l'indique l'en-tête du SAF-T AT.",
   "saftStandardAccountsTitle": "Comptes du plan standard",
   "saftStandardAccountsIntro": "Confirmez le compte du plan comptable standard autrichien (Einheitskontenrahmen) sous lequel chaque compte du livre est écrit. Une suggestion vient du rôle du compte ; vérifiez-la : tous les comptes d'un rôle ne relèvent pas du même compte standard.",

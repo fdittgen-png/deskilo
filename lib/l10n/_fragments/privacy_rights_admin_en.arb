@@ -8,10 +8,6 @@
   "@personalBirthdayHelp": {
     "description": "Shown as the helper text of a field in birthday field (profile)."
   },
-  "personalBirthdayPick": "Choose a date",
-  "@personalBirthdayPick": {
-    "description": "Shown as the text in birthday field (profile)."
-  },
   "personalBirthdayClear": "Remove the birthday",
   "@personalBirthdayClear": {
     "description": "Shown as the tooltip in birthday field (profile)."
@@ -116,10 +112,6 @@
   "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
   "@privacyAdminRefusalReason": {
     "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
-  },
-  "privacyAdminSave": "Save",
-  "@privacyAdminSave": {
-    "description": "Shown as the text in privacy admin sheets (members), and 3 other places."
   },
   "privacyAdminActionFailed": "The server refused: {reason}",
   "@privacyAdminActionFailed": {

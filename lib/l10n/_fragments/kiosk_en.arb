@@ -57,10 +57,6 @@
   "@kioskCheckIn": {
     "description": "Kiosk seat action: walk-up check-in (or into an existing reservation)"
   },
-  "kioskReserve": "Reserve",
-  "@kioskReserve": {
-    "description": "Kiosk seat action: reserve the seat for today's window"
-  },
   "kioskCheckOut": "Check out",
   "@kioskCheckOut": {
     "description": "Kiosk seat action: complete the badge member's active check-in"
@@ -152,14 +148,6 @@
   "nfcConfigDeviceUnavailable": "No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.",
   "@nfcConfigDeviceUnavailable": {
     "description": "Device NFC status: not usable"
-  },
-  "kioskConfirmAction": "Confirm",
-  "@kioskConfirmAction": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "kioskRejectAction": "Reject",
-  "@kioskRejectAction": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "kioskGateTitle": "Start kiosk mode?",
   "@kioskGateTitle": {

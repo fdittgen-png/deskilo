@@ -12,7 +12,7 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     return l10n.invoiceTemplateDocReminder(level);
   }
   return switch (kind.id) {
-    'invoice' => l10n.invoiceTemplateDocInvoice,
+    'invoice' => l10n.invoicePdfTitle,
     'proforma' => l10n.invoicePdfProforma,
     'statement' => l10n.invoiceTemplateDocStatement,
     'agreement' => l10n.reportDocAgreement,

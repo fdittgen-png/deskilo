@@ -113,7 +113,7 @@ class InboxHeader extends ConsumerWidget {
                 value: () => createGroupPage.open<void>(context, null),
                 child: ListTile(
                   leading: const Icon(Icons.group_add_outlined),
-                  title: Text(l10n.groupNew),
+                  title: Text(l10n.meGroupAdd),
                 ),
               ),
               PopupMenuItem(

@@ -56,8 +56,8 @@ void main() {
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = lookupAppLocalizations(locale);
       expect(
-        l10n.moneyDocumentLibrary,
-        l10n.documentsTitle,
+        l10n.featureDocuments,
+        l10n.featureDocuments,
         reason:
             '${locale.languageCode}: the member door and the library '
             'screen must read the same',

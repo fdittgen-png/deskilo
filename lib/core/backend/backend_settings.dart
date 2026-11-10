@@ -532,14 +532,14 @@ String backendProbeFacetsText(AppLocalizations l10n, BackendProbeReport r) {
   String facet(ProbeFacet f) => switch (f) {
         ProbeFacet.yes => l10n.backendFacetYes,
         ProbeFacet.no => l10n.backendFacetNo,
-        ProbeFacet.unknown => l10n.backendFacetUnknown,
+        ProbeFacet.unknown => l10n.biPrintUnknown,
       };
   final version = switch (r.compatibility) {
     SchemaCompatibility.current => l10n.backendVersionShortCurrent,
     SchemaCompatibility.behind => l10n.backendVersionShortBehind,
     SchemaCompatibility.ahead => l10n.backendVersionShortAhead,
     SchemaCompatibility.unknown || null =>
-      l10n.backendFacetUnknown,
+      l10n.biPrintUnknown,
   };
   return l10n.backendFacets(
         facet(r.reachable),

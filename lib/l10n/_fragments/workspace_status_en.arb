@@ -108,10 +108,6 @@
   "@repartitionAmountLabel": {
     "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
   },
-  "repartitionPeriodLabel": "Month",
-  "@repartitionPeriodLabel": {
-    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
-  },
   "repartitionRuleHint": "Each share is proposed by subscription percentage. Untick a member to leave them out; with the custom method, type their weight. The adjusted rule is proposed again next month.",
   "@repartitionRuleHint": {
     "description": "#934 workspace status / repartition wizard: repartitionRuleHint"

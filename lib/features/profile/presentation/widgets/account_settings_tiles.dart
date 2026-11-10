@@ -61,7 +61,7 @@ Future<void> _pickPhoto(
     final pick = ref.read(filePickerProvider);
     final file = await pick(
       XTypeGroup(
-        label: l10n.profilePhotoFileType,
+        label: l10n.editorToolImage,
         extensions: const ['jpg', 'jpeg', 'png', 'webp'],
         mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
       ),

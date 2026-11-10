@@ -30,7 +30,7 @@ import 'money_view_data.dart';
 /// The words of an order's [state].
 String _stateLabel(AppLocalizations l10n, PurchaseOrderState state) =>
     switch (state) {
-      PurchaseOrderState.draft => l10n.purchaseOrderStateDraft,
+      PurchaseOrderState.draft => l10n.purchasesStateDraft,
       PurchaseOrderState.sent => l10n.purchaseOrderStateSent,
       PurchaseOrderState.partlyReceived =>
         l10n.purchaseOrderStatePartlyReceived,

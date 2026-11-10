@@ -70,9 +70,9 @@ class SalesHubScreen extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.hubSalesTitle),
+        title: Text(context.l10n.bookReportJournalSales),
         actions: [
-          HelpDot(context.l10n.hubSalesTitle, anchor: HelpAnchor.moneySales),
+          HelpDot(context.l10n.bookReportJournalSales, anchor: HelpAnchor.moneySales),
         ],
       ),
       body: ListView(

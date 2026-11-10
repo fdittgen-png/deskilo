@@ -35,7 +35,7 @@ List<PrivacySection> privacySections(AppLocalizations l10n) => [
         '${l10n.consentWhoBody} ${l10n.consentWhoBodyPublic}',
       ),
       PrivacySection(
-        l10n.consentMessagesTitle,
+        l10n.messagesTitle,
         l10n.consentMessagesBody,
       ),
       PrivacySection(

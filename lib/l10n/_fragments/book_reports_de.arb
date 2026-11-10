@@ -10,7 +10,6 @@
   "bookReportDebitSide": "S",
   "bookReportCreditSide": "H",
   "bookReportJournalSales": "Verkauf",
-  "bookReportJournalBank": "Bank",
   "bookReportJournalPurchases": "Einkauf",
   "bookReportJournalOther": "Sonstige Buchungen",
   "bookReportEntry": "Buchung",

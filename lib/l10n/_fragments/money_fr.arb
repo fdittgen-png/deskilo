@@ -5,7 +5,6 @@
   "moneyUsageUnlimited": "{used} demi-journées utilisées",
   "moneyOverage": "{count, plural, =1{Dépassement (1 demi-journée supplémentaire)} other{Dépassement ({count} demi-journées supplémentaires)}}",
   "moneyCredits": "Paiements et crédits",
-  "moneyBalance": "Solde",
   "moneyStatementSettled": "Réglé",
   "moneyStatementOpen": "À régler",
   "moneyRecordPayment": "Enregistrer un paiement",
@@ -18,9 +17,7 @@
   "ledgerCategorySubscription": "Abonnement",
   "ledgerCategoryOverage": "Dépassement",
   "ledgerCategoryExpense": "Remboursement de dépense",
-  "ledgerCategoryPayment": "Paiement",
   "ledgerCategoryAdjustment": "Ajustement",
-  "ledgerCategoryService": "Service",
   "moneySubmitExpense": "Soumettre une dépense",
   "moneyExpenseCategoryLabel": "Catégorie",
   "moneyDescriptionLabel": "Description",
@@ -97,10 +94,6 @@
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
-  "vatDeclInvoices": "Factures",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
-  },
   "vatDeclTotals": "Totaux",
   "@vatDeclTotals": {
     "description": "Totals row"
@@ -128,10 +121,6 @@
   "vatDeclEmpty": "Aucune déclaration — choisissez une période et générez la première.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
-  },
-  "vatDeclDraft": "Brouillon",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclPrepared": "Préparée",
   "@vatDeclPrepared": {
@@ -281,10 +270,7 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
-  "moneyFacePayments": "Paiements",
-  "moneyFaceInvoices": "Factures",
   "moneyNoInvoicesYet": "Pas encore de facture — l'espace facture le mois une fois clos.",
-  "moneyFaceStatement": "Relevé",
   "moneyFaceDocuments": "Documents",
   "moneyOverdueBanner": "{count} en retard — {amount} à régler",
   "moneyPayNow": "Payer maintenant",
@@ -293,19 +279,16 @@
   "moneyDueIn": "Échéance dans {days} jours",
   "moneyOverdueBy": "En retard de {days} jours",
   "moneyNothingOpen": "Rien d'ouvert — vous êtes à jour.",
-  "moneyDocumentLibrary": "Bibliothèque de documents",
   "moneyStatementPdf": "Relevé du mois (PDF)",
   "moneyRemindedTimes": "Relancée ×{count}",
   "expenseSupplyToggle": "C'est une fourniture pour l'espace",
   "expenseSupplyHint": "Capsules de café, sacs d'aspirateur… Une fois validée, l'article va sur l'étagère comme service consommable : ceux qui l'utilisent le paient.",
   "expenseSupplyItem": "Article",
   "expenseSupplyNewItem": "Nouvel article",
-  "expenseSupplyQuantity": "Quantité",
   "expenseSupplyUnitPrice": "Prix unitaire (ce que coûte une consommation)",
   "expenseSupplyUnitPriceHint": "Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.",
   "serviceStockCount": "{count} en stock",
   "serviceOutOfStock": "Épuisé",
-  "serviceOutOfStockHint": "Plus rien sur l'étagère — la prochaine fourniture le réapprovisionne.",
   "negotiationCardTitle": "Mes conditions négociées",
   "negotiationOnTariff": "Vous êtes au tarif de l'espace.",
   "negotiationPending": "Des conditions attendent validation.",
@@ -318,8 +301,6 @@
   "negotiationWhoCanSee": "Qui peut voir",
   "negotiationProposeTitle": "Négociation tarifaire",
   "negotiationProposeHint": "Laissez un champ vide pour garder le tarif. Les conditions passent par la validation avant de s'appliquer.",
-  "negotiationNote": "Note",
-  "negotiationValidFrom": "Applicable dès",
   "negotiationSubmit": "Proposer pour validation",
   "negotiationProposed": "Conditions proposées — en attente de validation.",
   "negotiationPendingBadge": "en attente de validation",
@@ -381,7 +362,6 @@
   "moneySectionPurchases": "Achats et comptabilité",
   "hubPurchasesTitle": "Achats",
   "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",
-  "hubSalesTitle": "Ventes",
   "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation",
   "hubCashTitle": "Trésorerie",
   "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",

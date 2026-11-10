@@ -115,7 +115,7 @@ class GuestPassSaleSection extends StatelessWidget {
         ListTile(
           key: const ValueKey('guest-pass-day'),
           contentPadding: EdgeInsets.zero,
-          title: Text(l10n.guestPassDay),
+          title: Text(l10n.bookPeriodsFrom),
           subtitle: Text(isoDay(draft.day)),
           trailing: const Icon(Icons.calendar_today_outlined),
           onTap: () async {

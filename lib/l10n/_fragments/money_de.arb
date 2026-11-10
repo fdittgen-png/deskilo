@@ -5,7 +5,6 @@
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
   "moneyOverage": "{count, plural, =1{Mehrnutzung (1 zusätzlicher halber Tag)} other{Mehrnutzung ({count} zusätzliche halbe Tage)}}",
   "moneyCredits": "Zahlungen & Gutschriften",
-  "moneyBalance": "Saldo",
   "moneyStatementSettled": "Beglichen",
   "moneyStatementOpen": "Offen",
   "moneyRecordPayment": "Zahlung erfassen",
@@ -18,9 +17,7 @@
   "ledgerCategorySubscription": "Abo",
   "ledgerCategoryOverage": "Mehrnutzung",
   "ledgerCategoryExpense": "Auslagenerstattung",
-  "ledgerCategoryPayment": "Zahlung",
   "ledgerCategoryAdjustment": "Korrektur",
-  "ledgerCategoryService": "Leistung",
   "moneySubmitExpense": "Ausgabe einreichen",
   "moneyExpenseCategoryLabel": "Kategorie",
   "moneyDescriptionLabel": "Beschreibung",
@@ -97,10 +94,6 @@
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
-  "vatDeclInvoices": "Rechnungen",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
-  },
   "vatDeclTotals": "Summen",
   "@vatDeclTotals": {
     "description": "Totals row"
@@ -128,10 +121,6 @@
   "vatDeclEmpty": "Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
-  },
-  "vatDeclDraft": "Entwurf",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclPrepared": "Vorbereitet",
   "@vatDeclPrepared": {
@@ -281,10 +270,7 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
-  "moneyFacePayments": "Zahlungen",
-  "moneyFaceInvoices": "Rechnungen",
   "moneyNoInvoicesYet": "Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet.",
-  "moneyFaceStatement": "Abrechnung",
   "moneyFaceDocuments": "Dokumente",
   "moneyOverdueBanner": "{count} überfällig — {amount} zu begleichen",
   "moneyPayNow": "Jetzt zahlen",
@@ -293,19 +279,16 @@
   "moneyDueIn": "Fällig in {days} Tagen",
   "moneyOverdueBy": "Überfällig seit {days} Tagen",
   "moneyNothingOpen": "Nichts offen — Sie sind auf dem Laufenden.",
-  "moneyDocumentLibrary": "Dokumentbibliothek",
   "moneyStatementPdf": "Monatsabrechnung (PDF)",
   "moneyRemindedTimes": "Gemahnt ×{count}",
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyHint": "Kaffeekapseln, Staubsaugerbeutel… Nach der Genehmigung steht der Artikel als verbrauchbare Leistung im Regal: wer ihn nutzt, zahlt dafür.",
   "expenseSupplyItem": "Artikel",
   "expenseSupplyNewItem": "Neuer Artikel",
-  "expenseSupplyQuantity": "Menge",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
   "serviceStockCount": "{count} auf Lager",
   "serviceOutOfStock": "Ausverkauft",
-  "serviceOutOfStockHint": "Nichts mehr im Regal — der nächste Vorrat füllt es auf.",
   "negotiationCardTitle": "Meine verhandelten Preise",
   "negotiationOnTariff": "Sie sind auf dem Tarif des Workspace.",
   "negotiationPending": "Konditionen warten auf Prüfung.",
@@ -318,8 +301,6 @@
   "negotiationWhoCanSee": "Wer das sehen kann",
   "negotiationProposeTitle": "Preisverhandlung",
   "negotiationProposeHint": "Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.",
-  "negotiationNote": "Notiz",
-  "negotiationValidFrom": "Gilt ab",
   "negotiationSubmit": "Zur Prüfung vorschlagen",
   "negotiationProposed": "Konditionen vorgeschlagen — warten auf Prüfung.",
   "negotiationPendingBadge": "wartet auf Prüfung",
@@ -381,7 +362,6 @@
   "moneySectionPurchases": "Einkauf und Buchhaltung",
   "hubPurchasesTitle": "Einkauf",
   "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",
-  "hubSalesTitle": "Verkauf",
   "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung",
   "hubCashTitle": "Geld",
   "hubCashSubtitle": "Erfasste Ein- und Ausgänge und was noch zu zahlen ist",

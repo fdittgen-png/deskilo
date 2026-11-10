@@ -108,10 +108,6 @@
   "@repartitionAmountLabel": {
     "description": "#934 workspace status / repartition wizard: repartitionAmountLabel"
   },
-  "repartitionPeriodLabel": "Mese",
-  "@repartitionPeriodLabel": {
-    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
-  },
   "repartitionRuleHint": "Ogni quota è proposta in base alla percentuale di abbonamento. Deselezioni un socio per escluderlo; con il metodo «chiave», ne indichi il peso. La regola modificata sarà proposta il mese prossimo.",
   "@repartitionRuleHint": {
     "description": "#934 workspace status / repartition wizard: repartitionRuleHint"

@@ -287,7 +287,7 @@ class AccountingExportRun {
               association: association),
           customersLabel: l10n.fecAccountCustomers,
           revenueLabel: l10n.fecAccountRevenue,
-          bankLabel: l10n.fecAccountBank,
+          bankLabel: l10n.bookRoleBank,
           vatLabel: l10n.fecAccountVat,
           ledger: ledger,
           memberNames: memberNames,
@@ -316,7 +316,7 @@ class AccountingExportRun {
           invoices: exported, matches: matches, company: company, currency: workspace.currencyCode,
           softwareVersion: safTSoftwareVersion, createdAt: now,
           lineText: (line) => invoiceLineText(words, line, association: association),
-          fallbackDescription: l10n.invoicesTitle,
+          fallbackDescription: l10n.featureInvoicing,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
           ledgerAccounts: accounts, bookPostings: posted,
           reference: taxReference));

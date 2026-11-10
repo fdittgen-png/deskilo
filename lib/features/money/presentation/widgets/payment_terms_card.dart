@@ -253,7 +253,7 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
                   l10n.paymentTermsFieldRecovery,
                   w.recoveryIndemnity),
               _field(_reason, 'reason',
-                  l10n.paymentTermsReason, ''),
+                  l10n.reservationDeleteReasonLabel, ''),
               FilledButton(
                 key: const ValueKey('payment-terms-submit'),
                 onPressed: _busy ? null : () => _submit(inherit: false),

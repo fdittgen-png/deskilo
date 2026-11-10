@@ -128,18 +128,6 @@ abstract class AppLocalizations {
   /// **'Increase'**
   String get a11yIncrease;
 
-  /// Tooltip on the button that moves a report line one place later.
-  ///
-  /// In en, this message translates to:
-  /// **'Move down'**
-  String get a11yMoveDown;
-
-  /// Tooltip on the button that moves a report line one place earlier.
-  ///
-  /// In en, this message translates to:
-  /// **'Move up'**
-  String get a11yMoveUp;
-
   /// Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235).
   ///
   /// In en, this message translates to:
@@ -469,12 +457,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preferred online payment'**
   String get accountPaymentPreference;
-
-  /// Shown as a text in account activity screen (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get accountPaymentsTitle;
 
   /// Account card: open credit notes the workspace still owes
   ///
@@ -835,12 +817,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expense'**
   String get acctKindExpense;
-
-  /// #2370 Transfers list: the kind of document event a line carried.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get acctKindInvoice;
 
   /// #2370 Transfers list: the kind of document event a line carried.
   ///
@@ -1310,12 +1286,6 @@ abstract class AppLocalizations {
   /// **'someone no longer in the space'**
   String get acctWhoUnknown;
 
-  /// Country field on the member address sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Country'**
-  String get addressCountryLabel;
-
   /// Subtitle while no address is stored
   ///
   /// In en, this message translates to:
@@ -1610,12 +1580,6 @@ abstract class AppLocalizations {
   /// **'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.'**
   String get archiveSwissNeedsExportLog;
 
-  /// #872 one wizard idiom: assistantPrefix
-  ///
-  /// In en, this message translates to:
-  /// **'Assistant'**
-  String get assistantPrefix;
-
   /// #1827 Assistant setup: assistantSetupActorConfigurer
   ///
   /// In en, this message translates to:
@@ -1832,12 +1796,6 @@ abstract class AppLocalizations {
   /// **'Review requests'**
   String get assistantSetupReview;
 
-  /// #1827 Assistant setup: assistantSetupSaved
-  ///
-  /// In en, this message translates to:
-  /// **'Saved.'**
-  String get assistantSetupSaved;
-
   /// #1827 Assistant setup: assistantSetupStale
   ///
   /// In en, this message translates to:
@@ -1993,12 +1951,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm your e-mail address first: open the message we sent you, then sign in.'**
   String get authEmailNotConfirmed;
-
-  /// Validation message for an empty mandatory field
-  ///
-  /// In en, this message translates to:
-  /// **'Required'**
-  String get authFieldRequired;
 
   /// Sign-in link opening the reset-password sheet
   ///
@@ -2270,12 +2222,6 @@ abstract class AppLocalizations {
   /// **'Closure days'**
   String get availabilityClosureDays;
 
-  /// Label of the optional reason field when adding a closure day
-  ///
-  /// In en, this message translates to:
-  /// **'Reason (optional)'**
-  String get availabilityClosureReason;
-
   /// Shown as a title in availability sections (workspace).
   ///
   /// In en, this message translates to:
@@ -2377,12 +2323,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open weekdays'**
   String get availabilityOpenWeekdays;
-
-  /// Shown as a text in availability policies (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'Booking policies'**
-  String get availabilityPoliciesTitle;
 
   /// App-bar title of the owner availability editor and its settings tile
   ///
@@ -2521,12 +2461,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'no'**
   String get backendFacetNo;
-
-  /// Shown as the text in backend settings (core), and 1 other place.
-  ///
-  /// In en, this message translates to:
-  /// **'unknown'**
-  String get backendFacetUnknown;
 
   /// Shown as the text in backend settings (core).
   ///
@@ -3457,12 +3391,6 @@ abstract class AppLocalizations {
   /// **'Possibly imported already: review it'**
   String get bankLineReview;
 
-  /// #2380 Snack: the decision on a movement is saved.
-  ///
-  /// In en, this message translates to:
-  /// **'Saved.'**
-  String get bankLineSaved;
-
   /// #2380 Movement: the suggested invoice and why.
   ///
   /// In en, this message translates to:
@@ -4054,18 +3982,6 @@ abstract class AppLocalizations {
   /// #1924 finance KPI / #1923 analyses picker
   ///
   /// In en, this message translates to:
-  /// **'Move down'**
-  String get biCardDown;
-
-  /// #1924 finance KPI / #1923 analyses picker
-  ///
-  /// In en, this message translates to:
-  /// **'Move up'**
-  String get biCardUp;
-
-  /// #1924 finance KPI / #1923 analyses picker
-  ///
-  /// In en, this message translates to:
   /// **'Analyses shown'**
   String get biCards;
 
@@ -4134,12 +4050,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change'**
   String get biColumnChange;
-
-  /// #1923 B Web-BI toolbar and module section
-  ///
-  /// In en, this message translates to:
-  /// **'Value'**
-  String get biColumnValue;
 
   /// #2582 purchase analytics
   ///
@@ -4819,12 +4729,6 @@ abstract class AppLocalizations {
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
-  /// **'Filters'**
-  String get biEditorFilters;
-
-  /// #2580 BI report editor
-  ///
-  /// In en, this message translates to:
   /// **'Number format'**
   String get biEditorFormat;
 
@@ -4935,12 +4839,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Table'**
   String get biEditorKindTable;
-
-  /// #2580 BI report editor
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get biEditorKindText;
 
   /// #2580 BI report editor
   ///
@@ -5079,12 +4977,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pages and visuals'**
   String get biEditorPagesAndVisuals;
-
-  /// #2580 BI report editor
-  ///
-  /// In en, this message translates to:
-  /// **'Colours'**
-  String get biEditorPalette;
 
   /// #2580 BI report editor
   ///
@@ -5343,12 +5235,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Source note'**
   String get biEditorSourceNoteToggle;
-
-  /// #2580 BI report editor
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get biEditorText;
 
   /// #2580 BI report editor
   ///
@@ -5701,20 +5587,8 @@ abstract class AppLocalizations {
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
-  /// **'Month'**
-  String get biGrainMonth;
-
-  /// #1923 B Web-BI toolbar and module section
-  ///
-  /// In en, this message translates to:
   /// **'Quarter'**
   String get biGrainQuarter;
-
-  /// #1923 B Web-BI toolbar and module section
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get biGrainYear;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -5967,12 +5841,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Figures'**
   String get biPrintFigures;
-
-  /// #2581 analytical report print layout and exports
-  ///
-  /// In en, this message translates to:
-  /// **'Filters'**
-  String get biPrintFilters;
 
   /// #2581 analytical report print layout and exports
   ///
@@ -7035,12 +6903,6 @@ abstract class AppLocalizations {
   /// #1923 C Web-BI saved views
   ///
   /// In en, this message translates to:
-  /// **'Save'**
-  String get biViewSave;
-
-  /// #1923 C Web-BI saved views
-  ///
-  /// In en, this message translates to:
   /// **'Save as a new view…'**
   String get biViewSaveAs;
 
@@ -7127,12 +6989,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accessory supplements'**
   String get billAccessorySupplements;
-
-  /// Bill footer label; the bold period total renders trailing
-  ///
-  /// In en, this message translates to:
-  /// **'Balance'**
-  String get billBalance;
 
   /// Bill card title when the covering document is a credit note (#508)
   ///
@@ -7367,12 +7223,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get billingPackageName;
-
-  /// Label of the new-package price field
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get billingPackagePrice;
 
   /// Summary line under a package name in the editor: day count and formatted price
   ///
@@ -7841,12 +7691,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Grand total'**
   String get bookReportGrandTotal;
-
-  /// Book reports (#2376): the bank journal
-  ///
-  /// In en, this message translates to:
-  /// **'Bank'**
-  String get bookReportJournalBank;
 
   /// Book reports (#2376): the miscellaneous journal
   ///
@@ -8592,29 +8436,11 @@ abstract class AppLocalizations {
   /// **'Alerts'**
   String get calendarKindEvent;
 
-  /// #718/#719 - calendar hub
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get calendarKindInvoice;
-
   /// #2569 lease reminders
   ///
   /// In en, this message translates to:
   /// **'Lease dates'**
   String get calendarKindLease;
-
-  /// #718/#719 - calendar hub
-  ///
-  /// In en, this message translates to:
-  /// **'Messages'**
-  String get calendarKindMessage;
-
-  /// #718/#719 - calendar hub
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get calendarKindPayment;
 
   /// #718/#719 - calendar hub
   ///
@@ -8805,12 +8631,6 @@ abstract class AppLocalizations {
   /// Shown as a text in calendar view bar (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
-  /// **'Month'**
-  String get calendarViewMonth;
-
-  /// Shown as a text in calendar view bar (calendar), and 1 other place.
-  ///
-  /// In en, this message translates to:
   /// **'Week'**
   String get calendarViewWeek;
 
@@ -8915,12 +8735,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needs a local value first'**
   String get capabilityStateLocalInput;
-
-  /// #1660 template_why_match
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get capabilityStateUnknown;
 
   /// #1660 template_why_match
   ///
@@ -9083,12 +8897,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get carnetName;
-
-  /// #1279 carnets: carnetPrice
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get carnetPrice;
 
   /// #1279 carnets: carnetSell
   ///
@@ -9606,12 +9414,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 character left} other{{count} characters left}}'**
   String composerCharsLeft(int count);
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Draft kept'**
-  String get composerDraftKept;
-
   /// workspace groups: rename, description, admins, info
   ///
   /// In en, this message translates to:
@@ -9765,12 +9567,6 @@ abstract class AppLocalizations {
   /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
-  /// **'Messages'**
-  String get consentMessagesTitle;
-
-  /// Shown as the text in privacy policy (core).
-  ///
-  /// In en, this message translates to:
   /// **'No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server\'s notice. The F-Droid build has no Google services at all.'**
   String get consentNotBody;
 
@@ -9918,12 +9714,6 @@ abstract class AppLocalizations {
   /// **'Billing period (YYYY-MM)'**
   String get consumptionPeriodLabel;
 
-  /// Label of the quantity stepper (1–999)
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get consumptionQuantity;
-
   /// Snackbar after submitting; the charge stays pending until confirmed
   ///
   /// In en, this message translates to:
@@ -9954,12 +9744,6 @@ abstract class AppLocalizations {
   /// **'Not enough left in stock. Nothing was recorded.'**
   String get consumptionRefusedStock;
 
-  /// Label of the service dropdown in the consumption sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Service'**
-  String get consumptionService;
-
   /// #687 - messaging centre
   ///
   /// In en, this message translates to:
@@ -9978,12 +9762,6 @@ abstract class AppLocalizations {
   /// **'Archive'**
   String get conversationArchive;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Conversation archived.'**
-  String get conversationArchived;
-
   /// #2556 conversation pane: The thread pane beside the inbox before a conversation is opened (wide layout).
   ///
   /// In en, this message translates to:
@@ -10001,18 +9779,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No messages yet — say hello!'**
   String get conversationEmpty;
-
-  /// #687 - messaging centre
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get conversationGroup;
-
-  /// #687 - messaging centre
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get conversationGroupInfo;
 
   /// #687 - messaging centre
   ///
@@ -10067,12 +9833,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mute notifications'**
   String get conversationMute;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Muted'**
-  String get conversationMutedBadge;
 
   /// Shown as a title in unified inbox view (directory).
   ///
@@ -10145,12 +9905,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get conversationYesterday;
-
-  /// #687 - messaging centre
-  ///
-  /// In en, this message translates to:
-  /// **'You'**
-  String get conversationYou;
 
   /// #2454 country change
   ///
@@ -10596,18 +10350,6 @@ abstract class AppLocalizations {
   /// **'Attended'**
   String get dataReportColumnAttended;
 
-  /// #3485 dataReportColumn: the label for case 'balance'.
-  ///
-  /// In en, this message translates to:
-  /// **'Balance'**
-  String get dataReportColumnBalance;
-
-  /// #3485 dataReportColumn: the label for case 'bookings'.
-  ///
-  /// In en, this message translates to:
-  /// **'Bookings'**
-  String get dataReportColumnBookings;
-
   /// #3485 dataReportColumn: the label for case 'cancelled'.
   ///
   /// In en, this message translates to:
@@ -10637,12 +10379,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hours'**
   String get dataReportColumnHours;
-
-  /// #3485 dataReportColumn: the label for case 'month'.
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get dataReportColumnMonth;
 
   /// #3485 dataReportColumn: the label for case 'open'.
   ///
@@ -10685,12 +10421,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The data report could not be made. Try again in a moment.'**
   String get dataReportFailed;
-
-  /// #2862 data report: dataReportNo
-  ///
-  /// In en, this message translates to:
-  /// **'No'**
-  String get dataReportNo;
 
   /// #2862 data report: dataReportNone
   ///
@@ -10745,12 +10475,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace data report'**
   String get dataReportTitle;
-
-  /// #2862 data report: dataReportYes
-  ///
-  /// In en, this message translates to:
-  /// **'Yes'**
-  String get dataReportYes;
 
   /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
   ///
@@ -11136,29 +10860,11 @@ abstract class AppLocalizations {
   /// **'You are in {space}, viewing it as: {persona}'**
   String demoSetupCardWhere(String space, String persona);
 
-  /// #988/#990 deployments: deployEntityAccessories
-  ///
-  /// In en, this message translates to:
-  /// **'Accessories'**
-  String get deployEntityAccessories;
-
   /// #988/#990 deployments: deployEntityBookingRules
   ///
   /// In en, this message translates to:
   /// **'Booking rules'**
   String get deployEntityBookingRules;
-
-  /// #1289 deployments: deployEntityBranding — the workspace colours entity
-  ///
-  /// In en, this message translates to:
-  /// **'Colours'**
-  String get deployEntityBranding;
-
-  /// #988/#990 deployments: deployEntityClosureDays
-  ///
-  /// In en, this message translates to:
-  /// **'Closure days'**
-  String get deployEntityClosureDays;
 
   /// #1271 T1: deployEntityCreditProducts
   ///
@@ -11208,12 +10914,6 @@ abstract class AppLocalizations {
   /// **'Invitation templates'**
   String get deployEntityInvitations;
 
-  /// #988/#990 deployments: deployEntityPackages
-  ///
-  /// In en, this message translates to:
-  /// **'Packages'**
-  String get deployEntityPackages;
-
   /// #1010 deploy entity: payment instructions
   ///
   /// In en, this message translates to:
@@ -11237,12 +10937,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Services'**
   String get deployEntityServices;
-
-  /// #988/#990 deployments: deployEntitySites
-  ///
-  /// In en, this message translates to:
-  /// **'Sites'**
-  String get deployEntitySites;
 
   /// #988/#990 deployments: deployEntityTariffs
   ///
@@ -11925,12 +11619,6 @@ abstract class AppLocalizations {
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
-  /// **'Category'**
-  String get documentsCategoryLabel;
-
-  /// Workspace document library (#500)
-  ///
-  /// In en, this message translates to:
   /// **'Meeting minutes'**
   String get documentsCategoryMinutes;
 
@@ -11993,12 +11681,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Owners only'**
   String get documentsRoleOwner;
-
-  /// Workspace document library (#500)
-  ///
-  /// In en, this message translates to:
-  /// **'Document library'**
-  String get documentsTitle;
 
   /// Workspace document library (#500)
   ///
@@ -12594,12 +12276,6 @@ abstract class AppLocalizations {
   /// **'County or province (e.g. RO-B, MI)'**
   String get eInvoiceSubdivisionField;
 
-  /// Label above the seat sheet's accessory chips (workspace catalog)
-  ///
-  /// In en, this message translates to:
-  /// **'Accessories'**
-  String get editorAccessoriesLabel;
-
   /// FAB label / dialog title for creating a level (floor)
   ///
   /// In en, this message translates to:
@@ -13038,12 +12714,6 @@ abstract class AppLocalizations {
   /// **'What do you place?'**
   String get editorResourceKindTitle;
 
-  /// #2631 resource_editor: editorResourceRoom
-  ///
-  /// In en, this message translates to:
-  /// **'Meeting room'**
-  String get editorResourceRoom;
-
   /// #2631 resource_editor: editorResourceSeat
   ///
   /// In en, this message translates to:
@@ -13055,18 +12725,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capacity (people)'**
   String get editorRoomCapacityLabel;
-
-  /// #2631 resource_editor: editorRoomNameDefault
-  ///
-  /// In en, this message translates to:
-  /// **'Room'**
-  String get editorRoomNameDefault;
-
-  /// #2631 resource_editor: editorRoomProperties
-  ///
-  /// In en, this message translates to:
-  /// **'Meeting room'**
-  String get editorRoomProperties;
 
   /// #3074 the plan's drawn shapes: editorRotate
   ///
@@ -13691,12 +13349,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Register equipment'**
   String get equipmentRegisterTitle;
-
-  /// #2576 equipment register
-  ///
-  /// In en, this message translates to:
-  /// **'Saved.'**
-  String get equipmentSaved;
 
   /// #2576 equipment register
   ///
@@ -14380,12 +14032,6 @@ abstract class AppLocalizations {
   /// **'All'**
   String get eventsFilterAll;
 
-  /// Member-notes inbox on the Events screen (#460)
-  ///
-  /// In en, this message translates to:
-  /// **'Messages'**
-  String get eventsMessagesHeader;
-
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:
@@ -14463,12 +14109,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New item'**
   String get expenseSupplyNewItem;
-
-  /// Shown as a button or chip label in expense sheet (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get expenseSupplyQuantity;
 
   /// Shown as a title in expense sheet (money).
   ///
@@ -14692,23 +14332,11 @@ abstract class AppLocalizations {
   /// **'Bookable as a whole'**
   String get exportColumnNameBookableAsWhole;
 
-  /// #3485 exportColumnName: the label for case 'by_system'.
-  ///
-  /// In en, this message translates to:
-  /// **'Automatic'**
-  String get exportColumnNameBySystem;
-
   /// #3485 exportColumnName: the label for case 'capacity'.
   ///
   /// In en, this message translates to:
   /// **'Capacity'**
   String get exportColumnNameCapacity;
-
-  /// #3485 exportColumnName: the label for case 'category'.
-  ///
-  /// In en, this message translates to:
-  /// **'Category'**
-  String get exportColumnNameCategory;
 
   /// #3485 exportColumnName: the label for case 'chair'.
   ///
@@ -14751,12 +14379,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Company'**
   String get exportColumnNameCompany;
-
-  /// #3485 exportColumnName: the label for case 'country'.
-  ///
-  /// In en, this message translates to:
-  /// **'Country'**
-  String get exportColumnNameCountry;
 
   /// #3485 exportColumnName: the label for case 'created_at'.
   ///
@@ -14884,12 +14506,6 @@ abstract class AppLocalizations {
   /// **'Id'**
   String get exportColumnNameId;
 
-  /// #3485 exportColumnName: the label for case 'invoice'.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get exportColumnNameInvoice;
-
   /// #3485 exportColumnName: the label for case 'issued_at'.
   ///
   /// In en, this message translates to:
@@ -15004,18 +14620,6 @@ abstract class AppLocalizations {
   /// **'Number'**
   String get exportColumnNameNumber;
 
-  /// #3485 exportColumnName: the label for case 'occurred_on'.
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get exportColumnNameOccurredOn;
-
-  /// #3485 exportColumnName: the label for case 'office'.
-  ///
-  /// In en, this message translates to:
-  /// **'Room'**
-  String get exportColumnNameOffice;
-
   /// #3485 exportColumnName: the label for case 'on'.
   ///
   /// In en, this message translates to:
@@ -15076,12 +14680,6 @@ abstract class AppLocalizations {
   /// **'Postcode'**
   String get exportColumnNamePostalCode;
 
-  /// #3485 exportColumnName: the label for case 'price'.
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get exportColumnNamePrice;
-
   /// #3485 exportColumnName: the label for case 'process'.
   ///
   /// In en, this message translates to:
@@ -15093,12 +14691,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Provider'**
   String get exportColumnNameProvider;
-
-  /// #3485 exportColumnName: the label for case 'quantity'.
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get exportColumnNameQuantity;
 
   /// #3485 exportColumnName: the label for case 'recorded_at'.
   ///
@@ -15184,12 +14776,6 @@ abstract class AppLocalizations {
   /// **'Status'**
   String get exportColumnNameStatus;
 
-  /// #3485 exportColumnName: the label for case 'street'.
-  ///
-  /// In en, this message translates to:
-  /// **'Street'**
-  String get exportColumnNameStreet;
-
   /// #3485 exportColumnName: the label for case 'subject'.
   ///
   /// In en, this message translates to:
@@ -15225,12 +14811,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type'**
   String get exportColumnNameType;
-
-  /// #3485 exportColumnName: the label for case 'value'.
-  ///
-  /// In en, this message translates to:
-  /// **'Value'**
-  String get exportColumnNameValue;
 
   /// #3485 exportColumnName: the label for case 'vat'.
   ///
@@ -15279,12 +14859,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancelled on'**
   String get exportColumnNameVoidedAt;
-
-  /// #3485 exportColumnName: the label for case 'whatsapp'.
-  ///
-  /// In en, this message translates to:
-  /// **'WhatsApp'**
-  String get exportColumnNameWhatsapp;
 
   /// #3485 exportColumnName: the label for case 'width'.
   ///
@@ -15340,12 +14914,6 @@ abstract class AppLocalizations {
   /// **'About this export'**
   String get exportSheetNameAbout;
 
-  /// #3485 exportSheetName: the label for case 'accessories'.
-  ///
-  /// In en, this message translates to:
-  /// **'Accessories'**
-  String get exportSheetNameAccessories;
-
   /// #3485 exportSheetName: the label for case 'asset_valuation_batches'.
   ///
   /// In en, this message translates to:
@@ -15370,12 +14938,6 @@ abstract class AppLocalizations {
   /// **'Account mappings'**
   String get exportSheetNameBookMappings;
 
-  /// #3485 exportSheetName: the label for case 'book_periods'.
-  ///
-  /// In en, this message translates to:
-  /// **'Accounting periods'**
-  String get exportSheetNameBookPeriods;
-
   /// #3485 exportSheetName: the label for case 'book_profiles'.
   ///
   /// In en, this message translates to:
@@ -15393,12 +14955,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Attendance'**
   String get exportSheetNameCheckIns;
-
-  /// #3485 exportSheetName: the label for case 'closure_days'.
-  ///
-  /// In en, this message translates to:
-  /// **'Closure days'**
-  String get exportSheetNameClosureDays;
 
   /// #3485 exportSheetName: the label for case 'credit_products'.
   ///
@@ -15490,12 +15046,6 @@ abstract class AppLocalizations {
   /// **'Reminders'**
   String get exportSheetNameInvoiceReminders;
 
-  /// #3485 exportSheetName: the label for case 'invoices'.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get exportSheetNameInvoices;
-
   /// #3485 exportSheetName: the label for case 'lease_settlements'.
   ///
   /// In en, this message translates to:
@@ -15555,18 +15105,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overview'**
   String get exportSheetNameOverview;
-
-  /// #3485 exportSheetName: the label for case 'packages'.
-  ///
-  /// In en, this message translates to:
-  /// **'Packages'**
-  String get exportSheetNamePackages;
-
-  /// #3485 exportSheetName: the label for case 'payments'.
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get exportSheetNamePayments;
 
   /// #3485 exportSheetName: the label for case 'plan_images'.
   ///
@@ -15646,12 +15184,6 @@ abstract class AppLocalizations {
   /// **'Quota extensions'**
   String get exportSheetNameQuotaExtensions;
 
-  /// #3485 exportSheetName: the label for case 'reservations'.
-  ///
-  /// In en, this message translates to:
-  /// **'Bookings'**
-  String get exportSheetNameReservations;
-
   /// #3485 exportSheetName: the label for case 'rights_requests'.
   ///
   /// In en, this message translates to:
@@ -15699,18 +15231,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get exportSheetNameSettingValues;
-
-  /// #3485 exportSheetName: the label for case 'sites'.
-  ///
-  /// In en, this message translates to:
-  /// **'Sites'**
-  String get exportSheetNameSites;
-
-  /// #3485 exportSheetName: the label for case 'suppliers'.
-  ///
-  /// In en, this message translates to:
-  /// **'Suppliers'**
-  String get exportSheetNameSuppliers;
 
   /// #3485 exportSheetName: the label for case 'tax_exemption_certificates'.
   ///
@@ -15777,12 +15297,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Role holders'**
   String get exportSheetNameWorkspaceRoleMembers;
-
-  /// #3485 exportSheetName: the label for case 'workspace_roles'.
-  ///
-  /// In en, this message translates to:
-  /// **'Roles'**
-  String get exportSheetNameWorkspaceRoles;
 
   /// #669 - accounting export formats
   ///
@@ -15916,12 +15430,6 @@ abstract class AppLocalizations {
   /// **'Founder'**
   String get exportValueNameFounder;
 
-  /// #3485 exportValueName: the label for case 'full'.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get exportValueNameFull;
-
   /// #3485 exportValueName: the label for case 'invited'.
   ///
   /// In en, this message translates to:
@@ -15939,12 +15447,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'North'**
   String get exportValueNameN;
-
-  /// #3485 exportValueName: the label for case 'none'.
-  ///
-  /// In en, this message translates to:
-  /// **'No'**
-  String get exportValueNameNone;
 
   /// #3485 exportValueName: the label for case 'overage'.
   ///
@@ -15970,29 +15472,11 @@ abstract class AppLocalizations {
   /// **'Successor'**
   String get exportValueNamePassive;
 
-  /// #3485 exportValueName: the label for case 'paused'.
-  ///
-  /// In en, this message translates to:
-  /// **'Paused'**
-  String get exportValueNamePaused;
-
   /// #3485 exportValueName: the label for case 'payg'.
   ///
   /// In en, this message translates to:
   /// **'Pay as you go'**
   String get exportValueNamePayg;
-
-  /// #3485 exportValueName: the label for case 'payment'.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment'**
-  String get exportValueNamePayment;
-
-  /// #3485 exportValueName: the label for case 'pending'.
-  ///
-  /// In en, this message translates to:
-  /// **'Pending'**
-  String get exportValueNamePending;
 
   /// #3485 exportValueName: the label for case 'refund'.
   ///
@@ -16041,12 +15525,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seat'**
   String get exportValueNameSeat;
-
-  /// #3485 exportValueName: the label for case 'service'.
-  ///
-  /// In en, this message translates to:
-  /// **'Service'**
-  String get exportValueNameService;
 
   /// #3485 exportValueName: the label for case 'settlement'.
   ///
@@ -17980,29 +17458,11 @@ abstract class AppLocalizations {
   /// **'Task recorder'**
   String get featureTaskRecorderTitle;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Core'**
-  String get featureTierCore;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'What every space needs. On from the first day.'**
-  String get featureTierCoreDesc;
-
   /// Shown as a text in feature tile (workspace).
   ///
   /// In en, this message translates to:
   /// **'Platform'**
   String get featureTierPlatform;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Asked for, never assumed. Switch on what this space actually runs.'**
-  String get featureTierPlatformDesc;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -18304,12 +17764,6 @@ abstract class AppLocalizations {
   /// **'Switches'**
   String get featuresViewSwitches;
 
-  /// Field label: the cash account
-  ///
-  /// In en, this message translates to:
-  /// **'Bank'**
-  String get fecAccountBank;
-
   /// Field label: the receivable account
   ///
   /// In en, this message translates to:
@@ -18393,12 +17847,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review server'**
   String get federationActionReviewServer;
-
-  /// #1648 Abandons the pending Deskilo sign-in; the previous context stays.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get federationCancel;
 
   /// #1648 Dismisses a Deskilo sign-in failure message.
   ///
@@ -18621,12 +18069,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A private copy inside the app. It does not appear in Files.'**
   String get fileExportKeepHint;
-
-  /// iPhone Export… row: hand the file to the system share sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Share…'**
-  String get fileExportShare;
 
   /// iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)
   ///
@@ -18862,12 +18304,6 @@ abstract class AppLocalizations {
   /// **'Partly paid'**
   String get financesPartlyPaid;
 
-  /// Me › Finances
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get financesPayments;
-
   /// #2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay
   ///
   /// In en, this message translates to:
@@ -18928,29 +18364,11 @@ abstract class AppLocalizations {
   /// **'Paid'**
   String get financesStatePaid;
 
-  /// Me › Finances
-  ///
-  /// In en, this message translates to:
-  /// **'Refunded'**
-  String get financesStateRefunded;
-
   /// #2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet.
   ///
   /// In en, this message translates to:
   /// **'Unpaid'**
   String get financesStateUnpaid;
-
-  /// Me › Finances
-  ///
-  /// In en, this message translates to:
-  /// **'My finances'**
-  String get financesTitle;
-
-  /// Me › Finances
-  ///
-  /// In en, this message translates to:
-  /// **'To pay'**
-  String get financesToPay;
 
   /// #2557 C4 Me › Finances: the type filter, every document.
   ///
@@ -18963,12 +18381,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit note'**
   String get financesTypeCreditNote;
-
-  /// #2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter).
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get financesTypeInvoice;
 
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
@@ -19315,26 +18727,8 @@ abstract class AppLocalizations {
   /// messenger: creating a group of people
   ///
   /// In en, this message translates to:
-  /// **'Group name'**
-  String get groupName;
-
-  /// messenger: creating a group of people
-  ///
-  /// In en, this message translates to:
   /// **'Add at least one person.'**
   String get groupNeedsPeople;
-
-  /// messenger: creating a group of people
-  ///
-  /// In en, this message translates to:
-  /// **'New group'**
-  String get groupNew;
-
-  /// messenger: creating a group of people
-  ///
-  /// In en, this message translates to:
-  /// **'New group'**
-  String get groupNewTitle;
 
   /// messenger: creating a group of people
   ///
@@ -19389,12 +18783,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pass'**
   String get guestPassChoose;
-
-  /// #3308 guest passes sold at the desk
-  ///
-  /// In en, this message translates to:
-  /// **'First day'**
-  String get guestPassDay;
 
   /// #3308 guest passes sold at the desk
   ///
@@ -19996,12 +19384,6 @@ abstract class AppLocalizations {
   /// **'Set the open weekdays and working hours, and add closure days nobody can book.'**
   String get helpHintAvailability;
 
-  /// Shown as a text in help tips (core), and 2 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Availability'**
-  String get helpHintAvailabilityTopic;
-
   /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
@@ -20128,12 +19510,6 @@ abstract class AppLocalizations {
   /// **'Link a reservation or a space in a message instead of describing it; the reader taps it and lands on the right one.'**
   String get helpHintMessagesTip5;
 
-  /// #695 - messaging help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Messages'**
-  String get helpHintMessagesTopic;
-
   /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
@@ -20167,12 +19543,6 @@ abstract class AppLocalizations {
   /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
-  /// **'Invoices'**
-  String get helpHintMoneyInvoicesTopic;
-
-  /// Shown as a text in help tips (core).
-  ///
-  /// In en, this message translates to:
   /// **'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.'**
   String get helpHintMoneyPayments;
 
@@ -20188,23 +19558,11 @@ abstract class AppLocalizations {
   /// **'Services and Accessories'**
   String get helpHintMoneyPaymentsTipSupplyTopic;
 
-  /// Shown as a text in help tips (core), and 1 other place.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment'**
-  String get helpHintMoneyPaymentsTopic;
-
   /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.'**
   String get helpHintMoneyStatement;
-
-  /// Shown as a text in help tips (core).
-  ///
-  /// In en, this message translates to:
-  /// **'Statement'**
-  String get helpHintMoneyStatementTopic;
 
   /// Shown as a text in help tips (core).
   ///
@@ -20326,12 +19684,6 @@ abstract class AppLocalizations {
   /// **'Booking limits'**
   String get helpTopicBookingLimits;
 
-  /// Shown as the topic of a help symbol in availability policies (workspace), and 3 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking policies'**
-  String get helpTopicBookingPolicies;
-
   /// Guide-heading needle for the deployment help symbols (#1022)
   ///
   /// In en, this message translates to:
@@ -20362,12 +19714,6 @@ abstract class AppLocalizations {
   /// **'Instances'**
   String get helpTopicInstances;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Kiosk mode'**
-  String get helpTopicKiosk;
-
   /// Shown as the topic of a help symbol in legal identity screen (money), and 3 other places.
   ///
   /// In en, this message translates to:
@@ -20385,12 +19731,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'report editor'**
   String get helpTopicReportEditor;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Positioned layouts'**
-  String get helpTopicReportLayout;
 
   /// Shown as the topic of a help symbol in expense schedule sheet (money), and 2 other places.
   ///
@@ -20421,12 +19761,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VAT'**
   String get helpTopicVat;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'The window-envelope contract'**
-  String get helpTopicWindowEnvelope;
 
   /// Shown as the topic of a help symbol in availability sections (workspace), and 1 other place.
   ///
@@ -20884,12 +20218,6 @@ abstract class AppLocalizations {
   /// **'What the space sells and invoices: services, invoices, billing'**
   String get hubSalesSubtitle;
 
-  /// #2577 the sales and purchases pages
-  ///
-  /// In en, this message translates to:
-  /// **'Sales'**
-  String get hubSalesTitle;
-
   /// #1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched.
   ///
   /// In en, this message translates to:
@@ -21129,12 +20457,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requests: {count}'**
   String inboxRequestsCount(int count);
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Try again'**
-  String get inboxRetry;
 
   /// #2556 inbox sources: Loads the next page of every inbox source that has more.
   ///
@@ -21669,12 +20991,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Run the security check'**
   String get instanceDoctorRun;
-
-  /// #1308 instance wizard doctor and token
-  ///
-  /// In en, this message translates to:
-  /// **'Check again'**
-  String get instanceDoctorRunAgain;
 
   /// #3489 Detail: tables exist but no schema version.
   ///
@@ -22687,20 +22003,8 @@ abstract class AppLocalizations {
   /// Shown as a button or chip label in invite sheet (workspace).
   ///
   /// In en, this message translates to:
-  /// **'Share…'**
-  String get inviteViaShare;
-
-  /// Shown as a button or chip label in invite sheet (workspace).
-  ///
-  /// In en, this message translates to:
   /// **'SMS'**
   String get inviteViaSms;
-
-  /// Shown as a button or chip label in invite sheet (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'WhatsApp'**
-  String get inviteViaWhatsapp;
 
   /// Register action: the SAF-T file for the accountant (0074)
   ///
@@ -23115,12 +22419,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear filters'**
   String get invoiceFilterClear;
-
-  /// Archive month filter label
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get invoiceFilterMonthLabel;
 
   /// Archive empty state while filtering — NOT an empty archive
   ///
@@ -24064,12 +23362,6 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get invoiceRegisterAmount;
 
-  /// Register column header, and its sort control
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get invoiceRegisterDate;
-
   /// Register column header: the member for an issuer, the invoice number for a member
   ///
   /// In en, this message translates to:
@@ -24099,12 +23391,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get invoiceRegisterTotal;
-
-  /// Register filter: which fiscal year the register shows
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get invoiceRegisterYear;
 
   /// Partial payments stay open until a validated write-off (#504)
   ///
@@ -24280,12 +23566,6 @@ abstract class AppLocalizations {
   /// **'Newest first'**
   String get invoiceSortNewest;
 
-  /// Archive sort menu tooltip
-  ///
-  /// In en, this message translates to:
-  /// **'Sort'**
-  String get invoiceSortTooltip;
-
   /// Lifecycle chip: issued, still waiting for its payment
   ///
   /// In en, this message translates to:
@@ -24297,12 +23577,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Partially paid'**
   String get invoiceStatusPartiallyPaid;
-
-  /// Negative invoices are credit notes the workspace refunds (#508)
-  ///
-  /// In en, this message translates to:
-  /// **'Refunded'**
-  String get invoiceStatusRefunded;
 
   /// Partial payments stay open until a validated write-off (#504)
   ///
@@ -24351,12 +23625,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Body band (the invoice lines)'**
   String get invoiceTemplateBodyLabel;
-
-  /// Mahnwesen / reminder letters (#472)
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get invoiceTemplateDocInvoice;
 
   /// Mahnwesen / reminder letters (#472)
   ///
@@ -24502,35 +23770,11 @@ abstract class AppLocalizations {
   /// **'No invoices yet.'**
   String get invoicesEmpty;
 
-  /// #871 the Money tab row that opens invoice management (the billing hub)
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicesManage;
-
-  /// The invoice archive screen title and its Money entry button (0060)
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicesTitle;
-
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
   /// **'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.'**
   String get invoicingBanner;
-
-  /// invoicing hub vs my finances
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicingHubTitle;
-
-  /// invoicing hub vs my finances
-  ///
-  /// In en, this message translates to:
-  /// **'My finances'**
-  String get invoicingMyFinances;
 
   /// invoicing hub vs my finances
   ///
@@ -24909,12 +24153,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issued'**
   String get journeyStepIssued;
-
-  /// Shown as a text in invoice journey view (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Payment'**
-  String get journeyStepPayment;
 
   /// Shown as a text in invoice detail sections (money).
   ///
@@ -25450,12 +24688,6 @@ abstract class AppLocalizations {
   /// **'The workspace is closed today — check-in and reservations are not possible.'**
   String get kioskClosedToday;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm'**
-  String get kioskConfirmAction;
-
   /// Success snackbar after a kiosk operation; the member is signed out already
   ///
   /// In en, this message translates to:
@@ -25539,18 +24771,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Present the badge'**
   String get kioskPresentBadgeNext;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Reject'**
-  String get kioskRejectAction;
-
-  /// Kiosk seat action: reserve the seat for today's window
-  ///
-  /// In en, this message translates to:
-  /// **'Reserve'**
-  String get kioskReserve;
 
   /// Kiosk summary title when a reservation starts checked in
   ///
@@ -25779,12 +24999,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deposit due back: {amount}'**
   String leaseDepositBack(String amount);
-
-  /// #2569 premises lease
-  ///
-  /// In en, this message translates to:
-  /// **'Edit'**
-  String get leaseEdit;
 
   /// #2569 premises lease
   ///
@@ -26113,12 +25327,6 @@ abstract class AppLocalizations {
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
-  /// **'Save'**
-  String get leaseSave;
-
-  /// #2569 premises lease
-  ///
-  /// In en, this message translates to:
   /// **'Saved'**
   String get leaseSaved;
 
@@ -26205,12 +25413,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Running'**
   String get leaseStatusActive;
-
-  /// #2569 premises lease
-  ///
-  /// In en, this message translates to:
-  /// **'Draft'**
-  String get leaseStatusDraft;
 
   /// #2569 premises lease
   ///
@@ -26370,18 +25572,6 @@ abstract class AppLocalizations {
   /// Ledger entry category
   ///
   /// In en, this message translates to:
-  /// **'Payment'**
-  String get ledgerCategoryPayment;
-
-  /// Ledger entry category for confirmed service charges (#129)
-  ///
-  /// In en, this message translates to:
-  /// **'Service'**
-  String get ledgerCategoryService;
-
-  /// Ledger entry category
-  ///
-  /// In en, this message translates to:
   /// **'Subscription'**
   String get ledgerCategorySubscription;
 
@@ -26456,12 +25646,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Legal identity saved.'**
   String get legalIdentitySaved;
-
-  /// Street field label
-  ///
-  /// In en, this message translates to:
-  /// **'Street'**
-  String get legalIdentityStreet;
 
   /// Workspace-settings tile subtitle
   ///
@@ -26559,12 +25743,6 @@ abstract class AppLocalizations {
   /// **'Unavailable'**
   String get legendUnavailable;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'For member'**
-  String get levelAssignMember;
-
   /// Shown as a text in booking sheet (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -26619,12 +25797,6 @@ abstract class AppLocalizations {
   /// **'May not reserve a whole desk, office or level'**
   String get levelPermissionDenied;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Level reservations'**
-  String get levelPermissionTile;
-
   /// Shown as a text in space scan (reservations), and 3 other places.
   ///
   /// In en, this message translates to:
@@ -26643,23 +25815,11 @@ abstract class AppLocalizations {
   /// **'Reserve level'**
   String get levelReserveButton;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Reserve the whole level'**
-  String get levelReserveTitle;
-
   /// Shown as a text in report strings l10n (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Level reservations'**
   String get levelSupplementLabel;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Template applied.'**
-  String get libraryApplied;
 
   /// Template apply preview (#1280): libraryAppliedChanges
   ///
@@ -26667,23 +25827,11 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 change applied.} other{{count} changes applied.}}'**
   String libraryAppliedChanges(int count);
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Apply to this space'**
-  String get libraryApply;
-
   /// Template apply preview (#1280): libraryApplyChanges
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}'**
   String libraryApplyChanges(int count);
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.'**
-  String get libraryApplyConfirmBody;
 
   /// Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)
   ///
@@ -27351,12 +26499,6 @@ abstract class AppLocalizations {
   /// **'Your assistant access could not be loaded. Try again later.'**
   String get mcpAssistantsUnavailable;
 
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get mcpCancel;
-
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -27608,12 +26750,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In Claude Code, type /mcp, choose deskilo and then Authenticate. A browser opens to sign in and pick this workspace.'**
   String get mcpConnectCodeStep2;
-
-  /// #2145 Connect an assistant: mcpConnectCopied
-  ///
-  /// In en, this message translates to:
-  /// **'Copied.'**
-  String get mcpConnectCopied;
 
   /// #2145 Connect an assistant: mcpConnectCopyRequest
   ///
@@ -28644,18 +27780,6 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Save'**
-  String get mcpPolicySave;
-
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'Saved.'**
-  String get mcpPolicySaved;
-
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
   /// **'Someone changed these settings meanwhile. Review the current settings and save again.'**
   String get mcpPolicyStale;
 
@@ -28874,12 +27998,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expired or withdrawn'**
   String get mcpStateRevoked;
-
-  /// #1625 MCP status: mcpStateUnavailable
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get mcpStateUnavailable;
 
   /// #1625 MCP status: mcpStateUnlinked
   ///
@@ -29228,12 +28346,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Move to group…'**
   String get meGroupMove;
-
-  /// Shown as a title in group name dialog (me).
-  ///
-  /// In en, this message translates to:
-  /// **'Group name'**
-  String get meGroupName;
 
   /// Shown as a text in me spaces list (me).
   ///
@@ -29601,12 +28713,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}'**
   String meSpaceNotifications(int count);
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get meSpaceOpen;
-
   /// Subtitle of a space card whose membership awaits approval.
   ///
   /// In en, this message translates to:
@@ -29654,12 +28760,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Me'**
   String get meTabMe;
-
-  /// Me layer bottom tab: the person's messages.
-  ///
-  /// In en, this message translates to:
-  /// **'Messages'**
-  String get meTabMessages;
 
   /// #2552 first destination of the personal shell: the person's overview.
   ///
@@ -29829,12 +28929,6 @@ abstract class AppLocalizations {
   /// **'Take back the Administrator role'**
   String get memberMakeMember;
 
-  /// Member-sheet/profile action opening the conversation thread (messaging refactor)
-  ///
-  /// In en, this message translates to:
-  /// **'Messages'**
-  String get memberMessagesAction;
-
   /// #704 - the money section of a member profile
   ///
   /// In en, this message translates to:
@@ -29991,12 +29085,6 @@ abstract class AppLocalizations {
   /// **'Bought a guest pass at the desk'**
   String get memberOriginGuest;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'How this membership began'**
-  String get memberOriginHeading;
-
   /// Shown as a text in member contact card (members).
   ///
   /// In en, this message translates to:
@@ -30105,12 +29193,6 @@ abstract class AppLocalizations {
   /// **'Member since {date}'**
   String memberPageSince(String date);
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Active'**
-  String get memberPageStatusActive;
-
   /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
@@ -30128,12 +29210,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pause membership'**
   String get memberPause;
-
-  /// #704 - the money section of a member profile
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get memberPayments;
 
   /// #704 - the contact section of a member profile
   ///
@@ -30224,12 +29300,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No role: everything a member can do.'**
   String get memberRolesNone;
-
-  /// #2085 giving roles: memberRolesTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Roles'**
-  String get memberRolesTitle;
 
   /// #2085 giving roles: memberRolesWhatTheyCanDo
   ///
@@ -30384,12 +29454,6 @@ abstract class AppLocalizations {
   /// #687 - messaging search
   ///
   /// In en, this message translates to:
-  /// **'Messages'**
-  String get messageSearchMessages;
-
-  /// #687 - messaging search
-  ///
-  /// In en, this message translates to:
   /// **'Nothing matched.'**
   String get messageSearchNothing;
 
@@ -30429,12 +29493,6 @@ abstract class AppLocalizations {
   /// **'Person to person'**
   String get messengerContextAccount;
 
-  /// messenger: a group of people
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get messengerContextGroup;
-
   /// Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)
   ///
   /// In en, this message translates to:
@@ -30452,12 +29510,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In {space}'**
   String messengerContextSpace(String space);
-
-  /// messenger: reactions, stars, edits
-  ///
-  /// In en, this message translates to:
-  /// **'Copied.'**
-  String get messengerCopied;
 
   /// messenger: reactions, stars, edits
   ///
@@ -30488,12 +29540,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delivered'**
   String get messengerDelivered;
-
-  /// messenger: reactions, stars, edits
-  ///
-  /// In en, this message translates to:
-  /// **'Edit'**
-  String get messengerEdit;
 
   /// messenger: reactions, stars, edits
   ///
@@ -30825,12 +29871,6 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get moneyAmountLabel;
 
-  /// Statement bottom line; negative = member owes
-  ///
-  /// In en, this message translates to:
-  /// **'Balance'**
-  String get moneyBalance;
-
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:
@@ -30848,12 +29888,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get moneyDescriptionLabel;
-
-  /// Shown as a button or chip label in documents face (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Document library'**
-  String get moneyDocumentLibrary;
 
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
@@ -30878,24 +29912,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Documents'**
   String get moneyFaceDocuments;
-
-  /// Shown as a text in money faces view (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get moneyFaceInvoices;
-
-  /// Shown as a text in money faces view (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get moneyFacePayments;
-
-  /// Shown as a text in money faces view (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Statement'**
-  String get moneyFaceStatement;
 
   /// #833 - the Money tab face showing usage records
   ///
@@ -31629,12 +30645,6 @@ abstract class AppLocalizations {
   /// **'Mine'**
   String get negotiationMineColumn;
 
-  /// Shown as the label of a field in negotiation card (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Note'**
-  String get negotiationNote;
-
   /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -31707,23 +30717,11 @@ abstract class AppLocalizations {
   /// **'Propose for validation'**
   String get negotiationSubmit;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Applies from'**
-  String get negotiationValidFrom;
-
   /// Shown as a button or chip label in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Who can see this'**
   String get negotiationWhoCanSee;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get newConversationGroupSwitch;
 
   /// #687 - messaging centre
   ///
@@ -31743,12 +30741,6 @@ abstract class AppLocalizations {
   /// **'Start chat'**
   String get newConversationStart;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a person to open the chat; switch on Group to pick several.'**
-  String get newConversationTapToOpen;
-
   /// #687 - messaging centre
   ///
   /// In en, this message translates to:
@@ -31760,12 +30752,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create group'**
   String get newGroupCreate;
-
-  /// #687 - messaging centre
-  ///
-  /// In en, this message translates to:
-  /// **'Group name'**
-  String get newGroupName;
 
   /// #694 - group names are unique per workspace
   ///
@@ -31923,12 +30909,6 @@ abstract class AppLocalizations {
   /// **'This reservation no longer exists.'**
   String get noteRefGone;
 
-  /// #842 - attach-menu entry: reference an invoice
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get noteRefInvoice;
-
   /// Reservation picker when the sender has nothing upcoming (#523)
   ///
   /// In en, this message translates to:
@@ -31940,12 +30920,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing to reference yet.'**
   String get noteRefNone;
-
-  /// #842 - attach-menu entry: reference a payment
-  ///
-  /// In en, this message translates to:
-  /// **'Payment'**
-  String get noteRefPayment;
 
   /// #842 - title of the alert picker
   ///
@@ -32046,12 +31020,6 @@ abstract class AppLocalizations {
   /// Shown as a text in events filter bar (events).
   ///
   /// In en, this message translates to:
-  /// **'Date'**
-  String get notifGroupByDate;
-
-  /// Shown as a text in events filter bar (events).
-  ///
-  /// In en, this message translates to:
   /// **'Type'**
   String get notifGroupByType;
 
@@ -32139,23 +31107,11 @@ abstract class AppLocalizations {
   /// **'Credit notes'**
   String get numberSequenceJournalCreditNote;
 
-  /// #925 number sequences: numberSequenceJournalInvoice
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get numberSequenceJournalInvoice;
-
   /// #928 number-sequence adopters: numberSequenceJournalMember
   ///
   /// In en, this message translates to:
   /// **'Members'**
   String get numberSequenceJournalMember;
-
-  /// #928 number-sequence adopters: numberSequenceJournalPayment
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get numberSequenceJournalPayment;
 
   /// #928 number-sequence adopters: numberSequenceJournalVatDeclaration
   ///
@@ -32598,12 +31554,6 @@ abstract class AppLocalizations {
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
-  /// **'Sales'**
-  String get overviewGroupSales;
-
-  /// #2583 the workspace overview
-  ///
-  /// In en, this message translates to:
   /// **'Key indicators'**
   String get overviewIndicators;
 
@@ -32780,12 +31730,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Removed.'**
   String get payConfigRemoved;
-
-  /// Snackbar after saving a provider's config
-  ///
-  /// In en, this message translates to:
-  /// **'Saved.'**
-  String get payConfigSaved;
 
   /// Helper under a secret field that already holds a value
   ///
@@ -33173,12 +32117,6 @@ abstract class AppLocalizations {
   /// **'Member\'s own'**
   String get paymentTermsOverridden;
 
-  /// #881 member payment conditions: paymentTermsReason
-  ///
-  /// In en, this message translates to:
-  /// **'Reason (optional)'**
-  String get paymentTermsReason;
-
   /// #881 member payment conditions: paymentTermsRequestHint
   ///
   /// In en, this message translates to:
@@ -33233,12 +32171,6 @@ abstract class AppLocalizations {
   /// **'You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.'**
   String pendingApprovalBody(String workspace);
 
-  /// Shown as a tooltip in workspace applications screen (workspace), and 1 other place.
-  ///
-  /// In en, this message translates to:
-  /// **'Check again'**
-  String get pendingApprovalRefresh;
-
   /// Shown as a title in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
@@ -33274,12 +32206,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Switch workspace'**
-  String get pendingSwitchWorkspace;
 
   /// A plain percentage value (level chips, member rows)
   ///
@@ -33551,12 +32477,6 @@ abstract class AppLocalizations {
   /// **'Only you, people allowed to see members\' personal data and the workspace\'s privacy admin can read it. Someone who only issues invoices cannot.'**
   String get personalBirthdayHelp;
 
-  /// Shown as the text in birthday field (profile).
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a date'**
-  String get personalBirthdayPick;
-
   /// Shown as the error text of a field in personal info screen (profile).
   ///
   /// In en, this message translates to:
@@ -33574,12 +32494,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Company (optional)'**
   String get personalInfoCompany;
-
-  /// #886 personal-information form / feature: personalInfoCountry
-  ///
-  /// In en, this message translates to:
-  /// **'Country'**
-  String get personalInfoCountry;
 
   /// #886 personal-information form / feature: personalInfoEmail
   ///
@@ -33628,12 +32542,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On your documents'**
   String get personalInfoPreview;
-
-  /// #886 personal-information form: save button
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get personalInfoSave;
 
   /// #886 personal-information form / feature: personalInfoSaved
   ///
@@ -34193,12 +33101,6 @@ abstract class AppLocalizations {
   /// **'How far ahead a booking may be made, and how short or long it may be. These hold on every granularity.'**
   String get policyLimitsDesc;
 
-  /// #649 - section header for the three numeric booking limits
-  ///
-  /// In en, this message translates to:
-  /// **'Booking limits'**
-  String get policyLimitsTitle;
-
   /// #649 - max_duration_minutes explanation
   ///
   /// In en, this message translates to:
@@ -34679,12 +33581,6 @@ abstract class AppLocalizations {
   /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
   String get portalSourceUnavailable;
 
-  /// Shown as the text in recipient typeahead (directory).
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get portalSuggestionGroup;
-
   /// Shown as the title in connection dialog (directory).
   ///
   /// In en, this message translates to:
@@ -34894,12 +33790,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refuse'**
   String get privacyAdminRefuse;
-
-  /// Shown as the text in privacy admin sheets (members), and 3 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get privacyAdminSave;
 
   /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
@@ -35555,12 +34445,6 @@ abstract class AppLocalizations {
   /// **'Choose a photo'**
   String get profilePhotoChoose;
 
-  /// File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity.
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get profilePhotoFileType;
-
   /// Subtitle of the Photo entry when the member has no photo yet.
   ///
   /// In en, this message translates to:
@@ -35783,12 +34667,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Create 1 closure day} other{Create {count} closure days}}'**
   String publicHolidaysConfirm(int count);
 
-  /// #1274 the country field label
-  ///
-  /// In en, this message translates to:
-  /// **'Country'**
-  String get publicHolidaysCountry;
-
   /// #1274 how many closure days were written
   ///
   /// In en, this message translates to:
@@ -35830,12 +34708,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public holidays'**
   String get publicHolidaysSheetTitle;
-
-  /// #1274 the year field label
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get publicHolidaysYear;
 
   /// Shown as the title in public person screen (me).
   ///
@@ -36144,12 +35016,6 @@ abstract class AppLocalizations {
   /// #3307 purchase order e-mail
   ///
   /// In en, this message translates to:
-  /// **'Save'**
-  String get purchaseOrderMailSave;
-
-  /// #3307 purchase order e-mail
-  ///
-  /// In en, this message translates to:
   /// **'Sender address (a verified domain at Resend)'**
   String get purchaseOrderMailSender;
 
@@ -36224,12 +35090,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Print'**
   String get purchaseOrderPrint;
-
-  /// #3307 purchase orders
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get purchaseOrderQuantity;
 
   /// #3307 goods receipts
   ///
@@ -36338,12 +35198,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get purchaseOrderStateCancelled;
-
-  /// #3307 purchase orders
-  ///
-  /// In en, this message translates to:
-  /// **'Draft'**
-  String get purchaseOrderStateDraft;
 
   /// #3307 purchase orders
   ///
@@ -36554,12 +35408,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Owed to {name}'**
   String purchasesClaimOwedTo(String name);
-
-  /// #2574 purchase payables
-  ///
-  /// In en, this message translates to:
-  /// **'You'**
-  String get purchasesClaimYou;
 
   /// #2574 purchase payables
   ///
@@ -36834,12 +35682,6 @@ abstract class AppLocalizations {
   /// #2574 claim offset
   ///
   /// In en, this message translates to:
-  /// **'Invoice'**
-  String get purchasesOffsetInvoice;
-
-  /// #2574 claim offset
-  ///
-  /// In en, this message translates to:
   /// **'Offset · {amount} · {invoice}'**
   String purchasesOffsetLine(String amount, String invoice);
 
@@ -36956,12 +35798,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reversed'**
   String get purchasesPaymentReversed;
-
-  /// #2574 purchase payments
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get purchasesPayments;
 
   /// #2573 purchases
   ///
@@ -37190,12 +36026,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Documents'**
   String get purchasesTabDocuments;
-
-  /// #2574 purchase payables
-  ///
-  /// In en, this message translates to:
-  /// **'To pay'**
-  String get purchasesTabToPay;
 
   /// #2573 purchases
   ///
@@ -37436,12 +36266,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where it is asked'**
   String get questionEditorContexts;
-
-  /// #1288 the question editor: questionEditorKey
-  ///
-  /// In en, this message translates to:
-  /// **'Key'**
-  String get questionEditorKey;
 
   /// #1288 the question editor: questionEditorKeyHelp
   ///
@@ -37694,12 +36518,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The server operator'**
   String get readinessActorOperator;
-
-  /// #1636 workspace_readiness
-  ///
-  /// In en, this message translates to:
-  /// **'You'**
-  String get readinessActorOwner;
 
   /// #1636 workspace_readiness
   ///
@@ -38025,12 +36843,6 @@ abstract class AppLocalizations {
   /// **'Payments received'**
   String get recordedPaymentsTitle;
 
-  /// Row title when a payment names neither an invoice nor a payer
-  ///
-  /// In en, this message translates to:
-  /// **'Payment'**
-  String get recordedPaymentsUnnamed;
-
   /// #1514 recording privacy: recordingPrivacyBadge
   ///
   /// In en, this message translates to:
@@ -38103,12 +36915,6 @@ abstract class AppLocalizations {
   /// **'Not declared by the operator of this installation: the app states no location'**
   String get recordsLocationUndeclared;
 
-  /// Shown as the text in note record choices (workspace), and 2 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get refFacetMonth;
-
   /// Shown as the text in note record choices (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -38175,12 +36981,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Show 1 result} other{Show {count} results}}'**
   String refFilterShow(int count);
 
-  /// Shown as the tooltip in ref picker sheet (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'Sort'**
-  String get refFilterSort;
-
   /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
@@ -38232,12 +37032,6 @@ abstract class AppLocalizations {
   /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
-  /// **'Pending'**
-  String get refStatusPending;
-
-  /// Shown as the label in note record choices (workspace).
-  ///
-  /// In en, this message translates to:
   /// **'Refunded'**
   String get refStatusRefunded;
 
@@ -38246,12 +37040,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit note'**
   String get refTypeCreditNote;
-
-  /// Shown as the label in note record choices (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get refTypeInvoice;
 
   /// #2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change.
   ///
@@ -38382,12 +37170,6 @@ abstract class AppLocalizations {
   /// #711 - globalization
   ///
   /// In en, this message translates to:
-  /// **'Automatic'**
-  String get regionalFollowLanguage;
-
-  /// #711 - globalization
-  ///
-  /// In en, this message translates to:
   /// **'Numbers & dates'**
   String get regionalFormatLocale;
 
@@ -38438,12 +37220,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Method'**
   String get registerPaymentMethod;
-
-  /// Shown as the label of a field in register payment sheet (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Note'**
-  String get registerPaymentNote;
 
   /// Shown as a text in register payment sheet (money).
   ///
@@ -38696,12 +37472,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lands on'**
   String get repartitionPeriod;
-
-  /// #934 workspace status / repartition wizard: repartitionPeriodLabel
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get repartitionPeriodLabel;
 
   /// Shown as a button or chip label in expense repartition sheet (money), and 1 other place.
   ///
@@ -39105,12 +37875,6 @@ abstract class AppLocalizations {
   /// **'Replace the current layout?'**
   String get reportDesignerReplaceTitle;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Design and preview side by side'**
-  String get reportDesignerSideBySide;
-
   /// Shown as a text in report history controls (money).
   ///
   /// In en, this message translates to:
@@ -39278,12 +38042,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seller'**
   String get reportFieldGroupSeller;
-
-  /// #966 report guide: reportFieldGroupSites
-  ///
-  /// In en, this message translates to:
-  /// **'Sites'**
-  String get reportFieldGroupSites;
 
   /// #966 report guide: reportFieldGroupStatus
   ///
@@ -39897,30 +38655,6 @@ abstract class AppLocalizations {
   /// **'Placeholders and markup'**
   String get reportGuideTitle;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Alignment'**
-  String get reportImageAlign;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Centre'**
-  String get reportImageAlignCenter;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Left'**
-  String get reportImageAlignLeft;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Right'**
-  String get reportImageAlignRight;
-
   /// #2586 report image failure
   ///
   /// In en, this message translates to:
@@ -39944,12 +38678,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry reading the image'**
   String get reportImageRetry;
-
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Size'**
-  String get reportImageSize;
 
   /// Shown as a button or chip label in report visual editor actions (money).
   ///
@@ -40098,12 +38826,6 @@ abstract class AppLocalizations {
   /// Report WYSIWYG editor + image library (#488)
   ///
   /// In en, this message translates to:
-  /// **'Image'**
-  String get reportLineImage;
-
-  /// Report WYSIWYG editor + image library (#488)
-  ///
-  /// In en, this message translates to:
   /// **'Logic'**
   String get reportLineLogic;
 
@@ -40130,12 +38852,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spacing'**
   String get reportLineSpacer;
-
-  /// Report WYSIWYG editor + image library (#488)
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get reportLineText;
 
   /// Report WYSIWYG editor + image library (#488)
   ///
@@ -40358,12 +39074,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default language'**
   String get reportTextsInherited;
-
-  /// #880 report texts: reportTextsKey
-  ///
-  /// In en, this message translates to:
-  /// **'Key'**
-  String get reportTextsKey;
 
   /// #880 report texts: reportTextsKeyExists
   ///
@@ -40683,12 +39393,6 @@ abstract class AppLocalizations {
   /// **'Parking slot'**
   String get reserveParkingStandard;
 
-  /// Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a date'**
-  String get reservePickDateTooltip;
-
   /// #3068 the label of the plan skeleton on Reserve
   ///
   /// In en, this message translates to:
@@ -40754,12 +39458,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Correspondence'**
   String get retentionClassCorrespondence;
-
-  /// #2571 retention clocks
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get retentionClassInvoice;
 
   /// #2571 retention clocks
   ///
@@ -41157,12 +39855,6 @@ abstract class AppLocalizations {
   /// **'Members in this role'**
   String get roleEditorHolders;
 
-  /// #1528 the roles of a space: roleEditorKey
-  ///
-  /// In en, this message translates to:
-  /// **'Key'**
-  String get roleEditorKey;
-
   /// #1528 the roles of a space: roleEditorKeyHelp
   ///
   /// In en, this message translates to:
@@ -41448,12 +40140,6 @@ abstract class AppLocalizations {
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:
-  /// **'First day'**
-  String get roomRentFieldFrom;
-
-  /// #2568 rented rooms
-  ///
-  /// In en, this message translates to:
   /// **'Lessor'**
   String get roomRentFieldLessor;
 
@@ -41552,12 +40238,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rent this room'**
   String get roomRentRent;
-
-  /// #2568 rented rooms
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get roomRentSave;
 
   /// #2568 rented rooms
   ///
@@ -41672,18 +40352,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Small business (§ 6 (1) Z 27 UStG)'**
   String get saftSmallBusinessLabel;
-
-  /// #2379 the Austrian SAF-T AT header facts asked at export
-  ///
-  /// In en, this message translates to:
-  /// **'No'**
-  String get saftSmallBusinessNo;
-
-  /// #2379 the Austrian SAF-T AT header facts asked at export
-  ///
-  /// In en, this message translates to:
-  /// **'Yes'**
-  String get saftSmallBusinessYes;
 
   /// #2379 the Austrian standard chart accounts confirmed at export
   ///
@@ -42087,12 +40755,6 @@ abstract class AppLocalizations {
   /// **'If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.'**
   String get schemaUpdateOperator;
 
-  /// #1312 Button that asks the server its version again
-  ///
-  /// In en, this message translates to:
-  /// **'Check again'**
-  String get schemaUpdateRetry;
-
   /// #1312 Button opening Settings → Server
   ///
   /// In en, this message translates to:
@@ -42279,12 +40941,6 @@ abstract class AppLocalizations {
   /// **'Out of stock'**
   String get serviceOutOfStock;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing left on the shelf — the next supply restocks it.'**
-  String get serviceOutOfStockHint;
-
   /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
@@ -42374,6 +41030,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking and check-in'**
   String get settingGroupBooking;
+
+  /// Settings editor: the name of the group holding the business settings (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get settingGroupBusiness;
 
   /// #2486 settings: Settings group title.
   ///
@@ -42572,6 +41234,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Length of the stay booked on the spot with a badge or a space code on a minute grid.'**
   String get settingHintBookingWalkUpWindowMinutes;
+
+  /// Settings editor: the hint under the business kind setting (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'What the business is: a coworking space, a studio, a practice, a salon or another service business. It proposes the features and words it needs; a coworking space keeps everything as it was.'**
+  String get settingHintBusinessKind;
+
+  /// Settings editor: the hint under the further kinds setting (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Further kinds the business also is, if any, besides the main one.'**
+  String get settingHintBusinessMoreKinds;
 
   /// #2487 settings: Setting hint.
   ///
@@ -43011,6 +41685,18 @@ abstract class AppLocalizations {
   /// **'On-the-spot stay'**
   String get settingLabelBookingWalkUpWindowMinutes;
 
+  /// Settings editor: the label of the setting that says what kind of business the workspace is (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of business'**
+  String get settingLabelBusinessKind;
+
+  /// Settings editor: the label of the setting listing further kinds of the business (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Also a kind of business'**
+  String get settingLabelBusinessMoreKinds;
+
   /// #2487 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -43401,12 +42087,6 @@ abstract class AppLocalizations {
   /// **'Between {min} and {max} {unit}'**
   String settingRange(String min, String max, String unit);
 
-  /// #2484 settings: Save button.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get settingSave;
-
   /// #2484 settings: Snackbar.
   ///
   /// In en, this message translates to:
@@ -43538,12 +42218,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'years'**
   String get settingUnitYears;
-
-  /// #2484 settings: Field label.
-  ///
-  /// In en, this message translates to:
-  /// **'Value'**
-  String get settingValueField;
 
   /// #2484 settings: A history line.
   ///
@@ -44882,12 +43556,6 @@ abstract class AppLocalizations {
   /// **'Organised'**
   String get setupLevelNameCommunityOrganised;
 
-  /// #3485 setupLevelName: the label for case 'money_invoices'.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get setupLevelNameMoneyInvoices;
-
   /// #3485 setupLevelName: the label for case 'money_none'.
   ///
   /// In en, this message translates to:
@@ -45656,18 +44324,6 @@ abstract class AppLocalizations {
   /// **'{monthly} a month\nAn extra half-day {half} · an extra day {day}'**
   String setupPricingTerms(String monthly, String half, String day);
 
-  /// #3485 setupProcessName: the label for case 'assistant'.
-  ///
-  /// In en, this message translates to:
-  /// **'Assistant'**
-  String get setupProcessNameAssistant;
-
-  /// #3485 setupProcessName: the label for case 'bookings'.
-  ///
-  /// In en, this message translates to:
-  /// **'Bookings'**
-  String get setupProcessNameBookings;
-
   /// #3485 setupProcessName: the label for case 'community'.
   ///
   /// In en, this message translates to:
@@ -45685,12 +44341,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Operations'**
   String get setupProcessNameOperations;
-
-  /// #3485 setupProcessName: the label for case 'payments'.
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get setupProcessNamePayments;
 
   /// #3485 setupProcessName: the label for case 'presentation'.
   ///
@@ -46058,12 +44708,6 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get setupStateNameReady;
 
-  /// #3485 setupStateName: the label for case 'unknown'.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get setupStateNameUnknown;
-
   /// #3076 — on the last step page of the guide: goes back to the guide, nothing is left.
   ///
   /// In en, this message translates to:
@@ -46352,12 +44996,6 @@ abstract class AppLocalizations {
   /// **'Legal identity'**
   String get setupStepTitleLegalIdentity;
 
-  /// #3485 setupStepTitle: the label for case 'limits'.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking limits'**
-  String get setupStepTitleLimits;
-
   /// #3485 setupStepTitle: the label for case 'look'.
   ///
   /// In en, this message translates to:
@@ -46597,12 +45235,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Addresses, the levels at each, and who calls which home'**
   String get sitesSubtitle;
-
-  /// #945 sites: sitesTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Sites'**
-  String get sitesTitle;
 
   /// #2440 small-business threshold: smallBusinessCheckFigure
   ///
@@ -47255,12 +45887,6 @@ abstract class AppLocalizations {
   /// #2863 supplier lookup
   ///
   /// In en, this message translates to:
-  /// **'Country'**
-  String get supplierLookupCountry;
-
-  /// #2863 supplier lookup
-  ///
-  /// In en, this message translates to:
   /// **'Choose the supplier\'s country.'**
   String get supplierLookupCountryMissing;
 
@@ -47603,12 +46229,6 @@ abstract class AppLocalizations {
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
-  /// **'Street'**
-  String get suppliersFieldStreet;
-
-  /// #2567 suppliers
-  ///
-  /// In en, this message translates to:
   /// **'Tax identifier (VAT number with country prefix)'**
   String get suppliersFieldTaxId;
 
@@ -47737,12 +46357,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tax identifier verified'**
   String get suppliersTaxVerified;
-
-  /// #2567 suppliers
-  ///
-  /// In en, this message translates to:
-  /// **'Suppliers'**
-  String get suppliersTitle;
 
   /// #3070 supplier outstanding balance
   ///
@@ -48044,23 +46658,11 @@ abstract class AppLocalizations {
   /// **'A protected screen was visited ({category}); nothing on it was recorded.'**
   String taskExportExcluded(String category);
 
-  /// #1866 task export (Word document): FieldAccessories
-  ///
-  /// In en, this message translates to:
-  /// **'Accessories'**
-  String get taskExportFieldAccessories;
-
   /// #1866 task export (Word document): FieldCheckIn
   ///
   /// In en, this message translates to:
   /// **'Check in'**
   String get taskExportFieldCheckIn;
-
-  /// #1866 task export (Word document): FieldDateRelation
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get taskExportFieldDateRelation;
 
   /// #1866 task export (Word document): FieldForWhom
   ///
@@ -48374,12 +46976,6 @@ abstract class AppLocalizations {
   /// **'Book a place'**
   String get taskExportSceneBookingTitle;
 
-  /// #1876 storyboard and illustrations: SceneCancel
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get taskExportSceneCancel;
-
   /// #1876 storyboard and illustrations: SceneConfirm
   ///
   /// In en, this message translates to:
@@ -48457,18 +47053,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Step left out by the reviewer.'**
   String get taskExportStoryboardLeftOut;
-
-  /// #1876 storyboard and illustrations: StoryboardMoveDown
-  ///
-  /// In en, this message translates to:
-  /// **'Move down'**
-  String get taskExportStoryboardMoveDown;
-
-  /// #1876 storyboard and illustrations: StoryboardMoveUp
-  ///
-  /// In en, this message translates to:
-  /// **'Move up'**
-  String get taskExportStoryboardMoveUp;
 
   /// #1876 storyboard and illustrations: StoryboardOrderRefused
   ///
@@ -49454,12 +48038,6 @@ abstract class AppLocalizations {
   /// **'Pause'**
   String get taskRecorderPause;
 
-  /// #1865 task recorder: taskRecorderPaused
-  ///
-  /// In en, this message translates to:
-  /// **'Paused'**
-  String get taskRecorderPaused;
-
   /// #1865 task recorder: taskRecorderProtectedAuthentication
   ///
   /// In en, this message translates to:
@@ -50366,12 +48944,6 @@ abstract class AppLocalizations {
   /// **'from {from}, no end'**
   String taxCertOpenEnded(String from);
 
-  /// #2362 sales tax: taxCertRequired
-  ///
-  /// In en, this message translates to:
-  /// **'Required'**
-  String get taxCertRequired;
-
   /// #2362 sales tax: taxCertSave
   ///
   /// In en, this message translates to:
@@ -50743,12 +49315,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Option for the invoice date'**
   String get taxRefInvoiceOption;
-
-  /// #2477 tax reference: Field: key naming a value within a country.
-  ///
-  /// In en, this message translates to:
-  /// **'Key'**
-  String get taxRefKey;
 
   /// #2477 tax reference: Field: label of a rate.
   ///
@@ -51800,12 +50366,6 @@ abstract class AppLocalizations {
   /// **'Unblock'**
   String get unblockAction;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Unblocked.'**
-  String get unblockDone;
-
   /// #3072 body of the leave-with-unsaved-changes question
   ///
   /// In en, this message translates to:
@@ -52424,12 +50984,6 @@ abstract class AppLocalizations {
   /// **'Owner may validate their own'**
   String get validationOwnerSelfShort;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Pick the persons'**
-  String get validationPickPersons;
-
   /// Label of the 1–10 stepper for how many accepts confirm a pending event; also prefixes the count in the card summary
   ///
   /// In en, this message translates to:
@@ -52561,12 +51115,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validation trail'**
   String get validationTrailTitle;
-
-  /// #1221 the validation screen, grouped by the process a rule interrupts
-  ///
-  /// In en, this message translates to:
-  /// **'Bookings'**
-  String get validationWorkflowBookings;
 
   /// #1221 the validation screen, grouped by the process a rule interrupts
   ///
@@ -53018,12 +51566,6 @@ abstract class AppLocalizations {
   /// **'Accountant\'s valuations'**
   String get valuationTitle;
 
-  /// #2576 accountant valuations
-  ///
-  /// In en, this message translates to:
-  /// **'unknown'**
-  String get valuationUnknown;
-
   /// FEC account for collected VAT
   ///
   /// In en, this message translates to:
@@ -53149,12 +51691,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.'**
   String get vatDeclDisclaimer;
-
-  /// Draft status chip
-  ///
-  /// In en, this message translates to:
-  /// **'Draft'**
-  String get vatDeclDraft;
 
   /// #2357 VAT filing files: vatDeclEdiTva
   ///
@@ -53311,12 +51847,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deductible VAT'**
   String get vatDeclInputVat;
-
-  /// Invoice-count column
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get vatDeclInvoices;
 
   /// #2363 VAT filing files (ES, IT): vatDeclLipeXml
   ///
@@ -53575,12 +52105,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Intermediate'**
   String get vatGroupIntermediate;
-
-  /// #947 VAT groups: vatGroupLabel
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get vatGroupLabel;
 
   /// #947 VAT groups: vatGroupNotSubject
   ///
@@ -54524,12 +53048,6 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get wizardBack;
 
-  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
-  ///
-  /// In en, this message translates to:
-  /// **'Issue, send, remind, register and validate payments, match and close — one guided process.'**
-  String get wizardCardHint;
-
   /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
@@ -54577,12 +53095,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issued {number}'**
   String wizardIssuedChip(String number);
-
-  /// Shown as a text in wizard steps payments (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Match'**
-  String get wizardMatchAction;
 
   /// Shown as a text in wizard steps payments (money). Placeholders: {amount} (String).
   ///
@@ -54791,18 +53303,6 @@ abstract class AppLocalizations {
   /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
-  /// **'Match'**
-  String get wizardStepMatch;
-
-  /// Shown as a text in wizard context (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get wizardStepPayments;
-
-  /// Shown as a text in wizard context (money).
-  ///
-  /// In en, this message translates to:
   /// **'Remind'**
   String get wizardStepRemind;
 
@@ -54931,12 +53431,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validators'**
   String get wizardWhoValidators;
-
-  /// Shown as a text in wizard steps payments (money).
-  ///
-  /// In en, this message translates to:
-  /// **'You'**
-  String get wizardWhoYou;
 
   /// Shown as a text in wizard steps payments (money).
   ///
@@ -55177,12 +53671,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace ID & QR'**
   String get workspaceCodeTitle;
-
-  /// Configuration PDF section: open weekdays and closure days.
-  ///
-  /// In en, this message translates to:
-  /// **'Availability'**
-  String get workspaceConfigAvailability;
 
   /// Configuration PDF floor plan: marker next to a room that can be booked as a whole.
   ///

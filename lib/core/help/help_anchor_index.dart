@@ -96,7 +96,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.validationSequential,
   HelpAnchor.validationAutoOwner,
   HelpAnchor.validationAutoAdmin,
-  HelpAnchor.documentsTitle,
+  HelpAnchor.featureDocuments,
   HelpAnchor.documentsUrl,
   HelpAnchor.documentsProvider,
   HelpAnchor.documentsCategory,

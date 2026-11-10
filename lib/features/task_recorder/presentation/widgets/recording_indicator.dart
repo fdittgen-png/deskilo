@@ -259,7 +259,7 @@ class _Pill extends ConsumerWidget {
     final paused = status.state == RecorderState.paused;
     final controller = ref.read(recorderControllerProvider);
     final label = paused
-        ? (l10n.taskRecorderPaused)
+        ? (l10n.memberStatusPaused)
         : (l10n.taskRecorderIndicator(status.stepCount));
     return Semantics(
       container: true,

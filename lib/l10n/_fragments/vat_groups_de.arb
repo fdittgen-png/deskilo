@@ -8,10 +8,6 @@
   "@featureVatGroupsDesc": {
     "description": "#947 VAT groups: featureVatGroupsDesc"
   },
-  "vatGroupLabel": "Gruppe",
-  "@vatGroupLabel": {
-    "description": "#947 VAT groups: vatGroupLabel"
-  },
   "vatGroupStandard": "Regelsatz",
   "@vatGroupStandard": {
     "description": "#947 VAT groups: vatGroupStandard"

@@ -256,7 +256,7 @@ class _ViewsMenu {
       );
       onOpen(saved, query);
     }),
-    child: Text(l10n.biViewSave),
+    child: Text(l10n.commonSave),
   );
 
   PopupMenuEntry<void Function()> _saveAs() => PopupMenuItem(

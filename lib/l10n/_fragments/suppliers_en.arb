@@ -1,22 +1,42 @@
 {
   "@@locale": "en",
   "suppliersOutstanding": "Outstanding: {amount}",
-  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersNoOutstanding": "No outstanding balance",
-  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBalanceUnavailable": "Balance unavailable",
-  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersViewPayables": "View supplier payables",
-  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersPayablesUnavailable": "Payables unavailable",
-  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
+  },
   "suppliersHeld": "On hold: {amount}",
-  "@suppliersHeld": {"description": "#3070 portion of the supplier balance on hold", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersLoadMore": "Load more",
-  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
-  "suppliersTitle": "Suppliers",
-  "@suppliersTitle": {
-    "description": "#2567 suppliers"
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
   },
   "suppliersIntro": "The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.",
   "@suppliersIntro": {
@@ -46,8 +66,12 @@
   "@suppliersStanding": {
     "description": "#3070 supplier list: the date of the last bill and what the supplier cost this year",
     "placeholders": {
-      "date": {"type": "String"},
-      "amount": {"type": "String"}
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "suppliersArchivedTag": "archived",
@@ -72,10 +96,6 @@
   },
   "suppliersFieldGroup": "This is a VAT-group identifier",
   "@suppliersFieldGroup": {
-    "description": "#2567 suppliers"
-  },
-  "suppliersFieldStreet": "Street",
-  "@suppliersFieldStreet": {
     "description": "#2567 suppliers"
   },
   "suppliersFieldPostalCode": "Postal code",

@@ -185,7 +185,7 @@ class _Stage extends StatelessWidget {
           TextButton(
             key: const ValueKey('federation-cancel'),
             onPressed: onCancel,
-            child: Text(l10n.federationCancel),
+            child: Text(l10n.commonCancel),
           ),
       ],
     );

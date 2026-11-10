@@ -12,10 +12,6 @@
   "@purchasesOffsetHint": {
     "description": "#2574 claim offset"
   },
-  "purchasesOffsetInvoice": "Invoice",
-  "@purchasesOffsetInvoice": {
-    "description": "#2574 claim offset"
-  },
   "purchasesOffsetNone": "This member has no open invoice to settle.",
   "@purchasesOffsetNone": {
     "description": "#2574 claim offset"

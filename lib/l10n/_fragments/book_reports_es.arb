@@ -10,7 +10,6 @@
   "bookReportDebitSide": "D",
   "bookReportCreditSide": "H",
   "bookReportJournalSales": "Ventas",
-  "bookReportJournalBank": "Banco",
   "bookReportJournalPurchases": "Compras",
   "bookReportJournalOther": "Operaciones diversas",
   "bookReportEntry": "Asiento",

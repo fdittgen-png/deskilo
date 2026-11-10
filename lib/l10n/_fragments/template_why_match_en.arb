@@ -31,10 +31,6 @@
   "@capabilityStateIncompatible": {
     "description": "#1660 template_why_match"
   },
-  "capabilityStateUnknown": "Unknown",
-  "@capabilityStateUnknown": {
-    "description": "#1660 template_why_match"
-  },
   "templateRequire": "Require: {capability}",
   "@templateRequire": {
     "description": "#1660 template_why_match",

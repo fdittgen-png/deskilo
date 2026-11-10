@@ -3,16 +3,8 @@
   "@inviteSectionTitle": {
     "description": "Shown as a button or chip label in workspace code screen (workspace), and 2 other places."
   },
-  "inviteViaWhatsapp": "WhatsApp",
-  "@inviteViaWhatsapp": {
-    "description": "Shown as a button or chip label in invite sheet (workspace)."
-  },
   "inviteViaSms": "SMS",
   "@inviteViaSms": {
-    "description": "Shown as a button or chip label in invite sheet (workspace)."
-  },
-  "inviteViaShare": "Share…",
-  "@inviteViaShare": {
     "description": "Shown as a button or chip label in invite sheet (workspace)."
   },
   "inviteFirstNameLabel": "First name (optional)",

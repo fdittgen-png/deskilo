@@ -162,7 +162,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
                         onTap: () => _openConversation(c.id),
                       ),
                     if (messages.isNotEmpty)
-                      _header(l10n.messageSearchMessages),
+                      _header(l10n.messagesTitle),
                     for (final note in messages)
                       ListTile(
                         key: ValueKey('search-message-${note.id}'),

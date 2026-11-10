@@ -38,7 +38,7 @@ class AvailabilityWeekdays extends StatelessWidget {
           children: [
             Flexible(child: SectionHeader(l10n.availabilityOpenWeekdays)),
             HelpDot(
-              l10n.helpHintAvailabilityTopic,
+              l10n.availabilityTitle,
               anchor: HelpAnchor.availabilityOpenWeekdays,
             ),
           ],
@@ -92,7 +92,7 @@ class AvailabilityGranularity extends StatelessWidget {
           children: [
             Flexible(child: SectionHeader(l10n.availabilityGranularityTitle)),
             HelpDot(
-              l10n.helpHintAvailabilityTopic,
+              l10n.availabilityTitle,
               anchor: HelpAnchor.availabilityGranularity,
             ),
           ],

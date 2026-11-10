@@ -266,10 +266,6 @@
   "@instanceDoctorRun": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorRunAgain": "Check again",
-  "@instanceDoctorRunAgain": {
-    "description": "#1308 instance wizard doctor and token"
-  },
   "instanceDoctorProtected": "Protected",
   "@instanceDoctorProtected": {
     "description": "#1308 instance wizard doctor and token"

@@ -89,7 +89,7 @@ void main() {
     await tester.tap(
       find.descendant(
         of: firstTile,
-        matching: find.byTooltip(l.taskExportStoryboardMoveDown),
+        matching: find.byTooltip(l.spaceMoveDown),
       ),
     );
     expect(changed!.frames[1].stepSeq, 1);
@@ -107,7 +107,7 @@ void main() {
     await tester.tap(
       find.descendant(
         of: tile,
-        matching: find.byTooltip(l.taskExportStoryboardMoveUp),
+        matching: find.byTooltip(l.spaceMoveUp),
       ),
     );
     await tester.pump();

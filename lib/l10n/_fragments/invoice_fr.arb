@@ -7,7 +7,6 @@
   "invoiceIssueDeclined": "La validation a été refusée ou a expiré. Aucune facture n'a été émise.",
   "invoiceActionUnknownBody": "La demande a été envoyée mais la réponse n'est pas arrivée : elle a peut-être déjà été appliquée. Rien n'est renvoyé. Vérifiez à nouveau pour la retrouver.",
   "invoiceActionDeclined": "La validation a été refusée ou a expiré. Rien n'a été modifié.",
-  "invoicesTitle": "Factures",
   "invoicesEmpty": "Aucune facture pour l'instant.",
   "invoiceCreate": "Nouvelle facture",
   "invoiceMemberLabel": "Membre",
@@ -47,8 +46,6 @@
   "invoiceLineAdjustment": "Ajustement",
   "invoiceFilterAllMembers": "Tous les membres",
   "invoiceFilterAllMonths": "Tous les mois",
-  "invoiceFilterMonthLabel": "Mois",
-  "invoiceSortTooltip": "Trier",
   "invoiceSortNewest": "Plus récentes d'abord",
   "invoiceSortByMember": "Par membre",
   "invoiceSortByMonth": "Par mois",
@@ -307,12 +304,10 @@
   "legalIdentityVatId": "Numéro de TVA",
   "legalIdentityLegalId": "Numéro d'immatriculation",
   "legalIdentityExemptionReason": "Motif de non-application de la TVA",
-  "legalIdentityStreet": "Rue",
   "legalIdentityCity": "Ville",
   "legalIdentityPostalCode": "Code postal",
   "legalIdentitySaved": "Identité légale enregistrée.",
   "legalIdentityVatWarning": "Cet espace facture la TVA mais aucun taux par défaut n'est en vigueur : aucune facture ne peut être émise tant que vous n'en ajoutez pas. Les taux se modifient avec « Gestion de la TVA » activée.",
-  "addressCountryLabel": "Pays",
   "addressVatIdLabel": "Numéro de TVA (si vous facturez en tant que professionnel)",
   "invoiceProformaAction": "Facture proforma",
   "invoicePdfProforma": "Proforma",
@@ -321,7 +316,6 @@
   "invoicePdfCopy": "Copie",
   "invoiceStatusPartiallyPaid": "Partiellement payée",
   "invoiceRegisterTitle": "Registre des factures",
-  "invoiceRegisterDate": "Date",
   "invoiceRegisterName": "Nom",
   "invoiceRegisterAmount": "Montant",
   "invoiceRegisterTotal": "Total",
@@ -373,7 +367,6 @@
   "einvoiceConfigTokenSet": "Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).",
   "invoiceAccountingExport": "Export comptable",
   "invoiceAccountingExportEmpty": "Rien à exporter pour cette période.",
-  "invoiceRegisterYear": "Année",
   "invoiceRegisterAllYears": "Toutes les années",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportFec": "FEC (France, exigé en cas de contrôle)",
@@ -382,7 +375,6 @@
   "fecAccountsIntro": "Un FEC est fait d'écritures comptables : il lui faut des numéros de compte. Voici les comptes du plan comptable général — remplacez-les par ceux de votre comptable si besoin.",
   "fecAccountCustomers": "Clients",
   "fecAccountRevenue": "Ventes",
-  "fecAccountBank": "Banque",
   "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
   "invoiceEInvoiceStaleIdentity": "Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.",
   "einvoiceConfigUnavailable": "Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.",
@@ -433,7 +425,6 @@
   "dunningBetweenDays": "Jours entre les relances",
   "dunningSaved": "Règles de relance enregistrées.",
   "dunningDueChip": "Relance {level} à envoyer",
-  "invoiceTemplateDocInvoice": "Facture",
   "invoiceTemplateDocReminder": "Relance {level}",
   "reportPreviewZoomIn": "Agrandir",
   "reportPreviewZoomOut": "Réduire",
@@ -593,10 +584,6 @@
   "@reportLineSection": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineText": "Texte",
-  "@reportLineText": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineSmall": "Petit texte",
   "@reportLineSmall": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -615,10 +602,6 @@
   },
   "reportLineSpacer": "Espacement",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineImage": "Image",
-  "@reportLineImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineColumns": "Début/fin de colonnes",
@@ -732,10 +715,6 @@
   "@invoicePdfCreditNote": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceStatusRefunded": "Remboursée",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
-  },
   "invoiceRefundLabel": "À rembourser",
   "@invoiceRefundLabel": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
@@ -785,7 +764,6 @@
   "journeyStateUpcoming": "À venir",
   "journeyStateCancelled": "Annulé",
   "journeyStepIssued": "Émise",
-  "journeyStepPayment": "Paiement",
   "journeyStepConfirmation": "Confirmation",
   "journeyStepClosed": "Close",
   "journeyIssuerMemberPays": "En attente du paiement de {name} : {amount} — échéance {date}",
@@ -1044,14 +1022,9 @@
   "reportDesignerFieldsSearch": "Rechercher un champ",
   "reportDesignerMoveTo": "Déplacer vers la bande",
   "reportDesignerDrag": "Glisser pour réordonner",
-  "reportImageSize": "Taille",
   "reportImageSizeSmall": "Petite",
   "reportImageSizeMedium": "Moyenne",
   "reportImageSizeLarge": "Grande",
-  "reportImageAlign": "Alignement",
-  "reportImageAlignLeft": "Gauche",
-  "reportImageAlignCenter": "Centre",
-  "reportImageAlignRight": "Droite",
   "reportTemplateLangOverridden": "Modèle propre",
   "reportTemplateLangInherits": "Hérite du défaut",
   "reportTemplateClearOverlay": "Utiliser le défaut pour cette langue",
@@ -1063,10 +1036,8 @@
   "reportFieldGroupMoney": "Montants",
   "reportFieldGroupLegal": "Mentions légales",
   "reportFieldGroupLoops": "Boucles lignes et TVA",
-  "reportDesignerSideBySide": "Conception et aperçu côte à côte",
   "wizardTitle": "Assistant de facturation",
   "invoiceWizardAction": "Assistant de clôture",
-  "wizardCardHint": "Émettre, envoyer, relancer, enregistrer et valider les paiements, rapprocher et clôturer — un seul processus guidé.",
   "wizardRunStart": "Début de mois",
   "wizardRunEnd": "Fin de mois",
   "wizardRunStartHint": "Les abonnements payés d'avance : les émettre pour le mois à venir, les envoyer, prévoir les relances — puis le volet paiements.",
@@ -1075,8 +1046,6 @@
   "wizardStepIssue": "Émettre",
   "wizardStepSend": "Envoyer",
   "wizardStepRemind": "Relancer",
-  "wizardStepPayments": "Paiements",
-  "wizardStepMatch": "Rapprocher",
   "wizardStepClose": "Clôturer",
   "wizardStepSummary": "Récapitulatif",
   "wizardNext": "Suivant",
@@ -1160,7 +1129,6 @@
     }
   },
   "wizardMatchNoCredit": "Aucun paiement sur le compte pour l'instant",
-  "wizardMatchAction": "Rapprocher",
   "wizardCloseHint": "Un membre avec plusieurs factures ouvertes peut n'en payer QU'UNE ; le reste d'une facture partiellement payée peut être abandonné ; un avoir est remboursé. Chacun passe par la validation.",
   "wizardCloseNone": "Rien à regrouper, abandonner ou rembourser.",
   "wizardSettle": "Regrouper {count}",
@@ -1186,7 +1154,6 @@
   "wizardTallyNothing": "Rien n'a été modifié.",
   "wizardTodoHeading": "Encore ouvert — à qui de jouer",
   "wizardTodoNone": "Plus rien d'ouvert.",
-  "wizardWhoYou": "Vous",
   "wizardWhoValidators": "Validateurs",
   "registerPaymentTitle": "Enregistrer un paiement",
   "registerPaymentHint": "Un paiement arrivé à l'espace — le membre le confirme, puis il peut être rapproché d'une facture.",
@@ -1194,7 +1161,6 @@
   "registerPaymentAmount": "Montant",
   "registerPaymentMethod": "Moyen",
   "registerPaymentDate": "Payé le",
-  "registerPaymentNote": "Note",
   "registerPaymentSubmit": "Enregistrer",
   "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté.",
   "repartitionAction": "Répartir une dépense",
@@ -1347,10 +1313,6 @@
         "type": "String"
       }
     }
-  },
-  "retentionClassInvoice": "Factures",
-  "@retentionClassInvoice": {
-    "description": "#2571 retention clocks"
   },
   "retentionClassBooks": "Livres comptables",
   "@retentionClassBooks": {

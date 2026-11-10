@@ -139,7 +139,7 @@ class _ExportSheet extends StatelessWidget {
         ListTile(
           key: const ValueKey('file-export-share'),
           leading: const Icon(Icons.ios_share),
-          title: Text(l10n.fileExportShare),
+          title: Text(l10n.libraryShare),
           subtitle: Text(l10n.fileExportShareHint),
           onTap: () => Navigator.of(context).pop(_ExportChoice.share),
         ),

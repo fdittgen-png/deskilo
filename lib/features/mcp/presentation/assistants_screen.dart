@@ -64,7 +64,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           TextButton(
             key: const ValueKey('assistants-mcp-cancel'),
             onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.mcpCancel),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('mcp-disconnect-confirm'),

@@ -2,7 +2,6 @@
   "refFilterMore": "Filtres",
   "refFilterAll": "Tout",
   "refFilterClear": "Effacer les filtres",
-  "refFilterSort": "Trier",
   "refSortNewest": "Les plus récents d'abord",
   "refSortOldest": "Les plus anciens d'abord",
   "refSortAmountHigh": "Montant le plus élevé",
@@ -27,15 +26,12 @@
   },
   "refFacetStatus": "Statut",
   "refFacetPerson": "Personne",
-  "refFacetMonth": "Mois",
   "refFacetType": "Type",
   "refFacetWorkspace": "Espace",
   "refStatusOpen": "Ouverte (impayée)",
   "refStatusPaid": "Payée",
   "refStatusCancelled": "Annulée",
   "refStatusRefunded": "Remboursée",
-  "refTypeInvoice": "Facture",
   "refTypeCreditNote": "Avoir",
-  "refStatusPending": "En attente",
   "refStatusDecided": "Décidée"
 }

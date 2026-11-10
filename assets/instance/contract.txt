@@ -317,6 +317,10 @@ constraint book_profiles.book_profiles_revision_check CHECK ((revision >= 1))
 constraint book_profiles.book_profiles_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_profiles.system_company_present CHECK ((company_id IS NOT NULL))
+constraint business_kinds.business_kinds_code_check CHECK ((code ~ '^[a-z][a-z_]{1,31}$'::text))
+constraint business_kinds.business_kinds_feature_profile_check CHECK ((jsonb_typeof(feature_profile) = 'object'::text))
+constraint business_kinds.business_kinds_pkey PRIMARY KEY (code)
+constraint business_kinds.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint capability_states.capability_states_capability_key_check CHECK ((capability_key = 'accountingConnectors'::text))
 constraint capability_states.capability_states_changed_by_member_id_same_workspace FOREIGN KEY (workspace_id, changed_by_member_id) REFERENCES members(workspace_id, id)
 constraint capability_states.capability_states_pkey PRIMARY KEY (workspace_id, capability_key)
@@ -2238,6 +2242,7 @@ routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer 
 routine public.book_role_account_type(p_role text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:aedea518c9ee
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
+routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
 routine public.calendar_items(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_kinds text[], p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b467c82650aa
 routine public.can_discuss_workspace_application(p_event_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:fcf9ed2b287b
@@ -3441,6 +3446,7 @@ trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_st
 trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_mappings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger business_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
 trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_stations_guard BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_guard()
@@ -3729,6 +3735,7 @@ trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEF
 trigger services.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.services REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger services.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger setting_values.business_kind_setting_check CREATE TRIGGER business_kind_setting_check BEFORE INSERT OR UPDATE OF value ON public.setting_values FOR EACH ROW WHEN ((new.key = ANY (ARRAY['business.kind'::text, 'business.more_kinds'::text]))) EXECUTE FUNCTION business_kind_setting_check()
 trigger setting_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setup_step_drafts.setup_step_drafts_step_known CREATE TRIGGER setup_step_drafts_step_known BEFORE INSERT OR UPDATE OF step ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION setup_step_drafts_step_known()
 trigger setup_step_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

@@ -455,9 +455,9 @@ String _deploymentEntityName(AppLocalizations l10n, String key) =>
       'vat' => l10n.deployEntityVat,
       'tariffs' => l10n.deployEntityTariffs,
       'services' => l10n.deployEntityServices,
-      'packages' => l10n.deployEntityPackages,
-      'accessories' => l10n.deployEntityAccessories,
-      'sites' => l10n.deployEntitySites,
+      'packages' => l10n.biSalesKindPackage,
+      'accessories' => l10n.accessoriesTitle,
+      'sites' => l10n.featureMultiSite,
       'floor_plan' =>
         l10n.deployEntityFloorPlan,
       'booking_rules' => l10n.deployEntityBookingRules,
@@ -471,10 +471,10 @@ String _deploymentEntityName(AppLocalizations l10n, String key) =>
         l10n.deployEntityDocumentDesign,
       'document_links' =>
         l10n.deployEntityDocumentLinks,
-      'closure_days' => l10n.deployEntityClosureDays,
+      'closure_days' => l10n.availabilityClosureDays,
       'invitations' => l10n.deployEntityInvitations,
       'features' => l10n.deployEntityFeatures,
-      'branding' => l10n.deployEntityBranding,
+      'branding' => l10n.coloursTitle,
       'field_definitions' =>
         l10n.deployEntityFieldDefinitions,
       'workspace_roles' =>

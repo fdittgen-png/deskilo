@@ -4,7 +4,6 @@
   "assistantSetupIntro": "Lo que los asistentes necesitan en este espacio de trabajo, en orden. Cada paso indica quién lo realiza.",
   "assistantSetupNoWorkspace": "Elija primero un espacio de trabajo.",
   "assistantSetupAllDone": "Todo está configurado para este espacio de trabajo.",
-  "assistantSetupSaved": "Guardado.",
   "assistantSetupStale": "Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.",
   "assistantSetupFailed": "No se pudo guardar. No cambió nada; inténtelo de nuevo.",
   "assistantSetupLinkIdentity": "Confirmar mi identidad",

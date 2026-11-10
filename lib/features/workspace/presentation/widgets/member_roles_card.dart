@@ -175,7 +175,7 @@ class MemberRolesCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.memberRolesTitle,
+              l10n.rolesTitle,
               style: theme.textTheme.labelLarge
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),

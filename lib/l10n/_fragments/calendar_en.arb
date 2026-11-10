@@ -152,18 +152,6 @@
   "@calendarKindEvent": {
     "description": "#718/#719 - calendar hub"
   },
-  "calendarKindMessage": "Messages",
-  "@calendarKindMessage": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindInvoice": "Invoices",
-  "@calendarKindInvoice": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindPayment": "Payments",
-  "@calendarKindPayment": {
-    "description": "#718/#719 - calendar hub"
-  },
   "calendarKindConsumption": "Consumption",
   "@calendarKindConsumption": {
     "description": "#718/#719 - calendar hub"
@@ -279,10 +267,6 @@
   },
   "calendarViewWeek": "Week",
   "@calendarViewWeek": {
-    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
-  },
-  "calendarViewMonth": "Month",
-  "@calendarViewMonth": {
     "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
   },
   "calendarToday": "Today",

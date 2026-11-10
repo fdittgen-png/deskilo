@@ -42,9 +42,9 @@ class AvailabilityPolicies extends StatelessWidget {
   List<Widget> _switches(BuildContext context, AppLocalizations l10n) => [
     Row(
       children: [
-        Flexible(child: SectionHeader(l10n.availabilityPoliciesTitle)),
+        Flexible(child: SectionHeader(l10n.featureBookingPoliciesTitle)),
         HelpDot(
-          l10n.helpTopicBookingPolicies,
+          l10n.featureBookingPoliciesTitle,
           anchor: HelpAnchor.availabilityPolicies,
         ),
       ],
@@ -53,7 +53,7 @@ class AvailabilityPolicies extends StatelessWidget {
       key: const Key('policy-allow-past'),
       title: HelpDotTitle(
         l10n.policyAllowPastTitle,
-        l10n.helpTopicBookingPolicies,
+        l10n.featureBookingPoliciesTitle,
         anchor: HelpAnchor.availabilityAllowPast,
       ),
       subtitle: Text(l10n.policyAllowPastDesc),
@@ -65,7 +65,7 @@ class AvailabilityPolicies extends StatelessWidget {
       key: const Key('policy-admin-checkout'),
       title: HelpDotTitle(
         l10n.policyAdminCheckoutTitle,
-        l10n.helpTopicBookingPolicies,
+        l10n.featureBookingPoliciesTitle,
         anchor: HelpAnchor.availabilityAdminCheckout,
       ),
       subtitle: Text(l10n.policyAdminCheckoutDesc),
@@ -85,7 +85,7 @@ class AvailabilityPolicies extends StatelessWidget {
     ListTile(
       title: HelpDotTitle(
         l10n.policyOutsideHoursTitle,
-        l10n.helpTopicBookingPolicies,
+        l10n.featureBookingPoliciesTitle,
         anchor: HelpAnchor.availabilityOutsideHours,
       ),
       subtitle: Text(l10n.policyOutsideHoursDesc),
@@ -140,7 +140,7 @@ class AvailabilityPolicies extends StatelessWidget {
     // displays what it actually does.
     Row(
       children: [
-        Flexible(child: SectionHeader(l10n.policyLimitsTitle)),
+        Flexible(child: SectionHeader(l10n.helpTopicBookingLimits)),
         HelpDot(
           l10n.helpTopicBookingLimits,
           anchor: HelpAnchor.availabilityLimits,

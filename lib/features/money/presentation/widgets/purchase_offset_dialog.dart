@@ -147,7 +147,7 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
                 key: const ValueKey('offset-invoice'),
                 initialValue: _invoiceId,
                 decoration: InputDecoration(
-                  labelText: l10n.purchasesOffsetInvoice,
+                  labelText: l10n.invoicePdfTitle,
                 ),
                 items: [
                   for (final o in open)

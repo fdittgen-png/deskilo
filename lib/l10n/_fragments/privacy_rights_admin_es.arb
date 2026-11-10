@@ -2,7 +2,6 @@
   "@@locale": "es",
   "personalBirthday": "Fecha de nacimiento",
   "personalBirthdayHelp": "Solo usted, las personas autorizadas a ver los datos personales de los miembros y el administrador de datos personales del espacio pueden leerla. Quien solo emite facturas, no.",
-  "personalBirthdayPick": "Elegir una fecha",
   "personalBirthdayClear": "Quitar la fecha de nacimiento",
   "personalBirthdaySaveFailed": "Sus datos se guardaron, pero la fecha de nacimiento no.",
   "privacyAdminTitle": "Datos personales y solicitudes de derechos",
@@ -35,7 +34,6 @@
   "privacyAdminBasis": "Por qué se conservan",
   "privacyAdminPeriod": "Durante cuánto tiempo",
   "privacyAdminRefusalReason": "Motivo del rechazo (al menos 10 caracteres)",
-  "privacyAdminSave": "Guardar",
   "privacyAdminActionFailed": "El servidor lo rechazó: {reason}",
   "@privacyAdminActionFailed": {
     "placeholders": {

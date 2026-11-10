@@ -25,7 +25,7 @@ class SitesScreen extends ConsumerWidget {
     final sites = ref.watch(sitesProvider);
     final levels = ref.watch(levelsProvider).value ?? const [];
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.sitesTitle)),
+      appBar: AppBar(title: Text(l10n.featureMultiSite)),
       floatingActionButton: FloatingActionButton.extended(
         key: const ValueKey('sites-add'),
         onPressed: () => _editSite(context, ref, null),

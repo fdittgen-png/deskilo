@@ -137,7 +137,7 @@ class DrawerEntries {
             may(WorkspacePermission.manageBilling));
     return <DrawerEntry>[
       if (sales)
-        DrawerEntry('drawer-sales', Icons.sell_outlined, l10n.hubSalesTitle,
+        DrawerEntry('drawer-sales', Icons.sell_outlined, l10n.bookReportJournalSales,
             () => go('/money/sales'),
             route: '/money/sales'),
       if (features.contains(WorkspaceFeature.purchases) &&
@@ -153,7 +153,7 @@ class DrawerEntries {
               may(WorkspacePermission.manageBilling) ||
               may(WorkspacePermission.managePurchases)))
         DrawerEntry('drawer-suppliers', Icons.storefront_outlined,
-            l10n.suppliersTitle, () => go('/money/suppliers'),
+            l10n.bookRoleSuppliers, () => go('/money/suppliers'),
             route: '/money/suppliers'),
       ..._purchaseOrders(),
       // #3070 — the documents waiting for a decision; the drawer badges it.
@@ -280,7 +280,7 @@ class DrawerEntries {
         DrawerEntry(
           'drawer-invoices',
           Icons.receipt_long_outlined,
-          l10n.invoicesManage,
+          l10n.featureInvoicing,
           () => go('/invoices'),
           route: '/invoices',
         ),
@@ -409,7 +409,7 @@ class DrawerEntries {
         DrawerEntry(
           'drawer-documents',
           Icons.folder_open_outlined,
-          l10n.documentsTitle,
+          l10n.featureDocuments,
           () => go('/documents'),
         ),
       DrawerEntry(

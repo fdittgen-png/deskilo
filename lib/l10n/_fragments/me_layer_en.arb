@@ -7,10 +7,6 @@
   "@meTabDiscover": {
     "description": "Me layer bottom tab: find published spaces."
   },
-  "meTabMessages": "Messages",
-  "@meTabMessages": {
-    "description": "Me layer bottom tab: the person's messages."
-  },
   "meTabMe": "Me",
   "@meTabMe": {
     "description": "Me layer bottom tab and title: the person's own account."

@@ -33,7 +33,6 @@
   "memberPageGroupBilling": "Abrechnung",
   "memberPageGroupAccess": "Ausweise & Zugang",
   "memberPageManageHeading": "Verwalten",
-  "memberPageStatusActive": "Aktiv",
   "memberPageNeverSeen": "Noch nie gesehen",
   "memberPageYou": "{name} (Sie)",
   "@memberPageYou": {

@@ -328,7 +328,7 @@ class _OrderForm {
       key: ValueKey('purchase-order-qty-$i'),
       controller: fields['qty-$i'],
       fieldKey: 'qty-$i',
-      label: l10n.purchaseOrderQuantity,
+      label: l10n.purchasesQuantity,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
     ),
     AppTextField(

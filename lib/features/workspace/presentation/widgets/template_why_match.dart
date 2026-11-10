@@ -22,7 +22,7 @@ String _capabilityStateLabel(AppLocalizations l10n, CapabilityState s) =>
         l10n.capabilityStateLocalInput,
       CapabilityState.incompatible =>
         l10n.capabilityStateIncompatible,
-      CapabilityState.unknown => l10n.capabilityStateUnknown,
+      CapabilityState.unknown => l10n.compareUnknown,
     };
 
 /// #1660 — "Why this matches": for each capability the search asked

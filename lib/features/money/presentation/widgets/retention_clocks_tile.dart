@@ -12,7 +12,7 @@ import 'retention_holds_section.dart';
 
 /// The name of the document class [docClass] a retention rule is kept for.
 String retentionClassName(AppLocalizations l10n, String docClass) => switch (docClass) {
-  'invoice' => l10n.retentionClassInvoice,
+  'invoice' => l10n.featureInvoicing,
   'books' => l10n.retentionClassBooks,
   'correspondence' => l10n.retentionClassCorrespondence,
   _ => l10n.retentionClassVoucher,

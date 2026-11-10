@@ -121,7 +121,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
               controller: _price,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              label: l10n.carnetPrice,
+              label: l10n.servicesPrice,
               suffixText: money.currencySymbol,
             ),
           ),

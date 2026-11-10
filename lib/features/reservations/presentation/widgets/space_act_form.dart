@@ -273,7 +273,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               // #1191 — the chip's own tick would land on this.
               showCheckmark: false,
               avatar: const Icon(Icons.event_available_outlined, size: 18),
-              label: Text(l10n.kioskReserve),
+              label: Text(l10n.shellReserveButton),
               selected: _action == SpaceAction.reserve,
               onSelected: (_) => setState(() {
                 _action = SpaceAction.reserve;

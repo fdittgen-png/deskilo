@@ -89,7 +89,7 @@ class SetupPurchaseSideStep extends ConsumerWidget {
           lookupOn: MoneyViewData.gates(ref).supplierLookupOn,
         ),
         icon: const Icon(Icons.storefront_outlined),
-        label: Text(l10n.suppliersTitle),
+        label: Text(l10n.bookRoleSuppliers),
       ),
     };
   }

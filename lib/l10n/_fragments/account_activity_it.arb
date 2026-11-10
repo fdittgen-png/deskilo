@@ -1,6 +1,5 @@
 {
   "accountActivityTitle": "I miei consumi e pagamenti",
-  "accountPaymentsTitle": "Pagamenti",
   "accountActivityScope": "Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.",
   "accountActivityEmpty": "Nessun dato da mostrare.",
   "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.",

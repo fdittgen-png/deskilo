@@ -131,7 +131,7 @@ class PurchasePayablesView extends ConsumerWidget {
                 l10n.purchasesClaimOwedTo(
                   r.obligation.creditorName ??
                       names[r.obligation.creditorId] ??
-                      l10n.purchasesClaimYou,
+                      l10n.seatDayMine,
                 ),
               ),
               subtitle: Text(

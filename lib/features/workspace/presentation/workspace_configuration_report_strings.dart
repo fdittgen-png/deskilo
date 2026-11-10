@@ -18,7 +18,7 @@ WorkspaceConfigPdfStrings workspaceConfigurationStrings(
   colStatus: l10n.workspaceConfigColStatus,
   features: l10n.workspaceConfigFeatures,
   none: l10n.workspaceConfigNone,
-  availability: l10n.workspaceConfigAvailability,
+  availability: l10n.availabilityTitle,
   openDays: l10n.workspaceConfigOpenDays,
   closures: l10n.workspaceConfigClosures,
   floorPlan: l10n.workspaceConfigFloorPlan,
@@ -39,5 +39,5 @@ WorkspaceConfigPdfStrings workspaceConfigurationStrings(
       l10n.workspaceConfigInvitationSingleUse,
   workingHours: l10n.availabilityWorkHoursTitle,
   vatRates: l10n.vatRatesTile,
-  sites: l10n.sitesTitle,
+  sites: l10n.featureMultiSite,
 );

@@ -31,9 +31,5 @@
   "blockPersonDone": "Blocked.",
   "@blockPersonDone": {
     "description": "Shown as a text in block person (directory)."
-  },
-  "unblockDone": "Unblocked.",
-  "@unblockDone": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   }
 }

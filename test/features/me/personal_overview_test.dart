@@ -197,8 +197,8 @@ void main() {
         ),
         kTestNow,
       );
-      expect(next.entry?.item.id, 'soon');
-      expect(next.entry?.source, 'inst-b');
+      expect(next.commitment?.id, 'soon');
+      expect(next.commitment?.source, 'inst-b');
       expect(next.complete, isTrue);
       expect(next.failed, isEmpty);
     });
@@ -213,7 +213,7 @@ void main() {
         ]),
         kTestNow,
       );
-      expect(next.entry?.item.id, 'now');
+      expect(next.commitment?.id, 'now');
     });
 
     test('a host that failed or is still read keeps the answer from being '
@@ -222,9 +222,9 @@ void main() {
         composed(const [], bFailed: true),
         kTestNow,
       );
-      expect(failed.entry, isNull);
+      expect(failed.commitment, isNull);
       expect(failed.complete, isFalse);
-      expect(failed.failed.single.installationId, 'inst-b');
+      expect(failed.failed.single.sourceId, 'inst-b');
       final reading = nextCommitmentOf(
         composed(const [], bReading: true),
         kTestNow,

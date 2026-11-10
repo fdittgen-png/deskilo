@@ -30,7 +30,7 @@ class TaskExportLabels {
   };
 
   String field(String key) => switch (key) {
-    'date_relation' => l.taskExportFieldDateRelation,
+    'date_relation' => l.numberSequenceDatePart,
     'period' => l.taskExportFieldPeriod,
     'view_mode' => l.taskExportFieldViewMode,
     'resource_kind' => l.taskExportFieldResourceKind,
@@ -40,7 +40,7 @@ class TaskExportLabels {
     'series_result' => l.taskExportFieldSeriesResult,
     'refusal' => l.taskExportFieldRefusal,
     'time' => l.taskExportFieldTime,
-    'accessories' => l.taskExportFieldAccessories,
+    'accessories' => l.accessoriesTitle,
     _ => l.taskExportFieldUnknown,
   };
 

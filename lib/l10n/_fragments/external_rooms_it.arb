@@ -112,10 +112,6 @@
   "@roomRentNeedSupplier": {
     "description": "#2568 rented rooms"
   },
-  "roomRentFieldFrom": "Primo giorno",
-  "@roomRentFieldFrom": {
-    "description": "#2568 rented rooms"
-  },
   "roomRentFieldUntil": "Ultimo giorno (facoltativo)",
   "@roomRentFieldUntil": {
     "description": "#2568 rented rooms"
@@ -166,10 +162,6 @@
   },
   "roomRentInvalid": "Scegliete il locatore e il primo giorno e inserite gli importi come numeri.",
   "@roomRentInvalid": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentSave": "Salva",
-  "@roomRentSave": {
     "description": "#2568 rented rooms"
   },
   "roomRentSaved": "Locazione salvata",

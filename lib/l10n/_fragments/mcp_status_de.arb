@@ -21,7 +21,6 @@
   "mcpStateCurrent": "Erteilt",
   "mcpStateAvailable": "Erreichbar",
   "mcpStateIncompatible": "Inkompatible Version",
-  "mcpStateUnavailable": "Unbekannt",
   "mcpNextLinkIdentity": "Nächster Schritt: Bestätigen Sie Ihre Identität für Assistenten auf dieser Datenbank — ein Tippen unten.",
   "mcpNextRequestEligibility": "Als Nächstes: Sie bitten die Administratoren dieser Datenbank um Freigabe.",
   "mcpNextAwaitEligibility": "Als Nächstes: Ein Datenbank-Administrator entscheidet über Ihre Anfrage.",

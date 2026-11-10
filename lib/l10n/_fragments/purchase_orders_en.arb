@@ -56,10 +56,6 @@
   "@purchaseOrderDescription": {
     "description": "#3307 purchase orders"
   },
-  "purchaseOrderQuantity": "Quantity",
-  "@purchaseOrderQuantity": {
-    "description": "#3307 purchase orders"
-  },
   "purchaseOrderUnit": "Unit (e.g. box)",
   "@purchaseOrderUnit": {
     "description": "#3307 purchase orders"
@@ -122,10 +118,6 @@
   },
   "purchaseOrderBadEmail": "One e-mail address, or leave it empty to print",
   "@purchaseOrderBadEmail": {
-    "description": "#3307 purchase orders"
-  },
-  "purchaseOrderStateDraft": "Draft",
-  "@purchaseOrderStateDraft": {
     "description": "#3307 purchase orders"
   },
   "purchaseOrderStateSent": "Sent",

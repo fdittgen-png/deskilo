@@ -156,7 +156,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final actionLabel = switch (plan.receipt) {
       KioskReceipt.reserveAndCheckIn => l10n.kioskReserveAndCheckIn,
       KioskReceipt.checkIn => l10n.kioskCheckIn,
-      KioskReceipt.reserve => l10n.kioskReserve,
+      KioskReceipt.reserve => l10n.shellReserveButton,
       KioskReceipt.checkOut => l10n.kioskCheckOut,
     };
     // #616 — the member's own photo on the receipt: the visual

@@ -43,10 +43,6 @@
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
   },
-  "memberMessagesAction": "Messaggi",
-  "@memberMessagesAction": {
-    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
-  },
   "conversationEmpty": "Ancora nessun messaggio — saluti!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
@@ -59,20 +55,12 @@
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
   },
-  "conversationGroup": "Gruppo",
-  "@conversationGroup": {
-    "description": "#687 - messaging centre"
-  },
   "conversationUnknownMember": "Membro",
   "@conversationUnknownMember": {
     "description": "#687 - messaging centre"
   },
   "conversationYesterday": "Ieri",
   "@conversationYesterday": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationYou": "Lei",
-  "@conversationYou": {
     "description": "#687 - messaging centre"
   },
   "messagesTitle": "Messaggi",
@@ -108,16 +96,8 @@
   "@newConversationNoMembers": {
     "description": "#687 - messaging centre"
   },
-  "newGroupName": "Nome del gruppo",
-  "@newGroupName": {
-    "description": "#687 - messaging centre"
-  },
   "newGroupCreate": "Crea gruppo",
   "@newGroupCreate": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationGroupInfo": "Gruppo",
-  "@conversationGroupInfo": {
     "description": "#687 - messaging centre"
   },
   "conversationAddPeople": "Aggiungi membri",
@@ -164,10 +144,6 @@
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
   },
-  "messageSearchMessages": "Messaggi",
-  "@messageSearchMessages": {
-    "description": "#687 - messaging search"
-  },
   "messageSearchTitle": "Cerca",
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
@@ -199,10 +175,6 @@
   },
   "memberMonthInProgress": "Questo mese",
   "@memberMonthInProgress": {
-    "description": "#704 - the money section of a member profile"
-  },
-  "memberPayments": "Pagamenti",
-  "@memberPayments": {
     "description": "#704 - the money section of a member profile"
   },
   "memberInvoiceOpen": "{amount} da pagare",
@@ -252,8 +224,6 @@
   "conversationMarkUnread": "Segna come non letto",
   "conversationArchive": "Archivia",
   "conversationUnarchive": "Ripristina dall'archivio",
-  "conversationArchived": "Conversazione archiviata.",
-  "conversationMutedBadge": "Silenziosa",
   "conversationLoadEarlier": "Carica messaggi precedenti",
   "conversationToday": "Oggi",
   "composerAttach": "Allega un riferimento",
@@ -265,10 +235,6 @@
       }
     }
   },
-  "composerDraftKept": "Bozza conservata",
-  "newConversationTapToOpen": "Tocchi una persona per aprire la chat; attivi Gruppo per sceglierne più di una.",
-  "newConversationGroupSwitch": "Gruppo",
-  "inboxRetry": "Riprova",
   "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
   "memberNoteDeleteNotMine": "Solo il mittente può ritirare un messaggio.",
   "noteRefFilterLabel": "Filtra",
@@ -276,8 +242,6 @@
   "noteRefFilterEmpty": "Nessun risultato.",
   "noteRefAlert": "Avviso",
   "noteRefValidation": "Convalida",
-  "noteRefInvoice": "Fattura",
-  "noteRefPayment": "Pagamento",
   "noteRefRefund": "Rimborso",
   "noteRefPickAlert": "Quale avviso?",
   "noteRefPickValidation": "Quale convalida?",
@@ -289,7 +253,6 @@
   "memberOriginFounder": "Ha fondato questo spazio",
   "memberOriginInvited": "Si è unito su invito",
   "memberOriginDelegated": "Profilo creato da un amministratore",
-  "memberOriginHeading": "Come è iniziata questa adesione",
   "inboxMessengerDoor": "Apri i miei messaggi",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
@@ -312,14 +275,6 @@
   },
   "messengerCopy": "Copia testo",
   "@messengerCopy": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerCopied": "Copiato.",
-  "@messengerCopied": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerEdit": "Modifica",
-  "@messengerEdit": {
     "description": "messenger: reactions, stars, edits"
   },
   "messengerEdited": "modificato",
@@ -401,22 +356,6 @@
   "composerMention": "Menziona qualcuno",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
-  },
-  "messengerContextGroup": "Gruppo",
-  "@messengerContextGroup": {
-    "description": "messenger: a group of people"
-  },
-  "groupNew": "Nuovo gruppo",
-  "@groupNew": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNewTitle": "Nuovo gruppo",
-  "@groupNewTitle": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupName": "Nome del gruppo",
-  "@groupName": {
-    "description": "messenger: creating a group of people"
   },
   "groupCreate": "Crea gruppo",
   "@groupCreate": {

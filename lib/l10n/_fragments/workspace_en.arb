@@ -302,10 +302,6 @@
   "@workspaceConfigFeatures": {
     "description": "Configuration PDF section: the workspace's enabled feature flags."
   },
-  "workspaceConfigAvailability": "Availability",
-  "@workspaceConfigAvailability": {
-    "description": "Configuration PDF section: open weekdays and closure days."
-  },
   "workspaceConfigFloorPlan": "Floor plan",
   "@workspaceConfigFloorPlan": {
     "description": "Configuration PDF section: levels, rooms, desks and seats."
@@ -444,10 +440,6 @@
   "@featureDocumentsDesc": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Document library",
-  "@documentsTitle": {
-    "description": "Workspace document library (#500)"
-  },
   "documentsAdd": "Add a document",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -466,10 +458,6 @@
   },
   "documentsProviderLabel": "Stored on",
   "@documentsProviderLabel": {
-    "description": "Workspace document library (#500)"
-  },
-  "documentsCategoryLabel": "Category",
-  "@documentsCategoryLabel": {
     "description": "Workspace document library (#500)"
   },
   "documentsRoleLabel": "Visible to",
@@ -608,10 +596,6 @@
         "type": "String"
       }
     }
-  },
-  "regionalFollowLanguage": "Automatic",
-  "@regionalFollowLanguage": {
-    "description": "#711 - globalization"
   },
   "regionalClock": "Clock",
   "@regionalClock": {

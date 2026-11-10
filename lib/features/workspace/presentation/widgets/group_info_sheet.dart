@@ -86,7 +86,7 @@ class _GroupInfoSheet extends ConsumerWidget {
                   children: [
                     Text(
                       conversation.title ??
-                          (l10n.conversationGroupInfo),
+                          (l10n.taxRefGroup),
                       style: theme.textTheme.titleMedium,
                     ),
                     Text(
