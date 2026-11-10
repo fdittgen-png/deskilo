@@ -168,6 +168,9 @@
   "consentWhoTitle": "Who can see what",
   "consentWhoBody": "Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.",
   "consentWhoBodyPublic": "A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
+  "@consentWhoBodyPublic": {
+    "description": "#3485 The second half of the consent text on who sees what: the public profile (kept apart so no message passes 600 characters)."
+  },
   "consentMessagesTitle": "Messages",
   "consentMessagesBody": "Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space's owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server's, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.",
   "consentPushTitle": "Push notifications",

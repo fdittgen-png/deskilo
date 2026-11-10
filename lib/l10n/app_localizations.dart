@@ -9894,7 +9894,7 @@ abstract class AppLocalizations {
   /// **'Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.'**
   String get consentWhoBody;
 
-  /// No description provided for @consentWhoBodyPublic.
+  /// #3485 The second half of the consent text on who sees what: the public profile (kept apart so no message passes 600 characters).
   ///
   /// In en, this message translates to:
   /// **'A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.'**
