@@ -291,7 +291,7 @@ void main() {
               RepaintBoundary(
                 child: Theme(data: theme, child: page()),
               ),
-              size: Size(width, width < 600 ? 2600 : 2000),
+              size: Size(width, width < 600 ? 4000 : 2400),
               textScale: scale,
             );
             await tester.pumpAndSettle();
