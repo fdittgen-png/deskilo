@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/text/collation.dart';
 import 'account_activity.dart';
 import 'finance_hosts.dart';
+import 'invoice_due.dart';
 
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
 /// derives it).
@@ -65,8 +66,10 @@ class FinanceInvoice {
   /// rule the workspace's own documents follow (`Invoice.isCreditNote`).
   bool get isCreditNote => totalCents < 0;
 
+  /// Past the term: the due day counts, as the server and the register rule
+  /// (#3285: one rule, `invoiceDue`).
   bool overdueAt(DateTime now) =>
-      state.owed && dueOn != null && dueOn!.isBefore(DateTime(now.year, now.month, now.day));
+      state.owed && dueOn != null && isOverdueOn(dueOn!, now);
 
   factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'finance_invoice');
