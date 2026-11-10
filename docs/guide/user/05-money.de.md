@@ -431,6 +431,107 @@ Sie möchten sehen, was der Raum noch schuldet, und erfassen, was bezahlt wurde.
 
 **Siehe auch:** [Die Seite Geld](help:user.money.cash)
 
+<!-- anchor: user.money.purchases.lease -->
+### Der Mietvertrag der Räume
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum mietet seine Räumlichkeiten, und Sie möchten Miete und Nebenkosten einmal erfassen, mit ihrem Verlauf.
+
+<!-- image: user-money-purchases-lease -->
+
+**Schritte**
+
+1. Öffnen Sie [Einkauf](app:/money/purchases) und tippen Sie auf **Mietvertrag**.
+2. Tippen Sie auf **Mietvertrag hinzufügen**. Wählen Sie den **Vermieter (ein Lieferant)**, schreiben Sie die **Räume (Adresse)** und den **Beginn**. Ergänzen Sie **Fest bis**, **Kündigungsfrist in Monaten**, die **Kaution** und eine **Indexierung (Notiz)**, wenn der Vertrag sie vorsieht.
+3. Tippen Sie unter **Miete und Nebenkosten** auf **Neuer Betrag**. Wählen Sie die **Kostenart** (**Miete**, **Nebenkostenvorauszahlung** oder **Andere Kosten**), den **Betrag**, den Rhythmus (**Zahlung**) und den Starttag (**Ab**).
+4. Ändert sich die Miete, fügen Sie ab ihrem Datum einen **Neuer Betrag** hinzu. Er ersetzt den geltenden Betrag; der frühere bleibt im Verlauf.
+5. Um den Vertrag zu beenden, tippen Sie auf **Kündigen**. Geben Sie **Gekündigt am**, **Der Vertrag endet am** und **Warum endet er?** ein.
+6. Rechnet der Vermieter die Nebenkosten des Jahres ab, tippen Sie auf **Nebenkosten abrechnen**. Geben Sie den Zeitraum, den **Abgerechneter Betrag** und den Zahltag (**Fällig am**) ein.
+
+**Gut zu wissen**
+
+- Erfassen Sie den Vermieter zuerst als Lieferanten.
+- Nach der Kündigung enden die geplanten Beträge am Vertragsende. Bereits vorgelegte Fälligkeiten bleiben erhalten.
+- Eine Abrechnung zieht die im Zeitraum gezahlten Vorauszahlungen ab: Ein Saldo ist am gewählten Tag fällig, ein Überschuss wird als Gutschrift erfasst. Ein Zeitraum wird nur einmal abgerechnet.
+- Den Vertrag zu erfassen braucht **Mietvertrag der Räume erfassen**; der Raum muss **Mietvertrag der Räume** eingeschaltet haben.
+
+**Siehe auch:** [Mietfälligkeiten und die Rechnungen, die sie decken](help:user.money.purchases.commitments) · [Lieferantensalden](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.commitments -->
+### Mietfälligkeiten und die Rechnungen, die sie decken
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Mietvertrag oder ein gemieteter Raum erwartet jeden Monat Miete, und Sie möchten jeden Monat der Rechnung des Vermieters zuordnen, ohne die Kosten doppelt zu zählen.
+
+**Schritte**
+
+1. Tippen Sie in **Mietvertrag** oder **Gemietete Räume** auf **Fälligkeiten**.
+2. Lesen Sie jeden Monat: **Erwartet**, **Teilweise zugeordnet** oder **Zugeordnet**.
+3. Tippen Sie bei einem Monat auf **Rechnung zuordnen**. Wählen Sie die **Rechnung** und die **Zeile der Rechnung** und geben Sie den **Gedeckter Betrag** ein.
+4. Weicht die Rechnung von dem ab, was der Monat erwartet, tippen Sie auf **Abweichung akzeptieren** und schreiben Sie **Warum die Rechnung abweicht**.
+5. Eine falsche Zuordnung machen Sie mit **Rückgängig** und Begründung rückgängig.
+
+**Gut zu wissen**
+
+- Eine einem Monat zugeordnete Rechnung ersetzt dessen Erwartung; sie fügt nie zweite Kosten hinzu.
+- Zuordnen lassen sich nur offene oder genehmigte Lieferantenrechnungen des Vermieters, bis zu dem, was der Monat noch erwartet.
+- Eine akzeptierte Abweichung geht an die Validierenden: Nichts ändert sich, bevor sie entscheiden.
+
+**Siehe auch:** [Der Mietvertrag der Räume](help:user.money.purchases.lease) · [Gemietete Räume](help:user.money.purchases.rented-rooms)
+
+<!-- anchor: user.money.purchases.rented-rooms -->
+### Gemietete Räume
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum mietet Räume bei einem Vermieter, und Mitglieder sollen sie nur während der Miete buchen, und nur die Mitglieder, die Sie wählen.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Schritte**
+
+1. Markieren Sie im Grundriss die Etage als gemietet: Unter **Etagen** steht „Gemietete Etage: Ihre Räume sind nur innerhalb einer Miete buchbar“.
+2. Öffnen Sie [Einkauf](app:/money/purchases), tippen Sie auf **Gemietete Räume** und bei einem Raum auf **Diesen Raum mieten**.
+3. Wählen Sie den **Vermieter**, den **Erster Tag** und, wenn die Miete endet, den **Letzter Tag (optional)**. Geben Sie die **Monatliche Kosten für den Space** und die **Gebühr pro Halbtag für ein Mitglied (optional)** ein.
+4. Wählen Sie, wer buchen darf: **Für alle Mitglieder offen**, oder **Zusätzlich offen für diese Mitglieder**, **Zusätzlich offen für diese Rollen** oder **Zusätzlich offen für diese Tarife**, jeweils mit eigener Gebühr, wenn Sie möchten.
+5. Setzen Sie den **Status** auf **Aktiv: buchbar** und tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ein gemieteter Raum ist nur während seiner Mietzeit buchbar, und nur für die gewählten Personen. Sonst sieht ihn niemand.
+- Solange der Status **Entwurf: nicht buchbar** ist, kann niemand buchen. Ist die Miete **Beendet**, ist der Raum bis zu einer neuen Miete nicht buchbar.
+- Die monatlichen Kosten erscheinen unter **Fälligkeiten**, um sie den Rechnungen des Vermieters zuzuordnen.
+- Gemietete Räume zu verwalten braucht **Standorte verwalten und den Grundriss bearbeiten**; der Raum muss **Gemietete Räume** eingeschaltet haben.
+
+**Siehe auch:** [Mietfälligkeiten und die Rechnungen, die sie decken](help:user.money.purchases.commitments)
+
+<!-- anchor: user.money.purchases.equipment -->
+### Das Anlagenverzeichnis
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum hat langlebige Ausstattung gekauft, und Sie möchten sie erfassen und so behandeln, wie Ihre Steuerberatung entscheidet.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Schritte**
+
+1. Klassifizieren Sie die Zeile beim Einkauf als langlebige Ausstattung.
+2. Öffnen Sie [Einkauf](app:/money/purchases), tippen Sie auf **Anlagen** und dann auf **Anlage erfassen**. Wählen Sie die **Einkaufszeile** und geben Sie die **Bezeichnung der Anlage** ein.
+3. Tippen Sie auf **Behandlung festlegen**. Wählen Sie **Als Anlage aktivieren** oder **Als Aufwand buchen**, schreiben Sie die **Grundlage der Entscheidung** und ergänzen Sie **Nutzungsbereit seit** nur, wenn Sie es wissen.
+4. Um die Zahlen Ihrer Steuerberatung festzuhalten, tippen Sie auf **Bewertungen des Steuerberaters** und **Datei importieren** (oder **Einen Vermögenswert erfassen**). Prüfen Sie die Vorschau und tippen Sie auf **Bestätigen**.
+
+**Gut zu wissen**
+
+- Jedes Stück zeigt seinen Stand: **Behandlung offen**, **Aktiviert, in Gebrauch**, **Als Aufwand gebucht** oder **Ausgeschieden**.
+- Die Kosten stehen fest, sobald der abziehbare Vorsteueranteil des Einkaufs qualifiziert ist.
+- Bewertungen sind nur Belege: Aus ihnen wird nichts gebucht, und eine leere Zahl bleibt unbekannt. Ein späterer Stapel ersetzt den früheren und sagt, warum.
+- Erfassen braucht **Lieferantenrechnungen erfassen**; Behandlung und Bewertungen brauchen **Tarife und Abrechnungsregeln verwalten** und **Workspace-Finanzen einsehen**.
+
+**Siehe auch:** [Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung](help:user.money.purchases.bills)
+
 <!-- anchor: user.money.cash -->
 ### Die Seite Geld
 

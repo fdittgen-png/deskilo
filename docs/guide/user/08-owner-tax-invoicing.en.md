@@ -1241,3 +1241,27 @@ You look at how the workspace performs.
 - The current period is partial; its figures still change.
 
 **See also:** [The Invoicing screen](help:user.invoicing.hub)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Costs, commitments and shared costs in the analytics
+
+**Audience:** Owner · Billing administrator
+
+You want the purchase side of the analytics: what the space spent, still owes and still expects to pay, and how shared costs fall on each resource.
+
+**Steps**
+
+1. Open [Business analytics](app:/bi) and choose the months.
+2. Read **Operating costs (recorded)**, **Invoiced less recorded operating costs**, **Book depreciation (recorded)** and **Equipment bought (capitalised)**.
+3. Read **Paid out (recorded)**, **Still to be billed (contracts)** and **Expected to pay (owed + contracts)** for the cash side.
+4. Read **Shared costs by resource**, and tap **Allocation rules** to say how a purchase category is spread over levels and offices.
+5. In a rule, choose the **Purchase category** (or **One purchase line**), the **Weights (whole numbers; empty or 0 is no share)**, the **Basis (why these weights)** and **In force from**, then save. **Stop the rule** ends it from this month on.
+
+**Good to know**
+
+- Figures say what they count. **Invoiced less recorded operating costs** is not a profit: no depreciation, payroll or bank charges are in it. **Paid out (recorded)** is recorded payments, not a reconciled bank balance.
+- Depreciation is known only when your accountant's confirmed book values cover exactly the chosen months; otherwise it is unknown, never 0.
+- A cost no rule spreads stays unallocated, never split evenly. The allocation is an analysis: no member is billed and no document changes.
+- Allocation rules need **Manage tariffs and billing rules**.
+
+**See also:** [Business analytics](help:user.invoicing.bi) · [The equipment register](help:user.money.purchases.equipment)

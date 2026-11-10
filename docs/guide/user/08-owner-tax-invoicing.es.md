@@ -1241,3 +1241,27 @@ Observa cómo rinde el espacio.
 - El periodo actual es parcial; sus cifras todavía cambian.
 
 **Véase también:** [La pantalla de Facturación](help:user.invoicing.hub)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Costes, vencimientos y costes compartidos en el análisis
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere el lado de compras del análisis: lo que el espacio gastó, todavía debe y todavía espera pagar, y cómo los costes compartidos recaen en cada recurso.
+
+**Pasos**
+
+1. Abra [Análisis de negocio](app:/bi) y elija los meses.
+2. Lea **Gastos de explotación (registrados)**, **Facturado menos gastos de explotación registrados**, **Amortización contable (registrada)** y **Equipamiento adquirido (activado)**.
+3. Lea **Pagado (registrado)**, **Pendiente de facturar (contratos)** y **Previsto a pagar (debido + contratos)** para la tesorería.
+4. Lea **Costes compartidos por recurso**, y toque **Reglas de reparto** para decir cómo se reparte una categoría de compra entre plantas y despachos.
+5. En una regla, elija la **Categoría de compra** (o **Una línea de compra**), los **Pesos (números enteros; vacío o 0: sin parte)**, la **Base (por qué estos pesos)** y **Vigente desde**, y guarde. **Detener la regla** la termina a partir de este mes.
+
+**Conviene saber**
+
+- Las cifras dicen lo que cuentan. **Facturado menos gastos de explotación registrados** no es un beneficio: no incluye amortizaciones, nóminas ni comisiones bancarias. **Pagado (registrado)** son pagos registrados, no un saldo bancario conciliado.
+- La amortización solo se conoce si los valores contables confirmados por su asesor cubren exactamente los meses elegidos; si no, es desconocida, nunca 0.
+- Un coste que ninguna regla reparte queda sin asignar, nunca dividido a partes iguales. El reparto es un análisis: no se factura a ningún miembro ni cambia ningún documento.
+- Las reglas de reparto requieren **Gestionar tarifas y reglas de facturación**.
+
+**Véase también:** [Análisis de negocio](help:user.invoicing.bi) · [El registro de equipos](help:user.money.purchases.equipment)

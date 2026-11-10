@@ -431,6 +431,107 @@ Quiere ver lo que el espacio todavía debe y registrar lo que se pagó.
 
 **Véase también:** [La página Tesorería](help:user.money.cash)
 
+<!-- anchor: user.money.purchases.lease -->
+### El contrato de alquiler del local
+
+**Público:** Propietario · Administrador/a con el permiso
+
+El espacio alquila su local, y quiere registrar una sola vez la renta y los gastos que debe, con su historial.
+
+<!-- image: user-money-purchases-lease -->
+
+**Pasos**
+
+1. Abra [Compras](app:/money/purchases) y toque **Contrato de alquiler**.
+2. Toque **Añadir un contrato**. Elija el **Arrendador (un proveedor)**, escriba el **Local (dirección)** y la fecha de **Inicio**. Añada **Fijo hasta**, **Preaviso en meses**, la **Fianza** y una **Indexación (nota)** si el contrato los prevé.
+3. En **Renta y gastos**, toque **Nuevo importe**. Elija el **Concepto** (**Renta**, **Anticipo de gastos** u **Otro concepto**), el **Importe**, la periodicidad (**Pago**) y el día de inicio (**Desde**).
+4. Cuando la renta cambie, añada un **Nuevo importe** desde su fecha. Sustituye al importe vigente; el anterior queda en el historial.
+5. Para terminar el contrato, toque **Dar preaviso**. Introduzca **Preaviso dado el**, **El contrato termina el** y **¿Por qué termina?**.
+6. Cuando el arrendador facture los gastos del año, toque **Liquidar gastos**. Introduzca el período, el **Importe facturado** y el día de pago (**Vence el**).
+
+**Conviene saber**
+
+- Registre primero al arrendador como proveedor.
+- Tras el preaviso, los importes programados se detienen el día en que termina el contrato. Los vencimientos ya presentados se conservan.
+- Una liquidación descuenta los anticipos pagados en el período: un saldo se debe el día elegido, un excedente se registra como crédito. Un período se liquida una sola vez.
+- Registrar el contrato requiere **Registrar el contrato de alquiler**; el espacio debe tener activado **Contrato de alquiler del local**.
+
+**Véase también:** [Los vencimientos de renta y las facturas que los cubren](help:user.money.purchases.commitments) · [Saldos de proveedores](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.commitments -->
+### Los vencimientos de renta y las facturas que los cubren
+
+**Público:** Propietario · Administrador/a con el permiso
+
+El contrato o una sala alquilada espera una renta cada mes, y quiere conciliar cada mes con la factura del arrendador, sin contar el coste dos veces.
+
+**Pasos**
+
+1. En **Contrato de alquiler** o **Salas alquiladas**, toque **Vencimientos**.
+2. Lea cada mes: **Esperado**, **Parcialmente conciliado** o **Conciliado**.
+3. Toque **Conciliar una factura** en un mes. Elija la **Factura** y la **Línea de la factura**, e introduzca el **Importe cubierto**.
+4. Si la factura difiere de lo que el mes espera, toque **Aceptar la diferencia** y escriba **Por qué difiere la factura**.
+5. Una conciliación errónea se deshace con **Revertir** y su motivo.
+
+**Conviene saber**
+
+- Una factura conciliada con un mes sustituye la expectativa de ese mes; nunca añade un segundo coste.
+- Solo se concilian facturas de proveedor del arrendador pendientes o aprobadas, hasta lo que el mes todavía espera.
+- Una diferencia aceptada va a los validadores: nada cambia hasta que decidan.
+
+**Véase también:** [El contrato de alquiler del local](help:user.money.purchases.lease) · [Salas alquiladas](help:user.money.purchases.rented-rooms)
+
+<!-- anchor: user.money.purchases.rented-rooms -->
+### Salas alquiladas
+
+**Público:** Propietario · Administrador/a con el permiso
+
+El espacio alquila salas a un arrendador, y quiere que los miembros solo las reserven mientras dura el alquiler, y solo los que usted elija.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Pasos**
+
+1. En el plano, marque la planta como alquilada: en **Plantas** aparece «Planta alquilada: sus salas solo se reservan dentro de un alquiler».
+2. Abra [Compras](app:/money/purchases), toque **Salas alquiladas** y luego **Alquilar esta sala** en una sala.
+3. Elija el **Arrendador**, el **Primer día** y, si el alquiler termina, el **Último día (opcional)**. Introduzca el **Coste mensual para el espacio** y la **Tarifa por media jornada para un miembro (opcional)**.
+4. Elija quién puede reservar: **Abierta a todos los miembros**, o **Abierta también a estos miembros**, **Abierta también a estos roles** o **Abierta también a estos planes**, cada uno con su tarifa si lo desea.
+5. Ponga el **Estado** en **Activo: reservable** y toque **Guardar**.
+
+**Conviene saber**
+
+- Una sala alquilada solo se reserva durante su período de alquiler, y solo por las personas elegidas. Nadie más la ve.
+- Mientras el estado sea **Borrador: no reservable**, nadie puede reservarla. Una vez **Terminado** el alquiler, la sala no se puede reservar hasta un nuevo alquiler.
+- El coste mensual aparece en **Vencimientos**, para conciliarlo con las facturas del arrendador.
+- Gestionar las salas alquiladas requiere **Gestionar sedes y editar el plano**; el espacio debe tener activado **Salas alquiladas**.
+
+**Véase también:** [Los vencimientos de renta y las facturas que los cubren](help:user.money.purchases.commitments)
+
+<!-- anchor: user.money.purchases.equipment -->
+### El registro de equipos
+
+**Público:** Propietario · Administrador/a con el permiso
+
+El espacio compró un equipo duradero, y quiere registrarlo y tratarlo como decida su asesor contable.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Pasos**
+
+1. En la compra, clasifique la línea como equipo duradero.
+2. Abra [Compras](app:/money/purchases), toque **Equipos** y luego **Registrar un equipo**. Elija la **Línea de compra** y dé el **Nombre del equipo**.
+3. Toque **Decidir el tratamiento**. Elija **Capitalizar como equipo** o **Llevar a gasto**, escriba el **Fundamento de la decisión** y añada **En uso desde** solo si lo sabe.
+4. Para conservar las cifras de su asesor, toque **Valoraciones del contable** y **Importar un archivo** (o **Introducir un bien**). Compruebe la vista previa y toque **Confirmar**.
+
+**Conviene saber**
+
+- Cada equipo muestra su estado: **Pendiente de tratamiento**, **Capitalizado, en uso**, **Llevado a gasto** o **Dado de baja**.
+- El coste se conoce cuando la parte de IVA deducible de la compra está cualificada.
+- Las valoraciones son solo justificantes: no se contabiliza nada a partir de ellas, y una cifra vacía sigue desconocida. Un lote posterior sustituye al anterior y dice por qué.
+- Registrar requiere **Registrar facturas de proveedor**; decidir el tratamiento y las valoraciones requieren **Gestionar tarifas y reglas de facturación** y **Ver las finanzas del espacio**.
+
+**Véase también:** [Una factura de proveedor, del registro a la aprobación](help:user.money.purchases.bills)
+
 <!-- anchor: user.money.cash -->
 ### La página Tesorería
 
