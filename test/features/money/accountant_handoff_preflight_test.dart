@@ -69,7 +69,7 @@ void main() {
     tester,
   ) async {
     final results = await _open(tester, _report([_inv('1'), _inv('2')]));
-    expect(find.text('2 document(s) in the file'), findsOneWidget);
+    expect(find.text('2 documents in the file'), findsOneWidget);
     expect(find.textContaining('100.00 EUR'), findsOneWidget);
     expect(find.byKey(const ValueKey('handoff-blocked')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('handoff-save')));
