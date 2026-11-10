@@ -105,7 +105,7 @@ void main() {
           l10n.eventTypeBadgeSecurityAlert,
         );
         expect(
-          eventLine(l10n, event, const {}, const {}, MoneyFormat('EUR')),
+          eventLine(l10n, event, const {}, const {}, MoneyFormat('EUR', locale: null)),
           l10n.eventBadgeSecurityAlert(50, 15),
         );
         expect(categoryOfEvent(event), NotificationCategory.members);

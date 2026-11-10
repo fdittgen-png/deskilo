@@ -316,7 +316,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (workspace == null) return;
     final name = _pkgName.text.trim();
     final days = int.tryParse(_pkgDays.text.trim());
-    final price = parseMinorInput(_pkgPrice.text);
+    final price = appFormatOf(context).parseMinor(_pkgPrice.text);
     if (name.isEmpty || days == null || days < 1 || price == null) return;
     if (!await _run(
       'package create failed',

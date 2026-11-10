@@ -399,7 +399,7 @@ Future<void> showPriceNegotiationSheet(
     final t = raw.trim().replaceAll(',', '.');
     if (t.isEmpty) return null;
     // #1140 — the currency's own minor digits, never a literal 100.
-    return parseMinorInput(t);
+    return appFormatOf(context).parseMinor(t);
   }
   final discountPct = parseDecimalInput(discount.text, grouping: false)?.toDouble();
   final feeCents = cents(fee.text);

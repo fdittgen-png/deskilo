@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -58,7 +57,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
     // A blank price is no price, not a free service: a free one is a typed 0.
     final price = _price.text.trim().isEmpty
         ? null
-        : parseMinorInput(_price.text);
+        : appFormatOf(context).parseMinor(_price.text);
     if (name.isEmpty || price == null) {
       AppSnack.error(context, l10n.setupServicesInvalid);
       return;

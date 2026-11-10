@@ -16,7 +16,7 @@ ExpenseDraft _draft({
   String name = '',
   String qty = '1',
   String unit = '',
-}) => ExpenseDraft(
+}) => ExpenseDraft(locale: 'en_US', 
   amount: amount,
   category: 'supplies',
   description: ' paper ',

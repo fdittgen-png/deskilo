@@ -9,7 +9,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -95,7 +94,7 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
       ? 100
       : parseDecimalInput(_fields.text('share-${l.id}'), grouping: false)?.toDouble();
 
-  int? _gross(_Line l) => parseMinorInput(_fields.text('gross-${l.id}'));
+  int? _gross(_Line l) => appFormatOf(context).parseMinor(_fields.text('gross-${l.id}'));
 
   int _total() => _lines.fold(0, (sum, l) => sum + (_gross(l) ?? 0));
 

@@ -170,7 +170,7 @@ void main() {
   });
 
   test('a share outside 0..100 is refused before anything is sent', () {
-    const draft = ExpenseDraft(
+    const draft = ExpenseDraft(locale: 'en_US', 
       amount: '12',
       category: 'other',
       vatPercent: 20,
@@ -179,7 +179,7 @@ void main() {
     expect(expenseOutcome(draft), ExpenseOutcome.invalidDeductible);
     expect(
       expenseOutcome(
-        const ExpenseDraft(amount: '12', category: 'other', deductible: 'x'),
+        const ExpenseDraft(locale: 'en_US', amount: '12', category: 'other', deductible: 'x'),
       ),
       ExpenseOutcome.submitted,
       reason: 'without a VAT rate the share is not asked',

@@ -235,7 +235,7 @@ String _deductibleHelper(
   ExpenseVatChoice choice,
 ) {
   final words = vatWords(l10n);
-  final gross = parseMinorInput(amount);
+  final gross = parseMinorInput(amount, locale: currency.locale);
   final pct = choice.sharePct;
   final percent = choice.percent;
   if (gross == null ||

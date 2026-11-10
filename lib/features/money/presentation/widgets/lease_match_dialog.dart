@@ -67,7 +67,7 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
   });
 
   Future<void> _save(PurchaseDetail detail) async {
-    final cents = parseMinorInput(_amount.text);
+    final cents = appFormatOf(context).parseMinor(_amount.text);
     if (cents == null || cents <= 0 || cents > widget.occurrence.remainingCents) {
       setState(() => _invalid = true);
       return;

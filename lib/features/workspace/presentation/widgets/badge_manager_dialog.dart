@@ -167,7 +167,7 @@ class _BadgeManagerDialogState
         final cover = await batchCover(context, ref, docId: 'badges', data: {
           'workspace': workspaceName,
           'member': widget.name,
-          'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
+          'issued': DateFormat.yMMMMd(ref.read(appFormatProvider).locale).format(ref.read(clockProvider).now()),
         });
         if (!mounted || cover == null) return;
         // The cover has resolved its template and shared images.

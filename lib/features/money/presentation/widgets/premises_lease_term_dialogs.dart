@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -60,7 +60,7 @@ class _TermDialogState extends ConsumerState<_TermDialog> {
   }
 
   LeaseTermCommand? _command() {
-    final cents = parseMinorInput(_amount.text);
+    final cents = appFormatOf(context).parseMinor(_amount.text);
     final from = _from;
     if (cents == null ||
         cents <= 0 ||

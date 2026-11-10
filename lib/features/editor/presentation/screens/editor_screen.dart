@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -295,7 +296,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
 
   Future<void> _save() async {
     final l10n = context.l10n;
-    final cents = parseMinorInput(_price.text) ?? 0;
+    final cents = appFormatOf(context).parseMinor(_price.text) ?? 0;
     if (!await runGuarded(
       context,
       domain: 'editor',

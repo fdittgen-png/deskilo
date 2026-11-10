@@ -86,7 +86,7 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
 
   Future<void> _save(List<OpenInvoice> open) async {
     final id = _invoiceId;
-    final cents = parseMinorInput(_amount.text);
+    final cents = appFormatOf(context).parseMinor(_amount.text);
     final due = open.where((o) => o.invoice.id == id).firstOrNull?.dueCents;
     if (id == null || due == null || cents == null || cents <= 0) {
       setState(() => _invalid = true);

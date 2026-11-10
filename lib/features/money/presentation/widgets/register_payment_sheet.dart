@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -63,7 +62,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
 
   int? get _cents {
     // #1140 — the currency's own minor digits, never a literal 100.
-    final c = parseMinorInput(_amount.text);
+    final c = appFormatOf(context).parseMinor(_amount.text);
     return (c == null || c <= 0) ? null : c;
   }
 

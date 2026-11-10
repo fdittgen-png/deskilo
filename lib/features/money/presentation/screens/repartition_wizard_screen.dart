@@ -11,7 +11,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -65,7 +64,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
 
   int? get _cents {
     // #1140 — the currency's own minor digits, never a literal 100.
-    final c = parseMinorInput(_amount.text);
+    final c = appFormatOf(context).parseMinor(_amount.text);
     return (c == null || c == 0) ? null : c;
   }
 

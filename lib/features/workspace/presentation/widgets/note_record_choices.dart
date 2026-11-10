@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -124,7 +125,7 @@ Future<NoteRecordChoices> noteRecordChoices(
       final matches = ref.read(invoiceMatchesProvider).value ?? const {};
       final names = ref.read(memberNamesProvider).value ?? const <String, String>{};
       final moneyOf = moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: ref.read(appFormatProvider).locale);
       formatAmount = moneyOf.formatMinor;
       for (final invoice in invoices) {
         // A number, a name and a period: nothing here is translated, so
@@ -183,7 +184,7 @@ Future<NoteRecordChoices> noteRecordChoices(
     case NoteRecordKind.payment:
       final ledger = await ref.read(myLedgerProvider.future);
       final money = moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: ref.read(appFormatProvider).locale);
       final seen = <String>{};
       for (final entry in ledger) {
         if (entry.kind != LedgerKind.credit ||

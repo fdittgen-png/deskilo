@@ -227,7 +227,7 @@ void main() {
     final expenses = _Expenses();
     final outcome = await Expenses(
       expenses,
-    ).submit('w1', const ExpenseDraft(amount: '12.00', category: 'supplies'));
+    ).submit('w1', const ExpenseDraft(locale: 'en_US', amount: '12.00', category: 'supplies'));
 
     expect(outcome, ExpenseOutcome.submitted);
 

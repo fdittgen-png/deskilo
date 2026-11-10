@@ -42,6 +42,7 @@ typedef ExpenseVatFlags = ({bool asset, bool acquisition});
 /// What the person typed, as text, exactly as the sheet holds it.
 class ExpenseDraft {
   const ExpenseDraft({
+    required this.locale,
     required this.amount,
     required this.category,
     this.description = '',
@@ -55,6 +56,9 @@ class ExpenseDraft {
     this.deductible = '100',
     this.vatFlags = (asset: false, acquisition: false),
   });
+
+  /// #3484 — the member's format locale: the amounts typed here read in it.
+  final String locale;
 
   final String amount;
   final String category;
@@ -90,7 +94,7 @@ class ExpenseDraft {
           if (vatFlags.acquisition) 'acquisition': true,
         };
 
-  int? get amountCents => parseMinorInput(amount);
+  int? get amountCents => parseMinorInput(amount, locale: locale);
   int? get quantity => int.tryParse(supplyQuantity.trim());
   String get name => (supplyItemName ?? supplyName).trim();
 
@@ -101,7 +105,7 @@ class ExpenseDraft {
           if (supplyItemId != null) 'service_id': supplyItemId,
           'name': name,
           'quantity': quantity,
-          'unit_price_cents': parseMinorInput(supplyUnitPrice),
+          'unit_price_cents': parseMinorInput(supplyUnitPrice, locale: locale),
         };
 }
 
@@ -121,7 +125,7 @@ ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
   if (qty == null || qty < 1) return ExpenseOutcome.invalidSupplyQuantity;
   final unit = draft.supplyUnitPrice.trim();
   if (unit.isNotEmpty) {
-    final unitCents = parseMinorInput(unit);
+    final unitCents = parseMinorInput(unit, locale: draft.locale);
     if (unitCents == null || unitCents < 0) {
       return ExpenseOutcome.invalidUnitPrice;
     }

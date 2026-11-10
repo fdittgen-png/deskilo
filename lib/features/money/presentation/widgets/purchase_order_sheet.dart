@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
@@ -50,9 +51,9 @@ class PurchaseOrderSheet {
         submitLabel: l10n.purchaseOrderSave,
         submitKey: const ValueKey('purchase-order-save'),
         onDispose: form.fields.dispose,
-        validate: () => form.errors(l10n),
+        validate: () => form.errors(l10n, appFormatOf(context).locale),
         onSubmit: () async {
-          final draft = form.draft();
+          final draft = form.draft(appFormatOf(context).locale);
           final requestId = form.requestFor(draft);
           final ok = await runGuarded(
             context,
@@ -120,7 +121,7 @@ class _OrderForm {
   static double? _number(String text) =>
       parseDecimalInput(text, grouping: false)?.toDouble();
 
-  PurchaseOrderDraft draft() => PurchaseOrderDraft(
+  PurchaseOrderDraft draft(String locale) => PurchaseOrderDraft(
     orderId: order?.id,
     expectedRevision: order?.revision ?? 0,
     supplierId: supplierId,
@@ -134,7 +135,7 @@ class _OrderForm {
           description: fields['desc-$i'].text,
           quantity: _number(fields['qty-$i'].text) ?? 0,
           unit: fields['unit-$i'].text,
-          unitPriceCents: parseMinorInput(fields['price-$i'].text) ?? -1,
+          unitPriceCents: parseMinorInput(fields['price-$i'].text, locale: locale) ?? -1,
           vatRatePercent: fields['vat-$i'].text.trim().isEmpty
               ? null
               : (_number(fields['vat-$i'].text) ?? -1),
@@ -153,8 +154,8 @@ class _OrderForm {
   }
 
   /// Each problem of the draft under its field.
-  FieldErrors errors(AppLocalizations l10n) {
-    final d = draft();
+  FieldErrors errors(AppLocalizations l10n, String locale) {
+    final d = draft(locale);
     final out = <String, String>{};
     if (d.problems.contains(PurchaseOrderProblem.noSupplier)) {
       out['supplier'] = l10n.purchaseOrderNeedsSupplier;

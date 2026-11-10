@@ -27,7 +27,7 @@ String centsToMajor(int minor) {
 /// decimal input parser in the member's format locale. Empty input reads as
 /// 0 (editors treat blank as free); malformed or negative input returns
 /// null.
-int? parseMinorInput(String raw, {String? locale}) {
+int? parseMinorInput(String raw, {required String locale}) {
   if (raw.trim().isEmpty) return 0;
   final value = parseDecimalInput(
     raw,
