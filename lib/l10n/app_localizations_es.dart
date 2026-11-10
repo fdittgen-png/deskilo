@@ -14120,21 +14120,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)';
 
   @override
+  String get invoiceMonthAll => 'Todos';
+
+  @override
+  String invoiceMonthBusinessFix(String missing) {
+    return 'Los datos de su negocio están incompletos: $missing';
+  }
+
+  @override
   String get invoiceMonthCheckAgain => 'Comprobar de nuevo';
 
   @override
   String get invoiceMonthDone => 'Hecho';
 
   @override
+  String get invoiceMonthFix => 'Completar';
+
+  @override
   String get invoiceMonthHeld => 'Espera una validación';
 
   @override
-  String invoiceMonthIssue(int count) {
+  String invoiceMonthIssue(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Emitir $count facturas',
-      one: 'Emitir 1 factura',
+      other: 'Emitir $count facturas · $amount',
+      one: 'Emitir 1 factura · $amount',
       zero: 'Emitir facturas',
     );
     return '$_temp0';
@@ -14147,15 +14158,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMonthIssuing => 'Emitiendo…';
 
   @override
-  String invoiceMonthLineCaption(String month) {
-    return 'Posiciones de $month';
+  String get invoiceMonthNeedsFix => 'Hay que completarlo';
+
+  @override
+  String invoiceMonthNeedsFixCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count por completar',
+      one: '1 por completar',
+    );
+    return '$_temp0';
   }
 
   @override
   String get invoiceMonthNotDone => 'No hecho';
 
   @override
-  String get invoiceMonthNotIssued => 'El servidor no la emitió.';
+  String get invoiceMonthNotIssued => 'No se pudo emitir. Inténtelo de nuevo.';
 
   @override
   String get invoiceMonthNote =>
@@ -14165,15 +14185,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMonthProforma => 'Ver la proforma';
 
   @override
-  String get invoiceMonthResultNone => 'No se emitió nada';
+  String get invoiceMonthResultNone => 'Ninguna factura emitida';
 
   @override
   String get invoiceMonthResultNoneSubtitle =>
       'Todavía no existe factura para lo que sigue.';
 
   @override
-  String get invoiceMonthResultSubtitle =>
-      'Cada cliente la ve ahora en su cuenta y recibe una notificación.';
+  String invoiceMonthResultPartial(int issued, int total) {
+    return '$issued de $total facturas emitidas';
+  }
+
+  @override
+  String invoiceMonthResultSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Cada cliente la ve ahora en su cuenta y recibe una notificación.',
+      one: 'El cliente la ve ahora en su cuenta y recibe una notificación.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceMonthResultTitle(int count) {
@@ -14190,19 +14222,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMonthRetry => 'Reintentar para estas';
 
   @override
-  String get invoiceMonthStays => 'Lo que no se hizo se queda en «Por hacer».';
+  String invoiceMonthSelected(int count, int total, String amount) {
+    return '$count de $total seleccionados · $amount';
+  }
 
   @override
-  String invoiceMonthSummary(int count, String total) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count clientes · $total',
-      one: '1 cliente · $total',
-      zero: 'Nadie seleccionado',
-    );
-    return '$_temp0';
-  }
+  String get invoiceMonthStays => 'Lo que no se hizo se queda en «Por hacer».';
 
   @override
   String invoiceMonthTitle(String month) {

@@ -23272,6 +23272,18 @@ abstract class AppLocalizations {
   /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
   String get invoiceMissingVies;
 
+  /// #3587 R1-e: the select-all row of the month list
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get invoiceMonthAll;
+
+  /// #3587 R1-e: one notice: the business's own essentials missing for everyone
+  ///
+  /// In en, this message translates to:
+  /// **'Your business details are incomplete: {missing}'**
+  String invoiceMonthBusinessFix(String missing);
+
   /// #3587 R1-e: look again for the customers whose answer was lost
   ///
   /// In en, this message translates to:
@@ -23284,17 +23296,23 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get invoiceMonthDone;
 
+  /// #3587 R1-e: opens the place where a missing detail is completed
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get invoiceMonthFix;
+
   /// #3587 R1-e: chip on an invoice a validation policy holds
   ///
   /// In en, this message translates to:
   /// **'Waits for a validation'**
   String get invoiceMonthHeld;
 
-  /// #3587 R1-e: the one filled action of the month flow
+  /// #3587 R1-e: the one filled action of the month flow, with the amount it issues
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice} other{Issue {count} invoices}}'**
-  String invoiceMonthIssue(int count);
+  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}'**
+  String invoiceMonthIssue(int count, String amount);
 
   /// #3587 R1-e: chip on an issued invoice
   ///
@@ -23308,11 +23326,17 @@ abstract class AppLocalizations {
   /// **'Issuing…'**
   String get invoiceMonthIssuing;
 
-  /// #3587 R1-e: caption under a customer line of the month flow
+  /// #3587 R1-e: status of a customer whose details block the invoice
   ///
   /// In en, this message translates to:
-  /// **'Positions of {month}'**
-  String invoiceMonthLineCaption(String month);
+  /// **'Needs a fix'**
+  String get invoiceMonthNeedsFix;
+
+  /// #3587 R1-e: how many listed customers cannot be invoiced until fixed
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 needs a fix} other{{count} need a fix}}'**
+  String invoiceMonthNeedsFixCount(int count);
 
   /// #3587 R1-e: heading of what the server did not issue
   ///
@@ -23320,10 +23344,10 @@ abstract class AppLocalizations {
   /// **'Not done'**
   String get invoiceMonthNotDone;
 
-  /// #3587 R1-e: reason line when the server refused without words
+  /// #3587 R1-e: reason line when the server refused without a usable reason
   ///
   /// In en, this message translates to:
-  /// **'The server did not issue it.'**
+  /// **'Could not be issued. Try again.'**
   String get invoiceMonthNotIssued;
 
   /// #3587 R1-e: the line that says an issued invoice is immutable
@@ -23338,10 +23362,10 @@ abstract class AppLocalizations {
   /// **'Preview the proforma'**
   String get invoiceMonthProforma;
 
-  /// #3587 R1-e: result page title when nothing was issued
+  /// #3587 R1-e: result title when nothing was issued
   ///
   /// In en, this message translates to:
-  /// **'Nothing was issued'**
+  /// **'No invoice issued'**
   String get invoiceMonthResultNone;
 
   /// #3587 R1-e: result page subtitle when nothing was issued
@@ -23350,11 +23374,17 @@ abstract class AppLocalizations {
   /// **'No invoice exists yet for what is listed below.'**
   String get invoiceMonthResultNoneSubtitle;
 
+  /// #3587 R1-e: result title when only some invoices were issued
+  ///
+  /// In en, this message translates to:
+  /// **'{issued} of {total} invoices issued'**
+  String invoiceMonthResultPartial(int issued, int total);
+
   /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
   ///
   /// In en, this message translates to:
-  /// **'Each customer sees it in their account now and gets a notification.'**
-  String get invoiceMonthResultSubtitle;
+  /// **'{count, plural, =1{The customer sees it in their account now and gets a notification.} other{Each customer sees it in their account now and gets a notification.}}'**
+  String invoiceMonthResultSubtitle(int count);
 
   /// #3587 R1-e: result page title when something was issued
   ///
@@ -23368,17 +23398,17 @@ abstract class AppLocalizations {
   /// **'Retry for these'**
   String get invoiceMonthRetry;
 
+  /// #3587 R1-e: how many customers are selected of those listed, and their total
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total} selected · {amount}'**
+  String invoiceMonthSelected(int count, int total, String amount);
+
   /// #3587 R1-e: where what was not issued stays
   ///
   /// In en, this message translates to:
   /// **'What was not done stays in To do.'**
   String get invoiceMonthStays;
-
-  /// #3587 R1-e: how many customers are selected and their total
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{Nobody selected} =1{1 customer · {total}} other{{count} customers · {total}}}'**
-  String invoiceMonthSummary(int count, String total);
 
   /// #3587 R1-e: title of the Invoice-the-month flow
   ///
