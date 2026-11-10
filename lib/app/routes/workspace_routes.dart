@@ -222,7 +222,11 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
     GoRoute(
       path: '/availability',
       redirect: env.guard(
-        const RouteAccess(permission: WorkspacePermission.workspaceSettings),
+        const RouteAccess(
+          // #3550 — today its hours and rules serve place bookings only.
+          features: [WorkspaceFeature.placeBooking],
+          permission: WorkspacePermission.workspaceSettings,
+        ),
       ),
       builder: (context, state) => const AvailabilityScreen(),
     ),

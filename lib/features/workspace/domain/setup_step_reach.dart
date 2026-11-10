@@ -22,7 +22,6 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
   'hours': {_F.workingHours, _F.publicHolidays, _F.holidayImport},
   // The editor and the library the places page opens; sites group levels.
   'places': {
-    _F.placeBooking,
     _F.levelBooking,
     _F.meetingRooms,
     _F.parking,
