@@ -49,12 +49,16 @@ class AppFormat {
   /// `CHF 1'234.56` in `de_CH`; 1250 JPY → `￥1,250`, never `￥12.50`.
   String money(int minor, {String? currency}) {
     final code = currency ?? currencyCode;
-    return NumberFormat.currency(
-      locale: locale,
-      name: code,
-      symbol: _symbol(code),
-      decimalDigits: Currencies.minorDigits(code),
-    ).format(Currencies.toMajor(minor, code));
+    final symbol = _symbol(code);
+    return spaceAlphabeticSymbol(
+      NumberFormat.currency(
+        locale: locale,
+        name: code,
+        symbol: symbol,
+        decimalDigits: Currencies.minorDigits(code),
+      ).format(Currencies.toMajor(minor, code)),
+      symbol,
+    );
   }
 
   /// A compact money string for chips and badges: whole amounts drop
@@ -63,18 +67,23 @@ class AppFormat {
     final code = currency ?? currencyCode;
     final digits = Currencies.minorDigits(code);
     final whole = digits > 0 && minor % Currencies.minorPerMajor(code) == 0;
-    return NumberFormat.currency(
-      locale: locale,
-      name: code,
-      symbol: _symbol(code),
-      decimalDigits: whole ? 0 : digits,
-    ).format(Currencies.toMajor(minor, code));
+    final symbol = _symbol(code);
+    return spaceAlphabeticSymbol(
+      NumberFormat.currency(
+        locale: locale,
+        name: code,
+        symbol: symbol,
+        decimalDigits: whole ? 0 : digits,
+      ).format(Currencies.toMajor(minor, code)),
+      symbol,
+    );
   }
 
   /// #3484 — the money formatter of [code] (the workspace's when null) in the
   /// member's format locale, for a screen that formats many amounts or hands
   /// the formatter on. Documents name their own locale with `moneyFormat`.
-  MoneyFormat moneyIn(String? code) => moneyFormat(code ?? currencyCode, locale: locale);
+  MoneyFormat moneyIn(String? code) =>
+      moneyFormat(code ?? currencyCode, locale: locale, spaceAlphabetic: true);
 
   /// #3484 — plain numbers in the member's format locale: `1 234,5` in
   /// fr_FR; [decimals] fixes the fraction digits.
