@@ -1,11 +1,11 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3549 (0703): the business kinds are data; a workspace says its kind in two
+-- #3549 (0703, 0704): the business kinds are data; a workspace says its kind in two
 -- registry settings. Every workspace reads coworking until it says otherwise;
 -- an unknown kind is refused, and so is a further kind that repeats the
 -- primary one; a member without manageConfiguration cannot set it; another
 -- tenant reads nothing; no client writes the kinds. Rolled back.
 begin;
-select plan(12);
+select plan(13);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -51,6 +51,8 @@ select pg_temp.act_as('00000000-0000-4000-8000-0000003549a1');
 select is(pg_temp.set_error('business.kind', 'practice'), null, 'the owner sets a known kind');
 select like(pg_temp.set_error('business.kind', 'bakery'), '%unknown business kind%', 'an unknown kind is refused');
 select is(pg_temp.set_error('business.more_kinds', 'studio, salon'), null, 'further known kinds are kept');
+select like(pg_temp.set_error('business.kind', 'studio'), '%already a further kind%',
+            'the primary kind may not be one of the further kinds');
 select like(pg_temp.set_error('business.more_kinds', 'studio,practice'), '%primary business kind%',
             'a further kind may not repeat the primary one');
 select like(pg_temp.set_error('business.more_kinds', 'studio,studio'), '%listed twice%',
