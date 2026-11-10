@@ -1478,6 +1478,11 @@ window.SETUP_LEVELS={
    "key": "bookings",
    "levels": [
     {
+     "id": "none",
+     "features": [],
+     "needs": {}
+    },
+    {
      "id": "simple",
      "features": [
       "seriesBooking",
@@ -1488,7 +1493,9 @@ window.SETUP_LEVELS={
       "bookingPolicies",
       "seatDayTimeline",
       "bookingGate",
+      "singleRoomLevelNames",
       "calendarFileExport",
+      "placeFeedback",
       "planDecor",
       "placeBooking"
      ],
@@ -1500,9 +1507,11 @@ window.SETUP_LEVELS={
       "adminSeatBlocking",
       "levelBooking",
       "adminLevelAssign",
+      "planMemberPhotos",
       "multiSite",
       "publicHolidays",
       "holidayImport",
+      "guestParticipation",
       "meetingRooms",
       "parking",
       "externalRooms"
@@ -1565,12 +1574,9 @@ window.SETUP_LEVELS={
       "managedProfileAccess",
       "memberOrigin",
       "customRoles",
-      "customFields",
-      "guestParticipation"
+      "customFields"
      ],
-     "needs": {
-      "bookings": "simple"
-     }
+     "needs": {}
     }
    ]
   },
@@ -1731,13 +1737,9 @@ window.SETUP_LEVELS={
     {
      "id": "basic",
      "features": [
-      "planMemberPhotos",
-      "uniqueMonograms",
-      "singleRoomLevelNames"
+      "uniqueMonograms"
      ],
-     "needs": {
-      "bookings": "simple"
-     }
+     "needs": {}
     },
     {
      "id": "branded",
@@ -1774,13 +1776,10 @@ window.SETUP_LEVELS={
       "demoMode",
       "memberAccountMenu",
       "memberGettingStarted",
-      "placeFeedback",
       "setupGuide",
       "dataReport"
      ],
-     "needs": {
-      "bookings": "simple"
-     }
+     "needs": {}
     },
     {
      "id": "insight",

@@ -11580,6 +11580,7 @@ const Set<String> uiLabelKeys = {
   'setupLevelNameAssistantOff',
   'setupLevelNameAssistantOn',
   'setupLevelNameBookingsMeasured',
+  'setupLevelNameBookingsNone',
   'setupLevelNameBookingsResources',
   'setupLevelNameBookingsSimple',
   'setupLevelNameCommunityBasic',

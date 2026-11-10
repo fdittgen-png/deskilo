@@ -670,6 +670,7 @@ Map<String, _Getter> _part1() => {
   'setupHoursWeekTitle': (l) => l.setupHoursWeekTitle,
   'setupInvitePreviewNote': (l) => l.setupInvitePreviewNote,
   'setupLaunchPublicOff': (l) => l.setupLaunchPublicOff,
+  'setupLevelNameBookingsNone': (l) => l.setupLevelNameBookingsNone,
   'setupLevelsTitle': (l) => l.setupLevelsTitle,
   'setupLockMoneyLocaleFixed': (l) => l.setupLockMoneyLocaleFixed,
   'setupMilestoneNameMoney': (l) => l.setupMilestoneNameMoney,

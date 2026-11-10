@@ -1626,6 +1626,7 @@ window.SETUP_L10N={
     "assistant": "Assistant"
    },
    "level": {
+    "bookings_none": "No places",
     "bookings_simple": "Shared places",
     "bookings_resources": "Rooms and resources",
     "bookings_measured": "Measured use",
@@ -3338,6 +3339,7 @@ window.SETUP_L10N={
     "assistant": "Assistant"
    },
    "level": {
+    "bookings_none": "Pas de places",
     "bookings_simple": "Places partagées",
     "bookings_resources": "Salles et ressources",
     "bookings_measured": "Usage mesuré",
@@ -5050,6 +5052,7 @@ window.SETUP_L10N={
     "assistant": "Assistent"
    },
    "level": {
+    "bookings_none": "Keine Plätze",
     "bookings_simple": "Geteilte Plätze",
     "bookings_resources": "Räume und Ressourcen",
     "bookings_measured": "Gemessene Nutzung",
@@ -6762,6 +6765,7 @@ window.SETUP_L10N={
     "assistant": "Asistente"
    },
    "level": {
+    "bookings_none": "Sin plazas",
     "bookings_simple": "Plazas compartidas",
     "bookings_resources": "Salas y recursos",
     "bookings_measured": "Uso medido",
@@ -8474,6 +8478,7 @@ window.SETUP_L10N={
     "assistant": "Assistente"
    },
    "level": {
+    "bookings_none": "Nessun posto",
     "bookings_simple": "Posti condivisi",
     "bookings_resources": "Sale e risorse",
     "bookings_measured": "Uso misurato",

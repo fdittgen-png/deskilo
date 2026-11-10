@@ -16805,6 +16805,7 @@
   "setupLevelNameAssistantOff": "Désactivé",
   "setupLevelNameAssistantOn": "Activé",
   "setupLevelNameBookingsMeasured": "Usage mesuré",
+  "setupLevelNameBookingsNone": "Pas de places",
   "setupLevelNameBookingsResources": "Salles et ressources",
   "setupLevelNameBookingsSimple": "Places partagées",
   "setupLevelNameCommunityBasic": "Simple",

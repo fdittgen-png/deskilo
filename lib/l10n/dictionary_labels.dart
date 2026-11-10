@@ -304,6 +304,7 @@ extension DictionaryLabels on AppLocalizations {
 
   /// The `setupLevelName` label for [key].
   String setupLevelName(String key) => switch (key) {
+    'bookings_none' => setupLevelNameBookingsNone,
     'bookings_simple' => setupLevelNameBookingsSimple,
     'bookings_resources' => setupLevelNameBookingsResources,
     'bookings_measured' => setupLevelNameBookingsMeasured,

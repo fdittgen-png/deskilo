@@ -26159,6 +26159,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelNameBookingsMeasured => 'Measured use';
 
   @override
+  String get setupLevelNameBookingsNone => 'No places';
+
+  @override
   String get setupLevelNameBookingsResources => 'Rooms and resources';
 
   @override

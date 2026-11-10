@@ -3017,11 +3017,12 @@
           "bookings": {
             "type": "string",
             "enum": [
+              "none",
               "simple",
               "resources",
               "measured"
             ],
-            "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+            "description": "The level of bookings, lowest first: none (a business without places to book), simple, resources, measured. Left out: it keeps its level."
           },
           "community": {
             "type": "string",
@@ -3197,11 +3198,12 @@
           "bookings": {
             "type": "string",
             "enum": [
+              "none",
               "simple",
               "resources",
               "measured"
             ],
-            "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+            "description": "The level of bookings, lowest first: none (a business without places to book), simple, resources, measured. Left out: it keeps its level."
           },
           "community": {
             "type": "string",

@@ -71,6 +71,10 @@
   "@setupProcessNameOperations": {
     "description": "#3485 setupProcessName: the label for case 'operations'."
   },
+  "setupLevelNameBookingsNone": "No places",
+  "@setupLevelNameBookingsNone": {
+    "description": "#3550 setupLevelName: the label for case 'bookings_none' — a business without places to book."
+  },
   "setupLevelNameBookingsSimple": "Shared places",
   "@setupLevelNameBookingsSimple": {
     "description": "#3485 setupLevelName: the label for case 'bookings_simple'."

@@ -17,6 +17,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/workspace/domain/business_kind_proposal.dart::BusinessKindProposal':
+      '#3550 PR 2b — the kind chooser reads the proposal it shows',
   'lib/features/me/presentation/kit/me_card.dart::MeCardTone':
       '#3545 step 0 — an enum of the Me kit that steps A–F use',
   'lib/features/me/presentation/kit/me_status_chip.dart::MeChipKind':

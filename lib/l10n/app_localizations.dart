@@ -43556,6 +43556,12 @@ abstract class AppLocalizations {
   /// **'Measured use'**
   String get setupLevelNameBookingsMeasured;
 
+  /// #3550 setupLevelName: the label for case 'bookings_none' — a business without places to book.
+  ///
+  /// In en, this message translates to:
+  /// **'No places'**
+  String get setupLevelNameBookingsNone;
+
   /// #3485 setupLevelName: the label for case 'bookings_resources'.
   ///
   /// In en, this message translates to:
