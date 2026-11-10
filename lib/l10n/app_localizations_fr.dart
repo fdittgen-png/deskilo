@@ -14192,6 +14192,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMonthIssuing => 'Émission…';
 
   @override
+  String get invoiceMonthLeaveBlocked =>
+      'L\'émission est en cours. Attendez qu\'elle se termine.';
+
+  @override
   String get invoiceMonthNeedsFix => 'À compléter';
 
   @override
@@ -14203,6 +14207,11 @@ class AppLocalizationsFr extends AppLocalizations {
       one: '1 à compléter',
     );
     return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthNeedsFixLine(String missing) {
+    return 'À compléter : $missing';
   }
 
   @override
@@ -14227,7 +14236,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String invoiceMonthResultPartial(int issued, int total) {
-    return '$issued factures émises sur $total';
+    String _temp0 = intl.Intl.pluralLogic(
+      issued,
+      locale: localeName,
+      other: '$issued factures émises sur $total',
+      one: '$issued facture émise sur $total',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -14235,8 +14250,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Chaque client la voit maintenant dans son compte et reçoit une notification.',
-      one: 'Le client la voit maintenant dans son compte et reçoit une notification.',
+      other: 'Chaque client la voit maintenant dans son compte.',
+      one: 'Le client la voit maintenant dans son compte.',
     );
     return '$_temp0';
   }

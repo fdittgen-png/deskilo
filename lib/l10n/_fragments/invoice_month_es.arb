@@ -20,8 +20,10 @@
   "invoiceMonthFix": "Completar",
   "invoiceMonthBusinessFix": "Los datos de su negocio están incompletos: {missing}",
   "invoiceMonthAll": "Todos",
-  "invoiceMonthResultPartial": "{issued} de {total} facturas emitidas",
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} factura emitida de {total}} other{{issued} facturas emitidas de {total}}}",
   "invoiceMonthResultNone": "Ninguna factura emitida",
-  "invoiceMonthResultSubtitle": "{count, plural, =1{El cliente la ve ahora en su cuenta y recibe una notificación.} other{Cada cliente la ve ahora en su cuenta y recibe una notificación.}}",
-  "invoiceMonthNotIssued": "No se pudo emitir. Inténtelo de nuevo."
+  "invoiceMonthResultSubtitle": "{count, plural, =1{El cliente la ve ahora en su cuenta.} other{Cada cliente la ve ahora en su cuenta.}}",
+  "invoiceMonthNotIssued": "No se pudo emitir. Inténtelo de nuevo.",
+  "invoiceMonthNeedsFixLine": "Hay que completarlo: {missing}",
+  "invoiceMonthLeaveBlocked": "La emisión está en curso. Espere a que termine."
 }

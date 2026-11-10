@@ -18567,6 +18567,10 @@
   "@invoiceMonthIssuing": {
     "description": "#3587 R1-e: the issue button while it works"
   },
+  "invoiceMonthLeaveBlocked": "Issuing is running. Wait for it to finish.",
+  "@invoiceMonthLeaveBlocked": {
+    "description": "#3587 R1-e: said when the person tries to leave while invoices are being issued"
+  },
   "invoiceMonthNeedsFix": "Needs a fix",
   "@invoiceMonthNeedsFix": {
     "description": "#3587 R1-e: status of a customer whose details block the invoice"
@@ -18577,6 +18581,15 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "invoiceMonthNeedsFixLine": "Needs a fix: {missing}",
+  "@invoiceMonthNeedsFixLine": {
+    "description": "#3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message",
+    "placeholders": {
+      "missing": {
+        "type": "String"
       }
     }
   },
@@ -18604,7 +18617,7 @@
   "@invoiceMonthResultNoneSubtitle": {
     "description": "#3587 R1-e: result page subtitle when nothing was issued"
   },
-  "invoiceMonthResultPartial": "{issued} of {total} invoices issued",
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}",
   "@invoiceMonthResultPartial": {
     "description": "#3587 R1-e: result title when only some invoices were issued",
     "placeholders": {
@@ -18616,7 +18629,7 @@
       }
     }
   },
-  "invoiceMonthResultSubtitle": "{count, plural, =1{The customer sees it in their account now and gets a notification.} other{Each customer sees it in their account now and gets a notification.}}",
+  "invoiceMonthResultSubtitle": "{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
   "@invoiceMonthResultSubtitle": {
     "description": "#3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)",
     "placeholders": {

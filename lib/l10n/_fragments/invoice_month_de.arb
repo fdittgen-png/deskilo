@@ -20,8 +20,10 @@
   "invoiceMonthFix": "Ergänzen",
   "invoiceMonthBusinessFix": "Die Angaben Ihres Betriebs sind unvollständig: {missing}",
   "invoiceMonthAll": "Alle",
-  "invoiceMonthResultPartial": "{issued} von {total} Rechnungen ausgestellt",
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} von {total} Rechnungen ausgestellt} other{{issued} von {total} Rechnungen ausgestellt}}",
   "invoiceMonthResultNone": "Keine Rechnung ausgestellt",
-  "invoiceMonthResultSubtitle": "{count, plural, =1{Der Kunde sieht sie jetzt in seinem Konto und erhält eine Benachrichtigung.} other{Jeder Kunde sieht sie jetzt in seinem Konto und erhält eine Benachrichtigung.}}",
-  "invoiceMonthNotIssued": "Konnte nicht ausgestellt werden. Bitte erneut versuchen."
+  "invoiceMonthResultSubtitle": "{count, plural, =1{Der Kunde sieht sie jetzt in seinem Konto.} other{Jeder Kunde sieht sie jetzt in seinem Konto.}}",
+  "invoiceMonthNotIssued": "Konnte nicht ausgestellt werden. Bitte erneut versuchen.",
+  "invoiceMonthNeedsFixLine": "Muss ergänzt werden: {missing}",
+  "invoiceMonthLeaveBlocked": "Die Rechnungen werden gerade ausgestellt. Bitte warten Sie, bis es fertig ist."
 }

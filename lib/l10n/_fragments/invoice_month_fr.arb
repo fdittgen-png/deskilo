@@ -20,8 +20,10 @@
   "invoiceMonthFix": "Compléter",
   "invoiceMonthBusinessFix": "Les informations de votre entreprise sont incomplètes : {missing}",
   "invoiceMonthAll": "Tous",
-  "invoiceMonthResultPartial": "{issued} factures émises sur {total}",
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} facture émise sur {total}} other{{issued} factures émises sur {total}}}",
   "invoiceMonthResultNone": "Aucune facture émise",
-  "invoiceMonthResultSubtitle": "{count, plural, =1{Le client la voit maintenant dans son compte et reçoit une notification.} other{Chaque client la voit maintenant dans son compte et reçoit une notification.}}",
-  "invoiceMonthNotIssued": "N'a pas pu être émise. Réessayez."
+  "invoiceMonthResultSubtitle": "{count, plural, =1{Le client la voit maintenant dans son compte.} other{Chaque client la voit maintenant dans son compte.}}",
+  "invoiceMonthNotIssued": "N'a pas pu être émise. Réessayez.",
+  "invoiceMonthNeedsFixLine": "À compléter : {missing}",
+  "invoiceMonthLeaveBlocked": "L'émission est en cours. Attendez qu'elle se termine."
 }

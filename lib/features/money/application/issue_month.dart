@@ -11,7 +11,6 @@
 // A customer whose answer was lost is never sent again: the same request id
 // is looked up, so a retry can neither double an invoice nor call a
 // committed one a failure.
-import '../../../core/data/server_error.dart';
 import '../../../core/ids/request_id.dart';
 import 'issue_invoice.dart';
 
@@ -37,22 +36,31 @@ final class MonthIssueReport {
   List<String> get held => _of((o) => o is InvoiceIssueHeld).toList();
 
   /// The server said no, in words: retry may help once the cause is fixed.
-  List<String> get refused => _of((o) => o is InvoiceIssueRefused).toList();
+  /// A request a validator declined is not one of these (see [declined]).
+  List<String> get refused => _of(
+    (o) => o is InvoiceIssueRefused && o.error is! InvoiceIssueDeclined,
+  ).toList();
+
+  /// A validator declined the request: it is not retried, a new request would
+  /// ask the same question again.
+  List<String> get declined => _of(
+    (o) => o is InvoiceIssueRefused && o.error is InvoiceIssueDeclined,
+  ).toList();
 
   /// The answer was lost: the invoice may exist; only looking again helps.
   List<String> get unknown => _of((o) => o is InvoiceIssueUnknown).toList();
 
   /// What did not end in an invoice or a held request.
-  List<String> get notDone => [...refused, ...unknown];
+  List<String> get notDone => [...refused, ...declined, ...unknown];
 
   /// Every customer ended with an invoice.
   bool get allIssued => outcomes.isNotEmpty && issued.length == outcomes.length;
 
-  /// What the server said when it refused [memberId], in its own words; null
-  /// when it refused without any.
-  String? refusalTextOf(String memberId) {
+  /// What refused [memberId], to be worded by the shared helper; null when
+  /// the customer was not refused.
+  Object? refusalOf(String memberId) {
     final o = outcomes[memberId];
-    return o is InvoiceIssueRefused ? serverErrorMessage(o.error) : null;
+    return o is InvoiceIssueRefused ? o.error : null;
   }
 
   /// The invoice id of [memberId], when it exists.
@@ -122,7 +130,11 @@ Future<MonthIssueReport> retryNotDone({
   final changed = <String, InvoiceIssueOutcome>{};
   for (final entry in report.outcomes.entries) {
     final outcome = entry.value;
-    if (outcome is! InvoiceIssueRefused) continue;
+    // A declined request is never asked again.
+    if (outcome is! InvoiceIssueRefused ||
+        outcome.error is InvoiceIssueDeclined) {
+      continue;
+    }
     final attempt = outcome.attempt;
     onProgress?.call(entry.key, MonthLineProgress.issuing);
     changed[entry.key] = await issuance.issue(

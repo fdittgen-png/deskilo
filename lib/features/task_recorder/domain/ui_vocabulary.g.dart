@@ -8685,6 +8685,7 @@ const Set<String> uiLabelKeys = {
   'invoiceMonthHeld',
   'invoiceMonthIssued',
   'invoiceMonthIssuing',
+  'invoiceMonthLeaveBlocked',
   'invoiceMonthNeedsFix',
   'invoiceMonthNotDone',
   'invoiceMonthNotIssued',

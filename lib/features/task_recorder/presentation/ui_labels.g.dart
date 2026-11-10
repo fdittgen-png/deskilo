@@ -6589,6 +6589,7 @@ Map<String, _Getter> _part19() => {
   'invoiceMissingBuyerCapacity': (l) => l.invoiceMissingBuyerCapacity,
   'invoiceMissingExemptionReason': (l) => l.invoiceMissingExemptionReason,
   'invoiceMissingVatZeroLine': (l) => l.invoiceMissingVatZeroLine,
+  'invoiceMonthLeaveBlocked': (l) => l.invoiceMonthLeaveBlocked,
   'invoiceNoOpen': (l) => l.invoiceNoOpen,
   'invoicePdfBilledTo': (l) => l.invoicePdfBilledTo,
   'invoicePdfCreditNote': (l) => l.invoicePdfCreditNote,

@@ -25,15 +25,34 @@ class MonthFlowState extends ChangeNotifier {
   MonthIssueReport? get report => _report;
   bool get busy => _busy;
 
-  /// One customer's readiness arrived. A customer who needs a fix cannot be
-  /// ticked; one who no longer does is ticked again; an unknown read changes
-  /// nothing.
+  /// Customers a read blocked by themselves: unticked by the read, and the
+  /// only ones a later read may tick again.
+  final Set<String> _blocked = {};
+
+  /// [memberIds] are about to be read again: what was known of them is set
+  /// aside, so a stale answer of one never colours the answer of another.
+  void readingAgain(Iterable<String> memberIds) {
+    final again = memberIds.toSet();
+    _readiness = MonthReadiness({
+      for (final e in _readiness.lines.entries)
+        if (!again.contains(e.key)) e.key: e.value,
+    });
+    notifyListeners();
+  }
+
+  /// One customer's readiness arrived. Whoever needs a fix cannot be ticked
+  /// and is unticked; whoever WAS blocked and no longer is, is ticked again.
+  /// Any other read leaves the person's own choice alone: a deliberate
+  /// untick is never undone by a read arriving late or by a re-read.
   void readinessArrived(String memberId, LineReadiness readiness) {
     _readiness = _readiness.with_(memberId, readiness);
-    if (_readiness.needsFix(memberId)) {
-      _selected.remove(memberId);
-    } else if (readiness is! ReadinessUnknown) {
-      _selected.add(memberId);
+    for (final id in _readiness.lines.keys) {
+      if (_readiness.needsFix(id)) {
+        _selected.remove(id);
+        _blocked.add(id);
+      } else if (_blocked.remove(id)) {
+        _selected.add(id);
+      }
     }
     notifyListeners();
   }

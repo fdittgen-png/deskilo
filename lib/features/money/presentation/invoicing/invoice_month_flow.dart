@@ -99,15 +99,18 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
   );
 
   /// Rows render at once; their status fills in as each read answers.
-  Future<void> _read(List<String> memberIds) => readMonthReadiness(
-    queries: ref.read(invoiceQueriesProvider),
-    workspaceId: widget.workspaceId,
-    period: widget.period,
-    memberIds: memberIds,
-    onEach: (id, readiness) {
-      if (mounted) _state.readinessArrived(id, readiness);
-    },
-  );
+  Future<void> _read(List<String> memberIds) {
+    _state.readingAgain(memberIds);
+    return readMonthReadiness(
+      queries: ref.read(invoiceQueriesProvider),
+      workspaceId: widget.workspaceId,
+      period: widget.period,
+      memberIds: memberIds,
+      onEach: (id, readiness) {
+        if (mounted) _state.readinessArrived(id, readiness);
+      },
+    );
+  }
 
   Future<void> _fixCustomer(String memberId) async {
     await widget.onFixCustomer(memberId);
@@ -131,7 +134,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
         for (final e in widget.entries)
           if (_state.isSelected(e.memberId)) e.memberId,
       ],
-      onProgress: _state.progress,
+      onProgress: _progress,
     );
     _finish(report);
   }
@@ -144,9 +147,15 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
       await retryNotDone(
         issuance: _issuance,
         report: report,
-        onProgress: _state.progress,
+        onProgress: _progress,
       ),
     );
+  }
+
+  /// The run goes on if the person leaves; its progress then has no one to
+  /// tell.
+  void _progress(String memberId, MonthLineProgress p) {
+    if (mounted) _state.progress(memberId, p);
   }
 
   void _finish(MonthIssueReport report) {
@@ -169,16 +178,33 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.invoiceMonthTitle(monthLabel(context, widget.period))),
-      ),
-      body: ListenableBuilder(
-        listenable: _state,
-        builder: (context, _) {
-          final report = _state.report;
-          return report == null ? _review(context) : _result(context, report);
+    return ListenableBuilder(
+      listenable: _state,
+      builder: (context, child) => PopScope(
+        // Issuing is running: leaving would hide what it did.
+        canPop: !_state.busy,
+        onPopInvokedWithResult: (didPop, _) {
+          if (!didPop) {
+            ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+              SnackBar(content: Text(l10n.invoiceMonthLeaveBlocked)),
+            );
+          }
         },
+        child: child!,
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            l10n.invoiceMonthTitle(monthLabel(context, widget.period)),
+          ),
+        ),
+        body: ListenableBuilder(
+          listenable: _state,
+          builder: (context, _) {
+            final report = _state.report;
+            return report == null ? _review(context) : _result(context, report);
+          },
+        ),
       ),
     );
   }
@@ -289,14 +315,19 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
           child: SelectRow(
             key: ValueKey('invoice-month-select-${e.memberId}'),
             selected: _state.isSelected(e.memberId),
+            enabled: !fix,
             onChanged: _state.busy || fix
                 ? (_) {}
                 : (on) => _state.toggle(e.memberId, on: on),
             title: e.name,
             caption: fix
                 ? Text(
-                    '${l10n.invoiceMonthNeedsFix}: '
-                    '${monthMissingWords(l10n, _state.readiness.customerMissing(e.memberId))}',
+                    l10n.invoiceMonthNeedsFixLine(
+                      monthMissingWords(
+                        l10n,
+                        _state.readiness.customerMissing(e.memberId),
+                      ),
+                    ),
                     key: ValueKey('invoice-month-status-${e.memberId}'),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.error,

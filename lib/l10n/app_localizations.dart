@@ -23326,6 +23326,12 @@ abstract class AppLocalizations {
   /// **'Issuing…'**
   String get invoiceMonthIssuing;
 
+  /// #3587 R1-e: said when the person tries to leave while invoices are being issued
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing is running. Wait for it to finish.'**
+  String get invoiceMonthLeaveBlocked;
+
   /// #3587 R1-e: status of a customer whose details block the invoice
   ///
   /// In en, this message translates to:
@@ -23337,6 +23343,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 needs a fix} other{{count} need a fix}}'**
   String invoiceMonthNeedsFixCount(int count);
+
+  /// #3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a fix: {missing}'**
+  String invoiceMonthNeedsFixLine(String missing);
 
   /// #3587 R1-e: heading of what the server did not issue
   ///
@@ -23377,13 +23389,13 @@ abstract class AppLocalizations {
   /// #3587 R1-e: result title when only some invoices were issued
   ///
   /// In en, this message translates to:
-  /// **'{issued} of {total} invoices issued'**
+  /// **'{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}'**
   String invoiceMonthResultPartial(int issued, int total);
 
   /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{The customer sees it in their account now and gets a notification.} other{Each customer sees it in their account now and gets a notification.}}'**
+  /// **'{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}'**
   String invoiceMonthResultSubtitle(int count);
 
   /// #3587 R1-e: result page title when something was issued

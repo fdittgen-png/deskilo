@@ -26,7 +26,7 @@ const Map<String, String> _allowed = {
   'lib/features/money/application/receivables_answers.dart::owedBucketOf':
       '#3587 R1-c — the owed card filters the list by it',
   'lib/features/money/presentation/invoicing/invoice_month_flow.dart::InvoiceMonthFlow':
-      '#3587 R1-c — the invoicing home opens the flow',
+      '#3587 release 1 train — the invoicing home opens the flow',
 };
 
 void main() {
