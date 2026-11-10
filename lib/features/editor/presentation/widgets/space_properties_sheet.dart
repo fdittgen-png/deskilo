@@ -109,6 +109,6 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
   return (
     name: trimmed.isEmpty ? name : trimmed,
     bookable: isBookable,
-    priceCents: parseCentsInput(price.text) ?? 0,
+    priceCents: parseMinorInput(price.text) ?? 0,
   );
 }

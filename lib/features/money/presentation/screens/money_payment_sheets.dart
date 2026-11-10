@@ -47,7 +47,7 @@ class MoneySheets {
     );
     if (submitted != true || !_context.mounted) return;
 
-    final cents = parseCentsInput(draft.amount.text);
+    final cents = parseMinorInput(draft.amount.text);
     if (cents == null || cents <= 0) return;
     if (!await runGuarded(
       _context,

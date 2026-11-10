@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
@@ -89,9 +90,10 @@ class _ReceiptSheet {
       quantities: {
         for (final l in order.lines)
           l.lineNo:
-              double.tryParse(
-                fields.text('line-${l.lineNo}').replaceAll(',', '.'),
-              ) ??
+              parseDecimalInput(
+                fields.text('line-${l.lineNo}'),
+                grouping: false,
+              )?.toDouble() ??
               (fields.text('line-${l.lineNo}').isEmpty ? 0 : -1),
       },
     );

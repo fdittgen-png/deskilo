@@ -6,8 +6,14 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+
+/// #3487 — a rate typed in a tax reference field: one separator, `.` or
+/// `,`, always the decimal one.
+double? parseRateInput(String text) =>
+    parseDecimalInput(text, grouping: false)?.toDouble();
 
 /// The taxes typed in [text], or null when a line is not of the form
 /// `scheme, authority, percent` (percent above 0 up to 99.999) or there is none.
@@ -17,7 +23,7 @@ List<RateComponent>? parseRateComponents(String text) {
     if (line.trim().isEmpty) continue;
     final parts = line.split(',').map((p) => p.trim()).toList();
     if (parts.length != 3 || parts[0].isEmpty || parts[1].isEmpty) return null;
-    final pct = double.tryParse(parts[2]);
+    final pct = parseRateInput(parts[2]);
     if (pct == null || pct <= 0 || pct > 99.999) return null;
     out.add(RateComponent(scheme: parts[0], authority: parts[1], percent: pct));
   }

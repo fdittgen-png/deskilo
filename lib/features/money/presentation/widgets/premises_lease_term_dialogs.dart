@@ -60,7 +60,7 @@ class _TermDialogState extends ConsumerState<_TermDialog> {
   }
 
   LeaseTermCommand? _command() {
-    final cents = parseCentsInput(_amount.text);
+    final cents = parseMinorInput(_amount.text);
     final from = _from;
     if (cents == null ||
         cents <= 0 ||
