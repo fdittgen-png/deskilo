@@ -35,6 +35,9 @@ class MeScenario {
   final FakeMessengerRepository? messenger;
 }
 
+/// The instant every Me guard and sheet runs at (UTC, so no zone moves it).
+final DateTime meGuardNow = DateTime.utc(2026, 5, 13, 10);
+
 /// A state of a screen, by name, and how to set it up.
 typedef MeStateBuilder = MeScenario Function();
 
@@ -92,7 +95,8 @@ const _host = MyReservationsSource(
 );
 
 MyReservationItem _booking() {
-  final start = DateTime(kTestNow.year, kTestNow.month, kTestNow.day + 1, 9);
+  // A fixed instant, not a local one: the same text in every time zone.
+  final start = DateTime.utc(2026, 5, 14, 9);
   return MyReservationItem(
     id: 'b1',
     workspaceId: 'ws-1',

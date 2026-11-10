@@ -1,0 +1,6 @@
+{
+  "meGreetingMorning": "Bonjour, {name}",
+  "meGreetingAfternoon": "Bon après-midi, {name}",
+  "meGreetingEvening": "Bonsoir, {name}",
+  "meGreetingNoName": "Bienvenue"
+}

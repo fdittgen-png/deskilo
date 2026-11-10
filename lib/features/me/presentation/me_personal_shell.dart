@@ -206,9 +206,15 @@ class _MePersonalShellState extends ConsumerState<MePersonalShell>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(mainAxisSize: MainAxisSize.min, children: [
-                    Text(l10n.appTitle, style: theme.textTheme.labelLarge),
+                    Flexible(
+                      child: Text(
+                        l10n.appTitle,
+                        style: theme.textTheme.labelLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                     const SizedBox(width: AppSpacing.sm),
-                    const _MeScopeBadge(),
+                    const Flexible(child: _MeScopeBadge()),
                   ]),
                   Text(current.destinationLabel(l10n),
                       style: theme.textTheme.titleMedium),

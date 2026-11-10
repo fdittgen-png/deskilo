@@ -1,8 +1,6 @@
 {
   "@@locale": "de",
-  "meOverviewTitle": "Ihr Tag, an einem Ort",
-  "meOverviewSubtitle": "Ihre nächste Buchung, was auf Sie wartet, und Ihre Spaces.",
-  "meOverviewNextTitle": "Nächster Termin",
+  "meOverviewNextTitle": "Als Nächstes",
   "meOverviewNextNone": "Keine Buchung vom {from} bis {to}.",
   "meOverviewNextNotYet": "Keine anstehende Buchung unter den bisher gelesenen.",
   "meOverviewNextUnavailable": "Ihre Buchungen konnten nicht gelesen werden.",
@@ -10,7 +8,7 @@
   "meOverviewNextZone": "Zeiten in {zone}",
   "meOverviewView": "Ansehen",
   "meOverviewAttentionTitle": "Wartet auf Sie",
-  "meOverviewAttentionNone": "Nichts wartet auf Sie.",
+  "meOverviewAttentionNone": "Im Moment wartet nichts auf Sie.",
   "meOverviewAttentionDocumentToPay": "zu zahlen · {number}",
   "meOverviewAttentionOverdue": "Überfällig",
   "meOverviewAttentionViewDocument": "Dokument ansehen",
