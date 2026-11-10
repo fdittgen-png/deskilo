@@ -121,6 +121,12 @@ void main() {
       expect(shardOf('test/features/auth/a_test.dart'), money2Shard);
       expect(shardOf('test/features/events/a_test.dart'), restShard);
       expect(shardOf('test/core/a_test.dart'), coreShard);
+      expect(shardOf('test/core/demo/demo_g_test.dart'), coreShard);
+      expect(shardOf('test/core/demo/demo_h_test.dart'), gateShard);
+      expect(shardOf('test/core/demo/demo_l_test.dart'), gateShard);
+      expect(shardOf('test/core/demo/demo_m_test.dart'), workspaceShard);
+      expect(shardOf('test/core/demo/demo_z_test.dart'), workspaceShard);
+      expect(shardOf('test/core/demo_extra/a_test.dart'), coreShard);
       expect(shardOf('test/app/a_test.dart'), coreShard);
       expect(shardOf('test/a11y/a_test.dart'), coreShard);
       expect(shardOf('test/features/profile/a_test.dart'), coreShard);
