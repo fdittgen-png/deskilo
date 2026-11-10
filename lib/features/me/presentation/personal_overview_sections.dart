@@ -19,11 +19,10 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/inline_banner.dart';
-import '../../reservations/domain/my_reservations.dart';
-import '../../reservations/domain/my_reservations_composition.dart';
-import '../../reservations/presentation/widgets/my_reservations_layout.dart';
-import '../../reservations/providers/reservation_providers.dart';
+import '../application/personal_commitments.dart';
 import '../application/personal_overview.dart';
+import '../domain/personal_commitment.dart';
+import 'commitment_words.dart';
 import 'me_data_tab.dart';
 
 /// One section of the Overview: a titled surface, never a button itself.
@@ -166,24 +165,24 @@ class _NextBody extends ConsumerWidget {
     final next = nextCommitmentOf(composition, ref.watch(clockProvider).now());
     final format = ref.watch(appFormatProvider);
     final composer = ref.read(myReservationsComposerProvider(query).notifier);
-    final entry = next.entry;
+    final commitment = next.commitment;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (final slot in next.failed)
           SourceUnavailable(
-            key: ValueKey('me-overview-next-failed-${slot.installationId}'),
+            key: ValueKey('me-overview-next-failed-${slot.sourceId}'),
             text: l10n.meOverviewNextHostFailed(
-              slot.source.labels.isEmpty
+              slot.labels.isEmpty
                   ? l10n.myReservationsSourceUnnamed
-                  : slot.source.labels.join(', '),
+                  : slot.labels.join(', '),
             ),
-            onRetry: () => composer.retry(slot.installationId),
+            onRetry: () => composer.retry(slot.sourceId),
           ),
         if (next.reading)
           const SectionLoading(key: ValueKey('me-overview-next-loading'))
-        else if (entry != null)
-          _Commitment(entry: entry, format: format)
+        else if (commitment != null)
+          _Commitment(commitment: commitment, format: format)
         else if (next.complete)
           Text(
             l10n.meOverviewNextNone(
@@ -197,7 +196,7 @@ class _NextBody extends ConsumerWidget {
             l10n.meOverviewNextNotYet,
             key: const ValueKey('me-overview-next-not-yet'),
           ),
-        if (!next.reading && (entry != null || !next.complete))
+        if (!next.reading && (commitment != null || !next.complete))
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
@@ -215,12 +214,12 @@ class _NextBody extends ConsumerWidget {
   }
 }
 
-/// One booking: what and where, its day and hours in its workspace's own
+/// One commitment: what and where, its day and hours in its business's own
 /// zone (named when it is not the device's), and where it stands.
 class _Commitment extends StatelessWidget {
-  const _Commitment({required this.entry, required this.format});
+  const _Commitment({required this.commitment, required this.format});
 
-  final MyReservationEntry entry;
+  final PersonalCommitment commitment;
   final AppFormat format;
 
   @override
@@ -228,36 +227,35 @@ class _Commitment extends StatelessWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final tokens = PersonalTheme.of(context);
-    final item = entry.item;
-    final zone = entry.zone;
+    final c = commitment;
+    final zone = c.zone;
     final known = zone != null && TimeZones.isKnown(zone);
     DateTime wall(DateTime instant) => known
         ? tz.TZDateTime.from(instant, tz.getLocation(zone))
         : appFormatOf(context).wall(instant);
-    final start = wall(item.startsAt);
-    final end = wall(item.endsAt);
+    final start = wall(c.startsAt);
+    final end = wall(c.endsAt);
     final showZone =
-        known && start.timeZoneOffset != appFormatOf(context).wall(item.startsAt).timeZoneOffset;
-    final place = item.placeLabel.isEmpty
-        ? l10n.myReservationsUnnamedPlace
-        : item.placeLabel;
+        known && start.timeZoneOffset != appFormatOf(context).wall(c.startsAt).timeZoneOffset;
+    final place = c.label.isEmpty ? l10n.myReservationsUnnamedPlace : c.label;
     final day = format.dates(DateShape.weekdayMonthDay).format(start);
     final secondary = theme.textTheme.bodySmall?.copyWith(
       color: tokens.secondaryText,
     );
+    final kind = commitmentKindWords(l10n, c);
     return Column(
-      key: ValueKey('me-overview-next-${entry.source}-${item.id}'),
+      key: ValueKey('me-overview-next-${c.source}-${c.id}'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(myReservationKindIcon(item.placeKind), color: tokens.primary),
+            Icon(commitmentIcon(c), color: tokens.primary),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(place, style: theme.textTheme.titleMedium?.strong),
             ),
             Text(
-              myReservationStatusWords(l10n, item.status),
+              commitmentStateWords(l10n, c.state),
               style: theme.textTheme.labelLarge,
             ),
           ],
@@ -268,7 +266,7 @@ class _Commitment extends StatelessWidget {
           style: theme.textTheme.bodyLarge,
         ),
         Text(
-          '${myReservationKindWords(l10n, item.placeKind)} · ${item.workspaceName}',
+          kind.isEmpty ? c.businessName : '$kind · ${c.businessName}',
           style: secondary,
         ),
         if (showZone) Text(l10n.meOverviewNextZone(zone), style: secondary),

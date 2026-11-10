@@ -9,20 +9,22 @@
 import '../../directory/domain/messenger.dart';
 import '../../reservations/domain/my_reservations_composition.dart';
 import '../../reservations/domain/reservation.dart';
+import '../domain/personal_commitment.dart';
 import '../domain/personal_workspace_refs.dart';
+import 'personal_commitments.dart';
 
 /// Where the search for the next commitment stands.
 class NextCommitment {
   const NextCommitment({
-    required this.entry,
+    required this.commitment,
     required this.reading,
     required this.complete,
     required this.failed,
   });
 
-  /// The earliest own booking that is still to come and stands — neither
+  /// The earliest own commitment that is still to come and stands — neither
   /// cancelled, released nor over; null while none was found.
-  final MyReservationEntry? entry;
+  final PersonalCommitment? commitment;
 
   /// A host's first page is still being read: an earlier booking may come.
   final bool reading;
@@ -31,8 +33,18 @@ class NextCommitment {
   /// "none in this period", nothing more.
   final bool complete;
 
-  /// The hosts whose bookings could not be read.
-  final List<MyReservationsSlot> failed;
+  /// The hosts whose commitments could not be read.
+  final List<CommitmentSourceFailure> failed;
+}
+
+/// A source whose commitments could not be read: the installation to retry
+/// and the names of the businesses it holds ([labels] empty when it names
+/// none).
+class CommitmentSourceFailure {
+  const CommitmentSourceFailure({required this.sourceId, required this.labels});
+
+  final String sourceId;
+  final List<String> labels;
 }
 
 /// A booking that still holds its place: what a person has to turn up for.
@@ -44,20 +56,31 @@ NextCommitment nextCommitmentOf(
   MyReservationsComposition composition,
   DateTime now,
 ) {
-  MyReservationEntry? entry;
+  PersonalCommitment? commitment;
   for (final e in composition.visible) {
     if (_stands(e.item.status) && e.item.endsAt.isAfter(now)) {
-      entry = e;
+      commitment = commitmentOfReservation(
+        e.item,
+        now: now,
+        source: e.source,
+        zone: e.zone,
+      );
       break;
     }
   }
   return NextCommitment(
-    entry: entry,
+    commitment: commitment,
     reading: composition.reading,
     complete: composition.slots.every(
       (s) => s.state == MyReservationsSlotState.read && !s.hasMore,
     ),
-    failed: composition.failed,
+    failed: [
+      for (final s in composition.failed)
+        CommitmentSourceFailure(
+          sourceId: s.installationId,
+          labels: s.source.labels,
+        ),
+    ],
   );
 }
 

@@ -21,7 +21,11 @@ enum MyReservationPlaceKind {
   seat('seat'),
   desk('desk'),
   office('office'),
-  level('level');
+  level('level'),
+
+  /// #3548 -- a place kind this version does not know: the booking still
+  /// shows, by its label.
+  other('other');
 
   const MyReservationPlaceKind(this.wire);
   final String wire;
@@ -30,7 +34,7 @@ enum MyReservationPlaceKind {
     for (final k in values) {
       if (k.wire == wire) return k;
     }
-    throw JsonShapeException(context, 'place_kind', 'a place kind', wire);
+    return other;
   }
 }
 
