@@ -51,7 +51,15 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('wizard-next')));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
-      expect(tester.widget<TextFormField>(currency).controller!.text, 'CHF');
+      expect(
+        tester
+            .widget<TextField>(
+              find.descendant(of: currency, matching: find.byType(TextField)),
+            )
+            .controller!
+            .text,
+        'CHF',
+      );
       expect(find.byKey(const ValueKey('onboarding-name')), findsNothing);
       expect(tester.takeException(), isNull);
     });

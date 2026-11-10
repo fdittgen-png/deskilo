@@ -13,20 +13,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// Identities that may stay a text field, with why.
-const Map<String, String> _allowed = {
-  'workspaceSettingsTimezone':
-      'read-only: tapping it opens the time-zone picker (#711)',
-  'timezone-search': 'the search box of the time-zone picker itself',
-  'onboarding-currency':
-      'typed text validated against the supported list (isKnownCurrency, '
-      'onboardingCurrencyUnknown); found by this ratchet, not in the four of '
-      '#3563 -- becomes the CurrencyField with the onboarding rework',
-  'onboarding-timezone':
-      'typed text validated against the IANA database (workspaceTimezoneUnknown); '
-      'found by this ratchet, not in the four of #3563 -- becomes the picker '
-      'with the onboarding rework',
-};
+/// Identities that may stay a text field, with why. Empty: a field that only
+/// OPENS a lookup (`readOnly: true`, the picker behind it) and the search box
+/// of a picker (`*-search`) are not free text and are recognized by shape.
+const Map<String, String> _allowed = {};
 
 final _master = RegExp(
   'country|currency|timezone|zone|locale|language',
@@ -37,16 +27,21 @@ final _identity = RegExp(
   r'''(?:ValueKey|Key)(?:<String>)?\('([^']+)'\)|fieldKey:\s*'([^']+)'|fields?\['([^']+)'\]''',
 );
 
-/// The identities named inside the widget call whose `(` is at [open].
-Iterable<String> _identitiesAt(String text, int open) {
+/// The text of the widget call whose `(` is at [open].
+String _callText(String text, int open) {
   var depth = 0;
   var end = open;
   for (; end < text.length; end++) {
     if (text[end] == '(') depth++;
     if (text[end] == ')' && --depth == 0) break;
   }
+  return text.substring(open, end);
+}
+
+/// The identities named inside the widget call whose `(` is at [open].
+Iterable<String> _identitiesAt(String text, int open) {
   return [
-    for (final m in _identity.allMatches(text.substring(open, end)))
+    for (final m in _identity.allMatches(_callText(text, open)))
       m.group(1) ?? m.group(2) ?? m.group(3)!,
   ];
 }
@@ -60,7 +55,13 @@ void main() {
         final ids = _identitiesAt(text, m.end - 1).toList();
         if (ids.any(_master.hasMatch)) {
           final id = ids.firstWhere(_master.hasMatch);
-          if (!_allowed.containsKey(id)) found.add('${file.path}: $id');
+          final callText = _callText(text, m.end - 1);
+          final opensLookup = callText.contains('readOnly: true');
+          if (!opensLookup &&
+              !id.endsWith('-search') &&
+              !_allowed.containsKey(id)) {
+            found.add('${file.path}: $id');
+          }
         }
       }
     }
