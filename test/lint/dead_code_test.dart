@@ -18,7 +18,7 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/features/money/application/receivables.dart::actionFor':
+  'lib/features/money/application/receivables.dart::actionOf':
       '#3587 R1-c — the invoicing home reads it',
   'lib/features/money/application/receivables_answers.dart::customerRowsOf':
       '#3587 R1-c — the invoicing home reads it',
@@ -28,7 +28,9 @@ const Map<String, String> _allowed = {
       '#3587 R1-c — the invoicing home reads it',
   'lib/features/money/application/receivables_answers.dart::todoOf':
       '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/presentation/invoicing/receivables_adapter.dart::receivablesOf':
+  'lib/features/money/presentation/invoice_journey.dart::declarationOf':
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/presentation/invoicing/receivables_adapter.dart::ReceivablesReader':
       '#3587 R1-c — the invoicing home reads it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.

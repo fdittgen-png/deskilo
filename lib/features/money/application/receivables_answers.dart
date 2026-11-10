@@ -26,9 +26,7 @@ enum OwedBucket {
 /// its way goes to [OwedBucket.toConfirm] whatever the due date.
 OwedBucket? owedBucketOf(Receivable r, DateTime today) {
   if (!r.isOutstanding) return null;
-  if (r.paymentDeclared || r.paymentToMatch || r.awaitingSecondApproval) {
-    return OwedBucket.toConfirm;
-  }
+  if (r.paymentPending) return OwedBucket.toConfirm;
   return r.isLateOn(today) ? OwedBucket.overdue : OwedBucket.notYetDue;
 }
 
@@ -68,8 +66,9 @@ typedef MonthFigures = ({Tally invoiced, Tally received});
 /// An invoice's own payment lines are netted at issue and carry no date.
 typedef ReceivedPayment = ({String currency, int minor, DateTime on});
 
-/// [today]'s calendar month: invoiced = every invoice issued in it (a draft
-/// or a cancelled one is not invoiced), at its total; received = every
+/// [today]'s calendar month: invoiced = every invoice issued in it, at its
+/// total (not a draft, a cancelled invoice, a source regrouped into a
+/// settlement — the settlement carries it — or a credit note); received = every
 /// payment of [received] dated in it, partial payments included. Per
 /// currency, never summed across currencies.
 MonthFigures monthOf(
@@ -80,9 +79,13 @@ MonthFigures monthOf(
   bool inMonth(DateTime d) => d.year == today.year && d.month == today.month;
   var invoiced = Tally.empty;
   for (final r in invoices) {
-    final counts =
-        r.stage != ReceivableStage.draft &&
-        r.stage != ReceivableStage.cancelled;
+    final counts = switch (r.stage) {
+      ReceivableStage.open ||
+      ReceivableStage.partlyPaid ||
+      ReceivableStage.paid ||
+      ReceivableStage.credited => true,
+      _ => false,
+    };
     if (counts && inMonth(r.issuedOn)) {
       invoiced = invoiced.plus(r.currency, r.totalMinor);
     }
@@ -94,41 +97,55 @@ MonthFigures monthOf(
   return (invoiced: invoiced, received: money);
 }
 
-/// What "To do" can ask for, in its order.
+/// What "To do" can ask for, in its order (#3587's final design).
 enum TodoKind {
   invoiceTheMonth,
-  sendReminders,
+
+  /// Only when reminders are shared by hand: the queue.
+  shareReminders,
   confirmPayments,
   matchPayments,
-  fixSending,
+  payOutRefunds,
+  rejectedEInvoices,
+
+  /// Open invoices without a due date: no automatic reminder reaches them.
+  setDueDate,
   issueDrafts,
 }
 
 /// One entry of "To do": what to do, for how many, and the money at stake.
 typedef Todo = ({TodoKind kind, Tally tally});
 
-/// The "To do" entry [r] belongs to on [today], or null. A hold stops the
-/// reminders only: a payment declared on a held invoice is still confirmed.
-TodoKind? _todoOf(Receivable r, DateTime today) {
-  if (r.stage == ReceivableStage.draft) return TodoKind.issueDrafts;
-  if (!r.isOutstanding) return null;
-  if (r.sendFailed) return TodoKind.fixSending;
+/// The "To do" entry [r] belongs to, or null. A hold stops the reminders
+/// only: a payment declared on a held invoice is still confirmed.
+TodoKind? _todoOf(Receivable r, ReminderMode mode) {
+  switch (r.stage) {
+    case ReceivableStage.draft:
+      return TodoKind.issueDrafts;
+    case ReceivableStage.refundOwed:
+      return TodoKind.payOutRefunds;
+    case ReceivableStage.open || ReceivableStage.partlyPaid:
+      break;
+    case _:
+      return null;
+  }
+  if (r.eInvoiceRejected) return TodoKind.rejectedEInvoices;
   if (r.paymentDeclared) return TodoKind.confirmPayments;
   if (r.paymentToMatch) return TodoKind.matchPayments;
-  final status = invoiceStatusOf(r, today);
-  return status.kind == InvoiceStatusKind.reminderDue
-      ? TodoKind.sendReminders
-      : null;
+  if (reminderToShare(r, mode)) return TodoKind.shareReminders;
+  if (!r.dueDateSet) return TodoKind.setDueDate;
+  return null;
 }
 
-/// "To do" of [invoices] and [toInvoice] on [today]: invoice the month,
-/// send reminders, confirm payments, match payments, could not be sent,
-/// drafts to issue — each present only when it has something to do. No age
-/// threshold decides an entry.
+/// "To do" of [invoices] and [toInvoice] in [mode]: invoice the month, share
+/// reminders by hand, confirm payments, match payments, pay out refunds,
+/// rejected e-invoices, set a due date, drafts — each present only when it
+/// has something to do. No age threshold decides an entry; a customer whose
+/// every reminder was sent is not one (their line says it).
 List<Todo> todoOf(
   Iterable<Receivable> invoices, {
   Iterable<ToInvoice> toInvoice = const [],
-  required DateTime today,
+  required ReminderMode mode,
 }) {
   final tallies = {for (final k in TodoKind.values) k: Tally.empty};
   for (final t in toInvoice) {
@@ -138,7 +155,7 @@ List<Todo> todoOf(
     );
   }
   for (final r in invoices) {
-    final kind = _todoOf(r, today);
+    final kind = _todoOf(r, mode);
     if (kind != null) {
       tallies[kind] = tallies[kind]!.plus(r.currency, r.openMinor);
     }
@@ -149,7 +166,7 @@ List<Todo> todoOf(
   ];
 }
 
-/// One customer's line of the list (Design 2: the list is by customer).
+/// One customer's line of the list (the list is by customer).
 @immutable
 class CustomerRow {
   const CustomerRow({
@@ -158,10 +175,11 @@ class CustomerRow {
     required this.invoices,
     required this.owes,
     required this.daysLate,
-    required this.remindersDue,
+    required this.remindersToShare,
     required this.declared,
     required this.toMatch,
     required this.onHold,
+    required this.everyReminderSent,
   });
 
   final String customerId;
@@ -176,17 +194,20 @@ class CustomerRow {
   /// Days the most late invoice is late (the due day counts as day 0);
   /// null when none is late.
   final int? daysLate;
-  final int remindersDue;
+  final int remindersToShare;
   final int declared;
   final int toMatch;
 
   /// One of their invoices is on hold.
   final bool onHold;
 
-  /// The line's one action: remind, else confirm, else match; null when
-  /// nothing waits on the business.
-  InvoiceAction? get action => remindersDue > 0
-      ? InvoiceAction.sendReminder
+  /// A late invoice of theirs has had every reminder ("every reminder sent").
+  final bool everyReminderSent;
+
+  /// The line's one action: share a reminder, else confirm, else match;
+  /// null when nothing waits on the business.
+  InvoiceAction? get action => remindersToShare > 0
+      ? InvoiceAction.shareReminder
       : declared > 0
       ? InvoiceAction.confirmPayment
       : toMatch > 0
@@ -195,11 +216,13 @@ class CustomerRow {
 }
 
 /// [invoices] (the list's current selection) as one line per customer on
-/// [today]: late customers first, the most late first, then the larger
-/// amount when both owe in one same currency, then by name.
+/// [today] in [mode]: late customers first — among them those whose every
+/// reminder was sent — the most late first, then the larger amount when both
+/// owe in one same currency, then by name.
 List<CustomerRow> customerRowsOf(
   Iterable<Receivable> invoices, {
   required DateTime today,
+  required ReminderMode mode,
 }) {
   final byCustomer = <String, List<Receivable>>{};
   for (final r in invoices) {
@@ -207,12 +230,18 @@ List<CustomerRow> customerRowsOf(
   }
   final rows = [
     for (final MapEntry(key: id, value: rs) in byCustomer.entries)
-      _rowOf(id, rs, today),
+      _rowOf(id, rs, today, mode),
   ];
   return rows..sort(_byUrgency);
 }
 
 int _byUrgency(CustomerRow a, CustomerRow b) {
+  final aLate = a.daysLate != null;
+  final bLate = b.daysLate != null;
+  if (aLate != bLate) return aLate ? -1 : 1;
+  if (a.everyReminderSent != b.everyReminderSent) {
+    return a.everyReminderSent ? -1 : 1;
+  }
   final byLate = (b.daysLate ?? -1).compareTo(a.daysLate ?? -1);
   if (byLate != 0) return byLate;
   final ca = a.owes.byCurrency;
@@ -224,7 +253,12 @@ int _byUrgency(CustomerRow a, CustomerRow b) {
   return compareNames(a.customerName, b.customerName);
 }
 
-CustomerRow _rowOf(String id, List<Receivable> rs, DateTime today) {
+CustomerRow _rowOf(
+  String id,
+  List<Receivable> rs,
+  DateTime today,
+  ReminderMode mode,
+) {
   int dueKey(Receivable r) => r.dueOn?.millisecondsSinceEpoch ?? 0;
   rs.sort((a, b) => dueKey(a).compareTo(dueKey(b)));
   var owes = Tally.empty;
@@ -236,16 +270,17 @@ CustomerRow _rowOf(String id, List<Receivable> rs, DateTime today) {
       if (daysLate == null || days > daysLate) daysLate = days;
     }
   }
-  int count(TodoKind kind) => rs.where((r) => _todoOf(r, today) == kind).length;
+  int count(TodoKind kind) => rs.where((r) => _todoOf(r, mode) == kind).length;
   return CustomerRow(
     customerId: id,
     customerName: rs.first.customerName,
     invoices: List.unmodifiable(rs),
     owes: owes,
     daysLate: daysLate,
-    remindersDue: count(TodoKind.sendReminders),
+    remindersToShare: count(TodoKind.shareReminders),
     declared: count(TodoKind.confirmPayments),
     toMatch: count(TodoKind.matchPayments),
     onHold: rs.any((r) => r.onHold),
+    everyReminderSent: rs.any((r) => r.remindersExhausted && r.isLateOn(today)),
   );
 }

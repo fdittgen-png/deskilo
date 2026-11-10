@@ -26,7 +26,8 @@ Receivable _r({
   bool approval = false,
   bool customerConfirms = false,
   bool hold = false,
-  bool failed = false,
+  bool rejected = false,
+  bool dueSet = true,
   int? dueLevel,
 }) => Receivable(
   invoiceId: id,
@@ -44,7 +45,8 @@ Receivable _r({
   awaitingSecondApproval: approval,
   awaitingCustomerConfirmation: customerConfirms,
   onHold: hold,
-  sendFailed: failed,
+  eInvoiceRejected: rejected,
+  dueDateSet: dueSet,
   reminderDueLevel: dueLevel,
 );
 
@@ -130,50 +132,69 @@ void main() {
   });
 
   group('To do', () {
-    test('the order: month, reminders, confirm, match, could not be sent, '
-        'drafts — only what has something to do', () {
+    test('the order: month, reminders by hand, confirm, match, refunds, '
+        'rejected e-invoices, due dates, drafts', () {
       final todo = todoOf(
         [
           _r(id: 'd', stage: ReceivableStage.draft),
-          _r(id: 'f', due: _late, failed: true),
+          _r(id: 'n', dueSet: false),
+          _r(id: 'x', due: _late, rejected: true),
+          _r(id: 'cn', stage: ReceivableStage.refundOwed, open: 800),
           _r(id: 'm', toMatch: true, open: 300),
           _r(id: 'p', due: _late, declared: true),
           _r(id: 'r1', due: _late, dueLevel: 1, open: 1000),
           _r(id: 'r2', due: _late, dueLevel: 2, currency: 'CHF', open: 2000),
         ],
         toInvoice: [(customerId: 'c9', currency: 'EUR', amountMinor: 5000)],
-        today: _today,
+        mode: ReminderMode.byHand,
       );
       expect([for (final t in todo) t.kind], TodoKind.values);
       expect(todo[1].tally, const Tally(2, {'EUR': 1000, 'CHF': 2000}));
-      expect(todo[3].tally, const Tally(1, {'EUR': 300}));
-      expect(todoOf([_r()], today: _today), isEmpty);
+      expect(todo[4].tally, const Tally(1, {'EUR': 800}));
+      expect(todoOf([_r()], mode: ReminderMode.byHand), isEmpty);
     });
 
-    test('a hold stops the reminder, not the payment to confirm', () {
-      final todo = todoOf([
+    test('reminders that go out by themselves are no entry; a hold stops '
+        'the reminder, not the payment to confirm; a finished ladder is no '
+        'entry', () {
+      final invoices = [
+        _r(id: 'r', due: _late, dueLevel: 1),
         _r(id: 'h', due: _late, hold: true, dueLevel: 1),
         _r(id: 'hp', due: _late, hold: true, declared: true),
-      ], today: _today);
-      expect([for (final t in todo) t.kind], [TodoKind.confirmPayments]);
+      ];
+      expect(
+        [
+          for (final t in todoOf(invoices, mode: ReminderMode.automatic))
+            t.kind,
+        ],
+        [TodoKind.confirmPayments],
+      );
+      expect(
+        [for (final t in todoOf(invoices, mode: ReminderMode.byHand)) t.kind],
+        [TodoKind.shareReminders, TodoKind.confirmPayments],
+      );
     });
   });
 
   group('one line per customer', () {
     test('what they owe per currency, their worst lateness and their one '
         'action: remind, else confirm, else match', () {
-      final rows = customerRowsOf([
-        _r(id: 'a1', customer: 'a', due: DateTime(2026, 10), dueLevel: 2),
-        _r(id: 'a2', customer: 'a', currency: 'CHF', total: 700, due: _late),
-        _r(id: 'b1', customer: 'b', name: 'Bea', declared: true),
-        _r(id: 'c1', customer: 'c', name: 'Cy', toMatch: true),
-        _r(id: 'd1', customer: 'd', name: 'Dee', hold: true),
-      ], today: _today);
+      final rows = customerRowsOf(
+        [
+          _r(id: 'a1', customer: 'a', due: DateTime(2026, 10), dueLevel: 2),
+          _r(id: 'a2', customer: 'a', currency: 'CHF', total: 700, due: _late),
+          _r(id: 'b1', customer: 'b', name: 'Bea', declared: true),
+          _r(id: 'c1', customer: 'c', name: 'Cy', toMatch: true),
+          _r(id: 'd1', customer: 'd', name: 'Dee', hold: true),
+        ],
+        today: _today,
+        mode: ReminderMode.byHand,
+      );
       final ada = rows.first;
       expect(ada.customerName, 'Ada');
       expect(ada.owes, const Tally(2, {'EUR': 10000, 'CHF': 700}));
       expect(ada.daysLate, 40);
-      expect(ada.action, InvoiceAction.sendReminder);
+      expect(ada.action, InvoiceAction.shareReminder);
       expect([for (final i in ada.invoices) i.invoiceId], ['a1', 'a2']);
       final byName = {for (final r in rows) r.customerName: r};
       expect(byName['Bea']!.action, InvoiceAction.confirmPayment);
@@ -185,13 +206,17 @@ void main() {
 
     test('late first, the most late first, then the larger amount in one '
         'same currency, then the name', () {
-      final rows = customerRowsOf([
-        _r(id: 'z', customer: 'z', name: 'Zed', due: _late),
-        _r(id: 'y', customer: 'y', name: 'Yan', due: DateTime(2026, 10)),
-        _r(id: 'small', customer: 's', name: 'Sam', total: 100),
-        _r(id: 'big', customer: 'b', name: 'Bo', total: 900),
-        _r(id: 'chf', customer: 'c', name: 'Cal', currency: 'CHF', total: 50),
-      ], today: _today);
+      final rows = customerRowsOf(
+        [
+          _r(id: 'z', customer: 'z', name: 'Zed', due: _late),
+          _r(id: 'y', customer: 'y', name: 'Yan', due: DateTime(2026, 10)),
+          _r(id: 'small', customer: 's', name: 'Sam', total: 100),
+          _r(id: 'big', customer: 'b', name: 'Bo', total: 900),
+          _r(id: 'chf', customer: 'c', name: 'Cal', currency: 'CHF', total: 50),
+        ],
+        today: _today,
+        mode: ReminderMode.byHand,
+      );
       expect(
         [for (final r in rows) r.customerName],
         ['Yan', 'Zed', 'Bo', 'Cal', 'Sam'],

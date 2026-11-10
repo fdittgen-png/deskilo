@@ -1,208 +1,192 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3587 — the owner's invoicing read models: every status, its precedence
-// over the payment's own steps, and the one action per status. The answers
-// built on them are in receivables_answers_test.dart.
+// #3587 — the owner's invoicing read models: every status of the final list
+// and its precedence (a claim of payment outranks a hold), and the one action
+// of a line, which depends on whether reminders are shared by hand. The
+// answers built on them are in receivables_answers_test.dart.
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The business's calendar day the tests are read on.
 final _today = DateTime(2026, 11, 10);
+final _late = DateTime(2026, 11, 2);
 
 Receivable _r({
-  String id = 'i1',
-  String customer = 'c1',
-  String name = 'Ada',
-  String currency = 'EUR',
-  int total = 10000,
   int open = 10000,
   ReceivableStage stage = ReceivableStage.open,
-  DateTime? issued,
   DateTime? due,
   bool noDue = false,
+  bool dueSet = true,
   bool declared = false,
   bool toMatch = false,
   bool approval = false,
   bool customerConfirms = false,
   bool hold = false,
-  bool failed = false,
+  bool rejected = false,
   int sent = 0,
+  bool exhausted = false,
   int? dueLevel,
-  DateTime? paidOn,
 }) => Receivable(
-  invoiceId: id,
-  customerId: customer,
-  customerName: name,
-  number: stage == ReceivableStage.draft ? '' : 'F-$id',
-  currency: currency,
-  totalMinor: total,
+  invoiceId: 'i1',
+  customerId: 'c1',
+  customerName: 'Ada',
+  number: 'F-1',
+  currency: 'EUR',
+  totalMinor: 10000,
   openMinor: open,
-  issuedOn: issued ?? DateTime(2026, 10),
+  issuedOn: DateTime(2026, 10),
   dueOn: stage == ReceivableStage.draft || noDue
       ? null
       : (due ?? DateTime(2026, 11, 20)),
+  dueDateSet: dueSet,
   stage: stage,
   paymentDeclared: declared,
   paymentToMatch: toMatch,
   awaitingSecondApproval: approval,
   awaitingCustomerConfirmation: customerConfirms,
   onHold: hold,
-  sendFailed: failed,
+  eInvoiceRejected: rejected,
   remindersSent: sent,
+  remindersExhausted: exhausted,
   reminderDueLevel: dueLevel,
-  paidOn: paidOn,
 );
 
 InvoiceStatus _status(Receivable r) => invoiceStatusOf(r, _today);
+InvoiceStatusKind _kind(Receivable r) => _status(r).kind;
 
 void main() {
   group('status in words', () {
-    test('ended invoices say how they ended', () {
-      expect(
-        _status(_r(stage: ReceivableStage.draft)).kind,
-        InvoiceStatusKind.draft,
-      );
-      expect(
-        _status(_r(stage: ReceivableStage.paid, open: 0)).kind,
-        InvoiceStatusKind.paid,
-      );
-      expect(
-        _status(_r(stage: ReceivableStage.cancelled)).kind,
-        InvoiceStatusKind.cancelled,
-      );
-      expect(
-        _status(_r(stage: ReceivableStage.credited)).kind,
-        InvoiceStatusKind.credited,
-      );
+    test('a document whose story ended says how', () {
+      for (final (stage, kind) in [
+        (ReceivableStage.draft, InvoiceStatusKind.draft),
+        (ReceivableStage.paid, InvoiceStatusKind.paid),
+        (ReceivableStage.cancelled, InvoiceStatusKind.cancelled),
+        (ReceivableStage.credited, InvoiceStatusKind.credited),
+        (ReceivableStage.regrouped, InvoiceStatusKind.regrouped),
+        (ReceivableStage.refundOwed, InvoiceStatusKind.refundOwed),
+        (ReceivableStage.refunded, InvoiceStatusKind.refunded),
+      ]) {
+        expect(_kind(_r(stage: stage, due: _late, declared: true)), kind);
+      }
     });
 
-    test('the calendar: due in n days, due today, n days late', () {
+    test('the calendar: due in n days, n days late, no due date', () {
+      expect(_status(_r()), const InvoiceStatus(InvoiceStatusKind.dueIn, 10));
       expect(
-        _status(_r(due: DateTime(2026, 11, 13))),
-        const InvoiceStatus(InvoiceStatusKind.dueIn, 3),
-      );
-      // #3285: the due day itself is late — "due today" is the only
-      // sentence that names it.
-      expect(
-        _status(_r(due: DateTime(2026, 11, 10))),
-        const InvoiceStatus(InvoiceStatusKind.dueToday),
+        _kind(_r(due: DateTime(2026, 11, 10))),
+        InvoiceStatusKind.late,
+        reason: '#3285: the due day itself is late',
       );
       expect(
-        _status(_r(due: DateTime(2026, 11, 2))),
+        _status(_r(due: _late)),
         const InvoiceStatus(InvoiceStatusKind.late, 8),
       );
+      expect(_kind(_r(noDue: true)), InvoiceStatusKind.noDueDate);
+      // No date frozen at issue: the term still decides lateness (one rule),
+      // and before it the invoice says it has no due date.
+      expect(_kind(_r(dueSet: false)), InvoiceStatusKind.noDueDate);
+      expect(_kind(_r(dueSet: false, due: _late)), InvoiceStatusKind.late);
     });
 
-    test('what waits on the business comes before the calendar', () {
-      final late = DateTime(2026, 11, 2);
+    test('late, with its reminders: k sent, or every one sent', () {
       expect(
-        _status(_r(due: late, dueLevel: 2)),
-        const InvoiceStatus(InvoiceStatusKind.reminderDue, 2),
+        _status(_r(due: _late, sent: 2, dueLevel: 3)),
+        const InvoiceStatus(InvoiceStatusKind.lateReminderSent, 8, 2),
       );
       expect(
-        _status(_r(due: late, sent: 1)),
-        const InvoiceStatus(InvoiceStatusKind.reminderSent, 1),
-      );
-      expect(
-        _status(_r(due: late, declared: true, dueLevel: 2)).kind,
-        InvoiceStatusKind.paymentDeclared,
-      );
-      expect(
-        _status(_r(due: late, failed: true, declared: true)).kind,
-        InvoiceStatusKind.couldNotBeSent,
-      );
-      expect(
-        _status(_r(due: late, hold: true, failed: true)).kind,
-        InvoiceStatusKind.couldNotBeSent,
+        _status(_r(due: _late, sent: 3, exhausted: true)),
+        const InvoiceStatus(InvoiceStatusKind.lateEveryReminderSent, 8),
       );
     });
 
-    test('the payment\'s own steps, in order, and each outranks a hold', () {
-      final late = DateTime(2026, 11, 2);
-      InvoiceStatusKind kind(Receivable r) => _status(r).kind;
+    test("the payment's own steps, in order, each outranking a hold", () {
       expect(
-        kind(_r(due: late, hold: true, declared: true, approval: true)),
+        _kind(_r(due: _late, hold: true, declared: true, approval: true)),
         InvoiceStatusKind.paymentDeclared,
       );
       expect(
-        kind(_r(due: late, hold: true, approval: true, toMatch: true)),
+        _kind(_r(due: _late, hold: true, approval: true, toMatch: true)),
         InvoiceStatusKind.awaitingSecondApproval,
       );
       expect(
-        kind(_r(due: late, toMatch: true, customerConfirms: true)),
+        _kind(_r(due: _late, toMatch: true, customerConfirms: true)),
         InvoiceStatusKind.paymentToMatch,
       );
       expect(
-        kind(_r(due: late, hold: true, customerConfirms: true, dueLevel: 1)),
+        _kind(_r(due: _late, hold: true, customerConfirms: true)),
         InvoiceStatusKind.awaitingCustomer,
       );
-      // A hold stops the reminder that would be due.
       expect(
-        kind(_r(due: late, hold: true, dueLevel: 1)),
+        _kind(_r(due: _late, hold: true, dueLevel: 1)),
         InvoiceStatusKind.onHold,
       );
     });
 
-    test('a part paid, not yet late, says so; once late it is late', () {
+    test('a rejected e-invoice comes before everything still open', () {
       expect(
-        _status(_r(stage: ReceivableStage.partlyPaid, open: 4000)).kind,
-        InvoiceStatusKind.partlyPaid,
+        _kind(_r(due: _late, rejected: true, declared: true, hold: true)),
+        InvoiceStatusKind.eInvoiceRejected,
+      );
+    });
+
+    test('a part paid, not yet late, says the open amount; once late it is '
+        'late', () {
+      expect(
+        _status(_r(stage: ReceivableStage.partlyPaid, open: 4000)),
+        const InvoiceStatus(InvoiceStatusKind.partlyPaid, 4000),
       );
       expect(
-        _status(
-          _r(
-            stage: ReceivableStage.partlyPaid,
-            open: 4000,
-            due: DateTime(2026, 11),
-          ),
-        ),
-        const InvoiceStatus(InvoiceStatusKind.late, 9),
+        _kind(_r(stage: ReceivableStage.partlyPaid, open: 4000, due: _late)),
+        InvoiceStatusKind.late,
       );
     });
   });
 
-  test('an invoice without a due date is never late: it awaits payment', () {
-    final r = _r(noDue: true);
-    expect(_status(r).kind, InvoiceStatusKind.noDueDate);
-    expect(actionFor(_status(r)), InvoiceAction.open);
-    expect(r.isLateOn(_today), isFalse);
-  });
+  group('one action per line', () {
+    InvoiceAction byHand(Receivable r) =>
+        actionOf(r, _today, ReminderMode.byHand);
+    InvoiceAction automatic(Receivable r) =>
+        actionOf(r, _today, ReminderMode.automatic);
 
-  test('one action per status', () {
-    expect(
-      actionFor(const InvoiceStatus(InvoiceStatusKind.draft)),
-      InvoiceAction.issue,
-    );
-    expect(
-      actionFor(const InvoiceStatus(InvoiceStatusKind.reminderDue, 1)),
-      InvoiceAction.sendReminder,
-    );
-    expect(
-      actionFor(const InvoiceStatus(InvoiceStatusKind.paymentDeclared)),
-      InvoiceAction.confirmPayment,
-    );
-    expect(
-      actionFor(const InvoiceStatus(InvoiceStatusKind.paymentToMatch)),
-      InvoiceAction.match,
-    );
-    expect(
-      actionFor(const InvoiceStatus(InvoiceStatusKind.couldNotBeSent)),
-      InvoiceAction.fix,
-    );
-    for (final k in [
-      InvoiceStatusKind.dueIn,
-      InvoiceStatusKind.dueToday,
-      InvoiceStatusKind.late,
-      InvoiceStatusKind.reminderSent,
-      InvoiceStatusKind.partlyPaid,
-      InvoiceStatusKind.paid,
-      InvoiceStatusKind.onHold,
-      InvoiceStatusKind.awaitingSecondApproval,
-      InvoiceStatusKind.awaitingCustomer,
-      InvoiceStatusKind.cancelled,
-      InvoiceStatusKind.credited,
-    ]) {
-      expect(actionFor(InvoiceStatus(k)), InvoiceAction.open, reason: '$k');
-    }
+    test("the business's move, whatever the reminder mode", () {
+      expect(byHand(_r(stage: ReceivableStage.draft)), InvoiceAction.issue);
+      expect(byHand(_r(declared: true)), InvoiceAction.confirmPayment);
+      expect(byHand(_r(toMatch: true)), InvoiceAction.match);
+      expect(
+        byHand(_r(stage: ReceivableStage.refundOwed)),
+        InvoiceAction.payOutRefund,
+      );
+      expect(byHand(_r(rejected: true)), InvoiceAction.fix);
+    });
+
+    test('a due reminder is shared by hand; never offered when reminders go '
+        'out by themselves, on hold, with a payment pending or the ladder '
+        'done', () {
+      final due = _r(due: _late, dueLevel: 1);
+      expect(byHand(due), InvoiceAction.shareReminder);
+      expect(automatic(due), InvoiceAction.open);
+      for (final r in [
+        _r(due: _late, dueLevel: 1, hold: true),
+        _r(due: _late, dueLevel: 1, customerConfirms: true),
+        _r(due: _late, dueLevel: 1, approval: true),
+        _r(due: _late, dueLevel: 1, exhausted: true),
+      ]) {
+        expect(byHand(r), InvoiceAction.open);
+      }
+    });
+
+    test('everything else opens the invoice', () {
+      for (final r in [
+        _r(),
+        _r(due: _late),
+        _r(approval: true),
+        _r(customerConfirms: true),
+        _r(stage: ReceivableStage.paid),
+        _r(stage: ReceivableStage.regrouped),
+        _r(stage: ReceivableStage.refunded),
+      ]) {
+        expect(byHand(r), InvoiceAction.open, reason: '${_status(r)}');
+      }
+    });
   });
 }

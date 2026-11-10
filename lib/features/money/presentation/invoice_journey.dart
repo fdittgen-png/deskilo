@@ -104,7 +104,8 @@ typedef InvoiceJourneyFacts = ({
   bool writeoffPending,
 });
 
-const InvoiceJourneyFacts _noJourneyFacts = (
+/// The facts of an invoice no payment event mentions.
+const InvoiceJourneyFacts noJourneyFacts = (
   declaredCents: 0,
   recordedForMemberCents: 0,
   registeredCents: 0,
@@ -164,6 +165,29 @@ InvoiceJourneyFacts journeyFactsOf(
     registeredCents: registered,
     writeoffPending: writeoffPending,
   );
+}
+
+/// The customer's own pending payment declaration on [invoice]'s member
+/// (the latest one): the event that Confirm and Not received decide, and the
+/// day the customer says they paid (else the day they said so). Payment
+/// events are per member, not per invoice, as [journeyFactsOf] reads them.
+({String eventId, DateTime paidOn})? declarationOf(
+  Invoice invoice,
+  Iterable<WorkspaceEvent> events,
+) {
+  WorkspaceEvent? latest;
+  for (final e in events) {
+    if (e.type == EventType.payment &&
+        e.isPending &&
+        e.actorIsSubject &&
+        e.subjectMemberId == invoice.memberId &&
+        (latest == null || e.createdAt.isAfter(latest.createdAt))) {
+      latest = e;
+    }
+  }
+  if (latest == null) return null;
+  final paidOn = DateTime.tryParse(latest.payload['paid_on'] as String? ?? '');
+  return (eventId: latest.id, paidOn: paidOn ?? latest.createdAt);
 }
 
 /// The journey of one invoice: its lifecycle, the state of each step, the
@@ -256,7 +280,7 @@ class InvoiceJourney {
     required ({int count, DateTime last})? reminder,
     required DunningRules rules,
     required DateTime now,
-    InvoiceJourneyFacts facts = _noJourneyFacts,
+    InvoiceJourneyFacts facts = noJourneyFacts,
     String replacedByNumber = '',
   }) {
     final lifecycle = invoiceLifecycleOf(invoice, match);

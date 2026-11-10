@@ -31,14 +31,23 @@ enum ReceivableStage {
   /// Paid in full.
   paid,
 
-  /// Cancelled (erroneous, or its remainder written off).
+  /// Cancelled (issued by mistake, or its remainder written off).
   cancelled,
 
   /// Answered by a credit note.
   credited,
+
+  /// Folded into a settlement that is chased instead ([Receivable.regroupedInto]).
+  regrouped,
+
+  /// A credit note: the business owes the customer a refund.
+  refundOwed,
+
+  /// A credit note whose refund is paid out.
+  refunded,
 }
 
-/// One invoice as the owner's invoicing reads it.
+/// One invoice (or credit note) as the owner's invoicing reads it.
 @immutable
 class Receivable {
   const Receivable({
@@ -52,6 +61,7 @@ class Receivable {
     required this.issuedOn,
     required this.stage,
     this.dueOn,
+    this.dueDateSet = true,
     this.paymentDeclared = false,
     this.declaredEventId,
     this.declaredOn,
@@ -59,10 +69,12 @@ class Receivable {
     this.paymentToMatch = false,
     this.awaitingSecondApproval = false,
     this.onHold = false,
-    this.sendFailed = false,
+    this.eInvoiceRejected = false,
     this.remindersSent = 0,
+    this.remindersExhausted = false,
     this.reminderDueLevel,
     this.paidOn,
+    this.regroupedInto = '',
   });
 
   final String invoiceId;
@@ -72,17 +84,26 @@ class Receivable {
   /// '' for a draft.
   final String number;
   final String currency;
+
+  /// The document's total; a credit note's is negative.
   final int totalMinor;
 
-  /// What is still owed, in [currency].
+  /// What is still owed, in [currency]: by the customer on an invoice, by
+  /// the business on a credit note (a refund owed), always positive.
   final int openMinor;
 
   /// The day it was issued (for a draft: the day it was prepared).
   final DateTime issuedOn;
 
-  /// The day payment is due (#3285); null for a draft.
-  final DateTime? dueOn;
   final ReceivableStage stage;
+
+  /// The day payment is due: the date frozen at issue, else the payment
+  /// term (#3285's one rule); null for a draft.
+  final DateTime? dueOn;
+
+  /// A due date was frozen at issue; without one the automatic reminders
+  /// leave the invoice to the owner ("Set a due date").
+  final bool dueDateSet;
 
   /// The customer said they paid (a pending payment event they recorded);
   /// another administrator confirms it or says it was not received.
@@ -107,11 +128,14 @@ class Receivable {
   /// Reminders are suspended for it.
   final bool onHold;
 
-  /// Its sending (e-mail or e-invoice) failed and was not retried.
-  final bool sendFailed;
+  /// The e-invoicing platform rejected it.
+  final bool eInvoiceRejected;
 
   /// How many reminders were sent.
   final int remindersSent;
+
+  /// Every level of the dunning rules was sent and it is still owed.
+  final bool remindersExhausted;
 
   /// The level of the reminder the dunning rules say is due now; null when
   /// none is.
@@ -120,8 +144,15 @@ class Receivable {
   /// The day it was paid in full; null otherwise.
   final DateTime? paidOn;
 
+  /// The number of the settlement it was folded into; '' otherwise.
+  final String regroupedInto;
+
   bool get isOutstanding =>
       stage == ReceivableStage.open || stage == ReceivableStage.partlyPaid;
+
+  /// Money on its way: declared, to match, or waiting for a second approval.
+  bool get paymentPending =>
+      paymentDeclared || paymentToMatch || awaitingSecondApproval;
 
   /// Days from [today] to the due day: positive before, 0 on it, negative
   /// after. Null without a due day.
@@ -136,68 +167,84 @@ class Receivable {
   }
 }
 
-/// The words an invoice's status is said in (the screen picks the sentence).
+/// The words an invoice's status is said in (#3587's final list; the screen
+/// picks the sentence and the tone).
 enum InvoiceStatusKind {
   draft,
-
-  /// Issued without a due date: nothing is late.
-  noDueDate,
   dueIn,
   dueToday,
   late,
-  reminderSent,
-  reminderDue,
+
+  /// Late, and reminders were sent ([InvoiceStatus.level] of them).
+  lateReminderSent,
+
+  /// Late, and every level of the rules was sent.
+  lateEveryReminderSent,
   paymentDeclared,
-  awaitingSecondApproval,
-  paymentToMatch,
   awaitingCustomer,
+  paymentToMatch,
+  awaitingSecondApproval,
+  onHold,
+  eInvoiceRejected,
+  noDueDate,
+
+  /// Part paid: [InvoiceStatus.number] is the open amount, in minor units.
   partlyPaid,
   paid,
-  onHold,
-  couldNotBeSent,
   cancelled,
   credited,
+  regrouped,
+  refundOwed,
+  refunded,
 }
 
-/// An invoice's status: its kind and the number its sentence names (days
-/// for dueIn and late, the level for the reminders; 0 otherwise).
+/// An invoice's status: its kind, the number its sentence names (days for
+/// dueIn and the late kinds, the open amount for partlyPaid; 0 otherwise)
+/// and the reminder level for [InvoiceStatusKind.lateReminderSent].
 @immutable
 class InvoiceStatus {
-  const InvoiceStatus(this.kind, [this.number = 0]);
+  const InvoiceStatus(this.kind, [this.number = 0, this.level = 0]);
 
   final InvoiceStatusKind kind;
   final int number;
+  final int level;
 
   @override
   bool operator ==(Object other) =>
-      other is InvoiceStatus && other.kind == kind && other.number == number;
+      other is InvoiceStatus &&
+      other.kind == kind &&
+      other.number == number &&
+      other.level == level;
 
   @override
-  int get hashCode => Object.hash(kind, number);
+  int get hashCode => Object.hash(kind, number, level);
 
   @override
-  String toString() => '$kind($number)';
+  String toString() => '$kind($number, $level)';
 }
 
-/// The one status of [r] on [today]. What ended comes first, then could
-/// not be sent, then money on its way (a declared payment, a second
-/// approval, a payment to match, a customer's confirmation) — a claim of
-/// payment outranks a hold — then on hold, a reminder due, the calendar.
+/// The status of a document whose story has ended, or null.
+InvoiceStatusKind? _endedKind(ReceivableStage stage) => switch (stage) {
+  ReceivableStage.draft => InvoiceStatusKind.draft,
+  ReceivableStage.paid => InvoiceStatusKind.paid,
+  ReceivableStage.cancelled => InvoiceStatusKind.cancelled,
+  ReceivableStage.credited => InvoiceStatusKind.credited,
+  ReceivableStage.regrouped => InvoiceStatusKind.regrouped,
+  ReceivableStage.refundOwed => InvoiceStatusKind.refundOwed,
+  ReceivableStage.refunded => InvoiceStatusKind.refunded,
+  ReceivableStage.open || ReceivableStage.partlyPaid => null,
+};
+
+/// The one status of [r] on [today]. A document whose story ended says so;
+/// then a rejected e-invoice; then money on its way (a declared payment, a
+/// second approval, a payment to match, a customer's confirmation) — a claim
+/// of payment outranks a hold; then on hold; then lateness and its
+/// reminders; then a part paid; then the calendar.
 InvoiceStatus invoiceStatusOf(Receivable r, DateTime today) {
-  switch (r.stage) {
-    case ReceivableStage.draft:
-      return const InvoiceStatus(InvoiceStatusKind.draft);
-    case ReceivableStage.paid:
-      return const InvoiceStatus(InvoiceStatusKind.paid);
-    case ReceivableStage.cancelled:
-      return const InvoiceStatus(InvoiceStatusKind.cancelled);
-    case ReceivableStage.credited:
-      return const InvoiceStatus(InvoiceStatusKind.credited);
-    case ReceivableStage.open || ReceivableStage.partlyPaid:
-      break;
-  }
-  if (r.sendFailed) {
-    return const InvoiceStatus(InvoiceStatusKind.couldNotBeSent);
+  final ended = _endedKind(r.stage);
+  if (ended != null) return InvoiceStatus(ended);
+  if (r.eInvoiceRejected) {
+    return const InvoiceStatus(InvoiceStatusKind.eInvoiceRejected);
   }
   if (r.paymentDeclared) {
     return const InvoiceStatus(InvoiceStatusKind.paymentDeclared);
@@ -213,34 +260,68 @@ InvoiceStatus invoiceStatusOf(Receivable r, DateTime today) {
   }
   if (r.onHold) return const InvoiceStatus(InvoiceStatusKind.onHold);
   final days = r.daysToDue(today);
-  final late = days != null && days <= 0;
-  if (late && r.reminderDueLevel != null) {
-    return InvoiceStatus(InvoiceStatusKind.reminderDue, r.reminderDueLevel!);
+  if (days != null && days <= 0) {
+    if (r.remindersExhausted) {
+      return InvoiceStatus(InvoiceStatusKind.lateEveryReminderSent, -days);
+    }
+    if (r.remindersSent > 0) {
+      return InvoiceStatus(
+        InvoiceStatusKind.lateReminderSent,
+        -days,
+        r.remindersSent,
+      );
+    }
+    return InvoiceStatus(InvoiceStatusKind.late, -days);
   }
-  if (late && r.remindersSent > 0) {
-    return InvoiceStatus(InvoiceStatusKind.reminderSent, r.remindersSent);
+  if (r.stage == ReceivableStage.partlyPaid) {
+    return InvoiceStatus(InvoiceStatusKind.partlyPaid, r.openMinor);
   }
-  if (r.stage == ReceivableStage.partlyPaid && !late) {
-    return const InvoiceStatus(InvoiceStatusKind.partlyPaid);
+  if (days == null || !r.dueDateSet) {
+    return const InvoiceStatus(InvoiceStatusKind.noDueDate);
   }
-  if (days == null) return const InvoiceStatus(InvoiceStatusKind.noDueDate);
   if (days > 0) return InvoiceStatus(InvoiceStatusKind.dueIn, days);
-  if (days == 0) return const InvoiceStatus(InvoiceStatusKind.dueToday);
-  return InvoiceStatus(InvoiceStatusKind.late, -days);
+  return const InvoiceStatus(InvoiceStatusKind.dueToday);
 }
 
-/// The one action an invoice's row offers.
-enum InvoiceAction { issue, open, sendReminder, confirmPayment, match, fix }
+/// The one action a document's line offers.
+enum InvoiceAction {
+  issue,
+  open,
+  shareReminder,
+  confirmPayment,
+  match,
+  payOutRefund,
+  fix,
+}
 
-/// The action for [status] (everything else is under "More").
-InvoiceAction actionFor(InvoiceStatus status) => switch (status.kind) {
-  InvoiceStatusKind.draft => InvoiceAction.issue,
-  InvoiceStatusKind.reminderDue => InvoiceAction.sendReminder,
-  InvoiceStatusKind.paymentDeclared => InvoiceAction.confirmPayment,
-  InvoiceStatusKind.paymentToMatch => InvoiceAction.match,
-  InvoiceStatusKind.couldNotBeSent => InvoiceAction.fix,
-  _ => InvoiceAction.open,
-};
+/// Whether reminders go out by themselves or are shared by hand
+/// (`workspaces.dunning_rules.automatic`).
+enum ReminderMode { automatic, byHand }
+
+/// The reminder [r] can be shared by hand now: due by the rules, nothing on
+/// its way, not on hold, the ladder not exhausted. Never in automatic mode.
+bool reminderToShare(Receivable r, ReminderMode mode) =>
+    mode == ReminderMode.byHand &&
+    r.isOutstanding &&
+    r.reminderDueLevel != null &&
+    !r.onHold &&
+    !r.paymentPending &&
+    !r.awaitingCustomerConfirmation &&
+    !r.remindersExhausted;
+
+/// The one action of [r] on [today] (everything else is under "More").
+InvoiceAction actionOf(Receivable r, DateTime today, ReminderMode mode) {
+  final status = invoiceStatusOf(r, today);
+  return switch (status.kind) {
+    InvoiceStatusKind.draft => InvoiceAction.issue,
+    InvoiceStatusKind.paymentDeclared => InvoiceAction.confirmPayment,
+    InvoiceStatusKind.paymentToMatch => InvoiceAction.match,
+    InvoiceStatusKind.refundOwed => InvoiceAction.payOutRefund,
+    InvoiceStatusKind.eInvoiceRejected => InvoiceAction.fix,
+    _ when reminderToShare(r, mode) => InvoiceAction.shareReminder,
+    _ => InvoiceAction.open,
+  };
+}
 
 /// Amounts per currency and how many invoices they come from.
 @immutable
