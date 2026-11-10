@@ -120,6 +120,11 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onSubmitted,
     this.help,
+    this.readOnly = false,
+    this.onTap,
+    this.hint,
+    this.prefixIcon,
+    this.filled = false,
     this.focusNode,
   });
 
@@ -139,6 +144,12 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final Widget? help;
 
+  /// A field that only opens something (a search that leads to another
+  /// screen): it shows [hint] and a [prefixIcon], and [onTap] is the way on.
+  final bool readOnly, filled;
+  final VoidCallback? onTap;
+  final String? hint;
+  final Widget? prefixIcon;
   /// For a field a composite control owns (the master-data lookup).
   final FocusNode? focusNode;
 
@@ -148,6 +159,8 @@ class AppTextField extends StatelessWidget {
     final shown = error ?? scope?.errors[fieldKey];
     return TextField(
       controller: controller,
+      readOnly: readOnly,
+      onTap: onTap,
       focusNode: focusNode,
       enabled: enabled,
       autofocus: autofocus,
@@ -165,7 +178,11 @@ class AppTextField extends StatelessWidget {
       },
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: label.isEmpty ? null : label,
+        hintText: hint,
+        hintMaxLines: 2,
+        prefixIcon: prefixIcon,
+        filled: filled ? true : null,
         helperText: helper,
         helperMaxLines: 3,
         errorText: shown,

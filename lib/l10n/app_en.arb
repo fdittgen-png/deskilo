@@ -22777,6 +22777,18 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFindPlaceBrowse": "Browse places",
+  "@meFindPlaceBrowse": {
+    "description": "#3545 First visit: the button that opens Discover's start state."
+  },
+  "meFindPlaceHint": "Yoga, a desk, a massage…",
+  "@meFindPlaceHint": {
+    "description": "#3545 First visit: the placeholder of the search field in the hero card."
+  },
+  "meFindPlaceTitle": "Find a place near you",
+  "@meFindPlaceTitle": {
+    "description": "#3545 First visit: the title of the hero card that leads to Discover."
+  },
   "meFindSpace": "Find a space",
   "@meFindSpace": {
     "description": "Button on the Me home: open Discover."
@@ -22863,6 +22875,14 @@
   "meHomeTitle": "Home",
   "@meHomeTitle": {
     "description": "Title of the Me layer home tab."
+  },
+  "meInvitationBody": "Join the place that invited you",
+  "@meInvitationBody": {
+    "description": "#3545 First visit: the second line of the invitation card."
+  },
+  "meInvitationTitle": "I have an invitation code",
+  "@meInvitationTitle": {
+    "description": "#3545 First visit: the card that joins with an invitation code."
   },
   "meJoinSpace": "Join with a code",
   "@meJoinSpace": {
@@ -23113,6 +23133,14 @@
   "@meRefsUnavailable": {
     "description": "#2563 Me home: the references could not be read"
   },
+  "meRunASpace": "Run a business yourself?",
+  "@meRunASpace": {
+    "description": "#3545 First visit: the question before the link that creates a business."
+  },
+  "meRunASpaceAction": "Set it up",
+  "@meRunASpaceAction": {
+    "description": "#3545 First visit: the link that starts creating a business."
+  },
   "meSectionMine": "My history and data",
   "@meSectionMine": {
     "description": "Section heading in Me: the person's own history and data."
@@ -23166,6 +23194,46 @@
   "@meSpacesSearch": {
     "description": "Shown as a button or chip label in personal spaces view (me), and 1 other place."
   },
+  "meStartedAccount": "Create your account",
+  "@meStartedAccount": {
+    "description": "#3545 Getting started: the first step, always done once you are here."
+  },
+  "meStartedBooking": "Make your first booking",
+  "@meStartedBooking": {
+    "description": "#3545 Getting started: the step done by a first booking."
+  },
+  "meStartedDone": "Done",
+  "@meStartedDone": {
+    "description": "#3545 Getting started: the mark of a finished step."
+  },
+  "meStartedLeft": "{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}",
+  "@meStartedLeft": {
+    "description": "#3545 The one line at the end of Home while first steps remain: how many are left and which comes next.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
+  },
+  "meStartedNext": "Next",
+  "@meStartedNext": {
+    "description": "#3545 Getting started: the mark of the step to do now."
+  },
+  "meStartedProfile": "Add your name and photo",
+  "@meStartedProfile": {
+    "description": "#3545 Getting started: the step done by a name and a photo on the profile."
+  },
+  "meStartedSpace": "Find a place",
+  "@meStartedSpace": {
+    "description": "#3545 Getting started: the step done by joining or asking to join a place."
+  },
+  "meStartedTitle": "Getting started",
+  "@meStartedTitle": {
+    "description": "#3545 The getting-started card: its title."
+  },
   "meTabData": "My data",
   "@meTabData": {
     "description": "#2552 fifth destination of the personal shell: the person's own records."
@@ -23197,6 +23265,19 @@
   "meUtilityHelp": "Help and assistant",
   "@meUtilityHelp": {
     "description": "#2552 utility of the personal shell: the guide and the task assistant."
+  },
+  "meWelcomeSubtitle": "What are you looking for?",
+  "@meWelcomeSubtitle": {
+    "description": "#3545 First visit: the line under the welcome heading."
+  },
+  "meWelcomeTitle": "Welcome, {name}",
+  "@meWelcomeTitle": {
+    "description": "#3545 First visit: the heading above the search; {name} is the first name of the account.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "meWhereSpacesLive": "Where my spaces live",
   "@meWhereSpacesLive": {

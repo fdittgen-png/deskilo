@@ -1,0 +1,19 @@
+{
+  "meWelcomeTitle": "Bienvenido, {name}",
+  "meWelcomeSubtitle": "¿Qué busca?",
+  "meFindPlaceTitle": "Encuentra un lugar cerca",
+  "meFindPlaceHint": "Yoga, un puesto, un masaje…",
+  "meFindPlaceBrowse": "Ver lugares",
+  "meInvitationTitle": "Tengo un código de invitación",
+  "meInvitationBody": "Únase al lugar que le invitó",
+  "meRunASpace": "¿Dirige usted un negocio?",
+  "meRunASpaceAction": "Configurarlo",
+  "meStartedTitle": "Primeros pasos",
+  "meStartedAccount": "Cree su cuenta",
+  "meStartedSpace": "Encontrar un lugar",
+  "meStartedBooking": "Haga su primera reserva",
+  "meStartedProfile": "Añada su nombre y su foto",
+  "meStartedDone": "Hecho",
+  "meStartedNext": "Siguiente",
+  "meStartedLeft": "{count, plural, =1{Queda un paso · {next}} other{Quedan {count} pasos · {next}}}"
+}

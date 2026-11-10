@@ -233,7 +233,7 @@ class ProcessAndHookTests(unittest.TestCase):
                                 timeout=5, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         context = json.loads(result.stdout)["hookSpecificOutput"]["additionalContext"]
-        self.assertIn("#2596", context)
+        self.assertIn("#3542", context)
         self.assertIn("no tools, tests or setup were run", context)
         self.assertIn("No automatic release", context)
 

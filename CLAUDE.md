@@ -20,13 +20,13 @@ identity form, one-branch-at-a-time). This file indexes the skills and execution
 Global skills that also apply: `git-pr-workflow`, `flutter-dart-best-practices`,
 `dart-flutter-mcp`, the platform deployment skills.
 
-Which issue to take next: [#2596](https://github.com/fdittgen-png/deskilo/issues/2596) (programme selection; #1447 keeps the pilot/release qualification). Read the selected issue, its later corrections and the current claims.
+Which issue to take next: [#3542](https://github.com/fdittgen-png/deskilo/issues/3542) (the v2 queue: priorities, lanes, standards; v1's #2596 and #1447 are closed; v3 is #3557). Read the selected issue, its later corrections and the current claims.
 
 Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md#ready-done-and-closure`.
 
 ## Execution loop
 
-Read #2596 and the selected leaf before choosing work, and again after a handoff
+Read #3542 and the selected leaf before choosing work, and again after a handoff
 or context compaction. Check actual branches and `.agent-work` claims. Keep at
 most two coding workstreams and one owner per shared producer/consumer contract.
 Do not repeat delivered checkpoints or substitute easier breadth without recording
@@ -48,7 +48,7 @@ Finish code + actual consumer + success/refusal/recovery tests. If behavior is
 done and only evidence is missing, obtain the evidence without rewriting code.
 Close a leaf when its own scoped acceptance is verified; parent scope alone is
 not a closure blocker. Keep release/operator gates separate. Record the next
-outcome in #2596. Do not deploy or change permissions automatically.
+outcome in #3542. Do not deploy or change permissions automatically.
 
 An issue waiting on "owner review" of something you produced is yours to
 decide: post the reasoned decision on the issue, then implement and commit.

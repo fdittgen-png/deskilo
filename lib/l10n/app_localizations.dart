@@ -28443,6 +28443,24 @@ abstract class AppLocalizations {
   /// **'To pay:'**
   String get meFinanceGlanceOwed;
 
+  /// #3545 First visit: the button that opens Discover's start state.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse places'**
+  String get meFindPlaceBrowse;
+
+  /// #3545 First visit: the placeholder of the search field in the hero card.
+  ///
+  /// In en, this message translates to:
+  /// **'Yoga, a desk, a massage…'**
+  String get meFindPlaceHint;
+
+  /// #3545 First visit: the title of the hero card that leads to Discover.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a place near you'**
+  String get meFindPlaceTitle;
+
   /// Button on the Me home: open Discover.
   ///
   /// In en, this message translates to:
@@ -28550,6 +28568,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get meHomeTitle;
+
+  /// #3545 First visit: the second line of the invitation card.
+  ///
+  /// In en, this message translates to:
+  /// **'Join the place that invited you'**
+  String get meInvitationBody;
+
+  /// #3545 First visit: the card that joins with an invitation code.
+  ///
+  /// In en, this message translates to:
+  /// **'I have an invitation code'**
+  String get meInvitationTitle;
 
   /// Button on the Me home: join a space with an invitation code.
   ///
@@ -28815,6 +28845,18 @@ abstract class AppLocalizations {
   /// **'Your workspaces elsewhere could not be read.'**
   String get meRefsUnavailable;
 
+  /// #3545 First visit: the question before the link that creates a business.
+  ///
+  /// In en, this message translates to:
+  /// **'Run a business yourself?'**
+  String get meRunASpace;
+
+  /// #3545 First visit: the link that starts creating a business.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it up'**
+  String get meRunASpaceAction;
+
   /// Section heading in Me: the person's own history and data.
   ///
   /// In en, this message translates to:
@@ -28887,6 +28929,54 @@ abstract class AppLocalizations {
   /// **'Search my spaces'**
   String get meSpacesSearch;
 
+  /// #3545 Getting started: the first step, always done once you are here.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get meStartedAccount;
+
+  /// #3545 Getting started: the step done by a first booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Make your first booking'**
+  String get meStartedBooking;
+
+  /// #3545 Getting started: the mark of a finished step.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get meStartedDone;
+
+  /// #3545 The one line at the end of Home while first steps remain: how many are left and which comes next.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}'**
+  String meStartedLeft(int count, String next);
+
+  /// #3545 Getting started: the mark of the step to do now.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get meStartedNext;
+
+  /// #3545 Getting started: the step done by a name and a photo on the profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name and photo'**
+  String get meStartedProfile;
+
+  /// #3545 Getting started: the step done by joining or asking to join a place.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a place'**
+  String get meStartedSpace;
+
+  /// #3545 The getting-started card: its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting started'**
+  String get meStartedTitle;
+
   /// #2552 fifth destination of the personal shell: the person's own records.
   ///
   /// In en, this message translates to:
@@ -28934,6 +29024,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Help and assistant'**
   String get meUtilityHelp;
+
+  /// #3545 First visit: the line under the welcome heading.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking for?'**
+  String get meWelcomeSubtitle;
+
+  /// #3545 First visit: the heading above the search; {name} is the first name of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome, {name}'**
+  String meWelcomeTitle(String name);
 
   /// Row in Me opening the connected servers.
   ///
