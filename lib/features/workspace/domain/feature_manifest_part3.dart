@@ -119,6 +119,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // the places the Reserve hub already shows.
   WorkspaceFeature.placeFeedback: FeatureManifestEntry(
     feature: WorkspaceFeature.placeFeedback,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),
@@ -157,6 +158,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // #1918 — a management figure, asked for: Platform, off.
   WorkspaceFeature.capacityKpi: FeatureManifestEntry(
     feature: WorkspaceFeature.capacityKpi,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -191,6 +193,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // no published page; the server refuses what it cannot host).
   WorkspaceFeature.guestParticipation: FeatureManifestEntry(
     feature: WorkspaceFeature.guestParticipation,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.members,
     tier: FeatureTier.core,
     defaultOn: false,
@@ -249,6 +252,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // #2631 — a meeting room is a bookable resource of the plan with its own slot.
   WorkspaceFeature.meetingRooms: FeatureManifestEntry(
     feature: WorkspaceFeature.meetingRooms,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -256,6 +260,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // #2631 — a parking area holds slots booked per day.
   WorkspaceFeature.parking: FeatureManifestEntry(
     feature: WorkspaceFeature.parking,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -400,6 +405,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
   // Shapes tool; the symbols already drawn keep painting.
   WorkspaceFeature.planDecor: FeatureManifestEntry(
     feature: WorkspaceFeature.planDecor,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),
@@ -433,5 +439,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
     defaultOn: false,
+  ),
+  // #3550 — the business has places people book: seats, desks, rooms, a
+  // floor plan. Every place-specific flag sits under it, so a business
+  // without places (a studio, a practice, a salon) never meets a seat. Core
+  // and on: every existing workspace keeps its places.
+  WorkspaceFeature.placeBooking: FeatureManifestEntry(
+    feature: WorkspaceFeature.placeBooking,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
   ),
 };

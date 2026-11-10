@@ -214,6 +214,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
   // its one address as before.
   WorkspaceFeature.multiSite: FeatureManifestEntry(
     feature: WorkspaceFeature.multiSite,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -286,6 +287,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
   WorkspaceFeature.seatDayTimeline:
       FeatureManifestEntry(
       feature: WorkspaceFeature.seatDayTimeline,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.reserve,
       tier: FeatureTier.core,
     ),
@@ -405,6 +407,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
   // `tiny` has single-room levels, so it is Core and on.
   WorkspaceFeature.singleRoomLevelNames: FeatureManifestEntry(
     feature: WorkspaceFeature.singleRoomLevelNames,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),

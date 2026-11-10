@@ -48,6 +48,7 @@ const Set<String> workspaceFeatureKeys = {
   'planDecor',
   'mtdSubmission',
   'guestPasses',
+  'placeBooking',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',

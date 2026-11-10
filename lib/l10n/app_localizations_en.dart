@@ -10060,6 +10060,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePersonalShellTitle => 'Personal shell (five destinations)';
 
   @override
+  String get featurePlaceBookingDesc =>
+      'The business has places people book: seats, desks, rooms and a floor plan. Off: the plan, reservations and every place feature are hidden, for a studio, practice or salon that sells services, not places. Earlier bookings stay.';
+
+  @override
+  String get featurePlaceBookingTitle => 'Places to book';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member\'s own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.';
 

@@ -326,10 +326,15 @@ void main() {
 
   group('#800 — dependencies activate with the feature that needs them', () {
     test('the requirement chain reads upwards, nearest parent first', () {
-      // badgeSignIn needs nfcBadges, which needs kioskMode.
+      // badgeSignIn needs nfcBadges, which needs kioskMode, which needs
+      // the places (#3550).
       expect(
         requirementChain(WorkspaceFeature.badgeSignIn),
-        [WorkspaceFeature.nfcBadges, WorkspaceFeature.kioskMode],
+        [
+          WorkspaceFeature.nfcBadges,
+          WorkspaceFeature.kioskMode,
+          WorkspaceFeature.placeBooking,
+        ],
       );
       expect(requirementChain(WorkspaceFeature.moneyTab), isEmpty);
     });
@@ -372,7 +377,10 @@ void main() {
     test('the UI can name what a switch would bring with it', () {
       expect(
         alsoEnabledWith(
-          raw: const {WorkspaceFeature.kioskMode},
+          raw: const {
+            WorkspaceFeature.placeBooking,
+            WorkspaceFeature.kioskMode,
+          },
           feature: WorkspaceFeature.badgeSignIn,
         ),
         [WorkspaceFeature.nfcBadges],

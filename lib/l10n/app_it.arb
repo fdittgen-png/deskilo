@@ -6759,6 +6759,8 @@
   },
   "featurePersonalShellDesc": "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede.",
   "featurePersonalShellTitle": "Interfaccia personale (cinque destinazioni)",
+  "featurePlaceBookingDesc": "L'attività ha posti che si prenotano: sedute, scrivanie, sale e una planimetria. Disattivato: la planimetria, le prenotazioni e tutte le funzioni dei posti sono nascoste, per uno studio, un ambulatorio o un salone che vende servizi, non posti. Le prenotazioni passate restano.",
+  "featurePlaceBookingTitle": "Posti prenotabili",
   "featurePlaceFeedbackDesc": "I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient'altro ne dipende.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"

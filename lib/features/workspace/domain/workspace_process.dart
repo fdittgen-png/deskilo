@@ -64,6 +64,8 @@ const workspaceProcesses = <WorkspaceProcess>[
   ]),
   WorkspaceProcess('spaceManagement', [
     WorkspaceSubprocess('structure', [
+      // #3550 — the places themselves: the parent of every place flag.
+      WorkspaceFeature.placeBooking,
       WorkspaceFeature.multiSite,
       WorkspaceFeature.planObjectDelete,
       WorkspaceFeature.planDecor,

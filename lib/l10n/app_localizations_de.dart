@@ -10144,6 +10144,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featurePersonalShellTitle => 'Persönliche Oberfläche (fünf Ziele)';
 
   @override
+  String get featurePlaceBookingDesc =>
+      'Das Unternehmen hat Plätze, die gebucht werden: Sitzplätze, Tische, Räume und einen Raumplan. Aus: Plan, Reservierungen und alle Platzfunktionen sind ausgeblendet, für ein Studio, eine Praxis oder einen Salon, der Leistungen verkauft, keine Plätze. Frühere Buchungen bleiben.';
+
+  @override
+  String get featurePlaceBookingTitle => 'Buchbare Plätze';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.';
 

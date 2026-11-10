@@ -10125,6 +10125,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Interfaccia personale (cinque destinazioni)';
 
   @override
+  String get featurePlaceBookingDesc =>
+      'L\'attività ha posti che si prenotano: sedute, scrivanie, sale e una planimetria. Disattivato: la planimetria, le prenotazioni e tutte le funzioni dei posti sono nascoste, per uno studio, un ambulatorio o un salone che vende servizi, non posti. Le prenotazioni passate restano.';
+
+  @override
+  String get featurePlaceBookingTitle => 'Posti prenotabili';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient\'altro ne dipende.';
 
