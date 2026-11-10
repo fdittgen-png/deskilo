@@ -3467,6 +3467,30 @@ Sie möchten eine einzelne Funktion ein- oder ausschalten.
 
 **Siehe auch:** [Ganze Prozesse ein- oder ausschalten](#ganze-prozesse-ein--oder-ausschalten)
 
+<!-- anchor: user.workspace.settings.business-kind -->
+### Was für ein Unternehmen ist es?
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space und möchten, dass die App dazu passt. Der Einrichtungsleitfaden fragt es im ersten Schritt; hier können Sie es später ändern.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings).
+2. Tippen Sie auf **Was für ein Unternehmen ist es?**, wählen Sie eine Art und kreuzen Sie darunter weitere Arten an, wenn das Unternehmen mehreres ist (optional).
+3. Lesen Sie, was sie **Schaltet ein** und **Schaltet aus**, und tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Art ohne Plätze schaltet alles rund um Plätze aus — Sitzplätze, Raumplan, Kiosk, Räume. **Alle anzeigen** listet jede Funktion.
+- Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
+- Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
+- Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
+
+**Siehe auch:** [Funktionen](#ganze-prozesse-ein--oder-ausschalten)
+
 <!-- anchor: user.workspace.settings.country -->
 ### Land
 

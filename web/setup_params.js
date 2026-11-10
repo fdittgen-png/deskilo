@@ -189,7 +189,7 @@ const HELP={
  region:['helpAppRegion','user.workspace.settings.currency-timezone'],
  language:['helpAppLanguage','user.workspace.settings.language'],
  features:['helpAppFeatures','user.features.processes'],
- businessKind:['helpAppBusinessKind','setup.features.kind'],
+ businessKind:['helpAppBusinessKind','user.workspace.settings.business-kind'],
  availability:['helpAppAvailability','user.workspace.availability.open-weekdays'],
  hours:['helpAppHours','user.workspace.availability.working-hours'],
  booking:['helpAppBooking','user.workspace.availability.policies'],

@@ -12,7 +12,7 @@ import 'help_anchor_index.dart';
 /// from any of the five guides, a duplicate, and a malformed id.
 abstract final class HelpAnchor {
   /// #3549/#3550 — the kind of business and what it proposes.
-  static const setupFeaturesKind = 'setup.features.kind';
+  static const workspaceBusinessKind = 'user.workspace.settings.business-kind';
 
   /// The supplier balance and its scoped payable list.
   static const moneySupplierBalance = 'user.money.suppliers.balance';

@@ -10,7 +10,6 @@ In this chapter:
 - [Switching off deletes nothing](help:setup.features.off)
 - [Beta, Unreviewed and the question before you switch on](help:setup.features.maturity)
 - [Three starting points](help:setup.features.profiles)
-- [Your kind of business](help:setup.features.kind)
 - [The order to switch things on](help:setup.features.order)
 - [Switch a feature on safely](help:setup.features.safely)
 - [Avoid features that contradict each other](help:setup.features.consistency)
@@ -258,27 +257,6 @@ Then add only what applies to you:
 - Switch these on one at a time and issue a test invoice in a test space first. See [The order to switch things on](help:setup.features.order).
 
 **See also:** [Money and invoicing](help:setup.money.overview) · [Start from a template or from nothing](help:setup.before.template)
-
-<!-- anchor: setup.features.kind -->
-### Your kind of business
-
-**Audience:** Owner · Co-owner
-
-You run a studio, a practice or a salon rather than a coworking space, and want the app to match. The first setup step asks **What kind of business is it?**; you can change the answer later in **Workspace settings**.
-
-<!-- image: setup-features-kind -->
-
-*What the choice does*
-
-- Choose one kind: **Coworking space**, **Studio**, **Practice**, **Salon** or **Service business**. Tick further kinds below if the business is several things at once; that part is optional.
-- The kind proposes features. Before anything changes you read two sentences: what **Switches on** and what **Switches off**, each with **Show all** for the full list. A kind without places switches off everything about places — seats, the floor plan, the kiosk, rooms.
-- Nothing changes until you press **Save**. **Cancel** leaves the features as they are, and choosing a kind later proposes again; it never switches anything silently.
-
-*Good to know*
-
-- A feature that is not yet stable is switched on only if you tick it. Untick it and switch it on later in **Features**.
-- Coworking proposes nothing: every existing space keeps the features it has.
-- Switching places off deletes nothing; switch it on again and the floor plan and the bookings are back. See [Switching off deletes nothing](help:setup.features.off).
 
 <!-- anchor: setup.features.order -->
 ### The order to switch things on

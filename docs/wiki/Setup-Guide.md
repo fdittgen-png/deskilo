@@ -413,7 +413,6 @@ In this chapter:
 - [Switching off deletes nothing](#switching-off-deletes-nothing)
 - [Beta, Unreviewed and the question before you switch on](#beta-unreviewed-and-the-question-before-you-switch-on)
 - [Three starting points](#three-starting-points)
-- [Your kind of business](#your-kind-of-business)
 - [The order to switch things on](#the-order-to-switch-things-on)
 - [Switch a feature on safely](#switch-a-feature-on-safely)
 - [Avoid features that contradict each other](#avoid-features-that-contradict-each-other)
@@ -661,27 +660,6 @@ Then add only what applies to you:
 - Switch these on one at a time and issue a test invoice in a test space first. See [The order to switch things on](#the-order-to-switch-things-on).
 
 **See also:** [Money and invoicing](#money-and-tax) · [Start from a template or from nothing](#start-from-a-template-or-from-nothing)
-
-<!-- anchor: setup.features.kind -->
-### Your kind of business
-
-**Audience:** Owner · Co-owner
-
-You run a studio, a practice or a salon rather than a coworking space, and want the app to match. The first setup step asks **What kind of business is it?**; you can change the answer later in **Workspace settings**.
-
-<!-- image: setup-features-kind -->
-
-*What the choice does*
-
-- Choose one kind: **Coworking space**, **Studio**, **Practice**, **Salon** or **Service business**. Tick further kinds below if the business is several things at once; that part is optional.
-- The kind proposes features. Before anything changes you read two sentences: what **Switches on** and what **Switches off**, each with **Show all** for the full list. A kind without places switches off everything about places — seats, the floor plan, the kiosk, rooms.
-- Nothing changes until you press **Save**. **Cancel** leaves the features as they are, and choosing a kind later proposes again; it never switches anything silently.
-
-*Good to know*
-
-- A feature that is not yet stable is switched on only if you tick it. Untick it and switch it on later in **Features**.
-- Coworking proposes nothing: every existing space keeps the features it has.
-- Switching places off deletes nothing; switch it on again and the floor plan and the bookings are back. See [Switching off deletes nothing](#switching-off-deletes-nothing).
 
 <!-- anchor: setup.features.order -->
 ### The order to switch things on

@@ -3320,6 +3320,29 @@ Sie möchten eine einzelne Funktion ein- oder ausschalten.
 
 **Siehe auch:** [Ganze Prozesse ein- oder ausschalten](help:user.features.processes)
 
+### Was für ein Unternehmen ist es?
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space und möchten, dass die App dazu passt. Der Einrichtungsleitfaden fragt es im ersten Schritt; hier können Sie es später ändern.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](app:/workspace-settings).
+2. Tippen Sie auf **Was für ein Unternehmen ist es?**, wählen Sie eine Art und kreuzen Sie darunter weitere Arten an, wenn das Unternehmen mehreres ist (optional).
+3. Lesen Sie, was sie **Schaltet ein** und **Schaltet aus**, und tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Art ohne Plätze schaltet alles rund um Plätze aus — Sitzplätze, Raumplan, Kiosk, Räume. **Alle anzeigen** listet jede Funktion.
+- Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
+- Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
+- Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
+
+**Siehe auch:** [Funktionen](help:user.features.processes)
+
 ### Land
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
@@ -6797,7 +6820,6 @@ In diesem Kapitel:
 - [Ausschalten löscht nichts](help:setup.features.off)
 - [Beta, Nicht bewertet und die Frage vor dem Einschalten](help:setup.features.maturity)
 - [Drei Ausgangspunkte](help:setup.features.profiles)
-- [Ihre Art von Unternehmen](help:setup.features.kind)
 - [Die Reihenfolge beim Einschalten](help:setup.features.order)
 - [Eine Funktion sicher einschalten](help:setup.features.safely)
 - [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency)
@@ -7036,26 +7058,6 @@ Fügen Sie dann nur hinzu, was auf Sie zutrifft:
 - Schalten Sie diese einzeln ein und stellen Sie zuerst in einem Test-Space eine Testrechnung aus. Siehe [Die Reihenfolge beim Einschalten](help:setup.features.order).
 
 **Siehe auch:** [Geld und Rechnungen](help:setup.money.overview) · [Mit einer Vorlage oder bei null beginnen](help:setup.before.template)
-
-### Ihre Art von Unternehmen
-
-**Zielgruppe:** Inhaber · Mitinhaber
-
-Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space und möchten, dass die App dazu passt. Der erste Einrichtungsschritt fragt **Was für ein Unternehmen ist es?**; die Antwort können Sie später in den **Workspace** ändern.
-
-<!-- image: setup-features-kind -->
-
-*Was die Wahl bewirkt*
-
-- Wählen Sie eine Art: **Coworking-Space**, **Studio**, **Praxis**, **Salon** oder **Dienstleistungsunternehmen**. Kreuzen Sie darunter weitere Arten an, wenn das Unternehmen mehreres zugleich ist; das ist optional.
-- Die Art schlägt Funktionen vor. Bevor sich etwas ändert, lesen Sie zwei Sätze: **Schaltet ein** und **Schaltet aus**, jeweils mit **Alle anzeigen** für die ganze Liste. Eine Art ohne Plätze schaltet alles rund um Plätze aus — Sitzplätze, Raumplan, Kiosk, Räume.
-- Nichts ändert sich vor **Speichern**. **Abbrechen** lässt die Funktionen, wie sie sind, und eine spätere Wahl schlägt erneut vor; nichts wird je stillschweigend umgeschaltet.
-
-*Gut zu wissen*
-
-- Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen. Lassen Sie sie leer und schalten Sie sie später unter **Funktionen** ein.
-- Coworking schlägt nichts vor: Jeder bestehende Space behält seine Funktionen.
-- Plätze auszuschalten löscht nichts; schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück. Siehe [Ausschalten löscht nichts](help:setup.features.off).
 
 ### Die Reihenfolge beim Einschalten
 

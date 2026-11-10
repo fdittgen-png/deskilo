@@ -307,7 +307,7 @@ class BusinessKindTile extends ConsumerWidget {
             ),
       trailing: HelpDot(
         l10n.businessKindTitle,
-        anchor: HelpAnchor.setupFeaturesKind,
+        anchor: HelpAnchor.workspaceBusinessKind,
       ),
       onTap: () => _open(context, ref, workspace: workspace),
     );

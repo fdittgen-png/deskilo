@@ -413,7 +413,6 @@ In questo capitolo:
 - [Disattivare non cancella nulla](#disattivare-non-cancella-nulla)
 - [Beta, Non valutata e la domanda prima di attivare](#beta-non-valutata-e-la-domanda-prima-di-attivare)
 - [Tre punti di partenza](#tre-punti-di-partenza)
-- [Il suo tipo di attività](#il-suo-tipo-di-attività)
 - [L’ordine in cui attivare le cose](#lordine-in-cui-attivare-le-cose)
 - [Attivare una funzionalità in sicurezza](#attivare-una-funzionalità-in-sicurezza)
 - [Evitare funzionalità in contraddizione tra loro](#evitare-funzionalità-in-contraddizione-tra-loro)
@@ -661,27 +660,6 @@ Poi aggiunga solo ciò che la riguarda:
 - Attivi queste funzionalità una alla volta ed emetta prima una fattura di prova in uno spazio di prova. Veda [L’ordine in cui attivare le cose](#lordine-in-cui-attivare-le-cose).
 
 **Vedi anche:** [Denaro e fatturazione](#denaro-e-imposte) · [Partire da un modello o da zero](#partire-da-un-modello-o-da-zero)
-
-<!-- anchor: setup.features.kind -->
-### Il suo tipo di attività
-
-**Destinatari:** Proprietario · Comproprietario
-
-Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworking e vuole che l’app si adatti. Il primo passo della configurazione chiede **Che tipo di attività è?**; può cambiare la risposta più tardi in **Impostazioni dello spazio**.
-
-<!-- image: setup-features-kind -->
-
-*Cosa fa la scelta*
-
-- Scelga un tipo: **Spazio di coworking**, **Studio**, **Ambulatorio**, **Salone** o **Impresa di servizi**. Spunti altri tipi sotto se l’attività è più cose insieme; è facoltativo.
-- Il tipo propone funzioni. Prima che cambi qualcosa legge due frasi: cosa **Attiva** e cosa **Disattiva**, ciascuna con **Mostra tutto** per l’elenco completo. Un tipo senza posti disattiva tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale.
-- Nulla cambia prima di **Salva**. **Annulla** lascia le funzioni come sono, e scegliere un tipo più tardi propone di nuovo; nulla viene mai cambiato in silenzio.
-
-*Buono a sapersi*
-
-- Una funzione non ancora stabile si attiva solo se la spunta. La lasci senza spunta e la attivi più tardi in **Funzioni**.
-- Il coworking non propone nulla: ogni spazio esistente mantiene le sue funzioni.
-- Disattivare i posti non cancella nulla; li riattivi e planimetria e prenotazioni tornano. Veda [Disattivare non cancella nulla](#disattivare-non-cancella-nulla).
 
 <!-- anchor: setup.features.order -->
 ### L’ordine in cui attivare le cose

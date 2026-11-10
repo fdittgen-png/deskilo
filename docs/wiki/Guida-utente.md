@@ -3467,6 +3467,30 @@ Vuole attivare o disattivare una singola funzionalità.
 
 **Vedi anche:** [Attivare o disattivare interi processi](#attivare-o-disattivare-interi-processi)
 
+<!-- anchor: user.workspace.settings.business-kind -->
+### Che tipo di attività è?
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworking e vuole che l’app si adatti. La guida di configurazione lo chiede al primo passo; qui può cambiarlo più tardi.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Passaggi**
+
+1. Apra [Spazio di lavoro](https://fdittgen-png.github.io/deskilo/#/workspace-settings).
+2. Tocchi **Che tipo di attività è?**, scelga un tipo e, se l’attività è più cose, spunti altri tipi sotto (facoltativo).
+3. Legga cosa **Attiva** e **Disattiva** e tocchi **Salva**.
+
+**Da sapere**
+
+- Un tipo senza posti disattiva tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale. **Mostra tutto** elenca ogni funzione.
+- Nulla cambia prima di **Salva**; **Annulla** lascia tutto com’è. Scegliere un tipo più tardi propone di nuovo e non cambia mai nulla in silenzio.
+- Una funzione non ancora stabile si attiva solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.
+- Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
+
+**Vedi anche:** [Funzioni](#attivare-o-disattivare-interi-processi)
+
 <!-- anchor: user.workspace.settings.country -->
 ### Paese
 
