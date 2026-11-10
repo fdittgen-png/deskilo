@@ -49,20 +49,20 @@ select is((select edit_permission from public.setting_definitions where key = 'b
 -- the owner sets it
 select pg_temp.act_as('00000000-0000-4000-8000-0000003549a1');
 select is(pg_temp.set_error('business.kind', 'practice'), null, 'the owner sets a known kind');
-select like(pg_temp.set_error('business.kind', 'bakery'), '%unknown business kind%', 'an unknown kind is refused');
+select alike(pg_temp.set_error('business.kind', 'bakery'), '%unknown business kind%', 'an unknown kind is refused');
 select is(pg_temp.set_error('business.more_kinds', 'studio, salon'), null, 'further known kinds are kept');
-select like(pg_temp.set_error('business.kind', 'studio'), '%already a further kind%',
+select alike(pg_temp.set_error('business.kind', 'studio'), '%already a further kind%',
             'the primary kind may not be one of the further kinds');
-select like(pg_temp.set_error('business.more_kinds', 'studio,practice'), '%primary business kind%',
+select alike(pg_temp.set_error('business.more_kinds', 'studio,practice'), '%primary business kind%',
             'a further kind may not repeat the primary one');
-select like(pg_temp.set_error('business.more_kinds', 'studio,studio'), '%listed twice%',
+select alike(pg_temp.set_error('business.more_kinds', 'studio,studio'), '%listed twice%',
             'a further kind is not listed twice');
 select ok(not has_table_privilege('authenticated', 'public.business_kinds', 'insert'),
           'no client adds a kind');
 
 -- a member without the permission, and another tenant
 select pg_temp.act_as('00000000-0000-4000-8000-0000003549a2');
-select like(pg_temp.set_error('business.kind', 'salon'), '%not allowed%',
+select alike(pg_temp.set_error('business.kind', 'salon'), '%not allowed%',
             'a member without manageConfiguration cannot set it');
 select pg_temp.act_as('00000000-0000-4000-8000-0000003549a3');
 select is((select count(*)::int from public.setting_values
