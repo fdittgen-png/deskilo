@@ -12606,6 +12606,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'unbalancedEntry': 'l’écriture $subject n’est pas équilibrée',
       'unconvertedCurrency': '$subject n’est pas dans la devise du livre',
       'unknownDocument': 'une écriture porte sur le document inconnu $subject',
+      'sourceTooLong':
+          'le numéro de document $subject dépasse 20 caractères, ce que le fichier n’accepte pas',
+      'unusableAccount':
+          'le compte $subject ne peut pas être écrit dans le fichier',
       'other': '$subject',
     });
     return '$_temp0';
@@ -13026,6 +13030,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceExportSage => 'Sage 50 (journal d’audit)';
+
+  @override
+  String get invoiceExportSage50Ca => 'Journal Sage 50 Canada (fichier texte)';
 
   @override
   String get invoiceExportSwissKmu =>

@@ -52,6 +52,7 @@ import 'accounting_export_handover.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
 import 'accounting_export_sage.dart';
+import 'accounting_export_sage50_ca.dart';
 import 'accounting_export_swiss.dart';
 import 'accounting_export_xero.dart';
 import 'bank_reconciliation_archive.dart';
@@ -238,6 +239,8 @@ class AccountingExportRun {
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
       case ExportKind.bcJournal:
         await bcJournalExport(stem: 'business central');
+      case ExportKind.sage50CaJournal:
+        await sage50CaJournalExport(stem: 'sage 50 journal');
     }
   }
 

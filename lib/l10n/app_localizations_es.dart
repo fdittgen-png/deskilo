@@ -12573,6 +12573,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'unconvertedCurrency': '$subject no está en la moneda del libro',
       'unknownDocument':
           'un asiento contabiliza el documento desconocido $subject',
+      'sourceTooLong':
+          'el número de documento $subject supera los 20 caracteres, que el archivo no admite',
+      'unusableAccount':
+          'la cuenta $subject no se puede escribir en el archivo',
       'other': '$subject',
     });
     return '$_temp0';
@@ -12992,6 +12996,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportSage => 'Sage 50 (registro de auditoría)';
+
+  @override
+  String get invoiceExportSage50Ca =>
+      'Diario de Sage 50 Canadá (archivo de texto)';
 
   @override
   String get invoiceExportSwissKmu =>
