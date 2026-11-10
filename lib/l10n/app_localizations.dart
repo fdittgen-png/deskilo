@@ -30144,7 +30144,7 @@ abstract class AppLocalizations {
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Due in {days} days'**
+  /// **'{days, plural, =1{Due in 1 day} other{Due in {days} days}}'**
   String moneyDueIn(int days);
 
   /// Label of the expense category dropdown
@@ -30234,7 +30234,7 @@ abstract class AppLocalizations {
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Overdue by {days} days'**
+  /// **'{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}'**
   String moneyOverdueBy(int days);
 
   /// Shown as a tooltip in my invoices list (money), and 2 other places.

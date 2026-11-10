@@ -15,14 +15,45 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
+/// The name of a file by its URI: the last path segment, the same on Windows
+/// (`docs\decisions\0048-…md`) and on POSIX, where `path.split('/')` is not.
+String _name(Uri uri) => uri.pathSegments.last;
+
+/// `NNNN-kebab-case-slug.md`: the one matcher of a record's filename.
+final _adrFilename = RegExp(r'^(\d{4})-[a-z0-9-]+\.md$');
+
 void main() {
   final files = markdownFiles('docs/decisions', recursive: false);
+
+  test('the filename is the last URI segment on Windows and POSIX alike', () {
+    for (final uri in [
+      Uri.file(
+        r'C:\work\deskilo\docs\decisions\0048-domain-contracts-beside-the-invariants.md',
+        windows: true,
+      ),
+      Uri.file(
+        '/work/deskilo/docs/decisions/0048-domain-contracts-beside-the-invariants.md',
+        windows: false,
+      ),
+    ]) {
+      final name = _name(uri);
+      expect(name, '0048-domain-contracts-beside-the-invariants.md');
+      expect(_adrFilename.firstMatch(name)!.group(1), '0048');
+      expect(name.substring(0, 4), '0048');
+    }
+  });
+
+  test('a malformed filename is still refused, not repaired', () {
+    for (final bad in ['48-short.md', '0048_underscore.md', '0048-Upper.md']) {
+      expect(_adrFilename.hasMatch(_name(Uri.file('/docs/decisions/$bad'))), isFalse);
+    }
+  });
 
   test('ADR numbering is contiguous from 0001, no gaps or duplicates', () {
     final numbers = <int>[];
     for (final f in files) {
-      final name = f.path.split('/').last;
-      final m = RegExp(r'^(\d{4})-[a-z0-9-]+\.md$').firstMatch(name);
+      final name = _name(f.uri);
+      final m = _adrFilename.firstMatch(name);
       expect(m, isNotNull,
           reason: '$name is not NNNN-kebab-case-slug.md');
       numbers.add(int.parse(m!.group(1)!));
@@ -38,7 +69,7 @@ void main() {
 
   test('every ADR has a matching title and a Status/Date line', () {
     for (final f in files) {
-      final name = f.path.split('/').last;
+      final name = _name(f.uri);
       final number = name.substring(0, 4);
       final lines = f.readAsLinesSync();
 

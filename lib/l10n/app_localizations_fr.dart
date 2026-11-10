@@ -18339,7 +18339,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String moneyDueIn(int days) {
-    return 'Échéance dans $days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Échéance dans $days jours',
+      one: 'Échéance dans 1 jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -18400,7 +18406,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String moneyOverdueBy(int days) {
-    return 'En retard de $days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'En retard de $days jours',
+      one: 'En retard de 1 jour',
+      zero: 'Échéance aujourd’hui',
+    );
+    return '$_temp0';
   }
 
   @override
