@@ -116,7 +116,7 @@ void main() {
                 // Tall enough that no row is cut by the viewport: a clipped row's
                 // semantics rect is shorter than the row and would read as a
                 // target under 48 dp.
-                size: Size(width, width < 600 ? 2200 : 1100),
+                size: Size(width, width < 600 ? 3000 : 1100),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);

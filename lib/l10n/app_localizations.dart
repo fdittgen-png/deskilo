@@ -28611,6 +28611,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
   String meOverviewAttentionConversation(int count);
 
+  /// #3545 E: a Needs-you row for an unpaid invoice: what, then which business
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} · {workspace}'**
+  String meOverviewAttentionDocumentTitle(String number, String workspace);
+
   /// #2554 Overview: an unpaid document's number, after its remaining amount (#2552: the amount is a private value shown before this text)
   ///
   /// In en, this message translates to:
@@ -28628,6 +28634,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your documents could not be read.'**
   String get meOverviewAttentionDocumentsUnavailable;
+
+  /// #3545 E: the second line of an unpaid invoice's row: its frozen due day
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String meOverviewAttentionDue(String date);
 
   /// #2554 Overview: some servers' conversations could not be read
   ///
@@ -28670,6 +28682,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needs you'**
   String get meOverviewAttentionTitle;
+
+  /// #3545 E: the chip of an unpaid invoice that is not yet overdue
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get meOverviewAttentionToPay;
 
   /// #2554 Overview: open the document in My data
   ///
@@ -28718,6 +28736,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View'**
   String get meOverviewView;
+
+  /// #3545 E: where the person stands in a business, on a compact Home row
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get mePlaceMember;
+
+  /// #3545 E: a compact Home row of a space the person asked to join and nobody has answered
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent · waiting for an answer'**
+  String get mePlaceRequestSent;
 
   /// #2563 Me home: badge on the default workspace
   ///

@@ -187,7 +187,8 @@ String _state(AppLocalizations l10n, PersonalSpaceEntry entry) => [
   if (entry.isTest) l10n.mySpacesTestSpace,
 ].join(' · ');
 
-void _open(WidgetRef ref, BuildContext context, Workspace space) {
+/// Goes into [space]; Me remembers when.
+void openMySpace(WidgetRef ref, BuildContext context, Workspace space) {
   // The "recently used" order remembers when I went in.
   unawaited(
     ref
@@ -212,13 +213,13 @@ Widget? _action(
           ? OutlinedButton(
               key: ValueKey('my-space-open-$id'),
               style: OutlinedButton.styleFrom(minimumSize: _target),
-              onPressed: () => _open(ref, context, local),
+              onPressed: () => openMySpace(ref, context, local),
               child: Text(l10n.mySpacesOpenTest),
             )
           : FilledButton.tonal(
               key: ValueKey('my-space-open-$id'),
               style: FilledButton.styleFrom(minimumSize: _target),
-              onPressed: () => _open(ref, context, local),
+              onPressed: () => openMySpace(ref, context, local),
               child: Text(l10n.mySpacesOpen),
             ),
     PersonalSpaceAction.requestStatus => OutlinedButton(

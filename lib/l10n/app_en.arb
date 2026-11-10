@@ -22936,6 +22936,18 @@
       }
     }
   },
+  "meOverviewAttentionDocumentTitle": "Invoice {number} · {workspace}",
+  "@meOverviewAttentionDocumentTitle": {
+    "description": "#3545 E: a Needs-you row for an unpaid invoice: what, then which business",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
   "meOverviewAttentionDocumentToPay": "to pay · {number}",
   "@meOverviewAttentionDocumentToPay": {
     "description": "#2554 Overview: an unpaid document's number, after its remaining amount (#2552: the amount is a private value shown before this text)",
@@ -22952,6 +22964,15 @@
   "meOverviewAttentionDocumentsUnavailable": "Your documents could not be read.",
   "@meOverviewAttentionDocumentsUnavailable": {
     "description": "#2554 Overview: my documents could not be read"
+  },
+  "meOverviewAttentionDue": "Due {date}",
+  "@meOverviewAttentionDue": {
+    "description": "#3545 E: the second line of an unpaid invoice's row: its frozen due day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "meOverviewAttentionMessagesPartial": "Some conversations could not be read.",
   "@meOverviewAttentionMessagesPartial": {
@@ -22985,6 +23006,10 @@
   "meOverviewAttentionTitle": "Needs you",
   "@meOverviewAttentionTitle": {
     "description": "#2554 Overview: the needs-attention section"
+  },
+  "meOverviewAttentionToPay": "To pay",
+  "@meOverviewAttentionToPay": {
+    "description": "#3545 E: the chip of an unpaid invoice that is not yet overdue"
   },
   "meOverviewAttentionViewDocument": "View document",
   "@meOverviewAttentionViewDocument": {
@@ -23035,6 +23060,14 @@
   "meOverviewView": "View",
   "@meOverviewView": {
     "description": "#2554 Overview: open the next commitment in My reservations"
+  },
+  "mePlaceMember": "Member",
+  "@mePlaceMember": {
+    "description": "#3545 E: where the person stands in a business, on a compact Home row"
+  },
+  "mePlaceRequestSent": "Request sent · waiting for an answer",
+  "@mePlaceRequestSent": {
+    "description": "#3545 E: a compact Home row of a space the person asked to join and nobody has answered"
   },
   "meRefDefault": "Default",
   "@meRefDefault": {
