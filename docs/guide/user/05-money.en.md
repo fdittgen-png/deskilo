@@ -283,6 +283,29 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **See also:** [Approve or decline an expense](help:user.money.expense.approve)
 
+<!-- anchor: user.money.expenses.vat -->
+### The VAT of an expense
+
+**Audience:** Member · Administrator · Owner
+
+An expense carries VAT, and you want the space to deduct the right part of it.
+
+**Steps**
+
+1. In the expense form, or in **Scheduled expenses**, choose **VAT on this expense**: a rate, or **No VAT**.
+2. Enter the **Deductible share (%)**: 100 unless part of the expense is private or serves an exempt activity.
+3. Turn on **A fixed asset** for equipment the space keeps and depreciates.
+4. For a service bought abroad that carries no VAT of your country, turn on **Bought from a supplier abroad**. The amount you typed is then the base: the space owes the acquisition tax on it and deducts its share.
+
+**Good to know**
+
+- The fields appear when the space is VAT-registered and **Input VAT** is switched on.
+- **Bought from a supplier abroad** appears only where your country's return has a box for that tax, for example the Swiss return (Ziffer 383).
+- A scheduled expense asks once, and every occurrence carries the answer.
+- The deductible VAT counts in the month the expense is approved.
+
+**See also:** [Submit an expense](help:user.money.expense) · [The Swiss return: Ziffern 205 and 383](help:user.money.vat.ch-return)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approve or decline an expense
 

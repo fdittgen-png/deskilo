@@ -556,6 +556,29 @@ Eine Gruppe sagt, um welche Art von Satz es sich handelt, damit die Rechnung ihn
 
 **Siehe auch:** [Die Sätze festlegen](help:user.money.vat.rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### Die Schweizer Abrechnung: Ziffern 205 und 383
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ihr Raum ist in der Schweiz, und Sie möchten die optierten Leistungen und die Bezugsteuer in den richtigen Ziffern haben.
+
+**Schritte**
+
+1. Schalten Sie in [Rechtliche Identität & E-Rechnung](app:/legal-identity) unter **Vermietung und Option (Schweiz)** **Wir vermieten nur Räume** ein, wenn Sie Räume ohne Dienstleistungen vermieten. Schalten Sie dann **Wir haben optiert (Art. 22 MWSTG)** ein, wenn Sie optiert haben, und geben Sie **Option wirksam ab (JJJJ-MM-TT)** ein.
+2. Erfassen Sie eine im Ausland gekaufte Ausgabe mit eingeschaltetem **Bei einem Lieferanten im Ausland gekauft**.
+3. Öffnen Sie [Umsatzsteuer-Voranmeldung](app:/vat-declarations) und bereiten Sie die Periode vor.
+4. Laden Sie **MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)** herunter und laden Sie die Datei im ePortal hoch.
+
+**Gut zu wissen**
+
+- Ziffer 205 ist der Teil Ihres Umsatzes (Ziffer 200), der eine reine Vermietung ist und versteuert wird, weil Sie optiert haben. Die Liegenschaftszeilen der Rechnung bestimmen diesen Teil. Die Abrechnung zählt ihn weiterhin in Ziffer 200.
+- Ziffer 383 ist die Bezugsteuer. Sie wird als geschuldete Steuer deklariert, und ihr abziehbarer Anteil zählt zur Vorsteuer. Sie gehört nicht zum Umsatz.
+- In der eCH-0217-Datei stehen die optierten Leistungen als `opted`, die Bezugsteuer als ein Element `acquisitionTax` je Satz.
+- Wer als Betreiber:in die Felder in **Steuer-Referenzdaten** bearbeitet, nennt die zusätzlichen Zeilen eines Felds in **Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)**. Ziffer 383 trägt `acquisition`.
+
+**Siehe auch:** [Die Umsatzsteuer-Voranmeldung vorbereiten](help:user.money.vat.declaration) · [Die Umsatzsteuer einer Ausgabe](help:user.money.expenses.vat)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Einen Satz per Gesetz ändern
 
@@ -1132,6 +1155,48 @@ Sie übergeben Ihrer Buchhaltung die Rechnungen und Zahlungen des Jahres.
 - Bei einigen Formaten steht der Hinweis, dass DesKilo in Ihrem Land keine zertifizierte Software ist.
 
 **Siehe auch:** [Steuerkonto](help:user.money.vat.account) · [Das Rechnungsregister](help:user.invoicing.register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie führen Ihre Umsatzsteueraufzeichnungen in einem anderen Buchhaltungssystem und müssen zeigen, wie die Zahlen dorthin gelangt sind, zum Beispiel für das britische Making Tax Digital.
+
+**Schritte**
+
+1. Öffnen Sie [Buchhaltung & MwSt](app:/money/accounting) und tippen Sie auf **Buchhaltungssysteme**.
+2. Lesen Sie **Übertragungen**: jede ausgegebene Datei und jedes an eine Verbindung gelieferte Dokument der Periode, jeweils mit dem SHA-256 des Übertragenen.
+3. Geben Sie die **Buchhaltungs-CSV** an Ihre Steuerberatung. Ihr `report.json` zitiert die Übertragungsliste des Jahres.
+
+**Gut zu wissen**
+
+- Eine digitale Verbindung ist eine in **Übertragungen** erfasste Datei oder Lieferung über eine Verbindung. Zahlen von Hand in das andere System abzutippen, ist keine digitale Verbindung.
+- Der SHA-256 belegt, dass die Datei, die das andere System erhielt, die von DesKilo ausgegebene ist.
+- Eine leere Liste sagt: „In diesem Zeitraum wurde nichts übergeben oder übermittelt.“
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export) · [Wo die Aufzeichnungen aufbewahrt werden](help:user.invoicing.records-location)
+
+<!-- anchor: user.invoicing.records-location -->
+### Wo die Aufzeichnungen aufbewahrt werden
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in · Betreiber:in
+
+Manche Länder schreiben vor, wo ein Unternehmen seine Bücher aufbewahrt, und Sie möchten wissen, was die App zu Ihren angibt.
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](app:/legal-identity) und gehen Sie zum Abschnitt **Buchführung**.
+2. Lesen Sie **Wo die Aufzeichnungen aufbewahrt werden**, neben den Aufbewahrungsfristen.
+3. Für ein kanadisches Unternehmen, dessen Aufzeichnungen außerhalb Kanadas liegen, tragen Sie **CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas** in den Einstellungen des Raums unter **Aufbewahrungsort der Aufzeichnungen** ein.
+
+**Gut zu wissen**
+
+- Der oder die Betreiber:in der Installation gibt **Land, in dem diese Installation ihre Daten aufbewahrt** an, wie es der Hosting-Vertrag nennt. Die App errät es nie. Ist es nicht angegeben, sagt die Kachel das und nennt keinen Ort.
+- Kanada verlangt die Bücher in Kanada, außer die CRA genehmigt einen anderen Ort; Deutschland verlangt elektronische Bücher in der EU. Die Kachel warnt, wenn das angegebene Land nicht passt.
+- Ein britisches, irisches, kanadisches oder US-Archiv enthält seine Tabellen mit einer `tables/README.txt`, die jede Tabelle und Spalte auf Englisch beschreibt und sagt, wo die Aufzeichnungen aufbewahrt werden.
+
+**Siehe auch:** [Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem](help:user.invoicing.transfers)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Neue Buchhaltungsarbeit stoppen

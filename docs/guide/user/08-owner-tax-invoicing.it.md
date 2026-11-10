@@ -556,6 +556,29 @@ Un gruppo dice di che tipo di aliquota si tratta, così la fattura la colloca ne
 
 **Vedi anche:** [Impostare le aliquote](help:user.money.vat.rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### Il rendiconto svizzero: cifre 205 e 383
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Il Suo spazio è in Svizzera, e vuole le prestazioni per cui ha optato e l'imposta sull'acquisto nelle cifre giuste.
+
+**Passaggi**
+
+1. In [Identità legale e fatturazione elettronica](app:/legal-identity), sotto **Locazione e opzione (Svizzera)**, attivi **Affittiamo solo locali nudi** se affitta locali senza servizi. Poi attivi **Abbiamo optato (art. 22 LIVA)** se ha optato, e inserisca **Opzione efficace dal (AAAA-MM-GG)**.
+2. Registri una spesa acquistata all'estero con **Acquistato da un fornitore all'estero** attivo.
+3. Apra [Dichiarazione IVA](app:/vat-declarations) e prepari il periodo.
+4. Scarichi **Rendiconto IVA, XML eCH-0217 (caricamento nell'ePortal)** e lo carichi nell'ePortal.
+
+**Da sapere**
+
+- La cifra 205 è la parte della Sua cifra d'affari (cifra 200) che è una locazione nuda imposta perché ha optato. Le righe immobiliari della fattura ne danno la parte. Il rendiconto la conta comunque nella cifra 200.
+- La cifra 383 è l'imposta sull'acquisto. Viene dichiarata come imposta dovuta, e la sua quota detraibile conta con l'imposta precedente. Non fa parte della cifra d'affari.
+- Nel file eCH-0217, le prestazioni optate sono scritte come `opted`, e l'imposta sull'acquisto come un elemento `acquisitionTax` per aliquota.
+- Un operatore che modifica le caselle in **Dati di riferimento fiscali** nomina le righe aggiuntive di una casella in **Altre categorie di righe che somma (separate da virgole, ad es. acquisition)**. La cifra 383 porta `acquisition`.
+
+**Vedi anche:** [Preparare la dichiarazione IVA](help:user.money.vat.declaration) · [L'IVA di una spesa](help:user.money.expenses.vat)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Modificare un'aliquota per legge
 
@@ -1132,6 +1155,48 @@ Consegna al Suo commercialista le fatture e i pagamenti dell'anno.
 - Alcuni formati ricordano che DesKilo non è un software certificato nel Suo Paese.
 
 **Vedi anche:** [Conto IVA](help:user.money.vat.account) · [Il registro fatture](help:user.invoicing.register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Trasferimenti: il collegamento digitale con il Suo sistema contabile
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Tiene i Suoi registri IVA in un altro sistema contabile e deve mostrare come vi sono arrivate le cifre, per esempio per il Making Tax Digital britannico.
+
+**Passaggi**
+
+1. Apra [Contabilità e IVA](app:/money/accounting) e tocchi **Sistemi contabili**.
+2. Legga **Trasferimenti**: ogni file consegnato e ogni documento inviato a una connessione nel periodo, ciascuno con lo SHA-256 di ciò che è stato trasmesso.
+3. Consegni il **CSV contabile** al Suo commercialista. Il suo `report.json` cita l'elenco dei Trasferimenti dell'anno.
+
+**Da sapere**
+
+- Un collegamento digitale è un file o un invio tramite connessione registrato in **Trasferimenti**. Ribattere le cifre a mano nell'altro sistema non è un collegamento digitale.
+- Lo SHA-256 prova che il file ricevuto dall'altro sistema è quello consegnato da DesKilo.
+- Un elenco vuoto dice «In questo periodo non è stato consegnato né inviato nulla.»
+
+**Vedi anche:** [Esportazioni contabili](help:user.invoicing.accounting-export) · [Dove sono conservate le scritture](help:user.invoicing.records-location)
+
+<!-- anchor: user.invoicing.records-location -->
+### Dove sono conservate le scritture
+
+**Destinatari:** Proprietario · Amministratore fatturazione · Operatore
+
+Alcuni paesi stabiliscono dove un'impresa conserva i suoi libri, e vuole sapere che cosa indica l'app per i Suoi.
+
+**Passaggi**
+
+1. Apra [Identità legale e fatturazione elettronica](app:/legal-identity) e vada alla sezione **Libro contabile**.
+2. Legga **Dove sono conservate le scritture**, accanto ai periodi di conservazione.
+3. Per un'impresa canadese le cui scritture sono conservate fuori dal Canada, inserisca **Autorizzazione della CRA a conservare le scritture fuori dal Canada** nelle impostazioni dello spazio, sotto **Luogo di conservazione delle scritture**.
+
+**Da sapere**
+
+- L'operatore dell'installazione dichiara **Paese in cui questa installazione conserva i suoi dati**, come lo indica il contratto di hosting. L'app non lo indovina mai. Se non è dichiarato, il riquadro lo dice e non indica alcun luogo.
+- Il Canada esige i libri in Canada salvo autorizzazione della CRA; la Germania esige i libri elettronici nell'UE. Il riquadro avvisa quando il paese dichiarato non va bene.
+- Un archivio britannico, irlandese, canadese o statunitense contiene le sue tabelle con un `tables/README.txt` che descrive in inglese ogni tabella e colonna, e dice dove sono conservate le scritture.
+
+**Vedi anche:** [Trasferimenti: il collegamento digitale con il Suo sistema contabile](help:user.invoicing.transfers)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Fermare il nuovo lavoro contabile

@@ -426,6 +426,32 @@ You are in a space and want to reach a screen. Everything is in one menu, and a 
 
 **See also:** [Navigation style](#navigation-style) · [Me: your home and your spaces](#me-your-home-and-your-spaces)
 
+<!-- anchor: user.start.workspace-overview -->
+### The workspace overview
+
+**Audience:** Administrator · Owner
+
+You open the space and want to see first what needs you, then the figures you may read.
+
+<!-- image: user-start-workspace-overview -->
+
+**Steps**
+
+1. Open [Overview](https://fdittgen-png.github.io/deskilo/#/workspace-overview).
+2. Read **Needs attention**: what waits for you, and a line counting the requests nobody in the space has decided yet. "Nothing needs you" means there is nothing.
+3. Read **Key indicators**, grouped as **Capacity**, **Sales**, **Purchases**, **Cash** and **People**. Tap a tile to open where its figure comes from.
+4. Tap **Customize** to pin the tiles you want, in your order.
+5. Tap **All indicators** for the full analytics page.
+
+**Good to know**
+
+- You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
+- **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
+- **Customize** needs the right to read the workspace figures and the report designer.
+- The owner switches the page on as **Workspace overview** among the features. Off, the attention list and the analytics page stay as they are.
+
+**See also:** [Find your way around](#find-your-way-around)
+
 <!-- anchor: user.start.get-started -->
 ### The Get started card and the tips
 
@@ -2619,6 +2645,29 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **See also:** [Approve or decline an expense](#approve-or-decline-an-expense)
 
+<!-- anchor: user.money.expenses.vat -->
+### The VAT of an expense
+
+**Audience:** Member · Administrator · Owner
+
+An expense carries VAT, and you want the space to deduct the right part of it.
+
+**Steps**
+
+1. In the expense form, or in **Scheduled expenses**, choose **VAT on this expense**: a rate, or **No VAT**.
+2. Enter the **Deductible share (%)**: 100 unless part of the expense is private or serves an exempt activity.
+3. Turn on **A fixed asset** for equipment the space keeps and depreciates.
+4. For a service bought abroad that carries no VAT of your country, turn on **Bought from a supplier abroad**. The amount you typed is then the base: the space owes the acquisition tax on it and deducts its share.
+
+**Good to know**
+
+- The fields appear when the space is VAT-registered and **Input VAT** is switched on.
+- **Bought from a supplier abroad** appears only where your country's return has a box for that tax, for example the Swiss return (Ziffer 383).
+- A scheduled expense asks once, and every occurrence carries the answer.
+- The deductible VAT counts in the month the expense is approved.
+
+**See also:** [Submit an expense](#submit-an-expense) · [The Swiss return: Ziffern 205 and 383](#the-swiss-return-ziffern-205-and-383)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approve or decline an expense
 
@@ -2642,6 +2691,130 @@ An expense is waiting and you decide whether the workspace pays it.
 - **Finance alerts** in Money appears when the **Events tab** feature is on.
 
 **See also:** [Finance alerts](#finance-alerts)
+
+<!-- anchor: user.money.sales -->
+### The Sales page
+
+**Audience:** Administrator · Owner
+
+You want everything the space sells and invoices in one place.
+
+<!-- image: user-money-sales -->
+
+**Steps**
+
+1. Open [Sales](https://fdittgen-png.github.io/deskilo/#/money/sales), or tap **Sales** in [My finances](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tap **Services** to change what members can buy. It is shown when you may manage the services.
+3. Tap **Invoices** to issue and follow the invoices.
+4. Tap **Guest passes** for the passes sold at the desk, when the space sells them.
+5. Tap **Invoice register** for the list of every invoice issued, or **Pricing & packages** to change the prices. **Pricing & packages** is shown when you may manage the billing rules.
+
+**Good to know**
+
+- Each line opens the screen it always opened, with the same rights. The page only gathers them.
+- The page appears when invoicing is switched on in the space and you are an administrator.
+
+**See also:** [Invoicing at a glance](#invoicing-at-a-glance) · [The Purchases page](#the-purchases-page-and-add-purchase--expense)
+
+<!-- anchor: user.money.purchases -->
+### The Purchases page and Add purchase / expense
+
+**Audience:** Member · Administrator · Owner
+
+You bought something for the space, or a supplier sent a bill, and you want to record it.
+
+<!-- image: user-money-purchases -->
+
+**Steps**
+
+1. Open [Purchases](https://fdittgen-png.github.io/deskilo/#/money/purchases), or tap **Purchases** in [My finances](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tap **Add purchase / expense**.
+3. If you may capture supplier bills, answer **Who paid?**:
+   - **I paid personally**: the expense form opens. Once approved, the space owes it to you.
+   - **Not paid yet**: a supplier bill the space still has to pay.
+   - **The space already paid**: capture the bill. Once it is approved, record its payment from **To pay**.
+4. Fill in the form that opens and save it.
+
+**Good to know**
+
+- Without the right to capture supplier bills, the question is skipped and the expense form opens.
+- The other buttons on the page open **Suppliers**, **Purchases** (the list of purchase documents), the lease, the equipment and the rented rooms, each when the space uses it.
+- **Purchases** lists supplier bills and the receipts members paid for the space, one document each. The tabs are **Documents** and **To pay**.
+
+**See also:** [Submit an expense](#submit-an-expense) · [A supplier bill, from capture to approval](#a-supplier-bill-from-capture-to-approval)
+
+<!-- anchor: user.money.purchases.bills -->
+### A supplier bill, from capture to approval
+
+**Audience:** Administrator · Owner
+
+A supplier sent a bill and you want the space to owe it, with a second person's approval.
+
+**Steps**
+
+1. In **Purchases**, tap **Add supplier bill**, or use **Add purchase / expense**.
+2. Choose the **Supplier** and enter the **Invoice number**, the lines and the **Total**. A bill saved incomplete stays a draft: "A draft: send it for approval when it is complete."
+3. Tap **Send for approval**.
+4. Another person opens [Supplier bills to approve](https://fdittgen-png.github.io/deskilo/#/money/purchases/approvals) and taps **Approve**, or **Reject** with the reason.
+5. Once approved, the bill is owed to the supplier until it is paid.
+
+**Good to know**
+
+- A bill needs its supplier and an amount before it can be sent.
+- The person who sent a bill cannot decide it. In the workspace settings, **Bills one person may approve below (currency units)** lets that person approve small bills, if they may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.
+- Each document shows its approval, its settlement (**Unpaid**, **Partly settled**, **Settled**, **Nothing owed**) and its accounting state apart.
+- Capturing a bill needs **Capture supplier bills**. Deciding one needs **Approve expenses**.
+
+**See also:** [What the space owes: To pay](#what-the-space-owes-to-pay) · [Supplier balances](#supplier-balances)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### What the space owes: To pay
+
+**Audience:** Administrator · Owner
+
+You want to see what the space still owes, and record what was paid.
+
+**Steps**
+
+1. In **Purchases**, open the **To pay** tab, or open [Cash](https://fdittgen-png.github.io/deskilo/#/money/cash) and tap **To pay**.
+2. Read **Owed to suppliers** for approved bills and **Owed to members** for the reimbursements of approved receipts.
+3. Tap **Record payment** on a line. Enter the **Amount paid**, the date (**Paid on**), the **Method** and, if you wish, a **Reference (optional)**.
+4. For a member who also owes the space, tap **Offset against an invoice** instead. Choose the **Invoice**: the claim settles that open invoice rather than being paid out.
+5. To apply a supplier credit note, tap **Apply to its bill** on the credit note.
+
+**Good to know**
+
+- Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.
+- A wrong payment is never deleted. Tap **Reverse** and state the reason. A payment already applied to an invoice cannot be reversed.
+- An offset keeps the invoice's sales and VAT; only its payment is explained.
+- A credit note is applied by another person than the one who captured it, to an approved bill of the same supplier that still owes at least that much.
+- In the workspace settings, **Payments a second person records from (currency units)** means a payment of at least that amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.
+- Recording a payment needs **Record payments to members**; an offset needs **Issue invoices & match payments**.
+
+**See also:** [The Cash page](#the-cash-page)
+
+<!-- anchor: user.money.cash -->
+### The Cash page
+
+**Audience:** Administrator · Owner
+
+You want to see the money recorded in and out, and what is still to pay.
+
+<!-- image: user-money-cash -->
+
+**Steps**
+
+1. Open [Cash](https://fdittgen-png.github.io/deskilo/#/money/cash), or tap **Cash** in [My finances](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tap **Money in and out by month** for the recorded payments month by month.
+3. Tap **To pay** for what the space still owes.
+4. Tap **Bank statements** to import a statement and match its lines, when the space uses them.
+
+**Good to know**
+
+- The page shows recorded payments, not a reconciled bank balance.
+- It appears for administrators when the workspace status or purchases are switched on.
+
+**See also:** [What the space owes: To pay](#what-the-space-owes-to-pay)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Supplier balances
@@ -5080,6 +5253,29 @@ A group says what kind of rate this is, so the invoice puts it in the right cate
 
 **See also:** [Setting the rates](#setting-the-rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### The Swiss return: Ziffern 205 and 383
+
+**Audience:** Owner · Billing administrator
+
+Your space is in Switzerland, and you want the supplies you opted to tax and the acquisition tax in the right boxes.
+
+**Steps**
+
+1. In [Legal identity & e-invoicing](https://fdittgen-png.github.io/deskilo/#/legal-identity), under **Letting and the option (Switzerland)**, turn on **We only let bare rooms** if you let rooms without services. Then turn on **We opted for taxation (art. 22 MWSTG)** if you opted, and enter the **Option effective from (YYYY-MM-DD)**.
+2. Record an expense bought from a supplier abroad with **Bought from a supplier abroad** turned on.
+3. Open [VAT declaration](https://fdittgen-png.github.io/deskilo/#/vat-declarations) and prepare the period.
+4. Download **MWST return, eCH-0217 XML (ePortal upload)** and upload it on the ePortal.
+
+**Good to know**
+
+- Ziffer 205 is the part of your sales (Ziffer 200) that is a bare letting taxed because you opted. The invoice's property lines give that part. The return still counts it in 200.
+- Ziffer 383 is the acquisition tax. It is declared as tax owed, and its deductible share counts with the input tax. It is not part of the turnover.
+- In the eCH-0217 file, the opted supplies are written as `opted`, and the acquisition tax as one `acquisitionTax` element per rate.
+- An operator who edits the boxes in **Tax reference data** names the extra lines a box adds in **Other line categories it adds (comma separated, e.g. acquisition)**. Ziffer 383 carries `acquisition`.
+
+**See also:** [Preparing the VAT return](#preparing-the-vat-return) · [The VAT of an expense](#the-vat-of-an-expense)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Change a rate by law
 
@@ -5656,6 +5852,48 @@ You hand the year's invoices and payments to your accountant.
 - Some formats note that DesKilo is not certified software in your country.
 
 **See also:** [VAT account](#vat-account) · [The invoice register](#the-invoice-register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Transfers: the digital link to your accounting system
+
+**Audience:** Owner · Billing administrator
+
+You keep your VAT records in another accounting system, and you need to show how the figures got there, for example under UK Making Tax Digital.
+
+**Steps**
+
+1. Open [Accounting & VAT](https://fdittgen-png.github.io/deskilo/#/money/accounting) and tap **Accounting systems**.
+2. Read **Transfers**: every file handed out and every document delivered to a connection in the period, each with the SHA-256 of what was carried.
+3. Hand the **Accounting CSV** to your accountant. Its `report.json` quotes the Transfers list of the year.
+
+**Good to know**
+
+- A digital link is a file or a connection delivery recorded in **Transfers**. Typing figures into the other system by hand is not a digital link.
+- The SHA-256 proves that the file the other system received is the one DesKilo handed out.
+- An empty list says "Nothing was handed out or delivered in this period."
+
+**See also:** [Accounting exports](#accounting-exports) · [Where the records are kept](#where-the-records-are-kept)
+
+<!-- anchor: user.invoicing.records-location -->
+### Where the records are kept
+
+**Audience:** Owner · Billing administrator · Operator
+
+Some countries say where a business keeps its books, and you want to know what the app states about yours.
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](https://fdittgen-png.github.io/deskilo/#/legal-identity) and go to the **Accounting book** section.
+2. Read **Where the records are kept**, next to the retention periods.
+3. For a Canadian business whose records are kept outside Canada, enter **CRA authorisation to keep records outside Canada** in the workspace settings, under **Records location**.
+
+**Good to know**
+
+- The operator of the installation declares **Country where this installation keeps its data**, as the hosting contract states it. The app never guesses it. Undeclared, the tile says so and states no location.
+- Canada keeps books in Canada unless the CRA authorises another place; Germany keeps electronic books in the EU. The tile warns when the declared country does not fit.
+- A British, Irish, Canadian or US archive carries its tables with a `tables/README.txt` that describes every table and column in English, and says where the records are kept.
+
+**See also:** [Transfers: the digital link to your accounting system](#transfers-the-digital-link-to-your-accounting-system)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Stopping new accounting work

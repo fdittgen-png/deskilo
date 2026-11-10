@@ -426,6 +426,32 @@ Un account può appartenere a molti spazi. Ogni spazio le dà un profilo: il suo
 
 **Vedi anche:** [Stile di navigazione](#stile-di-navigazione) · [Io: la sua casa e i suoi spazi](#io-la-sua-casa-e-i-suoi-spazi)
 
+<!-- anchor: user.start.workspace-overview -->
+### La panoramica dello spazio
+
+**Destinatari:** Amministratore · Proprietario
+
+Apre lo spazio e vuole vedere prima ciò che La aspetta, poi le cifre che può leggere.
+
+<!-- image: user-start-workspace-overview -->
+
+**Passaggi**
+
+1. Apra [Panoramica](https://fdittgen-png.github.io/deskilo/#/workspace-overview).
+2. Legga **Da fare**: ciò che La aspetta, e una riga che conta le richieste che nessuno ha ancora deciso nello spazio. «Niente la aspetta» significa che non c'è nulla.
+3. Legga **Indicatori chiave**, raggruppati in **Capacità**, **Vendite**, **Acquisti**, **Cassa** e **Persone**. Tocchi un riquadro per aprire il punto da cui viene la sua cifra.
+4. Tocchi **Personalizzi** per fissare i riquadri che vuole, nel Suo ordine.
+5. Tocchi **Tutti gli indicatori** per la pagina di analisi completa.
+
+**Da sapere**
+
+- Vede solo le cifre che il Suo ruolo può leggere. Una cifra che non è stato possibile leggere mostra **Non disponibile**, mai zero.
+- **Iscrizioni attive** conta iscrizioni, non persone. **Crediti scaduti** esclude le fatture senza scadenza provata o in sospeso e le conta a parte. Sono cifre di oggi: non se ne conserva lo storico.
+- **Personalizzi** richiede il diritto di leggere le cifre dello spazio e il designer dei report.
+- Il proprietario attiva la pagina come **Panoramica dello spazio** tra le funzioni. Disattivata, l'elenco delle attenzioni e la pagina di analisi restano come sono.
+
+**Vedi anche:** [Orientarsi nell'app](#orientarsi-nellapp)
+
 <!-- anchor: user.start.get-started -->
 ### La scheda Primi passi e i suggerimenti
 
@@ -2619,6 +2645,29 @@ Ha pagato qualcosa per lo spazio e vuole che lo spazio Le rimborsi la somma.
 
 **Vedi anche:** [Approvare o rifiutare una spesa](#approvare-o-rifiutare-una-spesa)
 
+<!-- anchor: user.money.expenses.vat -->
+### L'IVA di una spesa
+
+**Destinatari:** Membro · Amministratore · Proprietario
+
+Una spesa contiene IVA, e vuole che lo spazio ne detragga la parte giusta.
+
+**Passaggi**
+
+1. Nel modulo della spesa, o in **Spese programmate**, scelga l'**IVA su questa spesa**: un'aliquota, oppure **Senza IVA**.
+2. Inserisca la **Quota detraibile (%)**: 100, salvo che una parte della spesa sia privata o serva un'attività esente.
+3. Attivi **Un bene strumentale** per un'attrezzatura che lo spazio conserva e ammortizza.
+4. Per un servizio acquistato all'estero senza l'imposta del Suo paese, attivi **Acquistato da un fornitore all'estero**. L'importo inserito è allora la base: lo spazio deve su di esso l'imposta sull'acquisto e ne detrae la sua quota.
+
+**Da sapere**
+
+- I campi compaiono quando lo spazio è soggetto all'IVA e **IVA a credito** è attiva.
+- **Acquistato da un fornitore all'estero** compare solo se la dichiarazione del Suo paese ha una casella per questa imposta, per esempio il rendiconto svizzero (cifra 383).
+- Una spesa programmata lo chiede una volta, e ogni occorrenza ne riprende la risposta.
+- L'IVA detraibile conta nel mese in cui la spesa viene approvata.
+
+**Vedi anche:** [Inviare una spesa](#inviare-una-spesa) · [Il rendiconto svizzero: cifre 205 e 383](#il-rendiconto-svizzero-cifre-205-e-383)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approvare o rifiutare una spesa
 
@@ -2642,6 +2691,130 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 - **Avvisi finanziari** in Finanze compare solo quando la funzione **Scheda Eventi** è attiva.
 
 **Vedi anche:** [Avvisi finanziari](#avvisi-finanziari)
+
+<!-- anchor: user.money.sales -->
+### La pagina Vendite
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
+
+<!-- image: user-money-sales -->
+
+**Passaggi**
+
+1. Apra [Vendite](https://fdittgen-png.github.io/deskilo/#/money/sales), oppure tocchi **Vendite** in [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tocchi **Servizi** per cambiare ciò che i soci possono acquistare. La riga compare se può gestire i servizi.
+3. Tocchi **Fatture** per emettere e seguire le fatture.
+4. Tocchi **Pass ospite** per i pass venduti all'accoglienza, se lo spazio li vende.
+5. Tocchi **Registro fatture** per l'elenco di tutte le fatture emesse, oppure **Tariffe e pacchetti** per cambiare i prezzi. **Tariffe e pacchetti** compare se può gestire le regole di fatturazione.
+
+**Da sapere**
+
+- Ogni riga apre la schermata che ha sempre aperto, con gli stessi diritti. La pagina si limita a raccoglierle.
+- La pagina compare quando la fatturazione è attiva nello spazio e Lei è amministratore.
+
+**Vedi anche:** [La fatturazione in sintesi](#la-fatturazione-in-sintesi) · [La pagina Acquisti e Aggiungi acquisto / spesa](#la-pagina-acquisti-e-aggiungi-acquisto--spesa)
+
+<!-- anchor: user.money.purchases -->
+### La pagina Acquisti e Aggiungi acquisto / spesa
+
+**Destinatari:** Membro · Amministratore · Proprietario
+
+Ha comprato qualcosa per lo spazio, o un fornitore ha mandato una fattura, e vuole registrarla.
+
+<!-- image: user-money-purchases -->
+
+**Passaggi**
+
+1. Apra [Acquisti](https://fdittgen-png.github.io/deskilo/#/money/purchases), oppure tocchi **Acquisti** in [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tocchi **Aggiungi acquisto / spesa**.
+3. Se può registrare le fatture dei fornitori, risponda a **Chi ha pagato?**:
+   - **Ho pagato io**: si apre il modulo della spesa. Una volta approvata, lo spazio Le deve l'importo.
+   - **Non ancora pagato**: una fattura fornitore che lo spazio deve ancora pagare.
+   - **Lo spazio ha già pagato**: registri la fattura. Una volta approvata, registri il suo pagamento da **Da pagare**.
+4. Compili il modulo che si apre e lo salvi.
+
+**Da sapere**
+
+- Senza il diritto di registrare le fatture dei fornitori, la domanda viene saltata e si apre il modulo della spesa.
+- Gli altri pulsanti della pagina aprono **Fornitori**, **Acquisti** (l'elenco dei documenti di acquisto), la locazione, le attrezzature e le sale prese in affitto, ciascuno quando lo spazio lo usa.
+- **Acquisti** elenca le fatture dei fornitori e le ricevute che i soci hanno pagato per lo spazio, un documento ciascuna. Le schede sono **Documenti** e **Da pagare**.
+
+**Vedi anche:** [Inviare una spesa](#inviare-una-spesa) · [Una fattura fornitore, dalla registrazione all'approvazione](#una-fattura-fornitore-dalla-registrazione-allapprovazione)
+
+<!-- anchor: user.money.purchases.bills -->
+### Una fattura fornitore, dalla registrazione all'approvazione
+
+**Destinatari:** Amministratore · Proprietario
+
+Un fornitore ha mandato una fattura e vuole che lo spazio la debba, con l'approvazione di una seconda persona.
+
+**Passaggi**
+
+1. In **Acquisti**, tocchi **Aggiungi fattura fornitore**, oppure usi **Aggiungi acquisto / spesa**.
+2. Scelga il **Fornitore** e inserisca il **Numero di fattura**, le righe e il **Totale**. Una fattura salvata incompleta resta una bozza: «Una bozza: la invii all'approvazione quando è completa.»
+3. Tocchi **Invia all'approvazione**.
+4. Un'altra persona apre [Fatture fornitori da approvare](https://fdittgen-png.github.io/deskilo/#/money/purchases/approvals) e tocca **Approva**, oppure **Rifiuta** indicando il motivo.
+5. Una volta approvata, la fattura è dovuta al fornitore finché non viene pagata.
+
+**Da sapere**
+
+- Una fattura ha bisogno del suo fornitore e di un importo prima di poter essere inviata.
+- Chi ha inviato una fattura non può deciderla. Nelle impostazioni dello spazio, **Fatture che una sola persona può approvare sotto (unità monetarie)** permette a quella persona di approvare le fatture piccole, se può approvare le spese. 0 mantiene la regola che un'altra persona approva ogni fattura. Il rifiuto richiede sempre un'altra persona.
+- Ogni documento mostra separatamente la sua approvazione, il suo saldo (**Non pagato**, **Saldato in parte**, **Saldato**, **Nulla di dovuto**) e il suo stato contabile.
+- Registrare una fattura richiede **Registrare le fatture dei fornitori**. Deciderla richiede **Approvare le spese**.
+
+**Vedi anche:** [Ciò che lo spazio deve: Da pagare](#ciò-che-lo-spazio-deve-da-pagare) · [Saldi dei fornitori](#saldi-dei-fornitori)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### Ciò che lo spazio deve: Da pagare
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere ciò che lo spazio deve ancora e registrare ciò che è stato pagato.
+
+**Passaggi**
+
+1. In **Acquisti**, apra la scheda **Da pagare**, oppure apra [Cassa](https://fdittgen-png.github.io/deskilo/#/money/cash) e tocchi **Da pagare**.
+2. Legga **Dovuto ai fornitori** per le fatture approvate e **Dovuto ai soci** per i rimborsi delle ricevute approvate.
+3. Tocchi **Registra pagamento** su una riga. Inserisca l'**Importo pagato**, la data (**Pagato il**), il **Metodo** e, se vuole, un **Riferimento (facoltativo)**.
+4. Per un socio che deve anche denaro allo spazio, tocchi invece **Compensa con una fattura**. Scelga la **Fattura**: il credito salda quella fattura aperta invece di essere pagato.
+5. Per applicare una nota di credito del fornitore, tocchi **Applica alla sua fattura** sulla nota di credito.
+
+**Da sapere**
+
+- Registri solo il denaro effettivamente pagato. Il pagamento è dichiarato da Lei; la banca non lo conferma.
+- Un pagamento errato non viene mai cancellato. Tocchi **Storna** e indichi il motivo. Un pagamento già applicato a una fattura non può essere stornato.
+- Una compensazione mantiene le vendite e l'IVA della fattura; ne spiega solo il pagamento.
+- Una nota di credito viene applicata da una persona diversa da chi l'ha registrata, a una fattura approvata dello stesso fornitore che deve ancora almeno quell'importo.
+- Nelle impostazioni dello spazio, **Pagamenti registrati da una seconda persona a partire da (unità monetarie)** significa che un pagamento di almeno quell'importo non può essere registrato dalla persona che ha approvato la fattura che paga. 0 disattiva la regola.
+- Registrare un pagamento richiede **Registrare i pagamenti ai soci**; una compensazione richiede **Emettere fatture e riconciliare pagamenti**.
+
+**Vedi anche:** [La pagina Cassa](#la-pagina-cassa)
+
+<!-- anchor: user.money.cash -->
+### La pagina Cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere il denaro registrato in entrata e in uscita, e ciò che resta da pagare.
+
+<!-- image: user-money-cash -->
+
+**Passaggi**
+
+1. Apra [Cassa](https://fdittgen-png.github.io/deskilo/#/money/cash), oppure tocchi **Cassa** in [Le mie finanze](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tocchi **Entrate e uscite per mese** per i pagamenti registrati, mese per mese.
+3. Tocchi **Da pagare** per ciò che lo spazio deve ancora.
+4. Tocchi **Estratti conto** per importare un estratto e riconciliarne le righe, se lo spazio li usa.
+
+**Da sapere**
+
+- La pagina mostra pagamenti registrati, non un saldo bancario riconciliato.
+- Compare per gli amministratori quando lo stato dello spazio o gli acquisti sono attivi.
+
+**Vedi anche:** [Ciò che lo spazio deve: Da pagare](#ciò-che-lo-spazio-deve-da-pagare)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldi dei fornitori
@@ -5080,6 +5253,29 @@ Un gruppo dice di che tipo di aliquota si tratta, così la fattura la colloca ne
 
 **Vedi anche:** [Impostare le aliquote](#impostare-le-aliquote)
 
+<!-- anchor: user.money.vat.ch-return -->
+### Il rendiconto svizzero: cifre 205 e 383
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Il Suo spazio è in Svizzera, e vuole le prestazioni per cui ha optato e l'imposta sull'acquisto nelle cifre giuste.
+
+**Passaggi**
+
+1. In [Identità legale e fatturazione elettronica](https://fdittgen-png.github.io/deskilo/#/legal-identity), sotto **Locazione e opzione (Svizzera)**, attivi **Affittiamo solo locali nudi** se affitta locali senza servizi. Poi attivi **Abbiamo optato (art. 22 LIVA)** se ha optato, e inserisca **Opzione efficace dal (AAAA-MM-GG)**.
+2. Registri una spesa acquistata all'estero con **Acquistato da un fornitore all'estero** attivo.
+3. Apra [Dichiarazione IVA](https://fdittgen-png.github.io/deskilo/#/vat-declarations) e prepari il periodo.
+4. Scarichi **Rendiconto IVA, XML eCH-0217 (caricamento nell'ePortal)** e lo carichi nell'ePortal.
+
+**Da sapere**
+
+- La cifra 205 è la parte della Sua cifra d'affari (cifra 200) che è una locazione nuda imposta perché ha optato. Le righe immobiliari della fattura ne danno la parte. Il rendiconto la conta comunque nella cifra 200.
+- La cifra 383 è l'imposta sull'acquisto. Viene dichiarata come imposta dovuta, e la sua quota detraibile conta con l'imposta precedente. Non fa parte della cifra d'affari.
+- Nel file eCH-0217, le prestazioni optate sono scritte come `opted`, e l'imposta sull'acquisto come un elemento `acquisitionTax` per aliquota.
+- Un operatore che modifica le caselle in **Dati di riferimento fiscali** nomina le righe aggiuntive di una casella in **Altre categorie di righe che somma (separate da virgole, ad es. acquisition)**. La cifra 383 porta `acquisition`.
+
+**Vedi anche:** [Preparare la dichiarazione IVA](#preparare-la-dichiarazione-iva) · [L'IVA di una spesa](#liva-di-una-spesa)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Modificare un'aliquota per legge
 
@@ -5656,6 +5852,48 @@ Consegna al Suo commercialista le fatture e i pagamenti dell'anno.
 - Alcuni formati ricordano che DesKilo non è un software certificato nel Suo Paese.
 
 **Vedi anche:** [Conto IVA](#conto-iva) · [Il registro fatture](#il-registro-fatture)
+
+<!-- anchor: user.invoicing.transfers -->
+### Trasferimenti: il collegamento digitale con il Suo sistema contabile
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Tiene i Suoi registri IVA in un altro sistema contabile e deve mostrare come vi sono arrivate le cifre, per esempio per il Making Tax Digital britannico.
+
+**Passaggi**
+
+1. Apra [Contabilità e IVA](https://fdittgen-png.github.io/deskilo/#/money/accounting) e tocchi **Sistemi contabili**.
+2. Legga **Trasferimenti**: ogni file consegnato e ogni documento inviato a una connessione nel periodo, ciascuno con lo SHA-256 di ciò che è stato trasmesso.
+3. Consegni il **CSV contabile** al Suo commercialista. Il suo `report.json` cita l'elenco dei Trasferimenti dell'anno.
+
+**Da sapere**
+
+- Un collegamento digitale è un file o un invio tramite connessione registrato in **Trasferimenti**. Ribattere le cifre a mano nell'altro sistema non è un collegamento digitale.
+- Lo SHA-256 prova che il file ricevuto dall'altro sistema è quello consegnato da DesKilo.
+- Un elenco vuoto dice «In questo periodo non è stato consegnato né inviato nulla.»
+
+**Vedi anche:** [Esportazioni contabili](#esportazioni-contabili) · [Dove sono conservate le scritture](#dove-sono-conservate-le-scritture)
+
+<!-- anchor: user.invoicing.records-location -->
+### Dove sono conservate le scritture
+
+**Destinatari:** Proprietario · Amministratore fatturazione · Operatore
+
+Alcuni paesi stabiliscono dove un'impresa conserva i suoi libri, e vuole sapere che cosa indica l'app per i Suoi.
+
+**Passaggi**
+
+1. Apra [Identità legale e fatturazione elettronica](https://fdittgen-png.github.io/deskilo/#/legal-identity) e vada alla sezione **Libro contabile**.
+2. Legga **Dove sono conservate le scritture**, accanto ai periodi di conservazione.
+3. Per un'impresa canadese le cui scritture sono conservate fuori dal Canada, inserisca **Autorizzazione della CRA a conservare le scritture fuori dal Canada** nelle impostazioni dello spazio, sotto **Luogo di conservazione delle scritture**.
+
+**Da sapere**
+
+- L'operatore dell'installazione dichiara **Paese in cui questa installazione conserva i suoi dati**, come lo indica il contratto di hosting. L'app non lo indovina mai. Se non è dichiarato, il riquadro lo dice e non indica alcun luogo.
+- Il Canada esige i libri in Canada salvo autorizzazione della CRA; la Germania esige i libri elettronici nell'UE. Il riquadro avvisa quando il paese dichiarato non va bene.
+- Un archivio britannico, irlandese, canadese o statunitense contiene le sue tabelle con un `tables/README.txt` che descrive in inglese ogni tabella e colonna, e dice dove sono conservate le scritture.
+
+**Vedi anche:** [Trasferimenti: il collegamento digitale con il Suo sistema contabile](#trasferimenti-il-collegamento-digitale-con-il-suo-sistema-contabile)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Fermare il nuovo lavoro contabile

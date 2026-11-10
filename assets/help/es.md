@@ -408,6 +408,31 @@ Usted está en un espacio y quiere llegar a una pantalla. Todo está en un únic
 
 **Véase también:** [Estilo de navegación](help:user.profile.settings.navigation) · [Yo: su inicio y sus espacios](help:user.me.home)
 
+### El resumen del espacio
+
+**Público:** Administrador/a · Propietario
+
+Abre el espacio y quiere ver primero lo que le espera, y después las cifras que puede leer.
+
+<!-- image: user-start-workspace-overview -->
+
+**Pasos**
+
+1. Abra [Resumen](app:/workspace-overview).
+2. Lea **Pendiente**: lo que le espera, y una línea que cuenta las solicitudes que nadie ha decidido todavía en el espacio. «Nada le espera» significa que no hay nada.
+3. Lea **Indicadores clave**, agrupados en **Capacidad**, **Ventas**, **Compras**, **Tesorería** y **Personas**. Toque un mosaico para abrir el lugar de donde viene su cifra.
+4. Toque **Personalizar** para fijar los mosaicos que quiera, en su orden.
+5. Toque **Todos los indicadores** para la página de análisis completa.
+
+**Conviene saber**
+
+- Solo ve las cifras que su rol puede leer. Una cifra que no pudo leerse muestra **No disponible**, nunca cero.
+- **Membresías activas** cuenta membresías, no personas. **Cobros vencidos** deja fuera las facturas sin vencimiento probado o en espera y las cuenta aparte. Ambas son cifras de hoy: no se guarda historial.
+- **Personalizar** requiere el derecho a leer las cifras del espacio y el diseñador de informes.
+- El propietario activa la página como **Resumen del espacio** entre las funciones. Desactivada, la lista de atención y la página de análisis siguen como están.
+
+**Véase también:** [Orientarse en la app](help:user.start.navigation)
+
 ### La tarjeta Primeros pasos y los consejos
 
 **Público:** Todos
@@ -2509,6 +2534,28 @@ Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
 
 **Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)
 
+### El IVA de un gasto
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Un gasto lleva IVA, y quiere que el espacio deduzca la parte correcta.
+
+**Pasos**
+
+1. En el formulario del gasto, o en **Gastos programados**, elija el **IVA de este gasto**: un tipo, o **Sin IVA**.
+2. Introduzca la **Parte deducible (%)**: 100, salvo que parte del gasto sea privada o sirva a una actividad exenta.
+3. Active **Un bien de inversión** para el equipamiento que el espacio conserva y amortiza.
+4. Para un servicio comprado en el extranjero sin el impuesto de su país, active **Comprado a un proveedor en el extranjero**. El importe introducido es entonces la base: el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.
+
+**Conviene saber**
+
+- Los campos aparecen cuando el espacio está sujeto al IVA y **IVA soportado** está activado.
+- **Comprado a un proveedor en el extranjero** solo aparece si la declaración de su país tiene una casilla para ese impuesto, por ejemplo la declaración suiza (casilla 383).
+- Un gasto programado lo pregunta una vez, y cada repetición conserva la respuesta.
+- El IVA deducible cuenta en el mes en que se aprueba el gasto.
+
+**Véase también:** [Envíe un gasto](help:user.money.expense) · [La declaración suiza: casillas 205 y 383](help:user.money.vat.ch-return)
+
 ### Apruebe o rechace un gasto
 
 **Público:** Administrador/a · Propietario
@@ -2531,6 +2578,125 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 - **Avisos financieros** en Finanzas solo aparece cuando la función **Pestaña Eventos** está activada.
 
 **Véase también:** [Avisos financieros](help:user.money.alerts)
+
+### La página Ventas
+
+**Público:** Administrador/a · Propietario
+
+Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
+
+<!-- image: user-money-sales -->
+
+**Pasos**
+
+1. Abra [Ventas](app:/money/sales), o toque **Ventas** en [Mis finanzas](app:/money).
+2. Toque **Servicios** para cambiar lo que los miembros pueden comprar. La línea aparece si puede gestionar los servicios.
+3. Toque **Facturas** para emitir y seguir las facturas.
+4. Toque **Pases de invitado** para los pases vendidos en recepción, si el espacio los vende.
+5. Toque **Registro de facturas** para la lista de todas las facturas emitidas, o **Tarifas y paquetes** para cambiar los precios. **Tarifas y paquetes** aparece si puede gestionar las reglas de facturación.
+
+**Conviene saber**
+
+- Cada línea abre la pantalla que siempre abrió, con los mismos derechos. La página solo las reúne.
+- La página aparece cuando la facturación está activada en el espacio y usted es administrador/a.
+
+**Véase también:** [La facturación de un vistazo](help:user.money.invoicing) · [La página Compras y Añadir compra / gasto](help:user.money.purchases)
+
+### La página Compras y Añadir compra / gasto
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Compró algo para el espacio, o un proveedor envió una factura, y quiere registrarlo.
+
+<!-- image: user-money-purchases -->
+
+**Pasos**
+
+1. Abra [Compras](app:/money/purchases), o toque **Compras** en [Mis finanzas](app:/money).
+2. Toque **Añadir compra / gasto**.
+3. Si puede registrar facturas de proveedor, responda a **¿Quién pagó?**:
+   - **Pagué yo**: se abre el formulario de gasto. Una vez aprobado, el espacio se lo debe.
+   - **Aún sin pagar**: una factura de proveedor que el espacio todavía debe pagar.
+   - **El espacio ya pagó**: registre la factura. Una vez aprobada, registre su pago desde **Por pagar**.
+4. Rellene el formulario que se abre y guárdelo.
+
+**Conviene saber**
+
+- Sin el derecho a registrar facturas de proveedor, la pregunta se omite y se abre el formulario de gasto.
+- Los demás botones de la página abren **Proveedores**, **Compras** (la lista de documentos de compra), el arrendamiento, el equipamiento y las salas alquiladas, cada uno cuando el espacio lo usa.
+- **Compras** lista las facturas de proveedor y los justificantes que los miembros pagaron para el espacio, un documento cada uno. Las pestañas son **Documentos** y **Por pagar**.
+
+**Véase también:** [Envíe un gasto](help:user.money.expense) · [Una factura de proveedor, del registro a la aprobación](help:user.money.purchases.bills)
+
+### Una factura de proveedor, del registro a la aprobación
+
+**Público:** Administrador/a · Propietario
+
+Un proveedor envió una factura y quiere que el espacio la deba, con la aprobación de una segunda persona.
+
+**Pasos**
+
+1. En **Compras**, toque **Añadir factura de proveedor**, o use **Añadir compra / gasto**.
+2. Elija el **Proveedor** e introduzca el **Número de factura**, las líneas y el **Total**. Una factura guardada incompleta queda como borrador: «Un borrador: envíelo a aprobación cuando esté completo.»
+3. Toque **Enviar a aprobación**.
+4. Otra persona abre [Facturas de proveedores por aprobar](app:/money/purchases/approvals) y toca **Aprobar**, o **Rechazar** indicando el motivo.
+5. Una vez aprobada, la factura se debe al proveedor hasta que se pague.
+
+**Conviene saber**
+
+- Una factura necesita su proveedor y un importe antes de poder enviarse.
+- Quien envió una factura no puede decidirla. En los ajustes del espacio, **Facturas que una sola persona puede aprobar por debajo de (unidades monetarias)** permite a esa persona aprobar facturas pequeñas, si puede aprobar gastos. 0 mantiene la regla de que otra persona aprueba cada factura. Rechazar siempre requiere otra persona.
+- Cada documento muestra por separado su aprobación, su liquidación (**Sin pagar**, **Saldado en parte**, **Saldado**, **Nada adeudado**) y su estado contable.
+- Registrar una factura requiere **Registrar facturas de proveedor**. Decidirla requiere **Aprobar gastos**.
+
+**Véase también:** [Lo que debe el espacio: Por pagar](help:user.money.purchases.to-pay) · [Saldos de proveedores](help:user.money.suppliers.balance)
+
+### Lo que debe el espacio: Por pagar
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que el espacio todavía debe y registrar lo que se pagó.
+
+**Pasos**
+
+1. En **Compras**, abra la pestaña **Por pagar**, o abra [Tesorería](app:/money/cash) y toque **Por pagar**.
+2. Lea **Debido a proveedores** para las facturas aprobadas y **Debido a miembros** para los reembolsos de justificantes aprobados.
+3. Toque **Registrar pago** en una línea. Introduzca el **Importe pagado**, la fecha (**Pagado el**), el **Método** y, si lo desea, una **Referencia (opcional)**.
+4. Para un miembro que también debe dinero al espacio, toque en su lugar **Compensar con una factura**. Elija la **Factura**: el crédito liquida esa factura abierta en lugar de pagarse.
+5. Para aplicar una nota de crédito de proveedor, toque **Aplicar a su factura** en la nota de crédito.
+
+**Conviene saber**
+
+- Registre solo el dinero realmente pagado. El pago lo declara usted; el banco no lo confirma.
+- Un pago erróneo nunca se borra. Toque **Revertir** e indique el motivo. Un pago ya aplicado a una factura no puede revertirse.
+- Una compensación mantiene las ventas y el IVA de la factura; solo se explica su pago.
+- Una nota de crédito la aplica una persona distinta de quien la registró, a una factura aprobada del mismo proveedor que todavía deba al menos ese importe.
+- En los ajustes del espacio, **Pagos que registra una segunda persona desde (unidades monetarias)** significa que un pago de al menos ese importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.
+- Registrar un pago requiere **Registrar pagos a miembros**; una compensación requiere **Emitir facturas y conciliar pagos**.
+
+**Véase también:** [La página Tesorería](help:user.money.cash)
+
+### La página Tesorería
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver el dinero registrado que entró y salió, y lo que queda por pagar.
+
+<!-- image: user-money-cash -->
+
+**Pasos**
+
+1. Abra [Tesorería](app:/money/cash), o toque **Tesorería** en [Mis finanzas](app:/money).
+2. Toque **Entradas y salidas por mes** para los pagos registrados, mes a mes.
+3. Toque **Por pagar** para lo que el espacio todavía debe.
+4. Toque **Extractos bancarios** para importar un extracto y conciliar sus líneas, si el espacio los usa.
+
+**Conviene saber**
+
+- La página muestra pagos registrados, no un saldo bancario conciliado.
+- Aparece para los administradores cuando el estado del espacio o las compras están activados.
+
+**Véase también:** [Lo que debe el espacio: Por pagar](help:user.money.purchases.to-pay)
 
 ### Saldos de proveedores
 
@@ -4842,6 +5008,28 @@ Un grupo indica de qué clase es el tipo, para que la factura lo coloque en la c
 
 **Véase también:** [Fijar los tipos](help:user.money.vat.rates)
 
+### La declaración suiza: casillas 205 y 383
+
+**Público:** Propietario · Administrador/a de facturación
+
+Su espacio está en Suiza, y quiere las prestaciones por las que optó y el impuesto por adquisición en las casillas correctas.
+
+**Pasos**
+
+1. En [Identidad legal y facturación electrónica](app:/legal-identity), bajo **Alquiler y opción (Suiza)**, active **Solo alquilamos locales desnudos** si alquila locales sin servicios. Después active **Hemos optado (art. 22 LIVA suiza)** si optó, e introduzca **Opción efectiva desde (AAAA-MM-DD)**.
+2. Registre un gasto comprado en el extranjero con **Comprado a un proveedor en el extranjero** activado.
+3. Abra [Declaración de IVA](app:/vat-declarations) y prepare el periodo.
+4. Descargue **Declaración MWST, XML eCH-0217 (carga en el ePortal)** y súbalo al ePortal.
+
+**Conviene saber**
+
+- La casilla 205 es la parte de su volumen de negocio (casilla 200) que es un alquiler desnudo gravado porque usted optó. Las líneas inmobiliarias de la factura dan esa parte. La declaración la sigue contando en la casilla 200.
+- La casilla 383 es el impuesto por adquisición. Se declara como impuesto adeudado, y su parte deducible cuenta con el impuesto soportado. No forma parte del volumen de negocio.
+- En el archivo eCH-0217, las prestaciones optadas se escriben como `opted`, y el impuesto por adquisición como un elemento `acquisitionTax` por tipo.
+- Un/a operador/a que edita las casillas en **Datos de referencia fiscales** nombra las líneas adicionales de una casilla en **Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)**. La casilla 383 lleva `acquisition`.
+
+**Véase también:** [Preparar la declaración del IVA](help:user.money.vat.declaration) · [El IVA de un gasto](help:user.money.expenses.vat)
+
 ### Cambiar un tipo por ley
 
 **Público:** Propietario · Administrador/a de facturación
@@ -5393,6 +5581,46 @@ Entrega a su gestor las facturas y los pagos del año.
 - Algunos formatos señalan que DesKilo no es un programa certificado en su país.
 
 **Véase también:** [Cuenta de IVA](help:user.money.vat.account) · [El registro de facturas](help:user.invoicing.register)
+
+### Transferencias: el vínculo digital con su sistema contable
+
+**Público:** Propietario · Administrador/a de facturación
+
+Lleva sus registros de IVA en otro sistema contable y debe mostrar cómo llegaron allí las cifras, por ejemplo para el Making Tax Digital británico.
+
+**Pasos**
+
+1. Abra [Contabilidad e IVA](app:/money/accounting) y toque **Sistemas contables**.
+2. Lea **Transferencias**: cada archivo entregado y cada documento enviado a una conexión en el periodo, cada uno con el SHA-256 de lo transmitido.
+3. Entregue el **CSV contable** a su asesor. Su `report.json` cita la lista de Transferencias del año.
+
+**Conviene saber**
+
+- Un vínculo digital es un archivo o un envío por conexión registrado en **Transferencias**. Teclear cifras a mano en el otro sistema no es un vínculo digital.
+- El SHA-256 prueba que el archivo que recibió el otro sistema es el que entregó DesKilo.
+- Una lista vacía dice «No se entregó ni envió nada en este periodo.»
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export) · [Dónde se conservan los registros](help:user.invoicing.records-location)
+
+### Dónde se conservan los registros
+
+**Público:** Propietario · Administrador/a de facturación · Operador/a
+
+Algunos países dicen dónde guarda una empresa sus libros, y quiere saber qué indica la app sobre los suyos.
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity) y vaya a la sección **Libro contable**.
+2. Lea **Dónde se conservan los registros**, junto a los plazos de conservación.
+3. Para una empresa canadiense cuyos registros se guardan fuera de Canadá, introduzca **Autorización de la CRA para conservar los registros fuera de Canadá** en los ajustes del espacio, bajo **Lugar de conservación de los registros**.
+
+**Conviene saber**
+
+- El operador o la operadora de la instalación declara **País donde esta instalación conserva sus datos**, como lo indica el contrato de alojamiento. La app nunca lo adivina. Sin declarar, el mosaico lo dice y no indica ningún lugar.
+- Canadá exige los libros en Canadá salvo autorización de la CRA; Alemania exige los libros electrónicos en la UE. El mosaico avisa cuando el país declarado no encaja.
+- Un archivo británico, irlandés, canadiense o estadounidense lleva sus tablas con un `tables/README.txt` que describe en inglés cada tabla y columna, y dice dónde se conservan los registros.
+
+**Véase también:** [Transferencias: el vínculo digital con su sistema contable](help:user.invoicing.transfers)
 
 ### Detener el trabajo contable nuevo
 

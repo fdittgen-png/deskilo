@@ -556,6 +556,29 @@ A group says what kind of rate this is, so the invoice puts it in the right cate
 
 **See also:** [Setting the rates](help:user.money.vat.rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### The Swiss return: Ziffern 205 and 383
+
+**Audience:** Owner · Billing administrator
+
+Your space is in Switzerland, and you want the supplies you opted to tax and the acquisition tax in the right boxes.
+
+**Steps**
+
+1. In [Legal identity & e-invoicing](app:/legal-identity), under **Letting and the option (Switzerland)**, turn on **We only let bare rooms** if you let rooms without services. Then turn on **We opted for taxation (art. 22 MWSTG)** if you opted, and enter the **Option effective from (YYYY-MM-DD)**.
+2. Record an expense bought from a supplier abroad with **Bought from a supplier abroad** turned on.
+3. Open [VAT declaration](app:/vat-declarations) and prepare the period.
+4. Download **MWST return, eCH-0217 XML (ePortal upload)** and upload it on the ePortal.
+
+**Good to know**
+
+- Ziffer 205 is the part of your sales (Ziffer 200) that is a bare letting taxed because you opted. The invoice's property lines give that part. The return still counts it in 200.
+- Ziffer 383 is the acquisition tax. It is declared as tax owed, and its deductible share counts with the input tax. It is not part of the turnover.
+- In the eCH-0217 file, the opted supplies are written as `opted`, and the acquisition tax as one `acquisitionTax` element per rate.
+- An operator who edits the boxes in **Tax reference data** names the extra lines a box adds in **Other line categories it adds (comma separated, e.g. acquisition)**. Ziffer 383 carries `acquisition`.
+
+**See also:** [Preparing the VAT return](help:user.money.vat.declaration) · [The VAT of an expense](help:user.money.expenses.vat)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Change a rate by law
 
@@ -1132,6 +1155,48 @@ You hand the year's invoices and payments to your accountant.
 - Some formats note that DesKilo is not certified software in your country.
 
 **See also:** [VAT account](help:user.money.vat.account) · [The invoice register](help:user.invoicing.register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Transfers: the digital link to your accounting system
+
+**Audience:** Owner · Billing administrator
+
+You keep your VAT records in another accounting system, and you need to show how the figures got there, for example under UK Making Tax Digital.
+
+**Steps**
+
+1. Open [Accounting & VAT](app:/money/accounting) and tap **Accounting systems**.
+2. Read **Transfers**: every file handed out and every document delivered to a connection in the period, each with the SHA-256 of what was carried.
+3. Hand the **Accounting CSV** to your accountant. Its `report.json` quotes the Transfers list of the year.
+
+**Good to know**
+
+- A digital link is a file or a connection delivery recorded in **Transfers**. Typing figures into the other system by hand is not a digital link.
+- The SHA-256 proves that the file the other system received is the one DesKilo handed out.
+- An empty list says "Nothing was handed out or delivered in this period."
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export) · [Where the records are kept](help:user.invoicing.records-location)
+
+<!-- anchor: user.invoicing.records-location -->
+### Where the records are kept
+
+**Audience:** Owner · Billing administrator · Operator
+
+Some countries say where a business keeps its books, and you want to know what the app states about yours.
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity) and go to the **Accounting book** section.
+2. Read **Where the records are kept**, next to the retention periods.
+3. For a Canadian business whose records are kept outside Canada, enter **CRA authorisation to keep records outside Canada** in the workspace settings, under **Records location**.
+
+**Good to know**
+
+- The operator of the installation declares **Country where this installation keeps its data**, as the hosting contract states it. The app never guesses it. Undeclared, the tile says so and states no location.
+- Canada keeps books in Canada unless the CRA authorises another place; Germany keeps electronic books in the EU. The tile warns when the declared country does not fit.
+- A British, Irish, Canadian or US archive carries its tables with a `tables/README.txt` that describes every table and column in English, and says where the records are kept.
+
+**See also:** [Transfers: the digital link to your accounting system](help:user.invoicing.transfers)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Stopping new accounting work

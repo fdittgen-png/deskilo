@@ -365,6 +365,32 @@ Vous êtes dans un espace et voulez atteindre un écran. Tout est dans un seul m
 
 **Voir aussi:** [Style de navigation](help:user.profile.settings.navigation) · [Moi : votre accueil et vos espaces](help:user.me.home)
 
+<!-- anchor: user.start.workspace-overview -->
+### La vue d'ensemble de l'espace
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffres que vous pouvez lire.
+
+<!-- image: user-start-workspace-overview -->
+
+**Étapes**
+
+1. Ouvrez [Vue d'ensemble](app:/workspace-overview).
+2. Lisez **À traiter** : ce qui vous attend, et une ligne qui compte les demandes que personne n'a encore décidées dans l'espace. « Rien ne vous attend » signifie qu'il n'y a rien.
+3. Lisez **Indicateurs clés**, groupés en **Capacité**, **Ventes**, **Achats**, **Trésorerie** et **Personnes**. Touchez une tuile pour ouvrir l'endroit d'où vient son chiffre.
+4. Touchez **Personnaliser** pour épingler les tuiles que vous voulez, dans votre ordre.
+5. Touchez **Tous les indicateurs** pour la page d'analyse complète.
+
+**Bon à savoir**
+
+- Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
+- **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
+- **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.
+- Le ou la propriétaire active la page sous **Vue d'ensemble de l'espace** parmi les fonctionnalités. Désactivée, la liste d'attention et la page d'analyse restent telles quelles.
+
+**Voir aussi:** [S'orienter dans l'application](help:user.start.navigation)
+
 <!-- anchor: user.start.get-started -->
 ### La carte Premiers pas et les astuces
 

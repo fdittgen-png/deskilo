@@ -556,6 +556,29 @@ Un grupo indica de qué clase es el tipo, para que la factura lo coloque en la c
 
 **Véase también:** [Fijar los tipos](help:user.money.vat.rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### La declaración suiza: casillas 205 y 383
+
+**Público:** Propietario · Administrador/a de facturación
+
+Su espacio está en Suiza, y quiere las prestaciones por las que optó y el impuesto por adquisición en las casillas correctas.
+
+**Pasos**
+
+1. En [Identidad legal y facturación electrónica](app:/legal-identity), bajo **Alquiler y opción (Suiza)**, active **Solo alquilamos locales desnudos** si alquila locales sin servicios. Después active **Hemos optado (art. 22 LIVA suiza)** si optó, e introduzca **Opción efectiva desde (AAAA-MM-DD)**.
+2. Registre un gasto comprado en el extranjero con **Comprado a un proveedor en el extranjero** activado.
+3. Abra [Declaración de IVA](app:/vat-declarations) y prepare el periodo.
+4. Descargue **Declaración MWST, XML eCH-0217 (carga en el ePortal)** y súbalo al ePortal.
+
+**Conviene saber**
+
+- La casilla 205 es la parte de su volumen de negocio (casilla 200) que es un alquiler desnudo gravado porque usted optó. Las líneas inmobiliarias de la factura dan esa parte. La declaración la sigue contando en la casilla 200.
+- La casilla 383 es el impuesto por adquisición. Se declara como impuesto adeudado, y su parte deducible cuenta con el impuesto soportado. No forma parte del volumen de negocio.
+- En el archivo eCH-0217, las prestaciones optadas se escriben como `opted`, y el impuesto por adquisición como un elemento `acquisitionTax` por tipo.
+- Un/a operador/a que edita las casillas en **Datos de referencia fiscales** nombra las líneas adicionales de una casilla en **Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)**. La casilla 383 lleva `acquisition`.
+
+**Véase también:** [Preparar la declaración del IVA](help:user.money.vat.declaration) · [El IVA de un gasto](help:user.money.expenses.vat)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Cambiar un tipo por ley
 
@@ -1132,6 +1155,48 @@ Entrega a su gestor las facturas y los pagos del año.
 - Algunos formatos señalan que DesKilo no es un programa certificado en su país.
 
 **Véase también:** [Cuenta de IVA](help:user.money.vat.account) · [El registro de facturas](help:user.invoicing.register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Transferencias: el vínculo digital con su sistema contable
+
+**Público:** Propietario · Administrador/a de facturación
+
+Lleva sus registros de IVA en otro sistema contable y debe mostrar cómo llegaron allí las cifras, por ejemplo para el Making Tax Digital británico.
+
+**Pasos**
+
+1. Abra [Contabilidad e IVA](app:/money/accounting) y toque **Sistemas contables**.
+2. Lea **Transferencias**: cada archivo entregado y cada documento enviado a una conexión en el periodo, cada uno con el SHA-256 de lo transmitido.
+3. Entregue el **CSV contable** a su asesor. Su `report.json` cita la lista de Transferencias del año.
+
+**Conviene saber**
+
+- Un vínculo digital es un archivo o un envío por conexión registrado en **Transferencias**. Teclear cifras a mano en el otro sistema no es un vínculo digital.
+- El SHA-256 prueba que el archivo que recibió el otro sistema es el que entregó DesKilo.
+- Una lista vacía dice «No se entregó ni envió nada en este periodo.»
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export) · [Dónde se conservan los registros](help:user.invoicing.records-location)
+
+<!-- anchor: user.invoicing.records-location -->
+### Dónde se conservan los registros
+
+**Público:** Propietario · Administrador/a de facturación · Operador/a
+
+Algunos países dicen dónde guarda una empresa sus libros, y quiere saber qué indica la app sobre los suyos.
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity) y vaya a la sección **Libro contable**.
+2. Lea **Dónde se conservan los registros**, junto a los plazos de conservación.
+3. Para una empresa canadiense cuyos registros se guardan fuera de Canadá, introduzca **Autorización de la CRA para conservar los registros fuera de Canadá** en los ajustes del espacio, bajo **Lugar de conservación de los registros**.
+
+**Conviene saber**
+
+- El operador o la operadora de la instalación declara **País donde esta instalación conserva sus datos**, como lo indica el contrato de alojamiento. La app nunca lo adivina. Sin declarar, el mosaico lo dice y no indica ningún lugar.
+- Canadá exige los libros en Canadá salvo autorización de la CRA; Alemania exige los libros electrónicos en la UE. El mosaico avisa cuando el país declarado no encaja.
+- Un archivo británico, irlandés, canadiense o estadounidense lleva sus tablas con un `tables/README.txt` que describe en inglés cada tabla y columna, y dice dónde se conservan los registros.
+
+**Véase también:** [Transferencias: el vínculo digital con su sistema contable](help:user.invoicing.transfers)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Detener el trabajo contable nuevo
