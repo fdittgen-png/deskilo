@@ -390,8 +390,9 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
 }
 
 // #3075 — the identity step asks for who the space is, not for server
-// settings: at most eight controls outside the Avancé disclosure, and the
-// server and network parameters inside it.
+// settings: at most nine controls outside the Avancé disclosure (#3549: the
+// kind of business joined them, it is who the space is), and the server and
+// network parameters inside it.
 {
   load('en', { name: 'Advanced Space' });
   const step = globalThis.__STEPS.find((st) => st.id === 'identity');
@@ -399,7 +400,7 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   let outside = 0, inside = 0;
   const walk = (n, inDetails) => { for (const c of (n.children || [])) { if (typeof c !== 'object') continue; if (isControl(c)) (inDetails ? inside++ : outside++); walk(c, inDetails || c.tagName === 'DETAILS'); } };
   for (const k of step.build()) if (k && typeof k === 'object') { if (isControl(k)) outside++; walk(k, k.tagName === 'DETAILS'); }
-  if (outside > 8) fail(`advanced: ${outside} controls on the identity step outside the Avancé disclosure (budget 8)`);
+  if (outside > 9) fail(`advanced: ${outside} controls on the identity step outside the Avancé disclosure (budget 9)`);
   if (inside < 8) fail(`advanced: only ${inside} controls inside the Avancé disclosure`);
   console.log(`advanced: identity shows ${outside} controls, ${inside} more behind Avancé`);
 }

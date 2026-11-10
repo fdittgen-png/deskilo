@@ -30,6 +30,7 @@ import '../../domain/feature_countries.dart';
 import '../../domain/workspace.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_change_confirm.dart';
+import 'business_kind_sheet.dart';
 import 'invite_sheet.dart';
 import 'setup_basics_preview.dart';
 import 'setup_draft_frame.dart';
@@ -245,6 +246,8 @@ class _BasicsForm extends StatelessWidget {
       children: [
         Text(l10n.setupStepHint('basics')),
         const SizedBox(height: AppSpacing.lg),
+        // #3549 — the first question: what kind of business it is.
+        const BusinessKindTile(),
         Text(
           name,
           key: const ValueKey('setup-basics-name'),

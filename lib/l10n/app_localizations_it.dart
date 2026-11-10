@@ -5060,6 +5060,98 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String businessKindAndMore(String list, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$list e altre $count',
+      one: '$list e 1 altra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindConsentLater =>
+      'Potrà attivarle più tardi in Funzioni.';
+
+  @override
+  String get businessKindConsentTitle =>
+      'Non ancora stabile — attivata solo se la spunta';
+
+  @override
+  String get businessKindDescCoworking =>
+      'I membri prenotano posti, scrivanie e sale su una planimetria.';
+
+  @override
+  String get businessKindDescPractice =>
+      'Appuntamenti: massaggio, terapia, coaching, consulenza.';
+
+  @override
+  String get businessKindDescSalon =>
+      'Estetica, parrucchiere, unghie, tatuaggio.';
+
+  @override
+  String get businessKindDescService =>
+      'Qualsiasi altra attività che vende i propri servizi.';
+
+  @override
+  String get businessKindDescStudio =>
+      'Lezioni e corsi: yoga, danza, musica, arte.';
+
+  @override
+  String get businessKindMoreTitle => 'È anche… (facoltativo)';
+
+  @override
+  String get businessKindNameCoworking => 'Spazio di coworking';
+
+  @override
+  String get businessKindNamePractice => 'Ambulatorio';
+
+  @override
+  String get businessKindNameSalon => 'Salone';
+
+  @override
+  String get businessKindNameService => 'Impresa di servizi';
+
+  @override
+  String get businessKindNameStudio => 'Studio';
+
+  @override
+  String get businessKindNoBookingYet =>
+      'La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.';
+
+  @override
+  String get businessKindNoChange => 'Le funzioni restano come sono.';
+
+  @override
+  String businessKindPlacesOff(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale ($count funzioni)',
+      one: 'tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale (1 funzione)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindShowAll => 'Mostra tutto';
+
+  @override
+  String businessKindSwitchesOff(String features) {
+    return 'Disattiva: $features';
+  }
+
+  @override
+  String businessKindSwitchesOn(String features) {
+    return 'Attiva: $features';
+  }
+
+  @override
+  String get businessKindTitle => 'Che tipo di attività è?';
+
+  @override
   String get buyPackageButton => 'Acquista un pacchetto';
 
   @override

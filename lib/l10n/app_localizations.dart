@@ -8184,6 +8184,132 @@ abstract class AppLocalizations {
   /// **'The colour {color} was not applied: {pair} would be unreadable.'**
   String brandColorRefused(String color, String pair);
 
+  /// #3550 a shortened list: {list} is the first names, {count} how many more
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{list} and 1 more} other{{list} and {count} more}}'**
+  String businessKindAndMore(String list, int count);
+
+  /// #3550 the line under the beta features: they can be switched on later
+  ///
+  /// In en, this message translates to:
+  /// **'You can switch these on later in Features.'**
+  String get businessKindConsentLater;
+
+  /// #3550 the heading over features in beta that are switched on only when ticked
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet stable — switched on only if you tick it'**
+  String get businessKindConsentTitle;
+
+  /// #3550 the one-line description of the business kind 'coworking'
+  ///
+  /// In en, this message translates to:
+  /// **'Members book seats, desks and rooms on a floor plan.'**
+  String get businessKindDescCoworking;
+
+  /// #3550 the one-line description of the business kind 'practice'
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments: massage, therapy, coaching, consulting.'**
+  String get businessKindDescPractice;
+
+  /// #3550 the one-line description of the business kind 'salon'
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty, hair, nails, tattoo.'**
+  String get businessKindDescSalon;
+
+  /// #3550 the one-line description of the business kind 'service'
+  ///
+  /// In en, this message translates to:
+  /// **'Any other business that sells its services.'**
+  String get businessKindDescService;
+
+  /// #3550 the one-line description of the business kind 'studio'
+  ///
+  /// In en, this message translates to:
+  /// **'Classes and courses: yoga, dance, music, art.'**
+  String get businessKindDescStudio;
+
+  /// #3550 the optional further kinds below the primary one
+  ///
+  /// In en, this message translates to:
+  /// **'It is also… (optional)'**
+  String get businessKindMoreTitle;
+
+  /// #3550 the name of the business kind 'coworking'
+  ///
+  /// In en, this message translates to:
+  /// **'Coworking space'**
+  String get businessKindNameCoworking;
+
+  /// #3550 the name of the business kind 'practice'
+  ///
+  /// In en, this message translates to:
+  /// **'Practice'**
+  String get businessKindNamePractice;
+
+  /// #3550 the name of the business kind 'salon'
+  ///
+  /// In en, this message translates to:
+  /// **'Salon'**
+  String get businessKindNameSalon;
+
+  /// #3550 the name of the business kind 'service'
+  ///
+  /// In en, this message translates to:
+  /// **'Service business'**
+  String get businessKindNameService;
+
+  /// #3550 the name of the business kind 'studio'
+  ///
+  /// In en, this message translates to:
+  /// **'Studio'**
+  String get businessKindNameStudio;
+
+  /// #3550 under the proposal of a kind without places: what this version does not do yet, and what it gives today
+  ///
+  /// In en, this message translates to:
+  /// **'Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.'**
+  String get businessKindNoBookingYet;
+
+  /// #3550 the proposal of a kind that changes no feature
+  ///
+  /// In en, this message translates to:
+  /// **'The features stay as they are.'**
+  String get businessKindNoChange;
+
+  /// #3550 what a kind without places switches off, in one phrase; {count} features in all
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}'**
+  String businessKindPlacesOff(int count);
+
+  /// #3550 the disclosure that lists every feature name of the proposal
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get businessKindShowAll;
+
+  /// #3550 the proposal's sentence of features it switches off; {features} is a list or the places phrase
+  ///
+  /// In en, this message translates to:
+  /// **'Switches off: {features}'**
+  String businessKindSwitchesOff(String features);
+
+  /// #3550 the proposal's sentence of features it switches on; {features} is a list of feature names
+  ///
+  /// In en, this message translates to:
+  /// **'Switches on: {features}'**
+  String businessKindSwitchesOn(String features);
+
+  /// #3550 the kind chooser's title, in settings and the setup guide
+  ///
+  /// In en, this message translates to:
+  /// **'What kind of business is it?'**
+  String get businessKindTitle;
+
   /// Money-tab button opening the package buy sheet (package-plan members)
   ///
   /// In en, this message translates to:

@@ -5061,6 +5061,97 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String businessKindAndMore(String list, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$list y $count más',
+      one: '$list y 1 más',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindConsentLater =>
+      'Puede activarlas más tarde en Funciones.';
+
+  @override
+  String get businessKindConsentTitle =>
+      'Aún no estable — solo se activa si lo marca';
+
+  @override
+  String get businessKindDescCoworking =>
+      'Los miembros reservan plazas, mesas y salas en un plano.';
+
+  @override
+  String get businessKindDescPractice =>
+      'Citas: masaje, terapia, coaching, asesoría.';
+
+  @override
+  String get businessKindDescSalon => 'Belleza, peluquería, uñas, tatuaje.';
+
+  @override
+  String get businessKindDescService =>
+      'Cualquier otro negocio que vende sus servicios.';
+
+  @override
+  String get businessKindDescStudio =>
+      'Clases y cursos: yoga, danza, música, arte.';
+
+  @override
+  String get businessKindMoreTitle => 'También es… (opcional)';
+
+  @override
+  String get businessKindNameCoworking => 'Espacio de coworking';
+
+  @override
+  String get businessKindNamePractice => 'Consulta';
+
+  @override
+  String get businessKindNameSalon => 'Salón';
+
+  @override
+  String get businessKindNameService => 'Empresa de servicios';
+
+  @override
+  String get businessKindNameStudio => 'Estudio';
+
+  @override
+  String get businessKindNoBookingYet =>
+      'La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.';
+
+  @override
+  String get businessKindNoChange => 'Las funciones se quedan como están.';
+
+  @override
+  String businessKindPlacesOff(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'todo lo relativo a plazas — asientos, plano, quiosco, salas ($count funciones)',
+      one: 'todo lo relativo a plazas — asientos, plano, quiosco, salas (1 función)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindShowAll => 'Mostrar todo';
+
+  @override
+  String businessKindSwitchesOff(String features) {
+    return 'Desactiva: $features';
+  }
+
+  @override
+  String businessKindSwitchesOn(String features) {
+    return 'Activa: $features';
+  }
+
+  @override
+  String get businessKindTitle => '¿Qué tipo de negocio es?';
+
+  @override
   String get buyPackageButton => 'Comprar un paquete';
 
   @override
