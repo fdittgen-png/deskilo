@@ -17,7 +17,16 @@
 //   money2     test/features/money/ files named n..z, and me/ and auth/
 //   workspace  test/features/workspace/
 //   rest       the other feature folders (a new one lands here)
-//   core       test/core/, test/app/, test/a11y/ and test/features/profile/
+//   core       test/core/, test/app/, test/a11y/ and test/features/profile/,
+//              except the demo files below
+//
+// #3475 step 3 — test/core/demo/ is the heaviest folder of the core shard
+// (run 42715962952: 16.1 of its 46 file-minutes, the shard 16 min against
+// 9-13 for the others). Its files are split by name, which a new file
+// falls on by rule: names before "demo_h" stay in core, "demo_h" up to
+// "demo_m" run in gate, and "demo_m" on run in workspace. Measured sums
+// after the move: core 33.5, rest 34.9, workspace 34.6, gate 28.3, money
+// 31.0, money2 27.5 file-minutes.
 //
 // #3166 — six shards, split by measured file times (run 41369658767: about
 // 10,300 file-seconds; the shard wall clock is about that divided by 2.8):
@@ -51,6 +60,11 @@ const _moneySplit = 'n';
 const _moneyFolders = ['test/features/reservations/'];
 const _money2Folders = ['test/features/me/', 'test/features/auth/'];
 const _workspaceFolders = ['test/features/workspace/'];
+
+/// #3475 — the demo folder of the core shard, split by file name.
+const _demoRoot = 'test/core/demo/';
+const _demoToGate = 'demo_h';
+const _demoToWorkspace = 'demo_m';
 const _coreRoots = [
   'test/core/',
   'test/app/',
@@ -77,6 +91,12 @@ List<String> requiredTestFiles({String root = '.'}) {
 /// The shard that runs [path] under the default plan.
 String shardOf(String path) {
   bool under(List<String> roots) => roots.any(path.startsWith);
+  if (path.startsWith(_demoRoot)) {
+    final name = path.substring(_demoRoot.length);
+    if (name.compareTo(_demoToWorkspace) >= 0) return workspaceShard;
+    if (name.compareTo(_demoToGate) >= 0) return gateShard;
+    return coreShard;
+  }
   if (under(_coreRoots)) return coreShard;
   if (path.startsWith(_moneyRoot)) {
     return path.substring(_moneyRoot.length).compareTo(_moneySplit) < 0
