@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'help_anchor_index.dart';
+
 /// #1016 — the identity a help symbol, a guide heading, a screenshot and
 /// its crops all share.
 ///
@@ -11,6 +13,15 @@
 abstract final class HelpAnchor {
   /// The supplier balance and its scoped payable list.
   static const moneySupplierBalance = 'user.money.suppliers.balance';
+
+  /// #3527 — the Sales, Purchases and Cash pages.
+  static const moneySales = 'user.money.sales';
+  static const moneyPurchases = 'user.money.purchases';
+  static const moneyCash = 'user.money.cash';
+
+  /// #3527 — an expense's VAT: rate, deductible share, fixed asset and a
+  /// purchase from a supplier abroad.
+  static const moneyExpenseVat = 'user.money.expenses.vat';
   // ── money · VAT ────────────────────────────────────────────────────
   /// The rate table: names, percentages, groups, the default star.
   static const moneyVatRates = 'user.money.vat.rates';
@@ -387,128 +398,10 @@ abstract final class HelpAnchor {
   /// The accountant exports and what each format may claim.
   static const invoicingAccountingExport = 'user.invoicing.accounting-export';
   static const invoicingAccountingState = 'user.invoicing.accounting-state';
-  /// Every anchor the app points at — the lint's left-hand side.
-  static const all = <String>{
-    moneySupplierBalance,
-    advancedDeploy,
-    advancedTroubleshooting,
-    invoicingAccountingExport,
-    invoicingAccountingState,
-    moneyVatRates,
-    moneyVatGroups,
-    moneyVatDeclaration,
-    legalSellerKind,
-    legalForm,
-    legalRegistration,
-    legalPaymentTerms,
-    legalLatePenalty,
-    legalRecovery,
-    legalEscompte,
-    legalInsurance,
-    moneyVatRegime,
-    moneyVatNumber,
-    moneyVatAccount,
-    moneyVatExemptionReason,
-    legalLegalId,
-    legalAddress,
-    legalSpecialMentions,
-    billingFeeBands,
-    billingLevels,
-    billingPackages,
-    billingPackageNew,
-    availabilityOpenWeekdays,
-    availabilityGranularity,
-    availabilityWorkingHours,
-    availabilityClosureDays,
-    availabilityPolicies,
-    availabilityAllowPast,
-    availabilityAdminCheckout,
-    availabilityOutsideHours,
-    availabilityLimits,
-    einvoiceOverview,
-    einvoiceSend,
-    einvoiceEndpoint,
-    einvoiceToken,
-    einvoiceAuthHeader,
-    einvoiceFileField,
-    einvoiceUat,
-    einvoiceDev,
-    expenseSchedule,
-    serviceOverview,
-    workspaceCountry,
-    workspaceCurrencyTimezone,
-    workspaceLanguage,
-    workspaceAddress,
-    workspaceWhatsappGroup,
-    workspaceInvitationMessage,
-    workspaceWording,
-    workspaceColours,
-    workspaceDeskTransparency,
-    exportSpaceXml,
-    exportSpaceImport,
-    exportConfigPdf,
-    exportWorkspaceReport,
-    exportSpaceQr,
-    exportExcel,
-    reportsInvoiceTemplate,
-    remindersRules,
-    billingSchedule,
-    profileWhatsapp,
-    profileStatus,
-    profileDefaultPeriod,
-    profilePersonalInfo,
-    profileAddress,
-    profileVatId,
-    profilePaymentTerms,
-    profileRestoreHints,
-    profileBadge,
-    profileBadgePin,
-    profileLanguage,
-    profileTheme,
-    profileNavigation,
-    profileFrontCamera,
-    validationOverview,
-    validationRequiredCount,
-    validationWhoMay,
-    validationOwnerRequired,
-    validationOwnerSelf,
-    validationSequential,
-    validationAutoOwner,
-    validationAutoAdmin,
-    documentsTitle,
-    documentsUrl,
-    documentsProvider,
-    documentsCategory,
-    documentsRole,
-    membersSubscription,
-    membersOveragePolicy,
-    membersReservationLimit,
-    membersSimultaneous,
-    membersVatTreatment,
-    membersNegotiation,
-    membersCoOwnership,
-    membersActions,
-    rolesMatrix,
-    rolesSpace,
-    featuresSwitch,
-    reservationsBookingSheet,
-    workspaceCode,
-    paymentsProvider,
-    paymentsMethods,
-    badgesNfc,
-    profileProfiles,
-    profileRegionalFormats,
-    profileClock,
-    profileDeviceZone,
-    backendServer,
-    backendHow,
-    privacyVisibility,
-    privacyExport,
-    privacyErase,
-    privacyConsent,
-    reportsEditor,
-    remindersAutomatic,
-  };
+  /// Every anchor the app points at — the lint's left-hand side. The list
+  /// lives in help_anchor_index.dart (#3527), so this file holds the
+  /// anchors and their meaning only.
+  static const all = helpAnchorIndex;
 
   /// The screenshot that documents [anchor], by the naming rule.
   static String imageFor(String anchor) => '${anchor.replaceAll('.', '-')}.jpg';
