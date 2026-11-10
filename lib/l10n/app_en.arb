@@ -3066,7 +3066,7 @@
   "@biCostsOperatingTitle": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at their gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
+  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -7476,7 +7476,8 @@
   "consentVersion": "Version",
   "consentWhatBody": "Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server's notice: who runs it, where the data is and who receives it.",
   "consentWhatTitle": "What DesKilo processes",
-  "consentWhoBody": "Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it. A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
+  "consentWhoBody": "Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.",
+  "consentWhoBodyPublic": "A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
   "consentWhoTitle": "Who can see what",
   "consumptionAdd": "Add consumption",
   "@consumptionAdd": {
@@ -7899,14 +7900,61 @@
   "@dataReportArchived": {
     "description": "#2862 data report: dataReportArchived"
   },
-  "dataReportColumn": "{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}",
-  "@dataReportColumn": {
-    "description": "#2862 data report column header by key; other keys fall back to the export column names",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "dataReportColumnAttended": "Attended",
+  "@dataReportColumnAttended": {
+    "description": "#3485 dataReportColumn: the label for case 'attended'."
+  },
+  "dataReportColumnBalance": "Balance",
+  "@dataReportColumnBalance": {
+    "description": "#3485 dataReportColumn: the label for case 'balance'."
+  },
+  "dataReportColumnBookings": "Bookings",
+  "@dataReportColumnBookings": {
+    "description": "#3485 dataReportColumn: the label for case 'bookings'."
+  },
+  "dataReportColumnCancelled": "Cancelled",
+  "@dataReportColumnCancelled": {
+    "description": "#3485 dataReportColumn: the label for case 'cancelled'."
+  },
+  "dataReportColumnCharges": "Charged",
+  "@dataReportColumnCharges": {
+    "description": "#3485 dataReportColumn: the label for case 'charges'."
+  },
+  "dataReportColumnCredits": "Settled",
+  "@dataReportColumnCredits": {
+    "description": "#3485 dataReportColumn: the label for case 'credits'."
+  },
+  "dataReportColumnHeld": "Held",
+  "@dataReportColumnHeld": {
+    "description": "#3485 dataReportColumn: the label for case 'held'."
+  },
+  "dataReportColumnHours": "Hours",
+  "@dataReportColumnHours": {
+    "description": "#3485 dataReportColumn: the label for case 'hours'."
+  },
+  "dataReportColumnMonth": "Month",
+  "@dataReportColumnMonth": {
+    "description": "#3485 dataReportColumn: the label for case 'month'."
+  },
+  "dataReportColumnOpen": "Open",
+  "@dataReportColumnOpen": {
+    "description": "#3485 dataReportColumn: the label for case 'open'."
+  },
+  "dataReportColumnPaid": "Paid",
+  "@dataReportColumnPaid": {
+    "description": "#3485 dataReportColumn: the label for case 'paid'."
+  },
+  "dataReportColumnReference": "Reference",
+  "@dataReportColumnReference": {
+    "description": "#3485 dataReportColumn: the label for case 'reference'."
+  },
+  "dataReportColumnRole": "Role",
+  "@dataReportColumnRole": {
+    "description": "#3485 dataReportColumn: the label for case 'role'."
+  },
+  "dataReportColumnSeats": "Places",
+  "@dataReportColumnSeats": {
+    "description": "#3485 dataReportColumn: the label for case 'seats'."
   },
   "dataReportContents": "Contents",
   "@dataReportContents": {
@@ -7924,14 +7972,29 @@
   "@dataReportNone": {
     "description": "#2862 data report: dataReportNone"
   },
-  "dataReportPart": "{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}",
-  "@dataReportPart": {
-    "description": "#2862 data report section title by key",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "dataReportPartBookings": "Bookings by month",
+  "@dataReportPartBookings": {
+    "description": "#3485 dataReportPart: the label for case 'bookings'."
+  },
+  "dataReportPartInvoices": "Invoice register",
+  "@dataReportPartInvoices": {
+    "description": "#3485 dataReportPart: the label for case 'invoices'."
+  },
+  "dataReportPartMembers": "Members",
+  "@dataReportPartMembers": {
+    "description": "#3485 dataReportPart: the label for case 'members'."
+  },
+  "dataReportPartPayments": "Payments and balances",
+  "@dataReportPartPayments": {
+    "description": "#3485 dataReportPart: the label for case 'payments'."
+  },
+  "dataReportPartPlan": "Plan and prices",
+  "@dataReportPartPlan": {
+    "description": "#3485 dataReportPart: the label for case 'plan'."
+  },
+  "dataReportPartPurchases": "Purchases and suppliers",
+  "@dataReportPartPurchases": {
+    "description": "#3485 dataReportPart: the label for case 'purchases'."
   },
   "dataReportSubtitle": "Members, bookings, invoices, payments, purchases and the plan with its prices, with totals, to read or print.",
   "@dataReportSubtitle": {
@@ -10947,14 +11010,461 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
-  "exportColumnName": "{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} field{Field} value{Value} process{Process} feature{Feature} on{On} other{{key}}}",
-  "@exportColumnName": {
-    "description": "#2861 workspace export: exportColumnName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "exportColumnNameAction": "Action",
+  "@exportColumnNameAction": {
+    "description": "#3485 exportColumnName: the label for case 'action'."
+  },
+  "exportColumnNameActive": "Active",
+  "@exportColumnNameActive": {
+    "description": "#3485 exportColumnName: the label for case 'active'."
+  },
+  "exportColumnNameActor": "Done by",
+  "@exportColumnNameActor": {
+    "description": "#3485 exportColumnName: the label for case 'actor'."
+  },
+  "exportColumnNameAddress": "Address",
+  "@exportColumnNameAddress": {
+    "description": "#3485 exportColumnName: the label for case 'address'."
+  },
+  "exportColumnNameAdmin": "Administrator",
+  "@exportColumnNameAdmin": {
+    "description": "#3485 exportColumnName: the label for case 'admin'."
+  },
+  "exportColumnNameAmenities": "Amenities",
+  "@exportColumnNameAmenities": {
+    "description": "#3485 exportColumnName: the label for case 'amenities'."
+  },
+  "exportColumnNameAmount": "Amount",
+  "@exportColumnNameAmount": {
+    "description": "#3485 exportColumnName: the label for case 'amount'."
+  },
+  "exportColumnNameAreaKind": "Area type",
+  "@exportColumnNameAreaKind": {
+    "description": "#3485 exportColumnName: the label for case 'area_kind'."
+  },
+  "exportColumnNameBlockedFrom": "Blocked from",
+  "@exportColumnNameBlockedFrom": {
+    "description": "#3485 exportColumnName: the label for case 'blocked_from'."
+  },
+  "exportColumnNameBlockedTo": "Blocked until",
+  "@exportColumnNameBlockedTo": {
+    "description": "#3485 exportColumnName: the label for case 'blocked_to'."
+  },
+  "exportColumnNameBookableAsWhole": "Bookable as a whole",
+  "@exportColumnNameBookableAsWhole": {
+    "description": "#3485 exportColumnName: the label for case 'bookable_as_whole'."
+  },
+  "exportColumnNameBySystem": "Automatic",
+  "@exportColumnNameBySystem": {
+    "description": "#3485 exportColumnName: the label for case 'by_system'."
+  },
+  "exportColumnNameCapacity": "Capacity",
+  "@exportColumnNameCapacity": {
+    "description": "#3485 exportColumnName: the label for case 'capacity'."
+  },
+  "exportColumnNameCategory": "Category",
+  "@exportColumnNameCategory": {
+    "description": "#3485 exportColumnName: the label for case 'category'."
+  },
+  "exportColumnNameChair": "Chair",
+  "@exportColumnNameChair": {
+    "description": "#3485 exportColumnName: the label for case 'chair'."
+  },
+  "exportColumnNameCheckedInAt": "Checked in",
+  "@exportColumnNameCheckedInAt": {
+    "description": "#3485 exportColumnName: the label for case 'checked_in_at'."
+  },
+  "exportColumnNameCheckedOutAt": "Checked out",
+  "@exportColumnNameCheckedOutAt": {
+    "description": "#3485 exportColumnName: the label for case 'checked_out_at'."
+  },
+  "exportColumnNameCity": "City",
+  "@exportColumnNameCity": {
+    "description": "#3485 exportColumnName: the label for case 'city'."
+  },
+  "exportColumnNameCoOwner": "Co-owner",
+  "@exportColumnNameCoOwner": {
+    "description": "#3485 exportColumnName: the label for case 'co_owner'."
+  },
+  "exportColumnNameColor": "Colour",
+  "@exportColumnNameColor": {
+    "description": "#3485 exportColumnName: the label for case 'color'."
+  },
+  "exportColumnNameCompany": "Company",
+  "@exportColumnNameCompany": {
+    "description": "#3485 exportColumnName: the label for case 'company'."
+  },
+  "exportColumnNameCountry": "Country",
+  "@exportColumnNameCountry": {
+    "description": "#3485 exportColumnName: the label for case 'country'."
+  },
+  "exportColumnNameCreatedAt": "Recorded on",
+  "@exportColumnNameCreatedAt": {
+    "description": "#3485 exportColumnName: the label for case 'created_at'."
+  },
+  "exportColumnNameCurrency": "Currency",
+  "@exportColumnNameCurrency": {
+    "description": "#3485 exportColumnName: the label for case 'currency'."
+  },
+  "exportColumnNameDecidedAt": "Decided on",
+  "@exportColumnNameDecidedAt": {
+    "description": "#3485 exportColumnName: the label for case 'decided_at'."
+  },
+  "exportColumnNameDecidedBy": "Decided by",
+  "@exportColumnNameDecidedBy": {
+    "description": "#3485 exportColumnName: the label for case 'decided_by'."
+  },
+  "exportColumnNameDecision": "Decision",
+  "@exportColumnNameDecision": {
+    "description": "#3485 exportColumnName: the label for case 'decision'."
+  },
+  "exportColumnNameDecisions": "Decisions",
+  "@exportColumnNameDecisions": {
+    "description": "#3485 exportColumnName: the label for case 'decisions'."
+  },
+  "exportColumnNameDescription": "Description",
+  "@exportColumnNameDescription": {
+    "description": "#3485 exportColumnName: the label for case 'description'."
+  },
+  "exportColumnNameDesk": "Desk",
+  "@exportColumnNameDesk": {
+    "description": "#3485 exportColumnName: the label for case 'desk'."
+  },
+  "exportColumnNameDetailed": "Detailed",
+  "@exportColumnNameDetailed": {
+    "description": "#3485 exportColumnName: the label for case 'detailed'."
+  },
+  "exportColumnNameDetails": "Details",
+  "@exportColumnNameDetails": {
+    "description": "#3485 exportColumnName: the label for case 'details'."
+  },
+  "exportColumnNameDueOn": "Due on",
+  "@exportColumnNameDueOn": {
+    "description": "#3485 exportColumnName: the label for case 'due_on'."
+  },
+  "exportColumnNameEmail": "E-mail",
+  "@exportColumnNameEmail": {
+    "description": "#3485 exportColumnName: the label for case 'email'."
+  },
+  "exportColumnNameEnabledFeatures": "Features on",
+  "@exportColumnNameEnabledFeatures": {
+    "description": "#3485 exportColumnName: the label for case 'enabled_features'."
+  },
+  "exportColumnNameEndsAt": "Ends",
+  "@exportColumnNameEndsAt": {
+    "description": "#3485 exportColumnName: the label for case 'ends_at'."
+  },
+  "exportColumnNameEventId": "Request",
+  "@exportColumnNameEventId": {
+    "description": "#3485 exportColumnName: the label for case 'event_id'."
+  },
+  "exportColumnNameEventType": "Request type",
+  "@exportColumnNameEventType": {
+    "description": "#3485 exportColumnName: the label for case 'event_type'."
+  },
+  "exportColumnNameFeature": "Feature",
+  "@exportColumnNameFeature": {
+    "description": "#3485 exportColumnName: the label for case 'feature'."
+  },
+  "exportColumnNameField": "Field",
+  "@exportColumnNameField": {
+    "description": "#3485 exportColumnName: the label for case 'field'."
+  },
+  "exportColumnNameFirstName": "First name",
+  "@exportColumnNameFirstName": {
+    "description": "#3485 exportColumnName: the label for case 'first_name'."
+  },
+  "exportColumnNameHeight": "Height",
+  "@exportColumnNameHeight": {
+    "description": "#3485 exportColumnName: the label for case 'height'."
+  },
+  "exportColumnNameId": "Id",
+  "@exportColumnNameId": {
+    "description": "#3485 exportColumnName: the label for case 'id'."
+  },
+  "exportColumnNameInvoice": "Invoice",
+  "@exportColumnNameInvoice": {
+    "description": "#3485 exportColumnName: the label for case 'invoice'."
+  },
+  "exportColumnNameIssuedAt": "Issued on",
+  "@exportColumnNameIssuedAt": {
+    "description": "#3485 exportColumnName: the label for case 'issued_at'."
+  },
+  "exportColumnNameIssuedBy": "Issued by",
+  "@exportColumnNameIssuedBy": {
+    "description": "#3485 exportColumnName: the label for case 'issued_by'."
+  },
+  "exportColumnNameJoinedAt": "Member since",
+  "@exportColumnNameJoinedAt": {
+    "description": "#3485 exportColumnName: the label for case 'joined_at'."
+  },
+  "exportColumnNameKind": "Type",
+  "@exportColumnNameKind": {
+    "description": "#3485 exportColumnName: the label for case 'kind'."
+  },
+  "exportColumnNameKiosk": "Kiosk",
+  "@exportColumnNameKiosk": {
+    "description": "#3485 exportColumnName: the label for case 'kiosk'."
+  },
+  "exportColumnNameLabel": "Wording",
+  "@exportColumnNameLabel": {
+    "description": "#3485 exportColumnName: the label for case 'label'."
+  },
+  "exportColumnNameLastName": "Last name",
+  "@exportColumnNameLastName": {
+    "description": "#3485 exportColumnName: the label for case 'last_name'."
+  },
+  "exportColumnNameLastSeen": "Last seen",
+  "@exportColumnNameLastSeen": {
+    "description": "#3485 exportColumnName: the label for case 'last_seen'."
+  },
+  "exportColumnNameLastSentAt": "Last sent",
+  "@exportColumnNameLastSentAt": {
+    "description": "#3485 exportColumnName: the label for case 'last_sent_at'."
+  },
+  "exportColumnNameLegalId": "Registration number",
+  "@exportColumnNameLegalId": {
+    "description": "#3485 exportColumnName: the label for case 'legal_id'."
+  },
+  "exportColumnNameLevel": "Level",
+  "@exportColumnNameLevel": {
+    "description": "#3485 exportColumnName: the label for case 'level'."
+  },
+  "exportColumnNameLine": "Line",
+  "@exportColumnNameLine": {
+    "description": "#3485 exportColumnName: the label for case 'line'."
+  },
+  "exportColumnNameMember": "Member",
+  "@exportColumnNameMember": {
+    "description": "#3485 exportColumnName: the label for case 'member'."
+  },
+  "exportColumnNameMemberId": "Member id",
+  "@exportColumnNameMemberId": {
+    "description": "#3485 exportColumnName: the label for case 'member_id'."
+  },
+  "exportColumnNameMemberNumber": "Member number",
+  "@exportColumnNameMemberNumber": {
+    "description": "#3485 exportColumnName: the label for case 'member_number'."
+  },
+  "exportColumnNameMinutesPresent": "Minutes present",
+  "@exportColumnNameMinutesPresent": {
+    "description": "#3485 exportColumnName: the label for case 'minutes_present'."
+  },
+  "exportColumnNameName": "Name",
+  "@exportColumnNameName": {
+    "description": "#3485 exportColumnName: the label for case 'name'."
+  },
+  "exportColumnNameNet": "Net",
+  "@exportColumnNameNet": {
+    "description": "#3485 exportColumnName: the label for case 'net'."
+  },
+  "exportColumnNameNumber": "Number",
+  "@exportColumnNameNumber": {
+    "description": "#3485 exportColumnName: the label for case 'number'."
+  },
+  "exportColumnNameOccurredOn": "Date",
+  "@exportColumnNameOccurredOn": {
+    "description": "#3485 exportColumnName: the label for case 'occurred_on'."
+  },
+  "exportColumnNameOffice": "Room",
+  "@exportColumnNameOffice": {
+    "description": "#3485 exportColumnName: the label for case 'office'."
+  },
+  "exportColumnNameOn": "On",
+  "@exportColumnNameOn": {
+    "description": "#3485 exportColumnName: the label for case 'on'."
+  },
+  "exportColumnNameOrderId": "Order",
+  "@exportColumnNameOrderId": {
+    "description": "#3485 exportColumnName: the label for case 'order_id'."
+  },
+  "exportColumnNameOrientation": "Orientation",
+  "@exportColumnNameOrientation": {
+    "description": "#3485 exportColumnName: the label for case 'orientation'."
+  },
+  "exportColumnNameOveragePolicy": "When over quota",
+  "@exportColumnNameOveragePolicy": {
+    "description": "#3485 exportColumnName: the label for case 'overage_policy'."
+  },
+  "exportColumnNameOwner": "Owner",
+  "@exportColumnNameOwner": {
+    "description": "#3485 exportColumnName: the label for case 'owner'."
+  },
+  "exportColumnNameParkingKind": "Parking type",
+  "@exportColumnNameParkingKind": {
+    "description": "#3485 exportColumnName: the label for case 'parking_kind'."
+  },
+  "exportColumnNamePaymentTerms": "Payment terms",
+  "@exportColumnNamePaymentTerms": {
+    "description": "#3485 exportColumnName: the label for case 'payment_terms'."
+  },
+  "exportColumnNamePeriod": "Period",
+  "@exportColumnNamePeriod": {
+    "description": "#3485 exportColumnName: the label for case 'period'."
+  },
+  "exportColumnNamePhone": "Phone",
+  "@exportColumnNamePhone": {
+    "description": "#3485 exportColumnName: the label for case 'phone'."
+  },
+  "exportColumnNamePostalCode": "Postcode",
+  "@exportColumnNamePostalCode": {
+    "description": "#3485 exportColumnName: the label for case 'postal_code'."
+  },
+  "exportColumnNamePrice": "Price",
+  "@exportColumnNamePrice": {
+    "description": "#3485 exportColumnName: the label for case 'price'."
+  },
+  "exportColumnNameProcess": "Process",
+  "@exportColumnNameProcess": {
+    "description": "#3485 exportColumnName: the label for case 'process'."
+  },
+  "exportColumnNameProvider": "Provider",
+  "@exportColumnNameProvider": {
+    "description": "#3485 exportColumnName: the label for case 'provider'."
+  },
+  "exportColumnNameQuantity": "Quantity",
+  "@exportColumnNameQuantity": {
+    "description": "#3485 exportColumnName: the label for case 'quantity'."
+  },
+  "exportColumnNameRecordedAt": "Recorded on",
+  "@exportColumnNameRecordedAt": {
+    "description": "#3485 exportColumnName: the label for case 'recorded_at'."
+  },
+  "exportColumnNameReplaces": "Replaces",
+  "@exportColumnNameReplaces": {
+    "description": "#3485 exportColumnName: the label for case 'replaces'."
+  },
+  "exportColumnNameReservationId": "Booking",
+  "@exportColumnNameReservationId": {
+    "description": "#3485 exportColumnName: the label for case 'reservation_id'."
+  },
+  "exportColumnNameResourceKind": "Place type",
+  "@exportColumnNameResourceKind": {
+    "description": "#3485 exportColumnName: the label for case 'resource_kind'."
+  },
+  "exportColumnNameSeriesId": "Series",
+  "@exportColumnNameSeriesId": {
+    "description": "#3485 exportColumnName: the label for case 'series_id'."
+  },
+  "exportColumnNameSeriesPattern": "Repeats",
+  "@exportColumnNameSeriesPattern": {
+    "description": "#3485 exportColumnName: the label for case 'series_pattern'."
+  },
+  "exportColumnNameSignedAmount": "Effect on balance",
+  "@exportColumnNameSignedAmount": {
+    "description": "#3485 exportColumnName: the label for case 'signed_amount'."
+  },
+  "exportColumnNameSlotMinutes": "Slot (minutes)",
+  "@exportColumnNameSlotMinutes": {
+    "description": "#3485 exportColumnName: the label for case 'slot_minutes'."
+  },
+  "exportColumnNameSortOrder": "Order",
+  "@exportColumnNameSortOrder": {
+    "description": "#3485 exportColumnName: the label for case 'sort_order'."
+  },
+  "exportColumnNameSourceInvoice": "From invoice",
+  "@exportColumnNameSourceInvoice": {
+    "description": "#3485 exportColumnName: the label for case 'source_invoice'."
+  },
+  "exportColumnNameSpace": "Place",
+  "@exportColumnNameSpace": {
+    "description": "#3485 exportColumnName: the label for case 'space'."
+  },
+  "exportColumnNameStartsAt": "Starts",
+  "@exportColumnNameStartsAt": {
+    "description": "#3485 exportColumnName: the label for case 'starts_at'."
+  },
+  "exportColumnNameState": "State",
+  "@exportColumnNameState": {
+    "description": "#3485 exportColumnName: the label for case 'state'."
+  },
+  "exportColumnNameStatus": "Status",
+  "@exportColumnNameStatus": {
+    "description": "#3485 exportColumnName: the label for case 'status'."
+  },
+  "exportColumnNameStreet": "Street",
+  "@exportColumnNameStreet": {
+    "description": "#3485 exportColumnName: the label for case 'street'."
+  },
+  "exportColumnNameSubject": "Concerns",
+  "@exportColumnNameSubject": {
+    "description": "#3485 exportColumnName: the label for case 'subject'."
+  },
+  "exportColumnNameSubscriptionPct": "Subscription (%)",
+  "@exportColumnNameSubscriptionPct": {
+    "description": "#3485 exportColumnName: the label for case 'subscription_pct'."
+  },
+  "exportColumnNameTimezone": "Time zone",
+  "@exportColumnNameTimezone": {
+    "description": "#3485 exportColumnName: the label for case 'timezone'."
+  },
+  "exportColumnNameTitle": "Title",
+  "@exportColumnNameTitle": {
+    "description": "#3485 exportColumnName: the label for case 'title'."
+  },
+  "exportColumnNameTotal": "Total",
+  "@exportColumnNameTotal": {
+    "description": "#3485 exportColumnName: the label for case 'total'."
+  },
+  "exportColumnNameType": "Type",
+  "@exportColumnNameType": {
+    "description": "#3485 exportColumnName: the label for case 'type'."
+  },
+  "exportColumnNameValue": "Value",
+  "@exportColumnNameValue": {
+    "description": "#3485 exportColumnName: the label for case 'value'."
+  },
+  "exportColumnNameVat": "VAT",
+  "@exportColumnNameVat": {
+    "description": "#3485 exportColumnName: the label for case 'vat'."
+  },
+  "exportColumnNameVatByRate": "VAT by rate",
+  "@exportColumnNameVatByRate": {
+    "description": "#3485 exportColumnName: the label for case 'vat_by_rate'."
+  },
+  "exportColumnNameVatCategory": "VAT category",
+  "@exportColumnNameVatCategory": {
+    "description": "#3485 exportColumnName: the label for case 'vat_category'."
+  },
+  "exportColumnNameVatId": "VAT number",
+  "@exportColumnNameVatId": {
+    "description": "#3485 exportColumnName: the label for case 'vat_id'."
+  },
+  "exportColumnNameVatPercent": "VAT %",
+  "@exportColumnNameVatPercent": {
+    "description": "#3485 exportColumnName: the label for case 'vat_percent'."
+  },
+  "exportColumnNameVatRegime": "VAT regime",
+  "@exportColumnNameVatRegime": {
+    "description": "#3485 exportColumnName: the label for case 'vat_regime'."
+  },
+  "exportColumnNameVatTreatment": "VAT treatment",
+  "@exportColumnNameVatTreatment": {
+    "description": "#3485 exportColumnName: the label for case 'vat_treatment'."
+  },
+  "exportColumnNameVoidedAt": "Cancelled on",
+  "@exportColumnNameVoidedAt": {
+    "description": "#3485 exportColumnName: the label for case 'voided_at'."
+  },
+  "exportColumnNameWhatsapp": "WhatsApp",
+  "@exportColumnNameWhatsapp": {
+    "description": "#3485 exportColumnName: the label for case 'whatsapp'."
+  },
+  "exportColumnNameWidth": "Width",
+  "@exportColumnNameWidth": {
+    "description": "#3485 exportColumnName: the label for case 'width'."
+  },
+  "exportColumnNameWorkspaceCode": "Workspace code",
+  "@exportColumnNameWorkspaceCode": {
+    "description": "#3485 exportColumnName: the label for case 'workspace_code'."
+  },
+  "exportColumnNameX": "X",
+  "@exportColumnNameX": {
+    "description": "#3485 exportColumnName: the label for case 'x'."
+  },
+  "exportColumnNameY": "Y",
+  "@exportColumnNameY": {
+    "description": "#3485 exportColumnName: the label for case 'y'."
   },
   "exportDenmarkRegisteredSystem": "Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ({systems}) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.",
   "@exportDenmarkRegisteredSystem": {
@@ -10988,27 +11498,509 @@
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}",
-  "@exportSheetName": {
-    "description": "#2861 workspace export: exportSheetName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "exportSheetNameAbout": "About this export",
+  "@exportSheetNameAbout": {
+    "description": "#3485 exportSheetName: the label for case 'about'."
+  },
+  "exportSheetNameAccessories": "Accessories",
+  "@exportSheetNameAccessories": {
+    "description": "#3485 exportSheetName: the label for case 'accessories'."
+  },
+  "exportSheetNameAssetValuationBatches": "Asset valuations",
+  "@exportSheetNameAssetValuationBatches": {
+    "description": "#3485 exportSheetName: the label for case 'asset_valuation_batches'."
+  },
+  "exportSheetNameAssetValuationRows": "Asset valuation lines",
+  "@exportSheetNameAssetValuationRows": {
+    "description": "#3485 exportSheetName: the label for case 'asset_valuation_rows'."
+  },
+  "exportSheetNameBookAccounts": "Chart of accounts",
+  "@exportSheetNameBookAccounts": {
+    "description": "#3485 exportSheetName: the label for case 'book_accounts'."
+  },
+  "exportSheetNameBookMappings": "Account mappings",
+  "@exportSheetNameBookMappings": {
+    "description": "#3485 exportSheetName: the label for case 'book_mappings'."
+  },
+  "exportSheetNameBookPeriods": "Accounting periods",
+  "@exportSheetNameBookPeriods": {
+    "description": "#3485 exportSheetName: the label for case 'book_periods'."
+  },
+  "exportSheetNameBookProfiles": "Book profiles",
+  "@exportSheetNameBookProfiles": {
+    "description": "#3485 exportSheetName: the label for case 'book_profiles'."
+  },
+  "exportSheetNameChargingStations": "Charging stations",
+  "@exportSheetNameChargingStations": {
+    "description": "#3485 exportSheetName: the label for case 'charging_stations'."
+  },
+  "exportSheetNameCheckIns": "Attendance",
+  "@exportSheetNameCheckIns": {
+    "description": "#3485 exportSheetName: the label for case 'check_ins'."
+  },
+  "exportSheetNameClosureDays": "Closure days",
+  "@exportSheetNameClosureDays": {
+    "description": "#3485 exportSheetName: the label for case 'closure_days'."
+  },
+  "exportSheetNameCreditProducts": "Carnet types",
+  "@exportSheetNameCreditProducts": {
+    "description": "#3485 exportSheetName: the label for case 'credit_products'."
+  },
+  "exportSheetNameDecisions": "Decisions",
+  "@exportSheetNameDecisions": {
+    "description": "#3485 exportSheetName: the label for case 'decisions'."
+  },
+  "exportSheetNameDesks": "Desks",
+  "@exportSheetNameDesks": {
+    "description": "#3485 exportSheetName: the label for case 'desks'."
+  },
+  "exportSheetNameEinvoiceInbox": "Received e-invoices",
+  "@exportSheetNameEinvoiceInbox": {
+    "description": "#3485 exportSheetName: the label for case 'einvoice_inbox'."
+  },
+  "exportSheetNameEvents": "Requests",
+  "@exportSheetNameEvents": {
+    "description": "#3485 exportSheetName: the label for case 'events'."
+  },
+  "exportSheetNameExpenseOccurrences": "Expense dates",
+  "@exportSheetNameExpenseOccurrences": {
+    "description": "#3485 exportSheetName: the label for case 'expense_occurrences'."
+  },
+  "exportSheetNameExpenseRepartitions": "Shared costs",
+  "@exportSheetNameExpenseRepartitions": {
+    "description": "#3485 exportSheetName: the label for case 'expense_repartitions'."
+  },
+  "exportSheetNameExpenseSchedules": "Scheduled expenses",
+  "@exportSheetNameExpenseSchedules": {
+    "description": "#3485 exportSheetName: the label for case 'expense_schedules'."
+  },
+  "exportSheetNameFeatures": "Features",
+  "@exportSheetNameFeatures": {
+    "description": "#3485 exportSheetName: the label for case 'features'."
+  },
+  "exportSheetNameFeeBands": "Fee bands",
+  "@exportSheetNameFeeBands": {
+    "description": "#3485 exportSheetName: the label for case 'fee_bands'."
+  },
+  "exportSheetNameGuestParticipations": "Guest visits",
+  "@exportSheetNameGuestParticipations": {
+    "description": "#3485 exportSheetName: the label for case 'guest_participations'."
+  },
+  "exportSheetNameInvoiceDunningHolds": "Reminder holds",
+  "@exportSheetNameInvoiceDunningHolds": {
+    "description": "#3485 exportSheetName: the label for case 'invoice_dunning_holds'."
+  },
+  "exportSheetNameInvoiceLines": "Invoice lines",
+  "@exportSheetNameInvoiceLines": {
+    "description": "#3485 exportSheetName: the label for case 'invoice_lines'."
+  },
+  "exportSheetNameInvoiceMatches": "Invoice settlements",
+  "@exportSheetNameInvoiceMatches": {
+    "description": "#3485 exportSheetName: the label for case 'invoice_matches'."
+  },
+  "exportSheetNameInvoiceReminders": "Reminders",
+  "@exportSheetNameInvoiceReminders": {
+    "description": "#3485 exportSheetName: the label for case 'invoice_reminders'."
+  },
+  "exportSheetNameInvoices": "Invoices",
+  "@exportSheetNameInvoices": {
+    "description": "#3485 exportSheetName: the label for case 'invoices'."
+  },
+  "exportSheetNameLeaseSettlements": "Lease settlements",
+  "@exportSheetNameLeaseSettlements": {
+    "description": "#3485 exportSheetName: the label for case 'lease_settlements'."
+  },
+  "exportSheetNameLeaseTerms": "Lease terms",
+  "@exportSheetNameLeaseTerms": {
+    "description": "#3485 exportSheetName: the label for case 'lease_terms'."
+  },
+  "exportSheetNameLedger": "Member accounts",
+  "@exportSheetNameLedger": {
+    "description": "#3485 exportSheetName: the label for case 'ledger'."
+  },
+  "exportSheetNameLevels": "Levels",
+  "@exportSheetNameLevels": {
+    "description": "#3485 exportSheetName: the label for case 'levels'."
+  },
+  "exportSheetNameMemberCreditUses": "Carnet uses",
+  "@exportSheetNameMemberCreditUses": {
+    "description": "#3485 exportSheetName: the label for case 'member_credit_uses'."
+  },
+  "exportSheetNameMemberCredits": "Carnets",
+  "@exportSheetNameMemberCredits": {
+    "description": "#3485 exportSheetName: the label for case 'member_credits'."
+  },
+  "exportSheetNameNumberSequences": "Number sequences",
+  "@exportSheetNameNumberSequences": {
+    "description": "#3485 exportSheetName: the label for case 'number_sequences'."
+  },
+  "exportSheetNameOffices": "Rooms",
+  "@exportSheetNameOffices": {
+    "description": "#3485 exportSheetName: the label for case 'offices'."
+  },
+  "exportSheetNameOutgoingPayments": "Outgoing payments",
+  "@exportSheetNameOutgoingPayments": {
+    "description": "#3485 exportSheetName: the label for case 'outgoing_payments'."
+  },
+  "exportSheetNameOverview": "Overview",
+  "@exportSheetNameOverview": {
+    "description": "#3485 exportSheetName: the label for case 'overview'."
+  },
+  "exportSheetNamePackages": "Packages",
+  "@exportSheetNamePackages": {
+    "description": "#3485 exportSheetName: the label for case 'packages'."
+  },
+  "exportSheetNamePayments": "Payments",
+  "@exportSheetNamePayments": {
+    "description": "#3485 exportSheetName: the label for case 'payments'."
+  },
+  "exportSheetNamePlanImages": "Plan images",
+  "@exportSheetNamePlanImages": {
+    "description": "#3485 exportSheetName: the label for case 'plan_images'."
+  },
+  "exportSheetNamePlans": "Plans",
+  "@exportSheetNamePlans": {
+    "description": "#3485 exportSheetName: the label for case 'plans'."
+  },
+  "exportSheetNamePremisesLeases": "Leases",
+  "@exportSheetNamePremisesLeases": {
+    "description": "#3485 exportSheetName: the label for case 'premises_leases'."
+  },
+  "exportSheetNamePriceNegotiations": "Price negotiations",
+  "@exportSheetNamePriceNegotiations": {
+    "description": "#3485 exportSheetName: the label for case 'price_negotiations'."
+  },
+  "exportSheetNamePurchaseDocuments": "Purchase documents",
+  "@exportSheetNamePurchaseDocuments": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_documents'."
+  },
+  "exportSheetNamePurchaseLines": "Purchase lines",
+  "@exportSheetNamePurchaseLines": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_lines'."
+  },
+  "exportSheetNamePurchaseObligations": "Amounts to pay",
+  "@exportSheetNamePurchaseObligations": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_obligations'."
+  },
+  "exportSheetNamePurchaseOrderLines": "Purchase order lines",
+  "@exportSheetNamePurchaseOrderLines": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_order_lines'."
+  },
+  "exportSheetNamePurchaseOrderReceiptLines": "Goods receipt lines",
+  "@exportSheetNamePurchaseOrderReceiptLines": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_order_receipt_lines'."
+  },
+  "exportSheetNamePurchaseOrderReceipts": "Goods receipts",
+  "@exportSheetNamePurchaseOrderReceipts": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_order_receipts'."
+  },
+  "exportSheetNamePurchaseOrderSends": "Purchase order sendings",
+  "@exportSheetNamePurchaseOrderSends": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_order_sends'."
+  },
+  "exportSheetNamePurchaseOrders": "Purchase orders",
+  "@exportSheetNamePurchaseOrders": {
+    "description": "#3485 exportSheetName: the label for case 'purchase_orders'."
+  },
+  "exportSheetNameQuotaExtensions": "Quota extensions",
+  "@exportSheetNameQuotaExtensions": {
+    "description": "#3485 exportSheetName: the label for case 'quota_extensions'."
+  },
+  "exportSheetNameReservations": "Bookings",
+  "@exportSheetNameReservations": {
+    "description": "#3485 exportSheetName: the label for case 'reservations'."
+  },
+  "exportSheetNameRightsRequests": "Privacy requests",
+  "@exportSheetNameRightsRequests": {
+    "description": "#3485 exportSheetName: the label for case 'rights_requests'."
+  },
+  "exportSheetNameRoomRentalFees": "Room rental fees",
+  "@exportSheetNameRoomRentalFees": {
+    "description": "#3485 exportSheetName: the label for case 'room_rental_fees'."
+  },
+  "exportSheetNameRoomRentals": "Room rentals",
+  "@exportSheetNameRoomRentals": {
+    "description": "#3485 exportSheetName: the label for case 'room_rentals'."
+  },
+  "exportSheetNameSeatAccessories": "Place accessories",
+  "@exportSheetNameSeatAccessories": {
+    "description": "#3485 exportSheetName: the label for case 'seat_accessories'."
+  },
+  "exportSheetNameSeats": "Places",
+  "@exportSheetNameSeats": {
+    "description": "#3485 exportSheetName: the label for case 'seats'."
+  },
+  "exportSheetNameServiceCatalog": "Service prices",
+  "@exportSheetNameServiceCatalog": {
+    "description": "#3485 exportSheetName: the label for case 'service_catalog'."
+  },
+  "exportSheetNameServices": "Services used",
+  "@exportSheetNameServices": {
+    "description": "#3485 exportSheetName: the label for case 'services'."
+  },
+  "exportSheetNameSettingValues": "Settings",
+  "@exportSheetNameSettingValues": {
+    "description": "#3485 exportSheetName: the label for case 'setting_values'."
+  },
+  "exportSheetNameSites": "Sites",
+  "@exportSheetNameSites": {
+    "description": "#3485 exportSheetName: the label for case 'sites'."
+  },
+  "exportSheetNameSuppliers": "Suppliers",
+  "@exportSheetNameSuppliers": {
+    "description": "#3485 exportSheetName: the label for case 'suppliers'."
+  },
+  "exportSheetNameTaxExemptionCertificates": "Exemption certificates",
+  "@exportSheetNameTaxExemptionCertificates": {
+    "description": "#3485 exportSheetName: the label for case 'tax_exemption_certificates'."
+  },
+  "exportSheetNameUsageRecords": "Usage",
+  "@exportSheetNameUsageRecords": {
+    "description": "#3485 exportSheetName: the label for case 'usage_records'."
+  },
+  "exportSheetNameUsers": "Members",
+  "@exportSheetNameUsers": {
+    "description": "#3485 exportSheetName: the label for case 'users'."
+  },
+  "exportSheetNameValidationPolicies": "Approval rules",
+  "@exportSheetNameValidationPolicies": {
+    "description": "#3485 exportSheetName: the label for case 'validation_policies'."
+  },
+  "exportSheetNameVatDeclarations": "VAT returns",
+  "@exportSheetNameVatDeclarations": {
+    "description": "#3485 exportSheetName: the label for case 'vat_declarations'."
+  },
+  "exportSheetNameVatRates": "VAT rates",
+  "@exportSheetNameVatRates": {
+    "description": "#3485 exportSheetName: the label for case 'vat_rates'."
+  },
+  "exportSheetNameWorkspace": "Workspace",
+  "@exportSheetNameWorkspace": {
+    "description": "#3485 exportSheetName: the label for case 'workspace'."
+  },
+  "exportSheetNameWorkspaceAssets": "Assets",
+  "@exportSheetNameWorkspaceAssets": {
+    "description": "#3485 exportSheetName: the label for case 'workspace_assets'."
+  },
+  "exportSheetNameWorkspaceFieldDefinitions": "Questions",
+  "@exportSheetNameWorkspaceFieldDefinitions": {
+    "description": "#3485 exportSheetName: the label for case 'workspace_field_definitions'."
+  },
+  "exportSheetNameWorkspaceFieldValues": "Answers",
+  "@exportSheetNameWorkspaceFieldValues": {
+    "description": "#3485 exportSheetName: the label for case 'workspace_field_values'."
+  },
+  "exportSheetNameWorkspaceRoleMembers": "Role holders",
+  "@exportSheetNameWorkspaceRoleMembers": {
+    "description": "#3485 exportSheetName: the label for case 'workspace_role_members'."
+  },
+  "exportSheetNameWorkspaceRoles": "Roles",
+  "@exportSheetNameWorkspaceRoles": {
+    "description": "#3485 exportSheetName: the label for case 'workspace_roles'."
   },
   "exportUncertifiedSoftware": "Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
   },
-  "exportValueName": "{key, select, reserved{Booked} checkedIn{Checked in} completed{Completed} cancelled{Cancelled} released{Released} active{Active} paused{Paused} pending{Pending} exited{Left} applied{Applied} confirmed{Confirmed} rejected{Declined} expired{Expired} created{Created} modified{Changed} submitted{Submitted} approved{Approved} accepted{Accepted} declined{Declined} charge{Charge} credit{Credit} subscription{Subscription} overage{Over quota} expense{Expense} payment{Payment} adjustment{Adjustment} service{Service} package{Package} refund{Refund} reimbursement{Reimbursement} seat{Seat} room{Room} parking{Parking} standard{Standard} ev{Electric} accessible{Accessible} workspace{Workspace} n{North} e{East} s{South} w{West} blocked{Not allowed} payg{Pay as you go} none{No} passive{Successor} founder{Founder} invited{Invited} full{Invoice} usage{Usage} settlement{Settlement} other{{key}}}",
-  "@exportValueName": {
-    "description": "#2861 workspace export: a status or type value as the reader reads it",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "exportValueNameAccepted": "Accepted",
+  "@exportValueNameAccepted": {
+    "description": "#3485 exportValueName: the label for case 'accepted'."
+  },
+  "exportValueNameAccessible": "Accessible",
+  "@exportValueNameAccessible": {
+    "description": "#3485 exportValueName: the label for case 'accessible'."
+  },
+  "exportValueNameActive": "Active",
+  "@exportValueNameActive": {
+    "description": "#3485 exportValueName: the label for case 'active'."
+  },
+  "exportValueNameAdjustment": "Adjustment",
+  "@exportValueNameAdjustment": {
+    "description": "#3485 exportValueName: the label for case 'adjustment'."
+  },
+  "exportValueNameApplied": "Applied",
+  "@exportValueNameApplied": {
+    "description": "#3485 exportValueName: the label for case 'applied'."
+  },
+  "exportValueNameApproved": "Approved",
+  "@exportValueNameApproved": {
+    "description": "#3485 exportValueName: the label for case 'approved'."
+  },
+  "exportValueNameBlocked": "Not allowed",
+  "@exportValueNameBlocked": {
+    "description": "#3485 exportValueName: the label for case 'blocked'."
+  },
+  "exportValueNameCancelled": "Cancelled",
+  "@exportValueNameCancelled": {
+    "description": "#3485 exportValueName: the label for case 'cancelled'."
+  },
+  "exportValueNameCharge": "Charge",
+  "@exportValueNameCharge": {
+    "description": "#3485 exportValueName: the label for case 'charge'."
+  },
+  "exportValueNameCheckedIn": "Checked in",
+  "@exportValueNameCheckedIn": {
+    "description": "#3485 exportValueName: the label for case 'checkedIn'."
+  },
+  "exportValueNameCompleted": "Completed",
+  "@exportValueNameCompleted": {
+    "description": "#3485 exportValueName: the label for case 'completed'."
+  },
+  "exportValueNameConfirmed": "Confirmed",
+  "@exportValueNameConfirmed": {
+    "description": "#3485 exportValueName: the label for case 'confirmed'."
+  },
+  "exportValueNameCreated": "Created",
+  "@exportValueNameCreated": {
+    "description": "#3485 exportValueName: the label for case 'created'."
+  },
+  "exportValueNameCredit": "Credit",
+  "@exportValueNameCredit": {
+    "description": "#3485 exportValueName: the label for case 'credit'."
+  },
+  "exportValueNameDeclined": "Declined",
+  "@exportValueNameDeclined": {
+    "description": "#3485 exportValueName: the label for case 'declined'."
+  },
+  "exportValueNameE": "East",
+  "@exportValueNameE": {
+    "description": "#3485 exportValueName: the label for case 'e'."
+  },
+  "exportValueNameEv": "Electric",
+  "@exportValueNameEv": {
+    "description": "#3485 exportValueName: the label for case 'ev'."
+  },
+  "exportValueNameExited": "Left",
+  "@exportValueNameExited": {
+    "description": "#3485 exportValueName: the label for case 'exited'."
+  },
+  "exportValueNameExpense": "Expense",
+  "@exportValueNameExpense": {
+    "description": "#3485 exportValueName: the label for case 'expense'."
+  },
+  "exportValueNameExpired": "Expired",
+  "@exportValueNameExpired": {
+    "description": "#3485 exportValueName: the label for case 'expired'."
+  },
+  "exportValueNameFounder": "Founder",
+  "@exportValueNameFounder": {
+    "description": "#3485 exportValueName: the label for case 'founder'."
+  },
+  "exportValueNameFull": "Invoice",
+  "@exportValueNameFull": {
+    "description": "#3485 exportValueName: the label for case 'full'."
+  },
+  "exportValueNameInvited": "Invited",
+  "@exportValueNameInvited": {
+    "description": "#3485 exportValueName: the label for case 'invited'."
+  },
+  "exportValueNameModified": "Changed",
+  "@exportValueNameModified": {
+    "description": "#3485 exportValueName: the label for case 'modified'."
+  },
+  "exportValueNameN": "North",
+  "@exportValueNameN": {
+    "description": "#3485 exportValueName: the label for case 'n'."
+  },
+  "exportValueNameNone": "No",
+  "@exportValueNameNone": {
+    "description": "#3485 exportValueName: the label for case 'none'."
+  },
+  "exportValueNameOverage": "Over quota",
+  "@exportValueNameOverage": {
+    "description": "#3485 exportValueName: the label for case 'overage'."
+  },
+  "exportValueNamePackage": "Package",
+  "@exportValueNamePackage": {
+    "description": "#3485 exportValueName: the label for case 'package'."
+  },
+  "exportValueNameParking": "Parking",
+  "@exportValueNameParking": {
+    "description": "#3485 exportValueName: the label for case 'parking'."
+  },
+  "exportValueNamePassive": "Successor",
+  "@exportValueNamePassive": {
+    "description": "#3485 exportValueName: the label for case 'passive'."
+  },
+  "exportValueNamePaused": "Paused",
+  "@exportValueNamePaused": {
+    "description": "#3485 exportValueName: the label for case 'paused'."
+  },
+  "exportValueNamePayg": "Pay as you go",
+  "@exportValueNamePayg": {
+    "description": "#3485 exportValueName: the label for case 'payg'."
+  },
+  "exportValueNamePayment": "Payment",
+  "@exportValueNamePayment": {
+    "description": "#3485 exportValueName: the label for case 'payment'."
+  },
+  "exportValueNamePending": "Pending",
+  "@exportValueNamePending": {
+    "description": "#3485 exportValueName: the label for case 'pending'."
+  },
+  "exportValueNameRefund": "Refund",
+  "@exportValueNameRefund": {
+    "description": "#3485 exportValueName: the label for case 'refund'."
+  },
+  "exportValueNameReimbursement": "Reimbursement",
+  "@exportValueNameReimbursement": {
+    "description": "#3485 exportValueName: the label for case 'reimbursement'."
+  },
+  "exportValueNameRejected": "Declined",
+  "@exportValueNameRejected": {
+    "description": "#3485 exportValueName: the label for case 'rejected'."
+  },
+  "exportValueNameReleased": "Released",
+  "@exportValueNameReleased": {
+    "description": "#3485 exportValueName: the label for case 'released'."
+  },
+  "exportValueNameReserved": "Booked",
+  "@exportValueNameReserved": {
+    "description": "#3485 exportValueName: the label for case 'reserved'."
+  },
+  "exportValueNameRoom": "Room",
+  "@exportValueNameRoom": {
+    "description": "#3485 exportValueName: the label for case 'room'."
+  },
+  "exportValueNameS": "South",
+  "@exportValueNameS": {
+    "description": "#3485 exportValueName: the label for case 's'."
+  },
+  "exportValueNameSeat": "Seat",
+  "@exportValueNameSeat": {
+    "description": "#3485 exportValueName: the label for case 'seat'."
+  },
+  "exportValueNameService": "Service",
+  "@exportValueNameService": {
+    "description": "#3485 exportValueName: the label for case 'service'."
+  },
+  "exportValueNameSettlement": "Settlement",
+  "@exportValueNameSettlement": {
+    "description": "#3485 exportValueName: the label for case 'settlement'."
+  },
+  "exportValueNameStandard": "Standard",
+  "@exportValueNameStandard": {
+    "description": "#3485 exportValueName: the label for case 'standard'."
+  },
+  "exportValueNameSubmitted": "Submitted",
+  "@exportValueNameSubmitted": {
+    "description": "#3485 exportValueName: the label for case 'submitted'."
+  },
+  "exportValueNameSubscription": "Subscription",
+  "@exportValueNameSubscription": {
+    "description": "#3485 exportValueName: the label for case 'subscription'."
+  },
+  "exportValueNameUsage": "Usage",
+  "@exportValueNameUsage": {
+    "description": "#3485 exportValueName: the label for case 'usage'."
+  },
+  "exportValueNameW": "West",
+  "@exportValueNameW": {
+    "description": "#3485 exportValueName: the label for case 'w'."
+  },
+  "exportValueNameWorkspace": "Workspace",
+  "@exportValueNameWorkspace": {
+    "description": "#3485 exportValueName: the label for case 'workspace'."
   },
   "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this space.",
   "favoriteKeptOnDeviceUnreachable": "Kept on this device only: your account could not be reached. Try again later.",
@@ -13647,7 +14639,7 @@
       }
     }
   },
-  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summary(ies) left out: their invoices are already listed}}",
+  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}",
   "@handoffExcludedSettlements": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -13656,7 +14648,7 @@
       }
     }
   },
-  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} document(s) in the file}}",
+  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} documents in the file}}",
   "@handoffIncluded": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -17238,22 +18230,419 @@
   "journeyTimelineTitle": "Timeline",
   "journeyValidatorsMatch": "Payment matched — awaiting the validators' decision",
   "journeyValidatorsWriteoff": "Write-off of the remainder requested — awaiting the validators",
-  "jpkKrPdField": "{field, select, nip{NIP} legalName{legal name} voivodeship{voivodeship} county{county} municipality{municipality} buildingNumber{building number} city{city} postalCode{postal code} street{street} taxOfficeCode{tax office code} accountName{account name} accountParent{account parent} accountMarker{Polish account marker} journalNumber{journal number} journalName{journal name} documentNumber{document number} documentType{document type} responsiblePerson{responsible person} journalDescription{journal description} accountIdentifier{account identifier or name} journalText{journal text} counterpartyCode{counterparty code} other{}}",
-  "@jpkKrPdField": {
-    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
+  "jpkKrPdFieldAccountIdentifier": "account identifier or name",
+  "@jpkKrPdFieldAccountIdentifier": {
+    "description": "#3485 jpkKrPdField: the label for case 'accountIdentifier'."
+  },
+  "jpkKrPdFieldAccountMarker": "Polish account marker",
+  "@jpkKrPdFieldAccountMarker": {
+    "description": "#3485 jpkKrPdField: the label for case 'accountMarker'."
+  },
+  "jpkKrPdFieldAccountName": "account name",
+  "@jpkKrPdFieldAccountName": {
+    "description": "#3485 jpkKrPdField: the label for case 'accountName'."
+  },
+  "jpkKrPdFieldAccountParent": "account parent",
+  "@jpkKrPdFieldAccountParent": {
+    "description": "#3485 jpkKrPdField: the label for case 'accountParent'."
+  },
+  "jpkKrPdFieldBuildingNumber": "building number",
+  "@jpkKrPdFieldBuildingNumber": {
+    "description": "#3485 jpkKrPdField: the label for case 'buildingNumber'."
+  },
+  "jpkKrPdFieldCity": "city",
+  "@jpkKrPdFieldCity": {
+    "description": "#3485 jpkKrPdField: the label for case 'city'."
+  },
+  "jpkKrPdFieldCounterpartyCode": "counterparty code",
+  "@jpkKrPdFieldCounterpartyCode": {
+    "description": "#3485 jpkKrPdField: the label for case 'counterpartyCode'."
+  },
+  "jpkKrPdFieldCounty": "county",
+  "@jpkKrPdFieldCounty": {
+    "description": "#3485 jpkKrPdField: the label for case 'county'."
+  },
+  "jpkKrPdFieldDocumentNumber": "document number",
+  "@jpkKrPdFieldDocumentNumber": {
+    "description": "#3485 jpkKrPdField: the label for case 'documentNumber'."
+  },
+  "jpkKrPdFieldDocumentType": "document type",
+  "@jpkKrPdFieldDocumentType": {
+    "description": "#3485 jpkKrPdField: the label for case 'documentType'."
+  },
+  "jpkKrPdFieldJournalDescription": "journal description",
+  "@jpkKrPdFieldJournalDescription": {
+    "description": "#3485 jpkKrPdField: the label for case 'journalDescription'."
+  },
+  "jpkKrPdFieldJournalName": "journal name",
+  "@jpkKrPdFieldJournalName": {
+    "description": "#3485 jpkKrPdField: the label for case 'journalName'."
+  },
+  "jpkKrPdFieldJournalNumber": "journal number",
+  "@jpkKrPdFieldJournalNumber": {
+    "description": "#3485 jpkKrPdField: the label for case 'journalNumber'."
+  },
+  "jpkKrPdFieldJournalText": "journal text",
+  "@jpkKrPdFieldJournalText": {
+    "description": "#3485 jpkKrPdField: the label for case 'journalText'."
+  },
+  "jpkKrPdFieldLegalName": "legal name",
+  "@jpkKrPdFieldLegalName": {
+    "description": "#3485 jpkKrPdField: the label for case 'legalName'."
+  },
+  "jpkKrPdFieldMunicipality": "municipality",
+  "@jpkKrPdFieldMunicipality": {
+    "description": "#3485 jpkKrPdField: the label for case 'municipality'."
+  },
+  "jpkKrPdFieldNip": "NIP",
+  "@jpkKrPdFieldNip": {
+    "description": "#3485 jpkKrPdField: the label for case 'nip'."
+  },
+  "jpkKrPdFieldPostalCode": "postal code",
+  "@jpkKrPdFieldPostalCode": {
+    "description": "#3485 jpkKrPdField: the label for case 'postalCode'."
+  },
+  "jpkKrPdFieldResponsiblePerson": "responsible person",
+  "@jpkKrPdFieldResponsiblePerson": {
+    "description": "#3485 jpkKrPdField: the label for case 'responsiblePerson'."
+  },
+  "jpkKrPdFieldStreet": "street",
+  "@jpkKrPdFieldStreet": {
+    "description": "#3485 jpkKrPdField: the label for case 'street'."
+  },
+  "jpkKrPdFieldTaxOfficeCode": "tax office code",
+  "@jpkKrPdFieldTaxOfficeCode": {
+    "description": "#3485 jpkKrPdField: the label for case 'taxOfficeCode'."
+  },
+  "jpkKrPdFieldVoivodeship": "voivodeship",
+  "@jpkKrPdFieldVoivodeship": {
+    "description": "#3485 jpkKrPdField: the label for case 'voivodeship'."
+  },
+  "jpkKrPdGapAccountBalances": "the balances of account{subject} are invalid",
+  "@jpkKrPdGapAccountBalances": {
+    "description": "#3485 jpkKrPdGap: the label for case 'accountBalances'.",
     "placeholders": {
-      "field": {
+      "subject": {
         "type": "String"
       }
     }
   },
-  "jpkKrPdGap": "{code, select, currencyNotPln{the functional currency must be PLN} noPostings{the journal needs posted entries} invalidYear{the reporting year is invalid} sectionEntity{the Polish entity and its address} sectionOffice{the tax office and the submission purpose} sectionAccounts{the account parents, Polish reporting markers and source balances} sectionJournal{the journal sequence and the responsible person} sectionSource{the source document and booking dates, amounts and line details} sectionKsef{KSeF applicability and identifier} sectionReconciliation{the income-tax reconciliation K_1–K_8} journalSequenceUnverified{the source journal sequence is not verified} taxYear{the income-tax year is invalid} entityCategory{this Polish reporting entity category is not supported} addressCountry{the entity’s address country must be Poland} nipFormat{the NIP must have 10 valid digits} missing{{field}{subject} is missing} tooLong{{field}{subject} is longer than {limit} characters} invalidOffice{the tax office code is not a known office} purpose{the submission purpose must be 1 or 2} reconciliation{the income-tax reconciliation K_1–K_8 must be eight amounts in PLN} openingOutside{opening posting{subject} is dated inside the reporting period} unbalanced{posting{subject} is not balanced} invalidDebitCredit{posting{subject} has an invalid debit or credit} foreignLine{posting{subject} has a foreign-currency line} postingCurrency{posting{subject} is not in PLN} accountBalances{the balances of account{subject} are invalid} openingMismatch{the opening balance of account{subject} does not match the postings} closingMismatch{the closing balance of account{subject} does not match the postings} invalidMarker{the Polish reporting marker of account{subject} is invalid} journalEvidence{every posting needs journal evidence} turnoverPrecision{the turnover of account{subject} exceeds the schema precision} totalsPrecision{the journal totals exceed the schema precision} documentTotalPrecision{the document total exceeds the schema precision} unreferencedCounterparty{counterparty{subject} is not referenced by any entry} invalidCounterpartyCountry{the country of counterparty{subject} is invalid} invalidCounterpartyTaxId{the tax ID of counterparty{subject} is invalid} counterpartyCodeInvalid{a counterparty code is missing or duplicated} journalSourceMismatch{journal entry{subject} does not match its source document} postingOutside{posting{subject} is dated outside the reporting year} bookingOutside{booking{subject} is dated outside the reporting year} documentAmount{the document amount{subject} is not in PLN} chronology{entry{subject} breaks the chronological order of the journal} duplicateJournalNumber{the journal number{subject} is used twice} lineDescriptions{entry{subject}: line descriptions are missing or do not match its lines} lineNumbers{entry{subject}: line numbers are missing, duplicated or do not match its lines} counterpartyCode{entry{subject} needs a counterparty code} counterpartySourceMissing{entry{subject} names a counterparty its source document does not have} counterpartySourceMismatch{the counterparty of entry{subject} does not match its source document} counterpartyUnknown{counterparty{subject} is not in the counterparty list} invalidKsef{the KSeF identifier of entry{subject} is invalid} duplicateLineNumber{the line number{subject} is used twice in a journal} ksefMissing{entry{subject} needs its KSeF identifier} other{}}",
-  "@jpkKrPdGap": {
-    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
+  "jpkKrPdGapAddressCountry": "the entity’s address country must be Poland",
+  "@jpkKrPdGapAddressCountry": {
+    "description": "#3485 jpkKrPdGap: the label for case 'addressCountry'."
+  },
+  "jpkKrPdGapBookingOutside": "booking{subject} is dated outside the reporting year",
+  "@jpkKrPdGapBookingOutside": {
+    "description": "#3485 jpkKrPdGap: the label for case 'bookingOutside'.",
     "placeholders": {
-      "code": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapChronology": "entry{subject} breaks the chronological order of the journal",
+  "@jpkKrPdGapChronology": {
+    "description": "#3485 jpkKrPdGap: the label for case 'chronology'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapClosingMismatch": "the closing balance of account{subject} does not match the postings",
+  "@jpkKrPdGapClosingMismatch": {
+    "description": "#3485 jpkKrPdGap: the label for case 'closingMismatch'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapCounterpartyCode": "entry{subject} needs a counterparty code",
+  "@jpkKrPdGapCounterpartyCode": {
+    "description": "#3485 jpkKrPdGap: the label for case 'counterpartyCode'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapCounterpartyCodeInvalid": "a counterparty code is missing or duplicated",
+  "@jpkKrPdGapCounterpartyCodeInvalid": {
+    "description": "#3485 jpkKrPdGap: the label for case 'counterpartyCodeInvalid'."
+  },
+  "jpkKrPdGapCounterpartySourceMismatch": "the counterparty of entry{subject} does not match its source document",
+  "@jpkKrPdGapCounterpartySourceMismatch": {
+    "description": "#3485 jpkKrPdGap: the label for case 'counterpartySourceMismatch'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapCounterpartySourceMissing": "entry{subject} names a counterparty its source document does not have",
+  "@jpkKrPdGapCounterpartySourceMissing": {
+    "description": "#3485 jpkKrPdGap: the label for case 'counterpartySourceMissing'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapCounterpartyUnknown": "counterparty{subject} is not in the counterparty list",
+  "@jpkKrPdGapCounterpartyUnknown": {
+    "description": "#3485 jpkKrPdGap: the label for case 'counterpartyUnknown'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapCurrencyNotPln": "the functional currency must be PLN",
+  "@jpkKrPdGapCurrencyNotPln": {
+    "description": "#3485 jpkKrPdGap: the label for case 'currencyNotPln'."
+  },
+  "jpkKrPdGapDocumentAmount": "the document amount{subject} is not in PLN",
+  "@jpkKrPdGapDocumentAmount": {
+    "description": "#3485 jpkKrPdGap: the label for case 'documentAmount'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapDocumentTotalPrecision": "the document total exceeds the schema precision",
+  "@jpkKrPdGapDocumentTotalPrecision": {
+    "description": "#3485 jpkKrPdGap: the label for case 'documentTotalPrecision'."
+  },
+  "jpkKrPdGapDuplicateJournalNumber": "the journal number{subject} is used twice",
+  "@jpkKrPdGapDuplicateJournalNumber": {
+    "description": "#3485 jpkKrPdGap: the label for case 'duplicateJournalNumber'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapDuplicateLineNumber": "the line number{subject} is used twice in a journal",
+  "@jpkKrPdGapDuplicateLineNumber": {
+    "description": "#3485 jpkKrPdGap: the label for case 'duplicateLineNumber'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapEntityCategory": "this Polish reporting entity category is not supported",
+  "@jpkKrPdGapEntityCategory": {
+    "description": "#3485 jpkKrPdGap: the label for case 'entityCategory'."
+  },
+  "jpkKrPdGapForeignLine": "posting{subject} has a foreign-currency line",
+  "@jpkKrPdGapForeignLine": {
+    "description": "#3485 jpkKrPdGap: the label for case 'foreignLine'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidCounterpartyCountry": "the country of counterparty{subject} is invalid",
+  "@jpkKrPdGapInvalidCounterpartyCountry": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidCounterpartyCountry'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidCounterpartyTaxId": "the tax ID of counterparty{subject} is invalid",
+  "@jpkKrPdGapInvalidCounterpartyTaxId": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidCounterpartyTaxId'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidDebitCredit": "posting{subject} has an invalid debit or credit",
+  "@jpkKrPdGapInvalidDebitCredit": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidDebitCredit'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidKsef": "the KSeF identifier of entry{subject} is invalid",
+  "@jpkKrPdGapInvalidKsef": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidKsef'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidMarker": "the Polish reporting marker of account{subject} is invalid",
+  "@jpkKrPdGapInvalidMarker": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidMarker'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapInvalidOffice": "the tax office code is not a known office",
+  "@jpkKrPdGapInvalidOffice": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidOffice'."
+  },
+  "jpkKrPdGapInvalidYear": "the reporting year is invalid",
+  "@jpkKrPdGapInvalidYear": {
+    "description": "#3485 jpkKrPdGap: the label for case 'invalidYear'."
+  },
+  "jpkKrPdGapJournalEvidence": "every posting needs journal evidence",
+  "@jpkKrPdGapJournalEvidence": {
+    "description": "#3485 jpkKrPdGap: the label for case 'journalEvidence'."
+  },
+  "jpkKrPdGapJournalSequenceUnverified": "the source journal sequence is not verified",
+  "@jpkKrPdGapJournalSequenceUnverified": {
+    "description": "#3485 jpkKrPdGap: the label for case 'journalSequenceUnverified'."
+  },
+  "jpkKrPdGapJournalSourceMismatch": "journal entry{subject} does not match its source document",
+  "@jpkKrPdGapJournalSourceMismatch": {
+    "description": "#3485 jpkKrPdGap: the label for case 'journalSourceMismatch'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapKsefMissing": "entry{subject} needs its KSeF identifier",
+  "@jpkKrPdGapKsefMissing": {
+    "description": "#3485 jpkKrPdGap: the label for case 'ksefMissing'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapLineDescriptions": "entry{subject}: line descriptions are missing or do not match its lines",
+  "@jpkKrPdGapLineDescriptions": {
+    "description": "#3485 jpkKrPdGap: the label for case 'lineDescriptions'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapLineNumbers": "entry{subject}: line numbers are missing, duplicated or do not match its lines",
+  "@jpkKrPdGapLineNumbers": {
+    "description": "#3485 jpkKrPdGap: the label for case 'lineNumbers'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapMissing": "{field}{subject} is missing",
+  "@jpkKrPdGapMissing": {
+    "description": "#3485 jpkKrPdGap: the label for case 'missing'.",
+    "placeholders": {
+      "field": {
         "type": "String"
       },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapNipFormat": "the NIP must have 10 valid digits",
+  "@jpkKrPdGapNipFormat": {
+    "description": "#3485 jpkKrPdGap: the label for case 'nipFormat'."
+  },
+  "jpkKrPdGapNoPostings": "the journal needs posted entries",
+  "@jpkKrPdGapNoPostings": {
+    "description": "#3485 jpkKrPdGap: the label for case 'noPostings'."
+  },
+  "jpkKrPdGapOpeningMismatch": "the opening balance of account{subject} does not match the postings",
+  "@jpkKrPdGapOpeningMismatch": {
+    "description": "#3485 jpkKrPdGap: the label for case 'openingMismatch'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapOpeningOutside": "opening posting{subject} is dated inside the reporting period",
+  "@jpkKrPdGapOpeningOutside": {
+    "description": "#3485 jpkKrPdGap: the label for case 'openingOutside'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapPostingCurrency": "posting{subject} is not in PLN",
+  "@jpkKrPdGapPostingCurrency": {
+    "description": "#3485 jpkKrPdGap: the label for case 'postingCurrency'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapPostingOutside": "posting{subject} is dated outside the reporting year",
+  "@jpkKrPdGapPostingOutside": {
+    "description": "#3485 jpkKrPdGap: the label for case 'postingOutside'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapPurpose": "the submission purpose must be 1 or 2",
+  "@jpkKrPdGapPurpose": {
+    "description": "#3485 jpkKrPdGap: the label for case 'purpose'."
+  },
+  "jpkKrPdGapReconciliation": "the income-tax reconciliation K_1–K_8 must be eight amounts in PLN",
+  "@jpkKrPdGapReconciliation": {
+    "description": "#3485 jpkKrPdGap: the label for case 'reconciliation'."
+  },
+  "jpkKrPdGapSectionAccounts": "the account parents, Polish reporting markers and source balances",
+  "@jpkKrPdGapSectionAccounts": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionAccounts'."
+  },
+  "jpkKrPdGapSectionEntity": "the Polish entity and its address",
+  "@jpkKrPdGapSectionEntity": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionEntity'."
+  },
+  "jpkKrPdGapSectionJournal": "the journal sequence and the responsible person",
+  "@jpkKrPdGapSectionJournal": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionJournal'."
+  },
+  "jpkKrPdGapSectionKsef": "KSeF applicability and identifier",
+  "@jpkKrPdGapSectionKsef": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionKsef'."
+  },
+  "jpkKrPdGapSectionOffice": "the tax office and the submission purpose",
+  "@jpkKrPdGapSectionOffice": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionOffice'."
+  },
+  "jpkKrPdGapSectionReconciliation": "the income-tax reconciliation K_1–K_8",
+  "@jpkKrPdGapSectionReconciliation": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionReconciliation'."
+  },
+  "jpkKrPdGapSectionSource": "the source document and booking dates, amounts and line details",
+  "@jpkKrPdGapSectionSource": {
+    "description": "#3485 jpkKrPdGap: the label for case 'sectionSource'."
+  },
+  "jpkKrPdGapTaxYear": "the income-tax year is invalid",
+  "@jpkKrPdGapTaxYear": {
+    "description": "#3485 jpkKrPdGap: the label for case 'taxYear'."
+  },
+  "jpkKrPdGapTooLong": "{field}{subject} is longer than {limit} characters",
+  "@jpkKrPdGapTooLong": {
+    "description": "#3485 jpkKrPdGap: the label for case 'tooLong'.",
+    "placeholders": {
       "field": {
         "type": "String"
       },
@@ -17261,6 +18650,37 @@
         "type": "String"
       },
       "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapTotalsPrecision": "the journal totals exceed the schema precision",
+  "@jpkKrPdGapTotalsPrecision": {
+    "description": "#3485 jpkKrPdGap: the label for case 'totalsPrecision'."
+  },
+  "jpkKrPdGapTurnoverPrecision": "the turnover of account{subject} exceeds the schema precision",
+  "@jpkKrPdGapTurnoverPrecision": {
+    "description": "#3485 jpkKrPdGap: the label for case 'turnoverPrecision'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapUnbalanced": "posting{subject} is not balanced",
+  "@jpkKrPdGapUnbalanced": {
+    "description": "#3485 jpkKrPdGap: the label for case 'unbalanced'.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "jpkKrPdGapUnreferencedCounterparty": "counterparty{subject} is not referenced by any entry",
+  "@jpkKrPdGapUnreferencedCounterparty": {
+    "description": "#3485 jpkKrPdGap: the label for case 'unreferencedCounterparty'.",
+    "placeholders": {
+      "subject": {
         "type": "String"
       }
     }
@@ -30796,14 +32216,21 @@
   "@setupLaunchGoLiveTitle": {
     "description": "#2876 setup launch: setupLaunchGoLiveTitle"
   },
-  "setupLaunchGroup": "{key, select, open{Open} run{Run} grow{Grow} launch{Launch} other{{key}}}",
-  "@setupLaunchGroup": {
-    "description": "#2876 setup launch: setupLaunchGroup",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupLaunchGroupGrow": "Grow",
+  "@setupLaunchGroupGrow": {
+    "description": "#3485 setupLaunchGroup: the label for case 'grow'."
+  },
+  "setupLaunchGroupLaunch": "Launch",
+  "@setupLaunchGroupLaunch": {
+    "description": "#3485 setupLaunchGroup: the label for case 'launch'."
+  },
+  "setupLaunchGroupOpen": "Open",
+  "@setupLaunchGroupOpen": {
+    "description": "#3485 setupLaunchGroup: the label for case 'open'."
+  },
+  "setupLaunchGroupRun": "Run",
+  "@setupLaunchGroupRun": {
+    "description": "#3485 setupLaunchGroup: the label for case 'run'."
   },
   "setupLaunchIsLive": "This is the real space: it is live.",
   "@setupLaunchIsLive": {
@@ -30854,14 +32281,101 @@
   "@setupLaunchTitle": {
     "description": "#2876 setup launch: setupLaunchTitle"
   },
-  "setupLevelName": "{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}",
-  "@setupLevelName": {
-    "description": "#2868 setup levels: setupLevelName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupLevelNameAssistantOff": "Off",
+  "@setupLevelNameAssistantOff": {
+    "description": "#3485 setupLevelName: the label for case 'assistant_off'."
+  },
+  "setupLevelNameAssistantOn": "On",
+  "@setupLevelNameAssistantOn": {
+    "description": "#3485 setupLevelName: the label for case 'assistant_on'."
+  },
+  "setupLevelNameBookingsMeasured": "Measured use",
+  "@setupLevelNameBookingsMeasured": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_measured'."
+  },
+  "setupLevelNameBookingsResources": "Rooms and resources",
+  "@setupLevelNameBookingsResources": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_resources'."
+  },
+  "setupLevelNameBookingsSimple": "Shared places",
+  "@setupLevelNameBookingsSimple": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_simple'."
+  },
+  "setupLevelNameCommunityBasic": "Basic",
+  "@setupLevelNameCommunityBasic": {
+    "description": "#3485 setupLevelName: the label for case 'community_basic'."
+  },
+  "setupLevelNameCommunityOrganised": "Organised",
+  "@setupLevelNameCommunityOrganised": {
+    "description": "#3485 setupLevelName: the label for case 'community_organised'."
+  },
+  "setupLevelNameMoneyInvoices": "Invoices",
+  "@setupLevelNameMoneyInvoices": {
+    "description": "#3485 setupLevelName: the label for case 'money_invoices'."
+  },
+  "setupLevelNameMoneyNone": "No money",
+  "@setupLevelNameMoneyNone": {
+    "description": "#3485 setupLevelName: the label for case 'money_none'."
+  },
+  "setupLevelNameMoneyStatements": "Statements",
+  "@setupLevelNameMoneyStatements": {
+    "description": "#3485 setupLevelName: the label for case 'money_statements'."
+  },
+  "setupLevelNameOperationsAdvanced": "Advanced",
+  "@setupLevelNameOperationsAdvanced": {
+    "description": "#3485 setupLevelName: the label for case 'operations_advanced'."
+  },
+  "setupLevelNameOperationsBasic": "Basic",
+  "@setupLevelNameOperationsBasic": {
+    "description": "#3485 setupLevelName: the label for case 'operations_basic'."
+  },
+  "setupLevelNameOperationsInsight": "Figures",
+  "@setupLevelNameOperationsInsight": {
+    "description": "#3485 setupLevelName: the label for case 'operations_insight'."
+  },
+  "setupLevelNamePaymentsOff": "By transfer",
+  "@setupLevelNamePaymentsOff": {
+    "description": "#3485 setupLevelName: the label for case 'payments_off'."
+  },
+  "setupLevelNamePaymentsOnline": "Online",
+  "@setupLevelNamePaymentsOnline": {
+    "description": "#3485 setupLevelName: the label for case 'payments_online'."
+  },
+  "setupLevelNamePresentationBasic": "Basic",
+  "@setupLevelNamePresentationBasic": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_basic'."
+  },
+  "setupLevelNamePresentationBranded": "Your colours",
+  "@setupLevelNamePresentationBranded": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_branded'."
+  },
+  "setupLevelNamePresentationPublic": "Public page",
+  "@setupLevelNamePresentationPublic": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_public'."
+  },
+  "setupLevelNamePurchasesExpenses": "Expenses",
+  "@setupLevelNamePurchasesExpenses": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_expenses'."
+  },
+  "setupLevelNamePurchasesFull": "Full purchasing",
+  "@setupLevelNamePurchasesFull": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_full'."
+  },
+  "setupLevelNamePurchasesNone": "None",
+  "@setupLevelNamePurchasesNone": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_none'."
+  },
+  "setupLevelNameTaxBooks": "Books",
+  "@setupLevelNameTaxBooks": {
+    "description": "#3485 setupLevelName: the label for case 'tax_books'."
+  },
+  "setupLevelNameTaxNone": "No VAT",
+  "@setupLevelNameTaxNone": {
+    "description": "#3485 setupLevelName: the label for case 'tax_none'."
+  },
+  "setupLevelNameTaxVat": "VAT",
+  "@setupLevelNameTaxVat": {
+    "description": "#3485 setupLevelName: the label for case 'tax_vat'."
   },
   "setupLevelsApplied": "Your space now does what you chose.",
   "@setupLevelsApplied": {
@@ -31016,14 +32530,21 @@
   "@setupLookMore": {
     "description": "#2871 setup run steps: setupLookMore"
   },
-  "setupMilestoneName": "{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}",
-  "@setupMilestoneName": {
-    "description": "#2869 setup guide: setupMilestoneName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupMilestoneNameBookable": "Take bookings",
+  "@setupMilestoneNameBookable": {
+    "description": "#3485 setupMilestoneName: the label for case 'bookable'."
+  },
+  "setupMilestoneNameInvoice": "Ready to invoice",
+  "@setupMilestoneNameInvoice": {
+    "description": "#3485 setupMilestoneName: the label for case 'invoice'."
+  },
+  "setupMilestoneNameLive": "Live",
+  "@setupMilestoneNameLive": {
+    "description": "#3485 setupMilestoneName: the label for case 'live'."
+  },
+  "setupMilestoneNameMoney": "Ready for money",
+  "@setupMilestoneNameMoney": {
+    "description": "#3485 setupMilestoneName: the label for case 'money'."
   },
   "setupNewMembersEditQuestions": "Write the questions",
   "@setupNewMembersEditQuestions": {
@@ -31074,32 +32595,49 @@
       }
     }
   },
-  "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
-  "@setupNotificationsAudience": {
-    "description": "#2871 setup run steps: setupNotificationsAudience",
-    "placeholders": {
-      "audience": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsAudienceDeciders": "Whoever decides it",
+  "@setupNotificationsAudienceDeciders": {
+    "description": "#3485 setupNotificationsAudience: the label for case 'deciders'."
   },
-  "setupNotificationsChannels": "{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}",
-  "@setupNotificationsChannels": {
-    "description": "#2871 setup run steps: setupNotificationsChannels",
-    "placeholders": {
-      "channels": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsAudienceMembers": "Members",
+  "@setupNotificationsAudienceMembers": {
+    "description": "#3485 setupNotificationsAudience: the label for case 'members'."
   },
-  "setupNotificationsEvent": "{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}",
-  "@setupNotificationsEvent": {
-    "description": "#2871 setup run steps: setupNotificationsEvent",
-    "placeholders": {
-      "event": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsChannelsApp": "in the app",
+  "@setupNotificationsChannelsApp": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'app'."
+  },
+  "setupNotificationsChannelsAppPush": "in the app and as a phone notification",
+  "@setupNotificationsChannelsAppPush": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'app_push'."
+  },
+  "setupNotificationsChannelsDevice": "as a reminder on their own phone, even without phone notifications",
+  "@setupNotificationsChannelsDevice": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'device'."
+  },
+  "setupNotificationsEventCheckIn": "A booking is about to start: time to check in",
+  "@setupNotificationsEventCheckIn": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'check_in'."
+  },
+  "setupNotificationsEventInvoiceReminder": "A payment reminder",
+  "@setupNotificationsEventInvoiceReminder": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'invoice_reminder'."
+  },
+  "setupNotificationsEventMemberMention": "Someone names them in a conversation",
+  "@setupNotificationsEventMemberMention": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'member_mention'."
+  },
+  "setupNotificationsEventMemberNote": "A message or an announcement",
+  "@setupNotificationsEventMemberNote": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'member_note'."
+  },
+  "setupNotificationsEventPendingRequest": "A request waits for a decision",
+  "@setupNotificationsEventPendingRequest": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'pending_request'."
+  },
+  "setupNotificationsEventReservationCancelled": "A booking was removed by someone else",
+  "@setupNotificationsEventReservationCancelled": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'reservation_cancelled'."
   },
   "setupNotificationsLeadFixed": "The check-in reminder appears {lead} before a booking starts.",
   "@setupNotificationsLeadFixed": {
@@ -31350,14 +32888,17 @@
   "@setupPlacesWholeSpace": {
     "description": "#2870 setup steps: setupPlacesWholeSpace"
   },
-  "setupPresetName": "{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}",
-  "@setupPresetName": {
-    "description": "#2868 setup levels: setupPresetName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupPresetNameComplet": "Complete",
+  "@setupPresetNameComplet": {
+    "description": "#3485 setupPresetName: the label for case 'complet'."
+  },
+  "setupPresetNameEssentiel": "Essential",
+  "@setupPresetNameEssentiel": {
+    "description": "#3485 setupPresetName: the label for case 'essentiel'."
+  },
+  "setupPresetNameStandard": "Standard",
+  "@setupPresetNameStandard": {
+    "description": "#3485 setupPresetName: the label for case 'standard'."
   },
   "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
@@ -31433,14 +32974,41 @@
       }
     }
   },
-  "setupProcessName": "{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}",
-  "@setupProcessName": {
-    "description": "#2868 setup levels: setupProcessName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupProcessNameAssistant": "Assistant",
+  "@setupProcessNameAssistant": {
+    "description": "#3485 setupProcessName: the label for case 'assistant'."
+  },
+  "setupProcessNameBookings": "Bookings",
+  "@setupProcessNameBookings": {
+    "description": "#3485 setupProcessName: the label for case 'bookings'."
+  },
+  "setupProcessNameCommunity": "Community",
+  "@setupProcessNameCommunity": {
+    "description": "#3485 setupProcessName: the label for case 'community'."
+  },
+  "setupProcessNameMoney": "Money",
+  "@setupProcessNameMoney": {
+    "description": "#3485 setupProcessName: the label for case 'money'."
+  },
+  "setupProcessNameOperations": "Operations",
+  "@setupProcessNameOperations": {
+    "description": "#3485 setupProcessName: the label for case 'operations'."
+  },
+  "setupProcessNamePayments": "Payments",
+  "@setupProcessNamePayments": {
+    "description": "#3485 setupProcessName: the label for case 'payments'."
+  },
+  "setupProcessNamePresentation": "Presentation",
+  "@setupProcessNamePresentation": {
+    "description": "#3485 setupProcessName: the label for case 'presentation'."
+  },
+  "setupProcessNamePurchases": "Purchases",
+  "@setupProcessNamePurchases": {
+    "description": "#3485 setupProcessName: the label for case 'purchases'."
+  },
+  "setupProcessNameTax": "Tax",
+  "@setupProcessNameTax": {
+    "description": "#3485 setupProcessName: the label for case 'tax'."
   },
   "setupPublicPageMore": "Address, image and plans in the page editor",
   "@setupPublicPageMore": {
@@ -31454,23 +33022,137 @@
   "@setupPurchaseSidePreview": {
     "description": "#2871 setup run steps: setupPurchaseSidePreview"
   },
-  "setupQuestion": "{key, select, association{The space is run by an association, a cooperative or a club} approve_bookings{Bookings wait for an approval; members do not book directly} members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}",
-  "@setupQuestion": {
-    "description": "#2868 setup levels: setupQuestion",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionApproveBookings": "Bookings wait for an approval; members do not book directly",
+  "@setupQuestionApproveBookings": {
+    "description": "#3485 setupQuestion: the label for case 'approve_bookings'."
   },
-  "setupReason": "{key, select, door_tablet{Because a tablet at the door checks people in} keeps_books{Because you keep accounting books} later{Because an assistant can come later} members_only{Because only members see the space} members_owe{Because members owe the space money} no_money{Because no money changes hands} no_purchases{Because the space buys nothing it tracks} no_vat{Because the space is not registered for VAT} organised{Because several people decide together} pay_by_transfer{Because members pay by transfer} pay_online{Because members pay online} public_page{Because the space has a public page} several_rooms{Because there are several rooms or sites} shared_places{Because members share the places} small_community{Because the community is small} start_simple{Because you want to start simple} tracks_purchases{Because you track what the space buys} vat_registered{Because the space is registered for VAT} issues_invoices{Because you issue invoices} association{Because an association decides together, with its board} approve_bookings{Because bookings wait for an approval} other{{key}}}",
-  "@setupReason": {
-    "description": "#2868 setup levels: setupReason",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionAssociation": "The space is run by an association, a cooperative or a club",
+  "@setupQuestionAssociation": {
+    "description": "#3485 setupQuestion: the label for case 'association'."
+  },
+  "setupQuestionDoorTablet": "A tablet at the door checks people in",
+  "@setupQuestionDoorTablet": {
+    "description": "#3485 setupQuestion: the label for case 'door_tablet'."
+  },
+  "setupQuestionIssueInvoices": "You issue invoices",
+  "@setupQuestionIssueInvoices": {
+    "description": "#3485 setupQuestion: the label for case 'issue_invoices'."
+  },
+  "setupQuestionKeepBooks": "You keep accounting books",
+  "@setupQuestionKeepBooks": {
+    "description": "#3485 setupQuestion: the label for case 'keep_books'."
+  },
+  "setupQuestionMembersOweMoney": "Members owe the space money (rent, passes, extras)",
+  "@setupQuestionMembersOweMoney": {
+    "description": "#3485 setupQuestion: the label for case 'members_owe_money'."
+  },
+  "setupQuestionOrganised": "Committees, own roles or approvals by several people",
+  "@setupQuestionOrganised": {
+    "description": "#3485 setupQuestion: the label for case 'organised'."
+  },
+  "setupQuestionPayOnline": "Members pay online",
+  "@setupQuestionPayOnline": {
+    "description": "#3485 setupQuestion: the label for case 'pay_online'."
+  },
+  "setupQuestionPublicPage": "A public page shows the space",
+  "@setupQuestionPublicPage": {
+    "description": "#3485 setupQuestion: the label for case 'public_page'."
+  },
+  "setupQuestionSeveralRoomsOrSites": "Several rooms, a meeting room or several sites",
+  "@setupQuestionSeveralRoomsOrSites": {
+    "description": "#3485 setupQuestion: the label for case 'several_rooms_or_sites'."
+  },
+  "setupQuestionTracksPurchases": "You track what the space buys",
+  "@setupQuestionTracksPurchases": {
+    "description": "#3485 setupQuestion: the label for case 'tracks_purchases'."
+  },
+  "setupQuestionVatRegistered": "The space is registered for VAT",
+  "@setupQuestionVatRegistered": {
+    "description": "#3485 setupQuestion: the label for case 'vat_registered'."
+  },
+  "setupReasonApproveBookings": "Because bookings wait for an approval",
+  "@setupReasonApproveBookings": {
+    "description": "#3485 setupReason: the label for case 'approve_bookings'."
+  },
+  "setupReasonAssociation": "Because an association decides together, with its board",
+  "@setupReasonAssociation": {
+    "description": "#3485 setupReason: the label for case 'association'."
+  },
+  "setupReasonDoorTablet": "Because a tablet at the door checks people in",
+  "@setupReasonDoorTablet": {
+    "description": "#3485 setupReason: the label for case 'door_tablet'."
+  },
+  "setupReasonIssuesInvoices": "Because you issue invoices",
+  "@setupReasonIssuesInvoices": {
+    "description": "#3485 setupReason: the label for case 'issues_invoices'."
+  },
+  "setupReasonKeepsBooks": "Because you keep accounting books",
+  "@setupReasonKeepsBooks": {
+    "description": "#3485 setupReason: the label for case 'keeps_books'."
+  },
+  "setupReasonLater": "Because an assistant can come later",
+  "@setupReasonLater": {
+    "description": "#3485 setupReason: the label for case 'later'."
+  },
+  "setupReasonMembersOnly": "Because only members see the space",
+  "@setupReasonMembersOnly": {
+    "description": "#3485 setupReason: the label for case 'members_only'."
+  },
+  "setupReasonMembersOwe": "Because members owe the space money",
+  "@setupReasonMembersOwe": {
+    "description": "#3485 setupReason: the label for case 'members_owe'."
+  },
+  "setupReasonNoMoney": "Because no money changes hands",
+  "@setupReasonNoMoney": {
+    "description": "#3485 setupReason: the label for case 'no_money'."
+  },
+  "setupReasonNoPurchases": "Because the space buys nothing it tracks",
+  "@setupReasonNoPurchases": {
+    "description": "#3485 setupReason: the label for case 'no_purchases'."
+  },
+  "setupReasonNoVat": "Because the space is not registered for VAT",
+  "@setupReasonNoVat": {
+    "description": "#3485 setupReason: the label for case 'no_vat'."
+  },
+  "setupReasonOrganised": "Because several people decide together",
+  "@setupReasonOrganised": {
+    "description": "#3485 setupReason: the label for case 'organised'."
+  },
+  "setupReasonPayByTransfer": "Because members pay by transfer",
+  "@setupReasonPayByTransfer": {
+    "description": "#3485 setupReason: the label for case 'pay_by_transfer'."
+  },
+  "setupReasonPayOnline": "Because members pay online",
+  "@setupReasonPayOnline": {
+    "description": "#3485 setupReason: the label for case 'pay_online'."
+  },
+  "setupReasonPublicPage": "Because the space has a public page",
+  "@setupReasonPublicPage": {
+    "description": "#3485 setupReason: the label for case 'public_page'."
+  },
+  "setupReasonSeveralRooms": "Because there are several rooms or sites",
+  "@setupReasonSeveralRooms": {
+    "description": "#3485 setupReason: the label for case 'several_rooms'."
+  },
+  "setupReasonSharedPlaces": "Because members share the places",
+  "@setupReasonSharedPlaces": {
+    "description": "#3485 setupReason: the label for case 'shared_places'."
+  },
+  "setupReasonSmallCommunity": "Because the community is small",
+  "@setupReasonSmallCommunity": {
+    "description": "#3485 setupReason: the label for case 'small_community'."
+  },
+  "setupReasonStartSimple": "Because you want to start simple",
+  "@setupReasonStartSimple": {
+    "description": "#3485 setupReason: the label for case 'start_simple'."
+  },
+  "setupReasonTracksPurchases": "Because you track what the space buys",
+  "@setupReasonTracksPurchases": {
+    "description": "#3485 setupReason: the label for case 'tracks_purchases'."
+  },
+  "setupReasonVatRegistered": "Because the space is registered for VAT",
+  "@setupReasonVatRegistered": {
+    "description": "#3485 setupReason: the label for case 'vat_registered'."
   },
   "setupRightsApplied": "Members already hold these rights.",
   "@setupRightsApplied": {
@@ -31541,14 +33223,33 @@
   "@setupServicesSaveFailed": {
     "description": "#2871 setup run steps: setupServicesSaveFailed"
   },
-  "setupStateName": "{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}",
-  "@setupStateName": {
-    "description": "#2869 setup guide: setupStateName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupStateNameBlocked": "Waits for another step",
+  "@setupStateNameBlocked": {
+    "description": "#3485 setupStateName: the label for case 'blocked'."
+  },
+  "setupStateNameDeferred": "Set aside",
+  "@setupStateNameDeferred": {
+    "description": "#3485 setupStateName: the label for case 'deferred'."
+  },
+  "setupStateNameNeedsConfiguration": "To do",
+  "@setupStateNameNeedsConfiguration": {
+    "description": "#3485 setupStateName: the label for case 'needsConfiguration'."
+  },
+  "setupStateNameNeedsOperator": "Your operator acts",
+  "@setupStateNameNeedsOperator": {
+    "description": "#3485 setupStateName: the label for case 'needsOperator'."
+  },
+  "setupStateNameNotApplicable": "Not used",
+  "@setupStateNameNotApplicable": {
+    "description": "#3485 setupStateName: the label for case 'notApplicable'."
+  },
+  "setupStateNameReady": "Done",
+  "@setupStateNameReady": {
+    "description": "#3485 setupStateName: the label for case 'ready'."
+  },
+  "setupStateNameUnknown": "Unknown",
+  "@setupStateNameUnknown": {
+    "description": "#3485 setupStateName: the label for case 'unknown'."
   },
   "setupStepDone": "Done",
   "@setupStepDone": {
@@ -31558,14 +33259,121 @@
   "@setupStepElsewhere": {
     "description": "#2870 setup steps: setupStepElsewhere"
   },
-  "setupStepHint": "{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space's code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} notifications{Who is told what, and how: in the app, on the phone, as a reminder.} limits{How far ahead, how long and how many places at once members book.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space's colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space's data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}",
-  "@setupStepHint": {
-    "description": "#2869 setup guide: setupStepHint",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupStepHintAccounting": "The chart of accounts and the exports for your accountant.",
+  "@setupStepHintAccounting": {
+    "description": "#3485 setupStepHint: the label for case 'accounting'."
+  },
+  "setupStepHintApprovals": "Who validates requests, and how many people must agree.",
+  "@setupStepHintApprovals": {
+    "description": "#3485 setupStepHint: the label for case 'approvals'."
+  },
+  "setupStepHintAssets": "What the space owns and how it loses value.",
+  "@setupStepHintAssets": {
+    "description": "#3485 setupStepHint: the label for case 'assets'."
+  },
+  "setupStepHintAssistant": "Let an AI assistant help, always with your confirmation.",
+  "@setupStepHintAssistant": {
+    "description": "#3485 setupStepHint: the label for case 'assistant'."
+  },
+  "setupStepHintBasics": "What the space is called and where it is: dates, money and holidays follow from it.",
+  "@setupStepHintBasics": {
+    "description": "#3485 setupStepHint: the label for case 'basics'."
+  },
+  "setupStepHintDocuments": "Your letterhead on invoices and letters.",
+  "@setupStepHintDocuments": {
+    "description": "#3485 setupStepHint: the label for case 'documents'."
+  },
+  "setupStepHintEinvoicing": "Sending invoices through the e-invoicing platform.",
+  "@setupStepHintEinvoicing": {
+    "description": "#3485 setupStepHint: the label for case 'einvoicing'."
+  },
+  "setupStepHintFirstBooking": "Book a place the way a member would.",
+  "@setupStepHintFirstBooking": {
+    "description": "#3485 setupStepHint: the label for case 'first_booking'."
+  },
+  "setupStepHintHours": "When members can book: days, hours and closures.",
+  "@setupStepHintHours": {
+    "description": "#3485 setupStepHint: the label for case 'hours'."
+  },
+  "setupStepHintInvite": "Share the space's code or send invitations.",
+  "@setupStepHintInvite": {
+    "description": "#3485 setupStepHint: the label for case 'invite'."
+  },
+  "setupStepHintKiosk": "A tablet at the door and member badges.",
+  "@setupStepHintKiosk": {
+    "description": "#3485 setupStepHint: the label for case 'kiosk'."
+  },
+  "setupStepHintLease": "The rent and charges the space pays.",
+  "@setupStepHintLease": {
+    "description": "#3485 setupStepHint: the label for case 'lease'."
+  },
+  "setupStepHintLegalIdentity": "The details every invoice must carry.",
+  "@setupStepHintLegalIdentity": {
+    "description": "#3485 setupStepHint: the label for case 'legal_identity'."
+  },
+  "setupStepHintLimits": "How far ahead, how long and how many places at once members book.",
+  "@setupStepHintLimits": {
+    "description": "#3485 setupStepHint: the label for case 'limits'."
+  },
+  "setupStepHintLook": "The space's colours and its own words.",
+  "@setupStepHintLook": {
+    "description": "#3485 setupStepHint: the label for case 'look'."
+  },
+  "setupStepHintMemberRights": "Let members book, see the calendar and their own account.",
+  "@setupStepHintMemberRights": {
+    "description": "#3485 setupStepHint: the label for case 'member_rights'."
+  },
+  "setupStepHintNewMembers": "What a new member starts with.",
+  "@setupStepHintNewMembers": {
+    "description": "#3485 setupStepHint: the label for case 'new_members'."
+  },
+  "setupStepHintNotifications": "Who is told what, and how: in the app, on the phone, as a reminder.",
+  "@setupStepHintNotifications": {
+    "description": "#3485 setupStepHint: the label for case 'notifications'."
+  },
+  "setupStepHintNumbering": "How invoice numbers are built.",
+  "@setupStepHintNumbering": {
+    "description": "#3485 setupStepHint: the label for case 'numbering'."
+  },
+  "setupStepHintOnlinePayments": "Card payments through a provider your operator connects.",
+  "@setupStepHintOnlinePayments": {
+    "description": "#3485 setupStepHint: the label for case 'online_payments'."
+  },
+  "setupStepHintPaymentMethods": "Your bank details and payment instructions.",
+  "@setupStepHintPaymentMethods": {
+    "description": "#3485 setupStepHint: the label for case 'payment_methods'."
+  },
+  "setupStepHintPlaces": "Draw the rooms, desks and seats members book.",
+  "@setupStepHintPlaces": {
+    "description": "#3485 setupStepHint: the label for case 'places'."
+  },
+  "setupStepHintPricing": "What a place, a membership or a day costs.",
+  "@setupStepHintPricing": {
+    "description": "#3485 setupStepHint: the label for case 'pricing'."
+  },
+  "setupStepHintPublicPage": "What people outside the space can see.",
+  "@setupStepHintPublicPage": {
+    "description": "#3485 setupStepHint: the label for case 'public_page'."
+  },
+  "setupStepHintPurchases": "What the space buys, and from whom.",
+  "@setupStepHintPurchases": {
+    "description": "#3485 setupStepHint: the label for case 'purchases'."
+  },
+  "setupStepHintRecovery": "Export the space's data once.",
+  "@setupStepHintRecovery": {
+    "description": "#3485 setupStepHint: the label for case 'recovery'."
+  },
+  "setupStepHintReminders": "When and how unpaid invoices are reminded.",
+  "@setupStepHintReminders": {
+    "description": "#3485 setupStepHint: the label for case 'reminders'."
+  },
+  "setupStepHintServices": "Coffee, printing, lockers: what members can add.",
+  "@setupStepHintServices": {
+    "description": "#3485 setupStepHint: the label for case 'services'."
+  },
+  "setupStepHintVat": "The rates you charge and your VAT returns.",
+  "@setupStepHintVat": {
+    "description": "#3485 setupStepHint: the label for case 'vat'."
   },
   "setupStepLoadFailed": "This step could not be loaded. Try again later.",
   "@setupStepLoadFailed": {
@@ -31583,14 +33391,121 @@
   "@setupStepPreviewTitle": {
     "description": "#2870 setup steps: setupStepPreviewTitle"
   },
-  "setupStepTitle": "{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}",
-  "@setupStepTitle": {
-    "description": "#2869 setup guide: setupStepTitle",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupStepTitleAccounting": "Accounting",
+  "@setupStepTitleAccounting": {
+    "description": "#3485 setupStepTitle: the label for case 'accounting'."
+  },
+  "setupStepTitleApprovals": "Approvals",
+  "@setupStepTitleApprovals": {
+    "description": "#3485 setupStepTitle: the label for case 'approvals'."
+  },
+  "setupStepTitleAssets": "Equipment",
+  "@setupStepTitleAssets": {
+    "description": "#3485 setupStepTitle: the label for case 'assets'."
+  },
+  "setupStepTitleAssistant": "Assistant",
+  "@setupStepTitleAssistant": {
+    "description": "#3485 setupStepTitle: the label for case 'assistant'."
+  },
+  "setupStepTitleBasics": "Name, country and time zone",
+  "@setupStepTitleBasics": {
+    "description": "#3485 setupStepTitle: the label for case 'basics'."
+  },
+  "setupStepTitleDocuments": "Invoice look",
+  "@setupStepTitleDocuments": {
+    "description": "#3485 setupStepTitle: the label for case 'documents'."
+  },
+  "setupStepTitleEinvoicing": "E-invoicing",
+  "@setupStepTitleEinvoicing": {
+    "description": "#3485 setupStepTitle: the label for case 'einvoicing'."
+  },
+  "setupStepTitleFirstBooking": "A first booking",
+  "@setupStepTitleFirstBooking": {
+    "description": "#3485 setupStepTitle: the label for case 'first_booking'."
+  },
+  "setupStepTitleHours": "Opening hours",
+  "@setupStepTitleHours": {
+    "description": "#3485 setupStepTitle: the label for case 'hours'."
+  },
+  "setupStepTitleInvite": "Invite members",
+  "@setupStepTitleInvite": {
+    "description": "#3485 setupStepTitle: the label for case 'invite'."
+  },
+  "setupStepTitleKiosk": "Kiosk and badges",
+  "@setupStepTitleKiosk": {
+    "description": "#3485 setupStepTitle: the label for case 'kiosk'."
+  },
+  "setupStepTitleLease": "Your lease",
+  "@setupStepTitleLease": {
+    "description": "#3485 setupStepTitle: the label for case 'lease'."
+  },
+  "setupStepTitleLegalIdentity": "Legal identity",
+  "@setupStepTitleLegalIdentity": {
+    "description": "#3485 setupStepTitle: the label for case 'legal_identity'."
+  },
+  "setupStepTitleLimits": "Booking limits",
+  "@setupStepTitleLimits": {
+    "description": "#3485 setupStepTitle: the label for case 'limits'."
+  },
+  "setupStepTitleLook": "Colours and wording",
+  "@setupStepTitleLook": {
+    "description": "#3485 setupStepTitle: the label for case 'look'."
+  },
+  "setupStepTitleMemberRights": "What members may do",
+  "@setupStepTitleMemberRights": {
+    "description": "#3485 setupStepTitle: the label for case 'member_rights'."
+  },
+  "setupStepTitleNewMembers": "New members",
+  "@setupStepTitleNewMembers": {
+    "description": "#3485 setupStepTitle: the label for case 'new_members'."
+  },
+  "setupStepTitleNotifications": "Notifications",
+  "@setupStepTitleNotifications": {
+    "description": "#3485 setupStepTitle: the label for case 'notifications'."
+  },
+  "setupStepTitleNumbering": "Invoice numbering",
+  "@setupStepTitleNumbering": {
+    "description": "#3485 setupStepTitle: the label for case 'numbering'."
+  },
+  "setupStepTitleOnlinePayments": "Online payments",
+  "@setupStepTitleOnlinePayments": {
+    "description": "#3485 setupStepTitle: the label for case 'online_payments'."
+  },
+  "setupStepTitlePaymentMethods": "How members pay",
+  "@setupStepTitlePaymentMethods": {
+    "description": "#3485 setupStepTitle: the label for case 'payment_methods'."
+  },
+  "setupStepTitlePlaces": "Places on the plan",
+  "@setupStepTitlePlaces": {
+    "description": "#3485 setupStepTitle: the label for case 'places'."
+  },
+  "setupStepTitlePricing": "Prices and plans",
+  "@setupStepTitlePricing": {
+    "description": "#3485 setupStepTitle: the label for case 'pricing'."
+  },
+  "setupStepTitlePublicPage": "Public page",
+  "@setupStepTitlePublicPage": {
+    "description": "#3485 setupStepTitle: the label for case 'public_page'."
+  },
+  "setupStepTitlePurchases": "Suppliers and purchases",
+  "@setupStepTitlePurchases": {
+    "description": "#3485 setupStepTitle: the label for case 'purchases'."
+  },
+  "setupStepTitleRecovery": "A copy of your data",
+  "@setupStepTitleRecovery": {
+    "description": "#3485 setupStepTitle: the label for case 'recovery'."
+  },
+  "setupStepTitleReminders": "Payment reminders",
+  "@setupStepTitleReminders": {
+    "description": "#3485 setupStepTitle: the label for case 'reminders'."
+  },
+  "setupStepTitleServices": "Services",
+  "@setupStepTitleServices": {
+    "description": "#3485 setupStepTitle: the label for case 'services'."
+  },
+  "setupStepTitleVat": "VAT",
+  "@setupStepTitleVat": {
+    "description": "#3485 setupStepTitle: the label for case 'vat'."
   },
   "setupTaskSaved": "Status is based on saved settings. Opening a task does not complete it.",
   "@setupTaskSaved": {

@@ -11,6 +11,7 @@ import 'package:deskilo/features/workspace/domain/setup_step_reach.dart';
 import 'package:deskilo/features/workspace/domain/setup_steps.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/dictionary_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Level features no step reaches, on 2026-10-25: none. Every one is a

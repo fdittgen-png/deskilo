@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_level_change.dart';
 import '../../domain/setup_step_reach.dart';
 import '../../domain/workspace_feature.dart';

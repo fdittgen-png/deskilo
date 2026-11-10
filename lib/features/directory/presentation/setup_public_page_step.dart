@@ -25,6 +25,7 @@ import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/setup_draft_form.dart';
 import '../../../core/ui/setup_step_layout.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';

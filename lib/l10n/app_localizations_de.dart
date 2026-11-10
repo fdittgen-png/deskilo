@@ -6079,7 +6079,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentWhoBody =>
-      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Space (der Plan zeigt die Belegung); Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Jede Angabe Ihres Profils sieht nur das Publikum, das Sie unter Wer mich sieht wählen; nichts ist öffentlich, wenn Sie es nicht wählen. Ein öffentliches Profil bleibt aus, bis Sie es veröffentlichen: Dann liest jeder mit dem Link Ihren Namen, Beruf und Ihre Kurzbiografie — nie Ihre Kontaktdaten, Ihre Anwesenheit oder Ihre Spaces —, bis Sie es zurückziehen. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
+      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Space (der Plan zeigt die Belegung); Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Jede Angabe Ihres Profils sieht nur das Publikum, das Sie unter Wer mich sieht wählen; nichts ist öffentlich, wenn Sie es nicht wählen.';
+
+  @override
+  String get consentWhoBodyPublic =>
+      'Ein öffentliches Profil bleibt aus, bis Sie es veröffentlichen: Dann liest jeder mit dem Link Ihren Namen, Beruf und Ihre Kurzbiografie — nie Ihre Kontaktdaten, Ihre Anwesenheit oder Ihre Spaces —, bis Sie es zurückziehen. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
 
   @override
   String get consentWhoTitle => 'Wer was sehen kann';
@@ -6470,26 +6474,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataReportArchived => 'Archiviert';
 
   @override
-  String dataReportColumn(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'month': 'Monat',
-      'bookings': 'Buchungen',
-      'held': 'Bestehend',
-      'attended': 'Anwesend',
-      'cancelled': 'Storniert',
-      'hours': 'Stunden',
-      'paid': 'Bezahlt',
-      'open': 'Offen',
-      'charges': 'Belastet',
-      'credits': 'Beglichen',
-      'balance': 'Saldo',
-      'seats': 'Plätze',
-      'reference': 'Referenz',
-      'role': 'Rolle',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get dataReportColumnAttended => 'Anwesend';
+
+  @override
+  String get dataReportColumnBalance => 'Saldo';
+
+  @override
+  String get dataReportColumnBookings => 'Buchungen';
+
+  @override
+  String get dataReportColumnCancelled => 'Storniert';
+
+  @override
+  String get dataReportColumnCharges => 'Belastet';
+
+  @override
+  String get dataReportColumnCredits => 'Beglichen';
+
+  @override
+  String get dataReportColumnHeld => 'Bestehend';
+
+  @override
+  String get dataReportColumnHours => 'Stunden';
+
+  @override
+  String get dataReportColumnMonth => 'Monat';
+
+  @override
+  String get dataReportColumnOpen => 'Offen';
+
+  @override
+  String get dataReportColumnPaid => 'Bezahlt';
+
+  @override
+  String get dataReportColumnReference => 'Referenz';
+
+  @override
+  String get dataReportColumnRole => 'Rolle';
+
+  @override
+  String get dataReportColumnSeats => 'Plätze';
 
   @override
   String get dataReportContents => 'Inhalt';
@@ -6505,18 +6529,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataReportNone => 'Nichts erfasst';
 
   @override
-  String dataReportPart(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'members': 'Mitglieder',
-      'bookings': 'Buchungen nach Monat',
-      'invoices': 'Rechnungsregister',
-      'payments': 'Zahlungen und Salden',
-      'purchases': 'Einkäufe und Lieferanten',
-      'plan': 'Plan und Preise',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get dataReportPartBookings => 'Buchungen nach Monat';
+
+  @override
+  String get dataReportPartInvoices => 'Rechnungsregister';
+
+  @override
+  String get dataReportPartMembers => 'Mitglieder';
+
+  @override
+  String get dataReportPartPayments => 'Zahlungen und Salden';
+
+  @override
+  String get dataReportPartPlan => 'Plan und Preise';
+
+  @override
+  String get dataReportPartPurchases => 'Einkäufe und Lieferanten';
 
   @override
   String get dataReportSubtitle =>
@@ -8832,126 +8860,346 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nur Rechnungen und Zahlungen, kein Hauptbuch. Die Datei sagt das in ihrem Kopf.';
 
   @override
-  String exportColumnName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'action': 'Aktion',
-      'active': 'Aktiv',
-      'actor': 'Ausgeführt von',
-      'address': 'Adresse',
-      'admin': 'Administrator',
-      'amenities': 'Ausstattung',
-      'amount': 'Betrag',
-      'area_kind': 'Bereichsart',
-      'blocked_from': 'Gesperrt ab',
-      'blocked_to': 'Gesperrt bis',
-      'bookable_as_whole': 'Als Ganzes buchbar',
-      'by_system': 'Automatisch',
-      'capacity': 'Kapazität',
-      'category': 'Kategorie',
-      'chair': 'Stuhl',
-      'checked_in_at': 'Eingecheckt',
-      'checked_out_at': 'Ausgecheckt',
-      'city': 'Ort',
-      'co_owner': 'Miteigentümer',
-      'color': 'Farbe',
-      'company': 'Firma',
-      'country': 'Land',
-      'created_at': 'Erfasst am',
-      'currency': 'Währung',
-      'decided_at': 'Entschieden am',
-      'decided_by': 'Entschieden von',
-      'decision': 'Entscheidung',
-      'decisions': 'Entscheidungen',
-      'description': 'Beschreibung',
-      'desk': 'Tisch',
-      'detailed': 'Detailliert',
-      'details': 'Details',
-      'due_on': 'Fällig am',
-      'email': 'E-Mail',
-      'enabled_features': 'Aktive Funktionen',
-      'ends_at': 'Ende',
-      'event_id': 'Antrag',
-      'event_type': 'Antragsart',
-      'first_name': 'Vorname',
-      'height': 'Höhe',
-      'id': 'ID',
-      'invoice': 'Rechnung',
-      'issued_at': 'Ausgestellt am',
-      'issued_by': 'Ausgestellt von',
-      'joined_at': 'Mitglied seit',
-      'kind': 'Art',
-      'kiosk': 'Kiosk',
-      'label': 'Bezeichnung',
-      'last_name': 'Nachname',
-      'last_seen': 'Zuletzt gesehen',
-      'last_sent_at': 'Zuletzt gesendet',
-      'legal_id': 'Registernummer',
-      'level': 'Etage',
-      'line': 'Zeile',
-      'member': 'Mitglied',
-      'member_id': 'Mitglieds-ID',
-      'member_number': 'Mitgliedsnummer',
-      'minutes_present': 'Anwesende Minuten',
-      'name': 'Name',
-      'net': 'Netto',
-      'number': 'Nummer',
-      'occurred_on': 'Datum',
-      'office': 'Raum',
-      'order_id': 'Bestellung',
-      'orientation': 'Ausrichtung',
-      'overage_policy': 'Bei Überschreitung',
-      'owner': 'Eigentümer',
-      'parking_kind': 'Stellplatzart',
-      'payment_terms': 'Zahlungsbedingungen',
-      'period': 'Zeitraum',
-      'phone': 'Telefon',
-      'postal_code': 'PLZ',
-      'price': 'Preis',
-      'provider': 'Anbieter',
-      'quantity': 'Menge',
-      'recorded_at': 'Erfasst am',
-      'replaces': 'Ersetzt',
-      'reservation_id': 'Buchung',
-      'resource_kind': 'Platzart',
-      'series_id': 'Serie',
-      'series_pattern': 'Wiederholung',
-      'signed_amount': 'Saldowirkung',
-      'slot_minutes': 'Zeitfenster (Minuten)',
-      'sort_order': 'Reihenfolge',
-      'source_invoice': 'Ursprungsrechnung',
-      'space': 'Platz',
-      'starts_at': 'Beginn',
-      'state': 'Stand',
-      'status': 'Status',
-      'street': 'Straße',
-      'subject': 'Betrifft',
-      'subscription_pct': 'Abo (%)',
-      'timezone': 'Zeitzone',
-      'title': 'Titel',
-      'total': 'Gesamt',
-      'type': 'Art',
-      'vat': 'USt.',
-      'vat_by_rate': 'USt. je Satz',
-      'vat_category': 'USt.-Kategorie',
-      'vat_id': 'USt-IdNr.',
-      'vat_percent': 'USt. %',
-      'vat_regime': 'Umsatzsteuerregelung',
-      'vat_treatment': 'USt.-Behandlung',
-      'voided_at': 'Storniert am',
-      'whatsapp': 'WhatsApp',
-      'width': 'Breite',
-      'workspace_code': 'Bereichscode',
-      'x': 'X',
-      'y': 'Y',
-      'field': 'Feld',
-      'value': 'Wert',
-      'process': 'Prozess',
-      'feature': 'Funktion',
-      'on': 'Aktiv',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get exportColumnNameAction => 'Aktion';
+
+  @override
+  String get exportColumnNameActive => 'Aktiv';
+
+  @override
+  String get exportColumnNameActor => 'Ausgeführt von';
+
+  @override
+  String get exportColumnNameAddress => 'Adresse';
+
+  @override
+  String get exportColumnNameAdmin => 'Administrator';
+
+  @override
+  String get exportColumnNameAmenities => 'Ausstattung';
+
+  @override
+  String get exportColumnNameAmount => 'Betrag';
+
+  @override
+  String get exportColumnNameAreaKind => 'Bereichsart';
+
+  @override
+  String get exportColumnNameBlockedFrom => 'Gesperrt ab';
+
+  @override
+  String get exportColumnNameBlockedTo => 'Gesperrt bis';
+
+  @override
+  String get exportColumnNameBookableAsWhole => 'Als Ganzes buchbar';
+
+  @override
+  String get exportColumnNameBySystem => 'Automatisch';
+
+  @override
+  String get exportColumnNameCapacity => 'Kapazität';
+
+  @override
+  String get exportColumnNameCategory => 'Kategorie';
+
+  @override
+  String get exportColumnNameChair => 'Stuhl';
+
+  @override
+  String get exportColumnNameCheckedInAt => 'Eingecheckt';
+
+  @override
+  String get exportColumnNameCheckedOutAt => 'Ausgecheckt';
+
+  @override
+  String get exportColumnNameCity => 'Ort';
+
+  @override
+  String get exportColumnNameCoOwner => 'Miteigentümer';
+
+  @override
+  String get exportColumnNameColor => 'Farbe';
+
+  @override
+  String get exportColumnNameCompany => 'Firma';
+
+  @override
+  String get exportColumnNameCountry => 'Land';
+
+  @override
+  String get exportColumnNameCreatedAt => 'Erfasst am';
+
+  @override
+  String get exportColumnNameCurrency => 'Währung';
+
+  @override
+  String get exportColumnNameDecidedAt => 'Entschieden am';
+
+  @override
+  String get exportColumnNameDecidedBy => 'Entschieden von';
+
+  @override
+  String get exportColumnNameDecision => 'Entscheidung';
+
+  @override
+  String get exportColumnNameDecisions => 'Entscheidungen';
+
+  @override
+  String get exportColumnNameDescription => 'Beschreibung';
+
+  @override
+  String get exportColumnNameDesk => 'Tisch';
+
+  @override
+  String get exportColumnNameDetailed => 'Detailliert';
+
+  @override
+  String get exportColumnNameDetails => 'Details';
+
+  @override
+  String get exportColumnNameDueOn => 'Fällig am';
+
+  @override
+  String get exportColumnNameEmail => 'E-Mail';
+
+  @override
+  String get exportColumnNameEnabledFeatures => 'Aktive Funktionen';
+
+  @override
+  String get exportColumnNameEndsAt => 'Ende';
+
+  @override
+  String get exportColumnNameEventId => 'Antrag';
+
+  @override
+  String get exportColumnNameEventType => 'Antragsart';
+
+  @override
+  String get exportColumnNameFeature => 'Funktion';
+
+  @override
+  String get exportColumnNameField => 'Feld';
+
+  @override
+  String get exportColumnNameFirstName => 'Vorname';
+
+  @override
+  String get exportColumnNameHeight => 'Höhe';
+
+  @override
+  String get exportColumnNameId => 'ID';
+
+  @override
+  String get exportColumnNameInvoice => 'Rechnung';
+
+  @override
+  String get exportColumnNameIssuedAt => 'Ausgestellt am';
+
+  @override
+  String get exportColumnNameIssuedBy => 'Ausgestellt von';
+
+  @override
+  String get exportColumnNameJoinedAt => 'Mitglied seit';
+
+  @override
+  String get exportColumnNameKind => 'Art';
+
+  @override
+  String get exportColumnNameKiosk => 'Kiosk';
+
+  @override
+  String get exportColumnNameLabel => 'Bezeichnung';
+
+  @override
+  String get exportColumnNameLastName => 'Nachname';
+
+  @override
+  String get exportColumnNameLastSeen => 'Zuletzt gesehen';
+
+  @override
+  String get exportColumnNameLastSentAt => 'Zuletzt gesendet';
+
+  @override
+  String get exportColumnNameLegalId => 'Registernummer';
+
+  @override
+  String get exportColumnNameLevel => 'Etage';
+
+  @override
+  String get exportColumnNameLine => 'Zeile';
+
+  @override
+  String get exportColumnNameMember => 'Mitglied';
+
+  @override
+  String get exportColumnNameMemberId => 'Mitglieds-ID';
+
+  @override
+  String get exportColumnNameMemberNumber => 'Mitgliedsnummer';
+
+  @override
+  String get exportColumnNameMinutesPresent => 'Anwesende Minuten';
+
+  @override
+  String get exportColumnNameName => 'Name';
+
+  @override
+  String get exportColumnNameNet => 'Netto';
+
+  @override
+  String get exportColumnNameNumber => 'Nummer';
+
+  @override
+  String get exportColumnNameOccurredOn => 'Datum';
+
+  @override
+  String get exportColumnNameOffice => 'Raum';
+
+  @override
+  String get exportColumnNameOn => 'Aktiv';
+
+  @override
+  String get exportColumnNameOrderId => 'Bestellung';
+
+  @override
+  String get exportColumnNameOrientation => 'Ausrichtung';
+
+  @override
+  String get exportColumnNameOveragePolicy => 'Bei Überschreitung';
+
+  @override
+  String get exportColumnNameOwner => 'Eigentümer';
+
+  @override
+  String get exportColumnNameParkingKind => 'Stellplatzart';
+
+  @override
+  String get exportColumnNamePaymentTerms => 'Zahlungsbedingungen';
+
+  @override
+  String get exportColumnNamePeriod => 'Zeitraum';
+
+  @override
+  String get exportColumnNamePhone => 'Telefon';
+
+  @override
+  String get exportColumnNamePostalCode => 'PLZ';
+
+  @override
+  String get exportColumnNamePrice => 'Preis';
+
+  @override
+  String get exportColumnNameProcess => 'Prozess';
+
+  @override
+  String get exportColumnNameProvider => 'Anbieter';
+
+  @override
+  String get exportColumnNameQuantity => 'Menge';
+
+  @override
+  String get exportColumnNameRecordedAt => 'Erfasst am';
+
+  @override
+  String get exportColumnNameReplaces => 'Ersetzt';
+
+  @override
+  String get exportColumnNameReservationId => 'Buchung';
+
+  @override
+  String get exportColumnNameResourceKind => 'Platzart';
+
+  @override
+  String get exportColumnNameSeriesId => 'Serie';
+
+  @override
+  String get exportColumnNameSeriesPattern => 'Wiederholung';
+
+  @override
+  String get exportColumnNameSignedAmount => 'Saldowirkung';
+
+  @override
+  String get exportColumnNameSlotMinutes => 'Zeitfenster (Minuten)';
+
+  @override
+  String get exportColumnNameSortOrder => 'Reihenfolge';
+
+  @override
+  String get exportColumnNameSourceInvoice => 'Ursprungsrechnung';
+
+  @override
+  String get exportColumnNameSpace => 'Platz';
+
+  @override
+  String get exportColumnNameStartsAt => 'Beginn';
+
+  @override
+  String get exportColumnNameState => 'Stand';
+
+  @override
+  String get exportColumnNameStatus => 'Status';
+
+  @override
+  String get exportColumnNameStreet => 'Straße';
+
+  @override
+  String get exportColumnNameSubject => 'Betrifft';
+
+  @override
+  String get exportColumnNameSubscriptionPct => 'Abo (%)';
+
+  @override
+  String get exportColumnNameTimezone => 'Zeitzone';
+
+  @override
+  String get exportColumnNameTitle => 'Titel';
+
+  @override
+  String get exportColumnNameTotal => 'Gesamt';
+
+  @override
+  String get exportColumnNameType => 'Art';
+
+  @override
+  String get exportColumnNameValue => 'Wert';
+
+  @override
+  String get exportColumnNameVat => 'USt.';
+
+  @override
+  String get exportColumnNameVatByRate => 'USt. je Satz';
+
+  @override
+  String get exportColumnNameVatCategory => 'USt.-Kategorie';
+
+  @override
+  String get exportColumnNameVatId => 'USt-IdNr.';
+
+  @override
+  String get exportColumnNameVatPercent => 'USt. %';
+
+  @override
+  String get exportColumnNameVatRegime => 'Umsatzsteuerregelung';
+
+  @override
+  String get exportColumnNameVatTreatment => 'USt.-Behandlung';
+
+  @override
+  String get exportColumnNameVoidedAt => 'Storniert am';
+
+  @override
+  String get exportColumnNameWhatsapp => 'WhatsApp';
+
+  @override
+  String get exportColumnNameWidth => 'Breite';
+
+  @override
+  String get exportColumnNameWorkspaceCode => 'Bereichscode';
+
+  @override
+  String get exportColumnNameX => 'X';
+
+  @override
+  String get exportColumnNameY => 'Y';
 
   @override
   String exportDenmarkRegisteredSystem(String systems) {
@@ -8978,149 +9226,385 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aus Rechnungen und Zahlungen rekonstruiert — DesKilo führt keine doppelte Buchführung, dies sind also nicht Ihre vollständigen Bücher. Ihre Steuerberatung ergänzt sie.';
 
   @override
-  String exportSheetName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'about': 'Über diesen Export',
-      'workspace': 'Arbeitsbereich',
-      'levels': 'Etagen',
-      'desks': 'Tische',
-      'seats': 'Plätze',
-      'users': 'Mitglieder',
-      'reservations': 'Buchungen',
-      'check_ins': 'Anwesenheit',
-      'payments': 'Zahlungen',
-      'services': 'Genutzte Leistungen',
-      'service_catalog': 'Leistungspreise',
-      'invoices': 'Rechnungen',
-      'offices': 'Räume',
-      'ledger': 'Mitgliederkonten',
-      'events': 'Anträge',
-      'decisions': 'Entscheidungen',
-      'invoice_lines': 'Rechnungszeilen',
-      'sites': 'Standorte',
-      'plans': 'Tarife',
-      'fee_bands': 'Preisstufen',
-      'packages': 'Pakete',
-      'credit_products': 'Kontingentarten',
-      'vat_rates': 'USt.-Sätze',
-      'accessories': 'Zubehör',
-      'seat_accessories': 'Platz-Zubehör',
-      'closure_days': 'Schließtage',
-      'validation_policies': 'Freigaberegeln',
-      'workspace_roles': 'Rollen',
-      'workspace_role_members': 'Rolleninhaber',
-      'workspace_field_definitions': 'Fragen',
-      'workspace_field_values': 'Antworten',
-      'number_sequences': 'Nummernkreise',
-      'charging_stations': 'Ladestationen',
-      'plan_images': 'Planbilder',
-      'setting_values': 'Einstellungen',
-      'member_credits': 'Kontingente',
-      'member_credit_uses': 'Kontingentnutzung',
-      'price_negotiations': 'Preisverhandlungen',
-      'quota_extensions': 'Kontingenterweiterungen',
-      'usage_records': 'Nutzung',
-      'invoice_matches': 'Rechnungsausgleich',
-      'invoice_reminders': 'Mahnungen',
-      'invoice_dunning_holds': 'Mahnsperren',
-      'tax_exemption_certificates': 'Freistellungsbescheinigungen',
-      'suppliers': 'Lieferanten',
-      'purchase_documents': 'Einkaufsbelege',
-      'purchase_lines': 'Einkaufszeilen',
-      'purchase_obligations': 'Zu zahlende Beträge',
-      'purchase_orders': 'Bestellungen',
-      'purchase_order_lines': 'Bestellpositionen',
-      'purchase_order_sends': 'Bestellversand',
-      'purchase_order_receipts': 'Wareneingänge',
-      'purchase_order_receipt_lines': 'Wareneingangspositionen',
-      'outgoing_payments': 'Ausgehende Zahlungen',
-      'expense_schedules': 'Geplante Ausgaben',
-      'expense_occurrences': 'Ausgabentermine',
-      'expense_repartitions': 'Geteilte Kosten',
-      'premises_leases': 'Mietverträge',
-      'lease_terms': 'Mietbedingungen',
-      'lease_settlements': 'Mietabrechnungen',
-      'room_rentals': 'Raumanmietungen',
-      'room_rental_fees': 'Mietgebühren',
-      'workspace_assets': 'Anlagegüter',
-      'asset_valuation_batches': 'Anlagenbewertungen',
-      'asset_valuation_rows': 'Bewertungszeilen',
-      'book_profiles': 'Buchhaltungsprofile',
-      'book_accounts': 'Kontenrahmen',
-      'book_mappings': 'Kontenzuordnungen',
-      'book_periods': 'Buchungsperioden',
-      'vat_declarations': 'USt.-Voranmeldungen',
-      'einvoice_inbox': 'Empfangene E-Rechnungen',
-      'guest_participations': 'Gästebesuche',
-      'rights_requests': 'Datenschutzanfragen',
-      'overview': 'Überblick',
-      'features': 'Funktionen',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get exportSheetNameAbout => 'Über diesen Export';
+
+  @override
+  String get exportSheetNameAccessories => 'Zubehör';
+
+  @override
+  String get exportSheetNameAssetValuationBatches => 'Anlagenbewertungen';
+
+  @override
+  String get exportSheetNameAssetValuationRows => 'Bewertungszeilen';
+
+  @override
+  String get exportSheetNameBookAccounts => 'Kontenrahmen';
+
+  @override
+  String get exportSheetNameBookMappings => 'Kontenzuordnungen';
+
+  @override
+  String get exportSheetNameBookPeriods => 'Buchungsperioden';
+
+  @override
+  String get exportSheetNameBookProfiles => 'Buchhaltungsprofile';
+
+  @override
+  String get exportSheetNameChargingStations => 'Ladestationen';
+
+  @override
+  String get exportSheetNameCheckIns => 'Anwesenheit';
+
+  @override
+  String get exportSheetNameClosureDays => 'Schließtage';
+
+  @override
+  String get exportSheetNameCreditProducts => 'Kontingentarten';
+
+  @override
+  String get exportSheetNameDecisions => 'Entscheidungen';
+
+  @override
+  String get exportSheetNameDesks => 'Tische';
+
+  @override
+  String get exportSheetNameEinvoiceInbox => 'Empfangene E-Rechnungen';
+
+  @override
+  String get exportSheetNameEvents => 'Anträge';
+
+  @override
+  String get exportSheetNameExpenseOccurrences => 'Ausgabentermine';
+
+  @override
+  String get exportSheetNameExpenseRepartitions => 'Geteilte Kosten';
+
+  @override
+  String get exportSheetNameExpenseSchedules => 'Geplante Ausgaben';
+
+  @override
+  String get exportSheetNameFeatures => 'Funktionen';
+
+  @override
+  String get exportSheetNameFeeBands => 'Preisstufen';
+
+  @override
+  String get exportSheetNameGuestParticipations => 'Gästebesuche';
+
+  @override
+  String get exportSheetNameInvoiceDunningHolds => 'Mahnsperren';
+
+  @override
+  String get exportSheetNameInvoiceLines => 'Rechnungszeilen';
+
+  @override
+  String get exportSheetNameInvoiceMatches => 'Rechnungsausgleich';
+
+  @override
+  String get exportSheetNameInvoiceReminders => 'Mahnungen';
+
+  @override
+  String get exportSheetNameInvoices => 'Rechnungen';
+
+  @override
+  String get exportSheetNameLeaseSettlements => 'Mietabrechnungen';
+
+  @override
+  String get exportSheetNameLeaseTerms => 'Mietbedingungen';
+
+  @override
+  String get exportSheetNameLedger => 'Mitgliederkonten';
+
+  @override
+  String get exportSheetNameLevels => 'Etagen';
+
+  @override
+  String get exportSheetNameMemberCreditUses => 'Kontingentnutzung';
+
+  @override
+  String get exportSheetNameMemberCredits => 'Kontingente';
+
+  @override
+  String get exportSheetNameNumberSequences => 'Nummernkreise';
+
+  @override
+  String get exportSheetNameOffices => 'Räume';
+
+  @override
+  String get exportSheetNameOutgoingPayments => 'Ausgehende Zahlungen';
+
+  @override
+  String get exportSheetNameOverview => 'Überblick';
+
+  @override
+  String get exportSheetNamePackages => 'Pakete';
+
+  @override
+  String get exportSheetNamePayments => 'Zahlungen';
+
+  @override
+  String get exportSheetNamePlanImages => 'Planbilder';
+
+  @override
+  String get exportSheetNamePlans => 'Tarife';
+
+  @override
+  String get exportSheetNamePremisesLeases => 'Mietverträge';
+
+  @override
+  String get exportSheetNamePriceNegotiations => 'Preisverhandlungen';
+
+  @override
+  String get exportSheetNamePurchaseDocuments => 'Einkaufsbelege';
+
+  @override
+  String get exportSheetNamePurchaseLines => 'Einkaufszeilen';
+
+  @override
+  String get exportSheetNamePurchaseObligations => 'Zu zahlende Beträge';
+
+  @override
+  String get exportSheetNamePurchaseOrderLines => 'Bestellpositionen';
+
+  @override
+  String get exportSheetNamePurchaseOrderReceiptLines =>
+      'Wareneingangspositionen';
+
+  @override
+  String get exportSheetNamePurchaseOrderReceipts => 'Wareneingänge';
+
+  @override
+  String get exportSheetNamePurchaseOrderSends => 'Bestellversand';
+
+  @override
+  String get exportSheetNamePurchaseOrders => 'Bestellungen';
+
+  @override
+  String get exportSheetNameQuotaExtensions => 'Kontingenterweiterungen';
+
+  @override
+  String get exportSheetNameReservations => 'Buchungen';
+
+  @override
+  String get exportSheetNameRightsRequests => 'Datenschutzanfragen';
+
+  @override
+  String get exportSheetNameRoomRentalFees => 'Mietgebühren';
+
+  @override
+  String get exportSheetNameRoomRentals => 'Raumanmietungen';
+
+  @override
+  String get exportSheetNameSeatAccessories => 'Platz-Zubehör';
+
+  @override
+  String get exportSheetNameSeats => 'Plätze';
+
+  @override
+  String get exportSheetNameServiceCatalog => 'Leistungspreise';
+
+  @override
+  String get exportSheetNameServices => 'Genutzte Leistungen';
+
+  @override
+  String get exportSheetNameSettingValues => 'Einstellungen';
+
+  @override
+  String get exportSheetNameSites => 'Standorte';
+
+  @override
+  String get exportSheetNameSuppliers => 'Lieferanten';
+
+  @override
+  String get exportSheetNameTaxExemptionCertificates =>
+      'Freistellungsbescheinigungen';
+
+  @override
+  String get exportSheetNameUsageRecords => 'Nutzung';
+
+  @override
+  String get exportSheetNameUsers => 'Mitglieder';
+
+  @override
+  String get exportSheetNameValidationPolicies => 'Freigaberegeln';
+
+  @override
+  String get exportSheetNameVatDeclarations => 'USt.-Voranmeldungen';
+
+  @override
+  String get exportSheetNameVatRates => 'USt.-Sätze';
+
+  @override
+  String get exportSheetNameWorkspace => 'Arbeitsbereich';
+
+  @override
+  String get exportSheetNameWorkspaceAssets => 'Anlagegüter';
+
+  @override
+  String get exportSheetNameWorkspaceFieldDefinitions => 'Fragen';
+
+  @override
+  String get exportSheetNameWorkspaceFieldValues => 'Antworten';
+
+  @override
+  String get exportSheetNameWorkspaceRoleMembers => 'Rolleninhaber';
+
+  @override
+  String get exportSheetNameWorkspaceRoles => 'Rollen';
 
   @override
   String get exportUncertifiedSoftware =>
       'Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.';
 
   @override
-  String exportValueName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'reserved': 'Gebucht',
-      'checkedIn': 'Eingecheckt',
-      'completed': 'Abgeschlossen',
-      'cancelled': 'Storniert',
-      'released': 'Freigegeben',
-      'active': 'Aktiv',
-      'paused': 'Pausiert',
-      'pending': 'Ausstehend',
-      'exited': 'Ausgetreten',
-      'applied': 'Angewendet',
-      'confirmed': 'Bestätigt',
-      'rejected': 'Abgelehnt',
-      'expired': 'Abgelaufen',
-      'created': 'Erstellt',
-      'modified': 'Geändert',
-      'submitted': 'Eingereicht',
-      'approved': 'Genehmigt',
-      'accepted': 'Angenommen',
-      'declined': 'Abgelehnt',
-      'charge': 'Belastung',
-      'credit': 'Gutschrift',
-      'subscription': 'Abonnement',
-      'overage': 'Überschreitung',
-      'expense': 'Auslage',
-      'payment': 'Zahlung',
-      'adjustment': 'Korrektur',
-      'service': 'Leistung',
-      'package': 'Paket',
-      'refund': 'Erstattung',
-      'reimbursement': 'Auslagenerstattung',
-      'seat': 'Platz',
-      'room': 'Raum',
-      'parking': 'Parken',
-      'standard': 'Standard',
-      'ev': 'Elektro',
-      'accessible': 'Barrierefrei',
-      'workspace': 'Arbeitsbereich',
-      'n': 'Nord',
-      'e': 'Ost',
-      's': 'Süd',
-      'w': 'West',
-      'blocked': 'Nicht erlaubt',
-      'payg': 'Nach Verbrauch',
-      'none': 'Nein',
-      'passive': 'Nachfolger',
-      'founder': 'Gründer',
-      'invited': 'Eingeladen',
-      'full': 'Rechnung',
-      'usage': 'Nutzung',
-      'settlement': 'Sammelabrechnung',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get exportValueNameAccepted => 'Angenommen';
+
+  @override
+  String get exportValueNameAccessible => 'Barrierefrei';
+
+  @override
+  String get exportValueNameActive => 'Aktiv';
+
+  @override
+  String get exportValueNameAdjustment => 'Korrektur';
+
+  @override
+  String get exportValueNameApplied => 'Angewendet';
+
+  @override
+  String get exportValueNameApproved => 'Genehmigt';
+
+  @override
+  String get exportValueNameBlocked => 'Nicht erlaubt';
+
+  @override
+  String get exportValueNameCancelled => 'Storniert';
+
+  @override
+  String get exportValueNameCharge => 'Belastung';
+
+  @override
+  String get exportValueNameCheckedIn => 'Eingecheckt';
+
+  @override
+  String get exportValueNameCompleted => 'Abgeschlossen';
+
+  @override
+  String get exportValueNameConfirmed => 'Bestätigt';
+
+  @override
+  String get exportValueNameCreated => 'Erstellt';
+
+  @override
+  String get exportValueNameCredit => 'Gutschrift';
+
+  @override
+  String get exportValueNameDeclined => 'Abgelehnt';
+
+  @override
+  String get exportValueNameE => 'Ost';
+
+  @override
+  String get exportValueNameEv => 'Elektro';
+
+  @override
+  String get exportValueNameExited => 'Ausgetreten';
+
+  @override
+  String get exportValueNameExpense => 'Auslage';
+
+  @override
+  String get exportValueNameExpired => 'Abgelaufen';
+
+  @override
+  String get exportValueNameFounder => 'Gründer';
+
+  @override
+  String get exportValueNameFull => 'Rechnung';
+
+  @override
+  String get exportValueNameInvited => 'Eingeladen';
+
+  @override
+  String get exportValueNameModified => 'Geändert';
+
+  @override
+  String get exportValueNameN => 'Nord';
+
+  @override
+  String get exportValueNameNone => 'Nein';
+
+  @override
+  String get exportValueNameOverage => 'Überschreitung';
+
+  @override
+  String get exportValueNamePackage => 'Paket';
+
+  @override
+  String get exportValueNameParking => 'Parken';
+
+  @override
+  String get exportValueNamePassive => 'Nachfolger';
+
+  @override
+  String get exportValueNamePaused => 'Pausiert';
+
+  @override
+  String get exportValueNamePayg => 'Nach Verbrauch';
+
+  @override
+  String get exportValueNamePayment => 'Zahlung';
+
+  @override
+  String get exportValueNamePending => 'Ausstehend';
+
+  @override
+  String get exportValueNameRefund => 'Erstattung';
+
+  @override
+  String get exportValueNameReimbursement => 'Auslagenerstattung';
+
+  @override
+  String get exportValueNameRejected => 'Abgelehnt';
+
+  @override
+  String get exportValueNameReleased => 'Freigegeben';
+
+  @override
+  String get exportValueNameReserved => 'Gebucht';
+
+  @override
+  String get exportValueNameRoom => 'Raum';
+
+  @override
+  String get exportValueNameS => 'Süd';
+
+  @override
+  String get exportValueNameSeat => 'Platz';
+
+  @override
+  String get exportValueNameService => 'Leistung';
+
+  @override
+  String get exportValueNameSettlement => 'Sammelabrechnung';
+
+  @override
+  String get exportValueNameStandard => 'Standard';
+
+  @override
+  String get exportValueNameSubmitted => 'Eingereicht';
+
+  @override
+  String get exportValueNameSubscription => 'Abonnement';
+
+  @override
+  String get exportValueNameUsage => 'Nutzung';
+
+  @override
+  String get exportValueNameW => 'West';
+
+  @override
+  String get exportValueNameWorkspace => 'Arbeitsbereich';
 
   @override
   String get favoriteKeptOnDeviceRefused =>
@@ -11436,7 +11920,7 @@ class AppLocalizationsDe extends AppLocalizations {
       count,
       locale: localeName,
       other:
-          '$count Sammelabrechnung(en) ausgelassen: ihre Rechnungen stehen bereits in der Datei',
+          '$count Sammelabrechnungen ausgelassen: ihre Rechnungen stehen bereits in der Datei',
       one: '1 Sammelabrechnung ausgelassen: ihre Rechnungen stehen bereits in der Datei',
     );
     return '$_temp0';
@@ -11447,7 +11931,7 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Beleg(e) in der Datei',
+      other: '$count Belege in der Datei',
       one: '1 Beleg in der Datei',
     );
     return '$_temp0';
@@ -14599,119 +15083,300 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ausbuchung des Restbetrags beantragt — Prüfer entscheiden';
 
   @override
-  String jpkKrPdField(String field) {
-    String _temp0 = intl.Intl.selectLogic(field, {
-      'nip': 'NIP',
-      'legalName': 'vollständiger Name',
-      'voivodeship': 'Woiwodschaft',
-      'county': 'Landkreis',
-      'municipality': 'Gemeinde',
-      'buildingNumber': 'Hausnummer',
-      'city': 'Ort',
-      'postalCode': 'Postleitzahl',
-      'street': 'Straße',
-      'taxOfficeCode': 'Finanzamtscode',
-      'accountName': 'Kontoname',
-      'accountParent': 'übergeordnetes Konto',
-      'accountMarker': 'polnische Kontenkennzeichnung',
-      'journalNumber': 'Journalnummer',
-      'journalName': 'Journalname',
-      'documentNumber': 'Belegnummer',
-      'documentType': 'Belegart',
-      'responsiblePerson': 'verantwortliche Person',
-      'journalDescription': 'Journalbeschreibung',
-      'accountIdentifier': 'Kontokennung oder -name',
-      'journalText': 'Journaltext',
-      'counterpartyCode': 'Geschäftspartnercode',
-      'other': '',
-    });
-    return '$_temp0';
+  String get jpkKrPdFieldAccountIdentifier => 'Kontokennung oder -name';
+
+  @override
+  String get jpkKrPdFieldAccountMarker => 'polnische Kontenkennzeichnung';
+
+  @override
+  String get jpkKrPdFieldAccountName => 'Kontoname';
+
+  @override
+  String get jpkKrPdFieldAccountParent => 'übergeordnetes Konto';
+
+  @override
+  String get jpkKrPdFieldBuildingNumber => 'Hausnummer';
+
+  @override
+  String get jpkKrPdFieldCity => 'Ort';
+
+  @override
+  String get jpkKrPdFieldCounterpartyCode => 'Geschäftspartnercode';
+
+  @override
+  String get jpkKrPdFieldCounty => 'Landkreis';
+
+  @override
+  String get jpkKrPdFieldDocumentNumber => 'Belegnummer';
+
+  @override
+  String get jpkKrPdFieldDocumentType => 'Belegart';
+
+  @override
+  String get jpkKrPdFieldJournalDescription => 'Journalbeschreibung';
+
+  @override
+  String get jpkKrPdFieldJournalName => 'Journalname';
+
+  @override
+  String get jpkKrPdFieldJournalNumber => 'Journalnummer';
+
+  @override
+  String get jpkKrPdFieldJournalText => 'Journaltext';
+
+  @override
+  String get jpkKrPdFieldLegalName => 'vollständiger Name';
+
+  @override
+  String get jpkKrPdFieldMunicipality => 'Gemeinde';
+
+  @override
+  String get jpkKrPdFieldNip => 'NIP';
+
+  @override
+  String get jpkKrPdFieldPostalCode => 'Postleitzahl';
+
+  @override
+  String get jpkKrPdFieldResponsiblePerson => 'verantwortliche Person';
+
+  @override
+  String get jpkKrPdFieldStreet => 'Straße';
+
+  @override
+  String get jpkKrPdFieldTaxOfficeCode => 'Finanzamtscode';
+
+  @override
+  String get jpkKrPdFieldVoivodeship => 'Woiwodschaft';
+
+  @override
+  String jpkKrPdGapAccountBalances(String subject) {
+    return 'die Salden des Kontos$subject sind ungültig';
   }
 
   @override
-  String jpkKrPdGap(String code, String field, String subject, String limit) {
-    String _temp0 = intl.Intl.selectLogic(code, {
-      'currencyNotPln': 'die Funktionalwährung muss PLN sein',
-      'noPostings': 'das Journal braucht gebuchte Einträge',
-      'invalidYear': 'das Berichtsjahr ist ungültig',
-      'sectionEntity': 'die polnische Einheit und ihre Adresse',
-      'sectionOffice': 'das Finanzamt und der Zweck der Einreichung',
-      'sectionAccounts': 'die übergeordneten Konten, die polnischen Kennzeichen und die Quellsalden',
-      'sectionJournal': 'die Journalfolge und die verantwortliche Person',
-      'sectionSource':
-          'die Beleg- und Buchungsdaten, Beträge und Zeilendetails',
-      'sectionKsef': 'KSeF-Pflicht und -Kennung',
-      'sectionReconciliation': 'die Einkommensteuer-Überleitung K_1–K_8',
-      'journalSequenceUnverified':
-          'die Journalfolge der Quelle ist nicht geprüft',
-      'taxYear': 'das Steuerjahr ist ungültig',
-      'entityCategory': 'diese polnische Meldekategorie wird nicht unterstützt',
-      'addressCountry': 'das Adressland der Einheit muss Polen sein',
-      'nipFormat': 'die NIP muss 10 gültige Ziffern haben',
-      'missing': '$field$subject fehlt',
-      'tooLong': '$field$subject ist länger als $limit Zeichen',
-      'invalidOffice': 'der Finanzamtscode ist unbekannt',
-      'purpose': 'der Zweck der Einreichung muss 1 oder 2 sein',
-      'reconciliation': 'die Überleitung K_1–K_8 braucht acht Beträge in PLN',
-      'openingOutside':
-          'die Eröffnungsbuchung$subject liegt im Berichtszeitraum',
-      'unbalanced': 'die Buchung$subject ist nicht ausgeglichen',
-      'invalidDebitCredit':
-          'die Buchung$subject hat ein ungültiges Soll oder Haben',
-      'foreignLine': 'die Buchung$subject enthält eine Fremdwährungszeile',
-      'postingCurrency': 'die Buchung$subject ist nicht in PLN',
-      'accountBalances': 'die Salden des Kontos$subject sind ungültig',
-      'openingMismatch':
-          'der Eröffnungssaldo des Kontos$subject passt nicht zu den Buchungen',
-      'closingMismatch':
-          'der Schlusssaldo des Kontos$subject passt nicht zu den Buchungen',
-      'invalidMarker':
-          'die polnische Kennzeichnung des Kontos$subject ist ungültig',
-      'journalEvidence': 'jede Buchung braucht einen Journalnachweis',
-      'turnoverPrecision':
-          'der Umsatz des Kontos$subject überschreitet die Schemagenauigkeit',
-      'totalsPrecision':
-          'die Journalsummen überschreiten die Schemagenauigkeit',
-      'documentTotalPrecision':
-          'die Belegsumme überschreitet die Schemagenauigkeit',
-      'unreferencedCounterparty':
-          'der Geschäftspartner$subject wird von keinem Eintrag verwendet',
-      'invalidCounterpartyCountry':
-          'das Land des Geschäftspartners$subject ist ungültig',
-      'invalidCounterpartyTaxId':
-          'die Steuernummer des Geschäftspartners$subject ist ungültig',
-      'counterpartyCodeInvalid':
-          'ein Geschäftspartnercode fehlt oder ist doppelt',
-      'journalSourceMismatch':
-          'der Journaleintrag$subject passt nicht zu seinem Quellbeleg',
-      'postingOutside':
-          'die Buchung$subject liegt außerhalb des Berichtsjahres',
-      'bookingOutside':
-          'die Verbuchung$subject liegt außerhalb des Berichtsjahres',
-      'documentAmount': 'der Belegbetrag$subject ist nicht in PLN',
-      'chronology':
-          'der Eintrag$subject verletzt die zeitliche Reihenfolge des Journals',
-      'duplicateJournalNumber':
-          'die Journalnummer$subject wird doppelt verwendet',
-      'lineDescriptions':
-          'Eintrag$subject: Zeilenbeschreibungen fehlen oder passen nicht zu den Zeilen',
-      'lineNumbers':
-          'Eintrag$subject: Zeilennummern fehlen, sind doppelt oder passen nicht zu den Zeilen',
-      'counterpartyCode':
-          'der Eintrag$subject braucht einen Geschäftspartnercode',
-      'counterpartySourceMissing':
-          'der Eintrag$subject nennt einen Geschäftspartner, den der Quellbeleg nicht hat',
-      'counterpartySourceMismatch':
-          'der Geschäftspartner des Eintrags$subject passt nicht zum Quellbeleg',
-      'counterpartyUnknown':
-          'der Geschäftspartner$subject steht nicht in der Partnerliste',
-      'invalidKsef': 'die KSeF-Kennung des Eintrags$subject ist ungültig',
-      'duplicateLineNumber':
-          'die Zeilennummer$subject wird in einem Journal doppelt verwendet',
-      'ksefMissing': 'der Eintrag$subject braucht seine KSeF-Kennung',
-      'other': '',
-    });
-    return '$_temp0';
+  String get jpkKrPdGapAddressCountry =>
+      'das Adressland der Einheit muss Polen sein';
+
+  @override
+  String jpkKrPdGapBookingOutside(String subject) {
+    return 'die Verbuchung$subject liegt außerhalb des Berichtsjahres';
+  }
+
+  @override
+  String jpkKrPdGapChronology(String subject) {
+    return 'der Eintrag$subject verletzt die zeitliche Reihenfolge des Journals';
+  }
+
+  @override
+  String jpkKrPdGapClosingMismatch(String subject) {
+    return 'der Schlusssaldo des Kontos$subject passt nicht zu den Buchungen';
+  }
+
+  @override
+  String jpkKrPdGapCounterpartyCode(String subject) {
+    return 'der Eintrag$subject braucht einen Geschäftspartnercode';
+  }
+
+  @override
+  String get jpkKrPdGapCounterpartyCodeInvalid =>
+      'ein Geschäftspartnercode fehlt oder ist doppelt';
+
+  @override
+  String jpkKrPdGapCounterpartySourceMismatch(String subject) {
+    return 'der Geschäftspartner des Eintrags$subject passt nicht zum Quellbeleg';
+  }
+
+  @override
+  String jpkKrPdGapCounterpartySourceMissing(String subject) {
+    return 'der Eintrag$subject nennt einen Geschäftspartner, den der Quellbeleg nicht hat';
+  }
+
+  @override
+  String jpkKrPdGapCounterpartyUnknown(String subject) {
+    return 'der Geschäftspartner$subject steht nicht in der Partnerliste';
+  }
+
+  @override
+  String get jpkKrPdGapCurrencyNotPln => 'die Funktionalwährung muss PLN sein';
+
+  @override
+  String jpkKrPdGapDocumentAmount(String subject) {
+    return 'der Belegbetrag$subject ist nicht in PLN';
+  }
+
+  @override
+  String get jpkKrPdGapDocumentTotalPrecision =>
+      'die Belegsumme überschreitet die Schemagenauigkeit';
+
+  @override
+  String jpkKrPdGapDuplicateJournalNumber(String subject) {
+    return 'die Journalnummer$subject wird doppelt verwendet';
+  }
+
+  @override
+  String jpkKrPdGapDuplicateLineNumber(String subject) {
+    return 'die Zeilennummer$subject wird in einem Journal doppelt verwendet';
+  }
+
+  @override
+  String get jpkKrPdGapEntityCategory =>
+      'diese polnische Meldekategorie wird nicht unterstützt';
+
+  @override
+  String jpkKrPdGapForeignLine(String subject) {
+    return 'die Buchung$subject enthält eine Fremdwährungszeile';
+  }
+
+  @override
+  String jpkKrPdGapInvalidCounterpartyCountry(String subject) {
+    return 'das Land des Geschäftspartners$subject ist ungültig';
+  }
+
+  @override
+  String jpkKrPdGapInvalidCounterpartyTaxId(String subject) {
+    return 'die Steuernummer des Geschäftspartners$subject ist ungültig';
+  }
+
+  @override
+  String jpkKrPdGapInvalidDebitCredit(String subject) {
+    return 'die Buchung$subject hat ein ungültiges Soll oder Haben';
+  }
+
+  @override
+  String jpkKrPdGapInvalidKsef(String subject) {
+    return 'die KSeF-Kennung des Eintrags$subject ist ungültig';
+  }
+
+  @override
+  String jpkKrPdGapInvalidMarker(String subject) {
+    return 'die polnische Kennzeichnung des Kontos$subject ist ungültig';
+  }
+
+  @override
+  String get jpkKrPdGapInvalidOffice => 'der Finanzamtscode ist unbekannt';
+
+  @override
+  String get jpkKrPdGapInvalidYear => 'das Berichtsjahr ist ungültig';
+
+  @override
+  String get jpkKrPdGapJournalEvidence =>
+      'jede Buchung braucht einen Journalnachweis';
+
+  @override
+  String get jpkKrPdGapJournalSequenceUnverified =>
+      'die Journalfolge der Quelle ist nicht geprüft';
+
+  @override
+  String jpkKrPdGapJournalSourceMismatch(String subject) {
+    return 'der Journaleintrag$subject passt nicht zu seinem Quellbeleg';
+  }
+
+  @override
+  String jpkKrPdGapKsefMissing(String subject) {
+    return 'der Eintrag$subject braucht seine KSeF-Kennung';
+  }
+
+  @override
+  String jpkKrPdGapLineDescriptions(String subject) {
+    return 'Eintrag$subject: Zeilenbeschreibungen fehlen oder passen nicht zu den Zeilen';
+  }
+
+  @override
+  String jpkKrPdGapLineNumbers(String subject) {
+    return 'Eintrag$subject: Zeilennummern fehlen, sind doppelt oder passen nicht zu den Zeilen';
+  }
+
+  @override
+  String jpkKrPdGapMissing(String field, String subject) {
+    return '$field$subject fehlt';
+  }
+
+  @override
+  String get jpkKrPdGapNipFormat => 'die NIP muss 10 gültige Ziffern haben';
+
+  @override
+  String get jpkKrPdGapNoPostings => 'das Journal braucht gebuchte Einträge';
+
+  @override
+  String jpkKrPdGapOpeningMismatch(String subject) {
+    return 'der Eröffnungssaldo des Kontos$subject passt nicht zu den Buchungen';
+  }
+
+  @override
+  String jpkKrPdGapOpeningOutside(String subject) {
+    return 'die Eröffnungsbuchung$subject liegt im Berichtszeitraum';
+  }
+
+  @override
+  String jpkKrPdGapPostingCurrency(String subject) {
+    return 'die Buchung$subject ist nicht in PLN';
+  }
+
+  @override
+  String jpkKrPdGapPostingOutside(String subject) {
+    return 'die Buchung$subject liegt außerhalb des Berichtsjahres';
+  }
+
+  @override
+  String get jpkKrPdGapPurpose =>
+      'der Zweck der Einreichung muss 1 oder 2 sein';
+
+  @override
+  String get jpkKrPdGapReconciliation =>
+      'die Überleitung K_1–K_8 braucht acht Beträge in PLN';
+
+  @override
+  String get jpkKrPdGapSectionAccounts =>
+      'die übergeordneten Konten, die polnischen Kennzeichen und die Quellsalden';
+
+  @override
+  String get jpkKrPdGapSectionEntity =>
+      'die polnische Einheit und ihre Adresse';
+
+  @override
+  String get jpkKrPdGapSectionJournal =>
+      'die Journalfolge und die verantwortliche Person';
+
+  @override
+  String get jpkKrPdGapSectionKsef => 'KSeF-Pflicht und -Kennung';
+
+  @override
+  String get jpkKrPdGapSectionOffice =>
+      'das Finanzamt und der Zweck der Einreichung';
+
+  @override
+  String get jpkKrPdGapSectionReconciliation =>
+      'die Einkommensteuer-Überleitung K_1–K_8';
+
+  @override
+  String get jpkKrPdGapSectionSource =>
+      'die Beleg- und Buchungsdaten, Beträge und Zeilendetails';
+
+  @override
+  String get jpkKrPdGapTaxYear => 'das Steuerjahr ist ungültig';
+
+  @override
+  String jpkKrPdGapTooLong(String field, String subject, String limit) {
+    return '$field$subject ist länger als $limit Zeichen';
+  }
+
+  @override
+  String get jpkKrPdGapTotalsPrecision =>
+      'die Journalsummen überschreiten die Schemagenauigkeit';
+
+  @override
+  String jpkKrPdGapTurnoverPrecision(String subject) {
+    return 'der Umsatz des Kontos$subject überschreitet die Schemagenauigkeit';
+  }
+
+  @override
+  String jpkKrPdGapUnbalanced(String subject) {
+    return 'die Buchung$subject ist nicht ausgeglichen';
+  }
+
+  @override
+  String jpkKrPdGapUnreferencedCounterparty(String subject) {
+    return 'der Geschäftspartner$subject wird von keinem Eintrag verwendet';
   }
 
   @override
@@ -26395,16 +27060,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLaunchGoLiveTitle => 'Live gehen?';
 
   @override
-  String setupLaunchGroup(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'open': 'Öffnen',
-      'run': 'Betreiben',
-      'grow': 'Ausbauen',
-      'launch': 'Starten',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupLaunchGroupGrow => 'Ausbauen';
+
+  @override
+  String get setupLaunchGroupLaunch => 'Starten';
+
+  @override
+  String get setupLaunchGroupOpen => 'Öffnen';
+
+  @override
+  String get setupLaunchGroupRun => 'Betreiben';
 
   @override
   String get setupLaunchIsLive => 'Dies ist der echte Space: er ist live.';
@@ -26444,36 +27109,76 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLaunchTitle => 'Prüfen und live gehen';
 
   @override
-  String setupLevelName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'bookings_simple': 'Geteilte Plätze',
-      'bookings_resources': 'Räume und Ressourcen',
-      'bookings_measured': 'Gemessene Nutzung',
-      'community_basic': 'Einfach',
-      'community_organised': 'Organisiert',
-      'money_none': 'Kein Geld',
-      'money_statements': 'Kontoauszüge',
-      'money_invoices': 'Rechnungen',
-      'payments_off': 'Per Überweisung',
-      'payments_online': 'Online',
-      'tax_none': 'Keine USt.',
-      'tax_vat': 'USt.',
-      'tax_books': 'Buchhaltung',
-      'purchases_none': 'Keiner',
-      'purchases_expenses': 'Ausgaben',
-      'purchases_full': 'Voller Einkauf',
-      'presentation_basic': 'Einfach',
-      'presentation_branded': 'Ihre Farben',
-      'presentation_public': 'Öffentliche Seite',
-      'operations_basic': 'Einfach',
-      'operations_insight': 'Kennzahlen',
-      'operations_advanced': 'Fortgeschritten',
-      'assistant_off': 'Aus',
-      'assistant_on': 'An',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupLevelNameAssistantOff => 'Aus';
+
+  @override
+  String get setupLevelNameAssistantOn => 'An';
+
+  @override
+  String get setupLevelNameBookingsMeasured => 'Gemessene Nutzung';
+
+  @override
+  String get setupLevelNameBookingsResources => 'Räume und Ressourcen';
+
+  @override
+  String get setupLevelNameBookingsSimple => 'Geteilte Plätze';
+
+  @override
+  String get setupLevelNameCommunityBasic => 'Einfach';
+
+  @override
+  String get setupLevelNameCommunityOrganised => 'Organisiert';
+
+  @override
+  String get setupLevelNameMoneyInvoices => 'Rechnungen';
+
+  @override
+  String get setupLevelNameMoneyNone => 'Kein Geld';
+
+  @override
+  String get setupLevelNameMoneyStatements => 'Kontoauszüge';
+
+  @override
+  String get setupLevelNameOperationsAdvanced => 'Fortgeschritten';
+
+  @override
+  String get setupLevelNameOperationsBasic => 'Einfach';
+
+  @override
+  String get setupLevelNameOperationsInsight => 'Kennzahlen';
+
+  @override
+  String get setupLevelNamePaymentsOff => 'Per Überweisung';
+
+  @override
+  String get setupLevelNamePaymentsOnline => 'Online';
+
+  @override
+  String get setupLevelNamePresentationBasic => 'Einfach';
+
+  @override
+  String get setupLevelNamePresentationBranded => 'Ihre Farben';
+
+  @override
+  String get setupLevelNamePresentationPublic => 'Öffentliche Seite';
+
+  @override
+  String get setupLevelNamePurchasesExpenses => 'Ausgaben';
+
+  @override
+  String get setupLevelNamePurchasesFull => 'Voller Einkauf';
+
+  @override
+  String get setupLevelNamePurchasesNone => 'Keiner';
+
+  @override
+  String get setupLevelNameTaxBooks => 'Buchhaltung';
+
+  @override
+  String get setupLevelNameTaxNone => 'Keine USt.';
+
+  @override
+  String get setupLevelNameTaxVat => 'USt.';
 
   @override
   String get setupLevelsApplied => 'Ihr Raum tut jetzt, was Sie gewählt haben.';
@@ -26589,16 +27294,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLookMore => 'Muster, Raumfarben und Logo';
 
   @override
-  String setupMilestoneName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'bookable': 'Buchungen annehmen',
-      'money': 'Bereit für Zahlungen',
-      'invoice': 'Bereit zur Rechnungsstellung',
-      'live': 'Live',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupMilestoneNameBookable => 'Buchungen annehmen';
+
+  @override
+  String get setupMilestoneNameInvoice => 'Bereit zur Rechnungsstellung';
+
+  @override
+  String get setupMilestoneNameLive => 'Live';
+
+  @override
+  String get setupMilestoneNameMoney => 'Bereit für Zahlungen';
 
   @override
   String get setupNewMembersEditQuestions => 'Fragen verfassen';
@@ -26637,39 +27342,45 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String setupNotificationsAudience(String audience) {
-    String _temp0 = intl.Intl.selectLogic(audience, {
-      'deciders': 'Wer darüber entscheidet',
-      'members': 'Mitglieder',
-      'other': '$audience',
-    });
-    return '$_temp0';
-  }
+  String get setupNotificationsAudienceDeciders => 'Wer darüber entscheidet';
 
   @override
-  String setupNotificationsChannels(String channels) {
-    String _temp0 = intl.Intl.selectLogic(channels, {
-      'app': 'in der App',
-      'app_push': 'in der App und als Benachrichtigung auf dem Telefon',
-      'device': 'als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen',
-      'other': '$channels',
-    });
-    return '$_temp0';
-  }
+  String get setupNotificationsAudienceMembers => 'Mitglieder';
 
   @override
-  String setupNotificationsEvent(String event) {
-    String _temp0 = intl.Intl.selectLogic(event, {
-      'pending_request': 'Eine Anfrage wartet auf eine Entscheidung',
-      'reservation_cancelled': 'Eine Buchung wurde von jemand anderem entfernt',
-      'check_in': 'Eine Buchung beginnt gleich: Zeit zum Einchecken',
-      'member_note': 'Eine Nachricht oder eine Ankündigung',
-      'member_mention': 'Jemand erwähnt das Mitglied in einem Gespräch',
-      'invoice_reminder': 'Eine Zahlungserinnerung',
-      'other': '$event',
-    });
-    return '$_temp0';
-  }
+  String get setupNotificationsChannelsApp => 'in der App';
+
+  @override
+  String get setupNotificationsChannelsAppPush =>
+      'in der App und als Benachrichtigung auf dem Telefon';
+
+  @override
+  String get setupNotificationsChannelsDevice =>
+      'als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen';
+
+  @override
+  String get setupNotificationsEventCheckIn =>
+      'Eine Buchung beginnt gleich: Zeit zum Einchecken';
+
+  @override
+  String get setupNotificationsEventInvoiceReminder =>
+      'Eine Zahlungserinnerung';
+
+  @override
+  String get setupNotificationsEventMemberMention =>
+      'Jemand erwähnt das Mitglied in einem Gespräch';
+
+  @override
+  String get setupNotificationsEventMemberNote =>
+      'Eine Nachricht oder eine Ankündigung';
+
+  @override
+  String get setupNotificationsEventPendingRequest =>
+      'Eine Anfrage wartet auf eine Entscheidung';
+
+  @override
+  String get setupNotificationsEventReservationCancelled =>
+      'Eine Buchung wurde von jemand anderem entfernt';
 
   @override
   String setupNotificationsLeadFixed(String lead) {
@@ -26885,15 +27596,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupPlacesWholeSpace => 'Als Ganzes buchbar';
 
   @override
-  String setupPresetName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'essentiel': 'Basis',
-      'standard': 'Standard',
-      'complet': 'Komplett',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupPresetNameComplet => 'Komplett';
+
+  @override
+  String get setupPresetNameEssentiel => 'Basis';
+
+  @override
+  String get setupPresetNameStandard => 'Standard';
 
   @override
   String setupPricingBand(int from, int to, String fee, String extra) {
@@ -26941,21 +27650,31 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String setupProcessName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'bookings': 'Buchungen',
-      'community': 'Gemeinschaft',
-      'money': 'Geld',
-      'payments': 'Zahlungen',
-      'tax': 'Steuern',
-      'purchases': 'Einkauf',
-      'presentation': 'Auftritt',
-      'operations': 'Betrieb',
-      'assistant': 'Assistent',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupProcessNameAssistant => 'Assistent';
+
+  @override
+  String get setupProcessNameBookings => 'Buchungen';
+
+  @override
+  String get setupProcessNameCommunity => 'Gemeinschaft';
+
+  @override
+  String get setupProcessNameMoney => 'Geld';
+
+  @override
+  String get setupProcessNameOperations => 'Betrieb';
+
+  @override
+  String get setupProcessNamePayments => 'Zahlungen';
+
+  @override
+  String get setupProcessNamePresentation => 'Auftritt';
+
+  @override
+  String get setupProcessNamePurchases => 'Einkauf';
+
+  @override
+  String get setupProcessNameTax => 'Steuern';
 
   @override
   String get setupPublicPageMore => 'Adresse, Bild und Tarife im Seiteneditor';
@@ -26969,58 +27688,119 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder sehen davon nichts: Es bleibt bei denen, die das Geld verwalten.';
 
   @override
-  String setupQuestion(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'association':
-          'Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum',
-      'approve_bookings':
-          'Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt',
-      'members_owe_money':
-          'Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)',
-      'issue_invoices': 'Sie stellen Rechnungen',
-      'pay_online': 'Mitglieder zahlen online',
-      'vat_registered': 'Der Raum ist umsatzsteuerpflichtig',
-      'keep_books': 'Sie führen Bücher',
-      'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
-      'several_rooms_or_sites':
-          'Mehrere Räume, ein Besprechungsraum oder mehrere Standorte',
-      'door_tablet': 'Ein Tablet am Eingang erfasst die Ankunft',
-      'public_page': 'Eine öffentliche Seite zeigt den Raum',
-      'organised': 'Gremien, eigene Rollen oder Freigaben durch mehrere',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupQuestionApproveBookings =>
+      'Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt';
 
   @override
-  String setupReason(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'Weil ein Tablet am Eingang die Ankunft erfasst',
-      'keeps_books': 'Weil Sie Bücher führen',
-      'later': 'Weil ein Assistent später kommen kann',
-      'members_only': 'Weil nur Mitglieder den Raum sehen',
-      'members_owe': 'Weil Mitglieder dem Raum Geld schulden',
-      'no_money': 'Weil kein Geld fließt',
-      'no_purchases': 'Weil der Raum keine Einkäufe verfolgt',
-      'no_vat': 'Weil der Raum nicht umsatzsteuerpflichtig ist',
-      'organised': 'Weil mehrere gemeinsam entscheiden',
-      'pay_by_transfer': 'Weil Mitglieder per Überweisung zahlen',
-      'pay_online': 'Weil Mitglieder online zahlen',
-      'public_page': 'Weil der Raum eine öffentliche Seite hat',
-      'several_rooms': 'Weil es mehrere Räume oder Standorte gibt',
-      'shared_places': 'Weil Mitglieder die Plätze teilen',
-      'small_community': 'Weil die Gemeinschaft klein ist',
-      'start_simple': 'Weil Sie einfach beginnen möchten',
-      'tracks_purchases': 'Weil Sie verfolgen, was der Raum einkauft',
-      'vat_registered': 'Weil der Raum umsatzsteuerpflichtig ist',
-      'issues_invoices': 'Weil Sie Rechnungen stellen',
-      'association':
-          'Weil ein Verein mit seinem Vorstand gemeinsam entscheidet',
-      'approve_bookings': 'Weil Buchungen auf eine Freigabe warten',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupQuestionAssociation =>
+      'Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum';
+
+  @override
+  String get setupQuestionDoorTablet =>
+      'Ein Tablet am Eingang erfasst die Ankunft';
+
+  @override
+  String get setupQuestionIssueInvoices => 'Sie stellen Rechnungen';
+
+  @override
+  String get setupQuestionKeepBooks => 'Sie führen Bücher';
+
+  @override
+  String get setupQuestionMembersOweMoney =>
+      'Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)';
+
+  @override
+  String get setupQuestionOrganised =>
+      'Gremien, eigene Rollen oder Freigaben durch mehrere';
+
+  @override
+  String get setupQuestionPayOnline => 'Mitglieder zahlen online';
+
+  @override
+  String get setupQuestionPublicPage => 'Eine öffentliche Seite zeigt den Raum';
+
+  @override
+  String get setupQuestionSeveralRoomsOrSites =>
+      'Mehrere Räume, ein Besprechungsraum oder mehrere Standorte';
+
+  @override
+  String get setupQuestionTracksPurchases =>
+      'Sie verfolgen, was der Raum einkauft';
+
+  @override
+  String get setupQuestionVatRegistered => 'Der Raum ist umsatzsteuerpflichtig';
+
+  @override
+  String get setupReasonApproveBookings =>
+      'Weil Buchungen auf eine Freigabe warten';
+
+  @override
+  String get setupReasonAssociation =>
+      'Weil ein Verein mit seinem Vorstand gemeinsam entscheidet';
+
+  @override
+  String get setupReasonDoorTablet =>
+      'Weil ein Tablet am Eingang die Ankunft erfasst';
+
+  @override
+  String get setupReasonIssuesInvoices => 'Weil Sie Rechnungen stellen';
+
+  @override
+  String get setupReasonKeepsBooks => 'Weil Sie Bücher führen';
+
+  @override
+  String get setupReasonLater => 'Weil ein Assistent später kommen kann';
+
+  @override
+  String get setupReasonMembersOnly => 'Weil nur Mitglieder den Raum sehen';
+
+  @override
+  String get setupReasonMembersOwe => 'Weil Mitglieder dem Raum Geld schulden';
+
+  @override
+  String get setupReasonNoMoney => 'Weil kein Geld fließt';
+
+  @override
+  String get setupReasonNoPurchases => 'Weil der Raum keine Einkäufe verfolgt';
+
+  @override
+  String get setupReasonNoVat =>
+      'Weil der Raum nicht umsatzsteuerpflichtig ist';
+
+  @override
+  String get setupReasonOrganised => 'Weil mehrere gemeinsam entscheiden';
+
+  @override
+  String get setupReasonPayByTransfer =>
+      'Weil Mitglieder per Überweisung zahlen';
+
+  @override
+  String get setupReasonPayOnline => 'Weil Mitglieder online zahlen';
+
+  @override
+  String get setupReasonPublicPage =>
+      'Weil der Raum eine öffentliche Seite hat';
+
+  @override
+  String get setupReasonSeveralRooms =>
+      'Weil es mehrere Räume oder Standorte gibt';
+
+  @override
+  String get setupReasonSharedPlaces => 'Weil Mitglieder die Plätze teilen';
+
+  @override
+  String get setupReasonSmallCommunity => 'Weil die Gemeinschaft klein ist';
+
+  @override
+  String get setupReasonStartSimple => 'Weil Sie einfach beginnen möchten';
+
+  @override
+  String get setupReasonTracksPurchases =>
+      'Weil Sie verfolgen, was der Raum einkauft';
+
+  @override
+  String get setupReasonVatRegistered =>
+      'Weil der Raum umsatzsteuerpflichtig ist';
 
   @override
   String get setupRightsApplied => 'Mitglieder haben diese Rechte bereits.';
@@ -27083,19 +27863,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.';
 
   @override
-  String setupStateName(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'ready': 'Erledigt',
-      'needsConfiguration': 'Zu tun',
-      'blocked': 'Wartet auf einen anderen Schritt',
-      'needsOperator': 'Ihr Betreiber ist dran',
-      'notApplicable': 'Nicht genutzt',
-      'deferred': 'Zurückgestellt',
-      'unknown': 'Unbekannt',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupStateNameBlocked => 'Wartet auf einen anderen Schritt';
+
+  @override
+  String get setupStateNameDeferred => 'Zurückgestellt';
+
+  @override
+  String get setupStateNameNeedsConfiguration => 'Zu tun';
+
+  @override
+  String get setupStateNameNeedsOperator => 'Ihr Betreiber ist dran';
+
+  @override
+  String get setupStateNameNotApplicable => 'Nicht genutzt';
+
+  @override
+  String get setupStateNameReady => 'Erledigt';
+
+  @override
+  String get setupStateNameUnknown => 'Unbekannt';
 
   @override
   String get setupStepDone => 'Fertig';
@@ -27105,46 +27891,117 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Schritt wird auf einem eigenen Bildschirm erledigt.';
 
   @override
-  String setupStepHint(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'basics': 'Wie der Bereich heißt und wo er liegt: Datum, Währung und Feiertage ergeben sich daraus.',
-      'hours':
-          'Wann Mitglieder buchen können: Tage, Uhrzeiten und Schließtage.',
-      'places':
-          'Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.',
-      'member_rights': 'Mitglieder buchen lassen, den Kalender und ihr eigenes Konto sehen lassen.',
-      'invite': 'Den Code des Bereichs teilen oder Einladungen senden.',
-      'pricing': 'Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.',
-      'services':
-          'Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.',
-      'payment_methods': 'Ihre Bankverbindung und Zahlungshinweise.',
-      'online_payments':
-          'Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.',
-      'approvals': 'Wer Anträge freigibt und wie viele zustimmen müssen.',
-      'new_members': 'Womit ein neues Mitglied beginnt.',
-      'notifications': 'Wer wovon erfährt, und wie: in der App, auf dem Telefon, als Erinnerung.',
-      'limits': 'Wie weit im Voraus, wie lange und wie viele Plätze gleichzeitig Mitglieder buchen.',
-      'kiosk': 'Ein Tablet am Eingang und Mitgliedsausweise.',
-      'purchases': 'Was der Bereich kauft und bei wem.',
-      'lease': 'Miete und Nebenkosten, die der Bereich zahlt.',
-      'assets': 'Was dem Bereich gehört und wie es an Wert verliert.',
-      'look': 'Die Farben des Bereichs und seine eigenen Wörter.',
-      'public_page': 'Was Menschen außerhalb des Bereichs sehen können.',
-      'legal_identity': 'Die Angaben, die jede Rechnung tragen muss.',
-      'vat': 'Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.',
-      'numbering': 'Wie Rechnungsnummern aufgebaut sind.',
-      'documents': 'Ihr Briefkopf auf Rechnungen und Briefen.',
-      'einvoicing': 'Rechnungen über die E-Rechnungsplattform senden.',
-      'accounting': 'Der Kontenrahmen und die Exporte für Ihren Steuerberater.',
-      'reminders': 'Wann und wie an offene Rechnungen erinnert wird.',
-      'first_booking': 'Einen Platz buchen, wie es ein Mitglied tun würde.',
-      'recovery': 'Die Daten des Bereichs einmal exportieren.',
-      'assistant':
-          'Einen KI-Assistenten helfen lassen, immer mit Ihrer Bestätigung.',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupStepHintAccounting =>
+      'Der Kontenrahmen und die Exporte für Ihren Steuerberater.';
+
+  @override
+  String get setupStepHintApprovals =>
+      'Wer Anträge freigibt und wie viele zustimmen müssen.';
+
+  @override
+  String get setupStepHintAssets =>
+      'Was dem Bereich gehört und wie es an Wert verliert.';
+
+  @override
+  String get setupStepHintAssistant =>
+      'Einen KI-Assistenten helfen lassen, immer mit Ihrer Bestätigung.';
+
+  @override
+  String get setupStepHintBasics =>
+      'Wie der Bereich heißt und wo er liegt: Datum, Währung und Feiertage ergeben sich daraus.';
+
+  @override
+  String get setupStepHintDocuments =>
+      'Ihr Briefkopf auf Rechnungen und Briefen.';
+
+  @override
+  String get setupStepHintEinvoicing =>
+      'Rechnungen über die E-Rechnungsplattform senden.';
+
+  @override
+  String get setupStepHintFirstBooking =>
+      'Einen Platz buchen, wie es ein Mitglied tun würde.';
+
+  @override
+  String get setupStepHintHours =>
+      'Wann Mitglieder buchen können: Tage, Uhrzeiten und Schließtage.';
+
+  @override
+  String get setupStepHintInvite =>
+      'Den Code des Bereichs teilen oder Einladungen senden.';
+
+  @override
+  String get setupStepHintKiosk =>
+      'Ein Tablet am Eingang und Mitgliedsausweise.';
+
+  @override
+  String get setupStepHintLease =>
+      'Miete und Nebenkosten, die der Bereich zahlt.';
+
+  @override
+  String get setupStepHintLegalIdentity =>
+      'Die Angaben, die jede Rechnung tragen muss.';
+
+  @override
+  String get setupStepHintLimits =>
+      'Wie weit im Voraus, wie lange und wie viele Plätze gleichzeitig Mitglieder buchen.';
+
+  @override
+  String get setupStepHintLook =>
+      'Die Farben des Bereichs und seine eigenen Wörter.';
+
+  @override
+  String get setupStepHintMemberRights =>
+      'Mitglieder buchen lassen, den Kalender und ihr eigenes Konto sehen lassen.';
+
+  @override
+  String get setupStepHintNewMembers => 'Womit ein neues Mitglied beginnt.';
+
+  @override
+  String get setupStepHintNotifications =>
+      'Wer wovon erfährt, und wie: in der App, auf dem Telefon, als Erinnerung.';
+
+  @override
+  String get setupStepHintNumbering => 'Wie Rechnungsnummern aufgebaut sind.';
+
+  @override
+  String get setupStepHintOnlinePayments =>
+      'Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.';
+
+  @override
+  String get setupStepHintPaymentMethods =>
+      'Ihre Bankverbindung und Zahlungshinweise.';
+
+  @override
+  String get setupStepHintPlaces =>
+      'Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.';
+
+  @override
+  String get setupStepHintPricing =>
+      'Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.';
+
+  @override
+  String get setupStepHintPublicPage =>
+      'Was Menschen außerhalb des Bereichs sehen können.';
+
+  @override
+  String get setupStepHintPurchases => 'Was der Bereich kauft und bei wem.';
+
+  @override
+  String get setupStepHintRecovery =>
+      'Die Daten des Bereichs einmal exportieren.';
+
+  @override
+  String get setupStepHintReminders =>
+      'Wann und wie an offene Rechnungen erinnert wird.';
+
+  @override
+  String get setupStepHintServices =>
+      'Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.';
+
+  @override
+  String get setupStepHintVat =>
+      'Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.';
 
   @override
   String get setupStepLoadFailed =>
@@ -27160,41 +28017,91 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupStepPreviewTitle => 'Was Ihre Mitglieder sehen';
 
   @override
-  String setupStepTitle(String key) {
-    String _temp0 = intl.Intl.selectLogic(key, {
-      'basics': 'Name, Land und Zeitzone',
-      'hours': 'Öffnungszeiten',
-      'places': 'Plätze auf dem Plan',
-      'member_rights': 'Was Mitglieder dürfen',
-      'invite': 'Mitglieder einladen',
-      'pricing': 'Preise und Tarife',
-      'services': 'Leistungen',
-      'payment_methods': 'Wie Mitglieder zahlen',
-      'online_payments': 'Online-Zahlung',
-      'approvals': 'Freigaben',
-      'new_members': 'Neue Mitglieder',
-      'notifications': 'Benachrichtigungen',
-      'limits': 'Buchungsgrenzen',
-      'kiosk': 'Kiosk und Ausweise',
-      'purchases': 'Lieferanten und Einkäufe',
-      'lease': 'Ihr Mietvertrag',
-      'assets': 'Ausstattung',
-      'look': 'Farben und Begriffe',
-      'public_page': 'Öffentliche Seite',
-      'legal_identity': 'Rechtliche Angaben',
-      'vat': 'Umsatzsteuer',
-      'numbering': 'Rechnungsnummern',
-      'documents': 'Rechnungsbild',
-      'einvoicing': 'E-Rechnung',
-      'accounting': 'Buchhaltung',
-      'reminders': 'Zahlungserinnerungen',
-      'first_booking': 'Eine erste Buchung',
-      'recovery': 'Eine Kopie Ihrer Daten',
-      'assistant': 'Assistent',
-      'other': '$key',
-    });
-    return '$_temp0';
-  }
+  String get setupStepTitleAccounting => 'Buchhaltung';
+
+  @override
+  String get setupStepTitleApprovals => 'Freigaben';
+
+  @override
+  String get setupStepTitleAssets => 'Ausstattung';
+
+  @override
+  String get setupStepTitleAssistant => 'Assistent';
+
+  @override
+  String get setupStepTitleBasics => 'Name, Land und Zeitzone';
+
+  @override
+  String get setupStepTitleDocuments => 'Rechnungsbild';
+
+  @override
+  String get setupStepTitleEinvoicing => 'E-Rechnung';
+
+  @override
+  String get setupStepTitleFirstBooking => 'Eine erste Buchung';
+
+  @override
+  String get setupStepTitleHours => 'Öffnungszeiten';
+
+  @override
+  String get setupStepTitleInvite => 'Mitglieder einladen';
+
+  @override
+  String get setupStepTitleKiosk => 'Kiosk und Ausweise';
+
+  @override
+  String get setupStepTitleLease => 'Ihr Mietvertrag';
+
+  @override
+  String get setupStepTitleLegalIdentity => 'Rechtliche Angaben';
+
+  @override
+  String get setupStepTitleLimits => 'Buchungsgrenzen';
+
+  @override
+  String get setupStepTitleLook => 'Farben und Begriffe';
+
+  @override
+  String get setupStepTitleMemberRights => 'Was Mitglieder dürfen';
+
+  @override
+  String get setupStepTitleNewMembers => 'Neue Mitglieder';
+
+  @override
+  String get setupStepTitleNotifications => 'Benachrichtigungen';
+
+  @override
+  String get setupStepTitleNumbering => 'Rechnungsnummern';
+
+  @override
+  String get setupStepTitleOnlinePayments => 'Online-Zahlung';
+
+  @override
+  String get setupStepTitlePaymentMethods => 'Wie Mitglieder zahlen';
+
+  @override
+  String get setupStepTitlePlaces => 'Plätze auf dem Plan';
+
+  @override
+  String get setupStepTitlePricing => 'Preise und Tarife';
+
+  @override
+  String get setupStepTitlePublicPage => 'Öffentliche Seite';
+
+  @override
+  String get setupStepTitlePurchases => 'Lieferanten und Einkäufe';
+
+  @override
+  String get setupStepTitleRecovery => 'Eine Kopie Ihrer Daten';
+
+  @override
+  String get setupStepTitleReminders => 'Zahlungserinnerungen';
+
+  @override
+  String get setupStepTitleServices => 'Leistungen';
+
+  @override
+  String get setupStepTitleVat => 'Umsatzsteuer';
 
   @override
   String get setupTaskSaved =>

@@ -16,6 +16,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/set_member_kiosk.dart';
 import '../../application/toggle_workspace_feature.dart';
 import '../../domain/member.dart';

@@ -15,9 +15,9 @@
 // Pure Dart; the server enforces the same rules in save_book_profile
 // (0335).
 
-import 'json_reader.dart';
-import 'date_text.dart';
 import 'accounting_amount.dart';
+import 'date_text.dart';
+import 'json_reader.dart';
 
 /// Who keeps the official books.
 enum BookAuthority {

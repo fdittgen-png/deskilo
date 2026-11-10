@@ -2,6 +2,7 @@
 //
 // #2861 — the workspace export's words in the reader's language.
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../domain/workspace_export_labels.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_process.dart';

@@ -7,8 +7,8 @@
 //       only was the first);
 //   (b) a message that interpolates `{count}` / `{n}` without a plural reads
 //       wrong at 1: it takes plural forms or sits on a reasoned allow-list;
-//   (c) a select whose `other` echoes its own argument prints the raw key to a
-//       member when a case is missing: counted, the ceiling only falls;
+//   (c) no select echoes its own argument: a dictionary word is a key per
+//       case (lib/l10n/dictionary_labels.dart), so a missing one is a test;
 //   (d) the longest English value only shrinks.
 // The ceilings are the measure of 2026-11-10; the follow-up slices lower them.
 import 'dart:convert';
@@ -72,11 +72,8 @@ const Map<String, String> _bareCountAllowed = {
   'workspaceXmlImportPreviewAccessories': 'after a colon',
 };
 
-/// Selects whose `other` is `{their own argument}`.
-const _selectEchoCeiling = 18;
-
 /// The longest English message, in characters.
-const _longestCeiling = 3463;
+const _longestCeiling = 565;
 
 Map<String, String> _messages(String locale) {
   final map =
@@ -208,22 +205,17 @@ void main() {
     }
   });
 
-  test('selects whose other echoes the key only fall', () {
+  test('no select echoes its own argument as the fallback (#3485)', () {
     final echo = RegExp(r'\{(\w+),\s*select,.*other\{\{\1\}\}', dotAll: true);
     final offenders = [
       for (final e in en.entries)
         if (echo.hasMatch(e.value)) e.key,
     ];
     expect(
-      offenders.length,
-      lessThanOrEqualTo(_selectEchoCeiling),
-      reason: 'a select that prints its raw key when a case is missing '
-          '(#3485): ${offenders.take(8).join(', ')}',
-    );
-    expect(
-      offenders.length,
-      _selectEchoCeiling,
-      reason: 'record the win: lower _selectEchoCeiling to ${offenders.length}',
+      offenders,
+      isEmpty,
+      reason: 'a select that prints its raw key when a case is missing: give '
+          'each case its own key and map it in lib/l10n/dictionary_labels.dart',
     );
   });
 

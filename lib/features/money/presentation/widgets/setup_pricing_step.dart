@@ -22,6 +22,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/offer_subscription_levels.dart';
 import '../../domain/credit_product.dart';
 import '../../domain/fee_band.dart';

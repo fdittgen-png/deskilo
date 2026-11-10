@@ -31,14 +31,21 @@
   "@setupLaunchAnswers": {
     "description": "#2876 setup launch: setupLaunchAnswers"
   },
-  "setupLaunchGroup": "{key, select, open{Open} run{Run} grow{Grow} launch{Launch} other{{key}}}",
-  "@setupLaunchGroup": {
-    "description": "#2876 setup launch: setupLaunchGroup",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupLaunchGroupOpen": "Open",
+  "@setupLaunchGroupOpen": {
+    "description": "#3485 setupLaunchGroup: the label for case 'open'."
+  },
+  "setupLaunchGroupRun": "Run",
+  "@setupLaunchGroupRun": {
+    "description": "#3485 setupLaunchGroup: the label for case 'run'."
+  },
+  "setupLaunchGroupGrow": "Grow",
+  "@setupLaunchGroupGrow": {
+    "description": "#3485 setupLaunchGroup: the label for case 'grow'."
+  },
+  "setupLaunchGroupLaunch": "Launch",
+  "@setupLaunchGroupLaunch": {
+    "description": "#3485 setupLaunchGroup: the label for case 'launch'."
   },
   "setupLaunchOperator": "Only your operator can do these:",
   "@setupLaunchOperator": {

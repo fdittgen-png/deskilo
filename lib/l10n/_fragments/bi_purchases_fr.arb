@@ -110,7 +110,7 @@
       }
     }
   },
-  "biCostsUnqualified": "{count, plural, =1{1 ligne dont la taxe récupérable n'est pas qualifiée compte pour leur montant TTC.} other{{count} lignes dont la taxe récupérable n'est pas qualifiée comptent pour leur montant TTC.}}",
+  "biCostsUnqualified": "{count, plural, =1{1 ligne dont la taxe récupérable n'est pas qualifiée compte pour son montant TTC.} other{{count} lignes dont la taxe récupérable n'est pas qualifiée comptent pour leur montant TTC.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {

@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';

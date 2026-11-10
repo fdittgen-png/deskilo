@@ -2,6 +2,6 @@
 /// The Canadian VAT filing add-on (#3333).
 library;
 
-export 'src/ca_vat_filing.dart';
-export 'src/ca_invoice_mentions.dart';
 export 'src/ca_archive.dart';
+export 'src/ca_invoice_mentions.dart';
+export 'src/ca_vat_filing.dart';

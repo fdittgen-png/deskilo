@@ -15,6 +15,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_payment_instructions.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';

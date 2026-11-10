@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../domain/workspace_data_report_pdf.dart';
 import 'workspace_configuration_report_strings.dart';
 

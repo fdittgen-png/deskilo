@@ -7,9 +7,9 @@
 //
 // Pure Dart; every amount is an [AccountingAmount], never a double.
 
-import 'json_reader.dart';
 import 'accounting_amount.dart';
 import 'book_role.dart';
+import 'json_reader.dart';
 
 enum PostingBlock {
   /// The currency has no reviewed exponent.

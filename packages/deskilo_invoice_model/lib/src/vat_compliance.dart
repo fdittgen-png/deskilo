@@ -8,9 +8,9 @@
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import 'national_invoice_rules.dart';
 import 'place_of_supply.dart' show uncl5305ReverseCharge;
 import 'vat_regime.dart';
-import 'national_invoice_rules.dart';
 
 // #3333: the Canadian registration numbers live in the standards package, one
 // copy for the application and the Canadian add-on.

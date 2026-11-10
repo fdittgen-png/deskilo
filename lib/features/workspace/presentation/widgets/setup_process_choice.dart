@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_level_demo.dart';
 import '../../domain/setup_levels.dart';
 import '../../domain/workspace_feature.dart';

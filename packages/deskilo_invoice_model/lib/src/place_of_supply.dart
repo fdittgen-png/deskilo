@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'supply_class.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
+import 'supply_class.dart';
 import 'vat_treatment.dart';
 
 /// UNCL5305 category code AE: VAT reverse charge. The one place the code is

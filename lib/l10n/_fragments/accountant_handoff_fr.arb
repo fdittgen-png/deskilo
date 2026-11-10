@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Avant d’enregistrer",
-  "handoffIncluded": "{count, plural, =1{1 document dans le fichier} other{{count} document(s) dans le fichier}}",
-  "handoffExcludedSettlements": "{count, plural, =1{1 récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatif(s) de règlement écarté(s) : leurs factures figurent déjà}}",
+  "handoffIncluded": "{count, plural, =1{1 document dans le fichier} other{{count} documents dans le fichier}}",
+  "handoffExcludedSettlements": "{count, plural, =1{1 récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatifs de règlement écartés : leurs factures figurent déjà}}",
   "handoffIssued": "Émises",
   "handoffVoided": "Annulées",
   "handoffPayments": "Payé : {confirmed} confirmé, {pending} en attente",

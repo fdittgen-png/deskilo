@@ -10,6 +10,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_confirmation.dart';

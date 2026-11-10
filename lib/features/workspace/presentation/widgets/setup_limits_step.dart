@@ -17,6 +17,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_booking_limits.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/workspace.dart';

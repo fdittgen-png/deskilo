@@ -20,6 +20,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/add_service.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';

@@ -24,6 +24,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_dunning_rules.dart';
 import '../../domain/dunning.dart';
 import '../../domain/report_data_sample.dart';

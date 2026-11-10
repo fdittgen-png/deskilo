@@ -33,10 +33,11 @@
 // apportionment and rounding — and the declaration stores the server's
 // figures; `vat_return_parity_test.dart` pins both to one fixture.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:meta/meta.dart';
+
 import 'invoice.dart';
 import 'invoice_kind.dart';
-import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'vat_rate.dart';
 import 'vat_tax_point_policy.dart';
 

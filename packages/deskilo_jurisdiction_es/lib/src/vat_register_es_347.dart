@@ -8,9 +8,9 @@
 // space made. What the modelo 349 lists (intra-EU), exports and operations
 // not subject here are left out, as the order says.
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show csvCell;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show csvCell;
 import 'vat_register_es.dart';
 
 /// One customer of the list.

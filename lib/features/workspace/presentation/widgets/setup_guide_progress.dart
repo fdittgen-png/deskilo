@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_status.dart';
 
 /// The milestones the space chose, each with where it stands.

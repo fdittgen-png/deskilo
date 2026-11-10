@@ -18,8 +18,9 @@
 import 'dart:convert' show utf8;
 
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
-import 'sdi_natura.dart';
 import 'package:xml/xml.dart';
+
+import 'sdi_natura.dart';
 
 /// Bumped in the same commit as any change of the bytes this profile writes.
 const itFatturaPaImplementationVersion = '1';

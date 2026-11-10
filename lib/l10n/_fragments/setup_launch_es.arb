@@ -31,15 +31,10 @@
   "@setupLaunchAnswers": {
     "description": "#2876 setup launch: setupLaunchAnswers"
   },
-  "setupLaunchGroup": "{key, select, open{Abrir} run{Operar} grow{Crecer} launch{Lanzar} other{{key}}}",
-  "@setupLaunchGroup": {
-    "description": "#2876 setup launch: setupLaunchGroup",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
-  },
+  "setupLaunchGroupOpen": "Abrir",
+  "setupLaunchGroupRun": "Operar",
+  "setupLaunchGroupGrow": "Crecer",
+  "setupLaunchGroupLaunch": "Lanzar",
   "setupLaunchOperator": "Solo su operador puede hacer esto:",
   "@setupLaunchOperator": {
     "description": "#2876 setup launch: setupLaunchOperator"

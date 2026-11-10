@@ -4282,7 +4282,7 @@ abstract class AppLocalizations {
   /// #2582 cost figures
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line whose recoverable tax is not qualified counts at their gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}'**
+  /// **'{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}'**
   String biCostsUnqualified(int count);
 
   /// #2582 cost figures
@@ -9891,8 +9891,14 @@ abstract class AppLocalizations {
   /// No description provided for @consentWhoBody.
   ///
   /// In en, this message translates to:
-  /// **'Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it. A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.'**
+  /// **'Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.'**
   String get consentWhoBody;
+
+  /// No description provided for @consentWhoBodyPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.'**
+  String get consentWhoBodyPublic;
 
   /// No description provided for @consentWhoTitle.
   ///
@@ -10596,11 +10602,89 @@ abstract class AppLocalizations {
   /// **'Archived'**
   String get dataReportArchived;
 
-  /// #2862 data report column header by key; other keys fall back to the export column names
+  /// #3485 dataReportColumn: the label for case 'attended'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}'**
-  String dataReportColumn(String key);
+  /// **'Attended'**
+  String get dataReportColumnAttended;
+
+  /// #3485 dataReportColumn: the label for case 'balance'.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get dataReportColumnBalance;
+
+  /// #3485 dataReportColumn: the label for case 'bookings'.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get dataReportColumnBookings;
+
+  /// #3485 dataReportColumn: the label for case 'cancelled'.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get dataReportColumnCancelled;
+
+  /// #3485 dataReportColumn: the label for case 'charges'.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged'**
+  String get dataReportColumnCharges;
+
+  /// #3485 dataReportColumn: the label for case 'credits'.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get dataReportColumnCredits;
+
+  /// #3485 dataReportColumn: the label for case 'held'.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get dataReportColumnHeld;
+
+  /// #3485 dataReportColumn: the label for case 'hours'.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get dataReportColumnHours;
+
+  /// #3485 dataReportColumn: the label for case 'month'.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get dataReportColumnMonth;
+
+  /// #3485 dataReportColumn: the label for case 'open'.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get dataReportColumnOpen;
+
+  /// #3485 dataReportColumn: the label for case 'paid'.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get dataReportColumnPaid;
+
+  /// #3485 dataReportColumn: the label for case 'reference'.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get dataReportColumnReference;
+
+  /// #3485 dataReportColumn: the label for case 'role'.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get dataReportColumnRole;
+
+  /// #3485 dataReportColumn: the label for case 'seats'.
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get dataReportColumnSeats;
 
   /// #2862 data report: dataReportContents
   ///
@@ -10626,11 +10710,41 @@ abstract class AppLocalizations {
   /// **'Nothing recorded'**
   String get dataReportNone;
 
-  /// #2862 data report section title by key
+  /// #3485 dataReportPart: the label for case 'bookings'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}'**
-  String dataReportPart(String key);
+  /// **'Bookings by month'**
+  String get dataReportPartBookings;
+
+  /// #3485 dataReportPart: the label for case 'invoices'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice register'**
+  String get dataReportPartInvoices;
+
+  /// #3485 dataReportPart: the label for case 'members'.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get dataReportPartMembers;
+
+  /// #3485 dataReportPart: the label for case 'payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments and balances'**
+  String get dataReportPartPayments;
+
+  /// #3485 dataReportPart: the label for case 'plan'.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan and prices'**
+  String get dataReportPartPlan;
+
+  /// #3485 dataReportPart: the label for case 'purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases and suppliers'**
+  String get dataReportPartPurchases;
 
   /// #2862 data report: dataReportSubtitle
   ///
@@ -14524,11 +14638,689 @@ abstract class AppLocalizations {
   /// **'Invoices and payments only; no general ledger. The file says so in its header.'**
   String get exportClaimSubset;
 
-  /// #2861 workspace export: exportColumnName
+  /// #3485 exportColumnName: the label for case 'action'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} field{Field} value{Value} process{Process} feature{Feature} on{On} other{{key}}}'**
-  String exportColumnName(String key);
+  /// **'Action'**
+  String get exportColumnNameAction;
+
+  /// #3485 exportColumnName: the label for case 'active'.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get exportColumnNameActive;
+
+  /// #3485 exportColumnName: the label for case 'actor'.
+  ///
+  /// In en, this message translates to:
+  /// **'Done by'**
+  String get exportColumnNameActor;
+
+  /// #3485 exportColumnName: the label for case 'address'.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get exportColumnNameAddress;
+
+  /// #3485 exportColumnName: the label for case 'admin'.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get exportColumnNameAdmin;
+
+  /// #3485 exportColumnName: the label for case 'amenities'.
+  ///
+  /// In en, this message translates to:
+  /// **'Amenities'**
+  String get exportColumnNameAmenities;
+
+  /// #3485 exportColumnName: the label for case 'amount'.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get exportColumnNameAmount;
+
+  /// #3485 exportColumnName: the label for case 'area_kind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Area type'**
+  String get exportColumnNameAreaKind;
+
+  /// #3485 exportColumnName: the label for case 'blocked_from'.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked from'**
+  String get exportColumnNameBlockedFrom;
+
+  /// #3485 exportColumnName: the label for case 'blocked_to'.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked until'**
+  String get exportColumnNameBlockedTo;
+
+  /// #3485 exportColumnName: the label for case 'bookable_as_whole'.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookable as a whole'**
+  String get exportColumnNameBookableAsWhole;
+
+  /// #3485 exportColumnName: the label for case 'by_system'.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get exportColumnNameBySystem;
+
+  /// #3485 exportColumnName: the label for case 'capacity'.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity'**
+  String get exportColumnNameCapacity;
+
+  /// #3485 exportColumnName: the label for case 'category'.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get exportColumnNameCategory;
+
+  /// #3485 exportColumnName: the label for case 'chair'.
+  ///
+  /// In en, this message translates to:
+  /// **'Chair'**
+  String get exportColumnNameChair;
+
+  /// #3485 exportColumnName: the label for case 'checked_in_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get exportColumnNameCheckedInAt;
+
+  /// #3485 exportColumnName: the label for case 'checked_out_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get exportColumnNameCheckedOutAt;
+
+  /// #3485 exportColumnName: the label for case 'city'.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get exportColumnNameCity;
+
+  /// #3485 exportColumnName: the label for case 'co_owner'.
+  ///
+  /// In en, this message translates to:
+  /// **'Co-owner'**
+  String get exportColumnNameCoOwner;
+
+  /// #3485 exportColumnName: the label for case 'color'.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get exportColumnNameColor;
+
+  /// #3485 exportColumnName: the label for case 'company'.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get exportColumnNameCompany;
+
+  /// #3485 exportColumnName: the label for case 'country'.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get exportColumnNameCountry;
+
+  /// #3485 exportColumnName: the label for case 'created_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded on'**
+  String get exportColumnNameCreatedAt;
+
+  /// #3485 exportColumnName: the label for case 'currency'.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get exportColumnNameCurrency;
+
+  /// #3485 exportColumnName: the label for case 'decided_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Decided on'**
+  String get exportColumnNameDecidedAt;
+
+  /// #3485 exportColumnName: the label for case 'decided_by'.
+  ///
+  /// In en, this message translates to:
+  /// **'Decided by'**
+  String get exportColumnNameDecidedBy;
+
+  /// #3485 exportColumnName: the label for case 'decision'.
+  ///
+  /// In en, this message translates to:
+  /// **'Decision'**
+  String get exportColumnNameDecision;
+
+  /// #3485 exportColumnName: the label for case 'decisions'.
+  ///
+  /// In en, this message translates to:
+  /// **'Decisions'**
+  String get exportColumnNameDecisions;
+
+  /// #3485 exportColumnName: the label for case 'description'.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get exportColumnNameDescription;
+
+  /// #3485 exportColumnName: the label for case 'desk'.
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get exportColumnNameDesk;
+
+  /// #3485 exportColumnName: the label for case 'detailed'.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed'**
+  String get exportColumnNameDetailed;
+
+  /// #3485 exportColumnName: the label for case 'details'.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get exportColumnNameDetails;
+
+  /// #3485 exportColumnName: the label for case 'due_on'.
+  ///
+  /// In en, this message translates to:
+  /// **'Due on'**
+  String get exportColumnNameDueOn;
+
+  /// #3485 exportColumnName: the label for case 'email'.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get exportColumnNameEmail;
+
+  /// #3485 exportColumnName: the label for case 'enabled_features'.
+  ///
+  /// In en, this message translates to:
+  /// **'Features on'**
+  String get exportColumnNameEnabledFeatures;
+
+  /// #3485 exportColumnName: the label for case 'ends_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Ends'**
+  String get exportColumnNameEndsAt;
+
+  /// #3485 exportColumnName: the label for case 'event_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Request'**
+  String get exportColumnNameEventId;
+
+  /// #3485 exportColumnName: the label for case 'event_type'.
+  ///
+  /// In en, this message translates to:
+  /// **'Request type'**
+  String get exportColumnNameEventType;
+
+  /// #3485 exportColumnName: the label for case 'feature'.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get exportColumnNameFeature;
+
+  /// #3485 exportColumnName: the label for case 'field'.
+  ///
+  /// In en, this message translates to:
+  /// **'Field'**
+  String get exportColumnNameField;
+
+  /// #3485 exportColumnName: the label for case 'first_name'.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get exportColumnNameFirstName;
+
+  /// #3485 exportColumnName: the label for case 'height'.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get exportColumnNameHeight;
+
+  /// #3485 exportColumnName: the label for case 'id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Id'**
+  String get exportColumnNameId;
+
+  /// #3485 exportColumnName: the label for case 'invoice'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get exportColumnNameInvoice;
+
+  /// #3485 exportColumnName: the label for case 'issued_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on'**
+  String get exportColumnNameIssuedAt;
+
+  /// #3485 exportColumnName: the label for case 'issued_by'.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by'**
+  String get exportColumnNameIssuedBy;
+
+  /// #3485 exportColumnName: the label for case 'joined_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get exportColumnNameJoinedAt;
+
+  /// #3485 exportColumnName: the label for case 'kind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get exportColumnNameKind;
+
+  /// #3485 exportColumnName: the label for case 'kiosk'.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk'**
+  String get exportColumnNameKiosk;
+
+  /// #3485 exportColumnName: the label for case 'label'.
+  ///
+  /// In en, this message translates to:
+  /// **'Wording'**
+  String get exportColumnNameLabel;
+
+  /// #3485 exportColumnName: the label for case 'last_name'.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get exportColumnNameLastName;
+
+  /// #3485 exportColumnName: the label for case 'last_seen'.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen'**
+  String get exportColumnNameLastSeen;
+
+  /// #3485 exportColumnName: the label for case 'last_sent_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Last sent'**
+  String get exportColumnNameLastSentAt;
+
+  /// #3485 exportColumnName: the label for case 'legal_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration number'**
+  String get exportColumnNameLegalId;
+
+  /// #3485 exportColumnName: the label for case 'level'.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get exportColumnNameLevel;
+
+  /// #3485 exportColumnName: the label for case 'line'.
+  ///
+  /// In en, this message translates to:
+  /// **'Line'**
+  String get exportColumnNameLine;
+
+  /// #3485 exportColumnName: the label for case 'member'.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get exportColumnNameMember;
+
+  /// #3485 exportColumnName: the label for case 'member_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Member id'**
+  String get exportColumnNameMemberId;
+
+  /// #3485 exportColumnName: the label for case 'member_number'.
+  ///
+  /// In en, this message translates to:
+  /// **'Member number'**
+  String get exportColumnNameMemberNumber;
+
+  /// #3485 exportColumnName: the label for case 'minutes_present'.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes present'**
+  String get exportColumnNameMinutesPresent;
+
+  /// #3485 exportColumnName: the label for case 'name'.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get exportColumnNameName;
+
+  /// #3485 exportColumnName: the label for case 'net'.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get exportColumnNameNet;
+
+  /// #3485 exportColumnName: the label for case 'number'.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get exportColumnNameNumber;
+
+  /// #3485 exportColumnName: the label for case 'occurred_on'.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get exportColumnNameOccurredOn;
+
+  /// #3485 exportColumnName: the label for case 'office'.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get exportColumnNameOffice;
+
+  /// #3485 exportColumnName: the label for case 'on'.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get exportColumnNameOn;
+
+  /// #3485 exportColumnName: the label for case 'order_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get exportColumnNameOrderId;
+
+  /// #3485 exportColumnName: the label for case 'orientation'.
+  ///
+  /// In en, this message translates to:
+  /// **'Orientation'**
+  String get exportColumnNameOrientation;
+
+  /// #3485 exportColumnName: the label for case 'overage_policy'.
+  ///
+  /// In en, this message translates to:
+  /// **'When over quota'**
+  String get exportColumnNameOveragePolicy;
+
+  /// #3485 exportColumnName: the label for case 'owner'.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get exportColumnNameOwner;
+
+  /// #3485 exportColumnName: the label for case 'parking_kind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Parking type'**
+  String get exportColumnNameParkingKind;
+
+  /// #3485 exportColumnName: the label for case 'payment_terms'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms'**
+  String get exportColumnNamePaymentTerms;
+
+  /// #3485 exportColumnName: the label for case 'period'.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get exportColumnNamePeriod;
+
+  /// #3485 exportColumnName: the label for case 'phone'.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get exportColumnNamePhone;
+
+  /// #3485 exportColumnName: the label for case 'postal_code'.
+  ///
+  /// In en, this message translates to:
+  /// **'Postcode'**
+  String get exportColumnNamePostalCode;
+
+  /// #3485 exportColumnName: the label for case 'price'.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get exportColumnNamePrice;
+
+  /// #3485 exportColumnName: the label for case 'process'.
+  ///
+  /// In en, this message translates to:
+  /// **'Process'**
+  String get exportColumnNameProcess;
+
+  /// #3485 exportColumnName: the label for case 'provider'.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider'**
+  String get exportColumnNameProvider;
+
+  /// #3485 exportColumnName: the label for case 'quantity'.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get exportColumnNameQuantity;
+
+  /// #3485 exportColumnName: the label for case 'recorded_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded on'**
+  String get exportColumnNameRecordedAt;
+
+  /// #3485 exportColumnName: the label for case 'replaces'.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces'**
+  String get exportColumnNameReplaces;
+
+  /// #3485 exportColumnName: the label for case 'reservation_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get exportColumnNameReservationId;
+
+  /// #3485 exportColumnName: the label for case 'resource_kind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Place type'**
+  String get exportColumnNameResourceKind;
+
+  /// #3485 exportColumnName: the label for case 'series_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get exportColumnNameSeriesId;
+
+  /// #3485 exportColumnName: the label for case 'series_pattern'.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get exportColumnNameSeriesPattern;
+
+  /// #3485 exportColumnName: the label for case 'signed_amount'.
+  ///
+  /// In en, this message translates to:
+  /// **'Effect on balance'**
+  String get exportColumnNameSignedAmount;
+
+  /// #3485 exportColumnName: the label for case 'slot_minutes'.
+  ///
+  /// In en, this message translates to:
+  /// **'Slot (minutes)'**
+  String get exportColumnNameSlotMinutes;
+
+  /// #3485 exportColumnName: the label for case 'sort_order'.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get exportColumnNameSortOrder;
+
+  /// #3485 exportColumnName: the label for case 'source_invoice'.
+  ///
+  /// In en, this message translates to:
+  /// **'From invoice'**
+  String get exportColumnNameSourceInvoice;
+
+  /// #3485 exportColumnName: the label for case 'space'.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get exportColumnNameSpace;
+
+  /// #3485 exportColumnName: the label for case 'starts_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get exportColumnNameStartsAt;
+
+  /// #3485 exportColumnName: the label for case 'state'.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get exportColumnNameState;
+
+  /// #3485 exportColumnName: the label for case 'status'.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get exportColumnNameStatus;
+
+  /// #3485 exportColumnName: the label for case 'street'.
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get exportColumnNameStreet;
+
+  /// #3485 exportColumnName: the label for case 'subject'.
+  ///
+  /// In en, this message translates to:
+  /// **'Concerns'**
+  String get exportColumnNameSubject;
+
+  /// #3485 exportColumnName: the label for case 'subscription_pct'.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription (%)'**
+  String get exportColumnNameSubscriptionPct;
+
+  /// #3485 exportColumnName: the label for case 'timezone'.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get exportColumnNameTimezone;
+
+  /// #3485 exportColumnName: the label for case 'title'.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get exportColumnNameTitle;
+
+  /// #3485 exportColumnName: the label for case 'total'.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get exportColumnNameTotal;
+
+  /// #3485 exportColumnName: the label for case 'type'.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get exportColumnNameType;
+
+  /// #3485 exportColumnName: the label for case 'value'.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get exportColumnNameValue;
+
+  /// #3485 exportColumnName: the label for case 'vat'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get exportColumnNameVat;
+
+  /// #3485 exportColumnName: the label for case 'vat_by_rate'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT by rate'**
+  String get exportColumnNameVatByRate;
+
+  /// #3485 exportColumnName: the label for case 'vat_category'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT category'**
+  String get exportColumnNameVatCategory;
+
+  /// #3485 exportColumnName: the label for case 'vat_id'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number'**
+  String get exportColumnNameVatId;
+
+  /// #3485 exportColumnName: the label for case 'vat_percent'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT %'**
+  String get exportColumnNameVatPercent;
+
+  /// #3485 exportColumnName: the label for case 'vat_regime'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT regime'**
+  String get exportColumnNameVatRegime;
+
+  /// #3485 exportColumnName: the label for case 'vat_treatment'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT treatment'**
+  String get exportColumnNameVatTreatment;
+
+  /// #3485 exportColumnName: the label for case 'voided_at'.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled on'**
+  String get exportColumnNameVoidedAt;
+
+  /// #3485 exportColumnName: the label for case 'whatsapp'.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get exportColumnNameWhatsapp;
+
+  /// #3485 exportColumnName: the label for case 'width'.
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get exportColumnNameWidth;
+
+  /// #3485 exportColumnName: the label for case 'workspace_code'.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace code'**
+  String get exportColumnNameWorkspaceCode;
+
+  /// #3485 exportColumnName: the label for case 'x'.
+  ///
+  /// In en, this message translates to:
+  /// **'X'**
+  String get exportColumnNameX;
+
+  /// #3485 exportColumnName: the label for case 'y'.
+  ///
+  /// In en, this message translates to:
+  /// **'Y'**
+  String get exportColumnNameY;
 
   /// Accounting export sheet (#2379): the Danish registered-system duty and its two routes; systems = the registered systems of the registry
   ///
@@ -14554,11 +15346,455 @@ abstract class AppLocalizations {
   /// **'Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.'**
   String get exportNoCompleteBooks;
 
-  /// #2861 workspace export: exportSheetName
+  /// #3485 exportSheetName: the label for case 'about'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} purchase_orders{Purchase orders} purchase_order_lines{Purchase order lines} purchase_order_sends{Purchase order sendings} purchase_order_receipts{Goods receipts} purchase_order_receipt_lines{Goods receipt lines} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
-  String exportSheetName(String key);
+  /// **'About this export'**
+  String get exportSheetNameAbout;
+
+  /// #3485 exportSheetName: the label for case 'accessories'.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get exportSheetNameAccessories;
+
+  /// #3485 exportSheetName: the label for case 'asset_valuation_batches'.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset valuations'**
+  String get exportSheetNameAssetValuationBatches;
+
+  /// #3485 exportSheetName: the label for case 'asset_valuation_rows'.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset valuation lines'**
+  String get exportSheetNameAssetValuationRows;
+
+  /// #3485 exportSheetName: the label for case 'book_accounts'.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts'**
+  String get exportSheetNameBookAccounts;
+
+  /// #3485 exportSheetName: the label for case 'book_mappings'.
+  ///
+  /// In en, this message translates to:
+  /// **'Account mappings'**
+  String get exportSheetNameBookMappings;
+
+  /// #3485 exportSheetName: the label for case 'book_periods'.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting periods'**
+  String get exportSheetNameBookPeriods;
+
+  /// #3485 exportSheetName: the label for case 'book_profiles'.
+  ///
+  /// In en, this message translates to:
+  /// **'Book profiles'**
+  String get exportSheetNameBookProfiles;
+
+  /// #3485 exportSheetName: the label for case 'charging_stations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging stations'**
+  String get exportSheetNameChargingStations;
+
+  /// #3485 exportSheetName: the label for case 'check_ins'.
+  ///
+  /// In en, this message translates to:
+  /// **'Attendance'**
+  String get exportSheetNameCheckIns;
+
+  /// #3485 exportSheetName: the label for case 'closure_days'.
+  ///
+  /// In en, this message translates to:
+  /// **'Closure days'**
+  String get exportSheetNameClosureDays;
+
+  /// #3485 exportSheetName: the label for case 'credit_products'.
+  ///
+  /// In en, this message translates to:
+  /// **'Carnet types'**
+  String get exportSheetNameCreditProducts;
+
+  /// #3485 exportSheetName: the label for case 'decisions'.
+  ///
+  /// In en, this message translates to:
+  /// **'Decisions'**
+  String get exportSheetNameDecisions;
+
+  /// #3485 exportSheetName: the label for case 'desks'.
+  ///
+  /// In en, this message translates to:
+  /// **'Desks'**
+  String get exportSheetNameDesks;
+
+  /// #3485 exportSheetName: the label for case 'einvoice_inbox'.
+  ///
+  /// In en, this message translates to:
+  /// **'Received e-invoices'**
+  String get exportSheetNameEinvoiceInbox;
+
+  /// #3485 exportSheetName: the label for case 'events'.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get exportSheetNameEvents;
+
+  /// #3485 exportSheetName: the label for case 'expense_occurrences'.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense dates'**
+  String get exportSheetNameExpenseOccurrences;
+
+  /// #3485 exportSheetName: the label for case 'expense_repartitions'.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared costs'**
+  String get exportSheetNameExpenseRepartitions;
+
+  /// #3485 exportSheetName: the label for case 'expense_schedules'.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled expenses'**
+  String get exportSheetNameExpenseSchedules;
+
+  /// #3485 exportSheetName: the label for case 'features'.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get exportSheetNameFeatures;
+
+  /// #3485 exportSheetName: the label for case 'fee_bands'.
+  ///
+  /// In en, this message translates to:
+  /// **'Fee bands'**
+  String get exportSheetNameFeeBands;
+
+  /// #3485 exportSheetName: the label for case 'guest_participations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest visits'**
+  String get exportSheetNameGuestParticipations;
+
+  /// #3485 exportSheetName: the label for case 'invoice_dunning_holds'.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder holds'**
+  String get exportSheetNameInvoiceDunningHolds;
+
+  /// #3485 exportSheetName: the label for case 'invoice_lines'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice lines'**
+  String get exportSheetNameInvoiceLines;
+
+  /// #3485 exportSheetName: the label for case 'invoice_matches'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice settlements'**
+  String get exportSheetNameInvoiceMatches;
+
+  /// #3485 exportSheetName: the label for case 'invoice_reminders'.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get exportSheetNameInvoiceReminders;
+
+  /// #3485 exportSheetName: the label for case 'invoices'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get exportSheetNameInvoices;
+
+  /// #3485 exportSheetName: the label for case 'lease_settlements'.
+  ///
+  /// In en, this message translates to:
+  /// **'Lease settlements'**
+  String get exportSheetNameLeaseSettlements;
+
+  /// #3485 exportSheetName: the label for case 'lease_terms'.
+  ///
+  /// In en, this message translates to:
+  /// **'Lease terms'**
+  String get exportSheetNameLeaseTerms;
+
+  /// #3485 exportSheetName: the label for case 'ledger'.
+  ///
+  /// In en, this message translates to:
+  /// **'Member accounts'**
+  String get exportSheetNameLedger;
+
+  /// #3485 exportSheetName: the label for case 'levels'.
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get exportSheetNameLevels;
+
+  /// #3485 exportSheetName: the label for case 'member_credit_uses'.
+  ///
+  /// In en, this message translates to:
+  /// **'Carnet uses'**
+  String get exportSheetNameMemberCreditUses;
+
+  /// #3485 exportSheetName: the label for case 'member_credits'.
+  ///
+  /// In en, this message translates to:
+  /// **'Carnets'**
+  String get exportSheetNameMemberCredits;
+
+  /// #3485 exportSheetName: the label for case 'number_sequences'.
+  ///
+  /// In en, this message translates to:
+  /// **'Number sequences'**
+  String get exportSheetNameNumberSequences;
+
+  /// #3485 exportSheetName: the label for case 'offices'.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get exportSheetNameOffices;
+
+  /// #3485 exportSheetName: the label for case 'outgoing_payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Outgoing payments'**
+  String get exportSheetNameOutgoingPayments;
+
+  /// #3485 exportSheetName: the label for case 'overview'.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get exportSheetNameOverview;
+
+  /// #3485 exportSheetName: the label for case 'packages'.
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get exportSheetNamePackages;
+
+  /// #3485 exportSheetName: the label for case 'payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get exportSheetNamePayments;
+
+  /// #3485 exportSheetName: the label for case 'plan_images'.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan images'**
+  String get exportSheetNamePlanImages;
+
+  /// #3485 exportSheetName: the label for case 'plans'.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get exportSheetNamePlans;
+
+  /// #3485 exportSheetName: the label for case 'premises_leases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Leases'**
+  String get exportSheetNamePremisesLeases;
+
+  /// #3485 exportSheetName: the label for case 'price_negotiations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiations'**
+  String get exportSheetNamePriceNegotiations;
+
+  /// #3485 exportSheetName: the label for case 'purchase_documents'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase documents'**
+  String get exportSheetNamePurchaseDocuments;
+
+  /// #3485 exportSheetName: the label for case 'purchase_lines'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase lines'**
+  String get exportSheetNamePurchaseLines;
+
+  /// #3485 exportSheetName: the label for case 'purchase_obligations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts to pay'**
+  String get exportSheetNamePurchaseObligations;
+
+  /// #3485 exportSheetName: the label for case 'purchase_order_lines'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order lines'**
+  String get exportSheetNamePurchaseOrderLines;
+
+  /// #3485 exportSheetName: the label for case 'purchase_order_receipt_lines'.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods receipt lines'**
+  String get exportSheetNamePurchaseOrderReceiptLines;
+
+  /// #3485 exportSheetName: the label for case 'purchase_order_receipts'.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods receipts'**
+  String get exportSheetNamePurchaseOrderReceipts;
+
+  /// #3485 exportSheetName: the label for case 'purchase_order_sends'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order sendings'**
+  String get exportSheetNamePurchaseOrderSends;
+
+  /// #3485 exportSheetName: the label for case 'purchase_orders'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase orders'**
+  String get exportSheetNamePurchaseOrders;
+
+  /// #3485 exportSheetName: the label for case 'quota_extensions'.
+  ///
+  /// In en, this message translates to:
+  /// **'Quota extensions'**
+  String get exportSheetNameQuotaExtensions;
+
+  /// #3485 exportSheetName: the label for case 'reservations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get exportSheetNameReservations;
+
+  /// #3485 exportSheetName: the label for case 'rights_requests'.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy requests'**
+  String get exportSheetNameRightsRequests;
+
+  /// #3485 exportSheetName: the label for case 'room_rental_fees'.
+  ///
+  /// In en, this message translates to:
+  /// **'Room rental fees'**
+  String get exportSheetNameRoomRentalFees;
+
+  /// #3485 exportSheetName: the label for case 'room_rentals'.
+  ///
+  /// In en, this message translates to:
+  /// **'Room rentals'**
+  String get exportSheetNameRoomRentals;
+
+  /// #3485 exportSheetName: the label for case 'seat_accessories'.
+  ///
+  /// In en, this message translates to:
+  /// **'Place accessories'**
+  String get exportSheetNameSeatAccessories;
+
+  /// #3485 exportSheetName: the label for case 'seats'.
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get exportSheetNameSeats;
+
+  /// #3485 exportSheetName: the label for case 'service_catalog'.
+  ///
+  /// In en, this message translates to:
+  /// **'Service prices'**
+  String get exportSheetNameServiceCatalog;
+
+  /// #3485 exportSheetName: the label for case 'services'.
+  ///
+  /// In en, this message translates to:
+  /// **'Services used'**
+  String get exportSheetNameServices;
+
+  /// #3485 exportSheetName: the label for case 'setting_values'.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get exportSheetNameSettingValues;
+
+  /// #3485 exportSheetName: the label for case 'sites'.
+  ///
+  /// In en, this message translates to:
+  /// **'Sites'**
+  String get exportSheetNameSites;
+
+  /// #3485 exportSheetName: the label for case 'suppliers'.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get exportSheetNameSuppliers;
+
+  /// #3485 exportSheetName: the label for case 'tax_exemption_certificates'.
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption certificates'**
+  String get exportSheetNameTaxExemptionCertificates;
+
+  /// #3485 exportSheetName: the label for case 'usage_records'.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get exportSheetNameUsageRecords;
+
+  /// #3485 exportSheetName: the label for case 'users'.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get exportSheetNameUsers;
+
+  /// #3485 exportSheetName: the label for case 'validation_policies'.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval rules'**
+  String get exportSheetNameValidationPolicies;
+
+  /// #3485 exportSheetName: the label for case 'vat_declarations'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT returns'**
+  String get exportSheetNameVatDeclarations;
+
+  /// #3485 exportSheetName: the label for case 'vat_rates'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rates'**
+  String get exportSheetNameVatRates;
+
+  /// #3485 exportSheetName: the label for case 'workspace'.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get exportSheetNameWorkspace;
+
+  /// #3485 exportSheetName: the label for case 'workspace_assets'.
+  ///
+  /// In en, this message translates to:
+  /// **'Assets'**
+  String get exportSheetNameWorkspaceAssets;
+
+  /// #3485 exportSheetName: the label for case 'workspace_field_definitions'.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions'**
+  String get exportSheetNameWorkspaceFieldDefinitions;
+
+  /// #3485 exportSheetName: the label for case 'workspace_field_values'.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers'**
+  String get exportSheetNameWorkspaceFieldValues;
+
+  /// #3485 exportSheetName: the label for case 'workspace_role_members'.
+  ///
+  /// In en, this message translates to:
+  /// **'Role holders'**
+  String get exportSheetNameWorkspaceRoleMembers;
+
+  /// #3485 exportSheetName: the label for case 'workspace_roles'.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get exportSheetNameWorkspaceRoles;
 
   /// #669 - accounting export formats
   ///
@@ -14566,11 +15802,305 @@ abstract class AppLocalizations {
   /// **'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.'**
   String get exportUncertifiedSoftware;
 
-  /// #2861 workspace export: a status or type value as the reader reads it
+  /// #3485 exportValueName: the label for case 'accepted'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, reserved{Booked} checkedIn{Checked in} completed{Completed} cancelled{Cancelled} released{Released} active{Active} paused{Paused} pending{Pending} exited{Left} applied{Applied} confirmed{Confirmed} rejected{Declined} expired{Expired} created{Created} modified{Changed} submitted{Submitted} approved{Approved} accepted{Accepted} declined{Declined} charge{Charge} credit{Credit} subscription{Subscription} overage{Over quota} expense{Expense} payment{Payment} adjustment{Adjustment} service{Service} package{Package} refund{Refund} reimbursement{Reimbursement} seat{Seat} room{Room} parking{Parking} standard{Standard} ev{Electric} accessible{Accessible} workspace{Workspace} n{North} e{East} s{South} w{West} blocked{Not allowed} payg{Pay as you go} none{No} passive{Successor} founder{Founder} invited{Invited} full{Invoice} usage{Usage} settlement{Settlement} other{{key}}}'**
-  String exportValueName(String key);
+  /// **'Accepted'**
+  String get exportValueNameAccepted;
+
+  /// #3485 exportValueName: the label for case 'accessible'.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessible'**
+  String get exportValueNameAccessible;
+
+  /// #3485 exportValueName: the label for case 'active'.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get exportValueNameActive;
+
+  /// #3485 exportValueName: the label for case 'adjustment'.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment'**
+  String get exportValueNameAdjustment;
+
+  /// #3485 exportValueName: the label for case 'applied'.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get exportValueNameApplied;
+
+  /// #3485 exportValueName: the label for case 'approved'.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get exportValueNameApproved;
+
+  /// #3485 exportValueName: the label for case 'blocked'.
+  ///
+  /// In en, this message translates to:
+  /// **'Not allowed'**
+  String get exportValueNameBlocked;
+
+  /// #3485 exportValueName: the label for case 'cancelled'.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get exportValueNameCancelled;
+
+  /// #3485 exportValueName: the label for case 'charge'.
+  ///
+  /// In en, this message translates to:
+  /// **'Charge'**
+  String get exportValueNameCharge;
+
+  /// #3485 exportValueName: the label for case 'checkedIn'.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get exportValueNameCheckedIn;
+
+  /// #3485 exportValueName: the label for case 'completed'.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get exportValueNameCompleted;
+
+  /// #3485 exportValueName: the label for case 'confirmed'.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get exportValueNameConfirmed;
+
+  /// #3485 exportValueName: the label for case 'created'.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get exportValueNameCreated;
+
+  /// #3485 exportValueName: the label for case 'credit'.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get exportValueNameCredit;
+
+  /// #3485 exportValueName: the label for case 'declined'.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get exportValueNameDeclined;
+
+  /// #3485 exportValueName: the label for case 'e'.
+  ///
+  /// In en, this message translates to:
+  /// **'East'**
+  String get exportValueNameE;
+
+  /// #3485 exportValueName: the label for case 'ev'.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get exportValueNameEv;
+
+  /// #3485 exportValueName: the label for case 'exited'.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get exportValueNameExited;
+
+  /// #3485 exportValueName: the label for case 'expense'.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get exportValueNameExpense;
+
+  /// #3485 exportValueName: the label for case 'expired'.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get exportValueNameExpired;
+
+  /// #3485 exportValueName: the label for case 'founder'.
+  ///
+  /// In en, this message translates to:
+  /// **'Founder'**
+  String get exportValueNameFounder;
+
+  /// #3485 exportValueName: the label for case 'full'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get exportValueNameFull;
+
+  /// #3485 exportValueName: the label for case 'invited'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invited'**
+  String get exportValueNameInvited;
+
+  /// #3485 exportValueName: the label for case 'modified'.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed'**
+  String get exportValueNameModified;
+
+  /// #3485 exportValueName: the label for case 'n'.
+  ///
+  /// In en, this message translates to:
+  /// **'North'**
+  String get exportValueNameN;
+
+  /// #3485 exportValueName: the label for case 'none'.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get exportValueNameNone;
+
+  /// #3485 exportValueName: the label for case 'overage'.
+  ///
+  /// In en, this message translates to:
+  /// **'Over quota'**
+  String get exportValueNameOverage;
+
+  /// #3485 exportValueName: the label for case 'package'.
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get exportValueNamePackage;
+
+  /// #3485 exportValueName: the label for case 'parking'.
+  ///
+  /// In en, this message translates to:
+  /// **'Parking'**
+  String get exportValueNameParking;
+
+  /// #3485 exportValueName: the label for case 'passive'.
+  ///
+  /// In en, this message translates to:
+  /// **'Successor'**
+  String get exportValueNamePassive;
+
+  /// #3485 exportValueName: the label for case 'paused'.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get exportValueNamePaused;
+
+  /// #3485 exportValueName: the label for case 'payg'.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay as you go'**
+  String get exportValueNamePayg;
+
+  /// #3485 exportValueName: the label for case 'payment'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get exportValueNamePayment;
+
+  /// #3485 exportValueName: the label for case 'pending'.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get exportValueNamePending;
+
+  /// #3485 exportValueName: the label for case 'refund'.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get exportValueNameRefund;
+
+  /// #3485 exportValueName: the label for case 'reimbursement'.
+  ///
+  /// In en, this message translates to:
+  /// **'Reimbursement'**
+  String get exportValueNameReimbursement;
+
+  /// #3485 exportValueName: the label for case 'rejected'.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get exportValueNameRejected;
+
+  /// #3485 exportValueName: the label for case 'released'.
+  ///
+  /// In en, this message translates to:
+  /// **'Released'**
+  String get exportValueNameReleased;
+
+  /// #3485 exportValueName: the label for case 'reserved'.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get exportValueNameReserved;
+
+  /// #3485 exportValueName: the label for case 'room'.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get exportValueNameRoom;
+
+  /// #3485 exportValueName: the label for case 's'.
+  ///
+  /// In en, this message translates to:
+  /// **'South'**
+  String get exportValueNameS;
+
+  /// #3485 exportValueName: the label for case 'seat'.
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get exportValueNameSeat;
+
+  /// #3485 exportValueName: the label for case 'service'.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get exportValueNameService;
+
+  /// #3485 exportValueName: the label for case 'settlement'.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement'**
+  String get exportValueNameSettlement;
+
+  /// #3485 exportValueName: the label for case 'standard'.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get exportValueNameStandard;
+
+  /// #3485 exportValueName: the label for case 'submitted'.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get exportValueNameSubmitted;
+
+  /// #3485 exportValueName: the label for case 'subscription'.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get exportValueNameSubscription;
+
+  /// #3485 exportValueName: the label for case 'usage'.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get exportValueNameUsage;
+
+  /// #3485 exportValueName: the label for case 'w'.
+  ///
+  /// In en, this message translates to:
+  /// **'West'**
+  String get exportValueNameW;
+
+  /// #3485 exportValueName: the label for case 'workspace'.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get exportValueNameWorkspace;
 
   /// No description provided for @favoriteKeptOnDeviceRefused.
   ///
@@ -18385,13 +19915,13 @@ abstract class AppLocalizations {
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summary(ies) left out: their invoices are already listed}}'**
+  /// **'{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}'**
   String handoffExcludedSettlements(int count);
 
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 document in the file} other{{count} document(s) in the file}}'**
+  /// **'{count, plural, =1{1 document in the file} other{{count} documents in the file}}'**
   String handoffIncluded(int count);
 
   /// #1640 accountant_handoff
@@ -23422,17 +24952,449 @@ abstract class AppLocalizations {
   /// **'Write-off of the remainder requested — awaiting the validators'**
   String get journeyValidatorsWriteoff;
 
-  /// Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about
+  /// #3485 jpkKrPdField: the label for case 'accountIdentifier'.
   ///
   /// In en, this message translates to:
-  /// **'{field, select, nip{NIP} legalName{legal name} voivodeship{voivodeship} county{county} municipality{municipality} buildingNumber{building number} city{city} postalCode{postal code} street{street} taxOfficeCode{tax office code} accountName{account name} accountParent{account parent} accountMarker{Polish account marker} journalNumber{journal number} journalName{journal name} documentNumber{document number} documentType{document type} responsiblePerson{responsible person} journalDescription{journal description} accountIdentifier{account identifier or name} journalText{journal text} counterpartyCode{counterparty code} other{}}'**
-  String jpkKrPdField(String field);
+  /// **'account identifier or name'**
+  String get jpkKrPdFieldAccountIdentifier;
 
-  /// Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or " (name)", limit is the schema maximum
+  /// #3485 jpkKrPdField: the label for case 'accountMarker'.
   ///
   /// In en, this message translates to:
-  /// **'{code, select, currencyNotPln{the functional currency must be PLN} noPostings{the journal needs posted entries} invalidYear{the reporting year is invalid} sectionEntity{the Polish entity and its address} sectionOffice{the tax office and the submission purpose} sectionAccounts{the account parents, Polish reporting markers and source balances} sectionJournal{the journal sequence and the responsible person} sectionSource{the source document and booking dates, amounts and line details} sectionKsef{KSeF applicability and identifier} sectionReconciliation{the income-tax reconciliation K_1–K_8} journalSequenceUnverified{the source journal sequence is not verified} taxYear{the income-tax year is invalid} entityCategory{this Polish reporting entity category is not supported} addressCountry{the entity’s address country must be Poland} nipFormat{the NIP must have 10 valid digits} missing{{field}{subject} is missing} tooLong{{field}{subject} is longer than {limit} characters} invalidOffice{the tax office code is not a known office} purpose{the submission purpose must be 1 or 2} reconciliation{the income-tax reconciliation K_1–K_8 must be eight amounts in PLN} openingOutside{opening posting{subject} is dated inside the reporting period} unbalanced{posting{subject} is not balanced} invalidDebitCredit{posting{subject} has an invalid debit or credit} foreignLine{posting{subject} has a foreign-currency line} postingCurrency{posting{subject} is not in PLN} accountBalances{the balances of account{subject} are invalid} openingMismatch{the opening balance of account{subject} does not match the postings} closingMismatch{the closing balance of account{subject} does not match the postings} invalidMarker{the Polish reporting marker of account{subject} is invalid} journalEvidence{every posting needs journal evidence} turnoverPrecision{the turnover of account{subject} exceeds the schema precision} totalsPrecision{the journal totals exceed the schema precision} documentTotalPrecision{the document total exceeds the schema precision} unreferencedCounterparty{counterparty{subject} is not referenced by any entry} invalidCounterpartyCountry{the country of counterparty{subject} is invalid} invalidCounterpartyTaxId{the tax ID of counterparty{subject} is invalid} counterpartyCodeInvalid{a counterparty code is missing or duplicated} journalSourceMismatch{journal entry{subject} does not match its source document} postingOutside{posting{subject} is dated outside the reporting year} bookingOutside{booking{subject} is dated outside the reporting year} documentAmount{the document amount{subject} is not in PLN} chronology{entry{subject} breaks the chronological order of the journal} duplicateJournalNumber{the journal number{subject} is used twice} lineDescriptions{entry{subject}: line descriptions are missing or do not match its lines} lineNumbers{entry{subject}: line numbers are missing, duplicated or do not match its lines} counterpartyCode{entry{subject} needs a counterparty code} counterpartySourceMissing{entry{subject} names a counterparty its source document does not have} counterpartySourceMismatch{the counterparty of entry{subject} does not match its source document} counterpartyUnknown{counterparty{subject} is not in the counterparty list} invalidKsef{the KSeF identifier of entry{subject} is invalid} duplicateLineNumber{the line number{subject} is used twice in a journal} ksefMissing{entry{subject} needs its KSeF identifier} other{}}'**
-  String jpkKrPdGap(String code, String field, String subject, String limit);
+  /// **'Polish account marker'**
+  String get jpkKrPdFieldAccountMarker;
+
+  /// #3485 jpkKrPdField: the label for case 'accountName'.
+  ///
+  /// In en, this message translates to:
+  /// **'account name'**
+  String get jpkKrPdFieldAccountName;
+
+  /// #3485 jpkKrPdField: the label for case 'accountParent'.
+  ///
+  /// In en, this message translates to:
+  /// **'account parent'**
+  String get jpkKrPdFieldAccountParent;
+
+  /// #3485 jpkKrPdField: the label for case 'buildingNumber'.
+  ///
+  /// In en, this message translates to:
+  /// **'building number'**
+  String get jpkKrPdFieldBuildingNumber;
+
+  /// #3485 jpkKrPdField: the label for case 'city'.
+  ///
+  /// In en, this message translates to:
+  /// **'city'**
+  String get jpkKrPdFieldCity;
+
+  /// #3485 jpkKrPdField: the label for case 'counterpartyCode'.
+  ///
+  /// In en, this message translates to:
+  /// **'counterparty code'**
+  String get jpkKrPdFieldCounterpartyCode;
+
+  /// #3485 jpkKrPdField: the label for case 'county'.
+  ///
+  /// In en, this message translates to:
+  /// **'county'**
+  String get jpkKrPdFieldCounty;
+
+  /// #3485 jpkKrPdField: the label for case 'documentNumber'.
+  ///
+  /// In en, this message translates to:
+  /// **'document number'**
+  String get jpkKrPdFieldDocumentNumber;
+
+  /// #3485 jpkKrPdField: the label for case 'documentType'.
+  ///
+  /// In en, this message translates to:
+  /// **'document type'**
+  String get jpkKrPdFieldDocumentType;
+
+  /// #3485 jpkKrPdField: the label for case 'journalDescription'.
+  ///
+  /// In en, this message translates to:
+  /// **'journal description'**
+  String get jpkKrPdFieldJournalDescription;
+
+  /// #3485 jpkKrPdField: the label for case 'journalName'.
+  ///
+  /// In en, this message translates to:
+  /// **'journal name'**
+  String get jpkKrPdFieldJournalName;
+
+  /// #3485 jpkKrPdField: the label for case 'journalNumber'.
+  ///
+  /// In en, this message translates to:
+  /// **'journal number'**
+  String get jpkKrPdFieldJournalNumber;
+
+  /// #3485 jpkKrPdField: the label for case 'journalText'.
+  ///
+  /// In en, this message translates to:
+  /// **'journal text'**
+  String get jpkKrPdFieldJournalText;
+
+  /// #3485 jpkKrPdField: the label for case 'legalName'.
+  ///
+  /// In en, this message translates to:
+  /// **'legal name'**
+  String get jpkKrPdFieldLegalName;
+
+  /// #3485 jpkKrPdField: the label for case 'municipality'.
+  ///
+  /// In en, this message translates to:
+  /// **'municipality'**
+  String get jpkKrPdFieldMunicipality;
+
+  /// #3485 jpkKrPdField: the label for case 'nip'.
+  ///
+  /// In en, this message translates to:
+  /// **'NIP'**
+  String get jpkKrPdFieldNip;
+
+  /// #3485 jpkKrPdField: the label for case 'postalCode'.
+  ///
+  /// In en, this message translates to:
+  /// **'postal code'**
+  String get jpkKrPdFieldPostalCode;
+
+  /// #3485 jpkKrPdField: the label for case 'responsiblePerson'.
+  ///
+  /// In en, this message translates to:
+  /// **'responsible person'**
+  String get jpkKrPdFieldResponsiblePerson;
+
+  /// #3485 jpkKrPdField: the label for case 'street'.
+  ///
+  /// In en, this message translates to:
+  /// **'street'**
+  String get jpkKrPdFieldStreet;
+
+  /// #3485 jpkKrPdField: the label for case 'taxOfficeCode'.
+  ///
+  /// In en, this message translates to:
+  /// **'tax office code'**
+  String get jpkKrPdFieldTaxOfficeCode;
+
+  /// #3485 jpkKrPdField: the label for case 'voivodeship'.
+  ///
+  /// In en, this message translates to:
+  /// **'voivodeship'**
+  String get jpkKrPdFieldVoivodeship;
+
+  /// #3485 jpkKrPdGap: the label for case 'accountBalances'.
+  ///
+  /// In en, this message translates to:
+  /// **'the balances of account{subject} are invalid'**
+  String jpkKrPdGapAccountBalances(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'addressCountry'.
+  ///
+  /// In en, this message translates to:
+  /// **'the entity’s address country must be Poland'**
+  String get jpkKrPdGapAddressCountry;
+
+  /// #3485 jpkKrPdGap: the label for case 'bookingOutside'.
+  ///
+  /// In en, this message translates to:
+  /// **'booking{subject} is dated outside the reporting year'**
+  String jpkKrPdGapBookingOutside(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'chronology'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject} breaks the chronological order of the journal'**
+  String jpkKrPdGapChronology(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'closingMismatch'.
+  ///
+  /// In en, this message translates to:
+  /// **'the closing balance of account{subject} does not match the postings'**
+  String jpkKrPdGapClosingMismatch(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'counterpartyCode'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject} needs a counterparty code'**
+  String jpkKrPdGapCounterpartyCode(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'counterpartyCodeInvalid'.
+  ///
+  /// In en, this message translates to:
+  /// **'a counterparty code is missing or duplicated'**
+  String get jpkKrPdGapCounterpartyCodeInvalid;
+
+  /// #3485 jpkKrPdGap: the label for case 'counterpartySourceMismatch'.
+  ///
+  /// In en, this message translates to:
+  /// **'the counterparty of entry{subject} does not match its source document'**
+  String jpkKrPdGapCounterpartySourceMismatch(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'counterpartySourceMissing'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject} names a counterparty its source document does not have'**
+  String jpkKrPdGapCounterpartySourceMissing(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'counterpartyUnknown'.
+  ///
+  /// In en, this message translates to:
+  /// **'counterparty{subject} is not in the counterparty list'**
+  String jpkKrPdGapCounterpartyUnknown(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'currencyNotPln'.
+  ///
+  /// In en, this message translates to:
+  /// **'the functional currency must be PLN'**
+  String get jpkKrPdGapCurrencyNotPln;
+
+  /// #3485 jpkKrPdGap: the label for case 'documentAmount'.
+  ///
+  /// In en, this message translates to:
+  /// **'the document amount{subject} is not in PLN'**
+  String jpkKrPdGapDocumentAmount(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'documentTotalPrecision'.
+  ///
+  /// In en, this message translates to:
+  /// **'the document total exceeds the schema precision'**
+  String get jpkKrPdGapDocumentTotalPrecision;
+
+  /// #3485 jpkKrPdGap: the label for case 'duplicateJournalNumber'.
+  ///
+  /// In en, this message translates to:
+  /// **'the journal number{subject} is used twice'**
+  String jpkKrPdGapDuplicateJournalNumber(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'duplicateLineNumber'.
+  ///
+  /// In en, this message translates to:
+  /// **'the line number{subject} is used twice in a journal'**
+  String jpkKrPdGapDuplicateLineNumber(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'entityCategory'.
+  ///
+  /// In en, this message translates to:
+  /// **'this Polish reporting entity category is not supported'**
+  String get jpkKrPdGapEntityCategory;
+
+  /// #3485 jpkKrPdGap: the label for case 'foreignLine'.
+  ///
+  /// In en, this message translates to:
+  /// **'posting{subject} has a foreign-currency line'**
+  String jpkKrPdGapForeignLine(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidCounterpartyCountry'.
+  ///
+  /// In en, this message translates to:
+  /// **'the country of counterparty{subject} is invalid'**
+  String jpkKrPdGapInvalidCounterpartyCountry(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidCounterpartyTaxId'.
+  ///
+  /// In en, this message translates to:
+  /// **'the tax ID of counterparty{subject} is invalid'**
+  String jpkKrPdGapInvalidCounterpartyTaxId(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidDebitCredit'.
+  ///
+  /// In en, this message translates to:
+  /// **'posting{subject} has an invalid debit or credit'**
+  String jpkKrPdGapInvalidDebitCredit(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidKsef'.
+  ///
+  /// In en, this message translates to:
+  /// **'the KSeF identifier of entry{subject} is invalid'**
+  String jpkKrPdGapInvalidKsef(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidMarker'.
+  ///
+  /// In en, this message translates to:
+  /// **'the Polish reporting marker of account{subject} is invalid'**
+  String jpkKrPdGapInvalidMarker(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidOffice'.
+  ///
+  /// In en, this message translates to:
+  /// **'the tax office code is not a known office'**
+  String get jpkKrPdGapInvalidOffice;
+
+  /// #3485 jpkKrPdGap: the label for case 'invalidYear'.
+  ///
+  /// In en, this message translates to:
+  /// **'the reporting year is invalid'**
+  String get jpkKrPdGapInvalidYear;
+
+  /// #3485 jpkKrPdGap: the label for case 'journalEvidence'.
+  ///
+  /// In en, this message translates to:
+  /// **'every posting needs journal evidence'**
+  String get jpkKrPdGapJournalEvidence;
+
+  /// #3485 jpkKrPdGap: the label for case 'journalSequenceUnverified'.
+  ///
+  /// In en, this message translates to:
+  /// **'the source journal sequence is not verified'**
+  String get jpkKrPdGapJournalSequenceUnverified;
+
+  /// #3485 jpkKrPdGap: the label for case 'journalSourceMismatch'.
+  ///
+  /// In en, this message translates to:
+  /// **'journal entry{subject} does not match its source document'**
+  String jpkKrPdGapJournalSourceMismatch(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'ksefMissing'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject} needs its KSeF identifier'**
+  String jpkKrPdGapKsefMissing(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'lineDescriptions'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject}: line descriptions are missing or do not match its lines'**
+  String jpkKrPdGapLineDescriptions(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'lineNumbers'.
+  ///
+  /// In en, this message translates to:
+  /// **'entry{subject}: line numbers are missing, duplicated or do not match its lines'**
+  String jpkKrPdGapLineNumbers(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'missing'.
+  ///
+  /// In en, this message translates to:
+  /// **'{field}{subject} is missing'**
+  String jpkKrPdGapMissing(String field, String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'nipFormat'.
+  ///
+  /// In en, this message translates to:
+  /// **'the NIP must have 10 valid digits'**
+  String get jpkKrPdGapNipFormat;
+
+  /// #3485 jpkKrPdGap: the label for case 'noPostings'.
+  ///
+  /// In en, this message translates to:
+  /// **'the journal needs posted entries'**
+  String get jpkKrPdGapNoPostings;
+
+  /// #3485 jpkKrPdGap: the label for case 'openingMismatch'.
+  ///
+  /// In en, this message translates to:
+  /// **'the opening balance of account{subject} does not match the postings'**
+  String jpkKrPdGapOpeningMismatch(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'openingOutside'.
+  ///
+  /// In en, this message translates to:
+  /// **'opening posting{subject} is dated inside the reporting period'**
+  String jpkKrPdGapOpeningOutside(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'postingCurrency'.
+  ///
+  /// In en, this message translates to:
+  /// **'posting{subject} is not in PLN'**
+  String jpkKrPdGapPostingCurrency(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'postingOutside'.
+  ///
+  /// In en, this message translates to:
+  /// **'posting{subject} is dated outside the reporting year'**
+  String jpkKrPdGapPostingOutside(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'purpose'.
+  ///
+  /// In en, this message translates to:
+  /// **'the submission purpose must be 1 or 2'**
+  String get jpkKrPdGapPurpose;
+
+  /// #3485 jpkKrPdGap: the label for case 'reconciliation'.
+  ///
+  /// In en, this message translates to:
+  /// **'the income-tax reconciliation K_1–K_8 must be eight amounts in PLN'**
+  String get jpkKrPdGapReconciliation;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionAccounts'.
+  ///
+  /// In en, this message translates to:
+  /// **'the account parents, Polish reporting markers and source balances'**
+  String get jpkKrPdGapSectionAccounts;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionEntity'.
+  ///
+  /// In en, this message translates to:
+  /// **'the Polish entity and its address'**
+  String get jpkKrPdGapSectionEntity;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionJournal'.
+  ///
+  /// In en, this message translates to:
+  /// **'the journal sequence and the responsible person'**
+  String get jpkKrPdGapSectionJournal;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionKsef'.
+  ///
+  /// In en, this message translates to:
+  /// **'KSeF applicability and identifier'**
+  String get jpkKrPdGapSectionKsef;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionOffice'.
+  ///
+  /// In en, this message translates to:
+  /// **'the tax office and the submission purpose'**
+  String get jpkKrPdGapSectionOffice;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionReconciliation'.
+  ///
+  /// In en, this message translates to:
+  /// **'the income-tax reconciliation K_1–K_8'**
+  String get jpkKrPdGapSectionReconciliation;
+
+  /// #3485 jpkKrPdGap: the label for case 'sectionSource'.
+  ///
+  /// In en, this message translates to:
+  /// **'the source document and booking dates, amounts and line details'**
+  String get jpkKrPdGapSectionSource;
+
+  /// #3485 jpkKrPdGap: the label for case 'taxYear'.
+  ///
+  /// In en, this message translates to:
+  /// **'the income-tax year is invalid'**
+  String get jpkKrPdGapTaxYear;
+
+  /// #3485 jpkKrPdGap: the label for case 'tooLong'.
+  ///
+  /// In en, this message translates to:
+  /// **'{field}{subject} is longer than {limit} characters'**
+  String jpkKrPdGapTooLong(String field, String subject, String limit);
+
+  /// #3485 jpkKrPdGap: the label for case 'totalsPrecision'.
+  ///
+  /// In en, this message translates to:
+  /// **'the journal totals exceed the schema precision'**
+  String get jpkKrPdGapTotalsPrecision;
+
+  /// #3485 jpkKrPdGap: the label for case 'turnoverPrecision'.
+  ///
+  /// In en, this message translates to:
+  /// **'the turnover of account{subject} exceeds the schema precision'**
+  String jpkKrPdGapTurnoverPrecision(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'unbalanced'.
+  ///
+  /// In en, this message translates to:
+  /// **'posting{subject} is not balanced'**
+  String jpkKrPdGapUnbalanced(String subject);
+
+  /// #3485 jpkKrPdGap: the label for case 'unreferencedCounterparty'.
+  ///
+  /// In en, this message translates to:
+  /// **'counterparty{subject} is not referenced by any entry'**
+  String jpkKrPdGapUnreferencedCounterparty(String subject);
 
   /// Submit button of the badge prompt
   ///
@@ -42842,11 +44804,29 @@ abstract class AppLocalizations {
   /// **'Go live?'**
   String get setupLaunchGoLiveTitle;
 
-  /// #2876 setup launch: setupLaunchGroup
+  /// #3485 setupLaunchGroup: the label for case 'grow'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, open{Open} run{Run} grow{Grow} launch{Launch} other{{key}}}'**
-  String setupLaunchGroup(String key);
+  /// **'Grow'**
+  String get setupLaunchGroupGrow;
+
+  /// #3485 setupLaunchGroup: the label for case 'launch'.
+  ///
+  /// In en, this message translates to:
+  /// **'Launch'**
+  String get setupLaunchGroupLaunch;
+
+  /// #3485 setupLaunchGroup: the label for case 'open'.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get setupLaunchGroupOpen;
+
+  /// #3485 setupLaunchGroup: the label for case 'run'.
+  ///
+  /// In en, this message translates to:
+  /// **'Run'**
+  String get setupLaunchGroupRun;
 
   /// #2876 setup launch: setupLaunchIsLive
   ///
@@ -42914,11 +44894,149 @@ abstract class AppLocalizations {
   /// **'Check and go live'**
   String get setupLaunchTitle;
 
-  /// #2868 setup levels: setupLevelName
+  /// #3485 setupLevelName: the label for case 'assistant_off'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}'**
-  String setupLevelName(String key);
+  /// **'Off'**
+  String get setupLevelNameAssistantOff;
+
+  /// #3485 setupLevelName: the label for case 'assistant_on'.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get setupLevelNameAssistantOn;
+
+  /// #3485 setupLevelName: the label for case 'bookings_measured'.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured use'**
+  String get setupLevelNameBookingsMeasured;
+
+  /// #3485 setupLevelName: the label for case 'bookings_resources'.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms and resources'**
+  String get setupLevelNameBookingsResources;
+
+  /// #3485 setupLevelName: the label for case 'bookings_simple'.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared places'**
+  String get setupLevelNameBookingsSimple;
+
+  /// #3485 setupLevelName: the label for case 'community_basic'.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic'**
+  String get setupLevelNameCommunityBasic;
+
+  /// #3485 setupLevelName: the label for case 'community_organised'.
+  ///
+  /// In en, this message translates to:
+  /// **'Organised'**
+  String get setupLevelNameCommunityOrganised;
+
+  /// #3485 setupLevelName: the label for case 'money_invoices'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get setupLevelNameMoneyInvoices;
+
+  /// #3485 setupLevelName: the label for case 'money_none'.
+  ///
+  /// In en, this message translates to:
+  /// **'No money'**
+  String get setupLevelNameMoneyNone;
+
+  /// #3485 setupLevelName: the label for case 'money_statements'.
+  ///
+  /// In en, this message translates to:
+  /// **'Statements'**
+  String get setupLevelNameMoneyStatements;
+
+  /// #3485 setupLevelName: the label for case 'operations_advanced'.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get setupLevelNameOperationsAdvanced;
+
+  /// #3485 setupLevelName: the label for case 'operations_basic'.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic'**
+  String get setupLevelNameOperationsBasic;
+
+  /// #3485 setupLevelName: the label for case 'operations_insight'.
+  ///
+  /// In en, this message translates to:
+  /// **'Figures'**
+  String get setupLevelNameOperationsInsight;
+
+  /// #3485 setupLevelName: the label for case 'payments_off'.
+  ///
+  /// In en, this message translates to:
+  /// **'By transfer'**
+  String get setupLevelNamePaymentsOff;
+
+  /// #3485 setupLevelName: the label for case 'payments_online'.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get setupLevelNamePaymentsOnline;
+
+  /// #3485 setupLevelName: the label for case 'presentation_basic'.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic'**
+  String get setupLevelNamePresentationBasic;
+
+  /// #3485 setupLevelName: the label for case 'presentation_branded'.
+  ///
+  /// In en, this message translates to:
+  /// **'Your colours'**
+  String get setupLevelNamePresentationBranded;
+
+  /// #3485 setupLevelName: the label for case 'presentation_public'.
+  ///
+  /// In en, this message translates to:
+  /// **'Public page'**
+  String get setupLevelNamePresentationPublic;
+
+  /// #3485 setupLevelName: the label for case 'purchases_expenses'.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get setupLevelNamePurchasesExpenses;
+
+  /// #3485 setupLevelName: the label for case 'purchases_full'.
+  ///
+  /// In en, this message translates to:
+  /// **'Full purchasing'**
+  String get setupLevelNamePurchasesFull;
+
+  /// #3485 setupLevelName: the label for case 'purchases_none'.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get setupLevelNamePurchasesNone;
+
+  /// #3485 setupLevelName: the label for case 'tax_books'.
+  ///
+  /// In en, this message translates to:
+  /// **'Books'**
+  String get setupLevelNameTaxBooks;
+
+  /// #3485 setupLevelName: the label for case 'tax_none'.
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get setupLevelNameTaxNone;
+
+  /// #3485 setupLevelName: the label for case 'tax_vat'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get setupLevelNameTaxVat;
 
   /// #2868 setup levels: setupLevelsApplied
   ///
@@ -43076,11 +45194,29 @@ abstract class AppLocalizations {
   /// **'Pattern, room colours and logo'**
   String get setupLookMore;
 
-  /// #2869 setup guide: setupMilestoneName
+  /// #3485 setupMilestoneName: the label for case 'bookable'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
-  String setupMilestoneName(String key);
+  /// **'Take bookings'**
+  String get setupMilestoneNameBookable;
+
+  /// #3485 setupMilestoneName: the label for case 'invoice'.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to invoice'**
+  String get setupMilestoneNameInvoice;
+
+  /// #3485 setupMilestoneName: the label for case 'live'.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get setupMilestoneNameLive;
+
+  /// #3485 setupMilestoneName: the label for case 'money'.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for money'**
+  String get setupMilestoneNameMoney;
 
   /// #2871 setup run steps: setupNewMembersEditQuestions
   ///
@@ -43136,23 +45272,71 @@ abstract class AppLocalizations {
   /// **'Next: {step}'**
   String setupNextNamed(String step);
 
-  /// #2871 setup run steps: setupNotificationsAudience
+  /// #3485 setupNotificationsAudience: the label for case 'deciders'.
   ///
   /// In en, this message translates to:
-  /// **'{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}'**
-  String setupNotificationsAudience(String audience);
+  /// **'Whoever decides it'**
+  String get setupNotificationsAudienceDeciders;
 
-  /// #2871 setup run steps: setupNotificationsChannels
+  /// #3485 setupNotificationsAudience: the label for case 'members'.
   ///
   /// In en, this message translates to:
-  /// **'{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}'**
-  String setupNotificationsChannels(String channels);
+  /// **'Members'**
+  String get setupNotificationsAudienceMembers;
 
-  /// #2871 setup run steps: setupNotificationsEvent
+  /// #3485 setupNotificationsChannels: the label for case 'app'.
   ///
   /// In en, this message translates to:
-  /// **'{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}'**
-  String setupNotificationsEvent(String event);
+  /// **'in the app'**
+  String get setupNotificationsChannelsApp;
+
+  /// #3485 setupNotificationsChannels: the label for case 'app_push'.
+  ///
+  /// In en, this message translates to:
+  /// **'in the app and as a phone notification'**
+  String get setupNotificationsChannelsAppPush;
+
+  /// #3485 setupNotificationsChannels: the label for case 'device'.
+  ///
+  /// In en, this message translates to:
+  /// **'as a reminder on their own phone, even without phone notifications'**
+  String get setupNotificationsChannelsDevice;
+
+  /// #3485 setupNotificationsEvent: the label for case 'check_in'.
+  ///
+  /// In en, this message translates to:
+  /// **'A booking is about to start: time to check in'**
+  String get setupNotificationsEventCheckIn;
+
+  /// #3485 setupNotificationsEvent: the label for case 'invoice_reminder'.
+  ///
+  /// In en, this message translates to:
+  /// **'A payment reminder'**
+  String get setupNotificationsEventInvoiceReminder;
+
+  /// #3485 setupNotificationsEvent: the label for case 'member_mention'.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone names them in a conversation'**
+  String get setupNotificationsEventMemberMention;
+
+  /// #3485 setupNotificationsEvent: the label for case 'member_note'.
+  ///
+  /// In en, this message translates to:
+  /// **'A message or an announcement'**
+  String get setupNotificationsEventMemberNote;
+
+  /// #3485 setupNotificationsEvent: the label for case 'pending_request'.
+  ///
+  /// In en, this message translates to:
+  /// **'A request waits for a decision'**
+  String get setupNotificationsEventPendingRequest;
+
+  /// #3485 setupNotificationsEvent: the label for case 'reservation_cancelled'.
+  ///
+  /// In en, this message translates to:
+  /// **'A booking was removed by someone else'**
+  String get setupNotificationsEventReservationCancelled;
 
   /// #2871 setup run steps: setupNotificationsLeadFixed
   ///
@@ -43442,11 +45626,23 @@ abstract class AppLocalizations {
   /// **'Booked as a whole'**
   String get setupPlacesWholeSpace;
 
-  /// #2868 setup levels: setupPresetName
+  /// #3485 setupPresetName: the label for case 'complet'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}'**
-  String setupPresetName(String key);
+  /// **'Complete'**
+  String get setupPresetNameComplet;
+
+  /// #3485 setupPresetName: the label for case 'essentiel'.
+  ///
+  /// In en, this message translates to:
+  /// **'Essential'**
+  String get setupPresetNameEssentiel;
+
+  /// #3485 setupPresetName: the label for case 'standard'.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get setupPresetNameStandard;
 
   /// #2871 setup run steps: setupPricingBand
   ///
@@ -43514,11 +45710,59 @@ abstract class AppLocalizations {
   /// **'{monthly} a month\nAn extra half-day {half} · an extra day {day}'**
   String setupPricingTerms(String monthly, String half, String day);
 
-  /// #2868 setup levels: setupProcessName
+  /// #3485 setupProcessName: the label for case 'assistant'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}'**
-  String setupProcessName(String key);
+  /// **'Assistant'**
+  String get setupProcessNameAssistant;
+
+  /// #3485 setupProcessName: the label for case 'bookings'.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get setupProcessNameBookings;
+
+  /// #3485 setupProcessName: the label for case 'community'.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get setupProcessNameCommunity;
+
+  /// #3485 setupProcessName: the label for case 'money'.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get setupProcessNameMoney;
+
+  /// #3485 setupProcessName: the label for case 'operations'.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get setupProcessNameOperations;
+
+  /// #3485 setupProcessName: the label for case 'payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get setupProcessNamePayments;
+
+  /// #3485 setupProcessName: the label for case 'presentation'.
+  ///
+  /// In en, this message translates to:
+  /// **'Presentation'**
+  String get setupProcessNamePresentation;
+
+  /// #3485 setupProcessName: the label for case 'purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get setupProcessNamePurchases;
+
+  /// #3485 setupProcessName: the label for case 'tax'.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get setupProcessNameTax;
 
   /// #2871 setup run steps: setupPublicPageMore
   ///
@@ -43538,17 +45782,203 @@ abstract class AppLocalizations {
   /// **'Members do not see this: it stays with the people who manage the money.'**
   String get setupPurchaseSidePreview;
 
-  /// #2868 setup levels: setupQuestion
+  /// #3485 setupQuestion: the label for case 'approve_bookings'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, association{The space is run by an association, a cooperative or a club} approve_bookings{Bookings wait for an approval; members do not book directly} members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}'**
-  String setupQuestion(String key);
+  /// **'Bookings wait for an approval; members do not book directly'**
+  String get setupQuestionApproveBookings;
 
-  /// #2868 setup levels: setupReason
+  /// #3485 setupQuestion: the label for case 'association'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, door_tablet{Because a tablet at the door checks people in} keeps_books{Because you keep accounting books} later{Because an assistant can come later} members_only{Because only members see the space} members_owe{Because members owe the space money} no_money{Because no money changes hands} no_purchases{Because the space buys nothing it tracks} no_vat{Because the space is not registered for VAT} organised{Because several people decide together} pay_by_transfer{Because members pay by transfer} pay_online{Because members pay online} public_page{Because the space has a public page} several_rooms{Because there are several rooms or sites} shared_places{Because members share the places} small_community{Because the community is small} start_simple{Because you want to start simple} tracks_purchases{Because you track what the space buys} vat_registered{Because the space is registered for VAT} issues_invoices{Because you issue invoices} association{Because an association decides together, with its board} approve_bookings{Because bookings wait for an approval} other{{key}}}'**
-  String setupReason(String key);
+  /// **'The space is run by an association, a cooperative or a club'**
+  String get setupQuestionAssociation;
+
+  /// #3485 setupQuestion: the label for case 'door_tablet'.
+  ///
+  /// In en, this message translates to:
+  /// **'A tablet at the door checks people in'**
+  String get setupQuestionDoorTablet;
+
+  /// #3485 setupQuestion: the label for case 'issue_invoices'.
+  ///
+  /// In en, this message translates to:
+  /// **'You issue invoices'**
+  String get setupQuestionIssueInvoices;
+
+  /// #3485 setupQuestion: the label for case 'keep_books'.
+  ///
+  /// In en, this message translates to:
+  /// **'You keep accounting books'**
+  String get setupQuestionKeepBooks;
+
+  /// #3485 setupQuestion: the label for case 'members_owe_money'.
+  ///
+  /// In en, this message translates to:
+  /// **'Members owe the space money (rent, passes, extras)'**
+  String get setupQuestionMembersOweMoney;
+
+  /// #3485 setupQuestion: the label for case 'organised'.
+  ///
+  /// In en, this message translates to:
+  /// **'Committees, own roles or approvals by several people'**
+  String get setupQuestionOrganised;
+
+  /// #3485 setupQuestion: the label for case 'pay_online'.
+  ///
+  /// In en, this message translates to:
+  /// **'Members pay online'**
+  String get setupQuestionPayOnline;
+
+  /// #3485 setupQuestion: the label for case 'public_page'.
+  ///
+  /// In en, this message translates to:
+  /// **'A public page shows the space'**
+  String get setupQuestionPublicPage;
+
+  /// #3485 setupQuestion: the label for case 'several_rooms_or_sites'.
+  ///
+  /// In en, this message translates to:
+  /// **'Several rooms, a meeting room or several sites'**
+  String get setupQuestionSeveralRoomsOrSites;
+
+  /// #3485 setupQuestion: the label for case 'tracks_purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'You track what the space buys'**
+  String get setupQuestionTracksPurchases;
+
+  /// #3485 setupQuestion: the label for case 'vat_registered'.
+  ///
+  /// In en, this message translates to:
+  /// **'The space is registered for VAT'**
+  String get setupQuestionVatRegistered;
+
+  /// #3485 setupReason: the label for case 'approve_bookings'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because bookings wait for an approval'**
+  String get setupReasonApproveBookings;
+
+  /// #3485 setupReason: the label for case 'association'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because an association decides together, with its board'**
+  String get setupReasonAssociation;
+
+  /// #3485 setupReason: the label for case 'door_tablet'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because a tablet at the door checks people in'**
+  String get setupReasonDoorTablet;
+
+  /// #3485 setupReason: the label for case 'issues_invoices'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you issue invoices'**
+  String get setupReasonIssuesInvoices;
+
+  /// #3485 setupReason: the label for case 'keeps_books'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you keep accounting books'**
+  String get setupReasonKeepsBooks;
+
+  /// #3485 setupReason: the label for case 'later'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because an assistant can come later'**
+  String get setupReasonLater;
+
+  /// #3485 setupReason: the label for case 'members_only'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because only members see the space'**
+  String get setupReasonMembersOnly;
+
+  /// #3485 setupReason: the label for case 'members_owe'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because members owe the space money'**
+  String get setupReasonMembersOwe;
+
+  /// #3485 setupReason: the label for case 'no_money'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because no money changes hands'**
+  String get setupReasonNoMoney;
+
+  /// #3485 setupReason: the label for case 'no_purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because the space buys nothing it tracks'**
+  String get setupReasonNoPurchases;
+
+  /// #3485 setupReason: the label for case 'no_vat'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because the space is not registered for VAT'**
+  String get setupReasonNoVat;
+
+  /// #3485 setupReason: the label for case 'organised'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because several people decide together'**
+  String get setupReasonOrganised;
+
+  /// #3485 setupReason: the label for case 'pay_by_transfer'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because members pay by transfer'**
+  String get setupReasonPayByTransfer;
+
+  /// #3485 setupReason: the label for case 'pay_online'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because members pay online'**
+  String get setupReasonPayOnline;
+
+  /// #3485 setupReason: the label for case 'public_page'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because the space has a public page'**
+  String get setupReasonPublicPage;
+
+  /// #3485 setupReason: the label for case 'several_rooms'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because there are several rooms or sites'**
+  String get setupReasonSeveralRooms;
+
+  /// #3485 setupReason: the label for case 'shared_places'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because members share the places'**
+  String get setupReasonSharedPlaces;
+
+  /// #3485 setupReason: the label for case 'small_community'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because the community is small'**
+  String get setupReasonSmallCommunity;
+
+  /// #3485 setupReason: the label for case 'start_simple'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you want to start simple'**
+  String get setupReasonStartSimple;
+
+  /// #3485 setupReason: the label for case 'tracks_purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you track what the space buys'**
+  String get setupReasonTracksPurchases;
+
+  /// #3485 setupReason: the label for case 'vat_registered'.
+  ///
+  /// In en, this message translates to:
+  /// **'Because the space is registered for VAT'**
+  String get setupReasonVatRegistered;
 
   /// #2870 setup steps: setupRightsApplied
   ///
@@ -43646,11 +46076,47 @@ abstract class AppLocalizations {
   /// **'The service could not be added. Try again.'**
   String get setupServicesSaveFailed;
 
-  /// #2869 setup guide: setupStateName
+  /// #3485 setupStateName: the label for case 'blocked'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}'**
-  String setupStateName(String key);
+  /// **'Waits for another step'**
+  String get setupStateNameBlocked;
+
+  /// #3485 setupStateName: the label for case 'deferred'.
+  ///
+  /// In en, this message translates to:
+  /// **'Set aside'**
+  String get setupStateNameDeferred;
+
+  /// #3485 setupStateName: the label for case 'needsConfiguration'.
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get setupStateNameNeedsConfiguration;
+
+  /// #3485 setupStateName: the label for case 'needsOperator'.
+  ///
+  /// In en, this message translates to:
+  /// **'Your operator acts'**
+  String get setupStateNameNeedsOperator;
+
+  /// #3485 setupStateName: the label for case 'notApplicable'.
+  ///
+  /// In en, this message translates to:
+  /// **'Not used'**
+  String get setupStateNameNotApplicable;
+
+  /// #3485 setupStateName: the label for case 'ready'.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get setupStateNameReady;
+
+  /// #3485 setupStateName: the label for case 'unknown'.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get setupStateNameUnknown;
 
   /// #3076 — on the last step page of the guide: goes back to the guide, nothing is left.
   ///
@@ -43664,11 +46130,179 @@ abstract class AppLocalizations {
   /// **'This step is done on its own screen.'**
   String get setupStepElsewhere;
 
-  /// #2869 setup guide: setupStepHint
+  /// #3485 setupStepHint: the label for case 'accounting'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} notifications{Who is told what, and how: in the app, on the phone, as a reminder.} limits{How far ahead, how long and how many places at once members book.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
-  String setupStepHint(String key);
+  /// **'The chart of accounts and the exports for your accountant.'**
+  String get setupStepHintAccounting;
+
+  /// #3485 setupStepHint: the label for case 'approvals'.
+  ///
+  /// In en, this message translates to:
+  /// **'Who validates requests, and how many people must agree.'**
+  String get setupStepHintApprovals;
+
+  /// #3485 setupStepHint: the label for case 'assets'.
+  ///
+  /// In en, this message translates to:
+  /// **'What the space owns and how it loses value.'**
+  String get setupStepHintAssets;
+
+  /// #3485 setupStepHint: the label for case 'assistant'.
+  ///
+  /// In en, this message translates to:
+  /// **'Let an AI assistant help, always with your confirmation.'**
+  String get setupStepHintAssistant;
+
+  /// #3485 setupStepHint: the label for case 'basics'.
+  ///
+  /// In en, this message translates to:
+  /// **'What the space is called and where it is: dates, money and holidays follow from it.'**
+  String get setupStepHintBasics;
+
+  /// #3485 setupStepHint: the label for case 'documents'.
+  ///
+  /// In en, this message translates to:
+  /// **'Your letterhead on invoices and letters.'**
+  String get setupStepHintDocuments;
+
+  /// #3485 setupStepHint: the label for case 'einvoicing'.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending invoices through the e-invoicing platform.'**
+  String get setupStepHintEinvoicing;
+
+  /// #3485 setupStepHint: the label for case 'first_booking'.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a place the way a member would.'**
+  String get setupStepHintFirstBooking;
+
+  /// #3485 setupStepHint: the label for case 'hours'.
+  ///
+  /// In en, this message translates to:
+  /// **'When members can book: days, hours and closures.'**
+  String get setupStepHintHours;
+
+  /// #3485 setupStepHint: the label for case 'invite'.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the space\'s code or send invitations.'**
+  String get setupStepHintInvite;
+
+  /// #3485 setupStepHint: the label for case 'kiosk'.
+  ///
+  /// In en, this message translates to:
+  /// **'A tablet at the door and member badges.'**
+  String get setupStepHintKiosk;
+
+  /// #3485 setupStepHint: the label for case 'lease'.
+  ///
+  /// In en, this message translates to:
+  /// **'The rent and charges the space pays.'**
+  String get setupStepHintLease;
+
+  /// #3485 setupStepHint: the label for case 'legal_identity'.
+  ///
+  /// In en, this message translates to:
+  /// **'The details every invoice must carry.'**
+  String get setupStepHintLegalIdentity;
+
+  /// #3485 setupStepHint: the label for case 'limits'.
+  ///
+  /// In en, this message translates to:
+  /// **'How far ahead, how long and how many places at once members book.'**
+  String get setupStepHintLimits;
+
+  /// #3485 setupStepHint: the label for case 'look'.
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s colours and its own words.'**
+  String get setupStepHintLook;
+
+  /// #3485 setupStepHint: the label for case 'member_rights'.
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book, see the calendar and their own account.'**
+  String get setupStepHintMemberRights;
+
+  /// #3485 setupStepHint: the label for case 'new_members'.
+  ///
+  /// In en, this message translates to:
+  /// **'What a new member starts with.'**
+  String get setupStepHintNewMembers;
+
+  /// #3485 setupStepHint: the label for case 'notifications'.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is told what, and how: in the app, on the phone, as a reminder.'**
+  String get setupStepHintNotifications;
+
+  /// #3485 setupStepHint: the label for case 'numbering'.
+  ///
+  /// In en, this message translates to:
+  /// **'How invoice numbers are built.'**
+  String get setupStepHintNumbering;
+
+  /// #3485 setupStepHint: the label for case 'online_payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Card payments through a provider your operator connects.'**
+  String get setupStepHintOnlinePayments;
+
+  /// #3485 setupStepHint: the label for case 'payment_methods'.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bank details and payment instructions.'**
+  String get setupStepHintPaymentMethods;
+
+  /// #3485 setupStepHint: the label for case 'places'.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the rooms, desks and seats members book.'**
+  String get setupStepHintPlaces;
+
+  /// #3485 setupStepHint: the label for case 'pricing'.
+  ///
+  /// In en, this message translates to:
+  /// **'What a place, a membership or a day costs.'**
+  String get setupStepHintPricing;
+
+  /// #3485 setupStepHint: the label for case 'public_page'.
+  ///
+  /// In en, this message translates to:
+  /// **'What people outside the space can see.'**
+  String get setupStepHintPublicPage;
+
+  /// #3485 setupStepHint: the label for case 'purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'What the space buys, and from whom.'**
+  String get setupStepHintPurchases;
+
+  /// #3485 setupStepHint: the label for case 'recovery'.
+  ///
+  /// In en, this message translates to:
+  /// **'Export the space\'s data once.'**
+  String get setupStepHintRecovery;
+
+  /// #3485 setupStepHint: the label for case 'reminders'.
+  ///
+  /// In en, this message translates to:
+  /// **'When and how unpaid invoices are reminded.'**
+  String get setupStepHintReminders;
+
+  /// #3485 setupStepHint: the label for case 'services'.
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee, printing, lockers: what members can add.'**
+  String get setupStepHintServices;
+
+  /// #3485 setupStepHint: the label for case 'vat'.
+  ///
+  /// In en, this message translates to:
+  /// **'The rates you charge and your VAT returns.'**
+  String get setupStepHintVat;
 
   /// #2870 setup steps: setupStepLoadFailed
   ///
@@ -43694,11 +46328,179 @@ abstract class AppLocalizations {
   /// **'What your members will see'**
   String get setupStepPreviewTitle;
 
-  /// #2869 setup guide: setupStepTitle
+  /// #3485 setupStepTitle: the label for case 'accounting'.
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
-  String setupStepTitle(String key);
+  /// **'Accounting'**
+  String get setupStepTitleAccounting;
+
+  /// #3485 setupStepTitle: the label for case 'approvals'.
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals'**
+  String get setupStepTitleApprovals;
+
+  /// #3485 setupStepTitle: the label for case 'assets'.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get setupStepTitleAssets;
+
+  /// #3485 setupStepTitle: the label for case 'assistant'.
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant'**
+  String get setupStepTitleAssistant;
+
+  /// #3485 setupStepTitle: the label for case 'basics'.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, country and time zone'**
+  String get setupStepTitleBasics;
+
+  /// #3485 setupStepTitle: the label for case 'documents'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice look'**
+  String get setupStepTitleDocuments;
+
+  /// #3485 setupStepTitle: the label for case 'einvoicing'.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing'**
+  String get setupStepTitleEinvoicing;
+
+  /// #3485 setupStepTitle: the label for case 'first_booking'.
+  ///
+  /// In en, this message translates to:
+  /// **'A first booking'**
+  String get setupStepTitleFirstBooking;
+
+  /// #3485 setupStepTitle: the label for case 'hours'.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get setupStepTitleHours;
+
+  /// #3485 setupStepTitle: the label for case 'invite'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite members'**
+  String get setupStepTitleInvite;
+
+  /// #3485 setupStepTitle: the label for case 'kiosk'.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk and badges'**
+  String get setupStepTitleKiosk;
+
+  /// #3485 setupStepTitle: the label for case 'lease'.
+  ///
+  /// In en, this message translates to:
+  /// **'Your lease'**
+  String get setupStepTitleLease;
+
+  /// #3485 setupStepTitle: the label for case 'legal_identity'.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal identity'**
+  String get setupStepTitleLegalIdentity;
+
+  /// #3485 setupStepTitle: the label for case 'limits'.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking limits'**
+  String get setupStepTitleLimits;
+
+  /// #3485 setupStepTitle: the label for case 'look'.
+  ///
+  /// In en, this message translates to:
+  /// **'Colours and wording'**
+  String get setupStepTitleLook;
+
+  /// #3485 setupStepTitle: the label for case 'member_rights'.
+  ///
+  /// In en, this message translates to:
+  /// **'What members may do'**
+  String get setupStepTitleMemberRights;
+
+  /// #3485 setupStepTitle: the label for case 'new_members'.
+  ///
+  /// In en, this message translates to:
+  /// **'New members'**
+  String get setupStepTitleNewMembers;
+
+  /// #3485 setupStepTitle: the label for case 'notifications'.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get setupStepTitleNotifications;
+
+  /// #3485 setupStepTitle: the label for case 'numbering'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice numbering'**
+  String get setupStepTitleNumbering;
+
+  /// #3485 setupStepTitle: the label for case 'online_payments'.
+  ///
+  /// In en, this message translates to:
+  /// **'Online payments'**
+  String get setupStepTitleOnlinePayments;
+
+  /// #3485 setupStepTitle: the label for case 'payment_methods'.
+  ///
+  /// In en, this message translates to:
+  /// **'How members pay'**
+  String get setupStepTitlePaymentMethods;
+
+  /// #3485 setupStepTitle: the label for case 'places'.
+  ///
+  /// In en, this message translates to:
+  /// **'Places on the plan'**
+  String get setupStepTitlePlaces;
+
+  /// #3485 setupStepTitle: the label for case 'pricing'.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices and plans'**
+  String get setupStepTitlePricing;
+
+  /// #3485 setupStepTitle: the label for case 'public_page'.
+  ///
+  /// In en, this message translates to:
+  /// **'Public page'**
+  String get setupStepTitlePublicPage;
+
+  /// #3485 setupStepTitle: the label for case 'purchases'.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers and purchases'**
+  String get setupStepTitlePurchases;
+
+  /// #3485 setupStepTitle: the label for case 'recovery'.
+  ///
+  /// In en, this message translates to:
+  /// **'A copy of your data'**
+  String get setupStepTitleRecovery;
+
+  /// #3485 setupStepTitle: the label for case 'reminders'.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reminders'**
+  String get setupStepTitleReminders;
+
+  /// #3485 setupStepTitle: the label for case 'services'.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get setupStepTitleServices;
+
+  /// #3485 setupStepTitle: the label for case 'vat'.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get setupStepTitleVat;
 
   /// Workspace configuration guidance and status.
   ///
