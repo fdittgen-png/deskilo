@@ -11,8 +11,13 @@ import 'kit_card.dart';
 import 'kit_metrics.dart';
 import 'split_bar.dart';
 
-/// What one currency owes: its total in words and figures, its bar.
-typedef OwedBlock = ({String total, List<SplitPart> parts});
+/// What one currency owes: its total, its bar and its own legend lines
+/// ([LegendToggle]s; a bucket with nothing is left out).
+typedef OwedBlock = ({
+  String total,
+  List<SplitPart> parts,
+  List<Widget> legend,
+});
 
 /// One of the month's figures: what it is, and its value (one line per
 /// currency).
@@ -23,7 +28,6 @@ class OwedCard extends StatelessWidget {
     super.key,
     required this.label,
     required this.blocks,
-    required this.legend,
     required this.figures,
   });
 
@@ -31,9 +35,6 @@ class OwedCard extends StatelessWidget {
 
   /// One block per currency, in the order they are shown.
   final List<OwedBlock> blocks;
-
-  /// The legend lines ([LegendToggle]s); a bucket with nothing is left out.
-  final List<Widget> legend;
 
   /// The month's figures, side by side under a hairline.
   final List<OwedFigure> figures;
@@ -55,8 +56,8 @@ class OwedCard extends StatelessWidget {
             if (i > 0) const Divider(height: 1),
             Text(b.total, style: total),
             if (b.parts.isNotEmpty) SplitBar(parts: b.parts),
+            ...b.legend,
           ],
-          ...legend,
           if (figures.isNotEmpty) ...[
             const Divider(height: 1),
             Row(

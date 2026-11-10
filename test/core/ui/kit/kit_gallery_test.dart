@@ -44,12 +44,22 @@ class _GalleryState extends State<_Gallery> {
   Widget build(BuildContext context) {
     final t = PersonalTheme.of(context);
     final wide = MediaQuery.sizeOf(context).width >= kWideNavigationMinWidth;
-    Color bar(StatusTone tone) => statusColorsOf(t, tone).$2;
+    Color bar(StatusTone tone) =>
+        statusColorsOf(t, tone, scheme: Theme.of(context).colorScheme).$2;
     final legend = [
       ('Not yet due', '6 invoices', 'CHF 2,941.00', t.interactiveBorder),
       ('To confirm', '3 invoices', 'CHF 890.00', bar(StatusTone.info)),
       ('Overdue', '8 invoices', 'CHF 1,761.00', bar(StatusTone.due)),
     ];
+    Widget toggle(int i, (String, String, String, Color) l) => LegendToggle(
+      key: ValueKey('kit-legend-$i'),
+      color: l.$4,
+      label: l.$1,
+      caption: l.$2,
+      value: l.$3,
+      selected: _legend == i,
+      onTap: () => setState(() => _legend = i),
+    );
     final owed = OwedCard(
       label: 'Owed to you',
       blocks: [
@@ -60,23 +70,20 @@ class _GalleryState extends State<_Gallery> {
             (weight: 890, color: bar(StatusTone.info)),
             (weight: 1761, color: bar(StatusTone.due)),
           ],
+          legend: [for (final (i, l) in legend.indexed) toggle(i, l)],
         ),
         (
           total: 'EUR 981.00',
           parts: [(weight: 981, color: bar(StatusTone.due))],
+          legend: [
+            toggle(3, (
+              'Overdue',
+              '1 invoice',
+              'EUR 981.00',
+              bar(StatusTone.due),
+            )),
+          ],
         ),
-      ],
-      legend: [
-        for (final (i, l) in legend.indexed)
-          LegendToggle(
-            key: ValueKey('kit-legend-$i'),
-            color: l.$4,
-            label: l.$1,
-            caption: l.$2,
-            value: l.$3,
-            selected: _legend == i,
-            onTap: () => setState(() => _legend = i),
-          ),
       ],
       figures: const [
         (label: 'Invoiced in November', values: ['CHF 4,120.00']),
@@ -284,7 +291,7 @@ void main() {
               RepaintBoundary(
                 child: Theme(data: theme, child: page()),
               ),
-              size: Size(width, width < 600 ? 2600 : 1400),
+              size: Size(width, width < 600 ? 2600 : 2000),
               textScale: scale,
             );
             await tester.pumpAndSettle();

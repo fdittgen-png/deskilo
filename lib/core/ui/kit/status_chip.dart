@@ -25,17 +25,25 @@ enum StatusTone {
   neutral,
 }
 
-/// The (tint, colour) pair of [tone] in the semantic tokens [t]: the same
-/// table the personal layer reads, and its brightness's copy under the
-/// workspace theme. "Info" is a blue, never the green of "ok".
-(Color, Color) statusColorsOf(PersonalTheme t, StatusTone tone) =>
-    switch (tone) {
-      StatusTone.due => (t.dangerTint, t.danger),
-      StatusTone.info => (t.infoTint, t.info),
-      StatusTone.warn => (t.warningTint, t.warning),
-      StatusTone.ok => (t.successTint, t.success),
-      StatusTone.neutral => (t.subtle, t.secondaryText),
-    };
+/// The (tint, colour) pair of [tone]: the semantic tokens [t] (the table the
+/// personal layer reads, and its brightness's copy under the workspace
+/// theme) for the four meanings — "info" is a blue, never the green of "ok"
+/// — and the ambient [scheme]'s own quiet surface and secondary text for
+/// neutral, so it never reads as a meaning.
+(Color, Color) statusColorsOf(
+  PersonalTheme t,
+  StatusTone tone, {
+  required ColorScheme scheme,
+}) => switch (tone) {
+  StatusTone.due => (t.dangerTint, t.danger),
+  StatusTone.info => (t.infoTint, t.info),
+  StatusTone.warn => (t.warningTint, t.warning),
+  StatusTone.ok => (t.successTint, t.success),
+  StatusTone.neutral => (
+    scheme.surfaceContainerHighest,
+    scheme.onSurfaceVariant,
+  ),
+};
 
 class StatusChip extends StatelessWidget {
   const StatusChip({super.key, required this.label, required this.tone});
@@ -49,6 +57,7 @@ class StatusChip extends StatelessWidget {
     final (background, foreground) = statusColorsOf(
       PersonalTheme.of(context),
       tone,
+      scheme: theme.colorScheme,
     );
     return DecoratedBox(
       decoration: BoxDecoration(

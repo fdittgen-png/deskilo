@@ -28,13 +28,26 @@ void _noop() {}
 void main() {
   test('a status takes its pair from the theme tokens; "info" is never the '
       'colour of "ok"', () {
-    for (final t in [PersonalTheme.light, PersonalTheme.dark]) {
-      expect(statusColorsOf(t, StatusTone.info), (t.infoTint, t.info));
-      expect(statusColorsOf(t, StatusTone.due), (t.dangerTint, t.danger));
-      expect(
-        statusColorsOf(t, StatusTone.info).$2,
-        isNot(statusColorsOf(t, StatusTone.ok).$2),
-      );
+    for (final (t, scheme) in [
+      (PersonalTheme.light, ColorScheme.fromSeed(seedColor: Colors.brown)),
+      (
+        PersonalTheme.dark,
+        ColorScheme.fromSeed(
+          seedColor: Colors.brown,
+          brightness: Brightness.dark,
+        ),
+      ),
+    ]) {
+      (Color, Color) of(StatusTone tone) =>
+          statusColorsOf(t, tone, scheme: scheme);
+      expect(of(StatusTone.info), (t.infoTint, t.info));
+      expect(of(StatusTone.due), (t.dangerTint, t.danger));
+      expect(of(StatusTone.info).$2, isNot(of(StatusTone.ok).$2));
+      // Neutral is the theme's own quiet pair, never a tinted meaning.
+      expect(of(StatusTone.neutral), (
+        scheme.surfaceContainerHighest,
+        scheme.onSurfaceVariant,
+      ));
     }
   });
 
