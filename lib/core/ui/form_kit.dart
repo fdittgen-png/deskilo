@@ -125,6 +125,7 @@ class AppTextField extends StatelessWidget {
     this.hint,
     this.prefixIcon,
     this.filled = false,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -149,6 +150,8 @@ class AppTextField extends StatelessWidget {
   final VoidCallback? onTap;
   final String? hint;
   final Widget? prefixIcon;
+  /// For a field a composite control owns (the master-data lookup).
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +161,7 @@ class AppTextField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
+      focusNode: focusNode,
       enabled: enabled,
       autofocus: autofocus,
       obscureText: obscureText,

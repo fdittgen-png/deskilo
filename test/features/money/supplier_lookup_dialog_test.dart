@@ -165,7 +165,7 @@ void main() {
       expect(find.textContaining('Source: VIES'), findsOneWidget);
       expect(_fieldText(tester, 'name'), 'Atelier des Arceaux SAS');
       expect(_fieldText(tester, 'tax-id'), 'FR 11 223 344 556');
-      expect(_fieldText(tester, 'country'), 'FR');
+      expect(_fieldText(tester, 'country'), 'France · FR', reason: 'the field shows the name and the code; the stored value is the code (asserted on the saved supplier below)');
       expect(_helperOf(tester, 'name'), 'Retrieved from VIES');
       expect(_helperOf(tester, 'street'), 'Retrieved from VIES');
       expect(_helperOf(tester, 'tax-id'), 'Validated by VIES');

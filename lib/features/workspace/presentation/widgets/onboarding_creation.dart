@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/i18n/time_zone_picker.dart';
 import '../../../../core/i18n/time_zones.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
@@ -206,7 +209,7 @@ class TemplateOutlineView extends StatelessWidget {
 
 /// #1636 — currency and time zone, each checked against what the app can
 /// actually use rather than "three letters" and "not empty".
-class PlaceFields extends StatelessWidget {
+class PlaceFields extends ConsumerWidget {
   const PlaceFields({
     super.key,
     required this.currency,
@@ -219,29 +222,44 @@ class PlaceFields extends StatelessWidget {
   final FocusNode currencyFocus, timezoneFocus;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-          TextFormField(
-            key: const ValueKey('onboarding-currency'),
-            controller: currency,
-            focusNode: currencyFocus,
-            decoration: InputDecoration(
-              labelText: l10n.workspaceCurrencyLabel,
-            ),
-            validator: (v) => isKnownCurrency(v ?? '')
+          FormField<String>(
+            initialValue: currency.text,
+            validator: (_) => isKnownCurrency(currency.text)
                 ? null
-                : (l10n.onboardingCurrencyUnknown),
+                : l10n.onboardingCurrencyUnknown,
+            builder: (field) => CurrencyField(
+              textKey: const ValueKey('onboarding-currency'),
+              controller: currency,
+              focusNode: currencyFocus,
+              label: l10n.workspaceCurrencyLabel,
+              error: field.errorText,
+              onChanged: field.didChange,
+            ),
           ),
           const SizedBox(height: 12),
+          // The zone is picked from the IANA database the clock installs from
+          // (search by city or zone id), never typed (#3563).
           TextFormField(
             key: const ValueKey('onboarding-timezone'),
             controller: timezone,
             focusNode: timezoneFocus,
+            readOnly: true,
+            onTap: () async {
+              final picked = await showTimeZonePicker(
+                context,
+                current: timezone.text,
+                now: ref.read(clockProvider).now(),
+              );
+              if (picked != null) timezone.text = picked;
+            },
             decoration: InputDecoration(
               labelText: l10n.workspaceTimezoneLabel,
+              suffixIcon: const Icon(Icons.search),
             ),
             validator: (v) => TimeZones.isKnown(v?.trim() ?? '')
                 ? null

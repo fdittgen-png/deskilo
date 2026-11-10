@@ -21,6 +21,18 @@ import 'settings_task_section.dart';
 /// Every tile asks the permission matrix — the question its route and the
 /// server ask — never `isOwner || canAdminister`. A section whose tiles are
 /// all hidden shows no header either, so a plain member meets none of them.
+/// #3550 — a place tile: the places are on, [perm] is held and, when named,
+/// [also] is on too.
+bool _onPlaces(
+  Set<WorkspaceFeature> features,
+  Set<WorkspacePermission> perms,
+  WorkspacePermission perm, [
+  WorkspaceFeature? also,
+]) =>
+    features.contains(WorkspaceFeature.placeBooking) &&
+    perms.contains(perm) &&
+    (also == null || features.contains(also));
+
 List<Widget> workspaceSettingsTiles(
   BuildContext context,
   WidgetRef ref, {
@@ -44,7 +56,7 @@ List<Widget> workspaceSettingsTiles(
         title: Text(l10n.workspaceSettingsTitle),
         onTap: () => context.push('/workspace-settings'),
       ),
-    if (perms.contains(WorkspacePermission.workspaceSettings))
+    if (_onPlaces(features, perms, WorkspacePermission.workspaceSettings))
       ListTile(
         key: const ValueKey('settings-workspace-sections-availability-title'),
         leading: const Icon(Icons.event_busy_outlined),
@@ -69,8 +81,12 @@ List<Widget> workspaceSettingsTiles(
     // Accessory catalog (#167): owner AND admins, per the epic #163
     // decision. The screen still gates its actions on canAdminister, so
     // the tile asks the same until the screen adopts the matrix.
-    if ((perms.contains(WorkspacePermission.manageServices)) &&
-        features.contains(WorkspaceFeature.accessorySupplements))
+    if (_onPlaces(
+      features,
+      perms,
+      WorkspacePermission.manageServices,
+      WorkspaceFeature.accessorySupplements,
+    ))
       ListTile(
         key: const ValueKey('settings-workspace-sections-accessories-title'),
         leading: const Icon(Icons.devices_other_outlined),

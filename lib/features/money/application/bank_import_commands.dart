@@ -8,6 +8,7 @@
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show supportedCurrencies;
 
 import '../../../core/trace/trace_logger.dart';
 
@@ -182,8 +183,8 @@ class BankImportCommands {
 enum BankCsvMappingProblem { account, currency, date, amount, duplicateColumn }
 
 /// The problems of a mapping as the person filled it in: an account named
-/// in at most [BankColumnWidths.account] characters, a three-letter
-/// currency, a date column and an amount column chosen, and no column
+/// in at most [BankColumnWidths.account] characters, a currency of the
+/// supported list, a date column and an amount column chosen, and no column
 /// chosen for two meanings.
 Set<BankCsvMappingProblem> bankCsvMappingProblems({
   required String account,
@@ -204,7 +205,7 @@ Set<BankCsvMappingProblem> bankCsvMappingProblems({
         account.trim().length > BankColumnWidths.account)
       BankCsvMappingProblem.account,
     if (currencyColumn == null &&
-        !RegExp(r'^[A-Za-z]{3}$').hasMatch(currency.trim()))
+        !supportedCurrencies.contains(currency.trim().toUpperCase()))
       BankCsvMappingProblem.currency,
     if (dateColumn == null) BankCsvMappingProblem.date,
     if (amountColumn == null) BankCsvMappingProblem.amount,

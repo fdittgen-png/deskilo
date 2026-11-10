@@ -99,6 +99,8 @@ const List<SetupStep> setupSteps = [
   ),
   SetupStep(
     'places',
+    // #3550 — a business without places has none to set up.
+    feature: WorkspaceFeature.placeBooking,
     group: SetupGroup.open,
     milestone: SetupMilestone.bookable,
     route: '/setup/step/places',
@@ -329,6 +331,8 @@ const List<SetupStep> setupSteps = [
   // ── Launch: live ────────────────────────────────────────────────────
   SetupStep(
     'first_booking',
+    // #3550 — a business without places has none to set up.
+    feature: WorkspaceFeature.placeBooking,
     group: SetupGroup.launch,
     milestone: SetupMilestone.live,
     route: '/reserve',

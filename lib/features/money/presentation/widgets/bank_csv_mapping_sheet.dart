@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
@@ -155,12 +156,11 @@ List<Widget> _typedFields(
       maxLength: BankColumnWidths.account,
     ),
     const FormGap(),
-    AppTextField(
-      key: const ValueKey('bank-csv-currency'),
+    CurrencyField(
+      textKey: const ValueKey('bank-csv-currency'),
       controller: draft.fields['currency'],
       fieldKey: 'currency',
       label: l10n.bankCsvCurrency,
-      maxLength: 3,
     ),
     const FormGap(),
     DropdownButtonFormField<BankCsvDatePattern>(

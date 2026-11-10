@@ -192,7 +192,8 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
       path: '/money/guest-passes',
       redirect: env.guard(
         const RouteAccess(
-          features: [WorkspaceFeature.guestPasses],
+          // #3550 — a pass books a place for its guest.
+          features: [WorkspaceFeature.placeBooking, WorkspaceFeature.guestPasses],
           to: '/money',
         ),
       ),

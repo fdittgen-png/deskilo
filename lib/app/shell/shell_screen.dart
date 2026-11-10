@@ -9,6 +9,7 @@ import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -62,10 +63,12 @@ class ShellScreen extends ConsumerWidget {
         visibleShellBranches(features, ref.watch(myPermissionsProvider));
     // Unknown permissions (the membership did not load) hide nothing: the
     // hub itself explains what went wrong.
-    final showReserve = ref.watch(myMemberProvider).value == null ||
-        ref
-            .watch(myPermissionsProvider)
-            .contains(WorkspacePermission.makeReservations);
+    // #3550 — a business without places has no Reserve button.
+    final showReserve = features.contains(WorkspaceFeature.placeBooking) &&
+        (ref.watch(myMemberProvider).value == null ||
+            ref
+                .watch(myPermissionsProvider)
+                .contains(WorkspacePermission.makeReservations));
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
 

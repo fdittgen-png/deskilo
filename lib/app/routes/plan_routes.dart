@@ -25,7 +25,11 @@ List<RouteBase> planRoutes(RouteEnv env) {
       path: '/accessories',
       redirect: env.guard(
         const RouteAccess(
-          features: [WorkspaceFeature.accessorySupplements],
+          // #3550 — accessories belong to places.
+          features: [
+            WorkspaceFeature.placeBooking,
+            WorkspaceFeature.accessorySupplements,
+          ],
           permission: WorkspacePermission.manageServices,
           bypass: RoleBypass.administrator,
         ),

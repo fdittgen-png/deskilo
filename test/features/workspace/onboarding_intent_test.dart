@@ -182,8 +182,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(
         tester
-            .widget<TextFormField>(
-                find.byKey(const ValueKey('onboarding-currency')))
+            .widget<TextField>(
+              find.descendant(
+                of: find.byKey(const ValueKey('onboarding-currency')),
+                matching: find.byType(TextField),
+              ),
+            )
             .controller!
             .text,
         'CHF',
@@ -205,12 +209,22 @@ void main() {
     await goTo(tester, 'Where');
     await tester.enterText(
         find.byKey(const ValueKey('onboarding-currency')), 'EURO');
-    await tester.enterText(
-        find.byKey(const ValueKey('onboarding-timezone')), 'Europe/Pairs');
+    // The zone is picked, never typed: its field is read-only and opens the
+    // picker (#3563), so there is no wrong zone to refuse.
+    expect(
+      tester
+          .widget<TextField>(
+            find.descendant(
+              of: find.byKey(const ValueKey('onboarding-timezone')),
+              matching: find.byType(TextField),
+            ),
+          )
+          .readOnly,
+      isTrue,
+    );
     await tester.tap(find.text('Next'));
     await tester.pumpAndSettle();
     expect(find.textContaining('currency code the app supports'), findsOneWidget);
-    expect(find.text('Pick a time zone from the list'), findsOneWidget);
     expect(repo.createRequests, isEmpty);
   });
 

@@ -97,8 +97,12 @@ StatefulShellRoute shellRoute(RouteEnv env) => StatefulShellRoute.indexedStack(
         GoRoute(
           // The Reserve hub behind the raised centre button. A
           // shell branch (not a pushed route) so the bottom bar
-          // stays visible and functional on the hub; ungated.
+          // stays visible and functional on the hub. #3550 — a business
+          // without places has no hub: it lands on the messages.
           path: '/reserve',
+          redirect: env.guard(
+            const RouteAccess(features: [WorkspaceFeature.placeBooking]),
+          ),
           builder: (context, state) => const ReserveScreen(),
         ),
       ],

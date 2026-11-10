@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/country_field.dart' show isKnownOrEmptyCountry;
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -24,6 +25,7 @@ class SupplierSaveState {
     this.duplicate,
     this.similar,
     this.nameError,
+    this.countryError,
   });
 
   /// A save is under way: Save, Cancel and the fields are off.
@@ -40,6 +42,9 @@ class SupplierSaveState {
 
   /// Under the name field.
   final String? nameError;
+
+  /// Under the country field: a code outside the catalogue (#3563).
+  final String? countryError;
 }
 
 /// The save step's state and its two decisions: what an edit changes, and
@@ -67,13 +72,21 @@ class SupplierSaveStep extends ValueNotifier<SupplierSaveState> {
     final now = value;
     final similar = supplierWithSimilarName(existing, draft);
     final nameError = draft.name.trim().isEmpty ? now.nameError : null;
-    if (similar?.id == now.similar?.id && nameError == now.nameError) return;
+    final countryError = isKnownOrEmptyCountry(draft.countryCode)
+        ? null
+        : now.countryError;
+    if (similar?.id == now.similar?.id &&
+        nameError == now.nameError &&
+        countryError == now.countryError) {
+      return;
+    }
     value = SupplierSaveState(
       busy: now.busy,
       problem: now.problem,
       duplicate: now.duplicate,
       similar: similar,
       nameError: nameError,
+      countryError: countryError,
     );
   }
 
@@ -87,19 +100,29 @@ class SupplierSaveStep extends ValueNotifier<SupplierSaveState> {
   }) async {
     if (value.busy) return null;
     final similar = value.similar;
-    void show({String? problem, Supplier? duplicate, String? nameError}) {
+    void show({
+      String? problem,
+      Supplier? duplicate,
+      String? nameError,
+      String? countryError,
+    }) {
       value = SupplierSaveState(
         problem: problem,
         duplicate: duplicate,
         similar: similar,
         nameError: nameError,
+        countryError: countryError,
       );
-      final said = nameError ?? problem;
+      final said = nameError ?? countryError ?? problem;
       if (said != null) announce(said);
     }
 
     if (draft.name.trim().isEmpty) {
       show(nameError: l10n.supplierNameMissing);
+      return null;
+    }
+    if (!isKnownOrEmptyCountry(draft.countryCode)) {
+      show(countryError: l10n.masterDataUnknownCode);
       return null;
     }
     final duplicate = supplierDuplicateOf(existing, draft, reference: reference);
