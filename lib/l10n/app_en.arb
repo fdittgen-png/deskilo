@@ -24018,7 +24018,7 @@
   "@moneyDescriptionLabel": {
     "description": "Label of the expense description input"
   },
-  "moneyDueIn": "Due in {days} days",
+  "moneyDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
   "@moneyDueIn": {
     "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
@@ -24104,7 +24104,7 @@
       }
     }
   },
-  "moneyOverdueBy": "Overdue by {days} days",
+  "moneyOverdueBy": "{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}",
   "@moneyOverdueBy": {
     "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
