@@ -102,8 +102,8 @@ dart run tool/preflight.dart --list   # which generators this change implicates
 ```
 
 Programme selection (the next outcomes, slots and bounded exceptions) lives only in
-[#2596](https://github.com/fdittgen-png/deskilo/issues/2596); #1447 keeps the
-existing-community pilot/release qualification. Read the selected issue, its later
+[#3542](https://github.com/fdittgen-png/deskilo/issues/3542) (v2; v1's #2596 and
+#1447 are closed). Read the selected issue, its later
 corrections and the current claims; priorities are not copied into source.
 
 The PR's Tests section carries one receipt line:
@@ -236,7 +236,7 @@ dated; a claim about today is not.
 
 ## Ready, Done and closure
 
-The one shared reference for issues, PRs and agents (canonical wording and the current execution directive live in [#1447](https://github.com/fdittgen-png/deskilo/issues/1447); this section is its checked-in summary, not a second policy).
+The one shared reference for issues, PRs and agents (canonical wording and the current execution directive live in [#3542](https://github.com/fdittgen-png/deskilo/issues/3542); this section is its checked-in summary, not a second policy).
 
 **Ready** — a checkpoint states the affected user and outcome, current vs expected behaviour, a minimal proving scenario, the exact producer prerequisite (or none), non-goals, business risk, the real consumer, the test layers that apply, and an ownership/size boundary. Refresh `master` and read the body plus later owner corrections first; a missing current proof means `unverified`, not `unimplemented`.
 
