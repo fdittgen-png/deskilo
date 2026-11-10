@@ -18,6 +18,18 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/me/presentation/kit/me_card.dart::MeCard':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
+  'lib/features/me/presentation/kit/me_notice.dart::MeNotice':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
+  'lib/features/me/presentation/kit/me_quiet_line.dart::MeQuietLine':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
+  'lib/features/me/presentation/kit/me_row.dart::MeRow':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
+  'lib/features/me/presentation/kit/me_section_label.dart::MeSectionLabel':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
+  'lib/features/me/presentation/kit/me_status_chip.dart::MeStatusChip':
+      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   // The workspace's business kind: the settings tile and the setup step of
   // #3549's second PR read it, then #3550's feature proposal.
   'lib/features/workspace/domain/business_profile.dart::BusinessProfile':
