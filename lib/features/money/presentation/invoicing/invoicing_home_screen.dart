@@ -24,6 +24,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
 import '../../domain/dunning.dart';
+import '../../providers/bank_statement_providers.dart' show WorkspaceFeature;
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
@@ -185,6 +186,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       eventFactsOf: ref.watch(invoiceEventFactsProvider),
       transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
       held: {...?ref.watch(dunningHoldsProvider).value?.keys},
+      fold: ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.settlementFold),
     );
     final receivables = reader.read(invoices);
     final period = overview.value?.period;
@@ -276,19 +280,23 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     if (invoice == null) return;
     final reminders = ref.read(invoiceRemindersProvider).value ?? const {};
     final match = matches[invoice.id];
+    final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
+    // 0061 — the correction that replaced it, so it is not replaced twice.
+    final replacedByNumber = [
+      for (final i in all)
+        if (i.replacesInvoiceId == invoice.id) i.number,
+    ].firstOrNull ?? '';
     await showInvoiceDetailSheet(
       context,
       ref: ref,
       view: InvoiceDetailView(
         invoice: invoice,
         match: match,
-        settledByNumber: settledByNumberOf(
-          invoice,
-          ref.read(invoicesProvider).value ?? const [],
-        ),
+        settledByNumber: settledByNumberOf(invoice, all),
         canIssue: true,
         isEu: widget.isEu,
         reminder: reminders[invoice.id],
+        replacedByNumber: replacedByNumber,
         showMemberName: widget.showMemberNames,
         transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
         journey: readInvoiceJourney(
@@ -296,6 +304,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           invoice,
           match: match,
           reminder: reminders[invoice.id],
+          replacedByNumber: replacedByNumber,
         ),
       ),
     );
@@ -369,33 +378,39 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final currency = format.moneyIn(currencyCode ?? '');
     await showDialog<void>(
       context: context,
-      builder: (page) => Dialog.fullscreen(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              l.invoicingTodoMonth(
-                period == null
-                    ? ''
-                    : format.dates(DateShape.month).format(_monthOf(period)),
+      builder: (_) => Dialog.fullscreen(
+        // Its own messenger: what the month says is said once, here, not
+        // also on the home under it.
+        child: ScaffoldMessenger(
+          child: Builder(
+            builder: (page) => Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  l.invoicingTodoMonth(
+                    period == null
+                        ? ''
+                        : format.dates(DateShape.month).format(_monthOf(period)),
+                  ),
+                ),
+              ),
+              body: ToInvoiceTab(
+                currency: currency,
+                onIssue: (memberId, p) =>
+                    showInvoiceIssueSheet(page, ref, memberId: memberId, period: p),
+                onIssueAll: (entries, p) =>
+                    issueInvoicesForAll(page, ref, entries, p, currency),
+                onProforma: (memberId, p) async {
+                  final invoice = await proformaForMonth(
+                    ref,
+                    memberId: memberId,
+                    period: p,
+                  );
+                  if (invoice != null && page.mounted) {
+                    await shareProforma(page, ref, invoice);
+                  }
+                },
               ),
             ),
-          ),
-          body: ToInvoiceTab(
-            currency: currency,
-            onIssue: (memberId, p) =>
-                showInvoiceIssueSheet(page, ref, memberId: memberId, period: p),
-            onIssueAll: (entries, p) =>
-                issueInvoicesForAll(page, ref, entries, p, currency),
-            onProforma: (memberId, p) async {
-              final invoice = await proformaForMonth(
-                ref,
-                memberId: memberId,
-                period: p,
-              );
-              if (invoice != null && page.mounted) {
-                await shareProforma(page, ref, invoice);
-              }
-            },
           ),
         ),
       ),
