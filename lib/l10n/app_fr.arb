@@ -12436,7 +12436,7 @@
   "portalReachableHeading": "Personnes à qui vous pouvez écrire",
   "portalRecipientHint": "Tapez un nom : des suggestions apparaissent dès la première lettre",
   "portalRegisterDirectory": "Relier un serveur à l’annuaire global",
-  "portalRequestProfile": "Demander un profil dans cet espace",
+  "portalRequestProfile": "Demander à rejoindre",
   "portalRequestSent": "Demande envoyée. L’espace examinera votre profil.",
   "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
   "portalResetAllBody": "Les valeurs publiques de chaque champ qui a une information dans l’espace sont remplacées par celle-ci. Les champs sans équivalent dans l’espace gardent ce que vous avez saisi.",
@@ -17273,6 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Écrire à {name}",
+  "spaceMessageSpace": "Écrire à l'espace",
   "spaceMoveDown": "Descendre",
   "spaceMoveUp": "Monter",
   "spaceNotBookable": "Cet espace n'est pas configuré pour les réservations entières.",
@@ -17285,6 +17286,7 @@
       }
     }
   },
+  "spacePreviewPrivacy": "Rien n'est partagé avec l'espace avant l'envoi de votre demande.",
   "spaceQrSizeLabel": "Taille du code QR",
   "spaceRatingClear": "Aucune note",
   "spaceScanField": "Code",

@@ -11,6 +11,7 @@ import '../../../core/backend/secondary_federation.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
+import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -220,6 +221,85 @@ class PublicWorkspaceView extends ConsumerWidget {
   }
   }
 
+  /// What the space published, then its contacts.
+  List<Widget> _details(
+    BuildContext context,
+    WidgetRef ref,
+    PublicWorkspace workspace, {
+    required bool withdrawn,
+  }) {
+    final l = context.l10n;
+    Widget link(String field, String label) =>
+        _link(ref, workspace, field, label);
+    return [
+          for (final field in ['description', 'email', 'phone', 'plans'])
+            if (workspace.text(field).isNotEmpty)
+              Padding(
+                padding: AppSpacing.smAll,
+                child: SelectableText(workspace.text(field)),
+              ),
+          if (workspace.text('website').isNotEmpty)
+            link('website', l.portalWebsite),
+          if (workspace.text('plan_url').isNotEmpty)
+            link('plan_url', l.portalPublicPlan),
+          for (final contact in workspace.contacts)
+            ListTile(
+              title: Text(contact['name'] as String? ?? ''),
+              subtitle: Text(
+                contact['owner'] == true ? (l.portalOwner) : (l.portalAdmin),
+              ),
+              trailing:
+                  !withdrawn &&
+                      contact['available'] == true &&
+                      contact['user_id'] is String
+                  ? IconButton(
+                      key: ValueKey('public-workspace-chat-${contact['user_id']}'),
+                      tooltip: l.portalChat,
+                      icon: const Icon(Icons.chat_outlined),
+                      onPressed: preview
+                          ? null
+                          : () => _chat(context, ref, workspace, contact),
+                    )
+                  : null,
+            ),
+    ];
+  }
+
+  /// ONE filled action, the inquiry and what asking shares.
+  List<Widget> _actions(
+    BuildContext context,
+    WidgetRef ref,
+    PublicWorkspace workspace, {
+    required bool withdrawn,
+  }) {
+    final l = context.l10n;
+    return [
+          // #1823 — what the space offers: ONE filled action (enter, or ask to
+          // join), then #1824's inquiry addressed to the space (read by its host
+          // roster, which the sheet shows before anything is written; a space
+          // that switched `spaceInquiries` off answers no roster).
+          if (!preview && !withdrawn) ...[
+            SpaceOffers(
+              workspace: workspace,
+              onRequest: () => _apply(context, ref, workspace),
+              secondary: OutlinedButton.icon(
+                key: const ValueKey('write-to-hosts'),
+                icon: const Icon(Icons.contact_support_outlined),
+                label: Text(l.spaceMessageSpace),
+                onPressed: () => _writeToHosts(context, ref, workspace),
+              ),
+            ),
+            Text(
+              l.spacePreviewPrivacy,
+              key: const ValueKey('public-workspace-privacy'),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+    ];
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -238,9 +318,12 @@ class PublicWorkspaceView extends ConsumerWidget {
           );
     final withdrawn = live is AsyncData<PublicWorkspace?> && live.value == null;
     final workspace = live?.value ?? this.workspace;
-    Widget link(String field, String label) =>
-        _link(ref, workspace, field, label);
     final image = Uri.tryParse(workspace.text('image_url'));
+    final kind = switch (workspace.text('host_type')) {
+      'association' => l.portalAssociation,
+      'company' => l.portalCompany,
+      _ => l.portalPerson,
+    };
     return Scaffold(
       appBar: AppBar(
         title: Text(preview ? l.portalPreview : workspace.name),
@@ -258,13 +341,34 @@ class PublicWorkspaceView extends ConsumerWidget {
               height: 160,
               fit: BoxFit.contain,
               errorBuilder: (_, error, stack) =>
-                  const Icon(Icons.business_outlined),
-            ),
+                  _InitialBlock(name: workspace.name),
+            )
+          else
+            _InitialBlock(name: workspace.name),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             workspace.name,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          Text(workspace.source),
+          if (workspace.text('address').isNotEmpty)
+            Text(
+              workspace.text('address'),
+              key: const ValueKey('public-workspace-address'),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          if (kind.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Chip(
+                  label: Text(kind),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ),
           WorkspaceFeedback(workspace: workspace, full: true),
           if (withdrawn)
             Padding(
@@ -274,67 +378,36 @@ class PublicWorkspaceView extends ConsumerWidget {
                 l.portalNoLongerPublished,
               ),
             ),
-          Text(switch (workspace.text('host_type')) {
-            'association' => l.portalAssociation,
-            'company' => l.portalCompany,
-            _ => l.portalPerson,
-          }),
-          for (final field in [
-            'description',
-            'address',
-            'email',
-            'phone',
-            'plans',
-          ])
-            if (workspace.text(field).isNotEmpty)
-              Padding(
-                padding: AppSpacing.smAll,
-                child: SelectableText(workspace.text(field)),
-              ),
-          if (workspace.text('website').isNotEmpty)
-            link('website', l.portalWebsite),
-          if (workspace.text('plan_url').isNotEmpty)
-            link('plan_url', l.portalPublicPlan),
-          for (final contact in workspace.contacts)
-            ListTile(
-              title: Text(contact['name'] as String? ?? ''),
-              subtitle: Text(
-                contact['owner'] == true
-                    ? (l.portalOwner)
-                    : (l.portalAdmin),
-              ),
-              trailing:
-                  !withdrawn &&
-                      contact['available'] == true &&
-                      contact['user_id'] is String
-                  ? IconButton(
-                      key: ValueKey('public-workspace-chat-${contact['user_id']}'),
-                      tooltip: l.portalChat,
-                      icon: const Icon(Icons.chat_outlined),
-                      onPressed: preview
-                          ? null
-                          : () => _chat(context, ref, workspace, contact),
-                    )
-                  : null,
-            ),
-          // #1824 — an inquiry addressed to the SPACE, read by its host
-          // roster, which the sheet shows before anything is written.
-          // The space's own `spaceInquiries` flag is decided on its
-          // server: a space that switched it off answers no roster.
-          if (!preview && !withdrawn)
-            OutlinedButton.icon(
-              key: const ValueKey('write-to-hosts'),
-              icon: const Icon(Icons.contact_support_outlined),
-              label: Text(l.messengerWriteToHosts),
-              onPressed: () => _writeToHosts(context, ref, workspace),
-            ),
-          // #1823 — what the space offers: enter, request, copy the e-mail.
-          if (!preview && !withdrawn)
-            SpaceOffers(
-              workspace: workspace,
-              onRequest: () => _apply(context, ref, workspace),
-            ),
+          ..._details(context, ref, workspace, withdrawn: withdrawn),
+          ..._actions(context, ref, workspace, withdrawn: withdrawn),
         ],
+      ),
+    );
+  }
+}
+
+/// The place's first letter on a tinted block, when it published no photo.
+class _InitialBlock extends StatelessWidget {
+  const _InitialBlock({required this.name});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      key: const ValueKey('public-workspace-initial'),
+      height: 96,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: scheme.primaryContainer,
+        borderRadius: AppRadius.xlAll,
+      ),
+      child: Text(
+        name.characters.firstOrNull?.toUpperCase() ?? '',
+        style: Theme.of(context).textTheme.displaySmall?.copyWith(
+          color: scheme.onPrimaryContainer,
+        ),
       ),
     );
   }

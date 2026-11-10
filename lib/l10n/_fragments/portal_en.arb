@@ -119,7 +119,7 @@
   "@portalChat": {
     "description": "Shown as the tooltip in public workspace view (directory)."
   },
-  "portalRequestProfile": "Request a workspace profile",
+  "portalRequestProfile": "Ask to join",
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."
   },
@@ -247,5 +247,13 @@
         "type": "String"
       }
     }
+  },
+  "spaceMessageSpace": "Message the space",
+  "spacePreviewPrivacy": "Nothing is shared with the space until you send your request.",
+  "@spaceMessageSpace": {
+    "description": "#3545 F: the outlined action of a space's public page that writes to its hosts"
+  },
+  "@spacePreviewPrivacy": {
+    "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"
   }
 }

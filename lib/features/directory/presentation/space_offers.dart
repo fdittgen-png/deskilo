@@ -25,12 +25,16 @@ class SpaceOffers extends ConsumerWidget {
     super.key,
     required this.workspace,
     required this.onRequest,
+    this.secondary,
   });
 
   final PublicWorkspace workspace;
 
   /// The admission request, as the page already made it.
   final Future<void> Function() onRequest;
+
+  /// The outlined action beside the one filled action (Message the space).
+  final Widget? secondary;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,8 +72,9 @@ class SpaceOffers extends ConsumerWidget {
               ),
               onPressed: onRequest,
             ),
+          ?secondary,
           if (email.isNotEmpty)
-            OutlinedButton.icon(
+            TextButton.icon(
               key: const ValueKey('portal-copy-email'),
               icon: const Icon(Icons.copy_outlined),
               label: Text(l.portalCopyEmail),

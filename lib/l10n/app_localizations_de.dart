@@ -20524,7 +20524,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server mit dem globalen Verzeichnis verbinden';
 
   @override
-  String get portalRequestProfile => 'Workspace-Profil beantragen';
+  String get portalRequestProfile => 'Beitritt anfragen';
 
   @override
   String get portalRequestSent =>
@@ -27792,6 +27792,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Dem Raum schreiben';
+
+  @override
   String get spaceMoveDown => 'Nach unten';
 
   @override
@@ -27809,6 +27812,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String spaceOptions(String name) {
     return 'Optionen für $name';
   }
+
+  @override
+  String get spacePreviewPrivacy =>
+      'Mit dem Raum wird nichts geteilt, bevor Sie Ihre Anfrage senden.';
 
   @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';

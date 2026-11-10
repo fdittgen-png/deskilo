@@ -20497,7 +20497,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Collega un server alla directory globale';
 
   @override
-  String get portalRequestProfile => 'Richiedi un profilo nello spazio';
+  String get portalRequestProfile => 'Chiedi di unirti';
 
   @override
   String get portalRequestSent =>
@@ -27758,6 +27758,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Scrivi allo spazio';
+
+  @override
   String get spaceMoveDown => 'Sposta giù';
 
   @override
@@ -27775,6 +27778,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String spaceOptions(String name) {
     return 'Opzioni di $name';
   }
+
+  @override
+  String get spacePreviewPrivacy =>
+      'Nulla viene condiviso con lo spazio finché non invii la richiesta.';
 
   @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';

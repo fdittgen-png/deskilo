@@ -12436,7 +12436,7 @@
   "portalReachableHeading": "Personen, denen Sie schreiben können",
   "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
-  "portalRequestProfile": "Workspace-Profil beantragen",
+  "portalRequestProfile": "Beitritt anfragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
   "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
   "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
@@ -17273,6 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Nachricht an {name}",
+  "spaceMessageSpace": "Dem Raum schreiben",
   "spaceMoveDown": "Nach unten",
   "spaceMoveUp": "Nach oben",
   "spaceNotBookable": "Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.",
@@ -17285,6 +17286,7 @@
       }
     }
   },
+  "spacePreviewPrivacy": "Mit dem Raum wird nichts geteilt, bevor Sie Ihre Anfrage senden.",
   "spaceQrSizeLabel": "Größe des QR-Codes",
   "spaceRatingClear": "Keine Bewertung",
   "spaceScanField": "Code",

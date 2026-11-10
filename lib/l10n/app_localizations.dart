@@ -33836,7 +33836,7 @@ abstract class AppLocalizations {
   /// Shown as the text in space offers (directory).
   ///
   /// In en, this message translates to:
-  /// **'Request a workspace profile'**
+  /// **'Ask to join'**
   String get portalRequestProfile;
 
   /// Shown as the text in public workspace view (directory).
@@ -45704,6 +45704,12 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
+  /// #3545 F: the outlined action of a space's public page that writes to its hosts
+  ///
+  /// In en, this message translates to:
+  /// **'Message the space'**
+  String get spaceMessageSpace;
+
   /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -45733,6 +45739,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Options for {name}'**
   String spaceOptions(String name);
+
+  /// #3545 F: the line under the actions of a space's public page: what asking to join shares
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is shared with the space until you send your request.'**
+  String get spacePreviewPrivacy;
 
   /// Shown as the text in space codes options dialog (workspace).
   ///

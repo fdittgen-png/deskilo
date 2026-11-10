@@ -20331,7 +20331,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
-  String get portalRequestProfile => 'Request a workspace profile';
+  String get portalRequestProfile => 'Ask to join';
 
   @override
   String get portalRequestSent =>
@@ -27504,6 +27504,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Message the space';
+
+  @override
   String get spaceMoveDown => 'Move down';
 
   @override
@@ -27521,6 +27524,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String spaceOptions(String name) {
     return 'Options for $name';
   }
+
+  @override
+  String get spacePreviewPrivacy =>
+      'Nothing is shared with the space until you send your request.';
 
   @override
   String get spaceQrSizeLabel => 'QR code size';

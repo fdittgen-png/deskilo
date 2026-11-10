@@ -29,7 +29,7 @@
   "portalOwner": "Proprietario",
   "portalAdmin": "Amministratore",
   "portalChat": "Chat",
-  "portalRequestProfile": "Richiedi un profilo nello spazio",
+  "portalRequestProfile": "Chiedi di unirti",
   "portalRequestSent": "Richiesta inviata. Lo spazio esaminerà il suo profilo.",
   "portalList": "Elenco",
   "portalMap": "Mappa",
@@ -57,5 +57,7 @@
   "portalGroupsHeading": "Gruppi",
   "portalRecipientHint": "Digiti un nome: i suggerimenti compaiono dalla prima lettera",
   "portalDirectoryCount": "{name} ({count})",
-  "portalWriteTo": "Scrivere a {name}"
+  "portalWriteTo": "Scrivere a {name}",
+  "spaceMessageSpace": "Scrivi allo spazio",
+  "spacePreviewPrivacy": "Nulla viene condiviso con lo spazio finché non invii la richiesta."
 }

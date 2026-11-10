@@ -20538,7 +20538,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalRegisterDirectory => 'Relier un serveur à l’annuaire global';
 
   @override
-  String get portalRequestProfile => 'Demander un profil dans cet espace';
+  String get portalRequestProfile => 'Demander à rejoindre';
 
   @override
   String get portalRequestSent =>
@@ -27821,6 +27821,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Écrire à l\'espace';
+
+  @override
   String get spaceMoveDown => 'Descendre';
 
   @override
@@ -27838,6 +27841,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String spaceOptions(String name) {
     return 'Options pour $name';
   }
+
+  @override
+  String get spacePreviewPrivacy =>
+      'Rien n\'est partagé avec l\'espace avant l\'envoi de votre demande.';
 
   @override
   String get spaceQrSizeLabel => 'Taille du code QR';
