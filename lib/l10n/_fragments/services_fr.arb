@@ -7,5 +7,13 @@
   "servicesName": "Nom",
   "servicesPrice": "Prix",
   "servicesInactive": "Inactif",
-  "servicesActive": "Actif"
+  "servicesActive": "Actif",
+  "servicesDescription": "Description",
+  "servicesDuration": "Durée (minutes)",
+  "servicesDurationHint": "Laissez vide si elle ne se compte pas en temps.",
+  "servicesDurationRange": "Entre {min} et {max} minutes.",
+  "servicesCategory": "Catégorie",
+  "servicesPublic": "Afficher sur notre page publique",
+  "servicesOtherCategory": "Autres prestations",
+  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}"
 }

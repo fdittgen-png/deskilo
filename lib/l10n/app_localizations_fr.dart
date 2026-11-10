@@ -24946,6 +24946,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get servicesCategory => 'Catégorie';
+
+  @override
+  String get servicesDescription => 'Description';
+
+  @override
+  String get servicesDuration => 'Durée (minutes)';
+
+  @override
+  String get servicesDurationHint =>
+      'Laissez vide si elle ne se compte pas en temps.';
+
+  @override
+  String servicesDurationRange(int min, int max) {
+    return 'Entre $min et $max minutes.';
+  }
+
+  @override
+  String servicesDurationShort(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get servicesEdit => 'Modifier le service';
 
   @override
@@ -24961,7 +24990,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesNew => 'Nouveau service';
 
   @override
+  String get servicesOtherCategory => 'Autres prestations';
+
+  @override
   String get servicesPrice => 'Prix';
+
+  @override
+  String get servicesPublic => 'Afficher sur notre page publique';
 
   @override
   String get servicesTitle => 'Services';
