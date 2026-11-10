@@ -37,7 +37,7 @@ Map<String, Object?> statementReportData(
   required TaxReferenceSet reference,
   Workspace? workspace,
 }) {
-  final currency = moneyFormat(currencyCode);
+  final currency = moneyFormat(currencyCode, locale: strings.formatLocale);
   // #870 — the seller kind decides what the recurring position is
   // called; it must read the same here as on the invoice itself.
   final association = InvoiceLegal.fromJson(
@@ -128,7 +128,7 @@ Map<String, Object?> agreementReportData(
   required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
   final band = feeBandFor(facts.bands, subscriptionPct);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
@@ -181,7 +181,7 @@ Map<String, Object?> agreementReportData(
     'subscription_pct': subscriptionPct,
     'number': '',
     'period': '',
-    'issued': DateFormat.yMMMd(strings.dateLocale).format(facts.now),
+    'issued': DateFormat.yMMMd(strings.documentDateLocale).format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
     'total': band == null ? '' : currency.formatMinor(band.feeCents),
@@ -211,8 +211,8 @@ Map<String, Object?> paymentsReportData(
 }) {
   final workspace = facts.workspace;
   final me = facts.me;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
-  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
+  final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   final ledger = facts.ledger
       .where(
         (entry) => entry.period == period && entry.kind == LedgerKind.credit,
@@ -294,11 +294,11 @@ Map<String, Object?> workspaceReportData(
   required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
   final levels = facts.levels;
   final plans = facts.plans;
   final hours = facts.hours;
-  final dayNames = DateFormat.E(strings.dateLocale);
+  final dayNames = DateFormat.E(strings.documentDateLocale);
   final monday = DateTime(2024); // a Monday — weekday names only.
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -306,7 +306,7 @@ Map<String, Object?> workspaceReportData(
     'member': '',
     'number': '',
     'period': '',
-    'issued': DateFormat.yMMMd(strings.dateLocale).format(facts.now),
+    'issued': DateFormat.yMMMd(strings.documentDateLocale).format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
     'total': '',
@@ -362,8 +362,8 @@ Map<String, Object?> reminderReportData(
   required int level,
   required TaxReferenceSet reference,
 }) {
-  final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
+  final currency = moneyFormat(invoice.currency, locale: strings.formatLocale);
+  final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   final now = facts.now;
   final workspace = facts.workspace;
   return <String, Object?>{

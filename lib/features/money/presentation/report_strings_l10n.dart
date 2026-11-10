@@ -2,6 +2,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -9,10 +10,15 @@ import '../../../l10n/app_localizations.dart';
 /// Every value here is exactly the `l10n?.x ?? 'default'` the builders
 /// used to compute inline, so a rendered document is byte-identical
 /// before and after the seam.
-ReportStrings reportStringsOf(AppLocalizations l10n, {String? dateLocale}) {
+ReportStrings reportStringsOf(
+  AppLocalizations l10n, {
+  String? dateLocale,
+  required String? formatLocale,
+}) {
   return ReportStrings(
     localeName: l10n.localeName,
     dateLocale: dateLocale,
+    formatLocale: formatLocale,
     paymentTermsDefault: l10n.invoiceLegalPaymentTermsDefault,
     latePenaltyDefault: l10n.invoiceLegalLatePenaltyDefault,
     recoveryDefault: l10n.invoiceLegalRecoveryDefault,
@@ -54,4 +60,5 @@ ReportStrings reportStringsFor(
     reportStringsOf(
       l10n ?? context.l10n,
       dateLocale: localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
+      formatLocale: appFormatOf(context).locale,
     );

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/files/file_names.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -85,7 +86,7 @@ Future<void> sendEInvoice(
       } else {
         // #2358 — the network's own syntax, from the inputs the
         // download uses.
-        final words = reportStringsOf(l10n);
+        final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
         final association = ref.read(sellerIsAssociationProvider);
         // Every input is read BEFORE the first await.
         final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
@@ -440,7 +441,7 @@ class _EInvoiceExportRun {
   Future<void> ublXml({required bool share}) {
     final association = ref.read(sellerIsAssociationProvider);
     final l10n = context.l10n;
-    final words = reportStringsOf(l10n);
+    final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
     return runGuarded(
       context,
       domain: 'money',

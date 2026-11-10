@@ -92,7 +92,7 @@ Map<String, Object?> _vatReportData(
 ) {
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: appFormatOf(context).locale);
   final locale = Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
   final rate = appFormatOf(context).rate;
@@ -157,7 +157,7 @@ Map<String, Object?> _vatReportData(
           'gross': currency.formatMinor(t.grossCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace, reference: reference),
+    ...legalMentionData(reportStringsOf(l10n, formatLocale: appFormatOf(context).locale), workspace, reference: reference),
   };
 }
 

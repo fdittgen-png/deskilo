@@ -25,6 +25,7 @@ class ReportStrings {
   const ReportStrings({
     this.localeName,
     this.dateLocale,
+    this.formatLocale,
     this.paymentTermsDefault = 'Payment on receipt.',
     this.latePenaltyDefault =
         'Late-payment penalty: three times the statutory interest rate.',
@@ -64,6 +65,16 @@ class ReportStrings {
   /// two (`AppLocalizations.localeName` vs `Localizations.localeOf`),
   /// and a document must not change by a byte for this seam.
   final String? dateLocale;
+
+  /// #3484 — the member's format locale (`AppFormat.locale`): what intl's
+  /// default locale was before the app stopped writing that global. A
+  /// document's amounts read in it, and so do its dates when [dateLocale]
+  /// is null, so every rendered byte stays what it was.
+  final String? formatLocale;
+
+  /// The locale a document's dates read in: [dateLocale], else
+  /// [formatLocale].
+  String? get documentDateLocale => dateLocale ?? formatLocale;
 
   final String paymentTermsDefault;
   final String latePenaltyDefault;

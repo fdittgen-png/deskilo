@@ -61,7 +61,7 @@ class InvoicePreviewBody extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final (i, line) in preview.lines.indexed) _lineRow(i, line),
+        for (final (i, line) in preview.lines.indexed) _lineRow(context, i, line),
         const Divider(),
         ..._vatRows(context, ref, preview.lines),
         _totalRow(context, preview.totalCents),
@@ -69,7 +69,7 @@ class InvoicePreviewBody extends ConsumerWidget {
     );
   }
 
-  Widget _lineRow(int index, InvoiceLine line) => Padding(
+  Widget _lineRow(BuildContext context, int index, InvoiceLine line) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 2),
     child: Row(
       key: ValueKey('invoice-preview-line-$index'),
@@ -77,7 +77,7 @@ class InvoicePreviewBody extends ConsumerWidget {
         Expanded(
           child: Text(
             invoiceLineText(
-              reportStringsOf(l10n),
+              reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
               line,
               association: association,
               period: period,

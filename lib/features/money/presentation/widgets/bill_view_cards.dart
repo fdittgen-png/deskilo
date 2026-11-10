@@ -230,7 +230,7 @@ class BillSubscriptionCard extends StatelessWidget {
           children: [
             BillLine(
               label: subscriptionLabel(
-                reportStringsOf(l10n),
+                reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                 statement.subscriptionPct,
                 association: association,
                 month: monthNameOf(l10n.localeName, statement.period),

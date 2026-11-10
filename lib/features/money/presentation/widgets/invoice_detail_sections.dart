@@ -84,7 +84,7 @@ class InvoiceDetailSections {
               Expanded(
                 child: Text(
                   invoiceLineText(
-                    reportStringsOf(l10n),
+                    reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                     position,
                     association: association,
                     period: invoice.period,
@@ -185,7 +185,7 @@ class InvoiceDetailSections {
                       Expanded(
                         child: Text(
                           invoiceLineText(
-                            reportStringsOf(l10n),
+                            reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                             position,
                             association: association,
                             period: source.period,

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/files/file_names.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
@@ -76,7 +77,7 @@ class AccountingExportRun {
     this.invoices, {
     required this.label,
   }) : l10n = context.l10n,
-       words = reportStringsOf(context.l10n),
+       words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale),
        association = ref.read(sellerIsAssociationProvider);
 
   final BuildContext context;

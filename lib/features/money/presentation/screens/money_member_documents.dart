@@ -201,7 +201,7 @@ class MoneyMemberDocuments {
       BillPdfStrings(
         title: l10n.billPdfTitle,
         subscription: subscriptionLabel(
-            reportStringsOf(l10n), statement.subscriptionPct,
+            reportStringsOf(l10n, formatLocale: appFormatOf(_context).locale), statement.subscriptionPct,
             association: _ref.watch(sellerIsAssociationProvider),
             // #1000 — the bill's position names its month too.
             month: monthNameOf(locale, yearMonth(month.year, month.month))),
