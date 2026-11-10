@@ -1,0 +1,6 @@
+{
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 cuenta no puede entrar} other{{count} cuentas no pueden entrar}}",
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 hallazgo necesita a una persona.} other{{count} hallazgos necesitan a una persona.}}",
+  "instanceDoctorAllHealthy": "Todo lo comprobado está sano.",
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 espacio de trabajo} other{{workspaces} espacios de trabajo}}, {members, plural, =1{1 miembro} other{{members} miembros}}"
+}

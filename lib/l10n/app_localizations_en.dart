@@ -12060,11 +12060,42 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get instanceDoctorAllHealthy => 'Everything checked is healthy.';
+
+  @override
   String get instanceDoctorAttention => 'Attention required';
+
+  @override
+  String instanceDoctorHeld(int workspaces, int members) {
+    String _temp0 = intl.Intl.pluralLogic(
+      workspaces,
+      locale: localeName,
+      other: '$workspaces workspaces',
+      one: '1 workspace',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      members,
+      locale: localeName,
+      other: '$members members',
+      one: '1 member',
+    );
+    return '$_temp0, $_temp1';
+  }
 
   @override
   String get instanceDoctorIntro =>
       'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.';
+
+  @override
+  String instanceDoctorNeedsHuman(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count findings need a human.',
+      one: '1 finding needs a human.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String instanceDoctorPassed(int count) {
@@ -12079,6 +12110,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceDoctorRunAgain => 'Check again';
+
+  @override
+  String instanceDoctorStuckTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count accounts cannot get in',
+      one: '1 account cannot get in',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get instanceDoneIntro =>

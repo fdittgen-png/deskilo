@@ -3078,6 +3078,7 @@ Map<String, _Getter> _part9() => {
   'hmrcSubmitButton': (l) => l.hmrcSubmitButton,
   'hubAccountingSubtitle': (l) => l.hubAccountingSubtitle,
   'hubAccountingTitle': (l) => l.hubAccountingTitle,
+  'instanceDoctorAllHealthy': (l) => l.instanceDoctorAllHealthy,
   'instanceDoctorAttention': (l) => l.instanceDoctorAttention,
   'instanceDoctorIntro': (l) => l.instanceDoctorIntro,
   'instanceGrantOtherAdmin': (l) => l.instanceGrantOtherAdmin,

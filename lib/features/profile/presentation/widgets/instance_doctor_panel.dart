@@ -8,6 +8,7 @@ import '../../../../core/instance/management_api.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// #1308 S3 — runs the doctor on a project and shows what it found:
 /// *Protected* or *Attention required*, problems first, passed checks
@@ -99,7 +100,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                 leading: Icon(f.level == DoctorLevel.alarm
                     ? Icons.error_outline
                     : Icons.warning_amber_outlined),
-                title: Text(f.title),
+                title: Text(_title(l10n, f)),
                 subtitle: Text(f.detail.replaceAll(RegExp(r'\n\s+'), '\n')),
               ),
             if (passed.isNotEmpty)
@@ -133,3 +134,10 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
     );
   }
 }
+
+/// A finding's title in the member's language: the ARB wording where the
+/// finding carries typed [DoctorWords], else the title as the doctor wrote it.
+String _title(AppLocalizations l10n, DoctorFinding f) => switch (f.words) {
+  DoctorWords.stuckAccounts => l10n.instanceDoctorStuckTitle(f.count ?? 0),
+  null => f.title,
+};

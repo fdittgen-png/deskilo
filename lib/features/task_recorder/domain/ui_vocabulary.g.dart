@@ -8128,6 +8128,7 @@ const Set<String> uiLabelKeys = {
   'instanceDelegatesNone',
   'instanceDelegatesTitle',
   'instanceDelegationWithdrawn',
+  'instanceDoctorAllHealthy',
   'instanceDoctorAttention',
   'instanceDoctorIntro',
   'instanceDoctorProtected',

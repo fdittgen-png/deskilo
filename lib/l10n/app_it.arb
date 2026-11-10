@@ -7993,12 +7993,16 @@
       }
     }
   },
+  "instanceDoctorAllHealthy": "Tutto ciò che è stato controllato è in salute.",
   "instanceDoctorAttention": "Richiede attenzione",
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 spazio di lavoro} other{{workspaces} spazi di lavoro}}, {members, plural, =1{1 membro} other{{members} membri}}",
   "instanceDoctorIntro": "Prima che questo dispositivo la usi, il controllo di sicurezza deve passare: un allarme tiene il pulsante disattivato finché non è risolto.",
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 rilievo richiede una persona.} other{{count} rilievi richiedono una persona.}}",
   "instanceDoctorPassed": "{count} controlli superati",
   "instanceDoctorProtected": "Protetto",
   "instanceDoctorRun": "Avvia il controllo di sicurezza",
   "instanceDoctorRunAgain": "Controlla di nuovo",
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 account non riesce a entrare} other{{count} account non riescono a entrare}}",
   "instanceDoneIntro": "L'istanza è pronta. La usi su questo dispositivo, poi condivida il QR del server dalla schermata Server perché i membri si uniscano alla stessa.",
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"

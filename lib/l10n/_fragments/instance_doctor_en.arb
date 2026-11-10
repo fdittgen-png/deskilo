@@ -1,0 +1,36 @@
+{
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}",
+  "@instanceDoctorStuckTitle": {
+    "description": "#3489 Instance doctor: accounts unconfirmed for over a day.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}",
+  "@instanceDoctorNeedsHuman": {
+    "description": "#3489 Instance doctor report footer: how many findings are problems.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAllHealthy": "Everything checked is healthy.",
+  "@instanceDoctorAllHealthy": {
+    "description": "#3489 Instance doctor report footer when nothing is wrong."
+  },
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}",
+  "@instanceDoctorHeld": {
+    "description": "#3489 Instance doctor: what an installation holds, in workspaces and members.",
+    "placeholders": {
+      "workspaces": {
+        "type": "int"
+      },
+      "members": {
+        "type": "int"
+      }
+    }
+  }
+}

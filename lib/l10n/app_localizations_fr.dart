@@ -12178,11 +12178,43 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get instanceDoctorAllHealthy =>
+      'Tout ce qui a été vérifié est en bonne santé.';
+
+  @override
   String get instanceDoctorAttention => 'Attention requise';
+
+  @override
+  String instanceDoctorHeld(int workspaces, int members) {
+    String _temp0 = intl.Intl.pluralLogic(
+      workspaces,
+      locale: localeName,
+      other: '$workspaces espaces de travail',
+      one: '1 espace de travail',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      members,
+      locale: localeName,
+      other: '$members membres',
+      one: '1 membre',
+    );
+    return '$_temp0, $_temp1';
+  }
 
   @override
   String get instanceDoctorIntro =>
       'Avant que cet appareil l\'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu\'à correction.';
+
+  @override
+  String instanceDoctorNeedsHuman(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count constats demandent une personne.',
+      one: '1 constat demande une personne.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String instanceDoctorPassed(int count) {
@@ -12197,6 +12229,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceDoctorRunAgain => 'Vérifier à nouveau';
+
+  @override
+  String instanceDoctorStuckTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count comptes ne peuvent pas entrer',
+      one: '1 compte ne peut pas entrer',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get instanceDoneIntro =>

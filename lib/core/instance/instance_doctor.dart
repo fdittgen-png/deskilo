@@ -17,18 +17,35 @@
 // Every signal needed was already in the project — the auth config and
 // four rows of `auth.users`. This is the thing that reads them.
 
+import 'package:intl/intl.dart';
+
 import 'instance_auth_check.dart';
 import 'instance_builder.dart';
 import 'instance_security_checks.dart';
 import 'management_api.dart';
 import 'schema_compatibility.dart';
 
+/// #3489 -- findings the panel words from the ARB catalogue.
+enum DoctorWords { stuckAccounts }
+
 /// How serious a finding is. [alarm] means people are affected right now.
 enum DoctorLevel { ok, warn, alarm }
 
 /// One thing the doctor looked at.
 class DoctorFinding {
-  const DoctorFinding(this.level, this.title, this.detail, {this.count});
+  const DoctorFinding(
+    this.level,
+    this.title,
+    this.detail, {
+    this.count,
+    this.words,
+  });
+
+  /// #3489 -- the words of a finding whose title carries a count, as data:
+  /// the panel words it in the member's language (ICU plural, [count]);
+  /// [title] stays the English the operator's command line prints. Null for a
+  /// finding still worded by [title] and [detail] alone.
+  final DoctorWords? words;
 
   final DoctorLevel level;
   final String title;
@@ -249,10 +266,15 @@ select
     if (stuck > 0) {
       findings.add(DoctorFinding(
         stuck > 2 ? DoctorLevel.alarm : DoctorLevel.warn,
-        '$stuck account${stuck == 1 ? '' : 's'} cannot get in',
+        Intl.plural(stuck,
+            one: '$stuck account cannot get in',
+            other: '$stuck accounts cannot get in',
+            locale: 'en'),
         'unconfirmed for more than 24 h; the oldest for $oldestHours h.\n'
             '        These are people who tried. They will not try again '
             'unprompted.',
+        count: stuck,
+        words: DoctorWords.stuckAccounts,
       ));
     } else {
       findings.add(const DoctorFinding(
@@ -459,6 +481,9 @@ String doctorReport(
     ..writeln()
     ..writeln(problems == 0
       ? 'Everything checked is healthy.'
-      : '$problems finding${problems == 1 ? '' : 's'} need a human.');
+      : Intl.plural(problems,
+          one: '$problems finding needs a human.',
+          other: '$problems findings need a human.',
+          locale: 'en'));
   return buffer.toString();
 }

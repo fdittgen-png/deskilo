@@ -7993,12 +7993,16 @@
       }
     }
   },
+  "instanceDoctorAllHealthy": "Todo lo comprobado está sano.",
   "instanceDoctorAttention": "Requiere atención",
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 espacio de trabajo} other{{workspaces} espacios de trabajo}}, {members, plural, =1{1 miembro} other{{members} miembros}}",
   "instanceDoctorIntro": "Antes de que este dispositivo la use, la comprobación de seguridad debe pasar: una alarma mantiene el botón desactivado hasta corregirla.",
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 hallazgo necesita a una persona.} other{{count} hallazgos necesitan a una persona.}}",
   "instanceDoctorPassed": "{count} comprobaciones superadas",
   "instanceDoctorProtected": "Protegido",
   "instanceDoctorRun": "Ejecutar la comprobación de seguridad",
   "instanceDoctorRunAgain": "Comprobar de nuevo",
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 cuenta no puede entrar} other{{count} cuentas no pueden entrar}}",
   "instanceDoneIntro": "La instancia está lista. Úsela en este dispositivo y comparta luego el QR del servidor desde la pantalla Servidor para que los miembros se unan a la misma.",
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"

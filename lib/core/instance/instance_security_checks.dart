@@ -11,6 +11,8 @@
 //
 // Its own file because the doctor is already long, and because these are
 // pure functions over rows: the tests drive them directly.
+import 'package:intl/intl.dart';
+
 import 'instance_doctor.dart';
 
 /// #1313 — every row-level policy the project carries, by name.
@@ -268,8 +270,8 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
   int count(String key) => int.tryParse('${row[key] ?? 0}') ?? 0;
   final workspaces = count('workspaces');
   final members = count('members');
-  final held = '$workspaces workspace${workspaces == 1 ? '' : 's'}, '
-      '$members member${members == 1 ? '' : 's'}';
+  final held = '${Intl.plural(workspaces, one: '$workspaces workspace', other: '$workspaces workspaces', locale: 'en')}, '
+      '${Intl.plural(members, one: '$members member', other: '$members members', locale: 'en')}';
   if (raw == null) {
     return [
       DoctorFinding(

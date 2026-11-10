@@ -7993,12 +7993,16 @@
       }
     }
   },
+  "instanceDoctorAllHealthy": "Alles Geprüfte ist in Ordnung.",
   "instanceDoctorAttention": "Handlungsbedarf",
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 Arbeitsbereich} other{{workspaces} Arbeitsbereiche}}, {members, plural, =1{1 Mitglied} other{{members} Mitglieder}}",
   "instanceDoctorIntro": "Bevor dieses Gerät sie nutzt, muss die Sicherheitsprüfung bestehen: ein Alarm hält die Schaltfläche gesperrt, bis er behoben ist.",
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 Befund braucht einen Menschen.} other{{count} Befunde brauchen einen Menschen.}}",
   "instanceDoctorPassed": "{count} Prüfungen bestanden",
   "instanceDoctorProtected": "Geschützt",
   "instanceDoctorRun": "Sicherheitsprüfung starten",
   "instanceDoctorRunAgain": "Erneut prüfen",
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 Konto kommt nicht hinein} other{{count} Konten kommen nicht hinein}}",
   "instanceDoneIntro": "Die Instanz ist bereit. Verwenden Sie sie auf diesem Gerät und teilen Sie dann den Server-QR vom Server-Bildschirm, damit Mitglieder derselben beitreten.",
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"

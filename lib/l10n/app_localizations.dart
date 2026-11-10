@@ -19942,17 +19942,35 @@ abstract class AppLocalizations {
   /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
   String instanceDeployFunctions(int count);
 
+  /// #3489 Instance doctor report footer when nothing is wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything checked is healthy.'**
+  String get instanceDoctorAllHealthy;
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Attention required'**
   String get instanceDoctorAttention;
 
+  /// #3489 Instance doctor: what an installation holds, in workspaces and members.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}'**
+  String instanceDoctorHeld(int workspaces, int members);
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.'**
   String get instanceDoctorIntro;
+
+  /// #3489 Instance doctor report footer: how many findings are problems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}'**
+  String instanceDoctorNeedsHuman(int count);
 
   /// #1308 instance wizard doctor and token
   ///
@@ -19977,6 +19995,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check again'**
   String get instanceDoctorRunAgain;
+
+  /// #3489 Instance doctor: accounts unconfirmed for over a day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}'**
+  String instanceDoctorStuckTitle(int count);
 
   /// #977 instance wizard: instanceDoneIntro
   ///
