@@ -106,6 +106,9 @@ class Receivable {
 /// The words an invoice's status is said in (the screen picks the sentence).
 enum InvoiceStatusKind {
   draft,
+
+  /// Issued without a due date: nothing is late.
+  noDueDate,
   dueIn,
   dueToday,
   late,
@@ -186,7 +189,7 @@ InvoiceStatus invoiceStatusOf(Receivable r, DateTime today) {
   if (r.stage == ReceivableStage.partlyPaid && !late) {
     return const InvoiceStatus(InvoiceStatusKind.partlyPaid);
   }
-  if (days == null) return const InvoiceStatus(InvoiceStatusKind.dueToday);
+  if (days == null) return const InvoiceStatus(InvoiceStatusKind.noDueDate);
   if (days > 0) return InvoiceStatus(InvoiceStatusKind.dueIn, days);
   if (days == 0) return const InvoiceStatus(InvoiceStatusKind.dueToday);
   return InvoiceStatus(InvoiceStatusKind.late, -days);
@@ -306,18 +309,15 @@ enum DoNextKind {
   sendReminders,
   confirmPayments,
   fixSending,
-  issueOldDrafts,
+  issueDrafts,
 }
 
 /// One entry of "Do next": what to do, for how many, and the money at stake.
 typedef DoNext = ({DoNextKind kind, Tally tally});
 
-/// A draft this many days old is waiting too long.
-const int _staleDraftDays = 7;
-
 /// "Do next" of [invoices] and [toInvoice] on [today]: at most five entries
 /// in the issue's order — invoice the month, reminders due, payments to
-/// confirm, could not be sent, drafts older than [_staleDraftDays] — each
+/// confirm, could not be sent, drafts to issue — each
 /// present only when it has something to do.
 List<DoNext> doNextOf(
   Iterable<Receivable> invoices, {
@@ -336,9 +336,7 @@ List<DoNext> doNextOf(
       InvoiceStatusKind.reminderDue => DoNextKind.sendReminders,
       InvoiceStatusKind.paymentDeclared => DoNextKind.confirmPayments,
       InvoiceStatusKind.couldNotBeSent => DoNextKind.fixSending,
-      InvoiceStatusKind.draft
-          when calendarDaysBetween(r.issuedOn, today) > _staleDraftDays =>
-        DoNextKind.issueOldDrafts,
+      InvoiceStatusKind.draft => DoNextKind.issueDrafts,
       _ => null,
     };
     if (kind != null) {

@@ -19,6 +19,7 @@ Receivable _r({
   ReceivableStage stage = ReceivableStage.open,
   DateTime? issued,
   DateTime? due,
+  bool noDue = false,
   bool declared = false,
   bool hold = false,
   bool failed = false,
@@ -34,7 +35,7 @@ Receivable _r({
   totalMinor: total,
   openMinor: open,
   issuedOn: issued ?? DateTime(2026, 10),
-  dueOn: stage == ReceivableStage.draft
+  dueOn: stage == ReceivableStage.draft || noDue
       ? null
       : (due ?? DateTime(2026, 11, 20)),
   stage: stage,
@@ -126,6 +127,15 @@ void main() {
         const InvoiceStatus(InvoiceStatusKind.late, 9),
       );
     });
+  });
+
+  test('an invoice without a due date is never late: it awaits payment', () {
+    final r = _r(noDue: true);
+    expect(_status(r).kind, InvoiceStatusKind.noDueDate);
+    expect(actionFor(_status(r)), InvoiceAction.open);
+    final f = figuresOf([r], today: _today);
+    expect(f.awaitingPayment, const Tally(1, {'EUR': 10000}));
+    expect(f.overdue, Tally.empty);
   });
 
   test('one action per status', () {
@@ -236,12 +246,12 @@ void main() {
           DoNextKind.sendReminders,
           DoNextKind.confirmPayments,
           DoNextKind.fixSending,
-          DoNextKind.issueOldDrafts,
+          DoNextKind.issueDrafts,
         ],
       );
       expect(next[1].tally, const Tally(2, {'EUR': 1000, 'CHF': 2000}));
-      // The draft of two days ago is not stale yet.
-      expect(next[4].tally.count, 1);
+      // Every draft counts, however recent.
+      expect(next[4].tally.count, 2);
       expect(doNextOf([_r()], today: _today), isEmpty);
     },
   );
