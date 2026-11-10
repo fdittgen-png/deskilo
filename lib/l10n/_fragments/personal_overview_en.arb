@@ -1,14 +1,6 @@
 {
   "@@locale": "en",
-  "meOverviewTitle": "Your day, in one place",
-  "@meOverviewTitle": {
-    "description": "#2554 Overview: the page heading"
-  },
-  "meOverviewSubtitle": "Your next booking, what needs you, and your spaces.",
-  "@meOverviewSubtitle": {
-    "description": "#2554 Overview: the supporting line under the heading"
-  },
-  "meOverviewNextTitle": "Next commitment",
+  "meOverviewNextTitle": "Next up",
   "@meOverviewNextTitle": {
     "description": "#2554 Overview: the next commitment section"
   },
@@ -54,11 +46,11 @@
   "@meOverviewView": {
     "description": "#2554 Overview: open the next commitment in My reservations"
   },
-  "meOverviewAttentionTitle": "Needs attention",
+  "meOverviewAttentionTitle": "Needs you",
   "@meOverviewAttentionTitle": {
     "description": "#2554 Overview: the needs-attention section"
   },
-  "meOverviewAttentionNone": "Nothing needs your attention.",
+  "meOverviewAttentionNone": "Nothing needs you right now.",
   "@meOverviewAttentionNone": {
     "description": "#2554 Overview: every source answered and nothing waits"
   },

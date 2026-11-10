@@ -86,14 +86,14 @@ enum MeTab {
   /// The personal shell's wording: Overview leads, and the account is the
   /// Confidentiality-and-account utility.
   String destinationLabel(AppLocalizations l10n) => switch (this) {
-    home => l10n.meTabOverview,
+    home => l10n.meTabHome,
     me => l10n.meUtilityAccount,
     _ => label(l10n),
   };
 
   /// The personal shell's wording on a phone's bottom bar.
   String compactLabel(AppLocalizations l10n) => switch (this) {
-    home => l10n.meTabOverviewShort,
+    home => l10n.meTabHome,
     spaces => l10n.meTabSpacesShort,
     data => l10n.meTabDataShort,
     _ => destinationLabel(l10n),

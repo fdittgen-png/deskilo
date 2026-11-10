@@ -10,8 +10,10 @@ import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -21,6 +23,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 /// ws-1 (owner) and ws-2 (a plain member, a development space);
@@ -69,6 +72,9 @@ Future<GoRouter> pumpMeApp(
   Size size = const Size(800, 1600),
   LinkLauncher? launcher,
   ResumePlaceStore? resumePlaces,
+  FakeProfileRepository? profile,
+  Clock? clock,
+  TimeZoneMode? timeZoneMode,
   List<Override> extraOverrides = const [],
 }) async {
   tester.view.physicalSize = size;
@@ -90,6 +96,9 @@ Future<GoRouter> pumpMeApp(
         contacts: contacts,
         guestVisits: guestVisits,
         resumePlaces: resumePlaces,
+        profile: profile,
+        clock: clock,
+        timeZoneMode: timeZoneMode ?? TimeZoneMode.workspace,
       )..addAll([
         if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
         ...extraOverrides,

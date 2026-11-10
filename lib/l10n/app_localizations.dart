@@ -28317,6 +28317,30 @@ abstract class AppLocalizations {
   /// **'Find a space'**
   String get meFindSpace;
 
+  /// #3545 The Home greeting from noon until 6 pm; {name} is the first name of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon, {name}'**
+  String meGreetingAfternoon(String name);
+
+  /// #3545 The Home greeting after 6 pm; {name} is the first name of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening, {name}'**
+  String meGreetingEvening(String name);
+
+  /// #3545 The Home greeting before noon; {name} is the first name of the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning, {name}'**
+  String meGreetingMorning(String name);
+
+  /// #3545 The Home greeting when the account has no name yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get meGreetingNoName;
+
   /// Shown as a title in me spaces list (me), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -28476,7 +28500,7 @@ abstract class AppLocalizations {
   /// Heading above the list of spaces the person belongs to.
   ///
   /// In en, this message translates to:
-  /// **'My spaces'**
+  /// **'My places'**
   String get meMySpaces;
 
   /// Empty state body on the Me home when the person has no space.
@@ -28548,7 +28572,7 @@ abstract class AppLocalizations {
   /// #2554 Overview: every source answered and nothing waits
   ///
   /// In en, this message translates to:
-  /// **'Nothing needs your attention.'**
+  /// **'Nothing needs you right now.'**
   String get meOverviewAttentionNone;
 
   /// #2554 Overview: open the conversation
@@ -28566,7 +28590,7 @@ abstract class AppLocalizations {
   /// #2554 Overview: the needs-attention section
   ///
   /// In en, this message translates to:
-  /// **'Needs attention'**
+  /// **'Needs you'**
   String get meOverviewAttentionTitle;
 
   /// #2554 Overview: open the document in My data
@@ -28596,7 +28620,7 @@ abstract class AppLocalizations {
   /// #2554 Overview: the next commitment section
   ///
   /// In en, this message translates to:
-  /// **'Next commitment'**
+  /// **'Next up'**
   String get meOverviewNextTitle;
 
   /// #2554 Overview: the bookings could not be read at all
@@ -28610,18 +28634,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Times in {zone}'**
   String meOverviewNextZone(String zone);
-
-  /// #2554 Overview: the supporting line under the heading
-  ///
-  /// In en, this message translates to:
-  /// **'Your next booking, what needs you, and your spaces.'**
-  String get meOverviewSubtitle;
-
-  /// #2554 Overview: the page heading
-  ///
-  /// In en, this message translates to:
-  /// **'Your day, in one place'**
-  String get meOverviewTitle;
 
   /// #2554 Overview: open the next commitment in My reservations
   ///
@@ -28773,28 +28785,16 @@ abstract class AppLocalizations {
   /// **'Me'**
   String get meTabMe;
 
-  /// #2552 first destination of the personal shell: the person's overview.
-  ///
-  /// In en, this message translates to:
-  /// **'Overview'**
-  String get meTabOverview;
-
-  /// #2552 the Overview destination on a phone's bottom bar (FR: Accueil).
-  ///
-  /// In en, this message translates to:
-  /// **'Overview'**
-  String get meTabOverviewShort;
-
   /// #2552 the My spaces destination on a phone's bottom bar.
   ///
   /// In en, this message translates to:
-  /// **'Spaces'**
+  /// **'Places'**
   String get meTabSpacesShort;
 
   /// #2552 utility of the personal shell: who sees what of me, and my account.
   ///
   /// In en, this message translates to:
-  /// **'Confidentiality and account'**
+  /// **'Privacy and account'**
   String get meUtilityAccount;
 
   /// #2552 utility of the personal shell: the guide and the task assistant.
