@@ -25,6 +25,10 @@ const Map<String, String> _allowed = {
       '#3587 R1-c — the owed card filters the list by it',
   'lib/features/money/application/receivables_answers.dart::owedBucketOf':
       '#3587 R1-c — the owed card filters the list by it',
+  'lib/features/money/application/reminder_queue.dart::ReminderLetter':
+      '#3587 R1-f — the queue screen builds the letter it shares',
+  'lib/features/money/application/reminder_queue.dart::ReminderQueue':
+      '#3587 R1-f — the queue screen holds and draws it',
 };
 
 void main() {
